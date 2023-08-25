@@ -1,0 +1,36 @@
+{
+    "number": 316654,
+    "data": "1,1,5,39,387,4960,74088,1312716,26239484,595023510,14908285892,412903136867,12448252189622,407804188400373,14380454869464352,544428684832123828,21991444994187529639,945234507638271696504,43042162953650721470752,2071216980365429970912347",
+    "name": "Number of series-reduced rooted identity trees whose leaves span an initial interval of positive integers with multiplicities an integer partition of n.",
+    "comment": [
+        "A rooted tree is series-reduced if every non-leaf node has at least two branches. It is an identity tree if no branch appears multiple times under the same root."
+    ],
+    "example": [
+        "The a(3) = 5 trees are (1(12)), (1(23)), (2(13)), (3(12)), (123)."
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "gro[m_]:=If[Length[m]==1,m,Select[Union[Sort/@Join@@(Tuples[gro/@#]&/@Select[mps[m],Length[#]>1&])],UnsameQ@@#&]];",
+        "Table[Sum[Length[gro[m]],{m,Flatten[MapIndexed[Table[#2,{#1}]&,#]]&/@IntegerPartitions[n]}],{n,5}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See links in A339645 for combinatorial species functions.",
+        "cycleIndexSeries(n)={my(v=vector(n)); v[1]=sv(1); for(n=2, #v, v[n]=polcoef(sWeighT(x*Ser(v[1..n])), n)); x*Ser(v)}",
+        "StronglyNormalLabelingsSeq(cycleIndexSeries(12)) \\\\ _Andrew Howroyd_, Jan 22 2021"
+    ],
+    "xref": [
+        "Cf. A000081, A000311, A000669, A001678, A004111, A005804, A141268, A181821, A292504, A300660, A304660.",
+        "Cf. A316651, A316652, A316653, A316655, A316656."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Jul 09 2018",
+    "ext": [
+        "Terms a(9) and beyond from _Andrew Howroyd_, Jan 22 2021"
+    ],
+    "references": 9,
+    "revision": 11,
+    "time": "2021-01-22T16:49:01-05:00",
+    "created": "2018-07-09T21:23:48-04:00"
+}

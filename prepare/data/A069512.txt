@@ -1,0 +1,49 @@
+{
+    "number": 69512,
+    "data": "2,14,22,118,124,222,1128,1144,1224,2222,11148,11228,11244,12224,22222,111188,111248,111444,112228,112244,122224,222222,1111288,1111448,1112248,1112444,1122228,1122244,1222224,2222222,11111488,11112288,11112448,11114444",
+    "name": "Geometric mean of digits = 2 and digits are in nondecreasing order.",
+    "comment": [
+        "No number is obtainable by permuting the digits of other members - only one with ascending order of digits is included. Product of the digits = 2^k where k is the number of digits."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A069512/b069512.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "1128 is a term but 2118 is not."
+    ],
+    "mathematica": [
+        "a = {}; b = 2; Do[c = Apply[ Times, IntegerDigits[n]]/b^Floor[ Log[10, n] + 1]; If[c == 1 && Position[a, FromDigits[ Sort[ IntegerDigits[n]]]] == {}, Print[n]; a = Append[a, n]], {n, 1, 10^7}]"
+    ],
+    "program": [
+        "(Python)",
+        "from math import prod",
+        "from sympy.utilities.iterables import multiset_combinations",
+        "def aupton(terms):",
+        "  n, digits, alst, powsexps2 = 0, 1, [], [(1,0), (2,1), (4,2), (8,3)]",
+        "  while n < terms:",
+        "    target = 2**digits",
+        "    mcstr = \"\".join(str(d)*(digits//max(1, r)) for d, r in powsexps2)",
+        "    for mc in multiset_combinations(mcstr, digits):",
+        "      if prod(map(int, mc)) == target:",
+        "        n += 1",
+        "        alst.append(int(\"\".join(mc)))",
+        "        if n == terms: break",
+        "    else: digits += 1",
+        "  return alst",
+        "print(aupton(34)) # _Michael S. Branicky_, Feb 14 2021"
+    ],
+    "xref": [
+        "Cf. A061426, A069516, A069518."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Mar 30 2002",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Apr 01 2002",
+        "a(31) corrected by and a(33) and beyond from _Michael S. Branicky_, Feb 14 2021"
+    ],
+    "references": 4,
+    "revision": 10,
+    "time": "2021-02-14T19:25:03-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

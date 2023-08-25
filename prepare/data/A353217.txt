@@ -1,0 +1,31 @@
+{
+    "number": 353217,
+    "data": "0,1,3,6,10,15,136,153,231,741,1711,11026,22366,99681,104653,593505,1348903,1378630,1886653,3098805,4388203,4474536,24587578,26626753,32092066,45825951,132804253,165283471,197239591,355657785,498727153,866008153,1074091726,1144165366",
+    "name": "Triangular numbers (A000217) with arithmetic derivative (A003415) a palindrome (A002113).",
+    "example": [
+        "15 = A000217(5) and 15' = 8 = A002113(9), so 15 is a term.",
+        "153 = A000217(17) and 153' = 111 = A002113(21), so 153 is a term."
+    ],
+    "mathematica": [
+        "d[0] = d[1] = 0; d[n_] := n*Plus @@ ((Last[#]/First[#]) & /@ FactorInteger[n]); Select[Table[n*(n + 1)/2, {n, 0, 50000}], PalindromeQ[d[#]] &] (* _Amiram Eldar_, Apr 30 2022 *)"
+    ],
+    "program": [
+        "(Magma) tr:=func<m|IsSquare(8*m+1)>; pal:=func<n|Intseq(n) eq Reverse(Intseq(n))>; f:=func<n |n le 1 select 0 else n*(&+[Factorisation(n)[i][2] / Factorisation(n)[i][1]: i in [1..#Factorisation(n)]])>; [n:n in [d*(d+1) div 2:d in [0..150000]]| pal(Floor(f(n)))];",
+        "(Python)",
+        "from itertools import chain, count, islice",
+        "from sympy import factorint",
+        "def A353217_gen(): # generator of terms",
+        "    return chain((0,1),filter(lambda m:(s:=str(sum((m*e//p for p,e in factorint(m).items()))))[:(t:=(len(s)+1)//2)]==s[:-t-1:-1],(n*(n+1)//2 for n in count(2))))",
+        "A353217_list = list(islice(A353217_gen(),20)) # _Chai Wah Wu_, Jun 24 2022"
+    ],
+    "xref": [
+        "Cf. A000217, A003415, A002113, A068312."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Marius A. Burtea_, Apr 30 2022",
+    "references": 0,
+    "revision": 17,
+    "time": "2022-06-24T17:20:20-04:00",
+    "created": "2022-05-04T18:45:03-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 178905,
+    "data": "0,1,2,3,4,5,6,9,10,11,12,18,19,20,22,25,36,37,38,44,45,50,51,52,74,75,76,77,89,90,100,101,102,105,109,147,150,153,154,165,166,173,178,179,180,181,204,205,210,212,214,217,293,294,299,300,301,306,308,309,329",
+    "name": "Numbers without 3 consecutive equal digits in any base b >= 2.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A178905/b178905.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "Prepend[Cases[Range[329], n_ /; NoneTrue[Range[2, (Sqrt[4 n - 3] - 1)/2], MatchQ[IntegerDigits[n, #], {___, d_, d_, d_, ___}] &]], 0] (* _Vladimir Reshetnikov_, Mar 20 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory.digits import digits",
+        "def three_in_a_row(s):",
+        "    return any(s[i] == s[i+1] == s[i+2] for i in range(len(s) - 2))",
+        "def ok(n):",
+        "    if n < 7: return True",
+        "    b = 2",
+        "    d = digits(n, b)[1:]",
+        "    while len(d) >= 3:",
+        "        if three_in_a_row(d): return False",
+        "        b += 1",
+        "        d = digits(n, b)[1:]",
+        "    return True",
+        "print([k for k in range(331) if ok(k)]) # _Michael S. Branicky_, Mar 27 2022"
+    ],
+    "xref": [
+        "Cf. A063037."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,3",
+    "author": "_Joonas Pohjonen_, Jun 22 2010",
+    "references": 2,
+    "revision": 15,
+    "time": "2022-03-28T01:31:52-04:00",
+    "created": "2010-07-11T03:00:00-04:00"
+}

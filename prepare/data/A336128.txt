@@ -1,0 +1,59 @@
+{
+    "number": 336128,
+    "data": "1,1,1,5,5,9,29,37,57,89,265,309,521,745,1129,3005,3545,5685,8201,12265,16629,41369,48109,77265,107645,160681,214861,316913,644837,798861,1207445",
+    "name": "Number of ways to split a strict composition of n into contiguous subsequences with different sums.",
+    "comment": [
+        "A composition of n is a finite sequence of positive integers summing to n."
+    ],
+    "link": [
+        "Gus Wiseman, <a href=\"/A038041/a038041.txt\">Sequences counting and ranking multiset partitions whose part lengths, sums, or averages are constant or strict.</a>"
+    ],
+    "example": [
+        "The a(0) = 1 through a(5) = 5 splits:",
+        "  ()  (1)  (2)  (3)     (4)     (5)",
+        "                (12)    (13)    (14)",
+        "                (21)    (31)    (23)",
+        "                (1)(2)  (1)(3)  (32)",
+        "                (2)(1)  (3)(1)  (41)",
+        "                                (1)(4)",
+        "                                (2)(3)",
+        "                                (3)(2)",
+        "                                (4)(1)",
+        "The a(6) = 29 splits:",
+        "  (6)    (1)(5)   (1)(2)(3)",
+        "  (15)   (2)(4)   (1)(3)(2)",
+        "  (24)   (4)(2)   (2)(1)(3)",
+        "  (42)   (5)(1)   (2)(3)(1)",
+        "  (51)   (1)(23)  (3)(1)(2)",
+        "  (123)  (1)(32)  (3)(2)(1)",
+        "  (132)  (13)(2)",
+        "  (213)  (2)(13)",
+        "  (231)  (2)(31)",
+        "  (312)  (23)(1)",
+        "  (321)  (31)(2)",
+        "         (32)(1)"
+    ],
+    "mathematica": [
+        "splits[dom_]:=Append[Join@@Table[Prepend[#,Take[dom,i]]&/@splits[Drop[dom,i]],{i,Length[dom]-1}],{dom}];",
+        "Table[Sum[Length[Select[splits[ctn],UnsameQ@@Total/@#&]],{ctn,Join@@Permutations/@Select[IntegerPartitions[n],UnsameQ@@#&]}],{n,0,15}]"
+    ],
+    "xref": [
+        "The version with equal instead of different sums is A336130.",
+        "Starting with a non-strict composition gives A336127.",
+        "Starting with a partition gives A336131.",
+        "Starting with a strict partition gives A336132.",
+        "Partitions of partitions are A001970.",
+        "Partitions of compositions are A075900.",
+        "Compositions of compositions are A133494.",
+        "Set partitions with distinct block-sums are A275780.",
+        "Compositions of partitions are A323583.",
+        "Cf. A006951, A063834, A271619, A279375, A305551, A326519, A317508, A318684, A336133, A336134, A336135."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Jul 10 2020",
+    "references": 19,
+    "revision": 8,
+    "time": "2020-07-11T07:38:27-04:00",
+    "created": "2020-07-11T07:38:27-04:00"
+}

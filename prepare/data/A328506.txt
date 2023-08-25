@@ -1,0 +1,63 @@
+{
+    "number": 328506,
+    "data": "1,5,16,36,66,101,160,218,285,374,464,565,680,815,969,1124,1282,1467,1659,1863,2091,2346,2559,2824,3100,3411,3690,4043,4380,4697,5060,5468,5833,6266,6670,7132,7595,8006,8502,9004,9518,10039,10609,11155,11740,12304,12971,13603,14202,14861,15532,16217",
+    "name": "Iteration of Abelian sandpile model where the n-th matrix expansions occurs. Begins with infinite sand in 1 X 1 matrix.",
+    "comment": [
+        "The Abelian sandpile model is a cellular automaton considering the behavior of sand grains on a square grid. Any square containing 4 or more grains will topple, sending a grain to each of its 4 neighbors and subtracting 4 grains from itself.",
+        "Here, expansion refers to the addition of a boundary layer to the outside of the existing matrix when the model reaches beyond the previous matrix boundary."
+    ],
+    "example": [
+        "                                                      _ _ _ _ _",
+        "          _ _ _      _ _ _      _ _ _      _ _ _     |0|0|1|0|0|",
+        "   _     |0|1|0|    |0|2|0|    |0|3|0|    |0|4|0|    |0|2|1|2|0|",
+        "  |\u221e| -> |1|\u221e|1| -> |2|\u221e|2| -> |3|\u221e|3| -> |4|\u221e|4| -> |1|1|\u221e|1|1| -> ...",
+        "   \u203e     |0|1|0|    |0|2|0|    |0|3|0|    |0|4|0|    |0|2|1|2|0|",
+        "          \u203e \u203e \u203e      \u203e \u203e \u203e      \u203e \u203e \u203e      \u203e \u203e \u203e     |0|0|1|0|0|",
+        "                                                      \u203e \u203e \u203e \u203e \u203e",
+        "            ^                                             ^",
+        "     1st expansion on                              2nd expansion on",
+        "   1st iteration (a(1) = 1)                      5th iteration (a(2) = 5)"
+    ],
+    "program": [
+        "(MATLAB)",
+        "L = 3;",
+        "plane = zeros(3,3);",
+        "plane(2,2) = 99999999999999999999999999999999999999999999999;",
+        "listn = [];",
+        "for n = 1:50000",
+        "    plane2 = plane;",
+        "    for r = 1:L",
+        "        for c = 1:L",
+        "            if plane(r,c) > 3",
+        "                plane2(r,c) = plane2(r,c) - 4;",
+        "                plane2(r-1,c) = plane2(r-1,c)+1;",
+        "                plane2(r+1,c) = plane2(r+1,c)+1;",
+        "                plane2(r,c-1) = plane2(r,c-1)+1;",
+        "                plane2(r,c+1) = plane2(r,c+1)+1;",
+        "            end",
+        "        end",
+        "    end",
+        "    if sum(plane2(:,1))+sum(plane2(1,:)) > 0",
+        "        plane2 = padarray(plane2,[1,1]);",
+        "        L = L+2;",
+        "        listn = [listn n];",
+        "    end",
+        "    plane = plane2;",
+        "end",
+        "fprintf('%s\\n', sprintf('%d,', listn))",
+        "(PARI)",
+        "Step(M)={my(n=#M, R=matrix(n,n)); for(i=2, n-1, for(j=2, n-1, if(M[i,j]>=4, R[i,j]-=4; R[i,j+1]++; R[i,j-1]++; R[i-1,j]++; R[i+1,j]++))); M+R}",
+        "Expand(M)={my(n=#M, R=matrix(n+2, n+2)); for(i=1, n, for(j=1, n, R[i+1, j+1]=M[i,j])); R}",
+        "seq(n)={my(L=List(), M=matrix(3,3), k=0); while(#L<n, k++; my(o=#L+2); M[o,o]=4; M=Step(M); if(M[1,], M=Expand(M); listput(L,k))); Vec(L)} \\\\ _Andrew Howroyd_, Oct 23 2019"
+    ],
+    "xref": [
+        "Cf. A259013, A249872."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Parker Grootenhuis_, Oct 22 2019",
+    "references": 0,
+    "revision": 27,
+    "time": "2019-10-24T10:52:24-04:00",
+    "created": "2019-10-24T10:52:24-04:00"
+}

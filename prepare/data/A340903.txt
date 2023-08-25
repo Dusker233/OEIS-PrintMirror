@@ -1,0 +1,30 @@
+{
+    "number": 340903,
+    "data": "1,1,4,20,139,1192,12318,148318,2041754,31616757,544005172,10296204096,212589150300,4755177958104,114545293676588,2956316416222300,81386676426000157,2380590235918735576,73729207700492304684,2410324868012471929670,82944575892433740648996",
+    "name": "a(0) = 1; a(n) = Sum_{k=1..n} binomial(n,k) * sigma_0(k) * a(n-k).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A340903/b340903.txt\">Table of n, a(n) for n = 0..413</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1 / (1 - Sum_{i>=1} Sum_{j>=1} x^(i*j) / (i*j)!).",
+        "E.g.f.: 1 / (1 - Sum_{k>=1} sigma_0(k) * x^k/k!). - _Seiichi Manyama_, Mar 29 2022"
+    ],
+    "mathematica": [
+        "a[0] = 1; a[n_] := a[n] = Sum[Binomial[n, k] DivisorSigma[0, k] a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 20}]",
+        "nmax = 20; CoefficientList[Series[1/(1 - Sum[Sum[x^(i j)/(i j)!, {j, 1, nmax}], {i, 1, nmax}]), {x, 0, nmax}], x] Range[0, nmax]!"
+    ],
+    "program": [
+        "(PARI) my(N=40, x='x+O('x^N)); Vec(serlaplace(1/(1-sum(k=1, N, numdiv(k)*x^k/k!)))) \\\\ _Seiichi Manyama_, Mar 29 2022",
+        "(PARI) a(n) = if(n==0, 1, sum(k=1, n, numdiv(k)*binomial(n, k)*a(n-k))); \\\\ _Seiichi Manyama_, Mar 29 2022"
+    ],
+    "xref": [
+        "Cf. A000005, A000670, A129921, A295739, A340904."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Jan 26 2021",
+    "references": 7,
+    "revision": 14,
+    "time": "2022-03-29T15:10:57-04:00",
+    "created": "2021-01-26T10:22:37-05:00"
+}

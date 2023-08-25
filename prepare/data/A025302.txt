@@ -1,0 +1,45 @@
+{
+    "number": 25302,
+    "data": "5,10,13,17,20,25,26,29,34,37,40,41,45,50,52,53,58,61,68,73,74,80,82,89,90,97,100,101,104,106,109,113,116,117,122,136,137,146,148,149,153,157,160,164,169,173,178,180,181,193,194,197,200,202,208,212,218,225,226,229",
+    "name": "Numbers that are the sum of 2 distinct nonzero squares in exactly 1 way.",
+    "comment": [
+        "From Fermat's two squares theorem, every prime of the form 4k + 1 is a term (A002144). - _Bernard Schott_, Apr 15 2022"
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A025302/b025302.txt\">Table of n, a(n) for n = 1..1000</a>.",
+        "Art of Problem Solving, <a href=\"https://artofproblemsolving.com/wiki/index.php/Fermat&#39;s_Two_Squares_Theorem\">Fermat's Two Squares Theorem</a>.",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of squares</a>."
+    ],
+    "formula": [
+        "A025441(a(n)) = 1. - _Reinhard Zumkeller_, Dec 20 2013"
+    ],
+    "mathematica": [
+        "nn = 229; t = Table[0, {nn}]; lim = Floor[Sqrt[nn - 1]]; Do[num = i^2 + j^2; If[num <= nn, t[[num]]++], {i, lim}, {j, i - 1}]; Flatten[Position[t, 1]] (* _T. D. Noe_, Apr 07 2011 *)",
+        "a[1] = 5; a[ n_] := a[n] = Module[ {s = a[n - 1], t = True, j}, While[ t, s++; Do[ If[ i^2 + (j = Floor[Sqrt[s - i^2]])^2 == s && i < j, t = False; Break], {i, Sqrt[s/2]}]]; s]; (* _Michael Somos_, Jan 20 2019 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a025302 n = a025302_list !! (n-1)",
+        "a025302_list = [x | x <- [1..], a025441 x == 1]",
+        "(Python)",
+        "from collections import Counter",
+        "from itertools import combinations",
+        "def aupto(lim):",
+        "  s = filter(lambda x: x <= lim, (i*i for i in range(1, int(lim**.5)+2)))",
+        "  s2 = filter(lambda x: x <= lim, (sum(c) for c in combinations(s, 2)))",
+        "  s2counts = Counter(s2)",
+        "  return sorted(k for k in s2counts if k <= lim and s2counts[k] == 1)",
+        "print(aupto(229)) # _Michael S. Branicky_, May 10 2021"
+    ],
+    "xref": [
+        "Cf. A002144 (subsequence), A009000, A009003, A024507, A025441, A004431.",
+        "Cf. Subsequence of A001983; A004435."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "references": 4,
+    "revision": 31,
+    "time": "2022-04-15T10:00:28-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

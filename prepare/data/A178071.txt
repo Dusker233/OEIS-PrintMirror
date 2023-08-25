@@ -1,0 +1,53 @@
+{
+    "number": 178071,
+    "data": "14,16,18,22,27,28,39,55,65,77,85,221,437,1517,2021,4757,6557,9797,11021,12317,16637,27221,38021,50621,53357,77837,95477,99221,123197,145157,159197,194477,210677,216221,239117,250997,378221,416021,455621,549077,576077",
+    "name": "Numbers k such that exactly one d, 2 <= d <= k/2, exists which divides binomial(k-d-1, d-1) and is not coprime to k.",
+    "comment": [
+        "Note that every d > 1 divides binomial(k-d-1, d-1), if gcd(k,d)=1.",
+        "As shown in the Shevelev link, the sequence contains p*(p+4) for every p >= 7 in A023200.  Thus it is infinite if A023200 is infinite. - _Robert Israel_, Feb 18 2016",
+        "Moreover, similar to proof of Theorem 1 in this link, one can prove that a number m > 85 is a member if and only if it has such a form. - _Vladimir Shevelev_, Feb 23 2016"
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A178071/b178071.txt\">Table of n, a(n) for n = 1..179</a>",
+        "R. J. Mathar, <a href=\"http://arxiv.org/abs/1109.0922\">Corrigendum to \"On the divisibility of...\"</a>, arXiv:1109.0922 [math.NT], 2011.",
+        "Vladimir Shevelev, <a href=\"http://dx.doi.org/10.1142/S179304210700078X\">On divisibility of binomial(n-i-1,i-1) by i</a>, Intl. J. of Number Theory 3, no.1 (2007), 119-139."
+    ],
+    "formula": [
+        "{k: A178101(k) = 1}."
+    ],
+    "maple": [
+        "filter:= proc(n) local d, b,count;",
+        "  count:= 0;",
+        "  b:= 1;",
+        "  for d from 2 to n/2 do",
+        "     b:= b * (n-2*d+1)*(n-2*d+2)/(n-d)/(d-1);",
+        "     if igcd(d,n) <> 1 and b mod d = 0 then",
+        "        count:= count+1;",
+        "        if count = 2 then return false fi;",
+        "     fi",
+        "  od;",
+        "  evalb(count=1);",
+        "end proc:",
+        "select(filter, [$1..10^4]); # _Robert Israel_, Feb 17 2016"
+    ],
+    "mathematica": [
+        "Select[Range@ 4000, Function[n, Count[Range[n/2], k_ /; And[! CoprimeQ[n, k], Divisible[Binomial[n - k - 1, k - 1], k]]] == 1]] (* _Michael De Vlieger_, Feb 17 2016 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(nb = 0); for (d=2, n\\2, if ((gcd(d, n) != 1) && ((binomial(n-d-1,d-1) % d) == 0), nb++); if (nb > 1, return (0));); nb == 1;} \\\\ _Michel Marcus_, Feb 17 2016"
+    ],
+    "xref": [
+        "Cf. A001359, A138389, A178101."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Shevelev_, May 19 2010",
+    "ext": [
+        "a(15)-a(23) from _Michel Marcus_, Feb 17 2016",
+        "a(24)-a(41) (from theorem in the Shevelev link) from _Robert Price_, May 14 2019"
+    ],
+    "references": 9,
+    "revision": 44,
+    "time": "2022-08-07T02:07:49-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

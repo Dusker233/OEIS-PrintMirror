@@ -1,0 +1,26 @@
+{
+    "number": 306796,
+    "data": "342225,280495504,1029447225,1148667664,1435045924,1596961444,1757705625,2177622225,14787776025,18114198921,32871503025,45018230625,150897287025,245485566225,272993710144,296006724225,705373218225,1126920249225,1329226832241,1358425215225",
+    "name": "Primitive abundant numbers (A071395) that are squares.",
+    "comment": [
+        "The square roots of the terms are 585, 16748, 32085, 33892, 37882, 39962, 41925, 46665, 121605, 134589, ..."
+    ],
+    "mathematica": [
+        "abQ[f_] := Times@@((f[[;;,1]]^(f[[;;,2]]+1)-1)/(f[[;;,1]]-1)) > 2*Times@@Power@@@f;",
+        "nondefQ[f_,g_] := Times@@((f^(g+1)-1)/(f-1)) >= 2*Times@@(f^g);",
+        "sub[f_,k_] := Module[{g=f[[;;,2]]}, n=Length[g]; kk=k-1; Do[g[[i]] = Mod[kk, f[[i,2]]+1]; kk=(kk-g[[i]])/(f[[i,2]]+1), {i,1,n}]; g];",
+        "paQ[f_] := abQ[f] && Module[{nd = Times@@(f[[;;,2]]+1), ans=True}, Do[g=sub[f,k]; If[nondefQ[f[[;;,1]], g], ans=False; Break[]], {k,1,nd-1}]; ans];",
+        "papowerQ[n_, e_] := Module[{f=FactorInteger[n]}, f[[;;,2]]*=e; paQ[f]];",
+        "s={}; e=2; Do[If[papowerQ[m, e], AppendTo[s, m^e]], {m, 2, 50000}]; s"
+    ],
+    "xref": [
+        "Cf. A000290, A071395, A306797."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Mar 10 2019",
+    "references": 2,
+    "revision": 6,
+    "time": "2019-03-13T23:51:19-04:00",
+    "created": "2019-03-13T23:51:19-04:00"
+}

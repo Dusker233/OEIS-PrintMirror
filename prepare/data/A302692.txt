@@ -1,0 +1,44 @@
+{
+    "number": 302692,
+    "data": "5,41,47,71,83,101,107,113,733,739,757,827,829,859,863,883,887,947,953,977,983,997,1019,1039,1069,1093,1097,1103,1109,1123,1129,1187,1193,1223,1229,1237,1283,1289,1297,1303,1307,1327,1367,1373,1429,1433,1439,1453,1459",
+    "name": "Primes p that are the sum of another prime q and the greatest k such that k! < p.",
+    "comment": [
+        "Primes p such that p - A084558(p) is also a prime.",
+        "Inspired by the fact that this sequence has a nonempty intersection with A124598.",
+        "Let H be the intersection of this sequence and A124598. With some observed exceptions q = 3, 103, 1013, 1223, 2903, ..., if some p in this sequence is in H then the corresponding q also belongs to H. It is unknown whether H is finite.",
+        "Based upon the first terms of this sequence, it looks like those k satisfying the definition given in NAME are the even terms of A084558 repeated in certain weakly increasing sequence."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A302692/b302692.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 41 since 41 is the third prime that satisfies the given definition(s) for this sequence. Note that A084558(41) = 4; if we subtract: 41-4 = 37, which is also a prime. Also p = 41 and q = 37 are consecutive terms in A124598.",
+        "a(300) = 49459, because q = 49459 - A084558(49459) = 49451 is a prime and p = 49459 is the 300th prime satisfying such property. Also p and q are consecutive terms in A124598."
+    ],
+    "maple": [
+        "k:= 0: f:= 1: p:= 1: Res:= NULL: count:= 0:",
+        "while count < 100 do",
+        "  p:= nextprime(p);",
+        "  while p > f do k:= k+1; f:= f*(k+1) od;",
+        "  if isprime(p-k) then Res:= Res, p; count:= count+1 fi;",
+        "od:",
+        "Res; # _Robert Israel_, Jun 10 2018"
+    ],
+    "mathematica": [
+        "Select[Prime@ Range[2^8], PrimeQ[# - Block[{k = 1}, While[k! <= #, k++]; k - 1]] &] (* _Michael De Vlieger_, Apr 10 2018 *)"
+    ],
+    "program": [
+        "(PARI) A084558(n)={my(m=0);while(n\\=m++,);m-1}",
+        "firstTerms(U)={my(L:list=List());forprime(p=2,nextprime(U),if(ispseudoprime(p-A084558(p)),listput(L,p)));return(Vec(L))}"
+    ],
+    "xref": [
+        "Cf. A084558, A124598."
+    ],
+    "keyword": "nonn,look",
+    "offset": "1,1",
+    "author": "_R. J. Cano_, Apr 08 2018",
+    "references": 1,
+    "revision": 27,
+    "time": "2019-02-03T17:01:45-05:00",
+    "created": "2018-06-10T14:55:32-04:00"
+}

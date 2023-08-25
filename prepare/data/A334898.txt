@@ -1,0 +1,25 @@
+{
+    "number": 334898,
+    "data": "1,2,6,8,24,30,32,40,42,48,54,56,66,72,78,88,96,104,120,128,160,168,192,210,216,224,240,264,270,280,288,312,320,330,336,352,360,378,384,390,408,416,432,440,448,456,462,480,486,504,510,512,520,528,544,546,552",
+    "name": "Bi-unitary practical numbers: numbers m such that every number 1 <= k <= bsigma(m) is a sum of distinct bi-unitary divisors of m, where bsigma is A188999.",
+    "comment": [
+        "Includes 1 and all the odd powers of 2 (A004171). The other terms are a subset of bi-unitary abundant numbers (A292982) and bi-unitary pseudoperfect numbers (A292985)."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A334898/b334898.txt\">Table of n, a(n) for n = 1..2500</a>"
+    ],
+    "mathematica": [
+        "biunitaryDivisorQ[div_, n_] := If[Mod[#2, #1] == 0, Last @ Apply[Intersection, Map[Select[Divisors[#], Function[d, CoprimeQ[d, #/d]]] &, {#1, #2/#1}]] == 1, False] & @@ {div, n}; bdivs[n_] := Module[{d = Divisors[n]}, Select[d, biunitaryDivisorQ[#, n] &]]; bPracQ[n_] := Module[{d = bdivs[n], sd, x}, sd = Plus @@ d; Min @ CoefficientList[Series[Product[1 + x^d[[i]], {i, Length[d]}], {x, 0, sd}], x] >  0]; Select[Range[1000], bPracQ]"
+    ],
+    "xref": [
+        "The bi-unitary version of A005153.",
+        "Cf. A004171, A188999, A286652, A292982, A292985, A334901."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, May 16 2020",
+    "references": 4,
+    "revision": 12,
+    "time": "2020-05-17T02:15:28-04:00",
+    "created": "2020-05-16T14:26:48-04:00"
+}

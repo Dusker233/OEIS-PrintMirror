@@ -1,0 +1,44 @@
+{
+    "number": 152729,
+    "data": "0,0,1,15,65,176,384,736,1281,2079,3201,4720,6720,9296,12545,16575,21505,27456,34560,42960,52801,64239,77441,92576,109824,129376,151425,176175,203841,234640,268800,306560,348161,393855,443905,498576,558144",
+    "name": "a(n) = (n-2)^4 - a(n-1) - a(n-2), with a(1) = a(2) = 0.",
+    "comment": [
+        "a(n+2) - a(n-1) = n^4 - (n-1)^4 = A005917(n) for all n in Z. - _Michael Somos_, Sep 02 2018"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A152729/b152729.txt\">Table of n, a(n) for n = 1..5000</a>",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-6,5,-5,6,-4,1)."
+    ],
+    "formula": [
+        "a(n) = -1/3 + (4/3)*(n-1)^3 + (2/3)*(n-1)^2 - (4/3)*(n-1) - ((1/6)*i)*sqrt(3)*(-1/2 + (1/2)*i*sqrt(3))^(n-1) + (1/6)*(-1/2 - (1/2)*i*sqrt(3))^(n-1) + (1/3)*(n-1)^4 + (1/6)*(-1/2 + (1/2)*i*sqrt(3))^(n-1) + (1/6)*i*sqrt(3)*(-1/2 - (1/2)*i*sqrt(3))^(n-1) with n >= 0 and i=sqrt(-1). - _Paolo P. Lava_, Dec 19 2008",
+        "G.f.: -x^3*(x+1)*(x^2+10*x+1) / ((x-1)^5*(x^2+x+1)). - _Colin Barker_, Oct 28 2014",
+        "a(n) = a(2 - n) for all n in Z. - _Michael Somos_, Sep 02 2018"
+    ],
+    "example": [
+        "0 + 0 + 1 = 1^4; 0 + 1 + 15 = 2^4; 1 + 15 + 65 = 3^4; ...",
+        "G.f. = x^3 + 15*x^4 + 65*x^5 + 176*x^6 + 384*x^7 + 736*x^8 + 1281*x^9 + ... - _Michael Somos_, Sep 02 2018"
+    ],
+    "mathematica": [
+        "k0=k1=0;lst={k0,k1};Do[kt=k1;k1=n^4-k1-k0;k0=kt;AppendTo[lst,k1],{n,1,4!}];lst",
+        "LinearRecurrence[{4,-6,5,-5,6,-4,1}, {0,0,1,15,65,176,384}, 50] (* _G. C. Greubel_, Sep 01 2018 *)",
+        "a[ n_] := With[ {m = Max[n, 2 - n]}, SeriesCoefficient[ x^3 (1 + x) (1 + 10 x + x^2) / ((1 - x)^5 (1 + x + x^2)), {x , 0, m}]]; (* _Michael Somos_, Sep 02 2018 *)"
+    ],
+    "program": [
+        "(PARI) concat([0,0], Vec(-x^3*(x+1)*(x^2+10*x+1)/((x-1)^5*(x^2+x+1)) + O(x^100))) \\\\ _Colin Barker_, Oct 28 2014",
+        "(PARI) {a(n) = my(m = max(n, 2 - n)); polcoeff( x^3 * (1 + x) * (1 + 10*x + x^2) / ((1 - x)^5 * (1 + x + x^2)) + x * O(x^m), m)}; /* _Michael Somos_, Sep 02 2018 */",
+        "(Magma) m:=50; R<x>:=PowerSeriesRing(Integers(), m); [0,0] cat Coefficients(R!(x^3*(x+1)*(x^2+10*x+1)/((1-x)^5*(x^2+x+1)))); // _G. C. Greubel_, Sep 01 2018"
+    ],
+    "xref": [
+        "Cf. A005917, A152728, A152725, A152726, A000212."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,4",
+    "author": "_Vladimir Joseph Stephan Orlovsky_, Dec 11 2008",
+    "ext": [
+        "Definition adapted to offset by _Georg Fischer_, Jun 18 2021"
+    ],
+    "references": 5,
+    "revision": 21,
+    "time": "2022-09-08T08:45:39-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

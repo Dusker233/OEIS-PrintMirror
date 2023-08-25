@@ -1,0 +1,42 @@
+{
+    "number": 24320,
+    "data": "0,0,2,3,5,7,11,13,24,30,36,46,50,60,70,74,103,117,131,139,157,171,177,193,207,221,278,294,310,330,348,360,390,408,424,448,470,486,573,611,625,653,673,699,739,761,781,803,835,863,891,925,1054,1078,1104,1136,1180,1214",
+    "name": "a(n) = s(1)*t(n) + s(2)*t(n-1) + ... + s(k)*t(n+1-k), where k = floor((n+1)/2), s = A023531, t = (1, p(1), p(2), ... ).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A024320/b024320.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A023531(1) + Sum_{j=2..floor((n+1)/2)} A023531(j)*Prime(n-j+1). - _G. C. Greubel_, Jan 19 2022"
+    ],
+    "mathematica": [
+        "A023531[n_]:= SquaresR[1, 8*n+9]/2;",
+        "p[n_]:= If[n==1, 1, Prime[n-1]];",
+        "a[n_]:= Sum[A023531[j]*p[n-j+1], {j, Floor[(n+1)/2]}];",
+        "Table[a[n], {n, 60}] (* _G. C. Greubel_, Jan 19 2022 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "A023531:= func< n | IsIntegral( (Sqrt(8*n+9) -3)/2 ) select 1 else 0 >;",
+        "p:= func< n | n eq 1 select 1 else NthPrime(n-1) >;",
+        "[ (&+[A023531(j)*p(n-j+1): j in [1..Floor((n+1)/2)]]) : n in [1..60]]; // _G. C. Greubel_, Jan 19 2022",
+        "(Sage)",
+        "def A023531(n):",
+        "    if ((sqrt(8*n+9) -3)/2).is_integer(): return 1",
+        "    else: return 0",
+        "def p(n):",
+        "    if (n==1): return 1",
+        "    else: return nth_prime(n-1)",
+        "[sum( A023531(j)*p(n-j+1) for j in (1..floor((n+1)/2)) ) for n in (1..60)] # _G. C. Greubel_, Jan 19 2022"
+    ],
+    "xref": [
+        "Cf. A024312, A024313, A024314, A024315, A024316, A024317, A024318, A024319, A024321, A024322, A024323, A024324, A024325, A024326, A024327.",
+        "Cf. A000040, A023531."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Clark Kimberling_",
+    "references": 17,
+    "revision": 13,
+    "time": "2022-01-28T22:57:12-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

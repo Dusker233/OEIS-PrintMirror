@@ -1,0 +1,39 @@
+{
+    "number": 319140,
+    "data": "1,2,5,6,11,17,23,30,44,60,76,102,128,166,214,264,327,413,502,618,759,917,1105,1335,1598,1907,2279,2702,3191,3776,4436,5198,6101,7113,8292,9653,11188,12951,14984,17277,19889,22881,26248,30073,34439,39320,44850",
+    "name": "Total number of binary digits in all partitions of n into distinct parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A319140/b319140.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "example": [
+        "For n = 4 there are 2 partitions into distinct parts in binary they are: 100, 11+1, for a total of 6 binary parts."
+    ],
+    "maple": [
+        "h:= proc(n) option remember; 1+ilog2(n) end:",
+        "b:= proc(n, i) option remember; `if`(n=0, [1, 0],",
+        "      `if`(n>i*(i+1)/2, 0, b(n, i-1)+(p-> p+h(i)",
+        "       *[0, p[1]])(b(n-i, min(n-i, i-1)))))",
+        "    end:",
+        "a:= n-> b(n$2)[2]:",
+        "seq(a(n), n=1..60);  # _Alois P. Heinz_, Sep 27 2018"
+    ],
+    "mathematica": [
+        "h[n_] := h[n] = 1+Log[2, n] // Floor;",
+        "b[n_, i_] := b[n, i] = If[n == 0, {1, 0}, If[n > i*(i+1)/2, 0, b[n, i-1] + Function[p, p + h[i]*{0, p[[1]]}][b[n-i, Min[n-i, i-1]]]]];",
+        "a[n_] := b[n, n][[2]];",
+        "a /@ Range[1; 60] (* _Jean-Fran\u00e7ois Alcover_, Sep 28 2019, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={[subst(deriv(p,y), y, 1) | p<-Vec(-1 + prod(k=1, n, 1 + x^k*y^(logint(k,2)+1) + O(x*x^n)))]} \\\\ _Andrew Howroyd_, Sep 17 2018"
+    ],
+    "xref": [
+        "Cf. A000009, A070939, A318756, A319142, A347060."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_David S. Newman_, Sep 11 2018",
+    "references": 2,
+    "revision": 28,
+    "time": "2021-08-15T21:04:30-04:00",
+    "created": "2018-09-28T03:55:47-04:00"
+}

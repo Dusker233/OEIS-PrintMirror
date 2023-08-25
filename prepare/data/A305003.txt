@@ -1,0 +1,44 @@
+{
+    "number": 305003,
+    "data": "1,2,4,8,14,26,48,88,146,236,394,674,1060,1640,2536,4086,6470,10292,16374,25720,39332,60154,92486,144218,217772,327898,494384,745096,1089186,1587432,2338018,3460572,4977860,7197148,10395464,14991916,20924630,28852352",
+    "name": "Number of length-n binary words having no subwords that are abelian fourth powers.",
+    "comment": [
+        "An \"abelian fourth power\" means four contiguous nonempty blocks of the same length and same number of 0's and 1's, such as (011)(101)(110)(101)."
+    ],
+    "link": [
+        "Lucas Mol, <a href=\"/A305003/b305003.txt\">Table of n, a(n) for n = 0..50</a>",
+        "James D. Currie, <a href=\"https://doi.org/10.1016/j.tcs.2004.02.005\">The number of binary words avoiding abelian fourth powers grows exponentially</a>, Theoretical Computer Science 319 (2004) 441-446.  Proves that the number of such words exceeds 2^{(n-15)/16}.",
+        "James D. Currie, Lucas Mol, Narad Rampersad, and Jeffrey Shallit, <a href=\"https://arxiv.org/abs/2111.07857\">Extending Dekking's construction of an infinite binary word avoiding abelian 4-powers</a>.  Proves that the number of such words of length n is Omega(1.172^n).",
+        "Lucas Mol, <a href=\"/A305003/a305003.py.txt\">Python 3 program for computing a(n) for n = 2..50</a>."
+    ],
+    "example": [
+        "For n = 5 the only words not counted are 00000, 00001, 10000, and their complements."
+    ],
+    "maple": [
+        "f:= proc(L)",
+        "local i, w, j;",
+        "for i from 1 to floor(nops(L)/4) do",
+        "   if L[2*i]=2*L[i] and L[3*i]=3*L[i] and L[4*i]=4*L[i] then return NULL",
+        "   fi",
+        "od:",
+        "L",
+        "end proc:",
+        "g:= proc(L)",
+        "  local Lp;",
+        "  Lp:= [0,op(L)]:",
+        "  f(Lp), f(map(`+`,Lp,1));",
+        "end proc:",
+        "S:= [0]: A[0]:= 1: A[1]:= 2:for n from 2 to 31 do",
+        "  S:= map(g, S);",
+        "  A[n]:= 2*nops(S);",
+        "od:",
+        "seq(A[i],i=0..31); # _Robert Israel_, May 23 2018"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Jeffrey Shallit_, May 23 2018",
+    "references": 2,
+    "revision": 27,
+    "time": "2023-03-25T13:13:00-04:00",
+    "created": "2018-05-24T16:22:39-04:00"
+}

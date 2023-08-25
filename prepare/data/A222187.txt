@@ -1,0 +1,34 @@
+{
+    "number": 222187,
+    "data": "3,7,13,34,78,237,687,2299,7685,27190,96909,353384,1296858,4808707,17920860,67169299,252745368,954677597,3617214681,13744852240,52359294790,199915018057,764884036743,2932046213314,11259024569838,43303903226962,166800088109829",
+    "name": "Number of toroidal n X 2 binary arrays, allowing rotation and/or reflection of the rows and/or the columns.",
+    "link": [
+        "S. N. Ethier, <a href=\"https://arxiv.org/abs/1301.2352\">Counting toroidal binary arrays</a>, arXiv preprint arXiv:1301.2352 [math.CO], 2013.",
+        "S. N. Ethier, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL16/Ethier/ethier2.html\">Counting toroidal binary arrays</a>, J. Int. Seq. 16 (2013) #13.4.7."
+    ],
+    "mathematica": [
+        "b1[m_, n_] := Sum[EulerPhi[c]*EulerPhi[d]*2^(m*n/LCM[c, d]), {c, Divisors[ m]}, {d, Divisors[n]}]/(4*m*n);",
+        "b2a[m_, n_] := If[OddQ[m], 2^((m+1)*n/2)/(4n), (2^(m*n/2) + 2^((m+2)*n/2))/(8n)];",
+        "b2b[m_, n_] := DivisorSum[n, If[# >= 2, EulerPhi[#]*2^((m*n)/#), 0]&]/(4n);",
+        "b2c[m_, n_] := If[OddQ[m], Sum[If[OddQ[n/GCD[j, n]], 2^((m+1)*GCD[j, n]/2) - 2^(m*GCD[j, n]), 0], {j, 1, n-1}]/(4*n), Sum[If[OddQ[n/GCD[j, n]], 2^(m*GCD[j, n]/2) + 2^((m+2)*GCD[j, n]/2) - 2^(m*GCD[j, n]+1), 0], {j, 1, n-1}]/(8n)];",
+        "b2[m_, n_] := b2a[m, n] + b2b[m, n] + b2c[m, n];",
+        "b3[m_, n_] := b2[n, m]; b4oo[m_, n_] := 2^((m*n - 3)/2);",
+        "b4eo[m_, n_] := 3*2^(m*n/2 - 3); b4ee[m_, n_] := 7*2^(m*n/2 - 4);",
+        "a[m_, n_] := Module[{b}, If[OddQ[m], If[OddQ[n], b = b4oo[m, n], b = b4eo[m, n]], If[OddQ[n], b = b4eo[m, n], b = b4ee[m, n]]]; b += b1[m, n] + b2[m, n] + b3[m, n]; Return[b]];",
+        "a[m_] := a[m, 2];",
+        "Array[a, 27] (* _Jean-Fran\u00e7ois Alcover_, Sep 23 2018, after _Michel Marcus_ in A222188 *)"
+    ],
+    "xref": [
+        "A column of A222188."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Feb 11 2013",
+    "ext": [
+        "More terms from _Michel Marcus_, Feb 17 2013"
+    ],
+    "references": 1,
+    "revision": 15,
+    "time": "2018-09-23T22:28:56-04:00",
+    "created": "2013-02-11T23:44:32-05:00"
+}

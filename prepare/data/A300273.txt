@@ -1,0 +1,26 @@
+{
+    "number": 300273,
+    "data": "2,3,4,5,7,8,9,11,12,13,16,17,19,23,25,27,29,31,32,36,37,40,41,43,47,48,49,53,59,61,63,64,67,71,73,79,81,83,84,89,97,101,103,107,108,109,112,113,121,125,127,128,131,137,139,144,149,151,157,163,167,169",
+    "name": "Sorted list of Heinz numbers of collapsible integer partitions.",
+    "comment": [
+        "A positive integer is in this sequence iff it can be reduced to a prime number by a sequence of collapses, where a collapse is a replacement of prime(n)^k with prime(n*k) in a number's prime factorization (k > 1)."
+    ],
+    "example": [
+        "A sequence of collapses is 84 -> 63 -> 49 -> 19 corresponding to the sequence of partitions (4211) -> (422) -> (44) -> (8). Hence 84 is in the sequence."
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n===1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "repcaps[q_]:=Union[{q},If[SquareFreeQ[q],{},Union@@repcaps/@Union[Times[q/#,Prime[Plus@@primeMS[#]]]&/@Select[Rest[Divisors[q]],!PrimeQ[#]&&PrimePowerQ[#]&]]]];",
+        "Select[Range[200],MemberQ[repcaps[#],_?PrimeQ]&]"
+    ],
+    "xref": [
+        "Cf. A000041, A001222, A002577, A005117, A018818, A056239, A094457, A112798, A145515, A215366, A275870, A289078, A289079, A291441, A296150, A299202."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Mar 01 2018",
+    "references": 48,
+    "revision": 5,
+    "time": "2018-03-03T14:57:48-05:00",
+    "created": "2018-03-03T14:57:48-05:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 355773,
+    "data": "1,3,5,7,9,13,15,17,19,31,35,37,39,51,53,57,59,71,73,79,91,93,95,97,111,137,139,153,157,159,173,179,193,197,221,223,227,229,317,333,359,371,379,395,397,443,449,519,537,571,579,591,593,661,663,669,719,739",
+    "name": "Numbers all of whose divisors are members of A333369.",
+    "comment": [
+        "All terms are necessarily odd because 2 is not in A333369"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A355773/b355773.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Project Euler, <a href=\"https://projecteuler.net/problem=520\">Problem 520: Simbers</a>."
+    ],
+    "example": [
+        "111 is a term since all the divisors of 111, i.e., 1, 3, 37 and 111, are in A333369."
+    ],
+    "mathematica": [
+        "simQ[n_] := AllTrue[Tally @ IntegerDigits[n], EvenQ[Plus @@ #] &]; Select[Range[1000], AllTrue[Divisors[#], simQ] &] (* _Amiram Eldar_, Jul 19 2022 *)"
+    ],
+    "program": [
+        "(PARI) issimber(m) = my(d=digits(m), s=Set(d)); for (i=1, #s, if (#select(x->(x==s[i]), d) % 2 != (s[i] % 2), return (0))); return (1); \\\\ A333369",
+        "isok(k) = fordiv(k, d, if (!issimber(d), return(0))); return(1); \\\\ _Michel Marcus_, Jul 19 2022",
+        "(Python)",
+        "from sympy import divisors, isprime",
+        "def c(n): s = str(n); return all(s.count(d)%2 == int(d)%2 for d in set(s))",
+        "def ok(n): return n > 0 and all(c(d) for d in divisors(n, generator=True))",
+        "print([k for k in range(740) if ok(k)]) # _Michael S. Branicky_, Jul 24 2022"
+    ],
+    "xref": [
+        "Cf. A333369, A353735, A355770, A355771, A355772.",
+        "Similar sequences: A062687, A190217, A329419, A337741",
+        ".",
+        "Subsequences: A155045, A355853."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Bernard Schott_, Jul 18 2022",
+    "references": 5,
+    "revision": 39,
+    "time": "2022-09-04T13:01:18-04:00",
+    "created": "2022-07-21T14:42:58-04:00"
+}

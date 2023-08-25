@@ -1,0 +1,48 @@
+{
+    "number": 298250,
+    "data": "176,35497,45850,68587,87725,229126,488776,705551,827702,1085876,1127100,1255380,1732900,1914785,1972840,2453122,2737126,2749297,2818776,3245026,4598126,5116190,5522882,6180335,6658120,6939126,6958497,7088327,7114437,7140595",
+    "name": "The first of three consecutive pentagonal numbers the sum of which is equal to the sum of three consecutive primes.",
+    "link": [
+        "Robert Israel, <a href=\"/A298250/b298250.txt\">Table of n, a(n) for n = 1..2352</a>"
+    ],
+    "example": [
+        "176 is in the sequence because 176+210+247 (consecutive pentagonal numbers) = 633 = 199+211+223 (consecutive primes)."
+    ],
+    "maple": [
+        "N:= 10^8: # to get all terms where the sums <= N",
+        "Res:= NULL:",
+        "mmax:= floor((sqrt(8*N-23)-5)/6):",
+        "M:= [seq(seq(4*i+j,j=2..3),i=0..mmax/4)]:",
+        "M3:= map(m -> 9/2*m^2+15/2*m+6, M):",
+        "for i from 1 to nops(M) do",
+        "m:= M3[i];",
+        "  r:= ceil((m-8)/3);",
+        "  p1:= prevprime(r+1);",
+        "  p2:= nextprime(p1);",
+        "  p3:= nextprime(p2);",
+        "  while p1+p2+p3 > m do",
+        "    p3:= p2; p2:= p1; p1:= prevprime(p1);",
+        "  od:",
+        "  if p1+p2+p3 = m then",
+        "    Res:= Res, M[i]*(3*M[i]-1)/2;",
+        "  fi",
+        "od:",
+        "Res; # Robert Israel, Jan 16 2018"
+    ],
+    "mathematica": [
+        "Module[{prs3=Total/@Partition[Prime[Range[10^6]],3,1]},Select[ Partition[ PolygonalNumber[ 5,Range[ 5000]],3,1],MemberQ[ prs3,Total[#]]&]][[All,1]] (* _Harvey P. Dale_, Dec 25 2022 *)"
+    ],
+    "program": [
+        "(PARI) L=List(); forprime(p=2, 8000000, q=nextprime(p+1); r=nextprime(q+1); t=p+q+r; if(issquare(72*t-207, &sq) && (sq-15)%18==0, u=(sq-15)\\18; listput(L, (3*u^2-u)/2))); Vec(L)"
+    ],
+    "xref": [
+        "Cf. A000040, A000326, A054643, A298073, A298168, A298169, A298222, A298223, A298251."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Colin Barker_, Jan 15 2018",
+    "references": 8,
+    "revision": 17,
+    "time": "2022-12-25T11:33:18-05:00",
+    "created": "2018-01-15T21:11:33-05:00"
+}

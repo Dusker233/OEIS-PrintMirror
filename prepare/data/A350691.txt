@@ -1,0 +1,82 @@
+{
+    "number": 350691,
+    "data": "1,1152,131081,131110,131111,11011112,111151110,111151111,1111511111,111711111181,1111416111111,11151111111171,1131141411111111,10111111111115011,117111183111111111,1011411111118111111,11111111181111141121,111112811111101111111",
+    "name": "Smallest number with exactly n 1's in its digits both in decimal and binary representation.",
+    "link": [
+        "Scott R. Shannon, <a href=\"/A350691/b350691.txt\">Table of n, a(n) for n = 1..45</a> (terms 1..25 from Michael S. Branicky, terms 26..35 from Chai Wah Wu)"
+    ],
+    "example": [
+        "a(2) = 1152 which in binary is 10010000000. Both representations contain exactly 2 1's. And there is no smaller number satisfying this constraint."
+    ],
+    "mathematica": [
+        "Join[{1},Table[t=0;While[!IntegerQ[k=Min@Flatten[Select[FromDigits/@Select[Permutations[#],First@#!=0&],Count[IntegerDigits[#,2],1]==n&]&/@(Join[Table[1,n],#]&/@Tuples[Join[{0},Range[2,9]],++t])]]];k,{n,2,12}]] (* _Giorgos Kalogeropoulos_, Jan 13 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "numbers = [0,2,3,4,5,6,7,8,9]",
+        "terms = []",
+        "for ones in range(1,13):",
+        "  if ones == 3: # needs more than 2 digits differing from \"1\"",
+        "    terms.append(131081)",
+        "  else:",
+        "    x = 1",
+        "    min_solution = 999999999999999999",
+        "    for i in range(ones+1):",
+        "      x += 10 ** (i + 1)",
+        "    for i in range(ones+2):",
+        "      for j in numbers:",
+        "        candidatej = x + (j - 1) * 10**i",
+        "        for k in range(i+1,ones+2):",
+        "          for l in numbers:",
+        "            candidate = candidatej + (l - 1) * 10 ** k",
+        "            if bin(candidate)[2:].count('1') == ones:",
+        "              if candidate < min_solution:",
+        "                min_solution = candidate",
+        "    terms.append(min_solution)",
+        "(Python)",
+        "from itertools import count",
+        "def A350691_helper(n,m): # generator in order of numbers with n decimal digits and m 1's. Leading zeros are allowed.",
+        "    if n >= m:",
+        "        if n == 1:",
+        "            if m == 1:",
+        "                yield 1",
+        "            else:",
+        "                yield 0",
+        "                yield from range(2,10)",
+        "        elif n == m:",
+        "            yield (10**m-1)//9",
+        "        else:",
+        "            for b in A350691_helper(n-1,m):",
+        "                yield b",
+        "            r = 10**(n-1)",
+        "            for b in A350691_helper(n-1,m-1):",
+        "                yield r+b",
+        "            for a in range(2,10):",
+        "                k = a*r",
+        "                for b in A350691_helper(n-1,m):",
+        "                    yield k+b",
+        "def A350691(n):",
+        "    for l in count(n):",
+        "        r = 10**(l-1)",
+        "        for a in range(1,10):",
+        "            n2 = n-1 if a == 1 else n",
+        "            k = a*r",
+        "            for s in A350691_helper(l-1,n2):",
+        "                m = k+s",
+        "                if bin(m)[2:].count('1') == n:",
+        "                    return m # _Chai Wah Wu_, Jan 13 2022"
+    ],
+    "xref": [
+        "Cf. A000120, A268643, A350692."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Ruediger Jehn_, Jan 12 2022",
+    "ext": [
+        "a(13)-a(18) from _Michael S. Branicky_, Jan 12 2022"
+    ],
+    "references": 2,
+    "revision": 53,
+    "time": "2022-01-25T07:46:15-05:00",
+    "created": "2022-01-13T09:45:35-05:00"
+}

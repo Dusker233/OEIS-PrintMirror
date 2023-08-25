@@ -1,0 +1,28 @@
+{
+    "number": 341989,
+    "data": "1,10,55,210,625,1542,3310,6390,11400,19090,30353,46060,67210,94780,130230,174862,230650,298800,382115,482090,603373,746860,918770,1118100,1355110,1626742,1949190,2312380,2740220,3212640,3769784,4375900,5092485,5854680,6758935,7703112",
+    "name": "Number of ways to write n as an ordered sum of 10 primes (counting 1 as a prime).",
+    "formula": [
+        "G.f.: ( x + Sum_{k>=1} x^prime(k) )^10."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; series(`if`(n=0, 1, x*add(",
+        "      `if`(j=1 or isprime(j), b(n-j), 0), j=1..n)), x, 11)",
+        "    end:",
+        "a:= n-> coeff(b(n), x, 10):",
+        "seq(a(n), n=10..45);  # _Alois P. Heinz_, Feb 25 2021"
+    ],
+    "mathematica": [
+        "nmax = 45; CoefficientList[Series[(x + Sum[x^Prime[k], {k, 1, nmax}])^10, {x, 0, nmax}], x] // Drop[#, 10] &"
+    ],
+    "xref": [
+        "Cf. A008578, A280917, A283762, A340966, A341972, A341981, A341982, A341983, A341984, A341985, A341986, A341987, A341988."
+    ],
+    "keyword": "nonn",
+    "offset": "10,2",
+    "author": "_Ilya Gutkovskiy_, Feb 24 2021",
+    "references": 4,
+    "revision": 6,
+    "time": "2021-02-25T15:25:01-05:00",
+    "created": "2021-02-25T08:33:02-05:00"
+}

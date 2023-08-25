@@ -1,0 +1,33 @@
+{
+    "number": 357041,
+    "data": "1,4,7,18,21,66,71,196,305,648,1035,2526,4109,8774,16875,34288,65553,134860,262163,531506,1051237,2109594,4194327,8425348,16779257,33611984,67123631,134350206,268435485,537178750,1073741855,2148064768,4295048345,8591114580",
+    "name": "a(n) = Sum_{d|n} 2^(d-1) * binomial(d+n/d-1,d).",
+    "formula": [
+        "G.f.: (1/2) * Sum_{k>0} (1/(1 - 2 * x^k)^k - 1).",
+        "G.f.: (1/2) * Sum_{k>0} (2 * x)^k/(1 - x^k)^(k+1).",
+        "If p is prime, a(p) = p + 2^(p-1)."
+    ],
+    "mathematica": [
+        "a[n_] := DivisorSum[n, 2^(#-1) * Binomial[# + n/# - 1, #] &]; Array[a, 50] (* _Amiram Eldar_, Jul 31 2023 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sumdiv(n, d, 2^(d-1)*binomial(d+n/d-1, d));",
+        "(PARI) my(N=40, x='x+O('x^N)); Vec(sum(k=1, N, (1/(1-2*x^k)^k-1))/2)",
+        "(PARI) my(N=40, x='x+O('x^N)); Vec(sum(k=1, N, (2*x)^k/(1-x^k)^(k+1))/2)",
+        "(Python)",
+        "from math import comb",
+        "from sympy import divisors",
+        "def A357041(n): return sum(comb(d+n//d-1,d)<<d-1 for d in divisors(n,generator=True)) # _Chai Wah Wu_, Feb 27 2023"
+    ],
+    "xref": [
+        "Cf. A081543, A338682.",
+        "Cf. A360797."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, Feb 26 2023",
+    "references": 1,
+    "revision": 110,
+    "time": "2023-07-31T02:25:36-04:00",
+    "created": "2023-02-27T03:54:41-05:00"
+}

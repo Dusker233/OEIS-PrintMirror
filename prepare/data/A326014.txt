@@ -1,0 +1,41 @@
+{
+    "number": 326014,
+    "data": "1,1,1,4,37,376,5851,116348,2654233,73034272,2356014871,86009667052,3547332820549,164187709367696,8421668696488867,475395141424459636,29395941256967070385,1979988614183567826496,144537864622993377619759,11390224711130862102597980,965536276617554529080723101,87743847735547289888220490096",
+    "name": "E.g.f. A(x) satisfies: 1 = Sum_{n>=0} (exp(n*x) - A(x))^n * x^n/n!.",
+    "comment": [
+        "More generally, the following sums are equal:",
+        "(1) Sum_{n>=0} (q^n + p)^n * x^n/n!,",
+        "(2) Sum_{n>=0} q^(n^2) * exp(p*q^n*x) * x^n/n!;",
+        "here, q = exp(x) and p = -A(x)."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A326014/b326014.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) = Sum_{n>=0} a(n)*x^n/n! satisfies:",
+        "(1) 1 = Sum_{n>=0} (exp(n*x) - A(x))^n * x^n/n!,",
+        "(2) 1 = Sum_{n>=0} exp(n^2*x - x*exp(n*x)*A(x)) * x^n/n!."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + x^2/2! + 4*x^3/3! + 37*x^4/4! + 376*x^5/5! + 5851*x^6/6! + 116348*x^7/7! + 2654233*x^8/8! + 73034272*x^9/9! + 2356014871*x^10/10! + 86009667052*x^11/11! + 3547332820549*x^12/12! + 164187709367696*x^13/13! + 8421668696488867*x^14/14! + 475395141424459636*x^15/15! + ...",
+        "such that",
+        "1 = 1 + (exp(x) - A(x))*x + (exp(2*x) - A(x))^2*x^2/2! + (exp(3*x) - A(x))^3*x^3/3! + (exp(4*x) - A(x))^4*x^4/4! + (exp(5*x) - A(x))^5*x^5/5! + (exp(6*x) - A(x))^6*x^6/6! + (exp(7*x) - A(x))^7*x^7/7! + ...",
+        "also,",
+        "1 = exp(-x*A(x)) + exp(x - x*exp(x)*A(x))*x + exp(4*x - x*exp(2*x)*A(x))*x^2/2! + exp(9*x - x*exp(3*x)*A(x))*x^3/3! + exp(16*x - x*exp(4*x)*A(x))*x^4/4! + exp(25*x - x*exp(5*x)*A(x))*x^5/5! + exp(36*x - x*exp(6*x)*A(x))*x^6/6! + exp(49*x - x*exp(7*x)*A(x))*x^7/7! + exp(64*x - x*exp(8*x)*A(x))*x^8/8! + ..."
+    ],
+    "program": [
+        "(PARI) /* 1 = Sum_{n>=0} (exp(n*x) - A(x))^n * x^n/n! */",
+        "{a(n) = my(A=[1]); for(i=1,n, A=concat(A,0); A[#A] = polcoeff( sum(m=0,#A, (exp(m*x +x*O(x^#A)) - Ser(A))^m * x^m/m!), #A) );n!*A[n+1]}",
+        "for(n=0,25, print1(a(n),\", \"))",
+        "(PARI) /* 1 = Sum_{n>=0} exp(n^2*x - x*exp(n*x)*A(x)) * x^n/n! */",
+        "{a(n) = my(A=[1]); for(i=1,n, A=concat(A,0); A[#A] = polcoeff( sum(m=0,#A, exp(m^2*x - x*exp(m*x +x*O(x^#A))*Ser(A)) * x^m/m!), #A) );n!*A[n+1]}",
+        "for(n=0,25, print1(a(n),\", \"))"
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Jun 05 2019",
+    "references": 1,
+    "revision": 4,
+    "time": "2019-06-05T18:01:41-04:00",
+    "created": "2019-06-05T18:01:41-04:00"
+}

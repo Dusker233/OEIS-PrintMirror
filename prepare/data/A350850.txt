@@ -1,0 +1,39 @@
+{
+    "number": 350850,
+    "data": "1,14,50,194,712,762,1100,1994,2701,4959,58376,70478,111538,116416,144080,158736,712410,1319216,1934075,7709760,10228166,11601194,94663994,177930006",
+    "name": "Members of A350836 that are not in A002385.",
+    "comment": [
+        "Numbers k that are not palindromic primes, such that the concatenation of the prime factors of k with multiplicity is congruent mod k to the reverse of k."
+    ],
+    "example": [
+        "a(3) = 50 is a term because A103168(50) = 5 mod 50 = 5 and A340592(50) = 255 mod 50 = 5, but 50 is not a palindromic prime."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L, i;",
+        "  L:= convert(n, base, 10);",
+        "  add(L[-i]*10^(i-1), i=1..nops(L))",
+        "end proc:",
+        "f:= proc(n) local L, p, i, r;",
+        "  L:= sort(map(t -> t[1]$t[2], ifactors(n)[2]));",
+        "  r:= L[1];",
+        "  for i from 2 to nops(L) do r:= r*10^(1+max(0, ilog10(L[i])))+L[i] od;",
+        "  r",
+        "end proc:",
+        "f(1):= 1:",
+        "filter:= proc(n) local r;",
+        "r:= revdigs(n);",
+        "(f(n) - r) mod n = 0 and (revdigs(n) <> n or not isprime(n))",
+        "end proc:",
+        "select(filter, [$1..10^6]);"
+    ],
+    "xref": [
+        "Cf. A002385, A103168, A340592, A350836."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 18 2022",
+    "references": 0,
+    "revision": 8,
+    "time": "2022-01-25T04:34:25-05:00",
+    "created": "2022-01-24T16:05:07-05:00"
+}

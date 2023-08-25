@@ -1,0 +1,49 @@
+{
+    "number": 333245,
+    "data": "31,127,257,683,1103,1801,2089,2113,2351,2731,3191,4051,4513,5419,6361,8191,9719,11119,11447,13367,14449,14951,20231,20857,23279,23311,26317,29191,30269,32377,37171,38737,39551,43441,43691,49477,54001,55633,55871,59393",
+    "name": "Primes p such that the order of 2 mod p is less than the square root of p.",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A333245/b333245.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The order of 2 mod 31 is 5, and sqrt(31) = 5.56776436283..., which is more than 5, so 31 is in the sequence.",
+        "The order of 2 mod 37 is 36, and sqrt(37) = 6.08276253..., which is significantly less than 36, so 37 is not in the sequence."
+    ],
+    "maple": [
+        "q:= p-> is(numtheory[order](2, p)^2<p):",
+        "select(q, [ithprime(i)$i=1..10000])[];  # _Alois P. Heinz_, Mar 16 2020"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[6000]], MultiplicativeOrder[2, #] < Sqrt[#] &] (* _Amiram Eldar_, Mar 16 2020 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List(),t,p,o); forfactored(P=30,lim\\1, if(vecsum(P[2][,2])==1, t=znorder(Mod(2,p=P[1]),o); if(t^2<p, listput(v,p))); o=P); Vec(v)",
+        "(Julia)",
+        "using Nemo",
+        "function isA333245(n)",
+        "    ! isprime(n) && return false",
+        "    s, m, N = 0, 1, n",
+        "    r = isqrt(n)",
+        "    while true",
+        "        k = N + m",
+        "        v = valuation(k, 2)",
+        "        s += v",
+        "        s > r && return false",
+        "        m = k >> v",
+        "        m == 1 && break",
+        "    end",
+        "    return true",
+        "end",
+        "print([n for n in 3:2:60000 if isA333245(n)]) # _Peter Luschny_, Mar 16 2020"
+    ],
+    "xref": [
+        "Cf. A014664, A002326."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Charles R Greathouse IV_, Mar 12 2020",
+    "references": 2,
+    "revision": 18,
+    "time": "2020-03-16T21:52:58-04:00",
+    "created": "2020-03-16T16:32:56-04:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 86265,
+    "data": "1,17,897,168529,118183389",
+    "name": "Numerators of mean number of s-clusters in an n X n (0,1)-matrix.",
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/s-Cluster.html\">s-Cluster</a>"
+    ],
+    "example": [
+        "1/2, 17/16, 897/512, 168529/65536, 118183389/33554432..."
+    ],
+    "mathematica": [
+        "For[n = 1, n <= 5, n++,",
+        "cnt = 0;",
+        "For[ii = 0, ii <= 2^(n^2), ii++,",
+        "  A = Partition[IntegerDigits[ii, 2, n^2], n];",
+        "  G = EmptyGraph[n^2];",
+        "  deleteG = 0;",
+        "  vert = {0, -1};",
+        "  horiz = {-1, 0};",
+        "  For[i = 1, i <= n, i++,",
+        "   For[j = 1, j <= n, j++,",
+        "    If[A[[i, j]] == 1,",
+        "     For[k = 1, k <= 2, k++,",
+        "      If[A[[i + vert[[k]], j + horiz[[k]]]] == 1,",
+        "       G = AddEdge[G, {j + (i - 1) n, j + horiz[[k]] + (i - 1) n + n vert[[k]]}];",
+        "       ]",
+        "      ],",
+        "     deleteG++;",
+        "     ]",
+        "    ]",
+        "   ];",
+        "  CC = ConnectedComponents[G];",
+        "  cnt += (Length[CC] - deleteG);",
+        "  ];",
+        "Print[cnt]",
+        "] (* _Luca Petrone_, May 09 2018 *)"
+    ],
+    "xref": [
+        "Cf. A002416."
+    ],
+    "keyword": "nonn,frac,more",
+    "offset": "1,2",
+    "author": "_Eric W. Weisstein_, Jul 14 2003",
+    "ext": [
+        "a(5) from _Luca Petrone_, May 09 2018"
+    ],
+    "references": 1,
+    "revision": 12,
+    "time": "2018-05-11T06:11:46-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

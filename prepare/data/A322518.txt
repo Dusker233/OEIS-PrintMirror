@@ -1,0 +1,63 @@
+{
+    "number": 322518,
+    "data": "1,6,84,1680,39240,999216,26899896,752939424,21691531800,638947312080,19155738105504,582589712312064,17930566188602136,557417298916695600,17477836958370383280,552090876791399769600,17552554240486710112920,561230779055361080132880",
+    "name": "Binomial transform of the Ap\u00e9ry numbers (A005259).",
+    "comment": [
+        "Starting with the a(3) term, each term is divisible by 8. (Empirical observation.)",
+        "The above is true and follows easily from the pair of known congruences for the Ap\u00e9ry numbers A(n): A(2*n) == 1 (mod 8) and A(2n+1) == 5 (mod 8). - _Peter Bala_, Jan 06 2020"
+    ],
+    "link": [
+        "Jackson Earles, Justin Ford, Poramate Nakkirt, Marlo Terr, Dr. Ilia Mishev, Sarah Arpin, <a href=\"https://www.colorado.edu/math/binomial-transforms-sequences-fall-2018\">Binomial Transforms of Sequences</a>, Fall 2018.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "a(n) ~ 2^(n - 3/4) * 3^(n + 3/2) * (1 + sqrt(2))^(2*n - 1) / (Pi*n)^(3/2). - _Vaclav Kotesovec_, Dec 17 2018",
+        "The Gauss congruences hold: a(n*p^k) == a(n*p^(k-1)) (mod p^k) for all primes p and n a positive integer. - _Peter Bala_, Jan 06 2020"
+    ],
+    "example": [
+        "a(2) = binomial(2,0)*A(0) + binomial(2,1)*A(1) + binomial(2,2)*A(2), where A(k) denotes the k-th Ap\u00e9ry number. Using this definition:",
+        "a(2) = binomial(2,0)*(binomial(0,0)*binomial(0,0))^2 + binomial(2,1)*((binomial(1,0)*binomial(1,0))^2 + (binomial(1,1)*binomial(2,1))^2) + binomial(2,2)*((binomial(2,0)*binomial(2,0))^2 + (binomial(2,1)*binomial(3,1))^2 + (binomial(2,2)*binomial(4,2))^2) = 84."
+    ],
+    "mathematica": [
+        "a[n_] := Sum[Binomial[n, k] * Sum[(Binomial[k, j] * Binomial[k+j, j])^2, {j, 0, k}], {k, 0, n}]; Array[a, 20, 0] (* _Amiram Eldar_, Dec 13 2018 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def OEISbinomial_transform(N, seq):",
+        "    BT = [seq[0]]",
+        "    k = 1",
+        "    while k< N:",
+        "        next = 0",
+        "        j = 0",
+        "        while j <=k:",
+        "            next = next + ((binomial(k,j))*seq[j])",
+        "            j = j+1",
+        "        BT.append(next)",
+        "        k = k+1",
+        "    return BT",
+        "Apery = oeis('A005259')",
+        "OEISBinom = OEISbinomial_transform(18,Apery.first_terms(20))",
+        "(Julia)",
+        "function BinomialTransform(seq)",
+        "    N = length(seq)",
+        "    bt = Array{BigInt,1}(undef,N)",
+        "    bt[1] = seq[1]",
+        "    for k in 1:N-1",
+        "        next = BigInt(0)",
+        "        for j in 0:k next += binomial(k, j)*seq[j+1] end",
+        "        bt[k+1] = next",
+        "    end",
+        "bt end",
+        "BinomialTransform([A005259(n) for n in 0:18]) |> println # _Peter Luschny_, Jan 06 2020"
+    ],
+    "xref": [
+        "Cf. A005259, A322519."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Sarah Arpin_, Dec 13 2018",
+    "references": 1,
+    "revision": 28,
+    "time": "2020-01-06T17:29:33-05:00",
+    "created": "2018-12-14T21:09:41-05:00"
+}

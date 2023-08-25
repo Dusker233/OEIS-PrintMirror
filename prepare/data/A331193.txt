@@ -1,0 +1,35 @@
+{
+    "number": 331193,
+    "data": "0,1,3,33,231,255,891,3687,21477,1216041,5360069,418964451,443750859,1445812789,23577810421,25474675645,154292473329,1904542477755,1925488579591,9617724354513,16654480398927,169215938357145,2563713753111945,3408057776446851,4019397080882727",
+    "name": "Numbers whose binary and dual Zeckendorf representations are both palindromic.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A331193/b331193.txt\">Table of n, a(n) for n = 1..29</a>"
+    ],
+    "example": [
+        "3 is a term since both its binary and dual Zeckendorf representations are 11 which is palindromic.",
+        "33 is a term since its binary representation, 100001, and its dual Zeckendorf representation, 1010101, are both palindromic."
+    ],
+    "mathematica": [
+        "mirror[dig_, s_] := Join[dig, s, Reverse[dig]];",
+        "select[v_, mid_] := Select[v, Length[#] == 0 || Last[#] != mid &];",
+        "fib[dig_] := Plus @@ (dig * Fibonacci[Range[2, Length[dig] + 1]]);",
+        "pals = Join[{{}}, Rest[Select[IntegerDigits /@ FromDigits /@ Tuples[{0, 1}, 22], SequenceCount[#, {0, 0}] == 0 &]]];",
+        "dualZeckPals = Union @ Join[{0}, fib /@ Join[mirror[#, {}] & /@ (select[pals, 0]), mirror[#, {0}] & /@ (select[pals, 0]), mirror[#, {1}] & /@ pals]];",
+        "binPalQ[n_] := PalindromeQ@IntegerDigits[n, 2]; Select[dualZeckPals, binPalQ]"
+    ],
+    "xref": [
+        "Intersection of A006995 and A331191.",
+        "Cf. A095309, A104326."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Amiram Eldar_, Jan 11 2020",
+    "ext": [
+        "a(18)-a(22) from _Chai Wah Wu_, Jan 12 2020",
+        "a(23)-a(25) from _Chai Wah Wu_, Jan 13 2020"
+    ],
+    "references": 4,
+    "revision": 15,
+    "time": "2023-03-27T09:34:29-04:00",
+    "created": "2020-01-11T21:51:40-05:00"
+}

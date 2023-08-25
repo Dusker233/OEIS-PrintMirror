@@ -1,0 +1,39 @@
+{
+    "number": 320095,
+    "data": "1,2,11,79,773,9281,137191,2396150,48426649,1111099879,28531150811,810554312866,25239591811405,854769747700454,31278135014945519,1229782937960902111,51702516367459973873,2314494592652832016030,109912203092221714132219,5518821052631039996623577",
+    "name": "Number of primitive (=aperiodic) n-ary words with length less than or equal to n which are earlier in lexicographic order than any other word derived by cyclic shifts of the alphabet.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A320095/b320095.txt\">Table of n, a(n) for n = 1..387</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=1..n} Sum_{d|j} n^(d-1) * mu(j/d).",
+        "a(n) = A143327(n,n).",
+        "a(n) = Sum_{j=1..n} A143325(j,n).",
+        "a(n) = A143326(n,n) / n.",
+        "a(n) = [x^n] (1/(1 - x)) * Sum_{k>=1} mu(k) * x^k / (1 - n*x^k). - _Ilya Gutkovskiy_, Feb 16 2020"
+    ],
+    "maple": [
+        "b:= (n, k)-> add(`if`(d=n, k^(n-1), -b(d, k)), d=numtheory[divisors](n)):",
+        "g:= proc(n, k) option remember; b(n, k)+`if`(n<2, 0, g(n-1, k)) end:",
+        "a:= n-> g(n$2):",
+        "seq(a(n), n=1..23);"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[n^(d-1)*MoebiusMu[j/d], {j, 1, n}, {d, Divisors[j]}];",
+        "Table[a[n], {n, 1, 20}] (* _Jean-Fran\u00e7ois Alcover_, Oct 25 2022, after A143327 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(j=1, n, sumdiv(j, d, n^(d-1) * moebius(j/d))); \\\\ _Michel Marcus_, Feb 16 2020"
+    ],
+    "xref": [
+        "Main diagonal of A143327.",
+        "Cf. A143325, A143326."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Oct 05 2018",
+    "references": 3,
+    "revision": 17,
+    "time": "2022-10-25T08:32:13-04:00",
+    "created": "2018-10-05T16:10:19-04:00"
+}

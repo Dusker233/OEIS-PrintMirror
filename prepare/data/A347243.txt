@@ -1,0 +1,31 @@
+{
+    "number": 347243,
+    "data": "1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,19,20,21,22,23,24,26,28,29,30,31,32,33,34,35,37,38,39,40,41,42,43,44,46,47,48,51,52,53,56,57,58,59,60,61,62,64,65,66,67,68,69,70,71,73,74,76,77,78,79,80,82,83,84,85,86,87,88,89,91,92,93,94,95,96,97,101",
+    "name": "Numbers k such that when iterating the map x -> A000593(x), we will not encounter a term x (after the starting point x=k) whose largest prime factor would be at least as large as A006530(k), before 1 is eventually reached.",
+    "comment": [
+        "The initial 1 is included by a convention."
+    ],
+    "example": [
+        "For n = 17, the iteration proceeds as follows 17 -> 18 (= 2*3*3), 18 -> 13 (13 is a prime), 13 -> 14 (= 2*7), 14 -> 8 (= 2*2*2), 8 -> 1. The largest prime factor present after the initial step is 13, which is less than the largest prime factor of 17 (which is 17 itself), thus 17 is included in this sequence."
+    ],
+    "program": [
+        "(PARI)",
+        "A006530(n) = if(1==n, n, my(f=factor(n)); f[#f~, 1]);",
+        "A000265(n) = (n >> valuation(n, 2));",
+        "A000593(n) = sigma(A000265(n));",
+        "A347244(n) = { my(gpf=A006530(n)); while(n>1, n = A000593(n); if(A006530(n)>=gpf,return(1))); (0); };",
+        "isA347243(n) = !A347244(n);"
+    ],
+    "xref": [
+        "Cf. A000593, A006530, A161942, A336361, A347240, A347241, A347242 (complement).",
+        "Positions of zeros in A347244 and in A347245.",
+        "Subsequences: A000040 (conjectured), A000079."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Aug 28 2021",
+    "references": 6,
+    "revision": 9,
+    "time": "2021-08-28T18:20:46-04:00",
+    "created": "2021-08-28T18:20:46-04:00"
+}

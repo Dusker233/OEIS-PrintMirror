@@ -1,0 +1,31 @@
+{
+    "number": 348265,
+    "data": "1,2,84,1596,410652,9114300,10628100,3012406320",
+    "name": "a(n) is the least number k such that A348264(k) = n, or -1 if no such number exists.",
+    "example": [
+        "n The n iterations of a(n) under the map x -> A348264(x)",
+        "- --------------------------------------------------------------------------------",
+        "0 1",
+        "1 2 -> 1",
+        "2 84 -> 78 -> 39",
+        "3 1596 -> 1428 -> 1326 -> 663",
+        "4 410652 -> 410172 -> 366996 -> 340782 -> 170391",
+        "5 9114300 -> 8871252 -> 8680848 -> 8661648 -> 8487018 -> 4243509",
+        "6 10628100 -> 10344684 -> 10309980 -> 10287900 -> 10013556 -> 9298302 -> 4649151",
+        "7 3012406320 -> 2999958360 -> 2927545572 -> 2917724340 -> 2911475700 -> 2833836348 -> 2631419466 -> 1315709733"
+    ],
+    "mathematica": [
+        "f[p_, e_] := p^e - 1; uphi[1] = 1; uphi[n_] := Times @@ f @@@ FactorInteger[n]; sum[n_] := Plus @@ DeleteDuplicates[uphi /@ Select[Divisors[n], CoprimeQ[#, n/#] &]]; s[n_] := -2 + Length@FixedPointList[sum, n]; seq[m_, lim_] := Module[{t = Table[0, {m}], c = 0, n = 1}, While[c < m && n < lim, i = s[n] + 1; If[i <= m && t[[i]] == 0, c++; t[[i]] = n]; n++]; TakeWhile[t, # > 0 &]]; seq[5, 10^6]"
+    ],
+    "xref": [
+        "The unitary version of A348214.",
+        "Cf. A348004, A348264."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Amiram Eldar_, Oct 09 2021",
+    "references": 0,
+    "revision": 4,
+    "time": "2021-10-09T07:19:13-04:00",
+    "created": "2021-10-09T07:19:13-04:00"
+}

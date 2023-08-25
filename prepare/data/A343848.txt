@@ -1,0 +1,33 @@
+{
+    "number": 343848,
+    "data": "1,2,5,17,77,444,3123,25933,248163,2687200,32460889,432482545,6296217017,99388128516,1690073020687,30788225809509,597998944638879,12332575195452440,269072563350272149,6190949611140562505,149789737789559221397,3801359947725801283196",
+    "name": "a(n) = Sum_{k = 0..n} (n - k)! LaguerreL(n - k, -k).",
+    "formula": [
+        "a(n) = Sum_{k=0..n} (n - k)! * Sum_{j=0..n-k} binomial(n - k, j) * k^j / j!."
+    ],
+    "maple": [
+        "A343848List := proc(n) local T; T := proc(n, k) option remember;",
+        "if n = k then return 1 elif n = k+1 then return k+1 fi;",
+        "(2*n-k-1)*T(n-1, k) - (n-k-1)^2*T(n-2, k) end:",
+        "seq(add(T(k, j), j = 0..k), k = 0..n) end: A343848List(21);"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[(n - k)! LaguerreL[n - k, -k], {k, 0, n}];",
+        "Table[a[n], {n, 0, 21}]"
+    ],
+    "program": [
+        "(PARI)",
+        "a(n) = sum(k=0, n, (n - k)!*sum(j=0, n - k, binomial(n - k, j) * k^j / j!))",
+        "for(n=0, 21, print(a(n)))"
+    ],
+    "xref": [
+        "Row sums of A343847."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Peter Luschny_, May 08 2021",
+    "references": 2,
+    "revision": 7,
+    "time": "2021-05-09T08:04:17-04:00",
+    "created": "2021-05-09T08:04:17-04:00"
+}

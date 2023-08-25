@@ -1,0 +1,32 @@
+{
+    "number": 328252,
+    "data": "9,18,25,45,49,63,75,90,98,117,121,126,147,150,153,169,171,175,198,234,242,245,261,279,289,294,315,325,333,338,342,350,361,363,369,387,414,423,425,450,475,477,490,495,507,522,529,539,550,558,575,578,603,605,630,637,639,650,657,666,711,722,726,735,738,774,775,801",
+    "name": "Numbers that are not squarefree, but whose arithmetic derivative (A003415) is.",
+    "link": [
+        "Antti Karttunen, <a href=\"/A328252/b328252.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "18 = 2 * 3^2 is not squarefree, but its arithmetic derivative A003415(18) = 21 = 3*7 is, thus 18 is included in this sequence."
+    ],
+    "program": [
+        "(PARI)",
+        "A003415(n) = if(n<=1, 0, my(f=factor(n)); n*sum(i=1, #f~, f[i, 2]/f[i, 1]));",
+        "isA328252(n) = (!issquarefree(n) && issquarefree(A003415(n)));",
+        "(PARI)",
+        "A003415checked(n) = if(n<=1, 0, my(f=factor(n), s=0); for(i=1, #f~, if(f[i,2]>=f[i,1],return(0), s += f[i, 2]/f[i, 1])); (n*s));",
+        "A328248(n) = { my(k=1); while(n && !issquarefree(n), k++; n = A003415checked(n)); (!!n*k); };",
+        "isA328252(n) = (2==A328248(n));"
+    ],
+    "xref": [
+        "Cf. A003415, A328253.",
+        "Row 3 of array A328250. Positions of 2's in A328248.",
+        "Setwise difference A328234 \\ A005117. Intersection of A013929 and A328234."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Oct 11 2019",
+    "references": 9,
+    "revision": 9,
+    "time": "2019-10-11T16:56:08-04:00",
+    "created": "2019-10-11T16:56:08-04:00"
+}

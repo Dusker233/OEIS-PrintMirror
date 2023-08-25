@@ -1,0 +1,63 @@
+{
+    "number": 324521,
+    "data": "2,4,6,8,9,12,16,18,20,24,27,30,32,36,40,45,48,50,54,56,60,64,72,75,80,81,84,90,96,100,108,112,120,125,126,128,135,140,144,150,160,162,168,176,180,189,192,196,200,210,216,224,225,240,243,250,252,256",
+    "name": "Numbers > 1 where the maximum prime index is less than or equal to the number of prime factors counted with multiplicity.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798.",
+        "Also Heinz numbers of integer partitions with nonnegative rank (A064174). The Heinz number of an integer partition (y_1, ..., y_k) is prime(y_1) * ... * prime(y_k)."
+    ],
+    "link": [
+        "Matthieu Pluntz, <a href=\"/A324521/b324521.txt\">Table of n, a(n) for n = 1..10929 (up to a(n) = 2^21)</a>"
+    ],
+    "formula": [
+        "A061395(a(n)) <= A001222(a(n))."
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices begins:",
+        "   2: {1}",
+        "   4: {1,1}",
+        "   6: {1,2}",
+        "   8: {1,1,1}",
+        "   9: {2,2}",
+        "  12: {1,1,2}",
+        "  16: {1,1,1,1}",
+        "  18: {1,2,2}",
+        "  20: {1,1,3}",
+        "  24: {1,1,1,2}",
+        "  27: {2,2,2}",
+        "  30: {1,2,3}",
+        "  32: {1,1,1,1,1}",
+        "  36: {1,1,2,2}",
+        "  40: {1,1,1,3}",
+        "  45: {2,2,3}",
+        "  48: {1,1,1,1,2}"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "q:= n-> is(pi(max(factorset(n)))<=bigomega(n)):",
+        "select(q, [$2..300])[];  # _Alois P. Heinz_, Mar 07 2019"
+    ],
+    "mathematica": [
+        "Select[Range[2,100],PrimePi[FactorInteger[#][[-1,1]]]<=PrimeOmega[#]&]"
+    ],
+    "program": [
+        "(PARI) isok(m) = (m>1) && (primepi(vecmax(factor(m)[, 1])) <= bigomega(m)); \\\\ _Michel Marcus_, Nov 14 2022",
+        "(Python)",
+        "from sympy import factorint, primepi",
+        "def ok(n):",
+        "    f = factorint(n)",
+        "    return primepi(max(f)) <= sum(f.values())",
+        "print([k for k in range(2, 257) if ok(k)]) # _Michael S. Branicky_, Nov 15 2022"
+    ],
+    "xref": [
+        "Cf. A001222, A003114, A056239, A061395, A064174, A106529, A112798, A256617.",
+        "Cf. A324515, A324517, A324519, A324522, A324560, A324562."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Mar 06 2019",
+    "references": 31,
+    "revision": 27,
+    "time": "2022-12-21T22:05:38-05:00",
+    "created": "2019-03-07T21:51:10-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 295865,
+    "data": "1,2,14,104,164,254,494,584,1484,2204,2534,2834,3002,3674,3926,4454,4484,4784,4844,5186,5264,5312,5984,6104,7994,8294,8414,8774,8834,9074,9164,9944,10004,10604,10724,11024,11684,11894,12254,13034,13064,13166,13364,13454,13754,14234,15344,15554,16184,16214",
+    "name": "Numbers k, the smallest of at least 4 consecutive numbers x, for which phi(x) <= phi(x+1).",
+    "comment": [
+        "There are 3988536 terms below 2*10^9.",
+        "Up to a(3988356):",
+        "- a(1) is the only odd term.",
+        "- a(1) is the only term with 5 consecutive numbers where phi(k) <= phi(k+1).",
+        "- the only powers of 2 are a(1)=1 and a(2) = 2.",
+        "- of the residues of a(n) mod 10, 4 accounts for greater than 91%.",
+        "- if a(n) is divisible by 4, then phi(a(n)) is divisible by 4.",
+        "Numbers k such that A057000(k) >= 0 for 3 consecutive terms. - _Michel Marcus_, Mar 21 2018"
+    ],
+    "example": [
+        "14 is a term because phi(14) <= phi(15) <= phi(16) <= phi(17).",
+        "15 is not a term because phi(15) <= phi(16) <= phi(17) > phi(18)."
+    ],
+    "maple": [
+        "Phi:= map(numtheory:-phi, [$1..20001]):",
+        "DPhi:= Phi[2..-1]-Phi[1..-2]:",
+        "C:= select(t -> DPhi[t]>=0, [$1..20000]):",
+        "C[select(t -> C[t+2]=C[t]+2, [$1..nops(C)-3])]; # _Robert Israel_, Mar 26 2018"
+    ],
+    "mathematica": [
+        "Drop[#, -2] & /@ Select[SplitBy[#, Last@ # >= 0 &], Length@ # > 2 && #[[1, -1]] >= 0 &][[All, All, 1]] &@ MapIndexed[{First@ #2, #1} &, Differences@ Array[EulerPhi, 2^14]] // Flatten (* _Michael De Vlieger_, Mar 26 2018 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(v = vector(4, k, eulerphi(n+k-1))); (v[1] <= v[2]) && (v[2] <= v[3]) && (v[3] <= v[4]);} \\\\ _Michel Marcus_, Mar 21 2018"
+    ],
+    "xref": [
+        "Cf. A000010, A057000."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Torlach Rush_, Feb 13 2018",
+    "references": 0,
+    "revision": 45,
+    "time": "2018-03-29T10:10:14-04:00",
+    "created": "2018-03-29T10:10:14-04:00"
+}

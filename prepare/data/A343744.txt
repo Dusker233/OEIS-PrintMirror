@@ -1,0 +1,58 @@
+{
+    "number": 343744,
+    "data": "1,2,3,4,5,6,7,8,9,12,15,24,36,128,135,144,175,384,672,735,1296,1575,82944,139968,1492992,27869184",
+    "name": "Zuckerman numbers which divided by the product of their digits give integers which are also divisible by the product of their digits, and so on, until result is 1.",
+    "comment": [
+        "Repunits >= 11 (A002275) are not in the sequence because, as they are fixed points of this map, they don't fit the definition.",
+        "Question: is this sequence finite as the similar sequence with Niven numbers (A114440) that has 15095 terms?",
+        "No other terms up to 2*10^9. - _Michel Marcus_, Apr 27 2021",
+        "From _David A. Corneth_, Apr 27 2021: (Start)",
+        "Terms are 7-smooth. Any prime factor > 7 will not be divided away by dividing by product of digits.",
+        "Any number k > a(26)*10^163 with product of digits vp > 0 has k/vp > a(26) so it suffices to check all candidates <= a(26)*10^163. Doing so gives no more terms so this sequence is finite and full. (End)",
+        "The number of steps needed to reach 1, has a maximum of 3, which occurs for n = 21, 23..26. - _A.H.M. Smeets_, Apr 29 2021"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"https://www.numbersaplenty.com/set/Zuckerman_number/\">Zuckerman numbers</a>, Numbers Aplenty."
+    ],
+    "example": [
+        "The integer 1296 is divisible by the product of its digits as 1296/(1*2*9*6) = 12, then 12/(1*2) = 6 and 6/6 = 1; hence, 1296 is a term of this sequence."
+    ],
+    "mathematica": [
+        "f[n_] := If[(prod = Times @@ IntegerDigits[n]) > 0 && Divisible[n, prod], n/prod, 0]; Select[Range[10^5], FixedPointList[f, #][[-1]] == 1 &] (* _Amiram Eldar_, Apr 27 2021 *)"
+    ],
+    "program": [
+        "(PARI) isz(n) = my(p=vecprod(digits(n))); p && !(n % p); \\\\ A007602",
+        "isok(n) = if (n==1, return(1)); my(m=n); until(m==1, if (isz(m), my(nm = m/vecprod(digits(m))); if (nm==m, return (0), m = nm), return(0))); return(1); \\\\ _Michel Marcus_, Apr 27 2021",
+        "(Python)",
+        "def proddigit(n):",
+        "    p = 1",
+        "    while n > 0:",
+        "        n, p = n//10, p*(n%10)",
+        "    return p",
+        "n, a = 1, 1",
+        "while n > 0:",
+        "    aa, pa = a, proddigit(a)",
+        "    while pa > 1 and aa%pa == 0 and aa > 1:",
+        "        aa = aa//pa",
+        "        pa = proddigit(aa)",
+        "    if aa == 1:",
+        "        print(n,a)",
+        "        n = n+1",
+        "    a = a+1 # _A.H.M. Smeets_, Apr 29 2021"
+    ],
+    "xref": [
+        "Cf. A007602, A288069.",
+        "Cf. A114440 (similar for Harshad numbers).",
+        "Subsequence of A002473 and of A343681."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,2",
+    "author": "_Bernard Schott_, Apr 27 2021",
+    "ext": [
+        "a(26) from _Michel Marcus_, Apr 27 2021"
+    ],
+    "references": 0,
+    "revision": 48,
+    "time": "2023-03-31T09:17:53-04:00",
+    "created": "2021-05-01T07:45:15-04:00"
+}

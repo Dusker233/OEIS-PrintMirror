@@ -1,0 +1,57 @@
+{
+    "number": 329738,
+    "data": "1,1,2,4,6,8,19,24,45,75,133,215,401,662,1177,2035,3587,6190,10933,18979,33339,58157,101958,178046,312088,545478,955321,1670994,2925717,5118560,8960946,15680074,27447350,48033502,84076143,147142496,257546243,450748484,788937192",
+    "name": "Number of compositions of n whose run-lengths are all equal.",
+    "comment": [
+        "A composition of n is a finite sequence of positive integers with sum n."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A329738/b329738.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{d|n} A003242(d).",
+        "a(n) = A329745(n) + A000005(n)."
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 19 compositions:",
+        "  (1)  (2)   (3)    (4)     (5)      (6)",
+        "       (11)  (12)   (13)    (14)     (15)",
+        "             (21)   (22)    (23)     (24)",
+        "             (111)  (31)    (32)     (33)",
+        "                    (121)   (41)     (42)",
+        "                    (1111)  (131)    (51)",
+        "                            (212)    (123)",
+        "                            (11111)  (132)",
+        "                                     (141)",
+        "                                     (213)",
+        "                                     (222)",
+        "                                     (231)",
+        "                                     (312)",
+        "                                     (321)",
+        "                                     (1122)",
+        "                                     (1212)",
+        "                                     (2121)",
+        "                                     (2211)",
+        "                                     (111111)"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],SameQ@@Length/@Split[#]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(b=Vec(1/(1 - sum(k=1, n, x^k/(1+x^k) + O(x*x^n)))-1)); concat([1], vector(n, k, sumdiv(k, d, b[d])))} \\\\ _Andrew Howroyd_, Dec 30 2020"
+    ],
+    "xref": [
+        "Compositions with relatively prime run-lengths are A000740.",
+        "Compositions with equal multiplicities are A098504.",
+        "Compositions with equal differences are A175342.",
+        "Compositions with distinct run-lengths are A329739.",
+        "Cf. A003242, A008965, A107429, A164707, A238130, A242882, A274174, A329745, A329766."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Nov 20 2019",
+    "references": 50,
+    "revision": 9,
+    "time": "2020-12-30T19:44:22-05:00",
+    "created": "2019-11-21T10:43:13-05:00"
+}

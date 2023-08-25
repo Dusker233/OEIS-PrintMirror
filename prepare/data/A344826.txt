@@ -1,0 +1,34 @@
+{
+    "number": 344826,
+    "data": "1,2,3,4,5,6,10,12,15,20,30,60,891,1584,1782,3564,4032,4455,4752,7920,8910,17820,20160,22275,23760,44550,49896,86400,89100,100800,118800,249480,349272,399168,694008,1097712,1746360,1778400,1995840,2181168,2774304,2794176,3470040",
+    "name": "Integers k such that k/A097621(k) is an integer.",
+    "comment": [
+        "_Allan C. Wechsler_ remarks that one can derive larger terms from existing terms. For instance, k = 5552064 has q = k/A097621(k) = 18. So multiplying 5552064 by 31 = A000961(18) will give a new term with q = 31.",
+        "More precisely, if k = a(n) has q = A343886(k) and m = A000961(q) such that gcd(k, m) = 1, then k*m is also a term. We could call \"primitive\" those terms not derived from a smaller term in this way. All the listed terms are primitive, but a({35, 36, 38, 42, 43}) allow the sequence to be extended to five larger non-primitive terms. The second and fourth one, having q = 17 resp. q = 23, both lead to a whole chain of many new terms. - _M. F. Hasler_, Jun 15 2021"
+    ],
+    "link": [
+        "Ray Chandler, <a href=\"/A344826/b344826.txt\">Table of n, a(n) for n = 1..187</a> (the first 90 terms from Michel Marcus, terms 91-133 from Lars Blomberg)"
+    ],
+    "program": [
+        "(PARI) f(n) = if(isprimepower(n), sum(i=1, logint(n, 2), primepi(sqrtnint(n, i)))+1, n==1); \\\\ A095874",
+        "ff(n) = my(fr=factor(n)); for (k=1, #fr~, fr[k,1] = f(fr[k,1]^fr[k,2]); fr[k,2] = 1); factorback(fr); \\\\ A097621",
+        "isok(k) = denominator(k/ff(k)) == 1;",
+        "(PARI) mappp(nn) = {my(map = Map()); mapput(map, 1, 1); my(nb=1); for (n=2, nn, if (isprimepower(n), nb++; mapput(map, n, nb));); map;}",
+        "ff(n, map) = my(fr=factor(n)); for (k=1, #fr~, fr[k, 1] = mapget(map, fr[k, 1]^fr[k, 2]); fr[k, 2] = 1); factorback(fr); \\\\ A097621",
+        "wa(na, nb) = {my(map = mappp(nb)); for (k=na, nb, if (denominator(k/ff(k, map)) == 1, print1(k, \", \")););}",
+        "wa(1, 10^8)",
+        "From _M. F. Hasler_, Jun 15 2021:",
+        "is_A344826(n)=!(n%A097621(n))",
+        "extend(n)=n*if(gcd(n, n=A000961(n/A097621(n)))==1,n) \\\\ Return the larger non-primitive term \"derived\" from a term n = a(k) with gcd(n,q) = 1, cf. COMMENTS, or zero if gcd(n,q) > 1, i.e., it cannot be \"extended\" that way. This allows the production of (infinitely?) many new terms from the existing ones. (End)"
+    ],
+    "xref": [
+        "Cf. A000961, A095874, A097621, A127724, A343886 (the ratios k/A097621(k))."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Marcus_, May 29 2021, after a suggestion from _Allan C. Wechsler_",
+    "references": 3,
+    "revision": 58,
+    "time": "2022-01-07T18:53:29-05:00",
+    "created": "2021-05-29T07:34:29-04:00"
+}

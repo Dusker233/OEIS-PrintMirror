@@ -1,0 +1,60 @@
+{
+    "number": 238448,
+    "data": "0,7,28,135,391,992,5837,9485,15975,244178",
+    "name": "Smallest number m such that 2^m contains a string of n consecutive increasing digits in its decimal representation.",
+    "comment": [
+        "This is an increasing sequence (but not necessarily strictly increasing)."
+    ],
+    "example": [
+        "7 is the smallest exponent such that 2^7 contains two consecutive increasing digits (2^7 = 128).",
+        "28 is the smallest exponent such that 2^28 ( = 268435456)  contains three consecutive increasing digits (456).",
+        "a(6) = 992 from  2^992 =",
+        "418558049682135672245478534789063207250548754572474065407714995457168379_345\\",
+        "    678_17284890561672488119458109166910841919797858872862722356017328064756\\",
+        "    15116630782786940537040715228680107267602488727296075852403533779290461\\",
+        "    69580757764357779904060393635270100437362409630553424235540298930640110\\",
+        "    82834640896 - _N. J. A. Sloane_, Aug 12 2018"
+    ],
+    "mathematica": [
+        "a[1]=0; a[n_] := Block[{k = 4, p = 16}, While[Max[ Length /@ Select[ Split@ Differences@ IntegerDigits@p, First@# == 1 &]] < n-1, k++; p *= 2]; k]; a/@ Range[7] (* _Giovanni Resta_, Feb 26 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def Str(x):",
+        "..for n in range(10**5):",
+        "....count = 0",
+        "....i = 0",
+        "....if len(str(2**n)) == x and x == 1:",
+        "......return n",
+        "....while i < len(str(2**n))-1:",
+        "......if int(str(2**n)[i]) == int(str(2**n)[i+1])-1:",
+        "........count += 1",
+        "........i += 1",
+        "......else:",
+        "........if count == x-1:",
+        "..........return n",
+        "........else:",
+        "..........count = 0",
+        "..........i += 1",
+        "....if count == x-1:",
+        "......return n",
+        "x = 1",
+        "while x < 50:",
+        "..print(Str(x))",
+        "..x += 1"
+    ],
+    "xref": [
+        "Cf. A045875."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,2",
+    "author": "_Derek Orr_, Feb 26 2014",
+    "ext": [
+        "a(8)-a(10) from _Giovanni Resta_, Feb 26 2014",
+        "Definition and examples corrected (\"integers\" changed to \"digits\") by _N. J. A. Sloane_, Aug 12 2018"
+    ],
+    "references": 3,
+    "revision": 22,
+    "time": "2018-08-12T13:58:48-04:00",
+    "created": "2014-02-26T18:29:19-05:00"
+}

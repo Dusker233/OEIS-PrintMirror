@@ -1,0 +1,48 @@
+{
+    "number": 111456,
+    "data": "2,108,228,13710,44790,6996920,11128712,12306056,3816547290,7838911147538198",
+    "name": "Pandigitals in some base (A061845) with an extra property: each number formed by the first i digits is divisible by i (digits in the pandigital base).",
+    "comment": [
+        "Finite? There are no more terms up to base 40. A probabilistic argument says higher bases are increasingly unlikely to produce a value.",
+        "There is no further term up to base=56; and no solution for base=60. Furthermore all bases are even: if the number formed by the first (base-1) digits is x, then x is divisible by (base-1) and x==base*(base-1)/2 mod (base-1), because the base-th digit is zero. From this the base is even. We can also see that if the i-th leftmost digit is d, then gcd(base,i)=gcd(base,d). To see this let g=gcd(base,i) and the number formed by the first i digit is x, then i divides x=k*base+d for some k, from this g divides d. And obviously g divides base, so g divides gcd(base,d), but it can't be larger than g, otherwise say gcd(base,d)=h>g, then in every h-th position we see a digit divisible by h, and the i-th digit is also divisible by h. This is a contradiction, there would be more than base/h digits divisible by h. - _Robert Gerbicz_, Mar 15 2016",
+        "Base corresponding to the terms: 2, 4, 4, 6, 6, 8, 8, 8, 10, 14. Terms written in its base: 10, 1230, 3210, 143250, 543210, 32541670, 52347610, 56743210, 3816547290, 9c3a5476b812d0 - _Hans Havermann_, May 26 2020",
+        "Subsequence of the terms of A256112 which are divisible by the base b in which they are pandigital (which is the least integer such that b^b > a(n)). In A256112 divisibility by i is required only for the numbers formed by the first i <= b-1 digits, while here it must also hold for i = b. - _M. F. Hasler_, May 26 2020"
+    ],
+    "example": [
+        "E.g. 13710 = 143250[6] (i.e., in base 6) is pandigital and 14[6] = 10[10] is even, 143[6] = 63[10] is divisible by 3, 1432[6] = 380[10] is divisible by 4, etc.",
+        "3816547290 is a well-known example in base 10."
+    ],
+    "program": [
+        "(Python)",
+        "def dgen(n, b):",
+        "    if n == 1:",
+        "        t = list(range(b))",
+        "        for i in range(1, b):",
+        "            u = list(t)",
+        "            u.remove(i)",
+        "            yield i, u",
+        "    else:",
+        "        for d, v in dgen(n-1, b):",
+        "            for g in v:",
+        "                k = d*b+g",
+        "                if not k % n:",
+        "                    u = list(v)",
+        "                    u.remove(g)",
+        "                    yield k, u",
+        "print([a for n in range(2, 15, 2) for a, b in dgen(n, n)]) # Chai Wah Wu, Jun 07 2015"
+    ],
+    "xref": [
+        "Cf. A061845, A256112."
+    ],
+    "keyword": "base,nonn,more,hard",
+    "offset": "1,1",
+    "author": "_Martin Fuller_, Nov 15 2005",
+    "ext": [
+        "Keyword 'fini' is removed as finiteness is not proved. - _Max Alekseyev_, Dec 15 2014",
+        "Offset corrected to 1 by _M. F. Hasler_, May 27 2020"
+    ],
+    "references": 4,
+    "revision": 34,
+    "time": "2020-05-29T02:23:04-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

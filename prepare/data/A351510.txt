@@ -1,0 +1,59 @@
+{
+    "number": 351510,
+    "data": "1,3,4,11,40,150,552,1971,6952,24818,90728,337246,1258784,4694284,17533904,65812931,248333624,940643162,3572280616,13595749994,51854273344,198197567924,759110304112,2912840355950,11195409484368,43093128851252",
+    "name": "G.f. A(x) = lim_{n->infinity} (1 - P(n,x))/(-2*x)^n, where P(1,x) = 1/sqrt(1 - 4*x), and P(n+1,x) = 1/sqrt(1 - 4*x + 4*x*P(n,x)) for n >= 1.",
+    "comment": [
+        "Is there a simpler formula for the g.f. of this sequence?",
+        "The g.f. of A351512 equals Product_{n>=1} P(n,x), where P(n,x) is defined in the example section of this sequence, with a special value found at x = 1/8: Product_{n>=1} P(n,x=1/8) = L/2 where L=A062539 is the Lemniscate constant.",
+        "Odd terms occur at positions 2^n - 1 for n >= 0."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A351510/b351510.txt\">Table of n, a(n) for n = 0..520</a>"
+    ],
+    "formula": [
+        "A(1/8) = L^4/32 = gamma(1/4)^8/(2048*Pi^2) = 1.477130626009639471039542..., where L = A062539 is the Lemniscate constant.",
+        "a(2^n - 1) = 1 (mod 2) for n >= 0.",
+        "Conjecture: a(n) ~ 4^n/n. - _Vaclav Kotesovec_, Mar 05 2022"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 3*x + 4*x^2 + 11*x^3 + 40*x^4 + 150*x^5 + 552*x^6 + 1971*x^7 + 6952*x^8 + 24818*x^9 + 90728*x^10 + 337246*x^11 + 1258784*x^12 + ...",
+        "Related tables.",
+        "The functions P(n,x) start with P(1,x) = 1/sqrt(1-4*x), and continue as P(n+1,x) = 1/sqrt(1 - 4*x + 4*x*P(n,x)) for n >= 1.",
+        "The table of coefficients of x^k in P(n,x) begins:",
+        "n=1: [1, 2,  6,  20,  70, 252, 924, 3432, 12870, 48620, ...];",
+        "n=2: [1, 0, -4, -12, -16,   4,  32, -168, -1376, -5100, ...];",
+        "n=3: [1, 0,  0,   8,  24,  32,  88,  512,  1968,  6144, ...];",
+        "n=4: [1, 0,  0,   0, -16, -48, -64, -176,  -640, -1632, ...];",
+        "n=5: [1, 0,  0,   0,   0,  32,  96,  128,   352,  1280, ...];",
+        "n=6: [1, 0,  0,   0,   0,   0, -64, -192,  -256,  -704, ...];",
+        "n=7: [1, 0,  0,   0,   0,   0,   0,  128,   384,   512, ...];",
+        "n=8: [1, 0,  0,   0,   0,   0,   0,    0,  -256,  -768, ...];",
+        "...",
+        "from which we can see that the coefficients in (1 - P(n,x))/(-2*x)^n tend to converge to this sequence as a limit:",
+        "n=1: [1, 3, 10, 35, 126, 462, 1716, 6435, 24310, 92378, ...];",
+        "n=2: [1, 3,  4, -1,  -8,  42,  344, 1275,  3432,  8982, ...];",
+        "n=3: [1, 3,  4, 11,  64, 246,  768, 2643, 10008, 37106, ...];",
+        "n=4: [1, 3,  4, 11,  40, 102,  360, 1539,  5608, 19730, ...];",
+        "n=5: [1, 3,  4, 11,  40, 150,  648, 2355,  7816, 27506, ...];",
+        "n=6: [1, 3,  4, 11,  40, 150,  552, 1779,  6184, 23090, ...];",
+        "n=7: [1, 3,  4, 11,  40, 150,  552, 1971,  7336, 26354, ...];",
+        "n=8: [1, 3,  4, 11,  40, 150,  552, 1971,  6952, 24050, ...];",
+        "n=9: [1, 3,  4, 11,  40, 150,  552, 1971,  6952, 24818, ...];",
+        "..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(P = 1/sqrt(1 - 4*x +x*O(x^(2*n+1)))); for(i=1,n,",
+        "P = 1/sqrt(1 - 4*x + 4*x*P +x*O(x^(2*n+1))) ); polcoeff( (1 - P)/(-2*x)^(n+1),n)}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A351512, A062539, A351509."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Feb 14 2022",
+    "references": 3,
+    "revision": 21,
+    "time": "2022-03-05T18:31:41-05:00",
+    "created": "2022-02-19T04:56:39-05:00"
+}

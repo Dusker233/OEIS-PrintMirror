@@ -1,0 +1,59 @@
+{
+    "number": 85363,
+    "data": "1,4,28,212,1676,13604,112380,940020,7936620,67494980,577309148,4961187092,42801458764,370478720356,3215827927228,27982214082612,244004165618220,2131710838837380,18654504783815580,163488269572628820",
+    "name": "a(0)=1, for n>0: a(n) = 4*9^(n-1) - (1/2)*Sum_{i=1..n-1} a(i)*a(n-i).",
+    "comment": [
+        "Apparently, the number of 2-D directed walks of semilength n starting at (0,0) and ending on the X-axis using steps NE, SE, NW and SW avoiding adjacent NW/SE and adjacent NE/SW. - _David Scambler_, Jun 20 2013",
+        "Form an array with m(0,n) = m(n,0) = 2^n; m(i,j) equals the sum of the terms to the left of m(i,j) and the sum of the terms above m(i,j), which is m(i,j) = Sum_{k-0..j-1} m(i,k) + Sum_{k=0..i-1} m(k,j).  m(n,n) = a(n). - _J. M. Bergot_, Jul 10 2013",
+        "From _G. C. Greubel_, May 22 2020: (Start)",
+        "This sequence is part of a class of sequences, for m >= 0, with the properties:",
+        "a(n) = 2*m*(4*m+1)^(n-1) - (1/2)*Sum_{k=1..n-1} a(k)*a(n-k).",
+        "a(n) = Sum_{k=0..n} m^k * binomial(n-1, n-k) * binomial(2*k, k).",
+        "a(n) = (2*m) * Hypergeometric2F1(-n+1, 3/2; 2; -4*m), for n > 0.",
+        "n*a(n) = 2*((2*m+1)*n - (m+1))*a(n-1) - (4*m+1)*(n-2)*a(n-2).",
+        "(4*m + 1)^n = Sum_{k=0..n} Sum_{j=0..k} a(j)*a(k-j).",
+        "G.f.: sqrt( (1 - t)/(1 - (4*m+1)*t) ).",
+        "This sequence is the case of m=2. (End)",
+        "The number of elements in the free group on two generators of length 2n that are zero exponent sum. - _Tey Berendschot_, Aug 09 2021"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A085363/b085363.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Kees A.S. Immink and Kui Cai, <a href=\"https://doi.org/10.1109/ACCESS.2020.2980036\">Properties and constructions of constrained codes for DNA-based data storage</a>, IEEE Access, vol. 8, no. 1, pp. 49523-49531, 2020, page 49529.",
+        "John Machacek, <a href=\"https://arxiv.org/abs/2105.02417\">Lattice walks ending on a coordinate hyperplane avoiding backtracking and repeats</a>, preprint arXiv:2105.02417 [math.CO], 2021."
+    ],
+    "formula": [
+        "G.f.: sqrt((1-x)/(1-9*x)).",
+        "Sum_{i=0..n} Sum_{j=0..i} a(j)*a(i-j) = 9^n.",
+        "From _Vladeta Jovovic_, Oct 10 2003: (Start)",
+        "First differences of A084771.",
+        "a(n) = Sum_{k=1..n} 2^k * binomial(n-1, k-1) * binomial(2*k, k). (End)",
+        "D-finite with recurrence n*a(n) = (10*n-6)*a(n-1) - (9*n-18)*a(n-2). - _Vladeta Jovovic_, Jul 16 2004",
+        "a(n) ~ 2*sqrt(2)*3^(2*n-1)/sqrt(Pi*n). - _Vaclav Kotesovec_, Oct 14 2012",
+        "a(0) = 1; a(n) = (4/n) * Sum_{k=0..n-1} (n+k) * a(k). - _Seiichi Manyama_, Mar 28 2023"
+    ],
+    "maple": [
+        "seq(coeff(series(sqrt((1-x)/(1-9*x)), x, n+1), x, n), n = 0..30); # _G. C. Greubel_, May 23 2020"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Sqrt[(1-x)/(1-9x)], {x, 0, 25}], x]"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^66)); Vec(sqrt((1-x)/(1-9*x)) ) \\\\ _Joerg Arndt_, May 10 2013",
+        "(Magma) R<x>:=PowerSeriesRing(Rationals(), 30); Coefficients(R!( Sqrt((1-x)/(1-9*x)) )); // _G. C. Greubel_, May 23 2020",
+        "(Sage)",
+        "def A085363_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( sqrt((1-x)/(1-9*x)) ).list()",
+        "A085363_list(30) # _G. C. Greubel_, May 23 2020"
+    ],
+    "xref": [
+        "Cf. A001019 (9^n), A084771, A085362, A085364, diagonal of A348595."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "Mario Catalani (mario.catalani(AT)unito.it), Jun 25 2003",
+    "references": 6,
+    "revision": 73,
+    "time": "2023-03-29T09:19:25-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

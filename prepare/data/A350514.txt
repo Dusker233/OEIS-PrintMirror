@@ -1,0 +1,36 @@
+{
+    "number": 350514,
+    "data": "1,1,1,1,1,1,1,1,1,1,2,2,2,3,4,6,8,12,17,30,41,70,107,186,307,531,887,1561,2701,4817,8514,15030,26490,47200,84622,151809,273912,496807,900595,1643185,2999837,5498916,10111429,18596096,34306158,63585519,118215700",
+    "name": "Maximal coefficient of Product_{j=1..n} (1 - x^prime(j)).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A350514/b350514.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1,",
+        "      expand((1-x^ithprime(n))*b(n-1)))",
+        "    end:",
+        "a:= n-> max(coeffs(b(n))):",
+        "seq(a(n), n=0..60);"
+    ],
+    "mathematica": [
+        "a[n_] := Times@@(1-x^Prime[Range[n]])//Expand//CoefficientList[#, x]&//Max;",
+        "Table[a[n], {n, 0, 60}] (* _Jean-Fran\u00e7ois Alcover_, Jun 02 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.abc import x",
+        "from sympy import prime, prod",
+        "def A350514(n): return 1 if n == 0 else max(prod(1-x**prime(i) for i in range(1,n+1)).as_poly().coeffs()) # _Chai Wah Wu_, Jan 04 2022",
+        "(PARI) a(n) = vecmax(Vec(prod(j=1, n, 1-'x^prime(j)))); \\\\ _Michel Marcus_, Jan 04 2022"
+    ],
+    "xref": [
+        "Cf. A000040, A007504, A046675, A086376, A350457."
+    ],
+    "keyword": "nonn",
+    "offset": "0,11",
+    "author": "_Alois P. Heinz_, Jan 02 2022",
+    "references": 1,
+    "revision": 45,
+    "time": "2022-06-02T08:59:23-04:00",
+    "created": "2022-01-04T17:32:48-05:00"
+}

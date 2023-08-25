@@ -1,0 +1,33 @@
+{
+    "number": 306674,
+    "data": "0,0,1,2,5,9,14,21,31,44,59,76,98,123,153,186,224,266,314,368,426,491,562,638,723,815,915,1021,1135,1258,1388,1528,1677,1836,2006,2183,2372,2569,2780,3002,3233,3476,3731,4000,4282,4574,4880,5198,5531,5879",
+    "name": "Number of distinct non-similar obtuse triangles with integer sides and length of largest side <= n.",
+    "example": [
+        "For n=6, there are 9 integer-sided obtuse triangles with largest side <= n. These have sides {a, b, c} = {2, 2, 3}, {2, 3, 4}, {2, 4, 5}, {2, 5, 6}, {3, 3, 5}, {3, 4, 5}, {3, 4, 6}, {3, 5, 6}, {4, 4, 6}. But {4, 4, 6} is similar to {2, 2, 3} and is excluded from the list, so a(6) = 8."
+    ],
+    "maple": [
+        "#nType=1 for acute triangles, nType=2 for obtuse triangles, nType=0 for both triangles",
+        "CountTriangles := proc (n, nType := 1)",
+        "  local aa, oo, a, b, c, tt, lAcute;",
+        "  aa := {}; oo := {};",
+        "  for a from n by -1 to 1 do for b from a by -1 to 1 do for c from b by -1 to 1 do",
+        "    if a < b+c and abs(b-c) < a and b < c+a and abs(c-a) < b and c < a+b and abs(a-b) < c and gcd(a, gcd(b, c)) = 1 then",
+        "      lAcute := evalb(0 < b^2+c^2-a^2);",
+        "      tt := sort([a, b, c]);",
+        "      if lAcute then aa := {op(aa), tt} else oo := {op(oo), tt} end if",
+        "    end if",
+        "  end do end do end do;",
+        "  return sort(`if`(nType = 1, aa, `if`(nType=2,oo,`union`(aa,oo))))",
+        "end proc"
+    ],
+    "xref": [
+        "Cf. A247587, A306673, A306676, A306677, A306678."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_C\u00e9sar Eliud Lozada_, Mar 04 2019",
+    "references": 4,
+    "revision": 16,
+    "time": "2019-05-03T19:23:35-04:00",
+    "created": "2019-05-03T19:23:35-04:00"
+}

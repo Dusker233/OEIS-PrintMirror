@@ -1,0 +1,40 @@
+{
+    "number": 322769,
+    "data": "1,4,92,5133,537813,91914202,23456071495,8411911367949,4055497274641836,2540939492105630071,2014322292658946180922,1977121111959534634757742,2360026677940190304494287625,3374607252811005168634470847052,5706308288951111509370981721908854",
+    "name": "Main diagonal of array in A322765.",
+    "reference": [
+        "D. E. Knuth, The Art of Computer Programming, Vol. 4A, Table A-1, page 778."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A322769/b322769.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = A346500(2n,n). - _Alois P. Heinz_, Jul 20 2021"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1,",
+        "      add(b(n-j)*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "A:= proc(n, k) option remember; `if`(n<k, A(k, n),",
+        "     `if`(k=0, b(n), (A(n+1, k-1)+add(A(n-k+j, j)",
+        "      *binomial(k-1, j), j=0..k-1)+A(n, k-1))/2))",
+        "    end:",
+        "a:= n-> A(2*n, n):",
+        "seq(a(n), n=0..15);  # _Alois P. Heinz_, Jul 21 2021"
+    ],
+    "mathematica": [
+        "P[m_, n_] := P[m, n] = If[n == 0, BellB[m], (1/2)(P[m+2, n-1] + P[m+1, n-1] + Sum[Binomial[n-1, k] P[m, k], {k, 0, n-1}])];",
+        "a[n_] := P[n, n];",
+        "Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Apr 29 2022 *)"
+    ],
+    "xref": [
+        "Cf. A322765, A346500."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Dec 30 2018",
+    "references": 3,
+    "revision": 15,
+    "time": "2022-04-29T05:47:41-04:00",
+    "created": "2018-12-30T22:03:49-05:00"
+}

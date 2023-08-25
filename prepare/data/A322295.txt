@@ -1,0 +1,35 @@
+{
+    "number": 322295,
+    "data": "1,2,10,120,2198,54304,1674468,61736880,2644978110,129019925424,7056278570108,427516982398576,28417031969575260,2055803302988520320,160786792285272198088,13517797622576903566560,1215656330296317906395790,116440107306323155369822800",
+    "name": "Number of permutations of [2n] with exactly n rising or falling successions.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A322295/b322295.txt\">Table of n, a(n) for n = 0..348</a>"
+    ],
+    "formula": [
+        "a(n) = A001100(2n,n)."
+    ],
+    "maple": [
+        "S:= proc(n) option remember; `if`(n<4, [1, 1, 2*t, 4*t+2*t^2]",
+        "       [n+1], expand((n+1-t)*S(n-1) -(1-t)*(n-2+3*t)*S(n-2)",
+        "       -(1-t)^2*(n-5+t)*S(n-3) +(1-t)^3*(n-3)*S(n-4)))",
+        "    end:",
+        "a:= n-> coeff(S(2*n), t, n):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = If[n < 4, {1, 1, 2t, 4t + 2 t^2}[[n+1]], Expand[(n+1-t)* s[n-1] - (1-t)(n-2 + 3t) s[n-2] - (1-t)^2 (n-5+t) s[n-3] + (1-t)^3 (n-3)* s[n-4]]];",
+        "a[n_] := Coefficient[s[2n], t, n];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Oct 23 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Bisection (even part) of A322294.",
+        "Cf. A001100."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Dec 02 2018",
+    "references": 3,
+    "revision": 13,
+    "time": "2021-10-23T10:13:19-04:00",
+    "created": "2018-12-02T08:45:37-05:00"
+}

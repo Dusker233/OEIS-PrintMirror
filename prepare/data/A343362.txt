@@ -1,0 +1,32 @@
+{
+    "number": 343362,
+    "data": "1,1,5,30,160,885,4810,26185,142005,769305,4159301,22455876,121057525,651737675,3504241650,18818709130,100945053055,540885242825,2895159035375,15481318817450,82704855762375,441427664993275,2354020475714775,12542918682786300,66778882780674975",
+    "name": "Expansion of Product_{k>=1} (1 + x^k)^(5^(k-1)).",
+    "formula": [
+        "a(n) ~ exp(2*sqrt(n/5) - 1/10 - c/5) * 5^(n - 1/4) / (2*sqrt(Pi)*n^(3/4)), where c = Sum_{j>=2} (-1)^j / (j * (5^(j-1) - 1)). - _Vaclav Kotesovec_, Apr 13 2021"
+    ],
+    "maple": [
+        "h:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(h(n-i*j, i-1)*binomial(5^(i-1), j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> h(n$2):",
+        "seq(a(n), n=0..24);  # _Alois P. Heinz_, Apr 12 2021"
+    ],
+    "mathematica": [
+        "nmax = 24; CoefficientList[Series[Product[(1 + x^k)^(5^(k - 1)), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, (1/n) Sum[Sum[(-1)^(k/d + 1) d 5^(d - 1), {d, Divisors[k]}] a[n - k], {k, 1, n}]]; Table[a[n], {n, 0, 24}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={Vec(prod(k=1, n, (1 + x^k + O(x*x^n))^(5^(k-1))))} \\\\ _Andrew Howroyd_, Apr 12 2021"
+    ],
+    "xref": [
+        "Cf. A098407, A292839, A343350, A343360, A343361, A343363, A343364, A343365, A343366."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 12 2021",
+    "references": 7,
+    "revision": 10,
+    "time": "2021-04-13T04:44:15-04:00",
+    "created": "2021-04-12T16:27:07-04:00"
+}

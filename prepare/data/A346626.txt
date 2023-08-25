@@ -1,0 +1,31 @@
+{
+    "number": 346626,
+    "data": "1,2,8,44,280,1936,14128,107088,834912,6652608,53934080,443467136,3689334272,30997608960,262651640064,2241857334528,19257951946240,166362924583936,1444351689281536,12595885932259328,110287974501355520,969178569410404352,8544982917273509888,75565732555028701184",
+    "name": "G.f. A(x) satisfies: A(x) = (1 + x * A(x)^3) / (1 - x).",
+    "comment": [
+        "Partial sums of A213282."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A346626/b346626.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=0} ( binomial(3*k,k) / (2*k + 1) ) * x^k / (1 - x)^(3*k+1).",
+        "a(0) = 1; a(n) = a(n-1) + Sum_{i=0..n-1} Sum_{j=0..n-i-1} a(i) * a(j) * a(n-i-j-1).",
+        "a(n) ~ 2^(n - 1/2) / (sqrt(3*Pi*(2 - (2 - sqrt(2))^(1/3)/2^(2/3) - 1/(2*(2 - sqrt(2)))^(1/3))) * n^(3/2) * (2 - 3/(sqrt(2) - 1)^(1/3) + 3*(sqrt(2) - 1)^(1/3))^n). - _Vaclav Kotesovec_, Nov 04 2021"
+    ],
+    "mathematica": [
+        "nmax = 23; A[_] = 0; Do[A[x_] = (1 + x A[x]^3)/(1 - x) + O[x]^(nmax + 1) // Normal, nmax + 1]; CoefficientList[A[x], x]",
+        "nmax = 23; CoefficientList[Series[Sum[(Binomial[3 k, k]/(2 k + 1)) x^k/(1 - x)^(3 k + 1), {k, 0, nmax}], {x, 0, nmax}], x]",
+        "a[0] = 1; a[n_] := a[n] = a[n - 1] + Sum[Sum[a[i] a[j] a[n - i - j - 1], {j, 0, n - i - 1}], {i, 0, n - 1}]; Table[a[n], {n, 0, 23}]"
+    ],
+    "xref": [
+        "Cf. A001764, A006318, A199475, A213282, A349310, A349311, A349312, A349313, A349314."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Jul 25 2021",
+    "references": 15,
+    "revision": 10,
+    "time": "2021-11-15T08:57:19-05:00",
+    "created": "2021-07-25T20:59:11-04:00"
+}

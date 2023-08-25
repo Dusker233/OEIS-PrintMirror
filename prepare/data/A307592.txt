@@ -1,0 +1,38 @@
+{
+    "number": 307592,
+    "data": "1,2,4,11,47,296,2638,31184,460445,8121616,166019736,3851820576,99905492939,2863509479104,89861971946594,3064181181957632,112806282518694969,4459192457431503104,188376562263115020076,8469292812455408254464,403767081039021522624615",
+    "name": "Expansion of e.g.f. (sec(x) + tan(x))*(1 - LambertW(-x)*(2 + LambertW(-x))/2).",
+    "comment": [
+        "Boustrophedon transform of A000272."
+    ],
+    "link": [
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "a(n) ~ (1 + sin(exp(-1)))/cos(exp(-1)) * n^(n-2). - _Vaclav Kotesovec_, Aug 17 2019"
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[(Sec[x] + Tan[x]) (1 - LambertW[-x] (2 + LambertW[-x])/2), {x, 0, nmax}], x] Range[0, nmax]!",
+        "t[n_, 0] := If[n < 1, 1, n^(n - 2)]; t[n_, k_] := t[n, k] = t[n, k - 1] + t[n - 1, n - k]; a[n_] := t[n, n]; Array[a, 21, 0]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice, count, accumulate",
+        "def A307592_gen(): # generator of terms",
+        "    blist = (1,2)",
+        "    yield from blist",
+        "    for i in count(2):",
+        "        yield (blist := tuple(accumulate(reversed(blist),initial=i**(i-2))))[-1]",
+        "A307592_list = list(islice(A307592_gen(),30)) # _Chai Wah Wu_, Jun 11 2022"
+    ],
+    "xref": [
+        "Cf. A000111, A000272, A306880, A306881."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Apr 17 2019",
+    "references": 0,
+    "revision": 10,
+    "time": "2022-06-11T20:17:41-04:00",
+    "created": "2019-04-17T19:07:13-04:00"
+}

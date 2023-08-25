@@ -1,0 +1,33 @@
+{
+    "number": 348623,
+    "data": "1,2,3,5,7,9,12,14,16,17,19,21,25,28,30,34,36,39,43,45,51,55,59,61,63,69,73,75,81,86,88,90,96,98,101,103,105,113,115,119,123,127,129,133,137,139,141,145,149,151,153,159,163,165,173,175,181,183,187,191,193,195,203",
+    "name": "a(1) = 1; for n > 1 a(n) = a(n-1) + A001227(a(n-1)).",
+    "mathematica": [
+        "NestList[# + Count[Divisors[#], _?OddQ] &, 1, 62] (* _Michael De Vlieger_, Oct 25 2021 *)"
+    ],
+    "program": [
+        "(PARI) f(n) = sumdiv(n, d, d%2); \\\\ A001227",
+        "a(n) = if (n==1, 1, my(x=a(n-1)); x + f(x)); \\\\ _Michel Marcus_, Oct 26 2021",
+        "(Python)",
+        "from math import prod",
+        "from itertools import islice",
+        "from sympy import factorint",
+        "def A348623gen(): # generator of terms",
+        "    n = 1",
+        "    yield n",
+        "    while True:",
+        "        n += prod(q+1 for p, q in factorint(n).items() if p > 2)",
+        "        yield n",
+        "A348623_list = list(islice(A348623gen(),20)) # _Chai Wah Wu_, Dec 13 2021"
+    ],
+    "xref": [
+        "Cf. A001227, A064491."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Patryk Kisieniowski_, Oct 25 2021",
+    "references": 0,
+    "revision": 24,
+    "time": "2021-12-14T01:43:46-05:00",
+    "created": "2021-12-13T17:32:33-05:00"
+}

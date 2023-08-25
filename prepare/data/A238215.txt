@@ -1,0 +1,47 @@
+{
+    "number": 238215,
+    "data": "0,0,0,1,1,1,1,1,1,1,2,2,3,4,5,6,8,9,11,13,15,18,21,24,28,33,38,44,51,59,68,79,90,104,119,136,156,178,202,230,261,296,335,379,427,482,543,610,686,770,863,967,1082,1209,1351,1508,1681,1873,2085,2318,2577",
+    "name": "The total number of 1's in all partitions of n into an even number of distinct parts.",
+    "comment": [
+        "The g.f. for \"number of k's\" is (1/2)*(x^k/(1+x^k))*(Product_{n>=1} 1 + x^n) - (1/2)*(x^k/(1-x^k))*(Product_{n>=1} 1 - x^n)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A238215/b238215.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=1..round(n/2)} A067659(n-(2*j-1)) - Sum_{j=1..floor(n/2)} A067661(n-2*j).",
+        "G.f.: (1/2)*(x/(1+x))*(Product_{n>=1} 1 + x^n) - (1/2)*(x/(1-x))*Product_{n>=1} 1 - x^n)."
+    ],
+    "example": [
+        "a(12) = 3 because the partitions in question are: 11+1, 6+3+2+1, 5+4+2+1."
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, t,",
+        "     `if`(i>n, 0, b(n, i+1, t)+b(n-i, i+1, 1-t)))",
+        "    end:",
+        "a:= n-> b(n-1, 2, 0):",
+        "seq(a(n), n=0..100);  # _Alois P. Heinz_, May 01 2020~"
+    ],
+    "mathematica": [
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0, t, If[i > n, 0, b[n, i + 1, t] + b[n - i, i + 1, 1 - t]]];",
+        "a[n_] := b[n - 1, 2, 0];",
+        "a /@ Range[0, 100] (* _Jean-Fran\u00e7ois Alcover_, Nov 01 2020, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(A=O(x^n)); Vec(x*(eta(x^2 + A)/(eta(x + A)*(1+x)) - eta(x + A)/(1-x))/2, -(n+1))} \\\\ _Andrew Howroyd_, May 01 2020"
+    ],
+    "xref": [
+        "Column k=1 of A238451.",
+        "Cf. A067659, A067661."
+    ],
+    "keyword": "nonn",
+    "offset": "0,11",
+    "author": "_Mircea Merca_, Feb 20 2014",
+    "ext": [
+        "Terms a(51) and beyond from _Andrew Howroyd_, May 01 2020"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2020-11-01T07:44:53-05:00",
+    "created": "2014-02-20T12:59:46-05:00"
+}

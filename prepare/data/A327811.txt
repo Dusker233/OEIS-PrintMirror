@@ -1,0 +1,40 @@
+{
+    "number": 327811,
+    "data": "2732225029,4344971347,5284288003,6552690421,7329791221,8845405603,8956420003,9307441621,9784676947,9786942547,13127589829,13143449029",
+    "name": "Numbers obtained from cyclically permuting the base-7 digits of 13143449029 and converting back to decimal.",
+    "comment": [
+        "All terms are prime, therefore 13143449029 is a base-7 circular prime, see A293660.",
+        "13143449029 is remarkable in that it has 12 digits in base 7 and may be the largest known nonrepunit circular prime in that base."
+    ],
+    "example": [
+        "Base-7 expansion | Decimal value",
+        "---------------------------------",
+        "643464321244     | 13143449029",
+        "434643212446     |  8956420003",
+        "346432124464     |  7329791221",
+        "464321244643     |  9784676947",
+        "643212446434     | 13127589829",
+        "432124464346     |  8845405603",
+        "321244643464     |  6552690421",
+        "212446434643     |  4344971347",
+        "124464346432     |  2732225029",
+        "244643464321     |  5284288003",
+        "446434643212     |  9307441621",
+        "464346432124     |  9786942547"
+    ],
+    "program": [
+        "(PARI) rot(n) = if(#Str(n)==1, v=vector(1), v=vector(#n-1)); for(i=2, #n, v[i-1]=n[i]); u=vector(#n); for(i=1, #n, u[i]=n[i]); v=concat(v, u[1]); v",
+        "decimal(v, base) = my(w=[]); for(k=0, #v-1, w=concat(w, v[#v-k]*base^k)); sum(i=1, #w, w[i])",
+        "my(d=digits(13143449029, 7), e=d, v=[]); while(1, v=concat(v, [decimal(d, 7)]); d=rot(d); if(d==e, return(vecsort(v))))"
+    ],
+    "xref": [
+        "Cf. A293142, A293660, A327835."
+    ],
+    "keyword": "nonn,base,easy,fini,full",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Sep 26 2019",
+    "references": 1,
+    "revision": 8,
+    "time": "2019-09-28T07:45:56-04:00",
+    "created": "2019-09-28T07:45:56-04:00"
+}

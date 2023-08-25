@@ -1,0 +1,37 @@
+{
+    "number": 320587,
+    "data": "3,13,31,37,41,43,67,79,97,103,109,113,127,131,139,149,151,157,163,193,199,211,227,229,239,241,257,271,277,281,283,293,307,311,313,331,337,347,349,353,359,367,373,379,383,389,397,401,409,419,421,433,439,443",
+    "name": "Primes that are not Base-3 deletable primes (written in base 10).",
+    "comment": [
+        "A prime p is a base-b deletable prime if when written in base b it has the property that removing some digit leaves either the empty string or another deletable prime.",
+        "Deleting a digit cannot leave any leading zeros in the new string. For example, deleting the 2 in 2003 to obtain 003 is not allowed.",
+        "Complement of all primes and A319596."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A320587/b320587.txt\">Table of n, a(n) for n = 1..906</a>"
+    ],
+    "mathematica": [
+        "b = 3; d = {};",
+        "p = Select[Range[2, 10000], PrimeQ[#] &];",
+        "For[i = 1, i <= Length[p], i++,",
+        "  c = IntegerDigits[p[[i]], b];",
+        "  If[Length[c] == 1, AppendTo[d, p[[i]]]; Continue[]];",
+        "  For[j = 1, j <= Length[c], j++,",
+        "   t = Delete[c, j];",
+        "   If[t[[1]] == 0, Continue[]];",
+        "If[MemberQ[d, FromDigits[t, b]], AppendTo[d, p[[i]]]; Break[]]]]; Complement[Table[Prime[n], {n, PrimePi[Last[d]]}], d] (* _Robert Price_, Dec 06 2018 *)"
+    ],
+    "xref": [
+        "Cf. A080608, A080603, A096235-A096246."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Robert Price_, Nov 14 2018",
+    "ext": [
+        "Added the term 3. As pointed out by Kevin Ryde, there is no need to \"seed\" the list using base-2 assumptions. - _Robert Price_, Dec 06 2018"
+    ],
+    "references": 1,
+    "revision": 44,
+    "time": "2018-12-07T12:27:09-05:00",
+    "created": "2018-11-14T20:30:44-05:00"
+}

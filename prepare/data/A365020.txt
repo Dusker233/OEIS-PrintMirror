@@ -1,0 +1,59 @@
+{
+    "number": 365020,
+    "data": "23,26,30,34,35,38,40,41,42,46,49,51,52,53,54,55,56,57,58,59,60,61,62,63,64,67,68,69,70,71,72,73,74,75,76,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105",
+    "name": "Solutions k to the exponential Diophantine equation k^5 = Sum_{i=1..7} y_i^5 with positive y_i.",
+    "comment": [
+        "This includes primitive solutions (where all y_i are coprime) and non-primitive solutions. There are k that have both types, e.g., 52^5 = 6^5 + 10^5 + 10^5 + 22^5 + 38^5 + 42^5 + 44^5 is non-primitive and 52^5 = 17^5 + 18^5 + 21^5 + 27^5 +31^5 + 44^5 + 44^5 is primitive. - _R. J. Mathar_, Aug 17 2023",
+        "Conjecture: sequence contains all integers >= 78 and a(n) = n+42 for n >= 36. - _Chai Wah Wu_, Aug 17 2023"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A365020/b365020.txt\">Table of n, a(n) for n = 1..324</a>",
+        "<a href=\"/index/Di#Diophantine\">Index to sequences related to Diophantine equations</a> (5,1,7)"
+    ],
+    "example": [
+        "Solutions [y_1,...,y_7]: k are [1, 7, 8, 14, 15, 18, 20]: 23, [3, 5, 5, 11, 19, 21, 22]: 26, [20, 23, 31, 32, 35, 41, 69]: 71, [5, 7, 12, 39, 45, 46, 68]: 72, [7, 19, 19, 26, 28, 56, 67]: 72, so 23, 26, 71 and 72 are in the sequence."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import integer_nthroot",
+        "def A365020_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        n5, flag = n**5, False",
+        "        for i1 in range(1,n):",
+        "            i15=i1**5",
+        "            for i2 in range(i1,n):",
+        "                i25 = i15+i2**5",
+        "                if i25>=n5: break",
+        "                for i3 in range(i2,n):",
+        "                    i35 = i25+i3**5",
+        "                    if i35>=n5: break",
+        "                    for i4 in range(i3,n):",
+        "                        i45 = i35+i4**5",
+        "                        if i45>=n5: break",
+        "                        for i5 in range(i4,n):",
+        "                            i55 = i45+i5**5",
+        "                            if i55>=n5: break",
+        "                            for i6 in range(i5,n):",
+        "                                i65 = i6**5",
+        "                                i75 = n5-i55-i65",
+        "                                if i75<i65: break",
+        "                                if integer_nthroot(i75,5)[1]:",
+        "                                    yield n",
+        "                                    flag = True",
+        "                                    break",
+        "                            if flag: break",
+        "                        if flag: break",
+        "                    if flag: break",
+        "                if flag: break",
+        "            if flag: break",
+        "A365020_list = list(islice(A365020_gen(),4)) # _Chai Wah Wu_, Aug 17 2023"
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_R. J. Mathar_, Aug 16 2023",
+    "references": 1,
+    "revision": 29,
+    "time": "2023-08-23T08:48:17-04:00",
+    "created": "2023-08-16T10:24:06-04:00"
+}

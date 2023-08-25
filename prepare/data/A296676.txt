@@ -1,0 +1,41 @@
+{
+    "number": 296676,
+    "data": "1,1,2,8,40,264,2048,18864,196992,2330112,30519552,440998656,6940852224,118501542912,2177222879232,42886017982464,900748014944256,20107190510714880,475167358873239552,11854636521914695680,311291779253770911744,8583598112533040332800,247944624171011289907200",
+    "name": "Expansion of e.g.f. 1/(1 - arctanh(x)).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A296676/b296676.txt\">Table of n, a(n) for n = 0..430</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1/(1 + (log(1 - x) - log(1 + x))/2).",
+        "a(n) ~ n! * 4*exp(2) * (exp(2)+1)^(n-1) / (exp(2)-1)^(n+1). - _Vaclav Kotesovec_, Dec 18 2017"
+    ],
+    "example": [
+        "1/(1 - arctanh(x)) = 1 + x/1! + 2*x^2/2! + 8*x^3/3! + 40*x^4/4! + 264*x^5/5! + ..."
+    ],
+    "maple": [
+        "S:= series(1/(1-arctanh(x)),x,41):",
+        "seq(coeff(S,x,j)*j!,j=0..40); # _Robert Israel_, Dec 18 2017",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(`if`(j::odd,",
+        "      a(n-j)*binomial(n, j)*(j-1)!, 0), j=1..n))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jun 22 2021"
+    ],
+    "mathematica": [
+        "nmax = 22; CoefficientList[Series[1/(1 - ArcTanh[x]), {x, 0, nmax}], x] Range[0, nmax]!",
+        "nmax = 22; CoefficientList[Series[1/(1 + (Log[1 - x] - Log[1 + x])/2), {x, 0, nmax}], x] Range[0, nmax]!"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^99); Vec(serlaplace(1/(1+(log(1-x)-log(1+x))/2))) \\\\ _Altug Alkan_, Dec 18 2017"
+    ],
+    "xref": [
+        "Cf. A000828, A010050, A191700, A296675."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Dec 18 2017",
+    "references": 2,
+    "revision": 13,
+    "time": "2021-06-22T15:13:14-04:00",
+    "created": "2017-12-18T19:43:09-05:00"
+}

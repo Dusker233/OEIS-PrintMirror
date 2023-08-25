@@ -1,0 +1,39 @@
+{
+    "number": 316652,
+    "data": "1,2,9,69,623,7793,110430,1906317,36833614,816101825,19925210834,541363267613,15997458049946,515769374925576,17905023985615254,669030297769291562,26689471638523499483,1134895275721374771655,51161002326406795249910,2440166138715867838359915",
+    "name": "Number of series-reduced rooted trees whose leaves span an initial interval of positive integers with multiplicities an integer partition of n.",
+    "comment": [
+        "A rooted tree is series-reduced if every non-leaf node has at least two branches."
+    ],
+    "example": [
+        "The a(3) = 9 trees:",
+        "(1(11)), (111),",
+        "(1(12)), (2(11)), (112),",
+        "(1(23)), (2(13)), (3(12)), (123)."
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "gro[m_]:=If[Length[m]==1,m,Union[Sort/@Join@@(Tuples[gro/@#]&/@Select[mps[m],Length[#]>1&])]];",
+        "Table[Sum[Length[gro[m]],{m,Flatten[MapIndexed[Table[#2,{#1}]&,#]]&/@IntegerPartitions[n]}],{n,4}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See A339645 for combinatorial species functions.",
+        "cycleIndexSeries(n)={my(v=vector(n)); v[1]=sv(1); for(n=2, #v, v[n] = polcoef( sExp(x*Ser(v[1..n])), n )); x*Ser(v)}",
+        "StronglyNormalLabelingsSeq(cycleIndexSeries(15)) \\\\ _Andrew Howroyd_, Jan 04 2021"
+    ],
+    "xref": [
+        "Cf. A000081, A000311, A000669, A001678, A005804, A141268, A181821, A292504, A304660.",
+        "Cf. A316651, A316653, A316654, A316655, A316656."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jul 09 2018",
+    "ext": [
+        "Terms a(10) and beyond from _Andrew Howroyd_, Jan 04 2021"
+    ],
+    "references": 25,
+    "revision": 15,
+    "time": "2021-01-22T16:49:37-05:00",
+    "created": "2018-07-09T21:23:29-04:00"
+}

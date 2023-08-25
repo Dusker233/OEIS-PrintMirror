@@ -1,0 +1,26 @@
+{
+    "number": 349739,
+    "data": "1,4,31,310,3925,58936,1032979,20600266,461742985",
+    "name": "Number of ordered pairs of commuting elements (partial permutations) in the symmetric inverse semigroup on [n].",
+    "reference": [
+        "Stephen Lipscomb, Symmetric Inverse Semigroups, Mathematical Surveys and Monographs, Volume 46, 1996, Chapters 3,4,5."
+    ],
+    "mathematica": [
+        "x[list_] := If[list == {}, 1, Apply[Times, list] Apply[Times,  Table[Count[list, i]!, {i, 1, Max[list]}]]]; y[list_] := If[list == {}, 1, Apply[Times,Table[Count[list, i]!, {i, 1, Max[list]}]]];",
+        "c[n_, pair_] := n!/(x[pair[[1]]] y[pair[[2]]]); n[k_, list_] := Count[list, k];",
+        "m[k_, list_] := Sum[Binomial[n[k, list], j]^2 j! k^j, {j, 0, n[k, list]}];",
+        "xp[list_] := Apply[Times, Table[m[k, list], {k, 1, Max[{1, list}]}]];",
+        "partialPermMatrices1[n_] := Module[{im = PadRight[IdentityMatrix[n], {n + 1, n}]},",
+        "  Sort@Map[Extract[im, List /@ #] &]@ Permutations[Join[ConstantArray[n + 1, n], Range@n], {n}]]; s[list_] := Total[Map[Apply[Times, #] &,Map[Min, Map[list[[#]] &, Map[Position[#, 1] &, partialPermMatrices1[Length[list]]], {2}], {2}]]]; Table[(Map[s,Level[Table[Level[Table[Table[{IntegerPartitions[nn - k][[i]],     IntegerPartitions[k][[j]]}, {i, 1,PartitionsP[nn - k]}], {j, 1,PartitionsP[k]}], {2}], {k,0, nn}], {2}][[All, 2]]])*(Map[xp, Level[Table[ Level[Table[Table[{IntegerPartitions[nn - k][[i]], IntegerPartitions[k][[j]]}, {i, 1, PartitionsP[nn - k]}], {j, 1, PartitionsP[k]}], {2}], {k, 0, nn}], {2}][[All, 1]]])*(Map[c[nn, #] &,Level[Table[Level[Table[Table[{IntegerPartitions[nn - k][[i]],IntegerPartitions[k][[j]]}, {i, 1, PartitionsP[nn - k]}], {j, 1,PartitionsP[k]}], {2}], {k, 0, nn}], {2}]]) // Total, {nn, 0, 7}]"
+    ],
+    "xref": [
+        "Cf. A002720, A000712 (number of conjugacy classes)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Geoffrey Critzer_, Dec 19 2021",
+    "references": 1,
+    "revision": 43,
+    "time": "2021-12-20T18:15:51-05:00",
+    "created": "2021-12-20T18:15:51-05:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 15465,
+    "data": "0,1,1,9,73,4681,303689,153690697,79763939913,322392516534857,1338539241447957065,43272129632752387301961,1437288838737538572434088521,371706200490726725394268777423433,98770108622737228265012391281001570889",
+    "name": "q-Fibonacci numbers for q=8.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A015465/b015465.txt\">Table of n, a(n) for n = 0..60</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1) + 8^(n-2) * a(n-2)."
+    ],
+    "maple": [
+        "q:=8; seq(add((product((1-q^(n-j-1-k))/(1-q^(k+1)), k=0..j-1))*q^(j^2), j = 0..floor((n-1)/2)), n = 0..20); # _G. C. Greubel_, Dec 16 2019"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[0]==0, a[1]==1, a[n]==a[n-1]+a[n-2]*8^(n-2)},  a, {n, 20}] (* _Vincenzo Librandi_, Nov 09 2012 *)",
+        "F[n_, q_]:= Sum[QBinomial[n-j-1, j, q]*q^(j^2), {j, 0, Floor[(n-1)/2]}];",
+        "Table[F[n, 8], {n, 0, 20}] (* _G. C. Greubel_, Dec 16 2019 *)"
+    ],
+    "program": [
+        "(Magma) [0] cat[n le 2 select 1 else Self(n-1) + Self(n-2)*(8^(n-2)): n in [1..15]]; // _Vincenzo Librandi_, Nov 09 2012",
+        "(PARI) q=8; m=20; v=concat([0,1], vector(m-2)); for(n=3, m, v[n]=v[n-1]+q^(n-3)*v[n-2]); v \\\\ _G. C. Greubel_, Dec 16 2019",
+        "(Sage)",
+        "def F(n,q): return sum( q_binomial(n-j-1, j, q)*q^(j^2) for j in (0..floor((n-1)/2)))",
+        "[F(n,8) for n in (0..20)] # _G. C. Greubel_, Dec 16 2019",
+        "(GAP) q:=8;; a:=[0,1];; for n in [3..20] do a[n]:=a[n-1]+q^(n-3)*a[n-2]; od; a; # _G. C. Greubel_, Dec 16 2019"
+    ],
+    "xref": [
+        "q-Fibonacci numbers: A000045 (q=1), A015459 (q=2), A015460 (q=3), A015461 (q=4), A015462 (q=5), A015463 (q=6), A015464 (q=7), this sequence (q=8), A015467 (q=9), A015468 (q=10), A015469 (q=11), A015470 (q=12)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 13,
+    "revision": 13,
+    "time": "2022-09-08T08:44:40-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

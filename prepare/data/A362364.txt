@@ -1,0 +1,52 @@
+{
+    "number": 362364,
+    "data": "1,2,15,154,3315,67298,2980185,102091066,6022953885,319238763382,24615812527995,1654614510608906,161405882746063215,14284287070086685498,1679105398207295625645,166597640098421012963174,24096841569672899523631395,2989927846846361919650083778,499069685749495422033929821845",
+    "name": "a(n) is the product of the first n primes that are coprime to a(n-1); a(0) = 1.",
+    "comment": [
+        "Lexicographically first sequence of squarefree numbers such that A001222(a(n)) = n and each term is coprime to the next."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A362364/b362364.txt\">Table of n, a(n) for n = 0..315</a>"
+    ],
+    "formula": [
+        "If n is even, a(n) = Product_{i=1..n/2} prime(4*i-2)*prime(4*i-1).",
+        "If n is odd, a(n) = 2 * Product_{i=1..(n-1)/2} prime(4*i)*prime(4*i+1).",
+        "From _Peter Munn_, Apr 21 2023: (Start)",
+        "a(0) = 1, for n >= 1, a(n) = A002110(2n-1)/a(n-1).",
+        "a(n) = A019565(A037481(n)).",
+        "For n >= 1, a(n-1) = A117214(A100112(a(n))).",
+        "(End)"
+    ],
+    "example": [
+        "a(0) = 1.",
+        "a(1) = 2 is the least prime coprime to a(0).",
+        "a(2) = 3*5 is the product of the two least primes coprime to a(1).",
+        "a(3) = 2*7*11 is the product of the three least primes coprime to a(2).",
+        "a(4) = 3*5*13*17 = 3315 is the product of the four least primes coprime to a(3)."
+    ],
+    "maple": [
+        "f:= proc(n) local i;",
+        "   if n::odd then 2 * mul(ithprime(4*i)*ithprime(4*i+1),i=1..(n-1)/2)",
+        "   else mul(ithprime(4*i-2)*ithprime(4*i-1),i=1..(n/2))",
+        "   fi",
+        "end proc:",
+        "map(f, [$0..20]);"
+    ],
+    "program": [
+        "(Python)",
+        "from math import prod",
+        "from sympy import prime",
+        "def A362364(n): return prod(prime(i)*prime(i+1) for i in range(2+((n&1)<<1),(n<<1)-1,4))<<(n&1) # _Chai Wah Wu_, Apr 20 2023"
+    ],
+    "xref": [
+        "Cf. A001222.",
+        "See the formula section for the relationships with A002110, A019565, A037481, A100112, A117214."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Robert Israel_, Apr 18 2023",
+    "references": 2,
+    "revision": 37,
+    "time": "2023-04-23T22:41:31-04:00",
+    "created": "2023-04-20T11:52:21-04:00"
+}

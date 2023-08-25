@@ -1,0 +1,32 @@
+{
+    "number": 344001,
+    "data": "1,2,4,6,8,14,15,16,20,22,24,28,30,32,33,38,40,45,46,51,52,54,60,62,63,64,65,66,69,72,77,86,87,90,91,92,94,95,96,102,112,115,116,118,120,123,124,126,128,130,134,138,140,141,142,143,144,145,148,152,153,154,156,158,159,161",
+    "name": "Indices k such that A011772(k) is odd.",
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A344001/b344001.txt\">Table of n, a(n) for n = 1..7187</a>"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory.modular import crt",
+        "from sympy import factorint",
+        "from math import prod",
+        "from itertools import count, islice, combinations",
+        "def A344001_gen(): # generator of terms",
+        "    for n in count(1):",
+        "        plist = tuple(p**q for p, q in factorint(2*n).items())",
+        "        if len(plist) == 1 or min(min(crt((m,2*n//m),(0,-1))[0],crt((2*n//m,m),(0,-1))[0]) for m in (prod(d) for l in range(1,len(plist)//2+1) for d in combinations(plist,l))) & 1:",
+        "            yield n",
+        "A344001_list = list(islice(A344001_gen(),40)) # _Chai Wah Wu_, Jun 15 2022"
+    ],
+    "xref": [
+        "Cf. A011772, A343999 (characteristic function), A344000 (complement).",
+        "Cf. also A354919."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jun 01 2021",
+    "references": 4,
+    "revision": 17,
+    "time": "2022-06-15T14:36:12-04:00",
+    "created": "2021-06-01T15:12:31-04:00"
+}

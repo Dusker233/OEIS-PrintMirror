@@ -1,0 +1,43 @@
+{
+    "number": 358382,
+    "data": "2,3,5,7,29,43,277,283,773,967,2801,3391,3701,5189,5233,5531,5591,6869,6949,7043,7753,9419,9787,10091,10957,11173,11551,13577,13729,13781,15319,15383,17489,17509,18583,19141,22091,23029,23669,25523,25601,25693,26249,27077,31151,31469,31891,32257",
+    "name": "First of three consecutive primes p,q,r such that r*(p+q) + p*q and r*(p+q) - p*q are prime.",
+    "link": [
+        "Robert Israel, <a href=\"/A358382/b358382.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(4) = 7 is a term because 7, 11, 13 are consecutive primes with 13*(7+11) + 7*11 = 311 and 13*(7+11) - 7*11 = 157 are prime."
+    ],
+    "maple": [
+        "q:= 2: r:= 3: count:= 0: R:= NULL:",
+        "while count < 100 do",
+        "  p:= q; q:= r; r:= nextprime(r);",
+        "  if isprime(r*(p+q)+p*q) and isprime(r*(p+q)-p*q) then",
+        "     R:= R, p; count:= count+1",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Partition[Prime[Range[3500]], 3, 1], PrimeQ[(s = #[[3]]*(#[[1]] + #[[2]])) + (t = #[[1]]*#[[2]])] && PrimeQ[s - t] &][[;; , 1]] (* _Amiram Eldar_, Nov 13 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime",
+        "def agen():",
+        "    p, q, r = 2, 3, 5",
+        "    while True:",
+        "        rpq, pq = r*(p+q), p*q",
+        "        if all(isprime(t) for t in [rpq+pq, rpq-pq]): yield p",
+        "        p, q, r = q, r, nextprime(r)",
+        "print(list(islice(agen(), 48))) # _Michael S. Branicky_, Nov 20 2022"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Nov 12 2022",
+    "references": 1,
+    "revision": 11,
+    "time": "2022-11-22T22:19:28-05:00",
+    "created": "2022-11-19T20:19:15-05:00"
+}

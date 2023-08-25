@@ -1,0 +1,31 @@
+{
+    "number": 52519,
+    "data": "0,0,0,0,0,0,80,840,7896,76608,793152,8838720,106096320,1368956160,18928615680,279530334720,4394135692800,73295141068800,1293442388582400,24082259707699200,471874122729676800",
+    "name": "Number of pairs of cycles of cardinality at least 3.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A052519/b052519.txt\">Table of n, a(n) for n = 0..448</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=85\">Encyclopedia of Combinatorial Structures 85</a>"
+    ],
+    "formula": [
+        "E.g.f.: log(1-x)^2 + x*(2+x)*log(1-x) + x^2 + x^3 + x^4/4.",
+        "(n-1)*a(n+2) + (3+n-2*n^2)*a(n+1) - n*(2+n-n^2)*a(n) = 0, with a(0) = .. = a(5) = 0, a(6) = 80."
+    ],
+    "maple": [
+        "Pairs spec := [S,{B=Cycle(Z,3 <= card),S=Prod(B,B)},labeled]: seq(combstruct[count](spec,size=n), n=0..20);"
+    ],
+    "mathematica": [
+        "With[{m = 25}, CoefficientList[Series[Log[1-x]^2 +x*(2+x)*Log[1-x] +x^2 + x^3 +x^4/4, {x,0,m}], x]*Range[0, m]!] (* _G. C. Greubel_, May 13 2019 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^25)); concat(vector(6), Vec(serlaplace( log(1-x)^2 + x*(2+x)*log(1-x) + x^2 + x^3 + x^4/4 ))) \\\\ _G. C. Greubel_, May 13 2019",
+        "(Magma) m:=25; R<x>:=PowerSeriesRing(Rationals(), m); b:=Coefficients(R!( Log(1-x)^2 + x*(2+x)*Log(1-x) + x^2 + x^3 + x^4/4 )); [0,0,0,0,0,0] cat [Factorial(n+5)*b[n]: n in [1..m-6]]; // _G. C. Greubel_, May 13 2019",
+        "(Sage) m = 25; T = taylor(log(1-x)^2 + x*(2+x)*log(1-x) + x^2 + x^3 + x^4/4, x, 0, m); [factorial(n)*T.coefficient(x, n) for n in (0..m)] # _G. C. Greubel_, May 13 2019"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,7",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "references": 1,
+    "revision": 15,
+    "time": "2022-09-08T08:44:59-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

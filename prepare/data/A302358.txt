@@ -1,0 +1,43 @@
+{
+    "number": 302358,
+    "data": "1,2,15,234,6170,245755,13761937,1030431500,99399019626,12003835242090,1773907219147800,314880916127332489,66109411013740671200,16204039283106534720952,4585484528618722750937783,1483746673734716952089913364,544359300175753347889146067840",
+    "name": "a(n) = coefficient of x^n in the n-th iteration (n-fold self-composition) of e.g.f. -log(1 - x).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A302358/b302358.txt\">Table of n, a(n) for n = 1..246</a>",
+        "Jekuthiel Ginsburg, <a href=\"/A000405/a000405.pdf\">Iterated exponentials</a>, Scripta Math., 11 (1945), 340-353. [Annotated scanned copy]",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "a(n) = T(n,n), T(n,k) = Sum_{j=1..n} |Stirling1(n,j)| * T(j,k-1), k>1, T(n,1) = (n-1)!. - _Seiichi Manyama_, Feb 11 2022"
+    ],
+    "example": [
+        "The initial coefficients of successive iterations of e.g.f. A(x) = -log(1 - x) are as follows:",
+        "n = 1: 0, (1), 1,   2,    6,    24,  ... e.g.f. A(x)",
+        "n = 2: 0,  1, (2),  7,   35,   228,  ... e.g.f. A(A(x))",
+        "n = 3: 0,  1,  3, (15), 105,   947,  ... e.g.f. A(A(A(x)))",
+        "n = 4: 0,  1,  4,  26, (234), 2696,  ... e.g.f. A(A(A(A(x))))",
+        "n = 5: 0,  1,  5,  40,  440, (6170), ... e.g.f. A(A(A(A(A(x)))))"
+    ],
+    "maple": [
+        "g:= x-> -log(1-x):",
+        "a:= n-> n! * coeff(series((g@@n)(x), x, n+1), x, n):",
+        "seq(a(n), n=1..19);  # _Alois P. Heinz_, Feb 11 2022"
+    ],
+    "mathematica": [
+        "Table[n! SeriesCoefficient[Nest[Function[x, -Log[1 - x]], x, n], {x, 0, n}], {n, 17}]"
+    ],
+    "program": [
+        "(PARI) T(n, k) = if(k==1, (n-1)!, sum(j=1, n, abs(stirling(n, j, 1))*T(j, k-1)));",
+        "a(n) = T(n, n); \\\\ _Seiichi Manyama_, Feb 11 2022"
+    ],
+    "xref": [
+        "Cf. A000268, A000310, A000359, A000406, A001765, A003713, A104150, A139383, A158832, A174482, A261280."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Apr 06 2018",
+    "references": 4,
+    "revision": 12,
+    "time": "2022-02-11T09:28:20-05:00",
+    "created": "2018-04-06T17:29:05-04:00"
+}

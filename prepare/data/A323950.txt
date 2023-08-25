@@ -1,0 +1,44 @@
+{
+    "number": 323950,
+    "data": "1,1,1,2,6,12,23,44,82,149,267,475,841,1484,2613,4595,8074,14180,24896,43702,76705,134622,236260,414623,727629,1276917,2240851,3932438,6900967,12110373,21252244,37295110,65448378,114853920,201554603,353703696,620706742",
+    "name": "Number of ways to split an n-cycle into connected subgraphs, none having exactly two vertices.",
+    "link": [
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-6,5,-3,1)."
+    ],
+    "formula": [
+        "G.f.: (x^7-3*x^6+3*x^5-2*x^4+x^3-3*x^2+3*x-1)/((x^3-x^2+2*x-1)*(x-1)^2). - _Alois P. Heinz_, Feb 10 2019"
+    ],
+    "example": [
+        "The a(1) = 1 through a(5) = 12 partitions:",
+        "  {{1}}  {{1}{2}}  {{123}}      {{1234}}        {{12345}}",
+        "                   {{1}{2}{3}}  {{1}{234}}      {{1}{2345}}",
+        "                                {{123}{4}}      {{1234}{5}}",
+        "                                {{124}{3}}      {{1235}{4}}",
+        "                                {{134}{2}}      {{1245}{3}}",
+        "                                {{1}{2}{3}{4}}  {{1345}{2}}",
+        "                                                {{1}{2}{345}}",
+        "                                                {{1}{234}{5}}",
+        "                                                {{123}{4}{5}}",
+        "                                                {{125}{3}{4}}",
+        "                                                {{145}{2}{3}}",
+        "                                                {{1}{2}{3}{4}{5}}"
+    ],
+    "mathematica": [
+        "cyceds[n_,k_]:=Union[Sort/@Join@@Table[1+Mod[Range[i,j]-1,n],{i,n},{j,Prepend[Range[i+k,n+i-1],i]}]];",
+        "spsu[_,{}]:={{}};spsu[foo_,set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@spsu[Select[foo,Complement[#,Complement[set,s]]=={}&],Complement[set,s]]]/@Cases[foo,{i,___}];",
+        "Table[Length[spsu[cyceds[n,2],Range[n]]],{n,15}]"
+    ],
+    "xref": [
+        "Cf. A000325, A001610, A001680, A005251, A066982, A306351, A323950, A323951, A323952, A323954."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Feb 10 2019",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Feb 10 2019"
+    ],
+    "references": 9,
+    "revision": 10,
+    "time": "2019-02-10T12:40:24-05:00",
+    "created": "2019-02-10T12:40:24-05:00"
+}

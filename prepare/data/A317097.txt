@@ -1,0 +1,44 @@
+{
+    "number": 317097,
+    "data": "1,1,2,4,9,20,46,106,248,583,1393,3343,8111,19801,48719,120489,299787,749258,1881216,4741340,11993672,30436507,77471471,197726053,505917729,1297471092,3334630086,8587369072,22155278381,57259037225,148222036272,384272253397",
+    "name": "Number of rooted trees with n nodes where the number of distinct branches under each node is <= 2.",
+    "comment": [
+        "There can be more than two branches as long as there are not three distinct branches."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A317097/b317097.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "The a(5) = 9 trees:",
+        "  ((((o))))",
+        "  (((oo)))",
+        "  ((o(o)))",
+        "  ((ooo))",
+        "  (o((o)))",
+        "  (o(oo))",
+        "  ((o)(o))",
+        "  (oo(o))",
+        "  (oooo)"
+    ],
+    "mathematica": [
+        "semisameQ[u_]:=Length[Union[u]]<=2;",
+        "nms[n_]:=nms[n]=If[n==1,{{}},Join@@Table[Select[Union[Sort/@Tuples[nms/@ptn]],semisameQ],{ptn,IntegerPartitions[n-1]}]];",
+        "Table[Length[nms[n]],{n,10}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(v=vector(n)); v[1]=1; for(n=1, n-1, v[n+1]=sum(k=1, n-1, sumdiv(k, d, v[d])*sumdiv(n-k, d, v[d])/2) + sumdiv(n, d, v[n/d]*(1 - (d-1)/2)) ); v} \\\\ _Andrew Howroyd_, Aug 28 2018"
+    ],
+    "xref": [
+        "Cf. A000081, A000598, A001190, A003238, A055277, A111299, A292050, A298204, A301344, A317098."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Aug 01 2018",
+    "ext": [
+        "Terms a(20) and beyond from _Andrew Howroyd_, Aug 28 2018"
+    ],
+    "references": 2,
+    "revision": 12,
+    "time": "2018-08-28T19:55:19-04:00",
+    "created": "2018-08-01T20:37:12-04:00"
+}

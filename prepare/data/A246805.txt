@@ -1,0 +1,47 @@
+{
+    "number": 246805,
+    "data": "1,3,4,7,19,31,67,391,583,4549,917467,6777061,86794921,1421517037,171234891469",
+    "name": "Lexicographically earliest sequence of distinct terms such that, when i<j, at least one of a(i) U a(j) or a(j) U a(i) is prime (where U denotes concatenation).",
+    "comment": [
+        "Two distinct terms can always be concatenated in some way to form a prime number.",
+        "Is this sequence infinite?"
+    ],
+    "link": [
+        "Paul Tek, <a href=\"/A246805/a246805.gp.txt\">PARI program for this sequence</a>"
+    ],
+    "example": [
+        "The following concatenations are prime:",
+        "- j=2: a(1) U a(2)=13, a(2) U a(1)=31",
+        "- j=3: a(3) U a(1)=41, a(3) U a(2)=43",
+        "- j=4: a(1) U a(4)=17, a(4) U a(1)=71, a(2) U a(4)=37, a(4) U a(2)=73, a(3) U a(4)=47",
+        "- j=5: a(5) U a(1)=191, a(5) U a(2)=193, a(3) U a(5)=419, a(4) U a(5)=719, a(5) U a(4)=197",
+        "- j=6: a(1) U a(6)=131, a(6) U a(1)=311, a(2) U a(6)=331, a(6) U a(2)=313, a(3) U a(6)=431, a(6) U a(4)=317, a(5) U a(6)=1931, a(6) U a(5)=3119"
+    ],
+    "program": [
+        "(PARI) See Link section.",
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import islice",
+        "def c(s, slst):",
+        "    return all(isprime(int(s+t)) or isprime(int(t+s)) for t in slst)",
+        "def agen():",
+        "    slst, an, mink = [], 1, 2",
+        "    while True:",
+        "        yield an; slst.append(str(an)); an += 1",
+        "        while not c(str(an), slst): an += 1",
+        "print(list(islice(agen(), 10))) # _Michael S. Branicky_, Oct 17 2022"
+    ],
+    "xref": [
+        "Cf. A156770, A228323."
+    ],
+    "keyword": "base,nonn,more",
+    "offset": "1,2",
+    "author": "_Paul Tek_, Nov 16 2014",
+    "ext": [
+        "a(15) from _Michael S. Branicky_, Nov 07 2022"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2022-11-07T13:46:14-05:00",
+    "created": "2014-11-30T07:37:21-05:00"
+}

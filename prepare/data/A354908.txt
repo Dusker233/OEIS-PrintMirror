@@ -1,0 +1,50 @@
+{
+    "number": 354908,
+    "data": "1,2,3,4,7,8,10,11,14,15,16,31,32,36,39,42,43,46,47,58,59,60,62,63,64,127,128,136,138,139,142,143,168,170,171,174,175,184,186,187,190,191,232,234,235,238,239,248,250,251,254,255,256,292,295,316,319,484",
+    "name": "Numbers k such that the k-th composition in standard order (graded reverse-lexicographic, A066099) is collapsible.",
+    "comment": [
+        "The k-th composition in standard order (graded reverse-lexicographic, A066099) is obtained by taking the set of positions of 1's in the reversed binary expansion of k, prepending 0, taking first differences, and reversing again. This gives a bijective correspondence between nonnegative integers and integer compositions.",
+        "If a collapse is an adding together of some partial run of an integer composition c, we say c is collapsible iff by some sequence of collapses it can be reduced to a single part. An example of such a sequence of collapses is (11132112) -> (332112) -> (33222) -> (6222) -> (66) -> (n), which shows that (11132112) is a collapsible composition of 12."
+    ],
+    "example": [
+        "The terms together with their corresponding compositions begin:",
+        "  1:(1)  2:(2)   4:(3)     8:(4)     16:(5)      32:(6)",
+        "         3:(11)  7:(111)  10:(22)    31:(11111)  36:(33)",
+        "                          11:(211)               39:(3111)",
+        "                          14:(112)               42:(222)",
+        "                          15:(1111)              43:(2211)",
+        "                                                 46:(2112)",
+        "                                                 47:(21111)",
+        "                                                 58:(1122)",
+        "                                                 59:(11211)",
+        "                                                 60:(1113)",
+        "                                                 62:(11112)",
+        "                                                 63:(111111)"
+    ],
+    "mathematica": [
+        "repcams[q_List]:=repcams[q]=Union[{q},If[UnsameQ@@q,{},Union@@repcams/@Union[Insert[Drop[q,#],Plus@@Take[q,#],First[#]]&/@Select[Tuples[Range[Length[q]],2],And[Less@@#,SameQ@@Take[q,#]]&]]]];",
+        "stc[n_]:=Differences[Prepend[Join@@ Position[Reverse[IntegerDigits[n,2]],1],0]]//Reverse;",
+        "Select[Range[0,100],MemberQ[repcams[stc[#]],{_}]&]"
+    ],
+    "xref": [
+        "The standard compositions used here are A066099, run-sums A353847/A353932.",
+        "The version for Heinz numbers of partitions is A300273, counted by A275870.",
+        "These compositions are counted by A353860.",
+        "A003242 counts anti-run compositions, ranked by A333489, complement A261983.",
+        "A011782 counts compositions.",
+        "A124767 counts runs in standard compositions.",
+        "A238279 and A333755 count compositions by number of runs.",
+        "A334968 counts distinct sums of subsequences of standard compositions.",
+        "A351014 counts distinct runs of standard compositions, firsts A351015.",
+        "A353853-A353859 pertain to composition run-sum trajectory.",
+        "A354582 counts distinct partial runs of standard compositions, sums A354907.",
+        "Cf. A005811, A029837, A072639, A124771, A274174, A318928, A333381, A353848, A353849, A353850."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jun 23 2022",
+    "references": 2,
+    "revision": 8,
+    "time": "2022-06-24T17:19:57-04:00",
+    "created": "2022-06-24T17:19:57-04:00"
+}

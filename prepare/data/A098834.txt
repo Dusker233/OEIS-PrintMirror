@@ -1,0 +1,46 @@
+{
+    "number": 98834,
+    "data": "4,22,121,202,454,535,636,666,1111,1881,3663,7227,7447,9229,10201,17271,22522,24142,28182,33633,38283,45054,45454,46664,47074,50305,51115,51315,54645,55055,55955,72627,81418,82628,83038,83938,90409,95359,96169,164461",
+    "name": "Palindromic Smith numbers.",
+    "link": [
+        "Donovan Johnson, <a href=\"/A098834/b098834.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 121 because 121 is a Smith number as well as a palindromic number."
+    ],
+    "mathematica": [
+        "d[n_] := IntegerDigits[n]; tr[n_] := Transpose[FactorInteger[n]]; Select[Range[2, 1.7*10^5], !PrimeQ[#] && Reverse[x=d[#]] == x && Total[x] == Total[d@tr[#][[1]]*tr[#][[2]], 2]&] (* _Jayanta Basu_, Jun 04 2013 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "from itertools import product",
+        "def sd(n): return sum(map(int, str(n)))",
+        "def smith(n):",
+        "  f = factorint(n)",
+        "  return sum(f[p] for p in f) > 1 and sd(n) == sum(sd(p)*f[p] for p in f)",
+        "def palsto(limit):",
+        "  yield from range(min(limit, 9)+1)",
+        "  midrange = [[\"\"], [str(i) for i in range(10)]]",
+        "  for digs in range(2, 10**len(str(limit))):",
+        "    for p in product(\"0123456789\", repeat=digs//2):",
+        "      left = \"\".join(p)",
+        "      if left[0] == '0': continue",
+        "      for middle in midrange[digs%2]:",
+        "        out = int(left + middle + left[::-1])",
+        "        if out > limit: return",
+        "        yield out",
+        "print(list(filter(smith, palsto(164461)))) # _Michael S. Branicky_, Apr 22 2021"
+    ],
+    "xref": [
+        "Cf. A006753.",
+        "Subsequence of A104171.  Supersequence of A104166."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Shyam Sunder Gupta_, Oct 10 2004",
+    "references": 6,
+    "revision": 12,
+    "time": "2021-04-22T21:54:14-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

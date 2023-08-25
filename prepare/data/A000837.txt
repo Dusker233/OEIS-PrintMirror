@@ -1,0 +1,59 @@
+{
+    "number": 837,
+    "data": "1,1,1,2,3,6,7,14,17,27,34,55,63,100,119,167,209,296,347,489,582,775,945,1254,1481,1951,2334,2980,3580,4564,5386,6841,8118,10085,12012,14862,17526,21636,25524,31082,36694,44582,52255,63260,74170,88931,104302",
+    "name": "Number of partitions of n into relatively prime parts. Also aperiodic partitions.",
+    "comment": [
+        "Starting (1, 1, 2, 3, 6, 7, 14, ...), = row sums of triangle A137585. - _Gary W. Adamson_, Jan 27 2008",
+        "Triangle A168532 has aerated variants of this sequence in each column starting with offset 1, row sums = A000041. -  _Gary W. Adamson_, Nov 28 2009",
+        "A partition is aperiodic iff its multiplicities are relatively prime, i.e., its Heinz number (A215366) is not a perfect power (A007916). - _Gus Wiseman_, Dec 19 2017",
+        "This sequence is monotonically increasing; each partition of n-1 can have a part of size 1 added to it to get a partition counted in a(n). - _Franklin T. Adams-Watters_, Jul 24 2020"
+    ],
+    "reference": [
+        "H. W. Gould, personal communication."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A000837/b000837.txt\">Table of n, a(n) for n = 0..10000</a> (terms 0..1000 from T. D. Noe)",
+        "Mohamed El Bachraoui, <a href=\"https://doi.org/10.11575/cdm.v5i2.62030\">On the Parity of p(n,3) and p_psi(n,3)</a>, Contributions to Discrete Mathematics, Vol. 5.2 (2010).",
+        "Wolfdieter Lang, <a href=\"https://arxiv.org/abs/2307.10645\">Cantor's List of Real Algebraic Numbers of Heights 1 to 7</a>, arXiv:2307.10645 [math.NT], 2023.",
+        "Mircea Merca and Maxie D. Schmidt, <a href=\"https://arxiv.org/abs/1706.00393\">Generating Special Arithmetic Functions by Lambert Series Factorizations</a>, arXiv:1706.00393 [math.NT], 2017. See Remark 3.4.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "M\u00f6bius transform of A000041. - _Christian G. Bower_, Jun 11 2000",
+        "Product_{n>0} 1/(1-q^n) = 1 + Sum_{n>0} a(n)*q^n/(1-q^n). - _Mamuka Jibladze_, Nov 14 2015",
+        "a(n) ~ exp(Pi*sqrt(2*n/3)) / (4*n*sqrt(3)). - _Vaclav Kotesovec_, Jan 28 2019",
+        "a(n) <= p(n) <= a(n+1), where p(n) is the number of partitions of n (A000041). - _Franklin T. Adams-Watters_, Jul 24 2020"
+    ],
+    "example": [
+        "Of the 11 partitions of 6, we must exclude 6, 4+2, 3+3 and 2+2+2, so a(6) = 11 - 4 = 7.",
+        "For n=6, 2+2+1+1 is periodic because it can be written 2*(2+1), similarly 1+1+1+1+1+1, 3+3 and 2+2+2.",
+        "The a(6) = 7 partitions into relatively prime parts are (51), (411), (321), (3111), (2211), (21111), (111111). The a(6) = 7 aperiodic partitions are (6), (51), (42), (411), (321), (3111), (21111). - _Gus Wiseman_, Dec 19 2017"
+    ],
+    "mathematica": [
+        "p[n_] := IntegerPartitions[n]; l[n_] := Length[p[n]]; g[n_, j_] := Apply[GCD, Part[p[n], j]]; h[n_] := Table[g[n, j], {j, 1, l[n]}]; Join[{1}, Table[Count[h[n], 1], {n, 1, 20}]]",
+        "(* _Clark Kimberling_, Mar 09 2012 *)",
+        "a[0] = 1; a[n_] := Sum[ MoebiusMu[n/d] * PartitionsP[d], {d, Divisors[n]}]; Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Oct 03 2013 *)"
+    ],
+    "program": [
+        "(PARI) N=66; x='x+O('x^N); gf=2+sum(n=1,N, (1/eta(x^n))*moebius(n)); Vec(gf) \\\\ _Joerg Arndt_, May 11 2013",
+        "(PARI) print1(\"1, \"); for(n=1,46,my(s=0);forpart(X=n,s+=gcd(X)==1);print1(s,\", \")) \\\\ _Hugo Pfoertner_, Mar 27 2020",
+        "(Python)",
+        "from sympy import npartitions, mobius, divisors",
+        "def a(n): return 1 if n==0 else sum(mobius(n//d)*npartitions(d) for d in divisors(n)) # _Indranil Ghosh_, Apr 26 2017"
+    ],
+    "xref": [
+        "Cf. A000041, A018783.",
+        "Cf. A000740, A007916, A047968, A055892, A100953, A137585, A168532, A281116."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Corrected and extended by _David W. Wilson_, Aug 15 1996",
+        "Additional name from _Christian G. Bower_, Jun 11 2000"
+    ],
+    "references": 247,
+    "revision": 92,
+    "time": "2023-07-25T09:50:59-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

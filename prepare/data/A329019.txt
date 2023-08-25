@@ -1,0 +1,30 @@
+{
+    "number": 329019,
+    "data": "1,13,133,1261,2321,105469,953317,8596237,77431669,139429433,6275373061,56482551853,508359743893,4575304803901,8235602334113,370603178776909,3335432903959477,30018913315504477,270170288559017029,486306574381812041,21883796946693169621",
+    "name": "a(n) = p(1,n), where p(x,n) is the strong divisibility sequence of polynomials based on sqrt(3/2) as in A328644.",
+    "comment": [
+        "a(n) is a strong divisibility sequence; i.e., gcd(a(h),a(k)) = a(gcd(h,k))."
+    ],
+    "example": [
+        "See Example in A328644."
+    ],
+    "mathematica": [
+        "c[poly_] := If[Head[poly] === Times, Times @@ DeleteCases[(#1 (Boole[MemberQ[#1, x] || MemberQ[#1, y] || MemberQ[#1, z]] &) /@Variables /@ #1 &)[List @@ poly], 0], poly];",
+        "r = Sqrt[3/2]; f[x_, n_] := c[Factor[Expand[(r x + r)^n - (r x - 1/r)^n]]];",
+        "Flatten[Table[CoefficientList[f[x, n], x], {n, 1, 12}]];  (* A328644 *)",
+        "Table[f[x, n] /. x -> 0, {n, 1, 30}]   (* A329017 *)",
+        "Table[f[x, n] /. x -> 1, {n, 1, 30}]   (* A329018 *)",
+        "Table[f[x, n] /. x -> 2, {n, 1, 30}]   (* A329019 *)",
+        "(* _Peter J. C. Moses_, Nov 01 2019 *)"
+    ],
+    "xref": [
+        "Cf. A328644, A329017, A329018."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Nov 23 2019",
+    "references": 4,
+    "revision": 5,
+    "time": "2019-12-27T16:36:02-05:00",
+    "created": "2019-12-27T16:36:02-05:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 212863,
+    "data": "32,192,216,243,3125,3750,4000,4500,4800,5120,5400,5760,6075,6480,7290,16807,24010,28812,34300,41160,43904,46305,49000,49392,55125,55566,58800,62720,65625,66150,70000,70560,75264,78750,79380,84000,84672,89600,94500,95256",
+    "name": "Numbers k such that the sum of prime factors of k (counted with multiplicity) equals five times the largest prime divisor of k.",
+    "comment": [
+        "The numbers prime(n)^5 are in the sequence.",
+        "Also contains 4^p p and 2^p p^3 for any prime p>2, and 3^p p^2 for any prime > 3. - _Robert Israel_, Jun 20 2017",
+        "From _David A. Corneth_, Apr 24 2020: (Start)",
+        "Suppose we look for terms below (inclusive) u. Let maxp be the largest prime factor that is the multiple of at least one of those terms. Then maxp is the largest prime below (inclusive) u^(1/5).",
+        "Proof: The sum of prime factors counted with multiplicity of a term t divisible by maxp is 5*maxp. The smallest product of primes summing to 5*maxp where the largest prime factor of t is maxp is maxp^5 which must be <= u. Solving this gives maxp is the largest prime below (inclusive) u^(1/5).",
+        "This enables us to search through the positive integers via a tree starting at 1. (End)"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A212863/b212863.txt\">Table of n, a(n) for n = 1..10000</a> (first 200 terms from Robert Israel. Following 4800 terms from Amiram Eldar)",
+        "David A. Corneth, <a href=\"/A212863/a212863.gp.txt\">PARI program</a>",
+        "David A. Corneth, <a href=\"/A212863/a212863_1.gp.txt\">Terms <= 10^12</a>"
+    ],
+    "example": [
+        "192 is in the sequence because 192 = 2^6 * 3 => sum of prime divisors = 2*6 + 3 = 15 = 5*3 where 3 is the greatest prime divisor."
+    ],
+    "maple": [
+        "with(numtheory):A:= proc(n) local e, j; e := ifactors(n)[2]: add (e[j][1]*e[j][2], j=1..nops(e)) end: for m from 2 to 500000 do: x:=factorset(m):n1:=nops(x):if A(m)=5*x[n1] then printf(`%d, `,m):else fi:od:"
+    ],
+    "mathematica": [
+        "Select[Range[2, 10^5], Plus @@ Times @@@ (f = FactorInteger[#]) == 5 * f[[-1, 1]] &] (* _Amiram Eldar_, Apr 24 2020 *)"
+    ],
+    "program": [
+        "(PARI) See Corneth link \\\\ _David A. Corneth_, Apr 24 2020"
+    ],
+    "xref": [
+        "Cf. A001414, A163836, A212861, A212862."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, May 29 2012",
+    "references": 1,
+    "revision": 25,
+    "time": "2020-05-06T01:28:34-04:00",
+    "created": "2012-05-31T12:30:05-04:00"
+}

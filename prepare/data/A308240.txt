@@ -1,0 +1,35 @@
+{
+    "number": 308240,
+    "data": "1,1,2,6,19,58,184,604,2017,6806,23161,79392,273614,946981,3289364,11460830,40036253,140175224,491756763,1728190792,6082921479,21440851774,75669652513,267362335333,945656056754,3347973882425,11863501369311,42072251661888",
+    "name": "Number of lattice paths from (0,0) to (n,n) that consist of steps (h,v) with h, v prime or one.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A308240/b308240.txt\">Table of n, a(n) for n = 0..600</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "maple": [
+        "b:= proc(x, y) option remember; `if`(y=0, 1, add(add(",
+        "      `if`((h=1 or isprime(h)) and (v=1 or isprime(v)),",
+        "         b(sort([x-h, y-v])[]), 0), v=1..y), h=1..x))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "f[p_List] := p + {0, p[[1]]}; f[0] = 0;",
+        "b[{x_, y_}] := b[{x, y}] = If[y == 0, {1, 1}, f[Sum[Sum[",
+        "     If[(h == 1 || PrimeQ[h]) && (v == 1 || PrimeQ[v]),",
+        "     b[Sort@{x - h, y - v}], {0, 0}], {v, 1, y}], {h, 1, x}]]];",
+        "a[n_] := b[{n, n}][[1]];",
+        "a /@ Range[0, 30] (* _Jean-Fran\u00e7ois Alcover_, Apr 05 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000040, A008578, A308241, A308273."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, May 16 2019",
+    "references": 3,
+    "revision": 15,
+    "time": "2021-04-05T09:17:50-04:00",
+    "created": "2019-05-25T15:17:51-04:00"
+}

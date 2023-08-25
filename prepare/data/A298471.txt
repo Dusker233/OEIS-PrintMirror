@@ -1,0 +1,37 @@
+{
+    "number": 298471,
+    "data": "2,4,22,32,38,44,50,56,62,68,74,80,86,92,98,104,110,116,122,130,140,146,152,158,164,170,176,182,190,200,206,212,218,226,236,242,248,254,262,272,278,284,290,298,308,314,320,326,334,344,350",
+    "name": "a(n) = a(0)*b(n) + a(1)*b(n-1), where a(0) = 2, a(1) = 4, b(0)  = 1; b(1) = 3 ; b(2) = 5.",
+    "comment": [
+        "The increasing complementary sequences a() and b() are uniquely determined by the titular equation and initial values. See A297830 for a guide to related sequences."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A298471/b298471.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "a(2) = 2*5 + 4*3 = 22."
+    ],
+    "mathematica": [
+        "mex[list_, start_] := (NestWhile[# + 1 &, start, MemberQ[list, #] &]);",
+        "aCoeffs = {2, 4}; bCoeffs = {1, 3, 5};",
+        "Table[a[n - 1] = #[[n]], {n, Length[#]}] &[aCoeffs];",
+        "Table[b[n - 1] = #[[n]], {n, Length[#]}] &[bCoeffs];",
+        "a[n_] := Hold[Sum[a[z] b[n - z], {z, 0, Length[aCoeffs] - 1}]]",
+        "Table[{a[z] = ReleaseHold[a[z]], b[z + 1] =",
+        "    mex[Join[Table[a[n], {n, 0, z}], Table[b[n], {n, 0, z}]], 1]}, {z,",
+        "    Length[aCoeffs], 1000}];",
+        "Table[a[n], {n, 0, 50}]  (* A298471 *)",
+        "Table[b[n], {n, 0, 50}]  (* complement *)",
+        "(* _Peter J. C. Moses_, Jan 19 2018 *)"
+    ],
+    "xref": [
+        "Cf. A298338, A298468."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "_Clark Kimberling_, Feb 11 2018",
+    "references": 1,
+    "revision": 4,
+    "time": "2018-02-11T22:07:18-05:00",
+    "created": "2018-02-11T22:07:18-05:00"
+}

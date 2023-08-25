@@ -1,0 +1,56 @@
+{
+    "number": 320169,
+    "data": "1,2,3,6,9,20,31,70,114,243,415,961,1603,3564,6559,14913,26630,60037,110160,248859,458445,1001190,1882350,4220358,7765303,16822107,32307240,70081784,133716083,291788153,561823990,1230204229,2396185727,5176454708,10220127290",
+    "name": "Number of balanced enriched p-trees of weight n.",
+    "comment": [
+        "An enriched p-tree of weight n is either the number n itself or a finite sequence of enriched p-trees whose weights are weakly decreasing and sum to n.",
+        "A tree is balanced if all leaves have the same height."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320169/b320169.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 20 balanced enriched p-trees:",
+        "  1  2     3      4           5            6",
+        "     (11)  (21)   (22)        (32)         (33)",
+        "           (111)  (31)        (41)         (42)",
+        "                  (211)       (221)        (51)",
+        "                  (1111)      (311)        (222)",
+        "                  ((11)(11))  (2111)       (321)",
+        "                              (11111)      (411)",
+        "                              ((21)(11))   (2211)",
+        "                              ((111)(11))  (3111)",
+        "                                           (21111)",
+        "                                           (111111)",
+        "                                           ((21)(21))",
+        "                                           ((22)(11))",
+        "                                           ((31)(11))",
+        "                                           ((111)(21))",
+        "                                           ((21)(111))",
+        "                                           ((211)(11))",
+        "                                           ((111)(111))",
+        "                                           ((1111)(11))",
+        "                                           ((11)(11)(11))"
+    ],
+    "mathematica": [
+        "eptrs[n_]:=Prepend[Join@@Table[Tuples[eptrs/@p],{p,Rest[IntegerPartitions[n]]}],n];",
+        "Table[Length[Select[eptrs[n],SameQ@@Length/@Position[#,_Integer]&]],{n,12}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(p=x/(1-x) + O(x*x^n), q=0); while(p, q+=p; p = 1/prod(k=1, n, 1 - polcoef(p,k)*x^k + O(x*x^n)) - 1 - p); Vec(q)} \\\\ _Andrew Howroyd_, Oct 26 2018"
+    ],
+    "xref": [
+        "Cf. A000311, A000669, A001678, A005804, A048816, A079500, A119262, A120803, A141268, A196545, A289501, A319312.",
+        "Cf. A316624, A320154, A320155, A320160, A320179."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Oct 07 2018",
+    "ext": [
+        "Terms a(16) and beyond from _Andrew Howroyd_, Oct 26 2018"
+    ],
+    "references": 9,
+    "revision": 8,
+    "time": "2018-10-26T00:52:17-04:00",
+    "created": "2018-10-07T14:35:55-04:00"
+}

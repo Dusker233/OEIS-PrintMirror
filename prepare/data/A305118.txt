@@ -1,0 +1,40 @@
+{
+    "number": 305118,
+    "data": "1,2,6,19,66,249,996,4148,17784,77939,347516,1571304,7187288,33196887,154611392,725284721,3423760262,16251813715,77523741208,371428985796,1786623827240,8624669381161,41769772877288,202893913979291,988224403828490,4825331506973445",
+    "name": "a(n) = Sum_{k=0..n-1} ( 1 + a(k) * a(n-k-1) ) for n >= 1, a(0) = 1.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A305118/b305118.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies: A(x) = 1 + x * (1/(1 - x)^2 + A(x)^2). - _Ilya Gutkovskiy_, Jun 30 2020",
+        "From _Vaclav Kotesovec_, Jun 30 2020: (Start)",
+        "G.f.: (1 - sqrt(1 - 4*x*(1 + x/(1 - x)^2))) / (2*x).",
+        "a(n) ~ sqrt(1/r + 2/(1 - r)^3) / (2*sqrt(Pi) * n^(3/2) * r^n), where r = 0.19288682865259090392018... is the real root of the equation -1 + 6*r - 5*r^2 + 4*r^3 = 0. (End)"
+    ],
+    "maple": [
+        "P:=proc(q) local a,k,n; a:=[1]; for n from 1 to q do",
+        "a:=[op(a),add(1+a[k]*a[n-k+1],k=1..n)]; od; op(a);",
+        "end: P(25); # _Paolo P. Lava_, Sep 25 2018"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1 - Sqrt[1 - 4*x*(1 + x/(1 - x)^2)]) / (2*x), {x, 0, 20}], x] (* _Vaclav Kotesovec_, Jun 30 2020 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "seq(N) = {",
+        "  my(a = vector(N)); a[1] = 1;",
+        "  for (n=2, N, a[n] = sum(k=1, n-1,  1 + a[k]*a[n-k])); a;",
+        "};",
+        "seq(32)"
+    ],
+    "xref": [
+        "Cf. A007317, A000699, A088716."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Joerg Arndt_, May 26 2018",
+    "references": 1,
+    "revision": 20,
+    "time": "2020-06-30T07:59:17-04:00",
+    "created": "2018-05-26T04:17:09-04:00"
+}

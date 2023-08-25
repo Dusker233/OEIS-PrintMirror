@@ -1,0 +1,48 @@
+{
+    "number": 307069,
+    "data": "0,0,2,3,9,50,51,70,71,133,134,135,136,2543,2544",
+    "name": "Given a special version of Pascal's triangle where only Fibonacci numbers are permitted, a(n) is the row number in which the n-th Fibonacci number first appears.",
+    "comment": [
+        "Consider a version of Pascal's Triangle: a triangular array with a single 1 on row 0, with numbers below equal to the sum of the two numbers above it if and only if that sum appears in the Fibonacci sequence A000045. If the sum does not appear in A000045, a 1 is put in its place.",
+        "So the first few rows would be as follows:",
+        "  row 0:            1",
+        "  row 1:           1 1",
+        "  row 2:          1 2 1",
+        "  row 3:         1 3 3 1",
+        "  row 4:        1 1 1 1 1",
+        "  row 5:       1 2 2 2 2 1",
+        "  row 6:      1 3 1 1 1 3 1",
+        "  row 7:     1 1 1 2 2 1 1 1",
+        "  row 8:    1 2 2 3 1 3 2 2 1",
+        "  row 9:   1 3 1 5 1 1 5 1 3 1",
+        "  ...",
+        "a(n) is the row number in which the n-th Fibonacci number first appears in this triangular array.",
+        "a(16) > 2.2*10^5. - _David A. Corneth_, Mar 25 2019",
+        "a(16) > 3.2*10^6. - _Daniel Suteu_, Mar 26 2019",
+        "a(16) > 1.5*10^7. - _Bert Dobbelaere_, Apr 02 2019"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A307069/a307069.gp.txt\">PARI program</a>"
+    ],
+    "mathematica": [
+        "Block[{s = Array[Fibonacci, 20], t}, t = Nest[Append[#1, (PadLeft[#1[[-1]], #2] + PadRight[#1[[-1]], #2]) /. k_Integer /; FreeQ[s, k] -> 1] & @@ {#, Length@ # + 1} &, {{1}}, 10^4]; -1 + TakeWhile[Map[FirstPosition[t, #][[1]] &, s], IntegerQ]] (* _Michael De Vlieger_, Mar 24 2019 *)"
+    ],
+    "program": [
+        "(PARI) isfib(n) = my(k=n^2); k+=(k+1)<<2; issquare(k) || (n>0 && issquare(k-8));",
+        "lista(nn) = {print1(0, \", \", 0, \", \"); v = [1,1]; nextf = 3; for (n=2, nn, w = vector(n+1); w[1] = v[1]; for (j=2, n, w[j] = v[j-1]+ v[j]; if (!isfib(w[j]), w[j] = 1)); w[n+1] = v[n]; sw = vecsort(w,,8); if (vecsearch(sw, fibonacci(nextf)), print1(n, \", \"); nextf++); v = w;);} \\\\ _Michel Marcus_, Mar 22 2019",
+        "(PARI) See Corneth link \\\\ _David A. Corneth_, Mar 25 2019"
+    ],
+    "xref": [
+        "Cf. A000045, A307116 (the special Pascal's triangle)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,3",
+    "author": "_Elliott Line_, Mar 22 2019",
+    "ext": [
+        "a(14)-a(15) from _Michel Marcus_, Mar 22 2019"
+    ],
+    "references": 2,
+    "revision": 40,
+    "time": "2019-04-05T05:51:28-04:00",
+    "created": "2019-03-28T12:06:08-04:00"
+}

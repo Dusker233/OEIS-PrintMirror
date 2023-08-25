@@ -1,0 +1,37 @@
+{
+    "number": 184884,
+    "data": "1,1,2,6,11,27,60,132,301,669,1502,3370,7543,16919,37912,84968,190457,426841,956698,2144238,4805827,10771315,24141588,54108332,121272549,271806901,609198390,1365390546,3060236911,6858880431,15372743856,34454786384,77223188593,173079605553,387921692082,869445237846",
+    "name": "Diagonal sums of number triangle A184883.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A184884/b184884.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,2,-1,1)."
+    ],
+    "formula": [
+        "G.f.: (1-x^2)/(1-x-2*x^2-2*x^3+x^4-x^5).",
+        "a(n) = Sum_{k=0..floor(n/2)} Sum_{j=0..k} C(2*n-4*k,j)*C(k,j)*2^j.",
+        "a(n) = Sum_{k=0..floor(n/2)} Hypergeometric2F1([-k, 2*(k-n)], [1], 2). - _G. C. Greubel_, Nov 19 2021"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1,2,2,-1,1}, {1,1,2,6,11}, 45] (* _G. C. Greubel_, Nov 19 2021 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "A184883:= func< n,k | (&+[Binomial(k,j)*Binomial(2*(n-k), j)*2^j: j in [0..k]]) >;",
+        "A184884:= func< n | (&+[A184883(n, j): j in [0..Floor(n/2)]]) >;",
+        "[A184884(n): n in [0..40]]; // _G. C. Greubel_, Nov 19 2021",
+        "(Sage)",
+        "def A184883(n,k): return simplify( hypergeometric([-k, 2*(k-n)], [1], 2) )",
+        "def A184884(n): return sum( A184883(n, j) for j in (0..n//2) )",
+        "[A184884(n) for n in (0..40)] # _G. C. Greubel_, Nov 19 2021"
+    ],
+    "xref": [
+        "Cf. A183883."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Paul Barry_, Jan 24 2011",
+    "references": 3,
+    "revision": 15,
+    "time": "2022-09-08T08:45:55-04:00",
+    "created": "2011-01-24T10:42:54-05:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 343119,
+    "data": "1,1,11,41867,517934206090276988507,42635439758725572299058305546953458030363703549127905691758491973278624456679699932948789006991639715987",
+    "name": "Number of compositions (ordered partitions) of the n-th primorial into distinct parts.",
+    "comment": [
+        "All terms are odd."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A343119/b343119.txt\">Table of n, a(n) for n = 0..6</a>"
+    ],
+    "formula": [
+        "a(n) = A032020(A002110(n))."
+    ],
+    "maple": [
+        "b:= proc(n) b(n):= `if`(n=0, 1, b(n-1)*ithprime(n)) end:",
+        "g:= proc(n, k) option remember; `if`(k<0 or n<0, 0,",
+        "     `if`(k=0, `if`(n=0, 1, 0), g(n-k, k)+k*g(n-k, k-1)))",
+        "    end:",
+        "a:= n-> add(g(b(n), k), k=0..floor((sqrt(8*b(n)+1)-1)/2)):",
+        "seq(a(n), n=0..5);"
+    ],
+    "mathematica": [
+        "$RecursionLimit = 5000;",
+        "b[n_] := If[n == 0, 1, b[n - 1]*Prime[n]];",
+        "g[n_, k_] := g[n, k] = If[k < 0 || n < 0, 0,",
+        "     If[k == 0, If[n == 0, 1, 0], g[n - k, k] + k*g[n - k, k - 1]]];",
+        "a[n_] := Sum[g[b[n], k], {k, 0, Floor[(Sqrt[8*b[n] + 1] - 1)/2]}];",
+        "Table[a[n], {n, 0, 5}] (* _Jean-Fran\u00e7ois Alcover_, Apr 14 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A002110, A032020, A000849, A005867, A054640, A058254, A062447, A342996, A343147."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Apr 09 2021",
+    "references": 1,
+    "revision": 23,
+    "time": "2022-04-14T06:31:41-04:00",
+    "created": "2021-04-09T15:33:17-04:00"
+}

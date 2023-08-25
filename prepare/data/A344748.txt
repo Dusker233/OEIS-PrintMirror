@@ -1,0 +1,49 @@
+{
+    "number": 344748,
+    "data": "0,1,2,3,4,5,6,7,8,9,21,26,42,47,63,68,84,89,147,284,321,468,505,642,789,826,963,2468,2963,4321,4826,6284,6789,8147,8642,50505,52963,54321,56789,58147,208642,258147,406284,456789,604826,654321,802468,852963",
+    "name": "Numbers m with decimal expansion (d_k, ..., d_1) such that d_i = m * i mod 10 for i = 1..k.",
+    "comment": [
+        "Positive terms have no trailing zero in decimal representation (A067251), and are uniquely determined by their final digit d (A010879) and the number of digits, say k, in their decimal expansion (A055642); d*k cannot be a multiple of 10.",
+        "If m belongs to the sequence, then A217657(m) also belongs to the sequence."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A344748/b344748.txt\">Table of n, a(n) for n = 1..1826</a>"
+    ],
+    "example": [
+        "- 6 * 1 = 6 mod 10,",
+        "- 6 * 2 = 2 mod 10,",
+        "- 6 * 3 = 8 mod 10,",
+        "- 6 * 4 = 4 mod 10,",
+        "- so 4826 belongs to the sequence."
+    ],
+    "program": [
+        "(PARI) is(n) = { my (r=n); for (k=1, oo, if (r==0, return (1), (n*k)%10!=r%10, return (0), r\\=10)) }",
+        "(PARI) print (setbinop((d,k) -> sum(i=1, k, 10^(i-1) * ((d*i)%10)), [1..9], [0..6]))",
+        "(Python)",
+        "def ok(m):",
+        "  d = str(m)",
+        "  return all(d[-i] == str((m*i)%10) for i in range(1, len(d)+1))",
+        "print(list(filter(ok, range(10**6)))) # _Michael S. Branicky_, May 29 2021",
+        "(Python)",
+        "def auptod(maxdigits):",
+        "  alst = [0]",
+        "  for k in range(1, maxdigits+1):",
+        "    aklst = []",
+        "    for d1 in range(1, 10):",
+        "      d = [(d1*i)%10 for i in range(k, 0, -1)]",
+        "      if d[0] != 0: aklst.append(int(\"\".join(map(str, d))))",
+        "    alst.extend(sorted(aklst))",
+        "  return alst",
+        "print(auptod(6)) # _Michael S. Branicky_, May 29 2021"
+    ],
+    "xref": [
+        "Cf. A010879, A055642, A067251, A217657, A344749, A344822."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,3",
+    "author": "_R\u00e9my Sigrist_, May 28 2021",
+    "references": 3,
+    "revision": 19,
+    "time": "2021-05-31T02:11:11-04:00",
+    "created": "2021-05-29T12:20:16-04:00"
+}

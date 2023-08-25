@@ -1,0 +1,56 @@
+{
+    "number": 353597,
+    "data": "16,28,2684,2805,4157,53669,5368563143669,5338951823110169,5338981436856610169,26768895182311048184,28231104817688951805,41768895182311048157,536856314368563143669,26768898143685661048184,28231101856314338951805,41768898143685661048157,536856610481768898143669",
+    "name": "Rounded values of Celsius (Centigrade) temperatures for which the corresponding Fahrenheit temperature rounds to its digit reversal.",
+    "comment": [
+        "Neither temperature reading is required to be an integer.  In fact, 2684 C = 4863.2 F which would not round to 4862, and 4862 F = 2863.33+ C which would not round to 2864.",
+        "Rounding is a necessary part of the definition; there are no solutions in exact integers.",
+        "The rounding behavior at half-integers will never be relevant as long as it's consistent (round down, round up, or round-to-even).  The only case where half-integers could produce an additional solution is when one of them would need to be rounded up and the other rounded down, but to integers of opposite parity, as in 2075372.5 C = 3735702.5 F.",
+        "The sequence is infinite: it includes families such as c = (53691*10^(8*k+4)-166331)/10001 = 53[68563143]669, f = (966438*10^(8*k+3)+8635)/10001 = 966[34136586]35, where the bracketed block of digits occurs k times, for k >= 0."
+    ],
+    "link": [
+        "Karl W. Heuer, <a href=\"/A353597/b353597.txt\">Table of n, a(n) for n = 1..1099</a>",
+        "Car Talk, <a href=\"https://www.cartalk.com/radio/puzzler/temperature-flip-0\">The Temperature Flip</a>"
+    ],
+    "example": [
+        "2684 is in the list because 2683.6 C = 4862.48 F and (2684, 4862) are reversals."
+    ],
+    "program": [
+        "(Python)",
+        "def rv(x, k):",
+        "  y = 0",
+        "  for i in xrange(k): x, y = x/10, y*10+x%10",
+        "  return y",
+        "def fc(maxlen):",
+        "  z, pp = 1, [[0]]*13",
+        "  for k in xrange(1, (maxlen+3)//2):",
+        "    z, od, ev = z*10, [], []",
+        "    for h in xrange(13):",
+        "      qq = []",
+        "      for p in pp[h]:",
+        "        for d in xrange(10):",
+        "          if k == 1 and d == 0: continue",
+        "          f0 = p + d*(z//10)",
+        "          c0 = (154+h-5*f0)*(z//9)%z",
+        "          c1, f1 = rv(f0, k), rv(c0, k)",
+        "          if c1%10 == f1%10:",
+        "            c, f = c1//10*z+c0, f1//10*z+f0",
+        "            if 9*c+154+h == 5*f: od.append(c)",
+        "          c, f = c1*z+c0, f1*z+f0",
+        "          if 9*c+154+h == 5*f: ev.append(c)",
+        "          if k < 3 or (9*(c1+2) >= 5*f1 and 5*(f1+1) >= 9*c1): qq.append(f0)",
+        "      pp[h] = qq",
+        "    for c in sorted(od): print c",
+        "    for c in sorted(ev): print c"
+    ],
+    "xref": [
+        "Cf. A353598."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Karl W. Heuer_, Apr 29 2022",
+    "references": 2,
+    "revision": 18,
+    "time": "2022-06-25T21:52:50-04:00",
+    "created": "2022-06-22T20:08:26-04:00"
+}

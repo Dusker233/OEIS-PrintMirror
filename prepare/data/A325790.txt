@@ -1,0 +1,50 @@
+{
+    "number": 325790,
+    "data": "1,1,2,6,16,100,492,1764,8592,71208,395520,1679480,9313128,72154030,420375872,1625653650",
+    "name": "Number of permutations of {1..n} such that every positive integer from 1 to n * (n + 1)/2 is the sum of some circular subsequence.",
+    "comment": [
+        "A circular subsequence is a sequence of consecutive non-overlapping terms where the last and first parts are also considered consecutive. The only circular subsequence of maximum length is the sequence itself (not any rotation of it). For example, the circular subsequences of (2,1,3) are: (), (1), (2), (3), (1,3), (2,1), (3,2), (2,1,3)."
+    ],
+    "example": [
+        "The a(1) = 1 through a(4) = 16 permutations:",
+        "  (1)  (1,2)  (1,2,3)  (1,2,3,4)",
+        "       (2,1)  (1,3,2)  (1,3,2,4)",
+        "              (2,1,3)  (1,4,2,3)",
+        "              (2,3,1)  (1,4,3,2)",
+        "              (3,1,2)  (2,1,4,3)",
+        "              (3,2,1)  (2,3,1,4)",
+        "                       (2,3,4,1)",
+        "                       (2,4,1,3)",
+        "                       (3,1,4,2)",
+        "                       (3,2,1,4)",
+        "                       (3,2,4,1)",
+        "                       (3,4,1,2)",
+        "                       (4,1,2,3)",
+        "                       (4,1,3,2)",
+        "                       (4,2,3,1)",
+        "                       (4,3,2,1)"
+    ],
+    "mathematica": [
+        "subalt[q_]:=Union[ReplaceList[q,{___,s__,___}:>{s}],DeleteCases[ReplaceList[q,{t___,__,u___}:>{u,t}],{}]];",
+        "Table[Length[Select[Permutations[Range[n]],Range[n*(n+1)/2]==Union[Total/@subalt[#]]&]],{n,0,5}]"
+    ],
+    "program": [
+        "(PARI)",
+        "weigh(p)={my(b=0); for(i=1, #p, my(s=0,j=i); for(k=1, #p, s+=p[j]; if(!bittest(b,s), b=bitor(b,1<<s)); j=if(j==#p, 1, j+1))); hammingweight(b)}",
+        "a(n)={my(e=n*(n+1)/2, c=0); forperm(n, p, if(weigh(p)==e, c++)); c} \\\\ _Andrew Howroyd_, Aug 16 2019"
+    ],
+    "xref": [
+        "Cf. A002033, A008965, A032153, A103295, A103300, A126796, A325684, A325781, A325788, A325791."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, May 23 2019",
+    "ext": [
+        "a(10)-a(12) from _Andrew Howroyd_, Aug 18 2019",
+        "a(13)-a(15) from _Bert Dobbelaere_, Nov 01 2020"
+    ],
+    "references": 7,
+    "revision": 18,
+    "time": "2020-11-01T03:53:56-05:00",
+    "created": "2019-05-28T19:38:32-04:00"
+}

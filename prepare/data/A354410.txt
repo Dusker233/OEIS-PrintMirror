@@ -1,0 +1,44 @@
+{
+    "number": 354410,
+    "data": "10,200,1001,1010,1100,3000,10002,10020,10200,12000,20001,20010,20100,21000,40000,100003,100011,100030,100101,100110,100300,101001,101010,101100,103000,110001,110010,110100,111000,130000,200002,200020,200200,202000,220000",
+    "name": "Numbers with as many zeros as the sum of their digits.",
+    "comment": [
+        "As is normal, there are no leading zeros. The places of k zeros and the nonzero digits that are partitions of k are combinatorial.",
+        "Numbers k such that A007953(k) = A055641(k). - _Felix Fr\u00f6hlich_, May 26 2022"
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A354410/a354410.gp.txt\">PARI program</a>"
+    ],
+    "mathematica": [
+        "Select[Range[250000],DigitCount[#,10,0]==Total[IntegerDigits[#]]&] (* _Harvey P. Dale_, Jan 12 2023 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = my(d=digits(m)); vecsum(d) == #select(x->(x==0), d); \\\\ _Michel Marcus_, May 26 2022",
+        "(PARI) See Links section.",
+        "(Python) # after linked PARI by _R\u00e9my Sigrist_",
+        "base, vv, nb = 10, [0], 0",
+        "def visit(v, s, z, r):",
+        "    global base, vv, nb",
+        "    if v and s==z:",
+        "        nb += 1",
+        "        if nb > len(vv): vv.append(len(vv))",
+        "        vv[nb-1] = v",
+        "    if s-z-r <= 0 and s-z+(base-1)*r >= 0:",
+        "        if v: visit(base*v, s, z+1, r-1)",
+        "        for d in range(1, base): visit(base*v+d, s+d, z, r-1)",
+        "def auptod(digits): visit(0, 0, 0, digits); return sorted(set(vv))",
+        "print(auptod(6)) # _Michael S. Branicky_, May 26 2022"
+    ],
+    "xref": [
+        "Subsequence of A011540.",
+        "Cf. A007953 (sum of digits), A055641 (number of 0's).",
+        "Cf. A031443, A061384."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Tamas Sandor Nagy_, May 25 2022",
+    "references": 1,
+    "revision": 33,
+    "time": "2023-01-12T18:31:55-05:00",
+    "created": "2022-05-26T09:52:15-04:00"
+}

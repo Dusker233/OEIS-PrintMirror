@@ -1,0 +1,44 @@
+{
+    "number": 111888,
+    "data": "1,109584,7245893376,381495483224064,17810567950611972096,778101042571221893382144,32762625292956765972873609216,1351813956241264848815287984717824",
+    "name": "Eighth column of triangle A112492 (inverse scaled Pochhammer symbols).",
+    "comment": [
+        "Also continuation of family of Differences of reciprocals of unity. See A001242, A111887 and triangle A008969."
+    ],
+    "link": [
+        "Mircea Merca, <a href=\"https://www.researchgate.net/publication/264664262_Some_experiments_with_complete_and_elementary_symmetric_functions\">Some experiments with complete and elementary symmetric functions</a>, Periodica Mathematica Hungarica, 69 (2014), 182-189."
+    ],
+    "formula": [
+        "G.f.: 1/Product_{j=1..8} 1-8!*x/j.",
+        "a(n) = -((8!)^n) * Sum_{j=1..8} (-1)^j*binomial(8, j)/j^n, n>=0.",
+        "a(n) = A112492(n+7, 8), n>=0."
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[k==0 || k==n, 1, (k+1)^(n-k)*T[n-1,k-1] +k!*T[n-1,k]]; (* T = A112492 *)",
+        "Table[T[n+7,7], {n,0,30}] (* _G. C. Greubel_, Jul 24 2023 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = -((8!)^n)*sum(j=1, 8, ((-1)^j)*binomial(8, j)/j^n); \\\\ _Michel Marcus_, Apr 28 2020",
+        "(Magma)",
+        "A111888:= func< n | (-1)*Factorial(8)^n*(&+[(-1)^j*Binomial(8,j)/j^n : j in [1..8]]) >;",
+        "[A111888(n): n in [0..30]]; // _G. C. Greubel_, Jul 24 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def T(n,k): # T = A112492",
+        "    if (k==0 or k==n): return 1",
+        "    else: return (k+1)^(n-k)*T(n-1,k-1) + factorial(k)*T(n-1,k)",
+        "def A111888(n): return T(n+7,7)",
+        "[A111888(n) for n in range(31)] # _G. C. Greubel_, Jul 24 2023"
+    ],
+    "xref": [
+        "Also right-hand column 7 in triangle A008969.",
+        "Cf. A001242, A111887, A112492."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Wolfdieter Lang_, Sep 12 2005",
+    "references": 2,
+    "revision": 15,
+    "time": "2023-07-25T09:15:17-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

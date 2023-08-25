@@ -1,0 +1,52 @@
+{
+    "number": 106782,
+    "data": "989999,1799999,1889999,1988999,1989899,1989989,1997999,1999799,1999889,1999979,2699999,2799899,2799989,2879999,2899997,2978999,2979989,2988899,2989799,2989997,2998997,2999879,2999897,3698999,3789899",
+    "name": "Primes with digit sum = 53.",
+    "comment": [
+        "There are (1, 10, 23, 43, 87, 146, 255, 408, 642) terms below (1, 2, 3, ..., 9)*10^6. Among the 960 terms below 10^7, only {8998991, 8999981, 9899891, 9988991, 9997991, 9999971} end in the digit 1, only 30 end in the digit 3, and 268 end with a digit 7. - _M. F. Hasler_, Mar 09 2022"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A106782/b106782.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..1000 from Vincenzo Librandi)"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[270000]],Total[IntegerDigits[#]]==53&]  (* _Harvey P. Dale_, Apr 17 2011 *)"
+    ],
+    "program": [
+        "(Magma) [p: p in PrimesUpTo(3800000) | &+Intseq(p) eq 53]; // _Vincenzo Librandi_, Jul 09 2014",
+        "(PARI) select( {is_A106782(p)=sumdigits(p)==53&&isprime(p)}, primes([9e5,4e6]\\1)) \\\\ _M. F. Hasler_, Mar 09 2022",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def agen(b=10, sod=53): # generator for any base, sum-of-digits",
+        "    if 0 <= sod < b:",
+        "        yield sod",
+        "    nzdigs = [i for i in range(1, b) if i <= sod]",
+        "    nzmultiset = []",
+        "    for d in range(1, b):",
+        "        nzmultiset += [d]*(sod//d)",
+        "    for d in count(2):",
+        "        fullmultiset = [0]*(d-1-(sod-1)//(b-1)) + nzmultiset",
+        "        for firstdig in nzdigs:",
+        "            target_sum, restmultiset = sod - int(firstdig), fullmultiset[:]",
+        "            restmultiset.remove(firstdig)",
+        "            for p in multiset_permutations(restmultiset, d-1):",
+        "                if sum(p) == target_sum:",
+        "                    t = int(\"\".join(map(str, [firstdig]+p)), b)",
+        "                    if isprime(t):",
+        "                        yield t",
+        "                    if p[0] == target_sum:",
+        "                        break",
+        "print(list(islice(agen(), 25))) # _Michael S. Branicky_, Mar 10 2022"
+    ],
+    "xref": [
+        "Cf. similar sequences listed in A244918."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, May 16 2005",
+    "references": 4,
+    "revision": 19,
+    "time": "2022-03-10T18:33:21-05:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

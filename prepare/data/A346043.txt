@@ -1,0 +1,32 @@
+{
+    "number": 346043,
+    "data": "1,2,6,17,67,166,676,1373,4475,10446,30036,51032,196386,315302,737515,1654229,4227565,6301902,17975187,26010425,70085244,133337963",
+    "name": "a(n) is the position of A138534(n) in A025487.",
+    "formula": [
+        "A025487(a(n)) = A138534(n)."
+    ],
+    "example": [
+        "A138534(2) = A025487(6) = 12, so a(2) = 6."
+    ],
+    "mathematica": [
+        "lps = Cases[Import[\"https://oeis.org/A025487/b025487.txt\", \"Table\"], {_, _}][[;; , 2]]; s = {}; Do[p = Position[lps, Product[Prime[k]^Floor[n/k], {k, 1, n}]]; If[p == {}, Break[]]; AppendTo[s, p[[1, 1]]], {n, 0, 20}]; s"
+    ],
+    "program": [
+        "(PARI) f(m) = my(c=1, p, q=2, v=vector(logint(m, 2), i, 2^i), w); while(#v, c+=#v; p=q; q=nextprime(q+1); w=List([]); for(i=1, #v, for(j=1, min(valuation(v[i], p), logint(m\\v[i], q)), listput(w, v[i]*q^j))); v=w); c;",
+        "a(n) = f(prod(k=1, n, prime(k)^(n\\k))); \\\\ _Jinyuan Wang_, Jul 08 2021"
+    ],
+    "xref": [
+        "Cf. A025487, A138534.",
+        "Similar sequences: A098718, A098719, A293635, A306802."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Amiram Eldar_, Jul 02 2021",
+    "ext": [
+        "a(20)-a(21) from _Jinyuan Wang_, Jul 08 2021"
+    ],
+    "references": 2,
+    "revision": 9,
+    "time": "2021-07-08T09:52:44-04:00",
+    "created": "2021-07-05T02:36:23-04:00"
+}

@@ -1,0 +1,60 @@
+{
+    "number": 276707,
+    "data": "4,12,60,381,2522,19094,151286,1237792,10354144,88407746,766869330",
+    "name": "Number of terms of A069090 with exactly n digits.",
+    "link": [
+        "Barry Carter, <a href=\"https://github.com/barrycarter/bcapps/blob/master/QUORA/bc-primes.m\">Mathematica work on first n for which randomly rolled digits will yield a prime</a>"
+    ],
+    "maple": [
+        "A276707 := proc(n)",
+        "    local a,k;",
+        "    a := 0 ;",
+        "    k := nextprime(10^(n-1)) ;",
+        "    while k < 10^n do",
+        "        if isA069090(k) then",
+        "            a := a+1 ;",
+        "        end if;",
+        "        k := nextprime(k) ;",
+        "    end do:",
+        "    a ;",
+        "end proc: # _R. J. Mathar_, Dec 15 2016"
+    ],
+    "program": [
+        "(perl/tcsh) \"bzcat A069090.b.txt.bz2  | perl -anle 'print length($F[1])' | sort | uniq -c\" with https://github.com/barrycarter/bcapps/blob/master/QUORA/A069090.b.txt.bz2",
+        "(Python)",
+        "from sympy import primerange, isprime",
+        "def ok(p):",
+        "    s = str(p)",
+        "    if len(s) == 1: return True",
+        "    return all(not isprime(int(s[:i])) for i in range(1, len(s)))",
+        "def a(n): return sum(ok(p) for p in primerange(10**(n-1), 10**n))",
+        "print([a(n) for n in range(1, 7)]) # _Michael S. Branicky_, Jul 03 2021",
+        "(Python) # faster version skipping bad prefixes",
+        "from sympy import isprime, nextprime",
+        "def a(n):",
+        "    if n == 1: return 4",
+        "    p, c = nextprime(10**(n-1)), 0",
+        "    while p < 10**n:",
+        "        s, fail = str(p), False",
+        "        for i in range(1, n):",
+        "            ti = int(s[:i])",
+        "            if isprime(ti): fail = i; break",
+        "        if fail: p = nextprime((ti+1)*10**(n-i))",
+        "        else: p, c = nextprime(p), c+1",
+        "    return c",
+        "print([a(n) for n in range(1, 8)]) # _Michael S. Branicky_, Jul 03 2021"
+    ],
+    "xref": [
+        "Cf. A069090."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Barry Carter_, Sep 15 2016",
+    "ext": [
+        "a(9)-a(11) from _Michael S. Branicky_, Jul 03 2021"
+    ],
+    "references": 2,
+    "revision": 25,
+    "time": "2021-07-03T10:57:27-04:00",
+    "created": "2016-09-16T11:11:44-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 294090,
+    "data": "5,18,35,50,180,315,350,500,1800,3150,3500,5000,18000,31500,35000,50000,180000,315000,350000,500000,1800000,3150000,3500000,5000000,18000000,31500000,35000000,50000000,180000000,315000000,350000000,500000000,1800000000",
+    "name": "Base-10 complementary numbers: n equals the product of the 10's complement of its digits.",
+    "comment": [
+        "The only primitive terms of the sequence, i.e., not equal to 10 times a smaller term, are 5, 18, 35 and 315.",
+        "For base 2, 3, 4 and 5, the corresponding sequences are less interesting: b = 2 yields powers of 2, A000079; b = 3 yields 4 times powers of 3, A003946 \\ {1}; b = 4 yields {2, 6}*{4^k, k>=0} = A122756 = 2*A084221; b = 5 yields 8*{5^k, k>=0} = A128625 \\ {1}.",
+        "See A298976 for base-6 complementary numbers. Base 7 yields {12, 120}*{7^k, k>=0}, cf. A298977. The linked web page (in French) gives also examples for base-100 complementary numbers, e.g., 198 = (100 - 1)*(100 - 98), 1680 = (100 - 16)*(100 - 80), ..., and for base-1000 complementary numbers."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A294090/b294090.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "G. Villemin, <a href=\"http://villemin.gerard.free.fr/aNombre/TYPFORM/Compleme.htm\">Nombres compl\u00e9ment\u00e9s</a> (in French).",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (0,0,0,10)."
+    ],
+    "formula": [
+        "a(n+4) = 10 a(n) for all n >= 3.",
+        "G.f.: x*(5 + 18*x + 35*x^2 + 50*x^3 + 130*x^4 + 135*x^5) / (1 - 10*x^4). - _Colin Barker_, Feb 09 2018"
+    ],
+    "example": [
+        "5 = (10-5), therefore 5 is in the sequence.",
+        "18 = (10-1)*(10-8), therefore 18 is in the sequence.",
+        "35 = (10-3)*(10-5), therefore 35 is in the sequence.",
+        "315 = (10-3)*(10-1)*(10-5), therefore 315 is in the sequence.",
+        "If x is in the sequence, then 10*x = concat(x,0) = x*(10-0) is in the sequence."
+    ],
+    "program": [
+        "(PARI) is(n,b=10)={n==prod(i=1,#n=digits(n,b),b-n[i])}",
+        "(PARI) a(n)=if(n>6,a((n-3)%4+3)*10^((n-3)\\4),[5,18,35,50,180,315][n])",
+        "(PARI) Vec(x*(5 + 18*x + 35*x^2 + 50*x^3 + 130*x^4 + 135*x^5) / (1 - 10*x^4) + O(x^60)) \\\\ _Colin Barker_, Feb 09 2018"
+    ],
+    "xref": [
+        "Cf. A298976, A298977."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_M. F. Hasler_, Feb 09 2018",
+    "references": 3,
+    "revision": 19,
+    "time": "2018-02-10T17:54:04-05:00",
+    "created": "2018-02-10T10:06:48-05:00"
+}

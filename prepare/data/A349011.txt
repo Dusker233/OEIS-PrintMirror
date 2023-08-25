@@ -1,0 +1,33 @@
+{
+    "number": 349011,
+    "data": "1,1,5,17,105,433,2925,13185,93425,443009,3233205,15840209,117950745,591187953,4466545245,22766535297,173906505825,897941153665,6918379345125,36089242700049,279988660639305,1472715584804529,11490841104036045,60857608450349313,477104721264920145",
+    "name": "G.f. A(x) satisfies: A(x) = (1 - x * A(-x)) / (1 - 2 * x * A(x)).",
+    "formula": [
+        "a(0) = 1; a(n) = (-1)^n * a(n-1) + 2 * Sum_{k=0..n-1} a(k) * a(n-k-1)."
+    ],
+    "maple": [
+        "A349011 := proc(n)",
+        "    option remember ;",
+        "    if n = 0 then",
+        "        1;",
+        "    else",
+        "        (-1)^n*procname(n-1)+2*add(procname(k)*procname(n-k-1),k=0..n-1) ;",
+        "    end if;",
+        "end proc:",
+        "seq(A349011(n),n=0..40) ; # _R. J. Mathar_, Aug 19 2022"
+    ],
+    "mathematica": [
+        "nmax = 24; A[_] = 0; Do[A[x_] = (1 - x A[-x])/(1 - 2 x A[x]) + O[x]^(nmax + 1) // Normal, nmax + 1]; CoefficientList[A[x], x]",
+        "a[0] = 1; a[n_] := a[n] = (-1)^n a[n - 1] + 2 Sum[a[k] a[n - k - 1], {k, 0, n - 1}]; Table[a[n], {n, 0, 24}]"
+    ],
+    "xref": [
+        "Cf. A001003, A103210, A348957."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Nov 05 2021",
+    "references": 1,
+    "revision": 7,
+    "time": "2022-08-19T05:06:38-04:00",
+    "created": "2021-11-06T09:07:39-04:00"
+}

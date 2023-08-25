@@ -1,0 +1,43 @@
+{
+    "number": 347757,
+    "data": "1,8,11,20,28,37,51,53,101,116,136,146,159,213,302,318,440,520,638,698,702,912,1031,1128,1528,1758,1832,1891,2107,2198,2523,2671,2857,3069,3760,3892,3946,4256,4438,4638,4880,5022,5656,6092,6147,6322,6470,6492,6579",
+    "name": "Indices of local minima in A347113.",
+    "comment": [
+        "a(n)-1 = last instance of A347756(n) in A347755.",
+        "a(n+1) > a(n) + 1, since terms in A347113 are distinct by definition."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A347757/b347757.txt\">Table of n, a(n) for n = 1..6904</a> (terms 1..898 from Michael De Vlieger)"
+    ],
+    "mathematica": [
+        "Block[{nn = 2^13, a = {1}, c, k, m, u = 2, v}, v = a; Map[Set[c[#], 1] &, Union@ a]; Do[Set[k, u]; If[PrimeQ[#], m = 2; While[IntegerQ[c[m #]], m++]; k = m #, While[Or[IntegerQ[c[k]], k == #, GCD[k, #] == 1], k++]] &[a[[-1]] + 1]; AppendTo[a, k]; Set[c[k], 1]; AppendTo[v, u]; If[k == u, While[IntegerQ[c[u]], u++]], nn]; Map[FirstPosition[a, #][[1]] &, Most@ Union@ v]]",
+        "(* or using A347113 bfile: *)",
+        "Block[{a, u = {1}, v = 1}, a = Import[\"https://oeis.org/A347113/b347113.txt\", \"Data\"][[All, -1]]; Do[If[a[[i]] == v, While[! FreeQ[a[[1 ;; i]], v], v++]]; AppendTo[u, v], {i, Length[a]}]; Map[FirstPosition[a, #][[1]] &, Most@ Union@ u] ]"
+    ],
+    "program": [
+        "(Python)",
+        "from math import gcd",
+        "A347757_list, nset, m, j, i = [1], {1}, 2, 2, 1",
+        "for _ in range(10**4):",
+        "    i += 1",
+        "    k = m",
+        "    while k == j or gcd(k,j) == 1 or k in nset:",
+        "        k += 1",
+        "    j = k + 1",
+        "    nset.add(k)",
+        "    if k == m:",
+        "        A347757_list.append(i)",
+        "    while m in nset:",
+        "        m += 1 # _Chai Wah Wu_, Sep 13 2021"
+    ],
+    "xref": [
+        "Cf. A347113, A347306 (indices of records in A347113), A347755, A347756."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michael De Vlieger_, Sep 12 2021",
+    "references": 3,
+    "revision": 18,
+    "time": "2021-09-19T14:47:03-04:00",
+    "created": "2021-09-12T20:36:29-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 107069,
+    "data": "1,4,12,34,90,222,542,1302,3058,7186,16714,38670,89358,205710,472906",
+    "name": "Number of self-avoiding walks of length n on an infinite triangular prism starting at the origin.",
+    "comment": [
+        "The discrete space in which the walking happens is a triangular prism infinite in both directions along the x-axis. One vertex is the root, the origin. The basis is the set of single-step vectors, which we abbreviate as l (left), r (right), c (one step \"clockwise\" around the triangle) and c- (one step counterclockwise, more properly denoted c^-1)."
+    ],
+    "formula": [
+        "No closed-form solution known, or likely."
+    ],
+    "example": [
+        "a(0) = 1, as there is one self-avoiding walk of length 0, namely the null-walk the walk whose steps are the null set).",
+        "a(1) = 4 because (using the terminology in the Comment), the 4 possible 1-step walks are W_1 = {l,r,c,c-}.",
+        "a(2) = 12 because the set of legal 2-step walks are {l^2, lc, lc-, r^2, rc, rc-, c^2, cl, cr, c^-2, c-l, c-r}.",
+        "a(3) = 34 because we have every W_2 concatenated with {l,r,c,c-} except for those with immediate violations (lr etc.) and those two which go in a triangle {c^3, c^-3}; hence a(3) = 3*a(2) - 2 = 3*12 - 2 = 36 - 2 = 34."
+    ],
+    "program": [
+        "(Python)",
+        "w = [[[(0, 0)]]]",
+        "for n in range(1, 15):",
+        "    nw = []",
+        "    for walk in w[-1]:",
+        "        (x, t) = walk[-1]",
+        "        nss = [(x-1, t), (x+1, t), (x, (t+1)%3), (x, (t-1)%3)]",
+        "        for ns in nss:",
+        "            if ns not in walk:",
+        "                nw.append(walk[:] + [ns])",
+        "    w.append(nw)",
+        "print([len(x) for x in w])",
+        "# _Andrey Zabolotskiy_, Sep 19 2019"
+    ],
+    "xref": [
+        "Cf. A002902, A002903, A077817, A038577, A302408, A007825."
+    ],
+    "keyword": "nonn,walk,more",
+    "offset": "0,2",
+    "author": "_Jonathan Vos Post_, May 10 2005",
+    "ext": [
+        "a(4) and a(5) corrected, a(6)-a(14) added by _Andrey Zabolotskiy_, Sep 19 2019"
+    ],
+    "references": 0,
+    "revision": 10,
+    "time": "2019-09-19T11:00:51-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

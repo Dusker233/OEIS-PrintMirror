@@ -1,0 +1,36 @@
+{
+    "number": 361750,
+    "data": "23,223,230,232,233,235,237,323,523,723,1123,1323,1723,1923,2023,2223,2230,2232,2233,2235,2237,2300,2302,2303,2305,2307,2311,2313,2317,2319,2320,2322,2323,2325,2327,2330,2332,2333,2335,2337,2350,2352,2353,2355,2357,2370,2372,2373,2375,2377",
+    "name": "Terms of A329150 that have several preimages.",
+    "comment": [
+        "From k = 1 to 9, A329147(k) has more than one preimage only for k = 9 since A329147(9) = A329147(12) = 23; so, all terms of this sequence have in their decimal expansion the two-digit integer '23'; it follows that when || denotes concatenation, the terms of this sequence are of the form:",
+        " X||23 as 223, 323, 523, 723, 1123, 1323, 1723, 1923, 2023, 2223, ... or,",
+        " 23||Y as 230, 232, 233, 235, 237, 2300, 2302, 2303, 2305, 2307, 2311, ... or,",
+        " X||23||Y as 2230, 2232, 2233, 2235, 2237, 3230, 3232, 3233, ...",
+        "Every term of this sequence has 2^q preimages, and the smallest terms with exactly 2^q preimages for q >= 1 are 23, 2323, 232323, ... with q times the 2-digit number 23 in its decimal expansion; hence, the 8 preimages of 232323 are 999, 9912, 9129, 91212, 1299, 12912, 12129 and 121212."
+    ],
+    "example": [
+        "One example for each type:",
+        "23||2 = 232 = A329147(91) = A329147(121).",
+        "7||23 = 723 = A329147(49) = A329147(412).",
+        "2||23||5 = 2235 = A329147(193) = A329147(1123).",
+        "23||23 = 2323 = A329147(99) = A329147(129) = A329147(1212) = A329147(912)."
+    ],
+    "mathematica": [
+        "p[n_] := If[n > 0, Prime[n], 0]; seq[ndigmax_] := Module[{t = Table[FromDigits[ Flatten @ IntegerDigits @ (p /@ IntegerDigits[n]) ], {n, 1, 10^ndigmax - 1}]}, Sort @ Select[Tally[t], First[#] < 10^ndigmax && Last[#] > 1 &][[;; , 1]]]; seq[4] (* _Amiram Eldar_, Mar 23 2023 *)"
+    ],
+    "program": [
+        "(PARI) f(n) = if (n, fromdigits(concat(apply(d -> if (d, digits(prime(d)), [0]), digits(n)))), 0); \\\\ A329147",
+        "lista(nn) = {my(map = Map()); for (n=1, nn, my(m = f(n)); if (mapisdefined(map, m), mapput(map, m, 1+mapget(map, m)), mapput(map, m, 0));); my(list = List()); for (n=1, nn, if (mapisdefined(map, n), my(v = mapget(map, n)); if (#v > 0, listput(list, n)););); Vec(list);} \\\\ _Michel Marcus_, Mar 24 2023"
+    ],
+    "xref": [
+        "Cf. A329147, A329149, A329150."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Mar 23 2023",
+    "references": 1,
+    "revision": 24,
+    "time": "2023-03-24T17:14:30-04:00",
+    "created": "2023-03-24T17:14:30-04:00"
+}

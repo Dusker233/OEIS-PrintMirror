@@ -1,0 +1,55 @@
+{
+    "number": 108424,
+    "data": "2,6,34,238,1858,15510,135490,1223134,11320066,106830502,1024144482,9945711566,97634828354,967298498358,9659274283650,97119829841854,982391779220482,9990160542904134,102074758837531810,1047391288012377774,10788532748880319298",
+    "name": "Number of paths from (0,0) to (3n,0) that stay in the first quadrant, consist of steps u=(2,1), U=(1,2), or d=(1,-1) and do not touch the x-axis, except at the endpoints.",
+    "comment": [
+        "These are the large nu-Schr\u00f6der numbers with nu=NE(NEE)^(n-1). - _Matias von Bell_, Jun 02 2021"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A108424/b108424.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Emeric Deutsch, <a href=\"http://www.jstor.org/stable/2589192\">Problem 10658: Another Type of Lattice Path</a>, American Math. Monthly, 107, 2000, 368-370.",
+        "M. von Bell and M. Yip, <a href=\"https://arxiv.org/abs/2006.09804\">Schr\u00f6der combinatorics and nu-associahedra</a>, arXiv:2006.09804 [math.CO], 2020."
+    ],
+    "formula": [
+        "a(n) = A027307(n-1) + A032349(n).",
+        "G.f.: z*A+z*A^2, where A=1+z*A^2+z*A^3 or, equivalently, A=(2/3)*sqrt((z+3)/z)*sin((1/3)*arcsin(sqrt(z)*(z+18)/(z+3)^(3/2)))-1/3.",
+        "a(n) = (n*2^n*C(2*n, n)/((2n-1)(n+1))) * Sum_{j=0..n-1} (C(n-1, j))^2 / (2^j*C(n+j+1,j)).",
+        "Recurrence: n*(2*n-1)*a(n) = 3*(6*n^2-10*n+3)*a(n-1) + (46*n^2-227*n+279)*a(n-2) + 2*(n-3)*(2*n-7)*a(n-3). - _Vaclav Kotesovec_, Oct 17 2012",
+        "a(n) ~ sqrt(30*sqrt(5) - 50)*((11 + 5*sqrt(5))/2)^n/(20*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Oct 17 2012",
+        "a(n) = Sum_{i=0..n} (2*n+i-2)!/((n-i)!*(n+i-1)!*i!), n>0. [_Vladimir Kruchinin_, Feb 16 2013]",
+        "From _Matias von Bell_, Jun 02 2021: (Start)",
+        "a(n) = 2*Sum_{i>=0} (1/n)*binomial(2*n-2,i)*binomial(3*n-2-i,2*n-1).",
+        "a(n) = 2*A344553(n). (End)",
+        "a(n) = 2*binomial(3*n - 2, 2*n - 1)*hypergeom([2 - 2*n, 1 - n], [2 - 3*n], -1) / n. - _Peter Luschny_, Jun 14 2021",
+        "From _Peter Bala_, Jun 17 2023: (Start)",
+        "a(n) = (-1)^(n+1) * 1/((d-1)*n + 1))*Sum_{i = 0..n} binomial((d - 1)*n+1, n-i) * binomial((d-1)*n+i, i), with d = -1.",
+        "P-recursive: n*(2*n - 1)*(5*n - 8)*a(n) = (110*n^3 - 396*n^2 + 445*n - 150)*a(n-1) + (n - 2)*(2*n - 5)*(5*n - 3)*a(n-2) with a(1) = 2 and a(2) = 6.",
+        "The g.f. A(x) = 2*x + 6*x^2 + 34*x^3 + .... Then 1/(1 - A(x)) = 1 + 2*x + 10*x^2 + 66*x^3 + .. is the g.f. of A027307.",
+        "(1/x) * the series reversion of x*(1 - A(x)) = 1 + 2*x + 14*x^2 + 134*x^3 + ... is the g.f. of A144097.",
+        "(1/x) * the series reversion of x/(1 - A(x)) = 1 - 2*x - 2*x^2 - 6*x^3 - 22*x^4 - 90*x^5 - ... =  1 - x - x*S(x), where S(x) is the g.f. of A006318. (End)"
+    ],
+    "example": [
+        "a(2) = 6 because we have uudd, uUddd, Ududd, UdUddd, Uuddd and UUdddd."
+    ],
+    "maple": [
+        "A:=(2/3)*sqrt((z+3)/z)*sin((1/3)*arcsin(sqrt(z)*(z+18)/(z+3)^(3/2)))-1/3: G:=z*A+z*A^2: Gser:=series(G,z=0,28): seq(coeff(Gser,z^n),n=1..25);",
+        "a:=proc(n) if n=1 then 2 else (n*2^n*binomial(2*n,n)/((2*n-1)*(n+1)))*sum(binomial(n-1,j)^2/2^j/binomial(n+j+1,j),j=0..n-1) fi end: seq(a(n),n=1..19);",
+        "# Alternative:",
+        "a := n -> 2*binomial(3*n - 2, 2*n - 1)*hypergeom([2 - 2*n, 1 - n], [2 - 3*n], -1)/n:",
+        "seq(simplify(a(n)), n = 1..21); # _Peter Luschny_, Jun 14 2021"
+    ],
+    "mathematica": [
+        "Table[(n*2^n*Binomial[2*n,n]/((2n-1)*(n+1))) * Sum[(Binomial[n-1,j])^2/ (2^j * Binomial[n+j+1,j]), {j,0,n-1}], {n,1,20}] (* _Vaclav Kotesovec_, Oct 17 2012 *)"
+    ],
+    "xref": [
+        "Cf. A027307, A032349, A344553.",
+        "Cf. A006318 (d = 2, signed version at d = 0), A027307 (d = 3), A144097 (d = 4), A260332 (d = 5, conjecturally), A363006 (d = 6)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Emeric Deutsch_, Jun 03 2005",
+    "references": 6,
+    "revision": 37,
+    "time": "2023-07-03T12:18:56-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

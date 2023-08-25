@@ -1,0 +1,51 @@
+{
+    "number": 104113,
+    "data": "0,1,81,100,1296,2025,3025,6724,8281,9801,10000,55225,88209,136161,136900,143641,171396,431649,455625,494209,571536,627264,826281,842724,893025,929296,980100,982081,998001,1000000,1679616,2896804,3175524,4941729,7441984",
+    "name": "Numbers which when chopped into one, two or more parts, added and squared result in the same number.",
+    "comment": [
+        "Every term is congruent to 0 or 1 modulo 9. - _Andrea Tarantini_, Sep 27 2021"
+    ],
+    "link": [
+        "John Drake, <a href=\"/A104113/b104113.txt\">Table of n, a(n) for n = 1..408</a> (terms 1..80 from Mehrad Mahmoudian, terms 81..225 from Giovanni Resta)",
+        "Mehrad Mahmoudian, <a href=\"https://gist.github.com/mmahmoudian/32dbd85442e74e93b733d4fe48beda1e\">R code to produce the sequence</a>",
+        "Mehrad Mahmoudian, <a href=\"/A104113/a104113_1.txt\">Decompositions for a(1)-a(80)</a>",
+        "Project Euler, <a href=\"https://projecteuler.net/problem=719\">Problem 719: Number Splitting</a> (2020)"
+    ],
+    "formula": [
+        "a(n) = A038206(n)^2. - _Andrea Tarantini_, Sep 27 2021"
+    ],
+    "example": [
+        "1296 is a term since (1+29+6)^2 = 36^2 = 1296."
+    ],
+    "mathematica": [
+        "Join[{0},Select[Select[Range@3000^2,Mod[#,9]<2&],(n=#;MemberQ[(Total/@(FromDigits/@#&/@Union[DeleteCases[SplitBy[#,#==-1&],{-1}]&/@(Insert[IntegerDigits@n,-1,#]&/@(List/@#&/@Rest@Subsets[Range@IntegerLength@n]))]))^2,#])&]] (* _Giorgos Kalogeropoulos_, Oct 28 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def expr(t, d): # can you express target t with digits d, only adding +'s",
+        "    if t < 0: return False",
+        "    if t == int(d): return True",
+        "    return any(expr(t-int(d[:i]), d[i:]) for i in range(1, len(d)))",
+        "def aupto(limit):",
+        "    alst, k, k2 = [], 0, 0",
+        "    while k2 <= limit:",
+        "        if expr(k, str(k2)):",
+        "            alst.append(k2)",
+        "        k, k2 = k+1, k2 + 2*k + 1",
+        "    return alst",
+        "print(aupto(7500000)) # _Michael S. Branicky_, Sep 27 2021"
+    ],
+    "xref": [
+        "Cf. A038206, A102766."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Bodo Zinser_, Mar 05 2005",
+    "ext": [
+        "a(30) and beyond from _Mehrad Mahmoudian_, Dec 16 2019"
+    ],
+    "references": 2,
+    "revision": 60,
+    "time": "2023-07-12T11:12:44-04:00",
+    "created": "2005-04-09T03:00:00-04:00"
+}

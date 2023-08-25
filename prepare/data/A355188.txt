@@ -1,0 +1,46 @@
+{
+    "number": 355188,
+    "data": "5,7,17,43,61,73,241,739,1297,4211,98519",
+    "name": "Primes p such that (2^p+p^2)/3 is prime.",
+    "comment": [
+        "No more terms < 50000.",
+        "Intersection with A242929 (primes p such that 2^p-p^2 is prime) includes 5, 7 and 17.  Any others?"
+    ],
+    "example": [
+        "a(3) = 17 is a term because (2^17+17^2)/3 = 43787 is prime."
+    ],
+    "maple": [
+        "filter:= proc(p) isprime(p) and isprime((2^p+p^2)/3) end proc:",
+        "select(filter, [seq(i,i=5..10000,2)]);"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[600]], PrimeQ[(2^# + #^2)/3] &] (* _Amiram Eldar_, Jun 23 2022 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = if (isprime(p), my(q=(2^p+p^2)/3); (denominator(q)==1) && ispseudoprime(q)); \\\\ _Michel Marcus_, Jun 23 2022",
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime",
+        "def agen():",
+        "    p = 2",
+        "    while True:",
+        "        t = 2**p+p**2",
+        "        if t%3 == 0 and isprime(t//3):",
+        "            yield p",
+        "        p = nextprime(p)",
+        "print(list(islice(agen(), 10))) # _Michael S. Branicky_, Jun 23 2022"
+    ],
+    "xref": [
+        "Cf. A242929."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jun 23 2022",
+    "ext": [
+        "a(11) from _Daniel Suteu_, Jun 25 2022"
+    ],
+    "references": 0,
+    "revision": 20,
+    "time": "2022-06-25T03:59:30-04:00",
+    "created": "2022-06-24T09:30:01-04:00"
+}

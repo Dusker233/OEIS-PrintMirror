@@ -1,0 +1,47 @@
+{
+    "number": 354970,
+    "data": "1,2,3,4,6,7,10,11,20,22,28,29,53,56,66,67,202,211,252,254,401,407,435,436,1408,1432,1594,1597,2202,2212,2278,2279,20369,20504,22358,22367,31838,31879,32384,32386,80455,80602,83023,83029,94803,94831,95266,95267",
+    "name": "Smallest value of the Colijn-Plazzotta rank among n-leaved unlabeled binary rooted trees.",
+    "comment": [
+        "a(n) gives the rank of the unlabeled binary rooted tree, among those with n leaves, that has the smallest rank according to the bijection of Colijn and Plazzotta (2018) between unlabeled binary rooted trees and positive integers."
+    ],
+    "link": [
+        "C. Colijn and G. Plazzotta, <a href=\"https://doi.org/10.1093/sysbio/syx046\">A metric on phylogenetic tree shapes</a>, Syst. Biol., 67 (2018), 113-126.",
+        "N. A. Rosenberg, <a href=\"https://doi.org/10.1016/j.dam.2020.11.021\">On the Colijn-Plazzotta numbering scheme for unlabeled binary rooted trees</a>, Discr. Appl. Math., 291 (2021), 88-98.",
+        "Kevin Ryde, <a href=\"/A354970/a354970.gp.txt\">PARI/GP Code</a>"
+    ],
+    "formula": [
+        "a(n) = a(n/2)*(a(n/2)-1)/2 + 1 + a(n/2) for even n; a(n) = a((n+1)/2)*(a((n+1)/2)-1)/2 + 1 + a((n-1)/2) for odd n>1; a(1)=1."
+    ],
+    "maple": [
+        "a := proc(n) option remember; local r, h; if n = 1 then 1 else",
+        "r := irem(n, 2); h := a((n + r)/2); (h^2 - h)/2 + a((n - r)/2) + 1 fi end:",
+        "seq(a(n), n = 1..48); # _Peter Luschny_, Jun 15 2022"
+    ],
+    "program": [
+        "(Python)",
+        "from collections import deque",
+        "from itertools import islice",
+        "def A354970_gen(): # generator of terms",
+        "    aqueue, f, a, b = deque([]), False, 1, 2",
+        "    yield from (1,2)",
+        "    while True:",
+        "        c = b*(b-1)//2+1+(b if f else a)",
+        "        yield c",
+        "        aqueue.append(c)",
+        "        if f: a, b = b, aqueue.popleft()",
+        "        f = not f",
+        "A354970_list = list(islice(A354970_gen(),40)) # _Chai Wah Wu_, Jun 17 2022",
+        "(PARI) See links."
+    ],
+    "xref": [
+        "Cf. A001190, A108225."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Noah A Rosenberg_, Jun 14 2022",
+    "references": 1,
+    "revision": 18,
+    "time": "2022-07-16T22:52:31-04:00",
+    "created": "2022-06-17T13:02:16-04:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 354411,
+    "data": "2,6,30,210,43890,510510,510510,3967173210,134748093480,530514844860,4201942828713630,1706257740074998110,125050509312845636520,511284700554162118403820,2695009287439086535873235280,206794067314254446263154097180,86753583273488685998907289046220",
+    "name": "a(n) is the least oblong number that is divisible by the first n primes.",
+    "formula": [
+        "From _Michael S. Branicky_, May 25 2022: (Start)",
+        "a(n) <= (m-1)*m, where m = A002110(n).",
+        "a(n) = m*(m+1), where m = A344005(A002110(n)).",
+        "(End)",
+        "a(n) = A118478(n)*(A118478(n)+1). - _Chai Wah Wu_, May 31 2022"
+    ],
+    "example": [
+        "2, 3, and 5 are the first three primes. The first oblong number that is a multiple of all three first primes is 30. So, a(3) = 30.",
+        "The first oblong number that is a multiple of primorial(5) = 2310 is 19*2310 = 43890, so a(5) = 43890."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import integer_nthroot, primorial",
+        "def oblong(n): r = integer_nthroot(n, 2)[0]; return r*(r+1) == n",
+        "def a(n):",
+        "    m = psharp = primorial(n)",
+        "    while not oblong(m): m += psharp",
+        "    return m",
+        "print([a(n) for n in range(1, 11)]) # _Michael S. Branicky_, May 25 2022",
+        "(Python) # faster alternative using Python 3.8+ A344005(n) by _Chai Wah Wu_",
+        "from sympy import primorial",
+        "def a(n): return (m := A344005(primorial(n)))*(m+1)",
+        "print([a(n) for n in range(1, 18)]) # _Michael S. Branicky_, May 26 2022",
+        "(PARI) a002110(n) = prod(i=1,n, prime(i)) \\\\ after _Washington Bomfim_ in A002110",
+        "a344005(n) = for(m=1, oo, if((m*(m+1))%n==0, return(m)))",
+        "a(n) = my(m=a344005(a002110(n))); m*(m+1) \\\\ _Felix Fr\u00f6hlich_, May 31 2022"
+    ],
+    "xref": [
+        "Cf. A000040, A002378, A002110, A118478, A344005."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ali Sada_, May 25 2022",
+    "ext": [
+        "a(9)-a(17) from _Michael S. Branicky_, May 26 2022"
+    ],
+    "references": 0,
+    "revision": 48,
+    "time": "2022-05-31T12:54:17-04:00",
+    "created": "2022-05-29T21:51:23-04:00"
+}

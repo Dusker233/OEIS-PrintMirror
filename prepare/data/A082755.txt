@@ -1,0 +1,43 @@
+{
+    "number": 82755,
+    "data": "2,3,5,223,727,3253,3727,5233,5323,7573,7723,7753,22273,23327,25523,27733,32233,32323,32533,35323,35533,37253,37273,52223,52727,53323,53327,53773,55333,72223,72727,75223,75527,75553,222527,222533,222553,223273,223753,225223",
+    "name": "Smaller of a pair of consecutive primes having only prime digits.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A082755/b082755.txt\">Table of n, a(n) for n = 1..10000</a> (Terms for n = 1..1000 from Harvey P. Dale)"
+    ],
+    "example": [
+        "223 is a term as the next prime 227 also has only prime digits."
+    ],
+    "mathematica": [
+        "NextPrim[n_] := Block[{k = n + 1}, While[ !PrimeQ[k], k++ ]; k]; p = 0; q = 1; pd = {1}; Do[p = q; pd = qd; q = NextPrim[p]; qd = Union[ Join[{2, 3, 5, 7}, IntegerDigits[q]]]; If[pd == qd == {2, 3, 5, 7}, Print[p]], {n, 1, 20000}]",
+        "Prime[#]&/@SequencePosition[Table[If[AllTrue[IntegerDigits[n],PrimeQ],1,0],{n,Prime[Range[20000]]}],{1,1}][[All,1]] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Aug 31 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import nextprime, isprime",
+        "from itertools import count, islice, product",
+        "def onlypd(n): return set(str(n)) <= set(\"2357\")",
+        "def agen():",
+        "    yield from [2, 3, 5]",
+        "    for digits in count(2):",
+        "        for p in product(\"2357\", repeat=digits-1):",
+        "            for end in \"37\":",
+        "                t = int(\"\".join(p) + end)",
+        "                if isprime(t) and onlypd(nextprime(t)):",
+        "                    yield t",
+        "print(list(islice(agen(), 40))) # _Michael S. Branicky_, Mar 11 2022"
+    ],
+    "xref": [
+        "Cf. A019546, A082756."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Apr 18 2003",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Apr 22 2003"
+    ],
+    "references": 4,
+    "revision": 18,
+    "time": "2022-03-11T12:57:51-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

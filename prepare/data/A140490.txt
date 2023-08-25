@@ -1,0 +1,47 @@
+{
+    "number": 140490,
+    "data": "1,5,9,14,19,23,27,32,38,43,47,51,56,62,67,71,75,81,86,91,95,99,104,110,116,122,127,131,135,141,146,151,155,159,164,170,176,182,187,191,195,201,206,211,215,219,224,230,236,242,247,251,255,261,266,271,275,279,284,290,296",
+    "name": "Trajectory of 1 under repeated application of the map: n -> n + third-smallest number that does not divide n.",
+    "comment": [
+        "Suggested by _Eric Angelini_."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A140490/b140490.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n+12) = a(n) + 60 for n >= 13. - _Robert Israel_, Jan 17 2023"
+    ],
+    "maple": [
+        "f:= proc(n) local k,count;",
+        "  count:= 0;",
+        "  for k from 2 do",
+        "    if n mod k <> 0 then count:= count+1; if count = 3 then return n+k fi fi",
+        "  od",
+        "end proc:",
+        "R:= 1: x:= 1:",
+        "for i from 1 to 100 do x:= f(x); R:= R, x od:",
+        "R; # _Robert Israel_, Jan 17 2023"
+    ],
+    "mathematica": [
+        "NestList[#+Complement[Range[#+50],Divisors[#]][[3]]&,1,60] (* _Harvey P. Dale_, Apr 21 2022 *)"
+    ],
+    "program": [
+        "(PARI) third(n) = {my(nb = 0, k = 1); while (nb != 3, if (n % k, nb++); if (nb != 3, k++);); k;}",
+        "f(n) = n + third(n);",
+        "lista1(nn) = {a = 1; print1(a, \", \"); for (n=2, nn, newa = f(a); print1(newa, \", \"); a = f(a););} \\\\ _Michel Marcus_, Oct 04 2018"
+    ],
+    "xref": [
+        "Cf. A140485, A140486, A140487, A140488, A140489 (second-smallest sequences).",
+        "Cf. A140491, A140492, A140493, A140494 (third-smallest sequences)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jacques Tramu_, Jun 25 2008",
+    "ext": [
+        "More terms from _Michel Marcus_, Oct 04 2018"
+    ],
+    "references": 4,
+    "revision": 16,
+    "time": "2023-01-17T14:37:25-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 54894,
+    "data": "1,2,11,48,227,1054,4921,22944,107017,499106,2327795,10856592,50634107,236152510,1101392305,5136786240,23957470033,111735303362,521122556315,2430464772336,11335450631123,52867436085214,246568565219689,1149971737922784,5363356017597913,25014169325118818",
+    "name": "a(n+1) = 4*a(n) + 4*a(n-1) - 4*a(n-2) - a(n-3) with a(1)=1, a(2)=2, a(3)=11, a(4)=48.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A054894/b054894.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Svenja Huntemann, Neil A. McKay, <a href=\"https://arxiv.org/abs/1909.12419\">Counting Domineering Positions</a>, arXiv:1909.12419 [math.CO], 2019.",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (4,4,-4,-1)."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} Fibonacci(k)^3*a(n-k), with a(0)=1. - _Vladeta Jovovic_, Apr 23 2003",
+        "G.f.: x*(1-2*x-x^2)/(1-4*x-4*x^2+4*x^3+x^4). - _Vaclav Kotesovec_, Nov 27 2012"
+    ],
+    "maple": [
+        "seq(coeff(series(x^4/((1+2*x)*(2*x^3+x^2-2*x+1)), x, n+1), x, n), n = 0..40); # _G. C. Greubel_, Dec 29 2019"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1-2*x-x^2)/(1-4*x-4*x^2+4*x^3+x^4), {x, 0, 40}], x] (* _Vincenzo Librandi_, May 05 2013 *)",
+        "LinearRecurrence[{4,4,-4,-1},{1,2,11,48},40] (* _Harvey P. Dale_, May 28 2014 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^66)); Vec(x*(1-2*x-x^2)/(1-4*x-4*x^2+4*x^3+x^4)) \\\\ _Joerg Arndt_, May 06 2013",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 40); Coefficients(R!( x*(1-2*x-x^2)/(1-4*x-4*x^2+4*x^3+x^4) )); // _G. C. Greubel_, Dec 29 2019",
+        "(Sage)",
+        "def A054894_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( x*(1-2*x-x^2)/(1-4*x-4*x^2+4*x^3+x^4) ).list()",
+        "a=A054894_list(40); a[1:] # _G. C. Greubel_, Dec 29 2019",
+        "(GAP) a:=[1,2,11,48];; for n in [5..40] do a[n]:=4*(a[n-1]+a[n-2]-a[n-3]) -a[n-4]; od; a; # _G. C. Greubel_, Dec 29 2019"
+    ],
+    "xref": [
+        "Column 3 of A332862 (apart from the initial term 1 here).",
+        "Cf. A055518, A055519."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Barry Cipra_, Jul 04 2000",
+    "references": 5,
+    "revision": 36,
+    "time": "2022-09-08T08:45:01-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

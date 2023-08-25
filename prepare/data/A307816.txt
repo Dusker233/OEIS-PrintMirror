@@ -1,0 +1,25 @@
+{
+    "number": 307816,
+    "data": "1,1,3,11,46,201,928,4399,21431,106399,536896,2744532,14185314,73999955,389131156,2060478226,10976863244,58792036053,316397505099,1710037259744,9277953713444,50514377326158,275903656802218,1511334791637679,8300811367229306,45703063861360901",
+    "name": "a(1) = 1; a(n) = Sum_{k=1..n-1} a(n-k) * Sum_{d|k} a(d)*a(k/d).",
+    "formula": [
+        "G.f.: A(x) = Sum_{n>=1} a(n)*x^n = x + (Sum_{n>=1} a(n)*x^n) * (Sum_{i>=1} Sum_{j>=1} a(i)*a(j)*x^(i*j))."
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = Sum[a[n - k] Sum[a[d] a[k/d], {d, Divisors[k]}], {k, 1, n - 1}]; a[1] = 1; Table[a[n], {n, 1, 26}]",
+        "a[n_] := a[n] = SeriesCoefficient[x + Sum[a[k] x^k, {k, 1, n - 1}]  Sum[Sum[a[i] a[j] x^(i j), {j, 1, n - 1}], {i, 1, n - 1}], {x, 0, n}]; Table[a[n], {n, 1, 26}]"
+    ],
+    "program": [
+        "(PARI) lista(nn) = { my(va=vector(nn)); va[1] = 1; for (n=2, nn, va[n] = sum(k=1, n-1, va[n-k] * sumdiv(k, d, va[d]*va[k/d]))); va;} \\\\ _Michel Marcus_, Apr 30 2019"
+    ],
+    "xref": [
+        "Cf. A038044, A317875."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Ilya Gutkovskiy_, Apr 30 2019",
+    "references": 0,
+    "revision": 7,
+    "time": "2019-04-30T21:49:46-04:00",
+    "created": "2019-04-30T21:49:46-04:00"
+}

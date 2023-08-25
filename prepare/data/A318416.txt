@@ -1,0 +1,32 @@
+{
+    "number": 318416,
+    "data": "1,1,4,10,22,50,115,231,470,995,1912,3745,7222,13608,25345,47322,85654,155163,278867,494080,870618,1524769,2640527,4549564,7802037,13251684,22412317,37706268,63015263,104800015,173574936,285694401,468449681,764775169,1242535747,2010866469,3242127656",
+    "name": "Expansion of Product_{i>=1, j>=1} (1 + i*j*x^(i*j)).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A318416/b318416.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} (1 + k*x^k)^tau(k), where tau = number of divisors (A000005).",
+        "G.f.: exp(Sum_{k>=1} ( Sum_{d|k} (-d)^(k/d+1)*tau(d) ) * x^k/k)."
+    ],
+    "maple": [
+        "a:=series(mul(mul(1+i*j*x^(i*j),j=1..55),i=1..55),x=0,37): seq(coeff(a,x,n),n=0..36); # _Paolo P. Lava_, Apr 02 2019"
+    ],
+    "mathematica": [
+        "nmax = 36; CoefficientList[Series[Product[Product[(1 + i j x^(i j)), {i, 1, nmax}], {j, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 36; CoefficientList[Series[Product[(1 + k x^k)^DivisorSigma[0, k], {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 36; CoefficientList[Series[Exp[Sum[Sum[(-d)^(k/d + 1) DivisorSigma[0, d], {d, Divisors[k]}] x^k/k, {k, 1, nmax}]], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[(-d)^(k/d + 1) DivisorSigma[0, d], {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 36}]",
+        "nmax = 36; s = 1 + x; Do[s *= Sum[Binomial[DivisorSigma[0, k], j]*k^j*x^(j*k), {j, 0, nmax/k}]; s = Expand[s]; s = Take[s, Min[nmax + 1, Exponent[s, x] + 1, Length[s]]];, {k, 2, nmax}]; CoefficientList[s, x] (* _Vaclav Kotesovec_, Aug 27 2018 *)"
+    ],
+    "xref": [
+        "Cf. A000005, A022629, A107742, A280541, A318415."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Aug 26 2018",
+    "references": 6,
+    "revision": 13,
+    "time": "2019-04-03T02:58:40-04:00",
+    "created": "2018-08-26T11:10:42-04:00"
+}

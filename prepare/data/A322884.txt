@@ -1,0 +1,43 @@
+{
+    "number": 322884,
+    "data": "1,1,5,39,493,9320,242366,8193031,346270455,17780116911,1085004090887,77324278953174,6344818280326312,592415284729545433,62319734032202722887,7323734663214254662683,954467851066831095051393,137065739258353347820981920",
+    "name": "Number of set partitions of [2n] such that the maximal absolute difference between the least elements of consecutive blocks equals n.",
+    "comment": [
+        "a(0) = 1 by convention."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A322884/b322884.txt\">Table of n, a(n) for n = 0..130</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "formula": [
+        "a(n) = A287215(2n,n)."
+    ],
+    "example": [
+        "a(1) = 1: 1|2.",
+        "a(2) = 5: 124|3, 12|34, 12|3|4, 13|2|4, 1|23|4."
+    ],
+    "maple": [
+        "b:= proc(n, k, m, l) option remember; `if`(n<1, 1,",
+        "     `if`(l-n>k, 0, b(n-1, k, m+1, n))+m*b(n-1, k, m, l))",
+        "    end:",
+        "A:= (n, k)-> b(n-1, min(k, n-1), 1, n):",
+        "a:= n-> A(2*n, n)-`if`(n=0, 0, A(2*n, n-1)):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "b[n_, k_, m_, l_] := b[n, k, m, l] = If[n < 1, 1, If[l - n > k, 0, b[n - 1, k, m + 1, n]] + m b[n - 1, k, m, l]];",
+        "A[n_, k_] := b[n - 1, Min[k, n - 1], 1, n];",
+        "a[n_] := A[2 n, n] - If[n == 0, 0, A[2 n, n - 1]];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Jan 03 2019, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A287215."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Dec 29 2018",
+    "references": 2,
+    "revision": 15,
+    "time": "2019-01-06T13:32:24-05:00",
+    "created": "2018-12-29T10:29:40-05:00"
+}

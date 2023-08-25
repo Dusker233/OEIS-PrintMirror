@@ -1,0 +1,37 @@
+{
+    "number": 306009,
+    "data": "1,2,2,7,14,43,130,446,1544,5773,22170,89356,370198,1591379,7020014,31922981,148679262,710828036,3474337098,17379964444,88739068866,462670294023,2458638559154,13317850411827,73432568553848,412120738922369,2351720323257872",
+    "name": "Inverse Weigh transform of A000085.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A306009/b306009.txt\">Table of n, a(n) for n = 1..800</a>"
+    ],
+    "formula": [
+        "Product_{k>=1} (1+x^k)^a(k) = Sum_{n>=0} A000085(n) * x^n."
+    ],
+    "maple": [
+        "g:= proc(n) option remember;",
+        "      `if`(n<2, 1, g(n-1)+(n-1)*g(n-2))",
+        "    end:",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(binomial(a(i), j)*b(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "a:= proc(n) option remember; g(n)-b(n, n-1) end:",
+        "seq(a(n), n=1..30);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = If[n < 2, 1, g[n - 1] + (n - 1)*g[n - 2]];",
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, If[i < 1, 0, Sum[Binomial[a[i], j]*b[n - i*j, i - 1], {j, 0, n/i}]]];",
+        "a[n_] := a[n] = g[n] - b[n, n - 1];",
+        "Table[a[n], {n, 1, 30}] (* _Jean-Fran\u00e7ois Alcover_, Oct 27 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000085, A293114."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Jun 16 2018",
+    "references": 2,
+    "revision": 12,
+    "time": "2021-10-27T09:27:27-04:00",
+    "created": "2018-06-16T19:32:13-04:00"
+}

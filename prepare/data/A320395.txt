@@ -1,0 +1,46 @@
+{
+    "number": 320395,
+    "data": "1,2,10,208,45960,287800704,100103176111616,3837878984050795692032,32966965900633495618246298767360,128880214965936601447070466061615999984402432,464339910355487357558396669850788946402420533504952464572416",
+    "name": "Number of non-isomorphic 3-uniform multiset systems over {1,...,n}.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320395/b320395.txt\">Table of n, a(n) for n = 0..25</a>"
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(2) = 10 multiset systems:",
+        "  {}",
+        "  {{111}}",
+        "  {{122}}",
+        "  {{111}{222}}",
+        "  {{112}{122}}",
+        "  {{112}{222}}",
+        "  {{122}{222}}",
+        "  {{111}{122}{222}}",
+        "  {{112}{122}{222}}",
+        "  {{111}{112}{122}{222}}"
+    ],
+    "mathematica": [
+        "Table[Sum[2^PermutationCycles[Ordering[Map[Sort,Select[Tuples[Range[n],3],OrderedQ]/.Rule@@@Table[{i,prm[[i]]},{i,n}],{1}]],Length],{prm,Permutations[Range[n]]}]/n!,{n,6}]"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v)={my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "rep(typ)={my(L=List(), k=0); for(i=1, #typ, k+=typ[i]; listput(L, k); while(#L<k, listput(L, #L))); Vec(L)}",
+        "can(v, f)={my(d=1, u=v); while(d>0, u=vecsort(apply(f, u)); d=lex(u, v)); !d}",
+        "Q(perm)={my(t=0); forsubset([#perm+2, 3], v, t += can([v[1],v[2]-1,v[3]-2], t->perm[t])); t}",
+        "a(n)={my(s=0); forpart(p=n, s += permcount(p)*2^Q(rep(p))); s/n!} \\\\ _Andrew Howroyd_, Aug 26 2019"
+    ],
+    "xref": [
+        "The 2-uniform case is A000666. The case of sets (as opposed to multisets) is A000665. The case of labeled spanning sets is A302374, with unlabeled case A322451.",
+        "Cf. A000088, A000612, A003180, A070166, A301922, A317795, A319876."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Dec 12 2018",
+    "ext": [
+        "Terms a(9) and beyond from _Andrew Howroyd_, Aug 26 2019"
+    ],
+    "references": 8,
+    "revision": 15,
+    "time": "2019-08-27T10:44:39-04:00",
+    "created": "2018-12-13T09:18:02-05:00"
+}

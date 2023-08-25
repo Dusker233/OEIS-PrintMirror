@@ -1,0 +1,35 @@
+{
+    "number": 298877,
+    "data": "1,6,15,29,50,79,117,165,224,295,379,477,591,722,871,1039,1227,1436,1667,1921,2199,2502,2831,3187,3571,3985,4430,4907,5417,5961,6540,7155,7807,8497,9226,9995,10805,11657,12552,13491,14475,15505,16582,17707,18881",
+    "name": "Solution (a(n)) of the complementary equation in Comments.",
+    "comment": [
+        "Define sequences a(n) and b(n) recursively, starting with a(0) = 1, b(0) = 2:",
+        "b(n) = least new;",
+        "a(n) = a(n-1) + b(n) + b(n-1) + ... + b(0),",
+        "where \"least new k\" means the least positive integer not yet placed."
+    ],
+    "example": [
+        "b(1) = least not in {a(0),b(0)} = 3;",
+        "a(1) = a(0) + b(1) + b(0) = 1 + 3 + 2 = 6."
+    ],
+    "mathematica": [
+        "z = 1000;",
+        "mex[list_, start_] := (NestWhile[# + 1 &, start, MemberQ[list, #] &]);",
+        "c = 1; a = {1}; b = {2}; x = {1};",
+        "Do[AppendTo[b, mex[Flatten[{a, b}], 1]];",
+        " AppendTo[x, 1];",
+        " AppendTo[a, c Last[a] + (Reverse[x] b // Total)], {z}]",
+        "Take[a, 30]",
+        "(* _Peter J. C. Moses_, May 10 2018 *)"
+    ],
+    "xref": [
+        "Cf. A298173, A198741."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, May 12 2018",
+    "references": 2,
+    "revision": 4,
+    "time": "2018-05-13T01:11:21-04:00",
+    "created": "2018-05-13T01:11:21-04:00"
+}

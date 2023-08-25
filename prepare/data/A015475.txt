@@ -1,0 +1,37 @@
+{
+    "number": 15475,
+    "data": "0,1,4,65,4164,1066049,1091638340,4471351706689,73258627454030916,4801077413298721817665,1258573637505038759624004676,1319710110525284599824799048959041,5535265395417901871821058989004725507140",
+    "name": "q-Fibonacci numbers for q=4.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A015475/b015475.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "formula": [
+        "a(n) = 4^(n-1)*a(n-1) + a(n-2)."
+    ],
+    "maple": [
+        "q:=4; seq(add((product((1-q^(2*(n-j-1-k)))/(1-q^(2*k+2)), k=0..j-1))* q^binomial(n-2*j,2), j = 0..floor((n-1)/2)), n = 0..20); # _G. C. Greubel_, Dec 17 2019"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[0]==0, a[1]==1, a[n]==a[n-1]*4^(n-1)+a[n-2]},  a, {n, 20}] (* _Vincenzo Librandi_, Nov 09 2012 *)",
+        "F[n_, q_]:= Sum[QBinomial[n-j-1, j, q^2]*q^Binomial[n-2*j,2], {j, 0, Floor[(n-1)/2]}]; Table[F[n, 4], {n, 0, 20}] (* _G. C. Greubel_, Dec 17 2019 *)"
+    ],
+    "program": [
+        "(PARI) q=4; m=20; v=concat([0,1], vector(m-2)); for(n=3, m, v[n]=q^(n-2)*v[n-1]+v[n-2]); v \\\\ _G. C. Greubel_, Dec 17 2019",
+        "(Magma) q:=4; I:=[0,1]; [n le 2 select I[n] else q^(n-2)*Self(n-1) + Self(n-2): n in [1..20]]; // _G. C. Greubel_, Dec 17 2019",
+        "(Sage)",
+        "def F(n,q): return sum( q_binomial(n-j-1, j, q^2)*q^binomial(n-2*j,2) for j in (0..floor((n-1)/2)))",
+        "[F(n,4) for n in (0..20)] # _G. C. Greubel_, Dec 17 2019",
+        "(GAP) q:=4;; a:=[0,1];; for n in [3..20] do a[n]:=q^(n-2)*a[n-1]+a[n-2]; od; a; # _G. C. Greubel_, Dec 17 2019"
+    ],
+    "xref": [
+        "q-Fibonacci numbers: A000045 (q=1), A015473 (q=2), A015474 (q=3), this sequence (q=4), A015476 (q=5), A015477 (q=6), A015479 (q=7), A015480 (q=8), A015481 (q=9), A015482 (q=10), A015484 (q=11), A015485 (q=12).",
+        "Differs from A015461."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 16,
+    "revision": 14,
+    "time": "2022-09-08T08:44:40-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

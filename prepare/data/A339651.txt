@@ -1,0 +1,25 @@
+{
+    "number": 339651,
+    "data": "1,1,2,4,14,92,884,11200,175460,3264456,70251004,1715832180,46881727360,1416695166888,46909359288468,1688908328539092,65689047712686678,2744769306400145168,122618498876673122160,5832010466617354498700,294228096306408399225374",
+    "name": "Number of trees with n integer labeled leaves spanning an initial interval of positive integers and all non-leaf nodes having degree 3.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A339651/b339651.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "program": [
+        "(PARI) \\\\ here U(n,k) is k-th column of A339650 as a vector.",
+        "R(n, k)={my(v=vector(n)); v[1]=k; for(n=2, n, v[n]=sum(j=1, (n-1)\\2, v[j]*v[n-j]) + if(n%2, 0, binomial(v[n/2]+1, 2))); v}",
+        "U(n, k)={my(g=x*Ser(R(n,k))); Vec(1 + g + (subst(g + O(x*x^(n\\3)), x, x^3) - g^3)/3) }",
+        "seq(n)={sum(k=0, n, U(n, k)*sum(r=k, n, binomial(r, k)*(-1)^(r-k)) )}"
+    ],
+    "xref": [
+        "Row sums of A339650.",
+        "Cf. A319590 (rooted)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Andrew Howroyd_, Dec 14 2020",
+    "references": 2,
+    "revision": 8,
+    "time": "2021-01-10T12:41:57-05:00",
+    "created": "2020-12-15T09:11:34-05:00"
+}

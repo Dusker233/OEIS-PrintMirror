@@ -1,0 +1,35 @@
+{
+    "number": 349567,
+    "data": "1,1,5,17,65,197,665,2017,6285,19025,58025,174565,527345,1584737,4766245,14311841,42981185,128995317,387158345,1161697825,3485732845,10458138977,31376865305,94134428213,282412758225,847253996225,2541798693045,7625460083185,22876524019505,68629830861205,205890058352825,617671220125537",
+    "name": "Dirichlet convolution of A133494 [3^(n-1)] with A349452 (Dirichlet inverse of A011782, 2^(n-1)).",
+    "comment": [
+        "Dirichlet convolution of this sequence with A034738 produces A034754."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A349567/b349567.txt\">Table of n, a(n) for n = 1..1001</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{d|n} 3^(d-1) * A349452(n/d)."
+    ],
+    "mathematica": [
+        "s[1] = 1; s[n_] := s[n] = -DivisorSum[n, s[#] * 2^(n/# - 1) &, # < n &]; a[n_] := DivisorSum[n, 3^(# - 1) * s[n/#] &]; Array[a, 32] (* _Amiram Eldar_, Nov 22 2021 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A011782(n) = (2^(n-1));",
+        "memoA349452 = Map();",
+        "A349452(n) = if(1==n,1,my(v); if(mapisdefined(memoA349452,n,&v), v, v = -sumdiv(n,d,if(d<n,A011782(n/d)*A349452(d),0)); mapput(memoA349452,n,v); (v)));",
+        "A349567(n) = sumdiv(n,d,(3^(d-1)) * A349452(n/d));"
+    ],
+    "xref": [
+        "Cf. A011782, A133494, A349452, A349568 (Dirichlet inverse).",
+        "Cf. also A034738, A034754, A349563, A349565, A349569."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Antti Karttunen_, Nov 22 2021",
+    "references": 6,
+    "revision": 10,
+    "time": "2021-11-25T12:15:48-05:00",
+    "created": "2021-11-22T19:58:42-05:00"
+}

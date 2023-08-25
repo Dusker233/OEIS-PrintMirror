@@ -1,0 +1,63 @@
+{
+    "number": 331330,
+    "data": "0,1,1,3,4,8,14,26,46,85,155,286,528,980,1824,3410,6392,12022,22675,42885,81312,154540,294362,561849,1074463,2058462,3950220,7592403,14614105,28168227,54363000,105043517,203200635,393496975,762765642,1479957400,2874038529,5585986973,10865544853,21150913457,41201771886",
+    "name": "a(n) is the number of sparse rulers of length n where the length of the first segment is unique.",
+    "comment": [
+        "A sparse ruler, or simply a ruler, is a strict increasing finite sequence of nonnegative integers starting from 0 called marks. See A103294 for more definitions."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A331330/b331330.txt\">Table of n, a(n) for n = 0..2000</a> (first 101 terms from Bert Dobbelaere)"
+    ],
+    "formula": [
+        "a(n) = A331332(n,1) for n >= 1.",
+        "Conjecture: a(n) ~ 2^n / (n * log(2)). - _Vaclav Kotesovec_, Nov 16 2020"
+    ],
+    "example": [
+        "All rulers of length four are listed below; those marked with x are counted: [0,4]x, [0,3,4]x, [0,2,4], [0,1,4]x, [0,2,3,4]x, [0,1,3,4], [0,1,2,4], [0,1,2,3,4]."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1, add(",
+        "     `if`(i=j, 0, b(n-j, `if`(n<i+j, 0, i))), j=1..n))",
+        "    end:",
+        "a:= proc(n) option remember; add(b(n-j, j), j=1..n) end:",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Feb 06 2020"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n==0, 1, Sum[If[i==j, 0, b[n-j, If[n<i+j, 0, i]]], {j, 1, n}]];",
+        "a[n_] := a[n] = Sum[b[n-j, j], {j, 1, n}];",
+        "a /@ Range[0, 50] (* _Jean-Fran\u00e7ois Alcover_, Nov 15 2020, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "cache={}",
+        "def f( n, l1):",
+        "..args=(n, l1)",
+        "..if args in cache: return cache[args]",
+        "..s=0",
+        "..for l in range(1, n+1):",
+        "....if l!=l1:",
+        "......s += 1 if l==n else f(n-l, l1)",
+        "..cache[args] = s",
+        "..return s",
+        "def a331330(n):",
+        "..if n==0: return 0",
+        "..s=1",
+        "..for l1 in range(1, n+1):",
+        "....s += f( n-l1, l1)",
+        "..return s",
+        "# _Bert Dobbelaere_, Feb 06 2020"
+    ],
+    "xref": [
+        "Cf. A331332, A103294."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Peter Luschny_, Jan 24 2020",
+    "ext": [
+        "More terms from _Bert Dobbelaere_, Feb 06 2020"
+    ],
+    "references": 2,
+    "revision": 30,
+    "time": "2020-11-16T02:37:54-05:00",
+    "created": "2020-01-25T02:12:09-05:00"
+}

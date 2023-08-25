@@ -1,0 +1,56 @@
+{
+    "number": 355520,
+    "data": "2,4,8,16,32,62,116,206,350,566,886,1334,1974,2846,3978,5472,7398,9854,12964,16804,21524",
+    "name": "Number of length-n binary strings having a string attractor of size at most 2.",
+    "comment": [
+        "A string attractor for a string x=x[1..n] is a set of positions S, a subset of {1,2,...,n}, such that every block occurring in x has a (possibly different) occurrence touching one of the positions in S.",
+        "a(n) is even by symmetry. - _Michael S. Branicky_, Jul 06 2022"
+    ],
+    "link": [
+        "S. Mantaci, A. Restivo, G. Romana, G. Rosone, and M. Sciortino, <a href=\"http://ceur-ws.org/Vol-2504/paper8.pdf\">String attractors and combinatorics on words</a>, Proc. ICTCS 2019 (20th Italian Conference on Theoretical Computer Science), CEUR Workshop Proceedings, pp. 57-71."
+    ],
+    "formula": [
+        "a(n) = A339668(n) + 2, since only 0^n and 1^n possess string attractors of size 1, where ^ is repeated concatenation. - _Michael S. Branicky_, Jul 06 2022"
+    ],
+    "example": [
+        "For example, the string 001011 has no string attractor of size 2, but it does have a string attractor of size 3, namely {1,3,5}."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import combinations as C, product as P",
+        "def blocks_ranges(w):",
+        "    blocks = dict()",
+        "    for i in range(len(w)):",
+        "        for j in range(i+1, len(w)+1):",
+        "            wij = w[i:j]",
+        "            if wij in blocks: blocks[wij].append(set(range(i, j)))",
+        "            else: blocks[wij] = [set(range(i, j))]",
+        "    return blocks",
+        "def isa(S, w):  # S is an attractor for string w",
+        "    br = blocks_ranges(w)",
+        "    for b in br:",
+        "        for i in range(len(br[b])):",
+        "            if S & br[b][i]: break",
+        "        else: return False",
+        "    return True",
+        "def ok(w):  # w has a string attractor of size at most 2",
+        "    return any(isa(set(s), w) for r in (1, 2) for s in C(range(len(w)), r))",
+        "def a(n):   # only search strings starting with 0 by symmetry",
+        "    return sum(2 for u in P(\"01\", repeat=n-1) if ok(\"0\"+\"\".join(u)))",
+        "print([a(n) for n in range(1, 12)]) # _Michael S. Branicky_, Jul 06 2022"
+    ],
+    "xref": [
+        "Cf. A339391, A339668."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Jul 05 2022",
+    "ext": [
+        "a(13)-a(18) from _Michael S. Branicky_, Jul 05 2022",
+        "a(19)-a(21) from _Michael S. Branicky_, Jul 06 2022"
+    ],
+    "references": 1,
+    "revision": 27,
+    "time": "2023-01-14T10:50:03-05:00",
+    "created": "2022-07-05T23:22:20-04:00"
+}

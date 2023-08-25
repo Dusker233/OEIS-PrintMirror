@@ -1,0 +1,35 @@
+{
+    "number": 359332,
+    "data": "6,10,114,130,174,182,222,231,255,273,286,298,357,358,455,574,622,870,1015,1309,1335,1677,1695,12594,13630,13686,15258,18534,18654,19082,19114,19522,19626,19922,19986,20998,21558,22178,22882,22930,23062,23262,23709,24338",
+    "name": "Numbers with arithmetic derivative which is a palindromic prime number (A002385).",
+    "comment": [
+        "A subsequence of A157037.",
+        "If p and q,(p < q), are twin primes and q is a term in A002385, then m = 2*p is a term. Indeed, m' = (2*p)' = p + 2 = q, which is a palindromic prime number (A157037)."
+    ],
+    "example": [
+        "6' = 5 = A002385(3).",
+        "114' = 101 = A002385(6)."
+    ],
+    "maple": [
+        "d:= n-> n*add(i[2]/i[1], i=ifactors(n)[2]):",
+        "q:= n-> (k-> isprime(k) and StringTools[IsPalindrome](\"\"||k))(d(n)):",
+        "select(q, [$1..25000])[];  # _Alois P. Heinz_, Jan 29 2023"
+    ],
+    "mathematica": [
+        "d[0] = d[1] = 0; d[n_] := n * Plus @@ ((Last[#]/First[#]) & /@ FactorInteger[n]); Select[Range[25000], PrimeQ[p = d[#]] && PalindromeQ[p] &] (* _Amiram Eldar_, Jan 29 2023 *)"
+    ],
+    "program": [
+        "(Magma) f:=func<n |n le 1 select 0 else n*(&+[Factorisation(n)[i][2] / Factorisation(n)[i][1]: i in [1..#Factorisation(n)]])>; pal:=func<n|Intseq(n) eq",
+        "Reverse(Intseq(n))>; [p:p in [1..25000]|pal(Floor(f(p))  and  IsPrime(Floor(f(p)))];"
+    ],
+    "xref": [
+        "Cf. A001097, A002113, A002385, A003415, A157037."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Marius A. Burtea_, Jan 29 2023",
+    "references": 0,
+    "revision": 19,
+    "time": "2023-03-01T14:29:59-05:00",
+    "created": "2023-03-01T14:29:59-05:00"
+}

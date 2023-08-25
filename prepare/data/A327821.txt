@@ -1,0 +1,65 @@
+{
+    "number": 327821,
+    "data": "1,5,19,57,161,449,1247,3457,9577,26525,73459,203433,563369,1560137,4320479,11964673",
+    "name": "Number of legal Go positions on a board which is an n-cycle graph.",
+    "comment": [
+        "This is a variation on A102620."
+    ],
+    "link": [
+        "S\u00e9bastien Palcoux, <a href=\"https://mathoverflow.net/q/342194/34538\">Is this representation of Go (game) irreducible?</a> (version: 2019-09-22), MathOverflow."
+    ],
+    "formula": [
+        "a(n)/A102620(n) converges to 1.44066.... This would imply that a(n+1)/a(n) converges to 2.769292354... the real root of x^3 - 3*x^2 + x - 1 = 0.",
+        "From _Colin Barker_, Sep 26 2019: (Start)",
+        "G.f.: x*(1 + x + 3*x^2 - x^3) / ((1 - x)*(1 - 3*x + x^2 - x^3)).",
+        "a(n) = 4*a(n-1) - 4*a(n-2) + 2*a(n-3) - a(n-4) for n > 4.",
+        "(End)",
+        "From _Zhujun Zhang_, Sep 28 2020: (Start)",
+        "a(n) = r_1^n + r_2^n + r_3^n - 2 where r_1, r_2 and r_3 are roots of x^3 - 3*x^2 + x - 1 = 0 for n > 0.",
+        "a(n) = floor(r^n - 3/2) where r is the real root of x^3 - 3*x^2 + x - 1 = 0 for n > 2.",
+        "(End)"
+    ],
+    "example": [
+        "A 2-cycle is a 1 X 2 grid so that a(2) = A102620(2) = A266278(1) = 5.",
+        "A 4-cycle is a 2 X 2 grid so that a(4) = A094777(2) = A266278(2) = 57."
+    ],
+    "program": [
+        "(SageMath)",
+        "cpdef GoCycle(int n):",
+        "   cdef int i,j,a,l",
+        "   cdef list L,LL,T",
+        "   LL=[]",
+        "   for i in range(3**n):",
+        "      L=Integer(i).digits(base=3,padto=n)",
+        "      T=[L[0]]",
+        "      for j in range(n-1):",
+        "         if L[j+1]<>L[j]:",
+        "            T.append(L[j+1])",
+        "      if len(T)>1 and T[0]==T[-1]:",
+        "         T.pop(0)",
+        "      a=1",
+        "      if 1 in T:",
+        "         a=0",
+        "         l=len(T)",
+        "         if l>2:",
+        "            for j in range(-2,l-2):",
+        "               if not 1 in [T[j],T[j+1],T[j+2]]:",
+        "                  a=1",
+        "                  break",
+        "      if a==0:",
+        "         L=[j-1 for j in L]",
+        "         LL.append(L)",
+        "   return LL",
+        "[len(GoCycle(i)) for i in range(1,17)]"
+    ],
+    "xref": [
+        "Cf. A094777, A102620, A266278, A268113."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_S\u00e9bastien Palcoux_, Sep 26 2019",
+    "references": 1,
+    "revision": 22,
+    "time": "2020-10-06T02:43:46-04:00",
+    "created": "2019-10-14T00:05:08-04:00"
+}

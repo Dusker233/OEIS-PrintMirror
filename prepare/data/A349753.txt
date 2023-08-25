@@ -1,0 +1,36 @@
+{
+    "number": 349753,
+    "data": "1,3,7,25,33,55,57,69,91,93,2211,4825,12639,28225,32043,68727,89575,970225,2245557,16322559,22799825,48980427,55037217,60406599,68258725,325422273,414690595,569173299,794579511,10056372275,10475647197,10759889913,11154517557",
+    "name": "Odd numbers k for which A003961(k)-2k divides A003961(k)-sigma(k), where A003961 shifts the prime factorization one step towards larger primes, and sigma is the sum of divisors function.",
+    "comment": [
+        "Numbers k for which A326057(k) = gcd(A003961(k)-2k, A003961(k)-sigma(k)) is equal to abs(A252748(k)) = |A003961(k)-2k|.",
+        "The odd terms of A326134 form a subsequence of this sequence. Unlike in A326134, here we don't constrain the value of A252748(k) = A003961(k)-2k, thus allowing also values <= +1. Because of that, the odd terms of A048674 and A348514 are all included here, for example 57 and 68727 that occur in A348514, and 1, 3, 25, 33, 93, 970225, 325422273, 414690595 that occur in A048674.",
+        "Conjecture (1): This is a subsequence of A319630, in other words, for all terms k, gcd(k, A003961(k)) = 1.",
+        "Conjecture (2): Apart from 1, there are no common terms with A349169, which would imply that no odd perfect numbers exist."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A349753/b349753.txt\">Table of n, a(n) for n = 1..36</a> (terms below 10^11)",
+        "<a href=\"/index/O#opnseqs\">Index entries for sequences where any odd perfect numbers must occur</a>",
+        "<a href=\"/index/Pri#prime_indices\">Index entries for sequences computed from indices in prime factorization</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "mathematica": [
+        "f[p_, e_] := NextPrime[p]^e; s[1] = 1; s[n_] := Times @@ f @@@ FactorInteger[n]; q[n_] := Divisible[(sn = s[n]) - DivisorSigma[1, n], sn - 2*n]; Select[Range[1, 10^6, 2], q] (* _Amiram Eldar_, Dec 04 2021 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A003961(n) = { my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); };",
+        "isA349753(n) = if(!(n%2), 0, my(s = A003961(n), t = (s-(2*n)), u = s-sigma(n)); !(u%t));"
+    ],
+    "xref": [
+        "Cf. A000203, A003961, A252748, A286385, A319630, A326057, A326134, A349169.",
+        "Cf. A048674, A348514."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Dec 01 2021",
+    "references": 2,
+    "revision": 26,
+    "time": "2021-12-17T11:35:28-05:00",
+    "created": "2021-12-04T12:31:28-05:00"
+}

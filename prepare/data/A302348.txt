@@ -1,0 +1,57 @@
+{
+    "number": 302348,
+    "data": "0,0,1,1,4,5,14,18,37,50,90,122,199,270,415,559,820,1096,1556,2060,2847,3736,5057,6576,8747,11279,14788,18916,24493,31097,39838,50225,63737,79833,100471,125076,156237,193394,239956,295443,364334,446349,547360,667440",
+    "name": "a(n) = Sum_{p in P} (H(2,p)^2)/2, where P is the set of partitions of n, and H(2,p) is the number of hooks of length 2 in p.",
+    "comment": [
+        "This sequence is part of the contribution to the b^2 term of the Han/Nekrasov-Okounkov hooklength formula truncated at hooks of size two.",
+        "It is of interest to enumerate and determine specific characteristics of partitions of n, considering each partition individually."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A302348/b302348.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Guo-Niu Han, <a href=\"https://arxiv.org/abs/0805.1398\">The Nekrasov-Okounkov hook length formula: refinement, elementary proof, extension and applications</a>, arXiv:0805.1398 [math.CO], 2008.",
+        "Guo-Niu Han, <a href=\"https://doi.org/10.5802/aif.2515\">The Nekrasov-Okounkov hook length formula: refinement, elementary proof, extension and applications</a>, Annales de l'institut Fourier, Tome 60 (2010) no. 1, pp. 1-29.",
+        "W. J. Keith, <a href=\"https://doi.org/10.1007/s11139-015-9704-x\">Restricted k-color partitions</a>, Ramanujan Journal (2016) 40: 71."
+    ],
+    "formula": [
+        "G.f: (q^2*(1+q^2+2*q^4))/((1-q^2)*(1-q^4)*Product_{i>0} (1-q^i))."
+    ],
+    "example": [
+        "For a(6), we sum over partitions of six. For each partition, we count 1 for each hook of length 2, then square the total in each partition. We divide the final result in half to get a(6).",
+        "6............1^2 = 1",
+        "5,1..........1^2 = 1",
+        "4,2..........2^2 = 4",
+        "4,1,1........2^2 = 4",
+        "3,3..........2^2 = 4",
+        "3,2,1........0^2 = 0",
+        "3,1,1,1......2^2 = 4",
+        "2,2,2........2^2 = 4",
+        "2,2,1,1......2^2 = 4",
+        "2,1,1,1,1....1^2 = 1",
+        "1,1,1,1,1,1..1^2 = 1",
+        "--------------------",
+        "Total.............28/2=14"
+    ],
+    "maple": [
+        "b:= proc(n, i, p, l) option remember; `if`(n=0, p^2,",
+        "      `if`(i>n, 0, b(n, i+1, p, 1)+add(b(n-i*j, i+1, p+",
+        "      `if`(j>1, 1, 0)+l, 0), j=1..n/i)))",
+        "    end:",
+        "a:= n-> b(n, 1, 0$2)/2:",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Apr 06 2018"
+    ],
+    "mathematica": [
+        "b[n_, i_, p_, l_] := b[n, i, p, l] = If[n == 0, p^2, If[i > n, 0, b[n, i + 1, p, 1] + Sum[b[n - i*j, i+1, p + If[j > 1, 1, 0]+l, 0], {j, 1, n/i}]]];",
+        "a[n_] := b[n, 1, 0, 0]/2;",
+        "Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, May 18 2018, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A024786, A302347."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Emily Anible_, Apr 05 2018",
+    "references": 1,
+    "revision": 25,
+    "time": "2018-05-20T18:13:48-04:00",
+    "created": "2018-04-15T12:38:39-04:00"
+}

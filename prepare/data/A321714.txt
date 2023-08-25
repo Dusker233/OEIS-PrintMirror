@@ -1,0 +1,46 @@
+{
+    "number": 321714,
+    "data": "13,26,35,39,45,52,65,70,78,90,91,104,105,112,117,130,140,144,156,180,182,195,208,210,234,260,273,280,312,315,336,360,364,390,420,455,468,520,546,560,585,624,630,720,728,780,819,840,910,936,1008,1040,1092,1170,1260,1365,1456,1560,1638,1680,1820,1872,2184,2340,2520,2730,3120,3276,3640,4095,4368,4680,5040,5460,6552,7280,8190,9360,10920,13104,16380,21840,32760,65520",
+    "name": "Numbers k such that lambda(k) = 12.",
+    "comment": [
+        "Here lambda is Carmichael's lambda function (see A002322)."
+    ],
+    "link": [
+        "R. D. Carmichael, <a href=\"https://doi.org/10.1090/S0002-9904-1910-01892-9\">Note on a new number theory function</a>, Bull. Amer. Math. Soc. 16 (1910), 232-238."
+    ],
+    "maple": [
+        "with(numtheory): op(select(n->lambda(n)=12,[$1..65520])); # _Paolo P. Lava_, Mar 19 2019"
+    ],
+    "program": [
+        "(PARI)",
+        "lambda(n) = { \\\\ A002322",
+        "  my(f=factor(n), fsz=matsize(f)[1]);",
+        "  lcm(vector(fsz, k, my(p=f[k,1], e=f[k,2]);",
+        "      if (p != 2, p^(e-1)*(p-1), e > 2, 2^(e-2), 2^(e-1))));",
+        "};",
+        "invlambda(n) = { \\\\ A270562",
+        "  if (n <= 0, return(0), n==1, return(2), n%2, return(0));",
+        "  my(f=factor(n), fsz=matsize(f)[1], g=1, h=1);",
+        "  for (k=1, fsz, my(p=f[k,1], e=1);",
+        "    while (n % lambda(p^e) == 0, e++); g *= p^(e-1));",
+        "  fordiv(n, d, if (isprime(d+1) && g % (d+1) != 0, h *= (d+1)));",
+        "  g *= h; if (lambda(g) != n, 0, g);",
+        "};",
+        "lambda_level(n) = {",
+        "  my(N = invlambda(n)); if (!N, return([])); my(s=List());",
+        "  fordiv(N, d, if (lambda(d) == n, listput(s, d)));",
+        "  Set(s);",
+        "};",
+        "lambda_level(12)"
+    ],
+    "xref": [
+        "Cf. A002322, A270562, A321713."
+    ],
+    "keyword": "nonn,fini,full",
+    "offset": "1,1",
+    "author": "_Gheorghe Coserea_, Feb 21 2019",
+    "references": 1,
+    "revision": 20,
+    "time": "2019-05-03T12:55:21-04:00",
+    "created": "2019-02-25T09:20:53-05:00"
+}

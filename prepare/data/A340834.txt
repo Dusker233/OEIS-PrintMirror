@@ -1,0 +1,44 @@
+{
+    "number": 340834,
+    "data": "12,1222,1437286,3441373,1032893366969",
+    "name": "Fixed points of A341885.",
+    "comment": [
+        "Numbers n such that A341885(n) = n.",
+        "Includes 2*p*q if p and q are primes such that p^2-4*p*q+q^2+p+q+6 = 0.  This includes 12 for p=2, q=3, 1222 for p=13,q=47, 1437286 for p=439, q=1637, and 76498942675946443126 for p=3201392659, q=11947760057.",
+        "Another term: 6538810199342921107066977217325653068509 = 13 * 4401624135264074597*114272683103433355069. - _Chai Wah Wu_, Feb 25 2021"
+    ],
+    "formula": [
+        "A341885(a(n)) = a(n)."
+    ],
+    "example": [
+        "a(2) = 1222 is a term because 1222 = 2*13*47 and A341885(1222) = 2*3/2 + 13*14/2 + 47*48/2 = 1222."
+    ],
+    "maple": [
+        "f:= proc(n) local F,t;",
+        "  F:= ifactors(n)[2];",
+        "  add(t[1]*(t[1]+1)/2*t[2],t=F)",
+        "end proc:",
+        "select(t -> f(t)=t, [$1..4000000]);"
+    ],
+    "mathematica": [
+        "Block[{a = {}}, Monitor[Do[If[# == i, AppendTo[a, i]] &@ Total[PolygonalNumber@ Flatten[ConstantArray[#1, #2] & @@@ FactorInteger[i]]], {i, 2, 4*10^6}], i]; a] (* _Michael De Vlieger_, Feb 22 2021 *)"
+    ],
+    "program": [
+        "(Python3)",
+        "from sympy import factorint",
+        "A340834_list = [n for n in range(2,10**4) if n == sum(k*m*(m+1)//2 for m,k in factorint(n).items())] # _Chai Wah Wu_, Feb 25 2021"
+    ],
+    "xref": [
+        "Cf. A341885."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Feb 22 2021",
+    "ext": [
+        "a(5) from _Martin Ehrenstein_, Mar 07 2021"
+    ],
+    "references": 1,
+    "revision": 60,
+    "time": "2021-03-07T18:45:07-05:00",
+    "created": "2021-02-22T18:28:56-05:00"
+}

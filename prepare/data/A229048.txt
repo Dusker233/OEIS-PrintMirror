@@ -1,0 +1,56 @@
+{
+    "number": 229048,
+    "data": "1,2,4,9,23,73,304,1954,23075,607507",
+    "name": "Number of different chromatic polynomials of a simple graph with n nodes.",
+    "comment": [
+        "Partial sums of A245883. This may be proved using two facts: (i) the number of connected components of a graph is the multiplicity of the root 0 of the chromatic polynomial (thus the chromatic polynomial determines whether a graph is connected) and (ii) a disconnected graph is chromatically equivalent to some graph with an isolated vertex. The first statement is well known. For the latter statement, see p. 65 of [Dong]. - _Eric M. Schmidt_, Mar 20 2015",
+        "A stable partition of a graph is a set partition of the vertices where no edge has both ends in the same block. The chromatic polynomial is given by chi_G(x) = Sum_p (x)_k, where the sum is over all stable partitions of G, k is the length (number of blocks) of p, and (x)_k is the falling factorial x(x-1)(x-2)...(x-k+1). - _Gus Wiseman_, Nov 24 2018"
+    ],
+    "reference": [
+        "F. M. Dong, K. M. Koh, and K. L. Teo. Chromatic Polynomials and Chromaticity of Graphs, World Scientific Publishing Company, 2005."
+    ],
+    "link": [
+        "MathWorld, <a href=\"http://mathworld.wolfram.com/ChromaticPolynomial.html\">Chromatic Polynomial</a>",
+        "Eric M. Schmidt, <a href=\"/A229048/a229048_1.txt\">The 304 polynomials for n=7</a>"
+    ],
+    "example": [
+        "From _Gus Wiseman_, Nov 24 2018: (Start)",
+        "The a(4) = 9 chromatic polynomials:",
+        "  -6x + 11x^2 - 6x^3 + x^4",
+        "  -4x +  8x^2 - 5x^3 + x^4",
+        "  -2x +  5x^2 - 4x^3 + x^4",
+        "  -3x +  6x^2 - 4x^3 + x^4",
+        "         2x^2 - 3x^3 + x^4",
+        "   -x +  3x^2 - 3x^3 + x^4",
+        "          x^2 - 2x^3 + x^4",
+        "                -x^3 + x^4",
+        "                       x^4",
+        "(End)"
+    ],
+    "mathematica": [
+        "spsu[_,{}]:={{}};spsu[foo_,set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@spsu[Select[foo,Complement[#,Complement[set,s]]=={}&],Complement[set,s]]]/@Cases[foo,{i,___}];",
+        "falling[x_,k_]:=Product[(x-i),{i,0,k-1}];",
+        "chromPoly[g_]:=Expand[Sum[falling[x,Length[stn]],{stn,spsu[Select[Subsets[Union@@g],Select[DeleteCases[g,{_}],Function[ed,Complement[ed,#]=={}]]=={}&],Union@@g]}]];",
+        "simpleSpans[n_]:=simpleSpans[n]=If[n==0,{{}},Union@@Table[If[#=={},Union[ine,{{n}}],Union[Complement[ine,List/@#],{#,n}&/@#]]&/@Subsets[Range[n-1]],{ine,simpleSpans[n-1]}]];",
+        "Table[Length[Union[chromPoly/@simpleSpans[n]]],{n,5}] (* _Gus Wiseman_, Nov 24 2018 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A229048(n):",
+        "    return len({g.chromatic_polynomial() for g in graphs(n)})",
+        "(Sage) sorted({g.chromatic_polynomial() for g in graphs(n)})"
+    ],
+    "xref": [
+        "Cf. A000088, A001187, A006125, A137568, A240936, A245883, A277203, A321911, A321994, A322011."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,2",
+    "author": "_Eric M. Schmidt_, Sep 25 2013",
+    "ext": [
+        "a(10) added by _Eric M. Schmidt_, Mar 20 2015"
+    ],
+    "references": 16,
+    "revision": 65,
+    "time": "2020-03-15T10:07:14-04:00",
+    "created": "2013-09-26T01:45:54-04:00"
+}

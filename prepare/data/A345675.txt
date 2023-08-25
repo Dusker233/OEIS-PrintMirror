@@ -1,0 +1,29 @@
+{
+    "number": 345675,
+    "data": "35,14315,22399,35711,455891,881809,1198159,1917071,2287987,3310037,4464941,11029439,12190061,13325753,17832803,33012941,33296147,37814849,44986423,74437181,76911149,82873661,91909571,98859851,108266171,128008159,128981243,132391409",
+    "name": "Numbers m such that D_{m-1} is the smallest base b > 1 for which b^{m-1} == 1 (mod m), where D_k is the denominator (A027642) of Bernoulli number B_k.",
+    "comment": [
+        "These are numbers m such that A027642(m-1) = A105222(m).",
+        "The corresponding bases of these pseudoprimes are 6, 6, 42, 66, 66, 46410, 3318, 66, 42, 30, 330, 6, 330, 61410, 6, 330, 1074, 510, 3318, 330, 7890, 330, 66, 12606, 66, 42, 6, 510, ..."
+    ],
+    "mathematica": [
+        "Den[n_] := Times @@ (1 + Select[Divisors[n], PrimeQ[# + 1] &]); q[k_] := Module[{m = 2, d = Den[k - 1]}, If[PowerMod[d, k - 1, k] != 1, False, While[m < d && PowerMod[m, k - 1, k] != 1, m++]; m == d]]; Select[Range[3, 10^6, 2], q] (* _Amiram Eldar_, Sep 04 2021 *)"
+    ],
+    "program": [
+        "(PARI) f(n) = my(m=2); while(Mod(m, n)^(n-1)!=1, m++); m;",
+        "isok(m) = f(m) == denominator(bernfrac(m-1)); \\\\ _Michel Marcus_, Sep 04 2021"
+    ],
+    "xref": [
+        "Cf. A027642, A105222, A121707, A316940."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Thomas Ordowski_, Sep 04 2021",
+    "ext": [
+        "More terms from _Amiram Eldar_, Sep 04 2021"
+    ],
+    "references": 0,
+    "revision": 20,
+    "time": "2021-11-01T01:17:09-04:00",
+    "created": "2021-11-01T01:17:09-04:00"
+}

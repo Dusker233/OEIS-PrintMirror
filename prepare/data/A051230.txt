@@ -1,0 +1,42 @@
+{
+    "number": 51230,
+    "data": "10,50,170,370,470,590,610,670,710,730,790,850,1010,1070,1270,1370,1390,1490,1630,1670,1850,1970,1990,2230,2270,2290,2570,2630,2690,2770,2830,2890,2950,3050,3070,3110,3130,3170,3310,3350,3470,3530",
+    "name": "Numbers m such that the Bernoulli number B_m has denominator 66.",
+    "comment": [
+        "From the von Staudt-Clausen theorem, denominator(B_{2*m}) = product of primes p such that (p-1)|2*m.",
+        "Numerator(B_m) mod denominator(B_m) = 5. - _Paolo P. Lava_, Mar 30 2015"
+    ],
+    "reference": [
+        "B. C. Berndt, Ramanujan's Notebooks Part IV, Springer-Verlag, see p. 75."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A051230/b051230.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Von_Staudt%E2%80%93Clausen_theorem\">Von Staudt-Clausen theorem</a>.",
+        "<a href=\"/index/Be#Bernoulli\">Index entries for sequences related to Bernoulli numbers</a>."
+    ],
+    "example": [
+        "The numbers m = 10, 50 belong to the list because B_10 = 5/66 and B_50 = 495057205241079648212477525/66. - _Petros Hadjicostas_, Jun 06 2020"
+    ],
+    "mathematica": [
+        "denoBn[n_?EvenQ] := Times @@ Select[Prime /@ Range[PrimePi[n] + 1], Divisible[n, # - 1] & ]; Select[ Range[10, 4000, 10], denoBn[#] == 66 &] (* _Jean-Fran\u00e7ois Alcover_, Jun 27 2012, after comments *)",
+        "Flatten[Position[BernoulliB[Range[4000]],_?(Denominator[#]==66&)]] (* _Harvey P. Dale_, Nov 17 2014 *)"
+    ],
+    "program": [
+        "(PARI) /* define indicator function */ a(n)=local(s); s=0; fordiv(n,d,s+=isprime(d+1)&(d>2)&(d!=10)); !s /* get sequence */ an=vector(45,n,0); m=0; forstep(n=10,4000,10, if(a(n),an[ m++ ]=n)); for(n=1,42,print1(an[ n ]\",\"))"
+    ],
+    "xref": [
+        "Cf. A045979, A051222, A051225, A051226, A051227, A051228.",
+        "Equals 2*A051229."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Michael Somos_",
+        "Name edited by _Petros Hadjicostas_, Jun 06 2020"
+    ],
+    "references": 38,
+    "revision": 30,
+    "time": "2020-06-07T01:24:36-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

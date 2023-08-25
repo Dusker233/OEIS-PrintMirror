@@ -1,0 +1,56 @@
+{
+    "number": 322269,
+    "data": "7,23,83,311,1873,3583,12289,33049,67369,174241,552841,1010881,3267289,7921489,12537719,30706079,56988649,108345169,328583161,880051561,1644946249",
+    "name": "a(n) is the largest minimal prime P such that, for any odd number b, the product P*b is a nonzero square modulo 8 and modulo each of the first n primes.",
+    "comment": [
+        "When factoring a number b using the quadratic sieve, it can be practical to multiply b by a certain factor f so that the product f*b is a square modulo several small primes. It is desirable that f be prime, because the prime factors of f cannot be used in the factor base of the quadratic sieve.",
+        "To find such an f for a given b and the first n primes, it must be checked whether b is a square or not, modulo each of these primes. Then f is the smallest prime (or 1) which satisfies the same conditions, modulo each of these primes.",
+        "Letting p=prime(n), an f can be found for each of the possible values of b (mod p#, the primorial of p), coprime to p#. (Actually we are using a period of 4*(p#), because instead of mod 2 we check for mod 8.) a(n) is the largest of all these values of f.",
+        "8 was chosen instead of 2, because there is a unique quadratic residue (mod 8), i.e., 1, for all odd numbers.",
+        "Sequences A322271 to A322275 are separate listings for the sequences of all f, corresponding to n=2 to 6, which illustrate the idea further.",
+        "For finding the full sequences of all f, instead of checking all b mod 4*(p#), it is more practical to check all prime numbers (and also 1) in order, whether they are suitable as an f or not. Each prime receives a \"code\" of Boolean flags which indicate whether it is a square or not, modulo each of the first n primes. If it is the first prime with this specific \"code\", then every value of b mod 4*(p#) which has the same \"code\" is assigned this prime as its f. This process is repeated until all possible \"codes\" have an f assigned. (The flag for mod 8, instead of only signaling \"is (not) a square\", has four different values: 1, 3, 5, and 7.)",
+        "A322270(n) is the code corresponding to a(n).",
+        "In order to satisfy the conditions, both f and b must be coprime to p#, i.e., f must either be 1 or greater than prime(n)."
+    ],
+    "example": [
+        "For n=3, we want the product to be a square mod 8, mod 2, mod 3 and mod 5. The corresponding products b*f are, for all b < 120 and coprime to 120:",
+        "1*1, 7*7, 11*11, 13*13, 17*17, 19*19, 23*23, 29*29, 31*31, 37*13, 41*41, 43*43, 47*23, 49*1, 53*53, 59*11, 61*61, 67*43, 71*71, 73*73, 77*53, 79*31, 83*83, 89*41, 91*19, 97*73, 101*29, 103*7, 107*83, 109*61, 113*17, 119*71. (See A322272.)",
+        "The largest f in this set is 83 (associated with b=83 and b=107). Therefore a(3) = 83."
+    ],
+    "program": [
+        "(PARI)",
+        "QresCode(n, nPrimes) = {",
+        "  code = bitand(n,7)>>1;",
+        "  for (j=2, nPrimes,",
+        "    x = Mod(n,prime(j));",
+        "    if (issquare(x), code += (1<<j));",
+        "  );",
+        "  return (code);",
+        "}",
+        "a322269(n) = {",
+        "  totalEntries = 1<<(n+1);",
+        "  f = vector(totalEntries);",
+        "  f[totalEntries-3] = 1;  \\\\ 1 always has the same code: ...111100",
+        "  counter = 1;",
+        "  forprime(p=prime(n+1), +oo,",
+        "    code = QresCode(p, n);",
+        "    if (f[code+1]==0,",
+        "      f[code+1]=p;",
+        "      counter += 1;",
+        "      if (counter==totalEntries, return(p));",
+        "    )",
+        "  )",
+        "}"
+    ],
+    "xref": [
+        "Binary codes as described above are given in A322270.",
+        "Sequences for all f associated with a specific n are given in A322271 (n=2), A322272 (n=3), A322273 (n=4), A322274 (n=5), and A322275 (n=6)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Hans Ruegg_, Dec 01 2018",
+    "references": 7,
+    "revision": 29,
+    "time": "2022-09-11T12:13:40-04:00",
+    "created": "2018-12-24T10:59:58-05:00"
+}

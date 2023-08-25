@@ -1,0 +1,42 @@
+{
+    "number": 351470,
+    "data": "25,225,250,693,2250,2439,2475,2500,3285,4095,4125,6930,6993,22500,22725,23125,23245,24390,24750,24975,25000,30825,32850,40950,41250,41625,42735,69300,69375,69735,69930,71225,225000,225225,227250,231250,232450,238095,243309,243900,247500,249750",
+    "name": "Numbers m such that the largest digit in the decimal expansion of 1/m is 4.",
+    "comment": [
+        "If k is a term, 10*k is also a term.",
+        "First few primitive terms are 25, 225, 693, 2439, 2475, 3285, 4095, 4125, ...",
+        "There is no prime up to 2.6*10^8 (see comments in A333237)."
+    ],
+    "link": [
+        "<a href=\"/index/1#1overn\">Index entries for sequences related to decimal expansion of 1/n</a>."
+    ],
+    "example": [
+        "As 1/25 = 0.04, and 25 is the smallest number m such that the largest digit in the decimal expansion of 1/m is 4, so a(1) = 25.",
+        "As 1/693 = 0.001443001443001443..., so 693 is a term."
+    ],
+    "mathematica": [
+        "f[n_] := Union[ Flatten[ RealDigits[ 1/n][[1]] ]];Select[Range@1500000, Max@ f@# == 4 &]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import n_order, multiplicity",
+        "def A351470_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for m in count(max(startvalue, 1)):",
+        "        m2, m5 = multiplicity(2, m), multiplicity(5, m)",
+        "        if max(str(10**(max(m2, m5)+n_order(10, m//2**m2//5**m5))//m)) == '4':",
+        "            yield m",
+        "A351470_list = list(islice(A351470_gen(), 10)) # _Chai Wah Wu_, Feb 14 2022"
+    ],
+    "xref": [
+        "Cf. A333236.",
+        "Similar with largest digit k: A333402 (k=1), A341383 (k=2), A350814 (k=3), this sequence (k=4), A351471 (k=5), A351472 (k=6), A351473 (k=7), A351474 (k=8), A333237 (k=9)."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Bernard Schott_ and _Robert G. Wilson v_, Feb 12 2022",
+    "references": 6,
+    "revision": 17,
+    "time": "2022-02-14T13:17:42-05:00",
+    "created": "2022-02-14T10:59:08-05:00"
+}

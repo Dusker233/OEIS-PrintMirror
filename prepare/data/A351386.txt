@@ -1,0 +1,64 @@
+{
+    "number": 351386,
+    "data": "1,10,100,1001,10010,100101,1001010,10010110,100101101,1001010011,10010100110,100101001110,1001010011100,10010100111001,100101001110011,1001010011000111,10010100110001110,100101001100011110,1001010011000111100,10010100110001111010,100101001100011110101",
+    "name": "Sequence of balanced, multiplicative binary words, starting with a(1)=1, a(2)=10; for j > 2, if j is a prime, then a(j) is obtained by appending 0 at the end of a(j-1); otherwise, a(j) is obtained by appending a single digit at the end of a(j-1) such that the new word is multiplicative, but if the obtained a(j) is not balanced, then we change the digit at the rightmost possible prime position (and, eventually, some digits at following nonprime positions to maintain multiplicativity) so that a(j) becomes balanced.",
+    "comment": [
+        "A binary word here is balanced if the numbers of 0's and 1's differ by at most one.",
+        "A binary word here is multiplicative if for all b,c > 1 if at its b-th position is a digit B and at c-th position is C, then at (b*c)-th position is a digit 1 if b=c and 0 otherwise.",
+        "According to Grytczuk (2021), the authorship of the sequence belongs to Krzysztof Rejmer.",
+        "Rejmer conjectures that this process never terminates (see Grytczuk (2021)).",
+        "Every odd term is automatically balanced (since it follows the even term which has the same number of 0's and 1's).",
+        "More naturally can be looked at as a balanced multiplicative sequence of strings of signs - and + (where the multiplication is implied by standard multiplication on integers).",
+        "This sequence was the inspiration for creating the sequence A332603 proposed in Grytczuk et al. (2020)."
+    ],
+    "link": [
+        "Jaroslaw Grytczuk, <a href=\"https://doi.org/10.1016/j.ejc.2020.103213\">From the 1-2-3 conjecture to the Riemann hypothesis</a>, European Journal of Combinatorics 91/1 (2021), 1-10.",
+        "Jaroslaw Grytczuk, Hubert Kordulewski, and Artur Niewiadomski, <a href=\"https://doi.org/10.37236/9264\">Extremal Square-Free Words</a>, Electronic J. Combinatorics, 27 (1), 2020, #1.48."
+    ],
+    "example": [
+        "a(15) = 100101001110011. To obtain the 16th term we arbitrarily choose a nontrivial decomposition of 16, for example, 2*8. The second (2) digit in a(15) is 0 and the eighth (8) digit is 0, so as the last digit of a(16) we append 1. We obtain a(16) = 1001010011100111, which is not balanced. Changing the 13th digit in a(16) (0 to 1) only decreases balance, so we check the next possible prime: changing the 11th digit (1 to 0) results in a balanced a(16) = 1001010011000111.",
+        "It is sufficient to test just one factorization - multiplicativity of the word guarantees that every factorization gives us the same result."
+    ],
+    "mathematica": [
+        "a = \"1\";",
+        "list = {a};",
+        "For[j = 2, j <= 100, j++,",
+        "If[PrimeQ[j] == True, a = a <> \"0\",",
+        "  i = 2; While[IntegerQ[j/i] == False, i++];",
+        "  a1 = ToExpression[StringTake[a, {i}]];",
+        "  a2 = ToExpression[StringTake[a, {j/i}]];",
+        "  If[a1 == a2, b = a <> \"1\", b = a <> \"0\"];",
+        "  If[Abs[StringCount[b, \"0\"] - StringCount[b, \"1\"]] < 2, a = b,",
+        "   For[k = j - 1, k >= 2, k = k - 1,",
+        "    If[PrimeQ[k] == True,",
+        "     c = StringTake[b, k - 1] <>",
+        "       ToString[1 - ToExpression[StringTake[b, {k}]]] <>",
+        "       StringTake[b, -(j - k)];",
+        "     For[l = k + 1, l <= j, l++,",
+        "      If[PrimeQ[l] == False,",
+        "       li = 2; While[IntegerQ[l/li] == False, li++];",
+        "       la1 = ToExpression[StringTake[c, {li}]];",
+        "       la2 = ToExpression[StringTake[c, {l/li}]];",
+        "       If[la1 == la2,",
+        "        c = StringTake[c, l - 1] <> \"1\" <> StringTake[c, -(j - l)],",
+        "        c = StringTake[c, l - 1] <> \"0\" <> StringTake[c, -(j - l)]]",
+        "       ]];",
+        "     If[Abs[StringCount[c, \"0\"] - StringCount[c, \"1\"]] < 2, a = c;",
+        "      Break[]]",
+        "     ]",
+        "    ]; If[b == c, Print[\"STOP\"]; Break[]]",
+        "   ]",
+        "  ];",
+        "list = Append[list, a]] ; Print[list]"
+    ],
+    "xref": [
+        "Cf. A332603, A008836."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Bartlomiej Pawlik_, Feb 09 2022",
+    "references": 1,
+    "revision": 60,
+    "time": "2022-04-21T10:55:34-04:00",
+    "created": "2022-03-22T18:52:22-04:00"
+}

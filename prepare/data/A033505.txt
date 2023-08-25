@@ -1,0 +1,52 @@
+{
+    "number": 33505,
+    "data": "1,3,10,32,103,331,1064,3420,10993,35335,113578,365076,1173471,3771911,12124128,38970824,125264689,402640763,1294216154,4160024536,13371648999,42980755379,138153890600,444070778180,1427385469761,4588073296863,14747534582170",
+    "name": "Expansion of 1/(1 - 3*x - x^2 + x^3).",
+    "comment": [
+        "From _Greg Dresden_, Jun 25 2022: (Start)",
+        "a(n) is the number of ways to tile, with squares and dominoes, a 2 X n board with one extra space at the end. Here is the board for n=3:",
+        "    _____",
+        "   |_|_|_|_",
+        "   |_|_|_|_|",
+        "and here is one of the a(3)=32 possible tilings of this board:",
+        "    _____",
+        "   | |_|_|_",
+        "   |_|_|___|",
+        "(End)"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A033505/b033505.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Richard M. Low and Ardak Kapbasov, <a href=\"https://www.emis.de/journals/JIS/VOL20/Low/low2.html\">Non-Attacking Bishop and King Positions on Regular and Cylindrical Chessboards</a>, Journal of Integer Sequences, Vol. 20 (2017), Article 17.6.1, Table 4.",
+        "N. J. A. Sloane <a href=\"/A030186/a030186.txt\">Notes on A030186 and A033505</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (3,1,-1)."
+    ],
+    "formula": [
+        "a(n) = 3*a(n-1) + a(n-2) - a(n-3). - _Greg Dresden_, Aug 16 2018"
+    ],
+    "maple": [
+        "seq(coeff(series(1/(1-3*x-x^2+x^3), x, n+1), x, n), n = 0..30); # _G. C. Greubel_, Oct 14 2019"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/(1-3x-x^2+x^3), {x, 0, 30}], x] (* or *) LinearRecurrence[{3,1,-1}, {1,3,10}, 30] (* _Vincenzo Librandi_, Aug 17 2018 *)"
+    ],
+    "program": [
+        "(Magma) I:=[1,3,10]; [n le 3 select I[n] else 3*Self(n-1)+Self(n-2)-Self(n-3): n in [1..30]]; // _Vincenzo Librandi_, Aug 17 2018",
+        "(PARI) my(x='x+O('x^30)); Vec(1/(1-3*x-x^2+x^3)) \\\\ _G. C. Greubel_, Oct 14 2019",
+        "(Sage)",
+        "def A033505_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P(1/(1-3*x-x^2+x^3)).list()",
+        "A033505_list(30) # _G. C. Greubel_, Oct 14 2019",
+        "(GAP) a:=[1,3,10];; for n in [4..30] do a[n]:=3*a[n-1]+a[n-2]-a[n-3]; od; a; # _G. C. Greubel_, Oct 14 2019"
+    ],
+    "xref": [
+        "Partial sums of A030186."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Feb 13 2002",
+    "references": 10,
+    "revision": 45,
+    "time": "2022-06-26T10:47:46-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

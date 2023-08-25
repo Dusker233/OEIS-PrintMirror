@@ -1,0 +1,45 @@
+{
+    "number": 325262,
+    "data": "0,0,0,1,1,2,6,7,12,18,29,38,58,77,110,145,198,257,345,441,576,733,942,1184,1503,1875,2352,2914,3620,4454,5493,6716,8221,10001,12167,14723,17816,21459,25836,30988,37139,44365,52956,63022,74934,88873,105296,124469",
+    "name": "Number of integer partitions of n whose omega-sequence does not cover an initial interval of positive integers.",
+    "comment": [
+        "The omega-sequence of an integer partition is the sequence of lengths of the multisets obtained by repeatedly taking the multiset of multiplicities until a singleton is reached. For example, the partition (32211) has chain of multisets of multiplicities {1,1,2,2,3} -> {1,2,2} -> {1,2} -> {1,1} -> {2}, so its omega-sequence is (5,3,2,2,1)."
+    ],
+    "example": [
+        "The a(3) = 1 through a(9) = 18 partitions:",
+        "  (111)  (1111)  (2111)   (222)     (421)      (431)       (333)",
+        "                 (11111)  (321)     (2221)     (521)       (432)",
+        "                          (2211)    (4111)     (2222)      (531)",
+        "                          (3111)    (22111)    (3311)      (621)",
+        "                          (21111)   (31111)    (5111)      (3222)",
+        "                          (111111)  (211111)   (22211)     (6111)",
+        "                                    (1111111)  (32111)     (22221)",
+        "                                               (41111)     (32211)",
+        "                                               (221111)    (33111)",
+        "                                               (311111)    (42111)",
+        "                                               (2111111)   (51111)",
+        "                                               (11111111)  (222111)",
+        "                                                           (321111)",
+        "                                                           (411111)",
+        "                                                           (2211111)",
+        "                                                           (3111111)",
+        "                                                           (21111111)",
+        "                                                           (111111111)"
+    ],
+    "mathematica": [
+        "normQ[m_]:=Or[m=={},Union[m]==Range[Max[m]]];",
+        "omseq[ptn_List]:=If[ptn=={},{},Length/@NestWhileList[Sort[Length/@Split[#]]&,ptn,Length[#]>1&]];",
+        "Table[Length[Select[IntegerPartitions[n],!normQ[omseq[#]]&]],{n,0,30}]"
+    ],
+    "xref": [
+        "Cf. A055932, A181819, A182850, A225486, A323014, A323023, A325250, A325251, A325261, A325277, A325285.",
+        "Integer partition triangles: A008284 (first omega), A116608 (second omega), A325242 (third omega), A325268 (second-to-last omega), A225485 or A325280 (frequency depth), A325249 (sum)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,6",
+    "author": "_Gus Wiseman_, Apr 23 2019",
+    "references": 4,
+    "revision": 6,
+    "time": "2019-04-25T09:32:59-04:00",
+    "created": "2019-04-25T09:32:59-04:00"
+}

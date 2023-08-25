@@ -1,0 +1,47 @@
+{
+    "number": 34349,
+    "data": "0,0,0,0,0,0,0,1,8,47,277,1775,12616,102445,957357,10174566,119235347,1482297912,18884450721,240477821389,3012879828566,36800049400028,436068618826236,5001537857507095,55482177298724426,595303034603214108,6181562837200509792,62170512250565592346",
+    "name": "Number of binary [ n,8 ] codes without 0 columns.",
+    "comment": [
+        "To find the g.f., modify the Sage program below (cf. function f). It is very complicated to write it here. - _Petros Hadjicostas_, Oct 07 2019"
+    ],
+    "link": [
+        "Discrete algorithms at the University of Bayreuth, <a href=\"http://www.algorithm.uni-bayreuth.de/en/research/SYMMETRICA/\">Symmetrica</a>.",
+        "Harald Fripertinger, <a href=\"http://www.mathe2.uni-bayreuth.de/frib/codes/tables.html\">Isometry Classes of Codes</a>.",
+        "Harald Fripertinger, <a href=\"http://www.mathe2.uni-bayreuth.de/frib/codes/tables_4.html\">Snk2: Number of the isometry classes of all binary (n,k)-codes without zero-columns</a>. [See column k=8.]",
+        "H. Fripertinger and A. Kerber, <a href=\"https://doi.org/10.1007/3-540-60114-7_15\">Isometry classes of indecomposable linear codes</a>. In: G. Cohen, M. Giusti, T. Mora (eds), Applied Algebra, Algebraic Algorithms and Error-Correcting Codes, 11th International Symposium, AAECC 1995, Lect. Notes Comp. Sci. 948 (1995), pp. 194-204. [Here a(n) = S_{n,8,2}.]",
+        "Petr Lisonek, <a href=\"https://doi.org/10.1016/j.jcta.2006.06.013\">Combinatorial families enumerated by quasi-polynomials</a>, J. Combin. Theory Ser. A 114(4) (2007), 619-630. [See Section 5.]",
+        "David Slepian, <a href=\"https://archive.org/details/bstj39-5-1219\">Some further theory of group codes</a>, Bell System Tech. J. 39(5) (1960), 1219-1252.",
+        "David Slepian, <a href=\"https://doi.org/10.1002/j.1538-7305.1960.tb03958.x\">Some further theory of group codes</a>, Bell System Tech. J. 39(5) (1960), 1219-1252.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Cycle_index\">Cycle index</a>.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Projective_linear_group\">Projective linear group</a>."
+    ],
+    "program": [
+        "(Sage) # Fripertinger's method to find the g.f. of column k >= 2 of A034253 (for small k):",
+        "def A034253col(k, length):",
+        "    G1 = PSL(k, GF(2))",
+        "    G2 = PSL(k-1, GF(2))",
+        "    D1 = G1.cycle_index()",
+        "    D2 = G2.cycle_index()",
+        "    f1 = sum(i[1]*prod(1/(1-x^j) for j in i[0]) for i in D1)",
+        "    f2 = sum(i[1]*prod(1/(1-x^j) for j in i[0]) for i in D2)",
+        "    f = f1 - f2",
+        "    return f.taylor(x, 0, length).list()",
+        "# For instance the Taylor expansion for column k = 8 (current sequence) gives",
+        "print(A034253col(8, 30)) # _Petros Hadjicostas_, Oct 07 2019"
+    ],
+    "xref": [
+        "Cf. A034254, A034344, A034345, A034346, A034347, A034348, A253186.",
+        "Column k=8 of A034253 and first differences of A034362."
+    ],
+    "keyword": "nonn",
+    "offset": "1,9",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Petros Hadjicostas_, Oct 07 2019"
+    ],
+    "references": 7,
+    "revision": 20,
+    "time": "2019-10-09T02:48:46-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

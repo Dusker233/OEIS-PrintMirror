@@ -1,0 +1,71 @@
+{
+    "number": 339459,
+    "data": "2,7,37,263,2437,28541,414893,7368913,157859813,4035572951,122006926709,4328504865941,178988464493359,8575347401843113,473485756611713633,29985730185033339911,2168685169398896331137,178419507110725228550743",
+    "name": "Prime numbers a(n) = floor(2^(n^d)) for all n>=1 where d=1.5039285240... is the constant defined at A339457.",
+    "comment": [
+        "Assuming Cramer's conjecture on prime gaps is true, it can be proved that there exists at least one constant d such that all terms of the sequence are primes. The constant giving the smallest growth rate is d=1.503928524069520633527689067897583199190738...",
+        "Algorithm to generate the smallest constant d and the associated prime number sequence a(n) = floor(2^(n^d)).",
+        "0.   n=1, a(1)=2, d=1",
+        "1.   n=n+1",
+        "2.   b=floor(2^(n^d))",
+        "3.   p=smpr(b)     (smallest prime >= b)",
+        "4.   If p=b, then a(n)=p, go to 1.",
+        "5.   d=log(log(p)/log(2))/log(n)",
+        "6.   a(n)=p",
+        "7.   k=1",
+        "8.   b=floor(2^(k^d))",
+        "9.   If b<>a(k) and b not prime, then p=smpr(b), n=k, go to 5.",
+        "10.  If b is prime then a(k)=b",
+        "11.  If k<n-1, then k=k+1, go to 8.",
+        "12.  go to 1.",
+        "112 decimals of d are sufficient to calculate the first 50 terms of the prime sequence. The prime number given by the term of index n=50 has 109 decimal digits."
+    ],
+    "link": [
+        "Bernard Montaron, <a href=\"https://arxiv.org/abs/2011.14653\">Exponential prime sequences</a>, arXiv:2011.14653 [math.NT], 2020."
+    ],
+    "formula": [
+        "a(n) = floor(2^(n^d)) where d=1.5039285240..."
+    ],
+    "example": [
+        "This example illustrates the importance of doing full precision calculations: a(19) = floor(2^(19^d)) = floor(2^83.7826351429215150692195114432) = 16637432012996855576590853. Here, the precision required on the exponent of 2 is 28 decimals in order to obtain the correct value for a(19). And the precision required keeps increasing with the index value n."
+    ],
+    "program": [
+        "(PARI) A339459(n=30, prec=100) = {",
+        "\\\\ if precision is large enough, returns the list of first n terms of the sequence",
+        "  my(curprec=default(realprecision));",
+        "  default(realprecision, max(prec,curprec));",
+        "  my(a=List([2]), d=1.0, c=2.0, b, p, ok, smpr(b)=my(p=b); while(!isprime(p), p=nextprime(p+1)); return(p); );",
+        "  for(j=1, n-1,",
+        "    b=floor(c^(j^d));",
+        "    until(ok,",
+        "      p=smpr(b);",
+        "      ok = 1;",
+        "      listput(a,p,j);",
+        "      if(p!=b,",
+        "         d=log(log(p)/log(c))/log(j);",
+        "         for(k=1,j-2,",
+        "             b=floor(c^(k^d));",
+        "             if(b!=a[k],",
+        "                ok=0;",
+        "                j=k;",
+        "                break;",
+        "               );",
+        "            );",
+        "        );",
+        "    );",
+        "  );",
+        "  default(realprecision, curprec);",
+        "  return(a);",
+        "} \\\\ _Fran\u00e7ois Marques_, Dec 08 2020"
+    ],
+    "xref": [
+        "Cf. A339457, A339458, A338613, A338837, A338850."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernard Montaron_, Dec 06 2020",
+    "references": 3,
+    "revision": 25,
+    "time": "2021-07-19T01:23:18-04:00",
+    "created": "2021-01-20T19:02:58-05:00"
+}

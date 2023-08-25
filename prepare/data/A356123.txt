@@ -1,0 +1,34 @@
+{
+    "number": 356123,
+    "data": "1,2,4,18,1364,1860498,2537720636,6440026026380244498,8784200221406821330636,77162173529763648886126034136172445632164498,4365101043708483494615466932242949707161871659736799144058331102381689400753867700636",
+    "name": "Least Lucas number with n Lucas divisors.",
+    "link": [
+        "Daniel Suteu, <a href=\"/A356123/b356123.txt\">Table of n, a(n) for n = 1..21</a>"
+    ],
+    "formula": [
+        "a(n) = A000032(A356666(n)). - _Daniel Suteu_, Aug 24 2022"
+    ],
+    "program": [
+        "(PARI) L(n)=fibonacci(n+1)+fibonacci(n-1); \\\\ A000032",
+        "isld(n) = { my(u1=1, u2=3, old_u1); if(n<=2, sign(n), while(n>u2, old_u1=u1; u1=u2; u2=old_u1+u2); (u2==n)); }; \\\\ A102460",
+        "nbld(n) = sumdiv(n, d, isld(d)); \\\\ A304092",
+        "a(n) = my(k=0); while(nbld(L(k)) != n, k++); L(k);",
+        "(PARI)",
+        "countLd(n) = my(c=0,x=2,y=1); while(x <= n, if(n%x == 0, c++); [x,y]=[y,x+y]); c;",
+        "a(n) = if(n==1, return(1)); my(x=2,y=1); while(1, if(countLd(x) == n, return(x)); [x,y]=[y,x+y]); \\\\ _Daniel Suteu_, Aug 24 2022"
+    ],
+    "xref": [
+        "Cf. A000032, A102460, A304092, A356062, A356122, A356666.",
+        "Cf. A076985 (similar for Fibonacci numbers)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Marcus_, Jul 27 2022",
+    "ext": [
+        "a(11) from _Daniel Suteu_, Aug 06 2022"
+    ],
+    "references": 3,
+    "revision": 18,
+    "time": "2022-08-24T12:09:06-04:00",
+    "created": "2022-07-27T10:35:58-04:00"
+}

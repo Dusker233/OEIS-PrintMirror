@@ -1,0 +1,34 @@
+{
+    "number": 190722,
+    "data": "3,45751,149351,171529,223099,434237,678077,706841,1996297,3993037,6340457,7199113,7419761,9000317,13129271,15052777,17193217,18436879,18749881,18998519,23353469,23689423,33746663,40985411,41437751,43547797,51198097,53773651,56825687,60207809,62190113,79778899,81708353,83019421",
+    "name": "Primes p such that A008472(p-1) = A008472(p+1) and is a prime.",
+    "comment": [
+        "A008472 is the sum of the distinct primes dividing n."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A190722/b190722.txt\">Table of n, a(n) for n = 1..223</a> (calculated from the b-file at A203182)"
+    ],
+    "example": [
+        "For p = 45751, p-1 = 2*3*5^3*61; 2+3+5+61=71 and p+1 = 2^3*7*19*43; 2+7+19+43 = 71."
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{pn = Plus @@ (First@# & /@ FactorInteger[n - 1]), pp = Plus@@ (First@# & /@ FactorInteger[n + 1])}, pn == pp && PrimeQ[pn]];",
+        "p = 2; lst = {}; While[p < 10^8, If[fQ@p, AppendTo[lst, p]; Print@p]; p =",
+        "NextPrime@p]; lst",
+        "pQ[n_]:=Module[{p1=Total[FactorInteger[n-1][[All,1]]],p2=Total[ FactorInteger[ n+1][[All,1]]]},p1==p2&&PrimeQ[p1]]; Select[ Prime[ Range[5*10^6]],pQ] (* _Harvey P. Dale_, Jun 18 2017 *)"
+    ],
+    "program": [
+        "(Magma) [p:p in PrimesInInterval(3,10^8)|(&+PrimeDivisors(p-1) eq &+PrimeDivisors(p+1)) and IsPrime(&+PrimeDivisors(p-1))]; // _Marius A. Burtea_, Nov 14 2019"
+    ],
+    "xref": [
+        "Cf. A190680, A008472, A086711.",
+        "Subsequence of A203182."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, May 17 2011",
+    "references": 2,
+    "revision": 19,
+    "time": "2022-09-08T08:45:57-04:00",
+    "created": "2011-05-17T10:20:12-04:00"
+}

@@ -1,0 +1,57 @@
+{
+    "number": 347189,
+    "data": "1,2,3,4,5,6,7,8,9,24,332,1676,121374,4975929,134116265,1086588775,3492159897,8652650287,8652650482",
+    "name": "Positive integers that can be expressed as the sum of powers of their digits (from right to left) with consecutive natural exponents.",
+    "comment": [
+        "Any number > 9 consisting of just one digit (A014181) can't be in the list. (Provable using the Carmichael function.)"
+    ],
+    "example": [
+        "24 = 4^2 + 2^3 is a term.",
+        "332 = 2^3 + 3^4 + 3^5 is another term."
+    ],
+    "program": [
+        "(Python)",
+        "liste = []",
+        "for ex in range(0, 20):",
+        "    for t in range(1, 10000):",
+        "        n = t",
+        "        pot = ex",
+        "        ergebnis = 0",
+        "        while n > 0:",
+        "            pot = pot + 1",
+        "            rest = n % 10",
+        "            n = (n - rest) // 10",
+        "            zw = 1",
+        "            for i in range(pot):",
+        "                zw = zw * rest",
+        "            ergebnis = ergebnis + zw",
+        "        if (int(ergebnis) == t) and (t not in liste):",
+        "            liste.append(t)",
+        "liste.sort()",
+        "print(liste)",
+        "(Python)",
+        "def powsum(digits, startexp):",
+        "    return sum(digits[i]**(startexp+i) for i in range(len(digits)))",
+        "def ok(n):",
+        "    if n < 10: return True",
+        "    s = str(n)",
+        "    if set(s) <= {'0', '1'}: return False",
+        "    digits, startexp = list(map(int, s))[::-1], 1",
+        "    while powsum(digits, startexp) < n: startexp += 1",
+        "    return n == powsum(digits, startexp)",
+        "print(list(filter(ok, range(2*10**5)))) # _Michael S. Branicky_, Aug 29 2021"
+    ],
+    "xref": [
+        "Cf. A023052, A032799, A014181."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_Reiner Moewald_, Aug 21 2021",
+    "ext": [
+        "a(15)-a(19) from _Michael S. Branicky_, Aug 31 2021"
+    ],
+    "references": 0,
+    "revision": 30,
+    "time": "2022-09-16T04:05:00-04:00",
+    "created": "2021-11-20T20:21:12-05:00"
+}

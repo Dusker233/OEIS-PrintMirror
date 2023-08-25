@@ -1,0 +1,32 @@
+{
+    "number": 138105,
+    "data": "4,10,17,26,36,47,59,73,88,104,121,139,158,178,200,223,247,272,298,325,353,382,412,443,475,508,543,579,616,654,693,733,774,816,859,903,948,994,1041,1089,1138,1188,1239,1291,1344,1398,1454,1511,1569,1628",
+    "name": "Partial sums of non-Fibonacci numbers A001690.",
+    "link": [
+        "Harvey P. Dale, <a href=\"/A138105/b138105.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=1..n} A001690(j)."
+    ],
+    "mathematica": [
+        "Module[{nn=100,k},k=Floor[Log[GoldenRatio,nn*Sqrt[5]]];Accumulate[ Complement[ Range[nn],Fibonacci[Range[k]]]]] (* _Harvey P. Dale_, Apr 29 2018 *)",
+        "Table[Sum[Floor[j +Log[GoldenRatio, Sqrt[5]*(Log[GoldenRatio, Sqrt[5]*j] + j) -5 +3/j] -2], {j,2,n}], {n, 2, 60}] (* _G. C. Greubel_, May 26 2019 *)"
+    ],
+    "program": [
+        "(PARI) phi = (1 + sqrt(5))/2;",
+        "a(n) = sum(j=2,n, floor(j +log(sqrt(5)*(log(sqrt(5)*j)/log(phi) + j) -5 +3/j)/log(phi)) - 2);",
+        "vector(60, n, n++; a(n)) \\\\ _G. C. Greubel_, May 26 2019",
+        "(Magma) phi:= (1+Sqrt(5))/2; [(&+[Floor(j + Log(phi, Sqrt(5)*(Log(phi, Sqrt(5)*j) + j) - 5 + 3/j) - 2): j in [2..n]]): n in [2..60]];  // _G. C. Greubel_, May 26 2019",
+        "(Sage) [sum(floor(j +log(sqrt(5)*(log(sqrt(5)*j, golden_ratio) + j) -5 +3/j, golden_ratio) - 2) for j in (2..n)) for n in (2..60)] # _G. C. Greubel_, May 26 2019"
+    ],
+    "xref": [
+        "Cf. A000045, A001690."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, May 03 2008",
+    "references": 2,
+    "revision": 18,
+    "time": "2022-09-08T08:45:33-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

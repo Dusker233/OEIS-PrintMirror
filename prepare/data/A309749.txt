@@ -1,0 +1,40 @@
+{
+    "number": 309749,
+    "data": "3,197,263,281,443,881,887,947,2111,2129,2237,2699,2741,2897,3251,3539,3821,3881,4049,4451,4523,4787,6257,6389,8609,8741,10163,10193,10247,11027,13187,14591,14897,16193,16901,17027,18797,19319,19379,20147,20681,21563,21647,22073,22259",
+    "name": "Primes p such that the base-10 concatenations (p+1)||p and (p+1)||(p+1)||p are both prime.",
+    "comment": [
+        "a(n) == 5 (mod 6) for n >= 2."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A309749/b309749.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 263 is in the sequence because 263, 264263 and 264264263 are all prime."
+    ],
+    "maple": [
+        "filter:= proc(n) local v,w,q;",
+        "  if not isprime(n) then return false fi;",
+        "  v:= 10^(1+ilog10(n));",
+        "  q:= v*(n+1)+n;",
+        "  if not isprime(q) then return false fi;",
+        "  isprime((10^(1+ilog10(q))+v)*(n+1)+n)",
+        "end proc:",
+        "select(filter, [3,seq(i,i=5..100000,6)]);"
+    ],
+    "mathematica": [
+        "pcQ[n_]:=Module[{idn=IntegerDigits[n],idn2=IntegerDigits[n+1]}, AllTrue[ {FromDigits[ Join[ idn2,idn]],FromDigits[ Join[idn2,idn2,idn]]},PrimeQ]]; Select[Prime[Range[2500]],pcQ] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Sep 11 2019 *)"
+    ],
+    "program": [
+        "(Magma) [p:p in PrimesUpTo(23000)|IsPrime(Seqint(Intseq(p) cat Intseq(p+1))) and IsPrime(Seqint(Intseq(p) cat Intseq(p+1) cat Intseq(p+1)))]; // _Marius A. Burtea_, Aug 27 2019"
+    ],
+    "xref": [
+        "Cf. A309935."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Aug 26 2019",
+    "references": 1,
+    "revision": 36,
+    "time": "2022-09-08T08:46:22-04:00",
+    "created": "2019-08-27T17:50:07-04:00"
+}

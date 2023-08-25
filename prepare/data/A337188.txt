@@ -1,0 +1,31 @@
+{
+    "number": 337188,
+    "data": "1,2,3,4,5,7,13,37,194,2263,81209,15670815,35447299799,2878604306322646,45110072663945746399499,1599030269628449375351280360624211,4602975420092714513333476912306224941820648781605",
+    "name": "a(n) = determinant([a(n-1), a(n-2); a(n-4), a(n-3)]) for n >= 5, a(n) = n otherwise.",
+    "reference": [
+        "B. Muslu, Say\u0131lar ve Ba\u011flant\u0131lar, Luna, 2021, pp. 18-22."
+    ],
+    "formula": [
+        "a(n) = a(n-1)*a(n-3) - a(n-2)*a(n-4) for n >= 5, a(n) = n for n <= 4."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<5, n,",
+        "      a(n-1)*a(n-3)-a(n-2)*a(n-4))",
+        "    end:",
+        "seq(a(n), n=1..18);  # _Alois P. Heinz_, Jan 29 2021"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n < 5, n, Det @ Map[a, n - {{1, 2}, {4, 3}}, {2}]]; Array[a, 20] (* _Amiram Eldar_, Jan 29 2021 *)",
+        "nxt[{a_,b_,c_,d_}]:={b,c,d,Det[{{d,c},{a,b}}]}; NestList[nxt,{1,2,3,4},20][[All,1]] (* _Harvey P. Dale_, Oct 23 2022 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = if (n<=4, n, a(n-1)*a(n-3) - a(n-2)*a(n-4)); \\\\ _Michel Marcus_, Jan 29 2021"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Burak Muslu_, Jan 29 2021",
+    "references": 0,
+    "revision": 32,
+    "time": "2022-10-23T13:24:59-04:00",
+    "created": "2021-02-12T16:28:35-05:00"
+}

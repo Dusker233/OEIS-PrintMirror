@@ -1,0 +1,60 @@
+{
+    "number": 354757,
+    "data": "0,0,1,2,6,12,15,27,59,115,127,252,508,1004,1021,2013,2047,4031,8127,16307,16375,32631,32767,65279,130815,261375,262143,524270,1048558,2096110,2097135,4194253,4194271,8386527,8388607,16773119,33550335,67096575,67108863",
+    "name": "a(n) = Sum_{k = ceiling(n/2)..n-1} A354169(k).",
+    "comment": [
+        "The 1's in the binary expansion of a(n) are forbidden in that of A354169(n). In other words, a(n) AND A354169(n) = 0 (where AND denotes the bitwise AND operator)."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A354757/b354757.txt\">Table of n, a(n) for n = 0..4800</a>",
+        "R\u00e9my Sigrist, <a href=\"/A354757/a354757.png\">Binary plot of a(n) (blue pixels) and A354169(n) (red pixels) for n=0..1000</a>",
+        "R\u00e9my Sigrist, <a href=\"/A354757/a354757.gp.txt\">PARI program</a>"
+    ],
+    "example": [
+        "a(5) = A354169(3) + A354169(4) = 4 + 8 = 12.",
+        "a(7) = A354169(4) + A354169(5) + A354169(6) = 8 + 3 + 16 = 27."
+    ],
+    "program": [
+        "(PARI) See Links section.",
+        "(Python)",
+        "from itertools import count, islice",
+        "from collections import deque",
+        "from functools import reduce",
+        "from operator import or_",
+        "def A354757_gen(): # generator of terms",
+        "    aset, aqueue, b, f = {0,1,2}, deque([2]), 2, False",
+        "    yield from (0,0,1)",
+        "    while True:",
+        "        for k in count(1):",
+        "            m, j, j2, r, s = 0, 0, 1, b, k",
+        "            while r > 0:",
+        "                r, q = divmod(r,2)",
+        "                if not q:",
+        "                    s, y = divmod(s,2)",
+        "                    m += y*j2",
+        "                j += 1",
+        "                j2 *= 2",
+        "            if s > 0:",
+        "                m += s*2**b.bit_length()",
+        "            if m not in aset:",
+        "                yield sum(aqueue)",
+        "                aset.add(m)",
+        "                aqueue.append(m)",
+        "                if f: aqueue.popleft()",
+        "                b = reduce(or_,aqueue)",
+        "                f = not f",
+        "                break",
+        "A354757_list = list(islice(A354757_gen(),40)) # _Chai Wah Wu_, Jun 06 2022"
+    ],
+    "xref": [
+        "Cf. A354169, A354758.",
+        "A354780 is a bisection."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,4",
+    "author": "_R\u00e9my Sigrist_, Jun 06 2022",
+    "references": 6,
+    "revision": 20,
+    "time": "2022-08-02T12:15:47-04:00",
+    "created": "2022-06-06T11:05:10-04:00"
+}

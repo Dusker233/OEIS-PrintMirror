@@ -1,0 +1,49 @@
+{
+    "number": 350577,
+    "data": "3,5,7,11,13,19,23,29,31,43,47,53,59,61,71,79,83,103,107,109,127,151,157,167,173,179,181,191,199,211,223,239,251,271,283,307,311,317,331,347,349,359,367,373,379,383,431,439,443,461,463,467,479,487,491,499",
+    "name": "Prime numbers in A036991.",
+    "comment": [
+        "This sequence includes A000668.",
+        "Conjecture: The sequence is infinite. For example, in the first million primes (see A000040) 304208 numbers are terms of A036991."
+    ],
+    "link": [
+        "Gennady Eremin, <a href=\"/A350577/b350577.txt\">Table of n, a(n) for n = 1..20000</a>"
+    ],
+    "formula": [
+        "Intersection of A000040 and A036991."
+    ],
+    "maple": [
+        "q:= proc(n) local l, t, i; l:= Bits[Split](n); t:=0;",
+        "      for i to nops(l) do t:= t-1+2*l[i];",
+        "        if t<0 then return false fi",
+        "      od: true",
+        "    end:",
+        "select(isprime and q, [$2..500])[];  # _Alois P. Heinz_, Jan 07 2022"
+    ],
+    "mathematica": [
+        "q[n_] := PrimeQ[n] && AllTrue[Accumulate[(-1)^Reverse[IntegerDigits[n, 2]]], # <= 0 &]; Select[Range[500], q] (* _Amiram Eldar_, Jan 07 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def ok(n):",
+        "    if n == 0: return True",
+        "    count = {\"0\": 0, \"1\": 0}",
+        "    for bit in bin(n)[:1:-1]:",
+        "        count[bit] += 1",
+        "        if count[\"0\"] > count[\"1\"]: return False",
+        "    return isprime(n)",
+        "print([k for k in range(3, 500, 2) if ok(k)]) # _Michael S. Branicky_, Jan 07 2022"
+    ],
+    "xref": [
+        "Subsequence of A000040, A005408, A036991, A042987, A045395, A095070, A095074, A216285.",
+        "Cf. A000668."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Gennady Eremin_, Jan 07 2022",
+    "references": 1,
+    "revision": 32,
+    "time": "2022-01-10T08:32:27-05:00",
+    "created": "2022-01-10T02:54:59-05:00"
+}

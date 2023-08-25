@@ -1,0 +1,60 @@
+{
+    "number": 321224,
+    "data": "266,506,759,1045,1288,1463,3795",
+    "name": "Sporadic numbers: n is defined to be sporadic if the set of groups G not in {A_n, S_n} and having a core-free maximal subgroup of index n is nonempty and contains only sporadic simple groups.",
+    "comment": [
+        "A finite group G has a core-free maximal subgroup H of index n if and only if it is a primitive permutation group of degree n (acting on the set G/H of cosets).",
+        "There are no other sporadic numbers less than 4096 (see computation below).",
+        "According to Derek Holt, the next sporadic number is 4180, and the last one should be 492693551703971265784426771318116315247411200000000 (coming from the maximal subgroup 41:40 of the Monster, and assuming that L_2(13) is not maximal).",
+        "Derek Holt suggested another sequence where we also allow the extensions of the sporadic simple groups."
+    ],
+    "reference": [
+        "The GAP Group, GAP - Groups, Algorithms, and Programming, Version 4.9.3, 2018. gap-system.org."
+    ],
+    "link": [
+        "S. Palcoux, <a href=\"https://mathoverflow.net/q/336691/34538\">The sporadic numbers</a> (version: 2019-07-22), MathOverflow."
+    ],
+    "program": [
+        "(GAP)",
+        "IsSporadic:=function(G)",
+        "   if not IsSimple(G) then",
+        "      return false;",
+        "   else",
+        "      return IsomorphismTypeInfoFiniteSimpleGroup(G).series=\"Spor\";",
+        "   fi;",
+        "end;;",
+        "SporadicNumbers:=function(b1,b2)",
+        "   local L,i,n,a,j,G;",
+        "   L:=[];",
+        "   for i in [b1..b2] do",
+        "      n:=NrPrimitiveGroups(i);",
+        "      if n>2 then",
+        "         a:=0;",
+        "         for j in [1..n] do",
+        "            G:=PrimitiveGroup(i,j);",
+        "            if not G=SymmetricGroup(i) and not G=AlternatingGroup(i) and not IsSporadic(G) then",
+        "               a:=1;",
+        "               break;",
+        "            fi;",
+        "         od;",
+        "         if a=0 then",
+        "            Add(L,i);",
+        "         fi;",
+        "      fi;",
+        "   od;",
+        "   return L;",
+        "end;;",
+        "SporadicNumbers(1,4095);",
+        "# gives: [ 266, 506, 759, 1045, 1288, 1463, 3795 ]"
+    ],
+    "xref": [
+        "Cf. A102842, A001228, A174601, A174848, A261717, A263447, A121236."
+    ],
+    "keyword": "nonn,fini,more",
+    "offset": "1,1",
+    "author": "_S\u00e9bastien Palcoux_, Aug 27 2019",
+    "references": 1,
+    "revision": 31,
+    "time": "2019-09-21T14:56:34-04:00",
+    "created": "2019-09-21T14:56:34-04:00"
+}

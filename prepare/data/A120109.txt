@@ -1,0 +1,41 @@
+{
+    "number": 120109,
+    "data": "1,3,10,21,106,107,750,1501,4504,4505,49556,49557,644242,644243,644244,1288489,21904314,21904315,416181986,416181987,416181988,416181989,9572185748,9572185749,47860928746,47860928747,143582786242",
+    "name": "Row sums of number triangle A120108.",
+    "comment": [
+        "It appears that the indices k such that a(k) = a(k-1) + 1 are A080765. - _Michel Marcus_, Mar 04 2019"
+    ],
+    "link": [
+        "Muniru A Asiru, <a href=\"/A120109/b120109.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} lcm(1,...,n+1)/lcm(1,...,k+1)."
+    ],
+    "mathematica": [
+        "A120108[n_, k_]:= LCM@@Range[n+1]/(LCM@@Range[k+1]);",
+        "A120109[n_]:= Sum[A120108[n, k], {k,0,n}];",
+        "Table[A120109[n], {n,0,50}] (* _G. C. Greubel_, May 04 2023 *)"
+    ],
+    "program": [
+        "(GAP) List([0..30],n->Sum([0..n],k->Lcm(List([1..n+1],i->i))/Lcm(List([1..k+1],i->i)))); # _Muniru A Asiru_, Mar 03 2019",
+        "(PARI) a(n) = lcm([1..n+1])*sum(k=0, n, 1/lcm([1..k+1])); \\\\ _Michel Marcus_, Mar 04 2019",
+        "(Magma)",
+        "A120108:= func< n,k | Lcm([1..n+1])/Lcm([1..k+1]) >;",
+        "[(&+[A120108(n,k): k in [0..n]]): n in [0..50]]; // _G. C. Greubel_, May 04 2023",
+        "(SageMath)",
+        "def f(n): return lcm(range(1,n+2))",
+        "def A120109(n):",
+        "    return sum(f(n)//f(k) for k in range(n+1))",
+        "[A120109(n) for n in range(51)] # _G. C. Greubel_, May 04 2023"
+    ],
+    "xref": [
+        "Cf. A080765, A120108, A120110."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Paul Barry_, Jun 09 2006",
+    "references": 3,
+    "revision": 23,
+    "time": "2023-05-05T01:44:09-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

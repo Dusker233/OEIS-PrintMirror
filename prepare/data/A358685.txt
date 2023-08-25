@@ -1,0 +1,53 @@
+{
+    "number": 358685,
+    "data": "3,15,57,182,790,3217,13298,56866,254689,1128121,5106701,23266331,107019385,494689488,2306491761,10758057302,50548874979",
+    "name": "Number of primes < 10^n whose digits are all odd.",
+    "link": [
+        "BBS Math Blog, <a href=\"https://bbs.emath.ac.cn/thread-18361-1-1.html\">How many prime numbers are all composed of 1,3,5,7,9?</a> (in Chinese)."
+    ],
+    "example": [
+        "a(2) = 15 as there are 15 primes less than 100 whose digits are all odd: 3, 5, 7, 11, 13, 17, 19, 31, 37, 53, 59, 71, 73, 79, 97."
+    ],
+    "mathematica": [
+        "n=7",
+        "Length[Select[Prime[Range[PrimePi[10^n]]], And @@ OddQ[IntegerDigits[#]] &]] (* _Zhining Yang_, Nov 26 2022 *)",
+        "n = PrimePi[10^8];",
+        "Sum[If[MemberQ[IntegerDigits[Prime[i]], _?EvenQ], 0, 1], {i, 1, n}]",
+        "(* _Jianlin Su_, Nov 27 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primerange",
+        "def a(n):",
+        "    p=list(primerange(3,10**n))",
+        "    return(sum(1 for k in p if all(int(d) %2 for d in str(k))==True))",
+        "print ([a(n) for n in range(1,8)])",
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, islice, product",
+        "def agen(): # generator of terms",
+        "    c = 3",
+        "    for d in count(2):",
+        "        yield c",
+        "        for p in product(\"13579\", repeat=d-1):",
+        "            s = \"\".join(p)",
+        "            for last in \"1379\":",
+        "                if isprime(int(s+last)): c += 1",
+        "print(list(islice(agen(), 9))) # _Michael S. Branicky_, Nov 27 2022"
+    ],
+    "xref": [
+        "Cf. A030096, A358690."
+    ],
+    "keyword": "base,nonn,more",
+    "offset": "1,1",
+    "author": "_Zhining Yang_, Nov 26 2022",
+    "ext": [
+        "a(10)-a(14) from _Michael S. Branicky_, Nov 26 2022",
+        "a(15) from _Zhining Yang_, Dec 21 2022",
+        "a(16)-a(17) from _Martin Ehrenstein_, Dec 21 2022"
+    ],
+    "references": 2,
+    "revision": 43,
+    "time": "2022-12-22T02:12:58-05:00",
+    "created": "2022-12-20T11:38:47-05:00"
+}

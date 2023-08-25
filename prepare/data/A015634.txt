@@ -1,0 +1,41 @@
+{
+    "number": 15634,
+    "data": "1,4,13,29,63,106,189,289,444,626,911,1203,1657,2130,2766,3462,4430,5359,6688,7992,9670,11405,13704,15840,18730,21548,25037,28521,33015,37067,42522,47690,53940,60108,67760,74748,83886,92433,102629,112469",
+    "name": "Number of ordered quadruples of integers from [ 1..n ] with no global factor.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A015634/b015634.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "G.f.: (1/(1 - x)) * Sum_{k>=1} mu(k) * x^k / (1 - x^k)^4. - _Ilya Gutkovskiy_, Feb 14 2020",
+        "a(n) = n*(n+1)*(n+2)*(n+3)/24 - Sum_{j=2..n} a(floor(n/j)) = A000332(n+3) - Sum_{j=2..n} a(floor(n/j)). - _Chai Wah Wu_, Apr 18 2021"
+    ],
+    "program": [
+        "(Python)",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A015634(n):",
+        "    if n == 0:",
+        "        return 0",
+        "    c, j = 1, 2",
+        "    k1 = n//j",
+        "    while k1 > 1:",
+        "        j2 = n//k1 + 1",
+        "        c += (j2-j)*A015634(k1)",
+        "        j, k1 = j2, n//j2",
+        "    return n*(n+1)*(n+2)*(n+3)//24-c+j-n # _Chai Wah Wu_, Apr 18 2021",
+        "(PARI) a(n) = sum(k=1, n, sumdiv(k, d, moebius(k/d)*binomial(d+2, 3))); \\\\ _Seiichi Manyama_, Jun 12 2021",
+        "(PARI) a(n) = binomial(n+3, 4)-sum(k=2, n, a(n\\k)); \\\\ _Seiichi Manyama_, Jun 12 2021",
+        "(PARI) my(N=66, x='x+O('x^N)); Vec(sum(k=1, N, moebius(k)*x^k/(1-x^k)^4)/(1-x)) \\\\ _Seiichi Manyama_, Jun 12 2021"
+    ],
+    "xref": [
+        "Column k=4 of A177976.",
+        "Cf. A000332, A002088, A015631, A015650, A117108."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 6,
+    "revision": 25,
+    "time": "2021-06-12T09:07:30-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

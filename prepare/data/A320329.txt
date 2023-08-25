@@ -1,0 +1,39 @@
+{
+    "number": 320329,
+    "data": "1,2,7,76,1301,26406,619207,16652168,508596489,17457431050,666726681611,28076838451212,1293333060096013,64713740778086414,3495868307630899215,202800355058036736016,12574907509808996352017,829987773918052958208018,58100729276791270637568019",
+    "name": "Row sums of A174790.",
+    "comment": [
+        "Except for n = 2, 3, 4 and 9, the A055642(n) least significant digits of a(n) give the decimal expansion of n + 1. - _Stefano Spezia_, Jul 02 2021"
+    ],
+    "link": [
+        "Stefano Spezia, <a href=\"/A320329/b320329.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{m=0..n} 1 + (binomial(n, m) - 1)*(n!)^2/(m!*(n - m)!).",
+        "a(0) = 1, a(n) = 1 + n - 2^n*n! + 2*(2*n - 1)!/(n - 1)! for n > 0.",
+        "From _Stefano Spezia_, Jul 02 2021: (Start)",
+        "E.g.f.: 1/sqrt(1 - 4*x) + exp(x)*(1 + x) + 1/(2*x - 1).",
+        "a(n) ~ sqrt(2)*4^n*exp(-n)*n^n. (End)"
+    ],
+    "maple": [
+        "a := n -> add(1+(binomial(n, m)-1)*(n!)^2/(m!*(n-m)!), m = 0 .. n): seq(a(n), n = 0 .. 20);"
+    ],
+    "mathematica": [
+        "T[n_, m_] = 1+((Binomial[n, m]-1)(n!)^2)/(m!(n-m)!); Table[Sum[T[n,m], {m,0,n}], {n,0,20}] (* or *)",
+        "a[n_]:=1+n-2^n n!+2(2n-1)!/(n-1)!; Join[{1},Array[a,20]]"
+    ],
+    "program": [
+        "(GAP) List([0..20], n->Sum([0..n], m->1+((Binomial(n, m)-1)*(Factorial(n)^2)/(Factorial(m)*Factorial(n-m)))));",
+        "(PARI) a(n) = sum(m=0, n, 1+(binomial(n, m)-1)*(n!)^2/(m!*(n-m)!));"
+    ],
+    "xref": [
+        "Cf. A000079, A000142, A000302, A174790."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Stefano Spezia_, Dec 18 2018",
+    "references": 2,
+    "revision": 58,
+    "time": "2021-07-03T12:16:30-04:00",
+    "created": "2018-12-18T17:01:10-05:00"
+}

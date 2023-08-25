@@ -1,0 +1,52 @@
+{
+    "number": 358582,
+    "data": "0,0,1,1,5,7,28,48,176,336,1179,2420,8269,17855,59832,134289,443407,1025685,3346702,7933161,25632265,62000170,198670299,488801159,1555187172,3882403641,12276230777,31034921462,97601239282,249471619165,780790439063,2015194486878",
+    "name": "Number of rooted trees with n nodes, most of which are not leaves.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A358582/b358582.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "A358581(n) + A358584(n) = A000081(n).",
+        "A358582(n) + A358583(n) = A000081(n).",
+        "a(n) = Sum_{k=1..floor((n-1)/2)} A055277(n, k). - _Andrew Howroyd_, Dec 30 2022"
+    ],
+    "example": [
+        "The a(3) = 1 through a(6) = 7 trees:",
+        "  ((o))  (((o)))  (((oo)))   ((((oo))))",
+        "                  ((o)(o))   (((o)(o)))",
+        "                  ((o(o)))   (((o(o))))",
+        "                  (o((o)))   ((o)((o)))",
+        "                  ((((o))))  ((o((o))))",
+        "                             (o(((o))))",
+        "                             (((((o)))))"
+    ],
+    "mathematica": [
+        "art[n_]:=If[n==1,{{}},Join@@Table[Select[Tuples[art/@c],OrderedQ],{c,Join@@Permutations/@IntegerPartitions[n-1]}]];",
+        "Table[Length[Select[art[n],Count[#,{},{0,Infinity}]<Count[#,_[__],{0,Infinity}]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See A358584 for R(n).",
+        "seq(n) = {my(A=R(n)); vector(n, n, vecsum(Vecrev(A[n]/y)[1..(n-1)\\2]))} \\\\ _Andrew Howroyd_, Dec 30 2022"
+    ],
+    "xref": [
+        "For equality we have A185650 aerated, ranked by A358578.",
+        "The opposite version is A358581, non-strict A358583.",
+        "The non-strict version is A358584.",
+        "The ordered version is A358585, odd-indexed terms A065097.",
+        "A000081 counts rooted trees, ordered A000108.",
+        "A055277 counts rooted trees by nodes and leaves, ordered A001263.",
+        "A358575 counts rooted trees by nodes and internal nodes, ordered A090181.",
+        "A358589 counts square trees, ranked by A358577, ordered A358590.",
+        "Cf. A000891, A034781, A109129, A342507, A358579, A358580, A358586, A358591."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_Gus Wiseman_, Nov 23 2022",
+    "ext": [
+        "Terms a(19) and beyond from _Andrew Howroyd_, Dec 30 2022"
+    ],
+    "references": 9,
+    "revision": 9,
+    "time": "2022-12-30T21:38:34-05:00",
+    "created": "2022-11-25T07:22:25-05:00"
+}

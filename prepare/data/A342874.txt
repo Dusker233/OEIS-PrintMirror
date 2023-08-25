@@ -1,0 +1,44 @@
+{
+    "number": 342874,
+    "data": "293,2106,2161,2763,3698,3793,3812,3922,3959,4000,4205,4224,4260,4728,4953,5065,5283,5617,5700,5751,5932,6326,6333,6422,6539,6623,7375,7475,7501,7533,7542,8306,8568,8751,8777,8994,9102,9259,9354,9480,10389,10700,10791",
+    "name": "Numbers k such that the k-th and (k+1)-st primes have the same digits.",
+    "comment": [
+        "Subsequence of A109182."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A342874/b342874.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "prime(293) = 1913, while prime(294) = 1931. Thus, 293 is in this sequence."
+    ],
+    "maple": [
+        "q:= n-> (f-> is(f(n)=f(n+1)))(t-> sort(convert(ithprime(t), base, 10))):",
+        "select(q, [$1..15000])[];  # _Alois P. Heinz_, Mar 28 2021"
+    ],
+    "mathematica": [
+        "Select[Range[10000], Sort[IntegerDigits[Prime[#]]] == Sort[IntegerDigits[Prime[# + 1]]] &]"
+    ],
+    "program": [
+        "(PARI) upto(n) = {my(t = 1, res = List(), q = 2); forprime(p = 3, oo, if((p - q)%9 == 0 && vecsort(digits(q)) == vecsort(digits(p)), listput(res, t); ); q = p; t++; if(t > n, return(res) ) ) } \\\\ _David A. Corneth_, Mar 29 2021",
+        "(Python)",
+        "from sympy import nextprime",
+        "from itertools import count, islice",
+        "def agen():",
+        "    p, pdigs, q, qdigs = 2, [\"2\"], 3, [\"3\"]",
+        "    for k in count(1):",
+        "        if pdigs == qdigs: yield k",
+        "        p, q = q, nextprime(q)",
+        "        pdigs, qdigs = qdigs, sorted(str(q))",
+        "print(list(islice(agen(), 43))) # _Michael S. Branicky_, Nov 27 2022"
+    ],
+    "xref": [
+        "Cf. A109182."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Mar 28 2021",
+    "references": 1,
+    "revision": 22,
+    "time": "2022-11-28T01:47:11-05:00",
+    "created": "2021-03-29T10:36:15-04:00"
+}

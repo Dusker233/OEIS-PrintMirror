@@ -1,0 +1,42 @@
+{
+    "number": 306893,
+    "data": "1,1,2,5,28,572,87210",
+    "name": "Number of distinct binary strings in the n-th Fibonacci shuffle set.",
+    "comment": [
+        "The sequence of Fibonacci shuffle sets is defined as follows:  X_1 = {0}, X_2 = {01}, and X_{n+2} is the shuffle of X_{n+1} and X_n.  Here the shuffle of two sets of strings X and Y is the union, over all x in X and y in Y, of s(x,y), the shuffle set of x and y.  And s(x,y) is the set of all strings z that arise from shuffling x and y.  More precisely, s(x,y) consists of all strings z such that if each letter of z is marked with either a ' or a \", then the primed letters spell out x (in order) and the double-primed letters spell out y.  For example, s(ab,c) = { abc, acb, cab }."
+    ],
+    "example": [
+        "X_3 = {010, 001} and X_4 = {01010, 00110, 00101, 01001, 00011}, so a(3) = 2 and a(4) = 5."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import combinations",
+        "def s(x, y):",
+        "    lxy, setxy = len(x) + len(y), set()",
+        "    setlxy, sxy = set(range(lxy)), [0 for i in range(lxy)]",
+        "    for xinds in combinations(range(lxy), len(x)):",
+        "        yinds = sorted(setlxy-set(xinds))",
+        "        for i, c in enumerate(x): sxy[xinds[i]] = c",
+        "        for i, c in enumerate(y): sxy[yinds[i]] = c",
+        "        setxy.add(\"\".join(sxy))",
+        "    return setxy",
+        "def aupto(n):",
+        "    Xnm2, Xnm1, alst = {'0'}, {'01'}, [1, 1]",
+        "    while len(alst) < n:",
+        "        Xn = set()",
+        "        for i, x in enumerate(Xnm2, start=1):",
+        "            for y in Xnm1:",
+        "                Xn |= s(x, y)",
+        "        Xnm2, Xnm1 = Xnm1, Xn",
+        "        alst.append(len(Xn))",
+        "    return alst[:n]",
+        "print(aupto(6)) # _Michael S. Branicky_, Jun 07 2022"
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,3",
+    "author": "_Jeffrey Shallit_, Mar 15 2019",
+    "references": 0,
+    "revision": 14,
+    "time": "2022-06-08T10:11:03-04:00",
+    "created": "2019-03-16T22:25:43-04:00"
+}

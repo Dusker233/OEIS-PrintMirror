@@ -1,0 +1,72 @@
+{
+    "number": 84783,
+    "data": "1,1,2,2,3,5,6,8,11,16,25,31,39,50,66,137,162,193,232,282,348,944,1081,1243,1436,1668,1950,2298,7884,8828,9909,11152,12588,14256,16206,18504,77514,85398,94226,104135,115287,127875,142131,158337,176841",
+    "name": "Triangle, read by rows, such that the diagonal (A084785) is the self-convolution of the first column (A084784) and the row sums (A084786) gives the differences of the diagonal and the first column.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A084783/b084783.txt\">Rows n = 0..150, flattened</a> (first 45 rows from Paul D. Hanna)"
+    ],
+    "formula": [
+        "T(0,0) = 1, T(n,0) = A084784(n), T(n,n) = A084785(n), T(n,k) = T(n,k-1) + T(n-1,k-1) for n>0, k>0."
+    ],
+    "example": [
+        "Triangle begins:",
+        "      1;",
+        "      1,     2;",
+        "      2,     3,     5;",
+        "      6,     8,    11,     16;",
+        "     25,    31,    39,     50,     66;",
+        "    137,   162,   193,    232,    282,    348;",
+        "    944,  1081,  1243,   1436,   1668,   1950,   2298;",
+        "   7884,  8828,  9909,  11152,  12588,  14256,  16206,  18504;",
+        "  77514, 85398, 94226, 104135, 115287, 127875, 142131, 158337, 176841;",
+        "  ..."
+    ],
+    "maple": [
+        "T:= proc(n, k) option remember; `if`(k=0, 1+add(T(j, 0)*",
+        "     (binomial(n, j)-T(n-j, 0)), j=1..n-1), T(n, k-1)+T(n-1, k-1))",
+        "    end:",
+        "seq(seq(T(n, k), k=0..n), n=0..10);  # _Alois P. Heinz_, Jun 09 2023"
+    ],
+    "mathematica": [
+        "b[n_]:= b[n]= If[n<1, Boole[n==0], Module[{A= 1/x -1/x^2}, Do[A=2A - Normal@Series[(x A^2)/. x-> x-1, {x, Infinity, k+1}], {k,2,n}]; (-1)^n Coefficient[A, x, -n-1]]]; (* b = A084784 *)",
+        "T[n_, k_]:= T[n, k]= If[k==0, b[n], T[n, k-1] +T[n-1, k-1]];",
+        "Table[T[n,k], {n,0,15}, {k,0,n}]//Flatten (* _G. C. Greubel_, Jun 07 2023 *)"
+    ],
+    "program": [
+        "(PARI) {A084784(n) = local(A); if( n<0, 0, A=1; for(k=1, n, A = truncate(A + O(x^k)) + x * O(x^k); A += A - 1 / subst(A^-2, x, x /(1 + x)) / (1 + x); ); polcoeff(A, n))}; /* After Michael Somos */",
+        "{T(n,k)=if(k==0,if(n==0,1,A084784(n)),T(n, k-1)+T(n-1, k-1))}",
+        "for(n=0,10,for(k=0,n,print1(T(n,k),\", \"));print(\"\"))",
+        "(Magma)",
+        "m:=50;",
+        "f:= func< n,x | Exp((&+[(&+[Factorial(j)*StirlingSecond(k,j)*x^k/k: j in [1..k]]): k in [1..n+2]])) >;",
+        "R<x>:=PowerSeriesRing(Rationals(), m+1);",
+        "b:=Coefficients(R!( f(m,x) )); // b = A084784",
+        "function T(n,k) // T = A084783",
+        "  if k eq 0 then return b[n+1];",
+        "  else return T(n,k-1) + T(n-1,k-1);",
+        "  end if;",
+        "end function;",
+        "[T(n,k): k in [0..n], n in [0..15]]; // _G. C. Greubel_, Jun 08 2023",
+        "(SageMath)",
+        "def f(n, x): return exp(sum(sum( factorial(j)*stirling_number2(k,j) *x^k/k for j in range(1,k+1)) for k in range(1,n+2)))",
+        "m=50",
+        "def A084784_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P( f(m,x) ).list()",
+        "b=A084784_list(m)",
+        "def T(n,k): # T = A084783",
+        "    if k==0: return b[n]",
+        "    else: return T(n, k-1) + T(n-1, k-1)",
+        "flatten([[T(n, k) for k in range(n+1)] for n in range(16)]) # _G. C. Greubel_, Jun 08 2023"
+    ],
+    "xref": [
+        "Cf. A084784, A084785, A084786."
+    ],
+    "keyword": "nonn,tabl",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jun 13 2003",
+    "references": 5,
+    "revision": 21,
+    "time": "2023-06-09T18:23:46-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

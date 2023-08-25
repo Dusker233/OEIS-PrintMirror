@@ -1,0 +1,40 @@
+{
+    "number": 318565,
+    "data": "1,6,27,169,1029,7817,61006,547537,5202009,54506262,606311524,7299051826,92985064466,1264720212352,18137495642192,275078184766323,4379514178076452,73235806332442156,1280229713195027792,23381809052104639236,444740694108284116235,8801030741502964613534",
+    "name": "Number of multiset partitions of multiset partitions of strongly normal multisets of size n.",
+    "comment": [
+        "A multiset is normal if it spans an initial interval of positive integers, and strongly normal if in addition it has weakly decreasing multiplicities."
+    ],
+    "example": [
+        "The a(2) = 6 multiset partitions of multiset partitions:",
+        "  {{{1,1}}}",
+        "  {{{1,2}}}",
+        "  {{{1},{1}}}",
+        "  {{{1},{2}}}",
+        "  {{{1}},{{1}}}",
+        "  {{{1}},{{2}}}"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "strnorm[n_]:=Flatten[MapIndexed[Table[#2,{#1}]&,#]]&/@IntegerPartitions[n];",
+        "Table[Sum[Length[mps[m]],{m,Join@@mps/@strnorm[n]}],{n,6}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See links in A339645 for combinatorial species functions.",
+        "seq(n)={my(A=symGroupSeries(n)); StronglyNormalLabelingsSeq(sExp(sExp(A))-1)} \\\\ _Andrew Howroyd_, Dec 30 2020"
+    ],
+    "xref": [
+        "Cf. A001970, A007716, A050336, A255906, A269134, A317533, A317791, A318564, A318566."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Aug 29 2018",
+    "ext": [
+        "Terms a(9) and beyond from _Andrew Howroyd_, Dec 30 2020"
+    ],
+    "references": 18,
+    "revision": 10,
+    "time": "2020-12-30T17:12:00-05:00",
+    "created": "2018-08-29T16:50:47-04:00"
+}

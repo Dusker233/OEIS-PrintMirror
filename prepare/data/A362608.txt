@@ -1,0 +1,55 @@
+{
+    "number": 362608,
+    "data": "0,1,2,2,4,5,7,11,16,21,29,43,54,78,102,131,175,233,295,389,490,623,794,1009,1255,1579,1967,2443,3016,3737,4569,5627,6861,8371,10171,12350,14901,18025,21682,26068,31225,37415,44617,53258,63313,75235,89173,105645",
+    "name": "Number of integer partitions of n having a unique mode.",
+    "comment": [
+        "A mode in a multiset is an element that appears at least as many times as each of the others. For example, the modes of {a,a,b,b,b,c,d,d,d} are {b,d}."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A362608/b362608.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{m>=1} (Sum_{j>=1} x^(j*m)*(1 - x^j)/(1 - x^(j*m))) * (Product_{j>=1} (1 - x^(j*m))/(1 - x^j)). - _Andrew Howroyd_, May 04 2023"
+    ],
+    "example": [
+        "The partition (3,3,2,1) has greatest multiplicity 2, and a unique part of multiplicity 2 (namely 3), so is counted under a(9).",
+        "The a(1) = 1 through a(7) = 11 partitions:",
+        "  (1)  (2)   (3)    (4)     (5)      (6)       (7)",
+        "       (11)  (111)  (22)    (221)    (33)      (322)",
+        "                    (211)   (311)    (222)     (331)",
+        "                    (1111)  (2111)   (411)     (511)",
+        "                            (11111)  (3111)    (2221)",
+        "                                     (21111)   (3211)",
+        "                                     (111111)  (4111)",
+        "                                               (22111)",
+        "                                               (31111)",
+        "                                               (211111)",
+        "                                               (1111111)"
+    ],
+    "mathematica": [
+        "Table[Length[Select[IntegerPartitions[n],Length[Commonest[#]]==1&]],{n,0,30}]"
+    ],
+    "program": [
+        "(PARI) seq(n) = my(A=O(x*x^n)); Vec(sum(m=1, n, sum(j=1, n\\m, x^(j*m)*(1-x^j)/(1 - x^(j*m)), A)*prod(j=1, n\\m, (1 - x^(j*m))/(1 - x^j) + A)/prod(j=n\\m+1, n, 1 - x^j + A)), -(n+1)) \\\\ _Andrew Howroyd_, May 04 2023"
+    ],
+    "xref": [
+        "For parts instead of multiplicities we have A000041(n-1), ranks A102750.",
+        "For median instead of mode we have A238478, complement A238479.",
+        "These partitions have ranks A356862.",
+        "The complement is counted by A362607, ranks A362605.",
+        "For co-mode complement we have A362609, ranks A362606.",
+        "For co-mode we have A362610, ranks A359178.",
+        "A275870 counts collapsible partitions.",
+        "A359893 counts partitions by median.",
+        "A362611 counts modes in prime factorization, co-modes A362613.",
+        "A362614 counts partitions by number of modes, co-modes A362615.",
+        "Cf. A002865, A008284, A053263, A098859, A237984, A304442, A327472, A360071, A360687, A362612."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Apr 30 2023",
+    "references": 57,
+    "revision": 14,
+    "time": "2023-05-04T14:57:32-04:00",
+    "created": "2023-05-02T14:40:15-04:00"
+}

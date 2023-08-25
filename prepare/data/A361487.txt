@@ -1,0 +1,50 @@
+{
+    "number": 361487,
+    "data": "75,135,147,189,225,245,363,375,405,441,507,525,567,605,675,735,825,845,847,867,875,891,945,975,1029,1053,1083,1089,1125,1183,1215,1225,1275,1323,1375,1377,1425,1445,1485,1521,1539,1575,1587,1617,1625,1701,1715,1725,1755,1805,1815,1859,1863,1875,1911",
+    "name": "Odd numbers k that are neither prime powers nor squarefree, such that k/rad(k) >= q, where rad(k) = A007947(k) and prime q = A119288(k).",
+    "comment": [
+        "Odd terms in A360768, which itself is a proper subsequence of A126706.",
+        "Odd numbers k such that there exists j such that 1 < j < k and rad(j) = rad(k), but j does not divide k."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A361487/b361487.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Michael De Vlieger, <a href=\"/A361487/a361487.png\">1020 pixel square bitmap</a> of indices n = 1..1040400, read left to right, top to bottom, such that A360768(n) in this sequence appears in black, else white. There is a faint pattern apparently related to that mentioned in A360768.",
+        "Michael De Vlieger, <a href=\"/A361487/a361487_1.png\">Chart showing k < a(n)</a>, n = 1..36, rows n contain k such that rad(k) = rad(n), yet k does not divide n. These k are in A360769, the number of k in row a(n) given by A355432(a(n))."
+    ],
+    "formula": [
+        "This sequence is { odd k in A126706 : k/A007947(k) >= A119288(k) }."
+    ],
+    "example": [
+        "a(1) = 75, since 75/15 >= 5. We note that rad(45) = rad(75) = 15, yet 45 does not divide 75.",
+        "a(2) = 135, since 135/15 >= 5. Note: rad(75) = rad(135) = 15, yet 45 does not divide 135.",
+        "a(3) = 147, since 147/21 >= 7. Note: rad(63) = rad(147) = 21, yet 147 mod 63 = 21.",
+        "Chart below shows k < a(n) such that rad(k) = rad(n), yet k does not divide n:",
+        "      75 | 45   .",
+        "     135 |  .   .  75   .   .",
+        "     147 |  .  63   .   .   .   .",
+        "     189 |  .   .   .   .   .   . 147   .   .   .",
+        "a(n) 225 |  .   .   .   .   . 135   .   .   .   .   .   .",
+        "     245 |  .   .   .   .   .   .   .   .   . 175   .   .   .",
+        "     363 |  .   .   .  99   .   .   .   .   .   .   .   .   .   .   .   .   . 297",
+        "     375 | 45   .   .   .   . 135   .   .   .   .   .   . 225   .   .   .   .   .",
+        "     ----------------------------------------------------------------------------",
+        "         | 45  63  75  99 117 135 147 153 171 175 189 207 225 245 261 275 279 297",
+        "                                        k in A360769"
+    ],
+    "mathematica": [
+        "Select[Select[Range[1, 2000, 2], Nor[SquareFreeQ[#], PrimePowerQ[#]] &], #1/#2 >= #3 & @@ {#1, Times @@ #2, #2[[2]]} & @@ {#, FactorInteger[#][[All, 1]]} &]"
+    ],
+    "program": [
+        "(PARI) is(k) = { if (k%2, my (f = factor(k)); #f~ > 1 && k/vecprod(f[,1]~) >= f[2, 1], 0); } \\\\ _R\u00e9my Sigrist_, Mar 29 2023"
+    ],
+    "xref": [
+        "Cf. A005408, A007947, A013929, A024619, A119288, A126706, A355432, A360768, A360769."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michael De Vlieger_, Mar 29 2023",
+    "references": 1,
+    "revision": 11,
+    "time": "2023-04-01T13:28:59-04:00",
+    "created": "2023-03-31T07:23:38-04:00"
+}

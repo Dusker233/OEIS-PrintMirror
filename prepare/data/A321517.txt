@@ -1,0 +1,25 @@
+{
+    "number": 321517,
+    "data": "50,75,100,125,150,175,190,200,222,225,238,242,246,250,275,285,300,325,333,338,350,357,363,369,374,375,380,400,425,438,442,444,450,475,476,484,492,494,500,507,525,550,555,561,570,575,578,595,600,605,615,625",
+    "name": "Numbers k such that A294902(k) != A321516(k).",
+    "mathematica": [
+        "A321516[n_] := Length[Select[Most[Divisors[n]], CompositeQ]]; abQ[n_] := DivisorSum[n, Total[IntegerDigits[#, 2]]*(-1)^Boole[#==n]&]>0; A294902[n_] := Length[Select[Most[Divisors[n]], abQ[#] &]]; Select[Range[650], A321516[#] != A294902 [#] &] (* _Amiram Eldar_, Nov 12 2018 after _Jean-Fran\u00e7ois Alcover_ at A175526 *)"
+    ],
+    "program": [
+        "(PARI) a292257(n) = sumdiv(n, d, (d<n)*hammingweight(d)) \\\\ after _Antti Karttunen_ in A292257",
+        "a294905(n) = (a292257(n) <= hammingweight(n)) \\\\ after _Antti Karttunen_ in A294905",
+        "a294902(n) = sumdiv(n, d, (d<n)*(0==a294905(d))) \\\\ after _Antti Karttunen_ in A294902",
+        "a321516(n) = my(d=divisors(n), i=0); for(k=2, #d-1, if(!ispseudoprime(d[k]), i++)); i",
+        "is(n) = a294902(n)!=a321516(n)"
+    ],
+    "xref": [
+        "Cf. A033942, A294902, A321516."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Nov 12 2018",
+    "references": 1,
+    "revision": 11,
+    "time": "2021-07-17T06:52:38-04:00",
+    "created": "2018-11-15T10:30:10-05:00"
+}

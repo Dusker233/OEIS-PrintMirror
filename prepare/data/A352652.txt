@@ -1,0 +1,52 @@
+{
+    "number": 352652,
+    "data": "1,30,2860,343200,45643500,6435891280,942422020540,141696569678400,21724714133822700,3381208130986900500,532553441617598475360,84695057996350934903680,13578009523892192555221500,2191530567314796197691108600,355765014009052303028935320000",
+    "name": "a(n) = ( binomial(7*n,2*n)*binomial(7*n/2,2*n)*binomial(2*n,n)^2 ) / binomial(7*n/2,n)^2.",
+    "comment": [
+        "We write x! as shorthand for Gamma(x+1) and binomial(x,y) as shorthand for x!/(y!*(x-y)!) = Gamma(x+1)/(Gamma(y+1)*Gamma(x-y+1)).",
+        "Given two sequences of numbers c = (c_1, c_2, ..., c_K) and d = (d_1, d_2, ..., d_L) where c_1 + ... + c_K = d_1 + ... + d_L  we can define the factorial ratio sequence u_n(c, d) = (c_1*n)!*(c_2*n)!* ... *(c_K*n)!/ ( (d_1*n)!*(d_2*n)!* ... *(d_L*n)! ) and ask whether it is integral for all n >= 0. The integer L - K is called the height of the sequence. Bober completed the classification of integral factorial ratio sequences of height 1. Soundararajan gives many examples of two-parameter families of integral factorial ratio sequences of height 2. Usually, it is assumed that the c's and d's are integers but here we allow for some of the c's and d's to be rational numbers. See A276098 and the cross references for further examples of factorial ratios of this type.",
+        "Conjecture: the supercongruences a(n*p^k) == a(n*p^(k-1)) (mod p^(3*k)) hold for all primes p >= 5 and positive integers n and k. The case n = k = 1 is easily proved."
+    ],
+    "link": [
+        "Peter Bala, <a href=\"/A276098/a276098.pdf\">Some integer ratios of factorials</a>",
+        "J. W. Bober, <a href=\"http://arxiv.org/abs/0709.1977\">Factorial ratios, hypergeometric series, and a family of step functions</a>, 2007, arXiv:0709.1977v1 [math.NT], 2007; J. London Math. Soc., 79, Issue 2, (2009), 422-444.",
+        "K. Soundararajan, <a href=\"http://doi.org/10.1098/rsta.2018.0444\">Integral factorial ratios: irreducible examples with height larger than 1</a>, Phil. Trans. R. Soc. A378: 2018044, 2019."
+    ],
+    "formula": [
+        "a(n) = (5/3)*Sum_{k = 0..n} (-1)^(n+k)*binomial(7*n,n-k)*binomial(5*n+k-1,k)^2 for n >= 1 (this formula shows 3*a(n) is integral; how to show a(n) is integral?).",
+        "a(n) = (5/3)*Sum_{k = 0..n} binomial(4*n-k-2,n-k)*binomial(5*n-1,k)^2 for n >= 1.",
+        "a(n) = (7*n)!*(5*n/2)!^2/((5*n)!*(7*n/2)!*(3*n/2)!*n!^2!).",
+        "a(n) = (5/3) * [x^n] ( (1 - x)^(2*n) * P(5*n-1,(1 + x)/(1 - x)) for n >= 1, where P(n,x) denotes the n-th Legendre polynomial.",
+        "a(n) = (5/3)*(-1)^n*binomial(7*n,n)*hypergeom([-n, 5*n, 5*n], [1, 6*n+1], 1) for n >= 1.",
+        "a(n) ~ sqrt(15)/Pi * 7^(7*n/2)/3^(3*n/2) * ( 1/(6*n) - 29/(945*n^2) + 841/(297675*n^3) + O(1/n^4) ).",
+        "a(n) = 7*(5*n-2)*(5*n-4)*(5*n-6)*(5*n-8)*(7*n-1)*(7*n-3)*(7*n-5)*(7*n-9)*(7*n-11)*(7*n-13)/(3*n^2*(n-1)^2*(3*n-2)*(3*n-4)*(5*n-1)*(5*n- 3)*(5*n -7)*(5*n-9)) * a(n-2) with a(0) = 1 and a(1) = 30.",
+        "a(n)*A275654(n) = (7*n)!/(n!^4*(3*n)!) = A071549(n)/A006480(n).",
+        "a(p) == 30 (mod p^3) for all primes p >= 5."
+    ],
+    "example": [
+        "Examples of supercongruences:",
+        "a(11) - a(1) = 84695057996350934903680 - 30 = 2*(5^2)*(11^3)*23*593* 3671*5693*4464799 == 0 (mod 11^3)",
+        "a(2*7) - a(2) = 355765014009052303028935320000 - 2860 = (2^2)*5*(7^3)*11* 269*3307*375101*14129010228023 == 0 (mod 7^3)"
+    ],
+    "maple": [
+        "a := n -> if n = 0 then 1 elif n = 1 then 30 else",
+        "7*(5*n-2)*(5*n-4)*(5*n-6)*(5*n-8)*(7*n-1)*(7*n-3)*(7*n-5)*(7*n-9)*(7*n-11)*(7*n-13)/(3*n^2*(n-1)^2*(3*n-2)*(3*n-4)*(5*n-1)*(5*n- 3)*(5*n -7)*(5*n-9)) *a(n-2) end if:",
+        "seq(a(n), n = 0..20);"
+    ],
+    "program": [
+        "(Python)",
+        "from math import factorial",
+        "from sympy import factorial2",
+        "def A352652(n): return int(factorial(7*n)*factorial2(5*n)**2//factorial(5*n)//factorial2(7*n)//factorial2(3*n)//factorial(n)**2) # _Chai Wah Wu_, Aug 08 2023"
+    ],
+    "xref": [
+        "Cf. A275654, A276098, A276100, A276101, A276102, A352651."
+    ],
+    "keyword": "nonn,easy,changed",
+    "offset": "0,2",
+    "author": "_Peter Bala_, Apr 03 2022",
+    "references": 5,
+    "revision": 20,
+    "time": "2023-08-23T12:19:11-04:00",
+    "created": "2022-04-22T05:37:26-04:00"
+}

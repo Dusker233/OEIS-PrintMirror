@@ -1,0 +1,46 @@
+{
+    "number": 78266,
+    "data": "1,16,222,2777,33333,388888,4444444,49999999,555555555,46464646464,4102564102563,377777777777777,35947712418300653,3508771929824561403,349206349206349206348,35265700483091787439613,3599999999999999999999999",
+    "name": "Integer part of the arithmetic mean of all the distinct numbers formed by permuting the digits of concatenation of numbers from 1 to n.",
+    "comment": [
+        "For n < 10 there are n! distinct numbers."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A078266/b078266.txt\">Table of n, a(n) for n = 1..369</a>"
+    ],
+    "formula": [
+        "a(n) = A007953(A007908(n))*(10^A055642(A007908(n))-1)/(9*A055642(A007908(n))). - _Chai Wah Wu_, Jan 06 2019"
+    ],
+    "example": [
+        "a(3) = floor((123 + 132 + 213 + 231 + 312 + 321)/6) = 222;",
+        "a(4) = floor((1234 + 1243 + 1324 + 1342 + 1423 + 1432 + ... + 4312 + 4321)/24) = 66660/24 = 2777."
+    ],
+    "maple": [
+        "a:= proc(n) local s, t, l;",
+        "      s:= cat(\"\", seq(i, i=1..n)); t:= length(s);",
+        "      l:= (p-> seq(coeff(p, x, i), i=0..9))(add(x^parse(s[i]), i=1..t));",
+        "      floor((10^t-1)/9*add(i*l[i+1], i=1..9)/t)",
+        "    end:",
+        "seq(a(n), n=1..20);  # _Alois P. Heinz_, Jan 05 2019"
+    ],
+    "program": [
+        "(PARI) { a(n) = c=vector(10); for(i=1,n, s=eval(Vec(Str(i))); for(j=1,#s,c[s[j]+1]++); ); l=sum(j=1,10,c[j]); (10^l-1)/9*sum(j=1,10,(j-1)*c[j])\\l } \\\\ _Max Alekseyev_",
+        "(Python)",
+        "def A078266(n):",
+        "    s = ''.join(str(i) for i in range(1,n+1))",
+        "    return sum(int(d) for d in s)*(10**len(s)-1)//(9*len(s)) # _Chai Wah Wu_, Jan 04 2019"
+    ],
+    "xref": [
+        "Cf. A071268, A078265."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Nov 24 2002",
+    "ext": [
+        "More terms from _Max Alekseyev_, Jan 24 2012"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2019-01-07T02:15:24-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

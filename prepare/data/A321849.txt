@@ -1,0 +1,43 @@
+{
+    "number": 321849,
+    "data": "1,1,13,253,6553,211801,8201701,369979093,19047250993,1101705494833,70715424362941,4987040544656941,383243311962126793,31871863566298601353,2851588139929576342933,273093945561709965890821,27871997808801906673665121",
+    "name": "Expansion of e.g.f.: exp(x/(1-6*x)).",
+    "comment": [
+        "For k = 2,3,4,... the difference a(n+k) - a(n) is divisible by k."
+    ],
+    "link": [
+        "Ludovic Schwob, <a href=\"/A321849/b321849.txt\">Table of n, a(n) for n = 0..199</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} 6^(n-k)*(n!/k!)*binomial(n-1, k-1).",
+        "Recurrence: a(n) = (12*n-11)*a(n-1) - 36*(n-2)*(n-1)*a(n-2).",
+        "a(n) ~ n! * exp(sqrt(2*n/3) - 1/12) * 6^(n - 1/4) / (2 * sqrt(Pi) * n^(3/4)). - _Vaclav Kotesovec_, Nov 21 2018"
+    ],
+    "maple": [
+        "seq(coeff(series(factorial(n)*exp(x/(1-6*x)),x,n+1), x, n), n = 0 .. 17); # _Muniru A Asiru_, Nov 24 2018"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[6^(n - k)*n!/k!*Binomial[n - 1, k - 1], {k, 0, n}]; Array[a, 20, 0] (* or *) a[0] = a[1] = 1; a[n_] := a[n] = (12n - 11)*a[n - 1] - 36(n - 2)(n - 1)*a[n - 2]; Array[a, 20, 0] (* _Amiram Eldar_, Nov 19 2018 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x + O('x^20)); Vec(serlaplace(exp(x/(1-6*x)))) \\\\ _Michel Marcus_, Nov 25 2018",
+        "(Magma) m:=25; R<x>:=PowerSeriesRing(Rationals(), m); b:=Coefficients(R!(Exp(x/(1-6*x)))); [Factorial(n-1)*b[n]: n in [1..m]]; // _G. C. Greubel_, Dec 08 2018",
+        "(Sage)",
+        "f= exp(x/(1-6*x))",
+        "g=f.taylor(x,0,13)",
+        "L=g.coefficients()",
+        "coeffs={c[1]:c[0]*factorial(c[1]) for c in L}",
+        "coeffs  # _G. C. Greubel_, Dec 08 2018",
+        "(Magma) [1] cat [&+[6^(n-k)* Factorial(n)/Factorial(k)*Binomial(n-1, k-1):  k in [0..n]]: n in [1.. 18]]; // _Vincenzo Librandi_, Dec 08 2018"
+    ],
+    "xref": [
+        "Cf. A000262, A025168, A321837, A321847, A321848, A321850."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ludovic Schwob_, Nov 19 2018",
+    "references": 6,
+    "revision": 33,
+    "time": "2022-09-08T08:46:23-04:00",
+    "created": "2018-12-19T12:49:16-05:00"
+}

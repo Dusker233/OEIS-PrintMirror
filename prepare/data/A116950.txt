@@ -1,0 +1,41 @@
+{
+    "number": 116950,
+    "data": "1,2,7,20,61,174,514,1478,4303,12437,36084,104494,303167,879283,2552803,7413583,21544347,62635823,182199853,530228946,1543761513,4496523995,13102414665,38193626823,111375529695,324891970936,948051861938,2767336312386,8080206646244",
+    "name": "Number of functional patterns on n elements; or digraphs with maximum outdegree 1, n arrows and every point connected to an arrow.",
+    "comment": [
+        "A001372 counts functional patterns from a set with n elements to itself; A000041 (partition function) counts functional patterns from a set with n elements to a disjoint set; this is the general case where the range may overlap the domain but may also include other values."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A116950/b116950.txt\">Table of n, a(n) for n = 0..2127</a>"
+    ],
+    "formula": [
+        "Euler transform of A002861(n) + A000081(n+1).",
+        "a(n) ~ c * d^n / sqrt(n), where d = A051491 = 2.95576528565199497471481752412..., c = 3.435908969217935496995961718... . - _Vaclav Kotesovec_, Sep 10 2014"
+    ],
+    "example": [
+        "For n=2 there are the following 7 digraphs:",
+        "o-+.o-+ o->o-+ o->o o-+.o->o o->o->o o->o o->o",
+        "^.|.^.| ...^.| ^..| ^.|..... ....... ...^ ....",
+        "+-+.+-+ ...+-+ +--+ +-+..... ....... o--+ o->o"
+    ],
+    "mathematica": [
+        "nmax = 750;",
+        "A002861 = Cases[Import[\"https://oeis.org/A002861/b002861.txt\", \"Table\"], {_, _}][[;; nmax + 2, 2]];",
+        "A000081 = Cases[Import[\"https://oeis.org/A000081/b000081.txt\", \"Table\"], {_, _}][[;; nmax + 2, 2]];",
+        "etr[p_] := Module[{b}, b[n_] := b[n] = If[n == 0, 1, Sum[Sum[d*p[d], {d, Divisors[j]}]*b[n - j], {j, 1, n}]/n]; b];",
+        "b[n_] := A002861[[n]] + A000081[[n + 2]];",
+        "a = etr[b];",
+        "a[0] = 1;",
+        "a /@ Range[0, nmax](* _Jean-Fran\u00e7ois Alcover_, Mar 13 2020 *)"
+    ],
+    "xref": [
+        "Cf. A000041, A001372, A002861, A000081."
+    ],
+    "keyword": "easy,nice,nonn",
+    "offset": "0,2",
+    "author": "_Franklin T. Adams-Watters_, Mar 29 2006",
+    "references": 5,
+    "revision": 15,
+    "time": "2020-03-13T08:58:00-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

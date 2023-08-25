@@ -1,0 +1,38 @@
+{
+    "number": 333679,
+    "data": "0,0,0,1,3,8,20,53,137,375,1035,2878,7988,22308,62642,176692,499818,1418228,4035568,11512449,32916181,94313011,270757747,778694171,2243200705,6471953522,18699169766,54098598824,156706773404,454457344755,1319382151919,3834346819731",
+    "name": "Sum of the heights of all nonnegative lattice paths from (0,0) to (n,0) such that slopes of adjacent steps differ by at most one, assuming zero slope before and after the paths.",
+    "comment": [
+        "The maximal height in all paths of length n is floor(ceil(n/2)^2/4) = A008642(n-3) for n>2."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A333679/b333679.txt\">Table of n, a(n) for n = 0..100</a>",
+        "Alois P. Heinz, <a href=\"/A333647/a333647.gif\">Animation of A333647(9) = 169 paths with height sum a(9) = 375</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "maple": [
+        "b:= proc(x, y, t, h) option remember;",
+        "      `if`(x=0, h, add(b(x-1, y+j, j, max(h, y)),",
+        "         j=max(t-1, -y)..min(x*(x-1)/2-y, t+1)))",
+        "    end:",
+        "a:= n-> b(n, 0$3):",
+        "seq(a(n), n=0..32);"
+    ],
+    "mathematica": [
+        "b[x_, y_, t_, h_] := b[x, y, t, h] =",
+        "     If[x == 0, h, Sum[b[x - 1, y + j, j, Max[h, y]],",
+        "     {j, Max[t - 1, -y], Min[x(x - 1)/2 - y, t + 1]}]];",
+        "a[n_] := b[n, 0, 0, 0];",
+        "a /@ Range[0, 32] (* _Jean-Fran\u00e7ois Alcover_, Apr 26 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A008642, A333647, A333678, A333680."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Alois P. Heinz_, Apr 01 2020",
+    "references": 4,
+    "revision": 16,
+    "time": "2021-04-26T05:22:53-04:00",
+    "created": "2020-04-02T09:36:37-04:00"
+}

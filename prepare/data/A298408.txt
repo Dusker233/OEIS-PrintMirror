@@ -1,0 +1,41 @@
+{
+    "number": 298408,
+    "data": "1,1,1,6,20,53,130,277,574,1115,2126,3862,7021,12341,21553,36957,63111,106224,178407,296638,492231,811731,1335994,2188950,3583027,5847108,9532980,15512342,25226123,40967842,66506422,107869832,174908573,283452771,459264017",
+    "name": "a(n) = 2*a(n-1) - a(n-3) + 2*a(floor(n/2)) + 3*a(floor(n/3)) + ... + n*a(floor(n/n)), where a(0) = 1, a(1) = 1, a(2) = 1.",
+    "comment": [
+        "a(n)/a(n-1) -> (1 + sqrt(5))/2, the golden ratio (A001622), so that (a(n)) has the growth rate of the Fibonacci numbers (A000045). See A298338 for a guide to related sequences."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A298408/b298408.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "mathematica": [
+        "a[0] = 1; a[1] = 1; a[2] = 1;",
+        "a[n_] := a[n] = 2*a[n - 1] - a[n - 3] + Sum[k*a[Floor[n/k]], {k, 2, n}];",
+        "Table[a[n], {n, 0, 90}]  (* A298408  *)"
+    ],
+    "program": [
+        "(Python)",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A298408(n):",
+        "    if n <= 2:",
+        "        return 1",
+        "    c, j = 2*A298408(n-1)-A298408(n-3), 2",
+        "    k1 = n//j",
+        "    while k1 > 1:",
+        "        j2 = n//k1 + 1",
+        "        c += (j2*(j2-1)-j*(j-1))*A298408(k1)//2",
+        "        j, k1 = j2, n//j2",
+        "    return c+(n*(n+1)-j*(j-1))//2 # _Chai Wah Wu_, Mar 31 2021"
+    ],
+    "xref": [
+        "Cf. A001622, A000045, A298338, A298409."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Clark Kimberling_, Feb 10 2018",
+    "references": 3,
+    "revision": 10,
+    "time": "2021-03-31T19:10:02-04:00",
+    "created": "2018-02-10T22:02:10-05:00"
+}

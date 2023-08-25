@@ -1,0 +1,38 @@
+{
+    "number": 327607,
+    "data": "0,1,3,11,21,58,128,276,516,1169,2227,4324,8335,15574,29116,55048,97698,176291,323277,563453,1005089,1770789,3076868,5293907,9184885,15668638,26751095,45517048,76882920,128738414,217219751,360525590,599158211,995474365",
+    "name": "Number of parts in all twice partitions of n where the first partition is strict.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327607/b327607.txt\">Table of n, a(n) for n = 0..4000</a>"
+    ],
+    "example": [
+        "a(3) = 11 = 1+2+3+2+3 counting the parts in 3, 21, 111, 2|1, 11|1."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; (p-> [p(n), add(p(n-j)*",
+        "      numtheory[tau](j), j=1..n)])(combinat[numbpart])",
+        "    end:",
+        "b:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0,",
+        "      `if`(n=0, [1, 0], b(n, i-1) +(h-> (f-> f+[0, f[1]*",
+        "       h[2]/h[1]])(b(n-i, min(n-i, i-1))*h[1]))(g(i))))",
+        "    end:",
+        "a:= n-> b(n$2)[2]:",
+        "seq(a(n), n=0..37);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = {PartitionsP[n], Sum[PartitionsP[n - j] DivisorSigma[0, j], {j, 1, n}]};",
+        "b[n_, i_] := b[n, i] = If[i(i+1)/2 < n, 0, If[n == 0, {1, 0}, Module[{h, f}, h = g[i]; f = b[n - i, Min[n - i, i - 1]] h[[1]]; b[n, i - 1] + f + {0, f[[1]] h[[2]] / h[[1]]}]]];",
+        "a[n_] := b[n, n][[2]];",
+        "a /@ Range[0, 37] (* _Jean-Fran\u00e7ois Alcover_, Dec 05 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000009, A000041, A271619, A327552, A327594, A327605, A327608."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 18 2019",
+    "references": 6,
+    "revision": 20,
+    "time": "2020-12-05T03:31:31-05:00",
+    "created": "2019-09-18T21:13:20-04:00"
+}

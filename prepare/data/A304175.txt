@@ -1,0 +1,39 @@
+{
+    "number": 304175,
+    "data": "1,1,2,5,12,27,59,128,277,597,1280,2730,5794,12248,25836,54508,115222,244144,518104,1099499,2330326,4930089,10415135,21992400,46470911,98353146,208580686,443186181,942988423,2007981801,4276830431,9109431322,19404918449,41357252072,88236092543",
+    "name": "Number of leaf-balanced rooted plane trees with n nodes.",
+    "comment": [
+        "A rooted plane tree is leaf-balanced if every branch of the root has the same number of leaves, and every branch of the root is itself leaf-balanced."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A304175/b304175.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "The a(5) = 12 leaf-balanced plane trees:",
+        "  ((((o)))), (((oo))), (((o)o)), ((o(o))), ((ooo)),",
+        "  (((o))o), (o((o))), ((o)(o)),",
+        "  ((o)oo), (o(o)o), (oo(o)),",
+        "  (oooo).",
+        "Missing from this list are ((oo)o) and (o(oo))."
+    ],
+    "mathematica": [
+        "lbplane[n_]:=If[n==1,{{}},Join@@Table[Select[Tuples[lbplane/@c],SameQ@@(Count[#,{},{0,Infinity}]&/@#)&],{c,Join@@Permutations/@IntegerPartitions[n-1]}]];",
+        "Table[Length[lbplane[n]],{n,10}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(v=vector(n)); v[1]=x/(1-x) + O(x*x^n); for(k=2, n, v[k]=x*sumdiv(k, d, if(d<k, v[d]^(k/d)))/(1-x) ); Vec(vecsum(v) + O(x*x^n))} \\\\ _Andrew Howroyd_, Dec 13 2020"
+    ],
+    "xref": [
+        "Cf. A000081, A000108, A001003, A001006, A003238, A007853, A126120, A291442, A291443, A304173."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Aug 16 2018",
+    "ext": [
+        "Terms a(17) and beyond from _Andrew Howroyd_, Dec 13 2020"
+    ],
+    "references": 6,
+    "revision": 12,
+    "time": "2020-12-14T01:37:32-05:00",
+    "created": "2018-08-17T09:21:13-04:00"
+}

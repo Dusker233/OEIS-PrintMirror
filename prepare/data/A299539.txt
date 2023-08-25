@@ -1,0 +1,52 @@
+{
+    "number": 299539,
+    "data": "5,19,28,37,46,55,64,73,82,91,159,258,357,456,555,654,753,852,951,1199,1289,1379,1469,1559,1649,1739,1829,1919,2198,2288,2378,2468,2558,2648,2738,2828,2918,3197,3287,3377,3467,3557,3647,3737,3827,3917,4196,4286",
+    "name": "Numbers n = d_1 d_2 ... d_k (in base 10) such that d_i + d_{k+1-i} = 10 for i = 1..k.",
+    "comment": [
+        "These numbers are also called upside-down numbers.",
+        "All terms belong to A052382 (zeroless numbers).",
+        "The central digit of the terms with an odd number of digits is always 5.",
+        "This sequence can be partitioned into three sets: { 5 }, A083678 and A093472.",
+        "This sequence has similarities with A284811: here d_i + d_{k+1-i} = 10, there d_i + d_{k+1-i} = 9.",
+        "These numbers have a palindromic Morse code representation (see A060109). To get all numbers with this property one has to include 0 and terms with corresponding \"interior\" digits 5 replaced by digits 0, e.g., 5 -> 0, 159 -> 109, 555 -> 505, 1559 -> 1009, 15559 -> {10009, 10509, 15059}. - _M. F. Hasler_, Nov 02 2020"
+    ],
+    "link": [
+        "Robert E. Kennedy and Curtis N. Cooper, <a href=\"http://www.jstor.org/stable/2686498\">Bach, 5465, and Upside-Down Numbers</a>, The College Mathematics Journal, Vol. 18, No. 2 (Mar., 1987), pp. 111-115.",
+        "Giovanni Resta, <a href=\"http://www.numbersaplenty.com/set/upside-down_number/\">Upside-down numbers</a>, Numbers Aplenty."
+    ],
+    "example": [
+        "1 + 9 = 10 and 5 + 5 = 10 and 9 + 1 = 10, hence 159 belongs to this sequence.",
+        "4 + 2 = 6, hence 42 does not belong to this sequence."
+    ],
+    "maple": [
+        "Res:= NULL;",
+        "for d from 1 to 3 do",
+        "  for x from 0 to 9^(d-1)-1 do",
+        "    L:= convert(9^(d-1)+x,base,9)[1..d-1];",
+        "    Res:= Res, 5*10^(d-1)+add((1+L[-i])*10^(2*d-1-i)+(9-L[-i])*10^(i-1),i=1..d-1)",
+        "  od;",
+        "  for x from 0 to 9^d-1 do",
+        "    L:= convert(9^d+x,base,9)[1..d];",
+        "    Res:= Res, add((1+L[-i])*10^(2*d-i)+(9-L[-i])*10^(i-1),i=1..d)",
+        "  od",
+        "od:",
+        "Res; # _Robert Israel_, Mar 06 2018"
+    ],
+    "mathematica": [
+        "Select[Range[4300], AllTrue[#1[[1 ;; #2]] + Reverse@ #1[[-#2 ;; -1]], # == 10 &] & @@ {#, Ceiling[Length[#]/2]} &@ IntegerDigits[#] &] (* _Michael De Vlieger_, Nov 04 2020 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = my (d=digits(n)); Set(d+Vecrev(d))==Set(10)"
+    ],
+    "xref": [
+        "Cf. A052382, A083678, A093472, A284811.",
+        "Cf. also A060109 (Morse code of numbers)."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_R\u00e9my Sigrist_, Mar 05 2018",
+    "references": 1,
+    "revision": 29,
+    "time": "2020-11-22T21:25:38-05:00",
+    "created": "2018-03-14T17:37:38-04:00"
+}

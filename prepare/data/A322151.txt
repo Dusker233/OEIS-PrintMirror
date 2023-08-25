@@ -1,0 +1,32 @@
+{
+    "number": 322151,
+    "data": "1,2,5,27,216,2311,30988,499919,9431026,203743252,4960335470,134382267082,4009794148101,130668970606412,4617468180528235,175867725701333896,7182126650899080024,313063334893103361130,14507460736615554141354,712192629608088061633746",
+    "name": "Number of labeled connected graphs with loops with n edges (the vertices are {1,2,...,k} for some k).",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A322151/b322151.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "mathematica": [
+        "multsubs[set_,k_]:=If[k==0,{{}},Join@@Table[Prepend[#,set[[i]]]&/@multsubs[Drop[set,i-1],k-1],{i,Length[set]}]];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Union[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[Subsets[multsubs[Range[n+1],2],{n}],And[Union@@#==Range[Max@@Union@@#],Length[csm[#]]==1]&]],{n,5}]"
+    ],
+    "program": [
+        "(PARI)",
+        "Connected(v)={my(u=vector(#v)); for(n=1, #u, u[n]=v[n] - sum(k=1, n-1, binomial(n-1, k)*v[k]*u[n-k])); u}",
+        "seq(n)={Vec(vecsum(Connected(vector(2*n, j, (1 + x + O(x*x^n))^binomial(j+1,2)))))} \\\\ _Andrew Howroyd_, Nov 28 2018"
+    ],
+    "xref": [
+        "Row sums of A322147. The unlabeled version is A191970.",
+        "Cf. A000664, A002905, A007718, A013922, A054923, A057500, A191646, A291842 (planar case), A321254, A322114, A322115."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Nov 28 2018",
+    "ext": [
+        "Terms a(7) and beyond from _Andrew Howroyd_, Nov 28 2018"
+    ],
+    "references": 5,
+    "revision": 5,
+    "time": "2018-11-28T20:57:09-05:00",
+    "created": "2018-11-28T20:57:09-05:00"
+}

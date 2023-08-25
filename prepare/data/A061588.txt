@@ -1,0 +1,65 @@
+{
+    "number": 61588,
+    "data": "2,4,16,136,1936,181936,164181936,13616164181936,193613613616164181936,1819361936193613613616164181936,1641819361819361819361936193613613616164181936",
+    "name": "a(1) = 2; thereafter a(n) is the number obtained by replacing each digit of a(n-1) with its square.",
+    "link": [
+        "John Cerkan, <a href=\"/A061588/b061588.txt\">Table of n, a(n) for n = 1..18</a>",
+        "William Davidson, <a href=\"https://www.maa.org/sites/default/files/pdf/abstracts/mf2012_abstracts.pdf\">Introducing the peculiar 'Davidson Sequence'</a>, MathFest 2012; see p. 37."
+    ],
+    "formula": [
+        "From _William Davidson_, Aug 15 2012: (Start)",
+        "For integer n > 5,",
+        "a(n) = a(n-4)*10^(L(a(n-5))+L(a(n-1))) + a(n-5)*10^(L(a(n-1))) + a(n-1), where L(x) is the number of digits in x.",
+        "L(a(n)) = (W^(n-1)*[s1]^T)^T*[d]^T, where W is the 5 X 5 square matrix [(0 1 0 0 0) (0 0 1 0 0) (0 0 0 1 0) (0 0 0 0 1) (1 1 0 0 1)], [s1] = [1 2 3 4 6], [d] = [1 0 0 0 0], and T denotes transpose.",
+        "To determine the initial digits of a(n), n > 5, let b = ((n+2) mod 4) + 2. Then a(n) begins with a(b). E.g. let n = 100, b = 4, then a(100) = 1936... (End)"
+    ],
+    "example": [
+        "After 136: the squares of 1, 3, 6 are 1, 9, 36 respectively hence the next term is 1936.",
+        "a(11) = a(7)*10^L(a(6)+a(10))+a(6)*10^L(a(10))+a(10)",
+        "     = 13616164181936*10^55 + 164181936*10^46 +",
+        "      1641819361819361819361936193613613616164181936",
+        "     = 136161641819361641819361641819361819361819361936193613613616164181936",
+        "a(100) = 1936...*10^L(a(96)+a(99))+136...*10^L(a(99))+136...936, where L(100) has approximately 2.74*10^17 digits. - _William Davidson_, Aug 15 2012"
+    ],
+    "program": [
+        "(Python)",
+        "def digits(n):",
+        ".d=[]",
+        ".while n>0:",
+        "..d.append(n%10)",
+        "..n=n//10",
+        ".return d",
+        "def sqdig(n):",
+        ".new=0",
+        ".num=digits(n)",
+        ".spacing=0",
+        ".while num:",
+        "..k=num.pop(0)",
+        "..new+=(10**(spacing))*(k**2)",
+        "..if k>3:",
+        "...spacing+=1",
+        "..spacing+=1",
+        ".return new",
+        "def davidson(n):",
+        ".i=2",
+        ".while n>1:",
+        "..i=sqdig(i)",
+        "..n-=1",
+        ".return i",
+        "# _David Nacin_, Aug 19 2012",
+        "(Python)",
+        "from itertools import accumulate",
+        "def f(an, _): return int(\"\".join(str(int(d)**2) for d in str(an)))",
+        "print(list(accumulate([2]*11, f))) # _Michael S. Branicky_, Jan 01 2022"
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, May 13 2001",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org) and Asher Natan Auel (auela(AT)reed.edu), May 15 2001. Corrected by _Matthew Vandermast_, Apr 23 2003"
+    ],
+    "references": 4,
+    "revision": 35,
+    "time": "2022-02-07T21:58:41-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

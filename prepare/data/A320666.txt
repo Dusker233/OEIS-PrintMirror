@@ -1,0 +1,70 @@
+{
+    "number": 320666,
+    "data": "0,2,6,9,14,22,29,38,51,61,74,92,105,122,145,161,182,210,229,254,287,309,338,376",
+    "name": "a(n) is the maximum number of liberties a single group can have on an otherwise empty n X n Go board.",
+    "comment": [
+        "For 1 X 1 the solution is a single stone on the only possible position and is not a valid final board state in a real game of Go.",
+        "Also seems to be the answer to the following parking problem: maximum number of cars in an n X n carpark such that any car can leave through a single exit. See Puzzling StackExchange links. - _Dmitry Kamenetsky_, Mar 26 2021"
+    ],
+    "link": [
+        "Ton Hospel, <a href=\"https://github.com/thospel/Go-CountLiberties\">Table of n, a(n) for n = 1..24</a>",
+        "Puzzling StackExchange, <a href=\"https://puzzling.stackexchange.com/questions/107886/placing-9-cars-into-a-4x4-carpark\">Placing 9 cars into a 4x4 carpark</a>, March 2021.",
+        "Puzzling StackExchange, <a href=\"https://puzzling.stackexchange.com/questions/55853/a-special-parking-lot\">A special parking lot</a>, October 2017."
+    ],
+    "formula": [
+        "Exact for n <= 24, conjectured for n > 24 but it is at least a lower bound:",
+        "  a(n) = 0 if n = 1.",
+        "  a(n) = 2 if n = 2.",
+        "  a(n) = 6 if n = 3.",
+        "  a(n) = n*(2*n-1)/3    if n = 0 (mod 3) and n != 3.",
+        "  a(n) = ((2n-1)^2+5)/6 if n = 1 (mod 3) and n != 1.",
+        "  a(n) = ((2n-1)^2+3)/6 if n = 2 (mod 3).",
+        "Conjectures from _Colin Barker_, Jun 05 2019: (Start)",
+        "G.f.: x^2*(2 + 4*x + 3*x^2 + x^3 + x^5 + x^6 + x^7 - x^8) / ((1 - x)^3*(1 + x + x^2)^2).",
+        "a(n) = a(n-1) + 2*a(n-3) - 2*a(n-4) - a(n-6) + a(n-7) for n>9.",
+        "(End)"
+    ],
+    "example": [
+        "For n = 7 one of many a(7) = 29 solutions:",
+        "  *********",
+        "  *.O.....*",
+        "  *.OOOOOO*",
+        "  *.O....O*",
+        "  *.O.....*",
+        "  *.O.OOO.*",
+        "  *.OOO.O.*",
+        "  *.O...O.*",
+        "  *********"
+    ],
+    "program": [
+        "(Perl)",
+        "sub a {",
+        "     # Conjectured: This program is valid for any m X n board size",
+        "     my ($m, $n) = @_;",
+        "     $n = $m if !defined $n;",
+        "     ($m, $n) = ($n, $m) if $m > $n;",
+        "     # So now $m <= $n",
+        "     # This program is certain to be valid for all $m <= 24",
+        "     if ($m >= 4) {",
+        "         return $m*(2*$n-1)/3 if $m % 3 == 0;",
+        "         return $n*(2*$m-1)/3 if $n % 3 == 0;",
+        "         return ((2*$m-1)*(2*$n-1)+5)/6 if $m % 3 == 1 && $n % 3 == 1;",
+        "         return ((2*$m-1)*(2*$n-1)+3)/6; # if $m % 3 == 2 || $n % 3 == 2",
+        "     }",
+        "     return 2*$n if $m == 3;",
+        "     return $n == 3 ? 4 : $n if $m == 2;",
+        "     return $n >= 3 ? 2 : $n-1 if $m == 1;",
+        "     die \"Bad call\";",
+        "}"
+    ],
+    "xref": [
+        "A071619 is a trivial upper bound for this sequence."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Ton Hospel_, Oct 28 2018",
+    "references": 1,
+    "revision": 43,
+    "time": "2021-03-26T04:43:18-04:00",
+    "created": "2018-10-29T05:15:46-04:00"
+}

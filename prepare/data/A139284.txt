@@ -1,0 +1,50 @@
+{
+    "number": 139284,
+    "data": "2,24,71,89,180,181,192,214,256,319,413,447,522,547,623,659,756,824,872,901,920,929,1020,1021,1032,1053,1084,1125,1176,1237,1308,1389,1480,1481,1492,1513,1544,1585,1636,1697,1768,1849,1940,1941,1952,1973,2005",
+    "name": "Analog of A121805, but starting with 2.",
+    "comment": [
+        "It appears that this sequence and A121805 have no terms in common. Furthermore, this sequence exists for at least 1551000000 terms. - _Jacques ALARDET_, Jul 22 2008",
+        "The last term of the sequence is a(194697747222394) = 9999999999999918. - _Giovanni Resta_, Nov 30 2019"
+    ],
+    "reference": [
+        "E. Angelini, \"Jeux de suites\", in Dossier Pour La Science, pp. 32-35, Volume 59 (Jeux math'), April/June 2008, Paris."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A139284/b139284.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Carlos Rivera, <a href=\"https://www.primepuzzles.net/puzzles/puzz_980.htm\">Puzzle 980. The \"Commas\" sequence</a>, The Prime Puzzles and Problems Connection."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k, t, y; if n=1 then 2 else k:= a(n-1); for y from 0 to 9 do t:= k +10* irem (k, 10) +y; if convert (t, base, 10)[ -1]=y then return t fi od; NULL fi end: seq(a(n), n=1..80); # _Alois P. Heinz_, Aug 13 2009"
+    ],
+    "mathematica": [
+        "a[1] = 2; a[n_] := a[n] = For[x=Mod[a[n-1], 10]; y=0, y <= 9, y++, an = a[n-1] + 10*x + y; If[y == IntegerDigits[an][[1]], Return[an]]]; Array[a, 80] (* _Jean-Fran\u00e7ois Alcover_, Nov 25 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "def agen(): # generator of terms",
+        "    an, y = 2, 1",
+        "    while y < 10:",
+        "        yield an",
+        "        an, y = an + 10*(an%10), 1",
+        "        while y < 10:",
+        "            if str(an+y)[0] == str(y):",
+        "                an += y",
+        "                break",
+        "            y += 1",
+        "print(list(islice(agen(), 47))) # _Michael S. Branicky_, Apr 08 2022"
+    ],
+    "xref": [
+        "Cf. A121805."
+    ],
+    "keyword": "nonn,base,fini",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_ (based on Angelini's article), Jun 08 2008",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Aug 13 2009"
+    ],
+    "references": 5,
+    "revision": 31,
+    "time": "2022-04-08T10:40:13-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

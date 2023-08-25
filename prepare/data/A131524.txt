@@ -1,0 +1,58 @@
+{
+    "number": 131524,
+    "data": "0,0,1,1,2,2,4,4,7,7,12,12,20,20,33,33,54,54,88,88,143,143,232,232,376,376,609,609,986,986,1596,1596,2583,2583,4180,4180,6764,6764,10945,10945,17710,17710,28656,28656,46367,46367,75024,75024,121392,121392",
+    "name": "Number of possible palindromic rows (or columns) in an n X n crossword puzzle.",
+    "comment": [
+        "To be an acceptable row, there must be at least one run of white squares and all runs of white squares must be of length at least three. Palindromic rows are of interest since if n is odd, the middle row of an n x n crossword puzzle must be palindromic if the puzzle is to have to usual rotational symmetry. Rather than use the explicit formula above, it is perhaps easier to observe that for all m, a(2m) = a(2m-1) and thus both the subsequences of odd-numbered terms and even-numbered terms are Fibonacci numbers - 1. (see A000071)"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A131524/b131524.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1, 1, -1, 1, -1)."
+    ],
+    "formula": [
+        "a(n+4) = a(n+2) + a(n) + 1, a(1) = a(2) = 0, a(3) = a(4) = 1.",
+        "a(n) = (2^(-n/2) (-5*2^(n/2)*(-1 + sqrt(5))^(3/2) + sqrt(5)*(1 + sqrt(5))^(n/2) (-sqrt(2)*(-1 + (-1)^n) + (1 + (-1)^n) sqrt(-1 + sqrt(5))) + 2 (-1 + sqrt(5))^(n/2) (sqrt(-55 + 25 sqrt(5)) cos(n Pi)/2 + sqrt(2) (-5 + 2 sqrt(5)) sin(n Pi)/2))))/(5 (-1 + sqrt(5))^(3/2)).",
+        "O.g.f.: x^3/((1-x)*(1-x^2-x^4)). - _R. J. Mathar_, Dec 05 2007",
+        "a(2*n) = Fibonacci(n+1) - 1, a(2*n+1) = Fibonacci(n+2) - 1. - _G. C. Greubel_, Jul 13 2019"
+    ],
+    "example": [
+        "a(9) = 7 because the palindromic rows, using 0's for white squares and 1's for black, are: 000000000, 100000001, 110000011, 111000111, 000010000, 000111000, 100010001"
+    ],
+    "mathematica": [
+        "With[{F=Fibonacci}, Table[If[Mod[n,2]==0, F[(n+2)/2] -1, F[(n+3)/2] -1], {n, 60}]] (* _G. C. Greubel_, Jul 13 2019 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (transpose)",
+        "a131524 n = a131524_list !! (n-1)",
+        "a131524_list = concat $ transpose [tail a000071_list, tail a000071_list]",
+        "-- _Reinhard Zumkeller_, May 23 2013",
+        "(PARI) vector(60, n, f=fibonacci; if(n%2==0, f((n+2)/2)-1, f((n+3)/2)-1)) \\\\ _G. C. Greubel_, Jul 13 2019",
+        "(Magma) F:=Fibonacci; [(n mod 2) eq 0 select F(floor((n+2)/2))-1 else F(Floor((n+3)/2))-1: n in [1..60]]; // _G. C. Greubel_, Jul 13 2019",
+        "(Sage)",
+        "def a(n):",
+        "    if (n%2==0): return fibonacci((n+2)/2) -1",
+        "    else: return fibonacci((n+3)/2) -1",
+        "[a(n) for n in (1..60)] # _G. C. Greubel_, Jul 13 2019",
+        "(GAP)",
+        "a:= function(n)",
+        "    if n mod 2=0 then return Fibonacci(Int((n+2)/2)) -1;",
+        "    else return Fibonacci(Int((n+3)/2)) -1;",
+        "    fi;",
+        "  end;",
+        "List([1..60], n-> a(n) ); # _G. C. Greubel_, Jul 13 2019"
+    ],
+    "xref": [
+        "Cf. A000045, A000071, A130578."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "Marc Brodie (mbrodie(AT)wju.edu), Aug 24 2007",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Aug 28 2007"
+    ],
+    "references": 7,
+    "revision": 18,
+    "time": "2022-09-08T08:45:31-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

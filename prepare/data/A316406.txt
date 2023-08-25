@@ -1,0 +1,30 @@
+{
+    "number": 316406,
+    "data": "1,3,10,33,98,291,798,2200,5804,15275,39014,99214,247065,612090,1492837,3622213,8682565,20711303,48923317,115048586,268374750,623503251,1438753371,3307821910,7560955644,17225642730,39047321794,88249150462,198572820286,445610719629",
+    "name": "Number of multisets of exactly five nonempty binary words with a total of n letters such that no word has a majority of 0's.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A316406/b316406.txt\">Table of n, a(n) for n = 5..1000</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n y^5] 1/Product_{j>=1} (1-y*x^j)^A027306(j)."
+    ],
+    "maple": [
+        "g:= n-> 2^(n-1)+`if`(n::odd, 0, binomial(n, n/2)/2):",
+        "b:= proc(n, i) option remember; series(`if`(n=0 or i=1, x^n, add(",
+        "       binomial(g(i)+j-1, j)*b(n-i*j, i-1)*x^j, j=0..n/i)), x, 6)",
+        "    end:",
+        "a:= n-> coeff(b(n$2), x, 5):",
+        "seq(a(n), n=5..34);"
+    ],
+    "xref": [
+        "Column k=5 of A292506.",
+        "Cf. A027306, A292549."
+    ],
+    "keyword": "nonn",
+    "offset": "5,2",
+    "author": "_Alois P. Heinz_, Jul 02 2018",
+    "references": 2,
+    "revision": 9,
+    "time": "2018-07-02T16:30:32-04:00",
+    "created": "2018-07-02T07:32:24-04:00"
+}

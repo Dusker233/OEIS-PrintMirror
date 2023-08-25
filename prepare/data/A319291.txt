@@ -1,0 +1,44 @@
+{
+    "number": 319291,
+    "data": "1,2,12,107,1299,20764,412957,9817743",
+    "name": "Number of series-reduced locally disjoint rooted trees with n leaves spanning an initial interval of positive integers.",
+    "example": [
+        "The a(3) = 12 series-reduced locally disjoint rooted trees:",
+        "  (1(11))",
+        "   (111)",
+        "  (1(22))",
+        "  (2(12))",
+        "   (122)",
+        "  (1(12))",
+        "  (2(11))",
+        "   (112)",
+        "  (1(23))",
+        "  (2(13))",
+        "  (3(12))",
+        "   (123)",
+        "The trees counted by A316651(4) but not by a(4):",
+        "  ((11)(12))",
+        "  ((12)(13))",
+        "  ((12)(22))",
+        "  ((12)(23))",
+        "  ((13)(23))"
+    ],
+    "mathematica": [
+        "disjointQ[u_]:=Apply[And,Outer[#1==#2||Intersection[#1,#2]=={}&,u,u,1],{0,1}];",
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "gro[m_]:=gro[m]=If[Length[m]==1,{m},Select[Union[Sort/@Join@@(Tuples[gro/@#]&/@Select[mps[m],Length[#]>1&])],disjointQ]];",
+        "allnorm[n_Integer]:=Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1];",
+        "Table[Sum[Length[gro[m]],{m,allnorm[n]}],{n,5}]"
+    ],
+    "xref": [
+        "Cf. A000081, A007562, A301700, A316473, A316475, A316495, A316651, A316694, A316695, A316696, A316697, A319286."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Sep 16 2018",
+    "references": 0,
+    "revision": 5,
+    "time": "2018-09-17T08:34:47-04:00",
+    "created": "2018-09-17T08:34:47-04:00"
+}

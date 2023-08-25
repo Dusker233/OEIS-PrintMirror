@@ -1,0 +1,39 @@
+{
+    "number": 322296,
+    "data": "1,4,48,888,22120,685368,25344480,1087931184,53138966904,2909014993080,176372774697856,11729862804913680,848948339328178128,66420006805308507568,5585680154203107163200,502437191145813112268640,48134705092961286591532440",
+    "name": "Number of permutations of [2n+1] with exactly n rising or falling successions.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A322296/b322296.txt\">Table of n, a(n) for n = 0..347</a>"
+    ],
+    "formula": [
+        "a(n) = A001100(2n+1,n)."
+    ],
+    "maple": [
+        "S:= proc(n) option remember; `if`(n<4, [1, 1, 2*t, 4*t+2*t^2]",
+        "       [n+1], expand((n+1-t)*S(n-1) -(1-t)*(n-2+3*t)*S(n-2)",
+        "       -(1-t)^2*(n-5+t)*S(n-3) +(1-t)^3*(n-3)*S(n-4)))",
+        "    end:",
+        "a:= n-> coeff(S(2*n+1), t, n):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "S[n_] := S[n] = If[n < 4, {1, 1, 2*t, 4*t + 2*t^2}[[n + 1]], Expand[",
+        "               (n + 1 - t)*S[n - 1] -",
+        "     (1 - t)*(n - 2 + 3*t)*S[n - 2] -",
+        "     (1 - t)^2*(n - 5 + t)*S[n - 3] +",
+        "         (1 - t)^3*(n - 3)*S[n - 4]]];",
+        "a[n_] := Coefficient[S[2*n + 1], t, n];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Apr 21 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Bisection (odd part) of A322294.",
+        "Cf. A001100."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Dec 02 2018",
+    "references": 2,
+    "revision": 12,
+    "time": "2022-04-21T05:22:25-04:00",
+    "created": "2018-12-02T08:46:54-05:00"
+}

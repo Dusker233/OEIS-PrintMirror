@@ -1,0 +1,52 @@
+{
+    "number": 326517,
+    "data": "1,1,2,12,28,140,956,3520,17792,111600,1144400,4884064,34907936,214869920,1881044032,25687617152,139175009920,1098825972608,8770328141888,74286112885504,784394159958848,15114871659653952,92392468773724544,889380453354852416,7652770202041529856",
+    "name": "Number of normal multiset partitions of weight n where each part has a different size.",
+    "comment": [
+        "A multiset partition is normal if it covers an initial interval of positive integers."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A326517/b326517.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Gus Wiseman, <a href=\"/A038041/a038041.txt\">Sequences counting and ranking multiset partitions whose part lengths, sums, or averages are constant or strict.</a>"
+    ],
+    "example": [
+        "The a(0) = 1 through a(3) = 12 normal multiset partitions:",
+        "  {}  {{1}}  {{1,1}}  {{1,1,1}}",
+        "             {{1,2}}  {{1,1,2}}",
+        "                      {{1,2,2}}",
+        "                      {{1,2,3}}",
+        "                      {{1},{1,1}}",
+        "                      {{1},{1,2}}",
+        "                      {{1},{2,2}}",
+        "                      {{1},{2,3}}",
+        "                      {{2},{1,1}}",
+        "                      {{2},{1,2}}",
+        "                      {{2},{1,3}}",
+        "                      {{3},{1,2}}"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "Table[Length[Select[Join@@mps/@allnorm[n],UnsameQ@@Length/@#&]],{n,0,6}]"
+    ],
+    "program": [
+        "(PARI)",
+        "R(n, k)={Vec(prod(j=1, n, 1 + binomial(k+j-1, j)*x^j + O(x*x^n)))}",
+        "seq(n)={sum(k=0, n, R(n, k)*sum(r=k, n, binomial(r, k)*(-1)^(r-k)))} \\\\ _Andrew Howroyd_, Feb 07 2020"
+    ],
+    "xref": [
+        "Row sums of A332253.",
+        "Cf. A007837, A038041, A255906, A317583, A326026, A326514, A326518, A326519, A326520, A326521, A326533."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jul 12 2019",
+    "ext": [
+        "Terms a(8) and beyond from _Andrew Howroyd_, Feb 07 2020"
+    ],
+    "references": 12,
+    "revision": 11,
+    "time": "2020-02-08T20:42:02-05:00",
+    "created": "2019-07-12T20:20:11-04:00"
+}

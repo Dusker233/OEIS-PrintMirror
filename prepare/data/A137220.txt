@@ -1,0 +1,41 @@
+{
+    "number": 137220,
+    "data": "1,4,75,2712,116681,5366384,256461703,12582521536,629390010177,31955248465164,1641724961412515,85159811886281576,4452782349821587705,234393562420377364008,12409423916987553634575,660253088667255226947072",
+    "name": "a(n) = (A126086(n) + 3*A001850(n) + 2)/6.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A137220/b137220.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = -Sum_{m>=0} binomial(-binomial(m,n),3)/2^(m+1).",
+        "a(n) = A137219(n) + A001850(n). - _R. J. Mathar_, Apr 01 2008",
+        "a(n) = Sum_{j=0..3*n} binomial(binomial(j,n)+2, 3) * (Sum_{i=j..3*n} (-1)^(i-j)*binomial(i,j)). - _Andrew Howroyd_, Feb 09 2020"
+    ],
+    "maple": [
+        "A126086 := proc(n) local x,y,z ; coeftayl(coeftayl(coeftayl(1/(1-x-y-z-x*y-x*z-y*z-x*y*z),z=0,n),y=0,n),x=0,n) ; end: A001850 := proc(n) local k ; add(binomial(n,k)*binomial(n+k,k),k=0..n) ; end: A137220 := proc(n) (A126086(n)+3*A001850(n)+2)/6 ; end: seq(A137220(n),n=0..30) ; # _R. J. Mathar_, Apr 01 2008"
+    ],
+    "mathematica": [
+        "T[n_, k_] := With[{m = n k}, Sum[Binomial[Binomial[j, n] + k - 1, k] Sum[ (-1)^(i - j) Binomial[i, j], {i, j, m}], {j, 0, m}]];",
+        "Table[T[n, 3], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Apr 10 2020, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI) a(n) = {sum(j=0, 3*n, binomial(binomial(j,n)+2, 3) * sum(i=j, 3*n, (-1)^(i-j)*binomial(i,j)))} \\\\ _Andrew Howroyd_, Feb 09 2020",
+        "(Sage)",
+        "@CachedFunction",
+        "def A137220(n): return round( -sum( binomial(-binomial(j, n), 3)/2^(j+1) for j in (0..500) ) )",
+        "[A137220(n) for n in (0..30)] # _G. C. Greubel_, Jan 05 2022"
+    ],
+    "xref": [
+        "Column k=3 of A330942.",
+        "Cf. A047665, A137219."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Vladeta Jovovic_, Mar 06 2008, Mar 16 2008",
+    "ext": [
+        "More terms from _R. J. Mathar_, Apr 01 2008"
+    ],
+    "references": 3,
+    "revision": 20,
+    "time": "2022-01-06T02:30:53-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

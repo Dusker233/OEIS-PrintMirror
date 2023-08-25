@@ -1,0 +1,45 @@
+{
+    "number": 173688,
+    "data": "10,11,12,13,14,15,19,20,21,30,31,40,41,50,51,90,91,100,101,110,111,123,132,133,134,135,138,143,144,147,153,156,158,165,168,169,174,177,183,185,186,196,203,213,230,231,302,303,304,305,308,312,313,314,315,318,320",
+    "name": "Numbers m such that the sum of square of factorial of decimal digits is prime.",
+    "comment": [
+        "Let the decimal expansion of m = d(0)d(1)...d(p). Numbers such that Sum_{k=0..p} (d(k)!)^2 is prime."
+    ],
+    "link": [
+        "Jinyuan Wang, <a href=\"/A173688/b173688.txt\">Table of n, a(n) for n = 1..6821</a>"
+    ],
+    "example": [
+        "a(5) = 14 is in the sequence because (1!)^2 + (4!)^2 = 1 + 24^2 = 577 and 577 is prime."
+    ],
+    "maple": [
+        "with(numtheory):for n from 1 to 500 do:l:=length(n):n0:=n:s:=0:for m from 1",
+        "  to l do:q:=n0:u:=irem(q,10):v:=iquo(q,10):n0:=v :s:=s+(u!)^2:od: if type(s,prime)=true",
+        "  then printf(`%d, `,n):else fi:od:"
+    ],
+    "mathematica": [
+        "Select[Range[400],PrimeQ[Total[(IntegerDigits[#]!)^2]]&]  (* _Harvey P. Dale_, Mar 23 2011 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, combinations_with_replacement",
+        "from math import factorial",
+        "from sympy import isprime",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def A173688_gen(): # generator of terms",
+        "    for l in count(0):",
+        "        for i in range(1,10):",
+        "            fi = factorial(i)**2",
+        "            yield from sorted(int(str(i)+''.join(map(str,k))) for j in combinations_with_replacement(range(10), l) for k in multiset_permutations(j) if isprime(fi+sum(map(lambda n:factorial(n)**2,j))))",
+        "A173688_list = list(islice(A173688_gen(),50)) # _Chai Wah Wu_, Feb 23 2023"
+    ],
+    "xref": [
+        "Cf. A165451, A173687, A173689."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Nov 25 2010",
+    "references": 2,
+    "revision": 17,
+    "time": "2023-02-23T12:00:31-05:00",
+    "created": "2010-11-12T14:22:55-05:00"
+}

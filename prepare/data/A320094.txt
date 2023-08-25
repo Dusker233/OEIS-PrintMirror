@@ -1,0 +1,35 @@
+{
+    "number": 320094,
+    "data": "1,10,109,1099,11098,110989,1110988,11109988,111109888,1111099879,11111099878,111110998888,1111110998887,11111109998878,111111109988779,1111111099988779,11111111099988778,111111110999888878,1111111110999888877,11111111109999887887",
+    "name": "Number of primitive (=aperiodic) 10-ary words with length less than or equal to n which are earlier in lexicographic order than any other word derived by cyclic shifts of the alphabet.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A320094/b320094.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=1..n} Sum_{d|j} 10^(d-1) * mu(j/d).",
+        "a(n) = A143327(n,10).",
+        "a(n) = Sum_{j=1..n} A143325(j,10).",
+        "a(n) = A143326(n,10) / 10.",
+        "G.f.: (1/(1 - x)) * Sum_{k>=1} mu(k) * x^k / (1 - 10*x^k). - _Ilya Gutkovskiy_, Dec 11 2020"
+    ],
+    "maple": [
+        "b:= n-> add(`if`(d=n, 10^(n-1), -b(d)), d=numtheory[divisors](n)):",
+        "a:= proc(n) option remember; b(n)+`if`(n<2, 0, a(n-1)) end:",
+        "seq(a(n), n=1..30);"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(j=1, n, sumdiv(j, d, 10^(d-1)*moebius(j/d))); \\\\ _Michel Marcus_, Dec 11 2020"
+    ],
+    "xref": [
+        "Column k=10 of A143327.",
+        "Partial sums of A320075.",
+        "Cf. A008683, A143325, A143326."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Oct 05 2018",
+    "references": 3,
+    "revision": 9,
+    "time": "2020-12-11T10:56:29-05:00",
+    "created": "2018-10-05T17:52:56-04:00"
+}

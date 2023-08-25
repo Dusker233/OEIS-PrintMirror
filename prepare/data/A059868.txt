@@ -1,0 +1,42 @@
+{
+    "number": 59868,
+    "data": "3,9,11,12,24",
+    "name": "There exist no palindromic pentagonal numbers of length a(n).",
+    "link": [
+        "Patrick De Geest, <a href=\"http://www.worldofnumbers.com/penta.htm\">Palindromic pentagonals</a>"
+    ],
+    "mathematica": [
+        "A002069 = {0, 1, 5, 22, 1001, 2882, 15251, 720027, 7081807, 7451547, 26811862, 54177145, 1050660501, 1085885801, 1528888251, 2911771192, 2376574756732, 5792526252975, 5875432345785, 10810300301801, 264571020175462, 5292834004382925, 10808388588380801, 15017579397571051, 76318361016381367, 150621384483126051, 735960334433069537, 1003806742476083001, 1087959810189597801, 2716280733370826172};",
+        "A059868[n_] := Length[Select[A002069, IntegerLength[#] == n  || (n == 1 && # == 0) &]];",
+        "Select[Range[18], A059868[#] == 0 &] (* _Robert Price_, Apr 26 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def ispal(n): s = str(n); return s == s[::-1]",
+        "def penpals(limit):",
+        "  for k in range(limit+1):",
+        "    if ispal(k*(3*k-1)//2): yield k*(3*k-1)//2",
+        "def aupto(limit):",
+        "  lengths = set(range(1, limit+1))",
+        "  for p in penpals(10**limit):",
+        "    lp, minlen = len(str(p)), min(lengths)",
+        "    for li in list(lengths):",
+        "      if li < lp: print(li, \"in A059868\"); lengths.discard(li)",
+        "    if lp in lengths: lengths.discard(lp); print(\"... discarding\", lp)",
+        "    if len(lengths) == 0: return",
+        "aupto(15) # _Michael S. Branicky_, Mar 09 2021"
+    ],
+    "xref": [
+        "Cf. A034822, A059869, A059870, A034307, A000326, A028386, A002069."
+    ],
+    "keyword": "nonn,base,hard",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Feb 15 2000",
+    "ext": [
+        "Name clarified by _David A. Corneth_, Apr 26 2019"
+    ],
+    "references": 7,
+    "revision": 24,
+    "time": "2021-03-11T06:11:05-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

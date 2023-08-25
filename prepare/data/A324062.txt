@@ -1,0 +1,53 @@
+{
+    "number": 324062,
+    "data": "0,0,1,2,6,16,60,240,840,3584,16800,96000,475200,3041280,19219200,153753600,864864000,6560153600,47048601600,439934976000,3192583680000,31434670080000,280947363840000,3296449069056000,27139515346944000,308787374614118400",
+    "name": "Number of defective (binary) heaps on n elements where one ancestor-successor pair does not have the correct order.",
+    "comment": [
+        "Or number of permutations p of [n] having exactly one pair (i,j) in {1,...,n} X {1,...,floor(log_2(i))} such that p(i) > p(floor(i/2^j))."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A324062/b324062.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Heap.html\">Heap</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Binary_heap\">Binary heap</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation\">Permutation</a>"
+    ],
+    "example": [
+        "a(4) = 6: 3241, 3412, 3421, 4123, 4132, 4213.",
+        "a(5) = 16: 43512, 43521, 45123, 45132, 45213, 45231, 45312, 45321, 52314, 52341, 52413, 52431, 53124, 53142, 53214, 53241.",
+        "(The examples use max-heaps.)"
+    ],
+    "maple": [
+        "b:= proc(u, o) option remember; local n, g, l; n:= u+o;",
+        "      if n=0 then 1",
+        "    else g:= 2^ilog2(n); l:= min(g-1, n-g/2); expand(",
+        "         add(x^(n-j)*add(binomial(j-1, i)*binomial(n-j, l-i)*",
+        "         b(i, l-i)*b(j-1-i, n-l-j+i), i=0..min(j-1, l)), j=1..u)+",
+        "         add(x^(j-1)*add(binomial(j-1, i)*binomial(n-j, l-i)*",
+        "         b(l-i, i)*b(n-l-j+i, j-1-i), i=0..min(j-1, l)), j=1..o))",
+        "      fi",
+        "    end:",
+        "a:= n-> coeff(b(n, 0), x, 1):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[u_, o_] := b[u, o] = Module[{n, g, l}, n = u + o; If[n == 0, 1,",
+        "     g = 2^(Length[IntegerDigits[n, 2]]-1); l = Min[g-1, n-g/2]; Expand[",
+        "     Sum[ x^(n - j)*Sum[Binomial[j - 1, i]*Binomial[n - j, l - i]*",
+        "     b[i, l-i]*b[j-1-i, n-l-j+i], {i, 0, Min[j - 1, l]}], {j, 1, u}] +",
+        "     Sum[x^(j-1)*Sum[Binomial[j-1, i]*Binomial[n - j, l - i]*",
+        "     b[l-i, i]*b[n-l-j+i, j-1-i], {i, 0, Min[j-1, l]}], {j, 1, o}]]]];",
+        "a[n_] := Coefficient[b[n, 0], x, 1];",
+        "a /@ Range[0, 25] (* _Jean-Fran\u00e7ois Alcover_, Apr 22 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=1 of A306393.",
+        "Cf. A056971."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Feb 13 2019",
+    "references": 2,
+    "revision": 18,
+    "time": "2021-04-22T08:41:47-04:00",
+    "created": "2019-02-13T18:54:53-05:00"
+}

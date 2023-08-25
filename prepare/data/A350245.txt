@@ -1,0 +1,58 @@
+{
+    "number": 350245,
+    "data": "75,363,867,1183,1587,1805,2523,4205,5043,6627,8427,10443,11767,15123,17405,20339,20667,23763,26011,30603,31205,34347,38307,39605,48223,51483,56307,59405,65863,66603,76313,83667,89787,96123,96605,109443,111005,115351,116427",
+    "name": "Numbers p^2*q, p > q odd primes such that q divides p+1.",
+    "comment": [
+        "For these terms m, there are precisely 3 groups of order m, so this is a subsequence of A055561.",
+        "The 3 groups are C_{p^2*q}, (C_p X C_p) X C_q and (C_p X C_p) : C_q, where C means cyclic groups of the stated order, the symbols X and : mean direct and semidirect products respectively."
+    ],
+    "reference": [
+        "Pascal Ortiz, Exercices d'Alg\u00e8bre, Collection CAPES / Agr\u00e9gation, Ellipses, probl\u00e8me 1.35, pp. 70-74, 2004."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A350245/b350245.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "75 = 5^2 * 3, 5 and 3 are odd and 3 divides 5+1 = 6, hence 75 is a term.",
+        "1183 = 13^2 * 7, 13 and 7 are odd and 7 divides 13+1 = 14, hence 1183 is another term."
+    ],
+    "maple": [
+        "N:= 10^6: # for terms <= N",
+        "P:= select(isprime, [seq(i,i=3..floor(sqrt(N/3)),2)]):",
+        "g:= proc(p) local Q;",
+        "      Q:= numtheory:-factorset(p+1) minus {2};",
+        "      select(`<=`, map(q -> p^2*q, Q), N);",
+        "end proc:",
+        "sort(convert(`union`(op(map(g,P))),list)); # _Robert Israel_, Dec 28 2021"
+    ],
+    "mathematica": [
+        "q[n_] := Module[{f = FactorInteger[n], p, e}, p = f[[;; , 1]]; e = f[[;; , 2]]; e == {1, 2} && Divisible[p[[2]] + 1, p[[1]]]]; Select[Range[1, 2*10^5, 2], q] (* _Amiram Eldar_, Dec 21 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import integer_nthroot, primerange",
+        "def aupto(limit):",
+        "    aset, maxp = set(), integer_nthroot(limit**2, 3)[0]",
+        "    for p in primerange(3, maxp+1):",
+        "        pp = p*p",
+        "        for q in primerange(3, min(p-1, limit//pp)+1):",
+        "            if (p+1)%q == 0:",
+        "                aset.add(pp*q)",
+        "    return sorted(aset)",
+        "print(aupto(120000)) # _Michael S. Branicky_, Dec 21 2021"
+    ],
+    "xref": [
+        "Intersection of A054753 and A055561.",
+        "Other subsequences of A054753 linked with order of groups: A079704, A143928, A349495, A350115."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Dec 21 2021",
+    "ext": [
+        "More terms from _Amiram Eldar_, Dec 21 2021"
+    ],
+    "references": 8,
+    "revision": 21,
+    "time": "2021-12-28T00:57:16-05:00",
+    "created": "2021-12-25T11:40:01-05:00"
+}

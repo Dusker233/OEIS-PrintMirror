@@ -1,0 +1,26 @@
+{
+    "number": 344065,
+    "data": "1,1,6,42,252,1728,10584,71280,435456,2939328,17962560,119532672,739031040,4867527168,30051689472,198147658752,1221537687552,7984437608448,49643697954816,321998350270464,1997815999463424,12977575759282176,80455233450737664,519208351807832064",
+    "name": "Expansion of Product_{k>=1} (1 + 6^(k-1)*x^k).",
+    "formula": [
+        "a(n) = Sum_{k=0..A003056(n)} q(n,k) * 6^(n-k), where q(n,k) is the number of partitions of n into k distinct parts.",
+        "a(n) ~ (-polylog(2, -1/6))^(1/4) * 6^n * exp(2*sqrt(-polylog(2, -1/6)*n)) / (2*sqrt(7*Pi/6)*n^(3/4)). - _Vaclav Kotesovec_, May 09 2021"
+    ],
+    "mathematica": [
+        "nmax = 23; CoefficientList[Series[Product[(1 + 6^(k - 1) x^k), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "Table[Sum[Length[Select[IntegerPartitions[n, {k}], UnsameQ @@ # &]] 6^(n - k), {k, 0, Floor[(Sqrt[8 n + 1] - 1)/2]}], {n, 0, 23}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={Vec(prod(k=1, n, 1 + 6^(k-1)*x^k + O(x*x^n)))} \\\\ _Andrew Howroyd_, May 08 2021"
+    ],
+    "xref": [
+        "Cf. A003056, A008289, A304961, A338675, A340103, A344062, A344063, A344064, A344066, A344067, A344068."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, May 08 2021",
+    "references": 6,
+    "revision": 9,
+    "time": "2021-05-09T03:33:16-04:00",
+    "created": "2021-05-08T23:04:15-04:00"
+}

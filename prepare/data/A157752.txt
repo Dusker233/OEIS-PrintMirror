@@ -1,0 +1,48 @@
+{
+    "number": 157752,
+    "data": "2,8,68,1118,2273,197468,1728998,1728998,447914738,10152454583,1313795640428,97783391392958,5726413266646343,38433316595821418,15103232990013860963,943894249589930135768,52858423703753671390658,932521283899305953765183,8790842834979573009644273",
+    "name": "Smallest positive integer m such that m == prime(i) (mod prime(i+1)) for all 1<=i<=n.",
+    "comment": [
+        "Suggested by Chinese Remainder Theorem.",
+        "a(n) is prime for n = 1, 5, 10, 23, 30."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A157752/b157752.txt\">Table of n, a(n) for n = 1..349</a>"
+    ],
+    "maple": [
+        "A157752 := proc(n)",
+        "    local lrem,leval,i ;",
+        "    lrem := [] ;",
+        "    leval := [] ;",
+        "    for i from 1 to n do",
+        "        lrem := [op(lrem),ithprime(i+1)] ;",
+        "        leval := [op(leval),ithprime(i)] ;",
+        "    end do:",
+        "    chrem(leval,lrem) ;",
+        "end proc: # _R. J. Mathar_, Apr 14 2016"
+    ],
+    "mathematica": [
+        "a[n_] := ChineseRemainder[Prime[Range[n]], Prime[Range[2, n + 1]]] a[ # ] & /@ Range[30]",
+        "Table[With[{pr=Prime[Range[n]]},ChineseRemainder[Most[pr],Rest[pr]]],{n,2,30}] (* _Harvey P. Dale_, Jun 11 2017 *)"
+    ],
+    "program": [
+        "(PARI) x=Mod(1, 1); for(i=1, 20, x=chinese(x, Mod(prime(i), prime(i+1))); print1(component(x, 2), \", \"))",
+        "(Python)",
+        "from sympy.ntheory.modular import crt",
+        "from sympy import prime",
+        "def A157752(n): return int(crt((s:=[prime(i+1) for i in range(1,n)])+[prime(n+1)],[2]+s)[0]) # _Chai Wah Wu_, May 02 2023"
+    ],
+    "xref": [
+        "Cf. A053664, A071057, A121934."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, Mar 05 2009",
+    "ext": [
+        "Edited by _Charles R Greathouse IV_, Oct 28 2009"
+    ],
+    "references": 4,
+    "revision": 20,
+    "time": "2023-05-04T10:53:54-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

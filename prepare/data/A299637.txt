@@ -1,0 +1,60 @@
+{
+    "number": 299637,
+    "data": "2,6,11,15,19,23,28,32,36,40,44,49,53,57,61,66,70,74,79,83,87,91,96,100,104,108,112,117,121,125,129,134,138,142,147,151,155,159,164,168,172,176,181,185,189,193,197,202,206,210,215,219,223,227,232,236,240",
+    "name": "Solution (b(n)) of the system of 5 complementary equations in Comments.",
+    "comment": [
+        "Define sequences a(n), b(n), c(n), d(n) recursively, starting with a(0) = 1, b(0) = 2, c(0) = 3:",
+        "a(n) = least new;",
+        "b(n) = least new;",
+        "c(n) = least new;",
+        "d(n) = least new;",
+        "e(n) = a(n) + b(n) + c(n) + d(n);",
+        "where \"least new k\" means the least positive integer not yet placed.",
+        "***",
+        "Conjecture: for all n >= 0,",
+        "0 <= 17n - 11 - 4 a(n) <= 4",
+        "0 <= 17n - 7 - 4 b(n) <= 4",
+        "0 <= 17n - 3 - 4 c(n) <= 3",
+        "0 <= 17n + 1 - 4 d(n) <= 3",
+        "0 <= 17n - 5 - e(n) <= 3",
+        "***",
+        "The sequences a,b,c,d,e partition the positive integers.  The sequence e can be called the \"anti-tetranacci sequence\"; see A075326 (anti-Fibonacci numbers) and A265389 (anti-tribonacci numbers)."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A299637/b299637.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "n:   0  1   2    3   4   5   6   7   8   9",
+        "a:   1  5   9   14  18  22  27  31  35  39",
+        "b:   2  6   11  15  19  23  28  32  36  40",
+        "c:   3  7   12  16  20  24  29  33  37  41",
+        "d:   4  8   13  17  21  25  30  34  38  42",
+        "e:  10  26  45  62  78  94 114 130 146 162"
+    ],
+    "mathematica": [
+        "z = 200;",
+        "mex[list_, start_] := (NestWhile[# + 1 &, start, MemberQ[list, #] &]);",
+        "a = {1}; b = {2}; c = {3}; d = {4}; e = {}; AppendTo[e,",
+        "Last[a] + Last[b] + Last[c] + Last[d]];",
+        "Do[{AppendTo[a, mex[Flatten[{a, b, c, d, e}], 1]],",
+        "   AppendTo[b, mex[Flatten[{a, b, c, d, e}], 1]],",
+        "   AppendTo[c, mex[Flatten[{a, b, c, d, e}], 1]],",
+        "   AppendTo[d, mex[Flatten[{a, b, c, d, e}], 1]],",
+        "   AppendTo[e, Last[a] + Last[b] + Last[c] + Last[d]]}, {z}];",
+        "Take[a, 100]  (* A299405 *)",
+        "Take[b, 100]  (* A299637 *)",
+        "Take[c, 100]  (* A299638 *)",
+        "Take[d, 100]  (* A299641 *)",
+        "Take[e, 100]  (* A299409 *)"
+    ],
+    "xref": [
+        "Cf. A036554, A299634, A299405, A299638,  A299641, A299409."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "_Clark Kimberling_, Apr 22 2018",
+    "references": 5,
+    "revision": 10,
+    "time": "2018-05-01T03:00:28-04:00",
+    "created": "2018-04-23T21:11:16-04:00"
+}

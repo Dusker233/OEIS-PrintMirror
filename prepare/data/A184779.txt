@@ -1,0 +1,44 @@
+{
+    "number": 184779,
+    "data": "2,6,7,9,12,15,18,20,29,34,37,38,39,43,47,57,61,62,63,66,67,77,80,81,84,86,88,91,94,103,106,107,111,113,115,116,129,133,134,135,140,145,146,147,150,151,154,156,166,173,177,178,186,188,193,194,197,201,204,205,208",
+    "name": "Numbers m such that prime(m) is of the form 2k + floor(k*sqrt(2)); complement of A184776.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A184779/b184779.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "See A184774."
+    ],
+    "mathematica": [
+        "r=2^(1/2); s=r/(r-1);",
+        "a[n_]:=Floor [n*r];  (* A001951 *)",
+        "b[n_]:=Floor [n*s];  (* A001952 *)",
+        "Table[a[n],{n,1,120}]",
+        "t1={}; Do[If[PrimeQ[a[n]], AppendTo[t1,a[n]]], {n,1,600}]; t1",
+        "t2={}; Do[If[PrimeQ[a[n]], AppendTo[t2,n]], {n,1,600}]; t2",
+        "t3={}; Do[If[MemberQ[t1, Prime[n]], AppendTo[t3,n]],{n,1,300}]; t3",
+        "t4={}; Do[If[PrimeQ[b[n]], AppendTo[t4,b[n]]],{n,1,600}]; t4",
+        "t5={}; Do[If[PrimeQ[b[n]], AppendTo[t5,n]],{n,1,600}]; t5",
+        "t6={}; Do[If[MemberQ[t4, Prime[n]], AppendTo[t6,n]],{n,1,300}]; t6",
+        "(* the lists t1,t2,t3,t4,t5,t6 match the sequences",
+        "A184774, A184775, A184776 ,A184777, A184778, A184779 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from math import isqrt",
+        "from itertools import count, islice",
+        "from sympy import isprime, primepi",
+        "def A184779_gen(): # generator of terms",
+        "    return map(primepi,filter(isprime,((k<<1)+isqrt(k**2<<1) for k in count(1))))",
+        "A184779_list = list(islice(A184779_gen(),25)) # _Chai Wah Wu_, Jul 28 2022"
+    ],
+    "xref": [
+        "Cf. A184774, A184776."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jan 21 2011",
+    "references": 6,
+    "revision": 17,
+    "time": "2022-07-29T09:56:35-04:00",
+    "created": "2011-01-21T19:32:12-05:00"
+}

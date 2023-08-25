@@ -1,0 +1,40 @@
+{
+    "number": 340987,
+    "data": "1,2,10,59,362,2287,14719,95965,631714,4189334,27946335,187319827,1260570515,8511460908,57634550179,391232510284,2661483301282,18140003082945,123846214549072,846801764644618,5797865791444367,39745254613927264,272762265331208465",
+    "name": "Number of colored integer partitions of 2n such that all colors from an n-set are used.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A340987/b340987.txt\">Table of n, a(n) for n = 0..1183</a>"
+    ],
+    "formula": [
+        "a(n) = [x^(2n)] (-1 + Product_{j>0} 1/(1-x^j))^n.",
+        "a(n) = A060642(2*n,n).",
+        "a(n) = Sum_{i=0..n} (-1)^i * C(n,i) * A144064(2n,n-i).",
+        "a(n) ~ c * d^n / sqrt(n), where d = 7.0224714601856191637116674203375767768930294104680988528373522936595686998... and c = 0.306577097117652483059452115503859901867921865482563952948772592499558... - _Vaclav Kotesovec_, Feb 14 2021"
+    ],
+    "example": [
+        "a(1) = 2: 2a, 1a1a.",
+        "a(2) = 10: 3a1b, 3b1a, 2a2b, 2a1b1b, 2b1a1a, 2a1a1b, 2b1a1b, 1a1b1b1b, 1a1a1b1b, 1a1a1a1b."
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; `if`(k<2, combinat[numbpart](n+1),",
+        "      (q-> add(b(j, q)*b(n-j, k-q), j=0..n))(iquo(k, 2)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[n_, k_] := b[n, k] = If[k<2, PartitionsP[n+1], With[{q = Quotient[k, 2]}, Sum[b[j, q] b[n-j, k-q], {j, 0, n}]]];",
+        "a[n_] := b[n, n];",
+        "a /@ Range[0, 25] (* _Jean-Fran\u00e7ois Alcover_, Feb 04 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000041, A060642, A144064, A324595."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Feb 01 2021",
+    "references": 5,
+    "revision": 21,
+    "time": "2021-02-14T05:38:13-05:00",
+    "created": "2021-02-01T16:02:16-05:00"
+}

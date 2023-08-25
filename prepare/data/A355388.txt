@@ -1,0 +1,73 @@
+{
+    "number": 355388,
+    "data": "1,1,2,6,18,58,174,536,1656,4947,14800,43157,126572,364070,1039926,2938898,8223400,22846370,62930113,172177400,467002792,1259736804,3371190792,8973530491,23728305128,62421018163,163255839779,424842462529,1100006243934,2834558927244,7270915592897",
+    "name": "Number of composable pairs (y, v) of integer compositions of n, where a composition is regarded as an arrow from the number of parts to the number of distinct parts.",
+    "comment": [
+        "Being composable here means that the length of v equals the number of distinct parts in y."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A355388/b355388.txt\">Table of n, a(n) for n = 0..800</a> (first 201 terms from Andrew Howroyd)"
+    ],
+    "formula": [
+        "a(n) = Sum_{k>=1} binomial(n-1, k-1)*A235998(n, k) for n > 0. - _Andrew Howroyd_, Jan 01 2023"
+    ],
+    "example": [
+        "The a(0) = 1 through a(4) = 18 pairs:",
+        "  ()()  (1)(1)  (2)(2)   (3)(3)    (4)(4)",
+        "                (11)(2)  (21)(21)  (31)(31)",
+        "                         (21)(12)  (31)(13)",
+        "                         (12)(21)  (31)(22)",
+        "                         (12)(12)  (13)(31)",
+        "                         (111)(3)  (13)(13)",
+        "                                   (13)(22)",
+        "                                   (22)(4)",
+        "                                   (211)(31)",
+        "                                   (211)(13)",
+        "                                   (211)(22)",
+        "                                   (121)(31)",
+        "                                   (121)(13)",
+        "                                   (121)(22)",
+        "                                   (112)(31)",
+        "                                   (112)(13)",
+        "                                   (112)(22)",
+        "                                   (1111)(4)"
+    ],
+    "maple": [
+        "b:= proc(n, i, p) option remember; `if`(n=0, p!, `if`(i<1, 0,",
+        "      expand(add(b(n-i*j, i-1, p+j)/j!*`if`(j=0, 1, x), j=0..n/i))))",
+        "    end:",
+        "a:= n-> (p-> add(coeff(p, x, i)*binomial(n-1, i-1), i=0..degree(p)))(b(n$2, 0)):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Jan 01 2023"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Tuples[Join@@Permutations/@IntegerPartitions[n],2], Length[Union[#[[1]]]]==Length[#[[2]]]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI) a(n) = {if(n==0, 1, my(s=0); forpart(p=n, p=Vec(p); my(S=Set(p)); s += binomial(n-1, #S-1)*(#p)!/prod(i=1, #S, my(c=#select(t->t==S[i], p)); c! )); s)} \\\\ _Andrew Howroyd_, Jan 01 2023",
+        "(PARI) \\\\ for larger n.",
+        "a(n) = { local(Cache=Map());",
+        "  my(F(r,m,p,q) = my(key=[r,m,p,q], z); if(!mapisdefined(Cache, key, &z),",
+        "  z = if(m==0, if(r==0, p!*binomial(n-1, q-1)), self()(r, m-1, p, q) + sum(j=1, r\\m, self()(r-j*m, min(m-1, r-j*m), p+j, q+1)/j!));",
+        "  mapput(Cache, key, z) ); z);",
+        "  if(n==0, 1, F(n, n, 0, 0))",
+        "} \\\\ _Andrew Howroyd_, Jan 01 2023"
+    ],
+    "xref": [
+        "The case with containment is A032020.",
+        "The inhomogeneous version with containment is A355384, partitions A355383.",
+        "The version for partitions is A355385, with containment A000009.",
+        "A133494 counts compositions of each part of a composition, strict A336139.",
+        "A323583 counts splittings of partitions.",
+        "Cf. A001970, A022811, A063834, A070933, A316245, A319910, A355382."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jul 02 2022",
+    "ext": [
+        "Terms a(14) and beyond from _Andrew Howroyd_, Jan 01 2023"
+    ],
+    "references": 6,
+    "revision": 15,
+    "time": "2023-01-01T20:19:59-05:00",
+    "created": "2022-07-04T09:31:04-04:00"
+}

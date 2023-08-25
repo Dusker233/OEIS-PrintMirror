@@ -1,0 +1,32 @@
+{
+    "number": 339836,
+    "data": "1,1,3,10,47,296,2970,49604,1484277,81494452,8273126920,1552510549440,538647737513260,346163021846858368,413301431190875322768,920040760819708654610560,3832780109273882704828352620,29989833030101321999992097828464,442280129125813382230656891568680400",
+    "name": "Number of bicolored graphs on n unlabeled nodes such that every white node is adjacent to a black node.",
+    "comment": [
+        "The black nodes form a dominating set. For n > 0, a(n) is then the total number of indistinguishable dominating sets summed over distinct unlabeled graphs on n nodes."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A339836/b339836.txt\">Table of n, a(n) for n = 0..40</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/DominatingSet.html\">Dominating Set</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, gcd(v[i], v[j]))) + sum(i=1, #v, v[i]\\2)}",
+        "dom(u, v) = {prod(i=1, #u, 2^sum(j=1, #v, gcd(u[i], v[j]))-1)}",
+        "U(nb,nw)={my(s=0); forpart(u=nw, my(t=0); forpart(v=nb, t += permcount(v) * 2^edges(v) * dom(u,v)); s += t*permcount(u) * 2^edges(u)/nb!); s/nw!}",
+        "a(n)={sum(k=0, n, U(k, n-k))}"
+    ],
+    "xref": [
+        "A049312 counts bicolored graphs where adjacent nodes cannot have the same color.",
+        "A000666 counts bicolored graphs where adjacent nodes can have the same color.",
+        "Cf. A339832, A339834 (trees), A340021."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Andrew Howroyd_, Dec 19 2020",
+    "references": 4,
+    "revision": 8,
+    "time": "2021-01-10T02:13:56-05:00",
+    "created": "2020-12-20T16:47:18-05:00"
+}

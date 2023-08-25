@@ -1,0 +1,40 @@
+{
+    "number": 364468,
+    "data": "1,1,1,1,1,3,3,8,12,20,35,62,106,189,343,603,1130,2055,3860,7154,13562,25463,48607,92204,176646,337587,649151,1246819,2404519,4636389,8963497,17334800,33585928,65107935,126385919,245492221,477345359,928772649,1808662015,3524337599,6872457828,13409202675,26179870365",
+    "name": "Number of primitive n-bead necklaces (turning over is allowed) comprising elements of two flavors where complements and scalings are equivalent.",
+    "comment": [
+        "A complement necklace is one where the flavor of each element is inverted (\"010\" is equivalent to \"101\"). A scaled necklace is one where each element in the sequence is repeated by the same integer scalar (\"010\" is equivalent to \"001100\", \"000111000\", etc.)."
+    ],
+    "formula": [
+        "a(n) = A000046(n) - Sum_{k = nontrivial divisors of n} a(k). (nontrivial divisors, d: 1 < d < n.)"
+    ],
+    "example": [
+        "For a(4) = 1, there is one solution: \"1110\". The other primitive sequence \"1100\" can be reduced to \"10\", which no longer uses 4 elements.",
+        "For a(6) = 3, there are three solutions: \"111110\", \"111010\", and \"110010\". The other primitive sequences \"111100\" and \"111000\" can be reduced to \"110\" and \"10\", respectively, which no longer use 6 elements."
+    ],
+    "program": [
+        "(PARI)",
+        "a11(n) = if( n<1, n==0, 2^(n\\2) / 2 + sumdiv(n, k, eulerphi(2*k) * 2^(n/k)) / (4*n));",
+        "a46(n) = {",
+        "  my(s=0);",
+        "  fordiv (n, d,",
+        "    s+=moebius(d)*a11(n/d));",
+        "  s};",
+        "a364468(n) = {",
+        "  my(s=a46(n));",
+        "  fordiv (n, k,",
+        "    s-=if(k!=1&&k!=n, a364468(k), 0));",
+        "  s};",
+        "for (k=1,42, print1(a364468(k),\", \"))  \\\\ _Hugo Pfoertner_, Jul 26 2023"
+    ],
+    "xref": [
+        "Cf. A000046, A070842, A000011."
+    ],
+    "keyword": "nonn",
+    "offset": "0,6",
+    "author": "_Richard B. Canty_, Jul 25 2023",
+    "references": 1,
+    "revision": 18,
+    "time": "2023-07-27T12:25:33-04:00",
+    "created": "2023-07-27T12:25:33-04:00"
+}

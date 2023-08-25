@@ -1,0 +1,42 @@
+{
+    "number": 91580,
+    "data": "1,1,2,3,5,7,11,15,22,30,41,55,74,96,126,162,208,263,333,415,518,639,788,962,1174,1420,1716,2060,2468,2940,3497,4137,4886,5747,6744,7885,9203,10702,12424,14379,16611,19136,22009,25245,28915,33037,37688,42901,48765",
+    "name": "Number of partitions of n into decimal palindromes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A091580/b091580.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PalindromicNumber.html\">Palindromic Number</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Partition.html\">Partition</a>"
+    ],
+    "example": [
+        "n=12: there are A000041(12)=77 partitions of 12, 3 of them contain non-palindromes: 12=10+2, 12=10+1+1 and 12 itself, therefore a(12)=77-3=74."
+    ],
+    "maple": [
+        "p:= proc(n) option remember; local i, s; s:= \"\"||n;",
+        "      for i to iquo(length(s), 2) do if",
+        "        s[i]<>s[-i] then return false fi od; true",
+        "    end:",
+        "h:= proc(n) option remember; `if`(n<1, 0,",
+        "     `if`(p(n), n, h(n-1)))",
+        "    end:",
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, 1,",
+        "      b(n, h(i-1))+b(n-i, h(min(n-i, i))))",
+        "    end:",
+        "a:= n-> b(n, h(n)):",
+        "seq(a(n), n=0..100);  # _Alois P. Heinz_, Sep 19 2018"
+    ],
+    "xref": [
+        "Cf. A002113, A091581.",
+        "Different from A088669 and from A000041.",
+        "Row sums of A319453."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Reinhard Zumkeller_, Jan 22 2004",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Sep 17 2018"
+    ],
+    "references": 8,
+    "revision": 17,
+    "time": "2021-08-19T18:29:06-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

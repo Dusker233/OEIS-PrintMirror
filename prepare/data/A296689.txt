@@ -1,0 +1,60 @@
+{
+    "number": 296689,
+    "data": "0,1,2,4,7,13,24,30,54,64,124,244,383,503,981,1021,1981,3901,6137,8057,13649,16369,32689,65329,98230,130870,229312,261952,491516,524156,1046388,1048564,2093044,4182004,8359924,16715764,25141220,33497060,58703812,67059652,125828996,134184836,259487492,268435204,536866564,1073729284",
+    "name": "Let phi be the one-to-one mapping between binary trees and natural numbers described in the Tychonievich link. Let a(n) = min({phi^{-1}(t)| size(t)=n}); i.e., a(n) is the rank -- starting from 0 -- of the first tree the size of which is n.",
+    "comment": [
+        "Let v(n) = max({phi^{-1}(t)| size(t)=n}); v(n) is already known as A072639.",
+        "The interleaving process used by Tychonievich is not specific to base 2, each base b>=3 giving birth to a new a(n)-like sequence and a new v(n)-like sequence.",
+        "a(n) is the position of the first occurrence of n in A072644. - _Andrey Zabolotskiy_, Dec 20 2017",
+        "The tree-enumeration scheme of Tychonievich is similar, but not the same as \"Recursive binary interleaving of binary trees\" mentioned at my OEIS Wiki notes about Alternative Catalan Orderings. On the other hand, it seems to be the same (possibly up to the reflection of binary trees) as the ranking/unranking scheme mentioned in the section \"Binary tree encoding with bijection\" and in sequences A072634 - A072637 that are permutations of nonnegative integers induced by cross-ranking binary trees between such a \"dense\" binary interleaving ranking system and the standard lexicographic ordering of them (A014486). - _Antti Karttunen_, Dec 20 2017"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"https://oeis.org/wiki/User:Antti_Karttunen/Catalania/Alternative_Catalan_Orderings\">Alternative Catalan Orderings</a> (Notes in OEIS Wiki, 2012-, see the section \"Binary tree encoding with bijection\")",
+        "Luther Tychonievich, <a href=\"https://www.cs.virginia.edu/~lat7h/blog/posts/434.html\">Enumerating Trees</a>, 2013."
+    ],
+    "program": [
+        "(Ocaml)",
+        "let rec evenOdd=function(*Luther Tychonievich decomposition*)",
+        "| n when n<=1 -> n,0",
+        "| n -> let ev,od=evenOdd(n/2) in",
+        "        2*od+n mod 2,ev",
+        "let rec cardImage=function",
+        "| n when n<=1 -> n",
+        "| n -> let ev,od=evenOdd(n-1) in 1+cardImage(ev)+cardImage(od)",
+        "let checkCatalanBis n=(*why 2*n+1 ? empirical...*)",
+        "  let (first,last)=(Array.make (2*n+1) 0,Array.make (2*n+1) 0) in",
+        "    for i=0 to 1 lsl n do",
+        "    let cai=cardImage i in",
+        "      last.(cai)<-1+last.(cai);",
+        "      if first.(cai)=0 then first.(cai)<-i done;",
+        "  (first,last)",
+        "(Python)",
+        "def dei(n):",
+        "    n1 = n2 = 0",
+        "    bit = 1",
+        "    while n:",
+        "        if n&1:",
+        "            n1 += bit",
+        "        n >>= 1",
+        "        if n&1:",
+        "            n2 += bit",
+        "        n >>= 1",
+        "        bit <<= 1",
+        "    return (n1, n2)",
+        "r = [0]",
+        "for n in range(1, 100):",
+        "    r.append(1 + sum(r[x] for x in dei(n-1)))",
+        "print([r.index(x) for x in range(max(r)+1)])",
+        "# _Andrey Zabolotskiy_, Dec 20 2017"
+    ],
+    "xref": [
+        "Cf. A014486, A059905, A059906, A072639, A072634, A072635, A072644."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Philippe Esperet_, Dec 18 2017",
+    "references": 1,
+    "revision": 31,
+    "time": "2018-01-19T03:33:35-05:00",
+    "created": "2018-01-19T03:33:35-05:00"
+}

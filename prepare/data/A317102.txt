@@ -1,0 +1,43 @@
+{
+    "number": 317102,
+    "data": "1,4,8,9,16,25,27,32,36,49,64,72,81,100,108,121,125,128,169,196,200,216,225,243,256,288,289,343,361,392,432,441,484,500,512,529,625,648,675,676,729,800,841,864,900,961,968,972,1000,1024,1089,1125,1152,1156,1225",
+    "name": "Powerful numbers whose distinct prime multiplicities are pairwise indivisible.",
+    "comment": [
+        "A number is powerful if its prime multiplicities are all greater than 1."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A317102/b317102.txt\">Table of n, a(n) for n = 1..3000</a>"
+    ],
+    "example": [
+        "144 = 2^4 * 3^2 is not in the sequence because 4 and 2 are not pairwise indivisible."
+    ],
+    "maple": [
+        "filter:= proc(n) local L,i,j,q;",
+        "  L:= convert(map(t -> t[2],ifactors(n)[2]),set);",
+        "  if min(L) = 1 then return false fi;",
+        "  for j from 2 to nops(L) do",
+        "    for i from 1 to j-1 do",
+        "      q:= L[i]/L[j];",
+        "      if q::integer or (1/q)::integer then return false fi;",
+        "  od od;",
+        "  true",
+        "end proc:",
+        "select(filter, [$4..10000]); # _Robert Israel_, Jun 23 2019"
+    ],
+    "mathematica": [
+        "Select[Range[1000],And[Max@@Last/@FactorInteger[#]>=2,Select[Tuples[Last/@FactorInteger[#],2],And[UnsameQ@@#,Divisible@@#]&]=={}]&]"
+    ],
+    "xref": [
+        "Cf. A001694, A056239, A112798, A118914, A124010, A285572, A285573, A303362, A304713, A316475, A317101, A317616."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Aug 01 2018",
+    "ext": [
+        "Definition corrected and a(1)=1 inserted by _Robert Israel_, Jun 23 2019"
+    ],
+    "references": 8,
+    "revision": 14,
+    "time": "2019-06-24T00:43:52-04:00",
+    "created": "2018-08-01T20:37:48-04:00"
+}

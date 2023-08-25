@@ -1,0 +1,61 @@
+{
+    "number": 347025,
+    "data": "0,1,2,4,7,13,24",
+    "name": "Maximum size of a family of nonempty sets on n elements such that no set is a union of some others.",
+    "comment": [
+        "The upper bounds of Loo (table on pp. 11-13; formula below) may be improved given the term a(5). Specifically, using h = 1 and a(5) in Loo's upper bound formula yields a(6) <= 27 (versus the published 30). The lower and upper bounds may be used to distinguish this sequence from others in the OEIS. - _Michael S. Branicky_, Mar 16 2022",
+        "a(7) >= 44, a(8) >= 79, a(9) >= 144, a(10) >= 270; see the Apr 05 2022 entry in the Formula section. - _Jon E. Schoenfield_, Apr 04 2022",
+        "a(7) <= 45. - _Jinyuan Wang_, Apr 23 2022"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A347025/a347025_1.py.txt\">Python program</a>",
+        "Andy Loo, <a href=\"https://arxiv.org/abs/1511.00170\">Union-Free Families of Subsets</a>, arXiv:1511.00170 [math.CO], 2015.",
+        "Augusto Perez, <a href=\"https://math.stackexchange.com/questions/4262598/maximum-size-of-antichain-like-collection\">Maximum size of antichain-like collection</a>, Math.SE question (2021)."
+    ],
+    "formula": [
+        "From _Michael S. Branicky_, Mar 16 2022: (Start)",
+        "Bounds from Loo (p. 10):",
+        "  a(n) >= binomial(n, ceiling(n/2)),",
+        "  a(n) >= max_{h=1..n-1} a(h) + a(n-h) + 1,",
+        "  a(n) <= min_{h=1..n-1} a(h) + 2^h*a(n-h). (End)",
+        "For n > 2, a(n) >= max_{m=3..n} 2*floor(m/3) + binomial(m,3) + [n < 6] + Sum_{j=m..n-1} binomial(j,m-3) where [n < 6] is an Iverson bracket. - _Jon E. Schoenfield_, Apr 05 2022"
+    ],
+    "example": [
+        "a(4) = 7: an example of such a family is {{1},{1,2},{1,3},{1,4},{2,3},{2,4},{3,4}}."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import combinations",
+        "def anysetunion(family):",
+        "    for s in family:",
+        "        allrest = 0",
+        "        for r in family:",
+        "            if r != s and r&s == r:",
+        "                allrest |= r",
+        "                if allrest == s:",
+        "                    return True",
+        "    return False",
+        "def a(n):",
+        "    if n < 2: return n",
+        "    m = 2",
+        "    while True:",
+        "        allfailed = True",
+        "        for family in combinations(range(1, 2**n), m):",
+        "            unionfound = anysetunion(family)",
+        "            allfailed &= unionfound",
+        "            if not unionfound: break",
+        "        if allfailed: return m - 1",
+        "        m += 1",
+        "print([a(n) for n in range(5)]) # _Michael S. Branicky_, Nov 09 2021"
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "0,3",
+    "author": "_Jukka Kohonen_, Sep 29 2021",
+    "ext": [
+        "a(6) from _Jinyuan Wang_, Apr 19 2022"
+    ],
+    "references": 2,
+    "revision": 96,
+    "time": "2022-06-02T10:23:13-04:00",
+    "created": "2022-06-02T10:23:13-04:00"
+}

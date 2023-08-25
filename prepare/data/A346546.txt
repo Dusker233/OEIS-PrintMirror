@@ -1,0 +1,28 @@
+{
+    "number": 346546,
+    "data": "1,1,1,2,15,44,485,1854,25781,170288,2477485,12571140,435748665,2049818198,64651106637,628176476186,18837010964105,93248340364152,6695745240354169,33794005826851192,2549048418922818525,20209158430316698922,1138228671555859916609",
+    "name": "E.g.f.: Product_{k>=1} 1 / (1 - x^k)^(exp(-x)/k).",
+    "comment": [
+        "Exponential transform of A002744.",
+        "The first negative term is a(37) = -2641429247236224246927617458359165366254750."
+    ],
+    "formula": [
+        "E.g.f.: exp( exp(-x) * Sum_{k>=1} d(k) * x^k / k ).",
+        "a(0) = 1; a(n) = Sum_{k=1..n} binomial(n-1,k-1) * A002744(k) * a(n-k)."
+    ],
+    "mathematica": [
+        "nmax = 22; CoefficientList[Series[Product[1/(1 - x^k)^(Exp[-x]/k), {k, 1, nmax}], {x, 0, nmax}], x] Range[0, nmax]!",
+        "nmax = 22; CoefficientList[Series[Exp[Exp[-x] Sum[DivisorSigma[0, k] x^k/k, {k, 1, nmax}]], {x, 0, nmax}], x] Range[0, nmax]!",
+        "A002744[n_] := Sum[(-1)^(n - k) Binomial[n, k] DivisorSigma[0, k] (k - 1)!, {k, 1, n}]; a[0] = 1; a[n_] := a[n] = Sum[Binomial[n - 1, k - 1] A002744[k] a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 22}]"
+    ],
+    "xref": [
+        "Cf. A000005, A002744, A028342, A346545, A346547, A346548."
+    ],
+    "keyword": "sign",
+    "offset": "0,4",
+    "author": "_Ilya Gutkovskiy_, Sep 16 2021",
+    "references": 3,
+    "revision": 11,
+    "time": "2022-08-17T10:27:07-04:00",
+    "created": "2021-09-16T23:52:50-04:00"
+}

@@ -1,0 +1,31 @@
+{
+    "number": 131357,
+    "data": "1,2,9,24,54,120,248,500,1004,2016,4038,8082,16170,32346,64700,129404,258812,517644,1035294,2070594,4141194,8282394,16564800,33129608,66259220,132518444,265036896,530073798,1060147602,2120295210,4240590426,8481180858,16962361722,33924723450,67849446906,135698893818",
+    "name": "a(1) = 1, a(2) = 2; for n > 1, a(n) = sum of the next two smallest integers > a(n-1) which are coprime to the sum s = a(1) + ... + a(n-1).",
+    "link": [
+        "Michel Marcus, <a href=\"/A131357/b131357.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "Conjecture: a(n) ~ 2^(n+1) * 0.9873393997556885598467... - _Petros Hadjicostas_, Jun 23 2019 [Constant evaluated using _Michel Marcus_'s bfile]"
+    ],
+    "example": [
+        "n = 3: a(1) = 1, a(2) = 2, s = 1 + 2 = 3; n1 = 4 (not 3) and n2 = 5 are both coprime to s, hence a(3) = n1 + n2 = 9;",
+        "n = 4: a(1) = 1, a(2) = 2, a(3) = 9, s = 1 + 2 + 9 = 12; n1 = 11 (not 10 or 12) and n2 = 13 are both coprime to s, hence a(4) = n1 + n2 = 24;",
+        "n = 5: s = 36; n1 = 25 (not 26, 27, or 28) and n2 = 29 are both coprime to s, hence a(5) = n1 + n2 = 54;",
+        "n = 6: s = 90; n1 = 59 (not 55, 56, 57, 58, or 60) and n2 = 61 are both comprime to s, hence a(6) = n1 + n2 = 120."
+    ],
+    "program": [
+        "(PARI) findnext(last, s) = {my(x = last+1); while (gcd(x, s) != 1, x++); my(y = x+1); while (gcd(y, s) != 1, y++); x+y;}",
+        "lista(nn) = {my(v = [1, 2], val); print1(v[1], \", \", v[2], \", \"); for (n=3, nn, val = findnext(v[#v], vecsum(v)); v = concat(v, val); print1(val, \", \"););} \\\\ _Michel Marcus_, Jun 25 2019"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Zak Seidov_, Sep 30 2007",
+    "ext": [
+        "More terms from _Petros Hadjicostas_, Jun 23 2019"
+    ],
+    "references": 2,
+    "revision": 30,
+    "time": "2019-07-26T12:15:03-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

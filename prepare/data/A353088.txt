@@ -1,0 +1,43 @@
+{
+    "number": 353088,
+    "data": "9551,12889,22193,22307,27143,29917,32261,40423,42863,46807,46993,47981,57637,60041,60493,71597,72613,73819,77137,84263,88427,89153,90583,93463,97463,97613,97883,112543,115057,118931,126307,127877,131321,134093,137873,144883",
+    "name": "Primes having square prime gaps to both neighbor primes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A353088/b353088.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Prime 9551 is a term, the gap to the previous prime 9547 is 4 and the gap to the next prime 9587 is 36 and both gaps are squares."
+    ],
+    "maple": [
+        "q:= n-> isprime(n) and andmap(issqr, [n-prevprime(n), nextprime(n)-n]):",
+        "select(q, [$3..200000])[];"
+    ],
+    "mathematica": [
+        "q[n_] := PrimeQ[n] && IntegerQ@Sqrt[n-NextPrime[n, -1]] && IntegerQ@ Sqrt[NextPrime[n]-n];",
+        "Select[Range[3, 200000], q] (* _Jean-Fran\u00e7ois Alcover_, May 14 2022, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import nextprime, integer_nthroot",
+        "def A353088_gen(): # generator of terms",
+        "    p, q, g, h = 3, 5, True, False",
+        "    while True:",
+        "        if g and h:",
+        "            yield p",
+        "        p, q = q, nextprime(q)",
+        "        g, h = h, integer_nthroot(q-p,2)[1]",
+        "A353088_list = list(islice(A353088_gen(),30)) # _Chai Wah Wu_, Apr 22 2022"
+    ],
+    "xref": [
+        "Intersection of A000040 and A353073.",
+        "Cf. A000290, A001223, A016742, A138198, A353135, A353136, A353137, A353550."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alois P. Heinz_, Apr 22 2022",
+    "references": 5,
+    "revision": 29,
+    "time": "2022-05-14T11:23:06-04:00",
+    "created": "2022-04-22T15:06:41-04:00"
+}

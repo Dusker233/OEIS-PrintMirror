@@ -1,0 +1,56 @@
+{
+    "number": 355412,
+    "data": "0,6,39,66,312,506,2154,3426,5193,7574,30523,44695,173076,254064,364384,511984,1945204,2749999,10159602,14427308,20186025,27861174,101837745,141340074,193902061,263152094,353549941,470539446,1730528206,2319027316",
+    "name": "Count of numbers <= 10^n with no prime factor greater than n.",
+    "comment": [
+        "a(n) counts the numbers s <= 10^n whose prime factorization s = p1^q1 * p2^q2 * ... * pk^qk (where p1 < p2 < ... < pk) has pk <= n."
+    ],
+    "example": [
+        "For n=2, a(n)=6, because there are 6 numbers not greater than 10^2 whose prime divisors are not greater than 2: {2,4,8,16,32,64}."
+    ],
+    "mathematica": [
+        "f[n0_, M0_] :=",
+        "  Module[{M = M0, n = n0, k, p},",
+        "   If[n == 1 || M <= 1, 0,",
+        "    If[n == 2, Floor[Log[n, M]], p = NextPrime[n + 1, {-1, -2}];",
+        "     k = Floor[Log[p[[1]], M]];",
+        "     k + Sum[f[p[[2]], M/p[[1]]^i], {i, 0, k}]]]];",
+        "Table[{n, f[n, 10^n]}, {n, 20}]",
+        "(* _Xianwen Wang_, Jul 16 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import prevprime",
+        "def intlog(n,base):",
+        "    ans=0",
+        "    while n>=base:",
+        "        n//=base",
+        "        ans+=1",
+        "    return (ans)",
+        "def count(n,s):",
+        "    if n==1:",
+        "        return 0",
+        "    if n==2:",
+        "        return intlog(s,n)",
+        "    else:",
+        "        p=prevprime(n+1)",
+        "        p2=prevprime(p)",
+        "        k=intlog(s,p)",
+        "        for i in range(k+1):",
+        "            k+=count(p2,s//(p**i))",
+        "        return(k)",
+        "for n in range(1,21):",
+        "    print([n,count(n,10**n)])",
+        "(PARI) a(n) = sum(k=2, 10^n, my(f=factor(k)[,1]); vecmax(f) <= n); \\\\ _Michel Marcus_, Jul 14 2022"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Zhining Yang_, Jul 01 2022",
+    "ext": [
+        "Edited by _Peter Munn_, May 26 2023"
+    ],
+    "references": 0,
+    "revision": 38,
+    "time": "2023-05-27T06:45:29-04:00",
+    "created": "2022-10-01T19:48:57-04:00"
+}

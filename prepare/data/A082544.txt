@@ -1,0 +1,39 @@
+{
+    "number": 82544,
+    "data": "1,31,241,991,3091,7501,16531,31711,57781,96601,157651,240031,362491,519961,739201,1012441,1383721,1822711,2409241,3091441,3966301,4974751,6257461,7680781,9481681,11474941,13916191,16610371,19911151,23435191",
+    "name": "Number of ordered quintuples (a,b,c,d,e) with gcd(a,b,c,d,e)=1 (1<= {a,b,c,d,e} <= n).",
+    "link": [
+        "Karl-Heinz Hofmann, <a href=\"/A082544/b082544.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} mu(k)*floor(n/k)^5; a(n) is asymptotic to c*n^5 with c=0.9643....",
+        "Lim_{n->infinity} a(n)/n^5 = 1/zeta(5) = A343308. - _Karl-Heinz Hofmann_, Apr 11 2021",
+        "Lim_{n->infinity} n^5/a(n) =   zeta(5) = A013663. - _Karl-Heinz Hofmann_, Apr 11 2021"
+    ],
+    "program": [
+        "(PARI) a(n)=sum(k=1,n,moebius(k)*floor(n/k)^5)",
+        "(Python)",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A082544(n):",
+        "    if n == 0:",
+        "        return 0",
+        "    c, j = 1, 2",
+        "    k1 = n//j",
+        "    while k1 > 1:",
+        "        j2 = n//k1 + 1",
+        "        c += (j2-j)*A082544(k1)",
+        "        j, k1 = j2, n//j2",
+        "    return n*(n**4-1)-c+j # _Chai Wah Wu_, Mar 29 2021"
+    ],
+    "xref": [
+        "Cf. A018805 (pairs), A071778 (triples), A082540 (quadruples)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Benoit Cloitre_, May 11 2003",
+    "references": 9,
+    "revision": 32,
+    "time": "2021-04-12T05:03:13-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

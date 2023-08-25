@@ -1,0 +1,51 @@
+{
+    "number": 351741,
+    "data": "1,3,4,5,7,10,13,16,23,26,31,32,37,39,51,54,56",
+    "name": "Numbers k such that the concatenation of 1,2,...,k and the concatenation of k,k-1,...,1 have the same number of prime factors, counted with multiplicity.",
+    "comment": [
+        "Numbers k such that A001222(A007908(k)) = A001222(A000422(k))."
+    ],
+    "example": [
+        "a(3) = 4 is a term because 1234 = 2*617 and 4321 = 29*149 each have two prime factors."
+    ],
+    "maple": [
+        "dcat:= (a,b) -> a*10(1+ilog10(b))+b:",
+        "a:= 1: b:= 1: R:= 1:",
+        "for n from 2 to 40 do",
+        "a:= dcat(n,a);",
+        "b:= dcat(b,n);",
+        "if numtheory:-bigomega(a) = numtheory:-bigomega(b) then R:= R,n fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Range[32], SameQ @@ PrimeOmega@{FromDigits@ Flatten@ #, FromDigits@ Flatten@ Reverse[#]} &@ IntegerDigits@ Range[#] &] (* _Michael De Vlieger_, Feb 17 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primeomega",
+        "def afind(limit, startk=1):",
+        "    k = startk",
+        "    sk = \"\".join(str(i) for i in range(1, k))",
+        "    skr = \"\".join(str(i) for i in range(k-1, 0, -1))",
+        "    for k in range(startk, limit+1):",
+        "        sk += str(k)",
+        "        skr = str(k) + skr",
+        "        if primeomega(int(sk)) == primeomega(int(skr)):",
+        "            print(k, end=\", \")",
+        "afind(23) # _Michael S. Branicky_, Feb 17 2022"
+    ],
+    "xref": [
+        "Cf. A000422, A001222, A007908, A048288."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Feb 17 2022",
+    "ext": [
+        "a(17) from _Michael S. Branicky_, Feb 19 2022"
+    ],
+    "references": 0,
+    "revision": 22,
+    "time": "2022-03-31T22:00:13-04:00",
+    "created": "2022-02-18T22:50:13-05:00"
+}

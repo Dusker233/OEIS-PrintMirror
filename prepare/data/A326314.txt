@@ -1,0 +1,32 @@
+{
+    "number": 326314,
+    "data": "5,25,55,275,935,3025,4675,21505,51425,107525,537625,1182775,2688125,3118225,15591125,34300475,77955625,127847225,583108075,639236125,1406319475,3196180625,6008819575,23907431075,30044097875,66097015325,150220489375,318467437475,1123649260525",
+    "name": "Where the number of divisors d(k) reaches a new record for numbers k whose prime factors are of the form 6*j+5.",
+    "comment": [
+        "For references and links see A326312."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A326314/b326314.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "mathematica": [
+        "aQ[n_] := AllTrue[FactorInteger[n][[;; , 1]], Mod[#, 6] == 5 &]; s[n_] := DivisorSum[n, 1 &, aQ[#] &]; sm = 0; seq = {}; Do[s1 = s[n]; If[s1 > sm, sm = s1; AppendTo[seq, n]], {n, 2, 10^5}]; seq (* _Amiram Eldar_, Sep 12 2019 *)"
+    ],
+    "program": [
+        "(PARI) pkn(x, d, m)={my(fn=factor(x), nf=#fn[, 1]); for(k=1, nf, if(fn[k, 1]%d!=m, return(0))); numdiv(x)};",
+        "divrecord=0;",
+        "for(k=2, 200000000, my(j=pkn(k, 6, 5)); if(j>divrecord, divrecord=j; print1(k, \", \")))"
+    ],
+    "xref": [
+        "Cf. A053624, A071383, A230655, A326312, A326313."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Hugo Pfoertner_, Sep 11 2019",
+    "ext": [
+        "More terms from _Amiram Eldar_, Sep 12 2019"
+    ],
+    "references": 3,
+    "revision": 17,
+    "time": "2019-09-12T11:57:37-04:00",
+    "created": "2019-09-11T20:21:10-04:00"
+}

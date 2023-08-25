@@ -1,0 +1,54 @@
+{
+    "number": 198775,
+    "data": "1729,2821,3367,3913,4123,4459,4921,5187,5551,5719,6097,6517,6643,6916,7189,7657,8029,8113,8463,8827,8911,9139,9331,9373,9709,9919,10101,10507,10621,10633,11137,11284,11557,11739,12369,12649,12691,12901,13237,13377",
+    "name": "Numbers having exactly four representations by the quadratic form x^2+xy+y^2 with 0<=x<=y.",
+    "comment": [
+        "A088534(a(n)) = 4; subsequence of A118886, see also A003136."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A198775/b198775.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..250 from Reinhard Zumkeller)."
+    ],
+    "example": [
+        "a(1) = 1729 = 3^2+3*40+40^2 = 8^2+8*37+37^2 = 15^2+15*32+32^2 = 23^2+23*25+25^2, A088534(1729) = 4;",
+        "a(10) = 5719 = 5^2+5*73+73^2 = 15^2+15*67+67^2 = 18^2+18*65+65^2 = 37^2+37*50+50^2, A088534(5719) = 4;",
+        "a(100) = 23779 = 17^2+17*145+145^2 = 30^2+30*137+137^2 = 50^2+50*123+123^2 = 85^2+85*93+93^2, A088534(23779) = 4."
+    ],
+    "mathematica": [
+        "amax = 20000; xmax = Sqrt[amax] // Ceiling; Clear[f]; f[_] = 0; Do[q = x^2 + x y + y^2; f[q] = f[q] + 1, {x, 0, xmax}, {y, x, xmax}];",
+        "A198775 = Select[Range[0, 3 xmax^2], # <= amax && f[#] == 4&] (* _Jean-Fran\u00e7ois Alcover_, Jun 21 2018 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a198775 n = a198775_list !! (n-1)",
+        "a198775_list = filter ((== 4) . a088534) a003136_list",
+        "(Python)",
+        "from itertools import count, islice",
+        "def A198775_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        c = 0",
+        "        for y in range(n+1):",
+        "            if c > 4 or y**2 > n:",
+        "                break",
+        "            for x in range(y+1):",
+        "                z = x*(x+y)+y**2",
+        "                if z > n:",
+        "                    break",
+        "                elif z == n:",
+        "                    c += 1",
+        "                    if c > 4:",
+        "                        break",
+        "        if c == 4:",
+        "            yield n",
+        "A198775_list = list(islice(A198775_gen(),10)) # _Chai Wah Wu_, May 16 2022"
+    ],
+    "xref": [
+        "Cf. A198772, A198773, A198774."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Oct 30 2011",
+    "references": 8,
+    "revision": 22,
+    "time": "2022-05-16T16:43:10-04:00",
+    "created": "2011-10-30T14:15:16-04:00"
+}

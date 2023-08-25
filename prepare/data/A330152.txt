@@ -1,0 +1,50 @@
+{
+    "number": 330152,
+    "data": "0,2,8,23,52,127,218,412,542,692,1471,2064,2327,4739,13025,16213,20388,45407,82605,123706,207778,323382,605338,905670,1033731,2041995,3325970,4282238,7638962,9840138,10364329",
+    "name": "Absolute multiplicative persistence: a(n) is the least number with multiplicative persistence n for some base b > 1.",
+    "link": [
+        "Edson de Faria and Charles Tresser, <a href=\"http://arxiv.org/abs/1307.1188\">On Sloane's persistence problem</a>, arXiv preprint arXiv:1307.1188 [math.DS], 2013.",
+        "Edson de Faria and Charles Tresser, <a href=\"http://dx.doi.org/10.1080/10586458.2014.910849\">On Sloane's persistence problem</a>, Experimental Math., 23 (No. 4, 2014), 363-382.",
+        "Brady Haran and Matt Parker, <a href=\"https://www.youtube.com/watch?v=Wim9WJeDTHQ\">What's special about 277777788888899?</a>, Numberphile video, 2019.",
+        "Tim Lamont-Smith, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL24/Lamont/lamont5.html\">Multiplicative Persistence and Absolute Multiplicative Persistence</a>, J. Int. Seq., Vol. 24 (2021), Article 21.6.7.",
+        "Stephanie Perez and Robert Styer, <a href=\"http://dx.doi.org/10.2140/involve.2015.8.439\">Persistence: A Digit Problem</a>, Involve, Vol. 8 (2015), No. 3, 439-446.",
+        "N. J. A. Sloane, <a href=\"http://neilsloane.com/doc/persistence.html\">The persistence of a number</a>, J. Recreational Math., 6 (1973), 97-98.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/MultiplicativePersistence.html\">Multiplicative Persistence</a>"
+    ],
+    "example": [
+        "2 when represented in base 2 goes 10 -> 0 and has an absolute persistence of 1, so a(1) = 2.",
+        "8 when represented in base 3 goes 22 -> 11 -> 1 and has an absolute persistence of 2, so a(2) = 8.",
+        "23 when represented in base 6 goes 35 -> 23 -> 10 -> 1 and has absolute persistence of 3, so a(3) = 23 (Cf. A064867).",
+        "52 when represented in base 9 goes 57 -> 38 -> 26 -> 13 -> 3 and has absolute persistence of 4, so a(4) = 52 (Cf. A064868)."
+    ],
+    "program": [
+        "(Python)",
+        "from math import prod",
+        "from sympy.ntheory.digits import digits",
+        "def mp(n, b): # multiplicative persistence of n in base b",
+        "    c = 0",
+        "    while n >= b:",
+        "        n, c = prod(digits(n, b)[1:]), c+1",
+        "    return c",
+        "def a(n):",
+        "    k = 0",
+        "    while True:",
+        "        if any(mp(k, b)==n for b in range(2, max(3, k))): return k",
+        "        k += 1",
+        "print([a(n) for n in range(11)]) # _Michael S. Branicky_, Sep 17 2021"
+    ],
+    "xref": [
+        "Cf. A003001, A064867, A064868, A064869, A064870, A064871, A064872."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "0,2",
+    "author": "_Tim Lamont-Smith_, Nov 29 2019",
+    "ext": [
+        "a(19)-a(27) from _Giovanni Resta_, Jan 20 2020",
+        "a(28)-a(30) from _Michael S. Branicky_, Sep 17 2021"
+    ],
+    "references": 0,
+    "revision": 43,
+    "time": "2021-09-18T08:27:16-04:00",
+    "created": "2020-01-17T23:33:43-05:00"
+}

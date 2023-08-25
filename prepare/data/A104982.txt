@@ -1,0 +1,39 @@
+{
+    "number": 104982,
+    "data": "1,4,21,133,977,8135,75609,775667,8707057,106185715,1398451353,19786121467,299384925569,4825081148819,82531968286569,1493412479919371,28504390805515921,572363196501249667,12061937537478658809",
+    "name": "Column 3 of triangle A104980, omitting leading zeros.",
+    "comment": [
+        "Equals one-half of column 0 (after initial term) in triangle A104988, which equals the matrix square of triangle A104980."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A104982/b104982.txt\">Table of n, a(n) for n = 0..440</a>"
+    ],
+    "formula": [
+        "a(n) = A104988(n+1, 0)/2 for n>=0."
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[k<0 || k>n, 0, If[k==n, 1, If[k==n-1, n, k*T[n, k+1] + Sum[T[j, 0]*T[n, j+k+1], {j,0,n-k-1}]]]];",
+        "Table[T[n+3, 3], {n, 0, 30}] (* _G. C. Greubel_, Jun 07 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if(n<0, 0, (matrix(n+4, n+4, m, j, if(m==j, 1, if(m==j+1, -m+1, -polcoeff((1-1/sum(i=0, m, i!*x^i))/x +O(x^m), m-j-1))))^-1)[n+4,4])}",
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n,k):",
+        "    if (k<0 or k>n): return 0",
+        "    elif (k==n): return 1",
+        "    elif (k==n-1): return n",
+        "    else: return k*T(n, k+1) + sum( T(j, 0)*T(n, j+k+1) for j in (0..n-k-1) )",
+        "[T(n+3,3) for n in (0..30)] # _G. C. Greubel_, Jun 07 2021"
+    ],
+    "xref": [
+        "Cf. A104980, A104981, A104988."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Apr 10 2005",
+    "references": 4,
+    "revision": 8,
+    "time": "2021-06-08T14:57:53-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

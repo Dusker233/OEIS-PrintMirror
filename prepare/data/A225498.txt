@@ -1,0 +1,37 @@
+{
+    "number": 225498,
+    "data": "9,25,27,45,49,81,121,125,169,225,243,289,325,343,361,405,529,561,625,637,729,841,891,961,1105,1125,1225,1331,1369,1377,1681,1729,1849,2025,2187,2197,2209,2401,2465,2809,2821,3125,3321,3481",
+    "name": "Weak Carmichael numbers.",
+    "comment": [
+        "An odd composite number n > 1 is a weak Carmichael number iff the prime factors of n are a subset of the prime factors of Clausen(n-1,1) (cf. A160014). If additionally n divides Clausen(n-1,1) then n is a Carmichael number. - _Peter Luschny_, May 21 2019"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A225498/b225498.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Romeo Me\u0161trovi\u0107, <a href=\"http://arxiv.org/abs/1305.1867\">Generalizations of Carmichael numbers I,</a> arXiv:1305.1867 [math.NT], May 4, 2013.",
+        "R. G. E. Pinch, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1993-1202611-7\">The Carminchael numbers up to 10^15</a>, Math. Comp. 61 (1993), 381-391.",
+        "R. G. E. Pinch, <a href=\"http://arxiv.org/abs/math/0604376\">The Carmichael numbers up to 10^18</a>, arXiv:math/060437 [math.NT], 2006."
+    ],
+    "maple": [
+        "with(numtheory): isweakCarmichael := proc(n)",
+        "if irem(n, 2) = 0 or isprime(n) then return false fi;",
+        "factorset(n) subset factorset(Clausen(n-1, 1)) end: # A160014",
+        "select(isweakCarmichael, [$2..3500]); # _Peter Luschny_, May 21 2019"
+    ],
+    "mathematica": [
+        "pf[n_] := FactorInteger[n][[All,1]];",
+        "Clausen[0, _] = 1; Clausen[n_, k_] := Times @@ (Select[Divisors[n],",
+        "PrimeQ[# + k] &] + k);",
+        "weakCarmQ[n_] := If[EvenQ[n] || PrimeQ[n], Return[False], pf[n] == (pf[n] ~Intersection~ pf[Clausen[n-1,1]])];",
+        "Select[Range[2,3500], weakCarmQ] (* _Jean-Fran\u00e7ois Alcover_, Jun 03 2019 *)"
+    ],
+    "xref": [
+        "Cf. A002997, A160014."
+    ],
+    "keyword": "nonn,easy,changed",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, May 08 2013",
+    "references": 4,
+    "revision": 40,
+    "time": "2023-08-17T08:16:58-04:00",
+    "created": "2013-05-14T13:10:23-04:00"
+}

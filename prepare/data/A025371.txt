@@ -1,0 +1,34 @@
+{
+    "number": 25371,
+    "data": "90,124,130,133,135,138,147,148,150,154,156,157,159,162,163,165,166,170,171,172,174,175,177,178,180,182,183,186,187,188,189,190,193,195,196,198,199,201,202,203,205,207,210,213,214,215,217,218,219,220,222,223,225,226",
+    "name": "Numbers that are the sum of 4 nonzero squares in 6 or more ways.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A025371/b025371.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Su#ssq\">Index entries for sequences related to sums of squares</a>"
+    ],
+    "formula": [
+        "{n: A025428(n) >= 6}. Union of A025372 and A025362. - _R. J. Mathar_, Jun 15 2018"
+    ],
+    "program": [
+        "(Python)",
+        "limit = 226",
+        "from functools import lru_cache",
+        "sq = [k**2 for k in range(1, int(limit**.5)+2) if k**2 + 3 <= limit]",
+        "sqs = set(sq)",
+        "@lru_cache(maxsize=None)",
+        "def findsums(n, m):",
+        "  if m == 1: return {(n, )} if n in sqs else set()",
+        "  return set(tuple(sorted(t+(s,))) for s in sqs for t in findsums(n-s, m-1))",
+        "print([n for n in range(4, limit+1) if len(findsums(n, 4)) >= 6]) # _Michael S. Branicky_, Apr 20 2021"
+    ],
+    "xref": [
+        "Cf. A025334, A025362, A025370, A025372, A344799, A345148."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "references": 8,
+    "revision": 16,
+    "time": "2021-08-05T07:27:29-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

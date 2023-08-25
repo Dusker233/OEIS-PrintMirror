@@ -1,0 +1,45 @@
+{
+    "number": 59053,
+    "data": "0,0,0,0,0,0,0,1,2,7,12,31,58,126,234,484,906,1800,3402,6643,12624,24458,46686,90157,172810,333498,641340,1238671,2388852,4620006,8932032,17302033,33522698,65042526,126258960,245361172,477091232",
+    "name": "Number of chiral pairs of necklaces with n beads and two colors (color complements being equivalent); i.e., turning the necklace over neither leaves it unchanged nor simply swaps the colors.",
+    "comment": [
+        "Number of chiral pairs of set partitions of a cycle of n elements using exactly two different elements. - _Robert A. Russell_, Oct 02 2018"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A059053/b059053.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/A059053/a059053.gif\">Illustration of initial terms</a>",
+        "<a href=\"/index/Ne#necklaces\">Index entries for sequences related to necklaces</a>"
+    ],
+    "formula": [
+        "a(n) = A000013(n) - A000011(n) = A000011(n) - A016116(n) = (A000013(n) - A016116(n))/2.",
+        "From _Robert A. Russell_, Oct 02 2018: (Start)",
+        "a(n) = (A056295(n)-A052551(n-2)) / 2 = A056295(n) - A056357(n) = A056357(n) - A052551(n-2).",
+        "a(n) = -S2(1+floor(n/2),2) + (1/2n) * Sum_{d|n} phi(d) * S2(n/d+[2|d],2), where S2 is a Stirling subset number A008277.",
+        "G.f.: -x(1+2x)/(2-4x^2) - Sum_{d>0} phi(d) * log(1-2x^d) / (2d*(2-[2|d])).",
+        "(End)"
+    ],
+    "example": [
+        "For a(7) = 1, the chiral pair is AAABABB-AAABBAB.",
+        "For a(8) = 2, the chiral pairs are AAAABABB-AAAABBAB and AAABAABB-AAABBAAB."
+    ],
+    "mathematica": [
+        "Prepend[Table[DivisorSum[n, EulerPhi[#] StirlingS2[n/# + If[Divisible[#,2],1,0], 2] &] / (2n) - StirlingS2[1+Floor[n/2],2] / 2, {n, 1, 40}],0] (* _Robert A. Russell_, Oct 02 2018 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = {if(n<1, 0, (sumdiv(n, k, eulerphi(2*k) * 2^(n/k)) / (2*n) - 2^(n\\2))/2)}; \\\\ _Andrew Howroyd_, Nov 03 2019"
+    ],
+    "xref": [
+        "Column 2 of A320647 and A320742.",
+        "Cf. A056295 (oriented), A056357 (unoriented), A052551(n-2) (achiral)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,9",
+    "author": "_Henry Bottomley_, Dec 21 2000",
+    "ext": [
+        "Name clarified by _Robert A. Russell_, Oct 02 2018"
+    ],
+    "references": 11,
+    "revision": 30,
+    "time": "2019-11-04T02:25:55-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

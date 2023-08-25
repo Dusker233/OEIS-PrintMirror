@@ -1,0 +1,33 @@
+{
+    "number": 321398,
+    "data": "0,1,2,10,84,984,14640,262800,5513760,132289920,3571464960,107140320000,3535590643200,127280784153600,4963944354969600,208485575730432000,9381849600195072000,450328759886573568000,22966766398527823872000,1240205379118128783360000",
+    "name": "a(n) = (-1)^(n+1)*n!* [x^n](log(x + 1)/2 + log(3*x + 1)/6).",
+    "link": [
+        "Robert Israel, <a href=\"/A321398/b321398.txt\">Table of n, a(n) for n = 0..381</a>"
+    ],
+    "formula": [
+        "E.g.f.: -log(1 - x)/2 - log(1 - 3*x)/6. - _Andrew Howroyd_, Nov 10 2018",
+        "3*n*(n+1)*a(n)-4*(n+1)*a(n)+a(n+2)=0. - _Robert Israel_, Nov 10 2018"
+    ],
+    "maple": [
+        "ser := series(ln(x+1)/2 + ln(1+3*x)/6, x, 21):",
+        "seq((-1)^(n+1)*n!*coeff(ser, x, n), n=0..19);"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Log[x+1]/2 + Log[1+3*x]/6, {x, 0, 50}], x]* Table[(-1)^(n+1)*n!, {n, 0, 50}] (* _Stefano Spezia_, Nov 10 2018 *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={Vec(serlaplace(-log(1 - x + O(x^n))/2 - log(1 - 3*x + O(x^n))/6), -n)} \\\\ _Andrew Howroyd_, Nov 10 2018",
+        "(Magma) m:=30; R<x>:=PowerSeriesRing(Rationals(), m); b:=Coefficients(R!( -Log((1-x)^3*(1-3*x))/6 )); [0] cat [Factorial(n-0)*b[n]: n in [1..(m-1)]]; // _G. C. Greubel_, Nov 11 2018"
+    ],
+    "xref": [
+        "Cf. A133942 (n=1), A000165 (n=2), this sequence (n=3), A320962 (limit)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, Nov 10 2018",
+    "references": 2,
+    "revision": 27,
+    "time": "2022-09-08T08:46:23-04:00",
+    "created": "2018-11-10T16:33:33-05:00"
+}

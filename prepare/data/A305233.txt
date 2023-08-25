@@ -1,0 +1,39 @@
+{
+    "number": 305233,
+    "data": "1,2,3,4,4,4,5,5,5,5,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9",
+    "name": "Smallest k such that binomial(k, floor(k/2)) >= n.",
+    "comment": [
+        "Minimal size of a set with n subsets such that no one contains another.",
+        "The proof that the minimal cardinality k of a set having n subsets not containg one other is the generalized central binomial coefficient binomial(k, floor(k/2)(equivalent to: \"the largest possible families of finite sets none of which contain any other sets in the family) is called \"Sperner's Theorem\" and is due to Sperner - _Renzo Benedetti_, May 26 2021",
+        "Also the Schein rank of a contranominal scale of size n represented as a Boolean matrix (Kim, 1982; Marenich, 2010). - _Dmitry I. Ignatov_, Nov 25 2021"
+    ],
+    "reference": [
+        "K. H. Kim, Boolean matrix theory and applications. Marcel Dekker, New York and Basel (1982)."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A305233/b305233.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Evgeny E. Marenich, <a href=\"https://doi.org/10.1142/9789812836021_0005\">Determining the Schein Rank of Boolean Matrices</a>. Matrix Methods: Theory, Algorithms and Applications (2010) 85-103.",
+        "Emanuel Sperner, <a href=\"http://www.digizeitschriften.de/dms/img/?PID=GDZPPN002369915\">Ein Satz \u00fcber Untermengen einer endlichen Menge</a>, Mathematische Zeitschrift 27, 544-548, (1928)."
+    ],
+    "mathematica": [
+        "Array[Block[{k = 1}, While[Binomial[k, Floor[k/2]] < #, k++]; k] &, 105] (* _Michael De Vlieger_, Aug 02 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import binomial",
+        "def f(n): return binomial(n, n // 2)",
+        "sum([[i]*(f(i)-f(i-1)) for i in range(1,10)],[1])",
+        "(PARI) a(n) = my(k=1); while (binomial(k, floor(k/2)) < n, k++); k; \\\\ _Michel Marcus_, Jul 10 2018",
+        "(PARI) first(n) = my(l=List(), t=1, res = vector(n), c=1); while(c<=n, listput(l,c); t++; c=binomial(t,t\\2)); listput(l,c); res[1]=1; for(i=2, #l, m = max(n,l[i]); for(j=l[i-1] + 1, min(n,l[i]), res[j]=i)); res \\\\ _David A. Corneth_, May 22 2020"
+    ],
+    "xref": [
+        "Cf. A001405."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jack Zhang_, May 28 2018",
+    "references": 2,
+    "revision": 40,
+    "time": "2021-11-25T11:42:10-05:00",
+    "created": "2018-08-04T22:57:13-04:00"
+}

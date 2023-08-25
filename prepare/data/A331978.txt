@@ -1,0 +1,29 @@
+{
+    "number": 331978,
+    "data": "0,1,4,46,1114,46246,2933074,263817646,31943268634,5009616448246,987840438629794,239217148602642046,69790939492563608554,24143849395162438623046,9772368696995766705116914,4575221153658910691872135246,2453303387149157947685779986874",
+    "name": "E.g.f.: -log(2 - cosh(x)) (even powers only).",
+    "formula": [
+        "a(0) = 0; a(n) = A094088(n) - (1/n) * Sum_{k=1..n-1} binomial(2*n,2*k) * A094088(n-k) * k * a(k).",
+        "a(n) ~ (2*n)! / (n * log(2 + sqrt(3))^(2*n)). - _Vaclav Kotesovec_, Feb 07 2020"
+    ],
+    "maple": [
+        "ptan := proc(n) option remember;",
+        "    if irem(n, 2) = 0 then 0 else",
+        "    add(`if`(k=0, 1, binomial(n, k)*ptan(n - k)), k = 0..n-1, 2) fi end:",
+        "A331978 := n -> ptan(2*n - 1):",
+        "seq(A331978(n), n = 0..16);  # _Peter Luschny_, Jun 06 2022"
+    ],
+    "mathematica": [
+        "nmax = 16; Table[(CoefficientList[Series[-Log[2 - Cosh[x]], {x, 0, 2 nmax}], x] Range[0, 2 nmax]!)[[n]], {n, 1, 2 nmax + 1, 2}]"
+    ],
+    "xref": [
+        "Cf. A000111, A000182, A000629, A003703, A003704, A003707, A094088, A331611."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Feb 03 2020",
+    "references": 2,
+    "revision": 14,
+    "time": "2022-06-06T07:15:23-04:00",
+    "created": "2020-02-03T22:19:33-05:00"
+}

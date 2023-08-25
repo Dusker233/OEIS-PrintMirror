@@ -1,0 +1,44 @@
+{
+    "number": 117487,
+    "data": "1,2,5,10,20,36,63,104,169,264,405,604,888,1278,1815,2536,3502,4772,6437,8586,11352,14866,19315,24890,31851,40466,51089,64092,79952,99172,122386,150264,183639,223394,270605,326422,392225,469490,559970,665542,788412",
+    "name": "G.f.: 1/((1-x)*(1-x^2)*(1-x^3)*(1-x^4)*(1-x^5))^2.",
+    "comment": [
+        "Molien series for S_5 X S_5, cf. A001401.",
+        "Molien series for S_k X S_k approaches A000712 as k increases.",
+        "Column 5 of table A115994.",
+        "Note that a(5) is 20, the scalar product of (1 1 2 3 5) and (5 3 2 1 1 ). a(6) is 36, the scalar product of (1 1 2 3 5 7) and (7 5 3 2 1 1 )."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A117487/b117487.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "maple": [
+        "# adapted from A115994 kmax := 120 : qmax := kmax/2 : g:=sum(t^k*q^(k^2)/product((1-q^j)^2, j=1..k), k=1..kmax): gser:=series(g, q=0, qmax): for n from 25 to qmax-1 do P :=coeff(gser, q^n) : printf(\"%a,\",coeff(P, t^5)); od: # _R. J. Mathar_, Apr 07 2006"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/(Product[(1-x^j), {j,5}])^2, {x,0,45}], x] (* _G. C. Greubel_, Jan 01 2020 *)"
+    ],
+    "program": [
+        "(Magma) n:=5; G:=SymmetricGroup(n); H:=DirectProduct(G,G); MolienSeries(H); // _N. J. A. Sloane_",
+        "(PARI) my(x='x+O('x^45)); Vec( 1/(prod(j=1,5, 1-x^j))^2 ) \\\\ _G. C. Greubel_, Jan 01 2020",
+        "(Sage)",
+        "def A117487_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( 1/(product(1-x^j for j in (1..5)))^2 ).list()",
+        "A117487_list(45) # _G. C. Greubel_, Jan 01 2020"
+    ],
+    "xref": [
+        "Cf. A000027, A000712, A001399, A001400, A006918.",
+        "Cf. A115994, A117485, A117486, A117488, A117489."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alford Arnold_, Mar 22 2006",
+    "ext": [
+        "More terms from _R. J. Mathar_, Apr 07 2006",
+        "Entry revised by _N. J. A. Sloane_, Mar 10 2007"
+    ],
+    "references": 4,
+    "revision": 18,
+    "time": "2022-09-08T08:45:24-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

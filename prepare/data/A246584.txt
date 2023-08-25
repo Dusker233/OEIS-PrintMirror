@@ -1,0 +1,46 @@
+{
+    "number": 246584,
+    "data": "1,2,6,12,26,48,92,160,282,470,784,1260,2020,3152,4896,7456,11290,16836,24962,36556,53232,76736,110012,156384,221156,310482,433776,602200,832224,1143696,1565088,2131072,2890266,3902344,5249356,7032576,9389022,12488368",
+    "name": "Number of overcubic partitions of n.",
+    "comment": [
+        "Convolution of A001935 and A002513. - _Vaclav Kotesovec_, Aug 16 2019"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A246584/b246584.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Michael D. Hirschhorn, <a href=\"https://www.thebookshelf.auckland.ac.nz/docs/NZJMaths/nzjmaths042/nzjmaths042-00-021.pdf\">A note on overcubic partitions</a>, New Zealand J. Math., 42:229-234, 2012.",
+        "Bernard L. S. Lin, <a href=\"https://doi.org/10.37236/4400\">Arithmetic properties of overcubic partition pairs</a>, Electronic Journal of Combinatorics 21(3) (2014), #P3.35.",
+        "James A. Sellers, <a href=\"https://ajc.maths.uq.edu.au/pdf/60/ajc_v60_p191.pdf\">Elementary proofs of congruences for the cubic and overcubic partition functions</a>, Australasian Journal of Combinatorics, 60(2) (2014), 191-197."
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} (1+x^k) * (1+x^(2*k)) / ((1-x^k) * (1-x^(2*k))). - _Vaclav Kotesovec_, Aug 16 2019",
+        "a(n) ~ 3^(3/4) * exp(sqrt(3*n/2)*Pi) / (2^(19/4)*n^(5/4)). - _Vaclav Kotesovec_, Aug 16 2019"
+    ],
+    "maple": [
+        "# to get 140 terms:",
+        "ph:=add(q^(n^2),n=-12..12);",
+        "ph:=series(ph,q,140);",
+        "g1:=1/(subs(q=-q,ph)*subs(q=-q^2,ph));",
+        "g1:=series(g1,q,140);",
+        "seriestolist(%);",
+        "# second Maple program:",
+        "with(numtheory):",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(a(n-j)*add(d*",
+        "      `if`(irem(d, 4)=2, 3, 2), d=divisors(j)), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Aug 17 2019"
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[Product[(1+x^k) * (1+x^(2*k)) / ((1-x^k) * (1-x^(2*k))), {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 16 2019 *)",
+        "nmax = 50; CoefficientList[Series[Product[(1+x^(2*k)) / (1-x^k)^2, {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 16 2019 *)"
+    ],
+    "xref": [
+        "Trisections: A246585, A246586, A246587."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Sep 03 2014",
+    "references": 7,
+    "revision": 34,
+    "time": "2022-10-27T12:04:58-04:00",
+    "created": "2014-09-03T23:16:02-04:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 316944,
+    "data": "0,1,4,16,80,456,3072,23536,202304,1937920,20470400,236172288,2955465216,39893618688,577937479680,8944476580864,147277509541888,2570740210700288,47418288632692736,921669646969167872,18829500772271472640,403390045252173381632",
+    "name": "Total height of the binary search trees summed over all permutations of [n].",
+    "comment": [
+        "Each permutation of [n] generates a binary search tree of height h (floor(log_2(n))+1 <= h <= n) when its elements are inserted in that order into the initially empty tree.  The average height of a binary search tree on n elements is A195582(n)/A195583(n).",
+        "Empty external nodes are counted in determining the height of a search tree."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A316944/b316944.txt\">Table of n, a(n) for n = 0..449</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Binary_search_tree\">Binary search tree</a>",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} k * A195581(n,k) = Sum_{k=0..n} k * A244108(n,k).",
+        "a(n) = A000142(n) * A195582(n)/A195583(n)."
+    ],
+    "example": [
+        "a(3) = 16 = 3 + 3 + (2+2) + 3 + 3:",
+        ".",
+        "          3         3        2        1         1",
+        "         / \\       / \\      / \\      / \\       / \\",
+        "        2   o     1   o    1   3    o   3     o   2",
+        "       / \\       / \\      ( ) ( )      / \\       / \\",
+        "      1   o     o   2     o o o o     2   o     o   3",
+        "     / \\           / \\               / \\           / \\",
+        "    o   o         o   o   (2,1,3)   o   o         o   o",
+        "     (3,2,1)     (3,1,2)  (2,3,1)    (1,3,2)   (1,2,3)",
+        "."
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; `if`(n<2, `if`(k<n, 0, 1),",
+        "      add(binomial(n-1, r)*b(r, k-1)*b(n-1-r, k-1), r=0..n-1))",
+        "    end:",
+        "a:= n-> add(k*(b(n, k)-b(n, k-1)), k=0..n):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[n_, k_] := b[n, k] = If[n < 2, If[k < n, 0, 1], Sum[Binomial[n - 1, r]* b[r, k - 1] b[n - 1 - r, k - 1], {r, 0, n - 1}]];",
+        "a[n_] := Sum[k(b[n, k] - b[n, k - 1]), {k, 0, n}];",
+        "a /@ Range[0, 25] (* _Jean-Fran\u00e7ois Alcover_, Jan 27 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000142, A000523, A195581, A195582, A195583, A244108, A335921."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 17 2018",
+    "references": 5,
+    "revision": 18,
+    "time": "2021-01-27T10:13:41-05:00",
+    "created": "2018-07-17T14:34:06-04:00"
+}

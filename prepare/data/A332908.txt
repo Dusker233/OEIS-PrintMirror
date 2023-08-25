@@ -1,0 +1,35 @@
+{
+    "number": 332908,
+    "data": "1,21,226,2612,29261,346453,4338214,57819554,815225643,12234293579,194294281572,3264124624256,57826690252441,1079032037759257,21142347350725466,434563256137908638,9344589765620199919,209952915324112384719,4919186923210370523448",
+    "name": "Number of entries in the fourth cycles of all permutations of [n] when cycles are ordered by increasing lengths.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A332908/b332908.txt\">Table of n, a(n) for n = 4..450</a>",
+        "Andrew V. Sills, <a href=\"https://arxiv.org/abs/1912.05306\">Integer Partitions Probability Distributions</a>, arXiv:1912.05306 [math.CO], 2019.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation\">Permutation</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, [1, 0], `if`(i>n, 0,",
+        "      add((p-> p+`if`(t>0 and t-j<1, [0, p[1]*i], 0))((i-1)!^j*",
+        "        b(n-i*j, i+1, max(0, t-j))/j!*combinat[multinomial]",
+        "         (n, i$j, n-i*j)), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n, 1, 4)[2]:",
+        "seq(a(n), n=4..22);"
+    ],
+    "mathematica": [
+        "multinomial[n_, k_List] := n!/Times @@ (k!);",
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0, {1, 0}, If[i > n, 0, Sum[Function[ p, p + If[p =!= 0 && t>0 && t - j < 1, {0, p[[1]]*i}, {0, 0}]][(i-1)!^j* b[n - i*j, i + 1, Max[0, t - j]]/j!*multinomial[n, Append[Array[i&, j], n - i*j]]], {j, 0, n/i}]]];",
+        "a[n_] := b[n, 1, 4][[2]];",
+        "a /@ Range[4, 22] (* _Jean-Fran\u00e7ois Alcover_, Apr 21 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=4 of A322383."
+    ],
+    "keyword": "nonn",
+    "offset": "4,2",
+    "author": "_Alois P. Heinz_, Mar 02 2020",
+    "references": 3,
+    "revision": 8,
+    "time": "2020-04-21T08:30:35-04:00",
+    "created": "2020-03-02T11:14:15-05:00"
+}

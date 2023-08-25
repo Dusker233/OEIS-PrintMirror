@@ -1,0 +1,30 @@
+{
+    "number": 341467,
+    "data": "1,1,1,1,2,2,4,5,6,7,10,12,16,19,24,28,36,41,52,60,73,85,102,116,142,161,192,217,256,287,339,382,442,496,574,639,737,821,937,1041,1184,1309,1483,1640,1845,2037,2283,2508,2807,3081,3430,3761,4170,4553,5045",
+    "name": "Number of partitions of n into 8 distinct nonprime parts.",
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0,",
+        "      `if`(t=0, 1, 0), `if`(i<1 or t<1, 0, b(n, i-1, t)+",
+        "      `if`(isprime(i), 0, b(n-i, min(n-i, i-1), t-1))))",
+        "    end:",
+        "a:= n-> b(n$2, 8):",
+        "seq(a(n), n=64..118);  # _Alois P. Heinz_, Feb 12 2021"
+    ],
+    "mathematica": [
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0,",
+        "     If[t == 0, 1, 0], If[i < 1 || t < 1, 0, b[n, i - 1, t] +",
+        "     If[PrimeQ[i], 0, b[n - i, Min[n - i, i - 1], t - 1], 0]]];",
+        "a[n_] := b[n, n, 8];",
+        "Table[a[n], {n, 64, 118}] (* _Jean-Fran\u00e7ois Alcover_, Feb 22 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A005171, A018252, A096258, A219202, A302479, A341455, A341461, A341462, A341464, A341465, A341466."
+    ],
+    "keyword": "nonn",
+    "offset": "64,5",
+    "author": "_Ilya Gutkovskiy_, Feb 12 2021",
+    "references": 9,
+    "revision": 10,
+    "time": "2022-02-22T06:41:01-05:00",
+    "created": "2021-02-12T20:30:56-05:00"
+}

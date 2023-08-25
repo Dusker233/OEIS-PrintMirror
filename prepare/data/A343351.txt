@@ -1,0 +1,28 @@
+{
+    "number": 343351,
+    "data": "1,1,7,43,280,1792,11586,74550,479892,3083640,19794678,126908502,812761299,5199586119,33230586285,212172173565,1353444677529,8626044781761,54931168743703,349524243121795,2222294161109422,14119034725444774,89639674321304392,568720801952770012",
+    "name": "Expansion of Product_{k>=1} 1 / (1 - x^k)^(6^(k-1)).",
+    "formula": [
+        "a(n) ~ exp(sqrt(2*n/3) - 1/12 + c/6) * 6^(n - 1/4) / (2*sqrt(Pi)*n^(3/4)), where c = Sum_{j>=2} 1/(j * (6^(j-1) - 1)). - _Vaclav Kotesovec_, Apr 12 2021"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(a(n-j)*add(",
+        "      d*6^(d-1), d=numtheory[divisors](j)), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..23);  # _Alois P. Heinz_, Apr 12 2021"
+    ],
+    "mathematica": [
+        "nmax = 23; CoefficientList[Series[Product[1/(1 - x^k)^(6^(k - 1)), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, (1/n) Sum[Sum[d 6^(d - 1), {d, Divisors[k]}] a[n - k], {k, 1, n}]]; Table[a[n], {n, 0, 23}]"
+    ],
+    "xref": [
+        "Cf. A034691, A104460, A144070, A343349, A343350, A343352, A343353, A343354, A343355."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 12 2021",
+    "references": 7,
+    "revision": 10,
+    "time": "2021-04-12T12:13:39-04:00",
+    "created": "2021-04-12T09:24:25-04:00"
+}

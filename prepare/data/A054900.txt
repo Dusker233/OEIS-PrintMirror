@@ -1,0 +1,56 @@
+{
+    "number": 54900,
+    "data": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6",
+    "name": "a(n) = Sum_{j >= 1} floor(n/16^j).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A054900/b054900.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n) = (n - A053836(n))/15.",
+        "From _Hieronymus Fischer_, Aug 14 2007: (Start)",
+        "Recurrence:",
+        "a(n) = a(floor(n/16)) + floor(n/16).",
+        "a(16*n) = a(n) + n.",
+        "a(n*16^m) = a(n) + n*(16^m - 1)/15.",
+        "a(k*16^m) = k*(16^m - 1)/15, for 0 <= k < 16, m>=0.",
+        "Asymptotic behavior:",
+        "a(n) = n/15 + O(log(n)).",
+        "a(n+1) - a(n) = O(log(n)) (this follows from the inequalities below).",
+        "a(n) <= (n-1)/15; equality holds for powers of 16.",
+        "a(n) >= (n-15)/15 - floor(log_16(n)); equality holds for n = 16^m - 1, m > 0.",
+        "Limits:",
+        "lim inf (n/15 - a(n)) = 1/15, for n --> oo.",
+        "lim sup (n/15 - log_16(n) - a(n)) = 0, for n --> oo.",
+        "lim sup (a(n+1) - a(n) - log_16(n)) = 0, for n --> oo.",
+        "Series:",
+        "G.f.: (1/(1-x))*Sum_{k > 0} x^(16^k)/(1-x^(16^k)). (End)"
+    ],
+    "mathematica": [
+        "a[n_, m_]:= If[n==0, 0, a[Floor[n/m], m] +Floor[n/m]];",
+        "Table[a[n, 16], {n,0,127}] (* _G. C. Greubel_, Apr 28 2023 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "m:=16;",
+        "function a(n) // a = A054900, m = 16",
+        "  if n eq 0 then return 0;",
+        "  else return a(Floor(n/m)) + Floor(n/m);",
+        "  end if; end function;",
+        "[a(n): n in [0..127]]; // _G. C. Greubel_, Apr 28 2023",
+        "(SageMath)",
+        "m=16 # a = A054900",
+        "def a(n): return 0 if (n==0) else a(n//m) + (n//m)",
+        "[a(n) for n in range(128)] # _G. C. Greubel_, Apr 28 2023"
+    ],
+    "xref": [
+        "Cf. A011371 and A054861 for analogs involving powers of 2 and 3.",
+        "Cf. A053836, A054897, A054899, A067080, A098844, A132032."
+    ],
+    "keyword": "nonn",
+    "offset": "0,33",
+    "author": "_Henry Bottomley_, May 23 2000",
+    "references": 3,
+    "revision": 27,
+    "time": "2023-04-29T08:10:47-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

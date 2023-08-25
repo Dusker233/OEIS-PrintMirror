@@ -1,0 +1,39 @@
+{
+    "number": 318555,
+    "data": "6,15,66,91,435,561,703,946,1105,1729,1891,2465,2701,2821,2926,3367,5551,6601,8646,8695,8911,10585,11305,12403,13981,15051,15841,16471,18721,23001,26335,29341,30889,38503,39865,41041,46657,49141,52633,53131,62745,63973,68101,75361,76627,76798,79003,88561,88831,91001",
+    "name": "\"Strong impostors\" not divisible by 4: Those numbers s !== 0 (mod 4) such that lambda(s) | 2(s-1), where lambda is the Carmichael function (A002322).",
+    "comment": [
+        "Strong impostors not == 0 (mod 4) have the property that, even though they are composite, when paired with any odd prime r such that (s,r) = 1, they produce valid RSA key pairs. More specifically, if n=sr, all a in Z_n will be correctly encrypted and decrypted for any (e,d) key pair such that ed == 1 mod (s-1)(r-1). They include the Carmichael numbers and are squarefree. The set of their odd prime factors is always normal: If p_i and p_j are odd prime factors, no p_i == 1 mod p_j."
+    ],
+    "link": [
+        "Barry Fagin, <a href=\"/A318555/b318555.txt\">Table of n, a(n) for n = 1..2773</a> (all terms up to 32 bits)",
+        "D. Borwein, J. M. Borwein, P. B. Borwein and R. Girgensohn, <a href=\"http://www.jstor.org/stable/2975213\">Giuga's Conjecture on Primality</a>, Amer. Math. Monthly 103, No. 1, 40-50 (1996).",
+        "B. S. Fagin, <a href=\"https://doi.org/10.3390/info9090216\">Composite Numbers That Give Valid RSA Key Pairs For Any Coprime p</a>, Information, 9, 216; doi:10.3390/info9090216.",
+        "J. M. Grau and Antonio Oller-Marc\u00e9n, <a href=\"https://arxiv.org/abs/1103.3483\">Generalizing Giuga's conjecture</a>, arXiv:1103.3483 [math.NT], 2011."
+    ],
+    "mathematica": [
+        "Reap[For[s = 1, s < 10^5, s++, If[!Divisible[s, 4] && CompositeQ[s], If[ Divisible[2(s-1), CarmichaelLambda[s]], Print[s]; Sow[s]]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Feb 18 2019 *)"
+    ],
+    "program": [
+        "(Python with numbthy library)",
+        "for s in range(min_s,max_s):",
+        "    if numbthy.is_prime(s):",
+        "        continue",
+        "    elif s % 4 == 0:",
+        "        continue",
+        "    elif (2*(s-1) % numbthy.carmichael_lambda(s) == 0):",
+        "        print(\"s =\",s)",
+        "(PARI) isok(s) = s>1 && s%4>0 && !isprime(s) && (2*s-2)%lcm(znstar(s)[2])==0; \\\\ _Jinyuan Wang_, Mar 01 2020"
+    ],
+    "xref": [
+        "Cf. A002997 (Carmichael numbers), A005117 (squarefree numbers).",
+        "Subsequence of A231569."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Barry Fagin_, Aug 28 2018",
+    "references": 1,
+    "revision": 38,
+    "time": "2023-07-23T01:53:51-04:00",
+    "created": "2018-09-17T12:35:36-04:00"
+}

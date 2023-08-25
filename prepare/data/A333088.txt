@@ -1,0 +1,46 @@
+{
+    "number": 333088,
+    "data": "1,7,143,4351,814001,1304114687,8811986820779,5052800260335941,153317149364862950801,131408899191108437793754033,11009306212815764937387730291387,4837569887867603346019952058036959933,37818210546715267110622871226615561517197713",
+    "name": "a(n) is the numerator of Sum_{i > 0} 1/(Fibonacci(i)*Fibonacci(i+2n)).",
+    "comment": [
+        "The denominators are given in A333089.",
+        "Sum_{i > 0} 1/(Fibonacci(i)*Fibonacci(i+2n)) is a fraction for n > 0.",
+        "Sum_{i > 0} 1/Fibonacci(i)^2, i.e., the n = 0 case, is known to be transcendental. See A105393.",
+        "Sum_{i > 0} 1/(Fibonacci(i)*Fibonacci(i+2n-1)) is an irrational number for n > 0. See for instance A290565 (n = 1)."
+    ],
+    "link": [
+        "A.H.M. Smeets, <a href=\"/A333088/b333088.txt\">Table of n, a(n) for n = 1..62</a>",
+        "Brother Alfred Brousseau, <a href=\"https://www.mathstat.dal.ca/FQ/Scanned/7-2/brousseau1.pdf\">Summation of Infinite Fibonacci Series</a>, The Fibonacci Quarterly, Vol. 7, No. 2 (1969), pp. 143-168. See (5) and (6) p. 148.",
+        "Stanley Rabinowitz, <a href=\"https://www.mathstat.dal.ca/FQ/Scanned/37-2/rabinowitz1.pdf\">Algorithmic summation of reciprocals of products of Fibonacci numbers</a>, The Fibonacci Quarterly, Vol. 37 (1999), pp. 122-127. See (23) and (25) p. 5."
+    ],
+    "formula": [
+        "a(n) = numerator of (1/Fibonacci(2n)) * Sum_{0 < i <= n} 1/(Fibonacci(2i-1)*Fibonacci(2i))."
+    ],
+    "example": [
+        "These infinite sums begin: 1, 7/18, 143/960, ..."
+    ],
+    "mathematica": [
+        "a[n_] := Numerator[Sum[1/(Fibonacci[2i-1]*Fibonacci[2i]),{i,1,n}]/Fibonacci[2n]]; Array[a, 13] (* _Amiram Eldar_, Mar 10 2020 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = numerator(sum(i=1, n, 1/(fibonacci(2*i-1)*fibonacci(2*i)))/ fibonacci(2*n)); \\\\ _Michel Marcus_, Mar 10 2020",
+        "(Python)",
+        "from math import gcd",
+        "f0, f1, snum, sden, n = 1, 1, 0, 1, 0",
+        "while n < 13:",
+        "    snum, sden, n = f0*f1*snum+sden, sden*f0*f1, n+1",
+        "    d = gcd(snum,sden*f0)",
+        "    print(n,snum//d)",
+        "    f0, f1 = 2*f0+f1, f0+f1 # _A.H.M. Smeets_, May 16 2020"
+    ],
+    "xref": [
+        "Cf. A105393, A290565, A333089 (denominator)."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "1,2",
+    "author": "_A.H.M. Smeets_, Mar 07 2020",
+    "references": 4,
+    "revision": 54,
+    "time": "2021-05-08T08:33:24-04:00",
+    "created": "2020-03-11T12:06:25-04:00"
+}

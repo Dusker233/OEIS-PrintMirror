@@ -1,0 +1,59 @@
+{
+    "number": 274005,
+    "data": "1,2,4,8,16,32,62,120,222,410,728,1294,2220,3816,6380,10690,17486,28704,46180,74464,118226,188158,295062,464146,721500,1123384,1731646,2676538,4094776,6279380,9562698,14563312,22043302,33433502,50357062,75988618,114092544",
+    "name": "Number of length-n binary sequences where the sum of each subblock differs by at most 2 from every other subblock of the same length.",
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A274005/a274005.gp.txt\">PARI program for A274005</a>"
+    ],
+    "example": [
+        "For n = 6, the strings 000111 and 111000 are not counted, since the sum of length-3 subblocks that begin and end differ by 3."
+    ],
+    "maple": [
+        "A274005 := proc(n)",
+        "    local a,b,lbdgs,bdgs,i,j,wrks,stri ;",
+        "    a := 0 ;",
+        "    for b from 0 to 2^n-1  do",
+        "        bdgs := convert(b,base,2) ;",
+        "        lbdgs := nops(bdgs) ;",
+        "        bdgs := [op(bdgs),seq(0,i=1..n-lbdgs)] ;",
+        "        wrks := true;",
+        "        for stri from 3 to n/2 do",
+        "            for i from 1 to n-stri do",
+        "            for j from i+1 to n-stri+1 do",
+        "                if abs(add(bdgs[u],u=i..i+stri-1) - add(bdgs[u],u=j..j+stri-1)) >2 then",
+        "                    wrks := false;",
+        "                end if ;",
+        "                if not wrks then",
+        "                    break;",
+        "                end if;",
+        "            end do:",
+        "            end do:",
+        "            if not wrks then",
+        "                break;",
+        "            end if;",
+        "        end do ;",
+        "        if wrks then",
+        "            a := a+1 ;",
+        "        end if;",
+        "    end do:",
+        "    a ;",
+        "end proc: # _R. J. Mathar_, Jun 16 2016"
+    ],
+    "program": [
+        "(PARI) See Links section."
+    ],
+    "xref": [
+        "Cf. A005598, which is the analogous sequence where \"2\" is replaced by \"1\".",
+        "Cf. A362063."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Jeffrey Shallit_, Jun 06 2016",
+    "ext": [
+        "More terms from _R\u00e9my Sigrist_, Jun 24 2021"
+    ],
+    "references": 4,
+    "revision": 18,
+    "time": "2023-05-19T08:02:12-04:00",
+    "created": "2016-06-08T04:56:44-04:00"
+}

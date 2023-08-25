@@ -1,0 +1,43 @@
+{
+    "number": 276559,
+    "data": "1,2,3,8,10,12,14,24,36,40,44,60,78,84,90,128,153,180,190,240,273,308,322,384,475,520,567,644,754,810,868,992,1122,1258,1330,1548,1702,1862,1950,2200,2460,2646,2838,3124,3510,3726,3948,4320,4802,5200,5457,6032,6572,7128,7425,8064,8778,9454,9971,10680",
+    "name": "Expansion of Sum_{k>=1} k^2*x^k^2/(1 - x^k^2) * Product_{k>=1} 1/(1 - x^k^2).",
+    "comment": [
+        "Sum of all parts of all partitions of n into squares.",
+        "Convolution of the sequences A001156 and A035316."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A276559/b276559.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Par#partN\">Index entries for related partition-counting sequences</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=1} k^2*x^k^2/(1 - x^k^2) * Product_{k>=1} 1/(1 - x^k^2).",
+        "G.f.: x*f'(x), where f(x) = Product_{k>=1} 1/(1 - x^k^2).",
+        "a(n) = n * A001156(n).",
+        "a(n) = n * Sum_{k=1..n} A243148(n,k). - _Alois P. Heinz_, Sep 19 2018"
+    ],
+    "example": [
+        "a(8) = 24 because we have [4, 4], [4, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1] and 3*8 = 24."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, [1, n], (s->",
+        "      `if`(s>n, 0, (p->p+[0, p[1]*s])(b(n-s, i))))(i^2)+b(n, i-1))",
+        "    end:",
+        "a:= n-> b(n, isqrt(n))[2]:",
+        "seq(a(n), n=1..70);  # _Alois P. Heinz_, Sep 19 2018"
+    ],
+    "mathematica": [
+        "nmax = 60; Rest[CoefficientList[Series[Sum[k^2 x^k^2/(1 - x^k^2), {k, 1, nmax}] Product[1/(1 - x^k^2), {k, 1, nmax}], {x, 0, nmax}], x]]",
+        "nmax = 60; Rest[CoefficientList[Series[x D[Product[1/(1 - x^k^2), {k, 1, nmax}], x], {x, 0, nmax}], x]]"
+    ],
+    "xref": [
+        "Cf. A000290, A001156, A035316, A066186, A243148, A281541."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Apr 10 2017",
+    "references": 2,
+    "revision": 11,
+    "time": "2018-09-19T10:48:21-04:00",
+    "created": "2017-04-10T23:29:58-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 320021,
+    "data": "5,6,7,8,35,40,51,237,263,264,280,387,899,1300,7300,8363,8364,11764,26740,26939,46595,59004,80877,131580,5244549,5462385,17062317,75097524,127838820,323987589,1162300835,1381439877,4943600220",
+    "name": "Numbers equal to the sum of the aliquot parts of the previous k numbers, for some k.",
+    "comment": [
+        "So far 2 <= k <= 4 (k = 2 for 7, 35, 51, 237, 263, 387, 899, 8363, 26939, 46595, 80877, ...; k = 3 for 5, 8, 40, 264, 280, 1300, 7300, 8364, 11764, 26740, 59004, 131580, ...; k = 4 for 6). Are there terms with k = 5, 6, 7, ...?",
+        "a(34) > 10^12. - _Giovanni Resta_, Oct 09 2018",
+        "If we were looking at numbers equal to the sum of the aliquot parts of the previous k numbers and of the following k, for some k, the first terms would be 2263024 and 128508838576."
+    ],
+    "formula": [
+        "a(n) = Sum_{i = 1..k} A001065(a(n)-i), for some k."
+    ],
+    "example": [
+        "5 is in the sequence because aliquot parts of 4 are 1, 2, of 3 is 1, of 2 is 1: 1 + 2 + 1 + 1 = 5.",
+        "6 is in the sequence because aliquot parts of 5 is 1, of 4 are 1, 2, of 3 is 1, of 2 is 1: 1 + 1 + 2 + 1 + 1 = 6.",
+        "7 is in the sequence because aliquot parts of 6 are 1, 2, 3, of 5 is 1: 1 + 2 + 3 + 1 = 7."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,j,k,n; for n from 1 to q do",
+        "a:=0; k:=0; while a<n do k:=k+1; a:=a+sigma(n-k)-n+k; od;",
+        "if a=n then print(n); fi; od; end: P(10^9);"
+    ],
+    "mathematica": [
+        "ok[n_] := Block[{s=0, k=n}, While[k>0 && s<n, k--; s += DivisorSigma[1, k] - k]; s == n]; Select[Range[10^5], ok] (* _Giovanni Resta_, Oct 09 2018 *)"
+    ],
+    "xref": [
+        "Cf. A001065, A320022."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Oct 03 2018",
+    "ext": [
+        "a(25)-a(33) from _Giovanni Resta_, Oct 09 2018"
+    ],
+    "references": 1,
+    "revision": 15,
+    "time": "2018-10-15T11:01:47-04:00",
+    "created": "2018-10-15T11:01:47-04:00"
+}

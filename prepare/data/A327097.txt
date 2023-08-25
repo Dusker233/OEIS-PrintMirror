@@ -1,0 +1,53 @@
+{
+    "number": 327097,
+    "data": "5,6,17,20,24,34,36,40,48,53,54,55,60,61,62,63,65,66,68,71,72,80,86,87,89,92,93,94,95,96,101,103,106,108,109,110,111,113,114,115,121,122,123,257,260,272,308,309,310,311,316,317,318,319,320,326,327,342",
+    "name": "BII-numbers of set-systems with non-spanning edge-connectivity 2.",
+    "comment": [
+        "A binary index of n is any position of a 1 in its reversed binary expansion. The binary indices of n are row n of A048793. We define the set-system with BII-number n to be obtained by taking the binary indices of each binary index of n. Every set-system (finite set of finite nonempty sets) has a different BII-number. For example, 18 has reversed binary expansion (0,1,0,0,1), and since the binary indices of 2 and 5 are {2} and {1,3} respectively, the BII-number of {{2},{1,3}} is 18. Elements of a set-system are sometimes called edges.",
+        "The non-spanning edge-connectivity of a set-system is the minimum number of edges that must be removed (along with any isolated vertices) to result in a disconnected or empty set-system."
+    ],
+    "example": [
+        "The sequence of all set-systems with non-spanning edge-connectivity 2 together with their BII-numbers begins:",
+        "   5: {{1},{1,2}}",
+        "   6: {{2},{1,2}}",
+        "  17: {{1},{1,3}}",
+        "  20: {{1,2},{1,3}}",
+        "  24: {{3},{1,3}}",
+        "  34: {{2},{2,3}}",
+        "  36: {{1,2},{2,3}}",
+        "  40: {{3},{2,3}}",
+        "  48: {{1,3},{2,3}}",
+        "  53: {{1},{1,2},{1,3},{2,3}}",
+        "  54: {{2},{1,2},{1,3},{2,3}}",
+        "  55: {{1},{2},{1,2},{1,3},{2,3}}",
+        "  60: {{1,2},{3},{1,3},{2,3}}",
+        "  61: {{1},{1,2},{3},{1,3},{2,3}}",
+        "  62: {{2},{1,2},{3},{1,3},{2,3}}",
+        "  63: {{1},{2},{1,2},{3},{1,3},{2,3}}",
+        "  65: {{1},{1,2,3}}",
+        "  66: {{2},{1,2,3}}",
+        "  68: {{1,2},{1,2,3}}",
+        "  71: {{1},{2},{1,2},{1,2,3}}"
+    ],
+    "mathematica": [
+        "bpe[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "edgeConn[y_]:=If[Length[csm[bpe/@y]]!=1,0,Length[y]-Max@@Length/@Select[Union[Subsets[y]],Length[csm[bpe/@#]]!=1&]];",
+        "Select[Range[0,100],edgeConn[bpe[#]]==2&]"
+    ],
+    "xref": [
+        "Positions of 2's in A326787.",
+        "BII-numbers for vertex-connectivity 2 are A327082.",
+        "BII-numbers for non-spanning edge-connectivity 1 are A327099.",
+        "BII-numbers for non-spanning edge-connectivity > 1 are A327102.",
+        "BII-numbers for spanning edge-connectivity 2 are A327108.",
+        "Cf. A007146, A048793, A052446, A059166, A070939, A095983, A263296, A322335, A322338, A322395, A326031, A327041, A327069, A327111."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Aug 20 2019",
+    "references": 13,
+    "revision": 10,
+    "time": "2019-08-22T20:41:19-04:00",
+    "created": "2019-08-22T20:41:19-04:00"
+}

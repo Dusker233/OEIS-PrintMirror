@@ -1,0 +1,37 @@
+{
+    "number": 321468,
+    "data": "1,1,1,1,2,2,4,4,10,20,40,40,116,116,232,464,1440,1440,4192,4192,11640,23280,46560,46560,157376",
+    "name": "Number of factorizations of n! into factors > 1 that can be obtained by taking the multiset union of a choice of factorizations of each positive integer from 2 to n into factors > 1.",
+    "comment": [
+        "a(n) is the number of factorizations finer than (2*3*...*n) in the poset of factorizations of n! into factors > 1, ordered by refinement."
+    ],
+    "example": [
+        "The a(2) = 1 through a(8) = 10 factorizations:",
+        "2  2*3  2*3*4    2*3*4*5    2*3*4*5*6      2*3*4*5*6*7      2*3*4*5*6*7*8",
+        "        2*2*2*3  2*2*2*3*5  2*2*2*3*5*6    2*2*2*3*5*6*7    2*2*2*3*5*6*7*8",
+        "                            2*2*3*3*4*5    2*2*3*3*4*5*7    2*2*3*3*4*5*7*8",
+        "                            2*2*2*2*3*3*5  2*2*2*2*3*3*5*7  2*2*3*4*4*5*6*7",
+        "                                                            2*2*2*2*3*3*5*7*8",
+        "                                                            2*2*2*2*3*4*5*6*7",
+        "                                                            2*2*2*3*3*4*4*5*7",
+        "                                                            2*2*2*2*2*2*3*5*6*7",
+        "                                                            2*2*2*2*2*3*3*4*5*7",
+        "                                                            2*2*2*2*2*2*2*3*3*5*7",
+        "For example, 2*2*2*2*2*2*3*5*6*7 = (2)*(3)*(2*2)*(5)*(6)*(7)*(2*2*2), so (2*2*2*2*2*2*3*5*6*7) is counted under a(8)."
+    ],
+    "mathematica": [
+        "facs[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[facs[n/d],Min@@#>=d&]],{d,Rest[Divisors[n]]}]];",
+        "Table[Length[Union[Sort/@Join@@@Tuples[facs/@Range[2,n]]]],{n,10}]"
+    ],
+    "xref": [
+        "Dominated by A321514.",
+        "Cf. A001055, A066723, A076716, A157612, A242422, A265947, A300383, A317144, A317145, A317534, A321467, A321470, A321471, A321472."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,5",
+    "author": "_Gus Wiseman_, Nov 11 2018",
+    "references": 6,
+    "revision": 8,
+    "time": "2018-11-13T12:55:05-05:00",
+    "created": "2018-11-13T12:55:05-05:00"
+}

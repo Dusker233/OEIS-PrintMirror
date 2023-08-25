@@ -1,0 +1,30 @@
+{
+    "number": 338787,
+    "data": "0,1,3,35,110,1594,8064,125292,684144,14215536,102769920,2367099360,18380943360,463602216960,4776780072960,141702567955200,1382620380825600,46390044372940800,550153713457152000,19877486361997824000,261552662423506944000,9914502028911427584000,146055669195092557824000",
+    "name": "a(n) = (n!/2) * Sum_{k=1..n-1} A000593(k)*A000593(n-k)/(k*(n-k)).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A338787/b338787.txt\">Table of n, a(n) for n = 1..449</a>"
+    ],
+    "formula": [
+        "a(n) = (n-1)! * Sum_{k=1..n-1} A000593(k)*A000593(n-k)/k."
+    ],
+    "mathematica": [
+        "nmax = 30; A000593 = Table[Sum[Mod[d, 2] d, {d, Divisors[n]}], {n, 1, nmax}]; Table[n!/2 * Sum[A000593[[k]] * A000593[[n-k]] / k / (n-k), {k, 1, n-1}], {n, 1, nmax}] (* _Vaclav Kotesovec_, Nov 09 2020 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(t='t); n!*polcoef(polcoef(prod(k=1, n, (1+x^k+x*O(x^n))^t), n), 2)}",
+        "(PARI) sod(n) = sigma(n>>valuation(n, 2)); \\\\ A000593",
+        "a(n) = (n!/2) * sum(k=1, n-1, sod(k)*sod(n-k)/(k*(n-k))); \\\\ _Michel Marcus_, Nov 09 2020"
+    ],
+    "xref": [
+        "Column 2 of A075525.",
+        "Cf. A000593, A059356."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Seiichi Manyama_, Nov 09 2020",
+    "references": 2,
+    "revision": 20,
+    "time": "2020-11-10T02:19:17-05:00",
+    "created": "2020-11-09T09:48:06-05:00"
+}

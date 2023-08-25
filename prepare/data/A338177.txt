@@ -1,0 +1,34 @@
+{
+    "number": 338177,
+    "data": "1,1,13,451,29329,3070651,471888433,100030519051,27969080006209,9972570497654971,4416195980278209553,2377846409073088636651,1529829042135951902385889,1159034793458252810698852891,1021349080129590760010431665073,1035766505500737073990176095282251",
+    "name": "E.g.f.: Sum_{n>=0} Product_{k=0..n-1} ( exp((n+k)*x) - 1 ).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A338177/b338177.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "E.g.f.: Sum_{n>=0} Product_{k=0..n-1} ( exp((n+k)*x) - 1 ).",
+        "E.g.f.: Sum_{n>=0} exp(n*(3*n-1)/2 * x) / Product_{k=0..n} (1 + exp((n+k)*x)).",
+        "a(n) ~ c * d^n * n!^2 / sqrt(n), where d = 4.66344230824842673353729480791793... and c = 0.2199220967955858347917680132696... - _Vaclav Kotesovec_, Oct 15 2020"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 13*x^2/2! + 451*x^3/3! + 29329*x^4/4! + 3070651*x^5/5! + 471888433*x^6/6! + 100030519051*x^7/7! + 27969080006209*x^8/8! + ...",
+        "where",
+        "A(x) = 1 + (exp(x) - 1) + (exp(x)^2 - 1)*(exp(3*x) - 1) + (exp(3*x) - 1)*(exp(4*x) - 1)*(exp(5*x) - 1) + (exp(4*x) - 1)*(exp(5*x) - 1)*(exp(6*x) - 1)*(exp(7*x) - 1) + (exp(5*x) - 1)*(exp(6*x) - 1)*(exp(7*x) - 1)*(exp(8*x) - 1)*(exp(9*x) - 1) + ... + Product_{k=0..n-1} (exp((n+k)*x) - 1) + ...",
+        "Also",
+        "A(x) = 1/(1 + 1)  +  exp(x)/((1 + exp(x))*(1 + exp(2*x)))  +  exp(5*x)/((1 + exp(2*x))*(1 + exp(3*x))*(1 + exp(4*x)))  +  exp(12*x)/((1 + exp(3*x))*(1 + exp(4*x))*(1 + exp(5*x))*(1 + exp(6*x)))  +  exp(22*x)/((1 + exp(4*x))*(1 + exp(5*x))*(1 + exp(6*x))*(1 + exp(7*x))*(1 + exp(8*x))) + ... + exp((n*(3*n-1)/2*x)/( Product_{k=0..n} (1 + exp((n+k)*x)) ) + ..."
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[Sum[Product[E^((n+k)*x) - 1, {k,0,n-1}], {n, 0, nmax}], {x, 0, nmax}], x] * Range[0, nmax]! (* _Vaclav Kotesovec_, Oct 15 2020 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = n!*polcoeff( sum(m=0, n, prod(k=0,m-1,exp((m+k)*x +x*O(x^n)) - 1) ),n)}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Oct 14 2020",
+    "references": 1,
+    "revision": 10,
+    "time": "2020-10-15T03:22:08-04:00",
+    "created": "2020-10-15T03:22:08-04:00"
+}

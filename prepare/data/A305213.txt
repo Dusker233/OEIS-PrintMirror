@@ -1,0 +1,55 @@
+{
+    "number": 305213,
+    "data": "0,10,110,10010,10011,110101,10011000,10011000,110100011,10010101000,10010101001,101111000101,10010001101010,10010001101010,101101111110011,1111110010100011,10001110000111111,101100111001011100,1111011010110001101,10001010110010101011,101011110011100111110",
+    "name": "a(n) is the smallest nonnegative integer whose first n binary digits coincide with its first n decimal digits.",
+    "link": [
+        "Bert Dobbelaere, <a href=\"/A305213/b305213.txt\">Table of n, a(n) for n = 1..150</a>"
+    ],
+    "example": [
+        "10011 expressed in binary is 10011100011011_2. It is the smallest number for which the first 5 digits coincide, so a(5)=10011."
+    ],
+    "program": [
+        "(Python)",
+        "RDXHI=10",
+        "RDXLO=2",
+        "def solvematch(startHi, startLo, digleft, powHi, powLo):",
+        "....global RDXHI,RDXLO",
+        "....if digleft<=0:",
+        "........return startHi",
+        "....if powHi<0 or powLo<0:",
+        "........return None",
+        "....startd = 1 if startHi==0 else 0",
+        "....for d in range(startd,RDXLO):",
+        "........bh=startHi + d * RDXHI**powHi",
+        "........bl=startLo + d * RDXLO**powLo",
+        "........if bh<(bl+RDXLO**powLo) and bl<(bh+RDXHI**powHi):",
+        "............res=solvematch(bh, bl, digleft-1, powHi-1, powLo-1)",
+        "............if res!=None:",
+        "................return res",
+        "....return None",
+        "def A305213(n):",
+        "....if n<=1:",
+        "........return 0 # Special case: leading and only digit is 0",
+        "....d_hi =n-1",
+        "....sol=None",
+        "....while sol==None:",
+        "........d_lo=d_hi",
+        "........while(RDXLO**d_lo < 2* RDXHI**d_hi):",
+        "............res=solvematch(0,0,n,d_hi,d_lo)",
+        "............if res!=None:",
+        "................sol = min(sol,res) if sol else res",
+        "............d_lo+=1",
+        "........d_hi+=1",
+        "....return sol"
+    ],
+    "xref": [
+        "Not a subsequence of A181929 (consider 10010)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Bert Dobbelaere_, May 27 2018",
+    "references": 4,
+    "revision": 18,
+    "time": "2021-02-25T07:28:59-05:00",
+    "created": "2018-05-27T19:29:12-04:00"
+}

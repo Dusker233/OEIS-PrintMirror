@@ -1,0 +1,51 @@
+{
+    "number": 77939,
+    "data": "1,2,5,13,33,84,214,545,1388,3535,9003,22929,58396,148724,378773,964666,2456829,6257097,15935689,40585304,103363394,263247781,670444260,1707499695,4348691431,11075326817,28206844760,71837707768,182957587113,465959726754",
+    "name": "Expansion of 1/(1 - 2*x - x^2 - x^3).",
+    "comment": [
+        "These coefficients are called the Tripell numbers by Bravo et al. - _Rigoberto Florez_, Jan 23 2020"
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A077939/b077939.txt\">Table of n, a(n) for n = 0..2463</a>",
+        "Jhon Jairo Bravo, Maribel Diaz, and Jos\u00e9 Luis Ramirez, <a href=\"https://doi.org/10.3906/mat-1907-40\">The 2-adic and 3-adic valuation of the Tripell sequence and an application</a>, Turk J Math, (2020) 44: 131-141.",
+        "Jhon J. Bravo, Jose L. Herrera, and Jos\u00e9 L. Ram\u00edrez, <a href=\"https://www.emis.de/journals/JIS/VOL23/Bravo/bravo4.html\">Combinatorial Interpretation of Generalized Pell Numbers</a>, J. Int. Seq., Vol. 23 (2020), Article 20.2.1.",
+        "Brian Hopkins and St\u00e9phane Ouvry, <a href=\"https://arxiv.org/abs/2008.04937\">Combinatorics of Multicompositions</a>, arXiv:2008.04937 [math.CO], 2020.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (2,1,1)."
+    ],
+    "formula": [
+        "a(n) = abs(A077986(n)) = A077849(n) - A077849(n-1) = |A077922(n)| + |A077922(n-1)| = Sum_{k=0..n} A077997(k). - _Ralf Stephan_, Feb 02 2004",
+        "a(n) = Sum_{m=1..n+1} Sum_(k=0..n-m+1} (Sum_{j=0..k} binomial(j,n-m-3*k+2*j+1) *binomial(k,j))*binomial(m+k-1,m-1). - _Vladimir Kruchinin_, Oct 11 2011",
+        "G.f. for sequence with 1 prepended: 1/(1 - Sum_{k>=0} x*(x+x^2+x^3)^k). - _Joerg Arndt_, Sep 30 2012",
+        "G.f.: Q(0)/2, where Q(k) = 1 + 1/(1- x*(4*k+2 + x+x^2)/(x*(4*k+4 + x+x^2) + 1/Q(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, Oct 04 2013",
+        "a(n) = 2*a(n-1) + a(n-2) + a(n-3), where a(0) = 0, a(1)=1, a(2)=2. - _Rigoberto Florez_, Jan 23 2020"
+    ],
+    "maple": [
+        "m:=30; S:=series(1/(1-2*x-x^2-x^3), x, m+1): seq(coeff(S, x, j), j=0..m); # _G. C. Greubel_, Feb 05 2020"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/(1-2*x-x^2-x^3),{x,0,40}],x] (* or *) LinearRecurrence[{2,1,1},{1,2,5},40] (* _Vladimir Joseph Stephan Orlovsky_, Jan 30 2012 *)",
+        "a[n_]:=a[n]=2a[n-1]+a[n-2]+a[n-3]; a[0]=0; a[1]=1; a[2]=2; Table[a[n], {n,30}] (* _Rigoberto Florez_, Jan 23 2020 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum(sum((sum(binomial(j,n-m-3*k+2*j+1)*binomial(k,j),j,0,k))* binomial(m+k-1,m-1),k,0,n-m+1),m,1,n+1); /* _Vladimir Kruchinin_, Oct 11 2011 */",
+        "(PARI) Vec(1/(1-2*x-x^2-x^3)+O(x^99)) \\\\ _Charles R Greathouse IV_, Sep 23 2012",
+        "(Magma) I:=[1,2,5]; [n le 3 select I[n] else 2*Self(n-1) +Self(n-2) +Self(n-3): n in [1..30]]; // _G. C. Greubel_, Feb 05 2020",
+        "(Sage)",
+        "def A077939_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return (1/(1-2*x-x^2-x^3)).list()",
+        "A077939_list(30) # _G. C. Greubel_, Feb 05 2020",
+        "(GAP) a:=[1,2,5];; for n in [4..30] do a[n]:=2*a[n-1]+a[n-2]+a[n-3]; od; a; # _G. C. Greubel_, Feb 05 2020"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Nov 17 2002",
+    "ext": [
+        "Deleted certain dangerous or potentially dangerous links. - _N. J. A. Sloane_, Jan 30 2021"
+    ],
+    "references": 14,
+    "revision": 96,
+    "time": "2022-09-08T08:45:07-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

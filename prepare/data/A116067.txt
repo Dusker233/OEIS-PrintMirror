@@ -1,0 +1,40 @@
+{
+    "number": 116067,
+    "data": "1,2,3,4,5,11,20,21,64,82,83,84,86,98,100,331,720,730,732,810,821,843,921,933,940,942,970,982,983,1100,5540,6442,6542,6644,7331,7411,7433,7440,7442,7443,7511,7520,7530,7531,7620,7630,7641,7642,7644,8210,8500,8510",
+    "name": "Numbers k such that both k and the k-th prime have nonincreasing digits.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A116067/b116067.txt\">Table of n, a(n) for n = 1..82</a> (all terms < 10^8)"
+    ],
+    "example": [
+        "prime(7531) = 76543."
+    ],
+    "mathematica": [
+        "Select[Range[9000],Max[Differences[IntegerDigits[#]]]< 1 && Max[ Differences[ IntegerDigits[Prime[#]]]]<1&] (* _Harvey P. Dale_, Oct 11 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import sieve",
+        "from itertools import count, islice, combinations_with_replacement as mc",
+        "def ni(n): s = str(n); return s == \"\".join(sorted(s, reverse=True))",
+        "def bgen(d):",
+        "    ni = map(int, (\"\".join(m) for m in mc(\"9876543210\", d)))",
+        "    yield from sorted(k for k in ni if k != 0)",
+        "def agen():",
+        "    for d in count(1):",
+        "        yield from (k for k in bgen(d) if ni(sieve[k]))",
+        "print(list(islice(agen(), 52))) # _Michael S. Branicky_, Jun 26 2022"
+    ],
+    "xref": [
+        "Cf. A116066, A116068, A116069."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Giovanni Resta_, Feb 13 2006",
+    "ext": [
+        "a(51) and beyond from _Michael S. Branicky_, Jun 26 2022"
+    ],
+    "references": 4,
+    "revision": 12,
+    "time": "2022-06-27T19:07:27-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

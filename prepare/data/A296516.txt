@@ -1,0 +1,87 @@
+{
+    "number": 296516,
+    "data": "1,1,2,5,14,40,111,300,797,2098,5499,14389,37634,98435,257516,673827,1763460,4615686,12082137,31628294",
+    "name": "a(n) is the number of terms in expanded form of bivariate polynomial Q_n, where (P_n, Q_n) is defined by: P_0 = x, Q_0 = y, P_(n+1) = P_n + Q_n, Q_(n+1) = P_n * Q_n.",
+    "comment": [
+        "Programs based on the direct application of the definition quickly reach a limitation by combinatorial explosion, hence this short list of values in section Data. The first conjectured formula (see Formulas) obtained by the observation of a pattern in the 2D shape of Q_n (as drawn in the Examples) is more computationally efficient and makes it possible to produce a significantly longer list of (nonguaranteed) values: see attached a-file in b-file format, section Links.",
+        "A003686 and A064847 are values of P_n and Q_n at x=y=1 (i.e., sums of coefficients in these polynomials). At x=2, y=1 (or vice versa) P_n and Q_n seem to give same sequences but shifted. At x=y=-1, P_n seems to give A000058 negated interleaved with -1's, while Q_n seems to give A007018 interleaved with the same sequence negated. - _Andrey Zabolotskiy_, May 22 2018"
+    ],
+    "link": [
+        "Luc Rousseau, <a href=\"/A296516/a296516_1.txt\">201 terms obtained with conjectured formula</a>",
+        "R\u00e9my Sigrist, <a href=\"/A296516/a296516.png\">Colored scatterplot of the points (i, j) such that the coefficient of x^i*y^j in Q_14 is nonzero</a> (where the color is function of the coefficient of x^i*y^j in Q_14)"
+    ],
+    "formula": [
+        "Conjectured:",
+        "a(n) = F(n+1)^2 - T(n-1) - T(F(n-1)) - 2*V(n) - 2*W(n) for n > 0, where",
+        "F(n) is the n-th Fibonacci number,",
+        "T(n) is the n-th triangular number,",
+        "V(n) = Sum_{i=1..n-4} F(i)*(Sum_{j=i+1..n-3} (n-2-j)*F(j))",
+        "W(n) = Sum_{i=1..n-3} (n-2-i)*T(F(i))",
+        "Or:",
+        "a(n) = F(n+1)^2 - T(n-1) - T(F(n-1)) - [n>=4]*U(n) where [] is the Iverson bracket,",
+        "U(n) = F(n-1)*F(n-3) + F(n+1)*(2*F(n-4)-1) + 5 - 8*(n mod 2).",
+        "Conjectures from _Colin Barker_, Mar 28 2018: (Start)",
+        "G.f.: 1 + x*(1 - 5*x + 9*x^2 - 5*x^3 - 2*x^4 + x^5) / ((1 - x)^3*(1 - 3*x + x^2)*(1 - x - x^2)).",
+        "a(n) = 7*a(n-1) - 18*a(n-2) + 20*a(n-3) - 6*a(n-4) - 6*a(n-5) + 5*a(n-6) - a(n-7) for n>7.",
+        "(End)",
+        "From _Luc Rousseau_, Mar 30 2018: (Start)",
+        "Derived from the conjectured order-7 linear recurrence above, for n > 0,",
+        "a(n) = -(1/2)*n^2 + (1/2)*n - 1 + (2+phi)/10*(phi^2)^n + (4-3*phi)/10*(-phi^(-1))^n + (1+3*phi)/10*(phi)^n + (3-phi)/10*(phi^(-2))^n,",
+        "where phi denotes the golden ratio and lim_{n->infinity} a(n+1)/a(n) = phi^2.",
+        "a(n) = (F(2*n+1) + F(n+2) - n^2 + n - 2) / 2.",
+        "(End)"
+    ],
+    "example": [
+        "Q_0 = y -> one term -> a(0) = 1;",
+        "Q_1 = x*y -> one term -> a(1) = 1;",
+        "Q_2 = x^2*y + x*y^2 -> two terms -> a(2) = 2;",
+        "Q_3 = x^3*y + 2*x^2*y^2 + x^3*y^2 + x*y^3 + x^2*y^3 -> five terms -> a(3) = 5;",
+        "...",
+        "Locations of terms in 2D arrays indexed by the exponents of x and y:",
+        "   0: .   1: ..   2: ...   3: ....   4: ......   5: .........",
+        "      X      .X      ..X      ...X      ....X.      .....X...",
+        "                     .X.      ..XX      ...XXX      ....XXXX.",
+        "                              .XX.      ..XXXX      ...XXXXXX",
+        "                                        .XXXX.      ..XXXXXXX",
+        "                                        ..XX..      .XXXXXXXX",
+        "                                                    ..XXXXXX.",
+        "                                                    ..XXXXX..",
+        "                                                    ...XXX..."
+    ],
+    "mathematica": [
+        "{p[0], q[0]} := {x, y};",
+        "{p[n_], q[n_]} := {p[n - 1] + q[n - 1], p[n - 1] q[n - 1]};",
+        "a[n_] := Length@CoefficientRules[q[n]];",
+        "Table[a[n], {n, 0, 10}] (* _Andrey Zabolotskiy_, _Peter Luschny_, May 30 2018 *)",
+        "From _Luc Rousseau_, Feb 27 2018: (Start)",
+        "(* conjectured: *)",
+        "T[n_] := n*(n + 1)/2",
+        "F[n_] := Fibonacci[n]",
+        "V[n_] := Sum[F[k]*(Sum[(n - 2 - l)*F[l], {l, k + 1, n - 3}]), {k, 1, n - 4}]",
+        "W[n_] := Sum[(n - 2 - l)*T[F[l]], {l, 1, n - 3}]",
+        "AA[n_] := (F[n + 1])^2 - T[n - 1] - T[F[n - 1]] - 2*V[n] - 2 W[n]",
+        "Table[AA[n], {n, 1, 50}]",
+        "(End)"
+    ],
+    "program": [
+        "(Python)",
+        "def A296516(n):",
+        "    P, Q = {(1,0)}, {(0,1)}",
+        "    for _ in range(n): P, Q = P|Q, set((p[0]+q[0],p[1]+q[1]) for p in P for q in Q)",
+        "    return len(Q) # _Chai Wah Wu_, Oct 18 2021"
+    ],
+    "xref": [
+        "Cf. A000045, A000217, A001622, A033192, A003686, A064847, A000058, A007018.",
+        "Cf. A005207 (which with +1 added appears to be to P_n as a(n) is to Q_n)."
+    ],
+    "keyword": "nonn,more,nice",
+    "offset": "0,3",
+    "author": "_Luc Rousseau_, Feb 27 2018",
+    "ext": [
+        "a(15)-a(19) from _Andrey Zabolotskiy_, May 30 2018"
+    ],
+    "references": 1,
+    "revision": 96,
+    "time": "2021-10-19T10:41:40-04:00",
+    "created": "2018-06-01T15:45:07-04:00"
+}

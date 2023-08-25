@@ -1,0 +1,40 @@
+{
+    "number": 225486,
+    "data": "0,2,3,4,4,4,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7",
+    "name": "Maximal frequency depth for the partitions of n.",
+    "comment": [
+        "See A225485 for the definition of frequency depth.",
+        "The frequency depth of an integer partition is the number of times one must take the multiset of multiplicities to reach (1). For example, the partition (32211) has frequency depth 5 because we have: (32211) -> (221) -> (21) -> (11) -> (2) -> (1). Differs from A325282 at a(0) and a(1). - _Gus Wiseman_, Apr 19 2019"
+    ],
+    "formula": [
+        "a(n) = number of terms in row n of the array in A225485, for n > 0."
+    ],
+    "example": [
+        "(See A225485.)"
+    ],
+    "mathematica": [
+        "c[s_] := c[s] = Select[Table[Count[s, i], {i, 1, Max[s]}], # > 0 &]",
+        "f[s_] := f[s] = Drop[FixedPointList[c, s], -2]",
+        "t[s_] := t[s] = Length[f[s]]",
+        "u[n_] := u[n] = Table[t[Part[IntegerPartitions[n], k]],",
+        "    {k, 1, Length[IntegerPartitions[n]]}];",
+        "Prepend[Table[Max[u[n]], {n, 2, 10}], 0]",
+        "(* second program *)",
+        "grw[q_]:=Join@@Table[ConstantArray[i,q[[Length[q]-i+1]]],{i,Length[q]}];",
+        "Join@@MapIndexed[ConstantArray[#2[[1]]-1,#1]&,Length[#]-Last[#]&/@NestList[grw,{1,1},6]] (* _Gus Wiseman_, Apr 19 2019 *)"
+    ],
+    "xref": [
+        "Run lengths are A325258, i.e., first differences of Levine's sequence A011784.",
+        "Cf. A008284, A116608, A181819, A182850, A182857, A225485, A323014, A323023, A325239, A325242, A325254, A325282, A325283."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, May 08 2013",
+    "ext": [
+        "More terms from _Gus Wiseman_, Apr 19 2019"
+    ],
+    "references": 17,
+    "revision": 12,
+    "time": "2019-04-22T14:26:18-04:00",
+    "created": "2013-05-09T12:35:24-04:00"
+}

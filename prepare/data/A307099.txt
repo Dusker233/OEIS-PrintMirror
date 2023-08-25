@@ -1,0 +1,40 @@
+{
+    "number": 307099,
+    "data": "3,10,51,189,227,356,578,677,996,3389,38997,69096,149462,2208495,3459604,4952236,6710605,48098656,81762222,419495413",
+    "name": "Positive integers k at which k/log_2(k) is at a record closeness to an integer, without actually being an integer.",
+    "comment": [
+        "The closeness of a real number x to an integer is measured as abs(x-round(x)).",
+        "k/log_2(k) can also be written as log(k,2^k). Thus, this is also where 2^k is at a record closeness to a power of k (logarithmically).",
+        "k/log_2(k) is an integer iff k is in A001146, so these integers are ignored."
+    ],
+    "example": [
+        "10/log_2(10) = 3.010... ~ 3, which is an integer. Or, 2^10 = 1024, which is close to 1000 = 10^3.",
+        "996/log_2(996) = 99.99998060..."
+    ],
+    "mathematica": [
+        "With[{s = {-1}~Join~Array[-Abs[Round[#] - #] &[#/Log2[#]] /. 0 -> -1 &, 10^5, 2]}, Rest@ Map[FirstPosition[s, #][[1]] &, Union@ FoldList[Max, s]]] (* _Michael De Vlieger_, Mar 27 2019 *)"
+    ],
+    "program": [
+        "(Python 3)",
+        "from math import floor,ceil,log",
+        "x=2",
+        "mindif=1",
+        "while True:",
+        "    logn=x/log(x,2)",
+        "    dif=min(logn-floor(logn),ceil(logn)-logn)",
+        "    if dif!=0 and mindif>dif:",
+        "        mindif=dif",
+        "        print(x,end=\", \")",
+        "    x+=1"
+    ],
+    "xref": [
+        "Cf. A001146."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Alex Costea_, Mar 24 2019",
+    "references": 0,
+    "revision": 23,
+    "time": "2019-07-09T10:51:34-04:00",
+    "created": "2019-07-09T10:51:34-04:00"
+}

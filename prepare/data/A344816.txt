@@ -1,0 +1,41 @@
+{
+    "number": 344816,
+    "data": "1,7,33,164,790,3946,19572,97828,488479,2442235,12207861,61039267,305179893,1525898649,7629414925,38147071306,190734961932,953674808838,4768372074464,23841860356470,119209292012746,596046459981502,2980232250997128,14901161254984784",
+    "name": "a(n) = Sum_{k=1..n} floor(n/k) * 5^(k-1).",
+    "comment": [
+        "Partial sums of A339685."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A344816/b344816.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} Sum_{d|k} 5^(d-1).",
+        "G.f.: (1/(1 - x)) * Sum_{k>=1} x^k/(1 - 5*x^k).",
+        "G.f.: (1/(1 - x)) * Sum_{k>=1} 5^(k-1) * x^k/(1 - x^k).",
+        "a(n) ~ 5^n / 4. - _Vaclav Kotesovec_, Jun 05 2021",
+        "a(n) = (1/4) * Sum_{k=1..n} (5^floor(n/k) - 1). - _Ridouane Oudra_, Mar 05 2023"
+    ],
+    "maple": [
+        "seq(add(5^(k-1)*floor(n/k), k=1..n), n=1..60); # _Ridouane Oudra_, Mar 05 2023"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[5^(k - 1) * Quotient[n, k], {k, 1, n}]; Array[a, 30] (* _Amiram Eldar_, May 29 2021 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, n\\k*5^(k-1));",
+        "(PARI) a(n) = sum(k=1, n, sumdiv(k, d, 5^(d-1)));",
+        "(PARI) my(N=40, x='x+O('x^N)); Vec(sum(k=1, N, x^k/(1-5*x^k))/(1-x))",
+        "(PARI) my(N=40, x='x+O('x^N)); Vec(sum(k=1, N, 5^(k-1)*x^k/(1-x^k))/(1-x))"
+    ],
+    "xref": [
+        "Column k=5 of A344821.",
+        "Cf. A059851, A268235, A332533, A344814, A344815, A344817, A344818, A344819, A344820."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, May 29 2021",
+    "references": 8,
+    "revision": 25,
+    "time": "2023-03-07T11:13:23-05:00",
+    "created": "2021-05-29T07:33:34-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 317111,
+    "data": "1,1,1,1,2,10,50,210,840,4200,29400,231000,1755600,13213200,109309200,1051050000,11099088000,120071952000,1320791472000,15317750448000,192286654560000,2577944809440000,35885904294240000,513695427204960000,7641940962015360000",
+    "name": "Number of permutations of [n] in which the length of every increasing run is 0 or 1 (mod 4).",
+    "comment": [
+        "Similarly, 1/(1 - x + x^2/2! - ... - x^(2m-1)/(2m-1)!) is the e.g.f. for permutations in which every increasing run has length 0 or 1 (mod 2m)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A317111/b317111.txt\">Table of n, a(n) for n = 0..485</a>",
+        "David Galvin, John Engbers, and Clifford Smyth, <a href=\"https://arxiv.org/abs/2303.14057\">Reciprocals of thinned exponential series</a>, arXiv:2303.14057 [math.CO], 2023.",
+        "Ira M. Gessel, <a href=\"https://arxiv.org/abs/1807.09290\">Reciprocals of exponential polynomials and permutation enumeration</a>, arXiv:1807.09290 [math.CO], 2018."
+    ],
+    "formula": [
+        "E.g.f.: 1/(1 - x + x^2/2! - x^3/3!)."
+    ],
+    "example": [
+        "For n=4 the a(4)=2 permutations are 4321 and 1234."
+    ],
+    "maple": [
+        "gser:=series(1/(1-x+x^2/2!-x^3/3!), x, 21): seq(n!*coeff(gser,x,n), n=0..20);"
+    ],
+    "mathematica": [
+        "With[{nmax = 25}, CoefficientList[Series[1/(1 -x +x^2/2! -x^3/3!), {x, 0, nmax}], x]*Range[0, nmax]!] (* _G. C. Greubel_, Nov 30 2018 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^25)); Vec(serlaplace(1/(1 -x +x^2/2 -x^3/6))) \\\\ _G. C. Greubel_, Nov 30 2018",
+        "(Magma) m:=25; R<x>:=PowerSeriesRing(Rationals(), m); b:=Coefficients(R!( 1/(1-x+x^2/2-x^3/6) )); [Factorial(n-1)*b[n]: n in [1..m]]; // _G. C. Greubel_, Nov 30 2018",
+        "(Sage)",
+        "f= 1/(1 -x +x^2/2 -x^3/6)",
+        "g=f.taylor(x,0,13)",
+        "L=g.coefficients()",
+        "coeffs={c[1]:c[0]*factorial(c[1]) for c in L}",
+        "coeffs  # _G. C. Greubel_, Nov 30 2018"
+    ],
+    "xref": [
+        "Cf. A097592, A097597."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,5",
+    "author": "_Ira M. Gessel_, Jul 21 2018",
+    "references": 13,
+    "revision": 23,
+    "time": "2023-03-29T15:24:36-04:00",
+    "created": "2018-07-21T16:49:27-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 318748,
+    "data": "1,1,2,4,7,13,24,43,82,151,285,535,1005,1883,3533,6631,12460,23407,43952,82538,154999,291088,546674,1026687,1928118,3621017,6800300,12771086,23984329,45042959,84591339,158863807,298348613,560303342,1052258402,1976157510",
+    "name": "Number of integer compositions of n that have only one part or whose consecutive parts are coprime and the last and first part are also coprime.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A318748/b318748.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = A328609(n) + 1 for n > 1. - _Andrew Howroyd_, Nov 01 2019"
+    ],
+    "example": [
+        "The a(5) = 13 compositions with adjacent parts coprime:",
+        "  (5)",
+        "  (41) (14) (32) (23)",
+        "  (311) (131) (113)",
+        "  (2111) (1211) (1121) (1112)",
+        "  (11111)",
+        "Missing from this list are (221), (212), and (122)."
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],Or[Length[#]==1,And@@CoprimeQ@@@Partition[#,2,1,1]]&]],{n,20}]"
+    ],
+    "program": [
+        "(PARI)",
+        "b(n, q, pred)={my(M=matrix(n, n)); for(k=1, n, M[k, k]=pred(q, k); for(i=1, k-1, M[i, k]=sum(j=1, k-i, if(pred(j, i), M[j, k-i], 0)))); M[q, ]}",
+        "seq(n)={concat([1], vector(n, i, i > 1) + sum(k=1, n, b(n, k, (i, j)->gcd(i, j)==1)))} \\\\ _Andrew Howroyd_, Nov 01 2019"
+    ],
+    "xref": [
+        "Cf. A000740, A008965, A059966, A100953, A167606, A296302, A318726, A318727, A318728, A318745, A328609."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Sep 02 2018",
+    "ext": [
+        "a(21)-a(35) from _Alois P. Heinz_, Sep 02 2018",
+        "Name corrected by _Gus Wiseman_, Nov 04 2019"
+    ],
+    "references": 11,
+    "revision": 16,
+    "time": "2019-11-04T10:39:48-05:00",
+    "created": "2018-09-02T17:09:27-04:00"
+}

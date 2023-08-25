@@ -1,0 +1,45 @@
+{
+    "number": 335066,
+    "data": "1,81,91,109,127,360,361,417,504,540,541,631,661,720,781,841,918,981,991,1008,1009,1039,1080,1081,1088,1089,1090,1091,1093,1099,1105,1111,1116,1117,1118,1119,1120,1121,1122,1123,1124,1125,1126,1128,1134,1135,1136,1137,1138,1139",
+    "name": "Decimal numbers such that when they are written in all bases from 2 to 10 those numbers all share a common digit (the digit 0 or 1).",
+    "comment": [
+        "As base 2 is included the only possible common digit between all the bases is either a 0 or 1."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A335066/b335066.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "1 is a term as 1 written in all bases is 1.",
+        "81 is a term as 81_2 = 1010001, 81_3 = 10000, 81_4 = 1101, 81_5 = 311, 81_6 = 213, 81_7 = 144, 81_8 121, 81_9 = 100, 81_10 = 81, all of which contain the digit 1.",
+        "360 is a term as 360_2 = 101101000, 360_3 = 111100, 360_4 = 11220, 360_5 = 2420, 360_6 = 1400, 360_7 = 1023, 360_8 = 550, 360_9 = 550, 360_10 = 360, all of which contain the digit 0."
+    ],
+    "program": [
+        "(Python)",
+        "def hasdigits01(n, b):",
+        "    has0, has1 = False, False",
+        "    while n >= b:",
+        "        n, r = divmod(n, b)",
+        "        if r == 0: has0 = True",
+        "        if r == 1: has1 = True",
+        "        if has0 and has1: return (True, True)",
+        "    return (has0, has1 or n==1)",
+        "def ok(n):",
+        "    all0, all1 = True, True",
+        "    for b in range(10, 1, -1):",
+        "        has0, has1 = hasdigits01(n, b)",
+        "        all0 &= has0; all1 &= has1",
+        "        if not all0 and not all1: return False",
+        "    return all0 or all1",
+        "print([k for k in range(1140) if ok(k)]) # _Michael S. Branicky_, May 23 2022"
+    ],
+    "xref": [
+        "Cf. A335051, A258107, A145100, A317725, A181929, A331565, A153114."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Scott R. Shannon_ and _Zach J. Shannon_, May 22 2020",
+    "references": 2,
+    "revision": 11,
+    "time": "2022-05-23T12:29:25-04:00",
+    "created": "2020-05-25T23:24:29-04:00"
+}

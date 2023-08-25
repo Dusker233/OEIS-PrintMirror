@@ -1,0 +1,48 @@
+{
+    "number": 302101,
+    "data": "1,1,3,12,57,318,2190,20298,265557,4683954,102511182,2622117720,75857421522,2436766744728,85885843375992,3292322691248310,136306472824555725,6059583761048830290,287832499902612461910,14546503423112218184280,779260996651844076919230,44104811071523533909346100,2629647430438623322437523380,164732335319839237173383723220",
+    "name": "G.f. A(x) satisfies: A(x) = 1 + x * (A(x) + 4*x*A'(x)) / (A(x) + x*A'(x)).",
+    "comment": [
+        "Compare to: C(x) = 1 + x*C(x) * (C(x) + 2*x*C'(x)) / (C(x) + x*C'(x)) holds when C(x) = 1 + x*C(x)^2 is a g.f. of the Catalan numbers (A000108).",
+        "If G(x) = 1 + x * (G(x) + y*x*G'(x)) / (G(x) + x*G'(x)), then negative coefficients are present in the power series expansion of G(x) when y < t where constant t = 3.79622607101172329768286422639804088884917373644497484011451904053377050..."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A302101/b302101.txt\">Table of n, a(n) for n = 0..382</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies: A'(x) = A(x) * (A(x) - 1 - x) / (x*(1 + 4*x - A(x))).",
+        "G.f.: A(x) = exp( Integral (A(x) - 1 - x) / (x*(1 + 4*x - A(x))) dx )."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 3*x^2 + 12*x^3 + 57*x^4 + 318*x^5 + 2190*x^6 + 20298*x^7 + 265557*x^8 + 4683954*x^9 + 102511182*x^10 + ...",
+        "such that A(x) = 1 + x * (A(x) + 4*x*A'(x)) / (A(x) + x*A'(x))."
+    ],
+    "maple": [
+        "G:= 1:",
+        "for n from 1 to 30 do",
+        "  G:= convert(series(1+x*(G+4*x*diff(G,x))/(G +x*diff(G,x)),x,n+1),polynom);",
+        "od:",
+        "seq(coeff(G,x,n),n=0..30); # _Robert Israel_, Apr 08 2018"
+    ],
+    "mathematica": [
+        "nmax = 23; sol = {a[0] -> 1};",
+        "Do[A[x_] = Sum[a[k] x^k, {k, 0, n}] /. sol; eq = CoefficientList[A[x] - (1 + x*(A[x] + 4*x*A'[x])/(A[x] + x*A'[x])) + O[x]^(n + 1), x] == 0 /. sol; sol = sol ~Join~ Solve[eq][[1]], {n, 1, nmax}];",
+        "sol /. Rule -> Set;",
+        "a /@ Range[0, nmax] (* _Jean-Fran\u00e7ois Alcover_, Nov 01 2019 *)"
+    ],
+    "program": [
+        "(PARI) /* Differential Equation */",
+        "{a(n) = my(A=1); for(i=0,n, A = 1 + x*(A + 4*x*A')/(A + x*A' +x^2*O(x^n))); polcoeff(A,n)}",
+        "for(n=0, 30, print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A302102."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 07 2018",
+    "references": 2,
+    "revision": 20,
+    "time": "2019-11-01T18:37:19-04:00",
+    "created": "2018-04-07T22:05:40-04:00"
+}

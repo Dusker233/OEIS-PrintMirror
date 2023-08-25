@@ -1,0 +1,45 @@
+{
+    "number": 100548,
+    "data": "1,1,1,28,2539,847126,987474781,4267529230672,71328353711113801,4706871807383903992060,1236666872833000506726110479,1297665884376581511952494336126664,5444003907104081585974782986977125743035,91341304409373044577470623665964376840167100920",
+    "name": "Number of n-node labeled digraphs without endpoints.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A100548/b100548.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(3/2*x^2)*(Sum_{n>=0} 2^(n*(n-1))*(x/exp(3*x))^n/n!)."
+    ],
+    "mathematica": [
+        "m = 11;",
+        "egf = Exp[3x^2/2]*Sum[2^(n(n-1))*(x/Exp[3 x])^n/n!, {n, 0, m}];",
+        "a[n_] := SeriesCoefficient[egf, {x, 0, n}]*n!;",
+        "Table[a[n], {n, 0, m}] (* _Jean-Fran\u00e7ois Alcover_, Feb 23 2019 *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(g=x/exp(3*x + O(x*x^n))); Vec(serlaplace(exp(3*x^2/2 + O(x*x^n))*sum(k=0, n, 2^(k*(k-1))*g^k/k!)))} \\\\ _Andrew Howroyd_, Jan 08 2020",
+        "(Magma)",
+        "m:=30;",
+        "f:= func< x | Exp(3*x^2/2)*(&+[ 2^(n*(n-1))*(x*Exp(-3*x))^n/Factorial(n) : n in [0..m+2]]) >;",
+        "R<x>:=PowerSeriesRing(Rationals(), m);",
+        "Coefficients(R!(Laplace( f(x) ))); // _G. C. Greubel_, Mar 27 2023",
+        "(SageMath)",
+        "m = 30",
+        "def f(x): return exp(3*x^2/2)*sum( 2^(n*(n-1))*(x*exp(-3*x))^n/factorial(n) for n in range(m+2) )",
+        "def A100548_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P( f(x) ).egf_to_ogf().list()",
+        "A100548_list(m) # _G. C. Greubel_, Mar 27 2023"
+    ],
+    "xref": [
+        "Cf. A059167, A101388 (labeled case)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "Goran Kilibarda, Zoran Maksimovic, _Vladeta Jovovic_, Jan 02 2005",
+    "ext": [
+        "Terms a(12) and beyond from _Andrew Howroyd_, Jan 08 2020"
+    ],
+    "references": 3,
+    "revision": 17,
+    "time": "2023-03-28T08:00:11-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

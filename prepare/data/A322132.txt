@@ -1,0 +1,41 @@
+{
+    "number": 322132,
+    "data": "1,1,2,2,6,8,18,26,56,90,202,320,730,1154,2592,4130,9522,15208,35330,56746,131352,212074,492570,795920,1855706,3006482,7016464,11406930,26635154,43409752,101387602,165798282,386965208,635250986,1480773866,2439516656,5678477866",
+    "name": "Number of compositions of n that can be rearranged into a palindrome.",
+    "comment": [
+        "Equivalently, the number of compositions of n with at most one part size having odd multiplicity."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A322132/b322132.txt\">Table of n, a(n) for n = 0..1000</a> (first 201 terms from Andrew Howroyd)"
+    ],
+    "example": [
+        "Case n=4: The 6 compositions are: 4, 211, 121, 112, 22, 1111.",
+        "Case n=5: The 8 compositions are: 5, 311, 131, 113, 122, 212, 221, 11111."
+    ],
+    "maple": [
+        "b:= proc(n, i, p, t) option remember; `if`(n=0 or i=1,",
+        "      `if`(t and n::odd, 0, (n+p)!/n!), add(`if`(t and j::odd,",
+        "       0, b(n-i*j, i-1, p+j, t or j::odd))/j!, j=0..n/i))",
+        "    end:",
+        "a:= n-> b(n$2, 0, false):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Dec 02 2018"
+    ],
+    "mathematica": [
+        "b[n_, i_, p_, t_] := b[n, i, p, t] = If[n == 0 || i == 1, If[t && OddQ[n], 0, (n+p)!/n!], Sum[If[t && OddQ[j], 0, b[n-i*j, i-1, p+j, t || OddQ[j]]]/ j!, {j, 0, n/i}]];",
+        "a[n_] := b[n, n, 0, False];",
+        "Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Aug 13 2019, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) a(n)={sum(k=0, n\\2, my(p=prod(i=1, k, 1 + sum(j=1, k\\i, x^(i*j)*y^(2*j)/(2*j + (i==n-2*k))!) + O(x*x^k))); subst(serlaplace(polcoef(p,k)*y^(2*k<n)), y, 1))}"
+    ],
+    "xref": [
+        "Cf. A130495, A322326."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Andrew Howroyd_, Nov 27 2018",
+    "references": 2,
+    "revision": 18,
+    "time": "2019-08-13T11:20:37-04:00",
+    "created": "2018-11-28T15:08:22-05:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 349709,
+    "data": "2,7,11,97,101,1021,1201,2003,3001,10103,10111,20011,20021,21001,101111,102001,102101,112103,112111,120103,201011,202001,1000003,1000211,1010003,1010201,1011001,1020011,1100101,1100311,1111013,1111021,1112003,1201001,2011201,2020001,2100001,2100011,10000103",
+    "name": "Primes p such that if q is the next prime, A004086(p*q) = A004086(p)*A004086(q).",
+    "link": [
+        "Robert Israel, <a href=\"/A349709/b349709.txt\">Table of n, a(n) for n = 1..169</a>"
+    ],
+    "example": [
+        "a(6) = 1021 is a term because it is prime, the next prime is 1031, and the reverse of 1021*1031 = 1052651 is 1562501 = 1301*1201."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,i,m;",
+        "  L:= convert(n,base,10);",
+        "  m:= nops(L);",
+        "  add(L[i]*10^(m-i),i=1..m)",
+        "end proc:",
+        "R:= NULL: count:= 0:",
+        "q:= 2: qr:= 2:",
+        "while count < 50 do",
+        "  p:= q; pr:= qr;",
+        "  q:= nextprime(q); qr:= revdigs(q);",
+        "  if pr*qr = revdigs(p*q) then",
+        "     count:= count+1; R:= R, p;",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "seqQ[p_] := PrimeQ[p] && Module[{r = IntegerReverse, q = NextPrime[p]}, r[p*q] == r[p] * r[q]]; Select[Range[2.2*10^6], seqQ] (* _Amiram Eldar_, Jan 05 2022 *)"
+    ],
+    "program": [
+        "(PARI) R(n) = fromdigits(Vecrev(digits(n))); \\\\ A004086",
+        "isok(p) = if (isprime(p), my(q=nextprime(p+1)); R(p*q) == R(p)*R(q)); \\\\ _Michel Marcus_, Jan 05 2022",
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime",
+        "def R(n): return int(str(n)[::-1])",
+        "def agen(): # generator of terms",
+        "    p, pr = 2, 2",
+        "    while True:",
+        "        q = nextprime(p)",
+        "        qr = R(q)",
+        "        if R(p*q) == pr * qr:",
+        "            yield p",
+        "        p, pr = q, qr",
+        "print(list(islice(agen(), 38))) # _Michael S. Branicky_, Jan 05 2022"
+    ],
+    "xref": [
+        "Cf. A004086."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 05 2022",
+    "references": 1,
+    "revision": 56,
+    "time": "2022-01-05T17:35:42-05:00",
+    "created": "2022-01-05T13:49:02-05:00"
+}

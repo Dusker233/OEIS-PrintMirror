@@ -1,0 +1,52 @@
+{
+    "number": 351759,
+    "data": "1,1,3,37,3593,2336376,12085125703,492300320300251,163856834420168837331,450436951076447377275760495,10360995769563446558192576106611177,2010994252878923176109086647579398800496256,3317129856969862808949985510559979253492213624483355",
+    "name": "Number of words either empty or beginning with the first letter of the n-ary alphabet, where each letter of the alphabet occurs n times and letters of neighboring word positions are equal or neighbors in the alphabet.",
+    "comment": [
+        "Also the number of (n^2-1)-step walks on n-dimensional cubic lattice from (1,0,...,0) to (n,n,...,n) with positive unit steps in all dimensions such that the absolute difference of the dimension indices used in consecutive steps is <= 1."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A351759/b351759.txt\">Table of n, a(n) for n = 0..40</a>"
+    ],
+    "formula": [
+        "a(n) = A208673(n,n)."
+    ],
+    "example": [
+        "a(2) = 3:",
+        "  +----+   +----+   +----+",
+        "  |aabb|   |abab|   |abba|",
+        "  +----+   +----+   +----+",
+        "  |1222|   |1122|   |1112|",
+        "  |0012|   |0112|   |0122|",
+        "  +----+   +----+   +----+",
+        "  |xx  |   |x x |   |x  x|",
+        "  |  xx|   | x x|   | xx |",
+        "  +----+   +----+   +----+",
+        "a(3) = 37: aaabbbccc, aaabbcbcc, aaabbccbc, aaabbcccb, aaabcbbcc, aaabcbcbc, aaabcbccb, aaabccbbc, aaabccbcb, aaabcccbb, aababbccc, aababcbcc, aababccbc, aababcccb, aabbabccc, aabbcccba, aabcbabcc, aabcbccba, aabccbabc, aabccbcba, aabcccbab, aabcccbba, abaabbccc, abaabcbcc, abaabccbc, abaabcccb, abababccc, ababcccba, abbaabccc, abbcccbaa, abcbaabcc, abcbccbaa, abccbaabc, abccbcbaa, abcccbaab, abcccbaba, abcccbbaa."
+    ],
+    "maple": [
+        "b:= proc(l, t) option remember; (n-> `if`(l=[0$n], 1,",
+        "      add(`if`(l[i]=0, 0, b(subsop(i=l[i]-1, l), i)),",
+        "           i=max(1, t-1)..min(n, t+1))))(nops(l))",
+        "    end:",
+        "a:= n-> b([n$n], 0):",
+        "seq(a(n), n=0..6);"
+    ],
+    "mathematica": [
+        "b[l_, t_] := b[l, t] = Function [n, If[l == Array[0&, n], 1,",
+        "     Sum[If[l[[i]] == 0, 0, b[ReplacePart[l, i -> l[[i]] - 1], i]],",
+        "     {i, Max[1, t - 1], Min[n, t + 1]}]]][Length[l]];",
+        "a[n_] := b[Array[n&, n], 0];",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 0, 7}] (* _Jean-Fran\u00e7ois Alcover_, May 16 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Main diagonal of A208673."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Feb 18 2022",
+    "references": 2,
+    "revision": 18,
+    "time": "2022-05-16T09:33:21-04:00",
+    "created": "2022-02-18T18:01:38-05:00"
+}

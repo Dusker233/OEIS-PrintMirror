@@ -1,0 +1,56 @@
+{
+    "number": 326259,
+    "data": "8903,15167,16717,17806,18647,20329,20453,21797,22489,25607,26709,27649,29551,30334,31373,32741,33434,34691,35177,35612,35821,37091,37133,37294,37969,38243,39493,40658,40906,41449,42011,42949,43594,43817,43873,44515,44861",
+    "name": "MM-numbers of crossing, capturing multiset partitions (with empty parts allowed).",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798. The multiset multisystem with MM-number n is obtained by taking the multiset of prime indices of each prime index of n.",
+        "A multiset partition is crossing if it has two blocks of the form {...x...y...}, {...z...t...} where x < z < y < t or z < x < t < y. It is capturing if it has two blocks of the form {...x...y...} and {...z...t...} where x < z and y > t or x > z and y < t. Capturing is a weaker condition than nesting, so for example {{1,3,5},{2,4}} is capturing but not nesting."
+    ],
+    "example": [
+        "The sequence of terms together with their multiset multisystems begins:",
+        "   8903: {{1,3},{2,2,4}}",
+        "  15167: {{1,3},{2,2,5}}",
+        "  16717: {{2,4},{1,3,3}}",
+        "  17806: {{},{1,3},{2,2,4}}",
+        "  18647: {{1,3},{2,2,6}}",
+        "  20329: {{1,3},{1,2,2,4}}",
+        "  20453: {{1,2,3},{1,2,4}}",
+        "  21797: {{1,1,3},{2,2,4}}",
+        "  22489: {{1,4},{2,2,5}}",
+        "  25607: {{1,3},{2,2,7}}",
+        "  26709: {{1},{1,3},{2,2,4}}",
+        "  27649: {{1,4},{2,2,6}}",
+        "  29551: {{1,3},{2,2,8}}",
+        "  30334: {{},{1,3},{2,2,5}}",
+        "  31373: {{2,5},{1,3,3}}",
+        "  32741: {{1,3},{2,2,2,4}}",
+        "  33434: {{},{2,4},{1,3,3}}",
+        "  34691: {{1,2,3},{2,2,4}}",
+        "  35177: {{1,3},{1,2,2,5}}",
+        "  35612: {{},{},{1,3},{2,2,4}}"
+    ],
+    "mathematica": [
+        "croXQ[stn_]:=MatchQ[stn,{___,{___,x_,___,y_,___},___,{___,z_,___,t_,___},___}/;x<z<y<t||z<x<t<y];",
+        "capXQ[stn_]:=MatchQ[stn,{___,{___,x_,___,y_,___},___,{___,z_,___,t_,___},___}/;x<z&&t<y||z<x&&y<t];",
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "Select[Range[100000],capXQ[primeMS/@primeMS[#]]&&croXQ[primeMS/@primeMS[#]]&]"
+    ],
+    "xref": [
+        "Crossing set partitions are A000108.",
+        "Capturing set partitions are A326243.",
+        "Crossing, capturing set partitions are A326246.",
+        "MM-numbers of crossing multiset partitions are A324170.",
+        "MM-numbers of nesting multiset partitions are A326256.",
+        "MM-numbers of capturing multiset partitions are A326255.",
+        "MM-numbers of unsortable multiset partitions are A326258.",
+        "Cf. A001055, A001519, A016098, A056239, A058681, A112798, A122880, A302242.",
+        "Cf. A326211, A326245, A326248, A326249, A326254."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Jun 22 2019",
+    "references": 6,
+    "revision": 4,
+    "time": "2019-06-22T23:14:19-04:00",
+    "created": "2019-06-22T23:14:19-04:00"
+}

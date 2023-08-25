@@ -1,0 +1,48 @@
+{
+    "number": 64205,
+    "data": "1,2,8,128,162,512,32768,41472,101250,125000,1414562,3748322,5120000,6837602,8000000,13530402,24234722,35701250,66724352,75031250,78125000,86093442,91125000,171532242,177058562,226759808,233971712,617831552,664301250,686128968",
+    "name": "Numbers k such that sigma(k) + tau(k) is a prime.",
+    "comment": [
+        "The terms involve powers of small primes. - _Jud McCranie_, Nov 29 2001",
+        "From _Kevin P. Thompson_, Jun 20 2022: (Start)",
+        "Theorem: Terms that are greater than one must be twice a square.",
+        "Proof: Since sigma(k) is odd if and only if k is a square or twice a square, and tau(k) is odd if and only if k is a square, then an odd sum only occurs when k is twice a square, in which case sigma(k) is odd and tau(k) is even. So, these are the only candidates for sigma(k) + tau(k) being prime.",
+        "Theorem: No terms are congruent to 4 or 6 (mod 10).",
+        "Proof: Since no square ends in 2, 3, 7, or 8, and each term > 1 is twice a square, no term ends in 4 or 6. (End)"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A064205/b064205.txt\">Table of n, a(n) for n = 1..5000</a> (first 34 terms from Harry J. Smith, terms 35..276 from Kevin P. Thompson)"
+    ],
+    "example": [
+        "128 is a term since sigma(128) + tau(128) = 255 + 8 = 263, which is prime."
+    ],
+    "mathematica": [
+        "Do[ If[ PrimeQ[ DivisorSigma[1, n] + DivisorSigma[0, n]], Print[n]], {n, 1, 10^7}]"
+    ],
+    "program": [
+        "(PARI) { n=0; for (m=1, 10^9, if (isprime(sigma(m) + numdiv(m)), write(\"b064205.txt\", n++, \" \", m); if (n==100, break)) ) } \\\\ _Harry J. Smith_, Sep 10 2009",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime, divisor_sigma as s, divisor_count as t",
+        "def agen(): # generator of terms",
+        "    yield 1",
+        "    yield from (k for k in (2*i*i for i in count(1)) if isprime(s(k)+t(k)))",
+        "print(list(islice(agen(), 30))) # _Michael S. Branicky_, Jun 20 2022"
+    ],
+    "xref": [
+        "Cf. A007503 (sigma+tau), A065061, A055813."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jason Earls_, Sep 21 2001",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Nov 12 2001",
+        "More terms from _Labos Elemer_, Nov 22 2001",
+        "More terms from _Jud McCranie_, Nov 29 2001",
+        "a(28) from _Harry J. Smith_, Sep 10 2009"
+    ],
+    "references": 11,
+    "revision": 50,
+    "time": "2022-12-06T07:56:51-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

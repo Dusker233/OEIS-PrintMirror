@@ -1,0 +1,42 @@
+{
+    "number": 296116,
+    "data": "1,1,1,2,3,4,4,6,9,12,14,18,23,29,35,43,56,68,82,100,122,147,174,209,252,302,356,421,500,589,690,808,952,1110,1292,1505,1756,2034,2348,2715,3139,3620,4156,4778,5492,6296,7195,8220,9398,10714,12194,13872,15784",
+    "name": "Number of partitions in which each summand, s, may be used with frequency f if f divides s.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A296116/b296116.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "<a href=\"/index/Par#partN\">Index entries for related partition-counting sequences</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{n >= 1} (1 + Sum_{d divides n} x^(d*n))."
+    ],
+    "example": [
+        "For n=3, the partitions counted are 3 and 2+1.",
+        "For n=4: 4, 3+1, 2+2.",
+        "For n=5: 5, 4+1, 3+2, 2+2+1."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1 or n<0, 0,",
+        "      b(n, i-1)+add(b(n-i*j, i-1), j=numtheory[divisors](i))))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Dec 05 2017"
+    ],
+    "mathematica": [
+        "iend = 30;",
+        "s = Series[Product[1 + Sum[x^(Divisors[n][[i]] n), {i, 1, Length[Divisors[n]]}], {n, 1, iend}], {x, 0, iend}]; Print[s];",
+        "CoefficientList[s, x]"
+    ],
+    "xref": [
+        "Cf. A100471, A100881, A100882, A100883."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_David S. Newman_, Dec 04 2017",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Dec 05 2017"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2017-12-06T07:14:08-05:00",
+    "created": "2017-12-06T05:37:58-05:00"
+}

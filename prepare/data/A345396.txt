@@ -1,0 +1,40 @@
+{
+    "number": 345396,
+    "data": "2,12049,52673,937253,1000099,3844790441,62911443401,1052000152157",
+    "name": "a(n) is the least prime p such that {p, p^2, ..., p^n} are all digitally balanced numbers in base 2 (A031443).",
+    "comment": [
+        "a(9) > 2.5 * 10^12, if it exists."
+    ],
+    "example": [
+        "a(1) = 2 since 2 is digitally balanced: its binary representation, 10, has the same number of 0's and 1's.",
+        "a(2) = 12049 since both 12049 and 12049^2 are digitally balanced: the binary representation of 12049, 10111100010001, has 7 0's and 7 1's, and the binary representation of 12049^2, 1000101001110011111100100001, has 14 0's and 14 1's."
+    ],
+    "mathematica": [
+        "balQ[n_] := Module[{d = IntegerDigits[n, 2], m}, EvenQ @ (m = Length @ d) && Count[d, 1] == m/2]; f[p_] := Module[{e = 0, r = p}, While[balQ[r], r *= p; e++]; e]; mx = 5; s = Table[0, {mx}]; c = 0; p = 2; While[c < mx, k = f[p]; Do[If[s[[i]] == 0, s[[i]] = p; c++], {i, 1, k}]; p = NextPrime[p]]; s"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def isbalanced(n): b = bin(n)[2:]; return b.count(\"0\") == b.count(\"1\")",
+        "def A066196gen():",
+        "    yield from filter(isprime, (int(\"1\"+\"\".join(p), 2) for n in count(1) for p in multiset_permutations(\"0\"*n+\"1\"*(n-1))))",
+        "def a(n):",
+        "    for p in A066196gen():",
+        "        if all(isbalanced(p**i) for i in range(2, n+1)):",
+        "            return p",
+        "print([a(n) for n in range(1, 6)]) # _Michael S. Branicky_, May 15 2022"
+    ],
+    "xref": [
+        "Subsequence of A031443, A066196 and A345395.",
+        "Cf. A345397."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jun 17 2021",
+    "references": 1,
+    "revision": 8,
+    "time": "2022-05-16T02:01:53-04:00",
+    "created": "2021-06-18T01:16:12-04:00"
+}

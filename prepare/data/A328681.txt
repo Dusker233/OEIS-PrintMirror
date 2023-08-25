@@ -1,0 +1,26 @@
+{
+    "number": 328681,
+    "data": "1,6,20,55,142,322,779,1608,3894,7370,18372,33137,81512,149694,353224,641461,1570836,2684928,6642915,11795178,28133846,46768200,125433400,197654545,485749918,893864394,2066417482,3385115393,8975476976,14384181908,35478028091,61940000322",
+    "name": "a(n) = Sum_{k=1..n} binomial(n,k) * tau(k) * tau(n - k + 1), where tau = A000005.",
+    "formula": [
+        "E.g.f.: (1/2) * d/dx (Sum_{k>=1} tau(k) * x^k / k!)^2."
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[n, k] DivisorSigma[0, k] DivisorSigma[0, n - k + 1], {k, 1, n}], {n, 1, 32}]",
+        "nmax = 32; CoefficientList[Series[(1/2) D[Sum[DivisorSigma[0, k] x^k/k!, {k, 1, nmax}]^2, x], {x, 0, nmax}], x] Range[0, nmax]! // Rest"
+    ],
+    "program": [
+        "(Magma) [&+[Binomial(n,k)*DivisorSigma(0,k)*DivisorSigma(0,n-k+1):k in [1..n]]:n in [1..32]]; // _Marius A. Burtea_, Dec 03 2019",
+        "(PARI) a(n) = sum(k=1, n, binomial(n,k)*numdiv(k)*numdiv(n-k+1)); \\\\ _Michel Marcus_, Dec 05 2019"
+    ],
+    "xref": [
+        "Cf. A000005, A007318, A055507, A160399, A330088."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Dec 03 2019",
+    "references": 2,
+    "revision": 30,
+    "time": "2022-09-08T08:46:24-04:00",
+    "created": "2019-12-03T21:12:38-05:00"
+}

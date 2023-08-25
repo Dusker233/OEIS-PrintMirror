@@ -1,0 +1,59 @@
+{
+    "number": 236912,
+    "data": "1,2,3,4,6,8,12,14,20,25,34,40,54,64,85,98,127,149,189,219,277,316,395,456,557,638,778,889,1070,1226,1461,1667,1978,2250,2645,3019,3521,3997,4652,5267,6093,6909,7943,8982,10291,11609,13251,14947,16984,19104",
+    "name": "Number of partitions of n such that no part is a sum of two other parts.",
+    "comment": [
+        "These are partitions containing the sum of no 2-element submultiset of the parts, a variation of binary sum-free partitions where parts cannot be re-used, ranked by A364461. The complement is counted by A237113. The non-binary version is A237667. For re-usable parts we have A364345. - _Gus Wiseman_, Aug 09 2023"
+    ],
+    "formula": [
+        "a(n) = A000041(n) - A237113(n)."
+    ],
+    "example": [
+        "Of the 11 partitions of 6, only these 3 include a part that is a sum of two other parts: [3,2,1], [2,2,1,1], [2,1,1,1,1].  Thus, a(6) = 11 - 3 = 8.",
+        "From _Gus Wiseman_, Aug 09 2023: (Start)",
+        "The a(1) = 1 through a(8) = 14 partitions:",
+        "  (1)  (2)   (3)    (4)     (5)      (6)       (7)        (8)",
+        "       (11)  (21)   (22)    (32)     (33)      (43)       (44)",
+        "             (111)  (31)    (41)     (42)      (52)       (53)",
+        "                    (1111)  (221)    (51)      (61)       (62)",
+        "                            (311)    (222)     (322)      (71)",
+        "                            (11111)  (411)     (331)      (332)",
+        "                                     (3111)    (421)      (521)",
+        "                                     (111111)  (511)      (611)",
+        "                                               (2221)     (2222)",
+        "                                               (4111)     (3311)",
+        "                                               (31111)    (5111)",
+        "                                               (1111111)  (41111)",
+        "                                                          (311111)",
+        "                                                          (11111111)",
+        "(End)"
+    ],
+    "mathematica": [
+        "z = 20; t = Map[Count[Map[Length[Cases[Map[Total[#] &, Subsets[#, {2}]],  Apply[Alternatives, #]]] &, IntegerPartitions[#]], 0] &, Range[z]] (* A236912 *)",
+        "u = PartitionsP[Range[z]] - t  (* A237113, _Peter J. C. Moses_, Feb 03 2014 *)",
+        "Table[Length[Select[IntegerPartitions[n],Intersection[#,Total/@Subsets[#,{2}]]=={}&]],{n,0,15}] (* _Gus Wiseman_, Aug 09 2023 *)"
+    ],
+    "xref": [
+        "For subsets of {1..n} we have A085489, complement A088809.",
+        "The complement is counted by A237113, ranks A364462.",
+        "The non-binary version is A237667, ranks A364531.",
+        "The non-binary complement is A237668, ranks A364532.",
+        "The version with re-usable parts is A364345, ranks A364347.",
+        "The (strict) version for linear combinations of parts is A364350.",
+        "These partitions have ranks A364461.",
+        "The strict case is A364533, non-binary A364349.",
+        "The strict complement is A364670, with re-usable parts A363226.",
+        "A000041 counts partitions, strict A000009.",
+        "A008284 counts partitions by length, strict A008289.",
+        "A108917 counts knapsack partitions, ranks A299702.",
+        "A323092 counts double-free partitions, ranks A320340.",
+        "Cf. A002865, A007865, A151897, A275972, A325862, A326083, A363225, A363260, A364346, A364755."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Feb 01 2014",
+    "references": 34,
+    "revision": 22,
+    "time": "2023-08-10T20:42:53-04:00",
+    "created": "2014-02-05T15:22:26-05:00"
+}

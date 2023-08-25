@@ -1,0 +1,45 @@
+{
+    "number": 344032,
+    "data": "2,11,23,53,12451,36779999",
+    "name": "a(n) is the least prime that begins a sequence of at least n distinct primes under iteration of A061762.",
+    "example": [
+        "12451 is prime and A061762(12451) = 1*2*4*5*1+1+2+4+5+1 = 53.",
+        "53 is prime and A061762(53) = 5*3+5+3 = 23.",
+        "23 is prime and A061762(23) = 2*3+2+3 = 11.",
+        "11 is prime and A061762(11) = 1*1+1+1 = 3.",
+        "3 is prime and A061762(3) = 3+3 = 6 is not prime.",
+        "Thus 12451 begins a sequence of 5 distinct primes under the iteration of A061762.  Since 12451 is the least such prime, a(5) = 12451."
+    ],
+    "maple": [
+        "f:= proc(n) local L;",
+        "   L:= convert(n,base,10);",
+        "   convert(L,`+`)+convert(L,`*`)",
+        "end proc:",
+        "g:= proc(n) local S,v;",
+        "  S:= {n}:",
+        "  v:= n;",
+        "  do",
+        "    v:= f(v);",
+        "    if member(v,S) or not isprime(v) then return nops(S) fi;",
+        "    S:= S union {v}",
+        "  od",
+        "end proc:",
+        "R:= NULL: p:= 1: m:= 0:",
+        "while m < 5 do",
+        "  p:= nextprime(p);",
+        "  v:= g(p);",
+        "  if v > m then R:= R, p$(v-m); m:= v fi",
+        "od:",
+        "R;"
+    ],
+    "xref": [
+        "Cf. A061762, A214629."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, May 07 2021",
+    "references": 1,
+    "revision": 6,
+    "time": "2021-05-09T15:34:03-04:00",
+    "created": "2021-05-07T15:43:47-04:00"
+}

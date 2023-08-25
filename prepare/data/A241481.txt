@@ -1,0 +1,51 @@
+{
+    "number": 241481,
+    "data": "48,68,75,80,82,104,116,122,144,156,160,189,196,212,225,237,242,273,279,291,309,328,342,356,364,403,490,513,524,531,592,597,614,640,651,679,684,688,712,784,788,804,808,810,822,833,889,898,903,922,925,927,954",
+    "name": "Numbers such that the GCD of the x's that satisfy sigma(x)=sigma(n) is not equal to 1 while the number of such x's is not 1 either.",
+    "comment": [
+        "Subsequence of A241480, restricted to those terms that do not belong to A211656.",
+        "Is it possible, for each term of A211656, to find a corresponding term in the present sequence such that the corresponding GCD is equal to the initial A211656 term?",
+        "The first 11 terms of A211656 are: 2, 3, 4, 5, 7, 8, 9, 12, 13, 18, 19.",
+        "For these, we have 68, 48, 104, 12735, 364, 7848, 144, 9984, 273, 1764, 1197 in the present sequence.",
+        "For instance for m=9984, the x's are [9984, 12252], with gcd=12.",
+        "Is it possible to find a term here with corresponding gcd=22, the 12th term of A211656?"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A241481/b241481.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "48 is in the sequence because sigma(48)=124 and the x's such that sigma(x)=124 are 48 and 75, with gcd(48, 75) not equal to 1."
+    ],
+    "maple": [
+        "M:=1000: # to get all terms <= M",
+        "N:= 0:",
+        "for n from 1 to M do",
+        "  v:= numtheory:-sigma(n);",
+        "  N:= max(N,v);",
+        "  if assigned(R[v]) then R[v]:= igcd(R[v],n); S[v]:= S[v] union {n}",
+        "  else R[v]:= n; S[v]:= {n}",
+        "  fi;",
+        "od:",
+        "for n from M+1 to N do",
+        "  v:= numtheory:-sigma(n);",
+        "  if assigned(R[v]) then R[v]:= igcd(R[v],n);  S[v]:= S[v] union {n} fi;",
+        "od:",
+        "A:=",
+        "`union`(seq(S[v], v = select(t -> R[t]>1 and nops(S[t])>1, map(op,[indices(R)])))) intersect {$1..M}:",
+        "sort(convert(A,list)); # _Robert Israel_, Oct 24 2019"
+    ],
+    "program": [
+        "(PARI) sigv(n) =  select(i->sigma(i) == n, vector(n, i, i));",
+        "isok(n) = my(v = sigv(sigma(n))); ((gcd(v)!=1) && (#v != 1));"
+    ],
+    "xref": [
+        "Cf. A000203, A211656, A241479, A241480."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Apr 23 2014",
+    "references": 1,
+    "revision": 13,
+    "time": "2019-10-24T16:38:48-04:00",
+    "created": "2014-04-24T15:54:55-04:00"
+}

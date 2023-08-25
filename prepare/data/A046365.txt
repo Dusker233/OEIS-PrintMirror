@@ -1,0 +1,41 @@
+{
+    "number": 46365,
+    "data": "6,22,88,99,202,252,333,414,424,454,464,595,686,747,777,808,838,848,858,909,1001,1551,1771,2442,3553,4114,5335,5775,6336,6996,8008,8228,9009,9559,9669,9889,12121,14241,16261,16761,17171,18081,18381,20102,20602,21012",
+    "name": "Composite palindromes whose sum of prime factors is prime (counted with multiplicity).",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A046365/b046365.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "A046363 INTERSECT A002113. - _R. J. Mathar_, Sep 09 2015"
+    ],
+    "mathematica": [
+        "Select[Range[20125], !PrimeQ[#] && Reverse[x=IntegerDigits[#]] == x && PrimeQ[Total[Times@@@FactorInteger[#]]]&] (* _Jayanta Basu_, May 29 2013 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "from sympy import factorint, isprime",
+        "def pals(d, base=10): # all d-digit palindromes",
+        "    digits = \"\".join(str(i) for i in range(base))",
+        "    for p in product(digits, repeat=d//2):",
+        "        if d > 1 and p[0] == \"0\": continue",
+        "        left = \"\".join(p); right = left[::-1]",
+        "        for mid in [[\"\"], digits][d%2]: yield int(left + mid + right)",
+        "def ok(pal):",
+        "    f = factorint(pal); return len(f)>1 and isprime(sum(p*f[p] for p in f))",
+        "print(list(filter(ok, (p for d in range(1, 6) for p in pals(d) if ok(p))))) # _Michael S. Branicky_, Jun 22 2021"
+    ],
+    "xref": [
+        "Cf. A046363, A046364."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Jun 15 1998",
+    "ext": [
+        "a(45) and beyond from _Michael S. Branicky_, Jun 22 2021"
+    ],
+    "references": 3,
+    "revision": 18,
+    "time": "2021-06-22T11:35:34-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

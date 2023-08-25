@@ -1,0 +1,56 @@
+{
+    "number": 356937,
+    "data": "1,1,3,9,29,94,310,1026,3411,11360,37886,126442,422203,1410189,4711039,15740098,52593430,175742438,587266782,1962469721,6558071499,21915580437,73237274083,244744474601,817889464220,2733235019732,9133973730633,30524096110942,102006076541264",
+    "name": "Number of multisets of intervals whose multiset union is of size n and covers an initial interval of positive integers.",
+    "comment": [
+        "An interval such as {3,4,5} is a set with all differences of adjacent elements equal to 1."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A356937/b356937.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/e/2PACX-1vR-C_picqWlu0KOguRGWaPjhS2HY7m43aGXGDcolDh4Qtyy-pu2lkq5mbHAbiMSyQoiIESG2mCGtc2j/pub\">Counting and ranking classes of multiset partitions related to gapless multisets</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(3) = 9 set multipartitions (multisets of sets):",
+        "  {{1}}  {{1,2}}    {{1,2,3}}",
+        "         {{1},{1}}  {{1},{1,2}}",
+        "         {{1},{2}}  {{1},{2,3}}",
+        "                    {{2},{1,2}}",
+        "                    {{3},{1,2}}",
+        "                    {{1},{1},{1}}",
+        "                    {{1},{1},{2}}",
+        "                    {{1},{2},{2}}",
+        "                    {{1},{2},{3}}"
+    ],
+    "mathematica": [
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "chQ[y_]:=Or[Length[y]<=1,Union[Differences[y]]=={1}];",
+        "Table[Length[Select[Join@@mps/@allnorm[n],And@@chQ/@#&]],{n,0,5}]"
+    ],
+    "program": [
+        "(PARI)",
+        "EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "R(n,k) = {EulerT(vector(n, j, max(0, 1+k-j)))}",
+        "seq(n) = {my(A=1+O(y*y^n)); for(k = 1, n, A += x^k*(1 + y*Ser(R(n,k), y) - polcoef(1/(1 - x*A) + O(x^(k+2)), k+1))); Vec(subst(A,x,1))} \\\\ _Andrew Howroyd_, Jan 01 2023"
+    ],
+    "xref": [
+        "A000041 counts integer partitions, strict A000009.",
+        "A000670 counts patterns, ranked by A333217, necklace A019536.",
+        "A011782 counts multisets covering an initial interval.",
+        "Cf. A055887, A063834, A270995, A304969, A349050, A349055.",
+        "Intervals are counted by A000012, A001227, ranked by A073485.",
+        "Other conditions: A034691, A116540, A255906, A356933, A356942.",
+        "Other types: A107742, A356936, A356938, A356939."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Sep 08 2022",
+    "ext": [
+        "Terms a(10) and beyond from _Andrew Howroyd_, Jan 01 2023"
+    ],
+    "references": 7,
+    "revision": 10,
+    "time": "2023-01-01T19:29:49-05:00",
+    "created": "2022-09-10T21:05:19-04:00"
+}

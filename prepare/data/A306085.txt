@@ -1,0 +1,40 @@
+{
+    "number": 306085,
+    "data": "23,43,47,67,83,101,103,107,109,127,149,163,167,181,211,223,227,263,271,283,307,347,367,419,431,443,463,467,479,487,503,509,523,563,569,607,613,617,619,631,643,647,653,659,673,683,701,709,743,761,769,811,823,827,853,859,863,883,887,907",
+    "name": "Primes which have an even decimal digit and remain prime after all even digits are removed.",
+    "comment": [
+        "A proper subset of A306084."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A306085/b306085.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "101 is a member of the sequence because it has an even digit, 0, and with its removal, the resulting number 11 is a prime."
+    ],
+    "maple": [
+        "filter:= proc(n) local L,Lp;",
+        "  if not isprime(n) then return false fi;",
+        "  L:= convert(n,base,10);",
+        "  Lp:= subs([0=NULL,2=NULL,4=NULL,6=NULL,8=NULL],L);",
+        "  if L = Lp then return false fi;",
+        "  isprime(add(Lp[i]*10^(i-1),i=1..nops(Lp)))",
+        "end proc:",
+        "select(filter, [seq(n,n=11..1000,2)]); # _Robert Israel_, Jul 04 2018"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{id = IntegerDigits@ n}, Select[id, EvenQ] != {} && PrimeQ[ FromDigits[ Select[id, OddQ]] ]]; Select[Prime@ Range@ 160, fQ]"
+    ],
+    "program": [
+        "(PARI) isok(p) = isprime(p) && (d=digits(p)) && #select(x->!(x%2), d) && isprime(fromdigits(select(x->(x % 2), d))); \\\\ _Michel Marcus_, Jun 22 2018"
+    ],
+    "xref": [
+        "Cf. A306084, A306086."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Zak Seidov_ and _Robert G. Wilson v_, Jun 20 2018",
+    "references": 3,
+    "revision": 15,
+    "time": "2018-07-04T05:49:19-04:00",
+    "created": "2018-07-03T11:55:38-04:00"
+}

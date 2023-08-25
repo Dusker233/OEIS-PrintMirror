@@ -1,0 +1,30 @@
+{
+    "number": 344677,
+    "data": "0,0,0,0,1,2,4,6,9,13,20,26,36,49,68,90,120,154,201,258,330,418,532,666,834,1041,1290,1592,1958,2404,2935,3588,4345,5278,6366,7692,9215,11096,13230,15853,18831,22477,26580,31620,37247,44145,51851,61247,71681,84445",
+    "name": "Number of partitions of n containing a prime number of primes and an arbitrary number of nonprimes.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A344677/b344677.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "a(6) = 4 because there are 4 partitions of 6 that contain a prime number of primes (including repetitions). These partitions are [3,3], [3,2,1], [2,2,2], [2,2,1,1]."
+    ],
+    "mathematica": [
+        "nterms=50;Table[Total[Map[If[PrimeQ[Count[#, _?PrimeQ]],1,0] &,IntegerPartitions[n]]],{n,0,nterms-1}]",
+        "(* Second program: *)",
+        "seq[n_] := Module[{p}, p = 1/Product[1 - If[PrimeQ[k], y*x^k, 0] + O[x]^n, {k, 2, n}]; CoefficientList[Sum[If[PrimeQ[k], Coefficient[p, y, k], 0], {k, 2, n}]/QPochhammer[x + O[x]^n]/(p /. y -> 1), x]];",
+        "seq[50] (* _Jean-Fran\u00e7ois Alcover_, May 27 2021, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(p=1/prod(k=2, n, 1 - if(isprime(k), y*x^k) + O(x*x^n))); Vec(sum(k=2, n, if(isprime(k), polcoef(p,k,y)))/eta(x+O(x*x^n))/subst(p,y,1), -(n+1))} \\\\ _Andrew Howroyd_, May 26 2021"
+    ],
+    "xref": [
+        "Cf. A000040, A058698, A085755, A235945, A343753."
+    ],
+    "keyword": "nonn",
+    "offset": "0,6",
+    "author": "_Paolo Xausa_, May 26 2021",
+    "references": 3,
+    "revision": 25,
+    "time": "2021-05-31T21:46:08-04:00",
+    "created": "2021-05-26T22:33:29-04:00"
+}

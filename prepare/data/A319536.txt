@@ -1,0 +1,51 @@
+{
+    "number": 319536,
+    "data": "0,2,14,122,1278,15802,225886,3670074,66843902,1349399162,29912161758,722399486074,18881553923326,531063524702778,15993786127174238,513533806880120762,17512128958240460286,632099987274779910394,24076353238897830158302",
+    "name": "Number of signed permutations of length n where numbers occur in consecutive order.",
+    "comment": [
+        "a(n) also represents the number of reducible signed permutations of length n. A permutation is reducible when an adjacency occurs in the permutation.",
+        "The first 8 terms of this sequence were found by exhaustive search of all signed permutations."
+    ],
+    "reference": [
+        "Manaswinee Bezbaruah, Henry Fessler, Leigh Foster, Marion Scheepers, George Spahn, Context Directed Sorting: Robustness and Complexity, draft."
+    ],
+    "link": [
+        "Leigh Foster, <a href=\"/A319536/b319536.txt\">Table of n, a(n) for n = 1..50</a>"
+    ],
+    "formula": [
+        "a(n) = A000165(n) - A271212(n)."
+    ],
+    "example": [
+        "Of the 8 signed permutations of length 2: {[1,2], [-1,2], [1,-2], [-1,-2], [2,1], [-2,1], [2,-1], [-2,-1]} only two are reducible: [1,2] and [-2,-1]. Thus a(2) = 2."
+    ],
+    "mathematica": [
+        "Table[(2 n)!!, {n, 1, 20}] - RecurrenceTable[{a[n]==(2n-1)*a[n-1]+2(n-2)*a[n-2], a[0]==1, a[1]==2}, a[n], {n, 1, 20}]"
+    ],
+    "program": [
+        "(SageMath)",
+        "from ast import literal_eval",
+        "def checkFunc(n):",
+        "    p = SignedPermutations(n)",
+        "    permlist = p.list()",
+        "    permset = set(permlist)",
+        "    for perm in permlist:",
+        "        perm_literal = literal_eval(str(perm))",
+        "        for i in range(n-1):",
+        "            a = perm_literal[i]",
+        "            if perm_literal[i + 1] == a + 1:",
+        "                permset.remove(perm)",
+        "                break",
+        "    print(factorial(n)*(2^n)-len(permset))",
+        "# usage: checkFunc({desired permutation length})"
+    ],
+    "xref": [
+        "Cf. A000165, A271212."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Leigh Foster_, Sep 22 2018",
+    "references": 1,
+    "revision": 18,
+    "time": "2020-02-26T08:15:12-05:00",
+    "created": "2018-12-20T23:45:19-05:00"
+}

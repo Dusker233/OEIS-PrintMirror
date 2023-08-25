@@ -1,0 +1,52 @@
+{
+    "number": 327110,
+    "data": "116,117,118,119,124,125,126,127,1796,1797,1798,1799,1904,1905,1906,1907,1908,1909,1910,1911,1912,1913,1914,1915,1916,1917,1918,1919,1924,1925,1926,1927,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044",
+    "name": "BII-numbers of set-systems with spanning edge-connectivity 3.",
+    "comment": [
+        "A binary index of n is any position of a 1 in its reversed binary expansion. The binary indices of n are row n of A048793. We define the set-system with BII-number n to be obtained by taking the binary indices of each binary index of n. Every set-system (finite set of finite nonempty sets) has a different BII-number. For example, 18 has reversed binary expansion (0,1,0,0,1), and since the binary indices of 2 and 5 are {2} and {1,3} respectively, the BII-number of {{2},{1,3}} is 18. Elements of a set-system are sometimes called edges.",
+        "The spanning edge-connectivity of a set-system is the minimum number of edges that must be removed (without removing incident vertices) to obtain a set-system that is disconnected or covers fewer vertices."
+    ],
+    "example": [
+        "The sequence of all set-systems with spanning edge-connectivity 3 together with their BII-numbers begins:",
+        "   116: {{1,2},{1,3},{2,3},{1,2,3}}",
+        "   117: {{1},{1,2},{1,3},{2,3},{1,2,3}}",
+        "   118: {{2},{1,2},{1,3},{2,3},{1,2,3}}",
+        "   119: {{1},{2},{1,2},{1,3},{2,3},{1,2,3}}",
+        "   124: {{1,2},{3},{1,3},{2,3},{1,2,3}}",
+        "   125: {{1},{1,2},{3},{1,3},{2,3},{1,2,3}}",
+        "   126: {{2},{1,2},{3},{1,3},{2,3},{1,2,3}}",
+        "   127: {{1},{2},{1,2},{3},{1,3},{2,3},{1,2,3}}",
+        "  1796: {{1,2},{1,4},{2,4},{1,2,4}}",
+        "  1797: {{1},{1,2},{1,4},{2,4},{1,2,4}}",
+        "  1798: {{2},{1,2},{1,4},{2,4},{1,2,4}}",
+        "  1799: {{1},{2},{1,2},{1,4},{2,4},{1,2,4}}",
+        "  1904: {{1,3},{2,3},{1,2,3},{1,4},{2,4},{1,2,4}}",
+        "  1905: {{1},{1,3},{2,3},{1,2,3},{1,4},{2,4},{1,2,4}}",
+        "  1906: {{2},{1,3},{2,3},{1,2,3},{1,4},{2,4},{1,2,4}}",
+        "  1907: {{1},{2},{1,3},{2,3},{1,2,3},{1,4},{2,4},{1,2,4}}",
+        "  1908: {{1,2},{1,3},{2,3},{1,2,3},{1,4},{2,4},{1,2,4}}",
+        "  1909: {{1},{1,2},{1,3},{2,3},{1,2,3},{1,4},{2,4},{1,2,4}}",
+        "  1910: {{2},{1,2},{1,3},{2,3},{1,2,3},{1,4},{2,4},{1,2,4}}",
+        "  1911: {{1},{2},{1,2},{1,3},{2,3},{1,2,3},{1,4},{2,4},{1,2,4}}"
+    ],
+    "mathematica": [
+        "bpe[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "csm[s_]:=With[{c=Select[Subsets[Range[Length[s]],{2}],Length[Intersection@@s[[#]]]>0&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "spanEdgeConn[vts_,eds_]:=Length[eds]-Max@@Length/@Select[Subsets[eds],Union@@#!=vts||Length[csm[#]]!=1&];",
+        "Select[Range[1000],spanEdgeConn[Union@@bpe/@bpe[#],bpe/@bpe[#]]==3&]"
+    ],
+    "xref": [
+        "Positions of 3's in A327144.",
+        "BII-numbers for spanning edge-connectivity 2 are A327108.",
+        "BII-numbers for spanning edge-connectivity >= 2 are A327109.",
+        "BII-numbers for spanning edge-connectivity 1 are A327111.",
+        "Cf. A001187, A095983, A322395, A326749, A326753, A326787, A327069, A327071, A327103, A327130, A327146, A327147."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Oct 03 2019",
+    "references": 1,
+    "revision": 4,
+    "time": "2019-10-04T23:29:43-04:00",
+    "created": "2019-10-04T23:29:43-04:00"
+}

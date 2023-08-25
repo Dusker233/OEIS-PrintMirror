@@ -1,0 +1,33 @@
+{
+    "number": 252732,
+    "data": "7,7,7,7,421,2311,43321,59730109,537052693",
+    "name": "In view of their definitions, let us refer to A251964 as sequence \"5\", A252280 as sequence \"7\", and similarly define sequence \"prime(n)\"; a(n) is the third term of the intersection of sequences \"5\", ..., \"prime(n)\".",
+    "comment": [
+        "Is this sequence finite?",
+        "Up to n=13, the first two terms of the intersection of sequences \"5\", ..., \"prime(n)\" are 2 and 5 respectively."
+    ],
+    "mathematica": [
+        "s[p_, k_] := Module[{s = Total[IntegerDigits[p^k]]}, s/2^IntegerExponent[s, 2]]; f[p_,q_] := Module[{k = 1}, While[ ! Divisible[s[p, k], q], k++]; k]; okQ[p_,q_] := s[p, f[p,q]] == q; okpQ[p_,nbseq_] := Module[{ans=True}, Do[If[!okQ[p,Prime[k+2]], ans=False; Break[]],{k,1,nbseq}]; ans]; a[n_]:=Module[{c=0, p=2},While[c<3 , If[okpQ[p,n],c++];p=NextPrime[p]];NextPrime[p,-1]]; Array[a,6] (* _Amiram Eldar_, Dec 09 2018 *)"
+    ],
+    "program": [
+        "(PARI) s(p, k) = my(s=sumdigits(p^k)); s >> valuation(s, 2);",
+        "f(p, vp) = my(k=1); while(s(p,k) % vp, k++); k;",
+        "isok(p, vp) = s(p, f(p, vp)) == vp;",
+        "isokp(p, nbseq) = {for (k=1, nbseq, if (! isok(p, prime(k+2)), return (0));); return (1);}",
+        "a(n) = {my(nbpok = 0); forprime(p=2, oo, if (isokp(p, n), nbpok ++); if (nbpok == 3, return (p)););} \\\\ _Michel Marcus_, Dec 09 2018"
+    ],
+    "xref": [
+        "Cf. A251964, A252280, A252281, A252282, A252283, A252666, A252668, A252670."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "3,1",
+    "author": "_Vladimir Shevelev_, Dec 21 2014",
+    "ext": [
+        "More terms from _Peter J. C. Moses_, Dec 21 2014",
+        "a(10)-a(11) from _Michel Marcus_, Dec 09 2018"
+    ],
+    "references": 0,
+    "revision": 29,
+    "time": "2019-10-16T13:24:35-04:00",
+    "created": "2014-12-29T18:43:04-05:00"
+}

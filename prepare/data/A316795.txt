@@ -1,0 +1,45 @@
+{
+    "number": 316795,
+    "data": "1,1,1,1,2,5,8,17,30,55,101,194,352,663,1227,2275,4225,7877,14600,27158,50414,93666,173972,323286,600353,1115407,2071843,3848794,7149196,13280874,24669606,45827047,85126845,158131764,293742200,545655290,1013598733",
+    "name": "Number of aperiodic rooted trees on n nodes with locally distinct multiplicities.",
+    "comment": [
+        "An aperiodic rooted tree is an unlabeled rooted tree in which the multiplicities of branches under any given node are relatively prime. A rooted tree has locally distinct multiplicities if the multiset of branches under any given node has all distinct multiplicities."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A316795/b316795.txt\">Table of n, a(n) for n = 1..100</a>",
+        "Gus Wiseman, <a href=\"/A316795/a316795.png\">The a(9) = 30 aperiodic trees with locally distinct multiplicities.</a>"
+    ],
+    "example": [
+        "The a(7) = 8 trees:",
+        "((((((o))))))",
+        "(((oo(o))))",
+        "((oo((o))))",
+        "((o(o)(o)))",
+        "((ooo(o)))",
+        "(oo(((o))))",
+        "(ooo((o)))",
+        "(oooo(o))"
+    ],
+    "mathematica": [
+        "strut[n_]:=strut[n]=If[n===1,{{}},Select[Join@@Function[c,Union[Sort/@Tuples[strut/@c]]]/@IntegerPartitions[n-1],And[UnsameQ@@Length/@Split[#],GCD@@Length/@Split[#]==1]&]];",
+        "Table[Length[strut[n]],{n,15}]"
+    ],
+    "program": [
+        "(PARI)",
+        "C(v,n)={my(recurse(r,b,g,p,k)=if(!r, g==1, sum(m=1, r, if(!bittest(b,m), sum(i=1, min(r\\m, p), my(f=if(i==p, k+1, 1)); if(v[i]>=f, (v[i]-f+1)*self()(r-m*i, bitor(b, 1<<m), gcd(g,m), i, f)/f)))))); recurse(n, 0, 0, #v, 0)}",
+        "seq(n)={my(v=vector(n)); v[1]=1; for(n=2, #v, v[n]=C(v[1..n-1], n-1)); v} \\\\ _Andrew Howroyd_, Feb 08 2020"
+    ],
+    "xref": [
+        "Cf. A000081, A000837, A004111, A301700, A303431, A316793, A316794, A316796."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_Gus Wiseman_, Jul 14 2018",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Feb 08 2020"
+    ],
+    "references": 5,
+    "revision": 11,
+    "time": "2020-02-08T20:41:36-05:00",
+    "created": "2018-07-15T13:25:36-04:00"
+}

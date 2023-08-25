@@ -1,0 +1,50 @@
+{
+    "number": 309765,
+    "data": "1,1,2,3,15,15,20,104,224,224,440,440,2079,2079,2079,2079,194480,194480,1956240,1956240,1956240,1956240,6113744,6113744,19706400,19706400,317839599,317839599,2183843375,2183843375,6081487775,6081487775,6081487775,6081487775,6081487775,6081487775",
+    "name": "a(n) is the least k>=1 such that k*(k+1) is divisible by A003418(n).",
+    "link": [
+        "Bert Dobbelaere, <a href=\"/A309765/b309765.txt\">Table of n, a(n) for n = 1..172</a>",
+        "Bert Dobbelaere, <a href=\"/A309765/a309765.py.txt\">Python program</a>"
+    ],
+    "example": [
+        "a(3)=2 because A003418(3)=6 divides 2*3 but does not divide 1*2."
+    ],
+    "maple": [
+        "A[1]:= 1:",
+        "X:=[]:",
+        "P:=[]:",
+        "S:= [[]]:",
+        "for n from 2 to 50 do",
+        "  F:= ifactors(n)[2];",
+        "  found:= false;",
+        "  for t in F do",
+        "    if member(t[1],P,'i') then",
+        "      if t[1]^t[2]>X[i] then",
+        "        found:= true;",
+        "        X:= subsop(i=t[1]^t[2], X);",
+        "      fi",
+        "    else",
+        "      found:= true;",
+        "      X:= [op(X), t[1]];",
+        "      P:= [op(P), t[1]];",
+        "      S:= map(t -> ([op(t),0],[op(t),-1]),S);",
+        "   fi;",
+        "  od;",
+        "  if found then",
+        "    A[n]:= min(map(x -> chrem(x,X),S[2..-1]));",
+        "  else A[n]:= A[n-1]",
+        "  fi;",
+        "od:",
+        "seq(A[i],i=1..50);"
+    ],
+    "xref": [
+        "Cf. A003418."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Aug 15 2019",
+    "references": 1,
+    "revision": 14,
+    "time": "2019-08-16T23:04:33-04:00",
+    "created": "2019-08-15T23:28:44-04:00"
+}

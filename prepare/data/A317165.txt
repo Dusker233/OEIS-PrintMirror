@@ -1,0 +1,36 @@
+{
+    "number": 317165,
+    "data": "1,1,5,241,188743,2734858573,892173483721887,7469920269852025033699,1841449549508718383891930251607,14973026148724796464136435753195418043885,4467880642339303169146446437381463615730321314015457,53810913396105573079543194840166969124601447333276658546225661505",
+    "name": "Number of permutations of [n*(n+1)/2] with distinct lengths of increasing runs.",
+    "formula": [
+        "a(n) = A317166(A000217(n)).",
+        "a(n) >= A317273(n)."
+    ],
+    "maple": [
+        "g:= (n, s)-> `if`(n in s, 0, 1):",
+        "b:= proc(u, o, t, s) option remember; `if`(u+o=0, g(t, s),",
+        "      `if`(g(t, s)=1, add(b(u-j, o+j-1, 1, s union {t})",
+        "       , j=1..u), 0)+ add(b(u+j-1, o-j, t+1, s), j=1..o))",
+        "    end:",
+        "a:= n-> b(n*(n+1)/2, 0$2, {}):",
+        "seq(a(n), n=0..8);"
+    ],
+    "mathematica": [
+        "g[n_, s_] := If[MemberQ[s, n], 0, 1];",
+        "b[u_, o_, t_, s_] := b[u, o, t, s] = If[u + o == 0, g[t, s],",
+        "     If[g[t, s] == 1, Sum[b[u - j, o + j - 1, 1, s ~Union~ {t}],",
+        "     {j, u}], 0] + Sum[b[u + j - 1, o - j, t + 1, s], {j, o}]];",
+        "a[n_] := b[n(n+1)/2, 0, 0, {}];",
+        "Table[a[n], {n, 0, 8}] (* _Jean-Fran\u00e7ois Alcover_, Sep 01 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000217, A246292, A317130, A317166, A317273."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 23 2018",
+    "references": 3,
+    "revision": 18,
+    "time": "2021-09-01T22:23:14-04:00",
+    "created": "2018-07-25T15:00:45-04:00"
+}

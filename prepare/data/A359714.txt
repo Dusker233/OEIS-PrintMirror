@@ -1,0 +1,30 @@
+{
+    "number": 359714,
+    "data": "1,6,68,970,15627,271698,4980320,94919382,1864060550,37486601966,768542230128,16010270917186,338044149765168,7220000851821450,155743662496011552,3388779105788095886,74299386925266352272,1640069094618726916032,36421678762652448251540",
+    "name": "Central terms of triangle A359670; a(n) = A359670(2*n,n) for n >= 0.",
+    "comment": [
+        "The g.f. G(x,y) of triangle A359670 satisfies: G(x,y) = 1/[Sum_{n=-oo..+oo} (-1)^n * (x*y*G(x,y) + x^n)^n]."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A359714/b359714.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=1); for(i=1,2*n,",
+        "A = 1/sum(m=-#A,#A, (-1)^m * (x*y*A + x^m + x*O(x^(2*n)) )^m ) );",
+        "polcoeff( polcoeff( A,2*n,x),n,y)}",
+        "for(n=0,25, print1( a(n),\", \"))",
+        "(PARI) {a(n) = my(A=[1]); for(i=1,2*n, A = concat(A,0);",
+        "A[#A] = polcoeff(-y + sum(m=-#A,#A, (-1)^m * x^m * (y*Ser(A) + x^(m-1))^(m+1) )/(-y),#A-1,x) ); polcoeff( A[2*n+1],n,y)}",
+        "for(n=0,25, print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A359670."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jan 17 2023",
+    "references": 2,
+    "revision": 7,
+    "time": "2023-01-18T14:53:42-05:00",
+    "created": "2023-01-18T14:53:42-05:00"
+}

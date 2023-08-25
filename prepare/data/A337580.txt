@@ -1,0 +1,69 @@
+{
+    "number": 337580,
+    "data": "1,6,108,27876,1826942052,7846656369001524324,144745261873314177475604083946266324068,49254260310842419635956203183145610297351659359183114324190902443509341776996",
+    "name": "a(n) is the sequence of turns in the n-th iteration of the dragon curve encoded in binary (L=1, R=0) represented in decimal.",
+    "comment": [
+        "The first iterations of the dragon curve produce the following sequence of turns:",
+        "1st iteration: L",
+        "2nd iteration: L L R",
+        "3rd iteration: L L R L L R R",
+        "4th iteration: L L R L L R R L L L R R L R R",
+        "Substituting L=1 and R=0 one obtains the sequence (1, 110, 1101100, ...). Finally the entries are interpreted as binary numbers. In decimal the result is: (1, 6, 108, ...)."
+    ],
+    "link": [
+        "Martin Gardner, <a href=\"http://www.jstor.org/stable/24931474\">Mathematical Games</a>, Scientific American, volume 216 number 4, April 1967, pages 116-123. Page 118 \"binary formulas\" shown (and drawn) are a(n) written in binary (description in answer 3, pages 119-120).",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Dragon_curve\">Dragon curve</a>"
+    ],
+    "formula": [
+        "Recursive, in base 2:",
+        "a(0) = 1; a(n) = a(n-1)|1|rev(not(a(n-1))), where | denotes concatenation, not() denotes binary not, and rev() denotes order reverse (e.g., rev(110) = 011).",
+        "Continuing (in base 2):",
+        "The n-th digit, d(n), of any element is given by A014577. The following algorithm can also be used:",
+        "Express n in the form k2^m with k odd.",
+        "d(n) = -1/2 mod(k,4) + 3/2",
+        "Explicit formula: the n-th element in the sequence is given by (in base 10):",
+        "a(n) = d(1)*2^(2^n-2) + d(2)*2^(2^n-3) + d(3)*2^(2*n-4) + ... + 2^n + ... + (1-d(3))*2^2 + (1-d(2))*2^1 + (1-d(1))*2^0.",
+        "Asymptotic growth:",
+        "a(n) ~ 2^(2^n-2).",
+        "a(n)/2^(2^(n+1)-1)) ~ A143347 (paper-folding constant)."
+    ],
+    "example": [
+        "Recurrence:",
+        "a(0) = 1.",
+        "a(1) = 1|1|rev(not(1)) = 110.",
+        "a(2) = 110|1|rev(not(110)) = 1101|rev(001) = 1101100.",
+        "n-th digit:",
+        "d(1) = -(1/2)*(1 mod 4) + 3/2 = 1.",
+        "d(2) = -(1/2)*(1 mod 4) + 3/2 = 1 (since 2=2*1).",
+        "d(3) = -(1/2)*(3 mod 4) + 3/2 = 0.",
+        "Explicit formula:",
+        "a(3) = d(1)*2^6 + d(2)*2^5 + d(3)*2^4 + 2^3 + (1-d(3))*2^2 + (1-d(2))*2^1 + (1-d(1))*2^0 = 2^6 + 2^5 + 2^3 + 2^2 = 108."
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := a[n] = FromDigits[Join[(d = IntegerDigits[a[n - 1], 2]), {1}, 1 - Reverse[d]], 2]; Array[a, 8] (* _Amiram Eldar_, Sep 03 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "a=[]",
+        "a.append('1')",
+        "def bnot(string):",
+        "    nstring=''",
+        "    for letter in string:",
+        "        nstring+=str(-int(letter)+1)",
+        "    return nstring",
+        "for i in range(10):",
+        "    a.append(a[i]+'1'+bnot(a[i])[::-1])",
+        "print([int(i,2) for i in a])"
+    ],
+    "xref": [
+        "Cf. A014577, A348162.",
+        "Cf. A060032 (terdragon turns in digits)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Michal D. Kuczynski_, Sep 01 2020",
+    "references": 3,
+    "revision": 34,
+    "time": "2022-02-23T22:51:44-05:00",
+    "created": "2020-09-08T03:22:57-04:00"
+}

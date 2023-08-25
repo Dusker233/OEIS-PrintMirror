@@ -1,0 +1,54 @@
+{
+    "number": 332726,
+    "data": "1,1,2,4,8,16,31,61,120,228,438,836,1580,2976,5596,10440,19444,36099,66784,123215,226846,416502,763255,1395952,2548444,4644578,8452200,15358445,27871024,50514295,91446810,165365589,298730375,539127705,972099072,1751284617,3152475368",
+    "name": "Number of compositions of n whose run-lengths are unimodal.",
+    "comment": [
+        "A sequence of integers is unimodal if it is the concatenation of a weakly increasing and a weakly decreasing sequence.",
+        "A composition of n is a finite sequence of positive integers summing to n."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A332726/b332726.txt\">Table of n, a(n) for n = 0..500</a>",
+        "MathWorld, <a href=\"http://mathworld.wolfram.com/UnimodalSequence.html\">Unimodal Sequence</a>"
+    ],
+    "formula": [
+        "a(n) + A332727(n) = 2^(n - 1)."
+    ],
+    "example": [
+        "The only composition of 6 whose run-lengths are not unimodal is (1,1,2,1,1)."
+    ],
+    "mathematica": [
+        "unimodQ[q_]:=Or[Length[q]<=1,If[q[[1]]<=q[[2]],unimodQ[Rest[q]],OrderedQ[Reverse[q]]]]",
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],unimodQ[Length/@Split[#]]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "step(M, m)={my(n=matsize(M)[1]); for(p=m+1, n, my(v=vector((p-1)\\m, i, M[p-i*m,i]), s=vecsum(v)); M[p,]+=vector(#M,i,s-if(i<=#v, v[i]))); M}",
+        "desc(M, m)={my(n=matsize(M)[1]); while(m>1, m--; M=step(M,m)); vector(n, i, vecsum(M[i,]))/(#M-1)}",
+        "seq(n)={my(M=matrix(n+1, n+1, i, j, i==1), S=M[,1]~); for(m=1, n, my(D=M); M=step(M, m); D=(M-D)[m+1..n+1,1..n-m+2]; S+=concat(vector(m), desc(D,m))); S} \\\\ _Andrew Howroyd_, Dec 31 2020"
+    ],
+    "xref": [
+        "Looking at the composition itself (not run-lengths) gives A001523.",
+        "The case of partitions is A332280, with complement counted by A332281.",
+        "The complement is counted by A332727.",
+        "Unimodal compositions are A001523.",
+        "Unimodal normal sequences appear to be A007052.",
+        "Non-unimodal compositions are A115981.",
+        "Compositions with normal run-lengths are A329766.",
+        "Numbers whose prime signature is not unimodal are A332282.",
+        "Partitions whose 0-appended first differences are unimodal are A332283, with complement A332284, with Heinz numbers A332287.",
+        "Compositions whose negated run-lengths are unimodal are A332578.",
+        "Compositions whose negated run-lengths are not unimodal are A332669.",
+        "Compositions whose run-lengths are weakly increasing are A332836.",
+        "Cf. A072706, A100883, A181819, A227038, A328509, A329744, A329746, A332642, A332670, A332741, A332833, A332835."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Feb 29 2020",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Dec 31 2020"
+    ],
+    "references": 18,
+    "revision": 13,
+    "time": "2020-12-31T17:03:03-05:00",
+    "created": "2020-03-01T20:42:05-05:00"
+}

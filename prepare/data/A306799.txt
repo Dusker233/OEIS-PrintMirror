@@ -1,0 +1,35 @@
+{
+    "number": 306799,
+    "data": "1,2,5,14,43,151,597,2701,13795,79129,503693,3527292,26945081,222997659,1987492223,18979143358,193319844179,2092211006561,23974970862885,289995870991594,3692342091149853,49362977658760079,691359846917532235,10123067013673200297,154669070822937580645",
+    "name": "Expansion of e.g.f. (sec(x) + tan(x))*(BesselI(0,2*x) + BesselI(1,2*x)).",
+    "comment": [
+        "Boustrophedon transform of A001405."
+    ],
+    "link": [
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "mathematica": [
+        "nmax = 24; CoefficientList[Series[(Sec[x] + Tan[x]) (BesselI[0, 2 x] + BesselI[1, 2 x]), {x, 0, nmax}], x] Range[0, nmax]!",
+        "t[n_, 0] := Binomial[n, Floor[n/2]]; t[n_, k_] := t[n, k] = t[n, k - 1] + t[n - 1, n - k]; a[n_] := t[n, n]; Array[a, 25, 0]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import accumulate, count, islice",
+        "def A306799_gen(): # generator of terms",
+        "    blist, a  = tuple(), 1",
+        "    for i in count(1):",
+        "        yield (blist := tuple(accumulate(reversed(blist),initial=a)))[-1]",
+        "        a = 2*a*i//(i+1) if i & 1 else 2*a",
+        "A306799_list = list(islice(A306799_gen(),30)) # _Chai Wah Wu_, Jun 11 2022"
+    ],
+    "xref": [
+        "Cf. A000111, A000753, A001405."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Apr 16 2019",
+    "references": 0,
+    "revision": 25,
+    "time": "2022-06-11T20:21:34-04:00",
+    "created": "2019-04-16T21:40:50-04:00"
+}

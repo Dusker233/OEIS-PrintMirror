@@ -1,0 +1,42 @@
+{
+    "number": 74379,
+    "data": "41041,62745,63973,75361,101101,126217,172081,188461,278545,340561,449065,552721,656601,658801,670033,748657,838201,852841,997633,1033669,1082809,1569457,1773289,2100901,2113921,2433601,2455921",
+    "name": "Carmichael numbers with exactly 4 prime factors.",
+    "comment": [
+        "Original name was: \"Super-Carmichael numbers with exactly 4 factors\", and a comment explained that the prefix \"super\" means that the Moebius function (A008683) equals mu(N) = +1 for these. But for squarefree numbers such as Carmichael numbers (A002997), this just means that they have an even number of prime factors, which is trivial if that number is 4.",
+        "In the literature there are other definitions of \"super-Carmichael numbers\", see the McIntosh and Me\u0161trovi\u0107 references, so we prefer not to use this terminology at all."
+    ],
+    "link": [
+        "R. J. Mathar and Amiram Eldar, <a href=\"/A074379/b074379.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..6042 from R. J. Mathar)",
+        "Richard J. McIntosh <a href=\"https://www.emis.de/journals/INTEGERS/papers/o59/o59.Abstract.html\">Carmichael numbers with (p + 1) | (n - 1)</a>, Integers 14 (2014) #A59.",
+        "Romeo Me\u0161trovi\u0107, <a href=\"https://arxiv.org/abs/1305.1867\">Generalizations of Carmichael numbers I</a>, arXiv:1305.1867, May 04 2013"
+    ],
+    "formula": [
+        "Intersection of A002997 (Carmichael numbers) and A046386 (product of four distinct primes). - _M. F. Hasler_, Mar 24 2022"
+    ],
+    "example": [
+        "41041 = 7 * 11 * 13 * 41.",
+        "62745 = 3 * 5 * 47 * 89."
+    ],
+    "mathematica": [
+        "p = Table[ Prime[i], {i, 1, 10}]; f[n_] := Union[ PowerMod[ Select[p, GCD[ #, n] == 1 & ], n - 1, n]]; Select[ Range[2500000], !PrimeQ[ # ] && OddQ[ # ] && Length[ FactorInteger[ # ]] == 4 && MoebiusMu[ # ] == 1 && f[ # ] == {1} & ]"
+    ],
+    "program": [
+        "(PARI) is_A074379(n)=is_A002997(n) && is_A046386(n) \\\\ _M. F. Hasler_, Mar 24 2022",
+        "(PARI) list(lim)=my(v=List()); forprime(p=3,sqrtnint(lim\\=1,4), forprime(q=p+2,sqrtnint(lim\\p,3), if(q%p==1, next); forprime(r=q+2,sqrtint(lim\\p\\q), if(r%p==1 || r%q==1, next); my(m=lcm([p-1,q-1,r-1]),pqr=p*q*r,t=Mod(1,m)/pqr,L=lim\\pqr); fordiv(pqr-1,d, my(s=d+1); if(s>L, break); if(s==t && s>r && isprime(s), listput(v,pqr*s)))))); Set(v) \\\\ _Charles R Greathouse IV_, Apr 23 2022"
+    ],
+    "xref": [
+        "Cf. A002997 (Carmichael numbers), A006931 (least Carmichael with n prime factors), A046386 (products of four distinct primes)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jani Melik_, Sep 24 2002",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Oct 03 2002",
+        "Edited by _M. F. Hasler_, Mar 24 2022"
+    ],
+    "references": 10,
+    "revision": 34,
+    "time": "2022-04-23T22:58:20-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

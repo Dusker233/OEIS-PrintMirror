@@ -1,0 +1,38 @@
+{
+    "number": 327795,
+    "data": "0,0,0,3,6,13,30,61,121,210,353,600,989,1628,2667,4205,6514,10406,15893,24322,37516,56824,85102,128420,191579,284898,422839,622721,913006,1345320,1958269,2843788,4140170,5983662,8632808,12433730,17830728,25527909,36516161",
+    "name": "Number of parts in all proper twice partitions of n into distinct parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327795/b327795.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "example": [
+        "a(4) = 3:",
+        "  4 -> 31 -> 211   (3 parts)"
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0, [1, 0],",
+        "     `if`(k=0, [1, 1], `if`(i*(i+1)/2<n, 0, b(n, i-1, k)+",
+        "         (h-> (f-> f +[0, f[1]*h[2]/h[1]])(h[1]*",
+        "        b(n-i, min(n-i, i-1), k)))(b(i$2, k-1)))))",
+        "    end:",
+        "a:= n-> (k-> add(b(n$2, i)[2]*(-1)^(k-i)*binomial(k, i), i=0..k))(2):",
+        "seq(a(n), n=1..41);"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = With[{}, If[n == 0, {1, 0}, If[k == 0, {1, 1}, If[i (i + 1)/2 < n, {0, 0}, b[n, i - 1, k] + Function[h, Function[f, f + {0, f[[1]] h[[2]]/h[[1]]}][h[[1]] b[n - i, Min[n - i, i - 1], k]]][ b[i, i, k - 1]]]]]];",
+        "T[n_, k_] := Sum[b[n, n, i][[2]] (-1)^(k - i) Binomial[k, i], {i, 0, k}];",
+        "a[n_] := T[n, 2];",
+        "Array[a, 41] (* _Jean-Fran\u00e7ois Alcover_, Dec 09 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=2 of A327632.",
+        "Cf. A327605."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Alois P. Heinz_, Sep 25 2019",
+    "references": 3,
+    "revision": 14,
+    "time": "2020-12-09T15:15:02-05:00",
+    "created": "2019-09-25T17:00:24-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 328632,
+    "data": "0,12,24,30,42,54,60,72,84,90,102,114,120,132,144,150,162,174,180,192,204,216,228,246,258,276,288,306,318,336,348,366,378,396,408,420,432,444,450,462,474,480,492,504,510,522,534,540,552,564,570,582,594,600,612,624,636,648,666,678,696,708,726,738,756,768,786,798,816",
+    "name": "Numbers k such that A276086(k) == 1 (mod 6), where A276086 is the primorial base exp-function.",
+    "comment": [
+        "Numbers k >= 0 for which A328578(k) = A257993(A276086(A276086(k))) = 2, where A276086 converts the primorial base expansion of k into its prime product form, and A257993 returns the index of the least prime not present in its argument. - The original, equivalent definition.",
+        "Numbers k for which A276087(k) is an even number, but not a multiple of three.",
+        "All terms are multiples of 6, and thus apart from the initial zero, this is a subsequence of A328587, numbers k for which A257993(A276086(A276086(k))) is less than A257993(k)."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A328632/b328632.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Pri#primorialbase\">Index entries for sequences related to primorial base</a>"
+    ],
+    "formula": [
+        "{k | A358840(k) == 1}. - _Antti Karttunen_, Dec 02 2022"
+    ],
+    "program": [
+        "(PARI)",
+        "A257993(n) = { for(i=1,oo,if(n%prime(i),return(i))); }",
+        "A276086(n) = { my(m=1, p=2); while(n, m *= (p^(n%p)); n = n\\p; p = nextprime(1+p)); (m); };",
+        "A328578(n) = A257993(A276086(A276086(n)));",
+        "isA328632(n) = (2==A328578(n));",
+        "(PARI)",
+        "isA326832(n) = A358841(n);",
+        "A358841(n) = { my(m=1, p=2); while(n, m *= (p^(n%p)); n = n\\p; p = nextprime(1+p)); (1==(m%6)); }; \\\\ _Antti Karttunen_, Dec 12 2022"
+    ],
+    "xref": [
+        "Row 2 of A328631.",
+        "After the initial zero, setwise difference A328587 \\ A328762. Also setwise difference A008588 \\ A358843.",
+        "Positions of 1's in A358840 and A358841 (characteristic function), positions of 2's in A328578.",
+        "Cf. A257993, A276086, A328578, A358845 (= a(n)/6).",
+        "Cf. also A328317."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Oct 27 2019",
+    "ext": [
+        "Definition replaced with a simpler one and the original definition moved to the comments section by _Antti Karttunen_, Dec 03 2022"
+    ],
+    "references": 9,
+    "revision": 27,
+    "time": "2022-12-12T08:16:38-05:00",
+    "created": "2019-10-27T17:32:07-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 330799,
+    "data": "1,3,13,59,285,1419,7245,37659,198589,1059371,5705517,30976571,169338781,931239243,5147825421,28587660123,159406327677,892113040491,5009160335085,28210229053563,159304938535773,901845743050635,5117144607546573,29096321095698843,165765778648482621",
+    "name": "Evaluation of the Motzkin polynomials at 1/2 and normalized with 2^n.",
+    "formula": [
+        "a(n) = Sum_{k=0..n} A201641(n,k).",
+        "a(n) = 2^n*Sum_{k=0..n} A064189(n,k)/2^k.",
+        "a(n) = (-84*(n - 2)*a(n-3) - 2*(8*n + 5)*a(n-2) + (11*n + 5)*a(n-1))/(n + 1).",
+        "a(n) = [x^n] 2/(1 - 4*x + sqrt((1 - 6*x)*(2*x + 1))).",
+        "a(n) = [x^n] reverse((x^2 + x)/(7*x^2 + 4*x+1))/x."
+    ],
+    "maple": [
+        "a := proc(n) option remember; if n < 3 then return [1, 3, 13][n+1] fi;",
+        "(-84*(n - 2)*a(n-3) - 2*(8*n + 5)*a(n-2) + (11*n + 5)*a(n-1))/(n + 1) end:",
+        "seq(a(n), n=0..24);",
+        "# Alternative:",
+        "gf := 2/(1 - 4*x + sqrt((1 - 6*x)*(2*x + 1))):",
+        "ser := series(gf, x, 30): seq(coeff(ser,x,n), n=0..24);",
+        "# Or:",
+        "series((x^2+x)/(7*x^2+4*x+1), x, 30): gfun:-seriestoseries(%, 'revogf'):",
+        "convert(%, polynom) / x: seq(coeff(%, x, n), n=0..24);"
+    ],
+    "mathematica": [
+        "With[{C = Binomial}, A064189[n_, k_] := Sum[C[n, j]* (C[n-j, j+k] - C[n-j, j+k+2]), {j, 0, n}]];",
+        "a[n_] := 2^n*Sum[A064189[n, k]/2^k, {k, 0, n}];",
+        "Table[a[n], {n, 0, 24}] (* _Jean-Fran\u00e7ois Alcover_, Sep 25 2022 *)"
+    ],
+    "program": [
+        "(SageMath)",
+        "R.<x> = PowerSeriesRing(QQ)",
+        "f = (x^2 + x)/(7*x^2 + 4*x+1)",
+        "f.reverse().shift(-1).list()"
+    ],
+    "xref": [
+        "Cf. A201641, A064189, A129400, A330800."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Peter Luschny_, Jan 01 2020",
+    "references": 5,
+    "revision": 7,
+    "time": "2022-09-25T11:27:52-04:00",
+    "created": "2020-01-01T00:06:26-05:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 358587,
+    "data": "0,0,0,0,1,4,14,41,111,282,688,1627,3761,8540,19122,42333,92851,202078,436916,939359,2009781,4281696,9087670,19223905,40544951,85284194,178956984,374691171,782936761,1632982372,3400182458,7068800357,14674471611,30422685030",
+    "name": "Number of n-node rooted trees of height equal to the number of internal (non-leaf) nodes.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A358587/b358587.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "The a(5) = 1 through a(7) = 14 trees:",
+        "  ((o)(o))  ((o)(oo))   ((o)(ooo))",
+        "            (o(o)(o))   ((oo)(oo))",
+        "            (((o)(o)))  (o(o)(oo))",
+        "            ((o)((o)))  (oo(o)(o))",
+        "                        (((o))(oo))",
+        "                        (((o)(oo)))",
+        "                        ((o)((oo)))",
+        "                        ((o)(o(o)))",
+        "                        ((o(o)(o)))",
+        "                        (o((o)(o)))",
+        "                        (o(o)((o)))",
+        "                        ((((o)(o))))",
+        "                        (((o)((o))))",
+        "                        ((o)(((o))))"
+    ],
+    "mathematica": [
+        "art[n_]:=If[n==1,{{}},Join@@Table[Select[Tuples[art/@c],OrderedQ],{c,Join@@Permutations/@IntegerPartitions[n-1]}]];",
+        "Table[Length[Select[art[n],Count[#,_[__],{0,Infinity}]==Depth[#]-1&]],{n,1,10}]"
+    ],
+    "program": [
+        "(PARI) \\\\ Needs R(n,f) defined in A358589.",
+        "seq(n) = {Vec(R(n, (h,p)->polcoef(subst(p, x, x/y), -h, y)), -n)} \\\\ _Andrew Howroyd_, Jan 01 2023"
+    ],
+    "xref": [
+        "For leaves instead of height we have A185650 aerated, ranked by A358578.",
+        "These trees are ranked by A358576.",
+        "The ordered version is A358588.",
+        "Square trees are counted by A358589, ranked by A358577, ordered A358590.",
+        "A000081 counts rooted trees, ordered A000108.",
+        "A034781 counts rooted trees by nodes and height, ordered A080936.",
+        "A055277 counts rooted trees by nodes and leaves, ordered A001263.",
+        "A358575 counts rooted trees by nodes and internal nodes, ordered A090181.",
+        "Cf. A000891, A065097, A342507, A358552, A358581-A358584, A358591."
+    ],
+    "keyword": "nonn",
+    "offset": "1,6",
+    "author": "_Gus Wiseman_, Nov 23 2022",
+    "ext": [
+        "Terms a(19) and beyond from _Andrew Howroyd_, Jan 01 2023"
+    ],
+    "references": 18,
+    "revision": 10,
+    "time": "2023-01-01T14:45:01-05:00",
+    "created": "2022-11-25T13:18:32-05:00"
+}

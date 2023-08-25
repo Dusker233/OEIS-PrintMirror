@@ -1,0 +1,48 @@
+{
+    "number": 345667,
+    "data": "2,5,7,11,17,19,23,29,41,43,47,53,59,61,71,83,89,97,101,103,107,109,113,127,131,137,139,149,157,167,173,179,191,197,199,211,227,233,239,241,251,257,263,269,271,281,293,311,313,317,331,337,347,349,353,359",
+    "name": "a(n) is the largest prime substring of A345666(n).",
+    "example": [
+        "a(4) = 11 is the largest prime substring of A345666(4) = 110."
+    ],
+    "mathematica": [
+        "lst={};max=m=0;Do[If[!PrimeQ@n,If[IntegerQ[s=Max@Select[FromDigits/@Subsequences@IntegerDigits@n,PrimeQ]],m=s]];If[m>max,max=m;AppendTo[lst,s]],{n,10000}];lst (* _Giorgos Kalogeropoulos_, Jun 25 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def trojan_composites_records(limit_maxval=None, limit_terms=None, verbose=True):",
+        "    from sympy import isprime",
+        "    num = 1",
+        "    found = []",
+        "    while (not limit_maxval or not found or found[-1] <= limit_maxval) and (not limit_terms or len(found) < limit_terms):",
+        "        num += 1",
+        "        if not isprime(num):",
+        "            string = str(num)",
+        "            for length in range(len(string), len(str(found[-1])) if found else 1, -1):",
+        "                candidate = max(filter(isprime, {int(string[i:i + length - 1]) for i in range(len(string) - length + 2)}), default=0)",
+        "                if candidate:",
+        "                    if not found or candidate > found[-1]:",
+        "                        if limit_maxval and candidate > limit_maxval:",
+        "                            if verbose:",
+        "                                print()",
+        "                            return found",
+        "                        found.append(candidate)",
+        "                        if verbose:",
+        "                            print(candidate, end=', ', flush=True)",
+        "                break",
+        "    if verbose:",
+        "        print()",
+        "    return found",
+        "trojan_composites_records(limit_terms=7) # [2, 5, 7, 11, 17, 19, 23]"
+    ],
+    "xref": [
+        "Cf. A002808, A345666. Subset of A047814."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Eyal Gruss_, Jun 21 2021",
+    "references": 1,
+    "revision": 29,
+    "time": "2021-07-30T09:18:32-04:00",
+    "created": "2021-07-30T09:18:32-04:00"
+}

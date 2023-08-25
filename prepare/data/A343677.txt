@@ -1,0 +1,48 @@
+{
+    "number": 343677,
+    "data": "4,6,19,34,100,241,697,1779,6590,16585,57237,179291,591325,1707010,6520756,18271423,65212230,210339179,706823539",
+    "name": "Number of (2n+1)-digit undulating alternating palindromic primes.",
+    "comment": [
+        "a(n) is the number of (2n+1)-digit terms in A343675.",
+        "a(n) <= A057332(n)."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def f(w):",
+        "    for s in w:",
+        "        for t in range(int(s[-1])+1,10,2):",
+        "            yield s+str(t)",
+        "def g(w):",
+        "    for s in w:",
+        "        for t in range(1-int(s[-1])%2,int(s[-1]),2):",
+        "            yield s+str(t)",
+        "def A343677(n):",
+        "    if n == 0:",
+        "        return 4",
+        "    c = 0",
+        "    for d in '1379':",
+        "        x = d",
+        "        for i in range(1,n+1):",
+        "            x = g(x) if i % 2 else f(x)",
+        "        c += sum(1 for p in x if isprime(int(p+p[-2::-1])))",
+        "        y = d",
+        "        for i in range(1,n+1):",
+        "            y = f(y) if i % 2 else g(y)",
+        "        c += sum(1 for p in y if isprime(int(p+p[-2::-1])))",
+        "    return c"
+    ],
+    "xref": [
+        "Cf. A002385, A030144, A057332, A059168, A343590."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "0,1",
+    "author": "_Chai Wah Wu_, Apr 25 2021",
+    "ext": [
+        "a(17)-a(18) from _Chai Wah Wu_, May 02 2021"
+    ],
+    "references": 1,
+    "revision": 23,
+    "time": "2021-09-03T20:36:37-04:00",
+    "created": "2021-04-26T20:55:10-04:00"
+}

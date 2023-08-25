@@ -1,0 +1,50 @@
+{
+    "number": 328460,
+    "data": "1,1,1,2,2,4,5,8,11,16,26,35,53,76,115,168,244,363,528,782,1144,1685,2474,3633,5347,7844,11539,16946,24919,36605,53782,79053,116142,170700,250800,368585,541610,795884,1169572,1718593,2525522,3711134,5453542,8013798,11776138",
+    "name": "Number of compositions of n with no part divisible by the next.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A328460/b328460.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(9) = 16 compositions:",
+        "  (1)  (2)  (3)   (4)   (5)   (6)    (7)    (8)     (9)",
+        "            (21)  (31)  (23)  (42)   (25)   (35)    (27)",
+        "                        (32)  (51)   (34)   (53)    (45)",
+        "                        (41)  (231)  (43)   (62)    (54)",
+        "                              (321)  (52)   (71)    (63)",
+        "                                     (61)   (251)   (72)",
+        "                                     (232)  (323)   (81)",
+        "                                     (421)  (341)   (234)",
+        "                                            (431)   (252)",
+        "                                            (521)   (342)",
+        "                                            (2321)  (351)",
+        "                                                    (423)",
+        "                                                    (432)",
+        "                                                    (531)",
+        "                                                    (621)",
+        "                                                    (3231)"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],!MatchQ[#,{___,x_,y_,___}/;Divisible[y,x]]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(r=matid(n)); for(k=1, n, for(i=1, k-1, r[i,k]=sum(j=1, k-i, if(j%i, r[j, k-i])))); concat([1], vecsum(Col(r)))} \\\\ _Andrew Howroyd_, Oct 19 2019"
+    ],
+    "xref": [
+        "The case of partitions is A328171.",
+        "If we also require no part to be divisible by the prior, we get A328508.",
+        "Compositions with each part relatively prime to the next are A167606.",
+        "Compositions with no part relatively prime to the next are A178470.",
+        "Cf. A328026, A328028, A328161, A328172, A328189."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Oct 17 2019",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Oct 19 2019"
+    ],
+    "references": 14,
+    "revision": 7,
+    "time": "2019-10-19T14:45:07-04:00",
+    "created": "2019-10-18T11:26:45-04:00"
+}

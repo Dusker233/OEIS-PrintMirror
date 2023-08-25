@@ -1,0 +1,42 @@
+{
+    "number": 26742,
+    "data": "1,1,2,3,6,11,21,43,79,173,309,707,1237,2917,5026,12111,20626,50503,85242,211263,354080,885831,1476368,3720995,6173634,15652239,25873744,65913927,108628550,277822147,456710589,1171853635,1922354351",
+    "name": "a(n) = T(n, floor(n/2)), T given by A026736.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A026742/b026742.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) ~ phi^(3*n/2 - (7 + (-1)^n)/4) / sqrt(5), where phi = A001622 = (1+sqrt(5))/2 is the golden ratio. - _Vaclav Kotesovec_, Jul 19 2019"
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k] = If[k==0 || k==n, 1, If[EvenQ[n] && k==(n-2)/2, T[n-1, k-1] +T[n-2, k-1] +T[n-1, k], T[n-1, k-1] + T[n-1, k]]]; Table[T[n, Floor[n/2]], {n,0,40}] (* _G. C. Greubel_, Jul 19 2019 *)"
+    ],
+    "program": [
+        "(PARI) T(n,k) = if(k==n || k==0, 1, if((n%2)==0 && k==(n-2)/2, T(n-1, k-1) + T(n-2, k-1) + T(n-1, k), T(n-1, k-1) + T(n-1, k) ));",
+        "vector(20, n, n--; T(n, n\\2)) \\\\ _G. C. Greubel_, Jul 19 2019",
+        "(Sage) @CachedFunction",
+        "def T(n, k):",
+        "    if (k==0 or k==n): return 1",
+        "    elif (mod(n,2)==0 and k==(n-2)/2): return T(n-1, k-1) + T(n-2, k-1) + T(n-1, k)",
+        "    else: return T(n-1, k-1) + T(n-1, k)",
+        "[T(n, floor(n/2)) for n in (0..40)] # _G. C. Greubel_, Jul 19 2019",
+        "(GAP)",
+        "T:= function(n,k)",
+        "    if k=0 or k=n then return 1;",
+        "    elif (n mod 2)=0 and k=Int((n-2)/2) then return T(n-1, k-1) + T(n-2, k-1) + T(n-1, k);",
+        "    else return T(n-1, k-1) + T(n-1, k);",
+        "    fi;",
+        "  end;",
+        "Flat(List([0..20], n-> T(n,Int(n/2)) )); # _G. C. Greubel_, Jul 19 2019"
+    ],
+    "xref": [
+        "Cf. A026736."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_",
+    "references": 1,
+    "revision": 15,
+    "time": "2019-07-19T17:05:17-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

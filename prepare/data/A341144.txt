@@ -1,0 +1,32 @@
+{
+    "number": 341144,
+    "data": "1,1,1,1,2,3,3,4,6,8,8,10,12,15,16,22,23,29,30,37,40,50,50,63,68,79,81,99,101,121,127,147,153,182,182,214,224,253,262,304,309,351,365,405,421,477,485,541,563,614,634,706,719,791,823,888,919,1006,1029,1115,1164",
+    "name": "Number of partitions of n into 7 distinct prime powers (including 1).",
+    "maple": [
+        "q:= proc(n) option remember; nops(ifactors(n)[2])<2 end:",
+        "b:= proc(n, i, t) option remember; `if`(n=0,",
+        "      `if`(t=0, 1, 0), `if`(i<1 or t<1, 0, b(n, i-1, t)+",
+        "      `if`(q(i), b(n-i, min(n-i, i-1), t-1), 0)))",
+        "    end:",
+        "a:= n-> b(n$2, 7):",
+        "seq(a(n), n=30..90);  # _Alois P. Heinz_, Feb 05 2021"
+    ],
+    "mathematica": [
+        "q[n_] := q[n] = Length[FactorInteger[n]] < 2;",
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0,",
+        "     If[t == 0, 1, 0], If[i < 1 || t < 1, 0, b[n, i - 1, t] +",
+        "     If[q[i], b[n - i, Min[n - i, i - 1], t - 1], 0]]];",
+        "a[n_] := b[n, n, 7];",
+        "Table[a[n], {n, 30, 90}] (* _Jean-Fran\u00e7ois Alcover_, Feb 22 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000961, A010055, A341125, A341132, A341136, A341140, A341141, A341142, A341143, A341145."
+    ],
+    "keyword": "nonn",
+    "offset": "30,5",
+    "author": "_Ilya Gutkovskiy_, Feb 05 2021",
+    "references": 8,
+    "revision": 10,
+    "time": "2022-02-22T03:40:20-05:00",
+    "created": "2021-02-05T20:36:21-05:00"
+}

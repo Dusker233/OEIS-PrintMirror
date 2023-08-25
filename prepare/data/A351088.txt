@@ -1,0 +1,27 @@
+{
+    "number": 351088,
+    "data": "0,1,2,6,7,8,30,2310,2556,30030,223092870",
+    "name": "Numbers k such that A327860(k) is reachable from k by iterating the arithmetic derivative (A003415) and there are no terms with p^p-factors on the path there.",
+    "comment": [
+        "Sequence includes also the terms for which no iterations are needed (when k is already equal to A327860(k)), thus A328110 is a subsequence. The other terms (and also 1) seem to be the intersection of primorials (A002110) with sequence A099308.",
+        "The numbers k for which A276086(k) is reachable from k by iterating A003415 form a subsequence of this sequence, but so far only one term is known: 6, for which A276086(6) = A003415(6) = 5. (See A351228). It would be interesting to know whether there are more such terms, especially terms that require more than one iteration of A003415."
+    ],
+    "program": [
+        "(PARI)",
+        "A003415checked(n) = if(n<=1, 0, my(f=factor(n), s=0); for(i=1, #f~, if(f[i,2]>=f[i,1],return(0), s += f[i, 2]/f[i, 1])); (n*s)); \\\\ Like A003415, but return zero also for n that have p^p-factor(s).",
+        "A327860(n) = { my(s=0, m=1, p=2, e); while(n, e = (n%p); m *= (p^e); s += (e/p); n = n\\p; p = nextprime(1+p)); (s*m); };",
+        "\\\\ This simple program doesn't check for any hypothetical p^p-free A003415-loops (they are so rare that they are conjectured not to exist at all):",
+        "isA351088(n) = if(!n, 1, my(g=A327860(n)); while(n>0, if(n==g, return(1)); n = A003415checked(n)); (n));"
+    ],
+    "xref": [
+        "Cf. A002110, A003415, A099308, A276086, A328110 (subsequence), A327860.",
+        "Cf. also A327969, A351089, A351228."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,3",
+    "author": "_Antti Karttunen_, Feb 05 2022",
+    "references": 8,
+    "revision": 19,
+    "time": "2022-02-06T10:08:05-05:00",
+    "created": "2022-02-05T16:10:35-05:00"
+}

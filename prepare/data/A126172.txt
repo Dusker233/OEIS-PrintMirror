@@ -1,0 +1,35 @@
+{
+    "number": 126172,
+    "data": "2024,62744,573560,1000824,1173704,1208504,1921185,2140215,2198504,2312024,2580864,4012184,5416280,9247095,12500865,13496840,23939685,26409320,34093304,37324584,40818855,52026920,66275384,76011992,79842104,101366342,101589320,106004024",
+    "name": "Smaller element of a reduced infinitary amicable pair.",
+    "comment": [
+        "A divisor of n is called infinitary if it is a product of divisors of the form p^{y_a 2^a}, where p^y is a prime power dividing n and sum_a y_a 2^a is the binary representation of y."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A126172/b126172.txt\">Table of n, a(n) for n = 1..278</a>",
+        "Jan Munch Pedersen, <a href=\"http://62.198.248.44/aliquot/tables.htm\">Tables of Aliquot Cycles</a>."
+    ],
+    "formula": [
+        "The values of m for which isigma(m)=isigma(n)=m+n+1, where m<n and isigma(n) is given by A049417(n)."
+    ],
+    "example": [
+        "a(3)=573560 because 573560 is the smaller element of the third reduced infinitary amicable pair, (573560, 817479)"
+    ],
+    "mathematica": [
+        "ExponentList[n_Integer, factors_List] := {#, IntegerExponent[n, # ]} & /@ factors; InfinitaryDivisors[1] := {1}; InfinitaryDivisors[n_Integer?Positive] := Module[ { factors = First /@ FactorInteger[n], d = Divisors[n] }, d[[Flatten[Position[ Transpose[ Thread[Function[{f, g}, BitOr[f, g] == g][ #, Last[ # ]]] & /@ Transpose[Last /@ ExponentList[ #, factors] & /@ d]], _?( And @@ # &), {1}]] ]] ] Null; properinfinitarydivisorsum[k_] := Plus @@ InfinitaryDivisors[k] - k; ReducedInfinitaryAmicableNumberQ[n_] := If[properinfinitarydivisorsum[properinfinitarydivisorsum[ n] - 1] == n + 1 && n > 1, True, False]; ReducedInfinitaryAmicablePairList[k_] := (anlist = Select[Range[k], ReducedInfinitaryAmicableNumberQ[ # ] &]; prlist = Table[Sort[{anlist[[n]], properinfinitarydivisorsum[anlist[[n]]] - 1}], {n, 1, Length[anlist]}]; amprlist = Union[prlist, prlist]); data1 = ReducedInfinitaryAmicablePairList[ 10^7]; Table[First[data1[[k]]], {k, 1, Length[data1]}]",
+        "fun[p_, e_] := Module[{b = IntegerDigits[e, 2]}, m = Length[b]; Product[If[b[[j]] > 0, 1 + p^(2^(m - j)), 1], {j, 1, m}]]; infs[n_] := Times @@ (fun @@@ FactorInteger[n]) - n; s = {}; Do[k = infs[n] - 1; If[k > n && infs[k] == n + 1, AppendTo[s, n]], {n, 2, 10^5}]; s (* _Amiram Eldar_, Jan 22 2019 *)"
+    ],
+    "xref": [
+        "Cf. A126169, A049417, A126168, A037445, A126170, A126171, A126173, A126174, A126175, A126176."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ant King_, Dec 23 2006",
+    "ext": [
+        "a(15)-a(28) from _Amiram Eldar_, Jan 22 2019"
+    ],
+    "references": 6,
+    "revision": 10,
+    "time": "2019-01-22T08:23:10-05:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

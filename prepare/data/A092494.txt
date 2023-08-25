@@ -1,0 +1,39 @@
+{
+    "number": 92494,
+    "data": "0,1,3,4,6,7,10,11,12,13,16,17,20,21,23,25,27,28,31,32,34,36,39,40,42,43,45,46,49,50,54,55,56,58,60,62,65,66,68,70,73,74,78,79,81,83,86,87,89,90,92,94,97,98,100,102,104,106,109,110,114,115,117,119,120,122",
+    "name": "a(n) = Sum_{p prime and p<=n} ceiling(n/p).",
+    "comment": [
+        "a(n) = A013939(n) + A048865(n)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A092494/b092494.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "N:= 100: # for a(1)..a(N)",
+        "V:= Vector(N):",
+        "p:= 0:",
+        "do",
+        "  p:= nextprime(p);",
+        "  if p > N then break fi;",
+        "  V[p]:= V[p]+1;",
+        "  for k from 2 to floor(N/p) do",
+        "    V[(k-1)*p+1 .. k*p]:= V[(k-1)*p+1 .. k*p] +~ k;",
+        "  od;",
+        "  if (k-1)*p+1<=N then V[(k-1)*p+1..N]:= V[(k-1)*p+1..N]+~ k fi",
+        "od:",
+        "convert(V,list); # _Robert Israel_, Jun 19 2019"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, isprime(k)*ceil(n/k)); \\\\ _Michel Marcus_, Jun 19 2019"
+    ],
+    "xref": [
+        "Cf. A006590."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Reinhard Zumkeller_, Apr 05 2004",
+    "references": 1,
+    "revision": 11,
+    "time": "2019-06-19T14:13:06-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

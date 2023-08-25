@@ -1,0 +1,65 @@
+{
+    "number": 360423,
+    "data": "1,3,9,27,37,101,303,909,2439,10101,10989,12987,15873,25641,27027,30303,37037,47619,76923,90909,1010101,1369863,3030303,9090909,12345679,27027027,37037037,101010101,243902439,303030303,909090909,10101010101,10989010989,12987012987,15873015873",
+    "name": "Positive integers n (with k digits) such that if a positive integer m with k+1 digits is divisible by n, then all the rotations of m are divisible by n.",
+    "comment": [
+        "John D. Cook's blog (see link below) provides a proof that \"if a three-digit number is divisible by 37, it remains divisible by 37 if you rotate its digits.\""
+    ],
+    "link": [
+        "John D. Cook, <a href=\"https://www.johndcook.com/blog/2023/02/12/rotating-multiples-of-37/\">Rotating multiples of 37</a>."
+    ],
+    "example": [
+        "For a(4)=27, 405 is a 3-digit multiple of 27, and the two rotations of 405 (i.e., 54 and 540) are also multiples of 27.",
+        "For a(5)=37, 185 is a 3-digit multiple of 37, and the two rotations of 185 (i.e., 851 and 518) are also multiples of 37.",
+        "For a(9)=2439, 12195 is a 5-digit multiple of 2439, and the four rotations of 12195 (i.e., 21951, 19512, 95121 and 51219) are also multiples of 2439."
+    ],
+    "program": [
+        "(Python)",
+        "def rotate(str):",
+        "    first_char = str[0 : 1]",
+        "    remaining_chars = str[1 :]",
+        "    return (remaining_chars + first_char)",
+        "def get_rotations(n):",
+        "    n_as_str = str(n)",
+        "    rotations = []",
+        "    rotation_as_str = n_as_str",
+        "    for i in range(len(n_as_str) - 1):",
+        "        rotation_as_str = rotate(rotation_as_str)",
+        "        rotations.append(int(rotation_as_str))",
+        "    return rotations",
+        "seq = []",
+        "max_n = 9999999",
+        "for n in range(1, max_n + 1):",
+        "    n_len = len(str(n))",
+        "    factor = 2",
+        "    while True:",
+        "        prod = n * factor",
+        "        prod_len = len(str(prod))",
+        "        if prod_len < n_len + 1:",
+        "            factor = factor + 1",
+        "        elif prod_len > n_len + 1:",
+        "            seq.append(n)",
+        "            break",
+        "        else:",
+        "            # prod_len == n_len + 1",
+        "            rotations = get_rotations(prod)",
+        "            if all(rotation % n == 0 for rotation in rotations):",
+        "                factor = factor + 1",
+        "            else:",
+        "                break",
+        "print(seq)"
+    ],
+    "xref": [
+        "Cf. A034089, A066484."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Robert C. Lyons_, Feb 14 2023",
+    "ext": [
+        "a(25)-a(35) from _Chai Wah Wu_, Feb 24 2023"
+    ],
+    "references": 0,
+    "revision": 29,
+    "time": "2023-02-24T18:37:08-05:00",
+    "created": "2023-02-24T02:34:42-05:00"
+}

@@ -1,0 +1,31 @@
+{
+    "number": 214514,
+    "data": "12,17,22,27,33,38,43,54,57,59,62,67,75,78,83,99,102,107,123,129,134,139,147,150,155,171,174,177,179,182,187,195,198,203,219,222,227,243,246,251,267,291,294,297,299,302,307,315,318,323,339,342,347,363,369",
+    "name": "Numbers of the form p^2 + q^2 + r^2, where p, q, and r are primes.",
+    "link": [
+        "T. D. Noe, <a href=\"/A214514/b214514.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "nn = 10^3; ps = Prime[Range[PrimePi[Sqrt[nn]]]]; t = Flatten[Table[ps[[i]]^2 + ps[[j]]^2 + ps[[k]]^2, {i, Length[ps]}, {j, i, Length[ps]}, {k, j, Length[ps]}]]; t = Select[t, # <= nn &]; Union[t]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primerange as primes",
+        "from itertools import takewhile, combinations_with_replacement as mc",
+        "def aupto(N):",
+        "    psqs = list(takewhile(lambda x: x<=N, (p**2 for p in primes(1, N+1))))",
+        "    sum3 = set(sum(c) for c in mc(psqs, 3) if sum(c) <= N)",
+        "    return sorted(sum3)",
+        "print(aupto(369)) # _Michael S. Branicky_, Dec 17 2021"
+    ],
+    "xref": [
+        "Cf. A045636 (two primes), A214515 (four primes)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_T. D. Noe_, Jul 29 2012",
+    "references": 3,
+    "revision": 10,
+    "time": "2021-12-17T11:07:14-05:00",
+    "created": "2012-07-29T15:23:56-04:00"
+}

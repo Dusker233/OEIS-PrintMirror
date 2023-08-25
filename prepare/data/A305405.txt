@@ -1,0 +1,39 @@
+{
+    "number": 305405,
+    "data": "1,1,3,10,41,201,1126,7043,48603,366298,2987189,26163501,244654150,2430411335,25539609327,282834656434,3290175964577,40089424302657,510340938343270,6772086558823547,93481666812344979,1339885322519303434,19907413622297965373,306126204811557339045",
+    "name": "Expansion of Sum_{k>=0} k!!*x^k/Product_{j=1..k} (1 - j*x).",
+    "comment": [
+        "Stirling transform of A006882."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A305405/b305405.txt\">Table of n, a(n) for n = 0..517</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/StirlingTransform.html\">Stirling Transform</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1 + exp((exp(x) - 1)^2/2)*(exp(x) - 1)*(1 + sqrt(Pi/2)*erf((exp(x) - 1)/sqrt(2))).",
+        "a(n) = Sum_{k=0..n} Stirling2(n,k)*k!!."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember;",
+        "     `if`(n=0, doublefactorial(m), m*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..23);  # _Alois P. Heinz_, Aug 04 2021"
+    ],
+    "mathematica": [
+        "nmax = 23; CoefficientList[Series[Sum[k!! x^k/Product[1 - j x, {j, 1, k}], {k, 0, nmax}], {x, 0, nmax}], x]",
+        "nmax = 23; CoefficientList[Series[1 + Exp[(E^x - 1)^2/2] (Exp[x] - 1) (1 + Sqrt[Pi/2] Erf[(Exp[x] - 1)/Sqrt[2]]), {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[Sum[StirlingS2[n, k] k!!, {k, 0, n}], {n, 0, 23}]"
+    ],
+    "xref": [
+        "Cf. A000670, A004123, A006882, A305404."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, May 31 2018",
+    "references": 2,
+    "revision": 7,
+    "time": "2021-08-04T09:55:28-04:00",
+    "created": "2018-05-31T17:58:55-04:00"
+}

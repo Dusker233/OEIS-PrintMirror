@@ -1,0 +1,24 @@
+{
+    "number": 334900,
+    "data": "6,30,40,54,510,544,798,918,928,1120,1240,1288,1408,1480,1566,1672,1720,1768,1792,1888,1950,1974,2046,2430,2440,2560,2728,2814,2838,2968,3198,3318,4134,4158,4264,4422,4480,4758,5248,6102,6270,6424,6942,7590,7830,9280",
+    "name": "Numbers k such that k and k+2 are both bi-unitary practical numbers (A334898).",
+    "link": [
+        "Amiram Eldar, <a href=\"/A334900/b334900.txt\">Table of n, a(n) for n = 1..112</a>"
+    ],
+    "example": [
+        "6 is a term since 6 and 6 + 2 = 8 are both bi-unitary practical numbers."
+    ],
+    "mathematica": [
+        "biunitaryDivisorQ[div_, n_] := If[Mod[#2, #1] == 0, Last@Apply[Intersection, Map[Select[Divisors[#], Function[d, CoprimeQ[d, #/d]]] &, {#1, #2/#1}]] == 1, False] & @@ {div, n}; bdivs[n_] := Module[{d = Divisors[n]}, Select[d, biunitaryDivisorQ[#, n] &]]; bPracQ[n_] := Module[{d = bdivs[n], sd, x}, sd = Plus @@ d; Min @ CoefficientList[Series[Product[1 + x^d[[i]], {i, Length[d]}], {x, 0, sd}], x] >  0]; seq = {}; q1 = bPracQ[2]; Do[q2 = bPracQ[n]; If[q1 && q2, AppendTo[seq, n - 2]]; q1 = q2, {n, 4, 1000, 2}]; seq"
+    ],
+    "xref": [
+        "Cf. A287681, A330871, A334882, A334898, A334903."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, May 16 2020",
+    "references": 2,
+    "revision": 9,
+    "time": "2020-05-17T02:15:50-04:00",
+    "created": "2020-05-16T14:26:59-04:00"
+}

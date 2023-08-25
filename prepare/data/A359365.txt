@@ -1,0 +1,46 @@
+{
+    "number": 359365,
+    "data": "1,1,2,6,72,240,3600,75600,1411200,10160640,457228800,4191264000,184415616000,2054916864000,12466495641600,1308982042368000,314155690168320000,14241724620963840000,2178983867007467520000,37260624125827694592000,337119932567012474880000",
+    "name": "a(n) = lcm([ n!*binomial(n-1, m-1) / m! for m = 1..n ]) with a(0) = 1.",
+    "comment": [
+        "The lcm of the rows of the unsigned Lah triangle (for k >= 1)."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A359365/b359365.txt\">Table of n, a(n) for n = 0..390</a>"
+    ],
+    "maple": [
+        "# Maple has the convention integer lcm() = 1, which covers the case n = 0.",
+        "a := n -> ilcm(seq(n!*binomial(n-1, m-1) / m!, m = 1..n)):",
+        "seq(a(n), n = 0..20);"
+    ],
+    "mathematica": [
+        "{1}~Join~Table[LCM @@ Array[n!*Binomial[n - 1, # - 1]/#! &, n], {n, 20}] (* _Michael De Vlieger_, Dec 30 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from functools import cache",
+        "from sympy import lcm",
+        "def A359365 (n: int) -> int:",
+        "    @cache",
+        "    def l(n: int) -> list[int]:",
+        "        if n == 0: return [1]",
+        "        row: list[int] = l(n - 1) + [1]",
+        "        row[0] = 0",
+        "        for k in range(n - 1, 0, -1):",
+        "            row[k] = row[k] * (n + k - 1) + row[k - 1]",
+        "        return row",
+        "    return lcm(l(n)[1:])",
+        "print([A359365(n) for n in range(21)])",
+        "(PARI) a(n) = lcm(vector(n, m, n!*binomial(n-1, m-1) / m!)); \\\\ _Michel Marcus_, Dec 30 2022"
+    ],
+    "xref": [
+        "Cf. A271703 (unsigned Lah numbers), A103505 (gcd counterpart)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, Dec 30 2022",
+    "references": 1,
+    "revision": 14,
+    "time": "2022-12-30T11:23:53-05:00",
+    "created": "2022-12-30T09:24:04-05:00"
+}

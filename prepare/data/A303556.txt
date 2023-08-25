@@ -1,0 +1,37 @@
+{
+    "number": 303556,
+    "data": "490,55930,98648,222560,396550,584988,838448,1173102,2345720,2855660,4150120,4781502,5557300,6072460,6115122,6688416,6715280,9390290,9486950,11691498,12704510,13331240,16035760,17325700,19377050,20055070,20859410,29651748,34516160,35040352",
+    "name": "Numbers equal to the sum of the numbers between two of their consecutive divisors.",
+    "comment": [
+        "If also the two consecutive divisors were added to the sum, the first terms would be 18, 55120, 1034540, 1386350, 1675960, ..."
+    ],
+    "example": [
+        "a(1) = 490 because 14 and 35 are two consecutive divisors of 490 and the sum of the numbers from 15 to 34 is equal to 490 itself.",
+        "a(7) = 838448 because 1807 and 2224 are two consecutive divisors of 838448 and the sum of the numbers from 1808 to 2223 is equal to 838448 itself."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,k,n;",
+        "for n from 1 to q do if not isprime(n) then a:=sort([op(divisors(n))]);",
+        "for k from 1 to tau(n)-1 do if n=((a[k+1]-1)*a[k+1]-a[k]*(a[k]+1))/2",
+        "then print(n); break; fi; od; fi; od; end: P(10^9);"
+    ],
+    "mathematica": [
+        "Select[Range[351*10^5],MemberQ[Total[Range[#[[1]]+1,#[[2]]-1]]&/@Partition[ Divisors[ #],2,1],#]&] (* _Harvey P. Dale_, Feb 14 2023 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = my(d=divisors(n)); vecsearch(vecsort(vector(#d-1, k, ((d[k+1]-1)*d[k+1]-d[k]*(d[k]+1))/2),,8), n); \\\\ _Michel Marcus_, Apr 27 2018"
+    ],
+    "xref": [
+        "Cf. A055233."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Apr 26 2018",
+    "ext": [
+        "a(10)-a(30) from _Giovanni Resta_, Apr 27 2018"
+    ],
+    "references": 1,
+    "revision": 13,
+    "time": "2023-02-14T12:56:51-05:00",
+    "created": "2018-05-04T08:47:13-04:00"
+}

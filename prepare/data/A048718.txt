@@ -1,0 +1,37 @@
+{
+    "number": 48718,
+    "data": "0,1,2,4,8,16,17,32,33,34,64,65,66,68,128,129,130,132,136,256,257,258,260,264,272,273,512,513,514,516,520,528,529,544,545,546,1024,1025,1026,1028,1032,1040,1041,1056,1057",
+    "name": "Binary expansion matches ((0)*0001)*(0*); or, Zeckendorf-like expansion of n using recurrence f(n) = f(n-1) + f(n-4).",
+    "comment": [
+        "Max. 1 one-bit occur in each range of four bits.",
+        "Constructed from A003269 in the same way as A003714 is constructed from A000045."
+    ],
+    "link": [
+        "Sebastian Karlsson, <a href=\"/A048718/a048718.txt\">Walnut code that verifies the conjectures of Paul D. Hanna</a>",
+        "Walnut can be downloaded from <a href=\"https://cs.uwaterloo.ca/~shallit/walnut.html\">https://cs.uwaterloo.ca/~shallit/walnut.html</a>.",
+        "<a href=\"/index/Con#CongruCrossDomain\">Index entries for sequences defined by congruent products between domains N and GF(2)[X]</a>",
+        "<a href=\"/index/Con#CongruXOR\">Index entries for sequences defined by congruent products under XOR</a>"
+    ],
+    "formula": [
+        "a(0) = 0, a(n) = (2^(invfyy(n)-1))+a(n-fyy(invfyy(n))) where fyy(n) is fyy(n-1) + fyy(n-4) (A003269) and invfyy is its \"integral\" (floored down) inverse.",
+        "a(n) XOR 14*a(n) = 15*a(n); 3*a(n) XOR 9*a(n) = 10*a(n); 3*a(n) XOR 13*a(n) = 14*a(n); 5*a(n) XOR 9*a(n) = 12*a(n); 5*a(n) XOR 11*a(n) = 14*a(n); 6*a(n) XOR 11*a(n) = 13*a(n); 7*a(n) XOR 9*a(n) = 14*a(n); 7*a(n) XOR 10*a(n) = 13*a(n); 7*a(n) XOR 11*a(n) = 12*a(n); 12*a(n) XOR 21*a(n) = 25*a(n); 12*a(n) XOR 37*a(n) = 41*a(n); etc. (conjectures). - _Paul D. Hanna_, Jan 22 2006",
+        "The conjectures can be verified using the Walnut theorem-prover (see links). - _Sebastian Karlsson_, Dec 31 2022"
+    ],
+    "mathematica": [
+        "filterQ[n_] := With[{bb = IntegerDigits[n, 2]}, !MemberQ[{{1, 1}, {1, 0, 1}, {1, 1, 0}, {1, 1, 1}}, bb] && SequencePosition[bb, {a_, b_, c_, d_} /; Count[{a, b, c, d}, 1] > 1] == {}];",
+        "Select[Range[0, 1057], filterQ] (* _Jean-Fran\u00e7ois Alcover_, Dec 31 2020 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=!bitand(n, 14*n) \\\\ _Charles R Greathouse IV_, Oct 03 2016"
+    ],
+    "xref": [
+        "Cf. A048715, A048719, A115422, A115423, A115424."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "0,3",
+    "author": "_Antti Karttunen_, Mar 30 1999",
+    "references": 8,
+    "revision": 25,
+    "time": "2022-12-31T15:20:16-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

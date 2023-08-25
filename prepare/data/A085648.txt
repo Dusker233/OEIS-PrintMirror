@@ -1,0 +1,38 @@
+{
+    "number": 85648,
+    "data": "4,6,9,15,121,253,361,437,451,473,527,671,703,799,851,901,923,979,1003,1027,1067,1081,1139,1157,1207,1247,1261,1333,1513,1517,1643,1711,2183,2291,2701,2813,3007,3403,3551,3589,3713,4307,4399,4489,5041,5063,5767",
+    "name": "Brilliant numbers (A078972) whose digital sum is also brilliant.",
+    "link": [
+        "Robert Israel, <a href=\"/A085648/b085648.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "7470269 is a term because 7470269 = 1249*5981 and 7+4+7+0+2+6+9 = 35 = 5*7."
+    ],
+    "maple": [
+        "isbril:= proc(n) local F;",
+        "  F:= ifactors(n)[2];",
+        "  (nops(F)=1 and F[1][2]=2) or (nops(F)=2 and F[1][2]=1 and F[2][2]=1 and ilog10(F[1][1])=ilog10(F[2][1]))",
+        "end proc:",
+        "R:= NULL:",
+        "for d from 1 to 2 do",
+        "  if d = 1 then P:= [2,3,5,7]",
+        "  else P:= select(isprime, [seq(i,i=10^(d-1)+1..10^d-1,2)])",
+        "  fi;",
+        "  R:= R, op(sort(select(t -> isbril(convert(convert(t,base,10),`+`)), [seq(seq(P[i]*P[j],j=1..i),i=1..nops(P))])))",
+        "od:",
+        "R; # _Robert Israel_, Nov 24 2020"
+    ],
+    "xref": [
+        "Cf. A078972."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, _Jason Earls_, Jul 11 2003",
+    "ext": [
+        "Offset changed by _Robert Israel_, Nov 24 2020"
+    ],
+    "references": 1,
+    "revision": 12,
+    "time": "2020-11-24T16:38:43-05:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

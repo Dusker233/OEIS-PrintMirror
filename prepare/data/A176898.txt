@@ -1,0 +1,56 @@
+{
+    "number": 176898,
+    "data": "5,231,14586,1062347,84021990,7012604550,607892634420,54200780036595,4938927219474990,457909109348466930,43057935618181929900,4096531994713828810686,393617202432246696493436,38142088615983865845923052,3723160004902167033863327592",
+    "name": "a(n) = binomial(6*n, 3*n)*binomial(3*n, n)/(2*(2*n+1)*binomial(2*n, n)).",
+    "comment": [
+        "During April 26-28, 2010, _Zhi-Wei Sun_ introduced this new sequence and proved that a(n) = binomial(6n,3n)*binomial(3n,n)/(2*(2n+1)*binomial(2n,n)) is a positive integer for every n=1,2,3,... He also observed that a(n) is odd if and only if n is a power of two, and that 3a(n)=0 (mod 2n+3). By Stirling's formula, we have lim_n (8n*sqrt(n*Pi)a(n)/108^n) = 1. It is interesting to find a combinatorial interpretation or recursion for the sequence.",
+        "From _Tatiana Hessami Pilehrood_, Dec 01 2015: (Start)",
+        "_Zhi-Wei Sun_ formulated two conjectures concerning a(n) (see Conjectures 1.1 and 1.2 in Z.-W. Sun, \"Products and sums divisible by central binomial coefficients\" and Conjecture A89 in \"Open conjectures on congruences\"). The first conjecture states that Sum_{n=1..p-1} a(n)/(108^n) is congruent to 0 or -1 modulo a prime p > 3 depending on whether p is congruent to +-1 or +-5 modulo 12, respectively.",
+        "The second conjecture asks about an exact formula for a companion sequence of a(n). Both conjectures as well as many numerical congruences involving a(n) and (2n+1)a(n) were solved by Kh. Hessami Pilehrood and T. Hessami Pilehrood, see the link below. (End)"
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A176898/b176898.txt\">Table of n, a(n) for n = 1..450</a>",
+        "Kh. Hessami Pilehrood and T. Hessami Pilehrood, <a href=\"http://arxiv.org/abs/1504.07944\">Jacobi polynomials and congruences involving some higher-order Catalan numbers and binomial coefficients</a>, preprint, arXiv:1504.07944 [math.NT], 2015.",
+        "K. H. Pilehrood and T. H. Pilehrood, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Pilehrood/pile5.html\">Jacobi Polynomials and Congruences Involving Some Higher-Order Catalan Numbers and Binomial Coefficients</a>, J. Int. Seq. 18 (2015) 15.11.7",
+        "M. R. Sepanski, <a href=\"https://doi.org/10.37236/3350\">On Divisibility of Convolutions of Central Binomial Coefficients</a>, Electronic Journal of Combinatorics, 21 (1) 2014, #P1.32.",
+        "Zhi-Wei Sun, <a href=\"http://arxiv.org/abs/1004.4623\">Products and sums divisible by central binomial coefficients</a>, preprint, arXiv:1004.4623 [math.NT], 2010.",
+        "Zhi-Wei Sun, <a href=\"http://arxiv.org/abs/0911.5665\">Open conjectures on congruences</a>, preprint, arXiv:0911.5665 [math.NT], 2009-2011.",
+        "Brian Y. Sun, J. X. Meng, <a href=\"https://arxiv.org/abs/1606.08153\">Proof of a Conjecture of Z.-W. Sun on Trigonometric Series</a>, arXiv preprint arXiv:1606.08153 [math.CO], 2016."
+    ],
+    "formula": [
+        "G.f.: (1-6*s)/((12*s-1)*(8*s-2)) - 1/2, where x+(3*s-1)*(12*s-1)^2*s*(4*s-1)^2 = 0. - _Mark van Hoeij_, May 06 2013",
+        "a(n) ~ 2^(2*n-3) * 3^(3*n) / (sqrt(Pi) * n^(3/2)). - _Vaclav Kotesovec_, Jan 09 2023",
+        "From _Peter Bala_, Feb 21 2023: (Start)",
+        "a(n+1) = 6*(6*n + 1)*(6*n + 5)/((n + 1)*(2*n + 3))*a(n).",
+        "a(n) = (2^(2*n-1)) * Product_{1 <= i <= j <= 2*n-1} (2*i + j + 2)/(2*i + j - 1). Cf. A006013. (End)"
+    ],
+    "example": [
+        "For n=2 we have a(2) = binomial(12,6)*binomial(6,2)/(2*(2*2+1)*binomial(4,2)) = 231."
+    ],
+    "maple": [
+        "ogf := eval((1-6*s)/((12*s-1)*(8*s-2)) - 1/2, s=RootOf(x+(3*s-1)*(12*s-1)^2*s*(4*s-1)^2,s));",
+        "series(ogf,x=0,30); # _Mark van Hoeij_, May 06 2013"
+    ],
+    "mathematica": [
+        "S[n_]:=Binomial[6n,3n]Binomial[3n,n]/(2(2n+1)Binomial[2n,n]) Table[S[n],{n,1,50}]"
+    ],
+    "program": [
+        "(Magma) [Binomial(6*n, 3*n)*Binomial(3*n, n)/(2*(2*n+1)*Binomial(2*n, n)): n in [1..15]]; // _Vincenzo Librandi_, Dec 02 2015",
+        "(PARI) a(n) = binomial(6*n, 3*n) * binomial(3*n, n) / (2*(2*n+1) * binomial(2*n, n)); \\\\ _Indranil Ghosh_, Mar 05 2017",
+        "(Python)",
+        "import math",
+        "f=math.factorial",
+        "def C(n,r): return f(n)/f(r)/f(n-r)",
+        "def A176898(n): return C(6*n, 3*n) * C(3*n, n) / (2*(2*n+1) * C(2*n, n)) # _Indranil Ghosh_, Mar 05 2017"
+    ],
+    "xref": [
+        "Cf. A000984, A006013, A173774, A176285, A176477."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Zhi-Wei Sun_, Apr 28 2010",
+    "references": 2,
+    "revision": 54,
+    "time": "2023-02-24T02:30:37-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

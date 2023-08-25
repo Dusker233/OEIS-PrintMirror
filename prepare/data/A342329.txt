@@ -1,0 +1,56 @@
+{
+    "number": 342329,
+    "data": "2,90,356232,152505051772,6961765466482521226",
+    "name": "Number of different games of Connect Four on an (n+1) X n board.",
+    "comment": [
+        "There are many more game variations than positions in the game Connect Four since almost all positions can be reached in many different ways. For the regular 7 X 6 board there are 4531985219092 legal positions (see A212693). If we estimate the number of possible games with the formula (0.75*(n+1))^(n*(n+1)-1), i.e., on average the players have 75% free columns to choose from, there are about 3.0*10^29 possible games."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Connect_Four\">Connect Four</a>"
+    ],
+    "example": [
+        "a(1) = 2: on a 2 X 1 board the first player can insert their first disc in the right or in the left column, the second player has no choice anymore, hence there are two different games. Obviously for the 2 X 1 and 3 X 2 boards, all games will end in a draw."
+    ],
+    "program": [
+        "(Python)",
+        "def next_turn(player): # there are players 0 and 1",
+        "    global total, position",
+        "    ngames = 0",
+        "    for i in range(n+1):",
+        "        fill = int(column[i]) # height of column i",
+        "        if fill < n: # throw a disc into column i",
+        "            position = position + 2 ** (i + (n + 1) * fill + ntimesnplus1 * player) # unique identifier for this position",
+        "            if position in games: # half of memory and cpu-time can be saved if you exploit symmetry of positions here",
+        "                ngames = ngames + games[position]",
+        "            else:",
+        "                column[i] = column[i] + 1",
+        "                total = total + 1",
+        "                if position in setfinalpos: # we have reached a known final position",
+        "                    ngames = ngames + 1",
+        "                else: # check if the new position is a win or if the board is full",
+        "                    if check4win(position, player, fill, i) or total == ntimesnplus1:",
+        "                        setfinalpos.add(position)",
+        "                        ngames = ngames + 1",
+        "                    else:",
+        "                        numbergames = next_turn(1 - player)",
+        "                        ngames = ngames + numbergames",
+        "                column[i] = column[i] - 1",
+        "                total = total - 1",
+        "            position = position - 2 ** (i + (n + 1) * fill + ntimesnplus1 * player)",
+        "    games[position] = ngames",
+        "    return ngames"
+    ],
+    "xref": [
+        "Cf. A013582, A090224, A212693."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Robin Jehn_, Mar 08 2021",
+    "ext": [
+        "a(5) from _Kester Habermann_, Mar 09 2021"
+    ],
+    "references": 0,
+    "revision": 20,
+    "time": "2021-03-28T18:54:17-04:00",
+    "created": "2021-03-28T18:54:17-04:00"
+}

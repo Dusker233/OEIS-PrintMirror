@@ -1,0 +1,28 @@
+{
+    "number": 33319,
+    "data": "0,2,4,6,180,1820,3588,9100,226153980,15140424455100,183567298683461940,9562401173878027020,42094239791738433660,1238789998647218582160,189073995951839020880499780706260",
+    "name": "Incrementally largest values of minimal y satisfying Pell equation x^2-Dy^2=1.",
+    "comment": [
+        "Records in A033317 (or A002349)."
+    ],
+    "link": [
+        "Ray Chandler, <a href=\"/A033319/b033319.txt\">Table of n, a(n) for n = 1..63</a>",
+        "N. J. A. Sloane et al., <a href=\"https://oeis.org/wiki/Binary_Quadratic_Forms_and_OEIS\">Binary Quadratic Forms and OEIS</a> (Index to related sequences, programs, references)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PellEquation.html\">Pell Equation</a>."
+    ],
+    "mathematica": [
+        "PellSolve[(m_Integer)?Positive] := Module[{cf, n, s}, cf = ContinuedFraction[Sqrt[m]]; n = Length[Last[cf]]; If[n == 0, Return[{}]]; If[OddQ[n], n = 2 n]; s = FromContinuedFraction[ ContinuedFraction[ Sqrt[m], n]]; {Numerator[s], Denominator[s]}];",
+        "yy = DeleteCases[PellSolve /@ Range[10^5], {}][[All, 2]];",
+        "Reap[Module[{y, record = 0}, Sow[0]; For[i = 1, i <= Length@yy, i++, y = yy[[i]]; If[y > record, record = y; Sow[y]]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Nov 21 2020, after _N. J. A. Sloane_ in A002350 *)"
+    ],
+    "xref": [
+        "Cf. A000037, A033317, A033318, A002349, A002350, A033316."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Eric W. Weisstein_",
+    "references": 3,
+    "revision": 16,
+    "time": "2020-11-21T05:08:05-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

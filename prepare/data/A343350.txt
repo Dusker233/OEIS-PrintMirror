@@ -1,0 +1,28 @@
+{
+    "number": 343350,
+    "data": "1,1,6,31,171,921,5031,27281,148101,801901,4336902,23415777,126254962,679805112,3655679442,19634501447,105334380517,564471596667,3021754455157,16160029793032,86339725851558,460874548444683,2457961986888773,13097958657023523,69740119667456018",
+    "name": "Expansion of Product_{k>=1} 1 / (1 - x^k)^(5^(k-1)).",
+    "formula": [
+        "a(n) ~ exp(2*sqrt(n/5) - 1/10 + c/5) * 5^(n - 1/4) / (2*sqrt(Pi)*n^(3/4)), where c = Sum_{j>=2} 1/(j * (5^(j-1) - 1)). - _Vaclav Kotesovec_, Apr 12 2021"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(a(n-j)*add(",
+        "      d*5^(d-1), d=numtheory[divisors](j)), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..24);  # _Alois P. Heinz_, Apr 12 2021"
+    ],
+    "mathematica": [
+        "nmax = 24; CoefficientList[Series[Product[1/(1 - x^k)^(5^(k - 1)), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, (1/n) Sum[Sum[d 5^(d - 1), {d, Divisors[k]}] a[n - k], {k, 1, n}]]; Table[a[n], {n, 0, 24}]"
+    ],
+    "xref": [
+        "Cf. A034691, A104460, A144069, A343349, A343351, A343352, A343353, A343354, A343355."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 12 2021",
+    "references": 7,
+    "revision": 9,
+    "time": "2021-04-12T12:13:14-04:00",
+    "created": "2021-04-12T09:24:12-04:00"
+}

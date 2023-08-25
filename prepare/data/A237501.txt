@@ -1,0 +1,34 @@
+{
+    "number": 237501,
+    "data": "4,12,42,106,300,654,1664,3300,7940,15018,34948,64396,147130,267404,604722,1090998,2453492,4409000,9886266,17729222",
+    "name": "Number of binary strings of length 2n which contain the reversals of each of their two halves.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A237501/a237501.py.txt\">Python program</a>"
+    ],
+    "example": [
+        "The two halves of 01111011 are 0111 and 1011. Their reversals are 1110 and 1101, and both are substrings of 01111011. Since there are 105 other strings of length 2*4 with this property, a(4) = 106."
+    ],
+    "mathematica": [
+        "sQ[L_, {s__}] := MatchQ[L, {___, s, ___}]; a[n_] := Length@ Select[ Tuples[{0, 1}, 2*n], sQ[#, Reverse[Take[#, n]]] && sQ[#, Reverse[Take[#, -n ]]] &]; Array[a,8]"
+    ],
+    "program": [
+        "(Python) # see link for faster version",
+        "from itertools import product as prod",
+        "def ok(s): return s[:len(s)//2][::-1] in s and s[len(s)//2:][::-1] in s",
+        "def a(n): return 2*sum(ok(\"0\"+\"\".join(p)) for p in prod(\"01\", repeat=2*n-1))",
+        "print([a(n) for n in range(1, 12)]) # _Michael S. Branicky_, Feb 06 2021"
+    ],
+    "xref": [
+        "Cf. A237500, A237502."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Giovanni Resta_, Feb 08 2014",
+    "ext": [
+        "a(17)-a(20) from _Michael S. Branicky_, Feb 06 2021"
+    ],
+    "references": 3,
+    "revision": 14,
+    "time": "2021-02-07T21:10:56-05:00",
+    "created": "2014-02-08T22:04:37-05:00"
+}

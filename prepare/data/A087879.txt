@@ -1,0 +1,35 @@
+{
+    "number": 87879,
+    "data": "5,29,37,61,101,173,181,197,269,277,293,349,389,509,541,613,653,661,677,701,757,773,821,877,941,1069,1093,1109,1117,1181,1237,1301,1373,1597,1613,1693,1733,1741,1789,1877,1933,1997,2029,2053,2069,2141,2221,2269",
+    "name": "Primes of the form (4n+1)^2 + (4m+2)^2, m,n >= 0.",
+    "link": [
+        "Robert Israel, <a href=\"/A087879/b087879.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "N:= 10000:",
+        "A:= NULL:",
+        "for x from 1 by 4 while x^2 < N do",
+        "  for y from 2 by 4 while x^2 + y^2 < N do",
+        "    v:= x^2 + y^2;",
+        "    if isprime(v) then A:= A,v fi",
+        "od od:",
+        "sort(convert({A},list)); # _Robert Israel_, Aug 26 2018"
+    ],
+    "program": [
+        "Contribution from _Michael B. Porter_, Dec 10 2009: (Start)",
+        "(PARI) /* numbers of the form (4x+1)^2 + (4y+2)^2 for x,y >= 0 */",
+        "/* largest possible x */",
+        "xm(n)=floor((sqrt(n-4)-1)/4)",
+        "/* determine if n - (4x+1)^2 is a square, and put the square root into a */",
+        "isform(n)={local(r,a);r=0;for(x=0,xm(n),if(issquare(n-(4*x+1)^2,a),if(Mod(a,4)==Mod(2,4),r=1)));r}",
+        "/* skip isform() calculation if possible */",
+        "isA087879(n) = if(n>4 && Mod(n,2)==Mod(1,2) && isprime(n),isform(n),0) (End)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Oct 11 2003",
+    "references": 1,
+    "revision": 11,
+    "time": "2018-08-26T20:15:17-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

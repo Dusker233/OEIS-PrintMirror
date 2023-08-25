@@ -1,0 +1,58 @@
+{
+    "number": 122552,
+    "data": "1,1,1,4,7,13,28,55,109,220,439,877,1756,3511,7021,14044,28087,56173,112348,224695,449389,898780,1797559,3595117,7190236,14380471,28760941,57521884,115043767,230087533,460175068,920350135,1840700269,3681400540",
+    "name": "a(0)=a(1)=a(2)=1, a(n) = a(n-1) + a(n-2) + 2*a(n-3) for n > 2.",
+    "comment": [
+        "Equals INVERT transform of (1, 0, 3, 0, 3, 0, 3, ...). - _Gary W. Adamson_, Apr 27 2009",
+        "No term is divisible by 3. - _Vladimir Joseph Stephan Orlovsky_, Mar 24 2011",
+        "For n > 3, a(n) is the number of quaternary sequences of length n-1 starting with q(0) = 0, in which all triples (q(i), q(i+1), q(i+2)) contain digits 0 and 3; cf. A294627. - _Wojciech Florek_, Jul 30 2018"
+    ],
+    "link": [
+        "Wojciech Florek, <a href=\"/A122552/b122552.txt\">Table of n, a(n) for n = 0..2000</a>",
+        "W. Florek, <a href=\"http://doi.org/10.1016/j.amc.2018.06.014\">A class of generalized Tribonacci sequences applied to counting problems</a>, Appl. Math. Comput., 338 (2018), 809-821.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,2)."
+    ],
+    "formula": [
+        "a(3*n) = 2*a(3*n-1)+2, a(3*n+1) = 2*a(3*n)-1, a(3*n+2) = 2*a(3*n+1)-1, a(0)=1.",
+        "G.f. : (1-x^2)/(1-x-x^2-2*x^3).",
+        "a(n) = (3/7)*2^n - (1/7)*i*sqrt(3)*((-1/2) + (1/2)*i*sqrt(3))^n + (2/7)*((-1/2) - (1/2)*i*sqrt(3))^n + (2/7)*((-1/2) + (1/2)*i*sqrt(3))^n + (1/7)*i*sqrt(3)*((-1/2) - (1/2)*i*sqrt(3))^n, with n >= 0 and i=sqrt(-1). - _Paolo P. Lava_, Nov 19 2008",
+        "a(n) = ((-1)^n*A130815(n+2) + 3*2^n)/7. -_R. J. Mathar_, Nov 30 2008",
+        "From _Paul Curtz_, Oct 02 2009: (Start)",
+        "a(n) = A140295(n+2)/4.",
+        "a(n+1) - 2a(n) = period 3: repeat -1,-1,2 = -A061347.",
+        "a(n) - a(n-1) = 0,0,3,3,6,15,27,54,111,... = 3*A077947.",
+        "a(n) - a(n-2) = 0,3,6,9,21,42,81,....",
+        "a(n) - a(n-3) = 3,6,12,24,... = A007283 = 3*A000079.",
+        "a(3n) + a(3n+1) + a(3n+2) = 3,24,192,... = A103333(n+1) = A140295(3n) + A140295(3n+1) + A140295(3n+2).",
+        "See A078010, A139217, A139218. (End)"
+    ],
+    "example": [
+        "It is shown in A294627 that there are 42 quaternary sequences (i.e., build from four digits 0, 1, 2, 3) and having both 0 and 3 in every (consecutive) triple. Only a(5=4+1) = 13 of them start with 0: 003x, 030x, 03y0, 0y30, 0330, where x = 0, 1, 2, 3 and y = 1, 2."
+    ],
+    "maple": [
+        "seq(coeff(series((1-x^2)/(1-x-x^2-2*x^3), x,n+1),x,n),n=0..40); # _Muniru A Asiru_, Aug 02 2018"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1, 1, 2}, {1, 1, 1}, 40]",
+        "CoefficientList[ Series[(x^2 - 1)/(2x^3 + x^2 + x - 1), {x, 0, 35}], x] (* _Robert G. Wilson v_, Jul 30 2018 *)"
+    ],
+    "program": [
+        "(Sage) from sage.combinat.sloane_functions import recur_gen3; it = recur_gen3(1,1,1,1,1,2); [next(it) for i in range(30)] # _Zerinvary Lajos_, Jun 25 2008",
+        "(PARI) Vec((1-x^2)/(1-x-x^2-2*x^3)+O(x^99)) \\\\ _Charles R Greathouse IV_, Jan 17 2012",
+        "(GAP) a:=[1,1,1];; for n in [4..40] do a[n]:=a[n-1]+a[n-2]+2*a[n-3]; od; a; # _Muniru A Asiru_, Jul 30 2018"
+    ],
+    "xref": [
+        "Cf. A294627."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Philippe Del\u00e9ham_, Sep 20 2006",
+    "ext": [
+        "Corrected by _T. D. Noe_, Nov 01 2006, Nov 07 2006",
+        "Typo in definition corrected by _Paul Curtz_, Oct 02 2009"
+    ],
+    "references": 3,
+    "revision": 46,
+    "time": "2020-02-26T15:14:06-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

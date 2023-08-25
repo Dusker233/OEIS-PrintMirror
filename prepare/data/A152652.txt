@@ -1,0 +1,31 @@
+{
+    "number": 152652,
+    "data": "2,13,17,19,59,79,389,499,1889,1999,6899,17989,39989,49999,98999,199999,599999,799999,2999999,4999999,9899999,19999999,59999999,189997999,389999999,689899999,998999999,2999899999,6999999989,9899989999,39899999999,68899999999,98999999999",
+    "name": "Least prime p with digit sum A047235(n).",
+    "link": [
+        "David A. Corneth, <a href=\"/A152652/b152652.txt\">Table of n, a(n) for n = 1..1713</a>"
+    ],
+    "formula": [
+        "{min A000040(i): A007605(i) = A047234(n)}. - _R. J. Mathar_, Dec 12 2008"
+    ],
+    "program": [
+        "(Magma) T:=[ n eq 1 select 2 else Self(n-1)+2*(1+n mod 2): n in [1..22] ]; S:=[]; p:=2; for k in T do while &+Intseq(p, 10) ne k do p:=NextPrime(p); end while; Append(~S,p); end for; S; // _Klaus Brockhaus_, Dec 13 2008",
+        "(PARI) a(n) = {n = (n-1)\\2*6+3+(-1)^n ; t = ceil(n/9); leastfound = oo; while(leastfound == oo, my(p = partitions(n, [1,9], [t,t])); v = vector(#p, i, oo); for(i = 1, #p, if(fromdigits(Vec(p[i])) > leastfound, next(2)); forperm(Vec(p[i]), q, if(isprime(fromdigits(Vec(q))), leastfound = min(leastfound, fromdigits(Vec(q))); v[i] = min(v[i], fromdigits(Vec(q))); next(2); ) ) ); t++ ); leastfound }\\\\ _David A. Corneth_, Jun 13 2020"
+    ],
+    "xref": [
+        "Cf. A111380 (smallest prime whose digital sum is equal to the n-th composite number not congruent to 0 (modulo 3)). - _Klaus Brockhaus_, Dec 12 2008",
+        "Cf. A000040, A007605, A047234, A047235."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Giovanni Teofilatto_, Dec 10 2008",
+    "ext": [
+        "Edited and extended by _R. J. Mathar_, Dec 12 2008",
+        "a(20)-a(22) from _Klaus Brockhaus_, Dec 13 2008",
+        "More terms from _Jinyuan Wang_, Jun 13 2020"
+    ],
+    "references": 1,
+    "revision": 24,
+    "time": "2022-09-08T08:45:39-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

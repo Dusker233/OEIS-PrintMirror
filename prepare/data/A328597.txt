@@ -1,0 +1,58 @@
+{
+    "number": 328597,
+    "data": "1,1,2,3,5,8,12,21,33,57,94,167,279,491,852,1507,2647,4714,8349,14923,26642,47793,85778,154474,278322,502715,908912,1646205,2984546,5418652,9847189,17916000,32625617,59470539,108493149,198094482,361965238,661891579,1211162270",
+    "name": "Number of necklace compositions of n where every pair of adjacent parts (including the last with the first) is relatively prime.",
+    "comment": [
+        "A necklace composition of n is a finite sequence of positive integers summing to n that is lexicographically minimal among all of its cyclic rotations."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A328597/b328597.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "a(n > 1) = A318728(n) - 1."
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 12 necklace compositions:",
+        "  (1)  (1,1)  (1,2)    (1,3)      (1,4)        (1,5)          (1,6)",
+        "              (1,1,1)  (1,1,2)    (2,3)        (1,1,4)        (2,5)",
+        "                       (1,1,1,1)  (1,1,3)      (1,2,3)        (3,4)",
+        "                                  (1,1,1,2)    (1,3,2)        (1,1,5)",
+        "                                  (1,1,1,1,1)  (1,1,1,3)      (1,1,1,4)",
+        "                                               (1,2,1,2)      (1,1,2,3)",
+        "                                               (1,1,1,1,2)    (1,1,3,2)",
+        "                                               (1,1,1,1,1,1)  (1,2,1,3)",
+        "                                                              (1,1,1,1,3)",
+        "                                                              (1,1,2,1,2)",
+        "                                                              (1,1,1,1,1,2)",
+        "                                                              (1,1,1,1,1,1,1)"
+    ],
+    "mathematica": [
+        "neckQ[q_]:=Array[OrderedQ[{q,RotateRight[q,#]}]&,Length[q]-1,1,And];",
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],neckQ[#]&&And@@CoprimeQ@@@Partition[#,2,1,1]&]],{n,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "b(n, q, pred)={my(M=matrix(n, n)); for(k=1, n, M[k, k]=pred(q, k); for(i=1, k-1, M[i, k]=sum(j=1, k-i, if(pred(j, i), M[j, k-i], 0)))); M[q,]}",
+        "seq(n)={my(v=sum(k=1, n, k*b(n, k, (i,j)->gcd(i,j)==1))); vector(n, n, sumdiv(n, d, eulerphi(d)*v[n/d])/n)} \\\\ _Andrew Howroyd_, Oct 26 2019"
+    ],
+    "xref": [
+        "The non-necklace version is A328609.",
+        "The non-necklace non-circular version is A167606.",
+        "The version with singletons is A318728.",
+        "The aperiodic case is A318745.",
+        "The indivisible (instead of coprime) version is A328600.",
+        "The non-coprime (instead of coprime) version is A328602.",
+        "Necklace compositions are A008965.",
+        "Cf. A000031, A000740, A000837, A032153, A059966, A318729, A318748, A328172, A328598, A328599, A328601."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Oct 23 2019",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Oct 26 2019"
+    ],
+    "references": 8,
+    "revision": 13,
+    "time": "2019-10-27T12:02:11-04:00",
+    "created": "2019-10-26T09:59:46-04:00"
+}

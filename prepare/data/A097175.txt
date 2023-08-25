@@ -1,0 +1,43 @@
+{
+    "number": 97175,
+    "data": "1,5,21,105,361,2045,6141,38865,104401,726245,1774821,13394745,30171961,244487885,512923341,4424729505,8719696801,79515368885,148234845621,1420480747785,2519992375561,25247684340125,42839870384541",
+    "name": "a(n) = Sum_{k=0..n} binomial(floor((n+1)/2), floor((k+1)/2)) * 4^k.",
+    "comment": [
+        "a(n) = (5/4)*{1, 17, 17, 289, 289, 4913, ...} - 16*{0, 1, 0, 16, 0, 256, ...} - (1/4)*{1, 1, 1, 1, 1, 1, ...}."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A097175/b097175.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,33,-33,-272,272)."
+    ],
+    "formula": [
+        "G.f.: (1+4*x-17*x^2-48*x^3)/((1-x)*(1-16*x^2)*(1-17*x^2)).",
+        "a(n) = (5/8)*((1-sqrt(17))*(-sqrt(17))^n + (1+sqrt(17))*(sqrt(17))^n) - 2*(4^n - (-4)^n) - 1/4.",
+        "a(n) = a(n-1) + 33*a(n-2) - 33*a(n-3) - 272*a(n-4) + 272*a(n-5)."
+    ],
+    "maple": [
+        "seq(coeff(series((1+4*x-17*x^2-48*x^3)/((1-x)*(1-16*x^2)*(1-17*x^2)), x, n+1), x, n), n = 0..30); # _G. C. Greubel_, Sep 17 2019"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1+4*x-17*x^2-48*x^3)/((1-x)*(1-16*x^2)*(1-17*x^2)), {x,0,30}], x] (* _G. C. Greubel_, Sep 17 2019 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^30)); Vec((1+4*x-17*x^2-48*x^3)/((1-x)*(1-16*x^2)*(1-17*x^2))) \\\\ _G. C. Greubel_, Sep 17 2019",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 30); Coefficients(R!( (1+4*x-17*x^2-48*x^3)/((1-x)*(1-16*x^2)*(1-17*x^2)) )); // _G. C. Greubel_, Sep 17 2019",
+        "(Sage)",
+        "def A097175_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P((1+4*x-17*x^2-48*x^3)/((1-x)*(1-16*x^2)*(1-17*x^2))).list()",
+        "A097175_list(30) # _G. C. Greubel_, Sep 17 2019",
+        "(GAP) a:=[1, 5, 21, 105, 361];; for n in [6..30] do a[n]:=a[n-1] + 33*a[n-2] - 33*a[n-3] - 272*a[n-4] + 272*a[n-5]; od; a; # _G. C. Greubel_, Sep 17 2019"
+    ],
+    "xref": [
+        "Cf. A097176, A097177."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Paul Barry_, Jul 30 2004",
+    "references": 3,
+    "revision": 13,
+    "time": "2022-09-08T08:45:14-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 356061,
+    "data": "1,2,8,9,10,11,17,18,20,26,27,35,36,39,44,45,48,53,54,57,62,63,66,71,72,75,80,81,84,90,93,99,100,101,107,108,110,116,117,125,126,129,134,135,138,143,144,147,152,153,156,161,162,165,170,171,174,180,183,189,192,198,200",
+    "name": "Numbers whose sum of digits is a refactorable number.",
+    "comment": [
+        "Also numbers k such that A007953(k) = c * A000005(A007953(k)); c >= 1 is a positive integer. For c = 1 see A356520."
+    ],
+    "example": [
+        "k = 17; A007953(17) = 2 * A000005(A007953(17)), thus k = 17 is in the sequence."
+    ],
+    "maple": [
+        "filter:= proc(n) local s; s:= convert(convert(n,base,10),`+`); s mod numtheory:-tau(s) = 0 end proc:",
+        "select(filter, [$1..200]); # _Robert Israel_, Aug 10 2022"
+    ],
+    "mathematica": [
+        "refQ[n_] := Divisible[n, DivisorSigma[0,n]]; Select[Range[2000], refQ[Plus @@ IntegerDigits[#]] &] (* _Amiram Eldar_, Aug 10 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisor_count",
+        "def ok(n): sd = sum(map(int, str(n))); return sd%divisor_count(sd) == 0",
+        "print([k for k in range(1, 200) if ok(k)]) # _Michael S. Branicky_, Aug 10 2022",
+        "(PARI) isok(k) = my(s=sumdigits(k)); denominator(s/numdiv(s)) == 1; \\\\ _Michel Marcus_, Aug 10 2022"
+    ],
+    "xref": [
+        "Cf. A000005, A033950, A007953, A306509, A356520."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Ctibor O. Zizka_, Aug 10 2022",
+    "references": 1,
+    "revision": 44,
+    "time": "2022-08-23T10:09:50-04:00",
+    "created": "2022-08-23T10:09:50-04:00"
+}

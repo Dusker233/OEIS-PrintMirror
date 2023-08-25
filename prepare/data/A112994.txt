@@ -1,0 +1,56 @@
+{
+    "number": 112994,
+    "data": "2,3,7,8,27,43,47,48,52,53,63,68,92,157,172,187,192,263,378,408,423,458,468,478,487,527,587,608,648,692,823,843,918,1457,1587,1592,4657,4732,5692,6058,6378,7658",
+    "name": "Numbers whose cubes are exclusionary: numbers k such that k has no repeated digits and k and k^3 have no digits in common.",
+    "comment": [
+        "A number k with no repeated digits has an exclusionary cube k^3 if the latter is made up of digits not appearing in k. (This is a subsequence of A029785.) For the corresponding exclusionary cubes see A112993. Conjectured to be complete.",
+        "Data are complete: there are 42 terms. - _Michael S. Branicky_, Aug 27 2021"
+    ],
+    "reference": [
+        "H. Ibstedt, Solution to Problem 2623, \"Exclusionary Powers\", pp. 346-9, Journal of Recreational Mathematics, vol. 32 No.4 2003-4, Baywood NY.",
+        "Clifford A. Pickover, A Passion for Mathematics, Wiley, 2005; see p. 60."
+    ],
+    "link": [
+        "Clifford A. Pickover, <a href=\"http://sprott.physics.wisc.edu/Pickover/extremec.html\">Extreme Challenges in Mathematics and Morals</a>"
+    ],
+    "mathematica": [
+        "Select[Range[8000],Max[DigitCount[#]]==1&&Intersection[IntegerDigits[ #],IntegerDigits[#^3]]=={}&] (* _Harvey P. Dale_, Sep 06 2021 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = my(digs = digits(n)); (#digs == #Set(digs)) && (#setintersect(Set(digs), Set(digits(n^3))) == 0); \\\\ _Michel Marcus_, Oct 26 2013",
+        "(Python)",
+        "def ok(n):",
+        "    s = str(n)",
+        "    return len(s) == len(set(s)) and set(s) & set(str(n**3)) == set()",
+        "print([k for k in range(7659) if ok(k)]) # _Michael S. Branicky_, Aug 27 2021",
+        "(Python) # version for verifying full sequence",
+        "from itertools import permutations",
+        "def no_repeated_digits():",
+        "    for d in range(1, 11):",
+        "        for p in permutations(\"0123456789\", d):",
+        "            if p[0] == '0': continue",
+        "            yield int(\"\".join(p))",
+        "def afull():",
+        "    alst = []",
+        "    for k in no_repeated_digits():",
+        "        if set(str(k)) & set(str(k**3)) == set():",
+        "            alst.append(k)",
+        "    return alst",
+        "print(afull()) # _Michael S. Branicky_, Aug 27 2021"
+    ],
+    "xref": [
+        "Subsequence of A029785.",
+        "The corresponding cubes are in A112993."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,1",
+    "author": "_Lekraj Beedassy_, Oct 13 2005",
+    "ext": [
+        "Missing term 468 added by _N. J. A. Sloane_, May 22 2008",
+        "Definition clarified by _Harvey P. Dale_, Sep 06 2021"
+    ],
+    "references": 3,
+    "revision": 22,
+    "time": "2021-09-06T19:00:37-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 351900,
+    "data": "2,6,15,62,112,910,5161,14110,359369,9719153,119512942",
+    "name": "a(n) is the smallest positive integer not the sum of one or more nonzero powers of p_0, p_1, ..., p_n, where p_0 = 1 and p_n = prime(n) for n >= 1.",
+    "comment": [
+        "a(n) cannot be written as Sum_{i=0..n} c_i*p_i^k_i, where c_i = 0 or 1 and k_i is a positive integer."
+    ],
+    "link": [
+        "Jon E. Schoenfield, <a href=\"/A351900/a351900_1.txt\">Magma program</a>"
+    ],
+    "example": [
+        "a(0) = 2 because 1 = p_0 and 2 is the smallest integer not the nonzero power of p_0.",
+        "a(1) = 6 because 1 = p_0, 2 = p_1, 3 = p_0 + p_1, 4 = p_1^2, 5 = p_1^2 + p_0, and 6 is the smallest integer not the sum of nonzero powers of p_0 and p_1."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product, combinations; from sympy import prime",
+        "def check(M):",
+        "    for L in product(*M):",
+        "        for i in range(1, len(L)+1):",
+        "            for c in set(combinations(L, i)):",
+        "                s = sum(c); W.add(s)",
+        "                if s == m: return 1",
+        "m_max, R, N = 10**8, [2], [{1}]",
+        "for n in range(1, 10):",
+        "    N.append({prime(n)}); W = {1}",
+        "    for m in range(2, m_max):",
+        "        for i in range(len(N)):",
+        "            t = max(N[i])*min(N[i])",
+        "            while 1 < t <= m:",
+        "                if t == m: W.add(t)",
+        "                N[i].add(t); t = max(N[i])*min(N[i])",
+        "        if m in W or check(N): continue",
+        "        R.append(m); break",
+        "print(*R, sep = ', ')"
+    ],
+    "xref": [
+        "Cf. A034875, A122863, A351661."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,1",
+    "author": "_Ya-Ping Lu_, Feb 24 2022",
+    "ext": [
+        "a(9)-a(10) from _Jon E. Schoenfield_, Feb 25 2022"
+    ],
+    "references": 2,
+    "revision": 13,
+    "time": "2022-02-26T08:38:00-05:00",
+    "created": "2022-02-26T08:38:00-05:00"
+}

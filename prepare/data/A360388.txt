@@ -1,0 +1,52 @@
+{
+    "number": 360388,
+    "data": "1,11,13,2787,3189,36783,37063,43331,47803,49813,56669,58121,62961,9205487,16215601,23070091,23248907,27264653,27475981,43469906355,55167946629,75985591407,80056245671,81489328999,83389490039,87235136243,88437433811,90400346819",
+    "name": "Positive integers with binary expansion (b(1), ..., b(m)) such that Sum_{i = 1..m-k} b(i)*b(i+k) is odd for all k = 0..m-1.",
+    "comment": [
+        "Leading zeros in binary expansions are ignored.",
+        "All terms are odd and odious (A092246).",
+        "This sequence is infinite since we can, from a given term, build another larger term (see Guy reference).",
+        "See A053006 for the distinct binary lengths.",
+        "If m is a term, then A030101(m) is also a term."
+    ],
+    "reference": [
+        "R. K. Guy, Unsolved Problems in Number Theory, E38."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A360388/a360388.gp.txt\">PARI program</a>",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "example": [
+        "For n = 11:",
+        "- the binary expansion of 11 is b = (1,1,0,1),",
+        "- b(1)*b(1) + b(2)*b(2) + b(3)*b(3) + b(4)*b(4) = 1 + 1 + 0 + 1 = 3 is odd,",
+        "- b(1)*b(2) + b(2)*b(3) + b(3)*b(4) = 1 + 0 + 0 = 1 is odd,",
+        "- b(1)*b(3) + b(2)*b(4) = 0 + 1 = 1 is odd,",
+        "- b(1)*b(4) = 1 is odd,",
+        "- so 11 belongs to the sequence."
+    ],
+    "program": [
+        "(PARI) See Links section.",
+        "(Python)",
+        "from itertools import count, islice",
+        "from functools import reduce",
+        "from operator import ixor",
+        "def A360388_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        b = tuple(int(d) for d in bin(n)[2:])",
+        "        m = len(b)",
+        "        if all(reduce(ixor, (b[i]&b[i+k] for i in range(m-k))) for k in range(m)):",
+        "            yield n",
+        "A360388_list = list(islice(A360388_gen(),10)) # _Chai Wah Wu_, Feb 07 2023"
+    ],
+    "xref": [
+        "Cf. A030101, A053006, A092246."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_R\u00e9my Sigrist_, Feb 05 2023",
+    "references": 1,
+    "revision": 26,
+    "time": "2023-02-07T17:53:11-05:00",
+    "created": "2023-02-06T12:46:46-05:00"
+}

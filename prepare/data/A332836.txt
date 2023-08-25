@@ -1,0 +1,58 @@
+{
+    "number": 332836,
+    "data": "1,1,2,4,7,12,24,40,73,128,230,399,712,1241,2192,3833,6746,11792,20711,36230,63532,111163,194782,340859,596961,1044748,1829241,3201427,5604504,9808976,17170112,30051470,52601074,92063629,161140256,282033124,493637137,863982135,1512197655",
+    "name": "Number of compositions of n whose run-lengths are weakly increasing.",
+    "comment": [
+        "A composition of n is a finite sequence of positive integers summing to n.",
+        "Also compositions whose run-lengths are weakly decreasing."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A332836/b332836.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "The a(0) = 1 through a(5) = 12 compositions:",
+        "  ()  (1)  (2)   (3)    (4)     (5)",
+        "           (11)  (12)   (13)    (14)",
+        "                 (21)   (22)    (23)",
+        "                 (111)  (31)    (32)",
+        "                        (121)   (41)",
+        "                        (211)   (122)",
+        "                        (1111)  (131)",
+        "                                (212)",
+        "                                (311)",
+        "                                (1211)",
+        "                                (2111)",
+        "                                (11111)",
+        "For example, the composition (2,3,2,2,1,1,2,2,2) has run-lengths (1,1,2,2,3) so is counted under a(17)."
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],LessEqual@@Length/@Split[#]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "step(M, m)={my(n=matsize(M)[1]); for(p=m+1, n, my(v=vector((p-1)\\m, i, M[p-i*m,i]), s=vecsum(v)); M[p,]+=vector(#M,i,s-if(i<=#v, v[i]))); M}",
+        "seq(n)={my(M=matrix(n+1, n, i, j, i==1)); for(m=1, n, M=step(M, m)); M[1,n]=0; vector(n+1, i, vecsum(M[i,]))/(n-1)} \\\\ _Andrew Howroyd_, Dec 31 2020"
+    ],
+    "xref": [
+        "The version for the compositions themselves (not run-lengths) is A000041.",
+        "The case of partitions is A100883.",
+        "The case of unsorted prime signature is A304678, with dual A242031.",
+        "Permitting the run-lengths to be weakly decreasing also gives A332835.",
+        "The complement is counted by A332871.",
+        "Unimodal compositions are A001523.",
+        "Compositions that are not unimodal are A115981.",
+        "Compositions with equal run-lengths are A329738.",
+        "Compositions whose run-lengths are unimodal are A332726.",
+        "Cf. A001462, A072704, A072706, A100882, A181819, A329744, A329766, A332641, A332727, A332745, A332833, A332834."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Feb 29 2020",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Dec 30 2020"
+    ],
+    "references": 12,
+    "revision": 15,
+    "time": "2020-12-31T17:00:13-05:00",
+    "created": "2020-03-01T20:42:51-05:00"
+}

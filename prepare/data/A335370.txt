@@ -1,0 +1,41 @@
+{
+    "number": 335370,
+    "data": "1,28,1638,6200,2457000,4713984,1381161600,10200236032",
+    "name": "Harmonic numbers m with a record number k of distinct prime numbers p_i (i = 1..k) that do not divide m such that m*p_1, m*p_1*p_2, ... , m*p_1*...*p_k are all harmonic numbers.",
+    "comment": [
+        "If m is a harmonic number (A001599), then it is possible to generate a new harmonic number m*p if p is a prime number that does not divide m and (p+1)/2 is a divisor of the harmonic mean of the divisors of m, h(m) = m * tau(m)/sigma(m) = m * A000005(m)/A000203(m).",
+        "The terms of this sequence begin a chain of harmonic numbers of a record length. In each chain, each member, except the first, is generated from its predecessor by multiplying it by a prime that does not divide it.",
+        "The corresponding record values of k are 0, 1, 2, 3, 4, 6, 7, 8, ...",
+        "The list of primes or their order may not be unique."
+    ],
+    "example": [
+        "28 is the least harmonic number with one prime, p = 5, such that 28*p = 140 is also a harmonic number.",
+        "1638 is the least harmonic number with 2 primes, 5 and 29, such that 1638*5 = 8190 and 1638*5*29 = 237510 are also harmonic numbers.",
+        ".",
+        "n  a(n)         k   primes p_i, i = 1..k                 number of permutations",
+        "-------------------------------------------------------------------------------",
+        "1  1            0   -                                         -",
+        "2  28           1   5                                         1",
+        "3  1638         2   5, 29                                     1",
+        "4  6200         3   19, 37, 73                                1",
+        "5  2457000      4   11, 19, 37, 73                            4",
+        "6  4713984      6   5, 7, 13, 19, 37, 73                      15",
+        "                    5, 7, 19, 37, 73, 1021                    5",
+        "7  1381161600   7   11, 19, 37, 43, 73, 6277, 12553           10",
+        "                    11, 19, 37, 43, 3181, 6361, 12721         6",
+        "8  10200236032  8   3, 5, 79, 157, 313, 1877, 7507, 15013     5"
+    ],
+    "mathematica": [
+        "harmNums = Cases[Import[\"https://oeis.org/A001599/b001599.txt\", \"Table\"], {_, _}][[;; , 2]]; harMean[n_] := n * DivisorSigma[0, n]/DivisorSigma[1, n]; harmGen[n_] := Module[{d = Divisors[harMean[n]]}, n * Select[2*d - 1, PrimeQ[#] && ! Divisible[n, #] &]]; harmGens[s_] := Union @ Flatten[harmGen /@ s]; lenmax = -1; seq = {}; Do[len = -3 + Length @ FixedPointList[harmGens, {harmNums[[k]]}]; If[len > lenmax, lenmax = len; AppendTo[seq, harmNums[[k]]]], {k, 1, Length[harmNums]}]; seq"
+    ],
+    "xref": [
+        "Cf. A000005, A000203, A001599, A099377, A099378, A335368, A335369, A335371."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Jun 03 2020",
+    "references": 3,
+    "revision": 11,
+    "time": "2020-06-03T23:56:52-04:00",
+    "created": "2020-06-03T23:56:52-04:00"
+}

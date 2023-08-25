@@ -1,0 +1,48 @@
+{
+    "number": 321704,
+    "data": "1,1,4,18,118,895,8151,83916,977026,12602451,178880725,2766415036,46314488705,834067614601,16074694453741,330017679352180,7188779521480810",
+    "name": "Number of words w of length n over an n-ary alphabet such that for every prefix z of w we have #(z,a_i) = 0 or #(z,a_i) >= #(z,a_j) for all j>i and #(z,a_i) counts the occurrences of the i-th letter in z.",
+    "formula": [
+        "a(n) = A213276(n,n)."
+    ],
+    "example": [
+        "a(3) = 18: aaa, aab, aac, aba, abc, aca, acb, baa, bac, bbb, bbc, bca, bcb, caa, cab, cba, cbb, ccc."
+    ],
+    "maple": [
+        "h:= proc(n, k, m, l) option remember;",
+        "      `if`(n=0 and k=0, b(l), `if`(k=0 or n>0 and n<m, 0,",
+        "       add(h(n-j, k-1, max(m, j), [j, l[]]), j=max(1, m)..n)",
+        "          +h(n, k-1, m, [0, l[]], [])))",
+        "    end:",
+        "b:= proc(l) option remember;",
+        "      `if`({l[]} minus {0}={}, 1, add(`if`(g(l, i),",
+        "       b(subsop(i=l[i]-1, l)), 0), i=1..nops(l)))",
+        "    end:",
+        "g:= proc(l, i) local j;",
+        "      if l[i]<1     then return false",
+        "    elif l[i]>1     then for j from i+1 to nops(l) do",
+        "      if l[i]<=l[j] then return false",
+        "    elif l[j]>0     then break",
+        "      fi od fi; true",
+        "    end:",
+        "a:= n-> h(n$2, 0, []):",
+        "seq(a(n), n=0..10);  # _Alois P. Heinz_, Mar 29 2020"
+    ],
+    "mathematica": [
+        "h[n_, k_, m_, l_] := h[n, k, m, l] = If[n == 0 && k === 0, b[l], If[k == 0 || n > 0 && n < m, 0, Sum[h[n - j, k - 1, Max[m, j], Join[{j}, l]], {j, Max[1, m], n}] + h[n, k - 1, m, Join[{0}, l]]]];",
+        "b[l_] := b[l] = If[Complement[l, {0}] == {}, 1, Sum[If[g[l, i], b[ReplacePart[l, i -> l[[i]] - 1]], 0], {i, 1, Length[l]}]];",
+        "g[l_, i_] := Module[{j}, If[l[[i]] < 1, Return[False], If[l[[i]] > 1, For[j = i + 1, j <= Length[l], j++, If[l[[i]] <= l[[j]], Return[False], If[l[[j]] > 0, Break[]]]]]]; True];",
+        "a[n_] := h[n, n, 0, {}];",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Jun 01 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Main diagonal of A213276."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Nov 17 2018",
+    "references": 1,
+    "revision": 14,
+    "time": "2022-06-01T14:44:55-04:00",
+    "created": "2018-11-17T11:56:16-05:00"
+}

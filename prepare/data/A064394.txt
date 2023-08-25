@@ -1,0 +1,54 @@
+{
+    "number": 64394,
+    "data": "4,5,8,9,22,23,26,27,32,33,50,51,56,57,70,71,76,77,82,83,94,95,100,101,112,113,118,119,128,129,134,135,176,177,186,187,196,197,266,267,274,275,280,281,296,297,342,343,352,353,358,359,364,365,372,373,386,387",
+    "name": "Numbers k such that the exponent of highest power of 2 dividing k! equals the largest prime < k.",
+    "comment": [
+        "[k/2]+[k/4]+[k/8]+[k/16]+... = prevprime(k)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A064394/b064394.txt\">Table of n, a(n) for n = 1..10000</a> (first 1001 terms from Harvey P. Dale)"
+    ],
+    "formula": [
+        "A011371(a(n)) = A151799(a(n))."
+    ],
+    "example": [
+        "8! = 2^7*3^2*5*7, 23! = 2^19*3^9*5^4*7^3*11^2*13*17*19*23."
+    ],
+    "maple": [
+        "for n from 3 to 10^3 do if sum(floor(n/(2^i)), i=1..15) = prevprime(n) then printf(`%d,`,n) fi; od:",
+        "# second Maple program:",
+        "b:= proc(n) option remember;",
+        "      `if`(n<1, 0, b(n-1)+padic[ordp](n, 2))",
+        "    end:",
+        "a:= proc(n) option remember; local k; for k from 1+",
+        "      `if`(n=1, 2, a(n-1)) while b(k)<>prevprime(k) do od; k",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Jul 10 2022"
+    ],
+    "mathematica": [
+        "Select[Range[400],IntegerExponent[#!,2]==NextPrime[#,-1]&] (* _Harvey P. Dale_, Sep 24 2013 *)"
+    ],
+    "program": [
+        "(Python 3.10+)",
+        "from itertools import count, islice",
+        "from sympy import prevprime",
+        "def A064394_gen(startvalue=3): # generator of terms",
+        "    return filter(lambda n:n-n.bit_count()==prevprime(n),count(max(startvalue,3)))",
+        "A064394_list = list(islice(A064394_gen(),30)) # _Chai Wah Wu_, Jul 10 2022",
+        "(PARI) isok(k) = (k>1) && (valuation(k!,2) == precprime(k-1)); \\\\ _Michel Marcus_, Jul 10 2022"
+    ],
+    "xref": [
+        "Cf. A000040, A011371, A064393, A151799."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladeta Jovovic_, Sep 29 2001",
+    "ext": [
+        "More terms from _James A. Sellers_, Oct 01 2001",
+        "Name clarified and offset changed to 1 by _Chai Wah Wu_, Jul 10 2022"
+    ],
+    "references": 4,
+    "revision": 26,
+    "time": "2022-07-10T17:31:25-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

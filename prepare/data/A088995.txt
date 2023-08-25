@@ -1,0 +1,61 @@
+{
+    "number": 88995,
+    "data": "5,98,1068,1068,127185,2728361,15917834,73482154,961700165,961700165,83322853582,1404948108914,7603192018819,167022179253602,3550275020220728,5729166542536373,106675272785875442",
+    "name": "Least k > 0 such that the first n digits of 2^k and 5^k are identical.",
+    "comment": [
+        "The number of matching first digits of 2^n and 5^n increases with n and forms the sequence 3,1,6,2,2,7,7,6,6,... which approaches sqrt(10).",
+        "Numbers are half of the denominator of some convergent to log_10(2). - J. Mulder (jasper.mulder(AT)planet.nl), Feb 03 2010",
+        "_Xianwen Wang_ guesses that if the length of the continued fraction of m/k is h (where m is the difference between the numbers of digits of 2^k and 5^k), the first h-1 items of the continued fractions of m/k and log_10(2.5) agree. But this guess is not true for the similar sequence A359698. - _Zhao Hui Du_, Jun 06 2023"
+    ],
+    "link": [
+        "Zhao Hui Du, <a href=\"/A088995/b088995.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Zhao Hui Du, <a href=\"https://zhuanlan.zhihu.com/p/634499178\">Chinese page to introduce algorithm for a(n) to prove the guess of _Xianwen Wang_</a>",
+        "T. Sillke, <a href=\"http://www.mathematik.uni-bielefeld.de/~sillke/PUZZLES/powers-2-5\">Powers of 2 and 5 Puzzle</a>"
+    ],
+    "example": [
+        "a(2) = 98: 2^98 = 316912650057057350374175801344 and 5^98 = 315544362088404722164691426113114491869282574043609201908111572265625."
+    ],
+    "mathematica": [
+        "L2 = N[ Log[ 10, 2 ], 50 ]; L5 = N[ Log[ 10, 5 ], 50 ]; k = 1; Do[ While[ Take[ RealDigits[ 10^FractionalPart[ L2*k ] ][[ 1 ] ], n ] != Take[ RealDigits[ 10^FractionalPart[ L5*k ] ][[ 1 ] ], n ], k++ ]; Print[ k ], {n, 1, 10} ]",
+        "L2 = N[ Log[ 10, 2 ], 50 ]; L5 = N[ Log[ 10, 5 ], 50 ]; k = 1; Do[ While[ Take[ RealDigits[ 10^FractionalPart[ L2*k ]][[ 1 ]], n ] != Take[ RealDigits[ 10^FractionalPart[ L5*k ]][[ 1 ]], n ], k++ ]; Print[ k ], {n, 1, 7} ]",
+        "f[n_, k_] := {Floor[ 10^(k - 1 + N[FractionalPart[n Log[5]/Log[10]], 20])], Floor[10^(k - 1 + N[FractionalPart[n Log[2]/Log[10]], 20])]} Flatten@Block[{$MaxExtraPrecision = \\[Infinity]}, Block[{l = Denominator /@ Convergents[Log10[2], 1000]}, Array[k \\[Function] l[[Flatten@Position[f[ #/2, k] & /@ l, {x_, x_}, {1}, 1]]]/2, 20]]] (* J. Mulder (jasper.mulder(AT)planet.nl), Feb 03 2010 *)",
+        "(* alternate program *)",
+        "n = 100; $MaxExtraPrecision = n; ans =",
+        " ContinuedFraction[Log10[5/2], n]; data =",
+        " Denominator /@",
+        "  Flatten[Table[",
+        "    FromContinuedFraction[Join[ans[[1 ;; p - 1]], {#}]] & /@",
+        "     Range[1, ans[[p]]], {p, 2, n}]]; sol =",
+        " Select[Table[{k, a = N[FractionalPart[{k Log10[2], k Log10[5]}], n];",
+        "    10^a, b = RealDigits[10^a][[All, 1]];",
+        "    LengthWhile[Range[Length[b[[1]]]], b[[1, #]] == b[[2, #]] &],",
+        "    10^a . {-1, 1}, RealDigits[10^a . {-1, 1}][[-1]]}, {k, data}],",
+        "  Abs[#[[-2]]] < 1 &];",
+        "acc = Association[{}]; s = sol[[All, {1, 3}]]; For[i = 1,",
+        " i < Length[s], i++,",
+        " If[Lookup[acc, s[[i, 2]], 0] == 0,",
+        "  acc[s[[i, 2]]] = s[[i, 1]]]]; final =",
+        " Rest[Sort[Normal[acc]]] /. Rule -> List;",
+        "bcc = Association[{}]; For[i = Max[Keys[acc]], i >= Min[Keys[acc]], i--,",
+        "  j = i; While[Lookup[acc, j, 0] == 0 && j < Max[Keys[acc]], j++];",
+        " bcc[i] = acc[j]; j = i; While[bcc[j] >= bcc[j + 1], j++];",
+        " bcc[i] = Min[bcc[i], bcc[j]]]; bb =",
+        " Rest[Sort[Normal[Reverse[bcc]]]] /. Rule -> List (* _Xianwen Wang_, Jun 02 2023 *)"
+    ],
+    "xref": [
+        "Cf. A088935, A010467."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Lekraj Beedassy_, Dec 01 2003",
+    "ext": [
+        "Edited by _Robert G. Wilson v_, Dec 02 2003",
+        "More terms from J. Mulder (jasper.mulder(AT)planet.nl), Feb 03 2010",
+        "a(6) and a(7) corrected by _Keith F. Lynch_, May 25 2023",
+        "a(11), a(13)-a(15), a(17) corrected by _Zhao Hui Du_, Jun 07 2023"
+    ],
+    "references": 4,
+    "revision": 53,
+    "time": "2023-07-15T06:26:14-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

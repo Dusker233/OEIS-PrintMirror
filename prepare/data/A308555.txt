@@ -1,0 +1,37 @@
+{
+    "number": 308555,
+    "data": "1,4,14,53,222,1011,4944,25884,144963,865556,5477661,36518635,255323564,1867122987,14259709474,113593734317,942317654779,8123227487723,72599829900774,671199117610868,6407156027307909,63061416571124056,639303956718643041,6670690645674913424",
+    "name": "Expansion of e.g.f. Sum_{k>=1} sigma(k)*(exp(x) - 1)^k/k!, where sigma = sum of divisors (A000203).",
+    "comment": [
+        "Stirling transform of A000203."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A308555/b308555.txt\">Table of n, a(n) for n = 1..575</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=1} sigma(k)*x^k / Product_{j=1..k} (1 - j*x).",
+        "a(n) = Sum_{k=1..n} Stirling2(n,k)*sigma(k)."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; uses numtheory;",
+        "     `if`(n=0, sigma(m), m*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=1..24);  # _Alois P. Heinz_, Aug 03 2021"
+    ],
+    "mathematica": [
+        "nmax = 24; Rest[CoefficientList[Series[Sum[DivisorSigma[1, k] (Exp[x] - 1)^k/k!, {k, 1, nmax}], {x, 0, nmax}], x] Range[0, nmax]!]",
+        "nmax = 24; Rest[CoefficientList[Series[Sum[DivisorSigma[1, k] x^k/Product[(1 - j x), {j, 1, k}], {k, 1, nmax}], {x, 0, nmax}], x]]",
+        "Table[Sum[StirlingS2[n, k] DivisorSigma[1, k], {k, 1, n}], {n, 1, 24}]"
+    ],
+    "xref": [
+        "Cf. A000203, A185003, A308554."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Jun 07 2019",
+    "references": 3,
+    "revision": 10,
+    "time": "2021-08-04T09:35:15-04:00",
+    "created": "2019-06-07T06:28:26-04:00"
+}

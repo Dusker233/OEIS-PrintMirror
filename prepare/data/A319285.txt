@@ -1,0 +1,39 @@
+{
+    "number": 319285,
+    "data": "1,2,9,69,619,7739,109855,1898230",
+    "name": "Number of series-reduced locally stable rooted trees whose leaves span an initial interval of positive integers with multiplicities an integer partition of n.",
+    "comment": [
+        "A rooted tree is series-reduced if every non-leaf node has at least two branches. It is locally stable if no branch is a submultiset of any other branch of the same root."
+    ],
+    "example": [
+        "The a(3) = 9 trees:",
+        "  (1(11))",
+        "   (111)",
+        "  (1(12))",
+        "  (2(11))",
+        "   (112)",
+        "  (1(23))",
+        "  (2(13))",
+        "  (3(12))",
+        "   (123)",
+        "Examples of rooted trees that are not locally stable are ((11)(111)), ((11)(112)), ((12)(112)), ((12)(123))."
+    ],
+    "mathematica": [
+        "submultisetQ[M_,N_]:=Or[Length[M]==0,MatchQ[{Sort[List@@M],Sort[List@@N]},{{x_,Z___},{___,x_,W___}}/;submultisetQ[{Z},{W}]]];",
+        "stableQ[u_]:=Apply[And,Outer[#1==#2||!submultisetQ[#1,#2]&&!submultisetQ[#2,#1]&,u,u,1],{0,1}];",
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "gro[m_]:=gro[m]=If[Length[m]==1,{m},Select[Union[Sort/@Join@@(Tuples[gro/@#]&/@Select[mps[m],Length[#]>1&])],stableQ]];",
+        "Table[Sum[Length[gro[m]],{m,Flatten[MapIndexed[Table[#2,{#1}]&,#]]&/@IntegerPartitions[n]}],{n,5}]"
+    ],
+    "xref": [
+        "Cf. A000081, A316466, A316468, A316469, A316473, A316475."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Sep 16 2018",
+    "references": 0,
+    "revision": 4,
+    "time": "2018-09-17T08:34:34-04:00",
+    "created": "2018-09-17T08:34:34-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 360204,
+    "data": "5,17,37,97,149,211,307,907,1151,1361,5623,8501,9587,15727,19661,31469,156007,360749,370373,492227,1349651,1357333,2010881,4652507,17051887,20831533,47326913,122164969,189695893,191913031,387096383,436273291,1294268779",
+    "name": "Primitive prime powers. p is a primitive prime power iff it is an odd prime power that exceeds the preceding odd prime power by more than any smaller odd prime power does. ('Prime power' defined in the sense of A246655.)",
+    "comment": [
+        "Conjecture: Primitive prime powers are primes."
+    ],
+    "example": [
+        "The first few terms of the sequence are the minuends in the following differences. The differences are strictly increasing by definition.",
+        "  5 -   3 = 2;",
+        " 17 -  13 = 4;",
+        " 37 -  31 = 6;",
+        " 97 -  89 = 8;",
+        "149 - 139 = 10;",
+        "211 - 199 = 12;",
+        "307 - 293 = 14;",
+        "907 - 887 = 20.",
+        "The example above might suggest the subtrahends are also prime. In general they are not, as the example a(10) shows, where 1361 - 1331 = 30, but 1331 is not prime. - _Ivan N. Ianakiev_, Feb 02 2023"
+    ],
+    "mathematica": [
+        "a[1] = 5; candidates[n_] := Select[Range[NextPrime[n, -1], n], OddQ[#] && PrimePowerQ[#]&];",
+        "difference[n_] := candidates[n][[-1]] - candidates[n][[-2]];",
+        "a[n_] := a[n] = Module[{k = a[n-1]+2}, While[OddQ[k] && !PrimePowerQ[k] || difference[k] <= difference[a[n-1]], k = k+2]; k];",
+        "a/@Range[16] (* _Ivan N. Ianakiev_, Feb 02 2023 *)"
+    ],
+    "program": [
+        "(SageMath)",
+        "def A360204_list(n):",
+        "    R = []; L = 3; MAX = 1",
+        "    for C in xsrange(3, n, 2):",
+        "        if C.is_prime_power():",
+        "            if C - L > MAX:",
+        "                MAX = C - L",
+        "                R.append(C)",
+        "            L = C",
+        "    return R",
+        "print(A360204_list(6000))"
+    ],
+    "xref": [
+        "Cf. A246655, A061345."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Feb 01 2023",
+    "references": 0,
+    "revision": 25,
+    "time": "2023-02-02T06:48:53-05:00",
+    "created": "2023-02-01T20:55:31-05:00"
+}

@@ -1,0 +1,68 @@
+{
+    "number": 75796,
+    "data": "2,38,682,12238,219602,3940598,70711162,1268860318,22768774562,408569081798,7331474697802,131557975478638,2360712083917682,42361259535039638,760141959546795802,13640194012307284798,244763350261984330562,4392100110703410665318,78813038642399407645162",
+    "name": "Numbers k such that 5*k^2 + 5 is a square.",
+    "comment": [
+        "Bisection of A001077; a(n) = A001077(2*n-1). - _Greg Dresden_, Jun 08 2021",
+        "From _Peter Bala_, Aug 25 2022: (Start)",
+        "The aerated sequence (b(n))n>=1 = [2, 0, 38, 0, 682, 0, 1238, 0, ...] is a fourth-order linear divisibility sequence; that is, if n | m then b(n) | b(m). The sequence (1/2)*(b(n))n>=1 is the case P1 = 0, P2 = -16, Q = -1  of the 3-parameter family of divisibility sequences found by Williams and Guy. See A100047. (End)"
+    ],
+    "reference": [
+        "A. H. Beiler, \"The Pellian.\" Ch. 22 in Recreations in the Theory of Numbers: The Queen of Mathematics Entertains. Dover, New York, New York, pp. 248-268, 1966.",
+        "L. E. Dickson, History of the Theory of Numbers, Vol. II, Diophantine Analysis. AMS Chelsea Publishing, Providence, Rhode Island, 1999, pp. 341-400.",
+        "Peter G. L. Dirichlet, Lectures on Number Theory (History of Mathematics Source Series, V. 16); American Mathematical Society, Providence, Rhode Island, 1999, pp. 139-147."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A075796/b075796.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "J. J. O'Connor and E. F. Robertson, <a href=\"https://web.archive.org/web/20170425000702/http://www-gap.dcs.st-and.ac.uk/~history/HistTopics/Pell.html\">Pell's Equation</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PellEquation.html\">Pell Equation.</a>",
+        "H. C. Williams and R. K. Guy, <a href=\"http://dx.doi.org/10.1142/S1793042111004587\">Some fourth-order linear divisibility sequences</a>, Intl. J. Number Theory 7 (5) (2011) 1255-1277.",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (18,-1)."
+    ],
+    "formula": [
+        "a(n) = (((9 + 4*sqrt(5))^n - (9 - 4*sqrt(5))^n) + ((9 + 4*sqrt(5))^(n-1) - (9 - 4*sqrt(5))^(n-1)))/(4*sqrt(5)).",
+        "a(n) = 18*a(n-1) - a(n-2).",
+        "a(n) = 2*A049629(n-1).",
+        "Limit_{n->oo} a(n)/a(n-1) = 8*phi + 1 = 9 + 4*sqrt(5).",
+        "a(n+1) = 9*a(n) + 4*sqrt(5)*sqrt((a(n)^2+1)). - _Richard Choulet_, Aug 30 2007",
+        "G.f.: 2*x*(1 + x)/(1 - 18*x + x^2). - _Richard Choulet_, Oct 09 2007",
+        "From _Johannes W. Meijer_, Jul 01 2010: (Start)",
+        "a(n) = A000045(6*n+3) + A000045(6*n)/2.",
+        "a(n) = 2*A167808(6*n+4) - A167808(6*n+6).",
+        "Limit_{k->oo} a(n+k)/a(k) = A023039(n)*A060645(n)*sqrt(5).",
+        "(End)",
+        "5*A007805(n)^2 - 1 = a(n+1)^2. - _Sture Sj\u00f6stedt_, Nov 29 2011",
+        "From _Peter Bala_, Nov 29 2013: (Start)",
+        "a(n) = Lucas(6*n - 3)/2.",
+        "Sum_{n >= 1} 1/(a(n) + 5/a(n)) = 1/4. Compare with A002878, A005248, A023039. (End)",
+        "Limit_{n->oo} a(n)/A007805(n-1) = sqrt(5). - _A.H.M. Smeets_, May 29 2017",
+        "E.g.f.: (exp((9 - 4*sqrt(5))*x)*(- 5 + 2*sqrt(5) + (5 + 2*sqrt(5))*exp(8*sqrt(5)*x)))/(2*sqrt(5)). - _Stefano Spezia_, Feb 13 2019",
+        "Sum_{n > 0} 1/a(n) = (1/log(9 - 4*sqrt(5)))*(- 17 - 38/sqrt(5))*sqrt(5*(9 - 4*sqrt(5)))*(- 9 + 4*sqrt(5))*(psi_{9 - 4*sqrt(5)}(1/2) - psi_{9 - 4*sqrt(5)}(1/2 - (I*Pi)/log(9 - 4*sqrt(5)))) approximately equal to 0.527868600269500798938265500122302016..., where psi_q(x) is the q-digamma function. - _Stefano Spezia_, Feb 25 2019",
+        "a(n) = sinh((6*n - 3)*arccsch(2)). - _Peter Luschny_, May 25 2022"
+    ],
+    "maple": [
+        "with(combinat); A075796:=n->fibonacci(6*n+3)+fibonacci(6*n)/2; seq(A075796(n), n=1..50); # _Wesley Ivan Hurt_, Nov 29 2013"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{18, -1}, {2, 38}, 50] (* _Sture Sj\u00f6stedt_, Nov 29 2011; typo fixed by _Vincenzo Librandi_, Nov 30 2011 *)",
+        "LucasL[6*Range[20]-3]/2 (* _G. C. Greubel_, Feb 13 2019 *)",
+        "CoefficientList[Series[2*(1+x)/( 1-18*x+x^2 ), {x,0,20}],x] (* _Stefano Spezia_, Mar 02 2019 *)"
+    ],
+    "program": [
+        "(Magma) I:=[2,38]; [n le 2 select I[n] else 18*Self(n-1)-Self(n-2): n in [1..20]]; // _Vincenzo Librandi_, Nov 30 2011",
+        "(Magma) [Lucas(6*n-3)/2: n in [1..20]]; // _G. C. Greubel_, Feb 13 2019",
+        "(PARI) vector(20, n, (fibonacci(6*n-2) + fibonacci(6*n-4))/2) \\\\ _G. C. Greubel_, Feb 13 2019",
+        "(Sage) [(fibonacci(6*n-2) + fibonacci(6*n-4))/2 for n in (1..20)] # _G. C. Greubel_, Feb 13 2019"
+    ],
+    "xref": [
+        "Cf. A000290, A306380, A001077."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Gregory V. Richardson_, Oct 13 2002",
+    "references": 11,
+    "revision": 101,
+    "time": "2022-08-30T14:11:04-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

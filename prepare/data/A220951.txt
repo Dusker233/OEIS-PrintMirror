@@ -1,0 +1,36 @@
+{
+    "number": 220951,
+    "data": "5,7,11,13,31,61,251,4093",
+    "name": "Primes p such that p+6 is also prime and there is a power of two in the interval (p,p+6).",
+    "comment": [
+        "A search for sexy primes bracketing a power of two was conducted up to 2^1500. It is conjectured that this is a finite sequence.",
+        "On the basis of existing work about primes of the form 2^n+k and 2^n-k, plus a few additional tests, we have a(9) > 2^750740. - _Giovanni Resta_, Feb 21 2013"
+    ],
+    "mathematica": [
+        "pptQ[n_]:=AllTrue[{n,n+6},PrimeQ]&&Count[Log[2,#]&/@Range[n,n+6], _?IntegerQ] > 0; Select[Range[4100],pptQ] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Nov 01 2015 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "//Program finds primes separated by an even number (called gap) which have a power of two between them. Program starts with the smallest power of two above gap. Primes less than this starting point can be checked by inspection.",
+        "gap:=6;",
+        "start:=Ilog2(gap)+1;",
+        "for i:= start to 1000 do",
+        "   powerof2:=2^i;",
+        "   for k:=powerof2-gap+1 to powerof2-1 by 2 do",
+        "      if (IsPrime(k) and IsPrime(k+gap)) then",
+        "         k;",
+        "      end if;",
+        "   end for;",
+        "end for;"
+    ],
+    "xref": [
+        "Cf. A023201, A220746, A221211."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Brad Clardy_, Feb 20 2013",
+    "references": 2,
+    "revision": 24,
+    "time": "2022-09-08T08:46:04-04:00",
+    "created": "2013-02-21T11:14:57-05:00"
+}

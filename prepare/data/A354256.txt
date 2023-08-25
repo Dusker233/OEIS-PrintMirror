@@ -1,0 +1,58 @@
+{
+    "number": 354256,
+    "data": "1089,9801,698896,10036224,42263001,637832238736,1021178969603881,1883069698711201,4099923883299904,6916103777337773016196",
+    "name": "Squares that remain square when written backward, are not divisible by 10, and have an even number of digits.",
+    "comment": [
+        "a(10) > 10^21.",
+        "Is this sequence infinite?",
+        "Every term is a multiple of 121.",
+        "Terms come in nonpalindromic pairs and palindromic singles; see Example section.",
+        "Removal of the \"even number of digits\" requirement yields A033294, which has 8560 terms < 10^20.",
+        "A027829 is a subsequence. - _Chai Wah Wu_, May 23 2022"
+    ],
+    "link": [
+        "<a href=\"/index/Sq#sqrev\">Index entry for sequences related to reversing digits of squares</a>"
+    ],
+    "example": [
+        "There are no 2-digit terms.",
+        "The smallest 4-digit multiple of 121 is 1089 = 33^2, which happens to be a(1); its digit reversal is a(2) = 9801 = 99^2.",
+        "The only 6-digit term is the palindrome a(3) = 698896 = 836^2.",
+        "The only 8-digit terms are a(4) = 10036224 = 3168^2 and its digit reversal a(5) = 42263001 = 6501^2.",
+        "There are no 10-digit terms.",
+        "The only 12-digit term is the palindrome a(6) = 637832238736 = 798644^2.",
+        "There are no 14-digit terms.",
+        "There are three 16-digit terms: a(7) = 1021178969603881 = 31955891^2, its digit reversal a(8) = 1883069698711201 = 43394351^2, and the palindrome a(9) = 4099923883299904 = 64030648^2."
+    ],
+    "program": [
+        "(Python)",
+        "from math import isqrt",
+        "from itertools import count, islice",
+        "def sqr(n): return isqrt(n)**2 == n",
+        "def agen(): yield from (k*k for k in count(1) if k%10 and len(s:=str(k*k))%2==0 and sqr(int(s[::-1])))",
+        "print(list(islice(agen(), 6))) # _Michael S. Branicky_, May 23 2022",
+        "(Python)",
+        "from math import isqrt",
+        "from itertools import count, islice",
+        "from sympy import integer_nthroot",
+        "def A354256_gen(): # generator of terms",
+        "    for l in count(2,2):",
+        "        for m in (1,4,5,6,9):",
+        "            for k in range(1+isqrt(m*10**(l-1)-1),1+isqrt((m+1)*10**(l-1)-1)):",
+        "                if k % 10 and integer_nthroot(int(str(k*k)[::-1]),2)[1]:",
+        "                    yield k*k",
+        "A354256_list = list(islice(A354256_gen(),9)) # _Chai Wah Wu_, May 23 2022"
+    ],
+    "xref": [
+        "Cf. A027829, A033294."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Jon E. Schoenfield_, May 21 2022",
+    "ext": [
+        "a(10) from _Chai Wah Wu_, May 24 2022"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2022-05-24T17:12:13-04:00",
+    "created": "2022-05-22T09:47:18-04:00"
+}

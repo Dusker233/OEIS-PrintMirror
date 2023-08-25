@@ -1,0 +1,75 @@
+{
+    "number": 342340,
+    "data": "1,1,2,4,6,9,17,24,41,67,109,173,296,469,781,1284,2109,3450,5713,9349,15422,25351,41720,68590,112982,185753,305752,503041,827819,1361940,2241435,3687742,6068537,9985389,16431144,27036576,44489533,73205429,120460062,198214516,326161107",
+    "name": "Number of compositions of n where each part after the first is either twice, half, or equal to the prior part.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A342340/b342340.txt\">Table of n, a(n) for n = 0..4623</a> (first 1001 terms from Andrew Howroyd)"
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 17 compositions:",
+        "  (1)  (2)   (3)    (4)     (5)      (6)",
+        "       (11)  (12)   (22)    (122)    (24)",
+        "             (21)   (112)   (212)    (33)",
+        "             (111)  (121)   (221)    (42)",
+        "                    (211)   (1112)   (222)",
+        "                    (1111)  (1121)   (1122)",
+        "                            (1211)   (1212)",
+        "                            (2111)   (1221)",
+        "                            (11111)  (2112)",
+        "                                     (2121)",
+        "                                     (2211)",
+        "                                     (11112)",
+        "                                     (11121)",
+        "                                     (11211)",
+        "                                     (12111)",
+        "                                     (21111)",
+        "                                     (111111)"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1, add(",
+        "      b(n-j, j), j=`if`(i=0, {$1..n}, select(x->",
+        "       x::integer and x<=n, {i/2, i, 2*i}))))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..42);  # _Alois P. Heinz_, May 24 2021"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],And@@Table[#[[i]]==#[[i-1]]||#[[i]]==2*#[[i-1]]||#[[i-1]]==2*#[[i]],{i,2,Length[#]}]&]],{n,0,15}]",
+        "(* Second program: *)",
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, Sum[b[n - j, j], {j, If[i == 0, Range[n], Select[ {i/2, i, 2 i}, IntegerQ[#] && # <= n &]]}]];",
+        "a[n_] := b[n, 0];",
+        "a /@ Range[0, 42] (* _Jean-Fran\u00e7ois Alcover_, Jun 10 2021, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(M=matid(n)); for(k=1, n, for(i=1, k-1, M[i, k] = if(i%2==0, M[i/2,k-i]) + if(i*2<=k, M[i,k-i]) + if(i*3<=k, M[i*2,k-i]))); concat([1], sum(q=1, n, M[q, ]))} \\\\ _Andrew Howroyd_, Mar 13 2021"
+    ],
+    "xref": [
+        "The case of partitions is A342337.",
+        "The anti-run version is A342331.",
+        "A000929 counts partitions with adjacent parts x >= 2y.",
+        "A002843 counts compositions with adjacent parts x <= 2y.",
+        "A154402 counts partitions with adjacent parts x = 2y.",
+        "A224957 counts compositions with x <= 2y and y <= 2x (strict: A342342).",
+        "A274199 counts compositions with adjacent parts x < 2y.",
+        "A342094 counts partitions with adjacent x <= 2y (strict: A342095).",
+        "A342096 counts partitions without adjacent x >= 2y (strict: A342097).",
+        "A342098 counts partitions with adjacent parts x > 2y.",
+        "A342330 counts compositions with x < 2y and y < 2x (strict: A342341).",
+        "A342332 counts compositions with adjacent parts x > 2y or y > 2x.",
+        "A342333 counts compositions with adjacent parts x >= 2y or y >= 2x.",
+        "A342334 counts compositions with adjacent parts x >= 2y or y > 2x.",
+        "A342335 counts compositions with adjacent parts x >= 2y or y = 2x.",
+        "A342338 counts compositions with adjacent parts x < 2y and y <= 2x.",
+        "Cf. A000005, A003114, A003242, A034296, A167606, A342083, A342084, A342087, A342191, A342336, A342339."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Mar 12 2021",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Mar 13 2021"
+    ],
+    "references": 14,
+    "revision": 17,
+    "time": "2021-06-10T20:36:23-04:00",
+    "created": "2021-03-12T09:13:30-05:00"
+}

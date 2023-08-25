@@ -1,0 +1,32 @@
+{
+    "number": 136509,
+    "data": "1,2,6,16,50,171,697,3416,21126,169105,1794683,25891713,507686588,13878639286,518836271475,27356839451662,1968958300103603,200935638262212462,27892630019328034846,5502857784211927305980",
+    "name": "G.f.: A(x) = Sum_{n>=0} (-1)^n * (1 -x -2^n*x^2)^(-1) * log(1 -x -2^n*x^2)^n / n!.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A136509/b136509.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "mathematica": [
+        "With[{m=30}, CoefficientList[Series[Sum[(-1)^j*Log[1-x-2^j*x^2]^j/(j!*(1-x -2^j*x^2)), {j,0,m+2}], {x,0,m}], x]] (* _G. C. Greubel_, Mar 15 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(i=0,n,(-1)^i*1/(1-x*(1+2^i*x +x*O(x^n)))*log(1-x-2^i*x^2 +x*O(x^n))^i/i!),n)}",
+        "(Magma)",
+        "m:=30; R<x>:=PowerSeriesRing(Rationals(), m);",
+        "Coefficients(R!( (&+[(-1)^j*Log(1-x-2^j*x^2)^j/(Factorial(j)*(1 -x -2^j*x^2)) : j in [0..m+2]]) )); // _G. C. Greubel_, Mar 15 2021",
+        "(Sage)",
+        "def A136509_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P( sum((-1)^j*log(1-x -2^j*x^2)^j/(factorial(j)*(1 -x -2^j*x^2)) for j in (0..32)) ).list()",
+        "A136509_list(30) # _G. C. Greubel_, Mar 15 2021"
+    ],
+    "xref": [
+        "Cf. A136507, A136508."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jan 01 2008",
+    "references": 3,
+    "revision": 6,
+    "time": "2021-03-15T01:50:33-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

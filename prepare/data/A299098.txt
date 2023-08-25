@@ -1,0 +1,58 @@
+{
+    "number": 299098,
+    "data": "0,1,2,6,25,113,548,2770,14426,76851,416848,2294224,12780394,71924647,408310668,2335443077,13446130438,77863375126,453203435319,2649957419351,15558520126830,91687179000949,542139459641933,3215484006733932,19125017153077911",
+    "name": "Number of rooted identity trees with 2n nodes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A299098/b299098.txt\">Table of n, a(n) for n = 0..1253</a>"
+    ],
+    "formula": [
+        "a(n) = A004111(2*n)."
+    ],
+    "example": [
+        "a(3) = 6:",
+        "   o     o       o       o       o         o",
+        "   |     |       |      / \\     / \\       / \\",
+        "   o     o       o     o   o   o   o     o   o",
+        "   |     |      / \\    |       |   |    / \\",
+        "   o     o     o   o   o       o   o   o   o",
+        "   |    / \\    |       |       |       |",
+        "   o   o   o   o       o       o       o",
+        "   |   |       |       |",
+        "   o   o       o       o",
+        "   |",
+        "   o"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; `if`(n<2, n, add(b(n-k)*add(",
+        "      b(d)*d*(-1)^(k/d+1), d=divisors(k)), k=1..n-1)/(n-1))",
+        "    end:",
+        "a:= n-> b(2*n):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n<2, n, Sum[b[n-k]*Sum[b[d]*d*(-1)^(k/d + 1), {d, Divisors[k]}], {k, 1, n-1}]/(n-1)];",
+        "a[n_] := b[2*n];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Jun 18 2018, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "from sympy.core.cache import cacheit",
+        "@cacheit",
+        "def b(n): return n if n<2 else sum([b(n-k)*sum([b(d)*d*(-1)**(k//d+1) for d in divisors(k)]) for k in range(1, n)])//(n-1)",
+        "def a(n): return b(2*n)",
+        "print([a(n) for n in range(31)]) # _Indranil Ghosh_, Mar 02 2018, after Maple program"
+    ],
+    "xref": [
+        "Bisection of A004111 (even part).",
+        "Cf. A100034, A299039, A299113."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Feb 02 2018",
+    "references": 4,
+    "revision": 24,
+    "time": "2020-05-02T16:07:39-04:00",
+    "created": "2018-02-02T16:59:34-05:00"
+}

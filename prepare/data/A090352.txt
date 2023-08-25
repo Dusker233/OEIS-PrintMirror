@@ -1,0 +1,49 @@
+{
+    "number": 90352,
+    "data": "1,2,7,36,255,2370,27713,393352,6582068,126888632,2767912036,67362737168,1808596304964,53083358012760,1690443996202428,58039582729688320,2136931230333535178,83981145793974066484",
+    "name": "Satisfies A^3 = BINOMIAL(A)^2, where A = A090351^2.",
+    "comment": [
+        "See comments in A090351."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A090352/b090352.txt\">Table of n, a(n) for n = 0..390</a>"
+    ],
+    "formula": [
+        "G.f. satisfies: A(x)^3 = A(x/(1-x))^2/(1-x)^2.",
+        "From _Peter Bala_, May 26 2015: (Start)",
+        "O.g.f. A(x) = exp( Sum_{n >= 1} b(n)*x^n/n ), where b(n) = Sum_{k = 1..n} k!*Stirling2(n,k)*2^k = A004123(n+1) = 2*A050351(n) for n >= 1. Cf. A084785.",
+        "BINOMIAL(A(x)) = exp( Sum_{n >= 1} c(n)*x^n/n ) where c(n) = (-1)^n*Sum_{k = 1..n} k!*Stirling2(n,k)*(-3)^k = A201339(n) = 3*A050351(n) for n >= 1.",
+        "A(x) = B(x)^2 and BINOMIAL(A(x)) = B(x)^3 where B(x) = 1 + x + 3*x^2 + 15*x^3 + 108*x^4 + ... is the o.g.f. for A090351. See also A019538. (End)"
+    ],
+    "mathematica": [
+        "nmax = 17; sol = {a[0] -> 1};",
+        "Do[A[x_] = Sum[a[k] x^k, {k, 0, n}] /. sol; eq = CoefficientList[A[x]^3 - A[x/(1 - x)]^2/(1 - x)^2 + O[x]^(n + 1), x] == 0 /. sol; sol = sol ~Join~ Solve[eq][[1]], {n, 1, nmax}];",
+        "sol /. Rule -> Set;",
+        "a /@ Range[0, nmax] (* _Jean-Fran\u00e7ois Alcover_, Nov 02 2019 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A); if(n<1,0,A=1+x+x*O(x^n); for(k=1,n,B=subst(A,x, x/(1-x))/(1-x)+x*O(x^n); A=A-A^3+B^2); polcoeff(A,n,x))}",
+        "(Magma)",
+        "m:=40;",
+        "f:= func< n, x | Exp((&+[(&+[2^j*Factorial(j)*StirlingSecond(k, j)*x^k/k: j in [1..k]]): k in [1..n+2]])) >;",
+        "R<x>:=PowerSeriesRing(Rationals(), m+1);  // A090352",
+        "Coefficients(R!( f(m, x) )); // _G. C. Greubel_, Jul 07 2023",
+        "(SageMath)",
+        "m=50",
+        "def f(n, x): return exp(sum(sum(2^j*factorial(j)*stirling_number2(k, j)*x^k/k for j in range(1, k+1)) for k in range(1, n+2)))",
+        "def A090352_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P( f(m, x) ).list()",
+        "A090352_list(m-9) # _G. C. Greubel_, Jul 07 2023"
+    ],
+    "xref": [
+        "Cf. A004123, A019538, A050351, A084785, A090351, A201339."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 26 2003",
+    "references": 5,
+    "revision": 20,
+    "time": "2023-07-08T08:06:15-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

@@ -1,0 +1,56 @@
+{
+    "number": 299113,
+    "data": "1,1,3,12,52,247,1226,6299,33209,178618,976296,5407384,30283120,171196956,975662480,5599508648,32334837886,187737500013,1095295264857,6417886638389,37752602033079,222861754454841,1319834477009635,7839314017612273,46688045740233741",
+    "name": "Number of rooted identity trees with 2n+1 nodes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A299113/b299113.txt\">Table of n, a(n) for n = 0..1253</a>"
+    ],
+    "formula": [
+        "a(n) = A004111(2n+1)."
+    ],
+    "example": [
+        "a(2) = 3:",
+        "   o     o       o",
+        "   |     |      / \\",
+        "   o     o     o   o",
+        "   |    / \\    |",
+        "   o   o   o   o",
+        "   |   |       |",
+        "   o   o       o",
+        "   |",
+        "   o"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; `if`(n<2, n, add(b(n-k)*add(",
+        "      b(d)*d*(-1)^(k/d+1), d=divisors(k)), k=1..n-1)/(n-1))",
+        "    end:",
+        "a:= n-> b(2*n+1):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n < 2, n, Sum[b[n - k]*Sum[b[d]*d*(-1)^(k/d + 1), {d, Divisors[k]}], {k, 1, n - 1}]/(n - 1)];",
+        "a[n_] := b[2*n + 1];",
+        "Array[a, 30, 0] (* _Jean-Fran\u00e7ois Alcover_, May 30 2019, from Maple *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "from sympy.core.cache import cacheit",
+        "@cacheit",
+        "def b(n): return n if n<2 else sum([b(n-k)*sum([b(d)*d*(-1)**(k//d+1) for d in divisors(k)]) for k in range(1, n)])//(n-1)",
+        "def a(n): return b(2*n+1)",
+        "print([a(n) for n in range(31)]) # _Indranil Ghosh_, Mar 02 2018"
+    ],
+    "xref": [
+        "Bisection of A004111 (odd part).",
+        "Cf. A100427, A299098."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Feb 02 2018",
+    "references": 3,
+    "revision": 17,
+    "time": "2020-05-02T16:40:12-04:00",
+    "created": "2018-02-02T17:00:01-05:00"
+}

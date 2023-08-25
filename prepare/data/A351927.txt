@@ -1,0 +1,56 @@
+{
+    "number": 351927,
+    "data": "1,2,4,10,15,15,15,15,15,15,50,50,101,101,101,101,143,143,143,143,143,143,143,143,143,1916,1916,1916,1916,1916,1916,82286,1134022,1639828,3483159,3483159,3483159,3917963,3917963,3917963,4729774,4729774,9827775,9827775,43622201,43622201,43622201",
+    "name": "Smallest positive integer k such that 2^k has no '0' in the last n digits of its ternary expansion.",
+    "comment": [
+        "The powers of two are required to have at least n ternary digits, i.e., 2^k >= 3^(n-1).",
+        "Sloane (1973) conjectured that every power 2^n with n > 15 has a '0' somewhere in its ternary expansion (see A102483 and A346497)."
+    ],
+    "link": [
+        "Robert I. Saye, <a href=\"https://arxiv.org/abs/2202.13256\">On two conjectures concerning the ternary digits of powers of two</a>, arXiv:2202.13256 [math.NT], 2022."
+    ],
+    "mathematica": [
+        "smallest[n_] := Module[{k}, k = Max[1, Ceiling[(n - 1) Log[2, 3]]];  While[MemberQ[Take[IntegerDigits[2^k, 3], -n], 0], ++k]; k]; Table[smallest[n], {n, 1, 20}]"
+    ],
+    "program": [
+        "(PARI) a(n) = my(k=1); while(!vecmin(Vec(Vecrev(digits(2^k,3)), n)), k++); k; \\\\ _Michel Marcus_, Feb 26 2022",
+        "(Python)",
+        "from sympy.ntheory.digits import digits",
+        "def a(n, startk=1):",
+        "    k = max(startk, len(bin(3**(n-1))[2:]))",
+        "    pow2 = 2**k",
+        "    while 0 in digits(pow2, 3)[-n:]:",
+        "        k += 1",
+        "        pow2 *= 2",
+        "    return k",
+        "an = 0",
+        "for n in range(1, 32):",
+        "    an = a(n, an)",
+        "    print(an, end=\", \") # _Michael S. Branicky_, Mar 10 2022",
+        "(Python)",
+        "from itertools import count",
+        "def A351927(n):",
+        "    kmax, m = 3**n, (3**(n-1)).bit_length()",
+        "    k2 = pow(2,m,kmax)",
+        "    for k in count(m):",
+        "        a = k2",
+        "        if 3*a >= kmax:",
+        "            while a > 0:",
+        "                a, b = divmod(a,3)",
+        "                if b == 0:",
+        "                    break",
+        "            else:",
+        "                return k",
+        "        k2 = 2*k2 % kmax # _Chai Wah Wu_, Mar 19 2022"
+    ],
+    "xref": [
+        "Cf. A004642, A117970, A102483, A346497, A351928."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Robert Saye_, Feb 25 2022",
+    "references": 2,
+    "revision": 38,
+    "time": "2023-03-18T08:49:14-04:00",
+    "created": "2022-03-19T06:35:12-04:00"
+}

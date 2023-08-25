@@ -1,0 +1,44 @@
+{
+    "number": 44432,
+    "data": "1,2,5,11,22,45,90,181,363,726,1453,2907,5814,11629,23258,46517,93035,186070,372141,744282,1488565,2977131,5954262,11908525,23817051,47634102,95268205,190536410,381072821",
+    "name": "a(n) is the number whose base-2 representation is d(0)d(1)...d(n), where d=A005614 (the infinite Fibonacci word).",
+    "comment": [
+        "a(n) can also be calculated as floor(2^n * R), where the rabbit constant R=0.709803442861291314641787399444575597012... converges rapidly using the result from Davison described in the comments at A014565. - _Federico Provvedi_, Oct 24 2018"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A044432/b044432.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A000225(n+1) - A182028(n). - _Reinhard Zumkeller_, Apr 07 2012",
+        "a(n) = 2*a(n-1) + A005614(n) for n > 0, a(0) = 1. - _Reinhard Zumkeller_, Apr 07 2012",
+        "From _Federico Provvedi_, Oct 24 2018: (Start)",
+        "a(n) = A000079(n) * Sum_{k=0..n} ((floor(phi*(k+1)) - floor(phi*k) - 1)/2^k).",
+        "a(n) = floor(2^n*(1-Sum_{n >= 1}(-1)^(n+1)*(1+2^Fibonacci(3*n+1))/((2^(Fibonacci(3*n-1))-1)*(2^(Fibonacci(3*n + 2))-1))).",
+        "a(n) = floor(2^n*R), where R is the rabbit constant.",
+        "a(n) = floor(2^n/[1, 2, 2, 4, 8, 32, ..., 2^Fibonacci(3*h)]), with h=1 for n=0, h=floor(2+log((n+1)/11)/arcsinh(2)) for n>0.",
+        "(End)"
+    ],
+    "mathematica": [
+        "FromDigits[(Floor[GoldenRatio(#+1)]-Floor[GoldenRatio #]-1)&@Range@#,2]&/@Range@40 (* _Federico Provvedi_, Oct 19 2018 *)",
+        "Floor[2^#/FromContinuedFraction[2^Fibonacci[Range[0,3*Max[1,Floor[2+Log[(#+1)/11]/ArcSinh[2]]]]]]]&/@Range[200] (* _Federico Provvedi_, Nov 01 2018 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a044432 n = a044432_list !! n",
+        "a044432_list = scanl1 (\\v b -> 2 * v + b) a005614_list",
+        "-- _Reinhard Zumkeller_, Apr 07 2012"
+    ],
+    "xref": [
+        "Cf. A000225, A005614, A182028, A000079, A014565."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Offset fixed by _Reinhard Zumkeller_, Apr 07 2012"
+    ],
+    "references": 4,
+    "revision": 53,
+    "time": "2018-12-20T23:39:18-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 136307,
+    "data": "1,11,211,3211,43211,543211,6543211,76543211,876543211,9876543211,109876543211,11109876543211,1211109876543211,131211109876543211,14131211109876543211,1514131211109876543211,161514131211109876543211,17161514131211109876543211,1817161514131211109876543211",
+    "name": "a(n)=n*(10^K) + a(n-1); a(0)=1; K=floor(log_10 a(n-1))+1.",
+    "maple": [
+        "A136307 := proc(n)",
+        "    option remember;",
+        "    local k ;",
+        "    if n = 0 then",
+        "        1;",
+        "    else",
+        "        if procname(n-1) < 1 then",
+        "            k := 0;",
+        "        else",
+        "            k := 1+floor(log[10](procname(n-1))) ;",
+        "        end if ;",
+        "        procname(n-1)+n*10^k  ;",
+        "    end if;",
+        "end proc:",
+        "seq(A136307(n),n=0..10) ; # _R. J. Mathar_, Jun 20 2021"
+    ],
+    "mathematica": [
+        "nxt[{n_,a_}]:={n+1,(n+1) 10^(Floor[Log[10,a]]+1)+a}; NestList[nxt,{0,1},20][[All,2]] (* _Harvey P. Dale_, Dec 07 2020 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = if (n==0, 1, my(x=a(n-1), K=log(x)\\log(10)+1); n*(10^K) + x); \\\\ _Michel Marcus_, Mar 16 2022"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Ctibor O. Zizka_, Mar 22 2008",
+    "ext": [
+        "Offset corrected by _R. J. Mathar_, Jun 20 2021",
+        "More terms from _Michel Marcus_, Mar 16 2022"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2022-03-16T10:33:50-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

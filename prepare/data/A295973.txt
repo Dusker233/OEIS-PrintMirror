@@ -1,0 +1,51 @@
+{
+    "number": 295973,
+    "data": "3,5,7,11,29,31,113,127,139,149,509,523,541,907,1069,1087,1151,1327,1361,1543,1669,1933,1951,2971,2999,3163,5381,5749,6421,7963,9551,10007,14143,15683,15727,15823,16183,19373,19609,20809,25471,28277,28351,31397,31469,31957,34061,34123,35671",
+    "name": "Primes introducing new second differences in A036263.",
+    "comment": [
+        "This list consists of those primes corresponding to new second differences in A036263. There are 97 new second differences introduced up to the 100000th prime."
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A295973/b295973.txt\">Table of n, a(n) for n = 1..324</a> (first 97 terms from Edward Bernstein)"
+    ],
+    "example": [
+        "The new values in A036263 are 1, 0, 2, -2, -4, 4, 10, -10, 8, -8, ... at indices 1, 2, 3, 4, 9, 10, 29, 30, ... and the middle primes of the prime triple starting at these indices are 3, 5, 7, 11, 29, ..."
+    ],
+    "maple": [
+        "A036263s := proc(maxn)",
+        "    s := {} ;",
+        "    for n from 1 to maxn do",
+        "        s := s union {A036263(n)} ;",
+        "    end do:",
+        "    s ;",
+        "end proc:",
+        "A295973a := proc(n)",
+        "    if n = 1 then",
+        "        return 2;",
+        "    end if;",
+        "    p := nextprime(procname(n-1)) ;",
+        "    pidx := numtheory[pi](p) ;",
+        "    while true do",
+        "        candD := A036263(pidx) ;",
+        "        if not candD in A036263s(pidx-1) then",
+        "            return ithprime(pidx) ;",
+        "        end if ;",
+        "        pidx := pidx+1 ;",
+        "    end do:",
+        "end proc:",
+        "A295973 := proc(n)",
+        "    nextprime(A295973a(n)) ;",
+        "end proc:",
+        "seq(A295973(n),n=1..40) ; # _R. J. Mathar_, Jan 06 2018"
+    ],
+    "xref": [
+        "Cf. A036263, A295746."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Edward Bernstein_, Nov 30 2017",
+    "references": 4,
+    "revision": 45,
+    "time": "2019-03-02T04:22:22-05:00",
+    "created": "2018-01-19T01:57:54-05:00"
+}

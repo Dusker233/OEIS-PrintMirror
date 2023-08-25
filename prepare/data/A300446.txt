@@ -1,0 +1,52 @@
+{
+    "number": 300446,
+    "data": "1,1,1,2,3,3,5,6,8,12,12,17,23,27,32,41,52,61,77,91,110,134,159,188,228,271,314,380,444,518,612,713,832,976,1128,1308,1529,1756,2023,2343,2698,3091,3555,4072,4657,5343,6074,6922,7912,8986,10194,11590,13135,14855",
+    "name": "Expansion of Product_{k>0} (Sum_{m>=0} x^(k*m^2)).",
+    "comment": [
+        "Also the number of partitions of n in which each part occurs a square number (>=0) of times."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A300446/b300446.txt\">Table of n, a(n) for n = 0..10000</a> (first 1001 terms from Seiichi Manyama)",
+        "Martin Klazar, <a href=\"http://arxiv.org/abs/1808.08449\">What is an answer? \u2014 remarks, results and problems on PIO formulas in combinatorial enumeration, part I</a>, arXiv:1808.08449 [math.CO], 2018, p. 30."
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} (theta_3(x^k) + 1)/2, where theta_3() is the Jacobi theta function. - _Ilya Gutkovskiy_, Oct 25 2018"
+    ],
+    "example": [
+        "n | Partitions of n in which each part occurs a square number (>=0) of times",
+        "--+-------------------------------------------------------------------------",
+        "1 | 1;",
+        "2 | 2;",
+        "3 | 3 = 2+1;",
+        "4 | 4 = 3+1 = 1+1+1+1;",
+        "5 | 5 = 4+1 = 3+2;",
+        "6 | 6 = 5+1 = 4+2 = 3+2+1 = 2+1+1+1+1;",
+        "7 | 7 = 6+1 = 5+2 = 4+3 = 4+2+1 = 3+1+1+1+1;",
+        "8 | 8 = 7+1 = 6+2 = 5+3 = 5+2+1 = 4+3+1 = 4+1+1+1+1 = 2+2+2+2;"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; local j; if n=0 then 1",
+        "      elif i<1 then 0 else b(n, i-1); for j while",
+        "        i*j^2<=n do %+b(n-i*j^2, i-1) od; % fi",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, May 11 2018"
+    ],
+    "mathematica": [
+        "nmax = 60; CoefficientList[Series[Product[(EllipticTheta[3, 0, x^k] + 1)/2, {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Oct 25 2018 *)"
+    ],
+    "program": [
+        "(PARI) N=99; x='x+O('x^N); Vec(prod(i=1, N, sum(j=0, sqrtint(N\\i), x^(i*j^2)))) \\\\ _Seiichi Manyama_, Oct 28 2018",
+        "(Magma) m:=60; R<x>:=PowerSeriesRing(Integers(), m); Coefficients(R!( (&*[(&+[x^(k*j^2):j in [0..2*m]]): k in [1..2*m]]) ));  // _G. C. Greubel_, Oct 29 2018"
+    ],
+    "xref": [
+        "Cf. A000041, A000122, A010052, A158441, A232173, A298329, A304329, A320932, A321139."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Seiichi Manyama_, May 11 2018",
+    "references": 11,
+    "revision": 74,
+    "time": "2022-09-08T08:46:20-04:00",
+    "created": "2018-05-12T13:23:04-04:00"
+}

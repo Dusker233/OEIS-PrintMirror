@@ -1,0 +1,34 @@
+{
+    "number": 350107,
+    "data": "1,6,14,31,45,81,101,150,191,253,285,401,439,527,623,752,802,979,1035,1233,1369,1509,1577,1901,2020,2186,2362,2642,2728,3136,3228,3549,3765,3983,4215,4772,4882,5126,5382,5932,6054,6630,6758,7202,7664,7960,8100,8936",
+    "name": "a(n) = Sum_{k=1..n} k * floor(n/k)^2.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A350107/b350107.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} k * Sum_{d|k} (2*d - 1)/d = 2 * A143127(n) - A024916(n).",
+        "G.f.: (1/(1 - x)) * Sum_{k>=1} (2*k - 1) * x^k/(1 - x^k)^2.",
+        "a(n) = Sum_{k=1..n} 2 * k * tau(k) - sigma(k)."
+    ],
+    "mathematica": [
+        "a[n_] := Sum[k * Floor[n/k]^2, {k, 1, n}]; Array[a, 50] (* _Amiram Eldar_, Dec 14 2021 *)",
+        "Accumulate[Table[2*k*DivisorSigma[0, k] - DivisorSigma[1, k], {k, 1, 100}]] (* _Vaclav Kotesovec_, Dec 16 2021 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, k*(n\\k)^2);",
+        "(PARI) a(n) = sum(k=1, n, k*sumdiv(k, d, (2*d-1)/d));",
+        "(PARI) my(N=66, x='x+O('x^N)); Vec(sum(k=1, N, (2*k-1)*x^k/(1-x^k)^2)/(1-x))",
+        "(PARI) a(n) = sum(k=1, n, 2*k*numdiv(k)-sigma(k));"
+    ],
+    "xref": [
+        "Column 2 of A350106.",
+        "Cf. A000005 (tau), A024916, A143127, A222548, A350123, A350128."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, Dec 14 2021",
+    "references": 4,
+    "revision": 29,
+    "time": "2021-12-16T08:48:20-05:00",
+    "created": "2021-12-14T09:50:55-05:00"
+}

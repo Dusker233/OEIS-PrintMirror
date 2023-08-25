@@ -1,0 +1,38 @@
+{
+    "number": 316768,
+    "data": "1,2,4,11,29,91,284,950,3235,11336,40370,146095,534774,1977891,7377235,27719883",
+    "name": "Number of series-reduced locally stable rooted trees whose leaves form an integer partition of n.",
+    "comment": [
+        "A rooted tree is series-reduced if every non-leaf node has at least two branches. It is locally stable if no branch is a submultiset of any other branch of the same root."
+    ],
+    "example": [
+        "The a(5) = 29 trees:",
+        "  5,",
+        "  (14),",
+        "  (23),",
+        "  (1(13)), (3(11)), (113),",
+        "  (1(22)), (2(12)), (122),",
+        "  (1(1(12))), (1(2(11))), (1(112)), (2(1(11))), (2(111)), ((11)(12)), (11(12)), (12(11)), (1112),",
+        "  (1(1(1(11)))), (1(1(111))), (1((11)(11))), (1(11(11))), (1(1111)), ((11)(1(11))), (11(1(11))), (11(111)), (1(11)(11)), (111(11)), (11111).",
+        "Missing from this list but counted by A141268 is ((11)(111))."
+    ],
+    "mathematica": [
+        "submultisetQ[M_,N_]:=Or[Length[M]==0,MatchQ[{Sort[List@@M],Sort[List@@N]},{{x_,Z___},{___,x_,W___}}/;submultisetQ[{Z},{W}]]];",
+        "stableQ[u_]:=Apply[And,Outer[#1==#2||!submultisetQ[#1,#2]&&!submultisetQ[#2,#1]&,u,u,1],{0,1}];",
+        "nms[n_]:=nms[n]=Prepend[Join@@Table[Select[Union[Sort/@Tuples[nms/@ptn]],stableQ],{ptn,Rest[IntegerPartitions[n]]}],{n}];",
+        "Table[Length[nms[n]],{n,10}]"
+    ],
+    "xref": [
+        "Cf. A000081, A000669, A001678, A141268, A292504, A316468, A316475, A316651, A316652, A316655."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jul 12 2018",
+    "ext": [
+        "a(15)-a(16) from _Robert Price_, Sep 16 2018"
+    ],
+    "references": 1,
+    "revision": 10,
+    "time": "2018-09-17T03:17:21-04:00",
+    "created": "2018-07-12T20:24:42-04:00"
+}

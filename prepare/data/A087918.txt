@@ -1,0 +1,31 @@
+{
+    "number": 87918,
+    "data": "1,3,21,210,6510,234360,29763720,4047865920,2068459485120,1092146608143360,2235624106869457920,4650098142288472473600,38088953883484878031257600,314462403262051153026062745600,10303989567687630131204997985075200,338960040818652280796119613717033779200",
+    "name": "Let A(n) be the matrix in the group GL(n,2) such that for 1<=i, j<=n: A[i,j] = 1 if i+j = n+1 A[i,j] = 0 if i+j != n+1. a(n) is the size of the conjugacy class of A(n) in GL(n,2).",
+    "formula": [
+        "a(n) = A002884(n) / A087540(n)."
+    ],
+    "program": [
+        "(GAP)",
+        "a:=function(n) local M;",
+        "M:=NullMat(n,n); for i in [1..n] do M[i][n+1-i]:=1; od;",
+        "return Size(ConjugacyClass(GL(n, Integers mod 2), M * One(Integers mod 2)));",
+        "end; # _Andrew Howroyd_, Jul 13 2018",
+        "(PARI) \\\\ here b(n) is A002884.",
+        "b(n)={prod(i=2, n, 2^i-1)*2^binomial(n, 2)}",
+        "a(n)={my(m=n\\2); b(n)/(2^(m*if(n%2, n+3, n)/2)*b(m))} \\\\ _Andrew Howroyd_, Jul 13 2018"
+    ],
+    "xref": [
+        "Cf. A002884, A087540."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Yuval Dekel (dekelyuval(AT)hotmail.com), Oct 26 2003",
+    "ext": [
+        "a(8)-a(16) from _Andrew Howroyd_, Jul 13 2018"
+    ],
+    "references": 1,
+    "revision": 7,
+    "time": "2018-07-13T21:05:31-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

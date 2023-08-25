@@ -1,0 +1,35 @@
+{
+    "number": 321520,
+    "data": "1,1,1,3,8,32,152,882,5964,46644,411564,4056912,44097072,524234448,6761911968,94055452128,1403047948320,22342552398720,378256278306240,6783950610708480,128480976137122560,2562250754919421440,53668564630447910400",
+    "name": "Expansion of Product_{k>=1} (1 + (k - 1)!*x^k).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A321520/b321520.txt\">Table of n, a(n) for n = 0..450</a>"
+    ],
+    "formula": [
+        "G.f.: exp(Sum_{k>=1} ( Sum_{d|k} (-1)^(k/d+1)*d*((d - 1)!)^(k/d) ) * x^k/k).",
+        "a(n) ~ (n-1)! * (1 + 1/n + 2/n^2 + 7/n^3 + 34/n^4 + 203/n^5 + 1454/n^6 + 12321/n^7 + 121326/n^8 + 1364947/n^9 + 17301550/n^10 + ...). - _Vaclav Kotesovec_, Nov 13 2018"
+    ],
+    "maple": [
+        "a:=series(mul((1+(k-1)!*x^k),k=1..100),x=0,23): seq(coeff(a,x,n),n=0..22); # _Paolo P. Lava_, Apr 02 2019",
+        "# second Maple program:",
+        "b:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0,",
+        "     `if`(n=0, 1, b(n, i-1)+b(n-i, min(n-i, i-1))*(i-1)!))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..24);  # _Alois P. Heinz_, Jul 05 2023"
+    ],
+    "mathematica": [
+        "nmax = 22; CoefficientList[Series[Product[(1 + (k - 1)! x^k), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[(-1)^(k/d + 1) d ((d - 1)!)^(k/d), {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 22}]"
+    ],
+    "xref": [
+        "Cf. A107107, A265950."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Ilya Gutkovskiy_, Nov 12 2018",
+    "references": 2,
+    "revision": 12,
+    "time": "2023-07-05T15:29:21-04:00",
+    "created": "2018-11-14T14:02:07-05:00"
+}

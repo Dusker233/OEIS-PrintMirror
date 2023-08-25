@@ -1,0 +1,33 @@
+{
+    "number": 121162,
+    "data": "1,3,13,41,141,440,1391,4244,12913,38651,115082,339646,997709,2915010,8485573,24612666,71191458,205393819,591330506,1699226719,4874925420,13965498369,39957144189,114193222891,326023307022,929958622555,2650483647976,7548608038736",
+    "name": "Number of separated bicyclic skeletons with n carbon atoms (see Parks et al. for precise definition).",
+    "comment": [
+        "Equivalently, the number of connected graphs on n unlabeled nodes with exactly 2 cycles of equal length without any shared node and all nodes having degree at most 4. - _Andrew Howroyd_, May 25 2018"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A121162/b121162.txt\">Table of n, a(n) for n = 6..200</a>",
+        "Camden A. Parks and James B. Hendrickson, <a href=\"https://doi.org/10.1021/ci00002a021\">Enumeration of monocyclic and bicyclic carbon skeletons</a>, J. Chem. Inf. Comput. Sci., vol. 31, 334-339 (1991)."
+    ],
+    "program": [
+        "(PARI) \\\\ here G is A000598 as series",
+        "G(n)={my(g=O(x)); for(n=1, n, g = 1 + x*(g^3/6 + subst(g, x, x^2)*g/2 + subst(g, x, x^3)/3) + O(x^n)); g}",
+        "C1(n)={sum(k=1, n\\4, d1^(4*k) + 2*d1^(2*k)*d2^k + d2^(2*k))*(1 + d1^2)/(8*(1-d1))}",
+        "C2(n)={sum(k=1, n\\4,  2*(d2^(2*k) + d4^k)*(1 + d2))*(1+d1)/(8*(1-d2))}",
+        "seq(n)={my(s=G(n)); my(d=x*(s^2+subst(s, x, x^2))/2); my(g(p,e)=subst(p + O(x*x^(n\\e)), x, x^e)); Vec(O(x^n/x) + g(s,1)^2*substvec(C1(n-2),[d1,d2],[g(d,1),g(d,2)]) + g(s,2)*substvec(C2(n-2), [d1,d2,d4], [g(d,1),g(d,2),g(d,4)]))} \\\\ _Andrew Howroyd_, May 25 2018"
+    ],
+    "xref": [
+        "Cf. A121158, A125669."
+    ],
+    "keyword": "nonn",
+    "offset": "6,2",
+    "author": "_Parthasarathy Nambi_, Aug 13 2006",
+    "ext": [
+        "More terms from _N. J. A. Sloane_, Aug 27 2006",
+        "Terms a(26) and beyond from _Andrew Howroyd_, May 25 2018"
+    ],
+    "references": 3,
+    "revision": 12,
+    "time": "2018-05-25T03:23:52-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

@@ -1,0 +1,68 @@
+{
+    "number": 316412,
+    "data": "1,2,3,5,7,11,13,17,23,31,37,53,71,73,113,131,137,173,311,317",
+    "name": "Positive numbers m so that deletion of some or none but not all digits from m yields a noncomposite number.",
+    "comment": [
+        "Subsequence of A068669. It is easy to see that these are the only terms from the said sequence that satisfy our definition; there are no more terms < 10000. If there is one >= 10000 then there would be one in [1000, 9999]. A contradiction hence the sequence is finite and full.",
+        "Also noncomposites m (in base 10) for which the concatenation of every subsequence of digits of m is noncomposite (in base 10). - _David A. Corneth_, Aug 08 2018"
+    ],
+    "example": [
+        "317 is a member since all its subsequences, i.e., 3, 1, 7, 31, 17, 37, 317, are noncomposite.",
+        "313 is not a member since one of its subsequences (33) is composite."
+    ],
+    "mathematica": [
+        "Select[Range[10^3], AllTrue[FromDigits /@ Union@ Rest@ Subsets@ IntegerDigits@ #, ! CompositeQ@ # &] &] (* _Michael De Vlieger_, Aug 05 2018 *)"
+    ],
+    "program": [
+        "(C++)",
+        "#include <iostream>",
+        "#include <queue>",
+        "int main() {",
+        "    int upper = 1000;",
+        "    // 0->composite, 1->prime, 2->member of the sequence",
+        "    auto *nums = new int[upper];",
+        "    for (int i = 0; i < upper; i++)",
+        "        nums[i] = 1;",
+        "    nums[0] = nums[1] = 2;",
+        "    std::queue<int> in_progress;",
+        "    in_progress.push(1);",
+        "    for (int i = 2; i < upper; i++) {",
+        "        if (nums[i] == 0) continue;",
+        "        // is a prime",
+        "        in_progress.push(i);",
+        "        for (int j = i + i; j < upper; j += i) {",
+        "            nums[j] = 0;",
+        "        }",
+        "    }",
+        "    while (!in_progress.empty()) {",
+        "        int p = in_progress.front();",
+        "        in_progress.pop();",
+        "        int div = 1;",
+        "        bool valid = true;",
+        "        while (div <= p) {",
+        "            int del = (p / (div * 10)) * div + (p % div);",
+        "            if (nums[del] != 2) {",
+        "                valid = false;",
+        "                break;",
+        "            }",
+        "            div *= 10;",
+        "        }",
+        "        if (valid) {",
+        "            nums[p] = 2;",
+        "            std::cout << p << \", \";",
+        "        }",
+        "    }",
+        "}"
+    ],
+    "xref": [
+        "Subsequence of A068669.",
+        "Cf. A008578."
+    ],
+    "keyword": "base,easy,fini,full,nonn",
+    "offset": "1,2",
+    "author": "_Matej Kripner_, Aug 04 2018",
+    "references": 0,
+    "revision": 37,
+    "time": "2018-09-23T22:53:01-04:00",
+    "created": "2018-09-23T22:53:01-04:00"
+}

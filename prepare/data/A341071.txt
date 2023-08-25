@@ -1,0 +1,36 @@
+{
+    "number": 341071,
+    "data": "1,1,3,7,23,76,267,932,3263,11410,40028,140955,498467,1769249,6299282,22485487,80435919,288275461,1034862558,3720499175,13393720428,48275699654,174194970601,629187941167,2274710068067,8230764250326,29805342037721,108009638665648",
+    "name": "Number of compositions of 2n into n squarefree parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A341071/b341071.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * d^n / sqrt(n), where d = 3.6921332109291502908930783402282652076342401140592914... and c = 0.27220098720735952890181498005903942865018992276116... - _Vaclav Kotesovec_, Feb 14 2021"
+    ],
+    "maple": [
+        "b:= proc(n, t) option remember;",
+        "      `if`(n=0, `if`(t=0, 1, 0), `if`(t<1, 0, add(",
+        "      `if`(numtheory[issqrfree](j), b(n-j, t-1), 0), j=1..n)))",
+        "    end:",
+        "a:= n-> b(2*n, n):",
+        "seq(a(n), n=0..35);"
+    ],
+    "mathematica": [
+        "b[n_, t_] := b[n, t] =",
+        "  If[n == 0, If[t == 0, 1, 0], If[t < 1, 0, Sum[",
+        "  If[SquareFreeQ[j], b[n - j, t - 1], 0], {j, 1, n}]]];",
+        "a[n_] := b[2n, n];",
+        "Table[a[n], {n, 0, 35}] (* _Jean-Fran\u00e7ois Alcover_, May 26 2023, from Maple program *)"
+    ],
+    "xref": [
+        "Cf. A005117, A333047, A338464, A338465, A341072."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Feb 04 2021",
+    "references": 3,
+    "revision": 14,
+    "time": "2023-05-27T02:11:17-04:00",
+    "created": "2021-02-05T05:58:02-05:00"
+}

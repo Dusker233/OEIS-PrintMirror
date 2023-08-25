@@ -1,0 +1,50 @@
+{
+    "number": 356646,
+    "data": "4,8,27,31,575,669,1201,2505,4784,7618,35710,65005,166422,870062,994086,1105670,1209538,2140133,3020610,9147713,9404277,14492743,16792162,18566766,19445469,21264479,46483343,109424090,292374429,293351547,362681674,399576585,450622855",
+    "name": "Numbers k such that the integer log of k! is a perfect power.",
+    "comment": [
+        "Numbers k such that A025281(k) is a perfect power.",
+        "Numbers k such that A356631(k) = 1."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A356646/b356646.txt\">Table of n, a(n) for n = 1..38</a>"
+    ],
+    "example": [
+        "a(2) = 8 because the integer log of 8! = 2^7 * 3^2 * 5 * 7 is 2*7 + 3*2 + 5 + 7 = 32 = 2^5 is a perfect power."
+    ],
+    "maple": [
+        "spf:= proc(n) local t; add(t[1]*t[2],t=ifactors(n)[2]) end proc:ispow:= proc(n) igcd(map(t -> t[2], ifactors(n)[2]))>1 end proc:s:= 0: R:= NULL: count:= 0:",
+        "for i from 1 while count < 27 do",
+        "  s:= s+spf(i);",
+        "  if ispow(s) then",
+        "    count:= count+1; R:= R,i;",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Range[8000], GCD @@ FactorInteger[Plus @@ Times @@@ FactorInteger[#!]][[;; , 2]] > 1 &] (* _Amiram Eldar_, Aug 26 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, accumulate",
+        "from math import prod",
+        "from sympy import perfect_power, factorint",
+        "def A356646_gen(): # generator of terms",
+        "    return (a+2 for a, b in enumerate(accumulate(sum(prod(d) for d in factorint(n).items()) for n in count(2))) if perfect_power(b))",
+        "A356646_list = list(islice(A356646_gen(),10)) # _Chai Wah Wu_, Aug 28 2022"
+    ],
+    "xref": [
+        "Cf. A001414, A001597, A025281, A356631."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Aug 19 2022",
+    "ext": [
+        "a(28)-a(33) from _Chai Wah Wu_, Aug 28 2022"
+    ],
+    "references": 2,
+    "revision": 20,
+    "time": "2022-08-30T22:08:32-04:00",
+    "created": "2022-08-28T08:48:56-04:00"
+}

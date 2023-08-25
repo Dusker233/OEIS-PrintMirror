@@ -1,0 +1,51 @@
+{
+    "number": 27435,
+    "data": "1,2,4,6,10,11,17,21,27,29,39,42,54,57,62,70,86,89,107,113,120,125,147,152,172,178,196,204,232,236,266,282,294,302,320,329,365,374,388,400,440,446,488,501,518,529,575,586,628,638,657,672,724,733,758,778",
+    "name": "Number of distinct products ij with 1 <= i <= n, 1 <= j <= n, (i,j)=1.",
+    "comment": [
+        "S. W. Golomb, personal communication, Svalbard, Norway, 7/97."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A027435/b027435.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Harri Hakula, Pauliina Ilmonen, Vesa Kaarnioja, <a href=\"https://arxiv.org/abs/1705.05163\">Computation of extremal eigenvalues of high-dimensional lattice-theoretic tensors via tensor-train decompositions</a>, arXiv:1705.05163 [math.NA], 2017. See Table 2, d=4,5."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} A014665(n). - _Sean A. Irvine_, Nov 15 2018",
+        "For n>1: # of positive integers u <= n(n-1) such that p^H_p(u)<=n for all p<=u, where H_p(u) = highest power of p dividing u.",
+        "a(n) = A236309(n) + 1. - _Andrew Howroyd_, Nov 16 2018"
+    ],
+    "maple": [
+        "A027435 := proc(n)",
+        "    local L, i, j ;",
+        "    L := {};",
+        "    for i from 1 to n do",
+        "        for j from 1 to n do",
+        "            if igcd(i,j) = 1 then",
+        "            L := L union {i*j};",
+        "            end if;",
+        "        end do:",
+        "    end do:",
+        "    nops(L);",
+        "end proc:  # _R. J. Mathar_, Jun 09 2016"
+    ],
+    "mathematica": [
+        "Array[-Boole[# > 1] + Length@ Union@ Apply[Join, Table[If[CoprimeQ @@ #, i j, 0] &@ {i, j}, {i, #}, {j, #}]] &, 56] (* _Michael De Vlieger_, Nov 01 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n)={#Set(concat(vector(n, i, [i*j | j<-[1..n], gcd(i,j)==1])))} \\\\ _Andrew Howroyd_, Nov 15 2018",
+        "(PARI) seq(n)={my(v=vector(n),t=1);for(n=1, n, t+=sum(i=1, n-1, gcd(i,n) == 1 && 0==sumdiv(i*n, d, my(t=i*n/d); gcd(t,d)==1 && d<n && t<d)); v[n]=t); v} \\\\ _Andrew Howroyd_, Nov 16 2018"
+    ],
+    "xref": [
+        "Cf. A014665, A236309."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Olivier G\u00e9rard_, Nov 15 1997"
+    ],
+    "references": 3,
+    "revision": 28,
+    "time": "2018-11-18T09:04:32-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

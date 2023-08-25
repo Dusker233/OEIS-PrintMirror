@@ -1,0 +1,51 @@
+{
+    "number": 334083,
+    "data": "1,2,4,16,32,64,128,256,1024,2048,4096,8192,16384",
+    "name": "Integers m such that all binomial coefficients C(m,k), with 0<=k<=m, are practical numbers.",
+    "comment": [
+        "Integers m such that A334082(m) = 0.",
+        "All terms are powers of 2, but this is not a sufficient condition since A334082(8) = 1."
+    ],
+    "program": [
+        "(PARI) isok(n) = sum(k=0, n, !is_A005153(binomial(n,k))) == 0;",
+        "(Python)",
+        "from itertools import count, islice",
+        "from math import comb",
+        "from sympy import factorint",
+        "def A334083_gen(): # generator of terms",
+        "    for n in count(0):",
+        "        m, flag = 1<<n, True",
+        "        for k in range(1,m):",
+        "            c = comb(m,k)",
+        "            if c > 1:",
+        "                l = (~c & c-1).bit_length()",
+        "                if l>0:",
+        "                    P = (1<<l+1)-1",
+        "                    for p, e in factorint(c>>l).items():",
+        "                        if p > 1+P:",
+        "                            flag = False",
+        "                            break",
+        "                        P *= (p**(e+1)-1)//(p-1)",
+        "                else:",
+        "                    flag = False",
+        "                    break",
+        "        if flag:",
+        "            yield m",
+        "A334083_list = list(islice(A334083_gen(),10)) # _Chai Wah Wu_, Jul 05 2023"
+    ],
+    "xref": [
+        "Cf. A005153 (practical numbers), A007318 (binomial coefficients).",
+        "Cf. A334082, A334084."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Michel Marcus_, Apr 14 2020",
+    "ext": [
+        "a(9) from _Jinyuan Wang_, Apr 14 2020",
+        "a(10)-a(13) from _Chai Wah Wu_, Jul 05 2023"
+    ],
+    "references": 2,
+    "revision": 22,
+    "time": "2023-07-06T01:52:38-04:00",
+    "created": "2020-04-14T07:31:02-04:00"
+}

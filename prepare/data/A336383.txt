@@ -1,0 +1,70 @@
+{
+    "number": 336383,
+    "data": "0,1,21,31,42,52,73,81,319,391,463,583,2911,3667,6451,8793,9927,237126,254158,278393,2561363,9398143,9431623,9951265,83543869,83896381,83935261,2843233127,2847297383,2853748583,2885762663,266998137657,685718563667,688373877587",
+    "name": "a(n) is the smallest number such that, with f(x) = x - (the product of the digits of x), f(a(n)) reaches a fixed point after n iterations.",
+    "comment": [
+        "A fixed point occurs once the function returns a number that contains the digit 0. After that, the product of the digits will be 0, and so subtracting it from the number will be idempotent.",
+        "This sequence is conceptually similar to A003001, though unlike the latter, it is probably infinite."
+    ],
+    "example": [
+        "a(9) = 391 because:",
+        "   1: 391 - 3*9*1 = 364",
+        "   2: 364 - 3*6*4 = 292",
+        "   3: 292 - 2*9*2 = 256",
+        "   4: 256 - 2*5*6 = 196",
+        "   5: 196 - 1*9*6 = 142",
+        "   6: 142 - 1*4*2 = 134",
+        "   7: 134 - 1*3*4 = 122",
+        "   8: 122 - 1*2*2 = 118",
+        "   9: 118 - 1*1*8 = 110",
+        "After iteration 9, the function becomes idempotent:",
+        "  10: 110 - 1*1*0 = 110",
+        "  11: 110 - 1*1*0 = 110",
+        "  12: 110 - 1*1*0 = 110",
+        "  ...",
+        "Additionally, 391 is the smallest number with this property. Thus, it is a(9)."
+    ],
+    "mathematica": [
+        "nmax = 20; tab = ConstantArray[Null, nmax];",
+        "For[k = 0, k <= 1000000, k++,",
+        " l=Length@  NestWhileList[#-Times @@ IntegerDigits[#] &,k,UnsameQ[##] &, 2]-2;",
+        "If[tab[[l+1]] == Null, tab[[l+1]] = k]]; tab  (* _Robert Price_, Sep 13 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def f(x):",
+        "    prod = 1",
+        "    for digit in str(x):",
+        "        prod *= int(digit)",
+        "    return x - prod",
+        "def a(n):",
+        "    i = 0",
+        "    iteration = 0",
+        "    while iteration != n:",
+        "        i += 1",
+        "        j = i",
+        "        iteration = 0",
+        "        new_j = f(j)",
+        "        while j != new_j:",
+        "            iteration += 1",
+        "            j = new_j",
+        "            new_j = f(j)",
+        "    return i",
+        "(PARI) f(m) = m - vecprod(digits(m)) + (m==0);",
+        "lista(nn) = {my(c, m, t); for(k=0, nn, c=0; m=k; while(m!=(m=f(m)), c++); if(c==t, print1(k, \", \"); t++)); } \\\\ _Jinyuan Wang_, Aug 14 2020"
+    ],
+    "xref": [
+        "Cf. A003001, A070565."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Alon Ran_, Jul 19 2020",
+    "ext": [
+        "a(27)-a(30) from _Jinyuan Wang_, Aug 14 2020",
+        "a(31)-a(33) added by _Michael S. Branicky_, Aug 29 2020"
+    ],
+    "references": 1,
+    "revision": 26,
+    "time": "2020-09-14T11:50:40-04:00",
+    "created": "2020-08-02T15:34:10-04:00"
+}

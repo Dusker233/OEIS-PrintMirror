@@ -1,0 +1,51 @@
+{
+    "number": 654,
+    "id": "M2173 N0868",
+    "data": "1,2,52,142090700,17844701940501123640681816160,59757436204078657410908164193971330396709572693816353610758085074676243846093824",
+    "name": "Invertible Boolean functions of n variables.",
+    "comment": [
+        "Equivalence classes of invertible maps from {0,1}^n to {0,1}^n, under action of permutation and complementation of variables on domain and range. - _Sean A. Irvine_, Mar 16 2011"
+    ],
+    "reference": [
+        "M. A. Harrison, The number of classes of invertible Boolean functions, J. ACM 10 (1963), 25-28.",
+        "C. S. Lorens, Invertible Boolean functions, IEEE Trans. Electron. Computers, EC-13 (1964), 529-541.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Adam P. Goucher, <a href=\"/A000654/b000654.txt\">Table of n, a(n) for n = 1..7</a>",
+        "M. A. Harrison, <a href=\"/A000653/a000653.pdf\">The number of classes of invertible Boolean functions</a>, J. ACM 10 (1963), 25-28. [Annotated scan of page 27 only]",
+        "M. A. Harrison, <a href=\"/A000370/a000370.pdf\">The number of equivalence classes of Boolean functions under groups containing negation</a>, IEEE Trans. Electron. Comput. 12 (1963), 559-561. [Annotated scanned copy]",
+        "C. S. Lorens, <a href=\"http://dx.doi.org/10.1109/PGEC.1964.263724\">Invertible Boolean functions</a>, IEEE Trans. Electron. Computers, EC-13 (1964), 529-541.",
+        "C. S. Lorens, <a href=\"/A000722/a000722.pdf\">Invertible Boolean functions</a>, IEEE Trans. Electron. Computers, EC-13 (1964), 529-541. [Annotated scan of page 530 only]",
+        "Qing-bin Luo, Jin-zhao Wu, Chen Lin, <a href=\"https://doi.org/10.1007/s10773-020-04508-y\">Computing the Number of the Equivalence Classes for Reversible Logic Functions</a>, Int'l J. of Theor. Phys. (2020) Vol. 59, 2384-2396.",
+        "<a href=\"/index/Bo#Boolean\">Index entries for sequences related to Boolean functions</a>"
+    ],
+    "mathematica": [
+        "cyclify =",
+        "  Function[{x},",
+        "   Sort@Tally[Length /@ PermutationCycles[x + 1, Identity]]];",
+        "totalweight =",
+        "  Function[{c}, Product[(x[[1]]^x[[2]]) ( x[[2]]!), {x, c}]];",
+        "perms = Function[{n},",
+        "   Flatten[Table[",
+        "     FromDigits[Permute[IntegerDigits[BitXor[x, a], 2, n], sigma],",
+        "      2], {sigma, Permutations[Range[n]]}, {a, 0, 2^n - 1}, {x, 0,",
+        "      2^n - 1}], 1]];",
+        "countit =",
+        "  Function[{n},",
+        "   Sum[totalweight[x[[1]]] (x[[2]]^2), {x,",
+        "      Tally[cyclify /@ perms[n]]}]/((2^n) (n!))^2];",
+        "Table[countit[n], {n, 1, 5}] (*  _Adam P. Goucher_, Feb 12 2021 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Sean A. Irvine_, Mar 15 2011"
+    ],
+    "references": 4,
+    "revision": 38,
+    "time": "2021-02-12T18:16:50-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

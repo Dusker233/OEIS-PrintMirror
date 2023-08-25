@@ -1,0 +1,57 @@
+{
+    "number": 306761,
+    "data": "27,54,270,4158,20790,270270,36506106,464053590,18621166410",
+    "name": "Let digsum(k) = A007953(k) denote the digital sum of k. The sequence lists the smallest integer k such that digsum(k) = digsum (k/d(1)) = digsum (k/d(2)) = ... = digsum (k/d(n)) where d(i) are the n distinct prime factors of k.",
+    "comment": [
+        "Conjecture 1: a(n) == 0 (mod 54) for n > 1.",
+        "Conjecture 2: a(n)/27 is a squarefree number for n > 1.",
+        "The smallest multiple of 54 that can be a(10) is 1069808930190, which is also a multiple of 7^2, so the two conjectures above cannot be both true. - _Giovanni Resta_, Mar 08 2019"
+    ],
+    "example": [
+        "a(4) = 4158 = 2*3^3*7*11 because 4 + 1 + 5 + 8 = 18, and:",
+        "4158/2 = 2079 and digsum(2079) = 18;",
+        "4158/3 = 1386 and digsum(1386) = 18;",
+        "4158/7 = 594 and digsum(594) = 18;",
+        "4158/11 = 378 and digsum(378) = 18."
+    ],
+    "maple": [
+        "with(numtheory):nn:=10^6:",
+        "for n from 1 to 10 do:",
+        "ii:=0:",
+        "  for k from 1 to nn while(ii=0) do:",
+        "     d:=factorset(k):n1:=nops(d):it:=0:",
+        "     b:=convert(k, base, 10):n2:=nops(b):s:=sum(\u2018b[i]\u2019, \u2018i\u2019=1..n2):",
+        "      for i from 1 to n1 do:",
+        "        x:=n/d[i]:b1:=convert(x, base, 10):n3:=nops(b1):",
+        "        s1:=sum(\u2018b1[i]\u2019, \u2018i\u2019=1..n3):",
+        "        if s1=s",
+        "         then",
+        "         it:=it+1:",
+        "         else",
+        "        fi:",
+        "      od:",
+        "       if it=n",
+        "        then",
+        "        ii:=1:printf(`%d %d \\n`,n,it):",
+        "       else",
+        "      fi:",
+        "od:"
+    ],
+    "program": [
+        "(PARI) isok(k, n) = {if (omega(k) != n, return(0)); my(pf = factor(k)[,1]~, sd = sumdigits(k)); for (i=1, n, if (sumdigits(k/pf[i]) != sd, return (0));); return (1);}",
+        "a(n) = {my(k=2); while (!isok(k, n), k++); k;} \\\\ _Michel Marcus_, Mar 09 2019"
+    ],
+    "xref": [
+        "Cf. A007953."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Mar 08 2019",
+    "ext": [
+        "a(9) from _Giovanni Resta_, Mar 08 2019"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2019-03-11T20:17:02-04:00",
+    "created": "2019-03-11T20:17:02-04:00"
+}

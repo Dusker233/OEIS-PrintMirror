@@ -1,0 +1,43 @@
+{
+    "number": 347339,
+    "data": "1,1,4,20,123,902,7656,73509,785154,9213324,117624569,1621028312,23959376436,377730250003,6322478398476,111904530008040,2087093471665987,40891426070289970,839329531471890724,18004595602417946685,402747680140030433886,9376084240910510840672,226760664399026618376569",
+    "name": "E.g.f.: exp( (exp(x) - 1) * exp(exp(x) - 1) ).",
+    "comment": [
+        "Exponential transform of A138378.",
+        "Stirling transform of A000248."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A347339/b347339.txt\">Table of n, a(n) for n = 0..465</a>"
+    ],
+    "formula": [
+        "a(0) = 1; a(n) = Sum_{k=1..n} binomial(n-1,k-1) * (Bell(k+1) - Bell(k)) * a(n-k).",
+        "a(n) = Sum_{k=0..n} Stirling2(n,k) * A000248(k)."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n=0, 1,",
+        "      add(g(n-j)*j*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "b:= proc(n, m) option remember; `if`(n=0,",
+        "      g(m), m*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..22);  # _Alois P. Heinz_, Aug 27 2021"
+    ],
+    "mathematica": [
+        "nmax = 22; CoefficientList[Series[Exp[(Exp[x] - 1) Exp[Exp[x] - 1]], {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[0] = 1; a[n_] := a[n] = Sum[Binomial[n - 1, k - 1] (BellB[k + 1] - BellB[k]) a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 22}]"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^25)); Vec(serlaplace(exp((exp(x)-1)*exp(exp(x)-1)))) \\\\ _Michel Marcus_, Aug 27 2021"
+    ],
+    "xref": [
+        "Cf. A000110, A000248, A000258, A005493, A005727, A087761, A138378."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Aug 27 2021",
+    "references": 2,
+    "revision": 10,
+    "time": "2021-09-02T15:39:10-04:00",
+    "created": "2021-08-27T13:05:56-04:00"
+}

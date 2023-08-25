@@ -1,0 +1,44 @@
+{
+    "number": 20700,
+    "data": "7,14,63,80,224,285,351,363,475,860,902,1088,1479,2013,2023,3478,3689,3925,5984,6715,8493,9456,13224,15520,17227,18569,19502,20490,21804,24435,24476,27335,31899,32390,35815,37406,37582,41876,49468,50609,54137,57239",
+    "name": "Numbers k such that k + sum of its prime factors = (k+1) + sum of its prime factors.",
+    "comment": [
+        "If p, (3/2)*(p+1), (3/2)*(p^2+p)+1 and (3/2)*(p^2+1)+2*p are all prime, then (3/2)*p*(3*p^2+4*p+3) is a term. The Generalized Bunyakovsky Conjecture implies that there are infinitely many of these. - _Robert Israel_, Apr 15 2022"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A020700/b020700.txt\">Table of n, a(n) for n = 1..2500</a>"
+    ],
+    "example": [
+        "A075254(7) = 7+7 = 14 and A075254(8) = 8+2+2+2 = 14, so 7 is in the sequence."
+    ],
+    "mathematica": [
+        "SequencePosition[Table[n+Total[Times@@@FactorInteger[n]],{n,58000}],{x_,x_}][[;;,1]] (* _Harvey P. Dale_, Feb 26 2023 *)"
+    ],
+    "program": [
+        "(PARI) A075254(n) = my(f = factor(n)); n + sum(i=1, #f~, f[i,1]*f[i,2]);",
+        "isok(n) = A075254(n) == A075254(n+1); \\\\ _Michel Marcus_, Jun 05 2014",
+        "(Python)",
+        "from sympy import factorint",
+        "from itertools import count, islice",
+        "def sopf(n): return sum(p*e for p, e in factorint(n).items())",
+        "def agen(): # generator of terms",
+        "    sopfkplus1 = 2",
+        "    for k in count(2):",
+        "        sopfk, sopfkplus1 = sopfkplus1, sopf(k+1)",
+        "        if k + sopfk == k + 1 + sopfkplus1: yield k",
+        "print(list(islice(agen(), 42))) # _Michael S. Branicky_, Apr 15 2022"
+    ],
+    "xref": [
+        "Cf. A020905, A228126."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Enoch Haga_",
+    "ext": [
+        "More terms from _Michel Marcus_, Jun 05 2014"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2023-02-26T17:54:55-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

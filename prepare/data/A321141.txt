@@ -1,0 +1,39 @@
+{
+    "number": 321141,
+    "data": "1,6,29,291,3127,48246,823545,16909060,387459858,10019533302,285311670613,8920489178073,302875106592255,11113363271736486,437893951444713443,18447307036548136965,827240261886336764179,39346708467688595378892,1978419655660313589123981",
+    "name": "a(n) = Sum_{d|n} sigma_n(d).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A321141/b321141.txt\">Table of n, a(n) for n = 1..386</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n] Sum_{k>=1} sigma_n(k)*x^k/(1 - x^k).",
+        "a(n) = Sum_{d|n} d^n*tau(n/d).",
+        "a(n) ~ n^n. - _Vaclav Kotesovec_, Feb 16 2020"
+    ],
+    "maple": [
+        "with(numtheory): seq(coeff(series(add(sigma[n](k)*x^k/(1-x^k),k=1..n),x,n+1), x, n), n = 1 .. 20); # _Muniru A Asiru_, Oct 28 2018"
+    ],
+    "mathematica": [
+        "Table[Sum[DivisorSigma[n, d], {d, Divisors[n]}] , {n, 19}]",
+        "Table[SeriesCoefficient[Sum[DivisorSigma[n, k] x^k/(1 - x^k), {k, 1, n}], {x, 0, n}], {n, 19}]"
+    ],
+    "program": [
+        "(PARI) a(n) = sumdiv(n, d, sigma(d, n)); \\\\ _Michel Marcus_, Oct 28 2018",
+        "(Python)",
+        "from sympy import divisor_sigma, divisors",
+        "def A321141(n):",
+        "    return sum(divisor_sigma(d,0)*(n//d)**n for d in divisors(n,generator=True)) # _Chai Wah Wu_, Feb 15 2020",
+        "(Magma) [&+[DivisorSigma(n, d):d in Divisors(n)]:n in [1..20]]; // _Vincenzo Librandi_, Feb 16 2020"
+    ],
+    "xref": [
+        "Cf. A000005, A007429, A007433, A023887, A319194, A320940, A321140."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Oct 28 2018",
+    "references": 10,
+    "revision": 26,
+    "time": "2023-07-29T06:43:06-04:00",
+    "created": "2018-10-28T09:14:22-04:00"
+}

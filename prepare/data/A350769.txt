@@ -1,0 +1,73 @@
+{
+    "number": 350769,
+    "data": "27,28,30,37,38,41,42,57,18362,2914913,5516281,6618242,7224834,9018353,9339114,10780554,16831081,17800553,18164161,18646202,20239913,29743561,32464433,32915513,42464514,43502033,45652314,51755761,53464314,62198634,69899754",
+    "name": "Numbers k such that tau(k) + ... + tau(k+5) = 28, where tau is the number of divisors function A000005.",
+    "comment": [
+        "It can be shown that if tau(k) + ... + tau(k+5) = 28, the sextuple (tau(k), tau(k+1), tau(k+2), tau(k+3), tau(k+4), tau(k+5)) must be one of the following, each of which might plausibly occur infinitely often:",
+        "  (2, 4, 4, 6, 4, 8), which first occurs at k = 5516281, 16831081, 18164161, ... (A208455);",
+        "  (2, 8, 4, 6, 4, 4), which first occurs at k = 2914913, 9018353, 17800553, ...;",
+        "  (4, 4, 6, 4, 8, 2), which first occurs at k = 18362, 6618242, 18646202, ...;",
+        "  (8, 4, 6, 4, 4, 2), which first occurs at k = 7224834, 9339114, 10780554, ...;",
+        "or one of the following, each of which occurs only once:",
+        "  (4, 6, 2, 8, 2, 6),  which occurs only at k = 27;",
+        "  (6, 2, 8, 2, 6, 4),  which occurs only at k = 28;",
+        "  (8, 2, 6, 4, 4, 4),  which occurs only at k = 30;",
+        "  (2, 4, 4, 8, 2, 8),  which occurs only at k = 37;",
+        "  (4, 4, 8, 2, 8, 2),  which occurs only at k = 38;",
+        "  (2, 8, 2, 6, 6, 4),  which occurs only at k = 41;",
+        "  (8, 2, 6, 6, 4, 2),  which occurs only at k = 42;",
+        "  (4, 4, 2, 12, 2, 4), which occurs only at k = 57.",
+        "The terms of the repeatedly occurring patterns form sequence A071368.",
+        "Tau(k) + ... + tau(k+5) >= 28 for all sufficiently large k; the only numbers k for which tau(k) + ... + tau(k+5) < 28 are 1..26, 29, 33, and 34."
+    ],
+    "link": [
+        "Jon E. Schoenfield, <a href=\"/A350769/b350769.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "{ k : Sum_{j=0..5} tau(k+j) = 28 }."
+    ],
+    "example": [
+        "The table below lists each term k with a pattern (tau(k), ..., tau(k+5)) that appears only once (these appear at n = 1..8) as well as each term k that is the smallest one having a pattern that appears repeatedly for large k. (a(12)=6618242 is omitted from the table because it has the same pattern as a(9)=18362.)",
+        "Each of the repeatedly occurring patterns corresponds to one of the four possible orders in which the multipliers m=1..6 can appear among 6 consecutive integers of the form m*prime, and thus to a single residue of k modulo 2520; e.g., k=18362 begins a run of 6 consecutive integers having the form (2*p, 3*q, 4*r, 5*s, 6*t, 1*u), where p, q, r, s, t, and u are distinct primes > 6, and all such runs satisfy k == 722 (mod 2520).",
+        "For each of the patterns that does not occur repeatedly, one or more of the six consecutive integers in k..k+5 has no prime factor > 6; each such integer appears in parentheses in the \"factorization\" columns.",
+        ".",
+        ".                                             factorization as         k",
+        "                      # divisors of             m*(prime > 6)         mod",
+        "   n    a(n)=k    k  k+1 k+2 k+3 k+4 k+5    k  k+1 k+2 k+3 k+4 k+5   2520",
+        "   -  --------   --- --- --- --- --- ---   --- --- --- --- --- ---   ----",
+        "   1        27    4   6   2   8   2   6    (27) 4q   r (30)  t (32)    27",
+        "   2        28    6   2   8   2   6   4     4p   q (30)  s (32) 3u     28",
+        "   3        30    8   2   6   4   4   4    (30)  q (32) 3s  2t  5u     30",
+        "   4        37    2   4   4   8   2   8      p  2q  3r (40)  t  6u     37",
+        "   5        38    4   4   8   2   8   2     2p  3q (40)  s  6t   u     38",
+        "   6        41    2   8   2   6   6   4      p  6q   r  4s (45) 2u     41",
+        "   7        42    8   2   6   6   4   2     6p   q  4r (45) 2t   u     42",
+        "   8        57    4   4   2  12   2   4     3p  2q   r (60)  t  2u     57",
+        "   9     18362    4   4   6   4   8   2     2p  3q  4r  5s  6t   u    722",
+        "  10   2914913    2   8   4   6   4   4      p  6q  5r  4s  3t  2u   1793",
+        "  11   5516281    2   4   4   6   4   8      p  2q  3r  4s  5t  6u      1",
+        "  13   7224834    8   4   6   4   4   2     6p  5q  4r  3s  2t   u   2514"
+    ],
+    "mathematica": [
+        "Position[Plus @@@ Partition[Array[DivisorSigma[0, #] &, 10^7], 6, 1], 28] // Flatten (* _Amiram Eldar_, Jan 16 2022 *)"
+    ],
+    "program": [
+        "(Python) from sympy import divisor_count as tau",
+        "taulist = [1, 2, 2, 3, 2, 4]",
+        "for k in range(1, 10000000):",
+        "    if sum(taulist) == 28: print(k, end=\", \")",
+        "    taulist.append(tau(k+6))",
+        "    del taulist[0] # _Karl-Heinz Hofmann_, Jan 18 2022"
+    ],
+    "xref": [
+        "Cf. A000005, A071368, A208455.",
+        "Numbers k such that Sum_{j=0..N-1} tau(k+j) = 2*Sum_{k=1..N} tau(k): A000040 (N=1), A350593 (N=2), A350675 (N=3), A350686 (N=4), A350699 (N=5), (this sequence) (N=6), A350773 (N=7), A350854 (N=8)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jon E. Schoenfield_, Jan 14 2022",
+    "references": 7,
+    "revision": 29,
+    "time": "2022-01-20T00:45:53-05:00",
+    "created": "2022-01-14T23:17:46-05:00"
+}

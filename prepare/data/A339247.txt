@@ -1,0 +1,47 @@
+{
+    "number": 339247,
+    "data": "11,17,37,41,53,59,89,101,113,137,149,173,181,193,197,229,233,241,251,257,293,317,353,389,449,521,541,557,569,577,601,641,661,677,709,761,769,797,809,821,829,857,877,881,929,937",
+    "name": "The primes that yield twice a prime when each bit of their binary expansion is inverted.",
+    "comment": [
+        "Primes p such that A035327(p)/2 is prime.",
+        "Obviously the resulting prime is smaller than the starting prime.",
+        "Conjecture: Each of the primes can be created by applying this transformation T(p) to at least one other prime. T(11)=2, T(549755813881)=3, T(53)=5, T(17)=7, T(41)=11."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A339247/b339247.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1) = 11 = 1011_2 \u2014inv-> 100_2 = 4 = 2 * 2.",
+        "a(2) = 17 = 10001_2 -inv-> 1110_2 = 14 = 2 * 7.",
+        "a(3) = 37 = 100101_2 -inv-> 11010_2 = 26 = 2 * 13."
+    ],
+    "maple": [
+        "filter:= proc(n) isprime(n) and isprime((2^(1+ilog2(n))-1-n)/2) end proc:",
+        "select(filter, [seq(i,i=3..1000,2)]); # _Robert Israel_, Jun 27 2023"
+    ],
+    "mathematica": [
+        "Select[Range[1000], And @@ PrimeQ[{#, (2^Ceiling @ Log2[#] - # - 1)/2}] &] (* _Amiram Eldar_, Dec 01 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from sympy import prime",
+        "for i in range(1,201):",
+        "  j=prime(i)",
+        "  xor=2**len(bin(j).strip('0b'))-1",
+        "  p=(j^xor)//2",
+        "  if isprime(p):",
+        "   print(j,end=', ')",
+        "(PARI) isok(p) = if ((p>2) && isprime(p), isprime(fromdigits(apply(x->1-x, binary(p)), 2)/2)); \\\\ _Michel Marcus_, Dec 01 2020"
+    ],
+    "xref": [
+        "Cf. A000040, A035327, A339268."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bob Andriesse_, Nov 28 2020",
+    "references": 2,
+    "revision": 30,
+    "time": "2023-06-29T09:51:28-04:00",
+    "created": "2020-12-06T08:33:27-05:00"
+}

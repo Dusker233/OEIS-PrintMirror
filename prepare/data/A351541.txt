@@ -1,0 +1,35 @@
+{
+    "number": 351541,
+    "data": "364,760,1092,1148,1160,1358,1490,1782,1990,2324,2360,2716,2912,2980,3160,3276,3388,3430,3444,3490,3560,3564,3892,3980,4004,4074,4102,4360,4490,4676,4990,5068,5302,5320,5432,5510,5560,5960,5990,6188,6244,6804,6860,6916,6972,6980,7028,7128,7160,7462,7960,8120,8148",
+    "name": "Even numbers k that have an odd prime factor p such that p^(1+valuation(k,p)) divides sigma(k), but p does not divide A003961(k), where A003961 is fully multiplicative with a(p) = nextprime(p), and sigma is the sum of divisors function.",
+    "comment": [
+        "Even numbers k that have an odd prime factor prime(i) such that prime(i-1) is not a factor of k, and prime(i)^(1+A286561(k,prime(i))) divides sigma(k)."
+    ],
+    "link": [
+        "<a href=\"/index/Pri#prime_indices\">Index entries for sequences computed from indices in prime factorization</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "example": [
+        "364 = 2^2 * 7^1 * 13^1 is present as sigma(364) = 784 = 2^4 * 7^2, which thus has a shared prime factor 7 with 364, but occurring with larger exponent, and with no prime 5 (which is the previous prime before 7) present in the prime factorization of 364."
+    ],
+    "mathematica": [
+        "Select[Range[2, 8200, 2], Function[{k, s, facs, t}, AnyTrue[DeleteCases[facs[[All, 1]], 2], And[Mod[s, #^(1 + IntegerExponent[k, #])] == 0, Mod[t, #] != 0] &]] @@ {#1, #2, #3, Apply[Times, (NextPrime[#1])^#2 & @@@ #3]} & @@ {#, DivisorSigma[1, #], FactorInteger[#]} &] (* _Michael De Vlieger_, Feb 16 2022 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A003961(n) = { my(f = factor(n)); for(i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); };",
+        "Aux351541(n) = { my(f=factor(n),s=sigma(n),u=A003961(n)); sum(k=1,#f~,(f[k,1]%2) && 0!=(u%f[k,1]) && (0==(s%(f[k,1]^(1+f[k,2]))))); };",
+        "isA351541(n) = (!(n%2) && Aux351541(n)>0);"
+    ],
+    "xref": [
+        "Cf. A000203, A003961.",
+        "Subsequence of A351540, and of A351542 and of A351543."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Feb 16 2022",
+    "references": 3,
+    "revision": 17,
+    "time": "2022-02-16T17:05:49-05:00",
+    "created": "2022-02-16T16:11:32-05:00"
+}

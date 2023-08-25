@@ -1,0 +1,69 @@
+{
+    "number": 306388,
+    "data": "1,3,5,13,17,61,65,213,329,885,1025,3933,4097,13781,22121,54613,65537,251741,262145,906613,1364681,3497301,4194305,16111453,17859617,55932245,86282825,225793493,268435457,1064687485,1073741825,3579139413,5526297161,14316688725",
+    "name": "a(n) is a decimal number k having a length n binary expansion which encodes, from left to right at digit j, the coprimality (0) or non-coprimality (1) of j to n, for 1 < j <= n, except for the first digit, which is always 1.",
+    "comment": [
+        "Let Sum* be a special summation procedure carried out on the binary expansions of each of the decimal values produced by the following expression for all distinct prime factors of n. That is, when 'adding' the various binary expansions of said decimal results for each p dividing n, p prime, allow that 1 + q + r + ... + s = 1, and 0 + 0 + ... + 0 = 0. Then, Sum*_{p|n} 2^(p-1) * ((2^p+1) * 2^(n-p) - 2)/(2^p - 1) + 1, when reverted to decimal, gives a(n).",
+        "a(n) -in binary, and recorded as a triangle- gives a 'Totient map' for the naturals.",
+        "   1                                    1",
+        "   2                                   11",
+        "   3                                  101",
+        "   4                                 1101",
+        "   5                                10001",
+        "   6                               111101",
+        "   7                              1000001",
+        "   8                             11010101",
+        "   9                            101001001",
+        "  10                           1101110101",
+        "  11                          10000000001",
+        "  12                         111101011101",
+        "  13                        1000000000001",
+        "  14                       11010111010101",
+        "  15                      101011001101001",
+        "  16                     1101010101010101",
+        "  ..."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A306388/b306388.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(p), p prime, are always 2^(p-1)+1, a result of ((2^p+1)*2^(n-p)-2)/(2^p-1)- the main parenthetical term in Sum*- being equal to 1.",
+        "a(c), c composite, is computable as follows:",
+        "a(6) = 61 because 6 has the distinct prime factors 2 and 3. So, the special summation of 2^(2-1) * ((2^2 + 1) * 2^(6-2) - 2)/(2^2 - 1) + 1 = 53, a decimal number which has a length 6 binary expansion (110101), and 2^(3-1) * ((2^3 + 1) * 2^(6-3) - 2)/(2^3 - 1) + 1 = 41, another decimal number which has a length 6 binary expansion (101001), gives Sum* =",
+        "        110101",
+        "      + 101001",
+        "       _______",
+        "        111101, which, when reverted to decimal, gives a(6).",
+        "a(12) = 3933 because 12 has the distinct prime factors 2 and 3. So, the special summation of 2^(2-1) * ((2^2 + 1) * 2^(12-2) - 2)/(2^2 - 1) + 1 = 3413, a decimal number which has a length 12 binary expansion (110101010101), and 2^(3-1) * ((2^3 + 1) * 2^(12-3) - 2)/(2^3 - 1) + 1 = 2633, another decimal number which has a length 12 binary expansion (101001001001), gives Sum* =",
+        "        110101010101",
+        "      + 101001001001",
+        "       ______________",
+        "        111101011101, which, when reverted to decimal, gives a(12).",
+        "Likewise, a(30) = 1064687485 because 30 has the distinct prime factors 2, 3, and 5. So, the special summation of 2^(2-1) * ((2^2 + 1) * 2^(30-2) - 2)/(2^2 - 1) + 1 = 894784853 = 110101010101010101010101010101 (length 30), and 2^(3-1) *((2^3 + 1) * 2^(30-3) - 2)/(2^3 - 1) + 1 = 690262601 = 101001001001001001001001001001, and 2^(5-1) * ((2^5 + 1) * 2^(30-5) - 2)/(2^5 - 1) + 1 = 571507745 = 100010000100001000010000100001,  gives Sum* =",
+        "    110101010101010101010101010101",
+        "    101001001001001001001001001001",
+        "  + 100010000100001000010000100001",
+        "    ______________________________",
+        "    111111011101011101011101111101, which, when reverted to decimal, gives a(30)."
+    ],
+    "mathematica": [
+        "a[n_] := FromDigits[Boole@(#==1 || GCD[#,n] > 1) &/@ Range[n], 2]; Array[a, 30] (* _Amiram Eldar_, Mar 26 2019 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = my(v=vector(n, k, if (k==1, 1, gcd(k, n) != 1))); fromdigits(v, 2); \\\\ _Michel Marcus_, Mar 28 2019"
+    ],
+    "xref": [
+        "Cf. A054432."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Christopher Hohl_, Mar 01 2019",
+    "ext": [
+        "More terms from _Amiram Eldar_, Mar 26 2019",
+        "Name clarified by _Michel Marcus_, Mar 28 2019"
+    ],
+    "references": 1,
+    "revision": 76,
+    "time": "2019-11-12T09:01:19-05:00",
+    "created": "2019-03-26T09:05:24-04:00"
+}

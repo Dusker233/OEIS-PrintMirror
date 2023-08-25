@@ -1,0 +1,44 @@
+{
+    "number": 179550,
+    "data": "13,127,457,1429,1553,1621,2273,2341,2837,4129,4231,4561,4813,5119,5519,5531,6121,6451,6547,8161,8167,8219,8237,8783,8819,8831,8941,9511,10267,10559,11299,11383,12809,13183,15091,15569,16573,17569,17659,18133",
+    "name": "Primes p such that p plus or minus the sum of its digits squared yields a prime in both cases.",
+    "link": [
+        "Robert Israel, <a href=\"/A179550/b179550.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(5)=1553 since 1553+(1^2+5^2+5^2+3^2)=1553+60=1613 is a prime AND 1553-(1^2+5^2+5^2+3^2)=1553-60=1493 is a prime again."
+    ],
+    "maple": [
+        "filter:= proc(p) local t,r;",
+        "if not isprime(p) then return false fi;",
+        "r:= add(t^2, t=convert(p,base,10));",
+        "isprime(p+r) and isprime(p-r);",
+        "end proc:",
+        "select(filter, [seq(i,i=3..20000,2)]); # _Robert Israel_, Mar 30 2021"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[2100]],AllTrue[#+{Total[IntegerDigits[#]^2],-Total[ IntegerDigits[ #]^2]},PrimeQ]&] (* _Harvey P. Dale_, Aug 07 2021 *)"
+    ],
+    "program": [
+        "(PARI) sumdd(n) = {digs = digits(n, 10); return (sum(i=1, #digs, digs[i]^2));}",
+        "lista(nn) = {forprime(p=2, nn, s = sumdd(p); if (isprime(p+s) && isprime(p-s), print1(p, \", \")););} \\\\ _Michel Marcus_, Jul 25 2013",
+        "(Python)",
+        "from sympy import isprime, primerange",
+        "def sumdd(n): return sum(int(d)**2 for d in str(n))",
+        "def list(nn):",
+        "  for p in primerange(2, nn+1):",
+        "    s = sumdd(p)",
+        "    if isprime(p-s) and isprime(p+s): print(p, end=\", \")",
+        "list(18133) # _Michael S. Branicky_, Mar 30 2021 after _Michel Marcus_"
+    ],
+    "xref": [
+        "Cf. A076162, A076163, A179549."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Carmine Suriano_, Jul 19 2010",
+    "references": 2,
+    "revision": 14,
+    "time": "2021-08-07T12:14:33-04:00",
+    "created": "2010-07-31T03:00:00-04:00"
+}

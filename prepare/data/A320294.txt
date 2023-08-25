@@ -1,0 +1,52 @@
+{
+    "number": 320294,
+    "data": "0,0,0,1,1,3,3,7,8,15,19,37,48,87,126,227,342,611,964,1719,2806,4975,8327,14782,25157,44609,76972,136622,237987,422881,742149,1320825,2331491,4156392,7370868,13164429,23433637,41928557,74871434,134203411,240284935,431437069",
+    "name": "Number of series-reduced rooted trees whose leaves are non-singleton integer partitions whose multiset union is an integer partition of n with no 1's.",
+    "comment": [
+        "Also phylogenetic trees with no singleton leaves on integer partitions of n with no 1's."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320294/b320294.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "The a(4) = 1 through a(10) = 15 trees:",
+        "  (22)  (32)  (33)   (43)   (44)        (54)        (55)",
+        "              (42)   (52)   (53)        (63)        (64)",
+        "              (222)  (322)  (62)        (72)        (73)",
+        "                            (332)       (333)       (82)",
+        "                            (422)       (432)       (433)",
+        "                            (2222)      (522)       (442)",
+        "                            ((22)(22))  (3222)      (532)",
+        "                                        ((22)(23))  (622)",
+        "                                                    (3322)",
+        "                                                    (4222)",
+        "                                                    (22222)",
+        "                                                    ((22)(24))",
+        "                                                    ((22)(33))",
+        "                                                    ((23)(23))",
+        "                                                    ((22)(222))"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "pgtm[m_]:=Prepend[Join@@Table[Union[Sort/@Tuples[pgtm/@p]],{p,Select[mps[m],Length[#]>1&]}],m];",
+        "Table[Sum[Length[Select[pgtm[m],FreeQ[#,{_}]&]],{m,Select[IntegerPartitions[n],FreeQ[#,1]&]}],{n,10}]"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "seq(n)={my(p=1/prod(k=2, n, 1 - x^k + O(x*x^n)), v=vector(n)); for(n=2, n, v[n]=polcoef(p, n) - 1 + EulerT(v[1..n])[n]); v} \\\\ _Andrew Howroyd_, Oct 25 2018"
+    ],
+    "xref": [
+        "Cf. A000045, A000311, A000669, A002865, A141268, A292504, A304966, A304967, A319312, A320289, A320293, A320295, A320296."
+    ],
+    "keyword": "nonn",
+    "offset": "1,6",
+    "author": "_Gus Wiseman_, Oct 09 2018",
+    "ext": [
+        "Terms a(16) and beyond from _Andrew Howroyd_, Oct 25 2018"
+    ],
+    "references": 5,
+    "revision": 9,
+    "time": "2018-10-25T22:21:51-04:00",
+    "created": "2018-10-10T20:06:22-04:00"
+}

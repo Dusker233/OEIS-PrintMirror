@@ -1,0 +1,50 @@
+{
+    "number": 356417,
+    "data": "0,1,4,9,10,18,40,46,52,61,63,90,94,100,121,144,148,163,169,180,400,423,441,460,484,487,520,522,526,610,630,652,675,676,691,900,925,927,940,961,982,1000,1042,1062,1089,1210,1251,1273,1297,1405,1426,1440,1480",
+    "name": "Numbers whose reversal is a square.",
+    "comment": [
+        "Every power of 10 is a term in the sequence.",
+        "If k is in the sequence then so is 10*k. - _David A. Corneth_, Aug 06 2022",
+        "If all multiples of 10 were omitted, A074896 would result. - _Jon E. Schoenfield_, Aug 06 2022"
+    ],
+    "example": [
+        "0 is a term, 0 -> 0 (0^2).",
+        "10 is a term, 10 -> 01 (leading zero is dropped) (1^2).",
+        "691 is a term, 691 -> 196 (14^2).",
+        "1800 is a term, 1800 -> 0081 (leading zeros are dropped) (9^2)."
+    ],
+    "mathematica": [
+        "Select[Range[0, 1500], IntegerQ[Sqrt[IntegerReverse[#]]] &] (* _Amiram Eldar_, Aug 06 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import integer_nthroot",
+        "def ok(n):",
+        "    return integer_nthroot(int(str(n)[::-1]), 2)[1]",
+        "print([k for k in range(1500) if ok(k)])",
+        "(Python)",
+        "from math import isqrt",
+        "from itertools import count, islice",
+        "def A356417_gen(): # generator of terms",
+        "    yield 0",
+        "    for l in count(1):",
+        "        nlist = []",
+        "        for m in range(1,isqrt(10**l)+1):",
+        "            if m%10:",
+        "                s = str(m**2)",
+        "                nlist.append(int(s[::-1])*10**(l-len(s)))",
+        "        yield from sorted(nlist)",
+        "A356417_list = list(islice(A356417_gen(),100)) # _Chai Wah Wu_, Aug 07 2022",
+        "(PARI) isok(k) = issquare(fromdigits(Vecrev(digits(k)))); \\\\ _Michel Marcus_, Aug 06 2022"
+    ],
+    "xref": [
+        "Cf. A002942, A004086, A074896."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Daniel Blam_, Aug 06 2022",
+    "references": 0,
+    "revision": 43,
+    "time": "2022-08-07T12:59:43-04:00",
+    "created": "2022-08-07T07:51:57-04:00"
+}

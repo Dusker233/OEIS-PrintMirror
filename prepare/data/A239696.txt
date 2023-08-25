@@ -1,0 +1,53 @@
+{
+    "number": 239696,
+    "data": "2,6,66,858,6006,204204,10444434,208888680,6172882716,231645546132,49795711759794,2400532020354468,477566276048801940",
+    "name": "Smallest number m such that m and reverse(m) each have exactly n distinct prime factors.",
+    "comment": [
+        "10^11 < a(10) <= 438024420834. - _Giovanni Resta_, Mar 28 2014"
+    ],
+    "example": [
+        "The first nontrivial example is a(6) = 204204. 204204 = 17*2^2*3*7*11*13 (6 distinct prime factors). 402402 = 2*3*7*67*11*13 (6 distinct prime factors). Since 204204 is the smallest number with this property, a(6) = 204204."
+    ],
+    "program": [
+        "(Python)",
+        "import sympy",
+        "from sympy import factorint",
+        "def Rev(x):",
+        "..rev = ''",
+        "..for i in str(x):",
+        "....rev = i + rev",
+        "..return int(rev)",
+        "def RevFact(x):",
+        "..n = 2",
+        "..while n < 10**8:",
+        "....if len(list(factorint(n).values())) == x:",
+        "......if len(list(factorint(Rev(n)).values())) == x:",
+        "........return n",
+        "......else:",
+        "........n += 1",
+        "....else:",
+        "......n += 1",
+        "x = 1",
+        "while x < 50:",
+        "..print(RevFact(x))",
+        "..x += 1",
+        "(PARI)",
+        "generate(A, B, n) = A=max(A, vecprod(primes(n))); (f(m, p, j) = my(list=List()); forprime(q=p, sqrtnint(B\\m, j), my(v=m*q); while(v <= B, if(j==1, if(v>=A && omega(fromdigits(Vecrev(digits(v)))) == n, listput(list, v)), if(v*(q+1) <= B, list=concat(list, f(v, q+1, j-1)))); v *= q)); list); vecsort(Vec(f(1, 2, n)));",
+        "a(n) = my(x=vecprod(primes(n)), y=2*x); while(1, my(v=generate(x, y, n)); if(#v >= 1, return(v[1])); x=y+1; y=2*x); \\\\ _Daniel Suteu_, Feb 07 2023"
+    ],
+    "xref": [
+        "Cf. A046399, A113548."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Derek Orr_, Mar 24 2014",
+    "ext": [
+        "a(8)-a(9) from _Giovanni Resta_, Mar 28 2014",
+        "a(10)-a(12) from _Daniel Suteu_, Feb 07 2023",
+        "a(13) from _Michael S. Branicky_, Feb 14 2023"
+    ],
+    "references": 2,
+    "revision": 19,
+    "time": "2023-02-14T19:42:46-05:00",
+    "created": "2014-03-31T04:31:38-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 195349,
+    "data": "1,7,19,41,57,64,68,133,145,149,164,235,267,291,317,336,358,419,433,503,528,566,599,612,659,726,801,927,1017,1035,1077,1118,1190,1206,1213,1281,1297,1309,1320,1323,1367,1446,1473,1485,1516,1595,1611,1634,1941",
+    "name": "Numbers n such that Sum_{k=1..n} d(k) divides Product_{k=1..n} d(k), where d(k) is the number of divisors of k.",
+    "comment": [
+        "d(k) is sometimes called tau(k) or sigma_0(k). Is this sequence infinite?"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A195349/b195349.txt\">Table of n, a(n) for n = 1..2000</a> (term 1..500 from Harvey P. Dale)"
+    ],
+    "mathematica": [
+        "t = {}; a = 0; b = 1; Do[a = a + DivisorSigma[0, n]; b = b*DivisorSigma[0, n]; If[Mod[b, a] == 0, AppendTo[t, n]], {n, 2000}]; t (* _T. D. Noe_, Sep 16 2011 *)",
+        "With[{c=DivisorSigma[0,Range[2000]]},Position[Thread[{FoldList[ Times,c], Accumulate[ c]}],_?(Divisible[#[[1]],#[[2]]]&),1,Heads->False]] // Flatten (* _Harvey P. Dale_, Apr 14 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisor_count",
+        "A195349_list, s, p = [], 0, 1",
+        "for k in range(1,10**4):",
+        "    d = divisor_count(k)",
+        "    s += d",
+        "    p *= d",
+        "    if p % s == 0:",
+        "        A195349_list.append(k) # _Chai Wah Wu_, Oct 09 2021"
+    ],
+    "xref": [
+        "Cf. A000005, A006218, A066843."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Carl Najafi_, Sep 16 2011",
+    "references": 1,
+    "revision": 21,
+    "time": "2021-10-10T04:13:11-04:00",
+    "created": "2011-09-16T12:33:40-04:00"
+}

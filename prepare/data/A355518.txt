@@ -1,0 +1,38 @@
+{
+    "number": 355518,
+    "data": "2,3,5,13,17,37,61,137",
+    "name": "Primes that cannot be represented as 2*p - q where p, q and 2*p^2 - q^2 are prime.",
+    "comment": [
+        "Conjecture: there are no other terms."
+    ],
+    "example": [
+        "11 is not in the sequence because 11 = 2*7 - 3 with 7, 3 and 2*7^2 - 3^2 = 89 prime."
+    ],
+    "maple": [
+        "M:= 10000: # to get all terms <= M",
+        "Pmax:= floor(M/(2-sqrt(2))):",
+        "Qmax:= floor(sqrt(2)*Pmax):",
+        "Q:= select(isprime,[2,seq(i,i=3..Qmax,2)]):",
+        "P:= select(`<=`,Q,Pmax): nQ:= nops(Q):",
+        "S:= convert(select(`<=`,P,M),set):",
+        "for p in P  do",
+        "  for j from 1 to nQ do",
+        "    q:= Q[j];",
+        "    r:= 2*p^2-q^2;",
+        "    if r < 2 then break fi;",
+        "    s:= 2*p-q;",
+        "    if s <= M and isprime(r) and isprime(s) then S:= S minus {s} fi;",
+        "od od:",
+        "S;"
+    ],
+    "xref": [
+        "Cf. A355521."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jul 05 2022",
+    "references": 1,
+    "revision": 8,
+    "time": "2022-07-18T19:37:47-04:00",
+    "created": "2022-07-18T19:37:47-04:00"
+}

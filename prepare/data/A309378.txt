@@ -1,0 +1,33 @@
+{
+    "number": 309378,
+    "data": "1,6,105,1330,331230,4081530,127357230",
+    "name": "a(n) is the smallest squarefree number m with n prime factors such that Sum_{prime q|m} 1/q - 1/m = P/Q, where P <> Q are primes, for n > 1, or a(n) = 1 if no such m.",
+    "comment": [
+        "Associated fractions P/Q for n > 1 are 2/3, 2/3, 17/19, 191/181, 19/17, 5701/4241, .... Note that Q | m.",
+        "a(n) is the least m with Omega(m) = omega(m) = n such that A326689(m) is a prime P and A326690(m) is a prime Q, or a(n) = 1 if no such m."
+    ],
+    "example": [
+        "1/2 + 1/3 - 1/6 = 2/3,",
+        "1/3 + 1/5 + 1/7 - 1/105 = 2/3,",
+        "1/2 + 1/5 + 1/7 + 1/19 - 1/1330 = 17/19,",
+        "....",
+        "6 = 2*3, 105 = 3*5*7, 1330 = 2*5*7*19, 331230 = 2*3*5*61*181, 127357230 = 2*3*5*17*53*151, ... - _Jonathan Sondow_, Jul 27 2019"
+    ],
+    "mathematica": [
+        "m=2; s={}; Do[f = FactorInteger[n]; p = f[[;; , 1]]; e = f[[;; , 2]]; If[Max[e] > 1 || Length[e] < m, Continue[]]; frac = Total@(1/p) - 1/n; num = Numerator[frac]; den = Denominator[frac]; If[den != num && PrimeQ[num] && PrimeQ[den], AppendTo[s, n]; m++], {n, 1, 5*10^6}]; s"
+    ],
+    "program": [
+        "(PARI) a(n) = {for(i = 2, oo, if(is(i, n), return(i)))}",
+        "is(m, qp) = {my(f = factor(m)); if(#f~ != qp, return(0)); if(Set(f[,2]) != Set([1]), return(0)); s = sum(i = 1, qp, 1/f[i, 1]) - 1/m; isprime(denominator(s)) && isprime(numerator(s))} \\\\ _David A. Corneth_, Jul 27 2019"
+    ],
+    "xref": [
+        "Cf. A000040, A120944, A190273, A190275, A326689, A326690."
+    ],
+    "keyword": "nonn,hard",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_ and _Thomas Ordowski_, Jul 26 2019",
+    "references": 2,
+    "revision": 22,
+    "time": "2019-07-29T13:14:53-04:00",
+    "created": "2019-07-27T10:31:05-04:00"
+}

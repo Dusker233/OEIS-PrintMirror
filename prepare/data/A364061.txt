@@ -1,0 +1,56 @@
+{
+    "number": 364061,
+    "data": "2,4,8,16,18,32,50,54,64,98,108,128,162,242,250,256,324,338,450,486,500,512,578,648,686,722,882,972,1024,1058,1250,1350,1372,1458,1682,1922,1944,2048,2178,2250,2450,2500,2646,2662,2738,2916,3042,3362,3698,3888",
+    "name": "Numbers whose exponent of 2 in their canonical prime factorization is smaller than all the other exponents.",
+    "comment": [
+        "Also numbers whose multiset of prime factors has unique co-mode 2. Here, a co-mode in a multiset is an element that appears at most as many times as each of the other elements. For example, the co-modes of {a,a,b,b,b,c,c} are {a,c}."
+    ],
+    "example": [
+        "The terms together with their prime factors begin:",
+        "    2 = 2",
+        "    4 = 2*2",
+        "    8 = 2*2*2",
+        "   16 = 2*2*2*2",
+        "   18 = 2*3*3",
+        "   32 = 2*2*2*2*2",
+        "   50 = 2*5*5",
+        "   54 = 2*3*3*3",
+        "   64 = 2*2*2*2*2*2",
+        "   98 = 2*7*7",
+        "  108 = 2*2*3*3*3",
+        "  128 = 2*2*2*2*2*2*2"
+    ],
+    "mathematica": [
+        "prifacs[n_]:=If[n==1,{},Flatten[ConstantArray@@@FactorInteger[n]]];",
+        "comodes[ms_]:=Select[Union[ms],Count[ms,#]<=Min@@Length/@Split[ms]&];",
+        "Select[Range[100],comodes[prifacs[#]]=={2}&]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "from itertools import count, islice",
+        "def A364061_gen(startvalue=2): # generator of terms >= startvalue",
+        "    return filter(lambda n:(l:=(~n&n-1).bit_length()) < min(factorint(m:=n>>l).values(),default=0) or m==1, count(max(startvalue+startvalue&1,2),2))",
+        "A364061_list = list(islice(A364061_gen(),30)) # _Chai Wah Wu_, Jul 14 2023"
+    ],
+    "xref": [
+        "For any unique co-mode: A359178, counted by A362610, complement A362606.",
+        "For high mode: A360013, positions of 1's in A363487, counted by A241131.",
+        "For low mode: A360015, positions of 1's in A363486, counted by A241131.",
+        "Partitions of this type are counted by A364062.",
+        "For low co-mode: A364158, positions of 1's in A364192, counted by A364159.",
+        "Positions of 1's in A364191, high A364192.",
+        "A112798 lists prime indices, length A001222, sum A056239.",
+        "A356862 ranks partitions w/ unique mode, count A362608, complement A362605.",
+        "A362611 counts modes in prime indices, triangle A362614.",
+        "A362613 counts co-modes in prime indices, triangle A362615.",
+        "Cf. A000265, A007814, A327473, A327476, A362616, A360014, A363722, A363723, A363725, A363727, A363730."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Jul 12 2023",
+    "references": 8,
+    "revision": 20,
+    "time": "2023-07-30T01:34:53-04:00",
+    "created": "2023-07-13T16:29:00-04:00"
+}

@@ -1,0 +1,30 @@
+{
+    "number": 326312,
+    "data": "2,4,8,16,20,40,80,160,320,400,440,800,880,1600,1760,3520,4400,7040,8800,14960,17600,29920,59840,74800,119680,149600,299200,598400,1196800,1376320,1720400,2752640,3440800,6881600,13763200,27526400,34408000,49891600,68816000",
+    "name": "Where the number of divisors d(k) reaches a new record for numbers k whose prime factors are of the form 3*j+2.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A326312/b326312.txt\">Table of n, a(n) for n = 1..300</a>",
+        "Amiram Eldar, <a href=\"http://list.seqfan.eu/oldermail/seqfan/2019-September/018904.html\">A230655 & A071383 and (3, 1)- and (4, 1)-highly composite numbers</a>, thread in SeqFan mailing list, Sep 11 2019."
+    ],
+    "mathematica": [
+        "aQ[n_] := AllTrue[FactorInteger[n][[;; , 1]], Mod[#, 3] == 2 &]; s[n_] := DivisorSum[n, 1 &, aQ[#] &]; sm = 0; seq = {}; Do[s1 = s[n]; If[s1 > sm, sm = s1; AppendTo[seq, n]], {n, 2, 10^5}]; seq (* _Amiram Eldar_, Sep 12 2019 *)"
+    ],
+    "program": [
+        "(PARI) pkn(x,d,m)={my(fn=factor(x),nf=#fn[,1]);for(k=1,nf,if(fn[k,1]%d!=m,return(0))); numdiv(x)};",
+        "divrecord=0;",
+        "for(k=2,50000000,my(j=pkn(k,3,2));if(j>divrecord,divrecord=j;print1(k,\", \")))"
+    ],
+    "xref": [
+        "Cf. A053624, A071383, A230655, A326313, A326314."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Hugo Pfoertner_, Sep 11 2019",
+    "ext": [
+        "More terms from _Amiram Eldar_, Sep 12 2019"
+    ],
+    "references": 3,
+    "revision": 16,
+    "time": "2023-01-02T12:30:54-05:00",
+    "created": "2019-09-11T20:20:53-04:00"
+}

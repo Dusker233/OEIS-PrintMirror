@@ -1,0 +1,34 @@
+{
+    "number": 327628,
+    "data": "0,1,1,7,16,35,73,170,357,799,1583,3159,6395,12669,24663,49001,92907,176482,340322,637803,1189953,2241558,4156837,7629834,14120680,25810341,47076266,85790799,155030395,279010877,505264895,902632836,1611104709,2880345715",
+    "name": "Number of parts in all thrice partitions of n into distinct parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327628/b327628.txt\">Table of n, a(n) for n = 0..3000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0, [1, 0],",
+        "     `if`(k=0, [1, 1], `if`(i*(i+1)/2<n, 0, b(n, i-1, k)+",
+        "         (h-> (f-> f +[0, f[1]*h[2]/h[1]])(h[1]*",
+        "        b(n-i, min(n-i, i-1), k)))(b(i$2, k-1)))))",
+        "    end:",
+        "a:= n-> b(n$2, 3)[2]:",
+        "seq(a(n), n=0..35);"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = With[{}, If[n == 0, Return[{1, 0}]]; If[k == 0, Return[{1, 1}]]; If[i(i+1)/2 < n, Return[{0, 0}]]; b[n, i - 1, k] + Function[h, Function[f, f + {0, f[[1]] h[[2]]/h[[1]]}][h[[1]] b[n - i, Min[n - i, i - 1], k]]][b[i, i, k - 1]]];",
+        "a[n_] := b[n, n, 3][[2]];",
+        "a /@ Range[0, 35] (* _Jean-Fran\u00e7ois Alcover_, Dec 09 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=3 of A327622.",
+        "Cf. A327627."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Sep 19 2019",
+    "references": 3,
+    "revision": 9,
+    "time": "2020-12-09T11:05:40-05:00",
+    "created": "2019-09-19T15:50:04-04:00"
+}

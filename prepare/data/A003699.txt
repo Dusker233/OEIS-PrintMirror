@@ -1,0 +1,57 @@
+{
+    "number": 3699,
+    "data": "1,6,22,82,306,1142,4262,15906,59362,221542,826806,3085682,11515922,42978006,160396102,598606402,2234029506,8337511622,31116016982,116126556306,433390208242,1617434276662,6036346898406,22527953316962,84075466369442,313773912160806",
+    "name": "Number of Hamiltonian cycles in C_4 X P_n.",
+    "comment": [
+        "a(n) is the number of generalized compositions of n when there are i^2+i-1 different types of i, (i = 1, 2, ...). - _Milan Janjic_, Sep 24 2010",
+        "Is this the same as the sequence visible in Table 5 of Pettersson, 2014? - _N. J. A. Sloane_, Jun 05 2015"
+    ],
+    "reference": [
+        "F. Faase, On the number of specific spanning subgraphs of the graphs G X P_n, Ars Combin. 49 (1998), 129-154."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A003699/b003699.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "W. K. Alt, <a href=\"http://people.reed.edu/~davidp/homepage/students/alt.pdf\">Enumeration of Domino Tilings on the Projective Grid Graph</a>, A Thesis Presented to The Division of Mathematics and Natural Sciences, Reed College, May 2013.",
+        "F. Faase, <a href=\"http://www.iwriteiam.nl/Cpaper.zip\">On the number of specific spanning subgraphs of the graphs G X P_n</a>, Preliminary version of paper that appeared in Ars Combin. 49 (1998), 129-154.",
+        "F. Faase, <a href=\"http://www.iwriteiam.nl/counting.html\">Counting Hamiltonian cycles in product graphs</a>",
+        "F. Faase, <a href=\"http://www.iwriteiam.nl/Cresults.html\">Results from the counting program</a>",
+        "Ville H. Pettersson, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v21i4p7\">Enumerating Hamiltonian Cycles</a>, The Electronic Journal of Combinatorics, Volume 21, Issue 4, 2014.",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-1)."
+    ],
+    "formula": [
+        "a(n) = 2 * A001835(n), n > 1.",
+        "From _Benoit Cloitre_, Mar 28 2003: (Start)",
+        "a(n) = ceiling((1 - sqrt(1/3))*(2 + sqrt(3))^n) for n > 1.",
+        "a(1) = 1, a(2) = 6, a(3) = 22 and for n > 3, a(n) = 4*a(n-1) - a(n-2). (End)",
+        "O.g.f.: x*(1 + 2*x - x^2)/(1-4*x+x^2) = -2 - x + 2*(1 - 3*x)/(1-4*x+x^2). - _R. J. Mathar_, Nov 23 2007",
+        "From _Franck Maminirina Ramaharo_, Nov 12 2018: (Start)",
+        "a(n) = ((1 + sqrt(3))*(2 - sqrt(3))^n - (1 - sqrt(3))*(2 + sqrt(3))^n)/sqrt(3), n > 1.",
+        "E.g.f.: ((1 + sqrt(3))*exp((2 - sqrt(3))*x) - (1 - sqrt(3))*exp((2 + sqrt(3))*x) - (2 + x)*sqrt(3))/sqrt(3). (End)",
+        "a(n) = 2*(ChebyshevU(n-1, 2) - ChebyshevU(n-2, 2)) for n >1, with a(1)=1. - _G. C. Greubel_, Dec 23 2019"
+    ],
+    "maple": [
+        "seq( simplify( `if`(n=1, 1, 2*(ChebyshevU(n-1,2) - ChebyshevU(n-2,2))) ), n=1..30); # _G. C. Greubel_, Dec 23 2019"
+    ],
+    "mathematica": [
+        "Join[{1},LinearRecurrence[{4,-1},{6,22},30]] (* _Harvey P. Dale_, Jul 19 2011 *)",
+        "Table[If[n<2, n, 2*(ChebyshevU[n-1, 2] - ChebyshevU[n-2, 2])], {n,30}] (* _G. C. Greubel_, Dec 23 2019 *)"
+    ],
+    "program": [
+        "(Maxima) (a[1] : 1, a[2] : 6, a[3] : 22, a[n] := 4*a[n - 1] - a[n - 2], makelist(a[n], n, 1, 50)); /* _Franck Maminirina Ramaharo_, Nov 12 2018 */",
+        "(Magma) I:=[1,6,22]; [n le 3 select I[n] else 4*Self(n-1)-Self(n-2): n in [1..30]]; // _Vincenzo Librandi_, Nov 13 2018",
+        "(PARI) vector(30, n, if(n==1, 1, 2*(polchebyshev(n-1, 2, 2) - polchebyshev(n-2, 2, 2))) ) \\\\ _G. C. Greubel_, Dec 23 2019",
+        "(Sage) [1]+[2*(chebyshev_U(n-1,2) - chebyshev_U(n-2,2)) for n in (2..30)] # _G. C. Greubel_, Dec 23 2019",
+        "(GAP) a:=[6,22];; for n in [3..20] do a[n]:=4a[n-1]-a[n-2]; od; Concatenation([1], a); # _G. C. Greubel_, Dec 23 2019"
+    ],
+    "xref": [
+        "First differences of A052530 and A071954.",
+        "Cf. A001353, A001835."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Frans J. Faase_",
+    "references": 11,
+    "revision": 46,
+    "time": "2022-09-08T08:44:32-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

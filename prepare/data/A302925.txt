@@ -1,0 +1,63 @@
+{
+    "number": 302925,
+    "data": "0,11,105,2213,51165,1453181,47976285,1811069453,76908075405,3628847679101,188346690807165,10664385332157293,654147624218952045,43211604394985309021,3058357414665518833245,230889832039240121542733,18520398049681432308011085",
+    "name": "Central half-moments of a Fibonacci-geometric probability distribution.",
+    "comment": [
+        "If F(k) is the k-th Fibonacci number, where F(0)=0, F(1)=1, and F(n)=F(n-1)+F(n-2), then p(k)=F(k-1)/2^k is a normalized probability distribution on the positive integers.",
+        "For example, it is the probability that k coin tosses are required to get two heads in a row, or the probability that a random series of k bits has its first two consecutive 1's at the end.",
+        "The g.f. for this distribution is g(x) = x^2/(4-2x-x^2) = (1/4)x^2 + (1/8)x^3 + (1/8)x^4 + (3/32)x^5 + ....",
+        "The mean of this distribution is 6. (See A302922.)",
+        "The n-th moments about the mean, known as central moments, are defined by a(n) = Sum_{k>=1} ((k-6)^n)p(k). They appear to be integers and form A302924.",
+        "For n >= 1, that sequence appears to be even. Dividing those terms by 2 gives this sequence.",
+        "The raw moments (i.e., the moments about zero) also appear to be integers. This is sequence A302922.",
+        "The raw moments also appear to be even for n >= 1. Dividing them by 2 gives sequence A302923.",
+        "The cumulants of this distribution, defined by the cumulant e.g.f. log(g(e^x)), also appear to be integers. They form sequence A302926.",
+        "The cumulants also appear to be even for n >= 0. Dividing them by 2 gives sequence A302927.",
+        "Note: Another probability distribution on the positive integers that has integral moments is the geometric distribution p(k)=1/2^k. The sequences related to these moments are A000629, A000670, A052841, and A091346."
+    ],
+    "link": [
+        "Albert Gordon Smith, <a href=\"/A302925/b302925.txt\">Table of n, a(n) for n = 1..300</a>",
+        "Christopher Genovese, <a href=\"http://www.stat.cmu.edu/~genovese/class/iprob-S06/notes/double-heads.pdf\">Double Heads</a>"
+    ],
+    "formula": [
+        "In the following,",
+        "F(k) is the k-th Fibonacci number, as defined in the Comments.",
+        "phi=(1+sqrt(5))/2 is the golden ratio, and psi=(1-sqrt(5))/2.",
+        "LerchPhi(z,s,a) = Sum_{k>=0} z^k/(a+k)^s is the Lerch transcendant.",
+        "For n>=1:",
+        "a(n) = (1/2)A302924(n);",
+        "a(n) = (1/2)Sum_{k>=1} (((k-6)^n)(F(k-1)/2^k));",
+        "a(n) = (1/2)Sum_{k>=1} (((k-6)^n)(((phi^(k-1)-psi^(k-1))/sqrt(5))/2^k));",
+        "a(n) = (1/2)(LerchPhi(phi/2,-n,-5)-LerchPhi(psi/2,-n,-5))/(2 sqrt(5));",
+        "a(n) = (1/2)Sum_{k=0..n} (binomial(n,k)A302922(k)(-6)^(n-k))."
+    ],
+    "example": [
+        "a(1)=0 is half the 1st central moment of the distribution, or half the \"mean about the mean\". It is zero by definition of central moments.",
+        "a(2)=11 is half the 2nd central moment, or half the variance, or half the square of the standard deviation."
+    ],
+    "mathematica": [
+        "Module[{max, r, g, moments, centralMoments},",
+        "  max = 17;",
+        "  r = Range[0, max];",
+        "  g[x_] := x^2/(4 - 2 x - x^2);",
+        "  moments = r! CoefficientList[Normal[Series[g[Exp[x]], {x, 0, max}]], x];",
+        "  centralMoments = Table[Sum[Binomial[n, k] moments[[k + 1]] (-6)^(n - k), {k, 0, n}], {n, 0, max}];",
+        "  Rest[centralMoments]/2",
+        "]"
+    ],
+    "xref": [
+        "Central moments: A302924.",
+        "Raw moments: A302922.",
+        "Raw half-moments: A302923.",
+        "Cumulants: A302926.",
+        "Half-cumulants: A302927.",
+        "Cf. A000629, A000670, A052841, A091346."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Albert Gordon Smith_, Apr 15 2018",
+    "references": 6,
+    "revision": 21,
+    "time": "2018-05-26T22:33:18-04:00",
+    "created": "2018-05-26T22:33:18-04:00"
+}

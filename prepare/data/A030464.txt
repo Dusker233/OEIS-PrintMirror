@@ -1,0 +1,44 @@
+{
+    "number": 30464,
+    "data": "23,3151332323,3242333533,3727337573,3757338083,7888779397,11202111123211,11232111126211,11606111163611,11787111180811,12626211268621,12737211276721,13111311317131,13353311338331",
+    "name": "Primes that are the concatenation of two consecutive palindromic primes.",
+    "link": [
+        "Robert Israel, <a href=\"/A030464/b030464.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "digrev:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "dcat:= proc(x,y) 10^(1+ilog10(y))*x+y end proc:",
+        "R:= 23: count:= 1: lastpp:= 3:",
+        "for d from 2 while count < 100 do",
+        "  for i in [1,3,7,9] while count < 100 do",
+        "    for m from i*10^(d-1)+1 to (i+1)*10^(d-1)-1 while count < 100 do",
+        "      for j from 0 to 9 while count < 100 do",
+        "    x:= m*10^(d+1)+j*10^d+digrev(m);",
+        "    if isprime(x) then",
+        "       y:= dcat(lastpp,x);",
+        "       lastpp:= x;",
+        "       if isprime(y) then R:= R,y; count:= count+1 fi",
+        "    fi",
+        "od od od od:",
+        "R; # _Robert Israel_, Apr 01 2021"
+    ],
+    "mathematica": [
+        "Select[FromDigits[Flatten[IntegerDigits/@#]]&/@Partition[Select[Prime[Range[ 110000]],PalindromeQ],2,1],PrimeQ] (* _Harvey P. Dale_, Mar 31 2023 *)"
+    ],
+    "xref": [
+        "Cf. A002385."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_",
+    "ext": [
+        "Edited by _Charles R Greathouse IV_, Apr 28 2010"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2023-03-31T18:54:48-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 285271,
+    "data": "11,15,22,33,44,48,55,66,77,88,99,115,122,124,126,128,155,162,168,175,184,212,222,244,248,264,288,324,333,336,366,384,396,412,424,444,448,488,515,555,636,648,666,672,728,777,784,816,824,848,864,888,936,999,1111,1112",
+    "name": "Numbers that are divisible by each of their digits but that are not divisible by the sum of their digits or by the product of their digits.",
+    "comment": [
+        "Numbers which are divisible by the sum and the product of their digits (A038186) are also divisible by each of their digits (A034838)",
+        "The product of the digits of n are trivially divisible by each digit; so if that product divides n, each digit must divide n. - _Franklin T. Adams-Watters_, Jul 02 2017"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A285271/b285271.txt\">Table of n, a(n) for n = 1..1520</a>"
+    ],
+    "example": [
+        "15 is divisible by its digits 1 and 5, and 15 is divisible by the product of its digits 1*5 = 5, but 15 is not divisible by the sum of its digits 1+5 = 6, hence 15 is a term.",
+        "48 is divisible by its digits 4 and 8, and 48 is divisible by the sum of its digits 4+8 = 12, but 48 is not divisible by the product of its digits 4*8 = 32, hence 48 is a term.",
+        "124 is divisible by its digits 1, 2 and 4, but 124 is not divisible by the product of its digits 1*2*4 = 8 and 124 is not divisible by the sum of its digits 1+2+4 = 7, hence 124 is a term.",
+        "24 is divisible by its digits 2 and 4, and 24 is divisible by the sum of its digits 2+4 = 6, and 24 is also divisible by the product of its digits 2*4 = 8, hence 24 is NOT a term."
+    ],
+    "maple": [
+        "filter:= proc(n) local F;",
+        "   F:= convert(n,base,10);",
+        "   andmap(t -> t > 0 and n mod t = 0, F) and not(n mod convert(F,`+`) = 0 and n mod convert(F,`*`) = 0)",
+        "end proc:",
+        "select(filter, [$11 .. 2000]); # _Robert Israel_, Jul 05 2017"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{ind = IntegerDigits@ n}, Union[ IntegerQ@# & /@ (n/ind)] == {True} && (!IntegerQ[n/Plus @@ ind] || !IntegerQ[n/Times @@ ind])]; Select[Range@ 1112, fQ] (* _Robert G. Wilson v_, Jul 05 2017 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {d = digits(n); if (vecmin(d), for (k=1, #d, if (n % d[k], return (0));); return ((n % vecsum(d)) || (n % prod(k=1, #d, d[k])));); return (0);} \\\\ _Michel Marcus_, Jul 02 2017"
+    ],
+    "xref": [
+        "Subsequence of A034838.",
+        "Cf. A005349, A007602, A038186."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Jun 24 2017",
+    "references": 2,
+    "revision": 62,
+    "time": "2021-03-11T20:44:38-05:00",
+    "created": "2017-07-05T23:31:25-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 332852,
+    "data": "1,7,46,341,2871,26797,275353,3090544,37652660,495756306,7015094802,106125820737,1710625964061,29267936828691,529655709670675,10110999740354242,203072647138681534,4280118000323963708,94470690960204259548,2179212745888578818307",
+    "name": "Number of entries in the third cycles of all permutations of [n] when cycles are ordered by decreasing lengths.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A332852/b332852.txt\">Table of n, a(n) for n = 3..450</a>",
+        "Andrew V. Sills, <a href=\"https://arxiv.org/abs/1912.05306\">Integer Partitions Probability Distributions</a>, arXiv:1912.05306 [math.CO], 2019.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation\">Permutation</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..floor(n/3)} k * A350015(n,k). - _Alois P. Heinz_, Dec 12 2021"
+    ],
+    "maple": [
+        "b:= proc(n, l) option remember; `if`(n=0, l[3], add((j-1)!*b(n-j,",
+        "      sort([l[], j], `>`)[1..3])*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, [0$3]):",
+        "seq(a(n), n=3..23);"
+    ],
+    "mathematica": [
+        "b[n_, l_] := b[n, l] = If[n == 0, l[[3]], Sum[(j-1)! b[n-j, ReverseSort[ Append[l, j]][[1 ;; 3]]] Binomial[n - 1, j - 1], {j, 1, n}]];",
+        "a[n_] := b[n, {0, 0, 0}];",
+        "a /@ Range[3, 23] (* _Jean-Fran\u00e7ois Alcover_, Mar 01 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=3 of A322384.",
+        "Cf. A350015."
+    ],
+    "keyword": "nonn",
+    "offset": "3,2",
+    "author": "_Alois P. Heinz_, Feb 26 2020",
+    "references": 3,
+    "revision": 14,
+    "time": "2021-12-12T10:04:58-05:00",
+    "created": "2020-02-26T23:22:07-05:00"
+}

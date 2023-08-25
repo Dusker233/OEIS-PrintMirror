@@ -1,0 +1,88 @@
+{
+    "number": 350574,
+    "data": "131,197,373,419,571,593,617,839,919,1297,1327,1429,1879,1949,1993,2129,2213,2591,3539,4337,4637,4639,5519,6619,8389,8933,11491,11519,11527,11597,11897,11969,12757,12829,12979,13649,13879,14537,14737,14741,14891",
+    "name": "Primes p such that p, asc(p), and desc(p) are all distinct primes (where asc(p) and desc(p) are the digits of p in ascending and descending order, respectively) and p is the minimum of all permutations of its digits with this property.",
+    "comment": [
+        "All terms in this sequence are zero-free: If p contained 0 as a digit, then desc(p) would end with the zero digit, making it divisible by 10 (thus composite)."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A350574/b350574.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "131 is prime, and so are asc(131) = 113 and desc(131) = 311. Further, these are all distinct primes.",
+        "419, asc(419) = 149, and desc(419) = 941 are all distinct primes, and 419 is the smallest permutation of the digits {1,4,9} with this property (149 is not included because asc(149) = 149, so these would not be distinct; 491 is not included because 419 < 491 with the same set of digits)."
+    ],
+    "maple": [
+        "d:= n-> convert(n, base, 10):",
+        "g:= (n, r)-> parse(cat(sort(d(n), r)[])):",
+        "f:= n-> (s-> nops(s)=3 and andmap(isprime, s))({n, g(n, `<`), g(n, `>`)}):",
+        "q:= n-> f(n) and n=min(select(f, map(x-> parse(cat(x[])),",
+        "        combinat[permute](d(n))))):",
+        "select(q, [$1..15000])[];  # _Alois P. Heinz_, Jan 15 2022"
+    ],
+    "mathematica": [
+        "Select[Prime@Range@2000,AllTrue[FromDigits/@{s=Sort[d=IntegerDigits@#],Reverse@s},PrimeQ]&&Min@Most@Rest@Sort@Select[FromDigits/@Permutations[d],PrimeQ]==#&] (* _Giorgos Kalogeropoulos_, Jan 16 2022 *)"
+    ],
+    "program": [
+        "(Python 3)",
+        "import numpy as np",
+        "# preliminary functions we will use in building our list",
+        "def is_prime(n):",
+        "    for d in range(2,int(np.sqrt(n))+1):",
+        "        if n % d == 0:",
+        "            return False",
+        "    return True",
+        "def asc(n): # returns integer with digits of n in ascending order",
+        "    n_list = [int(digit) for digit in str(n)] # separate digits of n into a list",
+        "    n_list.sort() # rearrange numbers in ascending order",
+        "    asc_n = int(''.join([str(digit) for digit in n_list])) # concatenate the sorted digits",
+        "    return asc_n",
+        "def desc(n): # returns integer with digits of n in descending order",
+        "    n_list = [int(digit) for digit in str(n)]",
+        "    n_list.sort(reverse=True)",
+        "    desc_n = int(''.join([str(digit) for digit in n_list]))",
+        "    return desc_n",
+        "N = 5",
+        "# get list of integers n such that n, asc(n), and desc(n) are all distinct primes",
+        "condition_1 = [n for n in range(2,10**N)",
+        "               if is_prime(n)",
+        "               and is_prime(asc(n))",
+        "               and is_prime(desc(n))",
+        "               and n not in (asc(n),desc(n))]",
+        "# refine so that our list includes only the minimum permutation of a given set of digits satisfying condition 1",
+        "condition_2 = []",
+        "for num in condition_1:",
+        "    if asc(num) not in [asc(n) for n in condition_2]:",
+        "        condition_2.append(num)",
+        "print(condition_2)",
+        "(Python)",
+        "from itertools import count, islice, combinations_with_replacement",
+        "from sympy import isprime",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def A350574_gen(): # generator of terms",
+        "    for l in count(1):",
+        "        rlist = []",
+        "        for a in combinations_with_replacement('123456789',l):",
+        "            s = ''.join(a)",
+        "            p, q = int(s), int(s[::-1])",
+        "            if p != q and isprime(p) and isprime(q):",
+        "                for b in multiset_permutations(a):",
+        "                    r = int(''.join(b))",
+        "                    if p < r < q and isprime(r):",
+        "                        rlist.append(r)",
+        "                        break",
+        "        yield from sorted(rlist)",
+        "A350574_list = list(islice(A350574_gen(),50)) # _Chai Wah Wu_, Feb 13 2022"
+    ],
+    "xref": [
+        "Cf. A009994.",
+        "Subsequence of A038618."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_William Riley Barker_, Jan 06 2022",
+    "references": 1,
+    "revision": 30,
+    "time": "2022-02-13T13:57:20-05:00",
+    "created": "2022-02-11T17:09:38-05:00"
+}

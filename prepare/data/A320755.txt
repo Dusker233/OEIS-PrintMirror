@@ -1,0 +1,36 @@
+{
+    "number": 320755,
+    "data": "1,9,46,175,551,1517,3775,8677,18703,38223,74682,140403,255280,450734,775440,1303509,2146040,3467254,5506807,8610369,13271183,20186110,30330668,45058828,66234905,96406840,139032605,198774473,281879613,396670035,554170514,768909964",
+    "name": "Number of partitions of n with nine kinds of 1.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A320755/b320755.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "G.f.: 1/(1-x)^9 * 1/Product_{j>1} (1-x^j).",
+        "Euler transform of 9,1,1,1,... .",
+        "a(n) ~ 4 * 3^(7/2) * n^3 * exp(Pi*sqrt(2*n/3)) / Pi^8. - _Vaclav Kotesovec_, Oct 24 2018"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      (numtheory[sigma](j)+8)*a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..40);"
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[1/((1-x)^8 * Product[1-x^k, {k, 1, nmax}]), {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Oct 24 2018 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^30); Vec(1/((1-x)^9*prod(j=2, 40, 1-x^j))) \\\\ _G. C. Greubel_, Oct 27 2018",
+        "(Magma) m:=30; R<x>:=PowerSeriesRing(Integers(), m); Coefficients(R!(1/((1-x)^9*(&*[1-x^j: j in [2..30]])))); // _G. C. Greubel_, Oct 27 2018"
+    ],
+    "xref": [
+        "Column k=9 of A292508."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Oct 20 2018",
+    "references": 2,
+    "revision": 12,
+    "time": "2022-09-08T08:46:23-04:00",
+    "created": "2018-10-20T16:34:21-04:00"
+}

@@ -1,0 +1,28 @@
+{
+    "number": 360355,
+    "data": "7425,8415,46035,76725,101475,182655,355725,669735,1411425,1606275,2352375,2891295,3592215,3650625,4079295,4861575,5053455,5870205,6093225,6636465,6920595,7732395,8750835,9120375,9783675,9850005,9958905,10155375,11298375,11532375,12120075",
+    "name": "Primitive terms of A360328: terms of A360328 with no proper divisor in A360328.",
+    "comment": [
+        "If m is a term then k*m is a term of A360328 for all k in A076610.",
+        "Analogous to primitive abundant numbers (A091191) with divisors that are restricted to numbers that have only prime-indexed prime factors."
+    ],
+    "mathematica": [
+        "f[p_, e_] := If[PrimeQ[PrimePi[p]], (p^(e + 1) - 1)/(p - 1), 1]; s[1] = 1; s[n_] := Times @@ f @@@ FactorInteger[n]; primQ[n_] := s[n] > 2*n && AllTrue[Divisors[n], # == n || s[#] <= 2*# &]; Select[Range[10^6], primQ]"
+    ],
+    "program": [
+        "(PARI) isab(n) = {my(f = factor(n), p = f[,1], e = f[,2]); prod(i = 1, #p, if(isprime(primepi(p[i])), (p[i]^(e[i]+1)-1)/(p[i]-1), 1)) > 2*n;}",
+        "is(n) = {if(!isab(n), return(0)); fordiv(n, d, if(d < n && isab(d), return(0))); return(1)};"
+    ],
+    "xref": [
+        "Subsequence of A360328.",
+        "Cf. A076610.",
+        "Similar sequences: A006038, A091191, A249263, A302574, A360356."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Feb 04 2023",
+    "references": 1,
+    "revision": 7,
+    "time": "2023-02-04T20:56:51-05:00",
+    "created": "2023-02-04T20:56:51-05:00"
+}

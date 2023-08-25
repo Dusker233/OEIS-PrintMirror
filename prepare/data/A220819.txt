@@ -1,0 +1,39 @@
+{
+    "number": 220819,
+    "data": "0,1,4,14,48,171,614,2270,8518,32567,126168,495079,1962752,7853581,31672502,128622480,525523990,2158818376,8911039462,36941520279,153740822408,642085403709,2690217364606,11304538078369,47630350694248,201181246749072,851690546714230",
+    "name": "Number of rooted binary leaf-multilabeled trees with n leaves on the label set [2].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A220819/b220819.txt\">Table of n, a(n) for n = 1..1542</a> (first 200 terms from Andrew Howroyd)",
+        "V. P. Johnson, <a href=\"http://people.math.sc.edu/czabarka/Theses/JohnsonThesis.pdf\">Enumeration Results on Leaf Labeled Trees</a>, Ph. D. Dissertation, Univ. Southern Calif., 2012."
+    ],
+    "formula": [
+        "a(n) = A083563(n) - 2*A001190(n). - _Andrew Howroyd_, Sep 23 2018"
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; `if`(n<2, k*n, `if`(n::odd, 0,",
+        "      (t-> t*(1-t)/2)(b(n/2, k)))+add(b(i, k)*b(n-i, k), i=1..n/2))",
+        "    end:",
+        "a:= n-> b(n, 2)-2*b(n, 1):",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, Sep 07 2019"
+    ],
+    "mathematica": [
+        "(* b = A083563 *) b[n_] := b[n] = If[n < 2, 2*n, If[OddQ[n], 0, #*(1 - #)/2 &[b[n/2]]]] + Sum[b[i]*b[n - i], {i, 1, n/2}];",
+        "(* c = A001190 *) c[n_?OddQ] := c[n] = Sum[c[k]*c[n - k], {k, 1, (n - 1)/2}]; c[n_?EvenQ] := c[n] = Sum[c[k]*c[n - k], {k, 1, n/2 - 1}] + (1/2)*c[n/2]*(1 + c[n/2]); c[0] = 0; c[1] = 1;",
+        "a[n_] := b[n] - 2 c[n];",
+        "Array[a, 27] (* _Jean-Fran\u00e7ois Alcover_, Sep 07 2019 *)"
+    ],
+    "xref": [
+        "Column k=2 of A319541.",
+        "Cf. A001190, A083563."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, Dec 22 2012",
+    "ext": [
+        "Terms a(11) and beyond from _Andrew Howroyd_, Sep 23 2018"
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2019-09-07T12:26:03-04:00",
+    "created": "2012-12-22T15:56:18-05:00"
+}

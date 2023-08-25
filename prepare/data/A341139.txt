@@ -1,0 +1,27 @@
+{
+    "number": 341139,
+    "data": "1,10,55,220,715,1992,4915,10990,22660,43660,79463,137830,229460,368710,574410,870644,1287545,1862110,2639135,3672050,5024035,6768950,8992340,11792070,15279450,19579514,24832415,31193900,38837085,47952400,58750125,71458860,86328885",
+    "name": "Number of ways to write n as an ordered sum of 10 prime powers (including 1).",
+    "maple": [
+        "q:= proc(n) option remember; nops(ifactors(n)[2])<2 end:",
+        "b:= proc(n, t) option remember;",
+        "      `if`(n=0, `if`(t=0, 1, 0), `if`(t<1, 0, add(",
+        "      `if`(q(j), b(n-j, t-1), 0), j=1..n)))",
+        "    end:",
+        "a:= n-> b(n, 10):",
+        "seq(a(n), n=10..42);  # _Alois P. Heinz_, Feb 05 2021"
+    ],
+    "mathematica": [
+        "nmax = 42; CoefficientList[Series[Sum[Boole[PrimePowerQ[k] || k == 1] x^k, {k, 1, nmax}]^10, {x, 0, nmax}], x] // Drop[#, 10] &"
+    ],
+    "xref": [
+        "Cf. A000961, A010055, A282062, A282064, A341131, A341133, A341134, A341135, A341136, A341137, A341138."
+    ],
+    "keyword": "nonn",
+    "offset": "10,2",
+    "author": "_Ilya Gutkovskiy_, Feb 05 2021",
+    "references": 7,
+    "revision": 5,
+    "time": "2021-02-05T18:45:23-05:00",
+    "created": "2021-02-05T18:45:23-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 260815,
+    "data": "3,12,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,575,576,577,578,579,580,1421,1422,1423,1424,1425,1426,1427,1428,1429,1430,1599,1600,1601,1602,1603,1604,1605,1606,1607,1608,1609,1610,1611,1612",
+    "name": "a(2) = 3; for n >= 3, a(n) = a(n-1) + gcd(n, a(n-1))^2.",
+    "comment": [
+        "The first differences of a(n) are all squares."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A260815/b260815.txt\">Table of n, a(n) for n = 2..10000</a>"
+    ],
+    "example": [
+        "a(3) = 3 + gcd(3, 3)^2 = 3 + 9 = 12.",
+        "a(4) = 12 + gcd(4, 12)^2 = 12 + 16 = 28.",
+        "a(5) = 28 + gcd(5, 28)^2 = 28 + 1 = 29."
+    ],
+    "maple": [
+        "N:= 100: # for a(2)..a(N)",
+        "A:= Array(2..N):",
+        "A[2]:= 3:",
+        "for n from 3 to N do",
+        "  A[n]:= A[n-1]+igcd(n,A[n-1])^2",
+        "od:",
+        "seq(A[i],i=2..N); # _Robert Israel_, Apr 13 2021"
+    ],
+    "mathematica": [
+        "Nest[Append[#1, #1[[-1]] + GCD[#2, #1[[-1]]]^2] & @@ {#, Length[#] + 2} &, {3}, 50] (* _Michael De Vlieger_, Apr 13 2021 *)"
+    ],
+    "program": [
+        "(Magma) I:=[0, 3]; Remove([n le 2 select I[n] else Self(n-1)+Gcd(n, Self(n-1))^2: n in [1..52]], 1);"
+    ],
+    "xref": [
+        "Cf. A167195, A343402."
+    ],
+    "keyword": "nonn,look",
+    "offset": "2,1",
+    "author": "_Arkadiusz Wesolowski_, Jul 31 2015",
+    "references": 2,
+    "revision": 30,
+    "time": "2022-09-08T08:46:13-04:00",
+    "created": "2015-08-02T17:39:16-04:00"
+}

@@ -1,0 +1,64 @@
+{
+    "number": 65847,
+    "data": "1,2,4,8,21,60,269,1147,4250,17883,71966,342060,1724337,8428101",
+    "name": "Let u be any string of n digits from {0,...,5}; let f(u) = number of distinct primes, not beginning with 0, formed by permuting the digits of u; then a(n) = max_u f(u).",
+    "example": [
+        "a(2)=2 because 15 and 51 (written in base 6) are primes (11 and 31)."
+    ],
+    "maple": [
+        "A065847 := proc(n)",
+        "    local b,u,udgs,uperm,a;",
+        "    b :=6 ;",
+        "    a := 0 ;",
+        "    for u from b^(n-1) to b^n-1 do",
+        "        udgs := convert(u,base,b) ;",
+        "        prs := {} ;",
+        "        for uperm in combinat[permute](udgs) do",
+        "            if op(-1,uperm) <> 0 then",
+        "                p := add( op(i,uperm)*b^(i-1),i=1..nops(uperm)) ;",
+        "                if isprime(p) then",
+        "                    prs := prs union {p} ;",
+        "                end if;",
+        "            end if;",
+        "        end do:",
+        "        a := max(a,nops(prs)) ;",
+        "    end do:",
+        "    a ;",
+        "end proc:",
+        "for n from 1 do",
+        "    print(n,A065847(n)) ;",
+        "end do: # _R. J. Mathar_, Apr 23 2016"
+    ],
+    "mathematica": [
+        "c[x_] := Module[{},",
+        "   Length[Select[Permutations[x],",
+        "     First[#] != 0 && PrimeQ[FromDigits[#, 6]] &]]];",
+        "A065847[n_] := Module[{i},",
+        "   Return[Max[Map[c, DeleteDuplicatesBy[Tuples[Range[0, 5], n],",
+        "       Table[Count[#, i], {i, 0, 5}] &]]]]];",
+        "Table[A065847[n], {n, 1, 8}] (* _Robert Price_, Mar 30 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "from itertools import combinations_with_replacement",
+        "def A065847(n):",
+        "    return max(sum(1 for t in multiset_permutations(s) if t[0] != '0' and isprime(int(''.join(t),6))) for s in combinations_with_replacement('012345',n)) # _Chai Wah Wu_, Apr 23 2019"
+    ],
+    "xref": [
+        "Cf. A065843, A065844, A065845, A065846, A065848, A065849, A065850, A065851, A065852, A065853"
+    ],
+    "keyword": "base,more,nonn",
+    "offset": "1,2",
+    "author": "_Sascha Kurz_, Nov 24 2001",
+    "ext": [
+        "a(12)-a(13) from _Sean A. Irvine_, Sep 06 2009",
+        "Definition corrected by _David A. Corneth_, Apr 23 2016",
+        "a(14) from _Chai Wah Wu_, Jun 15 2019"
+    ],
+    "references": 11,
+    "revision": 26,
+    "time": "2019-06-16T13:09:06-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

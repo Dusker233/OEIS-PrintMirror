@@ -1,0 +1,34 @@
+{
+    "number": 316961,
+    "data": "1,1,4,8,24,42,118,208,524,961,2191,3994,9020,16142,34500,62814,130496,234474,478334,855982,1712012,3061230,6003546,10689178,20783796,36789875,70540531,124812892,237022708,417422168,786509778,1381137702,2583046168,4526024200,8402928681",
+    "name": "Expansion of Product_{k>=1} 1/(1 - sigma(k)*x^k), where sigma(k) is the sum of the divisors of k (A000203).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A316961/b316961.txt\">Table of n, a(n) for n = 0..4150</a>"
+    ],
+    "formula": [
+        "G.f.: exp(Sum_{k>=1} Sum_{j>=1} sigma(j)^k*x^(j*k)/k).",
+        "From _Vaclav Kotesovec_, Jul 28 2018: (Start)",
+        "a(n) ~ c * 3^(n/2), where",
+        "c = 133.83151651318934683776776253692818185240361972305... if n is even and",
+        "c = 131.63961163168586786976253326691345807212512512772... if n is odd.",
+        "In closed form, a(n) ~ ((3 + sqrt(3)) * Product_{k>=3} (1/(1 - sigma(k) / 3^(k/2))) + (-1)^n * (3 - sqrt(3)) * Product_{k>=3} (1/(1 - (-1)^k * sigma(k) / 3^(k/2)))) * 3^(n/2) / 4. (End)"
+    ],
+    "maple": [
+        "with(numtheory): a:=series(mul(1/(1-sigma(k)*x^k),k=1..100),x=0,35): seq(coeff(a,x,n),n=0..34); # _Paolo P. Lava_, Apr 02 2019"
+    ],
+    "mathematica": [
+        "nmax = 34; CoefficientList[Series[Product[1/(1 - DivisorSigma[1, k] x^k), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 34; CoefficientList[Series[Exp[Sum[Sum[DivisorSigma[1, j]^k x^(j k)/k, {j, 1, nmax}], {k, 1, nmax}]], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[d DivisorSigma[1, d]^(k/d), {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 34}]"
+    ],
+    "xref": [
+        "Cf. A000203, A061256, A180305, A279784, A316962."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Jul 17 2018",
+    "references": 3,
+    "revision": 14,
+    "time": "2019-04-02T05:50:40-04:00",
+    "created": "2018-07-17T21:50:56-04:00"
+}

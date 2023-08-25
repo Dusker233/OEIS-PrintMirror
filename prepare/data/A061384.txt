@@ -1,0 +1,68 @@
+{
+    "number": 61384,
+    "data": "1,11,20,102,111,120,201,210,300,1003,1012,1021,1030,1102,1111,1120,1201,1210,1300,2002,2011,2020,2101,2110,2200,3001,3010,3100,4000,10004,10013,10022,10031,10040,10103,10112,10121,10130,10202,10211",
+    "name": "Numbers n such that sum of digits = number of digits.",
+    "comment": [
+        "Number of d-digit entries is A071976(d). - _Robert Israel_, Apr 06 2016",
+        "Equivalently, numbers n > 0 for which the arithmetic mean of the digits equals 1. - _M. F. Hasler_, Dec 07 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A061384/b061384.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "{n > 0 | A007953(n) = A055642(n)}. - _M. F. Hasler_, Dec 07 2018"
+    ],
+    "example": [
+        "120 is a term as the arithmetic mean of the digits is (1+2+0)/3 = 1."
+    ],
+    "maple": [
+        "Q:= proc(n,s) option remember;",
+        "# n-digit integers with digit sum s",
+        "if s = 0 then []",
+        "elif s = 1 then [10^(n-1)]",
+        "elif n = 1 then",
+        "   if s <= 9 then [s]",
+        "   else []",
+        "   fi",
+        "else",
+        "  map(op,[seq(map(t -> 10*t+i, procname(n-1,s-i)), i=0..min(9,s-1))])",
+        "fi",
+        "end proc:",
+        "map(op, [seq(sort(Q(n,n)),n=1..5)]); # _Robert Israel_, Apr 06 2016"
+    ],
+    "mathematica": [
+        "Select[Range[15000], Total[IntegerDigits[#]] == IntegerLength[#]&] (* _Harvey P. Dale_, Jan 08 2011 *)"
+    ],
+    "program": [
+        "(Magma) [ n: n in [1..10215] | &+Intseq(n) eq #Intseq(n) ]; // _Bruno Berselli_, Jun 30 2011",
+        "(PARI) isok(n) = (sumdigits(n)/#Str(n) == 1); \\\\ _Michel Marcus_, Mar 28 2016",
+        "(PARI) is_A061384(n)={sumdigits(n)==logint(n+!n,10)+1} \\\\ _M. F. Hasler_, Dec 07 2018",
+        "(PARI) A061384_row(n)={my(L=List(), u=vector(n, i, i==1), d); forvec(v=vector(n+1, i, [if(i>n,n, 1), if(i>1, n, 1)]), vecmax(d=v[^1]-v[^-1]+u)<10 && listput(L,fromdigits(d)),1);Vec(L)} \\\\ Return the list of all n-digit terms. - _M. F. Hasler_, Dec 07 2018",
+        "(Python)",
+        "from itertools import count, islice",
+        "def Q(n, s): # length-n strings of 0..9 with sum s, after _Robert Israel_",
+        "    if s == 0: yield \"0\"*n",
+        "    elif n == 1: yield (str(s) if s <= 9 else \"\")",
+        "    else:",
+        "        m = min(9, s) + 1",
+        "        yield from (str(i)+t for i in range(m) for t in Q(n-1, s-i))",
+        "def agen():",
+        "    yield from (int(t) for n in count(1) for t in Q(n, n) if t[0] != \"0\")",
+        "print(list(islice(agen(), 43))) # _Michael S. Branicky_, May 26 2022"
+    ],
+    "xref": [
+        "Totally balanced subset: A071154. Cf. also A061383-A061388, A061423-A061425.",
+        "Cf. A071976.",
+        "Cf. A007953 (sum of digits), A055642 (number of digits)."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, May 03 2001",
+    "ext": [
+        "More terms from _Erich Friedman_, May 08 2001"
+    ],
+    "references": 16,
+    "revision": 51,
+    "time": "2022-09-08T08:45:03-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

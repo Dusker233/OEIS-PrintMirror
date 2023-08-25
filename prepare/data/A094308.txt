@@ -1,0 +1,37 @@
+{
+    "number": 94308,
+    "data": "1,3,11,34,182,282,2034,4908,15564,20100,223620,251340,3295140,3964380,4324740,9370200,160014120,180434520,3440508120,3673300680,3906093240,4350515400,100294646760,105648875640,533598607080,585081577080",
+    "name": "Row sums of A094307.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A094308/b094308.txt\">Table of n, a(n) for n = 1..700</a>"
+    ],
+    "formula": [
+        "a(n) = A003418(n) * (n - Sum_{frac(log_p(n)) < log_p(2)} (1 - 1/p)). - _Charlie Neder_, Jun 13 2019"
+    ],
+    "maple": [
+        "A094307 := proc(n,k) local a,i ; if n = 1 then RETURN(1) ; elif k > 1 and k < n then a := [seq(i,i=1..k-1),seq(i,i=k+1..n)] ; elif k = n then a := [seq(i,i=1..k-1)] ; else a := [seq(i,i=2..n)] ; fi ; ilcm(op(a)) ; end: A094308 := proc(n) local k ; add( A094307(n,k),k=1..n) ; end: for n from 1 to 40 do printf(\"%d, \",A094308(n)) ; od ; # _R. J. Mathar_, Apr 30 2007"
+    ],
+    "mathematica": [
+        "T[n_, k_] := LCM @@ Which[n == 1, {1}, 1 < k < n, Join[Range[k - 1], Range[k + 1, n]], k == n, Range[k - 1], True, Range[2, n]];",
+        "a[n_] := Sum[T[n, k], {k, 1, n}];",
+        "Array[a, 30] (* _Jean-Fran\u00e7ois Alcover_, May 20 2020 *)"
+    ],
+    "program": [
+        "(PARI) T(n, k) = lcm(setminus(vector(n, i, i), Set(k))); \\\\ A094307",
+        "a(n) = sum(k=1, n, T(n,k)); \\\\ _Michel Marcus_, May 20 2020"
+    ],
+    "xref": [
+        "Cf. A094307, A003418.",
+        "Lower diagonal of A181853. - _Alois P. Heinz_, Jul 29 2013"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Apr 29 2004",
+    "ext": [
+        "More terms from _R. J. Mathar_, Apr 30 2007"
+    ],
+    "references": 3,
+    "revision": 27,
+    "time": "2020-05-20T05:00:05-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

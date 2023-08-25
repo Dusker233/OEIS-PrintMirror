@@ -1,0 +1,35 @@
+{
+    "number": 324322,
+    "data": "12,13,14,15,16,17,18,19,32,43,52,54,65,72,73,76,87,92,94,98,103,352,461,571,792,803,1003",
+    "name": "Numbers k such that Ld(k) == k (mod Rd(k)), where Ld(k) = A067080 and Rd(k) = A067079.",
+    "comment": [
+        "No other term up to 2*10^10. - _Giovanni Resta_, Feb 22 2019"
+    ],
+    "example": [
+        "Ld(792) = 792*79*7 = 437976, Rd(792) = 792*92*2 = 145728 and 437976 == 792 (mod 145728)."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(n) local a,k;",
+        "a:=mul(n mod 10^k, k=1..ilog10(n)+1): if a>0 then",
+        "if n=mul(trunc(n/10^k), k=0..ilog10(n)) mod a then n;",
+        "fi; fi; end: seq(P(i),i=1..1100);"
+    ],
+    "mathematica": [
+        "Select[Range[10^6], If[#2 != 0, Mod[Times @@ Map[FromDigits, NestWhileList[Most@ # &, IntegerDigits@ #1, Length@ # > 1 &]], #2] == #1] & @@ {#, Times @@ Map[FromDigits, NestWhileList[Rest@ # &, IntegerDigits@ #, Length@ # > 1 &]]} &] (* _Michael De Vlieger_, Feb 25 2019 *)"
+    ],
+    "program": [
+        "(PARI) Ld(n) = my(t=n); while(n\\=10, t*=n); t; \\\\ A067080",
+        "Rd(n) = prod(k=1, logint(n+!n, 10)+1, n-n\\10^k*10^k); \\\\ A067079",
+        "isok(k) = if (k % 10, (Ld(k) % Rd(k)) == k); \\\\ _Michel Marcus_, Jan 15 2023"
+    ],
+    "xref": [
+        "Cf. A067079, A067080, A324322."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Feb 22 2019",
+    "references": 2,
+    "revision": 16,
+    "time": "2023-01-15T15:09:10-05:00",
+    "created": "2019-03-14T09:23:30-04:00"
+}

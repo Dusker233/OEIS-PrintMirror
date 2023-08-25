@@ -1,0 +1,71 @@
+{
+    "number": 175941,
+    "data": "1,2,4,6,10,18,30,50,78,130,210,350,586,954,1606,2588,4234,6944,11342,18948,31450,52206,85662,141680,233040,385428,644910,1072074,1783342,2953094,4897922,8157096,13571014,22552212,37486916,62325564,103508754,172765524,287428656,479052200,798944976",
+    "name": "Number of n-step self-avoiding walks on a line, where step X skips X - 1 spaces.",
+    "formula": [
+        "a(n) <= 2*a(n-1) for n > 0. - _Andrew Howroyd_, Nov 12 2018"
+    ],
+    "example": [
+        "a(0) = 1 because every walk must start at a specific point on the line.",
+        "   --0--",
+        "a(1) = 2 because there are two ways to start, moving one space forward or backward.",
+        "   --01-",
+        "   -10--",
+        "a(2) = 4 because there are two ways to continue each of the walks described in a(1).",
+        "   ---01-2",
+        "   --201--",
+        "   --102--",
+        "   2-10---",
+        "a(3) = 6, not 8, because two of the possible four continuations are not self-avoiding.",
+        "   ------01-2--3",
+        "   -----2013----",
+        "   --3--201-----",
+        "   -----102--3--",
+        "   ----3102-----",
+        "   3--2-10------"
+    ],
+    "maple": [
+        "b:= proc(n, s) option remember; `if`(n=0, 1, add(`if`(j in s, 0,",
+        "      b(n-1, {map(x-> x-j, s)[], 0})), j=(k->[-k, k])(nops(s))))",
+        "    end:",
+        "a:= n-> b(n, {0}):",
+        "seq(a(n), n=0..24);  # _Alois P. Heinz_, May 19 2021"
+    ],
+    "mathematica": [
+        "b[n_, s_] := b[n, s] = If[n == 0, 1, Sum[If[MemberQ[s, j], 0, b[n - 1, Union[Append[s - j, 0]]]], {j, {-Length[s], Length[s]}}]];",
+        "a[n_] := b[n, {0}];",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 0, 28}] (* _Jean-Fran\u00e7ois Alcover_, Jul 09 2021, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "x = 1",
+        "n = 0",
+        "runs = [[n]]",
+        "while x < 30:",
+        "    print(x - 1, n)",
+        "    runs2 = []",
+        "    n = 0",
+        "    while runs:",
+        "        for pmx in (x, -x):",
+        "            if runs[0][ -1] + pmx not in runs[0]:",
+        "                runs2.append(runs[0] + [runs[0][ -1] + pmx])",
+        "                n += 1",
+        "        del runs[0]",
+        "    runs = runs2",
+        "    x += 1",
+        "(PARI) a(n)={local(f=vectorsmall(n*(n+1)+1)); my(recurse(p, k)=if(!f[p], if(k==n, 1, f[p]=1; k++; my(z=self()(p+k, k) + self()(p-k, k)); f[p]=0; z))); recurse((#f+1)/2, 0)} \\\\ _Andrew Howroyd_, Nov 12 2018"
+    ],
+    "xref": [
+        "Cf. A321535."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Grant Garcia_, Oct 25 2010",
+    "ext": [
+        "a(29)-a(40) from _Andrew Howroyd_, Nov 12 2018"
+    ],
+    "references": 1,
+    "revision": 20,
+    "time": "2021-07-09T22:57:24-04:00",
+    "created": "2010-11-10T03:00:00-05:00"
+}

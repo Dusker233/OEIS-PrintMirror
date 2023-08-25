@@ -1,0 +1,51 @@
+{
+    "number": 94420,
+    "data": "1,1,10,219,8676,544505,49729758,6232661239,1026912225160,215270320769109,55954905981282210,17662898483917308083,6655958151527584785900,2951503248457748982755953,1521436331153097968932487206,902143190212525713006814917615,609729139653483641913607434550800",
+    "name": "Generalized ordered Bell numbers Bo(n,n).",
+    "comment": [
+        "Main diagonal of array A094416."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A094420/b094420.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) ~ sqrt(2*Pi) * n^(2*n + 5/2) / exp(n - 3/2). - _Vaclav Kotesovec_, Jul 23 2018",
+        "a(n) = Sum_{k=0..n} k!*n^k*Stirling2(n, k). - _Seiichi Manyama_, Jun 12 2020",
+        "From _Peter Luschny_, May 21 2021: (Start)",
+        "a(n) = F_{n}(n), the Fubini polynomial F_{n}(x) evaluated at x = n.",
+        "a(n) = n! * [x^n] (1 / (1 + n * (1 - exp(x)))).  (End)"
+    ],
+    "maple": [
+        "F := proc(n) option remember; if n = 0 then return 1 fi;",
+        "expand(add(binomial(n, k)*F(n-k)*x, k=1..n)) end:",
+        "a := n -> subs(x = n, F(n)):",
+        "seq(a(n), n = 0..16); # _Peter Luschny_, May 21 2021"
+    ],
+    "mathematica": [
+        "Table[Sum[k!*n^k*StirlingS2[n, k], {k, 0, n}], {n, 1, 20}] (* _Vaclav Kotesovec_, Jul 23 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = sum(k=0, n, k!*n^k*stirling(n, k, 2))} \\\\ _Seiichi Manyama_, Jun 12 2020",
+        "(SageMath)",
+        "def aList(len):",
+        "    R.<x> = PowerSeriesRing(QQ)",
+        "    f = lambda n: R(1/(1 + n * (1 - exp(x))))",
+        "    return [factorial(n)*f(n).list()[n] for n in (0..len-1)]",
+        "print(aList(17)) # _Peter Luschny_, May 21 2021"
+    ],
+    "xref": [
+        "Cf. A094416, A321189.",
+        "The coefficients of the Fubini polynomials are A131689.",
+        "Central column of A344499."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ralf Stephan_, May 02 2004",
+    "ext": [
+        "More terms from _Seiichi Manyama_, Jun 12 2020"
+    ],
+    "references": 11,
+    "revision": 27,
+    "time": "2021-05-22T08:32:20-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

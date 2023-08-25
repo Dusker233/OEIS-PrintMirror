@@ -1,0 +1,32 @@
+{
+    "number": 119490,
+    "data": "1,2,4,8,16,80,400,10000,250000,48250000,83424250000,1441654464250000,24913230796704250000,5166032451235389984250000,1071233655120621702524064250000,3109835221395024747917162004384250000,135419643726614411057926317695276801184250000",
+    "name": "Sum of the absolute values in row n of A118687.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A119490/b119490.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "mathematica": [
+        "A049614[n_]:= n!/Product[Prime[i], {i, 1, PrimePi[n]}];",
+        "b:= Join[{{1}}, Table[CoefficientList[Product[1 -A049614[k]*x, {k,0,n}], x], {n, 0, 21}]];",
+        "Table[Sum[Abs[b[[n, j]]], {j, n}], {n, 20}] (* _G. C. Greubel_, Feb 07 2021 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A049614(n): return factorial(n)/product( nth_prime(j) for j in (1..prime_pi(n)) )",
+        "def A118687(n,k): return ( product(1 -A049614(k)*x for k in (0..n)) ).series(x, n+2).list()[k]",
+        "[1]+[sum(abs(A118687(n, k)) for k in (0..n+1)) for n in (0..20)] # _G. C. Greubel_, Feb 07 2021"
+    ],
+    "xref": [
+        "Cf. A118687."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Roger L. Bagula_, May 25 2006",
+    "ext": [
+        "Terms a(12) onward added by _G. C. Greubel_, Feb 07 2021"
+    ],
+    "references": 2,
+    "revision": 10,
+    "time": "2021-02-07T21:07:45-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

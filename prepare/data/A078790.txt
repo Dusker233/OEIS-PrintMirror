@@ -1,0 +1,58 @@
+{
+    "number": 78790,
+    "data": "2,5,11,101,313,727,10301,19891,30103,70207,1003001,1936391,3001003,7014107,100030001,193191391,300020003,700020007,10000500001,19301110391,30000500003,70005450007,1000008000001,1930022200391,3000002000003,7000005000007,100000323000001",
+    "name": "Palindromic primes with successive increasing difference: a(k)-a(k-1) < a(k+1)- a(k).",
+    "link": [
+        "Robert Israel, <a href=\"/A078790/b078790.txt\">Table of n, a(n) for n = 1..1600</a>"
+    ],
+    "maple": [
+        "revdigs:= proc(x) local F,i;",
+        "  F:= convert(x,base,10);",
+        "  add(F[-i]*10^(i-1),i=1..nops(F))",
+        "end proc:",
+        "f1:= proc(n)",
+        "  local m0,  a0,b0,m,a,b,c,x;",
+        "  m0:= ilog10(n)+1;",
+        "  if m0::even then m:= m0/2+1; a0:= 1; b0:= 0;",
+        "  else a0:= floor(n/10^(m0-1));",
+        "       if a0 = 4 or a0 = 5 then a0:= 7; b0:= 0",
+        "       elif a0::odd then b0:= n - 10^(m0-1)*a0;",
+        "     else a0:= a0+1; b0:= 0;",
+        "     fi;",
+        "     m:= ceil(m0/2); b0:= floor(b0/10^(m-1));",
+        "  fi;",
+        "  for a from a0 to 9 by 2 do",
+        "    for b from b0 to 10^(m-1)  do",
+        "      x:= 10^(m-1)*a + b;",
+        "      x:= 10^(m-1)*x + revdigs(floor(x/10));",
+        "      if x < n then next fi;",
+        "      if isprime(x) then return x fi",
+        "    od;",
+        "    b0:= 0;",
+        " od;",
+        " procname(10^m0);",
+        "end proc;",
+        "A[1]:= 2: A[2]:= 5: A[3]:= 11:",
+        "for n from 4 to 30 do",
+        "   A[n]:= f1(2*A[n-1]-A[n-2]+1);",
+        "od:",
+        "seq(A[i],i=1..30); # _Robert Israel_, Jan 31 2019"
+    ],
+    "mathematica": [
+        "p = 1; d = 0; Do[ q = FromDigits[ Join[ IntegerDigits[n], Drop[ Reverse[ IntegerDigits[n]], 1]]]; If[ PrimeQ[q] && q - p > d, Print[q]; d = q - p; p = q], {n, 2, 3000002}]"
+    ],
+    "xref": [
+        "Cf. A071250."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Dec 03 2002",
+    "ext": [
+        "Corrected by _T. D. Noe_, Oct 25 2006",
+        "Corrected and more terms from _Robert Israel_, Jan 31 2019"
+    ],
+    "references": 2,
+    "revision": 8,
+    "time": "2019-01-31T19:38:16-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

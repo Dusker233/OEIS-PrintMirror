@@ -1,0 +1,33 @@
+{
+    "number": 52151,
+    "data": "1,2,32,528,131328,22377984,91628068864,187650529822720,12297831583666176000,322380224569805856440320,338040160454396241027914530816,118153599638221082814732598131032064,1982288462105132553530631056140022239461376",
+    "name": "Number of self-complementary directed 3-multigraphs on n nodes.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A052151/b052151.txt\">Table of n, a(n) for n = 1..50</a>"
+    ],
+    "mathematica": [
+        "permcount[v_List] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_List] := 4 Sum[Sum[GCD[v[[i]], v[[j]]], {j, 1, i - 1}], {i, 2, Length[v]}] + Sum[2 v[[i]] - 1, {i, 1, Length[v]}];",
+        "a[n_] := Module[{s = 0}, Do[s += permcount[2 p]*4^edges[p]*If[OddQ[n], n*16^Length[p], 1], {p, IntegerPartitions[Quotient[n, 2]]}]; s/n!];",
+        "Array[a, 25] (* _Jean-Fran\u00e7ois Alcover_, Sep 12 2019, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "edges(v) = {4*sum(i=2, #v, sum(j=1, i-1, gcd(v[i], v[j]))) + sum(i=1, #v, 2*v[i]-1)}",
+        "a(n) = {my(s=0); forpart(p=n\\2, s+=permcount(2*Vec(p))*4^edges(p)*if(n%2, n*16^#p, 1)); s/n!} \\\\ _Andrew Howroyd_, Sep 17 2018"
+    ],
+    "xref": [
+        "Cf. A003086, A052112, A052152."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladeta Jovovic_, Jan 24 2000",
+    "ext": [
+        "Terms a(13) and beyond from _Andrew Howroyd_, Sep 17 2018"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2019-09-12T09:11:15-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

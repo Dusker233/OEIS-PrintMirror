@@ -1,0 +1,34 @@
+{
+    "number": 339869,
+    "data": "561,1105,2465,6601,8911,10585,46657,62745,162401,410041,449065,5148001,5632705,6313681,6840001,7207201,11119105,11921001,19683001,21584305,26719701,41298985,55462177,64774081,67371265,79411201,83966401,87318001,99861985,100427041,172290241,189941761,484662529,790623289,809883361",
+    "name": "Carmichael numbers k for which A053575(k) [the odd part of phi] divides k-1.",
+    "comment": [
+        "Lehmer conjectured that the equation k * phi(n) = n - 1 (with k integer) has no solutions for any composite n (i.e., when k > 1). If this sequence has no common terms with A339818, then the conjecture certainly holds."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A339869/b339869.txt\">Table of n, a(n) for n = 1..671</a> (terms below 2^64)",
+        "D. H. Lehmer, <a href=\"http://dx.doi.org/10.1090/s0002-9904-1932-05521-5\">On Euler's totient function</a>, Bulletin of the American Mathematical Society, 38 (1932), 745-751.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lehmer&#39;s_totient_problem\">Lehmer's totient problem</a>."
+    ],
+    "mathematica": [
+        "carmichaels = Cases[Import[\"https://oeis.org/A002997/b002997.txt\", \"Table\"], {_, _}][[;; , 2]]; oddPart[n_] := n/2^IntegerExponent[n, 2]; q[n_] := Divisible[n - 1, oddPart[EulerPhi[n]]]; Select[carmichaels, q] (* _Amiram Eldar_, Dec 26 2020 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A000265(n) = (n>>valuation(n, 2));",
+        "A002322(n) = lcm(znstar(n)[2]);",
+        "isA339869(n) = ((n>1)&&!isprime(n)&&(!((n-1)%A002322(n)))&&!((n-1)%A000265(eulerphi(n))));"
+    ],
+    "xref": [
+        "Intersection of A002997 and A339880.",
+        "Cf. A000010, A000265, A002322, A053575.",
+        "Cf. also A339818, A339878, A339909."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Dec 22 2020",
+    "references": 11,
+    "revision": 26,
+    "time": "2020-12-27T03:41:36-05:00",
+    "created": "2020-12-25T19:31:01-05:00"
+}

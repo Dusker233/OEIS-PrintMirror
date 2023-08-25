@@ -1,0 +1,46 @@
+{
+    "number": 318610,
+    "data": "0,4,12,24,72,252,756,2160,6480,19764,59292,176904,530712,1595052,4785156,14346720,43040160,129146724,387440172,1162241784,3486725352,10460412252,31381236756,94143001680,282429005040,847289140884,2541867422652,7625595890664,22876787671992",
+    "name": "a(1) = 0, a(2) = 4, a(3) = 12; for n > 3, a(n) = 3*a(n-1) - 3*a(n-2) + 9*a(n-3).",
+    "comment": [
+        "a(n) is the number of solutions to Sum_{i=1..n} x_i^2 == 2 (mod 3)."
+    ],
+    "link": [
+        "Jianing Song, <a href=\"/A318610/b318610.txt\">Table of n, a(n) for n = 1..500</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-3,9)."
+    ],
+    "formula": [
+        "a(n) = last term in M^n * [1, 0, 0]^T, where M = the 3 X 3 matrix [1, 0, 2 /  2, 1, 0 /  0, 2, 1] and T denotes transpose. [Edited by _Petros Hadjicostas_, Dec 19 2019]",
+        "O.g.f.: 4*x^2/((1 - 3x)*(1 + 3*x^2)).",
+        "E.g.f.: 1/3*(exp(3*x) + 2*cos(sqrt(3)*x + 2*Pi/3)).",
+        "a(n) = 3^(n/2 - 1)*((-i)^n*(-1 - sqrt(3)*i)/2 + i^n*(-1 + sqrt(3)*i)/2 + 3^(n/2)), where i is the imaginary unit.",
+        "a(n) = 3^(n/2 - 1)*(2*cos(n*Pi/2 + 2*Pi/3) + 3^(n/2)).",
+        "a(n) = 3^(n-1) + (-3)^(n/2-1) for even n and 3^(n-1) - (-3)^((n-1)/2) for odd n.",
+        "a(n) = a(n-1) + 2*A318609(n-1).",
+        "a(n) = A318609(n) for even n and 2*3^(n-1) - A318609(n) for odd n.",
+        "a(n) + A101990(n) + A318609(n) = 3^n."
+    ],
+    "example": [
+        "a(5) = 72 since M^5 * [1, 0, 0]^T = [81, 90, 72]^T."
+    ],
+    "mathematica": [
+        "LinearRecurrence[{3, -3, 9}, {0, 4, 12}, 30] (* _Vincenzo Librandi_, Sep 04 2018 *)"
+    ],
+    "program": [
+        "(PARI) concat([0], Vec(4*x^2/((1-3*x)*(1+3*x^2)) + O(x^40)))",
+        "(PARI) a(n) = ([1, 0, 2 ; 2, 1, 0 ; 0, 2, 1]^n*mattranspose([1, 0, 0]))[3]; \\\\ _Michel Marcus_, Dec 20 2019",
+        "(Magma) I:=[0,4,12]; [n le 3 select I[n] else 3*Self(n-1)-3*Self(n-2)+9*Self(n-3): n in [1..30]]; // _Vincenzo Librandi_, Sep 04 2018"
+    ],
+    "xref": [
+        "A101990 gives the number of solutions to Sum_{i=1..n} x_i^2 == 0 (mod 3);",
+        "A318609 gives the number of solutions to Sum_{i=1..n} x_i^2 == 1 (mod 3).",
+        "Cf. A228921, A228920, A229138, A330607, A330619, A330635."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Jianing Song_, Sep 02 2018",
+    "references": 9,
+    "revision": 41,
+    "time": "2022-09-08T08:46:22-04:00",
+    "created": "2018-09-04T05:34:37-04:00"
+}

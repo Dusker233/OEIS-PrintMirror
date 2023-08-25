@@ -1,0 +1,71 @@
+{
+    "number": 351327,
+    "data": "1,5,10,11,15,25,50,51,52,100,101,105,110,111,115,125,150,151,152,205,215,250,251,255,357,375,455,500,501,502,510,511,512,520,521,525,537,545,552,554,573,735,753,1000,1001,1005,1010,1011,1015,1025,1050,1051",
+    "name": "Numbers whose trajectory under iteration of the product of squares of nonzero digits map includes 1.",
+    "comment": [
+        "To determine whether a given number k is a term of this sequence, start with k, take the square of the product of its nonzero digits, apply the same process to the result, and continue until 1 is reached or a loop is entered. If 1 is reached, k is a term of this sequence.",
+        "Every power 10^k is a term of this sequence.",
+        "If k is a term, the numbers obtained by inserting zeros anywhere in k are terms.",
+        "If k is a term, the numbers obtained by inserting ones anywhere in k are terms.",
+        "If k is a term, each distinct permutation of the digits of k gives another term.",
+        "If k is a term, the number of iterations required to converge to 1 is less than or equal to 3 (conjectured).",
+        "From _Michael S. Branicky_, Feb 07 2022: (Start)",
+        "The product of squares of nonzero digits map, f, has fixed points given in A115385.",
+        "The map f has (at least) the following cycles:",
+        "  - 324, 576, 44100, 256, 3600;",
+        "  - 11664, 20736, 63504, 129600;",
+        "  - 15876, 2822400, 65536, 7290000;",
+        "  - 5308416, 8294400;",
+        "  - 49787136000000, 64524128256, 849346560000, 386983526400, 55725627801600.",
+        "(End)"
+    ],
+    "link": [
+        "Luca Onnis, <a href=\"https://arxiv.org/abs/2203.03381\">On a variant of the happy numbers and their generalizations</a>, arXiv:2203.03381 [math.GM], 2022."
+    ],
+    "example": [
+        "255 is a term of the sequence: the square of the product of its nonzero digits is (2*5*5)^2=2500, the square of the product of its nonzero digits is (2*5)^2=100, and the square of the product of its nonzero digits is 1^2=1.",
+        "2 is not a term of the sequence because its trajectory under the map is 2 -> 4 -> 16 -> 36 -> 324 -> 576 -> 44100 -> 256 -> 3600 -> 324 (reached earlier), so it enters a loop and never reaches 1."
+    ],
+    "maple": [
+        "b:= proc() false end:",
+        "q:= proc(n) local m, s; m, s:= n, {};",
+        "      do if m=1 then return true",
+        "       elif m in s or b(m) then b(n):= true; return false",
+        "       else s, m:= {s[], m}, mul(max(1, i)^2, i=convert(m, base, 10))",
+        "         fi",
+        "      od",
+        "    end:",
+        "select(q, [$1..2000])[];  # _Alois P. Heinz_, Feb 11 2022"
+    ],
+    "mathematica": [
+        "Select[Range[1000],",
+        "FixedPoint[",
+        "    Product[ReplaceAll[0 -> 1][IntegerDigits[#]][[i]]^2, {i, 1,",
+        "       Length[ReplaceAll[0 -> 1][IntegerDigits[#]]]}] &, #, 10] == 1 &]"
+    ],
+    "program": [
+        "(Python)",
+        "from math import prod",
+        "def psd(n): return prod(int(d)**2 for d in str(n) if d != \"0\")",
+        "def ok(n):",
+        "    seen = set()",
+        "    while n not in seen: # iterate until fixed point or in cycle",
+        "        seen.add(n)",
+        "        n = psd(n)",
+        "    return n == 1",
+        "def aupto(n): return [k for k in range(1, n+1) if ok(k)]",
+        "print(aupto(1205)) # _Michael S. Branicky_, Feb 07 2022",
+        "(PARI) f(n) = vecprod(apply(d -> if (d, d^2, 1), digits(n)))",
+        "is(n) = { my (m=f(n)); while (1, if (n==1, return (1), n==m, return (0), n=f(n); m=f(f(m)))) } \\\\ _R\u00e9my Sigrist_, Feb 11 2022"
+    ],
+    "xref": [
+        "Cf. A007770, A051801, A115385."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Luca Onnis_, Feb 07 2022",
+    "references": 2,
+    "revision": 51,
+    "time": "2023-03-18T08:49:14-04:00",
+    "created": "2022-02-11T17:10:17-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 307711,
+    "data": "3,31,97,331,1009,3067,11513,27403,64621,185617,480853,1333951,3524431,9558361,26080333,70411483,189961939",
+    "name": "a(n) is the least number k such that exactly fraction 1/n of the members of the reduced residue system mod k are prime, or 0 if there is no such k.",
+    "comment": [
+        "a(n) is the least number k, if any exists, such that A000010(k)/A048865(k) = n.",
+        "a(n) = A307712(m) for the least m such that A307713(m)=n."
+    ],
+    "formula": [
+        "n*A048865(a(n)) = A000010(a(n))."
+    ],
+    "example": [
+        "Of the 30 members of the reduced residue system mod 31, exactly one-third, namely 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, are prime.  31 is the least number with this property, so a(3) = 31."
+    ],
+    "maple": [
+        "f:= proc(n) uses numtheory;",
+        "  phi(n)/(pi(n) - nops(factorset(n)));",
+        "end proc:",
+        "N:= 13: # to get a(2)..a(N)",
+        "R:= Array(2..N): count:= 0:",
+        "for k from 3 while count < N-1 do",
+        "  v:= f(k);",
+        "  if v::integer and v <= N and R[v] = 0 then",
+        "     R[v]:= k;",
+        "     count:= count+1;",
+        "  fi",
+        "od:",
+        "convert(R,list);"
+    ],
+    "mathematica": [
+        "With[{s = Table[EulerPhi[n]/Count[Prime@ Range@ PrimePi@ n, _?(GCD[#, n] == 1 &)], {n, 3, 10^4}]}, Array[2 + FirstPosition[s, #][[1]] &, Max@ Select[s, IntegerQ] - 1, 2]] (* _Michael De Vlieger_, Apr 23 2019 *)"
+    ],
+    "xref": [
+        "Cf. A000010, A048865, A307712."
+    ],
+    "keyword": "nonn,more",
+    "offset": "2,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Apr 23 2019",
+    "references": 2,
+    "revision": 17,
+    "time": "2019-04-28T20:09:04-04:00",
+    "created": "2019-04-24T04:42:11-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 334886,
+    "data": "0,12,210,4438,104825,13276637,70543291,67890874657,766399019471,331100496521629,1938622271127289,632711558774104687,18983793845583749117,7475161875743183448469,32609977844866666501811,5014348056100175667015179,5642363887250888549594351",
+    "name": "Numerator of 2*Sum_{k=0..n} binomial(n,k)^2*binomial(n+k,k)^2*(H(n+k)-H(n-k)) where H(n)=Sum_{k=1..n} 1/k.",
+    "comment": [
+        "Conjecture: a(p-1) == 0 (mod p^2) for all primes p >= 5 (checked up to p = 499). - _Peter Bala_, Oct 23 2022"
+    ],
+    "link": [
+        "Ira Gessel, <a href=\"https://doi.org/10.1016/0022-314X(82)90071-3\">Some congruences for Ap\u00e9ry numbers</a>, Journal of Number Theory 14 (1982) 362-368. See b(n).",
+        "Eric Rowland, Reem Yassawi and Christian Krattenthaler, <a href=\"https://arxiv.org/abs/2005.04801\">Lucas congruences for the Ap\u00e9ry numbers modulo p^2</a>, arXiv:2005.04801 [math.NT], 2020. See A'(n)."
+    ],
+    "maple": [
+        "H:= proc(n) option remember; `if`(n=0, 0, 1/n+H(n-1)) end:",
+        "a:= n-> numer(2*add(binomial(n, k)^2*binomial(n+k, k)^2*(H(n+k)-H(n-k)), k=0..n)):",
+        "seq(a(n), n=0..17);  # _Alois P. Heinz_, May 14 2020"
+    ],
+    "mathematica": [
+        "a[n_] := Numerator[2 * Sum[Binomial[n, k]^2 * Binomial[n + k, k]^2 * (HarmonicNumber[n + k] - HarmonicNumber[n - k]), {k, 0, n}]]; Array[a, 17, 0] (* _Amiram Eldar_, May 14 2020 *)"
+    ],
+    "program": [
+        "(PARI) H(n) = sum(k=1, n, 1/k);",
+        "a(n) = numerator(2*sum(k=0, n, binomial(n,k)^2*binomial(n+k,k)^2*(H(n+k)-H(n-k))));"
+    ],
+    "xref": [
+        "Cf. A001008, A002805, A334887 (denominators)."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "0,2",
+    "author": "_Michel Marcus_, May 14 2020",
+    "references": 1,
+    "revision": 24,
+    "time": "2022-10-23T23:33:37-04:00",
+    "created": "2020-05-14T16:04:32-04:00"
+}

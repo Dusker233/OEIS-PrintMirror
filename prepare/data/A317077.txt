@@ -1,0 +1,41 @@
+{
+    "number": 317077,
+    "data": "1,1,3,8,28,110,519,2749,16317,106425,755425,5781956,47384170,413331955,3818838624,37213866876,381108145231,4088785729738,45829237977692,535340785268513,6502943193997922,81984445333355812,1070848034863526547,14467833457108560375,201894571410270034773",
+    "name": "Number of connected multiset partitions of normal multisets of size n.",
+    "comment": [
+        "A multiset is normal if it spans an initial interval of positive integers."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A317077/b317077.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "example": [
+        "The a(3) = 8 connected multiset partitions are (111), (1)(11), (1)(1)(1), (122), (2)(12), (112), (1)(12), (123)."
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Union[Append[Delete[s,List/@c[[1]]],multijoin@@s[[c[[1]]]]]]]]];",
+        "allnorm[n_]:=Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1];",
+        "Length/@Table[Join@@Table[Select[mps[m],Length[csm[#]]==1&],{m,allnorm[n]}],{n,8}]"
+    ],
+    "program": [
+        "(PARI)",
+        "EulerT(v)={Vec(exp(x*Ser(dirmul(v, vector(#v, n, 1/n))))-1, -#v)}",
+        "Connected(v)={my(u=vector(#v));for(n=1, #u, u[n]=v[n] - sum(k=1, n-1, binomial(n-1,k)*v[k]*u[n-k]));u}",
+        "seq(n)={my(u=vector(n, k, x*Ser(EulerT(vector(n,i,binomial(i+k-1,i)))))); Vec(1+vecsum(Connected(vector(n, k, sum(i=1, k, (-1)^(k-i)*binomial(k,i)*u[i])))))} \\\\ _Andrew Howroyd_, Jan 16 2023"
+    ],
+    "xref": [
+        "Cf. A007716, A007718, A048143, A293994, A303837, A303838, A304716, A305078.",
+        "Cf. A317073, A317075, A317078, A317079, A317080."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jul 20 2018",
+    "ext": [
+        "Terms a(9) and beyond from _Andrew Howroyd_, Jan 16 2023"
+    ],
+    "references": 9,
+    "revision": 8,
+    "time": "2023-01-16T21:54:01-05:00",
+    "created": "2018-07-20T22:30:10-04:00"
+}

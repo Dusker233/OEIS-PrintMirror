@@ -1,0 +1,56 @@
+{
+    "number": 292523,
+    "data": "0,1,12,21,132,213,231,312,1324,1342,2143,2413,2431,3124,3142,3412,4213,4231,15324,15342,21453,24153,24315,24351,24513,31254,31524,31542,35124,35142,35412,42153,42315,42351,42513,45213,51324,51342,153264,153426,153462",
+    "name": "Decimal encoding T(n,k) of the k-th non-averaging permutation of [n]; triangle T(n,k), n >= 0, k = 1..A003407(n), read by rows.",
+    "comment": [
+        "A non-averaging permutation avoids any 3-term arithmetic progression.",
+        "The encoding of the empty permutation () is 0. For positive n each element in the permutation is encoded using 1+floor(log_10(n)) = A055642(n) digits with leading 0's if necessary. Then all elements are concatenated.",
+        "All terms are in increasing order."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A292523/b292523.txt\">Rows n = 0..14, flattened</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/NonaveragingSequence.html\">Nonaveraging Sequence</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Arithmetic_progression\">Arithmetic progression</a>",
+        "<a href=\"/index/No#non_averaging\">Index entries related to non-averaging sequences</a>"
+    ],
+    "example": [
+        "Triangle T(n,k) begins:",
+        ":            0;",
+        ":            1;",
+        ":           12, 21;",
+        ":          132, 213, 231, 312;",
+        ":         1324, 1342, 2143, 2413,  2431,    3124,  3142, 3412, 4213, 4231;",
+        ":        15324, 15342, 21453, 24153,    ...,    42513, 45213, 51324, 51342;",
+        ":       153264, 153426, 153462, 153624, ..., 624153, 624315, 624351, 624513;",
+        ":      1532764, 1537264, 1537426,       ...,       7351462, 7351624, 7356124;",
+        ":     15327648, 15327684, 15372648,     ...,     84627351, 84672315, 84672351;",
+        ":    195327648, 195327684, 195372648,   ...,   915738462, 915783426, 915783462;",
+        ":   1090503020710060408,                ...,               10020608090401050703;",
+        ":  109050302110710060408,               ...,              1103070910010502060804;",
+        ": 10905031107021006041208,              ...,             120408100206110307090105;"
+    ],
+    "maple": [
+        "T:= proc(n) option remember; local b, l, c; b, l, c:=",
+        "      proc(s, p) local ok, i, j, k;",
+        "        if nops(s) = 0 then l:= [l[], parse(p)]",
+        "      else for j in s do ok, i, k:= true, j-1, j+1;",
+        "             while ok and i>0 and k<=n do ok, i, k:=",
+        "               not i in s xor k in s, i-1, k+1 od;",
+        "             `if`(ok, b(s minus {j}, cat(p, 0$(c-length(j)), j)), 0)",
+        "           od",
+        "        fi",
+        "      end, [], length(n); b({$1..n}, \"0\"): sort(l)[]",
+        "    end:",
+        "seq(T(n), n=0..6);"
+    ],
+    "xref": [
+        "Cf. A003407, A030299, A055642, A088370."
+    ],
+    "keyword": "nonn,tabf,base",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Dec 08 2017",
+    "references": 5,
+    "revision": 41,
+    "time": "2017-12-09T10:41:11-05:00",
+    "created": "2017-12-08T20:03:39-05:00"
+}

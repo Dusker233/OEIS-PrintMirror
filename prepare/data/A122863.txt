@@ -1,0 +1,39 @@
+{
+    "number": 122863,
+    "data": "1,2,6,12,24,54,108,246,510,1218,2742,6930,16242,47706,144018,672732,2756124,5656266,27943404,75554226,661653378,1323306756",
+    "name": "Smallest integer not the sum of nonzero powers of previous terms.",
+    "comment": [
+        "At most one power of a previous term is allowed in the sum. Sequence and the first few terms from _Andrew Weimholt_. Additional terms from _Jud McCranie_.",
+        "It can be shown that a(n) is even for n >= 2 and a(n+1)/a(n) >= 2. Conjecture: lim_{n->infinity} a(n+1)/a(n) = e and lim_{n->infinity} a(n)/e^(n-1) = 1. - _Ya-Ping Lu_, Feb 18 2022"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product, combinations",
+        "def adding(S): T = {n}; {T.add(x + n) for x in S}; W.update(T)",
+        "N = []; n_max = 10**9; W = set(); print(1, end = ', ')",
+        "for n in range(2, n_max, 2):",
+        "    found = False",
+        "    for i in range(0, len(N)):",
+        "        t = max(N[i])*min(N[i])",
+        "        if t == n:",
+        "            found = True; M = N[:]; del M[i]; S1 = set()",
+        "            {S1.add(sum(c)) for L in product(*M) for j in range(1, len(L)+1) for c in set(combinations(L, j))}",
+        "            adding(S1); N[i].add(n)",
+        "    if found or n in W: continue",
+        "    print(n, end = ', '); adding(W); N.append({n}) # _Ya-Ping Lu_, Feb 18 2022"
+    ],
+    "xref": [
+        "Cf. A034875."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jud McCranie_, Sep 15 2006",
+    "ext": [
+        "a(21)-a(22) from _Donovan Johnson_, Aug 31 2008",
+        "Offset corrected by _Donovan Johnson_, Dec 22 2013"
+    ],
+    "references": 3,
+    "revision": 21,
+    "time": "2022-02-19T11:51:21-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

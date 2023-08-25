@@ -1,0 +1,32 @@
+{
+    "number": 307889,
+    "data": "1,1,2,4,6,10,14,22,30,44,58,82,106,144,182,242,302,392,482,616,750,942,1134,1408,1682,2062,2442,2966,3490,4196,4902,5850,6798,8048,9298,10940,12582,14706,16830,19570,22310,25800,29290,33722,38154,43720,49286,56260,63234,71890,80546",
+    "name": "G.f. A(x) satisfies: A(x) = 1 + x*A(x^2)/(1 - x)^2.",
+    "link": [
+        "Robert Israel, <a href=\"/A307889/b307889.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "maple": [
+        "N:=100: # to get a(1)..a(N)",
+        "A:= 1:",
+        "for iter from 1 do",
+        "  B:= convert(series(1 + x*subs(x=x^2,A)/(1-x)^2, x, N+1),polynom);",
+        "  if B = A then break fi;",
+        "  A:= B;",
+        "od:",
+        "seq(coeff(A,x,j),j=0..N); # _Robert Israel_, May 03 2019"
+    ],
+    "mathematica": [
+        "terms = 50; A[_] = 0; Do[A[x_] = 1 + x A[x^2]/(1 - x)^2 + O[x]^(terms + 1) // Normal, terms + 1]; CoefficientList[A[x], x]",
+        "a[0] = 1; a[1] = 1; a[2] = 1; a[n_] := a[n] = 2 a[n - 1] - a[n - 2] + a[Floor[n/2]]; Join[{1, 1}, Differences[Table[2 a[n + 1], {n, 50}]]]"
+    ],
+    "xref": [
+        "Cf. A001906, A040039, A298414."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, May 03 2019",
+    "references": 1,
+    "revision": 10,
+    "time": "2019-05-03T11:52:41-04:00",
+    "created": "2019-05-03T08:41:46-04:00"
+}

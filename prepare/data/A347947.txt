@@ -1,0 +1,44 @@
+{
+    "number": 347947,
+    "data": "1,3,5,24,81,298,1070,3868,13960,50417,182084,657707,2375894,8583264,31009890,112038032,404803299,1462624643,5284813128,19095564020,68998567080,249316670981,900876831495,3255230444720,11762504284218,42502963168784,153581776819904",
+    "name": "Number of walks on square lattice from (1,n) to (0,0) using steps that decrease the Euclidean distance to the origin and increase the Euclidean distance to (n,1) and that change each coordinate by at most 1.",
+    "comment": [
+        "Lattice points may have negative coordinates, and different walks may differ in length.  All walks are self-avoiding."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A347947/b347947.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Alois P. Heinz, <a href=\"/A347947/a347947.gif\">Animation of a(5) = 298 walks</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Self-avoiding_walk\">Self-avoiding walk</a>"
+    ],
+    "maple": [
+        "s:= proc(n) option remember;",
+        "     `if`(n=0, [[]], map(x-> seq([x[], i], i=-1..1), s(n-1)))",
+        "    end:",
+        "b:= proc(l, v) option remember; (n-> `if`(l=[0$n], 1, add((h-> `if`(",
+        "      add(i^2, i=h)<add(i^2, i=l) and add(i^2, i=v-h)>add(i^2, i=v-l)",
+        "      , b(h, v), 0))(l+x), x=s(n))))(nops(l))",
+        "    end:",
+        "a:= n-> b([n, 1]$2):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = If[n == 0, {{}}, Sequence @@",
+        "     Table[Append[#, i], {i, -1, 1}]& /@ s[n-1]];",
+        "b[l_, v_] := b[l, v] = With[{n = Length[l]},",
+        "     If[l == Table[0, {n}], 1, Sum[With[{h = l + x},",
+        "     If[h.h<l.l && (v-h).(v-h)>(v-l).(v-l), b[h, v], 0]], {x, s[n]}]]];",
+        "a[n_] := b[{n, 1}, {n, 1}];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Nov 04 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column (or row) k=1 of A346540."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Sep 20 2021",
+    "references": 2,
+    "revision": 18,
+    "time": "2021-11-04T11:08:48-04:00",
+    "created": "2021-09-20T19:27:02-04:00"
+}

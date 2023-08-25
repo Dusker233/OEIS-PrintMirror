@@ -1,0 +1,36 @@
+{
+    "number": 345983,
+    "data": "1,2,4,7,11,13,19,26,34,38,48,51,63,69,74,89,105,113,131,135,141,151,173,181,205,217,243,250,278,283,313,344,355,371,385,393,429,447,459,474,514,520,562,573,582,604,650,665,713,737,754,766,818,844,854,861,879,907,965,980,1040,1070",
+    "name": "Partial sums of A344005.",
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A345983/b345983.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "N. J. A. Sloane, <a href=\"/A345983/a345983.txt\">Table of n, a(n) for n = 1..100000</a>"
+    ],
+    "mathematica": [
+        "spm[n_]:=Module[{m=1},While[!Divisible[m(m+1),n],m++];m]; Accumulate[ Array[ spm,100]] (* _Harvey P. Dale_, Dec 04 2022 *)"
+    ],
+    "program": [
+        "(Python 3.8+)",
+        "from itertools import combinations, count, islice",
+        "from math import prod",
+        "from sympy import factorint",
+        "from sympy.ntheory.modular import crt",
+        "def A345983_gen(): # generator of terms",
+        "    c = 1",
+        "    for n in count(2):",
+        "        yield c",
+        "        plist = tuple(p**q for p, q in factorint(n).items())",
+        "        c += n-1 if len(plist) == 1 else int(min(min(crt((m, n//m), (0, -1))[0], crt((n//m, m), (0, -1))[0]) for m in (prod(d) for l in range(1, len(plist)//2+1) for d in combinations(plist, l))))",
+        "A345983_list = list(islice(A345983_gen(),25)) # _Chai Wah Wu_, Jun 01 2022"
+    ],
+    "xref": [
+        "Cf. A011772, A344005, A345984."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jul 09 2021",
+    "references": 3,
+    "revision": 21,
+    "time": "2022-12-04T11:13:34-05:00",
+    "created": "2021-07-09T01:21:34-04:00"
+}

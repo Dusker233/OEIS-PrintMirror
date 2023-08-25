@@ -1,0 +1,42 @@
+{
+    "number": 359012,
+    "data": "318,557,692,729,2226,2437,2776,3209,4436,5336,5549,5718,5956,6068,6141,6353,6958,7045,7046,7338,7345,7643,7865,8261,8409,9153,9178,9242,9544,9569,9664,9894,9999,10174,10889,12389,12434,13497,13516,16308,18695,19707,21940,21954,22535",
+    "name": "Numbers k that are a substring of xPy where k=concatenation(x,y) and xPy is the number of permutations A008279(x,y).",
+    "comment": [
+        "If n and d are two nonnegative integers, and d <= n, then the number of permutations is obtained by the formula nPd = n!/(n-d)!."
+    ],
+    "example": [
+        "318 is present in 31P8 (= 318073392000 = A008279(31, 8)).",
+        "557 is present in 55P7 (= 1022755734000 = A008279(55, 7)).",
+        "692 is present in 69P2 (= 4692 = A008279(69, 2))."
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "def is_valid_sequence_number(n):",
+        "    num_str = str(n)",
+        "    length = len(num_str)",
+        "    for count in range(math.ceil(length / 2), length):",
+        "        if num_str in str(",
+        "            math.perm(int(num_str[:count]), int(num_str[-(length - count) :]))",
+        "        ):",
+        "            return True",
+        "    return False",
+        "A359012 = []",
+        "for num in range(10, 10**4):",
+        "    if is_valid_sequence_number(num):",
+        "        A359012.append(num)",
+        "(PARI) T(n,k) = n!/(n-k)!; \\\\ A008279",
+        "isok(k) = my(d=digits(k), s=Str(k), d1, d2); for (i=1, #d-1, d1=fromdigits(Vec(d, i)); d2=fromdigits(vector(#d-i, k, d[i+k])); if ((d1 >= d2) && (#strsplit(Str(T(d1,d2)), s) > 1), return(1));); \\\\ _Michel Marcus_, Dec 12 2022"
+    ],
+    "xref": [
+        "Cf. A008279."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_John Samuel_, Dec 11 2022",
+    "references": 1,
+    "revision": 35,
+    "time": "2023-01-06T20:54:31-05:00",
+    "created": "2023-01-06T20:54:31-05:00"
+}

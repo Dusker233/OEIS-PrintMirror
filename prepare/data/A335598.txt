@@ -1,0 +1,44 @@
+{
+    "number": 335598,
+    "data": "0,25,289,2025,13225,100489,198025,319225,466489,4862025,19758025,42471289,1975358025,3199599225,60415182025,134885049289,151192657225,197531358025,207612366025,248956092025,447136954489,588186226489,19753091358025,31996727599225,311995522926025,1975308691358025",
+    "name": "Squares that remain squares when the repunit with the same number of digits is added.",
+    "link": [
+        "Robert Israel, <a href=\"/A335598/b335598.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "0 is a term because 0 + 1 = 1. The result is another square.",
+        "25 is a term because 25 + 11 = 36. The result is another square.",
+        "289 is a term because 289 + 111 = 400. The result is another square."
+    ],
+    "maple": [
+        "f:= proc(d,q,m) local x,y;",
+        "if d < q/d then return NULL fi;",
+        "x:= ((d-q/d)/2)^2;",
+        "if x >= 10^m and x < 10^(m+1) then x else NULL fi;",
+        "end proc:",
+        "R:= 0:",
+        "for m from 1 to 20 do",
+        "  q:= (10^m-1)/9;",
+        "  V:= sort(convert(map(f, numtheory:-divisors(q),q,m-1),list));",
+        "  R:= R, op(V);",
+        "od:",
+        "R; # _Robert Israel_, Aug 21 2020"
+    ],
+    "program": [
+        "(PARI) lista(limit)={for(k=0, sqrtint(limit), my(t=k^2); if(issquare(t + (10^if(t, 1+logint(t,10), 1)-1)/9), print1(t, \", \")))}",
+        "{ lista(10^12) } \\\\ _Andrew Howroyd_, Aug 11 2020"
+    ],
+    "xref": [
+        "Cf. A002275, A048612, A273229."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Jos\u00e9 de Jes\u00fas Camacho Medina_, Jun 14 2020",
+    "ext": [
+        "Name corrected by _Robert Israel_, Aug 26 2020"
+    ],
+    "references": 1,
+    "revision": 26,
+    "time": "2020-08-27T08:18:41-04:00",
+    "created": "2020-08-17T23:12:30-04:00"
+}

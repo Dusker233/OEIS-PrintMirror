@@ -1,0 +1,47 @@
+{
+    "number": 340431,
+    "data": "13,211,421,523,154321,221941,1556641,2377201,3918757,4359961,7842511,9163873,20446561,1501102081,7578849037,15724210681,25522638481,52966796353,68999668237,109926997057,112417709113,209826685297,694503347201,963374692897",
+    "name": "Primes p such that, with q the next prime after p, q > p+2 and q^p == q (mod p+q) and p^q == p (mod p+q).",
+    "comment": [
+        "For twin primes p,q we always have p^q == p (mod p+q) and q^p == q (mod p+q)."
+    ],
+    "example": [
+        "a(3) = 421 is a term because the next prime is 431, 421^431 == 421 (mod 852) and 431^421 == 431 (mod 852)."
+    ],
+    "maple": [
+        "q:= 2: R:= NULL:",
+        "while p < 10^7 do",
+        "  p:= q; q:= nextprime(p);",
+        "  if q-p = 2 then next fi;",
+        "  if q &^ p mod (p+q) = q and p &^ q mod (p+q) = p then",
+        "    R:= R, p;",
+        "  fi;",
+        "od:",
+        "R;"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import nextprime",
+        "A340431_list , p = [], 2",
+        "while p <= 10**10:",
+        "    q = nextprime(p)",
+        "    if q > p+2:",
+        "        pq = p+q",
+        "        if pow(q,p,pq) == q and pow(p,q,pq) == p:",
+        "            A340431_list.append(p)",
+        "    p = q # _Chai Wah Wu_, Jan 12 2021",
+        "(PARI) upto(n) = my(p=2); forprime(q = nextprime(p+1), n, if(q-p > 2, if(Mod(p, p+q)^q == p, if(Mod(q, p+q)^p == q, print1(p, \", \")))); p = q); \\\\ _Daniel Suteu_, Jan 12 2021"
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 12 2021",
+    "ext": [
+        "a(15)-a(17) from _Daniel Suteu_, Jan 12 2021",
+        "a(18)-a(22) from _Chai Wah Wu_, Jan 15 2021",
+        "a(23)-a(24) from _Martin Ehrenstein_, Jan 19 2021"
+    ],
+    "references": 0,
+    "revision": 53,
+    "time": "2021-01-19T05:48:42-05:00",
+    "created": "2021-01-12T15:35:57-05:00"
+}

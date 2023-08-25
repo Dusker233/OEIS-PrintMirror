@@ -1,0 +1,76 @@
+{
+    "number": 340185,
+    "data": "1,1,15,2639,5100561,105518291153,23067254643457375,52901008815129395889375,1266973371422697144030728637409,315937379766837559600972497421046382689,818563964325891485548944567913851815851212484079",
+    "name": "Number of spanning trees in the halved Aztec diamond HOD_n.",
+    "comment": [
+        "                                              *",
+        "                                              |",
+        "                      *                   *---*---*",
+        "                      |                   |   |   |",
+        "      *           *---*---*           *---*---*---*---*",
+        "      |           |   |   |           |   |   |   |   |",
+        "  *---*---*   *---*---*---*---*   *---*---*---*---*---*---*",
+        "    HOD_1           HOD_2                   HOD_3",
+        "-------------------------------------------------------------",
+        "                  *",
+        "                  |",
+        "              *---*---*",
+        "              |   |   |",
+        "          *---*---*---*---*",
+        "          |   |   |   |   |",
+        "      *---*---*---*---*---*---*",
+        "      |   |   |   |   |   |   |",
+        "  *---*---*---*---*---*---*---*---*",
+        "                HOD_4"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A340185/b340185.txt\">Table of n, a(n) for n = 0..40</a>",
+        "Mihai Ciucu, <a href=\"https://arxiv.org/abs/0710.4500\">Symmetry classes of spanning trees of Aztec diamonds and perfect matchings of odd squares with a unit hole</a>, arXiv:0710.4500 [math.CO], 2007. See Corollary 3.7."
+    ],
+    "formula": [
+        "a(n) = Product_{1<=j<k<=2*n and j+k<=2*n} (4 - 4*cos(j*Pi/(2*n+1))*cos(k*Pi/(2*n+1))).",
+        "From _Seiichi Manyama_, Jan 02 2021: (Start)",
+        "a(n) = 4^((n-1)*n) * Product_{1<=j<k<=n} (1 - cos(j*Pi/(2*n+1))^2 * cos(k*Pi/(2*n+1))^2).",
+        "a(n) = A340052(n) * A065072(n) = (1/2^n) * sqrt(A127605(n) * A004003(n) / (2*n+1)). (End)",
+        "a(n) ~ sqrt(Gamma(1/4)) * exp(G*(2*n+1)^2/Pi) / (Pi^(3/8) * n^(3/4) * 2^(n + 3/4) * (1 + sqrt(2))^(n + 1/2)), where G is Catalan's constant A006752. - _Vaclav Kotesovec_, Jan 03 2021"
+    ],
+    "mathematica": [
+        "Table[4^((n-1)*n) * Product[Product[(1 - Cos[j*Pi/(2*n + 1)]^2*Cos[k*Pi/(2*n + 1)]^2), {k, j+1, n}], {j, 1, n}], {n, 0, 12}] // Round (* _Vaclav Kotesovec_, Jan 03 2021 *)"
+    ],
+    "program": [
+        "(PARI) default(realprecision, 120);",
+        "{a(n) = round(prod(j=1, 2*n, prod(k=j+1, 2*n-j, 4-4*cos(j*Pi/(2*n+1))*cos(k*Pi/(2*n+1)))))}",
+        "(PARI) default(realprecision, 120);",
+        "{a(n) = round(4^((n-1)*n)*prod(j=1, n, prod(k=j+1, n, 1-(cos(j*Pi/(2*n+1))*cos(k*Pi/(2*n+1)))^2)))} \\\\ _Seiichi Manyama_, Jan 02 2021",
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_HOD(n):",
+        "    s = 1",
+        "    grids = []",
+        "    for i in range(2 * n + 1, 1, -2):",
+        "        for j in range(i - 2):",
+        "            a, b, c = s + j, s + j + 1, s + i + j",
+        "            grids.extend([(a, b), (b, c)])",
+        "        grids.append((s + i - 2, s + i - 1))",
+        "        s += i",
+        "    return grids",
+        "def A340185(n):",
+        "    if n == 0: return 1",
+        "    universe = make_HOD(n)",
+        "    GraphSet.set_universe(universe)",
+        "    spanning_trees = GraphSet.trees(is_spanning=True)",
+        "    return spanning_trees.len()",
+        "print([A340185(n) for n in range(7)])"
+    ],
+    "xref": [
+        "Cf. A004003, A007725, A007726, A065072, A127605, A340052, A340176 (halved Aztec diamond HMD_n)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Dec 31 2020",
+    "references": 6,
+    "revision": 43,
+    "time": "2023-02-28T23:47:29-05:00",
+    "created": "2021-01-01T11:58:31-05:00"
+}

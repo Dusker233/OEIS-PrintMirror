@@ -1,0 +1,50 @@
+{
+    "number": 184775,
+    "data": "2,4,5,8,14,21,22,29,31,38,42,48,52,56,59,63,69,72,73,76,80,90,93,97,106,107,123,127,128,137,140,141,158,161,162,165,169,171,178,182,186,192,196,199,220,222,239,246,247,250,254,260,264,268,271,281,284,298,305,311,318",
+    "name": "Numbers k such that floor(k*sqrt(2)) is prime.",
+    "comment": [
+        "Chua, Park, & Smith prove a general result that implies that, for any m, there is a constant C(m) such that a(n+m) - a(n) < C(m) infinitely often. - _Charles R Greathouse IV_, Jul 01 2022"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A184775/b184775.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Lynn Chua, Soohyun Park, and Geoffrey D. Smith, <a href=\"https://arxiv.org/abs/1407.1747\">Bounded gaps between primes in special sequences</a>, Proceedings of the AMS, Volume 143, Number 11 (November 2015), pp. 4597-4611. arXiv:1407.1747 [math.NT]"
+    ],
+    "example": [
+        "See A184774."
+    ],
+    "mathematica": [
+        "r=2^(1/2); s=r/(r-1);",
+        "a[n_]:=Floor [n*r];  (* A001951 *)",
+        "b[n_]:=Floor [n*s];  (* A001952 *)",
+        "Table[a[n],{n,1,120}]",
+        "t1={}; Do[If[PrimeQ[a[n]], AppendTo[t1,a[n]]], {n,1,600}]; t1",
+        "t2={}; Do[If[PrimeQ[a[n]], AppendTo[t2,n]], {n,1,600}]; t2",
+        "t3={}; Do[If[MemberQ[t1, Prime[n]], AppendTo[t3,n]],{n,1,300}]; t3",
+        "t4={}; Do[If[PrimeQ[b[n]], AppendTo[t4,b[n]]],{n,1,600}]; t4",
+        "t5={}; Do[If[PrimeQ[b[n]], AppendTo[t5,n]],{n,1,600}]; t5",
+        "t6={}; Do[If[MemberQ[t4, Prime[n]], AppendTo[t6,n]],{n,1,300}]; t6",
+        "(* the lists t1,t2,t3,t4,t5,t6 match the sequences",
+        "A184774, A184775, A184776 ,A184777, A184778, A184779 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = isprime(floor(n*sqrt(2))); \\\\ _Michel Marcus_, Apr 10 2018",
+        "(PARI) is(n)=isprime(sqrtint(2*n^2)) \\\\ _Charles R Greathouse IV_, Jul 01 2022",
+        "(Python)",
+        "from itertools import count, islice",
+        "from math import isqrt",
+        "from sympy import isprime",
+        "def A184775_gen(): # generator of terms",
+        "    return filter(lambda k:isprime(isqrt(k**2<<1)), count(1))",
+        "A184775_list = list(islice(A184775_gen(),25)) # _Chai Wah Wu_, Jul 28 2022"
+    ],
+    "xref": [
+        "Cf. A001951, A184774, A184776."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jan 21 2011",
+    "references": 6,
+    "revision": 25,
+    "time": "2022-07-29T09:51:13-04:00",
+    "created": "2011-01-21T19:32:12-05:00"
+}

@@ -1,0 +1,62 @@
+{
+    "number": 325241,
+    "data": "12,18,20,28,44,45,50,52,60,63,68,72,75,76,84,90,92,98,99,108,116,117,124,126,132,140,147,148,150,153,156,164,171,172,175,180,188,198,200,204,207,212,220,228,234,236,242,244,245,252,260,261,268,275,276,279",
+    "name": "Numbers > 1 whose maximum prime exponent is one greater than their minimum.",
+    "comment": [
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k), so these are Heinz numbers of integer partitions whose maximum multiplicity is one greater than their minimum (counted by A325279).",
+        "The asymptotic density of this sequence is 1/zeta(3) - 1/zeta(2) = A088453 - A059956 = 0.22398... . - _Amiram Eldar_, Jan 30 2023"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A325241/b325241.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "A051903(a(n)) - A051904(a(n)) = 1."
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices begins:",
+        "  12: {1,1,2}",
+        "  18: {1,2,2}",
+        "  20: {1,1,3}",
+        "  28: {1,1,4}",
+        "  44: {1,1,5}",
+        "  45: {2,2,3}",
+        "  50: {1,3,3}",
+        "  52: {1,1,6}",
+        "  60: {1,1,2,3}",
+        "  63: {2,2,4}",
+        "  68: {1,1,7}",
+        "  72: {1,1,1,2,2}",
+        "  75: {2,3,3}",
+        "  76: {1,1,8}",
+        "  84: {1,1,2,4}",
+        "  90: {1,2,2,3}",
+        "  92: {1,1,9}",
+        "  98: {1,4,4}",
+        "  99: {2,2,5}"
+    ],
+    "mathematica": [
+        "Select[Range[100],Max@@FactorInteger[#][[All,2]]-Min@@FactorInteger[#][[All,2]]==1&]",
+        "Select[Range[300],  Min[e = FactorInteger[#][[;; , 2]]] +1 == Max[e] &] (* _Amiram Eldar_, Jan 30 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def ok(n):",
+        "    e = sorted(factorint(n).values())",
+        "    return n > 1 and max(e) == 1 + min(e)",
+        "print([k for k in range(280) if ok(k)]) # _Michael S. Branicky_, Dec 18 2021",
+        "(PARI) is(n)={my(e=factor(n)[,2]); n>1 && vecmin(e) + 1 == vecmax(e); } \\\\ _Amiram Eldar_, Jan 30 2023"
+    ],
+    "xref": [
+        "Positions of 1's in A062977. Supersequence of A054753, A096156.",
+        "Cf. A001221, A001222, A001694, A051903, A051904, A052485, A056239, A112798, A118914, A325240, A325259, A325270, A325279.",
+        "Cf. A059956, A088453."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Apr 15 2019",
+    "references": 9,
+    "revision": 16,
+    "time": "2023-01-30T02:39:58-05:00",
+    "created": "2019-04-16T15:26:27-04:00"
+}

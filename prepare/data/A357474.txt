@@ -1,0 +1,37 @@
+{
+    "number": 357474,
+    "data": "1,4,9,11,14,16,19,25,36,41,44,49,64,81,91,94,99,100,111,114,116,119,121,125,136,141,144,149,161,164,169,181,191,194,196,199,225,251,254,256,259,289,324,361,364,369,400,411,414,416,419,425,436,441,444,449,464",
+    "name": "Squarely correct numbers.",
+    "comment": [
+        "A positive integer is a squarely correct number if its base-10 representation consists entirely of one or more adjacent blocks of digits that are positive perfect squares with no leading zeros. (See George Berzsenyi link below.)"
+    ],
+    "link": [
+        "George Berzsenyi, <a href=\"https://doi.org/10.1080/10724117.2022.2092341\">Consecutively and Squarely Correct (P439)</a>, Math Horizons, Vol. 30, Issue 1, The Playground, August 2022."
+    ],
+    "formula": [
+        "5n/3 < a(n) << n^k for n > 1, where k = log 10/log 3 = 2.0959.... - _Charles R Greathouse IV_, Oct 03 2022"
+    ],
+    "example": [
+        "14401 is not a term, but 14411 is."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory.primetest import is_square",
+        "def ok(n):",
+        "    if is_square(n): return True",
+        "    s = str(n)",
+        "    return any(s[i]!=\"0\" and ok(int(s[:i])) and ok(int(s[i:])) for i in range(1, len(s)))",
+        "print([k for k in range(1, 465) if ok(k)]) # _Michael S. Branicky_, Oct 03 2022",
+        "(PARI) is(n)=if(n<11, issquare(n), n%10, my(d=digits(n)); for(i=1,#d, if(issquare(n%10^i) && d[#d+1-i] && is(n\\10^i), return(1))); 0, my(k=valuation(n,10)); k%2==0 && is(n/10^k)) \\\\ _Charles R Greathouse IV_, Oct 04 2022"
+    ],
+    "xref": [
+        "Cf. A000290, A036435, A018851."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,2",
+    "author": "_Freddy Barrera_, Sep 29 2022",
+    "references": 0,
+    "revision": 20,
+    "time": "2022-11-19T03:28:30-05:00",
+    "created": "2022-11-19T03:28:30-05:00"
+}

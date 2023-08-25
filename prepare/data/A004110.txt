@@ -1,0 +1,49 @@
+{
+    "number": 4110,
+    "id": "M1504",
+    "data": "1,1,1,2,5,16,78,588,8047,205914,10014882,912908876,154636289460,48597794716736,28412296651708628,31024938435794151088,63533059372622888758054,244916078509480823407040988,1783406527599529094009748567708",
+    "name": "Number of n-node unlabeled graphs without endpoints (i.e., no nodes of degree 1).",
+    "comment": [
+        "a(n) is also the number of unlabeled mating graphs with n nodes. A mating graph has no two vertices with identical sets of neighbors. - _Tanya Khovanova_, Oct 23 2008"
+    ],
+    "reference": [
+        "F. Harary, Graph Theory, Wiley, 1969. See illustrations in Appendix 1.",
+        "F. Harary and E. Palmer, Graphical Enumeration, (1973), compare formula (8.7.11).",
+        "R. W. Robinson, personal communication.",
+        "R. W. Robinson, Numerical implementation of graph counting algorithms, AGRC Grant, Math. Dept., Univ. Newcastle, Australia, 1976.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A004110/b004110.txt\">Table of n, a(n) for n = 0..50</a> (terms 0..26 from R. W. Robinson)",
+        "David Cook II, <a href=\"http://arxiv.org/abs/1306.0140\">Nested colourings of graphs</a>, arXiv preprint arXiv:1306.0140 [math.CO], 2013.",
+        "Ira M. Gessel and Ji Li, <a href=\"https://doi.org/10.1016/j.jcta.2010.03.009\"> Enumeration of point-determining graphs</a>, J. Combinatorial Theory Ser. A 118 (2011), 591-612.",
+        "R. J. Mathar, <a href=\"/A004110/a004110_1.pdf\">Illustrations for n=1..5 nodes</a>",
+        "Ronald C. Read, <a href=\"https://oeis.org/A006023/a006023.pdf\"> The enumeration of mating-type graphs</a>, Report CORR 89-38, Dept. Combinatorics and Optimization, Univ. Waterloo, 1989.",
+        "R. W. Robinson, <a href=\"/A004110/a004110_2.pdf\">Graphs without endpoints - computer printout</a>",
+        "N. J. A. Sloane, <a href=\"/A004110/a004110.pdf\">Illustration of a(0)-a(5)</a>"
+    ],
+    "mathematica": [
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t * k; s += t]; s!/m];",
+        "edges[v_] := Sum[GCD[v[[i]], v[[j]]], {i, 2, Length[v]}, {j, 1, i - 1}] + Total[Quotient[v, 2]];",
+        "a[n_] := Sum[permcount[p] * 2^edges[p] * Coefficient[Product[1 - x^p[[i]], {i, 1, Length[p]}], x, n - k]/k!, {k, 1, n}, {p, IntegerPartitions[k]}]; a[0] = 1;",
+        "Table[a[n], {n, 0, 18}] (* _Jean-Fran\u00e7ois Alcover_, Oct 27 2018, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI) \\\\ Compare A000088.",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, gcd(v[i], v[j]))) + sum(i=1, #v, v[i]\\2)}",
+        "a(n) = {my(s=0); sum(k=1, n, forpart(p=k, s+=permcount(p) * 2^edges(p) * polcoef(prod(i=1, #p, 1-x^p[i]), n-k)/k!)); s} \\\\ _Andrew Howroyd_, Sep 09 2018"
+    ],
+    "xref": [
+        "Row sums of A123551.",
+        "Cf. A059166 (n-node connected labeled graphs without endpoints), A059167 (n-node labeled graphs without endpoints), A004108 (n-node connected unlabeled graphs without endpoints), A006024 (number of labeled mating graphs with n nodes), A129584 (bi-point-determining graphs).",
+        "If isolated nodes are forbidden, see A261919."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "references": 30,
+    "revision": 77,
+    "time": "2021-04-15T20:35:35-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

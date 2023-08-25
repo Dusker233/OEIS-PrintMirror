@@ -1,0 +1,42 @@
+{
+    "number": 27265,
+    "data": "24,104,954,3786,33648,131264,1159844,4508580,39809076,154773696,1367463642,5323519838,47082494816,183586707648,1625447736120,6348284151024,56265306436584,220081449149440,1952476424575980,7647723960962932,67907006619888744,266322435212031984",
+    "name": "a(n) = Sum_{k=0..2n-3} T(n,k) * T(n,k+3), with T given by A026519.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A027265/b027265.txt\">Table of n, a(n) for n = 3..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..2n-3} A026519(n,k) * A026519(n,k+3)."
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[k<0 || k>2*n, 0, If[k==0 || k==2*n, 1, If[k==1 || k==2*n-1, Floor[(n+1)/2], If[EvenQ[n], T[n-1, k-2] + T[n-1, k], T[n-1, k-1] + T[n-1, k-2] + T[n-1, k] ]]]]; (* T = A026519 *)",
+        "a[n_] := a[n] = Block[{$RecursionLimit = Infinity}, Sum[T[n, k]*T[n, k+3], {k, 0, 2*n-3}] ];",
+        "Table[a[n], {n, 3, 40}] (* _G. C. Greubel_, Dec 21 2021 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n,k): # T = A026519",
+        "    if (k<0 or k>2*n): return 0",
+        "    elif (k==0 or k==2*n): return 1",
+        "    elif (k==1 or k==2*n-1): return (n+1)//2",
+        "    elif (n%2==0): return T(n-1, k) + T(n-1, k-2)",
+        "    else: return T(n-1, k) + T(n-1, k-1) + T(n-1, k-2)",
+        "@CachedFunction",
+        "def a(n): return sum( T(n,k)*T(n,k+3) for k in (0..2*n-3) )",
+        "[a(n) for n in (3..40)] # _G. C. Greubel_, Dec 21 2021"
+    ],
+    "xref": [
+        "Cf. A026519, A026520, A026521, A026522, A026523, A026524, A026525, A026526, A026527, A026528, A026529, A026530, A026531, A026532, A026533, A026534, A027262, A027263, A027264, A027266."
+    ],
+    "keyword": "nonn",
+    "offset": "3,1",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "More terms from _Sean A. Irvine_, Oct 26 2019"
+    ],
+    "references": 21,
+    "revision": 17,
+    "time": "2021-12-22T07:46:16-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

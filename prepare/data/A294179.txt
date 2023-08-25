@@ -1,0 +1,38 @@
+{
+    "number": 294179,
+    "data": "2,65,561,41041,825265,321197185,5394826801,232250619601,9746347772161",
+    "name": "a(n) is the smallest k with n prime factors such that p^k == p (mod k) for every prime p dividing k.",
+    "comment": [
+        "All the terms are squarefree. Are all composite terms odd?",
+        "Conjecture: the sequence contains only finitely many Carmichael numbers, A006931. What is the smallest n >= 3 for which a(n) is not a Carmichael number? For n >= 3, a(n) <= A006931(n)."
+    ],
+    "maple": [
+        "for k from 2 to 10^6 do",
+        "  if numtheory:-issqrfree(k) then",
+        "    ps := numtheory:-factorset(k);",
+        "    n := nops(ps);",
+        "    if not assigned(A[n]) and andmap(p -> p &^ k -p mod k = 0, ps) then",
+        "      A[n] := k;",
+        "    end if",
+        "  end if;",
+        "end do:",
+        "seq(A[i],i=1..max(map(op, [indices(A)]))); # _Robert Israel_, Feb 11 2018"
+    ],
+    "mathematica": [
+        "With[{s = Select[Range[10^6], Function[k, AllTrue[FactorInteger[k][[All, 1]], PowerMod[#, k, k] == Mod[#, k] &]]]}, Select[Table[SelectFirst[s, PrimeOmega@ # == n &], {n, 5}], IntegerQ]] (* _Michael De Vlieger_, Feb 20 2018 *)"
+    ],
+    "xref": [
+        "Cf. A006931, A285549, A294169."
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "1,1",
+    "author": "_Thomas Ordowski_, Feb 11 2018",
+    "ext": [
+        "a(7)-a(8) from _Daniel Suteu_, Feb 06 2023",
+        "a(9) from _Michael S. Branicky_, Aug 03 2023"
+    ],
+    "references": 0,
+    "revision": 25,
+    "time": "2023-08-03T10:45:51-04:00",
+    "created": "2018-03-10T10:51:12-05:00"
+}

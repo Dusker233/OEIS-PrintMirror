@@ -1,0 +1,34 @@
+{
+    "number": 308272,
+    "data": "1,1,1,2,2,3,5,6,7,10,13,16,22,27,33,44,53,65,84,101,124,156,187,226,280,336,403,492,587,700,850,1008,1195,1435,1693,2004,2390,2808,3303,3910,4584,5372,6328,7387,8619,10106,11757,13675,15961,18508,21464,24948,28845,33345",
+    "name": "G.f. A(x) satisfies: A(x) = (1 + x) * A(x^2)*A(x^3)*A(x^5)* ... *A(x^prime(k))* ...",
+    "comment": [
+        "Weigh transform of A008480."
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} (1 + x^k)^A008480(k)."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; (l-> add(i, i=l)!/",
+        "      mul(i!, i=l))(map(i-> i[2], ifactors(n)[2]))",
+        "    end:",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(binomial(g(i), j)*b(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, May 17 2019"
+    ],
+    "mathematica": [
+        "terms = 53; A[_] = 1; Do[A[x_] = (1 + x) Product[A[x^Prime[k]], {k, 1, terms}] + O[x]^(terms + 1) // Normal, terms + 1]; CoefficientList[A[x], x]"
+    ],
+    "xref": [
+        "Cf. A000040, A008480, A129373, A308271."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Ilya Gutkovskiy_, May 17 2019",
+    "references": 2,
+    "revision": 7,
+    "time": "2019-05-17T22:08:11-04:00",
+    "created": "2019-05-17T22:08:11-04:00"
+}

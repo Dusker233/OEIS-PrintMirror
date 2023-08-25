@@ -1,0 +1,39 @@
+{
+    "number": 181966,
+    "data": "0,2,12,72,480,4320,35280,322560,3265920,39916800,479001600,6706022400,93405312000,1482030950400,24845812992000,418455797760000,7469435990016000,147254595231744000,2919482409811968000,63255452212592640000,1430546380807864320000",
+    "name": "Sum of the sizes of normalizers of all prime order cyclic subgroups of the symmetric group S_n.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A181966/b181966.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Math.stackexchange.com, <a href=\"https://math.stackexchange.com/questions/1218392/normalizer-of-the-cyclic-group-in-s-n\">Normalizer of the cyclic group in S_n</a>"
+    ],
+    "formula": [
+        "a(n) = n! * A013939(n). - _Andrew Howroyd_, Jul 30 2018"
+    ],
+    "program": [
+        "(GAP) List([1..7], n->Sum(Filtered( ConjugacyClassesSubgroups( SymmetricGroup(n)), x->IsPrime( Size( Representative(x))) ), x->Size(x)*Size( Normalizer( SymmetricGroup(n), Representative(x))) )); # _Andrew Howroyd_, Jul 30 2018",
+        "(GAP)",
+        "a:=function(n) local total, perm, g, p, k;",
+        "  total:= 0; g:= SymmetricGroup(n);",
+        "  for p in Filtered([2..n], IsPrime) do for k in [1..QuoInt(n,p)] do",
+        "     perm:=PermList(List([0..p*k-1], i->i - (i mod p) + ((i + 1) mod p) + 1));",
+        "     total:=total + Size(Normalizer(g, perm)) * Factorial(n) / (p^k * (p-1) * Factorial(k) * Factorial(n-k*p));",
+        "  od; od;",
+        "  return total;",
+        "end; # _Andrew Howroyd_, Jul 30 2018",
+        "(PARI) a(n)={n!*sum(p=2, n, if(isprime(p), n\\p))} \\\\ _Andrew Howroyd_, Jul 30 2018"
+    ],
+    "xref": [
+        "Cf. A181954 for the number of such subgroups.",
+        "Cf. A013939, A181967."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Olivier G\u00e9rard_, Apr 04 2012",
+    "ext": [
+        "Terms a(8) and beyond from _Andrew Howroyd_, Jul 30 2018"
+    ],
+    "references": 2,
+    "revision": 18,
+    "time": "2018-07-30T19:09:04-04:00",
+    "created": "2012-04-05T02:59:54-04:00"
+}

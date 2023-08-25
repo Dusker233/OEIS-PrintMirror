@@ -1,0 +1,38 @@
+{
+    "number": 350683,
+    "data": "0,1,1,8,17,98,362,1916,9512,53858,315872,1984979,13105685,91128546,663815424,5055622309,40148341135,331753228115,2846786927873,25323311882074,233137061978065,2218141402504254,21780561656373552,220451321425101091,2297330116404668422",
+    "name": "Total sum over all partitions of [n] of elements i contained in block i when blocks are ordered with decreasing largest elements.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A350683/b350683.txt\">Table of n, a(n) for n = 0..575</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..max(0,A008805(n-1))} k * A350684(n,k)."
+    ],
+    "example": [
+        "a(4) = 17 = 3*1 + 4*2 + 2*3: 432(1), 42(1)|3, 4(1)|3|2, 43|(2)1, 43|(2)|1, 4|3(2)1, 4|3(2)|1, 43(1)|(2), 4(1)|3(2)."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0, [1, 0], add((p-> [0,",
+        "     `if`(n=j, p[1]*j, 0)]+p)(b(n-1, max(m, j))), j=1..m+1))",
+        "    end:",
+        "a:= n-> b(n, 0)[2]:",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[n_, m_] := b[n, m] = If[n == 0, {1, 0}, Sum[With[{p = b[n-1, Max[m, j]]},",
+        "     {0, If[n == j, p[[1]]*j, 0]} + p], {j, 1, m+1}]];",
+        "a[n_] := b[n, 0][[2]];",
+        "Table[a[n], {n, 0, 25}]; (* _Jean-Fran\u00e7ois Alcover_, May 08 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A008805, A350648, A350684."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jan 11 2022",
+    "references": 2,
+    "revision": 15,
+    "time": "2022-05-08T08:44:55-04:00",
+    "created": "2022-03-11T09:51:42-05:00"
+}

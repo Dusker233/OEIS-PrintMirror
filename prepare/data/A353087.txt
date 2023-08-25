@@ -1,0 +1,42 @@
+{
+    "number": 353087,
+    "data": "23,34,40,55,59,67,75,81,90,90,97,108,118,123,131,144,147,147,147,157,157,182,186,186,186,189,203,204,206,206,209,232,232,236,236,237,237,245,257,257,265,278,282,282,282,282,282,290,307,307,318,318,318,318,341",
+    "name": "Smallest integer k such that k! contains at least n copies of each decimal digit.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A353087/b353087.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "example": [
+        "23! = 25852016738884976640000 is the smallest factorial containing at least one copy of each decimal digit. Thus a(1) = 23."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k; for k from a(n-1)",
+        "      while min((p-> seq(coeff(p, x, j), j=0..9))(add(",
+        "            x^i, i=convert(k!, base, 10))))<n do od; k",
+        "    end: a(0):=0:",
+        "seq(a(n), n=1..100);"
+    ],
+    "program": [
+        "(Python)",
+        "def A353087(n):",
+        "    k, m, r  = 1, 1, 10**(10*n-1)",
+        "    while m < r:",
+        "        k += 1",
+        "        m *= k",
+        "    s = str(m)",
+        "    while any(s.count(d) < n for d in '0123456789'):",
+        "        k += 1",
+        "        m *= k",
+        "        s = str(m)",
+        "    return k # _Chai Wah Wu_, Apr 22 2022"
+    ],
+    "xref": [
+        "Cf. A000142, A352040."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alois P. Heinz_, Apr 22 2022",
+    "references": 1,
+    "revision": 18,
+    "time": "2022-04-23T01:40:53-04:00",
+    "created": "2022-04-22T14:53:14-04:00"
+}

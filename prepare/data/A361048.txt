@@ -1,0 +1,62 @@
+{
+    "number": 361048,
+    "data": "1,1,3,18,160,1830,25074,395248,6990876,136464705,2906040280,66938704602,1656963703434,43848218457953,1235194571623950,36905133359883240,1165832901366137184,38830278855693956931,1360186936717777641747,49995325008141402758320",
+    "name": "Expansion of g.f. A(x) satisfying a(n) = [x^(n-1)] A(x)^(n+1) for n >= 1.",
+    "comment": [
+        "A variant of A113882 (number of well-nested drawings of a rooted tree)."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A361048/b361048.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "Given g.f. A(x) = Sum_{n>=0} a(n)*x^n, let B(x) be the g.f. of A361049, then the following formulas hold.",
+        "(1) a(n) = [x^(n-1)] A(x)^(n+1) for n >= 1.",
+        "(2) a(n) = (n+1)/2 * [x^(n-1)] B(x)^2 for n >= 1.",
+        "(3) A(x) = 1 + x*B(x)^2 + x^2*B(x)*B'(x).",
+        "(4) A(x) = B(x/A(x)).",
+        "(5) A(x) = x / Series_Reversion(x*B(x)).",
+        "(6) B(x) = A(x*B(x)).",
+        "a(n) ~ c * n! * n^(3*LambertW(1) - 2 + 3/(1 + LambertW(1))) / LambertW(1)^n, where c = 0.078464448259604971209... - _Vaclav Kotesovec_, Mar 13 2023"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 3*x^2 + 18*x^3 + 160*x^4 + 1830*x^5 + 25074*x^6 + 395248*x^7 + 6990876*x^8 + 136464705*x^9 + ...",
+        "The table of coefficients in the successive powers of g.f. A(x) begins:",
+        "n = 1: [1, 1,  3,  18,  160,  1830,  25074,  395248, ...];",
+        "n = 2: [1, 2,  7,  42,  365,  4088,  55092,  857384, ...];",
+        "n = 3: [1, 3, 12,  73,  624,  6855,  90885, 1396236, ...];",
+        "n = 4: [1, 4, 18, 112,  947, 10224, 133410, 2023028, ...];",
+        "n = 5: [1, 5, 25, 160, 1345, 14301, 183765, 2750560, ...];",
+        "n = 6: [1, 6, 33, 218, 1830, 19206, 243205, 3593406, ...];",
+        "n = 7: [1, 7, 42, 287, 2415, 25074, 313159, 4568131, ...];",
+        "n = 8: [1, 8, 52, 368, 3114, 32056, 395248, 5693528, ...];",
+        "n = 9: [1, 9, 63, 462, 3942, 40320, 491304, 6990876, ...];",
+        "...",
+        "in which the secondary diagonal equals this sequence (shift left one position).",
+        "RELATION TO A361049.",
+        "The main diagonal in the above table,",
+        "[1, 2, 12, 112, 1345, 19206, 313159, 5693528, ...],",
+        "can be used to obtain the coefficients of the g.f. B(x) of A361049 like so:",
+        "[1, 2/2, 12/3, 112/4, 1345/5, 19206/6, 313159/7, 5693528/8, ...]",
+        "= [1, 1, 4, 28, 269, 3201, 44737, 711691, ..., A361049(n), ...].",
+        "Further, the coefficients in B(x)^2, which begins",
+        "[1, 2, 9, 64, 610, 7164, 98812, 1553528, 27292941, ...],",
+        "can in turn be used to generate the terms of this sequence:",
+        "[1*2/2, 2*3/2, 9*4/2, 64*5/2, 610*6/2, 7164*7/2, 98812*8/2, ...]",
+        "= [1, 3, 18, 160, 1830, 25074, 395248, ...]."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1]); for(i=1,n, A = concat(A,0);",
+        "A[#A] = -polcoeff( Ser(A) - x*Ser(A)^(#A), #A-1)); A[n+1]}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A361049, A113882, A132070."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Mar 13 2023",
+    "references": 3,
+    "revision": 13,
+    "time": "2023-05-04T20:37:39-04:00",
+    "created": "2023-03-13T12:47:37-04:00"
+}

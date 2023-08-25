@@ -1,0 +1,47 @@
+{
+    "number": 58898,
+    "data": "13,19,25,26,35,38,47,49,50,52,55,67,70,76,94,95,97,98,100,103,104,109,110,115,117,131,134,140,151,152,157,159,171,175,179,183,185,187,188,190,193,194,196,199,200,203,206,208,217,218,220,227,229",
+    "name": "Inconsummate numbers in base 2: no number is this multiple of the sum of its digits (in base 2).",
+    "comment": [
+        "Equivalently, these are the natural numbers that cannot be written as the arithmetic mean of distinct powers of 2. - _Brian Kell_, Feb 28 2009"
+    ],
+    "link": [
+        "Daniel Mondot, <a href=\"/A058898/b058898.txt\">Table of n, a(n) for n = 1..33099</a>"
+    ],
+    "formula": [
+        "n such that A065413(n) = 0. - _Brian Kell_, Mar 01 2009"
+    ],
+    "maple": [
+        "For Maple code see A058906."
+    ],
+    "mathematica": [
+        "Do[k = n; While[ Apply[ Plus, IntegerDigits[k, 2] ]*n != k && k < 250n, k += n]; If[k == 250n, Print[n] ], {n, 1, 10^3} ]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, combinations_with_replacement",
+        "def A058898_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        for l in count(1):",
+        "            if l*n < 1<<l-1:",
+        "                yield n",
+        "                break",
+        "            for d in combinations_with_replacement((0,1),l):",
+        "                if (s:=sum(d))>0 and sorted(bin(s*n)[2:]) == [str(e) for e in d]:",
+        "                    break",
+        "            else:",
+        "                continue",
+        "            break",
+        "A058898_list = list(islice(A058898_gen(),20)) # _Chai Wah Wu_, May 09 2023"
+    ],
+    "xref": [
+        "Cf. A003635, A052491, A058899-A058907."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Jan 09 2001",
+    "references": 16,
+    "revision": 34,
+    "time": "2023-05-09T19:06:27-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 319141,
+    "data": "211,223,271,283,433,463,691,823,859,2017,2029,2251,2269,2293,2341,2347,2593,2647,2833,2851,2857,2887,4153,4327,4507,4513,4903,6091,6361,6421,6481,6529,6871,6949,8011,8059,8161,8209,8287,8419,8467,8707,8803,8929,8971",
+    "name": "Prime numbers p such that p squared + p reversed is also prime.",
+    "comment": [
+        "All terms == 1 (mod 6). - _Robert Israel_, Sep 13 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A319141/b319141.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "271 belongs to this sequence as 271 squared is 73441 and 271 reversed is 172 and the sum of 73441 and 172 is 73613, which is prime."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L));",
+        "end proc:",
+        "filter:= t -> isprime(t) and isprime(t^2+revdigs(t)):",
+        "select(filter, [seq(t,t=1..10^4,6)]); # _Robert Israel_, Sep 13 2018"
+    ],
+    "mathematica": [
+        "Select[Prime@Range@1120, PrimeQ[#^2 + FromDigits[Reverse@IntegerDigits@#]] &] (* _Vincenzo Librandi_, Sep 14 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "nmax=10000",
+        "def is_prime(num):",
+        "    if num == 0 or num == 1: return(0)",
+        "    for k in range(2, num):",
+        "       if (num % k) == 0:",
+        "           return(0)",
+        "    return(1)",
+        "ris = \"\"",
+        "for i in range(nmax):",
+        "    if is_prime(i):",
+        "       r=int((str(i)[::-1]))",
+        "       t=pow(i,2)+r",
+        "       if is_prime(t):",
+        "          ris = ris+str(i)+\",\"",
+        "print(ris)",
+        "(PARI) forprime(p=1, 9000, if(ispseudoprime(p^2 + eval(concat(Vecrev(Str(p))))), print1(p, \", \"))) \\\\ _Felix Fr\u00f6hlich_, Sep 12 2018"
+    ],
+    "xref": [
+        "Cf. A304390."
+    ],
+    "keyword": "nonn,base,look",
+    "offset": "1,1",
+    "author": "_Pierandrea Formusa_, Sep 11 2018",
+    "references": 1,
+    "revision": 23,
+    "time": "2018-09-14T03:18:35-04:00",
+    "created": "2018-09-13T03:07:53-04:00"
+}

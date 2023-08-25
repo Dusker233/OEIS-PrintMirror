@@ -1,0 +1,61 @@
+{
+    "number": 261041,
+    "data": "1,2,4,10,29,97,366,1534,7050,35167,188835,1084180,6618472,42756208,291120551,2081922515,15590248868,121920095674,993343650912,8414029179365,73953763887277,673316834487162,6340176007793060,61657373569634586,618445940056365121",
+    "name": "Number of partitions of subsets of {1,...,n}, where consecutive integers are required to be in different parts.",
+    "comment": [
+        "From _Gus Wiseman_, Nov 25 2019: (Start)",
+        "Conjecture: Also the number of set partitions of {1, ..., n + 1} where, if x and x + 2 belong to the same block, then so does x + 1. For example, the a(0) = 1 through a(3) = 10 set partitions are:",
+        "  {{1}}  {{1,2}}    {{1,2,3}}      {{1,2,3,4}}",
+        "         {{1},{2}}  {{1},{2,3}}    {{1},{2,3,4}}",
+        "                    {{1,2},{3}}    {{1,2},{3,4}}",
+        "                    {{1},{2},{3}}  {{1,2,3},{4}}",
+        "                                   {{1,4},{2,3}}",
+        "                                   {{1},{2},{3,4}}",
+        "                                   {{1},{2,3},{4}}",
+        "                                   {{1,2},{3},{4}}",
+        "                                   {{1,4},{2},{3}}",
+        "                                   {{1},{2},{3},{4}}",
+        "(End)"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A261041/b261041.txt\">Table of n, a(n) for n = 0..400</a>"
+    ],
+    "example": [
+        "For n=3 the a(3) = 10 partitions are {}, 1, 2, 3, 1|2, 13, 1|3, 2|3, 13|2, 1|2|3.",
+        "From _Gus Wiseman_, Nov 25 2019: (Start)",
+        "The a(0) = 1 through a(3) = 10 set partitions:",
+        "  {}  {}     {}         {}",
+        "      {{1}}  {{1}}      {{1}}",
+        "             {{2}}      {{2}}",
+        "             {{1},{2}}  {{3}}",
+        "                        {{1,3}}",
+        "                        {{1},{2}}",
+        "                        {{1},{3}}",
+        "                        {{2},{3}}",
+        "                        {{1,3},{2}}",
+        "                        {{1},{2},{3}}",
+        "(End)"
+    ],
+    "maple": [
+        "g:= proc(n, l, t) option remember; `if`(n=0, 1, add(`if`(l>0",
+        "      and j=l, 0, g(n-1, j, `if`(j=t, t+1, t))), j=0..t))",
+        "    end:",
+        "a:= n-> g(n, 0, 1):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "g[n_, l_, t_] := g[n, l, t] = If[n==0, 1, Sum[If[l>0 && j==l, 0, g[n-1, j, If[j==t, t+1, t]]], {j, 0, t}]]; a[n_] := g[n, 0, 1]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Feb 04 2017, translated from Maple *)",
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "Table[Length[Select[Join@@sps/@Subsets[Range[n]],!MemberQ[#,{___,x_,y_,___}/;x+1==y]&]],{n,0,6}] (* _Gus Wiseman_, Nov 25 2019 *)"
+    ],
+    "xref": [
+        "Cf. A003242, A114901, A247100, A261134, A261489, A261492, A273461, A274174."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Aug 09 2015",
+    "references": 9,
+    "revision": 35,
+    "time": "2019-11-27T07:52:10-05:00",
+    "created": "2015-08-10T06:29:47-04:00"
+}

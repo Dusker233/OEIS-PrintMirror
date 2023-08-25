@@ -1,0 +1,44 @@
+{
+    "number": 318485,
+    "data": "1,1,2,5,13,37,107,336,1037,3367,10924,36438,121045,412789,1398168,4831708,16636297,58084208,202101971,712709423,2502000811,8880033929,31428410158,112199775788,399383181020,1433385148187,5128572792587,18481258241133",
+    "name": "Number of p-trees of weight 2n + 1 in which all outdegrees are odd.",
+    "comment": [
+        "A p-tree of weight n with odd outdegrees is either a single node (if n = 1) or a finite odd-length sequence of at least 3 p-trees with odd outdegrees whose weights are weakly decreasing and sum to n."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A318485/b318485.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "example": [
+        "The a(4) = 13 p-trees of weight 9 with odd outdegrees:",
+        "  ((((ooo)oo)oo)oo)",
+        "  (((ooo)(ooo)o)oo)",
+        "  (((ooo)oo)(ooo)o)",
+        "  ((ooo)(ooo)(ooo))",
+        "  (((ooooo)oo)oo)",
+        "  (((ooo)oooo)oo)",
+        "  ((ooooo)(ooo)o)",
+        "  (((ooo)oo)oooo)",
+        "  ((ooo)(ooo)ooo)",
+        "  ((ooooooo)oo)",
+        "  ((ooooo)oooo)",
+        "  ((ooo)oooooo)",
+        "  (ooooooooo)"
+    ],
+    "mathematica": [
+        "b[n_]:=b[n]=If[n>1,0,1]+Sum[Times@@b/@y,{y,Select[IntegerPartitions[n],Length[#]>1&&OddQ[Length[#]]&]}];",
+        "Table[b[n],{n,1,20,2}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(v=vector(n)); v[1]=1; for(n=2, n, v[n] = polcoef(1/prod(k=1, n-1, 1 - v[k]*x^(2*k-1) + O(x^(2*n))) - 1/prod(k=1, n-1, 1 + v[k]*x^(2*k-1) + O(x^(2*n))), 2*n-1)/2); v} \\\\ _Andrew Howroyd_, Aug 27 2018"
+    ],
+    "xref": [
+        "Cf. A027193, A063834, A078408, A196545, A279374, A289501, A298118, A300300, A300301, A300355, A300436, A300647, A300652, A300797, A302243."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Aug 27 2018",
+    "references": 1,
+    "revision": 9,
+    "time": "2018-08-31T15:24:41-04:00",
+    "created": "2018-08-29T16:49:05-04:00"
+}

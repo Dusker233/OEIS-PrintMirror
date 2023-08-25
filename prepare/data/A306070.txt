@@ -1,0 +1,33 @@
+{
+    "number": 306070,
+    "data": "1,2,4,7,11,14,20,27,35,41,51,59,71,80,89,104,120,132,150,164,178,193,215,232,256,274,300,321,349,364,394,425,448,472,497,526,562,589,617,648,688,709,751,786,820,853,899,935,983,1019,1056,1098,1150,1189",
+    "name": "Partial sums of A116550: Sum_{k=1..n} bphi(k) where bphi(k) is the bi-unitary analog of Euler's totient function.",
+    "comment": [
+        "The bi-unitary version of A002088 and A177754."
+    ],
+    "link": [
+        "L\u00e1szl\u00f3 T\u00f3th, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL12/Toth2/toth5.html\">On the bi-unitary analogues of Euler's arithmetical function and the gcd-sum function</a>, Journal of Integer Sequences, Vol. 12 (2009), Article 09.5.2."
+    ],
+    "formula": [
+        "a(n) = A*n^2/2 + O(n*log(n)^2), where A = A306071."
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := With[{pp = Power @@@ FactorInteger[n]}, Count[Range[n], m_ /; Intersection[pp, Power @@@ FactorInteger[m]] == {}]]; Accumulate[Table[a[n], {n, 1, 100}]] (* after _Jean-Fran\u00e7ois Alcover_ at A116550 *)"
+    ],
+    "program": [
+        "(PARI) udivs(n) = {my(d = divisors(n)); select(x->(gcd(x, n/x)==1), d); }",
+        "gcud(n, m) = vecmax(setintersect(udivs(n), udivs(m)));",
+        "bphi(n) = if (n==1, 1, sum(k=1, n-1, gcud(n, k) == 1));",
+        "a(n) = sum(k=1, n, bphi(k)); \\\\ _Michel Marcus_, Jun 20 2018"
+    ],
+    "xref": [
+        "Cf. A002088, A177754, A116550, A306071."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Jun 19 2018",
+    "references": 3,
+    "revision": 12,
+    "time": "2018-07-28T11:50:41-04:00",
+    "created": "2018-07-28T11:50:41-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 41003,
+    "data": "1,1,1,2,3,3,4,6,7,8,10,12,14,16,20,23,26,30,36,41,47,55,64,73,83,96,111,125,144,165,187,211,241,272,306,346,391,439,493,553,622,695,779,871,974,1086,1211,1348,1502,1671,1857,2061,2288,2533,2808,3107,3439,3800,4199,4634,5113",
+    "name": "The sequence e, given that c is a left shift by one place of b.",
+    "comment": [
+        "Map a binary sequence b=[ b_1,... ] to a binary sequence c=[ c_1,... ] so that C=1/Product (1-x^i)^c_i == 1+Sum b_i*x^i mod 2.",
+        "This produces 2 new sequences: d={i:c_i=1} and e=[ 1,e_1,... ] where C=1+Sum e_i*x^i."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A041003/b041003.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "From _Andrew Howroyd_, Apr 15 2021: (Start)",
+        "Euler transform of A041004.",
+        "G.f.: A(x) = 1/Product_{k>=1} (1 - x^k)^(a(k+1) mod 2). (End)"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "seq(n)={my(v=vector(n+1)); v[1]=1; for(n=2, #v, v[n]=(v[n-1]+EulerT(v[2..n])[n-1])%2); concat([1], EulerT(v[2..n+1]))} \\\\ _Andrew Howroyd_, Apr 14 2021"
+    ],
+    "xref": [
+        "Cf. A041002, A041004."
+    ],
+    "keyword": "nonn,easy,eigen",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Terms a(50) and beyond from _Andrew Howroyd_, Apr 14 2021"
+    ],
+    "references": 4,
+    "revision": 9,
+    "time": "2021-04-15T13:36:57-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

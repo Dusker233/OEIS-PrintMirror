@@ -1,0 +1,37 @@
+{
+    "number": 354218,
+    "data": "1,3,15,105,1155,1365,19635,23205,636405,10555545,24484845,869107785,14797252681546335,92442344345566215,40334203530676690635,1451417351374223318085,6087255082617244520985,469256253416014832182075245585,1519012498286389398934397206158552189345",
+    "name": "Records in A076978, divided by 2.",
+    "link": [
+        "Hugo Pfoertner, <a href=\"/A354218/b354218.txt\">Table of n, a(n) for n = 1..52</a>."
+    ],
+    "mathematica": [
+        "1/2*Union@ FoldList[Max, Array[Times @@ FactorInteger[Times @@ Range[#1 + 1, #2 - 1]][[All, 1]] & @@ Map[Prime, # + {0, 1}] &, 180, 2]] (* _Michael De Vlieger_, May 20 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import sieve as p, primefactors",
+        "def A076978_halfen(n): # for all integers n > 1",
+        "    result = 1",
+        "    for composites in range(p[n]+1, p[n+1]):",
+        "        for primefactor in primefactors(composites):",
+        "            if result % primefactor != 0: result *= primefactor",
+        "    return result//2",
+        "A354218 = [1]",
+        "for n in range(2,180):",
+        "    if  A076978_halfen(n) > A354218[-1]: A354218.append(A076978_halfen(n))",
+        "print(A354218) # _Karl-Heinz Hofmann_, May 20 2022",
+        "(PARI) a354218(maxterm) = {my(mp=0,pp=3); forprime(p=5,oo, my(L=List());for(j=pp+1,p-1, my(f=factor(j), nf=#f~); for(k=1,nf, listput(~L,f~[1,k]))); listsort(L,1); my(mpp=prod(k=1,#L,L[k])); if(mpp>mp, if(mpp<2*maxterm, print1(mpp/2,\", \"); mp=mpp, return)); pp=p)};",
+        "a354218(10^75)"
+    ],
+    "xref": [
+        "Cf. A007947, A076978, A354217."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Hugo Pfoertner_, May 19 2022",
+    "references": 3,
+    "revision": 36,
+    "time": "2022-06-14T08:51:05-04:00",
+    "created": "2022-05-20T08:49:36-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 300011,
+    "data": "1,1,2,6,20,80,362,1820,10084,60522,391864,2714514,20001700,156107224,1284705246,11112088358,100698613720,953478331288,9410963022318,96614921664444,1029705968813656,11373102766644372,129972789566984682,1534638410054873892,18696544357738885720",
+    "name": "Expansion of e.g.f. exp(Sum_{k>=1} phi(k)*x^k/k!), where phi() is the Euler totient function (A000010).",
+    "comment": [
+        "Exponential transform of A000010."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A300011/b300011.txt\">Table of n, a(n) for n = 0..552</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(Sum_{k>=1} A000010(k)*x^k/k!).",
+        "a(0) = 1; a(n) = Sum_{k=1..n} phi(k) * binomial(n-1,k-1) * a(n-k). - _Seiichi Manyama_, Feb 27 2022"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x/1! + 2*x^2/2! + 6*x^3/3! + 20*x^4/4! + 80*x^5/5! + 362*x^6/6! + 1820*x^7/7! + ..."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(a(n-j)*",
+        "      binomial(n-1, j-1)*numtheory[phi](j), j=1..n))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Mar 09 2018"
+    ],
+    "mathematica": [
+        "nmax = 24; CoefficientList[Series[Exp[Sum[EulerPhi[k] x^k/k!, {k, 1, nmax}]], {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[n_] := a[n] = Sum[EulerPhi[k] Binomial[n - 1, k - 1] a[n - k], {k, 1, n}]; a[0] = 1; Table[a[n], {n, 0, 24}]"
+    ],
+    "program": [
+        "(PARI) a(n) = if(n==0, 1, sum(k=1, n, eulerphi(k)*binomial(n-1, k-1)*a(n-k))); \\\\ _Seiichi Manyama_, Feb 27 2022"
+    ],
+    "xref": [
+        "Cf. A000010, A050392, A159929, A274804, A295739."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Mar 09 2018",
+    "references": 4,
+    "revision": 22,
+    "time": "2022-02-27T10:21:20-05:00",
+    "created": "2018-03-09T19:30:13-05:00"
+}

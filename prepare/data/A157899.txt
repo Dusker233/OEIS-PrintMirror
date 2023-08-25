@@ -1,0 +1,49 @@
+{
+    "number": 157899,
+    "data": "1,2,3,12,13,22,23,102,103,112,113,122,123,223,323,1112,1113,1122,1123,1223,1323,2323,3323,12323,13323,22323,23323,102323,103323,112323,113323,122323,123323,223323,323323,1113323,1122323,1123323,1223323,1323323,2323323,3323323",
+    "name": "a(n) is the smallest number whose name in US English contains n consonants.",
+    "comment": [
+        "In US English, \"102\" is written as \"one hundred two\".",
+        "Vowels are {a, e, i, o, u, y} here.  If y is a consonant, then a(5)..a(7) = 21, 22, 23 are the first of subsequent differences. - _Michael S. Branicky_, Jan 29 2022"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A157899/b157899.txt\">Table of n, a(n) for n = 1..2478</a> (all terms < 1000 centillion)",
+        "Wiktionary, <a href=\"https://en.wiktionary.org/wiki/one_hundred_one\">one hundred one</a> (US).",
+        "Wiktionary, <a href=\"https://en.wiktionary.org/wiki/one_hundred_and_one\">one hundred and one</a> (UK).",
+        "Michael S. Branicky, <a href=\"/A157899/a157899.py.txt\">Python program</a>"
+    ],
+    "example": [
+        "\"oNe\" has 1 consonant, \"TWo\" has 2, \"THRee\" has 3, \"TWeLVe\" has 4, \"THiRTeeN\" has 5, \"TWeNTyTWo\" has 6, \"TWeNTyTHRee\" has 7, \"oNe HuNDReD TWo\" has 8, \"oNe HuNDReD THRee\" has 9, \"oNe HuNDReD TWeLVe\" has 10."
+    ],
+    "program": [
+        "(Python) # see linked program for going to large numbers",
+        "from num2words import num2words",
+        "def consonants(n):",
+        "    w = num2words(n).replace(\" and\", \"\")",
+        "    return sum(1 for c in w if c in \"bcdfghjklmnpqrstvwxz\")",
+        "def aupton(nn):",
+        "    k, adict, alst = 1, {}, []",
+        "    while len(alst) < nn:",
+        "        c = consonants(k)",
+        "        if c not in adict:",
+        "            adict[c] = k",
+        "            alst = []",
+        "            for i in range(1, max(adict)+1):",
+        "                if i not in adict:",
+        "                    break",
+        "                alst.append(adict[i])",
+        "        k += 1",
+        "    return alst",
+        "print(aupton(27)) # _Michael S. Branicky_, Jan 29 2022"
+    ],
+    "keyword": "nonn,word",
+    "offset": "1,2",
+    "author": "_Rodolfo Kurchan_, Mar 08 2009",
+    "ext": [
+        "Edited by _Jon E. Schoenfield_, Sep 29 2018"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2022-01-30T02:33:53-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 287963,
+    "data": "1,1,1,2,5,10,28,71,194,532,1495,4256,12176,35251,102664,300260,881909,2599948,7688164,22788527,67676144,201308938,599676445,1788564038,5339905904,15956230705,47713265536,142763240666,427390085963,1280058256294,3835332884686",
+    "name": "Number of Dyck paths of semilength n such that each positive level up to the highest nonempty level has one or two peaks.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A287963/b287963.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "example": [
+        ". a(3) = 2:     /\\      /\\",
+        ".            /\\/  \\    /  \\/\\  .",
+        ".",
+        ". a(4) = 5:      /\\      /\\        /\\/\\    /\\        /\\/\\",
+        ".           /\\/\\/  \\  /\\/  \\/\\  /\\/    \\  /  \\/\\/\\  /    \\/\\ ."
+    ],
+    "maple": [
+        "b:= proc(n, j) option remember; `if`(n=j, 1, add(",
+        "       b(n-j, i)*i*(binomial(j-1, i-2) +(i-1)/2*",
+        "       binomial(j-1, i-3)), i=2..min(j+3, n-j)))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, b(n, 1)+b(n, 2)):",
+        "seq(a(n), n=0..35);"
+    ],
+    "mathematica": [
+        "b[n_, j_] := b[n, j] = If[n == j, 1, Sum[b[n - j, i]*i*(Binomial[j - 1, i - 2] + (i - 1)/2*Binomial[j - 1, i - 3]), {i, 2, Min[j + 3, n - j]}]];",
+        "a[n_] := If[n == 0, 1, b[n, 1] + b[n, 2]];",
+        "Table[a[n], {n, 0, 35}] (* _Jean-Fran\u00e7ois Alcover_, May 29 2018, from Maple *)"
+    ],
+    "xref": [
+        "Cf. A000108, A281874, A287843, A287845, A287846."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jun 03 2017",
+    "references": 4,
+    "revision": 10,
+    "time": "2018-05-29T08:28:36-04:00",
+    "created": "2017-06-03T16:13:35-04:00"
+}

@@ -1,0 +1,52 @@
+{
+    "number": 124610,
+    "data": "1,1,7,37,199,1069,5743,30853,165751,890461,4783807,25699957,138067399,741736909,3984819343,21407570533,115007491351,617852597821,3319277971807,17832095054677,95799031216999,514659346194349",
+    "name": "a(n) = 5*a(n-1) + 2*a(n-2), n > 1; a(0) = a(1) = 1.",
+    "comment": [
+        "Top left element of powers of the matrix [1,2;3,4]."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A124610/b124610.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (5,2)."
+    ],
+    "formula": [
+        "a(n)/a(n-1) tends to (sqrt(33) + 5)/2 = 5.37228132... - _Gary W. Adamson_, Mar 03 2008",
+        "a(n) = -(sqrt(33)/22)*((5+sqrt(33))/2)^n + (1/2)*((5-sqrt(33))/2)^n + (sqrt(33)/22)*((5-sqrt(33))/2)^n + (1/2)*((5+sqrt(33))/2)^n, with n>=0. - _Paolo P. Lava_, Jul 07 2008",
+        "G.f.: (1 - 4*x)/(1 - 5*x - 2*x^2). - _G. C. Greubel_, Oct 23 2019"
+    ],
+    "example": [
+        "a(5) = 1069 because [1,2;3,4]^5 = [1069,1558; 2337,3406]."
+    ],
+    "maple": [
+        "seq(coeff(series((1-4*x)/(1-5*x-2*x^2), x, n+1), x, n), n = 0..30); # _G. C. Greubel_, Oct 23 2019"
+    ],
+    "mathematica": [
+        "Table[MatrixPower[{{1, 2}, {3, 4}}, n][[1]][[1]], {n, 0, 30}]",
+        "Transpose[NestList[Flatten[{Rest[#],ListCorrelate[{2,5},#]}]&, {1,1},40]][[1]]  (* _Harvey P. Dale_, Mar 23 2011 *)",
+        "LinearRecurrence[{5,2},{1,1},30] (* _Harvey P. Dale_, Jan 01 2014 *)"
+    ],
+    "program": [
+        "(PARI) Vec((1-4*x)/(1-5*x-2*x^2) +O('x^30)) \\\\ _G. C. Greubel_, Oct 23 2019",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 30); Coefficients(R!( (1-4*x)/(1-5*x-2*x^2) )); // _G. C. Greubel_, Oct 23 2019",
+        "(Magma) [n le 2 select 1 else 5*Self(n-1) + 2*Self(n-2):n in [1..22]];// _Marius A. Burtea_, Oct 24 2019",
+        "(Sage)",
+        "def A124610_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( (1-4*x)/(1-5*x-2*x^2) ).list()",
+        "A124610_list(30) # _G. C. Greubel_, Oct 23 2019",
+        "(GAP) a:=[1,1];; for n in [3..30] do a[n]:=5*a[n-1]+2*a[n-2]; od; a; # _G. C. Greubel_, Oct 23 2019"
+    ],
+    "xref": [
+        "Cf. A100638."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Fredrik Johansson_, Dec 20 2006",
+    "ext": [
+        "Recurrence from _Gary W. Adamson_, Mar 03 2008"
+    ],
+    "references": 4,
+    "revision": 28,
+    "time": "2022-09-08T08:45:28-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

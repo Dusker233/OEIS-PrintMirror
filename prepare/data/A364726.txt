@@ -1,0 +1,29 @@
+{
+    "number": 364726,
+    "data": "12,24,84,120,672,24384,43065,78975,81081,261261,523776,9124731,13398021,69087249,91963648,459818240,39142675143,51001180160",
+    "name": "Admirable numbers with more divisors than any smaller admirable number.",
+    "comment": [
+        "The corresponding numbers of divisors are 6, 8, 12, 16, 24, 28, 32, 36, 40, 48, 80, 90, 96, 120, 144, 288, 360, 480, ... .",
+        "If there are infinitely many even perfect numbers (A000396), then this sequence is infinite, because if p is a Mersenne prime exponent (A000043) and q is an odd prime that does not divide 2^p-1, then 2^(p-1)*(2^p-1)*q is an admirable number with 4*p divisors (see A165772).",
+        "a(19) > 10^11."
+    ],
+    "mathematica": [
+        "admQ[n_] := (ab = DivisorSigma[1, n] - 2 n) > 0 && EvenQ[ab] && ab/2 < n && Divisible[n, ab/2];",
+        "seq[kmax_] := Module[{s = {}, dm = 0, d1}, Do[d1 = DivisorSigma[0, k]; If[d1 > dm && admQ[k], dm = d1; AppendTo[s, k]], {k, 1, kmax}]; s]; seq[10^6]"
+    ],
+    "program": [
+        "(PARI) isadm(n) = {my(ab=sigma(n)-2*n); ab>0 && ab%2 == 0 && ab/2 < n && n%(ab/2) == 0;}",
+        "lista(kmax) = {my(dm = 0, d1); for(k = 1, kmax, d1 = numdiv(k); if(d1 > dm && isadm(k), dm = d1; print1(k,\", \")));}"
+    ],
+    "xref": [
+        "Cf. A000005, A000043, A000396, A109745, A111592, A165772.\t",
+        "Similar sequences: A002182, A136404, A335008, A335317, A348198, A359963, A359964."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Aug 05 2023",
+    "references": 0,
+    "revision": 6,
+    "time": "2023-08-05T13:16:47-04:00",
+    "created": "2023-08-05T13:16:47-04:00"
+}

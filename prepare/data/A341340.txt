@@ -1,0 +1,33 @@
+{
+    "number": 341340,
+    "data": "1,3,4,6,8,10,12,14,17,22,24,28,31,35,40,46,51,55,59,64,72,79,83,88,94,103,113,120,126,131,138,146,158,170,180,186,190,196,204,216,240,250,258,265,272,283,293,304,318,326,333,342,375,396,403,409,416,424",
+    "name": "a(n) is the least k such that the product of n+1 consecutive primes starting with the k-th prime is greater than or equal to the product of the following n primes.",
+    "link": [
+        "Darrell Plank, <a href=\"https://1drv.ms/b/s!AiZQurjJAGNUkPhFMmtOCRsDGLhctQ?e=0RHK7B\">Products of Consecutive Primes (PDF)</a>"
+    ],
+    "example": [
+        "If n = 2 and k = 2 then pLow(2,2) = 3*5*7=105 and pHigh(2,2)=11*13=143 so pHigh(2,2) > pLow(2,2). On the other hand, we have pLow(2,3) = 5*7*11 = 385 and pHigh(2,3) = 13 * 17 = 221 so pHigh(2,3) < pLow(2,3).  The conjecture is that pHigh(2,i) < pLow(2,i) for all i >=3 so a(2) = 3.",
+        "For another example, pLow(4,5)=11*13*17*19*23=1062347 and pHigh(4,5)=29*31*37*41=1363783 so plow(4,5)<pHigh(4,5) but pLow(4,6)=13*17*19*23*29=2800733 and pHigh(4,6)=31*37*41*43=2022161 so pLow(4,5) < pHigh(4,5) while pLow(4,6) > pHigh(4,6) and the conjecture says that pLow(4,i) > pHigh(4,i) for all i >= 6 so a(4)=6."
+    ],
+    "mathematica": [
+        "products[m_, n_, i_] := {",
+        "   Times @@ Table[Prime[j], {j, i, i + m - 1}],",
+        "   Times @@ Table[Prime[j], {j, i + m, i + m + n - 1}]};",
+        "lowLarger[i_, m_, n_] :=",
+        "  Module[{p = products[m, n, i]}, p[[1]] > p[[2]]];",
+        "breakPosition[n_] :=",
+        "  Module[{i = 0},",
+        "   For[i = 1, ! lowLarger[i, n + 1, n], i++,]; i];",
+        "breakPosition /@ Range[1, 30]"
+    ],
+    "program": [
+        "(PARI) a(n) = my(k=1); while (prod(i=k, n+k, prime(i)) < prod(i=n+k+1, k+2*n, prime(i)), k++); k; \\\\ _Michel Marcus_, Jan 27 2022"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Darrell Plank_, Apr 25 2021",
+    "references": 0,
+    "revision": 28,
+    "time": "2022-03-05T01:19:24-05:00",
+    "created": "2022-03-05T01:19:24-05:00"
+}

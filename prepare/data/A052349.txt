@@ -1,0 +1,49 @@
+{
+    "number": 52349,
+    "data": "1,8,24,25,86,1260,1890,14136,197400,10467660,1231572090,682616834970",
+    "name": "Lexicographically earliest sequence of distinct positive integers such that no subsequence sums to a prime.",
+    "comment": [
+        "This set was defined by T. W. A. Baumann in The Prime Puzzles and Problems pages. He and C. Rivera obtained the first 10 members. Chris Nash proved that this sequence is infinite."
+    ],
+    "link": [
+        "Chris Nash, <a href=\"/A052349/a052349.txt\">Proof that A052349, A128687, and A128688 are infinite</a> [Cached copy of proof, from The Prime Puzzles and Problems website]",
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_084.htm\">Puzzle 84. Non-primes adding up to non-primes</a>, The Prime Puzzles and Problems Connection."
+    ],
+    "example": [
+        "a(4) = 25 as 25+1, 25+8, 25+24, 25+1+8, 25+1+24, 25+8+24 and finally 25+1+8+24 all are composite numbers."
+    ],
+    "mathematica": [
+        "a[1]=1; a[n_]:=a[n]=(s=Subsets[Array[a,n-1],n-1]; c=a[n-1]; While[d=1;While[!PrimeQ[Total[s[[d]]]+c]&&d<Length@s,d++]; d!=Length@s||PrimeQ[Total[s[[d]]]+c]||PrimeQ@c,c++];c); Array[a,8] (* _Giorgos Kalogeropoulos_, Nov 19 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import islice",
+        "def agen(start=1): # generator of terms",
+        "    alst, k, sums = [start], 1, {0} | {start}",
+        "    while True:",
+        "        yield alst[-1]",
+        "        while any(isprime(k + s) for s in sums): k += 1",
+        "        alst.append(k)",
+        "        sums.update([k + s for s in sums])",
+        "        k += 1",
+        "print(list(islice(agen(), 9))) # _Michael S. Branicky_, Dec 12 2022"
+    ],
+    "xref": [
+        "Cf. A068638.",
+        "Cf. A128687 (restricted to odd numbers), A128688 (restricted to even numbers)."
+    ],
+    "keyword": "hard,more,nonn,nice",
+    "offset": "1,2",
+    "author": "_Carlos Rivera_, Mar 07 2000",
+    "ext": [
+        "One more term from _T. D. Noe_, Mar 20 2007",
+        "a(12) from _Donovan Johnson_, Jun 26 2010",
+        "New name from _Charles R Greathouse IV_, Jan 13 2014",
+        "Name clarified by _Peter Kagey_, Jan 07 2017"
+    ],
+    "references": 15,
+    "revision": 48,
+    "time": "2022-12-12T15:00:05-05:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 316796,
+    "data": "1,1,2,3,6,11,21,40,75,139,263,498,932,1761,3322,6244,11775,22204,41810,78795,148458,279690,527006,993033,1870881,3525109,6641904,12514243,23578708,44426222,83705148,157713617,297156310,559886943,1054911312,1987613556",
+    "name": "Number of unlabeled rooted trees with n nodes where the multiplicities in the multiset of branches under any given node are distinct.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A316796/b316796.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "example": [
+        "The a(6) = 11 trees:",
+        "(((((o)))))",
+        "((((oo))))",
+        "(((ooo)))",
+        "(((o)(o)))",
+        "((oo(o)))",
+        "((oooo))",
+        "(oo((o)))",
+        "(oo(oo))",
+        "(o(o)(o))",
+        "(ooo(o))",
+        "(ooooo)"
+    ],
+    "mathematica": [
+        "strut[n_]:=strut[n]=If[n===1,{{}},Select[Join@@Function[c,Union[Sort/@Tuples[strut/@c]]]/@IntegerPartitions[n-1],UnsameQ@@Length/@Split[#]&]];",
+        "Table[Length[strut[n]],{n,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "C(v,n)={my(recurse(r,b,p,k)=if(!r, 1, sum(m=1, r, if(!bittest(b,m), sum(i=1, min(r\\m, p), my(f=if(i==p, k+1, 1)); if(v[i]>=f, (v[i]-f+1)*self()(r-m*i, bitor(b, 1<<m), i, f)/f)))))); recurse(n, 0, #v, 0)}",
+        "seq(n)={my(v=vector(n)); v[1]=1; for(n=2, #v, v[n]=C(v[1..n-1], n-1)); v} \\\\ _Andrew Howroyd_, Feb 08 2020"
+    ],
+    "xref": [
+        "Cf. A000081, A004111, A130091, A316793, A316794, A316795."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Jul 14 2018",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Feb 08 2020"
+    ],
+    "references": 5,
+    "revision": 9,
+    "time": "2020-02-08T20:41:42-05:00",
+    "created": "2018-07-15T13:25:51-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 335213,
+    "data": "1,2,5,25,70,210,660,2145,7150,32274,105633,368940,1278264,5001332,17889032,64483720,234013500,854286930,3265915016,12018041880,45831524310,168538227000,622526987940,2491083699390,9301358635140,34834645482780,130820066005200,503747328390300",
+    "name": "a(n) = C(n)*b(n), where C(n) is the n-th Catalan number and b(n) is the probability p_n(x<y) closest to 1/2 with x,y taken from the Catalan poset P_n.",
+    "comment": [
+        "C(n) = A000108(n).",
+        "P_n is the Catalan poset, which is the poset product of a 2-chain and an n-chain.",
+        "The number of linear extensions of P_n is the Catalan number C(n).",
+        "p_n(x,y) for x,y in P_n is the probability that x is less than y in the uniform random linear extension of P_n.",
+        "b(n) is the probability p_n(x<y) that is closest to 1/2 for all x,y in P_n."
+    ],
+    "link": [
+        "Swee Hong Chan, <a href=\"/A335213/b335213.txt\">Table of n, a(n) for n = 2..1000</a>",
+        "Swee Hong Chan, Igor Pak and Greta Panova, <a href=\"https://doi.org/10.1016/j.aam.2021.102221\">Sorting probability of Catalan posets</a>, Advances in Applied Mathematics, 129 (2021), 102221; arXiv:<a href=\"https://arxiv.org/abs/2005.13686\">2005.13686</a> [math.CO], 2020."
+    ],
+    "program": [
+        "(Sage)",
+        "def a(n):",
+        "    lsp=[];",
+        "    chalf=[];",
+        "    for y in range (1,n+1):",
+        "        sum=0;",
+        "        for z in range (0,y+1):",
+        "            K=(binomial(2*y-z-1,y-1)*binomial(2*n-2*y+z,n-y+z)*(z)*(z+1)*(n+1))/(binomial(2*n,n)*(y)*(n-y+z+1));",
+        "            sum=sum+K;",
+        "            if 2*sum >= 1:",
+        "                h=sum-K;",
+        "                a_1=1-2*h;",
+        "                a_2=2*sum-1;",
+        "                if a_1< a_2:",
+        "                    chalf.append(h);",
+        "                    lsp.append(a_1);",
+        "                else:",
+        "                    chalf.append(sum);",
+        "                    lsp.append(a_2);",
+        "                break;",
+        "    yindex=lsp.index(min(lsp));",
+        "    return (chalf[yindex])*(binomial(2*n,n))/(n+1)"
+    ],
+    "xref": [
+        "Cf. A000108, A335212."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_Swee Hong Chan_, May 26 2020",
+    "references": 1,
+    "revision": 31,
+    "time": "2021-09-15T10:04:39-04:00",
+    "created": "2020-09-14T12:25:47-04:00"
+}

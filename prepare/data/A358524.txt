@@ -1,0 +1,54 @@
+{
+    "number": 358524,
+    "data": "0,2,10,12,42,52,56,170,204,212,232,240,682,820,844,852,920,936,976,992,2730,3276,3284,3380,3404,3412,3640,3688,3736,3752,3888,3920,4000,4032,10922,13108,13132,13140,13516,13524,13620,13644,13652,14568,14744,14760",
+    "name": "Binary encoding of balanced ordered rooted trees (counted by A007059).",
+    "comment": [
+        "An ordered tree is balanced if all leaves are the same distance from the root.",
+        "The binary encoding of an ordered tree (see A014486) is obtained by replacing the internal left and right brackets with 0's and 1's, thus forming a binary number."
+    ],
+    "example": [
+        "The terms together with their corresponding trees begin:",
+        "    0: o",
+        "    2: (o)",
+        "   10: (oo)",
+        "   12: ((o))",
+        "   42: (ooo)",
+        "   52: ((oo))",
+        "   56: (((o)))",
+        "  170: (oooo)",
+        "  204: ((o)(o))",
+        "  212: ((ooo))",
+        "  232: (((oo)))",
+        "  240: ((((o))))",
+        "  682: (ooooo)",
+        "  820: ((o)(oo))",
+        "  844: ((oo)(o))",
+        "  852: ((oooo))",
+        "  920: (((o)(o)))",
+        "  936: (((ooo)))",
+        "  976: ((((oo))))",
+        "  992: (((((o)))))"
+    ],
+    "mathematica": [
+        "binbalQ[n_]:=n==0||Count[IntegerDigits[n,2],0]==Count[IntegerDigits[n,2],1]&&And@@Table[Count[Take[IntegerDigits[n,2],k],0]<=Count[Take[IntegerDigits[n,2],k],1],{k,IntegerLength[n,2]}];",
+        "bint[n_]:=If[n==0,{},ToExpression[StringReplace[StringReplace[ToString[IntegerDigits[n,2]/.{1->\"{\",0->\"}\"}],\",\"->\"\"],\"} {\"->\"},{\"]]]",
+        "Select[Range[0,1000],binbalQ[#]&&SameQ@@Length/@Position[bint[#],{}]&]"
+    ],
+    "xref": [
+        "These trees are counted by A007059.",
+        "This is a subset of A014486.",
+        "The version for binary trees is A057122.",
+        "The unordered version is A184155, counted by A048816.",
+        "Another ranking of balanced ordered trees is A358459.",
+        "A000108 counts ordered rooted trees, unordered A000081.",
+        "A358453 counts transitive ordered trees, unordered A290689.",
+        "Cf. A001263, A003238, A244925, A358377, A358379, A358523."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Nov 21 2022",
+    "references": 3,
+    "revision": 6,
+    "time": "2022-11-21T22:01:53-05:00",
+    "created": "2022-11-21T22:01:53-05:00"
+}

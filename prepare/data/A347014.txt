@@ -1,0 +1,33 @@
+{
+    "number": 347014,
+    "data": "1,2,10,116,2140,52856,1627192,59930480,2568599056,125553289760,6892279877536,419788155021632,28090704069553600,2048487353985408896,161687913401407530880,13733087614786273308416,1248892148354210466595072,121073054127693143488709120",
+    "name": "E.g.f.: exp(x) / (1 - 6 * x)^(1/6).",
+    "comment": [
+        "Binomial transform of A008542.",
+        "In general, for k >= 1, if e.g.f. = exp(x) / (1 - k*x)^(1/k), then a(n) ~ n! * exp(1/k) * k^n / (Gamma(1/k) * n^(1 - 1/k)). - _Vaclav Kotesovec_, Aug 14 2021"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} binomial(n,k) * A008542(k).",
+        "a(n) ~ n! * exp(1/6) * 6^n / (Gamma(1/6) * n^(5/6)). - _Vaclav Kotesovec_, Aug 14 2021"
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n<2, 1, (6*n-5)*g(n-1)) end:",
+        "a:= n-> add(binomial(n, k)*g(k), k=0..n):",
+        "seq(a(n), n=0..17);  # _Alois P. Heinz_, Aug 10 2021"
+    ],
+    "mathematica": [
+        "nmax = 17; CoefficientList[Series[Exp[x]/(1 - 6 x)^(1/6), {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[Sum[Binomial[n, k] 6^k Pochhammer[1/6, k], {k, 0, n}], {n, 0, 17}]",
+        "Table[HypergeometricU[1/6, n + 7/6, 1/6]/6^(1/6), {n, 0, 17}]"
+    ],
+    "xref": [
+        "Cf. A000522, A008542, A056547, A084262, A346258, A347012, A347013."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Aug 10 2021",
+    "references": 3,
+    "revision": 8,
+    "time": "2021-08-14T08:50:48-04:00",
+    "created": "2021-08-10T20:42:10-04:00"
+}

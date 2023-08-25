@@ -1,0 +1,37 @@
+{
+    "number": 318763,
+    "data": "1,2,3,5,8,26,27,41,83,2102,6972,7761,8942,20003,59305,75663,123623,185746,254268,394334,10655255,14778909,93300158,565765348,768508444,860579661,1871501781,2081745983,5414493192,6055361574,14177422842,19061134031,36554529447",
+    "name": "Numbers k such that neighboring digits of k^22 are distinct.",
+    "comment": [
+        "Heuristically, since k^22 has approximately 22*log_10(k) digits, the probability its neighboring digits are all distinct is approximately (9/10)^(22*log_10(k)) = k^(-22 log_10(10/9)). Since 22*log_10(10/9) = 1.006664792... > 1, we should expect this sequence to be finite.",
+        "a(27) if it exists is greater than 10^9. - _Robert Price_, Sep 06 2018",
+        "The number of d-digit numbers that are 22nd powers is approximately N(d) = 10^(d/22) - 10^((d-1)/22). If, as a fairly simple heuristic approach, we consider each d-digit 22nd power m as having a probability of (9/10)^(d-1) of having no runs of two or more of the same digit (so that m^(1/22) is a term of this sequence), then the expected number of such d-digit 22nd powers is about (9/10)^(d-1)*N(d) = (9/10)^(d-1)*(10^(d/22) - 10^((d-1)/22)), so the expected number of j-digit terms in this sequence should be about Sum_{d=22*(j-1)+1..22*j} (9/10)^(d-1)*(10^(d/22) - 10^((d-1)/22)); e.g., for j = 11..15, the expected numbers of j-digit terms in this sequence would be about 2.0669, 2.0354, 2.0044, 1.9739, and 1.9438, respectively. Perhaps surprisingly, this heuristic would indicate that this sequence should include about 136 terms beyond 10^10, and that the final term in this sequence -- not its 22nd power, but the term itself -- is most likely a number between 300 and 400 digits long. - _Jon E. Schoenfield_, Sep 07 2018"
+    ],
+    "example": [
+        "a(3) = 3 is a member because 3^22 = 31381059609 has all its neighboring digits distinct. 4 is not a member because 4^22 = 17592186044416 contains 44."
+    ],
+    "maple": [
+        "filter:= proc(n) local L;",
+        "  L:= convert(n,base,10);",
+        "  not member(0, L[2..-1]-L[1..-2])",
+        "end proc:",
+        "select(t -> filter(t^22), [$1..10^6]);"
+    ],
+    "mathematica": [
+        "Select[Range[10^6], 0 != Times @@ Differences[IntegerDigits[#^22]] &] (* _Giovanni Resta_, Sep 03 2018 *)"
+    ],
+    "xref": [
+        "Cf. A090516."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Sep 03 2018",
+    "ext": [
+        "a(21)-a(26) from _Robert Price_, Sep 06 2018",
+        "a(27)-a(33) from _Jon E. Schoenfield_, Sep 10 2018"
+    ],
+    "references": 1,
+    "revision": 31,
+    "time": "2018-09-10T19:23:29-04:00",
+    "created": "2018-09-03T02:53:26-04:00"
+}

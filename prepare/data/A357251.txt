@@ -1,0 +1,48 @@
+{
+    "number": 357251,
+    "data": "4,19,69,188,496,1029,2015,3478,5778,9519,14479,21768,31526,43609,59025,79218,105178,135739,173795,219164,271140,333629,406171,491878,594698,711959,842151,988848,1150168,1330177,1548617,1791098,2063454,2359107,2698231,3064708,3470396,3918157,4404795,4938846",
+    "name": "a(n) = Sum_{1<=i<=j<=n} prime(i)*prime(j)",
+    "comment": [
+        "a(n) is the sum of products of unordered pairs of (not necessarily distinct) elements from the first n primes.",
+        "It appears that 4 is the only square in the sequence."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A357251/b357251.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = (A007504(n)^2 + A024450(n))/2.",
+        "a(n) = A024447(n) + A024450(n).",
+        "a(n) = A065762(n)/2. - _Hugo Pfoertner_, Sep 24 2022"
+    ],
+    "example": [
+        "a(3) = 2*2 + 2*3 + 2*5 + 3*3 + 3*5 + 5*5 = 69."
+    ],
+    "maple": [
+        "P:= [seq(ithprime(i),i=1..100)]:",
+        "S:= ListTools:-PartialSums(P):",
+        "ListTools:-PartialSums(zip(`*`,P,S));"
+    ],
+    "mathematica": [
+        "Accumulate[(p = Prime[Range[40]]) * Accumulate[p]] (* _Amiram Eldar_, Sep 20 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import accumulate",
+        "from sympy import prime, primerange",
+        "def aupton(nn):",
+        "    p = list(primerange(2, prime(nn)+1))",
+        "    return list(accumulate(c*d for c, d in zip(p, accumulate(p))))",
+        "print(aupton(40)) # _Michael S. Branicky_, Sep 24 2022 after _Amiram Eldar_"
+    ],
+    "xref": [
+        "Cf. A007504, A024447, A024450, A065762, A357252.",
+        "Partial sums of A143215."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Sep 20 2022",
+    "references": 2,
+    "revision": 19,
+    "time": "2022-10-02T19:55:49-04:00",
+    "created": "2022-10-02T13:50:00-04:00"
+}

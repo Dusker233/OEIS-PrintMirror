@@ -1,0 +1,48 @@
+{
+    "number": 243666,
+    "data": "1,1,253,762763,11872636325,633287284180541,90604069581412784683,29529277377602939454694793,19507327717978242212109900308085,23927488379043876045061553841299192011,50897056444296458534155179226333868898628813,177758773838827813873239281786548960244155096117573",
+    "name": "Number of 5-packed words of degree n.",
+    "comment": [
+        "See Novelli-Thibon (2014) for precise definition."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A243666/b243666.txt\">Table of n, a(n) for n = 0..100</a> (terms n = 0..30 from Peter Luschny)",
+        "J.-C. Novelli, J.-Y. Thibon, <a href=\"http://arxiv.org/abs/1403.5962\">Hopf Algebras of m-permutations,(m+1)-ary trees, and m-parking functions</a>, arXiv preprint arXiv:1403.5962 [math.CO], 2014. See Fig. 16."
+    ],
+    "formula": [
+        "a(0) = 1; a(n) = Sum_{k=1..n} binomial(5*n,5*k) * a(n-k). - _Ilya Gutkovskiy_, Jan 21 2020"
+    ],
+    "maple": [
+        "a := (5+sqrt(5))/4: b := (5-sqrt(5))/4: g := t -> (exp(t)+2*exp(t-a*t)*cos(t*sqrt(b/2))+2*exp(t-b*t)*cos(t*sqrt(a/2)))/5: series(1/(2-g(t)),t,56): seq((5*n)!*(coeff(simplify(%),t,5*n)),n=0..11); # _Peter Luschny_, Jul 07 2015"
+    ],
+    "mathematica": [
+        "b = (5 - Sqrt[5])/4; c = (5 + Sqrt[5])/4;",
+        "g[t_] := (Exp[t] + 2*Exp[t - c*t]*Cos[t*Sqrt[b/2]] + 2*Exp[t - b*t]* Cos[t*Sqrt[c/2]])/5;",
+        "a[n_] := (5n)! SeriesCoefficient[1/(2 - g[t]), { t, 0, 5 n}] // Simplify;",
+        "Table[an = a[n]; Print[\"a(\", n, \") = \", an]; an, {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Jul 14 2018, after _Peter Luschny_ *)"
+    ],
+    "program": [
+        "(Sage) # uses[CEN from A243664]",
+        "A243666 = lambda len: CEN(5,len)",
+        "A243666(12) # _Peter Luschny_, Jul 06 2015",
+        "(Sage) # Alternatively:",
+        "def PackedWords5(n):",
+        "    shapes = ([x*5 for x in p] for p in Partitions(n))",
+        "    return sum(factorial(len(s))*SetPartitions(sum(s), s).cardinality() for s in shapes)",
+        "[PackedWords5(n) for n in (0..11)] # _Peter Luschny_, Aug 02 2015",
+        "(PARI) seq(n)={my(a=vector(n+1)); a[1]=1; for(n=1, n, a[1+n]=sum(k=1, n, binomial(5*n, 5*k) * a[1+n-k])); a} \\\\ _Andrew Howroyd_, Jan 21 2020"
+    ],
+    "xref": [
+        "Cf. A011782, A000670, A094088, A243664, A243665, A243666 for k-packed words of degree n for 0<=k<=5."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Jun 14 2014",
+    "ext": [
+        "a(0)=1 prepended, more terms from _Peter Luschny_, Jul 06 2015"
+    ],
+    "references": 7,
+    "revision": 40,
+    "time": "2020-03-16T05:37:37-04:00",
+    "created": "2014-06-14T07:07:53-04:00"
+}

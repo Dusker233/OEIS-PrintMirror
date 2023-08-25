@@ -1,0 +1,43 @@
+{
+    "number": 324210,
+    "data": "110,182,374,494,782,1334,2294,3182,3854,4982,6254,7905,7917,8174,9782,11534,12765,14774,15810,15834,18705,19982,20757,21614,22330,22454,24182,25530,27265,28210,30381,30597,32637,35894,37410,40205,41181,41514,43005,47414,49210",
+    "name": "Squarefree numbers k such that the sum of the distinct prime factors of k is twice the difference between the largest and the smallest prime factors of k.",
+    "comment": [
+        "This sequence is a primitive subsequence of A200070. If p|a(n) for some prime p then p*a(n) is in A200070.",
+        "From _Robert Israel_, Apr 09 2019: (Start)",
+        "All terms have at least three prime factors.",
+        "The number of prime factors is odd if and only if the term is even.",
+        "The terms with three prime factors are 2*A111192. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A324210/b324210.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "110 = 2 * 5 * 11 is squarefree. The minimal and maximal prime divisors of 110 are 2 and 11 respectively. Twice their difference is 2 * (11-2) = 18 which is also the sum of the distinct prime divisors of 110; 2 + 5 + 11 = 18."
+    ],
+    "maple": [
+        "filter:= proc(n) local P;",
+        "if not numtheory:-issqrfree(n) then return false fi;",
+        "P:= numtheory:-factorset(n);",
+        "  convert(P, `+`) = 2*(max(P)-min(P))",
+        "end proc:",
+        "select(filter, [$1..50000]);# _Robert Israel_, Apr 09 2019"
+    ],
+    "mathematica": [
+        "Select[Select[Range[2, 5*10^4], SquareFreeQ], Total@ # == 2 (Last@ # - First@ #) &@ FactorInteger[#][[All, 1]] &] (* _Michael De Vlieger_, Apr 11 2019 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = if(!issquarefree(n), return(0)); my(f=factor(n)[, 1]~); sum(i=1, #f, f[i])==2*(f[#f]-f[1])",
+        "forcomposite(c=1, 50000, if(is(c), print1(c, \", \"))) \\\\ _Felix Fr\u00f6hlich_, Apr 11 2019"
+    ],
+    "xref": [
+        "Cf. A200070, A111192."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David A. Corneth_, Apr 09 2019",
+    "references": 1,
+    "revision": 23,
+    "time": "2019-05-28T19:36:43-04:00",
+    "created": "2019-05-26T13:04:18-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 120156,
+    "data": "11,15,20,27,36,48,64,85,113,151,201,268,358,477,636,848,1131,1508,2010,2680,3574,4765,6353,8471,11295,15060,20080,26773,35697,47596,63462,84616,112821,150428,200571,267428,356570,475427,633903,845204",
+    "name": "a(n) = 11 + floor((2 + Sum_{j=1..n-1} a(j))/3).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A120156/b120156.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "mathematica": [
+        "A120156[n_]:= A120156[n]= 11 +Quotient[2+Sum[A120155[k], {k,n-1}], 3];",
+        "Table[A120156[n], {n,60}] (* _G. C. Greubel_, Jul 06 2023 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "function f(n, a, b)",
+        "  t:=0;",
+        "    for k in [1..n-1] do",
+        "      t+:= a+Floor((b+t)/3);",
+        "    end for;",
+        "  return t;",
+        "end function;",
+        "g:= func< n, a, b | f(n+1, a, b)-f(n, a, b) >;",
+        "A120156:= func< n | g(n, 11, 2) >;",
+        "[A120156(n): n in [1..60]]; // _G. C. Greubel_, Jul 06 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def A120156(n): return 11 +(2+sum(A120156(k) for k in range(1, n)))//3",
+        "[A120156(n) for n in range(1, 61)] # _G. C. Greubel_, Jul 06 2023"
+    ],
+    "xref": [
+        "Cf. A072493, A073941, A112088."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Graeme McRae_, Jun 10 2006",
+    "references": 1,
+    "revision": 6,
+    "time": "2023-07-07T05:46:05-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

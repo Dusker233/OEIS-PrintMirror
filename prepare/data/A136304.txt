@@ -1,0 +1,43 @@
+{
+    "number": 136304,
+    "data": "1,2,5,14,40,116,344,1047,3273,10500,34503,115838,396244,1377221,4851665,17285662,62173297,225424527,822919439,3021713140,11151957809,41340655956,153853915410,574593145517,2152679745351,8087904580883,30466311814036,115036597198845",
+    "name": "Expansion of g.f. (1-z)^2*(1-sqrt(1-4*z))/(2*z*(1 - 3*z + 2*z^2 - z^3)).",
+    "comment": [
+        "Previous name was: Transform of A000108 by the T_{0,0} transformation (see link)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A136304/b136304.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Richard Choulet, <a href=\"https://www.apmep.fr/IMG/pdf/curtz1.pdf\">Curtz-like transformation</a>."
+    ],
+    "formula": [
+        "G.f.: (1-z)^2*(1-sqrt(1-4*z))/(2*z*(1 - 3*z + 2*z^2 - z^3)).",
+        "Conjecture: (n+1)*a(n) + (-8*n+1)*a(n-1) + 3*(7*n-8)*a(n-2) + (-23*n+49)*a(n-3) + (13*n-32)*a(n-4) + 2*(-2*n+7)*a(n-5) = 0. - _R. J. Mathar_, Feb 29 2016",
+        "a(n) = Sum_{j=0..n} A034943(j+1)*A000108(n-j). - _G. C. Greubel_, Apr 19 2021"
+    ],
+    "mathematica": [
+        "A034943[n_]:= A034943[n]= Sum[Binomial[n+k-1, 3*k], {k, 0, n/2}];",
+        "Table[Sum[A034943[j+1]*CatalanNumber[n-j], {j,0,n}], {n,0,35}] (* _G. C. Greubel_, Apr 19 2021 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "A034943:= func< n | (&+[Binomial(n+j-1, 3*j): j in [0..Floor(n/2)]]) >;",
+        "[(&+[A034943(j+1)*Catalan(n-j): j in [0..n]]): n in [0..35]]; // _G. C. Greubel_, Apr 19 2021",
+        "(Sage)",
+        "def A034943(n): return sum(binomial(n+j-1,3*j) for j in (0..n//2))",
+        "[sum(A034943(j+1)*catalan_number(n-j) for j in (0..n)) for n in (0..35)] # _G. C. Greubel_, Apr 19 2021"
+    ],
+    "xref": [
+        "Cf. A097550, A135364, A136302, A136303, A136305, A137229, A137234, A137249.",
+        "Cf. A000108, A034943."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Richard Choulet_, Mar 22 2008",
+    "ext": [
+        "New name using g.f., _Joerg Arndt_, Apr 20 2021"
+    ],
+    "references": 9,
+    "revision": 29,
+    "time": "2022-09-08T08:45:32-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

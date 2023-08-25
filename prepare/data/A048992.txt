@@ -1,0 +1,44 @@
+{
+    "number": 48992,
+    "data": "12,23,31,34,41,42,45,51,52,53,56,61,62,63,64,67,71,72,73,74,75,78,81,82,83,84,85,86,89,91,92,93,94,95,96,97,98,101,111,113,121,122,123,131,141,151,161,171,181,191,192,201,202,210,211,212,213,214,215,216,217",
+    "name": "Hannah Rollman's numbers: the numbers excluded from A048991.",
+    "comment": [
+        "A105390(n) = number of terms <= n; for n < 740: A105390(n) < n/2. - _Reinhard Zumkeller_, Apr 04 2005",
+        "A116700 is a similar sequence. Note that 21 is missing from the current sequence, because we deleted 12 in computing A048991 and now 21 is no longer \"earlier in the sequence\". On the other hand 21 is present in A116700. - _N. J. A. Sloane_, Aug 05 2007",
+        "Otherwise said: Numbers which occur in the concatenation of all smaller numbers not listed in this sequence. - _M. F. Hasler_, Dec 29 2012",
+        "Number of terms < 10^n, n = 1, 2, ...: (0, 37, 589, 7046, ...), gives number of n-digit terms as first differences: (37, 552, 6457, ...). - _M. F. Hasler_, Oct 25 2019"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A048992/b048992.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Nick Hobson, <a href=\"/A048992/a048992.py.txt\">Python program for this sequence</a>"
+    ],
+    "mathematica": [
+        "a[0] = 1; s = \"1\"; a[n_] := a[n] = For[k = a[n-1] + 1, True, k++, If[StringFreeQ[s, t = ToString[k]], s = s <> t, Return[k]]]; Table[a[n], {n, 1, 100}] (* _Jean-Fran\u00e7ois Alcover_, Nov 25 2013 *)"
+    ],
+    "program": [
+        "(Python) # see Hobson link",
+        "(Haskell)",
+        "import Data.List (isInfixOf)",
+        "a048992 n = a048992_list !! (n-1)",
+        "a048992_list = g [1..] [] where",
+        "   g (x:xs) ys | xs' `isInfixOf` ys = x : g xs ys",
+        "               | otherwise          = g xs (xs' ++ ys)",
+        "               where xs' = reverse $ show x",
+        "-- _Reinhard Zumkeller_, Dec 05 2011",
+        "(PARI) D=[]; for(n=1, 999, for(i=0, #D-#d=digits(n), D[i+1..i+#d]!=d || print1(n\",\") || next(2)); D=concat(D, d)) \\\\ _M. F. Hasler_, Oct 25 2019"
+    ],
+    "xref": [
+        "Complement of A048991.",
+        "Similar to A116700: \"early birds\" in the Barbier word A007376 or Champernowne sequence A033307."
+    ],
+    "keyword": "nonn,nice,base,easy,look",
+    "offset": "1,1",
+    "author": "_Bernardo Recam\u00e1n_",
+    "ext": [
+        "Edited by _Patrick De Geest_, Jun 02 2003"
+    ],
+    "references": 13,
+    "revision": 43,
+    "time": "2021-07-01T07:11:01-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

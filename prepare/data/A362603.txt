@@ -1,0 +1,49 @@
+{
+    "number": 362603,
+    "data": "1,1,4,90,3024,176400,14731200,1710268560,261131270400,50881298307840,12308045700787200,3620112665116147200,1272148028456410828800,526419950201914728960000,253357552054376603817984000,140324455080520735061157120000,88618646911930055808757309440000",
+    "name": "Number of permutations p of [2n] in which exactly the first n terms satisfy the up-down property p(1) < p(2) > p(3) < ... .",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A362603/b362603.txt\">Table of n, a(n) for n = 0..234</a>"
+    ],
+    "formula": [
+        "a(n) = (2*n)!/n! * (A000111(n) - A000111(n+1)/(n+1)) for n > 0, a(0) = 1.",
+        "a(n) = A092580(2n,n)."
+    ],
+    "example": [
+        "a(0) = 1: (), the empty permutation.",
+        "a(1) = 1: 21.",
+        "a(2) = 4: 1234, 1243, 1342, 2341.",
+        "a(3) = 90: 143256, 143265, 153246, 153264, ..., 564213, 564231, 564312, 564321.",
+        "a(4) = 3024: 13245678, 13245687, 13245768, 13245786, ..., 78456213, 78456231, 78456312, 78456321."
+    ],
+    "maple": [
+        "b:= proc(u, o) option remember; `if`(u+o=0, 1,",
+        "      add(b(o-1+j, u-j), j=1..u))",
+        "    end:",
+        "a:= n-> (2*n)!/n!*`if`(n=0, 1, b(n, 0)-b(n+1, 0)/(n+1)):",
+        "seq(a(n), n=0..19);"
+    ],
+    "program": [
+        "(Python)",
+        "from fractions import Fraction",
+        "from math import factorial",
+        "from itertools import count, islice, accumulate",
+        "def A362603_gen(): # generator of terms",
+        "    yield 1",
+        "    blist, c = (0,1), 1",
+        "    for n in count(1):",
+        "        blist, a, c = tuple(accumulate(reversed(blist),initial=0)), blist[-1], c*((n<<2)-2)",
+        "        yield int(c*(a-Fraction(blist[-1],(n+1))))",
+        "A362603_list = list(islice(A362603_gen(),20)) # _Chai Wah Wu_, Apr 28 2023"
+    ],
+    "xref": [
+        "Cf. A000111, A001813, A092580."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Apr 27 2023",
+    "references": 2,
+    "revision": 23,
+    "time": "2023-04-29T07:05:21-04:00",
+    "created": "2023-04-27T16:40:44-04:00"
+}

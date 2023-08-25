@@ -1,0 +1,44 @@
+{
+    "number": 325096,
+    "data": "1,1,1,2,2,3,4,5,5,7,9,10,12,13,14,15,15,20,25,27,32,34,36,37,42,44,46,47,49,50,51,52,52,67,82,87,102,107,112,114,129,134,139,141,146,148,150,151,166,171,176,178,183,185,187,188,193,195,197,198,200,201",
+    "name": "Number of maximal subsets of {1...n} with no binary carries.",
+    "comment": [
+        "A binary carry of two positive integers is an overlap of the positions of 1's in their reversed binary expansion."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A325096/b325096.txt\">Table of n, a(n) for n = 0..8192</a>"
+    ],
+    "formula": [
+        "a(2^n - 1) = A000110(n)."
+    ],
+    "example": [
+        "The a(1) = 1 through a(9) = 7 maximal subsets:",
+        "  {1}  {12}  {3}   {34}   {25}   {16}   {7}    {78}    {69}",
+        "             {12}  {124}  {34}   {25}   {16}   {168}   {78}",
+        "                          {124}  {34}   {25}   {258}   {168}",
+        "                                 {124}  {34}   {348}   {249}",
+        "                                        {124}  {1248}  {258}",
+        "                                                       {348}",
+        "                                                       {1248}"
+    ],
+    "mathematica": [
+        "binpos[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "stableQ[u_,Q_]:=!Apply[Or,Outer[#1=!=#2&&Q[#1,#2]&,u,u,1],{0,1}];",
+        "maxim[s_]:=Complement[s,Last/@Select[Tuples[s,2],UnsameQ@@#&&SubsetQ@@#&]];",
+        "Table[Length[maxim[Select[Subsets[Range[n]],stableQ[#,Intersection[binpos[#1],binpos[#2]]!={}&]&]]],{n,0,10}]"
+    ],
+    "xref": [
+        "Cf. A000110, A019565, A050315, A080572, A247935, A267610, A267700.",
+        "Cf. A325095, A325099, A325100, A325101, A325103, A325104, A325107."
+    ],
+    "keyword": "nonn,look",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Mar 27 2019",
+    "ext": [
+        "a(15)-a(61) from _Alois P. Heinz_, Mar 28 2019"
+    ],
+    "references": 17,
+    "revision": 12,
+    "time": "2019-07-27T14:57:51-04:00",
+    "created": "2019-03-28T08:50:00-04:00"
+}

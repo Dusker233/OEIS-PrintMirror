@@ -1,0 +1,38 @@
+{
+    "number": 322448,
+    "data": "16,48,64,80,81,112,144,162,176,192,208,240,256,272,304,320,324,336,368,400,405,432,448,464,496,512,528,560,567,576,592,624,625,648,656,688,704,720,729,752,768,784,810,816,832,848,880,891,912,944,960,976,1008",
+    "name": "Numbers whose prime factorization contains at least one composite exponent.",
+    "comment": [
+        "The asymptotic density of this sequence is Product_{p prime} (1 - 1/p^4 + Sum_{q prime >= 5} 1/p^q - 1/p^(q-1)) = 0.05328066264472198953... (using the method of Shevelev, 2016). - _Amiram Eldar_, Nov 08 2020"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A322448/b322448.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Vladimir Shevelev, <a href=\"https://arxiv.org/abs/1602.04244\">A fast computation of density of exponentially S-numbers</a>, arXiv:1602.04244 [math.NT], 2016."
+    ],
+    "example": [
+        "16 = 2^4 is a term because 4 is a composite exponent here."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k; for k from 1+",
+        "      `if`(n=1, 0, a(n-1)) while andmap(i-> i[2]=1 or",
+        "       isprime(i[2]), ifactors(k)[2]) do od; k",
+        "    end:",
+        "seq(a(n), n=1..70);"
+    ],
+    "mathematica": [
+        "Select[Range[1000], AnyTrue[FactorInteger[#][[;; , 2]], CompositeQ] &] (* _Amiram Eldar_, Nov 08 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = #select(x->((x>1) && !isprime(x)), factor(m)[,2]) > 0; \\\\ _Michel Marcus_, Dec 02 2020"
+    ],
+    "xref": [
+        "Cf. A002808, A322449."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alois P. Heinz_, Dec 08 2018",
+    "references": 3,
+    "revision": 14,
+    "time": "2020-12-02T03:19:27-05:00",
+    "created": "2018-12-08T15:22:46-05:00"
+}

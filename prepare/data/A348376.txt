@@ -1,0 +1,26 @@
+{
+    "number": 348376,
+    "data": "1,3,7,265,641,9091,19237,68719513633,282430133569,1000011110041,3138449811201,184893175034572093,665439907336277581,2178010052496312581,6568538143240091341,340282366920938463481821633053755244641,2367911594760467245892768071944854959281",
+    "name": "a(n) = Sum_{k=1..n} n^(k'), where ' is the arithmetic derivative.",
+    "maple": [
+        "a:= n-> add(n^(k*add(i[2]/i[1], i=ifactors(k)[2])), k=1..n):",
+        "seq(a(n), n=1..18);  # _Alois P. Heinz_, Oct 15 2021"
+    ],
+    "mathematica": [
+        "d[0] = d[1] = 0; d[n_] := n * Plus @@ ((Last[#]/First[#]) & /@ FactorInteger[n]); a[n_] := Sum[n^d[k], {k, 1, n}]; Array[a, 20] (* _Amiram Eldar_, Oct 16 2021 *)"
+    ],
+    "program": [
+        "(PARI) ad(n) = vecsum([n/f[1]*f[2]|f<-factor(n+!n)~]); \\\\ A003415",
+        "a(n) = sum(k=1, n, n^ad(k)); \\\\ _Michel Marcus_, Oct 18 2021"
+    ],
+    "xref": [
+        "Cf. A003415."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Wesley Ivan Hurt_, Oct 15 2021",
+    "references": 0,
+    "revision": 13,
+    "time": "2021-10-20T11:54:32-04:00",
+    "created": "2021-10-20T11:54:32-04:00"
+}

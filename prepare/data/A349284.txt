@@ -1,0 +1,28 @@
+{
+    "number": 349284,
+    "data": "126720,134400,149760,188160,195840,456960,510720,549120,618240,718080,748800,779520,802560,833280,940800,979200,994560,1094400,1102080,1155840,1263360,1324800,1393920,1424640,1585920,1639680,1670400,1785600,1800960,1908480,1946880",
+    "name": "Numbers k such that A051378(k) > 2*k and A333926(k) <= 2*k.",
+    "comment": [
+        "(1+e)-abundant numbers are numbers k such that A051378(k) > 2*k, i.e., numbers k whose sum of (1+e)-divisors exceeds 2*k.",
+        "Since all the recursive divisors (see A282446) of a number are also its (1+e)-divisors, the sequence of (1+e)-abundant numbers includes all the recursive abundant numbers (A333928). The first 21387 (1+e)-abundant numbers are also recursive abundant numbers. Therefore, this sequence includes only the (1+e)-abundant numbers that are not recursive abundant numbers."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A349284/b349284.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "126720 is a term since A051378(126720) = 261144 > 2*126720 = 253440 and A333926(126720) = 246168 < 253440."
+    ],
+    "mathematica": [
+        "oesigma[1] = 1; oesigma[n_] := Times @@ (1 + Sum[First[#]^d, {d, Divisors[Last[#]]}] &) /@ FactorInteger[n]; recDivQ[n_, 1] = True; recDivQ[n_, d_] := recDivQ[n, d] = Divisible[n, d] && AllTrue[FactorInteger[d], recDivQ[IntegerExponent[n, First[#]], Last[#]] &]; recDivs[n_] := Select[Divisors[n], recDivQ[n, #] &]; f[p_, e_] := 1 + Total[p^recDivs[e]]; recsigma[1] = 1; recsigma[n_] := Times @@ (f @@@ FactorInteger[n]); Select[Range[10^6], oesigma[#] > 2*# && recsigma[#] <= 2*# &]"
+    ],
+    "xref": [
+        "Cf. A049599, A049603, A051378, A282446, A333926, A333928."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Nov 13 2021",
+    "references": 2,
+    "revision": 10,
+    "time": "2021-11-13T16:43:53-05:00",
+    "created": "2021-11-13T10:20:53-05:00"
+}

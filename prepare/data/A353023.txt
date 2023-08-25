@@ -1,0 +1,49 @@
+{
+    "number": 353023,
+    "data": "545,27272,1818181,636363636,90909090909,181818181818,272727272727,363636363636,454545454545,545454545454,636363636363,727272727272,818181818181,909090909090,363636363636363,81818181818181818,7272727272727272727,454545454545454545454",
+    "name": "Positive integers k with the property that they cannot be converted to a multiple of 11 by changing at most a single decimal digit.",
+    "comment": [
+        "This sequence was inspired by a puzzle from David K. Butler."
+    ],
+    "link": [
+        "Ben Weiss, <a href=\"https://blog.benweiss.com/2022/05/16/multiples-of-11/\">Multiples of 11</a>"
+    ],
+    "formula": [
+        "a(n) = a(n - 18) * 10^22 + (a(n - 18) mod 100) * 101010101010101010101."
+    ],
+    "program": [
+        "(OBJC)",
+        "int main(int argc, const char * argv[]) {",
+        "  // Search positive integers for solutions, up to 10^20.",
+        "  for (int length = 1; length < 20; ++length) {",
+        "    for (int a = 0; a <= 9; ++a) {",
+        "      int b = 9 - a;",
+        "      // Test number abababab... with length 'length'",
+        "      int a_mod_11 = (a * ((length + 1) / 2)) % 11;",
+        "      int b_mod_11 = (b * ((length    ) / 2)) % 11;",
+        "      int a_add = (b_mod_11 - a_mod_11 + 11) % 11;",
+        "      if (a + a_add == 10) {",
+        "        uint64_t num = 0;",
+        "        uint64_t dec = 1;",
+        "        for (int d = 0; d < length; ++d) {",
+        "          num += ((d & 1) ? b : a) * dec;",
+        "          dec *= 10;",
+        "        }",
+        "        NSLog(@\"Found solution: %llu\", num);",
+        "      }",
+        "    }",
+        "  }",
+        "  return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A008593 (multiples of 11)."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Ben Weiss_, May 15 2022",
+    "references": 0,
+    "revision": 35,
+    "time": "2022-06-14T01:43:30-04:00",
+    "created": "2022-06-14T01:43:30-04:00"
+}

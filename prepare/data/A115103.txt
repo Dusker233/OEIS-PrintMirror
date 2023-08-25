@@ -1,0 +1,47 @@
+{
+    "number": 115103,
+    "data": "5,19,29,43,67,89,151,173,197,233,271,283,307,317,349,461,491,569,571,593,653,701,739,751,787,857,859,907,919,1013,1061,1097,1277,1291,1303,1483,1667,1747,1831,1867,1889,1913,1973,2003,2083,2131,2311,2357,2393",
+    "name": "Primes p such that p-1 and p+1 have the same number of prime factors with multiplicity.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A115103/b115103.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from Vincenzo Librandi)"
+    ],
+    "example": [
+        "19-1 = 2*3*3 has 3 factors. 19+1 = 2*2*5 has 3 factors. So 19 is in the table."
+    ],
+    "maple": [
+        "isA115103 := proc(n)",
+        "    if not type(n,prime) then",
+        "        return false;",
+        "    end if;",
+        "    if numtheory[bigomega](n-1) <> numtheory[bigomega](n+1) then",
+        "        false;",
+        "    else",
+        "        true ;",
+        "    end if ;",
+        "end proc:",
+        "for n from 2 to 3000 do",
+        "    if isA115103(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Feb 13 2019",
+        "# second Maple program:",
+        "q:= p-> isprime(p) and (f-> f(p+1)=f(p-1))(numtheory[bigomega]):",
+        "select(q, [$1..3000])[];  # _Alois P. Heinz_, May 08 2022"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[400]],PrimeOmega[#-1]==PrimeOmega[#+1]&] (* _Harvey P. Dale_, Apr 26 2014 *)"
+    ],
+    "program": [
+        "(PARI) g(n) = forprime(x=1,n,p1=bigomega(x-1);p2=bigomega(x+1);if(p1==p2,print1(x\",\")))"
+    ],
+    "xref": [
+        "Cf. A067386 (without multiplicity), A323498, A323536, A323537."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Mar 02 2006",
+    "references": 5,
+    "revision": 18,
+    "time": "2022-05-08T17:14:11-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

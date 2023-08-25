@@ -1,0 +1,37 @@
+{
+    "number": 328280,
+    "data": "1,1,3,7,26,82,343,1257,5594,22411,103730,440350,2094028,9255877,44889351,204385719,1006126370,4685719954,23337166962,110633755459,556199376622,2674751727209,13550764116530,65935784179142,336190200180652,1651985253047884",
+    "name": "Number of n-step walks on cubic lattice starting at (0,0,0), ending at (0,floor(n/2),ceiling(n/2)), remaining in the first (nonnegative) octant and using steps (0,0,1), (0,1,0), (1,0,0), (-1,1,1), (1,-1,1), and (1,1,-1).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A328280/b328280.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path\">Lattice path</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Self-avoiding_walk\">Self-avoiding walk</a>"
+    ],
+    "formula": [
+        "a(n) = A328300(n,floor(n/2))."
+    ],
+    "maple": [
+        "b:= proc(l) option remember; `if`(l[-1]=0, 1, (r-> add(",
+        "      add(add(`if`(i+j+k=1, (h-> `if`(h[1]<0, 0, b(h)))(",
+        "      sort(l-[i, j, k])), 0), k=r), j=r), i=r))([$-1..1]))",
+        "    end:",
+        "a:= n-> (t-> b([0, t, n-t]))(iquo(n, 2)):",
+        "seq(a(n), n=0..31);"
+    ],
+    "mathematica": [
+        "b[l_] := b[l] = If[Last[l] == 0, 1, Sum[If[i + j + k == 1, Function[h, If[h[[1]] < 0, 0, b[h]]][Sort[l - {i, j, k}]], 0], {i, {-1, 0, 1}}, {j, {-1, 0, 1}}, {k, {-1, 0, 1}}]];",
+        "a[n_] := With[{t = Quotient[n, 2]}, b[{0, t, n - t}]];",
+        "a /@ Range[0, 31] (* _Jean-Fran\u00e7ois Alcover_, May 12 2020, after Maple *)"
+    ],
+    "xref": [
+        "Bisection gives A328269 (even part).",
+        "Cf. A328281, A328300."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Oct 10 2019",
+    "references": 4,
+    "revision": 19,
+    "time": "2020-05-12T11:50:30-04:00",
+    "created": "2019-10-11T19:12:42-04:00"
+}

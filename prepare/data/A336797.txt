@@ -1,0 +1,45 @@
+{
+    "number": 336797,
+    "data": "7,14,16,17,26,35,47,68,350,3788",
+    "name": "Numbers, not divisible by 3, whose squares have exactly 4 nonzero digits in base 3.",
+    "comment": [
+        "Is this sequence infinite?",
+        "Next term, if it exists, is > 3^500. - _James Rayman_, Feb 05 2021"
+    ],
+    "link": [
+        "Alessio Moscariello, <a href=\"https://arxiv.org/abs/2101.10415\">On sparse perfect powers</a>, arXiv:2101.10415 [math.NT], 2021. See Question 11 p. 9."
+    ],
+    "example": [
+        "7^2=49 in base 3 is 1211, so 7 is a term.",
+        "14^2=196 in base 3 is 21021, so 14 is a term."
+    ],
+    "mathematica": [
+        "Select[Range[4000], Mod[#, 3] > 0 && Length @ Select[IntegerDigits[#^2, 3], #1 > 0 &] == 4 &] (* _Amiram Eldar_, Jan 27 2021 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = (n%3) && #select(x->x, digits(n^2, 3)) == 4;",
+        "(Python)",
+        "from gmpy2 import isqrt, is_square",
+        "import itertools",
+        "N = 1000",
+        "powers = [1]",
+        "a_list = []",
+        "while len(powers) < N: powers.append(3 * powers[-1])",
+        "def attempt(n):",
+        "    if is_square(n): a_list.append(int(isqrt(n)))",
+        "for A, B, C in itertools.combinations(powers[1:], 3):",
+        "    for a, b, c in itertools.product([1, 2], repeat=3):",
+        "            attempt(a*A + b*B + c*C + 1)",
+        "print(sorted(a_list)) # _James Rayman_, Feb 05 2021"
+    ],
+    "xref": [
+        "Cf. A007089 (numbers in base 3), A160385."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Jan 27 2021",
+    "references": 0,
+    "revision": 36,
+    "time": "2021-02-14T13:29:55-05:00",
+    "created": "2021-01-27T05:33:12-05:00"
+}

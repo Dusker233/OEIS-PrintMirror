@@ -1,0 +1,30 @@
+{
+    "number": 356394,
+    "data": "1,1,6,51,452,5210,68514,1032906,17352320,323948376,6594052680,145585638000,3461441121192,88092914635128,2388119359650192,68667743686492440,2086307088847714560,66762608893508354880,2243693428523140377024,78982154604162553529664",
+    "name": "Expansion of e.g.f. ( Product_{k>0} (1+x^k)^k )^(1/(1-x)).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A356394/b356394.txt\">Table of n, a(n) for n = 0..423</a>"
+    ],
+    "formula": [
+        "a(0) = 1; a(n) = Sum_{k=1..n} A356391(k) * binomial(n-1,k-1) * a(n-k)."
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[Product[(1+x^k)^k, {k, 1, nmax}]^(1/(1-x)), {x, 0, nmax}], x] * Range[0,nmax]! (* _Vaclav Kotesovec_, Aug 07 2022 *)"
+    ],
+    "program": [
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(serlaplace(prod(k=1, N, (1+x^k)^k)^(1/(1-x))))",
+        "(PARI) a356391(n) = n!*sum(k=1, n, sumdiv(k, d, (-1)^(k/d+1)*d^2)/k);",
+        "a_vector(n) = my(v=vector(n+1)); v[1]=1; for(i=1, n, v[i+1]=sum(j=1, i, a356391(j)*binomial(i-1, j-1)*v[i-j+1])); v;"
+    ],
+    "xref": [
+        "Cf. A356392, A356393.",
+        "Cf. A026007, A356337, A356391."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Aug 05 2022",
+    "references": 6,
+    "revision": 16,
+    "time": "2022-08-16T10:16:33-04:00",
+    "created": "2022-08-05T10:48:13-04:00"
+}

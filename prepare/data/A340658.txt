@@ -1,0 +1,38 @@
+{
+    "number": 340658,
+    "data": "0,1,2,4,8,14,25,41,67,105,163,246,368,540,784,1124,1596,2242,3124,4316,5918,8058,10899,14651,19581,26028,34417,45293,59327,77372,100483,129984,167502,215077,275199,350966,446162,565451,714515,900334,1131370,1417963",
+    "name": "The number of overpartitions of n having more non-overlined parts than overlined parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A340658/b340658.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "B. Kim, E. Kim, and J. Lovejoy, <a href=\"https://doi.org/10.1016/j.ejc.2020.103159\">Parity bias in partitions</a>, European J. Combin., 89 (2020), 103159, 19 pp."
+    ],
+    "formula": [
+        "G.f.: (Product_{k>=1} (1+q^k)/(1-q^k)) - Sum_{n>=0} q^(n*(n+1)/2)/Product_{k=1..n} (1-q^k)^2."
+    ],
+    "example": [
+        "a(3) = 4 counts the overpartitions [3], [2,1], [1,1,1], and [1',1,1]."
+    ],
+    "maple": [
+        "b:= proc(n, i, c) option remember; `if`(n=0,",
+        "     `if`(c>0, 1, 0), `if`(i<1, 0, b(n, i-1, c)+add(",
+        "      add(b(n-i*j, i-1, c+j-t), t=[0, 2]), j=1..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2, 0):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Jan 15 2021"
+    ],
+    "mathematica": [
+        "b[n_, i_, c_] := b[n, i, c] = If[n==0, If[c>0, 1, 0], If[i<1, 0, b[n, i-1, c] + Sum[Sum[b[n-i*j, i-1, c+j-t], {t, {0, 2}}], {j, 1, n/i}]]];",
+        "a[n_] := b[n, n, 0];",
+        "a /@ Range[0, 60] (* _Jean-Fran\u00e7ois Alcover_, Jan 29 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A001524, A015128, A340659."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Jeremy Lovejoy_, Jan 15 2021",
+    "references": 3,
+    "revision": 14,
+    "time": "2021-01-29T14:49:05-05:00",
+    "created": "2021-01-15T06:07:01-05:00"
+}

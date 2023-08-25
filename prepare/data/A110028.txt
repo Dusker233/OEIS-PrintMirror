@@ -1,0 +1,62 @@
+{
+    "number": 110028,
+    "data": "23,223,227,337,353,373,557,577,733,757,773,22573,23327,25237,25253,25523,27253,27527,32233,32237,32257,32323,32327,33223,33353,33377,33533,33773,35227,35353,35533,35537,35573,35753,37223,37337,52237,52253,52727,53353",
+    "name": "Primes with a prime number of digits, all of them prime, that add up to a prime.",
+    "comment": [
+        "First 7-digit number in this sequence is 2222333.",
+        "From _Michael De Vlieger_, Feb 02 2019: (Start)",
+        "First p-digit number in this sequence:",
+        "    2                                       23",
+        "    3                                      223",
+        "    5                                    22573",
+        "    7                                  2222333",
+        "   11                              22222222223",
+        "   13                            2222222225323",
+        "   17                        22222222222225237",
+        "   19                      2222222222222223527",
+        "   23                  22222222222222222232723",
+        "   29            22222222222222222222222222577",
+        "   31          2222222222222222222222222232257",
+        "   37    2222222222222222222222222222222235773",
+        "  ...",
+        "(End)"
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A110028/b110028.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "22573 is a term because 22573 is prime, it has five digits (5 is a prime), all digits (2,3,5,7) are prime, and the sum of the digits is 2+2+5+7+3 = 19, which is also a prime."
+    ],
+    "maple": [
+        "a:=proc(n) local nn: nn:=convert(n,base,10): if isprime(n) and isprime(nops(nn)) and map(isprime,nn)=[seq(true,i=1..nops(nn))] and isprime(add(nn[j],j=1..nops(nn))) then n fi end: seq(a(k),k=1..60000); # _Emeric Deutsch_, Apr 02 2006"
+    ],
+    "mathematica": [
+        "Select[Prime@ Range@ 6000, And[PrimeQ@ Length@ #, AllTrue[#, PrimeQ], PrimeQ@ Total@ #] &@ IntegerDigits@ # &] (* or *)",
+        "With[{p = {2, 3, 5, 7}}, Table[Select[FromDigits /@ Select[Tuples[p, {q}], PrimeQ@ Total@ # &], PrimeQ], {q, Prime@ Range@ 3}]] // Flatten (* _Michael De Vlieger_, Feb 02 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, nextprime",
+        "from itertools import islice, product",
+        "def agen(): # generator of terms",
+        "    p = 2",
+        "    while True:",
+        "        for d in product(\"2357\", repeat=p-1):",
+        "            for last in \"37\":",
+        "                if isprime(sum(map(int, s:=\"\".join(d) + last))):",
+        "                    if isprime(t:=int(s)):",
+        "                        yield t",
+        "        p = nextprime(p)",
+        "print(list(islice(agen(), 40))) # _Michael S. Branicky_, May 26 2023"
+    ],
+    "xref": [
+        "Cf. A000040, A062088."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Sergio Pimentel_, Mar 31 2006",
+    "references": 2,
+    "revision": 20,
+    "time": "2023-05-26T10:48:24-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

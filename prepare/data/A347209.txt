@@ -1,0 +1,54 @@
+{
+    "number": 347209,
+    "data": "13,37,71,97,113,167,199,337,359,701,709,739,907,937,941,953,967,1033,1091,1109,1153,1181,1201,1217,1229,1259,1439,1471,1487,1669,1733,1789,1811,1933,1949,3019,3067,3083,3089,3121,3163,3221,3299,3343,3389,3433,3469,3511,3527,3571,3583,3643,3719",
+    "name": "Emirps in both base 2 and base 10.",
+    "comment": [
+        "Primes p such that A030101(p) and A004086(p) are primes other than p.",
+        "Are there any cases where A030101(p) = A004086(p), i.e. emirps in A081434?"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A347209/b347209.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 71 is a term because 71 is prime, its base-10 reversal 17 is a prime other than 71, and its base-2 reversal 113 is a prime other than 71."
+    ],
+    "maple": [
+        "filter:= proc(n) local L,nL,i,r,s;",
+        "  if not isprime(n) then return false fi;",
+        "  L:= convert(n,base,10);",
+        "  nL:= nops(L);",
+        "  r:= add(10^(nL-i)*L[i],i=1..nL);",
+        "  if r=n or not isprime(r) then return false fi;",
+        "  L:= convert(n,base,2);",
+        "  nL:= nops(L);",
+        "  s:=add(2^(nL-i)*L[i],i=1..nL);",
+        "  s <> n and isprime(s)",
+        "end proc:",
+        "select(filter, [seq(i,i=3..10000,2)]);"
+    ],
+    "mathematica": [
+        "Select[Range[4000], (ir = IntegerReverse[#]) != # && PrimeQ[#] && PrimeQ[ir] && (ir2 = IntegerReverse[#, 2]) != # && PrimeQ[ir2] &] (* _Amiram Eldar_, Aug 23 2021 *)",
+        "Select[Prime[Range[600]],!PalindromeQ[#]&&FromDigits[Reverse[IntegerDigits[#,2]],2]!=#&&AllTrue[{IntegerReverse[#],FromDigits[Reverse[IntegerDigits[#,2]],2]},PrimeQ]&] (* _Harvey P. Dale_, Oct 13 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, primerange",
+        "def ok(p):",
+        "    s, b = str(p), bin(p)[2:]",
+        "    if s == s[::-1] or b == b[::-1]: return False",
+        "    return isprime(int(s[::-1])) and isprime(int(b[::-1], 2))",
+        "print(list(filter(ok, primerange(1, 3720)))) # _Michael S. Branicky_, Aug 24 2021"
+    ],
+    "xref": [
+        "Intersection of A006567 and A080790.",
+        "Subset of A136634.",
+        "Cf. A004086, A030101, A081434."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Aug 23 2021",
+    "references": 1,
+    "revision": 16,
+    "time": "2022-10-13T11:48:12-04:00",
+    "created": "2021-08-23T21:48:22-04:00"
+}

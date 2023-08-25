@@ -1,0 +1,45 @@
+{
+    "number": 50421,
+    "data": "12,20,24,26,28,38,39,40,44,48,50,57,58,60,68,70,71,72,74,75,78,79,80,84,86,87,92,96,98,100,105,106,108,110,113,117,118,121,122,124,132,134,135,138,139,140,141,144,152,154,155,158,159,160,164,166,167,172",
+    "name": "Numbers for which in base 2 the least number of digits that can be removed to leave a palindrome (possibly beginning with 0) is 2.",
+    "link": [
+        "Robert Israel, <a href=\"/A050421/b050421.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "(20 base 2) = 101000 -> 0000."
+    ],
+    "maple": [
+        "filter:= proc(n) local L,R,k,m;",
+        "  L:= convert(n,base,2);",
+        "  R:= ListTools:-Reverse(L);",
+        "  m:= nops(L);",
+        "  if L = R then return false fi;",
+        "  if ormap(i -> subsop(i=NULL,L)=subsop(m+1-i=NULL,R), [$1..m]) then return false fi;",
+        "  ormap(p -> subsop(p[1]=NULL,subsop(p[2]=NULL,L))=subsop(m-p[1]=NULL,subsop(m+1-p[2]=NULL,R)), [seq(seq([i,j],j=i+1..m),i=1..m-1)])",
+        "end proc:",
+        "select(filter, [$4..200]); # _Robert Israel_, Oct 28 2020"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import combinations",
+        "def ok(n):",
+        "    b = bin(n)[2:]",
+        "    for digs_to_remove in range(4):",
+        "        for skip in combinations(range(len(b)), digs_to_remove):",
+        "            newb = \"\".join(b[i] for i in range(len(b)) if i not in skip)",
+        "            if len(newb) > 0 and newb == newb[::-1]:",
+        "                return (digs_to_remove == 2)",
+        "    return False",
+        "print(list(filter(ok, range(173)))) # _Michael S. Branicky_, Aug 24 2021"
+    ],
+    "xref": [
+        "Cf. A050426, A050420, A050422, A050423, A050424."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "references": 4,
+    "revision": 11,
+    "time": "2021-08-24T07:52:31-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 321439,
+    "data": "8,21,27,37,59,65,66,82,86,99,105,111,126,143,147,155,156,165,177,181,187,194,195,200,230,231,242,262,284,374,430,449,460,477,502,512,539,540,541,622,634,657,707,731,735,739,745,766,767,781,784,785,791,801",
+    "name": "Numbers k such that if j is the sum of the first prime(k) primes then the sum of the first j primes is prime.",
+    "comment": [
+        "k is a term if A007504(A007504(prime(k)) is prime. Terms can be even or odd since A007504(A007504(prime(k)) is odd for any k."
+    ],
+    "link": [
+        "Ray Chandler, <a href=\"/A321439/b321439.txt\">Table of n, a(n) for n = 1..2500</a>"
+    ],
+    "example": [
+        "8 is a term because prime(8) = 19, A007504(19) = 568, and A007504(568) = 1086557, which is prime.",
+        "2 is not a term since prime(2) = 3, A007504(3) = 10 and A007504(10) = 129, which is not prime."
+    ],
+    "maple": [
+        "N:=100:",
+        "for n from 1 to N do",
+        "X:=add(ithprime(k),k=1..ithprime(n));",
+        "Y:=add(ithprime(r),r=1..X);",
+        "if isprime(Y)then print(n);",
+        "end if:",
+        "end do:"
+    ],
+    "mathematica": [
+        "primeSum[n_] := Sum[Prime[i], {i, n}]; Select[Range[200], PrimeQ[ primeSum[primeSum[Prime[#]]]] &] (* _Amiram Eldar_, Nov 09 2018 *)"
+    ],
+    "program": [
+        "(Perl)",
+        "use ntheory qw(:all);",
+        "for (my ($i, $k) = (1, 1); ; ++$k) {",
+        "    if (is_prime sum_primes nth_prime sum_primes nth_prime nth_prime $k) {",
+        "        print \"a($i) = $k\\n\"; ++$i;",
+        "    }",
+        "} # _Daniel Suteu_, Nov 11 2018",
+        "(PARI)",
+        "sumprimes(n)={my(p=0, s=0); for(i=1, n, p=nextprime(1+p); s+=p); s}",
+        "ok(k)={isprime(sumprimes(sumprimes(prime(k))))}",
+        "for(n=1, 100, if(ok(n),print1(n, \", \"))) \\\\ _Andrew Howroyd_, Nov 11 2018"
+    ],
+    "xref": [
+        "Cf. A007504, A013916, A321342, A321343."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David James Sycamore_, Nov 09 2018",
+    "ext": [
+        "a(30)-a(54) from _Daniel Suteu_, Nov 11 2018"
+    ],
+    "references": 2,
+    "revision": 35,
+    "time": "2018-12-30T12:45:36-05:00",
+    "created": "2018-11-09T20:59:22-05:00"
+}

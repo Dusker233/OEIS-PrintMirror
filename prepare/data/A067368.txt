@@ -1,0 +1,52 @@
+{
+    "number": 67368,
+    "data": "2,6,10,14,16,18,22,26,30,34,38,42,46,48,50,54,58,62,66,70,74,78,80,82,86,90,94,98,102,106,110,112,114,118,122,126,128,130,134,138,142,144,146,150,154,158,162,166,170,174,176,178,182,186,190,194,198,202,206",
+    "name": "a(n) is the smallest positive even integer that cannot be expressed as the product of two or three previous terms (not necessarily distinct).",
+    "comment": [
+        "a(n+1) - a(n) = 2 or 4 for all n >= 1. See A067395 for the sequence of differences.",
+        "From _Jianing Song_, Sep 21 2018: (Start)",
+        "Numbers of the form 2^(3t+1)*s where s is an odd number.",
+        "Also positions of 1 in A191255. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A067368/b067368.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "Conjecture: a(n) = a(n-1) + 2 if (n = 2a(k) + k + 1) or (n = 2a(k) + k) for some k, otherwise a(n) = a(n-1) + 4. This has been confirmed for several hundred terms.",
+        "The above conjecture is correct because there are 2*(a(k+1)-a(k)) terms that are not divisible by 4 in the k-th interval which are determined by terms that are divisible by 4. For example, there are 2*(a(2)-a(1)) = 2*(6-2) = 8 terms between a(5) = 16 and a(14) = 48 because numbers of the form 2*s are always terms where s is an odd number. So first differences of a(n) determine the corresponding intervals and the formula above always holds. - _Altug Alkan_, Sep 24 2018",
+        "a(n) = 2*A191257(n) = A213258(n)/2. - _Jianing Song_, Sep 21 2018"
+    ],
+    "example": [
+        "8 = 2*2*2, but 10 = 2*5 cannot be expressed with factors 2 and 6, so a(3) = 10."
+    ],
+    "maple": [
+        "N:= 1000:",
+        "A:= {seq(seq(2^(3*k+1)*s,s=1..N/2^(3*k+1),2),k=0..floor(log[2](N/2)/3))}:",
+        "sort(convert(A,list)); # _Robert Israel_, Jul 23 2019"
+    ],
+    "mathematica": [
+        "t = Nest[Flatten[# /. {0 -> {0, 1}, 1 -> {0, 2}, 2 -> {0, 3}, 3 -> {0, 1}}] &, {0}, 9] (* A191255 *)",
+        "Flatten[Position[t, 0]] (* A005408, the odds *)",
+        "a = Flatten[Position[t, 1]] (* this sequence *)",
+        "b = Flatten[Position[t, 2]] (* A213258 *)",
+        "a/2  (* A191257 *)",
+        "b/4  (* a/2 *)",
+        "(* _Clark Kimberling_, May 28 2011 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = valuation(n, 2)%3==1; \\\\ _Altug Alkan_, Sep 21 2018"
+    ],
+    "xref": [
+        "Cf. A067395, A067396, A191255, A191257, A213258."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "Jeremiah K. Hower (jhower(AT)vt.edu), Jan 20 2002",
+    "ext": [
+        "Edited by _John W. Layman_, Jan 23 2002"
+    ],
+    "references": 9,
+    "revision": 48,
+    "time": "2019-07-23T15:35:58-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

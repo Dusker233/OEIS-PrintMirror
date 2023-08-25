@@ -1,0 +1,45 @@
+{
+    "number": 256383,
+    "data": "9,20,30,44,60,82,90,116,124,128,138,150,164,182,208,210,214,242,254,294,296,300,304,314,324,334,360,366,376,386,398,408,412,422,432,442,476,506,510,522,524,532,538,540,548,578,584,586,628,674,676,684",
+    "name": "Numbers n such that n-5 and n+5 are semiprimes.",
+    "comment": [
+        "It appears that there are no primes in this sequence.",
+        "If n is odd, one of n+5 and n-5 is divisible by 4, so unless n = 9 it can't be a semiprime.  Thus all terms except 9 are even. - _Robert Israel_, Apr 13 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A256383/b256383.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "N:= 1000: # for terms <= N-5",
+        "PP:= select(isprime, {seq(i,i=3..N/3,2)}):",
+        "P:= select(`<=`,PP,floor(sqrt(N))):",
+        "SP:= {}:",
+        "for p in P do",
+        "  PP:= select(`<=`,PP,N/p);",
+        "  SP:= SP union map(`*`,PP,p);",
+        "od:",
+        "R:= {9} union (map(`+`,SP,5) intersect map(`-`,SP,5)):",
+        "sort(convert(R,list)); # _Robert Israel_, Apr 13 2020"
+    ],
+    "mathematica": [
+        "Select[Range[2, 700], PrimeOmega[# + 5] == PrimeOmega[# - 5] == 2 &] (* _Vincenzo Librandi_, Mar 29 2015 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn,m=5) = {for (n=m+1, nn, if (bigomega(n-m)==2 && bigomega(n+m)==2, print1(n, \", \")););}",
+        "(PARI) issemi(n)=bigomega(n)==2",
+        "list(lim)=my(v=List([9])); forprime(p=5,(lim-5)\\3, if(issemi(3*p+10), listput(v,3*p+5))); forprime(p=29,(lim+5)\\3, if(issemi(3*p-10), listput(v,3*p-5))); forstep(n=30,lim\\=1,6, if(issemi(n-5) && issemi(n+5), listput(v, n))); Set(v) \\\\ _Charles R Greathouse IV_, Apr 13 2020",
+        "(Magma) IsSemiprime:=func< n | &+[k[2]: k in Factorization(n)] eq 2 >; [ n: n in [6..700] | IsSemiprime(n+5) and IsSemiprime(n-5) ]; // _Vincenzo Librandi_, Mar 29 2015"
+    ],
+    "xref": [
+        "Cf. A001358 (semiprimes).",
+        "Cf. A124936 (n-1 and n+1), A105571 (n-2 and n+2).",
+        "Cf. A256381 (n-3 and n+3), A256382 (n-4 and n+4)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Mar 27 2015",
+    "references": 4,
+    "revision": 17,
+    "time": "2022-09-08T08:46:11-04:00",
+    "created": "2015-03-27T08:44:12-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 300393,
+    "data": "2,15,42,1365,2730,451605,870870,140645505,300690390,139098404445,304075581810,217908972526245,485155825624470,378943703223140055,1033538145201932370,1433000638322479231005,1987938667108592728530,4573285492841794762027995,12549856805456545895209890",
+    "name": "Least squarefree number with n prime factors whose average is an integer.",
+    "comment": [
+        "A103622 lists the average values.",
+        "The parity of a(n) is different from the parity of n. - _David A. Corneth_, Mar 20 2018"
+    ],
+    "link": [
+        "Paolo P. Lava, <a href=\"/A300393/b300393.txt\">Table of n, a(n) for n = 1..30</a>"
+    ],
+    "formula": [
+        "a(1) = 2; 2/1 = 2;",
+        "a(2) = 15; (3+5)/2 = 4;",
+        "a(3) = 42; (2+3+7)/3 = 4;",
+        "a(4) = 1365; (3+5+7+13)/4 = 7;",
+        "a(5) = 2730; (2+3+5+7+13)/5 = 6."
+    ],
+    "maple": [
+        "with(combinat): P:=proc(q) local a,b,c,d,j,k,x; x:=[];",
+        "for j from 1 to q do x:=[op(x),ithprime(j)]; od; for j from 1 to q do",
+        "a:=choose(x,j); b:=10^40; d:=0;",
+        "for k from 1 to nops(a) do c:=convert(a[k],`+`)/j;",
+        "if frac(c)=0 and c<b then b:=c; d:=convert(a[k],`*`); fi; od;",
+        "print(d); od; end: P(30);"
+    ],
+    "mathematica": [
+        "f[n_] := If[n == 0, {1}, Block[{P = Product[Prime@ i, {i, n}], lim, k = 1, c, w = ConstantArray[1, n]},lim = Prime[n + 1] P;{w}~Join~Reap[Do[w = If[k == 1, MapAt[# + 1 &, w, -k], Join[Drop[MapAt[# + 1 &, w, -k], -k + 1], ConstantArray[1, k - 1]]]; c = Times @@ Map[If[# == 0, 1, Prime@ #] &, Accumulate@ w]; If[c < lim, Sow[w]; k = 1, If[k == n, Break[], k++]], {i, Infinity}]][[-1, 1]]]]; Array[Min@ Map[Times @@ # &, Select[Map[Prime@ Accumulate@ # &, f@ #], IntegerQ@ Mean@ # &]] &, 14] (* _Michael De Vlieger_, Mar 19 2018 *)"
+    ],
+    "xref": [
+        "Cf. A005117, A103622.",
+        "Subsequence of A072697. - _Michel Marcus_, Mar 19 2018"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Mar 05 2018",
+    "references": 1,
+    "revision": 25,
+    "time": "2018-03-21T11:50:26-04:00",
+    "created": "2018-03-13T04:56:52-04:00"
+}

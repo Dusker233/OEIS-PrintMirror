@@ -1,0 +1,43 @@
+{
+    "number": 359222,
+    "data": "0,1,2,11,80,7572,664475,3180929,120796790,556068798,1246707529,87037147316",
+    "name": "Number of steps to reach 0 from A359221(n) (Starting numbers that reach a new record high value during iteration by the map x->A359194(x)).",
+    "comment": [
+        "a(12) found by Tom Duff (26 Dec 2022).",
+        "It is unknown whether all starting numbers reach 0."
+    ],
+    "link": [
+        "Joshua Searle, <a href=\"https://qedscience.wordpress.com/2021/02/19/collatz-inspired-sequences/\">Collatz-inspired sequences</a>"
+    ],
+    "example": [
+        "a(4) is the step count from the starting number A359221(4) = 3: (3, 6, 13, 24, 55, 90, 241, 300, 123, 142, 85, 0) -- 11 steps, hence a(4) = 11."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def f(n): return 1 if n == 0 else (m:=3*n)^((1 << m.bit_length())-1)",
+        "def itersmax(n):",
+        "    i, fi, m = 0, n, n",
+        "    while fi != 0: i, fi, m = i+1, f(fi), max(m, fi)",
+        "    return i, m",
+        "def agen(): # generator of terms",
+        "    record = -1",
+        "    for m in count(0):",
+        "        v, mx = itersmax(m)",
+        "        if mx > record:",
+        "            yield v # use m to obtain starting numbers",
+        "            record = mx",
+        "print(list(islice(agen(), 8))) # _Michael S. Branicky_, Dec 29 2022"
+    ],
+    "xref": [
+        "Step counts of A359221.",
+        "Cf. A035327, A359194, A359207, A359208, A359209, A359215, A359218, A359219, A359220, A359255."
+    ],
+    "keyword": "nonn,base,more,hard",
+    "offset": "1,3",
+    "author": "_Joshua Searle_, Dec 29 2022",
+    "references": 3,
+    "revision": 12,
+    "time": "2023-01-05T18:56:43-05:00",
+    "created": "2023-01-05T18:56:43-05:00"
+}

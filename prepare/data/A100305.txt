@@ -1,0 +1,38 @@
+{
+    "number": 100305,
+    "data": "1,1,5,9,45,113,469,1369,5117,16065,56997,185513,641485,2125585,7257461,24262137,82321821,276418913,934993477,3146344777,10626292589,35797050801,120807391509,407183797913,1373642929981,4631113313281,15620256753125,52669163259369,177631217284365",
+    "name": "Expansion of (1 - x - 4*x^2)/(1 - 2*x - 7*x^2 + 8*x^3).",
+    "comment": [
+        "Construct a graph as follows: form the graph whose adjacency matrix is the tensor product of that of P_3 and [1,1;1,1], then add a loop at each of the 'internal' nodes. (Spectrum : [0^3; 1; (1-sqrt(33))/2;(1+sqrt(33))/2]). a(n) counts closed walks of length n at each of the 'internal' nodes."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A100305/b100305.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (2,7,-8)."
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1) + 7*a(n-2) - 8*a(n-3).",
+        "a(n) = 1/2 + 2^(-n)*(sqrt(33)/132)*((1 + sqrt(33))^(n+1) - (1 - sqrt(33))^(n+1)).",
+        "E.g.f.: exp(x)/2 + exp(x/2)*(33*cosh(sqrt(33)*x/2) + sqrt(33)*sinh(sqrt(33)*x/2))/66. - _Stefano Spezia_, Sep 08 2022",
+        "a(n) = (1/2)*(1 + (2*sqrt(2)*i)^n*ChebyshevU(n, -i/(4*sqrt(2)))). - _G. C. Greubel_, Feb 03 2023"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1-x-4x^2)/(1-2x-7x^2+8x^3),{x,0,40}],x] (* or *) LinearRecurrence[{2,7,-8},{1,1,5},40] (* _Harvey P. Dale_, Oct 05 2012 *)"
+    ],
+    "program": [
+        "(Magma) I:=[1,1,5]; [n le 3 select I[n] else 2*Self(n-1) +7*Self(n-2) -8*Self(n-3): n in [1..41]]; // _G. C. Greubel_, Feb 03 2023",
+        "(SageMath)",
+        "def A100305(n): return (1/2)*(1 + lucas_number1(n+1, 1, -8))",
+        "[A100305(n) for n in range(41)] # _G. C. Greubel_, Feb 03 2023"
+    ],
+    "xref": [
+        "Cf. A015443, A100304.",
+        "Partial sums of A100303."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Paul Barry_, Nov 12 2004",
+    "references": 2,
+    "revision": 18,
+    "time": "2023-02-04T10:20:04-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

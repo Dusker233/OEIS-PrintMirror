@@ -1,0 +1,33 @@
+{
+    "number": 330044,
+    "data": "1,1,1,7,25,61,841,5251,20497,423865,3780721,20292031,559501801,6487717237,44317795705,1527439916731,21798729916321,180816606476401,7478345832314977,126737815733490295,1236785588298582841,59677199741873516461,1171057417377450325801",
+    "name": "Expansion of e.g.f. exp(x) / (1 - x^3).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A330044/b330044.txt\">Table of n, a(n) for n = 0..250</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=0} (3*k)! * x^(3*k) / (1 - x)^(3*k + 1).",
+        "a(0) = a(1) = a(2) = 1; a(n) = n * (n - 1) * (n - 2) * a(n - 3) + 1.",
+        "a(n) = Sum_{k=0..floor(n/3)} n! / (n - 3*k)!.",
+        "a(n) ~ n! * (exp(1)/3 + 2*cos(sqrt(3)/2 - 2*Pi*n/3) / (3*exp(1/2))). - _Vaclav Kotesovec_, Apr 18 2020",
+        "a(n) = A158757(n, 2*n). - _G. C. Greubel_, Dec 05 2021"
+    ],
+    "mathematica": [
+        "nmax = 22; CoefficientList[Series[Exp[x]/(1 - x^3), {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[Sum[n!/(n - 3 k)!, {k, 0, Floor[n/3]}], {n, 0, 22}]"
+    ],
+    "program": [
+        "(Magma) [n le 3 select 1 else 1 + 6*Binomial(n-1,3)*Self(n-3): n in [1..41]]; // _G. C. Greubel_, Dec 05 2021",
+        "(Sage) [sum(factorial(3*k)*binomial(n, 3*k) for k in (0..n//3)) for n in (0..40)] # _G. C. Greubel_, Dec 05 2021"
+    ],
+    "xref": [
+        "Cf. A000522, A087208, A100732, A158757, A330045."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Ilya Gutkovskiy_, Nov 28 2019",
+    "references": 9,
+    "revision": 13,
+    "time": "2022-09-08T08:46:24-04:00",
+    "created": "2019-11-29T01:40:45-05:00"
+}

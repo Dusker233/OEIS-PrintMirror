@@ -1,0 +1,33 @@
+{
+    "number": 273994,
+    "data": "1,1,4,27,250,2975,43296,744913,14797036,333393345,8403026320,234300271811,7161316358616,238108166195263,8556626831402560,330494399041444425,13654219915946513296,600870384794864432897,28060233470995898505024,1386000542545570348128235",
+    "name": "Number of endofunctions on [n] whose cycle lengths are Fibonacci numbers.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A273994/b273994.txt\">Table of n, a(n) for n = 0..386</a>"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; local r, f, g;",
+        "      if n=0 then 1 else r, f, g:= $0..2;",
+        "      while f<=n do r:= r+(f-1)!*b(n-f)*",
+        "         binomial(n-1, f-1); f, g:= g, f+g",
+        "      od; r fi",
+        "    end:",
+        "a:= n-> add(b(j)*n^(n-j)*binomial(n-1, j-1), j=0..n):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = Module[{r, f, g}, If[n == 0, 1, {r, f, g} = {0, 1, 2}; While[f <= n, r = r + (f - 1)!*b[n - f]*Binomial[n - 1, f - 1]; {f, g} = {g, f + g}]; r]];",
+        "a[0] = 1; a[n_] := Sum[b[j]*n^(n - j)*Binomial[n - 1, j - 1], {j, 0, n}];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Jun 06 2018, from Maple *)"
+    ],
+    "xref": [
+        "Cf. A000045, A060435, A116956, A273001, A273996, A273997, A273998, A305824."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jun 06 2016",
+    "references": 6,
+    "revision": 15,
+    "time": "2018-06-10T16:16:09-04:00",
+    "created": "2016-06-06T09:36:22-04:00"
+}

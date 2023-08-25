@@ -1,0 +1,67 @@
+{
+    "number": 351975,
+    "data": "1,6,14,18,48,124,134,284,3135,4221,9594,16468,34825,557096,711676,746464,1333334,2676977,6514063,11280468,16081252,35401658,53879547,133333334,198485452,223856659,1333333334,2514095219,2956260256,3100811124,10912946218,19780160858",
+    "name": "Numbers k such that A037276(k) == -1 (mod k).",
+    "comment": [
+        "Numbers k such that the concatenation of prime factors of k is 1 less than a multiple of k.",
+        "Contains 2*m for m in A093170.",
+        "Terms k where k-1 is prime include 6, 14, 18, 48 and 284. Are there others?"
+    ],
+    "link": [
+        "Martin Ehrenstein, <a href=\"/A351975/b351975.txt\">Table of n, a(n) for n = 1..38</a>"
+    ],
+    "example": [
+        "a(4) = 48 is a term because 48=2*2*2*2*3 and 22223 == -1 (mod 48)."
+    ],
+    "maple": [
+        "tcat:= proc(x,y) x*10^(1+ilog10(y))+y end proc:",
+        "filter:= proc(n) local F,t,i;",
+        "F:= map(t -> t[1]$t[2], sort(ifactors(n)[2],(a,b)->a[1]<b[1]));",
+        "t:= F[1];",
+        "for i from 2 to nops(F) do",
+        "  t:= tcat(t,F[i])",
+        "od;",
+        "  t mod n = n-1",
+        "end proc:",
+        "filter(1):= true:",
+        "select(filter, [$1..10^8]);"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def A037276(n):",
+        "    if n == 1: return 1",
+        "    return int(\"\".join(str(p)*e for p, e in sorted(factorint(n).items())))",
+        "def afind(limit, startk=1):",
+        "    for k in range(startk, limit+1):",
+        "        if (A037276(k) + 1)%k == 0:",
+        "            print(k, end=\", \")",
+        "afind(10**6) # _Michael S. Branicky_, Feb 27 2022",
+        "# adapted and corrected by _Martin Ehrenstein_, Mar 06 2022",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import factorint",
+        "def A351975_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for k in count(max(startvalue,1)):",
+        "        c = 0",
+        "        for d in sorted(factorint(k,multiple=True)):",
+        "            c = (c*10**len(str(d)) + d) % k",
+        "        if c == k-1:",
+        "            yield k",
+        "A351975_list = list(islice(A351975_gen(),10)) # _Chai Wah Wu_, Feb 28 2022"
+    ],
+    "xref": [
+        "Cf. A037276, A093170."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Feb 26 2022",
+    "ext": [
+        "a(24)-a(25) from _Michael S. Branicky_, Feb 27 2022",
+        "Prepended 1 and more terms from _Martin Ehrenstein_, Feb 28 2022"
+    ],
+    "references": 1,
+    "revision": 28,
+    "time": "2022-03-07T07:53:51-05:00",
+    "created": "2022-02-27T22:18:27-05:00"
+}

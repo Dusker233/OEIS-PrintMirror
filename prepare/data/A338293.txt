@@ -1,0 +1,51 @@
+{
+    "number": 338293,
+    "data": "1,1,3,15,495,467775,448046589375,396822986774382287109375,316789536051348354157896789538095888519287109375",
+    "name": "Number of matchings in the complete binary tree of n rows.",
+    "comment": [
+        "A recurrence is formed by considering the root vertex matched or unmatched and a(n-1) or a(n-2) matchings in the subtrees below.",
+        "    unmatched         matched            matched",
+        "     /    \\           /   \\\\             //   \\",
+        "  any     any      any   matched     matched  any",
+        "                         /   \\        /   \\",
+        "                       any   any    any   any",
+        "  so:",
+        "    a(n-1)^2     +       2 * a(n-1)*a(n-2)^2     = a(n)",
+        "The Jacobsthal product formula (below) follows from this recurrence by induction by substituting the products for a(n-1) and a(n-2) and using J(n+1) = J(n) + 2*J(n-1) (its recurrence in A001045).",
+        "The Jacobsthal product terms, with multiplicity, in a(n) are a subset of the terms in any bigger a(m), so a(n) divides any bigger a(m) and so in particular this is a divisibility sequence.",
+        "Asymptotically, a(n) ~ (1/2)*C^(2^n) where C = 1.537176.. = A338294.  For growth power C, let c(n) = (2*a(n))^(1/2^n) so that C = lim_{n->oo} c(n).  The Jacobsthal products formula gives log(c(n)) = log(2)/2^n + log(J(n+1))/2^n + Sum_{k=1..n} log(J(k))/2^k.  Then discarding log(J(1)) = log(J(2)) = 0, and log(2)/2^n -> 0, and log(J(n+1))/2^n -> 0, leaves the terms of A242049 so that log(C) = A242049.",
+        "The asymptotic factor F = 1/2 is found by letting f(n) = a(n)/a(n-1)^2, so f(n) = J(n+1) / J(n) by the products formula, and f(n) = 2 + (-1)^n/J(n) -> 2 = 1/F.  This factor makes no difference to the growth power C, since any F^(1/2^n) -> 1, but it brings the approximation closer to a(n) sooner."
+    ],
+    "link": [
+        "Kevin Ryde, <a href=\"/A338293/b338293.txt\">Table of n, a(n) for n = 0..12</a>",
+        "Kevin Ryde, <a href=\"http://user42.tuxfamily.org/pari-vpar/index.html\">vpar</a> examples/complete-binary-matchings.gp calculations and code in PARI/GP.",
+        "<a href=\"/index/Aa#AHSL\">Index entries for sequences of form a(n+1)=a(n)^2 + ...</a>",
+        "<a href=\"/index/Di#divseq\">Index to divisibility sequences</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1)^2 + 2*a(n-1)*a(n-2)^2 starting a(0)=1 and a(1)=1.",
+        "a(n) = J(n+1) * J(n) * J(n-1)^2 * J(n-2)^4 * ... * J(1)^(2^(n-1)) where J(n) = (2^n - (-1)^n)/3 = A001045(n) is the Jacobsthal numbers.",
+        "A228607(n) = a(n+1)^2*(a(n+1)+3*a(n)^2). - _R. J. Mathar_, Jul 22 2022"
+    ],
+    "example": [
+        "n=0 rows is the empty tree and n=1 row is a single vertex.  Both have only the empty matching so a(0) = a(1) = 1.",
+        "n=2 rows is a path-3 and has 3 matchings: first two vertices, last two, or the empty matching, so a(2) = 3.",
+        "Jacobsthal products formula:",
+        "  a(4) = J(5) * J(4) * J(3)^2 * J(2)^4 * J(1)^8",
+        "       =  11  *   5  *    3^2 *    1^4 *    1^8 = 495."
+    ],
+    "program": [
+        "(PARI) a(n) = my(x=1,y=1); for(i=2,n, [x,y] = [x^2 + 2*x*y^2, x]); x;"
+    ],
+    "xref": [
+        "Cf. A001045 (Jacobsthal numbers), A338294 (growth power), A242049 (log of growth power).",
+        "Cf. A076725 (independent sets), A158681 (Wiener index), A000975 (independence number and matching number)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Kevin Ryde_, Oct 21 2020",
+    "references": 3,
+    "revision": 16,
+    "time": "2022-10-19T20:10:28-04:00",
+    "created": "2020-11-06T23:49:49-05:00"
+}

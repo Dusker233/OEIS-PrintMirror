@@ -1,0 +1,37 @@
+{
+    "number": 339296,
+    "data": "1,1,2,4,9,23,60,170,496,1505,4665,14772,47415,154093,505394,1671009,5561274,18615687,62624016,211605003,717823582,2443711716,8345934897,28587110560,98181058020,338029066457,1166451261583,4033596172701,13975467586797,48509872173875",
+    "name": "Number of unoriented series-parallel networks with n elements and without multiple unit elements in parallel.",
+    "comment": [
+        "A series configuration is the unit element or an ordered concatenation of two or more parallel configurations and a parallel configuration is the unit element or a multiset of two or more series configurations. In this variation, parallel configurations may include the unit element only once. a(n) is the number of distinct series or parallel configurations with n unit elements modulo reversing the order of all series configurations."
+    ],
+    "formula": [
+        "a(n) = A339294(n) + A339295(n) for n > 1.",
+        "a(n) = (A339290(n) + A339293(n)) / 2."
+    ],
+    "example": [
+        "In the following examples, elements in series are juxtaposed and elements in parallel are separated by '|'. The unit element is denoted by 'o'.",
+        "a(1) = 1: (o).",
+        "a(2) = 1: (oo).",
+        "a(3) = 2: (ooo), (o|oo).",
+        "a(4) = 4: (oooo), (o(o|oo)), (o|ooo), (oo|oo).",
+        "a(5) = 9: (ooooo), (oo(o|oo)), (o(o|oo)o), (o(o|ooo)), (o(oo|oo)), (o|oooo), (o|o(o|oo)), (oo|ooo), (o|oo|oo)."
+    ],
+    "program": [
+        "(PARI) \\\\ here B(n) gives A339290 as a power series.",
+        "\\\\ Note replacing Z by x/(1-x) gives A339225.",
+        "EulerT(v)={Vec(exp(x*Ser(dirmul(v, vector(#v, n, 1/n))))-1, -#v)}",
+        "B(n, Z=x)={my(p=Z+O(x^2)); for(n=2, n, p = Z + (1 + Z)*x*Ser(EulerT( Vec(p^2/(1+p), -n) ))); p}",
+        "seq(n, Z=x)={my(q=subst(B((n+1)\\2, Z), x, x^2), s=q^2/(1+q), p=Z+O(x^2), t=0); forstep(n=2, n, 2, t=q*(1 + p); p=Z + (1 + Z)*x*Ser(EulerT(Vec(t+(s-subst(t, x, x^2))/2, -n-1))) - t); Vec(p+t+B(n,Z))/2}"
+    ],
+    "xref": [
+        "Cf. A339225, A339290 (oriented), A339293 (achiral), A339294, A339295."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Andrew Howroyd_, Dec 07 2020",
+    "references": 4,
+    "revision": 6,
+    "time": "2020-12-08T02:27:41-05:00",
+    "created": "2020-12-08T02:27:41-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 66188,
+    "data": "0,0,1,6,22,58,141,289,579,1054,1885,3161,5280,8371,13220,20183,30605,45178,66448,95546,136877,192759,270146,373387,514187,699429,947846,1272067,1700456,2254007,2977623,3904091,5102058,6625434,8575277,11037277,14163777",
+    "name": "Sum of the second moments of all partitions of n.",
+    "comment": [
+        "The first element of each partition is given weight 0."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A066188/b066188.txt\">Table of n, a(n) for n = 0..5000</a> (terms 0..1000 from Alois P. Heinz)"
+    ],
+    "formula": [
+        "a(n) ~ exp(Pi*sqrt(2*n/3)) * n / (5*sqrt(3)). - _Vaclav Kotesovec_, May 30 2021"
+    ],
+    "example": [
+        "a(3) = 6 because the second moments of all partitions of 3 are {3}.{0},{2,1}.{0,1} and {1,1,1}.{0,1,4}, resulting in 0,1,5; summing to 6."
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, [1, 0],",
+        "      `if`(i<1, [0$2], `if`(i>n, b(n, i-1, t), b(n, i-1, t)+",
+        "       (h-> h+[0, h[1]*i*t^2])(b(n-i, i, t+1)))))",
+        "    end:",
+        "a:= n-> b(n$2, 0)[2]:",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Jan 29 2014"
+    ],
+    "mathematica": [
+        "Table[ Plus@@Map[ #.Range[ 0, -1+Length[ # ] ]^2&, IntegerPartitions[ n ] ], {n, 30} ]",
+        "(* Second program: *)",
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0, {1, 0},",
+        "     If[i < 1, {0, 0}, If[i > n, b[n, i - 1, t], b[n, i - 1, t] +",
+        "     Function[h, h + {0, h[[1]]*i*t^2}][b[n - i, i, t + 1]]]]];",
+        "a[n_] := b[n, n, 0][[2]];",
+        "a /@ Range[0, 50] (* _Jean-Fran\u00e7ois Alcover_, May 30 2021, after _Alois P. Heinz_ *)"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,4",
+    "author": "_Wouter Meeussen_, Dec 15 2001",
+    "references": 1,
+    "revision": 17,
+    "time": "2021-05-30T11:20:03-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

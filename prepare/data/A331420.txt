@@ -1,0 +1,44 @@
+{
+    "number": 331420,
+    "data": "0,0,0,0,0,0,0,0,16,32,192,384,1344,2688,7168,14336,32256,64512,129024,258048,473088,946176,1622016,3244032,5271552,10543104,16400384,32800768,49201152,98402304,143130624,286261248,405536768,811073536,1123024896,2246049792,3048210432,6096420864",
+    "name": "a(n) is the number of subsets of {1..n} that contain exactly 5 odd numbers.",
+    "comment": [
+        "2*a(n-1) for n > 1 is the number of subsets of {1..n} that contain 5 even numbers.",
+        "In general, if a(n) is the number of subsets of {1..n} that contain k odd numbers, then a(n) = binomial((n+1)/2, k)*2^((n-1)/2) for n odd; a(n) = binomial((n/2), k)*2^(n/2) for n even, and 2*a(n-1), n > 1, is the number of subsets of {1..n} that contain k even numbers.",
+        "In terms of k, the number a(n) of subsets of {1..n} that contain k even numbers is a(n) = binomial((n-1)/2, k)*2^((n+1)/2) for n odd; a(n) = binomial((n/2), k)* 2^(n/2) for n even.  Note that a triangle can be made for different values of k and n."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A331420/b331420.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_12\">Index entries for linear recurrences with constant coefficients</a>, signature (0,12,0,-60,0,160,0,-240,0,192,0,-64)."
+    ],
+    "formula": [
+        "a(n) = binomial((n+1)/2, 5) * 2^((n-1)/2), n odd;",
+        "a(n) = binomial((n/2), 5) * 2^(n/2), n even.",
+        "From _Colin Barker_, Jan 17 2020: (Start)",
+        "G.f.: 16*x^9*(1 + 2*x) / (1 - 2*x^2)^6.",
+        "a(n) = 12*a(n-2) - 60*a(n-4) + 160*a(n-6) - 240*a(n-8) + 192*a(n-10) - 64*a(n-12) for n>12. (End)",
+        "From _Amiram Eldar_, Mar 24 2022: (Start)",
+        "Sum_{n>=9} 1/a(n) = (5/64)*(12*log(2)-7).",
+        "Sum_{n>=9} (-1)^(n+1)/a(n) = (5/192)*(12*log(2)-7). (End)"
+    ],
+    "example": [
+        "a(9)=16 and the 16 subsets are {1,3,5,7,9}, {1,2,3,5,7,9}, {1,3,4,5,7,9}, {1,3,5,6,7,9}, {1,3,5,7,8,9},{1,2,3,4,5,7,9},{1,2,3,5,6,7,9}, {1,2,3,5,7,8,9}, {1,3,4,5,6,7,9}, {1,3,4,5,7,8,9}, {1,3,5,6,7,8,9}, {1,2,3,4,5,6,7,9}, {1,2,3,4,5,7,8,9}, {1,2,3,5,6,7,8,9}, {1,3,4,5,6,7,8,9},{1,2,3,4,5,6,7,8,9}."
+    ],
+    "mathematica": [
+        "a[n_] := If[OddQ[n], Binomial[(n + 1)/2, 5]*2^((n - 1)/2), Binomial[n/2, 5]*2^(n/2)]; Array[a, 38] (* _Amiram Eldar_, Jan 17 2020 *)"
+    ],
+    "program": [
+        "(PARI) concat([0,0,0,0,0,0,0,0], Vec(16*x^9*(1 + 2*x) / (1 - 2*x^2)^6 + O(x^40))) \\\\ _Colin Barker_, Jan 17 2020",
+        "(Magma) [IsOdd(n) select Binomial((n+1) div 2, 5)*2^((n-1) div 2) else Binomial((n div 2), 5)*2^(n div 2): n in [1..38]]; // _Marius A. Burtea_, Jan 17 2020"
+    ],
+    "xref": [
+        "Cf. A330592, A331408, A331419."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,9",
+    "author": "_Enrique Navarrete_, Jan 16 2020",
+    "references": 1,
+    "revision": 30,
+    "time": "2022-03-24T08:44:18-04:00",
+    "created": "2020-01-20T22:49:36-05:00"
+}

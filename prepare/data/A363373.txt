@@ -1,0 +1,38 @@
+{
+    "number": 363373,
+    "data": "0,1,2,6,9,14,33,62,177,886,1155,1719,3255,4018,13377,19942,46022,103401,193426,422751,634113,1080742,2850591,5493662,10252635,25631525,51217666,135055839",
+    "name": "a(n) is the least k such that, if x_0, x_1, x_2, ... are the iterations of the arithmetic derivative A003415 starting with x_0 = k, x_0 > x_1 > ... > x_n.",
+    "comment": [
+        "a(n) is the least k such that the first n iterations of A003415 starting at k are decreasing.",
+        "a(n) is the least k such that A361869(k) = n."
+    ],
+    "example": [
+        "a(3) = 6 because the iterations of A003415 starting at 6 are 6 > 5 > 1 > 0 = 0.",
+        "First differs from A189760 and A327967 at 9, where a(9) = 886 (corresponding to iterations 886 > 445 > 94 > 49 > 14 > 9 > 6 > 5 > 1 > 0) while A189760(9) = A327967(9) = 414 < A003415(414) = 501."
+    ],
+    "maple": [
+        "ader:= proc(n) local t;",
+        "  n * add(t[2]/t[1], t = ifactors(n)[2])",
+        "end proc:",
+        "f:= proc(n) option remember; local t;",
+        "   t:= ader(n);",
+        "   if t < n then procname(t)+1 else 0 fi",
+        "end proc:",
+        "M:= 25: V:= Array(0..M,-1): count:= 0:",
+        "for n from 0 while count <= M do",
+        "  v:= f(n);",
+        "  if V[v] = -1 then count:= count+1; V[v]:= n fi;",
+        "od:",
+        "convert(V,list);"
+    ],
+    "xref": [
+        "Cf. A003415, A189760, A327967, A361869."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Robert Israel_, May 29 2023",
+    "references": 0,
+    "revision": 6,
+    "time": "2023-05-30T07:45:57-04:00",
+    "created": "2023-05-30T07:45:57-04:00"
+}

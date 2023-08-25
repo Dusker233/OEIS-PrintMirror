@@ -1,0 +1,55 @@
+{
+    "number": 335859,
+    "data": "12,15,21,30,35,57,60,65,70,77,91,105,111,114,119,126,133,143,147,150,155,165,168,180,185,190,198,209,217,220,231,234,255,260,264,294,301,310,312,319,323,330,341,360,427,432,437,455,456,462,473,497,504,510,511,546,559,588",
+    "name": "Terms of A334245 in increasing order and without repetition.",
+    "comment": [
+        "See the network with the 50 smallest merging points of A334245 in link."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A335859/b335859.txt\">Table of n, a(n) for n = 1..5939</a>",
+        "Bernard Schott and Blandine Schott, <a href=\"/A335859/a335859_3.pdf\">Network of merging points</a>."
+    ],
+    "example": [
+        "l means: add least prime factor, and,",
+        "L means: add largest prime factor.",
+        "For 3:",
+        "   L:  3 + 3 = 6            l: 3 + 3 = 6",
+        "   l:  6 + 2 = 8            L: 6 + 3 = 9",
+        "   L:  8 + 2 = 10           l: 9 + 3 = 12",
+        "   l: 10 + 2 = 12",
+        "So A334245(3) = 12 and 12 is a merging point with a(1) = 12.",
+        "Now, for 12:",
+        "   L: 12 + 3 = 15           l: 12 + 2 = 14",
+        "   l: 15 + 3 = 18           L: 14 + 7 = 21",
+        "   L: 18 + 3 = 21",
+        "So A334245(12) = 21 and 21 is the merging point corresponding to 12 with a(3) = 21."
+    ],
+    "maple": [
+        "N:= 1000: # to get all values <= N",
+        "S:= x -> x + min(numtheory:-factorset(x)):",
+        "T:= x -> x + max(numtheory:-factorset(x)):",
+        "f:= proc(n) g(S(n),T(n),0,1) end proc:",
+        "g:= proc(s,t,i,j) option remember;",
+        "      if max(s,t) > N then return 0 fi;",
+        "      if s = t and i=j then return s fi;",
+        "      if s <= t then",
+        "        if i = 0 then procname(T(s),t,1,j)",
+        "        else procname(S(s),t,0,j)",
+        "        fi",
+        "      elif j=0 then procname(s,T(t),i,1)",
+        "      else procname(s,S(t),i,0)",
+        "      fi",
+        "end proc:",
+        "sort(convert(map(f, {$2..N}) minus {0},list)); # _Robert Israel_, Jul 09 2020"
+    ],
+    "xref": [
+        "Cf. A334245."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Jun 27 2020",
+    "references": 2,
+    "revision": 46,
+    "time": "2021-05-08T08:30:09-04:00",
+    "created": "2020-07-09T16:50:22-04:00"
+}

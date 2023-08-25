@@ -1,0 +1,32 @@
+{
+    "number": 334157,
+    "data": "1,2,5,16,89,686,5917,54860,588401,7370074,103522421,1573237832,25869057865,462768222086,8965777751309,186025937645956,4106375449878497,96241703493486770,2390797380938894821,62730027061416412544",
+    "name": "Row sums of array A158777.",
+    "formula": [
+        "a(n) = n!*Sum_{k=0..n} A003269(k+1)/(n-k)!.",
+        "a(n) = n!*Sum_{k=0..n} Sum_{s=0..floor(k/3)} binomial(k-3*s, s)/(n-k)!.",
+        "E.g.f.: exp(x)/(1 - x - x^4)."
+    ],
+    "maple": [
+        "W := proc(n, m) local v, s, h; v := 0;",
+        "for s from 0 to m do",
+        "if 0 = (m - s) mod 4 then",
+        "h := (m - s)/4;",
+        "v := v + binomial(n - s - 3*h, h)/s!;",
+        "end if; end do; n!*v; end proc;",
+        "seq(add(W(n1, m1), m1 = 0 .. n1), n1 = 0 .. 35);"
+    ],
+    "mathematica": [
+        "Table[Apply[Plus, CoefficientList[Expand[t^n*n!*SeriesCoefficient[Series[Exp[t*x]/( 1 - x/t - t^4*x^4), {x, 0, 50}], n]], t]], {n, 0, 40}]; (* Program due to _Roger L. Bagula_ from A158777 *)"
+    ],
+    "xref": [
+        "Cf. A003269, A087208, A158777, A330044, A330045."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Petros Hadjicostas_, Apr 16 2020",
+    "references": 2,
+    "revision": 19,
+    "time": "2020-04-17T03:06:57-04:00",
+    "created": "2020-04-17T03:06:57-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 295706,
+    "data": "7,17,23,37,47,59,83,89,107,113,127,131,149,163,173,257,353,433,439,457,467,521,563,761,773,839,881,953,1009,1031,1213,1307,1319,1321,1697,1733,1759,1811,1861,1871,1913,1979,2153,2221,2281,2287,2309,2393,2593,2767,2789",
+    "name": "Primes p for which the difference between p^2 and the square of the next prime is both 1 more and 1 less than a prime.",
+    "comment": [
+        "I.e., primes p for which the difference between p^2 and the square of the next prime is the average of a twin prime pair."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A295706/b295706.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The primes 7 and 11 are consecutive and their squares are 49 and 121. The difference is 72, and both 71 and 73 are prime.",
+        "Likewise, the difference between the square of 563 and the next prime (569) is 6792, and 6791 and 6793 are twin primes."
+    ],
+    "maple": [
+        "N:= 10^4: # to get all terms <= N",
+        "p:= 1: q:= 2: A:= NULL:",
+        "while p < N do",
+        "  p:= q; q:= nextprime(p);",
+        "  d:= q^2-p^2;",
+        "  if isprime(d+1) and isprime(d-1) then A:= A, p fi",
+        "od:",
+        "A; # _Robert Israel_, Mar 02 2018"
+    ],
+    "mathematica": [
+        "For[p = 1, p < 10000, p++,",
+        "a = Prime[p];",
+        "b = Prime[p + 1];",
+        "c = b^2 - a^2;",
+        "d = (c + 1);",
+        "e = (c - 1);",
+        "If[And[PrimeQ[d] == True, PrimeQ[e] == True], Print[a]];",
+        "]",
+        "(* Second program: *)",
+        "Select[Partition[Prime@ Range@ 300, 2, 1], AllTrue[{# + 1, # - 1}, PrimeQ] &[#2^2 - #1^2] & @@ # &][[All, 1]] (* _Michael De Vlieger_, Dec 03 2017 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = { my(pp=2); forprime(p=3, nn, my(d=p^2-pp^2); if(isprime(d+1) && isprime(d-1), print1(pp, \", \")); pp=p); } \\\\ _Iain Fox_, Dec 03 2017"
+    ],
+    "xref": [
+        "Cf. A014574 (average of twin prime pairs), A069482 (difference between squares of consecutive primes)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Geoffrey Marnell_, Nov 25 2017",
+    "references": 1,
+    "revision": 35,
+    "time": "2018-03-02T13:16:27-05:00",
+    "created": "2018-03-02T02:33:06-05:00"
+}

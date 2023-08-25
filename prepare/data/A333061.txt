@@ -1,0 +1,37 @@
+{
+    "number": 333061,
+    "data": "1,11,81,512,3151,20071,133853,924320,6551293,47529561,354259153,2725545695,21741995463,180198265559,1551865576121,13865702570254,128238585735637,1224733005946425,12053244176971825,122035994844818345,1269623551116437475,13561114665253219451",
+    "name": "Number of entries in the fourth blocks of all set partitions of [n] when blocks are ordered by decreasing lengths.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A333061/b333061.txt\">Table of n, a(n) for n = 4..576</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, [1, 0], `if`(i<1, 0,",
+        "      add((p-> p+`if`(t>0 and t-j<1, [0, p[1]*i], 0))(",
+        "       combinat[multinomial](n, i$j, n-i*j)/j!*",
+        "      b(n-i*j, min(n-i*j, i-1), max(0, t-j))), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2, 4)[2]:",
+        "seq(a(n), n=4..25);"
+    ],
+    "mathematica": [
+        "multinomial[n_, k_List] := n!/Times @@ (k!);",
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0, {1, 0}, If[i < 1, {0, 0},",
+        "     Sum[Function[p, p + If[t > 0 && t - j < 1, {0, p[[1]]*i}, {0, 0}]][",
+        "     multinomial[n, Append[Table[i, {j}], n - i*j]]/j!*",
+        "     b[n - i*j, Min[n - i*j, i - 1], Max[0, t - j]]], {j, 0, n/i}]]];",
+        "a[n_] := b[n, n, 4][[2]];",
+        "a /@ Range[4, 25] (* _Jean-Fran\u00e7ois Alcover_, Apr 24 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=4 of A319375."
+    ],
+    "keyword": "nonn",
+    "offset": "4,2",
+    "author": "_Alois P. Heinz_, Mar 06 2020",
+    "references": 2,
+    "revision": 8,
+    "time": "2021-04-24T20:45:04-04:00",
+    "created": "2020-03-06T18:55:21-05:00"
+}

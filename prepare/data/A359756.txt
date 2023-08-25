@@ -1,0 +1,54 @@
+{
+    "number": 359756,
+    "data": "0,3,6,7,13,14,15,27,29,30,31,55,59,61,62,63,111,119,123,125,126",
+    "name": "First position of n in the sequence of zero-based weighted sums of standard compositions (A124757), if we start with position 0.",
+    "comment": [
+        "The k-th composition in standard order (graded reverse-lexicographic, A066099) is obtained by taking the set of positions of 1's in the reversed binary expansion of k, prepending 0, taking first differences, and reversing again. This gives a bijective correspondence between nonnegative integers and integer compositions.",
+        "The zero-based weighted sum of a sequence (y_1,...,y_k) is Sum_{i=1..k} (i-1)*y_i.",
+        "Is this sequence strictly increasing?"
+    ],
+    "link": [
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/e/2PACX-1vTCPiJVFUXN8IqfLlCXkgP15yrGWeRhFS4ozST5oA4Bl2PYS-XTA3sGsAEXvwW-B0ealpD8qnoxFqN3/pub\">Statistics, classes, and transformations of standard compositions</a>"
+    ],
+    "formula": [
+        "Appears to be the complement of A083329 in A089633."
+    ],
+    "example": [
+        "The terms together with their standard compositions begin:",
+        "    0: ()",
+        "    3: (1,1)",
+        "    6: (1,2)",
+        "    7: (1,1,1)",
+        "   13: (1,2,1)",
+        "   14: (1,1,2)",
+        "   15: (1,1,1,1)",
+        "   27: (1,2,1,1)",
+        "   29: (1,1,2,1)",
+        "   30: (1,1,1,2)",
+        "   31: (1,1,1,1,1)"
+    ],
+    "mathematica": [
+        "nn=10;",
+        "stc[n_]:=Differences[Prepend[Join@@Position[Reverse[IntegerDigits[n,2]],1],0]]//Reverse;",
+        "wts[y_]:=Sum[(i-1)*y[[i]],{i,Length[y]}];",
+        "seq=Table[wts[stc[n]],{n,0,2^(nn-1)}];",
+        "Table[Position[seq,k][[1,1]]-1,{k,0,nn}]"
+    ],
+    "xref": [
+        "The one-based version is A089633, for prime indices A359682.",
+        "First index of n in A124757, reverse A231204.",
+        "The version for prime indices is A359676, reverse A359681.",
+        "A053632 counts compositions by zero-based weighted sum.",
+        "A066099 lists standard compositions.",
+        "A304818 gives weighted sums of prime indices, reverse A318283.",
+        "A320387 counts multisets by weighted sum, zero-based A359678.",
+        "Cf. A000120, A029931, A059893, A070939, A083329, A359043, A359674."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Jan 17 2023",
+    "references": 7,
+    "revision": 6,
+    "time": "2023-01-19T11:10:50-05:00",
+    "created": "2023-01-19T11:10:50-05:00"
+}

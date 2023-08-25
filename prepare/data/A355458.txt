@@ -1,0 +1,50 @@
+{
+    "number": 355458,
+    "data": "1,7,111,3367,7787,8517,9071,54079,54451,138657,262157,759461,857817,4662317,21754021,25400729,41171387,50304331,368119693,799245603,938577991",
+    "name": "Numbers k that set a new record m where m is the largest left-truncatable prime up to the final k (stop on reaching the final k).",
+    "comment": [
+        "If instead of comparing the values of m, we compare the number of digits concatenated to k, then there are only 3 known terms: 1, 7 and 50304331 with 19, 23 and 24 digits respectively."
+    ],
+    "example": [
+        "a(1) = 1 because 1 sets a record m = 89726156799336363541 and 89726156799336363541, 9726156799336363541, 726156799336363541, 26156799336363541, 6156799336363541, 156799336363541, 56799336363541, 6799336363541, 799336363541, 99336363541, 9336363541, 336363541, 36363541, 6363541, 363541, 63541, 3541, 541, 41 are all primes (the truncation stops when the final k is reached).",
+        "a(2) = 7 because for k = 2..6 no m exceeds 89726156799336363541, but for k = 7, m = 357686312646216567629137."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def findNewCandidates(candidates):",
+        "  newCandidates = []",
+        "  for candidate in candidates:",
+        "    for k in range(1,10):",
+        "      p = int(str(k) + str(candidate))",
+        "      if (isprime(p)):",
+        "        newCandidates.append(p)",
+        "  return newCandidates",
+        "record = 0",
+        "for k in range(1, 10**6):",
+        "  if (k % 2 == 0 or k % 5 == 0):",
+        "    continue",
+        "  toCheck = [k]",
+        "  while len(toCheck) > 0:",
+        "    lastToCheck = toCheck",
+        "    toCheck = findNewCandidates(toCheck)",
+        "  result = lastToCheck[-1]",
+        "  if (result > record):",
+        "    record = result",
+        "    print(str(k))"
+    ],
+    "xref": [
+        "Cf. A024785."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_Eder Vanzei_, Jul 02 2022",
+    "ext": [
+        "a(15)-a(18) from _Michael S. Branicky_, Jul 02 2022",
+        "a(19)-a(21) from _Michael S. Branicky_, Jul 04 2022"
+    ],
+    "references": 0,
+    "revision": 33,
+    "time": "2022-08-30T14:27:03-04:00",
+    "created": "2022-08-30T14:27:03-04:00"
+}

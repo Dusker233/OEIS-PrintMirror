@@ -1,0 +1,40 @@
+{
+    "number": 173500,
+    "data": "0,0,0,6,64,854,13392,244944,5124266,120795956,3169804000,91666666668,2897010809280,99350833566282,3674884626652666,145845089585448960,6182031393612132352,278750799336055446646,13322922112485213149376",
+    "name": "Number of sequences of length n with terms from {0,1,...,n-1} such that the sum of terms is 0 modulo n and the i-th term is not i or 2i modulo n.",
+    "link": [
+        "Robert Israel, <a href=\"/A173500/b173500.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Art of Problem Solving forum, <a href=\"https://artofproblemsolving.com/community/c6h31946\">45th IMO Team Selection Test Lincoln, Nebraska</a>."
+    ],
+    "formula": [
+        "For prime p, a(p) = (p-1)*((p-2)^(p-1)-1)/p."
+    ],
+    "example": [
+        "For n=4 the a(4)=6 sequences are 0103, 0112, 0301, 3113, 3302 and 3311. - _Robert Israel_, Aug 30 2020"
+    ],
+    "maple": [
+        "f:= proc(n)",
+        "local g;",
+        "  g:= proc(i,s) option remember;",
+        "    if i = 0 then if s=0 then return 1 else return 0 fi fi;",
+        "    add(procname(i-1,s-k mod n),k= {$0..n-1} minus {2*i mod n,i})",
+        "  end proc;",
+        "  g(n,0)",
+        "end proc:",
+        "map(f, [$1..30]); # _Robert Israel_, Aug 30 2020"
+    ],
+    "mathematica": [
+        "f[n_] := Module[{g}, g[i_, s_] := g[i, s] = With[{}, If[i == 0, If[s == 0, Return@1, Return@0]]; Sum[g[i-1, Mod[s-k, n]], {k, Range[0, n-1] ~Complement~ {Mod[2i, n], i}}]]; g[n, 0]];",
+        "Table[f[n], {n, 1, 30}] (* _Jean-Fran\u00e7ois Alcover_, May 11 2023, after _Robert Israel_ *)"
+    ],
+    "xref": [
+        "Cf. A173499."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Max Alekseyev_, Feb 20 2010",
+    "references": 2,
+    "revision": 18,
+    "time": "2023-05-12T23:17:11-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

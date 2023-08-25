@@ -1,0 +1,34 @@
+{
+    "number": 356594,
+    "data": "3,25,55,82,85,95,116,121,145,194,226,245,253,289,295,301,305,332,335,343,362,391,407,418,422,446,455,493,529,535,548,583,611,671,731,745,749,754,778,779,781,785,799,805,815,817,818,833,838,845,866,869,899,917,931,943,955,959,985,995,998",
+    "name": "Numbers k for which there exists at least one pair of positive integers (x,y) such that k = x + y and k' = x' + y', and every such pair is coprime.",
+    "comment": [
+        "Subsequence of A212662.",
+        "a(1)=3 is the only prime term.",
+        "It is not known if this sequence is finite.",
+        "Every term in A212662 is a multiple of a term in this sequence (this could be considered its primitive sequence), and no term in this sequence divides another term of this sequence.",
+        "In general, we do not have (i+j)'=i'+j'; this is in contrast with the normal derivative, because the derivative of the sum of two functions is equal to the sum of the derivatives of the individual functions. The terms in this sequence are the ones for which there exist positive integers i and j with the properties illustrated above, thus building another common point between the arithmetic derivative and the normal derivative."
+    ],
+    "program": [
+        "(PARI)",
+        "D(n)={x=factor(n);n*sum(i=1,matsize(x)[1],}{x[i,2]/x[i,1])}",
+        "Base(n)={for(i=1,n\\2,if(D(n-i)+D(i)==D(n)&&gcd(i,n-i)==1,return(1)))}",
+        "Impure(n)={for(i=1,n\\2,if(D(n-i)+D(i)==D(n)&&gcd(i,n-i)!=1,return(1)))}",
+        "IsTerm(n)={Base(n)&&!Impure(n)}",
+        "Bp(n)={for(i=2,n,if(IsTerm(i),print1(i, \", \")))}",
+        "Bp(1000)",
+        "(PARI) ard(n)=vecsum([n/f[1]*f[2]|f<-factor(n+!n)~]); \\\\ A003415",
+        "isok1(m) = for (k=1, m\\2, if (ard(m-k)+ard(k) == ard(m), return(1))); \\\\ A212662",
+        "isok(m) = if (isok1(m), my(d=divisors(m)); for (k=1, #d, if((d[k]!=m) && isok1(d[k]), return(0))); return(1)); \\\\ _Michel Marcus_, Aug 28 2022"
+    ],
+    "xref": [
+        "Cf. A003415 (arithmetic derivative), A212662."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Giosu\u00e8 Cavallo_, Aug 14 2022",
+    "references": 0,
+    "revision": 48,
+    "time": "2022-08-30T09:45:09-04:00",
+    "created": "2022-08-30T09:45:09-04:00"
+}

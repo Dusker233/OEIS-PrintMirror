@@ -1,0 +1,72 @@
+{
+    "number": 145204,
+    "data": "0,3,6,12,15,21,24,27,30,33,39,42,48,51,54,57,60,66,69,75,78,84,87,93,96,102,105,108,111,114,120,123,129,132,135,138,141,147,150,156,159,165,168,174,177,183,186,189,192,195,201,204,210,213,216,219,222,228,231",
+    "name": "Numbers whose representation in base 3 (A007089) ends in an odd number of zeros.",
+    "comment": [
+        "Previous name: Complement of A007417.",
+        "Also numbers having infinitary divisor 3, or the same, having factor 3 in their Fermi-Dirac representation as product of distinct terms of A050376. - _Vladimir Shevelev_, Mar 18 2013",
+        "For n > 1: where even terms occur in A051064. - _Reinhard Zumkeller_, May 23 2013",
+        "If we exclude a(1) = 0, these are numbers whose squarefree part is divisible by 3, which can be partitioned into numbers whose squarefree part is congruent to 3 mod 9 (A055041) and 6 mod 9 (A055040) respectively. - _Peter Munn_, Jul 14 2020",
+        "The inclusion of 0 as a term might be viewed as a cultural preference: if we habitually wrote numbers enclosed in brackets and then used a null string of digits for zero, the natural number sequence in ternary would be [], [1], [2], [10], [11], [12], [20], ... . - _Peter Munn_, Aug 02 2020",
+        "The asymptotic density of this sequence is 1/4. - _Amiram Eldar_, Sep 20 2020"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A145204/b145204.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Aviezri S. Fraenkel, <a href=\"http://dx.doi.org/10.1016/j.disc.2011.03.032\">The vile, dopey, evil and odious game players</a>, Discrete Math. 312 (2012), no. 1, 42-46.",
+        "<a href=\"/index/Ar#3-automatic\">Index entries for 3-automatic sequences</a>."
+    ],
+    "formula": [
+        "a(n) = 3 * A007417(n-1) for n > 1.",
+        "A014578(a(n)) = 0.",
+        "For n > 1, A007949(a(n)) mod 2 = 1. [Edited by _Peter Munn_, Aug 02 2020]",
+        "{a(n) : n >= 2} = {A052330(A042964(k)) : k >= 1} = {A064614(A036554(k)) : k >= 1}. - Peter Munn, Aug 31 2019 and Dec 06 2020"
+    ],
+    "maple": [
+        "isA145204 := proc(n) local d, c;",
+        "if n = 0 then return true fi;",
+        "d := A007089(n); c := 0;",
+        "while irem(d, 10) = 0 do c := c+1; d := iquo(d, 10) od;",
+        "type(c, odd) end:",
+        "select(isA145204, [$(0..231)]); # _Peter Luschny_, Aug 05 2020"
+    ],
+    "mathematica": [
+        "Select[ Range[0, 235], (# // IntegerDigits[#, 3]& // Split // Last // Count[#, 0]& // OddQ)&] (* _Jean-Fran\u00e7ois Alcover_, Mar 18 2013 *)",
+        "Join[{0}, Select[Range[235], OddQ @ IntegerExponent[#, 3] &]] (* _Amiram Eldar_, Sep 20 2020 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a145204 n = a145204_list !! (n-1)",
+        "a145204_list = 0 : map (+ 1) (findIndices even a051064_list)",
+        "-- _Reinhard Zumkeller_, May 23 2013",
+        "# Python",
+        "import numpy as np",
+        "def isA145204(n):",
+        "    if n == 0: return True",
+        "    c = 0",
+        "    d = int(np.base_repr(n, base = 3))",
+        "    while d % 10 == 0:",
+        "        c += 1",
+        "        d //= 10",
+        "    return c % 2 == 1",
+        "print([n for n in range(231) if isA145204(n)]) # _Peter Luschny_, Aug 05 2020"
+    ],
+    "xref": [
+        "Subsequence of A008585, A028983.",
+        "Subsequences: A016051, A055040, A055041, A329575.",
+        "Cf. A007089, A007417 (complement), A050376, A182581 (characteristic function).",
+        "Positions of 0s in A014578.",
+        "Excluding 0: the positions of odd numbers in A007949; equivalently, of even numbers in A051064; symmetric difference of A003159 and A036668.",
+        "Related to A042964 via A052330.",
+        "Related to A036554 via A064614."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Oct 04 2008",
+    "ext": [
+        "New name using a comment of _Vladimir Shevelev_ by _Peter Luschny_, Aug 05 2020"
+    ],
+    "references": 19,
+    "revision": 69,
+    "time": "2021-05-16T01:55:50-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

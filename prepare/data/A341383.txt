@@ -1,0 +1,50 @@
+{
+    "number": 341383,
+    "data": "5,45,50,450,495,500,819,825,4500,4545,4950,4995,5000,8190,8250,8325,45000,45045,45450,47619,49500,49950,49995,50000,81819,81900,82500,83250,83325,89109,450000,450045,450450,454500,454545,476190,495000,499500,499950,499995,500000",
+    "name": "Numbers m such that the largest digit in the decimal expansion of 1/m is 2.",
+    "comment": [
+        "If m is a term, 10*m is also a term.",
+        "5 is the only prime up to 2.6*10^8 (comments in A333237).",
+        "Some subsequences: {45, 4545, 454545, ...}, {45045, 45045045, 45045045045, ...}, {45, 495, 4995, 49995, ...}, {819, 81819, 8181819, ...}, {825, 8325, 83325, 833325...}, ...",
+        "The subsequence of terms where 1/m has only digits {0,2} is m = 5*A333402 = 5, 45, 50, etc.  A333402 is those t where 1/t has only digits {0,1}, so that 1/(5*t) = 2*(1/t)*(1/10) has digits {0,2}, starting from 1/5 = 0.2.  These m are also A333402/2 of the even terms from A333402, since A333402 (like here) is self-similar in that the multiples of 10, divided by 10, are the sequence itself. - _Kevin Ryde_, Feb 13 2021"
+    ],
+    "link": [
+        "<a href=\"/index/1#1overn\">Index entries for sequences related to decimal expansion of 1/n</a>"
+    ],
+    "example": [
+        "As 1/45 = 0.0202020202..., 45 is a term.",
+        "As 1/825 = 0.0012121212121212...., 825 is a term.",
+        "As 1/47619 = 0.000021000021000021..., 47619 is a term.",
+        "As 1/4545045 = 0.000000220019824..., 4545045 is not a term."
+    ],
+    "mathematica": [
+        "Select[Range[10^5], Max[RealDigits[1/#][[1]]] == 2 &] (* _Amiram Eldar_, Feb 10 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import n_order, multiplicity",
+        "def A341383_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for m in count(max(startvalue,1)):",
+        "        m2, m5 = multiplicity(2,m), multiplicity(5,m)",
+        "        if max(str(10**(max(m2,m5)+n_order(10,m//2**m2//5**m5))//m)) == '2':",
+        "            yield m",
+        "A341383_list = list(islice(A341383_gen(),10)) # _Chai Wah Wu_, Feb 07 2022"
+    ],
+    "xref": [
+        "Cf. A333236.",
+        "Similar with largest digit k: A333402 (k=1), A333237 (k=9).",
+        "Subsequence: A093143 \\ {1}.",
+        "Decimal expansion: A021499 (1/495), A021823 (1/819)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Feb 10 2021",
+    "ext": [
+        "Missing terms added by _Amiram Eldar_, Feb 10 2021"
+    ],
+    "references": 9,
+    "revision": 41,
+    "time": "2022-02-07T21:46:38-05:00",
+    "created": "2021-02-15T09:37:04-05:00"
+}

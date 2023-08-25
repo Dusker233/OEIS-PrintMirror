@@ -1,0 +1,49 @@
+{
+    "number": 340318,
+    "data": "0,1,3,5,8,11,16",
+    "name": "Minimum size of a partial order that contains all partial orders of size n.",
+    "comment": [
+        "a(n) is the minimum number of elements in a poset P such that every poset of size n is isomorphic to a subset of P, where the subset inherits the order from P.",
+        "Elementary bounds are a(n) >= 2n-1 because it must contain a chain and an antichain, and a(n) <= 2^n-1 because every partial order embeds into the powerset partial order on n elements. It is shown in the MathOverflow link that a(n) has no polynomial upper bound. This is in particular derived from binomial(a(n),n) >= A000112(n).",
+        "a(4) = 8 verified using a computer-assisted proof with a SAT solver.",
+        "a(5) = 11 proven on MathOverflow.",
+        "a(6) = 16 and 16 <= a(7) <= 25 proven on MathOverflow. - _Jukka Kohonen_, Jan 15 2021"
+    ],
+    "link": [
+        "Joel David Hamkins and Fedor Petrov, <a href=\"https://mathoverflow.net/questions/25874/what-is-the-minimal-size-of-a-partial-order-that-is-universal-for-all-partial-or\">What is the minimal size of a partial order that is universal for all partial orders of size n?</a>, MathOverflow.",
+        "Jukka Kohonen, <a href=\"https://mathoverflow.net/a/380314/32499\">What is the minimum size of a partial order containing all partial orders of size 5?</a> (proofs of a(5)=11, a(6)=16 and 16 <= a(7) <= 25), MathOverflow.",
+        "Caleb Stanford, <a href=\"https://github.com/cdstanford/curiosities/blob/master/universal-poset/universal-poset.als\">Alloy program to verify a(n) for small n</a>, GitHub."
+    ],
+    "example": [
+        "a(2) = 3 because there are 2 nonisomorphic posets on two elements, and both embed into the poset of three elements {a, b, c} with ordering a < b (and other pairs are incomparable).",
+        "a(3) = 5 because all posets on three elements can be embedded into {a, b, c, d, e} with ordering a < d, b < c < d, and b < e."
+    ],
+    "program": [
+        "(Sage)",
+        "# Find an u-poset that contains all n-posets as induced posets.",
+        "def find_universal_poset(n,u):",
+        "    PP = list(Posets(n))",
+        "    for U in Posets(u):",
+        "        ok = True",
+        "        for P in PP:",
+        "            if not U.has_isomorphic_subposet(P):",
+        "                ok = False",
+        "                break",
+        "        if ok:",
+        "            return U",
+        "    return None"
+    ],
+    "xref": [
+        "Cf. A000112, A001035, A004401, A097911."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Caleb Stanford_, Jan 04 2021",
+    "ext": [
+        "a(6) from _Jukka Kohonen_, Jan 15 2021"
+    ],
+    "references": 0,
+    "revision": 28,
+    "time": "2021-02-19T20:32:59-05:00",
+    "created": "2021-01-05T21:33:36-05:00"
+}

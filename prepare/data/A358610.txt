@@ -1,0 +1,53 @@
+{
+    "number": 358610,
+    "data": "1,2,4,5,8,10,13,20,25,40,50,52,100,125,200,250,400,475,500,601,848,908,1000,1120,1250,1750,2000,2500,2800,2900,3670,4000,4375,4685,5000,6085,7000,7640,7924,8375,10000,10900,12500,13346,14000,17800,20000,21568,25000",
+    "name": "Numbers k such that the concatenation 1,2,3,... up to (k-1) is one less than a multiple of k.",
+    "comment": [
+        "For a >= 0, the infinite subsequence of numbers 10^a, 2^b*10^a (for 1 <= b <= 2) and 5^c*10^a (for 1 <= c <= 3), i.e., 1, 2, 4, 5, 10, 20, 25, 40, 50, 100, 125, 200, 250, 400, 500, 1000, 1250, 2000, 2500, 4000, 5000, ... are terms in the sequence because first, the concatenation 1, 2, 3, ... up to (10^a - 1) mod 10^a is equal to 10^a times the concatenation 1, 2, 3, ... up to (10^a - 2) + (10^a - 1) mod 10^a, which results in 10^a - 1 and second, the concatenation 1, 2, 3, ... up to (2^b*10^a - 1) mod 2^b*10^a is equal to 10^(a+1) times the concatenation 1, 2, 3, ... up to (2^b*10^a - 2) + (2^b*10^a - 1) mod 2^b*10^a, which results in 2^b*10^a - 1 and third, the concatenation 1, 2, 3, ... up to (5^c*10^a - 1) mod 5^c*10^a is equal to 10^(a+c) times the concatenation 1, 2, 3, ... up to (5^c*10^a - 2) + (5^c*10^a - 1) mod 5^c*10^a, which results in 5^c*10^a - 1."
+    ],
+    "link": [
+        "Martin Renner, <a href=\"/A358610/b358610.txt\">Table of n, a(n) for n = 1..92</a>"
+    ],
+    "example": [
+        "13 is a term because 123456789101112 mod 13 = 12.",
+        "20 is a term because 12345678910111213141516171819 mod 20 = 19."
+    ],
+    "maple": [
+        "a:=proc(m)",
+        "  local A, str, i;",
+        "  if m = 1 then return([1]);",
+        "  else",
+        "    if m = 2 then return([1, 2]);",
+        "    else",
+        "      A := [1, 2];",
+        "      str := 1;",
+        "      for i from 2 to m do",
+        "        str := str*10^length(i) + i;",
+        "        if str mod (i+1) = i then A := [op(A), i+1]; fi;",
+        "      od;",
+        "    fi;",
+        "  fi;",
+        "  return(A);",
+        "end:"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def agen():",
+        "    s = \"0\"",
+        "    for n in count(1):",
+        "        if int(s)%n == n - 1: yield n",
+        "        s += str(n)",
+        "print(list(islice(agen(), 30))) # _Michael S. Branicky_, Nov 23 2022"
+    ],
+    "xref": [
+        "Cf. A094151, A110740."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Martin Renner_, Nov 23 2022",
+    "references": 1,
+    "revision": 29,
+    "time": "2022-12-11T12:15:09-05:00",
+    "created": "2022-11-26T02:48:23-05:00"
+}

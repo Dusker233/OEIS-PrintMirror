@@ -1,0 +1,47 @@
+{
+    "number": 303918,
+    "data": "1021,1031,1051,1061,1063,1087,1091,1093,1097,1201,1213,1217,1223,1229,1237,1249,1259,1279,1289,1301,1303,1307,1319,1327,1367,1409,1423,1427,1429,1439,1447,1459,1489,1523,1549,1559,1567,1579,1601,1607,1609,1613,1619,1627,1637,1657,1667,1669,1709,1723,1747",
+    "name": "Prime numbers with property that left half and right half have the same pattern of consecutive increasing/decreasing/equal digits:.",
+    "comment": [
+        "Each term in the sequence must have an even number of digits to allow comparison of its two halves. Minimum four-digit term is 1021, maximum is 9887; minimum six-digit term is 100411, maximum is 998551."
+    ],
+    "example": [
+        "1021 belongs to the sequence as it is prime and the consecutive digits in its left and right halves (10 and 21, respectively) have the same pattern: 1 > 0, 2 > 1.",
+        "The prime number 100411 belongs to the sequence as the consecutive digits in its left half (100) and right half (411) have the same pattern: 1 > 0 = 0, 4 > 1 = 1."
+    ],
+    "mathematica": [
+        "pt[w_] := Sign@ Differences@ w; ok[p_] := PrimeQ[p] && Block[{d = IntegerDigits[p], m}, m = Length[d]; EvenQ[m] && pt@ Take[d, m/2] == pt@ Take[d, -m/2]]; Select[ Range[1000, 1747], ok] (* _Giovanni Resta_, May 04 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "#program to get all terms less than one million",
+        "def pattern(p):",
+        "    l=len(p)",
+        "    s=\"\"",
+        "    for k in range(l-1):",
+        "        if p[k+1]>p[k]: s=s+\"+\"",
+        "        elif p[k+1]<p[k]: s=s+\"-\"",
+        "        else: s=s+\"=\"",
+        "    return(s)",
+        "def is_prime(num):",
+        "    for k in range(2,num):",
+        "       if (num % k) == 0:",
+        "           return(0)",
+        "    return(1)",
+        "for i in range(1000,999999):",
+        "    if len(str(i)) % 2 == 0:",
+        "        p1=str(i)[0:int(len(str(i))/2)]",
+        "        p2=str(i)[int(len(str(i))/2):len(str(i))]",
+        "        if pattern(p1)==pattern(p2) and is_prime(i):  print(i)"
+    ],
+    "xref": [
+        "Cf. A000040."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Pierandrea Formusa_, May 02 2018",
+    "references": 0,
+    "revision": 17,
+    "time": "2018-06-19T05:34:24-04:00",
+    "created": "2018-06-19T05:34:24-04:00"
+}

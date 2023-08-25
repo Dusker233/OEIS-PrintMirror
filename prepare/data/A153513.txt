@@ -1,0 +1,34 @@
+{
+    "number": 153513,
+    "data": "2701,18721,31621,49141,83333,83665,88561,90751,93961,104653,107185,176149,204001,226801,228241,276013,282133,534061,563473,574561,622909,653333,665281",
+    "name": "Composite numbers k such that 2^k-2 and 3^k-3 are both divisible by k and k is not a Carmichael number (A002997).",
+    "link": [
+        "Amiram Eldar, <a href=\"/A153513/b153513.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..200 from Robert Israel)"
+    ],
+    "maple": [
+        "filter:= proc(n) local p;",
+        "  if isprime(n) or (2 &^n - 2 mod n <> 0) or (3 &^n - 3 mod n <> 0) then return false fi;",
+        "  if n::even then return true fi;",
+        "  if not numtheory:-issqrfree(n) then return true fi;",
+        "  for p in numtheory:-factorset(n) do",
+        "    if n-1 mod (p-1) <> 0 then return true fi",
+        "  od;",
+        "false",
+        "end proc:",
+        "select(filter, [$2..10^6]); # _Robert Israel_, Jan 29 2017"
+    ],
+    "mathematica": [
+        "Reap[Do[If[CompositeQ[n] && Divisible[2^n-2, n] && Divisible[3^n-3, n] && Mod[n, CarmichaelLambda[n]] != 1, Print[n]; Sow[n]], {n, 2, 10^6}]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Mar 25 2019 *)"
+    ],
+    "xref": [
+        "Intersection of A153514 and A153508 (excluding the number 1).",
+        "Cf. A002997, A122780."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Artur Jasinski_, Dec 28 2008",
+    "references": 8,
+    "revision": 29,
+    "time": "2021-06-13T08:46:22-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

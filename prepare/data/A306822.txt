@@ -1,0 +1,35 @@
+{
+    "number": 306822,
+    "data": "1,3,11,46,207,988,4989,26734,152827,937212,6192741,44191654,340575513,2829201638,25252605283,241269232186,2457951274627,26602476272908,304845053785469,3687342610303174,46948693772419597,627657623728640182,8790742273959180703,128716280124796774354",
+    "name": "Expansion of e.g.f. (sec(x) + tan(x))*exp(2*x)*BesselI(0,2*x).",
+    "comment": [
+        "Boustrophedon transform of central binomial coefficients (A000984)."
+    ],
+    "link": [
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "mathematica": [
+        "nmax = 23; CoefficientList[Series[(Sec[x] + Tan[x]) Exp[2 x] BesselI[0, 2 x], {x, 0, nmax}], x] Range[0, nmax]!",
+        "t[n_, 0] := Binomial[2 n, n]; t[n_, k_] := t[n, k] = t[n, k - 1] + t[n - 1, n - k]; a[n_] := t[n, n]; Array[a, 24, 0]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, accumulate",
+        "def A306822_gen(): # generator of terms",
+        "    blist, m = tuple(), 1",
+        "    for i in count(1):",
+        "        yield (blist := tuple(accumulate(reversed(blist),initial=m)))[-1]",
+        "        m = m*(4*i-2)//i",
+        "A306822_list = list(islice(A306822_gen(),20)) # _Chai Wah Wu_, Jun 11 2022"
+    ],
+    "xref": [
+        "Cf. A000111, A000753, A000984."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Apr 16 2019",
+    "references": 1,
+    "revision": 20,
+    "time": "2022-06-11T01:20:39-04:00",
+    "created": "2019-04-16T21:40:57-04:00"
+}

@@ -1,0 +1,29 @@
+{
+    "number": 80146,
+    "data": "1,2,9,52,738,2829,53643,162438,4023888,166236537,921787428,48034254669,935251837851,2558696229078,68055676507664,2655011771373417,210067141980993186,831463105466530077,42882922858578320598",
+    "name": "Binary encoding of quadratic residue set for each prime. a(n) = A055094(A000040(n)).",
+    "formula": [
+        "a(A080148(n)) = A080117(A080148(n))."
+    ],
+    "maple": [
+        "with(numtheory,ithprime); A080146 := n -> A055094(ithprime(n));"
+    ],
+    "mathematica": [
+        "A055094[n_] := With[{rr = Table[Mod[k^2, n], {k, 1, n-1}] // Union}, Boole[MemberQ[rr, #]]& /@ Range[n-1]] // FromDigits[#, 2]&;",
+        "a[n_] := A055094[Prime[n]];",
+        "Table[a[n], {n, 1, 20}] (* _Jean-Fran\u00e7ois Alcover_, Sep 20 2022 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = my(p=prime(n)); sum(k=1, p-1, 2^(k-1)*(0<sum(i=1, p-1, i^2%p==p-k))); \\\\ _Michel Marcus_, Sep 20 2022; after A055094"
+    ],
+    "xref": [
+        "Cf. A000040, A055094, A080117, A080148."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Feb 11 2003",
+    "references": 3,
+    "revision": 9,
+    "time": "2022-09-20T07:52:35-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

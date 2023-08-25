@@ -1,0 +1,71 @@
+{
+    "number": 304710,
+    "data": "0,0,0,1,2,6,12,25,46,85,146,250,410,666,1053,1648,2527,3840,5747,8525,12496,18172,26165,37408,53038,74714,104502,145315,200808,276030,377339,513342,694925,936590,1256670,1679310,2234994,2963430,3914701,5153434,6760937",
+    "name": "Number of partitions of 2n whose Ferrers-Young diagram cannot be tiled with dominoes.",
+    "reference": [
+        "Also the number of partitions of 2n where the number of odd parts in even positions differs from the number of odd parts in odd positions."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A304710/b304710.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FerrersDiagram.html\">Ferrers Diagram</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Domino_(mathematics)\">Domino</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Domino_tiling\">Domino tiling</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Ferrers_diagram\">Ferrers diagram</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Mutilated_chessboard_problem\">Mutilated chessboard problem</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau#Diagrams\">Young tableau, Diagrams</a>",
+        "<a href=\"/index/Do#domino\">Index entries for sequences related to dominoes</a>"
+    ],
+    "formula": [
+        "a(n) = A058696(n) - A000712(n) = A000041(2*n) - A000712(n).",
+        "a(n) = A144064(2*n,1) - A144064(n,2).",
+        "a(n) ~ exp(2*Pi*sqrt(n/3)) / (8*sqrt(3)*n) * (1 - 2/(3^(1/4)*n^(1/4)) - (sqrt(3)/(2*Pi) + Pi/(48*sqrt(3))) / sqrt(n) + (Pi/(6*3^(3/4)) + 15*3^(1/4)/(8*Pi)) / n^(3/4)). - _Vaclav Kotesovec_, May 25 2018"
+    ],
+    "example": [
+        "a(3) = 1: the Ferrers-Young diagram of 321 cannot be tiled with dominoes because the numbers of white and black squares (when colored like a chessboard) are different but each domino covers exactly one white and one black square:",
+        "   ._____.",
+        "   |_|X|_|",
+        "   |X|_|",
+        "   |_|",
+        ".",
+        "a(4) = 2: 32111, 521.",
+        "a(5) = 6: 3211111, 32221, 4321, 52111, 541, 721.",
+        "a(6) = 12: 321111111, 3222111, 33321, 432111, 5211111, 52221, 54111, 543, 6321, 72111, 741, 921."
+    ],
+    "maple": [
+        "b:= proc(n, i, p, c) option remember; `if`(n=0, `if`(c=0, 0, 1),",
+        "      `if`(i<1, 0, b(n, i-1, p, c)+b(n-i, min(n-i, i), -p, c+",
+        "      `if`(i::odd, p, 0))))",
+        "    end:",
+        "a:= n-> b(2*n$2, 1, 0):",
+        "seq(a(n), n=0..50);",
+        "# second Maple program:",
+        "a:= n-> (p-> p(2*n)-add(p(j)*p(n-j), j=0..n))(combinat[numbpart]):",
+        "seq(a(n), n=0..50);",
+        "# third Maple program:",
+        "b:= proc(n, k) option remember; `if`(n=0, 1, add(",
+        "      numtheory[sigma](j)*b(n-j, k), j=1..n)*k/n)",
+        "    end:",
+        "a:= n-> b(2*n, 1)-b(n, 2):",
+        "seq(a(n), n=0..50);"
+    ],
+    "mathematica": [
+        "b[n_, i_, p_, c_] := b[n, i, p, c] = If[n == 0, If[c == 0, 0, 1], If[i < 1, 0, b[n, i - 1, p, c] + b[n - i, Min[n - i, i], -p, c + If[OddQ[i], p, 0]]]];",
+        "a[n_] := b[2n, 2n, 1, 0];",
+        "Table[a[n], {n, 0, 50}]",
+        "(* second program: *)",
+        "a[n_] := PartitionsP[2n] - Sum[PartitionsP[j]* PartitionsP[n - j], {j, 0, n}];",
+        "Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Feb 13 2023, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=0 of A304789.",
+        "Cf. A000041, A000712, A058696, A144064, A182616, A304662."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Alois P. Heinz_, May 17 2018",
+    "references": 4,
+    "revision": 31,
+    "time": "2023-02-13T02:33:58-05:00",
+    "created": "2018-05-19T14:41:34-04:00"
+}

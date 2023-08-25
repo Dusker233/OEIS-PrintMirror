@@ -1,0 +1,39 @@
+{
+    "number": 338269,
+    "data": "3,5,103,149,337,491,1559,1753,5009,12239,44381,219097,2789881,3137357,4012297,4171337,4217693,5910397,6837499,23800489,53253617,994831501,2894057281,3415613611,39349394531",
+    "name": "Odd primes p such that the area of the triangle with sides p and the next two primes achieves a record for closeness to an integer.",
+    "example": [
+        "a(3)=103 is in the sequence because 103 is a prime, the triangle with sides 103 and the next two primes 107 and 109 has area sqrt(382278435)/4 whose distance to the nearest integer, 4888, is approximately 0.0145, and this is less than any distance previously achieved."
+    ],
+    "maple": [
+        "atr:= proc(p,q,r) local s; s:= (p+q+r)/2; sqrt(s*(s-p)*(s-q)*(s-r)) end proc:",
+        "p:= 2: q:= 3: r:= 5: count:= 0: R:= NULL: dmin:= infinity:",
+        "while count < 10 do",
+        "  p:= q; q:= r; r:= nextprime(r);",
+        "  a:= atr(p,q,r);",
+        "  d:= abs(a - round(a));",
+        "  if is(d < dmin) then",
+        "    count:= count+1;",
+        "    dmin:= d;",
+        "    R:= R, p;",
+        "  fi;",
+        "od:",
+        "R;"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {my(m=p=3, q=5, s, t); forprime(r=7, nn, s=sqrt((p-s=(p+q+r)/2)*(q-s)*(s-r)*s); if(m>t=min(s-floor(s), ceil(s)-s), print1(p, \", \"); m=t); p=q; q=r); } \\\\ _Jinyuan Wang_, Oct 24 2020"
+    ],
+    "xref": [
+        "Cf. A330096, A338262, A338267."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Oct 19 2020",
+    "ext": [
+        "a(13)-a(25) from _Jinyuan Wang_, Oct 24 2020"
+    ],
+    "references": 2,
+    "revision": 13,
+    "time": "2020-10-24T08:46:51-04:00",
+    "created": "2020-10-19T23:10:52-04:00"
+}

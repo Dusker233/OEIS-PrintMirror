@@ -1,0 +1,60 @@
+{
+    "number": 51532,
+    "data": "1,2,3,4,5,7,9,11,13,15,17,19,23,25,29,31,33,35,37,41,43,45,47,49,51,53,59,61,65,67,69,71,73,77,79,83,85,87,89,91,95,97,99,101,103,107,109,113,115,119,121,123,127,131,133,137,139,141,143,145,149,151,153,157,159,161",
+    "name": "The abelian orders (or abelian numbers): n such that every group of order n is abelian.",
+    "comment": [
+        "Except for a(2)=2 and a(4)=4, all of the terms in the sequence are odd. This is because of the existence of a non-abelian dihedral group of order 2n for each n > 2.",
+        "Cubefree terms of A056867; A212793(a(n)) = 1. - _Reinhard Zumkeller_, Jun 28 2013",
+        "See similar comment with \"squarefree terms\" in A003277 (Donald J. McCarthy link). - _Bernard Schott_, Feb 20 2023"
+    ],
+    "reference": [
+        "W. R. Scott, Group Theory, Dover, 1987, page 217."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A051532/b051532.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..1000 from T. D. Noe)",
+        "Donald J. McCarthy, <a href=\"https://doi.org/10.1111/j.2164-0947.1971.tb02624.x\">A survey of partial converses to Lagrange's theorem on finite groups</a>, Transactions of the New York Academy of Sciences, 1971, page 592.",
+        "J. Pakianathan and K. Shankar, <a href=\"http://www.jstor.org/stable/2589118\">Nilpotent Numbers</a>, Amer. Math. Monthly, 107, August-September 2000, pp. 631-634.",
+        "<a href=\"/index/Gre#groups\">Index entries for sequences related to groups</a>"
+    ],
+    "formula": [
+        "n must be cubefree and its prime divisors must satisfy certain congruences.",
+        "Let the prime factorization of n be p1^e1*...*pr^er. Then n is in this sequence if ei < 3 for all i and pi^k is not congruent to 1 (mod pj) for all i and j and 1 <= k <= ei. - _T. D. Noe_, Mar 25 2007"
+    ],
+    "example": [
+        "a(4) = 4 because every group of order 4 is abelian.",
+        "These two abelian groups of order 4 are the cyclic group C_4 and the Klein four-group = C_2 X C_2, the smallest non-cyclic abelian group. - _Bernard Schott_, Feb 21 2023"
+    ],
+    "mathematica": [
+        "okQ[n_] := Module[{f, lf, p, e, v}, f = FactorInteger[n]; lf = Length[f]; p = f[[All, 1]]; e = f[[All, 2]]; If[AnyTrue[e, # > 2&], Return[False]]; v = p^e; For[i = 1, i <= lf, i++, For[j = i+1, j <= lf, j++, If[Mod[v[[i]], p[[j]]]==1 || Mod[v[[j]], p[[i]]]==1, Return[False]]]]; Return[True]];",
+        "Select[Range[200], okQ] (* _Jean-Fran\u00e7ois Alcover_, May 03 2012, after PARI, updated Jan 10 2020 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(f=factor(n),v=vector(#f[,1])); for(i=1,#v, if(f[i,2]>2, return(0), v[i]=f[i,1]^f[i,2])); for(i=1,#v, for(j=i+1,#v, if(v[i]%f[j,1]==1 || v[j]%f[i,1]==1, return(0)))); 1 \\\\ _Charles R Greathouse IV_, Feb 13 2011",
+        "(Haskell)",
+        "a051532 n = a051532_list !! (n-1)",
+        "a051532_list = filter ((== 1) . a212793) a056867_list",
+        "-- _Reinhard Zumkeller_, Jun 28 2013",
+        "(Python)",
+        "from sympy import factorint",
+        "def ok(n):",
+        "    if n == 1: return True",
+        "    f = factorint(n)",
+        "    p, e = f.keys(), f.values()",
+        "    if max(e) >= 3: return False",
+        "    return all((pi**k)%pj!=1 for pi in p for pj in p if pj!=pi for k in range(1, f[pi]+1))",
+        "print([k for k in range(1, 162) if ok(k)]) # _Michael S. Branicky_, Feb 20 2023"
+    ],
+    "xref": [
+        "Subsequence of A056867 and supersequence of A003277.",
+        "Complement of A060652.",
+        "Intersection of A004709 and A056867.",
+        "Cf. A064899, A212793."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_Des MacHale_, Dec 11 1999",
+    "references": 33,
+    "revision": 70,
+    "time": "2023-03-06T12:56:58-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

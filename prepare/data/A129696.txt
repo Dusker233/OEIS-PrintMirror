@@ -1,0 +1,63 @@
+{
+    "number": 129696,
+    "data": "1,2,5,9,17,29,50,83,138,226,370,602,979,1588,2575,4171,6755,10935,17700,28645,46356,75012,121380,196404,317797,514214,832025,1346253,2178293,3524561,5702870,9227447,14930334,24157798,39088150,63245966",
+    "name": "Antidiagonal sums of triangular array T defined in A014430: T(j,k) = binomial(j+1, k) - 1 for 1 <= k <= j.",
+    "comment": [
+        "If T is construed as a lower triangular matrix M over the rational field, the inverse M^-1 is a lower triangular matrix containing fractions. Its row sums are the Bernoulli numbers. First column of M^-1 is 1, -1, 2/3, -1/4, -1/30, 1/12, 1/42, -1/12, ... . Multiplied by j! this gives 1, -2, 4, -6, -4, 60, 120, -3660, ... .",
+        "The Kn22 sums, see A180662 for the definition of these sums, of the 'Races with Ties' triangle A035317 lead to this sequence. - _Johannes W. Meijer_, Jul 20 2011",
+        "This sequence is the convolution of (1,1,2,3,5,8,13,21,...) and (1,1,2,2,3,3,4,4,5,5,...), i.e., the Fibonacci numbers (A000045) and A008619. - _Clark Kimberling_, May 28 2012"
+    ],
+    "reference": [
+        "P. Curtz, Int\u00e9gration num\u00e9rique des syst\u00e8mes diff\u00e9rentiels \u00e0 conditions initiales. Note no. 12 du Centre de Calcul Scientifique de l'Armement, 1969."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A129696/b129696.txt\">Table of n, a(n) for n = 1..200</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (2,1,-3,0,1)."
+    ],
+    "formula": [
+        "From _Paul Barry_, Jan 18 2009: (Start)",
+        "a(n) = Sum_{k=0..floor(n/2)} A000071(n-2*k+3).",
+        "a(n) = Sum_{k=0..floor(n/2)} (Sum_{j=0..n-2*k} Fibonacci(j+1)). (End)",
+        "a(n+1) = a(n-1) + a(n) + 1 + floor(n/2) for n>1, a(0)=1, a(1)=2. - _Alex Ratushnyak_, Jul 30 2012",
+        "From _R. J. Mathar_, Jul 25 2013: (Start)",
+        "G.f.: x/((1 + x)*(1 - x)^2*(1 - x - x^2)).",
+        "a(n) + a(n+1) = A001924(n+1). (End)",
+        "a(n) = Fibonacci(n+3) - 2 - floor(n/2). - _Emeric Deutsch_, Nov 22 2014",
+        "a(n) = (-5/4 - (-1)^n/4 + (2^(-n)*((1 - t)^n*(-2 + t) + (1 + t)^n*(2 + t)))/t + (-1 - n)/2), where t=sqrt(5). - _Colin Barker_, Feb 09 2017"
+    ],
+    "maple": [
+        "with(combinat): a := proc (n) options operator, arrow: fibonacci(n+3)-2-floor((1/2)*n) end proc: seq(a(n), n = 1 .. 34); # _Emeric Deutsch_, Nov 22 2014"
+    ],
+    "mathematica": [
+        "a[n_]:= a[n]= If[n<3, n, a[n-1] + a[n-2] + (n + Mod[n, 2])/2];",
+        "Table[a[n], {n,40}] (* _Jean-Fran\u00e7ois Alcover_, Mar 04 2013 *)",
+        "Table[Fibonacci[n+3] -2 -Floor[n/2], {n, 100}] (* _Vincenzo Librandi_, Nov 23 2014 *)"
+    ],
+    "program": [
+        "(Magma) m:=36; M:=ZeroMatrix(IntegerRing(), m, m); for j:=1 to m do for k:=1 to j do M[j, k]:=Binomial(j+1, k)-1; end for; end for; [ &+[ M[j-k+1, k]: k in [1..(j+1) div 2] ]: j in [1..m] ]; // _Klaus Brockhaus_, Jun 11 2007",
+        "(Python)",
+        "prpr = 1",
+        "prev = 2",
+        "for n in range(2,100):",
+        "    print(prpr, end=\", \")",
+        "    curr = prpr+prev + 1 + n//2",
+        "    prpr = prev",
+        "    prev = curr",
+        "# _Alex Ratushnyak_, Jul 30 2012",
+        "(Magma) [Fibonacci(n+3)-2-Floor(n/2): n in [1..40]]; // _Vincenzo Librandi_, Nov 23 2014",
+        "(SageMath) [fibonacci(n+3) -2 -(n//2) for n in range(1,41)] # _G. C. Greubel_, Mar 17 2023"
+    ],
+    "xref": [
+        "Cf. A000045, A000071, A001924, A008619, A014430, A027641, A035317, A052952 (first differences), A180662."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Paul Curtz_, Jun 01 2007",
+    "ext": [
+        "Edited and extended by _Klaus Brockhaus_, Jun 11 2007"
+    ],
+    "references": 13,
+    "revision": 61,
+    "time": "2023-03-17T07:22:07-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

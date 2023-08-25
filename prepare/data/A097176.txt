@@ -1,0 +1,44 @@
+{
+    "number": 97176,
+    "data": "1,6,31,186,811,5466,21091,157746,548371,4492026,14257651,126558306,370698931,3534656586,9638172211,98004586866,250592477491,2700707149146,6515404414771,74033083143426,169400514784051,2020227593369706",
+    "name": "a(n) = Sum_{k=0..n} binomial(floor((n+1)/2), floor((k+1)/2)) * 5^k.",
+    "comment": [
+        "a(n) = (6/5)*{1, 26, 26, 676, 676, 17576, ...} - 25*{0, 1, 0, 25, 0, 625, ...} - (1/5)*{1, 1, 1, 1, 1, 1, ...}."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A097176/b097176.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,51,-51,-650,650)."
+    ],
+    "formula": [
+        "G.f.: (1 +5*x -26*x^2 -100*x^3)/((1-x)*(1-25*x^2)*(1-26*x^2)).",
+        "a(n) = (3/5)*((1-sqrt(26))*(-sqrt(26))^n + (1+sqrt(26))*(sqrt(26))^n) - (5/2)*(5^n - (-5)^n) - 1/5.",
+        "a(n) = a(n-1) + 51*a(n-2) - 51*a(n-3) - 650*a(n-4) + 650*a(n-5)."
+    ],
+    "maple": [
+        "seq(coeff(series((1+5*x-26*x^2-100*x^3)/((1-x)*(1-25*x^2)*(1-26*x^2)), x, n+1), x, n), n = 0..30); # _G. C. Greubel_, Sep 17 2019"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1+5*x-26*x^2-100*x^3)/((1-x)*(1-25*x^2)*(1- 26*x^2)), {x,0,30}], x] (* _G. C. Greubel_, Sep 17 2019 *)",
+        "LinearRecurrence[{1,51,-51,-650,650},{1,6,31,186,811},30] (* _Harvey P. Dale_, Oct 27 2020 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^30)); Vec((1+5*x-26*x^2-100*x^3)/((1-x)*(1-25*x^2)*(1-26*x^2))) \\\\ _G. C. Greubel_, Sep 17 2019",
+        "(Magma) R<x>:=PowerSeriesRing(Rationals(), 20); Coefficients(R!( (1+5*x-26*x^2-100*x^3)/((1-x)*(1-25*x^2)*(1-26*x^2)) )); // _G. C. Greubel_, Sep 17 2019",
+        "(Sage)",
+        "def A097194_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P((1+5*x-26*x^2-100*x^3)/((1-x)*(1-25*x^2)*(1-26*x^2))).list()",
+        "A097194_list(20) # _G. C. Greubel_, Sep 17 2019",
+        "(GAP) a:=[1,6,31,186,811];; for n in [6..30] do a[n]:=a[n-1]+51*a[n-2] -51*a[n-3]-650*a[n-4]+650*a[n-5]; od; a; # _G. C. Greubel_, Sep 17 2019"
+    ],
+    "xref": [
+        "Cf. A097175, A097177."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Paul Barry_, Jul 30 2004",
+    "references": 3,
+    "revision": 15,
+    "time": "2022-09-08T08:45:14-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 70218,
+    "data": "2,3,7,13,29,59,127,241,487,971,1949,3889,7789,15569,31139,62297,124577,249181,498331,996689,1993357,3986711,7973419,15946841,31893713,63787391,127574789,255149591,510299171,1020598339,2041196683,4082393387,8164786771,16329573527",
+    "name": "a(1) = 2; a(n) is the smallest prime greater than the sum of all previous terms.",
+    "comment": [
+        "Grows exponentially: ceiling(log_2(a(n))) = n. - _Labos Elemer_, May 08 2002"
+    ],
+    "link": [
+        "Vojtech Strnad, <a href=\"/A070218/b070218.txt\">Table of n, a(n) for n = 1..2000</a> (first 200 terms from Zak Seidov)"
+    ],
+    "maple": [
+        "s:= proc(n) option remember; `if`(n<1, 0, s(n-1)+a(n)) end:",
+        "a:= proc(n) option remember; `if`(n<1, 0, nextprime(s(n-1))) end:",
+        "seq(a(n), n=1..35);  # _Alois P. Heinz_, Sep 21 2021"
+    ],
+    "mathematica": [
+        "tb[0]={} tb[x_] := Union[tb[x-1], m[x]] m[x_] := {Prime[1+PrimePi[Apply[Plus, tb[x-1]]]]} Flatten[Table[m[w], {w, 1, 10}]] (* _Labos Elemer_, May 08 2002 *)",
+        "bb={2};s=2;Do[p=Prime[PrimePi[s]+1];s=s+p;bb=Append[bb, p], {k, 32}];bb (Seidov)",
+        "Nest[Append[#,NextPrime[Total[#]]]&,{2},30] (* _Zak Seidov_, Oct 28 2011 *)"
+    ],
+    "program": [
+        "(PARI) print1(s=2);for(n=2,99,print1(\", \"t=nextprime(s+1));s+=t)",
+        "(Python)",
+        "from sympy import nextprime",
+        "def aupton(terms):",
+        "    alst, s = [2], 2",
+        "    while len(alst) < terms:",
+        "        p = nextprime(s)",
+        "        alst.append(p)",
+        "        s += p",
+        "    return alst",
+        "print(aupton(31)) # _Michael S. Branicky_, Sep 21 2021"
+    ],
+    "xref": [
+        "Cf. A063807, A151800."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, May 01 2002",
+    "ext": [
+        "More terms from _Labos Elemer_, May 08 2002",
+        "Corrected by _Zak Seidov_, May 21 2005"
+    ],
+    "references": 7,
+    "revision": 33,
+    "time": "2021-09-21T19:31:20-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

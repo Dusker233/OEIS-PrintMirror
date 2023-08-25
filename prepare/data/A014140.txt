@@ -1,0 +1,55 @@
+{
+    "number": 14140,
+    "data": "1,3,7,16,39,104,301,927,2983,9901,33615,116115,406627,1440039,5147891,18550588,67310955,245716112,901759969,3325067016,12312494483,45766188970,170702447097,638698318874,2396598337975,9016444758528,34003644251233,128524394659942,486793096819011",
+    "name": "Apply partial sum operator twice to Catalan numbers.",
+    "comment": [
+        "From _Alexander Adamchuk_, Jul 04 2006: (Start)",
+        "p divides a(p-1) and a((p-3)/2) for primes in A002476.",
+        "p divides a((p-5)/2) for primes in A068228.",
+        "p^2 divides a(p^2-1) for all primes p > 3. (End)",
+        "Equals triangle A106270(unsigned) * [1, 2, 3, ...]. - _Gary W. Adamson_, Apr 02 2009"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A014140/b014140.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "1*C(n) + 2*C(n-1) + 3*C(n-2) + ... + (n+1-k)*C(k) + ... + n*C(1) + (n+1)*C(0), where C(k) = (2k)!/(k!*(k+1)!) is Catalan Number A000108(k). - _Alexander Adamchuk_, Jul 04 2006",
+        "From _Alexander Adamchuk_, Jul 04 2006: (Start)",
+        "a(n) = Sum_{m=0..n} Sum_{k=0..m} (2k)!/(k!*(k+1)!).",
+        "a(n) = Sum_{k=0..n} (n+1-k)*(2k)!/(k!*(k+1)!). (End)",
+        "G.f.: 1/(1-x)^2*(1-sqrt(1-4*x))/(2*x). - _Vladimir Kruchinin_, Oct 14 2016",
+        "a(n) = Sum_{k=0..n} binomial(n+2,k+2)*r(k), where r(k) are the Riordan numbers A005043. - _Vladimir Kruchinin_, Oct 14 2016",
+        "a(n) ~ 2^(2*n+4) / (9*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Oct 14 2016"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n<0, [0$2], (q->(f->",
+        "      [f[2]+q, q]+f)(b(n-1)))(binomial(2*n, n)/(n+1)))",
+        "    end:",
+        "a:= n-> b(n)[1]:",
+        "seq(a(n), n=0..28);  # _Alois P. Heinz_, Feb 13 2022"
+    ],
+    "mathematica": [
+        "Table[Sum[Sum[(2k)!/k!/(k+1)!,{k,0,m}],{m,0,n}],{n,0,50}] Table[Sum[(n+1-k)*(2k)!/k!/(k+1)!,{k,0,n}],{n,0,50}] (* _Alexander Adamchuk_, Jul 04 2006 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "sm(v)={my(s=vector(#v)); s[1]=v[1]; for(n=2, #v, s[n]=v[n]+s[n-1]); s; }",
+        "C(n)=binomial(2*n, n)/(n+1);",
+        "sm(sm(vector(66, n, C(n-1))))",
+        "/* _Joerg Arndt_, May 04 2013 */"
+    ],
+    "xref": [
+        "Partial sums of A014137.",
+        "Cf. A000108, A005043, A106270."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Alexander Adamchuk_, Jul 04 2006"
+    ],
+    "references": 4,
+    "revision": 40,
+    "time": "2022-02-13T10:42:06-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

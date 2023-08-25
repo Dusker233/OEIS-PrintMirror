@@ -1,0 +1,42 @@
+{
+    "number": 326827,
+    "data": "1,10,59,270,1045,3582,11194,32488,88716,230150,571363,1365148,3153522,7069242,15425719,32849906,68421073,139645914,279740407,550790788,1067244261,2037348726,3835457084,7126887974,13081454919,23735283778,42598577587,75668099822",
+    "name": "Expansion of 1 / (chi(-x)^10 * chi(-x^2)^4) in powers of x where chi() is a Ramanujan theta function.",
+    "comment": [
+        "Ramanujan theta functions: f(q) (see A121373), phi(q) (A000122), psi(q) (A010054), chi(q) (A000700)."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanThetaFunctions.html\">Ramanujan Theta Functions</a>"
+    ],
+    "formula": [
+        "Expansion of q^(-3/4) * (eta(q^2)^3 * eta(q^4)^2 / eta(q)^5)^2 in powers of q.",
+        "Euler transform of period 4 sequence [10, 4, 10, 0, ...].",
+        "G.f.: Product_{n>=0} (1 - x^(2*n + 1))^-10 * (1 - x^(4*n + 2))^-4.",
+        "A093160(2*n + 1) = A123655(4*n + 3) = 4*a(n).",
+        "A232772(2*n + 1) = A215348(4*n + 3) = A215349(4*n + 3) = 8*a(n).",
+        "A007096(4*n + 3) = A212318(4*n + 3) = 16*a(n). A189925(4*n + 3) = A232358(4*n + 3) = -16*a(n).",
+        "a(n) ~ exp(2*Pi*sqrt(n)) / (256*n^(3/4)). - _Vaclav Kotesovec_, Oct 31 2019"
+    ],
+    "example": [
+        "G.f. = 1 + 10*x + 59*x^2 + 270*x^3 + 1045*x^4 + 3582*x^5 + 11194*x^6 + ...",
+        "G.f. = q^3 + 10*q^7 + 59*q^11 + 270*q^15 + 1045*q^19 + 3582*q^23 + 11194*q^27 + ..."
+    ],
+    "mathematica": [
+        "a[ n_] := SeriesCoefficient[ (QPochhammer[ x^2]^3 QPochhammer[ x^4]^2 / (QPochhammer[ x]^5))^2, {x, 0, n}];",
+        "a[ n_] := SeriesCoefficient[ x^(-3/4) (EllipticTheta[ 2, 0, x^(1/2)] EllipticTheta[ 2, 0, x] / EllipticTheta[ 4, 0, x]^2 / 4)^2, {x, 0, n}];",
+        "nmax = 20; CoefficientList[Series[Product[(1 + x^k)^10/(1 - x^(4*k - 2))^4, {k, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Oct 31 2019 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A); if( n<0, 0, A = x * O(x^n); polcoeff( (eta(x^2 + A)^3 * eta(x^4 + A)^2 / eta(x + A)^5)^2, n))};"
+    ],
+    "xref": [
+        "Cf. A007096, A093160, A123655, A189925, A212318, A215348, A215349, A232358, A232772."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Michael Somos_, Oct 20 2019",
+    "references": 0,
+    "revision": 18,
+    "time": "2019-11-02T08:59:13-04:00",
+    "created": "2019-10-20T13:48:01-04:00"
+}

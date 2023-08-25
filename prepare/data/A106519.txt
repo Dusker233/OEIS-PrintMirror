@@ -1,0 +1,45 @@
+{
+    "number": 106519,
+    "data": "1,1,1,2,3,9,19,58,160,499,1527,4940,16001,53187,178305,606330,2079863,7203864,25138879,88367780,312577245,1112119079,3977502767,14294207172,51596165898,186998138529,680272336906,2483341820512,9094756956909",
+    "name": "a(n) = (2/n)*binomial(2*n-2, n-1) - (1/(2*n))*Sum_{d|n} Moebius(d)*binomial(2*n/d, n/d).",
+    "comment": [
+        "A simple formula with no known combinatorial interpretation. This should give the multiplicity of the trivial module in some sequence of modules of dimension (2*n-2)!/n! over the symmetric groups S_n induced from modules of dimension (2*n-2)!/n!(n-1)! over the cyclic groups C_n."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A106519/b106519.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = (2/n)*binomial(2*n-2, n-1) - (1/(2*n))*Sum_{d|n} Moebius(d)*binomial(2*n/d, n/d).",
+        "a(n) = 2*A000108(n-1) - (1/(2*n))*Sum_{d|n} Moebius(d)*(n/d + 1)*A000108(n/d). - _G. C. Greubel_, Aug 06 2021"
+    ],
+    "maple": [
+        "a:= n -> (2/n)*( binomial(2*n-2, n-1) - (1/4)*add(NumberTheory[Moebius](d)*binomial(2*n/d, n/d), d = Divisors(n)) );",
+        "seq(a(n), n = 1..30); # modified by _G. C. Greubel_, Aug 06 2021"
+    ],
+    "mathematica": [
+        "f[n_] := Block[{d = Divisors[n]}, 2*Binomial[2n-2, n-1]/n - Plus @@ (MoebiusMu[d]*Binomial[2*n/d, n/d])/(2n)]; Table[f[n], {n, 29}] (* _Robert G. Wilson v_, May 31 2005 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def a(n):",
+        "    return binomial(2*n-2,n-1)*2//n - sum(moebius(n//d)*binomial(2*d,d) for d in divisors(n))//(2*n) # _F. Chapoton_, May 31 2020",
+        "(PARI) a(n) = (2*binomial(2*n-2, n-1) - sumdiv(n, d, moebius(d)*binomial(2*n/d, n/d))/2)/n; \\\\ _Michel Marcus_, Aug 06 2021",
+        "(Magma)",
+        "A106519:= func< n | 2*Catalan(n-1) - (1/(2*n))*(&+[Round(Gamma(2*n/d +1)/Gamma(n/d +1)^2)*MoebiusMu(d): d in Divisors(n)]) >;",
+        "[A106519(n): n in [1..30]]; // _G. C. Greubel_, Aug 06 2021"
+    ],
+    "xref": [
+        "Cf. A000108, A001761, A008683."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_F. Chapoton_, May 30 2005",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, May 31 2005",
+        "a(1) = 1 prepended by _G. C. Greubel_, Aug 06 2021"
+    ],
+    "references": 1,
+    "revision": 22,
+    "time": "2022-09-08T08:45:18-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 36771,
+    "data": "1,4,420,201600,264264000,734557824000,3723191087616000,31125877492469760000,399532678960326912000000,7462849882264211635200000000,194563959280510261541299200000000,6847568575944052279580806348800000000,316573366618757452963440048714547200000000",
+    "name": "Number of labeled rooted trees with a degree constraint: ((3*n)!/(6^n)) * binomial(3*n + 1, n).",
+    "comment": [
+        "a(n) is the number of labeled rooted unordered trees on 3n+1 nodes such that each node has zero or three children. - _Geoffrey Critzer_, Mar 14 2013"
+    ],
+    "link": [
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=47\">Encyclopedia of Combinatorial Structures 47</a>.",
+        "Lajos Takacs, <a href=\"http://www.appliedprobability.org/data/files/TMS%20articles/18_1_1.pdf\">Enumeration of rooted trees and forests</a>, Math. Scientist 18 (1993), 1-10; see Eqs. (12) and (13) on p. 4.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Cubic_function\">Cubic function</a>.",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "E.g.f. (with interpolated zeros): -(1/2)/x * ((-3*x + ((-8 + 9*x^3) / x)^(1/2)) * x^2)^(1/3) - 1/((-3*x + ((-8 + 9*x^3) / x)^(1/2)) * x^2)^(1/3) - (1/2)*I*3^(1/2) * (1/x * ((-3*x + ((-8 + 9*x^3) / x)^(1/2)) * x^2)^(1/3) - 2/((-3*x + ((-8 + 9*x^3) / x)^(1/2)) * x^2)^(1/3)).",
+        "Recurrence (with interpolated zeros): Define sequence (b(n): n >= 0) by b(3*n + 1) = a(n) for n >= 0 and b(n) = 0 otherwise. Then it satisfies the recurrence (-9*n^4 - 45*n^3 - 63*n^2 - 27*n) * b(n) + (8*n + 28) * b(n+3) = 0 for n >= 0 with b(0) = 0, b(1) = 1, and b(2) = 0. [Corrected by _Petros Hadjicostas_, Jun 07 2019]",
+        "E.g.f. with interpolated zeros satisfies: A(x) = x*(1 + A(x)^3/3!). -  _Geoffrey Critzer_, Mar 14 2013",
+        "From _Petros Hadjicostas_, Jun 07 2019: (Start)",
+        "In other words, if A(x) = Sum_{n >= 0} b(n)*x^n/n! = Sum_{m >= 0} a(m)*x^(3*m+1)/(3*m+1)!, then  A(x) = x*(1 + A(x)^3/3!).",
+        "E.g.f. of (b(n): n >= 1) according to the link for ECS 47 above: Let f(x) = ((-3*x + sqrt((9*x^3 - 8)/x)) * x^2)^(1/3). Then the e.g.f. of (b(n): n >= 1), which includes interpolated zeros, is -f(x)/(2*x) - 1/f(x) - (I*sqrt(3)/2)*(f(x)/x - 2/f(x)). (It is not clear whether it is correct or useful.)",
+        "E.g.f. using the solution of a cubic in terms of trigonometric functions: A(x) = (2*sqrt(2)/sqrt(|x|)) * cos( (1/3) * arccos((-3*|x|/2) * sqrt(|x|/2)) - 2*Pi/3 ) for 0 < |x| < 2/9^(1/3). (We have lim_{x -> 0} A(x) = 0.) (End)",
+        "Recurrence without interpolated zeros: -3 * (3*n + 4) * (3*n + 1) * (3*n + 2)^2 * a(n) + 4 * (2*n + 3) * a(n + 1) = 0 for n >= 0 with a(0) = 1. - _Petros Hadjicostas_, Jun 08 2019"
+    ],
+    "example": [
+        "E.g.f. (with interpolated zeros): 1*x/1! + 4*x^4/4! + 420*x^7/7! + 201600*x^10/10! + 264264000*x^13/13! + 734557824000*x^16/16! + 3723191087616000*x^19/19! + ... = x + 1/6*x^4 + 1/12*x^7 + 1/18*x^10 + 55/1296*x^13 + 91/2592*x^16 + 119/3888*x^19 + ... - _Petros Hadjicostas_, Jun 07 2019"
+    ],
+    "maple": [
+        "spec := [S,{S=Union(Z,Prod(Z,Set(S,card=3)))},labeled]: seq(combstruct[count](spec,size=n), n=0..20);",
+        "A := proc(x) 2*sqrt(2)*cos(1/3*arccos(-3/2*x*sqrt(1/2*x)) - 2/3*Pi)/sqrt(x); end proc;",
+        "series(A(x), x = 0, 80);  # _Petros Hadjicostas_, Jun 07 2019"
+    ],
+    "mathematica": [
+        "nn=34;f[x_]:=Sum[a[n]x^n/n!,{n,0,nn}];s=SolveAlways[0=Series[f[x]-x (1+f[x]^3/3!),{x,0,nn}],x];Table[a[n],{n,1,nn,3}]/.s  (* _Geoffrey Critzer_, Mar 14 2013 *)"
+    ],
+    "xref": [
+        "Cf. A036770, A036772, A036773."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_.",
+    "references": 3,
+    "revision": 61,
+    "time": "2019-06-09T03:52:35-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

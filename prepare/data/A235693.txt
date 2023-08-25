@@ -1,0 +1,39 @@
+{
+    "number": 235693,
+    "data": "10237,10238,10239,10249,10265,10279,10294,10297,10327,10342,10345,10347,10349,10358,10367,10378,10379,10389,10394,10397,10423,10435,10462,10473,10483,10489,10493,10495,10497,10523,10537,10543,10546,10547,10562,10573,10579",
+    "name": "Semiprimes which have one or more occurrences of exactly five different digits.",
+    "comment": [
+        "The first term having a repeated digit is 100235.",
+        "The first term that is a square is 12769. - _Robert Israel_, Jul 06 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A235693/b235693.txt\">Table of n, a(n) for n = 1..6240</a>"
+    ],
+    "maple": [
+        "# to get all terms with 5 digits S:= combinat:-choose([$0..9],5):",
+        "f:= proc(x) local s,L;",
+        "      L:= convert(x,base,5);      if nops(L) < 5 then L:= [op(L),0$(5-nops(L))] fi;      if nops(convert(L,set))<5 then return NULL fi;",
+        "      op(select(t -> t > 10^4 and numtheory:-bigomega(t)=2, map(s -> add(s[L[i]+1]*10^(i-1),i=1..5),S)))",
+        "end proc:",
+        "sort(map(f, [$1..5^5-1])); # _Robert Israel_, Jul 06 2018"
+    ],
+    "mathematica": [
+        "Select[Range[10000,11000],PrimeOmega[#]==2&&Count[DigitCount[#],0]==5&] (* _Harvey P. Dale_, Apr 08 2015 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "list(lim)=my(v=List(), t); forprime(p=2, sqrt(lim), t=p; forprime(q=p, lim\\t, listput(v, t*q))); vecsort(Vec(v)) \\\\ From A001358",
+        "b=list(15000); s=[]; for(n=1, #b, if(#vecsort(eval(Vec(Str(b[n]))),,8)==5, s=concat(s, b[n]))); s"
+    ],
+    "xref": [
+        "Cf. A235690-A235692, A235694-A235696.",
+        "Cf. A235154-A235161."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Colin Barker_, Jan 14 2014",
+    "references": 3,
+    "revision": 18,
+    "time": "2018-07-06T23:15:34-04:00",
+    "created": "2014-01-15T06:26:17-05:00"
+}

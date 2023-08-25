@@ -1,0 +1,33 @@
+{
+    "number": 328267,
+    "data": "1,1,3,9,45,243,1611,11565,92169,782775,7078995,67106313,663693597,6797495115,71796341151,778700005929,8645902267653,97997326844499,1131383216210067,13278579296016357,158171247347313933,1909500035430728655,23334309656230665411",
+    "name": "Number of walks on cubic lattice starting at (0,0,0), ending at (0,0,n), remaining in the first (nonnegative) octant and using steps which are permutations of (-2,1,2), (-1,0,2), (-1,1,1), (0,0,1).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A328267/b328267.txt\">Table of n, a(n) for n = 0..851</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path\">Lattice path</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Self-avoiding_walk\">Self-avoiding walk</a>"
+    ],
+    "maple": [
+        "b:= proc(l) option remember; `if`(l[-1]=0, 1, (r-> add(",
+        "      add(add(`if`(i+j+k=1, (h-> `if`(h[1]<0, 0, b(h)))(",
+        "      sort(l-[i, j, k])), 0), k=r), j=r), i=r))([$-2..2]))",
+        "    end:",
+        "a:= n-> b([0$2, n]):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[l_] := b[l] = If[Last[l] == 0, 1, Function[r, Sum[If[i + j + k == 1, Function[h, If[h[[1]] < 0, 0, b[h]]][Sort[l - {i, j, k}]], 0], {i, r}, {j, r}, {k, r}]][Range[-2, 2]]];",
+        "a[n_] := b[{0, 0, n}];",
+        "a /@ Range[0, 25] (* _Jean-Fran\u00e7ois Alcover_, May 13 2020, after Maple *)"
+    ],
+    "xref": [
+        "Cf. A002426, A328268."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Oct 10 2019",
+    "references": 2,
+    "revision": 16,
+    "time": "2020-05-13T05:21:24-04:00",
+    "created": "2019-10-12T21:47:04-04:00"
+}

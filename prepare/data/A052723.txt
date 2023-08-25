@@ -1,0 +1,38 @@
+{
+    "number": 52723,
+    "data": "0,0,2,6,24,240,2880,35280,524160,9434880,188697600,4151347200,101548339200,2727435110400,79332244992000,2488504322304000,83879464660992000,3021209014247424000,115754916599562240000",
+    "name": "Expansion of e.g.f. (1 - x - sqrt(1-2*x+x^2-4*x^3))/(2*x).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A052723/b052723.txt\">Table of n, a(n) for n = 0..350</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=679\">Encyclopedia of Combinatorial Structures 679</a>"
+    ],
+    "formula": [
+        "D-finite with recurrence: a(0) = a(1) = 0, a(2) = 2, a(3) = 6, a(4) = 24, (n+4)*a(n+3) = (15 + 11*n + 2*n^2)*a(n+2) - (6 + 11*n + 6*n^2 + n^3)*a(n+1) - (12 - 2*n - 32*n^2 - 22*n^2 - 4*n^4)*a(n).",
+        "a(n) = n!*A023431(n-2). - _R. J. Mathar_, Oct 18 2013"
+    ],
+    "maple": [
+        "spec := [S,{B=Prod(S,S),C=Union(B,S,Z),S=Prod(Z,C)},labeled]: seq(combstruct[count](spec,size=n), n=0..20);",
+        "seq(n!*add(binomial(n-2-k,2*k)*binomial(2*k,k)/(k+1), k=0..floor((n-2)/3)), n=0..18);  # _Mark van Hoeij_, May 12 2013"
+    ],
+    "mathematica": [
+        "With[{nn=20},CoefficientList[Series[(1-x-Sqrt[1-2x+x^2-4x^3])/(2x),{x,0,nn}],x] Range[0,nn]!] (* _Harvey P. Dale_, Jan 19 2017 *)",
+        "a[n_]:= a[n]= n!*Sum[Binomial[n-k-2,2*k]*CatalanNumber[k], {k,0,Floor[(n-2)/2]}];",
+        "Table[a[n], {n,0,30}] (* _G. C. Greubel_, May 28 2022 *)"
+    ],
+    "program": [
+        "(SageMath)",
+        "def A052723(n): return factorial(n)*sum( binomial(n-k-2, 2*k)*catalan_number(k) for k in (0..(n-2)//2) )",
+        "[A052723(n) for n in (0..30)] # _G. C. Greubel_, May 28 2022"
+    ],
+    "xref": [
+        "Cf. A052711, A052712, A052713, A052714, A052715, A052716, A052717, A052718, A052719, A052720, A052721, A052722.",
+        "Cf. A023431."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "references": 9,
+    "revision": 24,
+    "time": "2022-05-29T03:16:58-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

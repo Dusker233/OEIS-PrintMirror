@@ -1,0 +1,33 @@
+{
+    "number": 333789,
+    "data": "119,143,187,209,221,238,239,286,319,357,374,407,418,419,429,442,443,451,476,478,479,561,572,595,627,638,663,667,671,703,713,714,715,717,748,779,803,814,833,836,838,839,851,858,859,884,886,887,902,935,943,952,953,956,957,958,979,989,1001,1045,1067,1071,1073,1105,1111,1122",
+    "name": "Numbers k for which A333790(k) < A073934(k).",
+    "comment": [
+        "Numbers n for which the {smallest path sum when iterating from n to 1 with nondeterministic map k -> k - k/p, where p is any prime factor of k} cannot be obtained by always selecting the smallest prime factor of k (A020639). See the example in A333790 how that simple heuristic fails when starting from k=119."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A333789/b333789.txt\">Table of n, a(n) for n = 1..36576; all terms <= 2^17</a>"
+    ],
+    "mathematica": [
+        "Block[{a, b, nn = 1122}, a = Min@ Map[Total, #] & /@ Nest[Function[{a, n}, Append[a, Join @@ Table[Flatten@ Prepend[#, n] & /@ a[[n - n/p]], {p, FactorInteger[n][[All, 1]]}]]] @@ {#, Length@ # + 1} &, {{{1}}}, nn]; b = Array[If[# == 1, 1, Total@ NestWhileList[If[PrimeQ@ #, # - 1, # - #/FactorInteger[#][[1, 1]] ] &, #, # > 1 &]] &, nn]; Select[Range@ nn, a[[#]] < b[[#]] &]] (* _Michael De Vlieger_, Apr 15 2020 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "search_up_to = 2^17;",
+        "A333790list(up_to) = { my(v=vector(up_to)); v[1] = 1; for(n=2, up_to, v[n] = n+vecmin(apply(p -> v[n-n/p], factor(n)[, 1]~))); (v); };",
+        "v333790 = A333790list(search_up_to);",
+        "A333790(n) = v333790[n];",
+        "A073934(n) = if(1==n,n,n + A073934(n-(n/vecmin(factor(n)[,1]))));",
+        "isA333789(n) = (A073934(n)!=A333790(n);"
+    ],
+    "xref": [
+        "Cf. A020639, A060681, A073934, A333790."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Apr 12 2020",
+    "references": 2,
+    "revision": 16,
+    "time": "2020-04-15T12:30:07-04:00",
+    "created": "2020-04-12T21:45:01-04:00"
+}

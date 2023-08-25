@@ -1,0 +1,49 @@
+{
+    "number": 319248,
+    "data": "3,11,59,179,347,419,659,827,1451,1619,1667,2027,2267,3467,3851,4019,4091,4259,4787,6779,6827,6947,7547,8219,8291,8819,9419,10067,10091,10139,10499,10859,12251,12611,13931,14387,14627,14867,16067,16187,16979,17387,17747",
+    "name": "Lesser of the pairs of twin primes in A001122.",
+    "comment": [
+        "Primes p such that both p and p + 2 are both in A001122.",
+        "Apart from the first term, all terms are congruent to 11 mod 24, since terms in A001359 are congruent to 5 mod 6 apart from the first one, and terms in A001122 are congruent to 3 or 5 mod 8.",
+        "Note that \"there are infinitely many pairs of twin primes\" and \"there are infinitely many primes with primitive root 2\" are two famous and unsolved problems, so a stronger conjecture implying both of them is that this sequence is infinite.",
+        "Also note that a pair of cousin primes can't both appear in A001122, while a pair of sexy primes can."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A319248/b319248.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..406 from Jianing Song)"
+    ],
+    "formula": [
+        "a(n) = A319249(n) - 2.",
+        "For n >= 2, a(n) = 24*A319250(n-1) + 11."
+    ],
+    "example": [
+        "11 and 13 is a pair of twin primes both having 2 as a primitive root, so 11 is a term.",
+        "59 and 61 is a pair of twin primes both having 2 as a primitive root, so 59 is a term.",
+        "Although 101 and 103 is a pair of twin primes, 101 has 2 as a primitive root while 103 doesn't, so 101 is not a term."
+    ],
+    "mathematica": [
+        "Select[Prime[Range[2^11]], PrimeQ[# + 2] && PrimitiveRoot[#] == 2 && PrimitiveRoot[# + 2] == 2 &] (* _Amiram Eldar_, May 02 2023 *)"
+    ],
+    "program": [
+        "(PARI) forprime(p=3, 10000, if(znorder(Mod(2,p))==p-1 && znorder(Mod(2,p+2))==p+1, print1(p, \", \")))",
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime, is_primitive_root",
+        "def A319248_gen(): # generator of terms",
+        "    p = 2",
+        "    while (p:=nextprime(p)):",
+        "        if isprime(p+2) and is_primitive_root(2,p) and is_primitive_root(2,p+2):",
+        "            yield p",
+        "A319248_list = list(islice(A319248_gen(),30)) # _Chai Wah Wu_, Feb 13 2023"
+    ],
+    "xref": [
+        "Cf. A001122, A001359, A006512.",
+        "A319249 gives p+2, A319250 gives (p-11)/24."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jianing Song_, Sep 15 2018",
+    "references": 3,
+    "revision": 39,
+    "time": "2023-05-02T02:27:43-04:00",
+    "created": "2018-09-17T20:24:07-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 339199,
+    "data": "204,33145,4847163,545217435,61575093671,7050330616441,808723201743855,92672075290059017,10617254793634907021,1216460857186123433837,139377550879455782939427,15969325570952770252910697,1829698785056144504575785405,209639263869115933534540710701",
+    "name": "Number of (undirected) cycles on the n X 5 king graph.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A339199/b339199.txt\">Table of n, a(n) for n = 2..400</a>",
+        "Vaclav Kotesovec, <a href=\"/A339199/a339199.txt\">Empirical g.f.</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/GraphCycle.html\">Graph Cycle</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/KingGraph.html\">King Graph</a>"
+    ],
+    "program": [
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_nXk_king_graph(n, k):",
+        "    grids = []",
+        "    for i in range(1, k + 1):",
+        "        for j in range(1, n):",
+        "            grids.append((i + (j - 1) * k, i + j * k))",
+        "            if i < k:",
+        "                grids.append((i + (j - 1) * k, i + j * k + 1))",
+        "            if i > 1:",
+        "                grids.append((i + (j - 1) * k, i + j * k - 1))",
+        "    for i in range(1, k * n, k):",
+        "        for j in range(1, k):",
+        "            grids.append((i + j - 1, i + j))",
+        "    return grids",
+        "def A339098(n, k):",
+        "    universe = make_nXk_king_graph(n, k)",
+        "    GraphSet.set_universe(universe)",
+        "    cycles = GraphSet.cycles()",
+        "    return cycles.len()",
+        "def A339199(n):",
+        "    return A339098(n, 5)",
+        "print([A339199(n) for n in range(2, 20)])"
+    ],
+    "xref": [
+        "Column 5 of A339098.",
+        "Cf. A339202."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Seiichi Manyama_, Nov 27 2020",
+    "references": 4,
+    "revision": 16,
+    "time": "2020-12-09T05:37:14-05:00",
+    "created": "2020-11-28T02:21:01-05:00"
+}

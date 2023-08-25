@@ -1,0 +1,68 @@
+{
+    "number": 332874,
+    "data": "0,0,0,0,0,0,0,0,0,0,10,10,20,30,50,150,180,290,420,630,860,1828,2168,3326,4514,6530,8576,12188,20096,25314,35576,48062,65592,86752,117222,152060,237590,292346,402798,524596,711270,910606,1221204,1554382,2044460,2927124",
+    "name": "Number of strict compositions of n that are neither unimodal nor is their negation.",
+    "comment": [
+        "A sequence of integers is unimodal if it is the concatenation of a weakly increasing and a weakly decreasing sequence.",
+        "A composition of n is a finite sequence of positive integers summing to n. It is strict if there are not repeated parts."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A332874/b332874.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/UnimodalSequence.html\">Unimodal Sequence</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=4} (k! - 2^k + 2) * [y^k](Product_{j>=1} 1 + y*x^j). - _Andrew Howroyd_, Apr 16 2021"
+    ],
+    "example": [
+        "The a(10) = 10 through a(12) = 20 compositions:",
+        "  (1,3,2,4)  (1,3,2,5)  (1,3,2,6)",
+        "  (1,4,2,3)  (1,5,2,3)  (1,4,2,5)",
+        "  (2,1,4,3)  (2,1,5,3)  (1,5,2,4)",
+        "  (2,3,1,4)  (2,3,1,5)  (1,6,2,3)",
+        "  (2,4,1,3)  (2,5,1,3)  (2,1,5,4)",
+        "  (3,1,4,2)  (3,1,5,2)  (2,1,6,3)",
+        "  (3,2,4,1)  (3,2,5,1)  (2,3,1,6)",
+        "  (3,4,1,2)  (3,5,1,2)  (2,4,1,5)",
+        "  (4,1,3,2)  (5,1,3,2)  (2,5,1,4)",
+        "  (4,2,3,1)  (5,2,3,1)  (2,6,1,3)",
+        "                        (3,1,6,2)",
+        "                        (3,2,6,1)",
+        "                        (3,6,1,2)",
+        "                        (4,1,5,2)",
+        "                        (4,2,5,1)",
+        "                        (4,5,1,2)",
+        "                        (5,1,4,2)",
+        "                        (5,2,4,1)",
+        "                        (6,1,3,2)",
+        "                        (6,2,3,1)"
+    ],
+    "mathematica": [
+        "unimodQ[q_]:=Or[Length[q]<=1,If[q[[1]]<=q[[2]],unimodQ[Rest[q]],OrderedQ[Reverse[q]]]];",
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],UnsameQ@@#&&!unimodQ[#]&&!unimodQ[-#]&]],{n,0,20}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(p=prod(k=1, n, 1 + y*x^k + O(x*x^n))); Vec(sum(k=4, n, (k! - 2^k + 2)*polcoef(p,k,y)), -(n+1))} \\\\ _Andrew Howroyd_, Apr 16 2021"
+    ],
+    "xref": [
+        "The non-strict version for unsorted prime signature is A332643.",
+        "The non-strict version is A332870.",
+        "Unimodal compositions are A001523.",
+        "Non-unimodal compositions are A115981.",
+        "Non-unimodal normal sequences are A328509.",
+        "Compositions whose negation is unimodal are A332578.",
+        "Compositions whose negation is not unimodal are A332669.",
+        "Compositions with neither weakly increasing nor weakly decreasing run-lengths are A332833.",
+        "Compositions with weakly increasing or weakly decreasing run-lengths are A332835.",
+        "Cf. A007052, A072704, A227038, A329398, A332281, A332284, A332639, A332640, A332641, A332745, A332746, A332831, A332834."
+    ],
+    "keyword": "nonn",
+    "offset": "0,11",
+    "author": "_Gus Wiseman_, Mar 04 2020",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Apr 16 2021"
+    ],
+    "references": 7,
+    "revision": 13,
+    "time": "2021-04-17T03:42:05-04:00",
+    "created": "2020-03-05T04:58:10-05:00"
+}

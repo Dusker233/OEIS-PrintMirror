@@ -1,0 +1,42 @@
+{
+    "number": 274784,
+    "data": "1,1,13,49,661,4021,49141,382033,4387909,39174421,435947953,4223039173,46369242349,472149790477,5166034019173,54291944826769,594930602047909,6384197552441317,70225109775221041,764509591210501189,8448837429195472441,92938878099911462521,1032029676943832312473",
+    "name": "Diagonal of the rational function 1/(1-(wxyz + wxy + wxz + wyz + xz + yz)).",
+    "link": [
+        "A. Bostan, S. Boukraa, J.-M. Maillard, and J.-A. Weil, <a href=\"http://arxiv.org/abs/1507.03227\">Diagonals of rational functions and selected differential Galois groups</a>, arXiv preprint arXiv:1507.03227 [math-ph], 2015.",
+        "Jacques-Arthur Weil, <a href=\"http://www.unilim.fr/pages_perso/jacques-arthur.weil/diagonals/\">Supplementary Material for the Paper \"Diagonals of rational functions and selected differential Galois groups\"</a>"
+    ],
+    "formula": [
+        " 0 = x^2*(1-x)*(x+2)^2*(x^3+105*x^2+3*x-1)*y''' -  6*x*(x+2)*(x^5+81*x^4+209*x^3-205*x^2-6*x+1)*y'' - (7*x^6+378*x^5+2463*x^4+3904*x^3-2808*x^2-60*x+4)*y' + (-x^5-19*x^4-112*x^3-1196*x^2+352*x+4)*y, where y is the g.f.",
+        "a(n) = Sum_{i = 0..floor(n/2)} Sum_{j = 0..floor(n/2)-i} (n+i+j)!/((n-2*i-2*j)!*(i+j)!*i!^2*j!^2). - _Peter Bala_, Mar 16 2023",
+        "From _Vaclav Kotesovec_, Mar 17 2023: (Start)",
+        "Recurrence: n^3*(3*n - 8)*(3*n - 7)*(3*n - 5)*a(n) = 2*(3*n - 8)*(18*n^5 - 99*n^4 + 190*n^3 - 162*n^2 + 69*n - 12)*a(n-1) + 3*(3*n - 4)*(306*n^5 - 2550*n^4 + 8065*n^3 - 11991*n^2 + 8306*n - 2132)*a(n-2) - (3*n - 7)*(3*n - 2)*(312*n^4 - 2548*n^3 + 7614*n^2 - 9843*n + 4644)*a(n-3) - (n-3)^3*(3*n - 5)*(3*n - 4)*(3*n - 2)*a(n-4).",
+        "a(n) ~ c * (1 + 12*cos(arccos(1/4)/3))^n / (Pi^(3/2) * n^(3/2)), where c = sqrt(49/48 + sqrt(199)*cos(arccos(-163/(796*sqrt(199)))/3)/12). (End)"
+    ],
+    "maple": [
+        "seq(add(add( (n+i+j)!/((n-2*i-2*j)!*(i+j)!*i!^2*j!^2), j = 0..floor(n/2)-i), i = 0..floor(n/2)), n = 0..22); # _Peter Bala_, Mar 16 2023"
+    ],
+    "program": [
+        "(PARI)",
+        "my(x='x, y='y, z='z, w='w);",
+        "R = 1/(1-(w*x*y*z+w*x*y+w*x*z+w*y*z+x*z+y*z));",
+        "diag(n, expr, var) = {",
+        "  my(a = vector(n));",
+        "  for (i = 1, #var, expr = taylor(expr, var[#var - i + 1], n));",
+        "  for (k = 1, n, a[k] = expr;",
+        "       for (i = 1, #var, a[k] = polcoeff(a[k], k-1)));",
+        "  return(a);",
+        "};",
+        "diag(12, R, [x,y,z,w])"
+    ],
+    "xref": [
+        "Cf. A268545-A268555."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Gheorghe Coserea_, Jul 13 2016",
+    "references": 0,
+    "revision": 20,
+    "time": "2023-03-17T12:19:30-04:00",
+    "created": "2016-07-14T08:34:51-04:00"
+}

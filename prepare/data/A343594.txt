@@ -1,0 +1,41 @@
+{
+    "number": 343594,
+    "data": "1,5,17,25,31,41,63,92,151,170,202,221,263,266,278,322,327,347,364,401,404,412,421,423,437,467,470,482,490,498,501,515,519,543,558,578,590,612,623,636,646,647,671,683,685,705,707,717,718,726,764,785,795,859,867,872,875,881,890,892,897",
+    "name": "Numbers k that, when written in all bases from base 2 to base 10, are a substring of k^k when written in the same base.",
+    "example": [
+        "5 is a term. See below table:",
+        ".",
+        "   base  |  5 in base  |  5^5 in base",
+        "---------+-------------+-------------",
+        "    10          5                3125",
+        "     9          5                4252",
+        "     8          5                6065",
+        "     7          5               12053",
+        "     6          5               22245",
+        "     5         10              100000",
+        "     4         11              300311",
+        "     3         12            11021202",
+        "     2        101        110000110101",
+        ".",
+        "5^5 in all bases contains 5 in that base as a substring."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory import digits",
+        "def nstr(n, b): return \"\".join(map(str, digits(n, b=b)[1:]))",
+        "def ok(k): return all(nstr(k, b) in nstr(k**k, b) for b in range(10, 1, -1))",
+        "print(list(filter(ok, range(900)))) # _Michael S. Branicky_, Apr 25 2021",
+        "(PARI) str(v) = my(s=\"\"); for (k=1, #v, s = concat(s, Str(v[k]))); s;",
+        "isok(k) = {for (b=2, 10, my(kb = digits(k, b), kkb = digits(k^k, b)); if (#strsplit(str(kkb), str(kb)) <=1 , return (0));); return (1);} \\\\ _Michel Marcus_, Apr 26 2021"
+    ],
+    "xref": [
+        "Cf. A049329, A045537, A051248."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Scott R. Shannon_, Apr 21 2021",
+    "references": 0,
+    "revision": 23,
+    "time": "2021-04-26T21:37:05-04:00",
+    "created": "2021-04-26T21:37:05-04:00"
+}

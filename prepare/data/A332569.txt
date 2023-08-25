@@ -1,0 +1,30 @@
+{
+    "number": 332569,
+    "data": "1,5,12,23,36,54,74,97,125,156,186,226,268,306,354,409,458,515,574,636,710,778,838,922,1013,1086,1168,1264,1350,1452,1556,1651,1762,1864,1966,2105,2234,2332,2448,2594,2726,2864,3004,3132,3294,3444,3564,3736,3917,4067",
+    "name": "a(n) = Sum_{k=1..n} floor(n/k) * ceiling(n/k).",
+    "formula": [
+        "G.f.: ((1 + x) / (1 - x)) * Sum_{k>=1} x^k / (1 - x^k)^2.",
+        "a(n) = 1 + Sum_{k=1..n-1} (sigma(k) + sigma(k+1)) for n > 0.",
+        "a(n) ~ (Pi*n)^2/6. - _Vaclav Kotesovec_, Jun 24 2021"
+    ],
+    "mathematica": [
+        "Table[Sum[Ceiling[n/k] Floor[n/k], {k, 1, n}], {n, 1, 50}]",
+        "Table[1 + Sum[DivisorSigma[1, k] + DivisorSigma[1, k + 1], {k, 1, n - 1}], {n, 1, 50}]",
+        "nmax = 50; CoefficientList[Series[((1 + x)/(1 - x)) Sum[x^k/(1 - x^k)^2, {k, 1, nmax}], {x, 0, nmax}], x] // Rest"
+    ],
+    "program": [
+        "(Magma) [&+[Floor(n/k)*Ceiling(n/k):k in [1..n]]:n in [1..50]]; // _Marius A. Burtea_, Feb 16 2020",
+        "(PARI) a(n) = sum(k=1, n, my(q=n/k); floor(q) * ceil(q)); \\\\ _Michel Marcus_, Feb 17 2020"
+    ],
+    "xref": [
+        "Row sums of A085383.",
+        "Cf. A000203, A006218, A006590, A024916, A049697, A222548, A332490."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Feb 16 2020",
+    "references": 1,
+    "revision": 15,
+    "time": "2022-09-08T08:46:25-04:00",
+    "created": "2020-02-16T17:34:27-05:00"
+}

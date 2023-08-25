@@ -1,0 +1,76 @@
+{
+    "number": 355301,
+    "data": "0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28,29,30,31,32,34,35,36,37,38,39,40,41,42,43,45,46,47,48,49,50,51,52,53,54,56,57,58,59,60,61,62,63,64,65,67,68,69,70,71,72,73,74,75,76,78,79,80,81,82,83,84,85,86,87,89,90,91,92,93,94,95,96,97,98,101,102,103,104,105,106,107,108,109,120,121,130,131,132,140,141,142,143,150",
+    "name": "Normal undulating numbers where 'undulating' means that the alternate digits go up and down (or down and up) and 'normal' means that the absolute difference values between two adjacent digits may differ.",
+    "comment": [
+        "This definition comes from Patrick De Geest's link.",
+        "Other definitions for undulating are present in OEIS: A033619, A046075 (examples).",
+        "When the absolute difference values between two adjacent digits are always equal (e.g., 85858), then these numbers are called smoothly undulating numbers and form a subsequence (A046075).",
+        "The definition includes the trivial 1- and 2-digit undulating numbers.",
+        "Subsequence of A043096 where the first different term is A043096(103) = 123 while a(103) = 130.",
+        "This sequence first differs from A010784 for a(92) = 101 while A010784(92) = 102.",
+        "The sequence differs from A160542 (which contains 100). - _R. J. Mathar_, Aug 05 2022"
+    ],
+    "link": [
+        "Patrick De Geest, <a href=\"http://www.worldofnumbers.com/undulat.htm\">Smoothly Undulating Palindromic Primes</a>, World of Numbers."
+    ],
+    "example": [
+        "111 is not a term while A033619(102) = 111.",
+        "a(93) = 102 while 102 is not a term of A046075.",
+        "Some terms: 5276, 918230, 1053837, 263915847, 3636363636363636.",
+        "Are not terms: 1331, 594571652, 824327182."
+    ],
+    "maple": [
+        "isA355301 := proc(n)",
+        "    local dgs,i,back,forw ;",
+        "    dgs := convert(n,base,10) ;",
+        "    if nops(dgs) < 2 then",
+        "        return true;",
+        "    end if;",
+        "    for i from 2 to nops(dgs)-1 do",
+        "        back := op(i,dgs) -op(i-1,dgs) ;",
+        "        forw := op(i+1,dgs) -op(i,dgs) ;",
+        "        if back*forw >= 0 then",
+        "            return false;",
+        "        end if ;",
+        "    end do:",
+        "    back := op(-1,dgs) -op(-2,dgs) ;",
+        "    if back = 0 then",
+        "        return false;",
+        "    end if ;",
+        "    return true ;",
+        "end proc:",
+        "A355301 := proc(n)",
+        "    option remember ;",
+        "    if n = 1 then",
+        "        0;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if isA355301(a) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "seq(A355301(n),n=1..110) ; # _R. J. Mathar_, Aug 05 2022"
+    ],
+    "mathematica": [
+        "q[n_] := AllTrue[(s = Sign[Differences[IntegerDigits[n]]]), # != 0 &] && AllTrue[Differences[s], # != 0 &]; Select[Range[0, 100], q] (* _Amiram Eldar_, Jun 28 2022 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = if (m<10, return(1)); my(d=digits(m), dd = vector(#d-1, k, sign(d[k+1]-d[k]))); if (#select(x->(x==0), dd), return(0)); my(pdd = vector(#dd-1, k, dd[k+1]*dd[k])); #select(x->(x>0), pdd) == 0; \\\\ _Michel Marcus_, Jun 30 2022"
+    ],
+    "xref": [
+        "Cf. A033619, A043096, A046075.",
+        "Cf. A059168 (subsequence of primes).",
+        "Differs from A010784, A241157, A241158.",
+        "Cf. A355302, A355303, A355304."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Bernard Schott_, Jun 27 2022",
+    "references": 4,
+    "revision": 40,
+    "time": "2022-08-05T06:17:49-04:00",
+    "created": "2022-07-07T16:20:22-04:00"
+}

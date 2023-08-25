@@ -1,0 +1,49 @@
+{
+    "number": 136296,
+    "data": "11,13,137,9091,909091,5882353,909090909090909091,909090909090909090909090909091,9090909090909090909090909090909090909090909090909091,909090909090909090909090909090909090909090909090909090909090909091",
+    "name": "\"Special augmented primes\": primes p such that the decimal number 1p1 is divisible by p.",
+    "comment": [
+        "Equals A116436 INTERSECT A000040. - _R. J. Mathar_, Apr 24 2008",
+        "The larger terms may be only probable primes. - _Franklin T. Adams-Watters_, Apr 23 2008",
+        "According to the Magma Calculator (http://magma.maths.usyd.edu.au/calc/), all nine terms given for this sequence are prime. - _Jon E. Schoenfield_, Aug 24 2009"
+    ],
+    "reference": [
+        "Clifford A. Pickover, A Passion for Mathematics, Wiley, 2005; see p. 61."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A136296/b136296.txt\">Table of n, a(n) for n = 1..12</a> (all terms with <= 1000 digits)"
+    ],
+    "example": [
+        "11371/137 = 83, an integer, so the prime 137 is a term."
+    ],
+    "mathematica": [
+        "max=6; a={}; For[i=1, i<=10^max, i++, If[Mod[FromDigits[Join[{1}, IntegerDigits[Prime[i]], {1}]], Prime[i]] == 0, AppendTo[a, Prime[i]]]]; a (* _Stefano Spezia_, Mar 26 2023 *)"
+    ],
+    "program": [
+        "(PARI) A136296k(k) = { local(l, d, lb, ub); d=factor(10^(k+1)+1)[,1]; l=[]; lb=10^(k-1); ub=10*lb; for(i=1,#d,if(d[i]>=lb&&d[i]<ub,l=concat(l,[d[i]]))); l} l=[];for(i=1,60,l=concat(l,A136296k(i)));l \\\\ _Franklin T. Adams-Watters_, Apr 23 2008",
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    for k in count(2):",
+        "        t = 10**(k+1) + 1",
+        "        d = [t//i for i in range(100, 10, -1) if t%i == 0]",
+        "        yield from (di for di in d if isprime(di))",
+        "print(list(islice(agen(), 8))) # _Michael S. Branicky_, Mar 26 2023 following _Franklin T. Adams-Watters_ but removing factorization"
+    ],
+    "xref": [
+        "Prime members of A116436."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Apr 20 2008",
+    "ext": [
+        "a(4)-a(6) from _M. F. Hasler_, Apr 22 2008",
+        "a(7)-a(9) from _Franklin T. Adams-Watters_, Apr 23 2008",
+        "a(10) from _Michael S. Branicky_, Mar 26 2023"
+    ],
+    "references": 2,
+    "revision": 29,
+    "time": "2023-03-26T11:25:22-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 334623,
+    "data": "1,1,2,18,1576,2675100,128235838496,265039489112493900,31306198216486969509375104,278983981168082455883720325976751040,235157286166918393786165504356030195355598048512,23075317400822150539572583950910707053701314350537805923757600",
+    "name": "Sum of the n-th powers of the descent set statistics for permutations of [n].",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A334623/b334623.txt\">Table of n, a(n) for n = 0..24</a> (terms 0..21 from Alois P. Heinz)",
+        "R. Ehrenborg and A. Happ, <a href=\"https://arxiv.org/abs/1709.00778\">On the powers of the descent set statistic</a>, arXiv:1709.00778 [math.CO], 2017."
+    ],
+    "formula": [
+        "a(n) = A334622(n,n).",
+        "a(n) = Sum_{j=0..ceiling(2^(n-1))-1} A060351(n,j)^n."
+    ],
+    "maple": [
+        "b:= proc(u, o, t) option remember; expand(`if`(u+o=0, 1,",
+        "      add(b(u-j, o+j-1, t+1)*x^floor(2^(t-1)), j=1..u)+",
+        "      add(b(u+j-1, o-j, t+1), j=1..o)))",
+        "    end:",
+        "a:= n-> (p-> add(coeff(p, x, i)^n, i=0..degree(p)))(b(n, 0$2)):",
+        "seq(a(n), n=0..12);"
+    ],
+    "mathematica": [
+        "b[u_, o_, t_] := b[u, o, t] = Expand[If[u + o == 0, 1,",
+        "    Sum[b[u - j, o + j - 1, t + 1]*x^Floor[2^(t - 1)], {j, 1, u}] +",
+        "    Sum[b[u + j - 1, o - j, t + 1], {j, 1, o}]]];",
+        "a[n_] := Function[p, Sum[Coefficient[p, x, i]^n, {i, 0, Exponent[p, x]}]][ b[n, 0, 0]];",
+        "a /@ Range[0, 12] (* _Jean-Fran\u00e7ois Alcover_, Dec 20 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Main diagonal of A334622.",
+        "Cf. A060351, A335546."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 09 2020",
+    "references": 4,
+    "revision": 25,
+    "time": "2020-12-20T12:36:37-05:00",
+    "created": "2020-09-10T16:56:36-04:00"
+}

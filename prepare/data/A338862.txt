@@ -1,0 +1,48 @@
+{
+    "number": 338862,
+    "data": "1,1,4,13,49,175,655,2437,9208,34867,132952,508621,1953580,7524625,29061835,112493680,436330753,1695388480,6598016866,25714222228,100343852938,392023844362,1533182752336,6001993189687,23517048084424,92220047277892,361906295452669,1421252193947311",
+    "name": "a(n) is the number of polynomials of degree 2*n over the field GF(2) that have no factors of odd degree.",
+    "comment": [
+        "a(n) is the number of partitions of n into parts k of A001037(2*k) sorts. - _Joerg Arndt_, Nov 13 2020"
+    ],
+    "link": [
+        "A. Swaminathan, <a href=\"https://math.stackexchange.com/questions/3905138/how-many-monic-polynomials-modulo-2-have-an-odd-degree-factor\">How many monic polynomials modulo 2 have an odd-degree factor?</a>, Mathematics StackExchange."
+    ],
+    "formula": [
+        "G.f.: 1 / ( Product_{k>=1} (1-x^k)^A001037(2*k) ). - _Joerg Arndt_, Nov 13 2020"
+    ],
+    "example": [
+        "For n=2 the a(2) = 4 polynomials are X^4 + X + 1, X^4 + X^2 + 1, X^4 + X^3 + 1, and X^4 + X^3 + X^2 + X + 1.  Of these X^4+X^2+1 = (X^2+X+1)^2 while the others are irreducible over GF(2)."
+    ],
+    "maple": [
+        "f:= proc(d) local P,x,X,count,L,F;",
+        "  count:= 0;",
+        "  for x from 2^d+1 to 2^(d+1)-1 by 2 do",
+        "  L:= convert(x,base,2);",
+        "  if convert(L,`+`)::even then next fi;",
+        "  P:= add(L[i+1]*X^i,i=0..d);",
+        "  F:= map(t -> t[1],(Factors(P) mod 2)[2]);",
+        "  if andmap(t -> degree(t)::even, F) then count:= count+1 fi",
+        "  od:",
+        "count",
+        "end proc:",
+        "seq(f(i),i=2..20,2);"
+    ],
+    "mathematica": [
+        "nn = 50; A001037 =Table[1/n Sum[MoebiusMu[n/d] 2^d, {d, Divisors[n]}], {n, 1, nn}];",
+        "Select[CoefficientList[ Series[Product[1/(1 - z^i)^A001037[[i]], {i, 2, nn, 2}], {z, 0, nn}], z], # > 0 &] (* _Geoffrey Critzer_, Aug 11 2022 *)"
+    ],
+    "program": [
+        "(PARI) b(n)=sumdiv(n, d, moebius(d)*2^(n/d))/n; \\\\ A001037",
+        "N=33;  x='x+O('x^N);",
+        "Vec( 1 / prod(k=1, N, (1-x^k)^b(2*k) ) )",
+        "\\\\ _Joerg Arndt_, Nov 13 2020"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Robert Israel_, Nov 12 2020",
+    "references": 0,
+    "revision": 22,
+    "time": "2022-08-23T10:19:56-04:00",
+    "created": "2020-11-13T14:20:34-05:00"
+}

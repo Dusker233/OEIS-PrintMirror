@@ -1,0 +1,34 @@
+{
+    "number": 305204,
+    "data": "1,1,4,10,29,62,176,363,931,2029,4751,10062,23749,48959,109342,230981,500344,1031667,2223218,4531585,9570395,19523510,40411313,81628389,168484616,336850254,685112670,1369559157,2757908932,5464925114,10958578421,21574592680",
+    "name": "Expansion of Product_{k>=1} 1/(1 - (k*(k + 1)/2)*x^k).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A305204/b305204.txt\">Table of n, a(n) for n = 0..3841</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} 1/(1 - A000217(k)*x^k).",
+        "G.f.: exp(Sum_{k>=1} Sum_{j>=1} (j*(j + 1))^k*x^(j*k)/(k*2^k))."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1,",
+        "      1, b(n, i-1)+(1+i)*i/2*b(n-i, min(n-i, i)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..33);  # _Alois P. Heinz_, Aug 16 2019"
+    ],
+    "mathematica": [
+        "nmax = 31; CoefficientList[Series[Product[1/(1 - (k (k + 1)/2) x^k), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 31; CoefficientList[Series[Exp[Sum[Sum[(j (j + 1))^k x^(j k)/(k 2^k), {j, 1, nmax}], {k, 1, nmax}]], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[d^(k/d + 1) ((d + 1)/2)^(k/d), {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 31}]"
+    ],
+    "xref": [
+        "Cf. A000217, A000294, A006906, A077335, A265836."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, May 27 2018",
+    "references": 2,
+    "revision": 9,
+    "time": "2019-08-16T12:52:09-04:00",
+    "created": "2018-05-27T19:46:38-04:00"
+}

@@ -1,0 +1,87 @@
+{
+    "number": 67659,
+    "data": "0,1,1,1,1,1,2,2,3,4,5,6,8,9,11,14,16,19,23,27,32,38,44,52,61,71,82,96,111,128,148,170,195,224,256,293,334,380,432,491,557,630,713,805,908,1024,1152,1295,1455,1632,1829,2048,2291,2560,2859,3189,3554,3958,4404",
+    "name": "Number of partitions of n into distinct parts such that number of parts is odd.",
+    "comment": [
+        "Ramanujan theta functions: phi(q) := Sum_{k=-oo..oo} q^(k^2) (A000122), chi(q) := Prod_{k>=0} (1+q^(2k+1)) (A000700)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A067659/b067659.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, end of section 16.4.2 \"Partitions into distinct parts\", pp.348ff",
+        "Mircea Merca, <a href=\"https://doi.org/10.1016/j.jnt.2015.08.014\">Combinatorial interpretations of a recent convolution for the number of divisors of a positive integer</a>, Journal of Number Theory, Volume 160 (March 2016), Pages 60-75, function q_o(n).",
+        "Michael Somos, <a href=\"/A010815/a010815.txt\">Introduction to Ramanujan theta functions</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanThetaFunctions.html\">Ramanujan Theta Functions</a>"
+    ],
+    "formula": [
+        "For g.f. see under A067661.",
+        "a(n) = (A000009(n)-A010815(n))/2. - _Vladeta Jovovic_, Feb 24 2002",
+        "Expansion of (1-phi(-q))/(2*chi(-q)) in powers of q where phi(),chi() are Ramanujan theta functions. - _Michael Somos_, Feb 14 2006",
+        "G.f.: sum(n>=1, q^(2*n^2-n) / prod(k=1..2*n-1, 1-q^k ) ). [_Joerg Arndt_, Apr 01 2014]",
+        "a(n) = A067661(n) - A010815(n). - _Andrey Zabolotskiy_, Apr 12 2017",
+        "A000009(n) = a(n) + A067661(n). - _Gus Wiseman_, Jan 09 2021"
+    ],
+    "example": [
+        "From _Gus Wiseman_, Jan 09 2021: (Start)",
+        "The a(5) = 1 through a(15) = 14 partitions (A-F = 10..15):",
+        "  5   6     7     8     9     A     B     C     D     E     F",
+        "      321   421   431   432   532   542   543   643   653   654",
+        "                  521   531   541   632   642   652   743   753",
+        "                        621   631   641   651   742   752   762",
+        "                              721   731   732   751   761   843",
+        "                                    821   741   832   842   852",
+        "                                          831   841   851   861",
+        "                                          921   931   932   942",
+        "                                                A21   941   951",
+        "                                                      A31   A32",
+        "                                                      B21   A41",
+        "                                                            B31",
+        "                                                            C21",
+        "                                                            54321",
+        "(End)"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n>i*(i+1)/2, 0,",
+        "      `if`(n=0, t, add(b(n-i*j, i-1, abs(t-j)), j=0..min(n/i, 1))))",
+        "    end:",
+        "a:= n-> b(n$2, 0):",
+        "seq(a(n), n=0..80);  # _Alois P. Heinz_, Apr 01 2014"
+    ],
+    "mathematica": [
+        "b[n_, i_, t_] := b[n, i, t] = If[n > i*(i + 1)/2, 0, If[n == 0, t, Sum[b[n - i*j, i - 1, Abs[t - j]], {j, 0, Min[n/i, 1]}]]]; a[n_] := b[n, n, 0]; Table[a[n], {n, 0, 80}] (* _Jean-Fran\u00e7ois Alcover_, Jan 16 2015, after _Alois P. Heinz_ *)",
+        "CoefficientList[Normal[Series[(QPochhammer[-x, x]-QPochhammer[x])/2, {x, 0, 100}]], x] (* _Andrey Zabolotskiy_, Apr 12 2017 *)",
+        "Table[Length[Select[IntegerPartitions[n],UnsameQ@@#&&OddQ[Length[#]]&]],{n,0,30}] (* _Gus Wiseman_, Jan 09 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A); if(n<0, 0, A=x*O(x^n); polcoeff( (eta(x^2+A)/eta(x+A) - eta(x+A))/2, n))} /* _Michael Somos_, Feb 14 2006 */",
+        "(PARI) N=66;  q='q+O('q^N);  S=1+2*sqrtint(N);",
+        "gf=sum(n=1,S, (n%2!=0) * q^(n*(n+1)/2) / prod(k=1,n, 1-q^k ) );",
+        "concat( [0], Vec(gf) )  /* _Joerg Arndt_, Oct 20 2012 */",
+        "(PARI) N=66;  q='q+O('q^N);  S=1+sqrtint(N);",
+        "gf=sum(n=1, S, q^(2*n^2-n) / prod(k=1, 2*n-1, 1-q^k ) );",
+        "concat( [0], Vec(gf) )  \\\\ _Joerg Arndt_, Apr 01 2014"
+    ],
+    "xref": [
+        "Dominates A000009.",
+        "Numbers with these strict partitions as binary indices are A000069.",
+        "The non-strict version is A027193.",
+        "The Heinz numbers of these partitions are A030059.",
+        "The even version is A067661.",
+        "The version for rank is A117193, with non-strict version A101707.",
+        "The ordered version is A332304, with non-strict version A166444.",
+        "Other cases of odd length:",
+        "- A024429 counts set partitions of odd length.",
+        "- A089677 counts ordered set partitions of odd length.",
+        "- A174726 counts ordered factorizations of odd length.",
+        "- A339890 counts factorizations of odd length.",
+        "A008289 counts strict partitions by sum and length.",
+        "A026804 counts partitions whose least part is odd, with strict case A026832.",
+        "Cf. A000700, A027187, A030229, A117192, A332305."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,7",
+    "author": "_Naohiro Nomoto_, Feb 23 2002",
+    "references": 85,
+    "revision": 65,
+    "time": "2021-01-12T12:57:27-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,65 @@
+{
+    "number": 326366,
+    "data": "1,1,1,2,28,1960,1379273,229755337549,423295079757497714059",
+    "name": "Number of intersecting antichains of nonempty subsets of {1..n} with empty intersection (meaning there is no vertex in common to all the edges).",
+    "comment": [
+        "A set system (set of sets) is an antichain if no edge is a subset of any other, and is intersecting if no two edges are disjoint."
+    ],
+    "formula": [
+        "a(n) = A326375(n) - 1.",
+        "a(n) = A001206(n+1) + A307249(n) - A014466(n). - _Andrew Howroyd_, Aug 14 2019"
+    ],
+    "example": [
+        "The a(0) = 1 through a(4) = 28 intersecting antichains with empty intersection:",
+        "  {}  {}  {}  {}              {}",
+        "              {{12}{13}{23}}  {{12}{13}{23}}",
+        "                              {{12}{14}{24}}",
+        "                              {{13}{14}{34}}",
+        "                              {{23}{24}{34}}",
+        "                              {{12}{13}{234}}",
+        "                              {{12}{14}{234}}",
+        "                              {{12}{23}{134}}",
+        "                              {{12}{24}{134}}",
+        "                              {{13}{14}{234}}",
+        "                              {{13}{23}{124}}",
+        "                              {{13}{34}{124}}",
+        "                              {{14}{24}{123}}",
+        "                              {{14}{34}{123}}",
+        "                              {{23}{24}{134}}",
+        "                              {{23}{34}{124}}",
+        "                              {{24}{34}{123}}",
+        "                              {{12}{134}{234}}",
+        "                              {{13}{124}{234}}",
+        "                              {{14}{123}{234}}",
+        "                              {{23}{124}{134}}",
+        "                              {{24}{123}{134}}",
+        "                              {{34}{123}{124}}",
+        "                              {{12}{13}{14}{234}}",
+        "                              {{12}{23}{24}{134}}",
+        "                              {{13}{23}{34}{124}}",
+        "                              {{14}{24}{34}{123}}",
+        "                              {{123}{124}{134}{234}}"
+    ],
+    "mathematica": [
+        "stableSets[u_,Q_]:=If[Length[u]==0,{{}},With[{w=First[u]},Join[stableSets[DeleteCases[u,w],Q],Prepend[#,w]&/@stableSets[DeleteCases[u,r_/;r==w||Q[r,w]||Q[w,r]],Q]]]];",
+        "Table[Length[Select[stableSets[Subsets[Range[n],{1,n}],Or[Intersection[#1,#2]=={},SubsetQ[#1,#2]]&],#=={}||Intersection@@#=={}&]],{n,0,4}]"
+    ],
+    "xref": [
+        "The case with empty edges allowed is A326375.",
+        "Intersecting antichains of nonempty sets are A001206.",
+        "Intersecting set systems with empty intersection are A326373.",
+        "Antichains of nonempty sets with empty intersection are A006126 or A307249.",
+        "The inverse binomial transform is the covering case A326365.",
+        "Cf. A007363, A014466, A051185, A058891, A305001, A305843, A305844, A318128, A318129, A326361, A326362, A326363, A326364."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Jul 01 2019",
+    "ext": [
+        "a(7)-a(8) from _Andrew Howroyd_, Aug 14 2019"
+    ],
+    "references": 5,
+    "revision": 16,
+    "time": "2019-08-14T18:22:54-04:00",
+    "created": "2019-07-02T11:18:09-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 346772,
+    "data": "0,1,5,22,100,482,2475,13527,78476,481687,3117962,21218851,151387882,1129430737,8790433999,71222812912,599577147056,5235054113412,47331036294905,442462325254995,4270909302907430,42514043248222709,435920900603529954,4599155199953703373",
+    "name": "Total sum of block indices of the elements over all partitions of [n].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A346772/b346772.txt\">Table of n, a(n) for n = 0..574</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} A120057(n,k).",
+        "a(n) = Sum_{k=0..n*(n-1)/2} (n+k) * A126347(n,k).",
+        "a(n) = Sum_{k=1..n} k * A270236(n,k)."
+    ],
+    "example": [
+        "a(3) = 22 = 3 + 4 + 4 + 5 + 6, summing block indices 111, 112, 121, 122, 123 of the 5 partitions of [3]: 123, 12|3, 13|2, 1|23, 1|2|3."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0, [1, 0], add(",
+        "     (p-> p+[0, p[1]*j])(b(n-1, max(m, j))), j=1..m+1))",
+        "    end:",
+        "a:= n-> b(n, 0)[2]:",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[n_, m_] := b[n, m] = If[n == 0, {1, 0}, Sum[",
+        "     Function[p, p+{0, p[[1]]*j}][b[n-1, Max[m, j]]], {j, 1, m+1}]];",
+        "a[n_] := b[n, 0][[2]];",
+        "Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Apr 27 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Row sums of A120057.",
+        "Cf. A000110, A070071, A105488, A126347, A270236."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 02 2021",
+    "references": 4,
+    "revision": 23,
+    "time": "2022-04-27T08:47:35-04:00",
+    "created": "2021-08-02T21:29:36-04:00"
+}

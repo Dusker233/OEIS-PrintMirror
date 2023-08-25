@@ -1,0 +1,51 @@
+{
+    "number": 348594,
+    "data": "8,50,1250,1800,2450,9800,14450,20000,24200,101250,105800,135200,162450,168200,204800,304200,336200,451250,480200,490050,530450,696200,924800,966050,1008200,1125000,1155200,1428050,1805000,2332800,2420000,2576450,2761250,2832200",
+    "name": "Numbers m such that m^2 + 1 = p*q with p, q primes and m = (p + q)/2 - 1.",
+    "comment": [
+        "Subsequence of A085722.",
+        "The corresponding pairs (p, q) of the sequence are (5, 13), (41, 61), (1201, 1301), (1741, 1861), (2381, 2521), (9661, 9941), (14281, 14621), (19801, 20201), (23981, 24421), (100801, 101701), ...",
+        "Property:",
+        "a(n) = 2* A109306(n)^2 and a(n) == 0 (mod 50) for n > 1. Proof:",
+        "From the relations:",
+        "(1)        m^2 + 1 = p*q",
+        "(2)        (p + q)/2 = m + 1",
+        "We obtain:",
+        "(3)        p = m + 1 - sqrt(8*m)/2",
+        "(4)        q = m + 1 + sqrt(8*m)/2",
+        "with m = 2*k^2 we obtain:",
+        "(5)        p = k^2 + (k-1)^2",
+        "(6)        q = k^2 + (k+1)^2",
+        "For n > 1, A109306(n) == 0 (mod 5) => 2*A109306(n)^2 == 0 (mod 50)."
+    ],
+    "example": [
+        "50 = 2*5^2 is in the sequence because 50^2 + 1 = 41*61 with 50 = (41 + 61)/2 - 1."
+    ],
+    "maple": [
+        "with(numtheory):nn:=250:printf(`%d, `,8):",
+        "for k from 0 to nn do:",
+        "n:=50*k^2:d:=factorset(n^2+1):",
+        "  if bigomega(n^2+1)=2 and (d[1]+d[2])/2 - 1 = n",
+        "   then",
+        "    printf(`%d, `,n):",
+        "    else",
+        "  fi:",
+        "od:"
+    ],
+    "mathematica": [
+        "q[n_] := Module[{f = FactorInteger[n^2 + 1]}, f[[;; , 2]] == {1, 1} && f[[1, 1]] + f[[2, 1]] == 2*n + 2]; Select[Range[3*10^5], q] (* _Amiram Eldar_, Jan 26 2022 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = my(x); if (bigomega(x=m^2+1)==2, my(f=factor(x)); (f[1,1]+f[2,1] == 2*(m+1))); \\\\ _Michel Marcus_, Jan 26 2022"
+    ],
+    "xref": [
+        "Cf. A014442, A085722, A089120, A109306, A144255."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Jan 26 2022",
+    "references": 0,
+    "revision": 15,
+    "time": "2022-01-26T09:00:25-05:00",
+    "created": "2022-01-26T09:00:25-05:00"
+}

@@ -1,0 +1,60 @@
+{
+    "number": 56513,
+    "data": "1,1,1,1,2,3,4,7,10,14,21,31,42,63,91,123,184,255,371,511,750,1015,1519,2047,3030,4092,6111,8176,12222,16383,24486,32767,49024,65503,98175,131061,196308,262143,392959,524223,785910,1048575,1572256,2097151,3144702,4194162",
+    "name": "Number of primitive (period n) periodic palindromic structures using a maximum of two different symbols.",
+    "comment": [
+        "For example, aaabbb is not a (finite) palindrome but it is a periodic palindrome. Permuting the symbols will not change the structure.",
+        "Number of Lyndon compositions (aperiodic necklaces of positive integers) summing to n that can be rotated to form a palindrome. - _Gus Wiseman_, Sep 16 2018"
+    ],
+    "reference": [
+        "M. R. Nester (1999). Mathematical investigations of some plant interaction designs. PhD Thesis. University of Queensland, Brisbane, Australia. [See A056391 for pdf file of Chap. 2]"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A056513/b056513.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{d|n} mu(d)*A056503(n/d) for n > 0.",
+        "a(n) = Sum_{k=1..2} A285037(n, k). - _Andrew Howroyd_, Apr 08 2017",
+        "G.f.: 1 + (1/2)*Sum_{k>=1} mu(k)*x^k*(2 + 3*x^k)/(1 - 2*x^(2*k)) - mu(2*k)*x^(2*k)*(1 + x^(2*k))/(1 - 2*x^(4*k)). - _Andrew Howroyd_, Sep 27 2019"
+    ],
+    "example": [
+        "From _Gus Wiseman_, Sep 16 2018: (Start)",
+        "The sequence of palindromic Lyndon compositions begins:",
+        "  (1)  (2)  (3)  (4)    (5)    (6)      (7)",
+        "                 (112)  (113)  (114)    (115)",
+        "                        (122)  (1122)   (133)",
+        "                               (11112)  (223)",
+        "                                        (11113)",
+        "                                        (11212)",
+        "                                        (11122)",
+        "(End)"
+    ],
+    "mathematica": [
+        "(* b = A164090, c = A045674 *)",
+        "b[n_] := (1/4)*(7 - (-1)^n)*2^((1/4)*(2*n + (-1)^n - 1));",
+        "c[0] = 1;",
+        "c[n_] := c[n] = If[EvenQ[n], 2^(n/2 - 1) + c[n/2], 2^((n - 1)/2)];",
+        "a56503[n_] := If[OddQ[n], b[n]/2, (1/2)*(b[n] + c[n/2])];",
+        "a[n_] := DivisorSum[n, MoebiusMu[#] a56503[n/#]&];",
+        "Array[a, 45] (* _Jean-Fran\u00e7ois Alcover_, Jun 29 2018, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI) a(n) = {if(n < 1, n==0, sumdiv(n, d, moebius(d)*(2 + d%2)*(2^(n/d\\2)))/(4 - n%2))} \\\\ _Andrew Howroyd_, Sep 26 2019",
+        "(PARI) seq(n) = Vec(1 + (1/2)*sum(k=1, n, moebius(k)*x^k*(2 + 3*x^k)/(1 - 2*x^(2*k)) - moebius(2*k)*x^(2*k)*(1 + x^(2*k))/(1 - 2*x^(4*k)) + O(x*x^n))) \\\\ _Andrew Howroyd_, Sep 27 2019"
+    ],
+    "xref": [
+        "Row sums of A179317.",
+        "Cf. A008965, A025065, A056476, A059966, A242414, A285037, A317085, A317086, A317087, A318731."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Marks R. Nester_",
+    "ext": [
+        "a(17)-a(45) from _Andrew Howroyd_, Apr 08 2017",
+        "a(0)=1 prepended by _Andrew Howroyd_, Sep 27 2019"
+    ],
+    "references": 5,
+    "revision": 24,
+    "time": "2019-09-27T19:45:03-04:00",
+    "created": "2000-07-22T03:00:00-04:00"
+}

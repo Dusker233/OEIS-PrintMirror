@@ -1,0 +1,59 @@
+{
+    "number": 102378,
+    "data": "1,3,5,9,13,19,25,35,45,59,73,93,113,139,165,201,237,283,329,389,449,523,597,691,785,899,1013,1153,1293,1459,1625,1827,2029,2267,2505,2789,3073,3403,3733,4123,4513,4963,5413,5937,6461,7059,7657,8349",
+    "name": "a(n) = a(n-1) + a([n/2]) + 1, a(1) = 1.",
+    "comment": [
+        "From _Gus Wiseman_, Mar 23 2019: (Start)",
+        "The offset could safely be changed to zero by setting the boundary condition to a(0) = 0.",
+        "Also the number of integer partitions of 2n into powers of 2 with at least one part > 1. The Heinz numbers of these partitions are given by A324927. For example, the a(1) = 1 through a(5) = 13 integer partitions are:",
+        "  (2)  (4)    (42)     (8)        (82)",
+        "       (22)   (222)    (44)       (442)",
+        "       (211)  (411)    (422)      (811)",
+        "              (2211)   (2222)     (4222)",
+        "              (21111)  (4211)     (4411)",
+        "                       (22211)    (22222)",
+        "                       (41111)    (42211)",
+        "                       (221111)   (222211)",
+        "                       (2111111)  (421111)",
+        "                                  (2221111)",
+        "                                  (4111111)",
+        "                                  (22111111)",
+        "                                  (211111111)",
+        "(End)"
+    ],
+    "formula": [
+        "a(n) - a(n-1) = A018819(n+1)",
+        "G.f. A(x) satisfies (1-x)*A(x) = 2(1 + x)*B(x^2), where B(x) is the gf of A033485",
+        "a(n) = A000123(n) - 1. - _Gus Wiseman_, Mar 23 2019",
+        "G.f. A(x) satisfies: A(x) = (x + (1 - x^2) * A(x^2)) / (1 - x)^2. - _Ilya Gutkovskiy_, Aug 11 2021"
+    ],
+    "mathematica": [
+        "Table[Length[Select[IntegerPartitions[n],And[Max@@#>1,And@@IntegerQ/@Log[2,#]]&]],{n,0,30,2}] (* _Gus Wiseman_, Mar 23 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from collections import deque",
+        "def A102378_gen(): # generator of terms",
+        "    aqueue, f, b, a = deque([2]), True, 1, 2",
+        "    yield from (1, 3)",
+        "    while True:",
+        "        a += b",
+        "        yield 2*a - 1",
+        "        aqueue.append(a)",
+        "        if f: b = aqueue.popleft()",
+        "        f = not f",
+        "A102378_list = list(islice(A102378_gen(),40)) # _Chai Wah Wu_, Jun 08 2022"
+    ],
+    "xref": [
+        "Cf. A000123, A033485.",
+        "Cf. A018819, A318400, A324927, A324928."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Mitch Harris_, Jan 05 2005",
+    "references": 10,
+    "revision": 15,
+    "time": "2022-06-09T02:29:33-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

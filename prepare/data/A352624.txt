@@ -1,0 +1,33 @@
+{
+    "number": 352624,
+    "data": "1,1,3,8,31,122,579,2886,16139,95358,611111,4128830,29709695,224400022,1785322699,14841968646,129015458195,1167021383902,10979895178511,107113768171950,1082508179141031,11308614423992102,121995294474174963,1356835055606851286,15542964081299602811",
+    "name": "Expansion of e.g.f. exp(exp(x) + cosh(x) - 2).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A352624/b352624.txt\">Table of n, a(n) for n = 0..566</a>"
+    ],
+    "formula": [
+        "a(0) = 1; a(n) = (1/2) * Sum_{k=1..n} binomial(n-1,k-1) * (3 + (-1)^k) * a(n-k).",
+        "a(n) = Sum_{k=0..floor(n/2)} binomial(n,2*k) * A005046(k) * A000110(n-2*k).",
+        "a(n) = Sum_{k=0..floor(n/2)} binomial(n,2*k) * A000807(k) * A003724(n-2*k)."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      a(n-k)*binomial(n-1, k-1)*(2-(k mod 2)), k=1..n))",
+        "    end:",
+        "seq(a(n), n=0..24);  # _Alois P. Heinz_, Mar 24 2022"
+    ],
+    "mathematica": [
+        "nmax = 24; CoefficientList[Series[Exp[Exp[x] + Cosh[x] - 2], {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[0] = 1; a[n_] := a[n] = (1/2) Sum[Binomial[n - 1, k - 1] (3 + (-1)^k) a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 24}]"
+    ],
+    "xref": [
+        "Cf. A000110, A000807, A001861, A003724, A005046, A352327, A352617."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Mar 24 2022",
+    "references": 2,
+    "revision": 14,
+    "time": "2022-03-25T10:13:53-04:00",
+    "created": "2022-03-24T19:12:55-04:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 130488,
+    "data": "0,1,3,6,10,15,21,28,36,45,45,46,48,51,55,60,66,73,81,90,90,91,93,96,100,105,111,118,126,135,135,136,138,141,145,150,156,163,171,180,180,181,183,186,190,195,201,208,216,225,225,226,228,231,235,240,246,253",
+    "name": "a(n) = Sum_{k=0..n} (k mod 10) (Partial sums of A010879).",
+    "comment": [
+        "Let A be the Hessenberg n X n matrix defined by A[1,j] = j mod 10, A[i,i]:=1, A[i,i-1]=-1. Then, for n >= 1, a(n)=det(A). - _Milan Janjic_, Jan 24 2010"
+    ],
+    "link": [
+        "Shawn A. Broyles, <a href=\"/A130488/b130488.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_11\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,0,0,0,0,0,0,0,1,-1)."
+    ],
+    "formula": [
+        "a(n) = 45*floor(n/10) + A010879(n)*(A010879(n) + 1)/2.",
+        "G.f.: (Sum_{k=1..9} k*x^k)/((1-x^10)*(1-x)).",
+        "G.f.: x*(1 - 10*x^9 + 9*x^10)/((1-x^10)*(1-x)^3)."
+    ],
+    "maple": [
+        "seq(coeff(series(x*(1-10*x^9+9*x^10)/((1-x^10)*(1-x)^3), x, n+1), x, n), n = 0..60); # _G. C. Greubel_, Aug 31 2019"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1,0,0,0,0,0,0,0,0,1,-1}, {0,1,3,6,10,15,21,28,36,45, 45}, 60] (* _G. C. Greubel_, Aug 31 2019 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=0, n, k % 10); \\\\ _Michel Marcus_, Apr 28 2018",
+        "(Magma) I:=[0,1,3,6,10,15,21,28,36,45,45]; [n le 11 select I[n] else Self(n-1) + Self(n-10) - Self(n-11): n in [1..61]]; // _G. C. Greubel_, Aug 31 2019",
+        "(Sage)",
+        "def A130488_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P(x*(1-10*x^9+9*x^10)/((1-x^10)*(1-x)^3)).list()",
+        "A130488_list(60) # _G. C. Greubel_, Aug 31 2019",
+        "(GAP) a:=[0,1,3,6,10,15,21,28,36,45,45];; for n in [12..61] do a[n]:=a[n-1]+a[n-10]-a[n-11]; od; a; # _G. C. Greubel_, Aug 31 2019",
+        "(Python)",
+        "def A130488(n):",
+        "    a, b = divmod(n,10)",
+        "    return 45*a+(b*(b+1)>>1) # _Chai Wah Wu_, Jul 27 2022"
+    ],
+    "xref": [
+        "Cf. A010872, A010873, A010874, A010875, A010876, A010877, A010878, A130481, A130482, A130483, A130484, A130485, A130486, A130487."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Hieronymus Fischer_, May 31 2007",
+    "references": 8,
+    "revision": 28,
+    "time": "2022-07-28T09:05:51-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

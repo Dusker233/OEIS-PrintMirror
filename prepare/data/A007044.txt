@@ -1,0 +1,44 @@
+{
+    "number": 7044,
+    "id": "M4370",
+    "data": "0,0,1,7,20,48,100,194,352,615,1034,1693,2705,4239,6522,9889,14786,21844,31913,46165,66162,94035,132600,185637,258128,356674,489906,669173,909212,1229217,1653993,2215597,2955192,3925659,5194520,6847963,8995524,11776227",
+    "name": "Left diagonal of partition triangle A047812.",
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A007044/b007044.txt\">Table of n, a(n) for n = 1..500</a>",
+        "R. K. Guy, <a href=\"/A007042/a007042.pdf\">Letter to N. J. A. Sloane, Aug. 1992</a>",
+        "R. K. Guy, <a href=\"/A007042/a007042_1.pdf\">Parker's permutation problem involves the Catalan numbers</a>, Preprint, 1992. (Annotated scanned copy)",
+        "R. K. Guy, <a href=\"http://www.jstor.org/stable/2324467\">Parker's permutation problem involves the Catalan numbers</a>, Amer. Math. Monthly 100 (1993), 287-289."
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, 1, `if`(n<0",
+        "      or t*i<n, 0, b(n, i-1, t)+b(n-i, min(i, n-i), t-1)))",
+        "    end:",
+        "a:= n-> b(2*n+2, n$2):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, May 31 2020"
+    ],
+    "mathematica": [
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0, 1, If[n < 0 || t i < n, 0, b[n, i - 1, t] + b[n - i, Min[i, n - i], t - 1]]];",
+        "a[n_] := b[2n+2, n, n];",
+        "Array[a, 50] (* _Jean-Fran\u00e7ois Alcover_, Nov 23 2020, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) T(n, k) = polcoeff(prod(j=0, n-1, (1-q^(2*n-j))/(1-q^(j+1)) ), k*(n+1) );",
+        "for(n=1, 40, print1(T(n, 2), \",\")) \\\\ _Petros Hadjicostas_, May 31 2020"
+    ],
+    "xref": [
+        "Cf. A007042, A007045, A047812, A051643."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_N. J. A. Sloane_ and _R. K. Guy_",
+    "ext": [
+        "Name edited by _Petros Hadjicostas_, May 31 2020"
+    ],
+    "references": 4,
+    "revision": 34,
+    "time": "2020-11-23T06:06:59-05:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

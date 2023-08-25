@@ -1,0 +1,52 @@
+{
+    "number": 352040,
+    "data": "68,88,119,200,209,246,291,318,396,398,443,443,495,586,592,622,646,707,758,758,813,866,875,903,923,1001,1022,1022,1105,1111,1111,1231,1243,1245,1327,1342,1419,1453,1453,1454,1534,1536,1537,1626,1676,1699,1699,1763",
+    "name": "a(n) is the least number k such that 2^k contains each of the 10 digits at least n times.",
+    "comment": [
+        "a(1)-a(8) were given in the solution to Problem 410 (Crux Mathematicorum, 1979), but a(2) = 170 is wrong.",
+        "a(1) was calculated by Rudolph Ondrejka in 1976."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A352040/b352040.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "James Gary Propp, <a href=\"https://cms.math.ca/publications/crux/issue?volume=5&amp;issue=1\">Problem 410</a>, Crux Mathematicorum, Vol. 5, No. 1 (1979), p. 17; <a href=\"https://cms.math.ca/publications/crux/issue?volume=5&amp;issue=10\">Solution to Problem 410</a>, ibid., Vol. 5, No. 10 (1979), pp. 296-299."
+    ],
+    "formula": [
+        "Conjecture: a(n) ~ c*n, where c = 10*log_2(10) = 33.21928... .",
+        "a(n) >= (10n-1)*log_2(10), i.e., c = 10*log_2(10) is a lower bound on the asymptotic growth rate. - _Chai Wah Wu_, Apr 16 2022"
+    ],
+    "example": [
+        "a(1) = 68 since 2^68 = 295147905179352825856 is the least power of 2 that contains all the 10 digits at least once."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k; for k from a(n-1)",
+        "      while min((p-> seq(coeff(p, x, j), j=0..9))(add(",
+        "            x^i, i=convert(2^k, base, 10))))<n do od; k",
+        "    end: a(0):=0:",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Apr 22 2022"
+    ],
+    "mathematica": [
+        "s = Table[Min[DigitCount[2^n, 10, Range[0, 9]]], {n, 1, 2500}]; Table[FirstPosition[s, _?(# >= n &)], {n, 1, Max[s]}] // Flatten"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import ceiling, log",
+        "def A352040(n):",
+        "    k = 10*n-1+int(ceiling((10*n-1)*log(5,2)))",
+        "    s = str(c := 2**k)",
+        "    while any(s.count(d) < n for d in '0123456789'):",
+        "        c *= 2",
+        "        k += 1",
+        "        s = str(c)",
+        "    return k   # _Chai Wah Wu_, Apr 16 2022"
+    ],
+    "xref": [
+        "Cf. A000079, A007377, A020862, A130694, A130696."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Apr 16 2022",
+    "references": 2,
+    "revision": 53,
+    "time": "2022-04-22T09:58:00-04:00",
+    "created": "2022-04-16T05:25:17-04:00"
+}

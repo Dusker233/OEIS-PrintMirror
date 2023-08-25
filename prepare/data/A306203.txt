@@ -1,0 +1,48 @@
+{
+    "number": 306203,
+    "data": "1,2,3,4,5,7,8,11,16,17,19,21,31,32,53,57,59,64,67,73,85,127,128,131,133,159,241,256,269,277,311,331,335,365,367,371,393,399,439,512,649,709,719,739,751,917,933,937,1007,1024,1113,1139,1205,1241,1345,1523",
+    "name": "Matula-Goebel numbers of balanced rooted semi-identity trees.",
+    "comment": [
+        "A rooted tree is a semi-identity tree if the non-leaf branches of the root are all distinct and are themselves semi-identity trees. It is balanced if all leaves are the same distance from the root. The only balanced rooted identity trees are rooted paths."
+    ],
+    "example": [
+        "The sequence of all unlabeled balanced rooted semi-identity trees together with their Matula-Goebel numbers begins:",
+        "   1: o",
+        "   2: (o)",
+        "   3: ((o))",
+        "   4: (oo)",
+        "   5: (((o)))",
+        "   7: ((oo))",
+        "   8: (ooo)",
+        "  11: ((((o))))",
+        "  16: (oooo)",
+        "  17: (((oo)))",
+        "  19: ((ooo))",
+        "  21: ((o)(oo))",
+        "  31: (((((o)))))",
+        "  32: (ooooo)",
+        "  53: ((oooo))",
+        "  57: ((o)(ooo))",
+        "  59: ((((oo))))",
+        "  64: (oooooo)",
+        "  67: (((ooo)))",
+        "  73: (((o)(oo)))",
+        "  85: (((o))((oo)))"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "psidQ[n_]:=And[UnsameQ@@DeleteCases[primeMS[n],1],And@@psidQ/@primeMS[n]];",
+        "mgtree[n_]:=If[n==1,{},mgtree/@primeMS[n]];",
+        "Select[Range[100],And[psidQ[#],SameQ@@Length/@Position[mgtree[#],{}]]&]"
+    ],
+    "xref": [
+        "Cf. A000081, A004111, A007097, A048816, A184155, A276625, A306200, A306201, A306202, A316467, A317710."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jan 29 2019",
+    "references": 6,
+    "revision": 5,
+    "time": "2019-01-30T00:01:32-05:00",
+    "created": "2019-01-30T00:01:32-05:00"
+}

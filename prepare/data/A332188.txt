@@ -1,0 +1,38 @@
+{
+    "number": 332188,
+    "data": "0,3,72,1557,36928,986550,29641608,994006209,36887753216,1502798312547,66730937637400,3209318261685690,166242143849148864,9229638177763268395,546842961612529341032,34443269219453881669425",
+    "name": "a(n) = (1/e^n) * Sum_{j>=2} j^n * n^j / (j-2)!.",
+    "formula": [
+        "a(n) = Sum_{k=0..n+2} n^k*(Stirling2(n+2,k) - Stirling2(n+1,k)). [Thanks to _Andrew Howroyd_ for his example in A338282]"
+    ],
+    "example": [
+        "a(3) = 1557 = (1/e^3) * Sum_{j>=2} j^3 * 3^j / factorial(j-2)."
+    ],
+    "mathematica": [
+        "a[n_] := Sum[n^k*(StirlingS2[n + 2, k] - StirlingS2[n + 1, k]), {k, 2, n + 2}]; Array[a, 16, 0] (* _Amiram Eldar_, Oct 30 2020 *)"
+    ],
+    "program": [
+        "(SageMath) # Increase precision for larger n!",
+        "R = RealField(100)",
+        "t = 2",
+        "sol = [0]*18",
+        "for n in range(0, 18):",
+        "    suma = R(0)",
+        "    for j in range(t, 1000):",
+        "        suma += (j^n * n^j) / factorial(j - t)",
+        "    suma *= exp(-n)",
+        "    sol[n] = round(suma)",
+        "print(sol) # Thanks to _Peter Luschny_ for his example in A338282.",
+        "(PARI) a(n) = sum(k=0, n+2, n^k*(stirling(n+2,k,2) - stirling(n+1,k,2))); \\\\ _Michel Marcus_, Oct 30 2020"
+    ],
+    "xref": [
+        "Cf. A005494, A143495, A242817, A299824, A338282."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Pedro Caceres_, Oct 30 2020",
+    "references": 0,
+    "revision": 25,
+    "time": "2020-10-31T02:03:31-04:00",
+    "created": "2020-10-31T02:03:31-04:00"
+}

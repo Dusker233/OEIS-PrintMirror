@@ -1,0 +1,30 @@
+{
+    "number": 336680,
+    "data": "900,1764,4356,4500,4900,6084,6300,7056,8820,9900,10404,11700,12348,12996,14700,15300,17100,19044,19404,20700,21780,22932,26100,27900,29988,30276,30420,30492,31500,33300,33516,34596,35280,36900,38700,40572,42300,42588,47700",
+    "name": "Exponential admirable numbers: numbers k such that there is a proper exponential divisor d of k such that esigma(k) - 2*d = 2*k, where esigma is the sum of exponential divisors function (A051377).",
+    "comment": [
+        "Equivalently, numbers that are equal to the sum of their proper exponential divisors, with one of them taken with a minus sign."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A336680/b336680.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "900 is a term since 900 = 30 + 60 + 90 + 150 - 180 + 300 + 450 is the sum of its proper exponential divisors with one of them, 180, taken with a minus sign."
+    ],
+    "mathematica": [
+        "dQ[n_, m_] := (n > 0 && m > 0 && Divisible[n, m]); expDivQ[n_, d_] := Module[{ft = FactorInteger[n]}, And @@ MapThread[dQ, {ft[[;; , 2]], IntegerExponent[d, ft[[;; , 1]]]}]]; esigma[n_] := Times @@ (Sum[First[#]^d, {d, Divisors[Last[#]]}] &) /@ FactorInteger[n]; expAdmQ[n_] := (ab = esigma[n] - 2*n) > 0 && EvenQ[ab] && ab/2 < n && Divisible[n, ab/2] && expDivQ[n, ab/2]; Select[Range[50000], expAdmQ]"
+    ],
+    "xref": [
+        "The exponential version of A111592.",
+        "Subsequence of A129575.",
+        "Similar sequences: A328328, A334972, A334974.",
+        "Cf. A051377, A322791."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jul 30 2020",
+    "references": 2,
+    "revision": 9,
+    "time": "2020-07-31T06:46:38-04:00",
+    "created": "2020-07-30T20:19:40-04:00"
+}

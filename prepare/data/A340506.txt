@@ -1,0 +1,35 @@
+{
+    "number": 340506,
+    "data": "1,6,72,120,1440,6720,28800,80640,483840,1612800,5806080,7096320,85155840,283852800,510935040,1476034560,7947878400,17712414720,29520691200,106274488320,354248294400,1653158707200,2125489766400,4817776803840,8029628006400,28906660823040",
+    "name": "For those rows n of A249223 which are weakly increasing, let w(n) denote the maximal entry in the row: sequence gives values of n for which w(n) sets a new record.",
+    "comment": [
+        "This is a companion to A250071 (and is derived from the data for that sequence), which lists the first time k appears as a width.",
+        "The record values are 1, 2, 3, 4, 6, 8, 9, 12, 16, 18, 20, but more data is needed to identify this sequence.",
+        "The odd part of a(n) is A053624(n), n>=1. The record values 1, 2, 3, 4, 6, 8, 9, 12, 16, 18, 20, ... are the beginning of A053640. - _Hartmut F. W. Hoft_, Mar 29 2022"
+    ],
+    "formula": [
+        "a(n) = 2^t(n) * A053624(n), n > 1, where t(n) is the largest exponent satisfying 2^t(n) < A053624(n) and A053624(n) is the odd part of a(n) - see the comment in A250071. - _Hartmut F. W. Hoft_, Mar 29 2022"
+    ],
+    "example": [
+        "a(4) = 120 = 2^3 * A053624(4) = 2^3 * 15 and a(7) = 28800 = 2^7 * A053624(7) = 2^7 * 225. - _Hartmut F. W. Hoft_, Mar 29 2022"
+    ],
+    "mathematica": [
+        "prevPower2[k_] := If[k==1, 1, 2^(Ceiling[Log[2, k]]-1)]",
+        "a340506[n_] := Module[{recL={{1, 1}}, q, d, pp}, For[q=1, q<=n, q+=2, d=DivisorSigma[0, q]; pp=prevPower2[q] q; If[First[Last[recL]]<d, AppendTo[recL, {d, pp }]]]; Last[Transpose[recL]]]",
+        "a340506[10000000] (* _Hartmut F. W. Hoft_, Mar 29 2022 *)"
+    ],
+    "xref": [
+        "Cf. A237270, A237593, A249223, A250068, A250070, A250071.",
+        "Cf. A053624, A053640."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jan 23 2021",
+    "ext": [
+        "a(12)-a(26) from _Hartmut F. W. Hoft_, Mar 29 2022"
+    ],
+    "references": 5,
+    "revision": 17,
+    "time": "2022-05-13T10:07:58-04:00",
+    "created": "2021-01-23T22:39:39-05:00"
+}

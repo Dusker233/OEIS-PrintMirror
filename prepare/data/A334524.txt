@@ -1,0 +1,36 @@
+{
+    "number": 334524,
+    "data": "1,5,9,13,17,29,33,37,41,45,65,69,73,77,81,101,105,109,113,117,153,157,161,165,169,181,185,189,193,197,233,237,241,245,249,261,273,277,281,285,321,325,329,333,337,373,377,381,385,397,417,421,425,429,433,445",
+    "name": "Number of ordered triples (w,x,y) with all terms in {-n,...,0,...,n} and w^2 + 5xy = 0.",
+    "comment": [
+        "If n is squarefree and not divisible by 5, a(n) = a(n-1)+4. - _Robert Israel_, Jun 29 2020"
+    ],
+    "link": [
+        "Brandon Crofts, <a href=\"/A334524/b334524.txt\">Table of n, a(n) for n = 0..20000</a> (first 10001 terms from Robert Israel)",
+        "Brandon Crofts, <a href=\"/A334524/a334524.txt\">Mathematica code for 334524</a>"
+    ],
+    "maple": [
+        "df:= proc(n) local t,s,m0,m;",
+        "   if n mod 5 = 0 then",
+        "     m:= n/5;",
+        "     t:= 4*nops(select(s -> s < n and s > m, numtheory:-divisors(5*m^2)))",
+        "   else t:= 0",
+        "   fi;",
+        "   m0:= mul(`if`(s[1]=5, s[1]^ceil((s[2]-1)/2),",
+        "       s[1]^ceil(s[2]/2)),s=ifactors(n)[2]);",
+        "   t + 4 + 8*floor(n/m0/5);",
+        "end proc:",
+        "df(0):= 1:",
+        "ListTools:-PartialSums(map(df,[$0..100])); # _Robert Israel_, Jun 29 2020"
+    ],
+    "xref": [
+        "Cf. A211423."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Brandon Crofts_, Jun 15 2020",
+    "references": 1,
+    "revision": 27,
+    "time": "2020-07-09T11:58:46-04:00",
+    "created": "2020-06-25T15:14:40-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 343471,
+    "data": "2,2,2,2,2575723,7533777323,277535577223,5323733533375237,57552737757357223",
+    "name": "Start of the first run of n or more consecutive primes using only prime digits.",
+    "comment": [
+        "This is a variant of A352312. - _Bernard Schott_, Mar 24 2022"
+    ],
+    "link": [
+        "Chris K. Caldwell and G. L. Honaker, Jr., <a href=\"https://primes.utm.edu/curios/page.php?curio_id=41445\">Prime Curios! 277535577223</a>"
+    ],
+    "example": [
+        "a(1) = 2 because it is the first prime using only prime digits.",
+        "a(2) = 2 because 2, 3 is the first pair of consecutive primes using only prime digits.",
+        "a(5) = 2575723 because 2575723, 2575733, 2575753, 2575757, 2575777 is the first run of 5 consecutive primes using only prime digits."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import nextprime, isprime",
+        "from itertools import count, islice, product",
+        "def onlypd(n): return set(str(n)) <= set(\"2357\")",
+        "def agen():",
+        "    adict = {i:2 for i in range(1, 5)}",
+        "    for i in range(1, 5): yield 2",
+        "    for digits in count(2):",
+        "        for p in product(\"2357\", repeat=digits-1):",
+        "            for end in \"37\":",
+        "                t0 = t = int(\"\".join(p) + end)",
+        "                run = 0",
+        "                while isprime(t):",
+        "                    run += 1",
+        "                    t = nextprime(t)",
+        "                    if not onlypd(t): break",
+        "                if run not in adict:",
+        "                    for r in range(max(adict)+1, run+1):",
+        "                        adict[r] = t0",
+        "                        yield t0",
+        "print(list(islice(agen(), 6))) # _Michael S. Branicky_, Mar 11 2022"
+    ],
+    "xref": [
+        "Cf. A019546, A082755, A352312."
+    ],
+    "keyword": "nonn,base,hard,more",
+    "offset": "1,1",
+    "author": "_Metin Sariyar_, Apr 16 2021",
+    "ext": [
+        "a(8) from _Daniel Suteu_, Apr 22 2021",
+        "a(9) from _Michael S. Branicky_, Mar 15 2022"
+    ],
+    "references": 1,
+    "revision": 41,
+    "time": "2022-03-25T06:27:44-04:00",
+    "created": "2021-06-04T08:09:38-04:00"
+}

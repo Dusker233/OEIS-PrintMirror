@@ -1,0 +1,42 @@
+{
+    "number": 344936,
+    "data": "11,19,19,71,98689,130049597,78736136153",
+    "name": "a(n) is the smallest prime p such that a string s of n zeros can be inserted between all adjacent digits of p simultaneously such that the resulting number is also prime and is also prime for each s of length k with 0 < k < n.",
+    "comment": [
+        "a(n) is the smallest prime p such that A344937(i) >= n, where i is the index of p in A000040."
+    ],
+    "example": [
+        "For n = 5: 98689, 908060809, 9008006008009, 90008000600080009, 900008000060000800009 and 9000008000006000008000009 are all prime. Since 98689 is the smallest prime where strings of zeros of successive lengths up to 5 can be inserted between all adjacent digits such that each resulting number is also prime, a(5) = 98689."
+    ],
+    "mathematica": [
+        "Table[m=1;While[!And@@Table[PrimeQ@FromDigits@Flatten@Riffle[IntegerDigits@Prime@m,{Table[0,k]}],{k,n}],m++];Prime@m,{n,5}] (* _Giorgos Kalogeropoulos_, Jun 03 2021 *)"
+    ],
+    "program": [
+        "(PARI) eva(n) = subst(Pol(n), x, 10)",
+        "insert_zeros(num, len) = my(d=digits(num), v=[]); for(k=1, #d-1, v=concat(v, concat([d[k]], vector(len)))); v=concat(v, d[#d]); eva(v)",
+        "a(n) = forprime(p=10, , for(k=1, n, if(!ispseudoprime(eva(insert_zeros(p, k))), break, if(k==n, return(p)))))",
+        "(Python)",
+        "from sympy import isprime, nextprime",
+        "def insert_zeros(n, k): return int((\"0\"*k).join(list(str(n))))",
+        "def ok(p, n): return all(isprime(insert_zeros(p, k)) for k in range(1, n+1))",
+        "def a(n, startat=11):",
+        "  p = startat",
+        "  while True:",
+        "    if ok(p, n): return p",
+        "    p = nextprime(p)",
+        "print([a(n) for n in range(1, 6)]) # _Michael S. Branicky_, Jun 03 2021"
+    ],
+    "xref": [
+        "Cf. A000040, A344637, A344937."
+    ],
+    "keyword": "nonn,base,hard,more",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Jun 03 2021",
+    "ext": [
+        "a(7) from _Michael S. Branicky_, Jun 11 2021"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2021-06-11T09:29:31-04:00",
+    "created": "2021-06-05T17:01:59-04:00"
+}

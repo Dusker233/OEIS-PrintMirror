@@ -1,0 +1,54 @@
+{
+    "number": 338748,
+    "data": "1,1,1,2,6,22,92,423,2093,10994,60744,350743,2106422,13110304,84330164,559367278,3819233961,26802388190,193080823079,1426252354150,10792528835886,83587157097544,662060553448763,5358900630188358,44296806348364981",
+    "name": "G.f. A(x) satisfies: 1 = A(x) - x*A(x)/(A(x) - x*A(x)^2/(A(x) - x*A(x)^3/(A(x) - x*A(x)^4/(A(x) - x*A(x)^5/(A(x) - ...))))), a continued fraction relation.",
+    "comment": [
+        "Note that the continued fraction relation: 1 = F(x) - x*F(x)^k/(F(x) - x*F(x)^k/(F(x) - x*F(x)^k/(F(x) - ...))) holds when F(x) = 1 + x*F(x)^k for a fixed parameter k; this sequence explores the case where the parameter k varies over the positive integers in the continued fraction expression."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A338748/b338748.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = P(x)/Q(x), where",
+        "  P(x) = Sum_{n>=0} A(x)^(n*(n-1)) * x^n / Product_{k=1..n} (A(x)^k - 1),",
+        "  Q(x) = Sum_{n>=0} A(x)^(n*(n-2)) * x^n / Product_{k=1..n} (A(x)^k - 1),",
+        "  due to Ramanujan's continued fraction identity.",
+        "(2) A(x) = 1 + x*N(x)/P(x), where",
+        "  N(x) = Sum_{n>=0} A(x)^(n^2) * x^n / Product_{k=1..n} (A(x)^k - 1),",
+        "  P(x) = Sum_{n>=0} A(x)^(n*(n-1)) * x^n / Product_{k=1..n} (A(x)^k - 1).",
+        "(3) A(x) = x/(1 - R(x)/Q(x)), where",
+        "  Q(x) = Sum_{n>=0} A(x)^(n*(n-2)) * x^n / Product_{k=1..n} (A(x)^k - 1),",
+        "  R(x) = Sum_{n>=0} A(x)^(n*(n-3)) * x^n / Product_{k=1..n} (A(x)^k - 1).",
+        "(4) A(x) = 1 + x/(1 - x*M(x)/N(x)), where",
+        "  M(x) = Sum_{n>=0} A(x)^(n*(n+1)) * x^n / Product_{k=1..n} (A(x)^k - 1),",
+        "  N(x) = Sum_{n>=0} A(x)^(n^2) * x^n / Product_{k=1..n} (A(x)^k - 1).",
+        "(5) A(x) = B(x*A(x)) where B(x) = A(x/B(x)) is the g.f. of A338747.",
+        "(6) A(x) = (1/x)*Series_Reversion( x/B(x) ) where B(x) is the g.f. of A338747."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + x^2 + 2*x^3 + 6*x^4 + 22*x^5 + 92*x^6 + 423*x^7 + 2093*x^8 + 10994*x^9 + 60744*x^10 + 350743*x^11 + 2106422*x^12 + ...",
+        "where",
+        "1 = A(x) - x*A(x)/(A(x) - x*A(x)^2/(A(x) - x*A(x)^3/(A(x) - x*A(x)^4/(A(x) - x*A(x)^5/(A(x) - x*A(x)^6/(A(x) - ...)))))).",
+        "RELATED SERIES.",
+        "Given B(x) is the g.f. of A338747:",
+        "B(x) = 1 + x + x^3 + x^4 + 6*x^5 + 17*x^6 + 79*x^7 + 330*x^8 + 1594*x^9 + 7876*x^10 + 41433*x^11 + 226617*x^12 + ...",
+        "then B(x) = A(x/B(x)) and A(x) = B(x*A(x))",
+        "where",
+        "1 = B(x) - x/(B(x) - x*B(x)/(B(x) - x*B(x)^2/(B(x) - x*B(x)^3/(B(x) - x*B(x)^4/(B(x) - x*B(x)^5/(B(x) - ...))))))."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1], CF=1); for(i=1, n, A=concat(A, 0); for(i=1, #A, CF = Ser(A) - (Ser(A)^(#A-i+1)*x)/CF ); A[#A] = -polcoeff(CF, #A-1) ); H=Ser(A);A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A338747, A338752."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Nov 06 2020",
+    "references": 3,
+    "revision": 18,
+    "time": "2020-11-07T01:17:05-05:00",
+    "created": "2020-11-06T17:31:10-05:00"
+}

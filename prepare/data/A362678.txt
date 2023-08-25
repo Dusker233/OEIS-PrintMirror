@@ -1,0 +1,49 @@
+{
+    "number": 362678,
+    "data": "2,3,5,7,23,37,223,227,233,257,277,337,557,577,2237,2333,2357,2377,2557,2777,3557,5557,22277,22777,23333,23357,23557,25577,33377,33577,222337,222557,223337,223577,233357,233557,233777,235577,333337,335557,355777",
+    "name": "Primes whose digits are prime and in nondecreasing order.",
+    "comment": [
+        "Intersection of A009994 and A019546.",
+        "The subsequence for primes whose digits are prime and in strictly increasing order has just eight terms: 2 3 5 7 23 37 257 2357 (see A177061)."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A362678/b362678.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "M:= 7: # for terms with <+ M digits",
+        "R:= NULL:",
+        "for d from 1 to M do",
+        "  S:= NULL:",
+        "  for x2 from 0 to d do",
+        "    for x3 from 0 to d-x2 do",
+        "      for x5 from 0 to d-x2-x3 do",
+        "        x7:= d-x2-x3-x5;",
+        "        x:= parse(cat(2$x2,3$x3,5$x5,7$x7));",
+        "        if isprime(x) then S:= S,x fi;",
+        "    od od od;",
+        "    R:= R, op(sort([S]));",
+        "od:",
+        "R;  # _Robert Israel_, Jul 04 2023"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[31000]], AllTrue[d = IntegerDigits[#], PrimeQ] && LessEqual @@ d &] (* _Amiram Eldar_, Jul 07 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, combinations_with_replacement as cwr, islice",
+        "def agen(): yield from (filter(isprime, (int(\"\".join(c)) for d in count(1) for c in cwr(\"2357\",d))))",
+        "print(list(islice(agen(), 50))) # _Michael S. Branicky_, Jul 05 2023",
+        "(PARI) isok(p) = if (isprime(p), my(d=digits(p)); (d == vecsort(d)) && (#select(isprime, d) == #d)); \\\\ _Michel Marcus_, Jul 07 2023"
+    ],
+    "xref": [
+        "Cf. A009994, A019546, A177061."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_James C. McMahon_, Jul 03 2023",
+    "references": 1,
+    "revision": 50,
+    "time": "2023-08-08T17:50:24-04:00",
+    "created": "2023-08-05T22:19:04-04:00"
+}

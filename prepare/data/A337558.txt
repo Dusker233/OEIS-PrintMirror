@@ -1,0 +1,45 @@
+{
+    "number": 337558,
+    "data": "1,1,2,9,76,865,11976,197449,3798992,83513889,2063157760,56576301001,1705317547968,56039920728961,1993964008270976,76368613495847625,3132518434553118976,137006108936644781761,6364605036943211332608,312966349102938272936329,16240099797362530389324800",
+    "name": "E.g.f. A(x) satisfies: A(x) = Sum_{n>=0} (n+1 - A(x))^n * x^n/n!.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A337558/b337558.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) Sum_{n>=0} (n+1 - A(x))^n * x^n/n!  =  A(x).",
+        "(2) Sum_{n>=0} (n+2 - A(x))^n * x^n/n!  =  A(x) * LambertW(-x)/(-x).",
+        "(3) Sum_{n>=0} (n+m - A(x))^n * x^n/n!  =  A(x) * ( LambertW(-x)/(-x) )^(m-1).",
+        "(4) Sum_{n>=0} (n+1 - 2*A(x))^n * x^n/n! = A(x)^2 * (1 + LambertW(-x)) / ( LambertW(-x)/(-x) ).",
+        "(5) Sum_{n>=0} (n+m - p*A(x))^n * x^n/n! = A(x)^p * (1 + LambertW(-x))^(p-1) * ( LambertW(-x)/(-x) )^(m-p).",
+        "(6) A(x) = ( LambertW(-x)/(-x) )^(1 - A(x)) / (1 + LambertW(-x)).",
+        "(7) A(x) = exp( LambertW(-x)*A(x) ) * ( LambertW(-x)/(-x) ) / (1 + LambertW(-x)).",
+        "E.g.f.: -LambertW(LambertW(-x)^2/(x + x*LambertW(-x))) / LambertW(-x). - _Vaclav Kotesovec_, Sep 01 2020"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 2*x^2/2! + 9*x^3/3! + 76*x^4/4! + 865*x^5/5! + 11976*x^6/6! + 197449*x^7/7! + 3798992*x^8/8! + 83513889*x^9/9! + 2063157760*x^10/10! + ...",
+        "where",
+        "A(x) = 1 + (2 - A(x))*x + (3 - A(x))^2*x^2/2! + (4 - A(x))^3*x^3/3! + (5 - A(x))^4*x^4/4! + (6 - A(x))^5*x^5/5! + (7 - A(x))^6*x^6/6! + ...",
+        "Also,",
+        "A(x) * LambertW(-x)/(-x) = 1 + (3 - A(x))*x + (4 - A(x))^2*x^2/2! + (5 - A(x))^3*x^3/3! + (6 - A(x))^4*x^4/4! + (7 - A(x))^5*x^5/5! + ...",
+        "where",
+        "LambertW(-x)/(-x) = 1 + x + 3*x^2/2! + 16*x^3/3! + 125*x^4/4! + 1296*x^5/5! + 16807*x^6/6! + ... + (n+1)^(n-1)*x^n/n! + ..."
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[-LambertW[LambertW[-x]^2/(x + x*LambertW[-x])]/LambertW[-x], {x, 0, nmax}], x] * Range[0, nmax]! (* _Vaclav Kotesovec_, Sep 01 2020 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=1 +O(x)); for(i=1, n, A = sum(m=0, n, (m+1 - A)^m *x^m/m!) ); n!*polcoeff(A,n)}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A304866."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Aug 31 2020",
+    "references": 1,
+    "revision": 22,
+    "time": "2020-09-01T10:36:49-04:00",
+    "created": "2020-08-31T19:24:33-04:00"
+}

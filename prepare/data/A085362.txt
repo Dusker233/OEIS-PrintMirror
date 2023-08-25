@@ -1,0 +1,59 @@
+{
+    "number": 85362,
+    "data": "1,2,8,34,150,678,3116,14494,68032,321590,1528776,7301142,35003238,168359754,812041860,3926147730,19022666310,92338836390,448968093320,2186194166950,10659569748370,52037098259090,254308709196660",
+    "name": "a(0)=1; for n>0, a(n) = 2*5^(n-1) - (1/2)*Sum_{i=1..n-1} a(i)*a(n-i).",
+    "comment": [
+        "Number of bilateral Schroeder paths (i.e. lattice paths consisting of steps U=(1,1), D=(1,-1) and H=(2,0)) from (0,0) to (2n,0) and with no H-steps at even (zero, positive or negative) levels. Example: a(2)=8 because we have UDUD, UUDD, UHD, UDDU and their reflections in the x-axis. First differences of A026375. - _Emeric Deutsch_, Jan 28 2004",
+        "From _G. C. Greubel_, May 22 2020: (Start)",
+        "This sequence is part of a class of sequences, for m >= 0, with the properties:",
+        "a(n) = 2*m*(4*m+1)^(n-1) - (1/2)*Sum_{k=1..n-1} a(k)*a(n-k).",
+        "a(n) = Sum_{k=0..n} m^k * binomial(n-1, n-k) * binomial(2*k, k).",
+        "a(n) = (2*m) * Hypergeometric2F1(-n+1, 3/2; 2; -4*m), for n > 0.",
+        "n*a(n) = 2*((2*m+1)*n - (m+1))*a(n-1) - (4*m+1)*(n-2)*a(n-2).",
+        "(4*m + 1)^n = Sum_{k=0..n} Sum_{j=0..k} a(j)*a(k-j).",
+        "G.f.: sqrt( (1 - t)/(1 - (4*m+1)*t) ).",
+        "This sequence is the case of m=1. (End)"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A085362/b085362.txt\">Table of n, a(n) for n = 0..200</a>",
+        "L\u00e1szl\u00f3 N\u00e9meth, <a href=\"https://arxiv.org/abs/1905.13475\">Tetrahedron trinomial coefficient transform</a>, arXiv:1905.13475 [math.CO], 2019."
+    ],
+    "formula": [
+        "G.f.: sqrt((1-x)/(1-5*x)).",
+        "Sum_{i=0..n} (Sum_{j=0..i} a(j)*a(i-j)) = 5^n.",
+        "D-finite with recurrence: a(n) = (2*(3*n-2)*a(n-1)-5*(n-2)*a(n-2)])n; a(0)=1, a(1)=2. - _Emeric Deutsch_, Jan 28 2004",
+        "a(n) ~ 2*5^(n-1/2)/sqrt(Pi*n). - _Vaclav Kotesovec_, Oct 14 2012",
+        "G.f.: G(0), where G(k)= 1 + 4*x*(4*k+1)/( (4*k+2)*(1-x) - 2*x*(1-x)* (2*k+1)*(4*k+3)/(x*(4*k+3) + (1-x)*(k+1)/G(k+1))); (continued fraction). - _Sergei N. Gladkovskii_, Jun 22 2013",
+        "a(n) = Sum_{k=0..n} binomial(2*k,k)*binomial(n-1,n-k). - _Vladimir Kruchinin_, May 30 2016",
+        "a(n) = 2*hypergeom([3/2, 1-n], [2], -4) for n>0. - _Peter Luschny_, Jan 30 2017",
+        "a(0) = 1; a(n) = (2/n) * Sum_{k=0..n-1} (n+k) * a(k). - _Seiichi Manyama_, Mar 28 2023"
+    ],
+    "maple": [
+        "a := n -> `if`(n=0,1,2*hypergeom([3/2, 1-n], [2], -4)):",
+        "seq(simplify(a(n)), n=0..22); # _Peter Luschny_, Jan 30 2017"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Sqrt[(1-x)/(1-5x)], {x, 0, 25}], x]"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^66)); Vec(sqrt((1-x)/(1-5*x))) \\\\ _Joerg Arndt_, May 10 2013",
+        "(Magma) R<x>:=PowerSeriesRing(Rationals(), 30); Coefficients(R!( Sqrt((1-x)/(1-5*x)) )); // _G. C. Greubel_, May 23 2020",
+        "(Sage)",
+        "def A085362_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( sqrt((1-x)/(1-5*x)) ).list()",
+        "A085362_list(30) # _G. C. Greubel_, May 23 2020"
+    ],
+    "xref": [
+        "Bisection of A026392.",
+        "Cf. A000351 (5^n), A026375, A026387, A085363, A085364.",
+        "Cf. A110170, A162478, A359758, A360132."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "Mario Catalani (mario.catalani(AT)unito.it), Jun 25 2003",
+    "references": 23,
+    "revision": 54,
+    "time": "2023-03-28T14:00:29-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

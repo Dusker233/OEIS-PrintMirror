@@ -1,0 +1,54 @@
+{
+    "number": 331993,
+    "data": "1,1,1,2,3,6,11,22,43,90,185,393,835,1802,3904,8540,18756,41463,92022,205179,459086,1030917,2321949,5245104,11878750,26967957,61359917,139902251,319591669,731385621,1676573854,3849288924,8850674950,20378544752,46982414535",
+    "name": "Number of semi-lone-child-avoiding rooted semi-identity trees with n unlabeled vertices.",
+    "comment": [
+        "Semi-lone-child-avoiding means there are no vertices with exactly one child unless that child is an endpoint/leaf.",
+        "In a semi-identity tree, the non-leaf branches of any given vertex are distinct."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A331993/b331993.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 11 trees:",
+        "  o  (o)  (oo)  (ooo)   (oooo)   (ooooo)    (oooooo)",
+        "                (o(o))  (o(oo))  (o(ooo))   (o(oooo))",
+        "                        (oo(o))  (oo(oo))   (oo(ooo))",
+        "                                 (ooo(o))   (ooo(oo))",
+        "                                 ((o)(oo))  (oooo(o))",
+        "                                 (o(o(o)))  ((o)(ooo))",
+        "                                            (o(o)(oo))",
+        "                                            (o(o(oo)))",
+        "                                            (o(oo(o)))",
+        "                                            (oo(o(o)))",
+        "                                            ((o)(o(o)))"
+    ],
+    "mathematica": [
+        "sssb[n_]:=Switch[n,1,{{}},2,{{{}}},_,Join@@Function[c,Select[Union[Sort/@Tuples[sssb/@c]],UnsameQ@@DeleteCases[#,{}]&]]/@Rest[IntegerPartitions[n-1]]];",
+        "Table[Length[sssb[n]],{n,10}]"
+    ],
+    "program": [
+        "(PARI) WeighT(v)={Vec(exp(x*Ser(dirmul(v, vector(#v,n,(-1)^(n-1)/n))))-1,-#v)}",
+        "seq(n)={my(v=[0]); for(n=1, n-1, v=concat(v, 1 + vecsum(WeighT(v)) - v[n])); v[1]=1; v} \\\\ _Andrew Howroyd_, Feb 09 2020"
+    ],
+    "xref": [
+        "Not requiring any lone-child-avoidance gives A306200.",
+        "The locally disjoint case is A324969 (essentially A000045).",
+        "Matula-Goebel numbers of these trees are A331994.",
+        "Lone-child-avoiding rooted identity trees are A000007.",
+        "Semi-lone-child-avoiding rooted trees are A331934.",
+        "Semi-lone-child-avoiding rooted identity trees are A331964.",
+        "Lone-child-avoiding rooted semi-identity trees are A331966.",
+        "Cf. A001678, A004111, A300660, A316694, A331683, A331686, A331783, A331875, A331933, A331963, A331965."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Gus Wiseman_, Feb 05 2020",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Feb 09 2020"
+    ],
+    "references": 5,
+    "revision": 9,
+    "time": "2020-02-09T18:58:57-05:00",
+    "created": "2020-02-05T23:54:53-05:00"
+}

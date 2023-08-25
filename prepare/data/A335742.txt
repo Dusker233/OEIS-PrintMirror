@@ -1,0 +1,54 @@
+{
+    "number": 335742,
+    "data": "12978,13338,34920,41382,76626,176946,253422,455202,1336734,2410254,3187782,3214458,3277800,3347838,3387240,3427866,3507894,3587922,3614598,3694626,3747978,3774654,3908034,4094766,4148118,4174794,4228146,4414878,4494906,4628286",
+    "name": "Pseudoperfect (or semiperfect) numbers k having more than one set of contiguous proper divisors whose sum equals k.",
+    "comment": [
+        "Observation of some pseudoperfect numbers with an attribute similar to multiperfect numbers.",
+        "A total of 84 of the 96 terms (representing all terms less than 10^7) are equal to 0 (mod 13338).",
+        "Many of the terms greater than (13338*239)-1 are in the form of 13338*p where p>=239. Prime(52)*1338 through Prime(50188)*1338 were tested and are all terms in this sequence.",
+        "There are numbers greater than (13338*239)-1 in this sequence that do not have 13338 as a divisor, for example; 3277800, 3387240, 5007222 and 9233154.",
+        "(Uni-)Perfect numbers cannot be in this sequence."
+    ],
+    "example": [
+        "The proper divisors of 12978 are (1, 2, 3, 6, 7, 9, 14, 18, 21, 42, 63, 103, 126, 206, 309, 618, 721, 927, 1442, 1854, 2163, 4326, 6489).",
+        "The contiguous divisor lists of (3+6+7+9+14+18+21+42+63+103+126+206+309+618+721+927+1442+1854+2163+4326) and (2163+4326+6489) equals 12978."
+    ],
+    "mathematica": [
+        "pspQ[n_] := Module[{d = Divisors[n]}, c = Accumulate[d]; Length @ Intersection[c, c + n] > 2]; Select[Range[10^6], pspQ] (* _Amiram Eldar_, Jul 02 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "# Pseudoperfect (or semiperfect) numbers having more than one set of contiguous proper divisors whose sum equals n.",
+        "import sympy",
+        "A335742_list = []",
+        "for n in range(1, (10**7)+1):",
+        "    # create an ascending list of divisors of n.",
+        "    n_divs = list(sympy.divisors(n))",
+        "    # pop last divisor, which equals n, so only proper divisors are examined.",
+        "    n_divs.pop()",
+        "    # reset iterator for sets of contiguous proper divisors whose sum equals n.",
+        "    itr = 0",
+        "    # run the outer loop for each proper divisor of n.",
+        "    for i in range(len(n_divs)+1):",
+        "        # run the inner loop for each divisor >= i.",
+        "        for j in range(i, len(n_divs)+1):",
+        "            # if sum of divisors i:j is greater than n; continue to next n.",
+        "            if sum(n_divs[i:j]) > n:",
+        "                continue",
+        "            # elif sum of divisors i:j equals n; increment itr; if itr > 1; append n to sequence.",
+        "            elif sum(n_divs[i:j]) == n:",
+        "                itr += 1",
+        "                if itr > 1:",
+        "                    A335742_list.append(n)"
+    ],
+    "xref": [
+        "Subsequence of A005835 and A236359."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Matthew Schuster_, Jul 02 2020",
+    "references": 0,
+    "revision": 24,
+    "time": "2021-08-14T18:55:38-04:00",
+    "created": "2020-08-13T22:00:39-04:00"
+}

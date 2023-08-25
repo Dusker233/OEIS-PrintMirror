@@ -1,0 +1,46 @@
+{
+    "number": 304360,
+    "data": "2,4,5,8,10,13,16,17,20,23,25,26,31,32,34,37,40,43,46,47,50,52,61,62,64,65,67,68,73,74,79,80,85,86,89,92,94,100,103,104,107,109,113,115,122,124,125,128,130,134,136,137,146,148,149,151,155,158,160,163",
+    "name": "Lexicographically earliest infinite sequence of numbers m > 1 with the property that none of the prime indices of m are in the sequence.",
+    "comment": [
+        "A self-describing sequence.",
+        "The prime indices of m are the numbers k such that prime(k) divides m.",
+        "The sequence is monotonically increasing, since once a number is rejected it stays rejected. Sequence is closed under multiplication for a similar reason. - _N. J. A. Sloane_, Aug 26 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A304360/b304360.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "After the initial term 2, the next term cannot be 3 because 3 has prime index 2, and 2 is already in the sequence. The next term could be 10, which has prime indices 1 and 3, but 4 (with prime index 1) is smaller. So a(2) = 4."
+    ],
+    "maple": [
+        "A:= NULL:",
+        "P:= {}:",
+        "for n  from 2 to 1000 do",
+        "  pn:= numtheory:-factorset(n);",
+        "  if pn intersect P = {} then",
+        "    A:= A, n;",
+        "    P:= P union {ithprime(n)};",
+        "  fi",
+        "od:",
+        "A; # _Robert Israel_, Aug 26 2018"
+    ],
+    "mathematica": [
+        "gaQ[n_]:=Or[n==0,And@@Cases[FactorInteger[n],{p_,k_}:>!gaQ[PrimePi[p]]]];",
+        "Select[Range[100],gaQ]"
+    ],
+    "xref": [
+        "Cf. A000002, A001462, A079000, A079254, A214577, A276625, A277098, A280996, A303431.",
+        "For first differences see A317963, for primes see A317964."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Aug 16 2018",
+    "ext": [
+        "Added \"infinite\" to definition. - _N. J. A. Sloane_, Sep 28 2019"
+    ],
+    "references": 64,
+    "revision": 50,
+    "time": "2019-09-28T14:34:39-04:00",
+    "created": "2018-08-26T13:22:21-04:00"
+}

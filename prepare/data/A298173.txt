@@ -1,0 +1,39 @@
+{
+    "number": 298173,
+    "data": "1,4,16,50,155,468,1410,4234,12709,38132,114404,343218,1029663,3088997,9267001,27801012,83403047,250209151,750627465,2251882406,6755647231,20266941705,60800825129,182402475400,547207426215,1641622278659,4924866835993,14774600507994",
+    "name": "Solution (a(n)) of the complementary equation in Comments.",
+    "comment": [
+        "Define sequences a(n) and b(n) recursively, starting with a(0) = 1, b(0) = 2:",
+        "b(n) = least new;",
+        "a(n) = 3*a(n-1) + x(0)*b(n) + x(1)*b(n-1) + ... + x(n)b(0),",
+        "where \"least new k\" means the least positive integer not yet placed, and x(k) = (-1)^k for k >= 0.",
+        "***",
+        "It appears that a(n)/a(n-1) -> 3 and that {a(n) - 3*a(n-1), n >= 1} is unbounded."
+    ],
+    "example": [
+        "b(1) = least not in {a(0),b(0)} = 3;",
+        "a(1) = 3*a(0) + b(1) - b(0) = 3*1 + 3 - 2 = 4."
+    ],
+    "mathematica": [
+        "mex[list_, start_] := (NestWhile[# + 1 &, start, MemberQ[list, #] &]);",
+        "c = 3; a = {1}; b = {2}; x = {-1};",
+        "Do[AppendTo[b, mex[Flatten[{a, b}], 1]];",
+        " AppendTo[x, -Last[x]];",
+        " AppendTo[a, c Last[a] - (Reverse[x] b // Total)], {25}]",
+        "Grid[{Join[{\"n\"}, Range[0, # - 1]], Join[{\"a(n)\"}, Take[a, #]],",
+        "    Join[{\"b(n)\"}, Take[b, #]], Join[{\"x(n)\"}, Take[-x, #]]},",
+        "   Alignment -> \".\",",
+        "   Dividers -> {{2 -> Red, -1 -> Blue}, {2 -> Red, -1 -> Blue}}] &[10]",
+        "(* _Peter J. C. Moses_, May 10 2018 *)"
+    ],
+    "xref": [
+        "Cf. A298741, A298877."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, May 12 2018",
+    "references": 2,
+    "revision": 4,
+    "time": "2018-05-13T01:11:08-04:00",
+    "created": "2018-05-13T01:11:08-04:00"
+}

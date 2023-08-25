@@ -1,0 +1,33 @@
+{
+    "number": 353139,
+    "data": "212,781,794,806,817,838,841,844,865,2962,3101,3130,3171,3178,3185,3213,3219,3226,3269,3274,3335,3353,3354,3356,3370,3378,3490,3496,3521,3528,3595,3597,3606,3610,3626,3651,3672,3718,3777,11797,11798,11850,11938,12049",
+    "name": "Digitally balanced numbers (A031443) whose squares are also digitally balanced.",
+    "comment": [
+        "Numbers x such that both x and x^2 are terms of A031443, that is, have the same number of 0's as 1's in their binary representations."
+    ],
+    "mathematica": [
+        "balQ[n_] := Module[{d = IntegerDigits[n, 2], m}, EvenQ @ (m = Length @ d) && Count[d, 1] == m/2]; Select[Range[12000], balQ[#] && balQ[#^2] &] (* _Amiram Eldar_, Apr 26 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def isbalanced(n): b = bin(n)[2:]; return b.count(\"0\") == b.count(\"1\")",
+        "def A031443gen(): yield from (int(\"1\"+\"\".join(p), 2) for n in count(1) for p in multiset_permutations(\"0\"*n+\"1\"*(n-1)))",
+        "def agen():",
+        "    for k in A031443gen():",
+        "        if isbalanced(k**2):",
+        "            yield k",
+        "print(list(islice(agen(), 40))) # _Michael S. Branicky_, Apr 26 2022"
+    ],
+    "xref": [
+        "Cf. A031443, A345397."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, Apr 26 2022",
+    "references": 2,
+    "revision": 15,
+    "time": "2022-04-28T07:48:58-04:00",
+    "created": "2022-04-28T07:48:58-04:00"
+}

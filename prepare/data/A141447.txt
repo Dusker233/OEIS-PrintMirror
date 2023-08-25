@@ -1,0 +1,59 @@
+{
+    "number": 141447,
+    "data": "0,1,4,5,22,23,82,83,466,467,478,479,1090486,1090487,1090774,1090775,1090846,1090847,1199566,1199567",
+    "name": "a(0)=0; for n >= 1, a(n) is the least positive integer that cannot be written in the form Sum_{k>=1} s(k)*k!, with s(k) in {a(0), a(1), ..., a(n-1)}.",
+    "comment": [
+        "This sequence was suggested by Kevin O'Bryant, who provided terms a(0)-a(11); a(12)-a(17) were from _David S. Newman_.",
+        "The numbers always come in pairs, the first even, then the following odd number.",
+        "a(20) > 10^10. - _Andrew Howroyd_, Mar 02 2023"
+    ],
+    "link": [
+        "Sidney Cadot, <a href=\"/A141447/b141447.txt\">Table of n, a(n) for n = 0..19</a>"
+    ],
+    "example": [
+        "When a(0) = 0 and a(1) = 1, the numbers from 1 to 3 may be written 1 = 1*1!, 2 = 1*2!, 3 = 1*1! + 1*2!, but there is no way to write 4 as a sum having the required form, so a(2) = 4."
+    ],
+    "program": [
+        "(Python)",
+        "def make_reachable(coefficients, factorials, max_k):",
+        "    reachable = set([0])",
+        "    for factorial in factorials:",
+        "        reachable_extra = set(r + coefficient * factorial for r in reachable for coefficient in coefficients if r + coefficient * factorial <= max_k)",
+        "        reachable.update(reachable_extra)",
+        "    return reachable",
+        "def generate_sequence_elements(num_elements):",
+        "    m = [0]",
+        "    factorials = [1]",
+        "    k = 1",
+        "    max_k = 1",
+        "    reachable = make_reachable(m, factorials, max_k)",
+        "    while len(m) < num_elements:",
+        "        if k > max_k:",
+        "            max_k *= 2",
+        "            reachable = make_reachable(m, factorials, max_k)",
+        "        if factorials[-1] * (len(factorials) + 1) <= k:",
+        "            factorials.append(factorials[-1] * (len(factorials) + 1))",
+        "            reachable = make_reachable(m, factorials, max_k)",
+        "        if k not in reachable:",
+        "            m.append(k)",
+        "            reachable = make_reachable(m, factorials, max_k)",
+        "        k += 1",
+        "    return m",
+        "print(generate_sequence_elements(20)) # _Sidney Cadot_, Mar 01 2023",
+        "(PARI)",
+        "Fact(lim)={my(k=1); while(k!<=lim, k++); vector(k-1, i, i!)}",
+        "Scan(lim, F, S)=my(b=2^lim); for(i=1, #F, my(f=F[i], t=0); for(j=1, #S, my(s=f*S[j]); if(s && s<=lim, t=bitor(t, b>>s))); b=bitor(b,t)); b=2^(lim+1)-1-b; if(!b, 0, lim-logint(b,2))",
+        "upto(lim) = {my(S=[0], t=0, b=0); while(t || b<lim, if(t, S=concat(S,t), b=min(lim,2*b+1)); t=Scan(b, Fact(b), S)); S}",
+        "{ upto(1200000) } \\\\ _Andrew Howroyd_, Mar 02 2023"
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_David S. Newman_, Dec 16 2010",
+    "ext": [
+        "a(18)-a(19) from _Sidney Cadot_, Mar 01 2023"
+    ],
+    "references": 1,
+    "revision": 51,
+    "time": "2023-03-03T08:35:33-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

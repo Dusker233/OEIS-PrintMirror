@@ -1,0 +1,38 @@
+{
+    "number": 165319,
+    "data": "2,5,7,13,23,29,37,41,53,61,73,101,103,109,113,127,137,151,157,167,173,181,193,229,257,263,269,277,281,311,313,317,353,373,383,389,397,401,409,421,433,439,457,461,487,509,541,569,593,601,613,617,631,641,653",
+    "name": "Primes p where the number of divisors of p+1 is a power of 2.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A165319/b165319.txt\">Table of n, a(n) for n = 1..20000</a>"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; is(n=2^ilog2(n)) end:",
+        "a:= proc(n) option remember; local p; p:= `if`(n=1, 1, a(n-1));",
+        "      do p:= nextprime(p);",
+        "         if andmap(b, map(i-> i[2]+1, ifactors(p+1)[2])) then break fi",
+        "      od; p",
+        "    end:",
+        "seq(a(n), n=1..55);  # _Alois P. Heinz_, Sep 05 2019"
+    ],
+    "mathematica": [
+        "okQ[p_] := PrimeQ[p] && IntegerQ[Log[2, DivisorSigma[0, p+1]]];",
+        "Select[Prime[Range[200]], okQ] (* _Jean-Fran\u00e7ois Alcover_, May 20 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = isprime(p) && (nd = numdiv(p+1)) && (nd == 2^valuation(nd, 2)); \\\\ _Michel Marcus_, Sep 05 2019"
+    ],
+    "xref": [
+        "Cf. A165318, A165320.",
+        "Cf. A008329. [_R. J. Mathar_, Sep 20 2009]"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Leroy Quet_, Sep 14 2009",
+    "ext": [
+        "Extended by _R. J. Mathar_, Sep 20 2009"
+    ],
+    "references": 3,
+    "revision": 18,
+    "time": "2020-05-20T07:40:40-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

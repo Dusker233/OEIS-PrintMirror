@@ -1,0 +1,41 @@
+{
+    "number": 47083,
+    "data": "1,2,2,5,7,15,23,49,76,161,253,532,845,1766,2829,5881,9488,19631,31863,65649,107112,219857,360360,737152,1213150,2473930,4086217,8309252,13769519,27927146,46416937,93915759,156520328,315982677,527937429,1063586803,1781131638",
+    "name": "a(n) = Sum_{i=0..floor((n+1)/2)} A047080(n,i).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A047083/b047083.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "mathematica": [
+        "A[n_, k_]:= Sum[(-1)^j*(n+k-3*j)!/(j!*(n-2*j)!*(k-2*j)!), {j,0,Floor[(n+k)/3]}] -",
+        " Sum[(-1)^j*(n+k-3*j-2)!/(j!*(n-2*j-1)!*(k-2*j-1)!), {j,0,Floor[(n+k-2)/3]}];",
+        "A047083[n_]:= A047083[n]= Sum[A[n-k,k], {k,0,Floor[(n+1)/2]}];",
+        "Table[A047083[n], {n,0,50}] (* _G. C. Greubel_, Oct 31 2022 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "F:=Factorial;",
+        "p:= func< n,k | (&+[ (-1)^j*F(n+k-3*j)/(F(j)*F(n-2*j)*F(k-2*j)): j in [0..Min(Floor(n/2), Floor(k/2))]]) >;",
+        "q:= func< n,k | n eq 0 or k eq 0 select 0 else (&+[ (-1)^j*F(n+k-3*j-2)/(F(j)*F(n-2*j-1)*F(k-2*j-1)) : j in [0..Min(Floor((n-1)/2), Floor((k-1)/2))]]) >;",
+        "A:= func< n,k | p(n,k) - q(n,k) >;",
+        "[(&+[A(n-j,j): j in [0..Floor((n+1)/2)]]): n in [0..50]]; // _G. C. Greubel_, Oct 31 2022",
+        "(SageMath)",
+        "f=factorial",
+        "def p(n,k): return sum( (-1)^j*f(n+k-3*j)/(f(j)*f(n-2*j)*f(k-2*j)) for j in range(1+min((n//2), (k//2))) )",
+        "def q(n,k): return sum( (-1)^j*f(n+k-3*j-2)/(f(j)*f(n-2*j-1)*f(k-2*j-1)) for j in range(1+min(((n-1)//2), ((k-1)//2))) )",
+        "def A(n,k): return p(n,k) - q(n,k)",
+        "[sum(A(n-j,j) for j in range(1+((n+1)//2))) for n in range(51)] # _G. C. Greubel_, Oct 31 2022"
+    ],
+    "xref": [
+        "Cf. A047080, A047081, A047082, A047084, A047085, A047086, A047087, A047088."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Data corrected by _Sean A. Irvine_, May 11 2021"
+    ],
+    "references": 9,
+    "revision": 17,
+    "time": "2022-11-01T03:09:10-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,32 @@
+{
+    "number": 343204,
+    "data": "1,1,3,13,67,239,1031,2501,36579,109915,468653,1043851,9395751,21232827,97493519,235880373,7717800611,17385733651,82456426833,175398844079,1578297716013,3634938193489,15867173716609,34517119775523,619312307079687,1363237700933583",
+    "name": "Numerators of coefficients in expansion of Product_{k>=1} (1 + x^k)^(1/2).",
+    "formula": [
+        "a(n) / A046161(n) ~ exp(sqrt(n/6)*Pi) / (4*3^(1/4)*n^(3/4)). - _Vaclav Kotesovec_, Apr 12 2021"
+    ],
+    "example": [
+        "1, 1/2, 3/8, 13/16, 67/128, 239/256, 1031/1024, 2501/2048, 36579/32768, 109915/65536, 468653/262144, 1043851/524288, ..."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1, add(b(n-j)*add(",
+        "     `if`(d::odd, d/2, 0), d=numtheory[divisors](j)), j=1..n)/n)",
+        "    end:",
+        "a:= n-> numer(b(n)):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Apr 12 2021"
+    ],
+    "mathematica": [
+        "nmax = 25; CoefficientList[Series[Product[(1 + x^k)^(1/2), {k, 1, nmax}], {x, 0, nmax}], x] // Numerator",
+        "a[n_] := a[n] = If[n == 0, 1, (1/(2 n)) Sum[Sum[Mod[d, 2] d, {d, Divisors[k]}] a[n - k], {k, 1, n}]]; Table[a[n], {n, 0, 25}] // Numerator"
+    ],
+    "xref": [
+        "Cf. A000009, A022567, A046161 (denominators), A061159, A098987."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 07 2021",
+    "references": 0,
+    "revision": 11,
+    "time": "2021-04-12T10:35:21-04:00",
+    "created": "2021-04-07T19:55:57-04:00"
+}

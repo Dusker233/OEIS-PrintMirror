@@ -1,0 +1,33 @@
+{
+    "number": 331811,
+    "data": "1,2,3,5,12,25,49,73,171,195,512,658,1560,1950,4826,6142,14868,18768,45920,58204,141660,179196,437264,553672,1349328,1707720,4164392,5271736,12851568,16267008,39662048,50205520,122401584,154935600,377748224,478159264,1165778688,1475649888",
+    "name": "a(n) is the next number after a(n-1) which cannot be represented in the form 2*a(i) and Sum_{j=1..n-1} b_j*a(j) where 0 < i < n, b_j = 1 or 0. The sequence starts: a(1) = 1; a(2) = 2; a(3) = 3; a(4) = 5.",
+    "comment": [
+        "This sequence is a complete sequence."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A331811/a331811.txt\">C++ program for A331811</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CompleteSequence.html\">Complete Sequence</a>"
+    ],
+    "mathematica": [
+        "Nest[Append[#, Block[{k = #[[-1]] + 1}, While[Nand[NoneTrue[#, k == 2 # &], FreeQ[Map[Total, Rest@ Subsets[#]], k]], k++]; k]] & @@ {#, Map[Total, Subsets[#]]} &, {1, 2, 3, 5}, 10] (* _Michael De Vlieger_, Jan 27 2020 *)"
+    ],
+    "program": [
+        "(PARI) upto(lim)={my(a=[1, 2, 3, 5], b=[]); for(i=1, lim, forsubset(#a, x, b=concat(b, [vecsum(vecextract(a, x))])); b=setminus(vecsort(b, , 8), a); for(j=1, #a, b=concat(b, [2*a[j]]); b=vecsort(b, , 8)); if(setsearch(b, i)==0, a=concat(a, [i]); a=vecsort(a, , 8)) ); a}",
+        "{ upto(200) }"
+    ],
+    "xref": [
+        "(C++) See Links section."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Zhandos Mambetaliyev_, Jan 27 2020",
+    "ext": [
+        "a(13)-a(14) from _Hugo Pfoertner_, Jan 27 2020",
+        "More terms from _R\u00e9my Sigrist_, Jan 28 2020"
+    ],
+    "references": 3,
+    "revision": 38,
+    "time": "2020-01-28T12:07:23-05:00",
+    "created": "2020-01-28T09:52:41-05:00"
+}

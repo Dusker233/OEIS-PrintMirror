@@ -1,0 +1,65 @@
+{
+    "number": 358824,
+    "data": "0,1,2,4,7,15,32,61,121,260,498,967,1890,3603,6839,12972,23883,44636,82705,150904,275635,501737,905498,1628293,2922580,5224991,9296414,16482995,29125140,51287098,90171414,157704275,275419984,479683837,833154673,1442550486,2493570655",
+    "name": "Number of twice-partitions of n of odd length.",
+    "comment": [
+        "A twice-partition of n is a sequence of integer partitions, one of each part of an integer partition of n."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A358824/b358824.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: ((1/Product_{k>=1} (1-A000041(k)*x^k)) - (1/Product_{k>=1} (1+A000041(k)*x^k)))/2. - _Andrew Howroyd_, Dec 30 2022"
+    ],
+    "example": [
+        "The a(1) = 1 through a(5) = 15 twice-partitions:",
+        "  (1)  (2)   (3)        (4)         (5)",
+        "       (11)  (21)       (22)        (32)",
+        "             (111)      (31)        (41)",
+        "             (1)(1)(1)  (211)       (221)",
+        "                        (1111)      (311)",
+        "                        (2)(1)(1)   (2111)",
+        "                        (11)(1)(1)  (11111)",
+        "                                    (2)(2)(1)",
+        "                                    (3)(1)(1)",
+        "                                    (11)(2)(1)",
+        "                                    (2)(11)(1)",
+        "                                    (21)(1)(1)",
+        "                                    (11)(11)(1)",
+        "                                    (111)(1)(1)",
+        "                                    (1)(1)(1)(1)(1)"
+    ],
+    "mathematica": [
+        "twiptn[n_]:=Join@@Table[Tuples[IntegerPartitions/@ptn],{ptn,IntegerPartitions[n]}];",
+        "Table[Length[Select[twiptn[n],OddQ[Length[#]]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "R(u,y) = {1/prod(k=1, #u, 1 - u[k]*y*x^k + O(x*x^#u))}",
+        "seq(n) = {my(u=vector(n,k,numbpart(k))); Vec(R(u, 1) - R(u, -1), -(n+1))/2} \\\\ _Andrew Howroyd_, Dec 30 2022"
+    ],
+    "xref": [
+        "The version for set partitions is A024429.",
+        "For odd lengths (instead of length) we have A358334.",
+        "The case of odd parts also is A358823.",
+        "The case of odd sums also is A358826.",
+        "The case of odd lengths also is A358834.",
+        "For multiset partitions of integer partitions: A358837, ranked by A026424.",
+        "A000009 counts partitions into odd parts.",
+        "A027193 counts partitions of odd length.",
+        "A063834 counts twice-partitions, strict A296122, row-sums of A321449.",
+        "A078408 counts odd-length partitions into odd parts.",
+        "A300301 aerated counts twice-partitions with odd sums and parts.",
+        "Cf. A000041, A001970, A072233, A270995, A271619, A279374, A279785, A306319, A336342, A356932."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Dec 03 2022",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Dec 30 2022"
+    ],
+    "references": 10,
+    "revision": 11,
+    "time": "2022-12-30T21:38:48-05:00",
+    "created": "2022-12-04T20:24:19-05:00"
+}

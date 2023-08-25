@@ -1,0 +1,53 @@
+{
+    "number": 215651,
+    "data": "1,2,8,283,132069776",
+    "name": "Number of transformation semigroups acting on n points (counting conjugates as one), i.e., the number of subsemigroups of the full transformation semigroup T_n.",
+    "comment": [
+        "The semigroup analog of A000638.",
+        "We apply the categorical viewpoint and consider the empty set as a semigroup."
+    ],
+    "link": [
+        "James East, Attila Egri-Nagy, James D. Mitchell, <a href=\"https://doi.org/10.1007/s00233-017-9869-2\">Enumerating Transformation Semigroups</a>, Semigroup Forum 95, 109-125 (2017); arXiv: <a href=\"https://arxiv.org/abs/1403.0274\">1403.0274</a> [math.GR], 2014-2017."
+    ],
+    "program": [
+        "(GAP)",
+        "################################################################################",
+        "# GAP 4.5 function calculating the conjugacy classes of a set of subsemigrops.",
+        "# (C) 2012 Attila Egri-Nagy www.egri-nagy.hu",
+        "# GAP can be obtained from www.gap-system.org",
+        "################################################################################",
+        "# Input: list of subsemigroups of a transformation semigroup,",
+        "#        automorphism group of the semigroup",
+        "# Output: list of conjugacy classes",
+        "ConjugacyClassesSubsemigroups := function(subsemigroups, G)",
+        "local ssg, #subsemigroup",
+        "      ccl, #conjugacy class",
+        "      ccls; #result: all conjugacy classes",
+        "  ccls := [];",
+        "  for ssg in subsemigroups do",
+        "    #we check whether the subsemigroup is already in a conjugacy class",
+        "    if not ForAny(ccls, x -> ssg in x) then",
+        "      #conjugating by all group elements",
+        "      ccl := DuplicateFreeList(",
+        "                     List(G,",
+        "                          g -> AsSortedList(List(ssg, t-> t^g))));",
+        "      Add(ccls, ccl);",
+        "    fi;",
+        "  od;",
+        "  return ccls;",
+        "end;"
+    ],
+    "xref": [
+        "Cf. A000638, A215650."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Attila Egri-Nagy_, Aug 19 2012",
+    "ext": [
+        "a(4) moved from a comment by _Attila Egri-Nagy_, Jan 09 2014 to data by _Andrey Zabolotskiy_, Mar 25 2021"
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2021-03-25T10:19:36-04:00",
+    "created": "2012-09-07T04:45:13-04:00"
+}

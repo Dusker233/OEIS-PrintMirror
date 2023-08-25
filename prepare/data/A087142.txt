@@ -1,0 +1,36 @@
+{
+    "number": 87142,
+    "data": "11,15,22,33,44,55,66,77,88,99,115,122,124,128,155,168,175,184,212,244,248,366,384,412,424,488,515,636,672,728,784,816,824,848,1111,1112,1113,1115,1124,1131,1144,1155,1176,1184,1197,1222,1244,1248,1266,1288,1311",
+    "name": "Numbers divisible by their individual digits, but not by the sum of their digits (counted with multiplicity).",
+    "comment": [
+        "Intersection of A034838 and A065877."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A087142/b087142.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from Harvey P. Dale)"
+    ],
+    "example": [
+        "488 is in the sequence as its divisible by its individual digits but not by the sum of its digits counted with multiplicity. That is 488 is divisible by 4 and 8 but not by 4 + 8 + 8 = 20. - _David A. Corneth_, Jan 28 2021"
+    ],
+    "mathematica": [
+        "didQ[n_]:=Module[{idn=IntegerDigits[n]},FreeQ[idn,0]&&AllTrue[n/idn, IntegerQ] && !Divisible[n,Total[idn]]]; Select[Range[1300], didQ] (* The program uses the AllTrue function from Mathematica version 10 *)  (* _Harvey P. Dale_, Apr 18 2016 *)087142\"]"
+    ],
+    "program": [
+        "(PARI) is(n) = { my(d = digits(n), sd = vecsum(d), s = Set(d)); if(n == 0 || s[1] == 0, return(0)); if(n % sd != 0, for(i = 1, #s, if(n % s[i] != 0, return(0) ) ); return(1) ); 0 } \\\\ _David A. Corneth_, Jan 28 2021",
+        "(Python)",
+        "def ok(n):",
+        "    d = list(map(int, str(n)))",
+        "    return 0 not in d and n%sum(d) and all(n%di == 0 for di in set(d))",
+        "print([k for k in range(1312) if ok(k)]) # _Michael S. Branicky_, Nov 15 2021"
+    ],
+    "xref": [
+        "Cf. A034838, A052382, A065877, A087141.",
+        "Cf. A337163 (similar, with product)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Aug 18 2003",
+    "references": 4,
+    "revision": 17,
+    "time": "2022-05-06T13:13:51-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

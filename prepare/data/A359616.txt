@@ -1,0 +1,35 @@
+{
+    "number": 359616,
+    "data": "1,1,5,18,245,2249,57213,947177,50431724,1282453618",
+    "name": "a(n) is the minimal permanent of an n X n Hermitian Toeplitz matrix using all the integers 1, 2, ..., n and with all off-diagonal elements purely imaginary.",
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Toeplitz_matrix\">Toeplitz Matrix</a>."
+    ],
+    "example": [
+        "a(4) = 245:",
+        "  [   1,  3*i,  2*i, 4*i;",
+        "   -3*i,    1,  3*i, 2*i;",
+        "   -2*i, -3*i,    1, 3*i;",
+        "   -4*i, -2*i, -3*i,   1 ]"
+    ],
+    "mathematica": [
+        "a={1}; For[n=1, n<=7, n++, mn=Infinity; For[d=1, d<=n, d++, For[i=1, i<=(n-1)!, i++, If[(t=Permanent[ToeplitzMatrix[Join[{d}, I Part[Permutations[Drop[Range[n], {d}]], i]]]])<mn, mn=t]]]; AppendTo[a, mn]]; a"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import permutations",
+        "from sympy import Matrix, I",
+        "def A359616(n): return min(Matrix(n,n,[(d[i-j] if i>j else -d[j-i]) if i!=j else d[0]*I for i in range(n) for j in range(n)]).per()*(1,-I,-1,I)[n&3] for d in permutations(range(1,n+1))) if n else 1 # _Chai Wah Wu_, Jan 25 2023"
+    ],
+    "xref": [
+        "Cf. A351019, A359560, A359562.",
+        "Cf. A359614 (minimal determinant), A359615 (maximal determinant), A359617 (maximal)."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "0,3",
+    "author": "_Stefano Spezia_, Jan 07 2023",
+    "references": 9,
+    "revision": 23,
+    "time": "2023-01-25T21:10:57-05:00",
+    "created": "2023-01-25T02:55:01-05:00"
+}

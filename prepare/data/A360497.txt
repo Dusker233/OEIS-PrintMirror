@@ -1,0 +1,47 @@
+{
+    "number": 360497,
+    "data": "2,3,5,7,23,223,2777,7727,27527,33377,33773,35537,35573,35753,37337,52727,55337,55373,55733,73553,75227,75353,75533,222557,222773,223277,225257,225527,233357,235337,235553,253553,253733,277223,322727,323537,332573,335273",
+    "name": "Maximal sequence of primes whose digits are primes and whose digit sum is also a term.",
+    "comment": [
+        "The sequence is maximal in the sense that a nonempty set of primes cannot be added consistently."
+    ],
+    "example": [
+        "2 is a term because it is a prime with prime digits only and its digit sum 2 is also a term.",
+        "227 is not a term because the digit sum is 11 which is not a term because it has nonprime digits.",
+        "27527 is a term: it is a prime, each digit (2,5,7) is also a prime, and the sum of the digits (2+7+5+2+7 = 23) is also in the sequence."
+    ],
+    "maple": [
+        "R:= {2,3,5,7}: count:= 4:",
+        "S:= [2,3,5,7];",
+        "for d from 2 to 11 do",
+        "  S:= map(t -> (10*t+2,10*t+3,10*t+5,10*t+7), S);",
+        "  for x in S do",
+        "    if member(convert(convert(x,base,10),`+`),R) and isprime(x) then",
+        "       R:= R union {x}; count:= count+1;",
+        "    fi",
+        "  od;",
+        "od:",
+        "sort(convert(R,list)); # _Robert Israel_, Mar 02 2023"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "seq = [2, 3, 5, 7]",
+        "for i in range(9, 10**6, 2):",
+        "    s = str(i)",
+        "    if set(s) <= set(\"2357\") and sum(map(int, s)) in seq and isprime(i):",
+        "        seq.append(i)",
+        "print(seq)"
+    ],
+    "xref": [
+        "A subsequence of A062088.",
+        "Cf. A000040, A007953."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Hongwei Jin_, Feb 09 2023",
+    "references": 0,
+    "revision": 34,
+    "time": "2023-03-05T19:49:45-05:00",
+    "created": "2023-03-05T19:49:45-05:00"
+}

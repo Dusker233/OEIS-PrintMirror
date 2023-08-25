@@ -1,0 +1,100 @@
+{
+    "number": 51026,
+    "data": "1,2,3,5,7,13,17,33,45,73,103,205,253,505,733,1133,1529,3057,3897,7793,10241,16513,24593,49185,59265,109297,163369,262489,355729,711457,879937,1759873,2360641,3908545,5858113,10534337,12701537,25403073,38090337,63299265,81044097,162088193,205482593,410965185,570487233,855676353",
+    "name": "Number of primitive subsequences of {1, 2, ..., n}.",
+    "comment": [
+        "a(n) counts all subsequences of {1, ..., n} in which no term divides any other.  If n is a prime a(n) = 2*a(n-1)-1 because for each subsequence s counted by a(n-1) two different subsequences are counted by a(n): s and s,n.  There is only one exception: 1,n is not a primitive subsequence because 1 divides n.  For all n>1: a(n) < 2*a(n-1). - _Alois P. Heinz_, Mar 07 2011",
+        "Maximal primitive subsets are counted by A326077. - _Gus Wiseman_, Jun 07 2019"
+    ],
+    "reference": [
+        "Blanchet-Sadri, Francine. Algorithmic combinatorics on partial words. Chapman & Hall/CRC, Boca Raton, FL, 2008. ii+385 pp. ISBN: 978-1-4200-6092-8; 1-4200-6092-9 MR2384993 (2009f:68142). See p. 320. - _N. J. A. Sloane_, Apr 06 2012"
+    ],
+    "link": [
+        "Juliana Couras, Ricardo Jesus, and Tom\u00e1s Oliveira e Silva, <a href=\"/A051026/b051026.txt\">Table of n, a(n) for n = 0..800</a> (terms up to n=80 from Alois P. Heinz)",
+        "Marcel K. Goh and Jonah Saks, <a href=\"https://arxiv.org/abs/2206.12535\">Alternating-sum statistics for certain sets of integers</a>, arXiv:2206.12535 [math.CO], 2022.",
+        "N. McNew, <a href=\"http://arxiv.org/abs/1808.04923\">Counting primitive subsets and other statistics of the divisor graph of {1,2,..,n}</a>, arXiv:1808.04923 [math.NT], 2018.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PrimitiveSequence.html\">Primitive Sequence</a>"
+    ],
+    "example": [
+        "a(4) = 7, the primitive subsequences (including the empty sequence) are: (), (1), (2), (3), (4), (2,3), (3,4).",
+        "a(5) = 13 = 2*7-1, the primitive subsequences are: (), (5), (1), (2), (2,5), (3), (3,5), (4), (4,5), (2,3), (2,3,5), (3,4), (3,4,5).",
+        "From _Gus Wiseman_, Jun 07 2019: (Start)",
+        "The a(0) = 1 through a(5) = 13 primitive (pairwise indivisible) subsets:",
+        "  {}  {}   {}   {}     {}     {}",
+        "      {1}  {1}  {1}    {1}    {1}",
+        "           {2}  {2}    {2}    {2}",
+        "                {3}    {3}    {3}",
+        "                {2,3}  {4}    {4}",
+        "                       {2,3}  {5}",
+        "                       {3,4}  {2,3}",
+        "                              {2,5}",
+        "                              {3,4}",
+        "                              {3,5}",
+        "                              {4,5}",
+        "                              {2,3,5}",
+        "                              {3,4,5}",
+        "a(n) is also the number of subsets of {1..n} containing all of their pairwise products <= n as well as any quotients of divisible elements. For example, the a(0) = 1 through a(5) = 13 subsets are:",
+        "  {}  {}   {}     {}       {}         {}",
+        "      {1}  {1}    {1}      {1}        {1}",
+        "           {1,2}  {1,2}    {1,3}      {1,3}",
+        "                  {1,3}    {1,4}      {1,4}",
+        "                  {1,2,3}  {1,2,4}    {1,5}",
+        "                           {1,3,4}    {1,2,4}",
+        "                           {1,2,3,4}  {1,3,4}",
+        "                                      {1,3,5}",
+        "                                      {1,4,5}",
+        "                                      {1,2,3,4}",
+        "                                      {1,2,4,5}",
+        "                                      {1,3,4,5}",
+        "                                      {1,2,3,4,5}",
+        "Also the number of subsets of {1..n} containing all of their multiples <= n. For example, the a(0) = 1 through a(5) = 13 subsets are:",
+        "  {}  {}   {}     {}       {}         {}",
+        "      {1}  {2}    {2}      {3}        {3}",
+        "           {1,2}  {3}      {4}        {4}",
+        "                  {2,3}    {2,4}      {5}",
+        "                  {1,2,3}  {3,4}      {2,4}",
+        "                           {2,3,4}    {3,4}",
+        "                           {1,2,3,4}  {3,5}",
+        "                                      {4,5}",
+        "                                      {2,3,4}",
+        "                                      {2,4,5}",
+        "                                      {3,4,5}",
+        "                                      {2,3,4,5}",
+        "                                      {1,2,3,4,5}",
+        "(End)"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(s) option remember; local n;",
+        "      n:= max(s[]);",
+        "      `if`(n<0, 1, b(s minus {n}) + b(s minus divisors(n)))",
+        "    end:",
+        "bb:= n-> b({$2..n} minus divisors(n)):",
+        "sb:= proc(n) option remember; `if`(n<2, 0, bb(n) + sb(n-1)) end:",
+        "a:= n-> `if`(n=0, 1, `if`(isprime(n), 2*a(n-1)-1, 2+sb(n))):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Mar 07 2011"
+    ],
+    "mathematica": [
+        "b[s_] := b[s] = With[{n=Max[s]}, If[n < 0, 1, b[Complement[s, {n}]] + b[Complement[s, Divisors[n]]]]];",
+        "bb[n_] := b[Complement[Range[2, n], Divisors[n]]];",
+        "sb[n_] := sb[n] = If[n < 2, 0, bb[n] + sb[n-1]];",
+        "a[n_] := If[n == 0, 1, If[PrimeQ[n], 2a[n-1] - 1, 2 + sb[n]]]; Table[a[n], {n, 0, 37}]",
+        "(* _Jean-Fran\u00e7ois Alcover_, Jul 27 2011, converted from Maple *)",
+        "Table[Length[Select[Subsets[Range[n]],SubsetQ[#,Select[Union@@Table[#*i,{i,n}],#<=n&]]&]],{n,10}] (* _Gus Wiseman_, Jun 07 2019 *)"
+    ],
+    "xref": [
+        "Cf. A007865, A054519, A096827, A103580, A303362, A305148.",
+        "Cf. A326023, A326076, A326077, A326081, A326082, A326083, A326117."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,2",
+    "author": "_Eric W. Weisstein_",
+    "ext": [
+        "More terms from _David Wasserman_, May 02 2002",
+        "a(32)-a(37) from _Donovan Johnson_, Aug 11 2010"
+    ],
+    "references": 47,
+    "revision": 58,
+    "time": "2022-06-27T23:34:42-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

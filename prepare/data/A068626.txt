@@ -1,0 +1,40 @@
+{
+    "number": 68626,
+    "data": "1,3,3,7,12,12,19,27,27,37,48,48,61,75,75,91,108,108,127,147,147,169,192,192,217,243,243,271,300,300,331,363,363,397,432,432,469,507,507,547,588,588,631,675,675,721,768,768,817,867,867,919,972,972,1027,1083,1083,1141",
+    "name": "a(3n) = a(3n-1) = 3*n^2, a(3n-2) = 3*n^2 - 3*n + 1.",
+    "comment": [
+        "Or, a(1) = 1, a(n) = n + a(n-1) if n does not divide a(n-1) else a(n) = a(n-1). E.g. a(6) = a(5) = 12 as 6 divides 12. a(10) = 10+a(9) = 10+27 = 37."
+    ],
+    "link": [
+        "B. D. Swan, <a href=\"/A068626/b068626.txt\">Table of n, a(n) for n = 1..90000</a>",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,2,-2,0,-1,1)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Feb 18 2020: (Start)",
+        "G.f.: x*(1 + 2*x + 2*x^3 + x^4) / ((1 - x)^3*(1 + x + x^2)^2).",
+        "a(n) = a(n-1) + 2*a(n-3) - 2*a(n-4) - a(n-6) + a(n-7) for n>7.",
+        "(End)"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1,0,2,-2,0,-1,1},{1,3,3,7,12,12,19},60] (* _Harvey P. Dale_, Jun 29 2022 *)"
+    ],
+    "program": [
+        "(Perl)",
+        "my @a = (1); for (my $n = 1; $n <= 90000; $n ++) {",
+        "  $a[$n] = $a[$n - 1] + ($a[$n - 1] % $n != 0 ? $n : 0);",
+        "  print \"$n $a[$n]\\n\";",
+        "} # _Georg Fischer_ Feb 18 2020",
+        "(Magma) [(n mod 3 eq 1) select (n+2)^2/3 - n-1 else (n+((n mod 3)^2) mod 3 )^2/3  : n in [1..50]]; // _Marius A. Burtea_, Feb 19 2020",
+        "(PARI) Vec(x*(1 + 2*x + 2*x^3 + x^4) / ((1 - x)^3*(1 + x + x^2)^2) + O(x^50)) \\\\ _Colin Barker_, Feb 19 2020"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Feb 26 2002",
+    "ext": [
+        "Entry revised by _N. J. A. Sloane_, Mar 13 2006"
+    ],
+    "references": 5,
+    "revision": 30,
+    "time": "2022-09-08T08:45:05-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,55 @@
+{
+    "number": 344214,
+    "data": "5,11,15,18,19,20,24,27,28,33,36,37,39,42,45,46,48,51,54,55,57,60,63,64,66,69,72,73,75,78,81,82,84,87,90,91,93,96,99,101,105,108,109,110,114,117,118,123,126,127,129,132,135,136,138,141,144,145,147,150,153,154",
+    "name": "Numbers k such that repeated iterations of f(m) = (digsum(f(m-1)))^2 + 1 starting from f(1) = k will eventually yield 5 before any other single-digit number.",
+    "comment": [
+        "f(x) = digsum(x)^2 + 1 < x for x >= 400, and all iterations terminate in a single digit or lead to the cycle 65 -> 122 -> 26. - _Michael S. Branicky_, May 14 2021"
+    ],
+    "example": [
+        "11 is in the list because (1+1)^2 + 1 = 5.",
+        "12 is not in the list because repeatedly iterating the function starting with f(1) = 12 will yield 2 before 5.",
+        "13 is not in the list because it will never yield 5. Specifically, 13 -> 17 -> 65 -> 122 -> 26 -> 65 -> ... ."
+    ],
+    "mathematica": [
+        "Select[Range@100,Last@NestWhileList[Total[IntegerDigits@#]^2+1&,#,#>10&&#!=26&]==5&] (* _Giorgos Kalogeropoulos_, May 12 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def f(n):",
+        "    s = 0",
+        "    while n > 0:",
+        "        s, n = s+n%10, n//10",
+        "    return s*s+1",
+        "n, pota = 0, 0",
+        "while n < 62:",
+        "    a, repf, i, ii = pota, 0, 0, 4",
+        "    while a > 9 and a != repf:",
+        "        a, i = f(a), i+1",
+        "        if i == ii:",
+        "            repf, ii = a, 2*ii",
+        "    if a == 5:",
+        "        n = n+1",
+        "        print(pota, end = \", \")",
+        "    pota = pota+1 # _A.H.M. Smeets_, May 13 2021",
+        "(Python)",
+        "def f(x): return sum(map(int, str(x)))**2 + 1",
+        "def ok(n):",
+        "  iter = n  # set to f(n) if number of iterations must be >= 1",
+        "  while iter > 9:",
+        "    if iter in {65, 122, 26}: return False",
+        "    iter = f(iter)",
+        "  return iter == 5",
+        "print(list(filter(ok, range(1, 155)))) # _Michael S. Branicky_, May 19 2021"
+    ],
+    "xref": [
+        "Subsequence of A344208.",
+        "Cf. A007953, A052216, A052224, A344208, A118881."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Joseph Brown_, May 11 2021",
+    "references": 1,
+    "revision": 47,
+    "time": "2021-06-12T09:19:53-04:00",
+    "created": "2021-06-12T09:19:53-04:00"
+}

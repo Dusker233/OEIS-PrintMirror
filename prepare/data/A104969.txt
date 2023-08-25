@@ -1,0 +1,36 @@
+{
+    "number": 104969,
+    "data": "1,2,6,12,18,36,92,184,298,596,1444,2888,4852,9704,22840,45680,78490,156980,362580,725160,1265564,2531128,5767688,11535376,20366596,40733192,91866984,183733968,327351336,654702672,1464522864,2929045728",
+    "name": "Sum of squares of terms in rows of triangle A104967.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A104969/b104969.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "a(2*n+1) = 2*a(2*n).",
+        "G.f.: A(x) = (1+2*x)*G(x^2) where G(x) is the g.f. of A104970 such that G(x) satisfies: 2*(1+12*x)*G(x) - (1-16*x^2)*deriv(G(x), x) + 4 = 0.",
+        "a(n) = Sum_{k=0..n} (A104967(n, k))^2."
+    ],
+    "mathematica": [
+        "A104967[n_, k_]:= A104967[n, k]= Sum[(-2)^j*Binomial[k+1, j]*Binomial[n-j, k], {j, 0, n-k}];",
+        "A104969[n_]:= A104969[n]= Sum[A104967[n, k]^2, {k,0,n}];",
+        "Table[A104969[n], {n, 0, 50}] (* _G. C. Greubel_, Jun 09 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(X=x+x*O(x^n)); sum(k=0,n,polcoeff(polcoeff((1-2*X)/(1-X-X*y*(1-2*X)),n,x),k,y)^2)}",
+        "(Sage)",
+        "@cached_function",
+        "def A104967(n,k): return sum( (-2)^j*binomial(k+1,j)*binomial(n-j,k) for j in (0..n-k))",
+        "def A104969(n): return sum((A104967(n,k))^2 for k in (0..n))",
+        "[A104969(n) for n in (0..50)] # _G. C. Greubel_, Jun 09 2021"
+    ],
+    "xref": [
+        "Cf. A104967, A104968, A104970."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 30 2005",
+    "references": 5,
+    "revision": 7,
+    "time": "2021-06-09T22:38:35-04:00",
+    "created": "2005-04-09T03:00:00-04:00"
+}

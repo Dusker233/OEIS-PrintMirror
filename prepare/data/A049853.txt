@@ -1,0 +1,40 @@
+{
+    "number": 49853,
+    "data": "1,2,2,3,6,11,19,33,58,102,179,314,551,967,1697,2978,5226,9171,16094,28243,49563,86977,152634,267854,470051,824882,1447567,2540303,4457921,7823106,13728594,24092003,42278518,74193627",
+    "name": "a(n) = a(n-1) + Sum_{k=0..n-3} a(k) for n >= 2, a(0)=1, a(1)=2.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A049853/b049853.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (2,-1,1)."
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1) - a(n-2) + a(n-3); 3 initial terms required.",
+        "a(n) = a(n-1) + a(n-2) + a(n-4) for n > 3. - _Reinhard Zumkeller_, Aug 06 2011",
+        "Empirical: a(n) = Sum_{k=0..floor(n/3)} A084534(n-2*k, n-3*k). - _Johannes W. Meijer_, Jun 17 2018",
+        "G.f.: (1 - x)*(1 + x) / (1 - 2*x + x^2 - x^3). - _Colin Barker_, Jun 17 2018"
+    ],
+    "maple": [
+        "a := proc(n) option remember: if n<2 then n+1 else a(n-1) + add(a(k), k=0..n-3) fi end: seq(a(n), n=0..33); # _Johannes W. Meijer_, Jun 18 2018"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{2,-1,1},{1,2,2},40] (* _Harvey P. Dale_, May 12 2022 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a049853 n = a049853_list !! n",
+        "a049853_list = 1 : 2 : 2 : 3 :",
+        "   zipWith (+) a049853_list",
+        "               (zipWith (+) (drop 2 a049853_list) (drop 3 a049853_list))",
+        "-- _Reinhard Zumkeller_, Aug 06 2011",
+        "(PARI) Vec((1 - x)*(1 + x) / (1 - 2*x + x^2 - x^3) + O(x^40)) \\\\ _Colin Barker_, Jun 17 2018"
+    ],
+    "xref": [
+        "Cf. A070550, A180662 (Ca2)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_",
+    "references": 4,
+    "revision": 30,
+    "time": "2022-05-12T15:01:47-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

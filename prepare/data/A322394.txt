@@ -1,0 +1,29 @@
+{
+    "number": 322394,
+    "data": "2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,151,157,163,167,173,179,181,191,193,195,197,199,211,223,227,229,233,239,241,251,257,263,269",
+    "name": "Heinz numbers of integer partitions with edge-connectivity 1.",
+    "comment": [
+        "The first nonprime term is 195, which is the Heinz number of (6,3,2).",
+        "The Heinz number of an integer partition (y_1, ..., y_k) is prime(y_1) * ... * prime(y_k).",
+        "An integer partition has edge-connectivity 1 if the prime factorizations of the parts form a connected hypergraph that can be disconnected (or made empty) by removing a single part."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/K-edge-connected_graph\">k-edge-connected graph</a>"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "edgeConn[y_]:=If[Length[csm[primeMS/@y]]!=1,0,Length[y]-Max@@Length/@Select[Union[Subsets[y]],Length[csm[primeMS/@#]]!=1&]];",
+        "Select[Range[100],edgeConn[primeMS[#]]==1&]"
+    ],
+    "xref": [
+        "Cf. A007718, A013922, A054921, A056239, A095983, A112798, A218970, A304716, A305078, A305079, A322336, A322391, A322393."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Dec 06 2018",
+    "references": 5,
+    "revision": 4,
+    "time": "2018-12-06T16:36:03-05:00",
+    "created": "2018-12-06T16:36:03-05:00"
+}

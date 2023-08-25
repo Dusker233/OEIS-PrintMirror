@@ -1,0 +1,78 @@
+{
+    "number": 334932,
+    "data": "2535,3705,162279,237177,10385895,15179385,664697319,971480697,42540628455,62174764665,2722600221159,3979184938617,174246414154215,254667836071545,11151770505869799,16298741508578937,713713312375667175,1043119456549052025,45677651992042699239",
+    "name": "Numbers that generate rotationally symmetrical XOR-triangles with a pattern of zero-triangles of edge length 3, some of which are clipped to result in some zero-triangles of edge length 2 at the edges.",
+    "comment": [
+        "Subset of A334769 which is a subset of A334556.",
+        "Numbers m in this sequence A070939(m) (mod 3) = 0. All m have first and last bits = 1.",
+        "The numbers in this sequence can be constructed using run lengths of bits thus: 12..(42)..3 or the reverse 3..(24)..21, with at least one copy of the pair of parenthetic numbers.",
+        "Thus, the smallest number m has run lengths {1, 2, 4, 2, 3}, which is the binary 100111100111 = decimal 2535.",
+        "2n has the reverse run length pattern as 2n - 1. a(3) has the run lengths {1, 2, 4, 2, 4, 2, 3}, while a(4) has {3, 2, 4, 2, 4, 2, 1}, etc."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A334932/b334932.txt\">Table of n, a(n) for n = 1..1104</a>",
+        "Michael De Vlieger, <a href=\"/A334932/a334932.png\">Diagram montage</a> of XOR-triangles resulting from a(n) with 1 <= n <= 32.",
+        "Michael De Vlieger, <a href=\"http://vincico.com/seq/a334769.html\">Central zero-triangles in rotationally symmetrical XOR-Triangles</a>, 2020.",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (0,65,0,-64).",
+        "<a href=\"/index/X#XOR-triangles\">Index entries for sequences related to XOR-triangles</a>"
+    ],
+    "formula": [
+        "From _Colin Barker_, Jun 09 2020: (Start)",
+        "G.f.: 3*x*(13 + 19*x)*(65 - 64*x^2) / ((1 - x)*(1 + x)*(1 - 8*x)*(1 + 8*x)).",
+        "a(n) = 65*a(n-2) - 64*a(n-4) for n>4.",
+        "a(n) = (1/21)*(-16 - 3*(-1)^n + 123*2^(5+3*n) - 85*(-1)^n*2^(5 + 3*n)) for n>0.",
+        "(End)"
+    ],
+    "example": [
+        "Diagrams of a(1)-a(4), replacing \u201c0\u201d with \u201c.\u201d and \u201c1\u201d with \u201c@\u201d for clarity:",
+        "a(1) = 2535 (a(2) = 3705 appears as a mirror image):",
+        "  @ . . @ @ @ @ . . @ @ @",
+        "   @ . @ . . . @ . @ . .",
+        "    @ @ @ . . @ @ @ @ .",
+        "     . . @ . @ . . . @",
+        "      . @ @ @ @ . . @",
+        "       @ . . . @ . @",
+        "        @ . . @ @ @",
+        "         @ . @ . .",
+        "          @ @ @ .",
+        "           . . @",
+        "            . @",
+        "             @",
+        ".",
+        "a(3) = 162279 (a(4) = 237177 appears as a mirror image):",
+        "  @ . . @ @ @ @ . . @ @ @ @ . . @ @ @",
+        "   @ . @ . . . @ . @ . . . @ . @ . .",
+        "    @ @ @ . . @ @ @ @ . . @ @ @ @ .",
+        "     . . @ . @ . . . @ . @ . . . @",
+        "      . @ @ @ @ . . @ @ @ @ . . @",
+        "       @ . . . @ . @ . . . @ . @",
+        "        @ . . @ @ @ @ . . @ @ @",
+        "         @ . @ . . . @ . @ . .",
+        "          @ @ @ . . @ @ @ @ .",
+        "           . . @ . @ . . . @",
+        "            . @ @ @ @ . . @",
+        "             @ . . . @ . @",
+        "              @ . . @ @ @",
+        "               @ . @ . .",
+        "                @ @ @ .",
+        "                 . . @",
+        "                  . @",
+        "                   @"
+    ],
+    "mathematica": [
+        "Array[FromDigits[Flatten@ MapIndexed[ConstantArray[#2, #1] & @@ {#1, Mod[First[#2], 2]} &, If[EvenQ@ #1, Reverse@ #2, #2]], 2] & @@ {#, Join[{1, 2}, PadRight[{}, Ceiling[#, 2], {4, 2}], {3}]} &, 19]",
+        "(* Generate a textual plot of XOR-triangle T(n) *)",
+        "xortri[n_Integer] := TableForm@ MapIndexed[StringJoin[ConstantArray[\" \", First@ #2 - 1], StringJoin @@ Riffle[Map[If[# == 0, \".\" (* 0 *), \"@\" (* 1 *)] &, #1], \" \"]] &, NestWhileList[Map[BitXor @@ # &, Partition[#, 2, 1]] &, IntegerDigits[n, 2], Length@ # > 1 &]]"
+    ],
+    "xref": [
+        "Cf. A334556, A334769, A334930, A334931."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Michael De Vlieger_, May 16 2020",
+    "references": 3,
+    "revision": 17,
+    "time": "2020-06-21T06:03:42-04:00",
+    "created": "2020-05-23T23:57:52-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 64985,
+    "data": "1,2,4,6,9,12,17,22,29,36,45,54,66,78,93,108,126,144,166,188,214,240,270,300,336,372,414,456,504,552,608,664,728,792,864,936,1018,1100,1192,1284,1386,1488,1602,1716,1842,1968,2106,2244,2397,2550,2718,2886",
+    "name": "Number of partitions of n into factorial parts ( 0! allowed ).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A064985/b064985.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "G.f.: 1/(Product_{i>=1} (1-x^(i!)))/(1-x).",
+        "G.f.: 1/(1-x) + Sum_{n>0} x^(n!) / Product_{k=0..n} (1 - x^(k!)). - _Seiichi Manyama_, Oct 12 2019"
+    ],
+    "example": [
+        "a(3) = 6 because we can write 3 = 2!+1! = 2!+0! = 1!+1!+1! = 0!+0!+0! = 1!+1!+0! = 1!+0!+0!.",
+        "G.f.: 1/(1-x) + x/(1-x)^2 + x^2/((1-x)^2*(1-x^2)) + x^6/((1-x)^2*(1-x^2)*(1-x^6)) + ... . - _Seiichi Manyama_, Oct 12 2019"
+    ],
+    "mathematica": [
+        "nn=51;CoefficientList[Series[Product[1/(1-x^(i!)),{i,0,10}],{x,0,nn}],x] (* _Geoffrey Critzer_, Sep 29 2013 *)",
+        "Table[Length@IntegerPartitions[n, All, Factorial[Range[0, 6]]], {n, 0, 51}] (* _Robert Price_, Jun 04 2020 *)"
+    ],
+    "program": [
+        "(PARI) N=66; x='x+O('x^N); m=1; while(N>=m!, m++); Vec(1/prod(k=0, m-1, 1-x^k!)) \\\\ _Seiichi Manyama_, Oct 13 2019",
+        "(PARI) N=66; x='x+O('x^N); m=1; while(N>=m!, m++); Vec(1/(1-x)+sum(i=1, m-1, x^i!/prod(j=0, i, 1-x^j!))) \\\\ _Seiichi Manyama_, Oct 13 2019"
+    ],
+    "xref": [
+        "Cf. A064986."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Naohiro Nomoto_, Oct 30 2001",
+    "ext": [
+        "More terms from _Vladeta Jovovic_ and _Don Reble_, Nov 02 2001"
+    ],
+    "references": 4,
+    "revision": 32,
+    "time": "2020-06-04T19:31:02-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

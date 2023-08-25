@@ -1,0 +1,53 @@
+{
+    "number": 339391,
+    "data": "1,2,2,2,2,3,3,3,3,3,3,4,4,4,4,5,5,5,5",
+    "name": "Maximum, over all binary strings w of length n, of the size of the smallest string attractor for w.",
+    "comment": [
+        "A set S of positions of a string w[1..n] is called a \"string attractor\" if every nonempty contiguous block occurring in w has an occurrence in w that touches at least one of the positions of S.  For example, \"alfalfa\" has a string attractor of size 3:  {3,4,5}.",
+        "0 has smallest string attractor size 1;",
+        "01 has smallest string attractor size 2;",
+        "001011 has smallest string attractor size 3;",
+        "000100101011 has smallest string attractor size 4;",
+        "0001001010110111 has smallest string attractor size 5.",
+        "These are the shortest binary strings achieving this minimum attractor size."
+    ],
+    "link": [
+        "D. Kempa and N. Prezza. <a href=\"https://dl.acm.org/doi/abs/10.1145/3188745.3188814\">At the roots of dictionary compression: string attractors</a>. In STOC'18 Proceedings, ACM Press, 2018, pp. 827-840."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product, combinations",
+        "def blocks_ranges(w):",
+        "  blocks = dict()",
+        "  for i in range(len(w)):",
+        "    for j in range(i+1, len(w)+1):",
+        "      wij = w[i:j]",
+        "      if wij in blocks: blocks[wij].append(set(range(i, j)))",
+        "      else: blocks[wij] = [set(range(i, j))]",
+        "  return blocks",
+        "def is_attractor(S, w):",
+        "  br = blocks_ranges(w)",
+        "  for b in br:",
+        "    for i in range(len(br[b])):",
+        "      if S & br[b][i]: break",
+        "    else: return False",
+        "  return True",
+        "def lsa(w): # length of smallest attractor of w",
+        "  for r in range(1, len(w)+1):",
+        "    for s in combinations(range(len(w)), r):",
+        "      if is_attractor(set(s), w): return r",
+        "def a(n):   # only search strings starting with 0 by symmetry",
+        "  return max(lsa(\"0\"+\"\".join(u)) for u in product(\"01\", repeat=n-1))",
+        "print([a(n) for n in range(1, 12)]) # _Michael S. Branicky_, Dec 20 2020"
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Jeffrey Shallit_, Dec 12 2020",
+    "ext": [
+        "(17)-a(19) from _Michael S. Branicky_, Dec 20 2020"
+    ],
+    "references": 3,
+    "revision": 33,
+    "time": "2021-01-09T00:42:18-05:00",
+    "created": "2020-12-12T04:45:40-05:00"
+}

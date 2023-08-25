@@ -1,0 +1,79 @@
+{
+    "number": 352519,
+    "data": "9,25,27,121,125,243,289,961,1331,1681,2187,3125,3481,4489,4913,6889,11881,16129,24649,29791,32041,36481,44521,58081,68921,76729,78125,80089,109561,124609,134689,160801,161051,177147,185761,205379,212521,259081,299209",
+    "name": "Numbers of the form prime(p)^q where p and q are primes. Prime powers whose prime index and exponent are both prime.",
+    "comment": [
+        "Alternatively, numbers of the form prime(prime(i))^prime(j) for some positive integers i, j."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A352519/b352519.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The terms together with their prime indices begin:",
+        "      9: {2,2}",
+        "     25: {3,3}",
+        "     27: {2,2,2}",
+        "    121: {5,5}",
+        "    125: {3,3,3}",
+        "    243: {2,2,2,2,2}",
+        "    289: {7,7}",
+        "    961: {11,11}",
+        "   1331: {5,5,5}",
+        "   1681: {13,13}",
+        "   2187: {2,2,2,2,2,2,2}",
+        "   3125: {3,3,3,3,3}",
+        "   3481: {17,17}",
+        "   4489: {19,19}",
+        "   4913: {7,7,7}",
+        "   6889: {23,23}",
+        "  11881: {29,29}",
+        "  16129: {31,31}",
+        "  24649: {37,37}",
+        "  29791: {11,11,11}"
+    ],
+    "maple": [
+        "N:= 10^7: # for terms <= N",
+        "M:=numtheory:-pi(numtheory:-pi(isqrt(N))):",
+        "PP:= {seq(ithprime(ithprime(i)),i=1..M)}:",
+        "R:= NULL:",
+        "for p in PP do",
+        "  q:= 1:",
+        "  do",
+        "    q:= nextprime(q);",
+        "    t:= p^q;",
+        "    if t > N then break fi;",
+        "    R:= R, t;",
+        "  od;",
+        "od:",
+        "sort([R]); # _Robert Israel_, Dec 08 2022"
+    ],
+    "mathematica": [
+        "Select[Range[10000],PrimePowerQ[#]&&MatchQ[FactorInteger[#],{{_?(PrimeQ[PrimePi[#]]&),k_?PrimeQ}}]&]"
+    ],
+    "xref": [
+        "Numbers of the form p^q for p and q prime are A053810, counted by A001221.",
+        "These partitions are counted by A230595.",
+        "This is the prime power case of A346068.",
+        "For numbers that are not a prime power we have A352518, counted by A352493.",
+        "A000040 lists the primes.",
+        "A000961 lists prime powers.",
+        "A001597 lists perfect powers.",
+        "A001694 lists powerful numbers, counted by A007690.",
+        "A056166 = prime exponents are all prime, counted by A055923.",
+        "A076610 = prime indices are all prime, counted by A000607, powerful A339218.",
+        "A109297 = same indices as exponents, counted by A114640.",
+        "A112798 lists prime indices, reverse A296150, sum A056239.",
+        "A124010 gives prime signature, sorted A118914, sum A001222.",
+        "A164336 lists all possible power-towers of prime numbers.",
+        "A257994 counts prime indices that are themselves prime, nonprime A330944.",
+        "A325131 = disjoint indices from exponents, counted by A114639.",
+        "Cf. A000720, A002035, A005117, A007821, A038499, A101436, A181819, A181821."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Mar 26 2022",
+    "references": 4,
+    "revision": 18,
+    "time": "2022-12-10T10:47:07-05:00",
+    "created": "2022-04-01T23:53:03-04:00"
+}

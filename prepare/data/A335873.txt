@@ -1,0 +1,53 @@
+{
+    "number": 335873,
+    "data": "0,1,4,10,48,216,1440,9360,80640,685440,7257600,76204800,958003200,11975040000,174356582400,2528170444800,41845579776000,690452066304000,12804747411456000,236887827111936000,4865804016353280000,99748982335242240000,2248001455555215360000",
+    "name": "Total number of points in all permutations of [n] that are fixed or reflected.",
+    "comment": [
+        "A permutation p of [n] has fixed point j if p(j) = j, it has reflected point j if p(n+1-j) = j.  A point can be fixed and reflected at the same time."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A335873/b335873.txt\">Table of n, a(n) for n = 0..450</a>",
+        "T. Simpson, <a href=\"/A007016/a007016.pdf\">Permutations with unique fixed and reflected points</a>, Preprint. (Annotated scanned copy)",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation\">Permutation</a>"
+    ],
+    "formula": [
+        "E.g.f.: 2*x/(1-x) - (log(1+x) - log(1-x))/2.",
+        "a(0) = 0, a(n) = 2*n! - (n mod 2)*(n-1)! for n > 0.",
+        "a(n) = (n-1)*(4*a(n-1)+(n-2)*(4*n-3)*a(n-2))/(4*n-7) for n >= 2, a(n) = n for n < 2.",
+        "a(n) = Sum_{k=1..n} k * A335872(n,k)."
+    ],
+    "example": [
+        "a(3) = 10: (1)(2)(3), (1)32, 21(3), 23(1), (3)12, (3)(2)(1)."
+    ],
+    "maple": [
+        "b:= proc(s, i) option remember; (n-> `if`(n=0, [1, 0],",
+        "      add((p-> p+[0, `if`(j in {i, n}, p[1], 0)])(",
+        "        b(s minus {j}, i+1)), j=s)))(nops(s))",
+        "    end:",
+        "a:= n-> b({$1..n}, 1)[2]:",
+        "seq(a(n), n=0..14);",
+        "# second Maple program:",
+        "a:= n-> `if`(n=0, 0, 2*n! -`if`(n::odd, (n-1)!, 0)):",
+        "seq(a(n), n=0..22);",
+        "# third Maple program:",
+        "a:= proc(n) option remember; `if`(n<2, n, (n-1)*",
+        "      (4*a(n-1)+(n-2)*(4*n-3)*a(n-2))/(4*n-7))",
+        "    end:",
+        "seq(a(n), n=0..22);"
+    ],
+    "mathematica": [
+        "a[n_] :=  If[n == 0, 0, 2 n! - If[OddQ[n], (n-1)!, 0]];",
+        "Table[a[n], {n, 0, 22}] (* _Jean-Fran\u00e7ois Alcover_, Aug 24 2021, from 2nd Maple program *)"
+    ],
+    "xref": [
+        "Bisection (even part) gives 2 * A010050(n) for n>0.",
+        "Cf. A000142, A005359, A306258, A335872."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jun 28 2020",
+    "references": 2,
+    "revision": 31,
+    "time": "2021-08-24T05:40:35-04:00",
+    "created": "2020-06-28T16:47:06-04:00"
+}

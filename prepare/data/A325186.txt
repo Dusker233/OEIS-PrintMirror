@@ -1,0 +1,53 @@
+{
+    "number": 325186,
+    "data": "3,4,15,18,21,25,27,33,36,39,51,57,69,72,87,93,105,111,123,129,141,144,147,150,159,165,175,177,183,195,201,213,219,225,231,237,245,249,250,255,267,273,275,285,288,291,300,303,309,321,325,327,339,343,345,357",
+    "name": "Heinz numbers of integer partitions whose Young diagram has last part of its origin-to-boundary partition equal to 2.",
+    "comment": [
+        "The k-th part of the origin-to-boundary partition of a Young diagram is the number of squares graph-distance k from the lower-right boundary.",
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k)."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/GraphDistance.html\">Graph Distance</a>.",
+        "Gus Wiseman, <a href=\"/A325186/a325186.png\">Young diagrams for the first 25 terms</a>."
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices begins:",
+        "    3: {2}",
+        "    4: {1,1}",
+        "   15: {2,3}",
+        "   18: {1,2,2}",
+        "   21: {2,4}",
+        "   25: {3,3}",
+        "   27: {2,2,2}",
+        "   33: {2,5}",
+        "   36: {1,1,2,2}",
+        "   39: {2,6}",
+        "   51: {2,7}",
+        "   57: {2,8}",
+        "   69: {2,9}",
+        "   72: {1,1,1,2,2}",
+        "   87: {2,10}",
+        "   93: {2,11}",
+        "  105: {2,3,4}",
+        "  111: {2,12}",
+        "  123: {2,13}",
+        "  129: {2,14}"
+    ],
+    "mathematica": [
+        "primeptn[n_]:=If[n==1,{},Reverse[Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]]];",
+        "ptnmat[ptn_]:=PadRight[(ConstantArray[1,#]&)/@Sort[ptn,Greater],{Length[ptn],Max@@ptn}+1];",
+        "corpos[mat_]:=ReplacePart[mat,Select[Position[mat,1],Times@@Extract[mat,{#+{1,0},#+{0,1}}]==0&]->0];",
+        "Select[Range[100],Apply[Plus,If[#==1,{},FixedPointList[corpos,ptnmat[primeptn[#]]][[-3]]],{0,1}]==2&]"
+    ],
+    "xref": [
+        "Cf. A006918, A056239, A065770, A112798.",
+        "Cf. A325164, A325169, A325170, A325183, A325184, A325185, A325190, A325197."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Apr 08 2019",
+    "references": 4,
+    "revision": 4,
+    "time": "2019-04-10T22:00:46-04:00",
+    "created": "2019-04-10T22:00:46-04:00"
+}

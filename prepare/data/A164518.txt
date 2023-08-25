@@ -1,0 +1,44 @@
+{
+    "number": 164518,
+    "data": "11027,65027,74531,119027,184043,308027,314723,370883,423803,603731,783227,804611,815411,915851,938963,1238771,1279163,1461683,1490843,1535123,1550027,1718723,2556803,2673227,2812331,3059003,3493163",
+    "name": "Primes of the form A162143(k) + 2.",
+    "comment": [
+        "Primes of the form 2 + q^2*r^2*s^2 where q, r, and s are three distinct primes."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A164518/b164518.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1) = 11027 = A000040(1337) = A162143(7) + 2."
+    ],
+    "maple": [
+        "N:= 10^7: # to get all terms <= N",
+        "P:= select(isprime, [seq(i,i=3..floor(sqrt(N-2)/15))]):",
+        "R:= NULL:",
+        "for i from 1 to nops(P) do",
+        "  for j from 1 to i-1 while (3*P[i]*P[j])^2<=N-2 do",
+        "    for k from 1 to j-1 do",
+        "      p:= (P[i]*P[j]*P[k])^2+2;",
+        "      if p > N then break fi;",
+        "      if isprime(p) then R:= R, p fi",
+        "od od od:",
+        "sort([R]); # _Robert Israel_, Jun 05 2018"
+    ],
+    "mathematica": [
+        "f[n_]:=FactorInteger[n][[1,2]]==2&&Length[FactorInteger[n]]==3&&FactorInteger[n][[2, 2]]==2&&FactorInteger[n][[3,2]]==2; lst={};Do[p=Prime[n];If[f[p-2], AppendTo[lst,p]],{n,4,9!}];lst",
+        "With[{nn=30},Take[Union[Select[Times@@(#^2)+2&/@Subsets[Prime[ Range[ nn]], {3}],PrimeQ]],nn]] (* _Harvey P. Dale_, Mar 14 2016 *)"
+    ],
+    "xref": [
+        "Cf. A056899, A162143, A164517."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Joseph Stephan Orlovsky_, Aug 14 2009",
+    "ext": [
+        "Edited by _R. J. Mathar_, Aug 21 2009"
+    ],
+    "references": 4,
+    "revision": 11,
+    "time": "2018-06-05T22:34:38-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

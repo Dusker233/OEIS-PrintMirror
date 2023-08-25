@@ -1,0 +1,53 @@
+{
+    "number": 50219,
+    "data": "728,2964,3864,4959,5935,6187,9386,9633,11695,13764,16536,16591,20784,25428,28808,29623,32696,33632,35805,39585,43736,44733,49027,55344,56336,57663,58305,62634,65912,65974,66650,67067,67728,69279,69835,73615,73616,74168",
+    "name": "Smaller of Smith brothers.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A050219/b050219.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..1000 from Robert Israel)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SmithBrothers.html\">Smith Brothers.</a>"
+    ],
+    "maple": [
+        "issmith:= proc(n)",
+        "  if isprime(n) then return false fi;",
+        "  convert(convert(n,base,10),`+`) = add(t[2]*convert(convert(t[1],base,10),`+`),t=ifactors(n)[2])",
+        "end proc:",
+        "S:= select(issmith, {$4..10^5}):",
+        "sort(convert(S intersect map(`-`,S,1), list)); # _Robert Israel_, Jan 15 2018"
+    ],
+    "mathematica": [
+        "smithQ[n_] := !PrimeQ[n] && Total[Flatten[IntegerDigits[Table[#[[1]], {#[[2]]}]& /@ FactorInteger[n]]]] == Total[IntegerDigits[n]];",
+        "Select[Range[10^5], smithQ[#] && smithQ[#+1]&] (* _Jean-Fran\u00e7ois Alcover_, Jun 07 2020 *)"
+    ],
+    "program": [
+        "(PARI) isone(n) = {if (!isprime(n), f = factor(n); sumdigits(n) == sum(k=1, #f~, f[k,2]*sumdigits(f[k,1])););}",
+        "isok(n) =  isone(n) && isone(n+1); \\\\ _Michel Marcus_, Jul 17 2015",
+        "(Python)",
+        "from sympy import factorint",
+        "from itertools import count, islice",
+        "def sd(n): return sum(map(int, str(n)))",
+        "def smith():",
+        "    for k in count(1):",
+        "        f = factorint(k)",
+        "        if sum(f[p] for p in f) > 1 and sd(k) == sum(sd(p)*f[p] for p in f):",
+        "            yield k",
+        "def agen():",
+        "    prev = -1",
+        "    for s in smith():",
+        "        if s == prev + 1: yield prev",
+        "        prev = s",
+        "print(list(islice(agen(), 38))) # _Michael S. Branicky_, Dec 23 2022"
+    ],
+    "xref": [
+        "Cf. A006753, A050220."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Eric W. Weisstein_",
+    "ext": [
+        "Offset corrected by _Arkadiusz Wesolowski_, May 08 2012"
+    ],
+    "references": 8,
+    "revision": 34,
+    "time": "2022-12-23T17:25:37-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

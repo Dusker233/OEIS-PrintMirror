@@ -1,0 +1,73 @@
+{
+    "number": 107579,
+    "data": "19,37,73,109,127,163,181,271,307,433,523,541,613,631,811,1009,1063,1117,1153,1171,1423,1531,1621,1801,2017,2053,2143,2161,2251,2341,2503,2521,3061,3313,3331,3511,4051,4231,5023,5113,6121,6211,6301,8011,8101",
+    "name": "Primes with digit sum 10.",
+    "comment": [
+        "Subset of A061237 and A117674."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A107579/b107579.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1001..3000 from Vincenzo Librandi and Zak Seidov, terms 1..1000 from Vincenzo Librandi)"
+    ],
+    "formula": [
+        "Intersection of A000040 (primes) and A052224 (digit sum = 10). - _M. F. Hasler_, Mar 09 2022"
+    ],
+    "maple": [
+        "a:=proc(n) local nn: nn:=convert(n,base,10): if isprime(n)=true and add(nn[j], j=1..nops(nn))=10 then n else end if end proc: seq(a(n),n=1..10^4); # _Emeric Deutsch_, Mar 06 2008"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[100000]], Total[IntegerDigits[#]]==10 &] (* _Vincenzo Librandi_, Jul 08 2014 *)"
+    ],
+    "program": [
+        "(Magma) [p: p in PrimesUpTo(10000) | &+Intseq(p) eq 10]; // _Vincenzo Librandi_, Jul 08 2014",
+        "(PARI) forprime(p=19,8101,if(10==sumdigits(p),print(p\",\"))) \\\\ _Zak Seidov_, Oct 08 2016",
+        "(PARI) (A107579_nxt(p)=until(isprime(p=A228915(p)),); p); A107579_first(N=100)=vector(N, i, p=if(i>1, A107579_nxt(p), 19))) \\\\ _M. F. Hasler_, Mar 15 2022",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def agen(b=10, sod=10): # generator for any base, sum-of-digits",
+        "    if 0 <= sod < b:",
+        "        yield sod",
+        "    nzdigs = [i for i in range(1, b) if i <= sod]",
+        "    nzmultiset = []",
+        "    for d in range(1, b):",
+        "        nzmultiset += [d]*(sod//d)",
+        "    for d in count(2):",
+        "        fullmultiset = [0]*(d-1-(sod-1)//(b-1)) + nzmultiset",
+        "        for firstdig in nzdigs:",
+        "            target_sum, restmultiset = sod - int(firstdig), fullmultiset[:]",
+        "            restmultiset.remove(firstdig)",
+        "            for p in multiset_permutations(restmultiset, d-1):",
+        "                if sum(p) == target_sum:",
+        "                    t = int(\"\".join(map(str, [firstdig]+p)), b)",
+        "                    if isprime(t):",
+        "                        yield t",
+        "                    if p[0] == target_sum:",
+        "                        break",
+        "print(list(islice(agen(), 45))) # _Michael S. Branicky_, Mar 10 2022",
+        "(Python)",
+        "from sympy import isprime",
+        "def A107579(p=19):",
+        "    \"Return a generator of the sequence of all primes >= p with the same digit sum as p.\"",
+        "    while True:",
+        "        if isprime(p): yield p",
+        "        p = A228915(p) # skip to next larger integer with the same digit sum",
+        "a=A107579(); [next(a) for _ in range(50)] # _M. F. Hasler_, Mar 16 2022"
+    ],
+    "xref": [
+        "Cf. A000040 (primes), A007953 (sum of digits), A052224 (digit sum = 10).",
+        "Cf. A061237 (sum of digits == 1 (mod 9)).",
+        "Subsequence of A062340 (primes with digit sum divisible by 5).",
+        "Cf. A062339 (same for digit sum s = 4), A062341 (s = 5), A062343 (s = 8),  A106754 (s = 11), and others listed in A244918 (s = 68)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, May 16 2005",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Feb 20 2009 at the suggestion of Pacha Nambi"
+    ],
+    "references": 13,
+    "revision": 37,
+    "time": "2022-03-16T16:39:01-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

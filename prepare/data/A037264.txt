@@ -1,0 +1,47 @@
+{
+    "number": 37264,
+    "data": "1,2,3,4,5,6,7,8,9,22,36,44,63,66,88,236,244,263,326,333,362,424,442,488,623,632,666,848,884,999,2488,2666,2848,2884,3366,3446,3464,3636,3644,3663,4288,4346,4364,4436,4444,4463,4634,4643,4828,4882,6266,6336",
+    "name": "Numbers whose sum of reciprocals of digits is the reciprocal of an integer.",
+    "comment": [
+        "Intersection of A214958 and A052382: A214949(a(n))*A168046(a(n)) = 1. - _Reinhard Zumkeller_, Aug 02 2012"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A037264/b037264.txt\">Table of n, a(n) for n = 1..1232</a> (complete sequence)"
+    ],
+    "example": [
+        "63 is a term: 1/((1/6) + (1/3)) = 2."
+    ],
+    "maple": [
+        "P:=proc(n) local a,b,k,ok; a:=convert(n,base,10); b:=0; ok:=1;",
+        "for k from 1 to nops(a) do if a[k]>0 then b:=b+1/a[k]; else ok:=0;",
+        "break; fi; od; if ok=1 then if frac(1/b)=0 then n; fi; fi; end:",
+        "seq(P(i),i=1..6336); # _Paolo P. Lava_, May 24 2018"
+    ],
+    "mathematica": [
+        "Reap[Do[If[FreeQ[id = IntegerDigits[n], 0], If[IntegerQ[1/Total[1/id]], Sow[n]]], {n, 1, 10^4}]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Dec 15 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a037264 n = a037264_list !! (n-1)",
+        "a037264_list = filter ((== 1) . a168046) $",
+        "                      takeWhile (<= 999999999) a214958_list",
+        "-- _Reinhard Zumkeller_, Aug 02 2012",
+        "(PARI) isok(n) = {my(d=digits(n)); vecmin(d) && (numerator(sum(k=1, #d, 1/d[k])) == 1);} \\\\ _Michel Marcus_, May 24 2018",
+        "(Python)",
+        "from fractions import Fraction",
+        "def ok(n):",
+        "    ds = list(map(int, str(n)))",
+        "    return 0 not in ds and sum(Fraction(1, d) for d in ds).numerator == 1",
+        "print(list(filter(ok, range(1, 6337)))) # _Michael S. Branicky_, Aug 08 2021"
+    ],
+    "xref": [
+        "Cf. A037265, A045910."
+    ],
+    "keyword": "easy,nonn,nice,base,fini,full",
+    "offset": "1,2",
+    "author": "_Naohiro Nomoto_",
+    "references": 6,
+    "revision": 28,
+    "time": "2021-08-09T01:29:57-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

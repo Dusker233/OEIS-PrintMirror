@@ -1,0 +1,30 @@
+{
+    "number": 307165,
+    "data": "0,1,4,16,22,340",
+    "name": "Numbers k such that the sequence f(0)=f(1)=k, f(x)=(a*b) mod (a+b+1), where a=f(x-1) and b=f(x-2) is a cycle.",
+    "comment": [
+        "Zeros of A307087.",
+        "The next term, if it exists, is bigger than 1.5*10^7.",
+        "Abmod sequences are defined as follows: see A307087.",
+        "Abmod(x,y,0) = x;",
+        "Abmod(x,y,1) = y;",
+        "Abmod(x,y,n) = (a*b) mod (a+b+1), where a and b are the 2 previous terms: Abmod(x,y,n-2) and Abmod(x,y,n-1).",
+        "a(7) > 10^9 if it exists. - _Bert Dobbelaere_, Aug 18 2019"
+    ],
+    "example": [
+        "Abmod(4,4) is [4,4,7,4,4,7,4,4,7,...]."
+    ],
+    "mathematica": [
+        "cyclePos[s_] := Module[{sp = SequencePosition[s[[1 ;; -3]], s[[-2 ;; -1]]]}, If[Length[sp] == 0, 0, sp[[1, 1]]]]; a[n_] := Module[{f, g}, g[a_, b_] := Mod[a*b, a + b + 1]; f[0] = f[1] = n; f[k_] := f[k] = g[f[k - 1], f[k - 2]]; s = {}; m = 0; While[Length[s] < 4 || cyclePos[s] == 0, AppendTo[s, f[m]]; m++];  cyclePos[s] - 1]; seq = {}; Do[If[a[j] == 0, AppendTo[seq, j]], {j, 0, 340}]; seq (* _Amiram Eldar_, Jul 06 2019 *)"
+    ],
+    "xref": [
+        "Cf. A307087."
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "1,3",
+    "author": "_Alex Costea_, Mar 27 2019",
+    "references": 0,
+    "revision": 33,
+    "time": "2019-08-18T17:55:15-04:00",
+    "created": "2019-08-16T16:22:01-04:00"
+}

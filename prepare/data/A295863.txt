@@ -1,0 +1,38 @@
+{
+    "number": 295863,
+    "data": "2,6,30,130,536,2174,8746,35070,140438,562008,2248460,8994530,35979160,143917970,575673270,2302692898,9210765608",
+    "name": "Number of ordered pairs of length-n mutually overlapping binary strings.",
+    "comment": [
+        "A pair of strings (u,v) is mutually overlapping if some nonempty suffix of u is a prefix of v, and vice versa, such as (00101010,10110001).",
+        "All terms are even. - _Michael S. Branicky_, Dec 06 2020"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "def overlapping(u, v):",
+        "    for i in range(1, 1+min(len(u), len(v))):",
+        "        if v[:i]==u[-i:]: return True",
+        "    return False",
+        "def a(n):",
+        "    out = 0",
+        "    for u in product(\"01\", repeat=n-1):",
+        "        u = (\"0\",) + u",
+        "        for v in product(\"01\", repeat=n):",
+        "            if overlapping(u, v) and overlapping(v, u): out += 1",
+        "    return 2*out # by symmetry",
+        "print([a(n) for n in range(1, 11)]) # _Michael S. Branicky_, Dec 06 2020"
+    ],
+    "xref": [
+        "Cf. A296600."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Feb 13 2018",
+    "ext": [
+        "a(14)-a(17) from _Michael S. Branicky_, Dec 06 2020"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2020-12-06T10:56:22-05:00",
+    "created": "2018-02-15T03:19:43-05:00"
+}

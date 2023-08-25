@@ -1,0 +1,49 @@
+{
+    "number": 320171,
+    "data": "1,2,5,11,29,82,247,782,2579,8702,29975,104818,371111,1327307,4788687,17404838,63669763,234237605,866090021,3216738344,11995470691,44894977263,168582174353,634939697164,2398004674911,9079614633247,34458722286825,131059771522401",
+    "name": "Number of series-reduced rooted identity trees whose leaves are integer partitions whose multiset union is an integer partition of n.",
+    "comment": [
+        "A rooted tree is series-reduced if every non-leaf node has at least two branches.",
+        "In an identity tree, all branches directly under any given node are different."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320171/b320171.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(4) = 11 rooted identity trees:",
+        "  (1)  (2)   (3)        (4)",
+        "       (11)  (21)       (22)",
+        "             (111)      (31)",
+        "             ((1)(2))   (211)",
+        "             ((1)(11))  (1111)",
+        "                        ((1)(3))",
+        "                        ((1)(21))",
+        "                        ((2)(11))",
+        "                        ((1)(111))",
+        "                        ((1)((1)(2)))",
+        "                        ((1)((1)(11)))"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "gig[m_]:=Prepend[Join@@Table[Union[Sort/@Select[Sort/@Tuples[gig/@mtn],UnsameQ@@#&]],{mtn,Select[mps[m],Length[#]>1&]}],m];",
+        "Table[Sum[Length[gig[y]],{y,IntegerPartitions[n]}],{n,8}]"
+    ],
+    "program": [
+        "(PARI) WeighT(v)={Vec(exp(x*Ser(dirmul(v, vector(#v,n,(-1)^(n-1)/n))))-1,-#v)}",
+        "seq(n)={my(v=vector(n)); for(n=1, n, v[n]=numbpart(n) + WeighT(v[1..n])[n]); v} \\\\ _Andrew Howroyd_, Oct 25 2018"
+    ],
+    "xref": [
+        "Cf. A000081, A000311, A000669, A001678, A005804, A141268, A292504, A300660, A319312, A320172, A320177, A320178."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Oct 07 2018",
+    "ext": [
+        "Terms a(12) and beyond from _Andrew Howroyd_, Oct 25 2018"
+    ],
+    "references": 5,
+    "revision": 8,
+    "time": "2018-10-26T00:52:27-04:00",
+    "created": "2018-10-07T14:36:01-04:00"
+}

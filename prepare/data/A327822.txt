@@ -1,0 +1,31 @@
+{
+    "number": 327822,
+    "data": "14,16,19,20,23,29,30,32,34,35,38,41,43,47,50,53,59,61,67,70,74,76,83,89,91,92,95,98,1015,1018,1070,1075,1099,1132,1136,1163,1216,1238,1274,1303,1321,1339,1361,1475,1510,1517,1535,1570,1574,1612,1630,1631,1636",
+    "name": "Numbers k such that when cyclically permuting the digits of k any number of times, any prime obtained is followed by a composite number and vice-versa.",
+    "example": [
+        "When cyclically permuting the digits of 961990 one gets the numbers 961990, 619909, 199096, 990961, 909619, 96199 and these numbers are composite, prime, composite, prime, composite, prime, respectively, so 961990 (and each of these cyclic permutations except 96199) is a term of the sequence.",
+        "A more graphical representation:",
+        "       961990              C",
+        "      /      \\           /   \\",
+        "  096199   619909       P     P",
+        "     |        |         |     |",
+        "  909619   199096       C     C",
+        "      \\      /           \\   /",
+        "       990961              P"
+    ],
+    "program": [
+        "(PARI) eva(n) = subst(Pol(n), x, 10)",
+        "rot(n) = if(#Str(n)==1, v=vector(1), v=vector(#n-1)); for(i=2, #n, v[i-1]=n[i]); u=vector(#n); for(i=1, #n, u[i]=n[i]); v=concat(v, u[1]); v",
+        "is(n) = my(nn=#Str(n), u=[], v=vector(nn, x, x%2==0), w=vector(nn, x, x%2==1), d=digits(n), r=rot(d)); if(nn%2==1, return(0)); u=concat(u, [ispseudoprime(eva(d))]); u=concat(u, ispseudoprime(eva(r))); while(1, r=rot(r); if(r==d, if(u==v || u==w, return(1)); return(0)); u=concat(u, ispseudoprime(eva(r))))"
+    ],
+    "xref": [
+        "Cf. A068652, A068654, A270083."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Sep 26 2019",
+    "references": 0,
+    "revision": 16,
+    "time": "2019-09-28T22:33:13-04:00",
+    "created": "2019-09-28T22:33:13-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 320222,
+    "data": "1,1,2,4,9,18,39,78,161,324,658,1316,2657,5314,10668,21347,42777,85554,171290,342580,685498,1371037,2742733,5485466,10972351,21944711,43892080,87784323,175574004,351148008,702307038,1404614076,2809249582,5618499824,11237042426",
+    "name": "Number of unlabeled rooted trees with n nodes in which the non-leaf branches directly under any given node are all equal.",
+    "comment": [
+        "This is a weaker condition than achirality (cf. A003238)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320222/b320222.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "a(n) = 1 + Sum_{k = 2..n-1} floor((n-1)/k) * a(k).",
+        "a(n) ~ c * 2^n, where c = 0.3270422384018894564479397100499014525700668391191792769625407295138546463... - _Vaclav Kotesovec_, Sep 07 2019"
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 18 rooted trees:",
+        "  o  (o)  (oo)   (ooo)    (oooo)     (ooooo)",
+        "          ((o))  ((oo))   ((ooo))    ((oooo))",
+        "                 (o(o))   (o(oo))    (o(ooo))",
+        "                 (((o)))  (oo(o))    (oo(oo))",
+        "                          (((oo)))   (ooo(o))",
+        "                          ((o)(o))   (((ooo)))",
+        "                          ((o(o)))   ((o(oo)))",
+        "                          (o((o)))   ((oo(o)))",
+        "                          ((((o))))  (o((oo)))",
+        "                                     (o(o)(o))",
+        "                                     (o(o(o)))",
+        "                                     (oo((o)))",
+        "                                     ((((oo))))",
+        "                                     (((o)(o)))",
+        "                                     (((o(o))))",
+        "                                     ((o((o))))",
+        "                                     (o(((o))))",
+        "                                     (((((o)))))"
+    ],
+    "mathematica": [
+        "saue[n_]:=Sum[If[SameQ@@DeleteCases[ptn,1],If[DeleteCases[ptn,1]=={},1,saue[DeleteCases[ptn,1][[1]]]],0],{ptn,IntegerPartitions[n-1]}];",
+        "Table[saue[n],{n,15}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(v=vector(n)); for(n=1, n, v[n] = 1 + sum(k=2, n-1, (n-1)\\k*v[k])); v} \\\\ _Andrew Howroyd_, Oct 26 2018"
+    ],
+    "xref": [
+        "Cf. A002541, A003238, A010766, A126656, A014668, A167865, A214577, A316782, A317099, A317100, A317712, A320230."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Oct 07 2018",
+    "references": 12,
+    "revision": 15,
+    "time": "2023-01-22T18:54:08-05:00",
+    "created": "2018-10-08T08:11:44-04:00"
+}

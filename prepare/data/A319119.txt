@@ -1,0 +1,37 @@
+{
+    "number": 319119,
+    "data": "1,3,9,37,173,921,5185,30497,184469,1140413,7170085,45704821",
+    "name": "Number of multimin tree-factorizations of Heinz numbers of integer partitions of n.",
+    "comment": [
+        "A multimin factorization of n is an ordered factorization of n into factors greater than 1 such that the sequence of minimal primes dividing each factor is weakly increasing. A multimin tree-factorization of n is either the number n itself or a sequence of multimin tree-factorizations, one of each factor in a multimin factorization of n with at least two factors.",
+        "The Heinz number of an integer partition (y_1, ..., y_k) is prime(y_1) * ... * prime(y_k)."
+    ],
+    "example": [
+        "The a(3) = 9 multimin tree-factorizations:",
+        "  5, 6, 8,",
+        "  (2*3), (2*4), (4*2), (2*2*2),",
+        "  (2*(2*2)), ((2*2)*2).",
+        "Or as series-reduced plane trees of multisets:",
+        "  3, 12, 111,",
+        "  (1,2), (1,11), (11,1), (1,1,1),",
+        "  (1,(1,1)), ((1,1),1)."
+    ],
+    "mathematica": [
+        "facs[n_]:=If[n<=1,{{}},Join@@Table[(Prepend[#1,d]&)/@Select[facs[n/d],Min@@#1>=d&],{d,Rest[Divisors[n]]}]];",
+        "mmftrees[n_]:=Prepend[Join@@(Tuples[mmftrees/@#]&/@Select[Join@@Permutations/@Select[facs[n],Length[#]>1&],OrderedQ[FactorInteger[#][[1,1]]&/@#]&]),n];",
+        "Table[Sum[Length[mmftrees[k]],{k,Times@@Prime/@#&/@IntegerPartitions[n]}],{n,7}]"
+    ],
+    "xref": [
+        "Cf. A001055, A020639, A196545, A255397, A281113, A281118, A281119, A295279, A317545, A317546, A319118."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Sep 10 2018",
+    "ext": [
+        "a(11)-a(12) from _Robert Price_, Sep 14 2018"
+    ],
+    "references": 2,
+    "revision": 9,
+    "time": "2018-09-14T10:56:19-04:00",
+    "created": "2018-09-11T17:01:52-04:00"
+}

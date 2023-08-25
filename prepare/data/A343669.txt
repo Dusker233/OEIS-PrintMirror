@@ -1,0 +1,30 @@
+{
+    "number": 343669,
+    "data": "1,1,2,5,15,52,203,877,4140,21146,115965,678460,4212497,27633712,190795218,1381942530,10470109267,82764226404,681048663329,5822029128397,51610194855972,473631475252041,4492967510009533,43996047374513046,444151309687221889,4617189912288741028",
+    "name": "Number of partitions of an n-set without blocks of size 9.",
+    "formula": [
+        "E.g.f.: exp(exp(x) - 1 - x^9/9!).",
+        "a(n) = n! * Sum_{k=0..floor(n/9)} (-1)^k * Bell(n-9*k) / ((n-9*k)! * k! * (9!)^k)."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      `if`(j=9, 0, a(n-j)*binomial(n-1, j-1)), j=1..n))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Apr 25 2021"
+    ],
+    "mathematica": [
+        "nmax = 25; CoefficientList[Series[Exp[Exp[x] - 1 - x^9/9!], {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[n! Sum[(-1)^k BellB[n - 9 k]/((n - 9 k)! k! (9!)^k), {k, 0, Floor[n/9]}], {n, 0, 25}]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[If[k == 9, 0, Binomial[n - 1, k - 1]  a[n - k]], {k, 1, n}]]; Table[a[n], {n, 0, 25}]"
+    ],
+    "xref": [
+        "Cf. A000110, A000296, A027343, A097514, A124504, A343664, A343665, A343666, A343667, A343668."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 25 2021",
+    "references": 7,
+    "revision": 6,
+    "time": "2021-04-25T20:08:06-04:00",
+    "created": "2021-04-25T20:08:06-04:00"
+}

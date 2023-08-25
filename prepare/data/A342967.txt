@@ -1,0 +1,31 @@
+{
+    "number": 342967,
+    "data": "1,2,5,22,177,2606,70226,3457742,311348897,51177188350,15377065068510,8430169458379450,8446194335222422950,15435904380166258833482,51546769958534244310727102,313937270864810066000897492222,3493348088919874482660174997662017",
+    "name": "a(n) = 1 + Sum_{j=1..n} Product_{k=0..j-1} binomial(2*n-1,n+k) / binomial(2*n-1,k).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A342967/b342967.txt\">Table of n, a(n) for n = 0..87</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=0..n} Product_{k=0..n-1} binomial(n+k,j)/binomial(j+k,j).",
+        "a(n) ~ c * exp(1/12) * 2^(4*n^2 - 1/12) / (A * n^(1/12) * 3^(9*n^2/4 - 1/6)), where c = JacobiTheta3(0,1/3) = EllipticTheta[3, 0, 1/3] = 1.69145968168171534134842... if n is even, and c = JacobiTheta2(0,1/3) = EllipticTheta[2, 0, 1/3] = 1.69061120307521423305296... if n is odd, and A is the Glaisher-Kinkelin constant A074962. - _Vaclav Kotesovec_, Apr 02 2021"
+    ],
+    "mathematica": [
+        "a[n_] := 1 + Sum[Product[Binomial[2*n - 1, n + k]/Binomial[2*n - 1, k], {k, 0, j - 1}], {j, 1, n}]; Array[a, 17, 0] (* _Amiram Eldar_, Apr 01 2021 *)",
+        "Table[1 + BarnesG[2*n + 1] * Sum[BarnesG[j + 1]*BarnesG[n - j + 1] / (BarnesG[n + j + 1]*BarnesG[2*n - j + 1]), {j, 1, n}], {n, 0, 15}] (* _Vaclav Kotesovec_, Apr 02 2021 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = 1+sum(j=1, n, prod(k=0, j-1, binomial(2*n-1, n+k)/binomial(2*n-1, k)));",
+        "(PARI) a(n) = sum(j=0, n, prod(k=0, n-1, binomial(n+k, j)/binomial(j+k, j)));"
+    ],
+    "xref": [
+        "Row sums of A342972.",
+        "Cf. A001181, A005362, A005363, A005364, A005365, A005366, A116925."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Seiichi Manyama_, Apr 01 2021",
+    "references": 2,
+    "revision": 27,
+    "time": "2021-04-02T03:35:55-04:00",
+    "created": "2021-04-01T14:41:30-04:00"
+}

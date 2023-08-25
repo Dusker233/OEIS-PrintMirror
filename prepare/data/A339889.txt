@@ -1,0 +1,50 @@
+{
+    "number": 339889,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,65,66,67,68,69,70",
+    "name": "Products of distinct primes or semiprimes.",
+    "comment": [
+        "Numbers that can be factored into distinct primes or semiprimes.",
+        "A semiprime (A001358) is a product of any two prime numbers."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A339889/b339889.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Gus Wiseman, <a href=\"/A339741/a339741_1.txt\">Counting and ranking factorizations, factorability, and vertex-degree partitions for groupings into pairs.</a>"
+    ],
+    "example": [
+        "See A339840 for examples."
+    ],
+    "maple": [
+        "N:= 100: # for terms <= N",
+        "B:= select(t -> numtheory:-bigomega(t) <= 2, {$2..N}):",
+        "S:= {1}:",
+        "for b in B do",
+        "  S:= S union map(`*`,select(`<=`,S,N/b),b)",
+        "od:",
+        "sort(convert(S,list)); # _Robert Israel_, Dec 28 2020"
+    ],
+    "mathematica": [
+        "facs[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[facs[n/d],Min@@#>=d&]],{d,Rest[Divisors[n]]}]];",
+        "Select[Range[100],Select[facs[#],UnsameQ@@#&&SubsetQ[{1,2},PrimeOmega/@#]&]!={}&]"
+    ],
+    "xref": [
+        "See link for additional cross-references.",
+        "Allowing only primes gives A005117.",
+        "Not allowing squares of primes gives A339741.",
+        "Positions of nonzeros in A339839.",
+        "Complement of A339840.",
+        "A001055 counts factorizations.",
+        "A001358 lists semiprimes, with squarefree case A006881.",
+        "A320663 counts non-isomorphic multiset partitions into singletons or pairs.",
+        "A320732 counts factorizations into primes or semiprimes.",
+        "A339742 counts factorizations into distinct primes or squarefree semiprimes.",
+        "A339841 have exactly one factorization into primes or semiprimes.",
+        "Cf. A002100, A013929, A293511, A320893, A339740, A339846."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Dec 23 2020",
+    "references": 3,
+    "revision": 19,
+    "time": "2021-01-08T20:36:31-05:00",
+    "created": "2020-12-26T23:52:58-05:00"
+}

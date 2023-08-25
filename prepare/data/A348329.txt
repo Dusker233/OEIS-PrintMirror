@@ -1,0 +1,51 @@
+{
+    "number": 348329,
+    "data": "0,1,4,27,3125,823543,1647082,2238771",
+    "name": "Numbers k such that k' = k'', where ' is the arithmetic derivative.",
+    "comment": [
+        "For n > 2, a(n) is such that a(n)' = p^p for some prime p. So A051674 is a subsequence. - _David A. Corneth_, Oct 13 2021",
+        "If p > 2 and p^p-2 are both primes (i.e., p is an odd prime term of A100408), then 2*(p^p-2) is a term. Terms of this type are 1647082 and 3956839311320627178247954, corresponding to p = 7 and 19 respectively. - _Amiram Eldar_, Oct 13 2021"
+    ],
+    "formula": [
+        "Numbers k such that A003415(k) = A068346(k)."
+    ],
+    "maple": [
+        "isA348329 := proc(n)",
+        "    local d ;",
+        "    d := A003415(n) ;",
+        "    if A003415(d) = d then",
+        "        true ;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 0 do",
+        "    if isA348329(n) then",
+        "        print(n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Oct 19 2021"
+    ],
+    "mathematica": [
+        "d[0] = d[1] = 0; d[n_] := n * Plus @@ ((Last[#]/First[#]) & /@ FactorInteger[n]); Select[Range[0, 2.5*10^6], d[#] == d[d[#]] &] (* _Amiram Eldar_, Oct 13 2021 *)"
+    ],
+    "program": [
+        "(PARI) ad(n) = vecsum([n/f[1]*f[2]|f<-factor(n+!n)~]); \\\\ A003415",
+        "isok(k) = ad(k) == ad(ad(k)); \\\\ _Michel Marcus_, Oct 18 2021",
+        "(Python)",
+        "from sympy import factorint",
+        "from itertools import count, islice",
+        "def ad(n): return 0 if n<2 else sum(n*e//p for p, e in factorint(n).items())",
+        "def agen(): yield from (k for k in count(0) if (adk:=ad(k)) == ad(adk))",
+        "print(list(islice(agen(), 5))) # _Michael S. Branicky_, Oct 12 2022"
+    ],
+    "xref": [
+        "Cf. A003415, A051674, A068346, A100408."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,3",
+    "author": "_Wesley Ivan Hurt_, Oct 12 2021",
+    "references": 0,
+    "revision": 24,
+    "time": "2022-10-12T08:58:05-04:00",
+    "created": "2021-10-18T20:20:27-04:00"
+}

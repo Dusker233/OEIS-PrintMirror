@@ -1,0 +1,50 @@
+{
+    "number": 297345,
+    "data": "0,1,2,7,24,85,285,1143,6268,216784,1059813,6100794,226303113",
+    "name": "a(0)=0; for n>0, a(n) is the least positive integer that cannot be represented as Sum_{k=1..n-1} a(i_k)*a(k), with 0 <= i_k < n.",
+    "example": [
+        "a(1)= 1 since it is not possible to write 1 using only a(0). a(2)=2, since it is not possible to obtain 2 using only a(0) and a(1). The following numbers up to 6 can be represented using these first 3 elements of the sequence: 3 = 1*1 + 1*2, 4 = 0*1 + 2*2, 5 = 1*1 + 2*2, 6 = 2*1 + 2*2. Again we reach a number that cannot be represented as defined above, so that number is appended to the sequence. It happens here when we try to represent 7 using only a(0)=0, a(1)=1, and a(2)=2. So 7 becomes a(3).",
+        "A larger example: 216752 = 1*1 + 1*2 + 85*7 + 285*24 + 85*85 + 85*285 + 24*1143 + 24*6268"
+    ],
+    "mathematica": [
+        "Nest[Function[a, Append[a, 1 + LengthWhile[Differences@ #, # == 1 &] &@ Union[Total /@ Map[a # &, Tuples[a, Length@ a]]]]], {0}, 8] (* _Michael De Vlieger_, Jan 09 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "# Generate all the elements in the sequence, S, necessary to represent all",
+        "# numbers until the integer 'last'. It also shows how each integer is",
+        "# represented by showing the sequence elements and the respective",
+        "# multiplicative factors.",
+        "import numpy as np",
+        "import itertools",
+        "last=100",
+        "def generate(i,S):",
+        "    n=len(S)",
+        "    s=np.asarray(S,dtype=np.int)",
+        "    perms = [p for p in itertools.product(S, repeat=n)]",
+        "    for iks in perms:",
+        "        t=np.asarray(iks)",
+        "        if np.dot(t,s) == i:",
+        "            print('%d=' %i, end=',')",
+        "            print(t,'x',s)",
+        "            return 0",
+        "    return -1",
+        "S=[0]",
+        "for i in range(1,last+1):",
+        "        if generate(i,S) == -1:",
+        "            S.append(i)",
+        "            generate(i,S)"
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "0,3",
+    "author": "_Luis F.B.A. Alexandre_, Dec 28 2017",
+    "ext": [
+        "a(9) from _Robert G. Wilson v_, Jan 09 2018",
+        "a(10)-a(11) from _Jon E. Schoenfield_, Jan 16 2018",
+        "a(12) from _Giovanni Resta_, Jan 22 2018"
+    ],
+    "references": 1,
+    "revision": 65,
+    "time": "2021-05-24T08:00:23-04:00",
+    "created": "2018-02-11T12:49:01-05:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 337873,
+    "data": "336,5952,10080,27776,44352,60480,61152,97536,102816,127680,178560,185472,196560,260400,292320,333312,455168,472416,578592,635712,758016,785664,833280,961632,1083264,1179360,1189440,1270752,1330560,1530816,1717632,1815072,1821312,1834560",
+    "name": "Numbers m such that the equation m = k*sigma(k) has more than one solution.",
+    "comment": [
+        "The map k -> k*sigma(k) = m is not injective (A064987), this sequence lists in increasing order the integers m that have several preimages.",
+        "These terms m satisfy A327153(m) > 1.",
+        "If 2^p-1 and 2^r-1 are distinct Mersenne primes (A000668), then k = (2^p-1)* 2^(r-1) and q = (2^r-1) * 2^(p-1) satisfy k*sigma(k) = q*sigma(q) = m = (2^p-1) * (2^r-1) * 2^(p+r-1) [see examples a(1) and a(2)].",
+        "The multiplicativity of sigma(k) ensures an infinity of solutions and thus of terms m [see example a(3)]."
+    ],
+    "reference": [
+        "Richard K. Guy, Unsolved Problems in Number Theory, 3rd Edition, Springer, 2004, Section B11, p. 101-102."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A337873/b337873.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "For a(1): 12 * sigma(12) = 14 * sigma(14) = 336 with p=2 and r=3.",
+        "For a(2): 48 * sigma(48) = 62 * sigma(62) = 5952 with p=2 and r=5.",
+        "For a(3): 60 * sigma(60) = 70 * sigma(70) = 10080 with 60/12 = 70/14 = 5.",
+        "a(16) = 333312 is the smallest term with 3 preimages because 336 * sigma(336) = 372 * sigma(372) = 434 * sigma(434) = 333312."
+    ],
+    "mathematica": [
+        "m = 2*10^6; v = Table[0, {m}]; Do[i = n*DivisorSigma[1, n]; If[i <= m, v[[i]]++], {n, 1, Floor@Sqrt[m]}]; Position[v, _?(# > 1 &)] // Flatten (* _Amiram Eldar_, Sep 28 2020 *)"
+    ],
+    "program": [
+        "(PARI) upto(n) = {m = Map(); res = List(); n = sqrtint(n); for(i = 1, n, c = i*sigma(i); if(mapisdefined(m, c), listput(res, c); mapput(m, c, mapget(m, c) + 1) , mapput(m, c, 1); ) ); listsort(res, 1); select(x -> x <= (n+1)^2, res) } \\\\ _David A. Corneth_, Sep 27 2020",
+        "(PARI) isok(m) = {my(nb=0); fordiv(m, d, if (d*sigma(d) == m, nb++; if (nb>1, return(1)));); return (0);} \\\\ _Michel Marcus_, Sep 29 2020"
+    ],
+    "xref": [
+        "Cf. A000203, A000668, A064987.",
+        "Cf. A327153. Subsequence of A327165.",
+        "Cf. A212490, A337874 (preimages), A337875 (primitive terms)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Sep 27 2020",
+    "ext": [
+        "More terms from _David A. Corneth_, Sep 27 2020"
+    ],
+    "references": 6,
+    "revision": 51,
+    "time": "2023-03-31T09:19:14-04:00",
+    "created": "2020-09-29T05:18:43-04:00"
+}

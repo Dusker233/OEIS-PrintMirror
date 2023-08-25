@@ -1,0 +1,37 @@
+{
+    "number": 305256,
+    "data": "1,1,2,8,27,103,389,1497,5786,22556,88230,346576,1365119,5390585,21327913,84527939,335477433,1333079925,5302763618,21112688376,84125853415,335443149005,1338370995240,5342843332758,21339341267983,85266832981905,340840044333836,1362936812554758",
+    "name": "Expansion of exp(Sum_{k>=1} (-1)^(k+1)*x^k/(k*sqrt(1 - 4*x^k))).",
+    "comment": [
+        "Weigh transform of the central binomial coefficients 1, 2, 6, 20, 70, ... (A000984)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A305256/b305256.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} (1 + x^k)^binomial(2*k-2,k-1)."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0, add(",
+        "      binomial(binomial(2*i-2, i-1), j)*b(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, May 28 2018"
+    ],
+    "mathematica": [
+        "nmax = 27; CoefficientList[Series[Exp[Sum[(-1)^(k + 1) x^k/(k Sqrt[1 - 4 x^k]), {k, 1, nmax}]], {x, 0, nmax}], x]",
+        "nmax = 27; CoefficientList[Series[Product[(1 + x^k)^Binomial[2 k - 2, k - 1], {k, 1, nmax}], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[(-1)^(k/d + 1) d Binomial[2 d - 2, d - 1], {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 27}]"
+    ],
+    "xref": [
+        "Cf. A000984, A194353."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, May 28 2018",
+    "references": 1,
+    "revision": 12,
+    "time": "2018-06-09T02:21:55-04:00",
+    "created": "2018-05-28T19:43:29-04:00"
+}

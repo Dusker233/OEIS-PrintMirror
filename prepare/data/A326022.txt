@@ -1,0 +1,48 @@
+{
+    "number": 326022,
+    "data": "1,1,1,1,2,2,2,4,8,8,8,10,14,25,40,49,62",
+    "name": "Number of minimal complete subsets of {1..n} with maximum n.",
+    "comment": [
+        "A set of positive integers summing to m is complete if every nonnegative integer up to m is the sum of some subset. For example, (1,2,3,6,13) is a complete set because we have:",
+        "   0 = (empty sum)",
+        "   1 = 1",
+        "   2 = 2",
+        "   3 = 3",
+        "   4 = 1 + 3",
+        "   5 = 2 + 3",
+        "   6 = 6",
+        "   7 = 6 + 1",
+        "   8 = 6 + 2",
+        "   9 = 6 + 3",
+        "  10 = 1 + 3 + 6",
+        "  11 = 2 + 3 + 6",
+        "  12 = 1 + 2 + 3 + 6",
+        "and the remaining numbers 13-25 are obtained by adding 13 to each of these."
+    ],
+    "example": [
+        "The a(3) = 1 through a(9) = 8 subsets:",
+        "  {1,2,3}  {1,2,4}  {1,2,3,5}  {1,2,3,6}  {1,2,3,7}  {1,2,4,8}    {1,2,3,4,9}",
+        "                    {1,2,4,5}  {1,2,4,6}  {1,2,4,7}  {1,2,3,5,8}  {1,2,3,5,9}",
+        "                                                     {1,2,3,6,8}  {1,2,3,6,9}",
+        "                                                     {1,2,3,7,8}  {1,2,3,7,9}",
+        "                                                                  {1,2,4,5,9}",
+        "                                                                  {1,2,4,6,9}",
+        "                                                                  {1,2,4,7,9}",
+        "                                                                  {1,2,4,8,9}"
+    ],
+    "mathematica": [
+        "fasmin[y_]:=Complement[y,Union@@Table[Union[s,#]&/@Rest[Subsets[Complement[Union@@y,s]]],{s,y}]];",
+        "Table[Length[fasmin[Select[Subsets[Range[n]],Max@@#==n&&Union[Plus@@@Subsets[#]]==Range[0,Total[#]]&]]],{n,10}]"
+    ],
+    "xref": [
+        "Cf. A002033, A103295, A108917, A126796, A188431, A276024.",
+        "Cf. A325684, A325781, A325790, A325791, A325986, A325988, A326016, A326020, A326021, A326036."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,5",
+    "author": "_Gus Wiseman_, Jun 04 2019",
+    "references": 3,
+    "revision": 8,
+    "time": "2019-06-04T08:36:56-04:00",
+    "created": "2019-06-04T08:36:56-04:00"
+}

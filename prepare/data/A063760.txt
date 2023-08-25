@@ -1,0 +1,34 @@
+{
+    "number": 63760,
+    "data": "4,9,25,36,144,441,676,1089,1296,1764,2304,4900,5184,9216,15876,33124,36100,43264,51984,82944,115600,142884,147456,224676,266256,298116,331776,389376,467856,898704,944784,1016064,1587600,2286144,3111696",
+    "name": "Numbers whose sum of non-unitary divisors is a prime and sets a new record for such primes.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A063760/b063760.txt\">Table of n, a(n) for n = 1..100</a> (terms 1..51 from Harry J. Smith)"
+    ],
+    "example": [
+        "441 is a term because sigma(441) - usigma(441) = 241, a prime."
+    ],
+    "mathematica": [
+        "fun[p_, e_] := (p^(e+1)-1)/(p-1); nusigma[1] = 0; nusigma[n_] := Times @@ (fun @@@ (f = FactorInteger[n])) - Times @@ (1 + Power @@@ f); s = {}; pm = 0; Do[If[ PrimeQ[(p = nusigma[n])] && p > pm, pm = p; AppendTo[s, n] ], {n, 1, 10^5}]; s (* _Amiram Eldar_, Sep 24 2019 *)"
+    ],
+    "program": [
+        "(PARI) u(n) = sumdiv(n,d, if(gcd(d, n/d)==1,d));",
+        "a=0; for(n=1,50000,x=sigma(n)-u(n); if(isprime(x),b=x; if(b>a,a=b; print(n))))",
+        "(PARI) u(n) = sumdiv(n, d, if(gcd(d, n/d)==1, d))",
+        "{ n=-1; a=0; for (m=1, 10^9, if(isprime(b=sigma(m) - u(m)), if(b>a, a=b; write(\"b063760.txt\", n++, \" \", m); if (n==50, break))) ) } \\\\ _Harry J. Smith_, Aug 30 2009"
+    ],
+    "xref": [
+        "Cf. A048146."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jason Earls_, Aug 24 2001",
+    "ext": [
+        "Six more terms from _Harry J. Smith_, Aug 30 2009",
+        "Offset corrected by _Amiram Eldar_, Sep 24 2019"
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2019-09-24T05:08:16-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

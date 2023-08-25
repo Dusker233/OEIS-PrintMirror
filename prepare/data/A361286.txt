@@ -1,0 +1,42 @@
+{
+    "number": 361286,
+    "data": "1,2,6,18,50,138,430,1242,3666,10938,34598,108098,338634,1058370",
+    "name": "Total over all partitions lambda of n, of factors of s_lambda in the skew Schur function s_( nu/lambda ) with (s_lambda)^2 = Sum( C(nu, lambda, lambda) s_nu ).",
+    "comment": [
+        "All the terms for n >= 1 so far are twice an odd integer.",
+        "In terms of Young diagrams, this counts how many original copies one gets by first adding n boxes and then removing n boxes while maintaining an allowed Young diagram shape.",
+        "Also a(n) is the total over all partitions n of the multiplicities squared, partition by partition, in the LR-expansion of (s_lambda |- n)^2. Notice that this is different from A067855 where the multipliciteis are first summed over all lambda |-n, and finally squared, then summed."
+    ],
+    "example": [
+        "For n=3,",
+        "    {3} -> 4 s_{3} + 2 s_{2,1}",
+        "    {2,1} -> 4 s_{3} + 10 s_{2,1} + 4 s_{1,1,1} and",
+        "    {1,1,1} -> 2 s_{2,1} + 4 s_{1,1,1}",
+        "so a(3) = 4 + 10 + 4 = 18.",
+        "Also,",
+        "s(3)^2 -> s(6)+s(3;3)+s(4;2)+s(5,1) -> {1,1,1,1} ->{1,1,1,1} ->4",
+        "  s(2;1)^2 ->s(4;2)+s(4;1;1)+s(3;3)+2 s(3;2;1)+s(3;1;1;1)+s(2;2;2)+s(2;2;1;1)",
+        "         -> {1,1,1,2,1,1,1} -> {1,1,1,4,1,1,1} -> 10",
+        "s(1;1;1)^2 -> s(2;2;2)+s(2;2;1;1)+s(2;1;1;1;1)+s(1^6) ->{1,1,1,1} ->{1,1,1,1} ->4"
+    ],
+    "mathematica": [
+        "(* with 'LRRule' and 'skewschur' defined in http://users.telenet.be/Wouter.Meeussen/ToolBox.nb *)",
+        "Tr/@ Table[Coefficient[",
+        "  Total[skewschur[#, \\[Lambda], n] & /@",
+        "    LRRule[\\[Lambda], \\[Lambda]]], ss[\\[Lambda], n] ], {n,",
+        "  13}, {\\[Lambda], Partitions[n]}];",
+        "also Table[Total[",
+        "  Table[Map[Last, Tally[LRRule[\\[Lambda], \\[Lambda]]] ]^2, {\\[Lambda],",
+        "     Partitions[n]}], 2], {n, 13}];"
+    ],
+    "xref": [
+        "Cf. A067855, A322210."
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "0,2",
+    "author": "_Wouter Meeussen_, Mar 07 2023",
+    "references": 1,
+    "revision": 17,
+    "time": "2023-04-09T02:31:00-04:00",
+    "created": "2023-04-09T02:31:00-04:00"
+}

@@ -1,0 +1,32 @@
+{
+    "number": 340325,
+    "data": "5,6,10,11,12,13,14,15,17,18,19,20,22,23,24,25,26,28,29,30,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84",
+    "name": "Numbers k such that starting with k and repeatedly applying the map x -> A340323(x) reaches the fixed point 12.",
+    "comment": [
+        "From _Sebastian Karlsson_, Jan 15 2021: (Start)",
+        "The sequence contains no powers of two. If a number isn't a power of two, then it is in this sequence if and only if either of the following conditions hold:",
+        "- It is a multiple of a prime that is not a Mersenne prime.",
+        "- It is divisible by the square of a Mersenne prime greater than 3. (End)"
+    ],
+    "mathematica": [
+        "fa[n_]:=fa[n]=FactorInteger[n];phi[1]=1; phi[p_, s_]:= (p + 1)*( p - 1)^(s - 1)",
+        "phi[n_]:=Product[phi[fa[n][[i, 1]], fa[n][[i, 2]]], {i, Length[fa[n]]}];",
+        "S[n_] := NestWhile [phi, n, ! ( # == 12 || # == 3 || # == 4) &];",
+        "Select[1 + Range[100], S[#] == 12 &]"
+    ],
+    "program": [
+        "(PARI) f(n) = if(1==n, n, my(f=factor(n)); prod(i=1, #f~, (f[i, 1]+1)*((f[i, 1]-1)^(f[i, 2]-1)))); \\\\ A340323",
+        "isok(m) = if (m==1, return(0)); while(! ((m==3) || (m==4) || (m==12)), m = f(m)); (m==12); \\\\ _Michel Marcus_, Jan 21 2021"
+    ],
+    "xref": [
+        "Cf. A340323, A340324.",
+        "Cf. A000668."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jos\u00e9 Mar\u00eda Grau Ribas_, Jan 07 2021",
+    "references": 2,
+    "revision": 18,
+    "time": "2021-02-06T12:35:37-05:00",
+    "created": "2021-02-06T12:35:37-05:00"
+}

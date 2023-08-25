@@ -1,0 +1,33 @@
+{
+    "number": 356981,
+    "data": "2,3,5,7,84,144,160,250,343,468,735,936,975,1125,1215,1375,1408,1600,1694,1872,2401,2500,2646,2880,3920,4913,6084,6318,6860,7296,7695,8624,8704,8788,9126,10125,10240,10816,11264,12672,12675,14641,14896,16000",
+    "name": "Numbers k such that the sum of distinct digits of k equals the sum of the prime divisors of k.",
+    "comment": [
+        "Similar to A070275, where distinctness of digits is not required."
+    ],
+    "example": [
+        "144 = 2^4*3^2 and 1+4=2+3. Thus, 144 is in this sequence."
+    ],
+    "mathematica": [
+        "Select[Range[2, 20000],Total[Union[IntegerDigits[#]]] ==  Total[Transpose[FactorInteger[#]][[1]]] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import primefactors",
+        "def A356981_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda k:sum(int(d) for d in set(str(k)))==sum(primefactors(k)), count(max(startvalue,1)))",
+        "A356981_list = list(islice(A356981_gen(),30)) # _Chai Wah Wu_, Sep 12 2022",
+        "(PARI) isok(k) = vecsum(Set(digits(k))) == vecsum(factor(k)[, 1]); \\\\ _Michel Marcus_, Sep 12 2022"
+    ],
+    "xref": [
+        "Cf. A070275, A217928."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Sep 09 2022",
+    "references": 1,
+    "revision": 23,
+    "time": "2022-09-14T02:06:26-04:00",
+    "created": "2022-09-11T19:03:15-04:00"
+}

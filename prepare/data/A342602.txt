@@ -1,0 +1,46 @@
+{
+    "number": 342602,
+    "data": "0,0,1,1,1,4,6,14,29,63,129,300,756,1677,4134,9525,22841,57175,141819,354992,882420,2218078,5588989,14173217,35918542",
+    "name": "Number of solutions to 1 +-* 2 +-* 3 +-* ... +-* n = 0.",
+    "comment": [
+        "Normal operator precedence is followed, so multiplication is performed before addition or subtraction. Unlike A058377, which uses only addition and subtraction, this sequence has solutions for all values of n >= 3.",
+        "The author thanks Ursula Ponting for useful discussions."
+    ],
+    "example": [
+        "a(3) = 1 as 1 + 2 - 3 = 0 is the only solution.",
+        "a(4) = 1 as 1 - 2 - 3 + 4 = 0 is the only solution.",
+        "a(5) = 1 as 1 * 2 - 3 - 4 + 5 = 0 is the only solution. This is the first term where a solution exists while no corresponding solution exists in A058377.",
+        "a(6) = 4. The solutions, all of which use multiplication, are",
+        "         1 + 2 * 3 + 4 - 5 - 6 = 0,",
+        "         1 - 2 + 3 * 4 - 5 - 6 = 0,",
+        "         1 - 2 * 3 + 4 - 5 + 6 = 0,",
+        "         1 * 2 + 3 - 4 + 5 - 6 = 0.",
+        "a(10) = 63. An example solution is",
+        "         1 - 2 * 3 * 4 - 5 - 6 - 7 * 8 + 9 * 10 = 0.",
+        "a(20) = 354992. An example solution is",
+        "         1 * 2 * 3 * 4 * 5 * 6 * 7 + 8 * 9 + 10 * 11 - 12 * 13 + 14 * 15",
+        "             - 16 * 17 * 18 - 19 * 20 = 0",
+        "  which includes thirteen multiplications."
+    ],
+    "mathematica": [
+        "Table[Length@Select[Tuples[{\"+\",\"-\",\"*\"},k-1],ToExpression[\"\"<>Riffle[ToString/@Range@k,#]]==0&],{k,11}] (* _Giorgos Kalogeropoulos_, Apr 02 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "def a(n):",
+        "  nn = [str(i) for i in range(1, n+1)]",
+        "  return sum(eval(\"\".join([*sum(zip(nn, ops+(\"\",)), ())])) == 0 for ops in product(\"+-*\", repeat=n-1))",
+        "print([a(n) for n in range(1, 14)]) # _Michael S. Branicky_, Apr 02 2021"
+    ],
+    "xref": [
+        "Cf. A342804 (using +-*/), A342995 (using +-/), A058377 (using +-), A063865, A000217, A025591, A161943."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,6",
+    "author": "_Scott R. Shannon_, Mar 27 2021",
+    "references": 2,
+    "revision": 45,
+    "time": "2021-04-04T01:02:23-04:00",
+    "created": "2021-04-04T01:02:23-04:00"
+}

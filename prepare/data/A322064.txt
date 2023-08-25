@@ -1,0 +1,41 @@
+{
+    "number": 322064,
+    "data": "1,1,1,7,141,6533,631875,123430027,48659732725,39107797223409,64702785181953175,221636039917857648631,1575528053913118966200441,23249384407499950496231003021,711653666389829384034090082068939,45128328085994437067694854477617868995",
+    "name": "Number of ways to choose a stable partition of a simple connected graph with n vertices.",
+    "comment": [
+        "A stable partition of a graph is a set partition of the vertices where no non-singleton edge has both ends in the same block."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A322064/b322064.txt\">Table of n, a(n) for n = 0..75</a>"
+    ],
+    "example": [
+        "The a(3) = 7 stable partitions. The simple connected graph is on top, and below is a list of all its stable partitions.",
+        "  {1,3}{2,3}     {1,2}{2,3}     {1,2}{1,3}     {1,2}{1,3}{2,3}",
+        "  --------       --------       --------       --------",
+        "  {{1,2},{3}}    {{1,3},{2}}    {{1},{2,3}}    {{1},{2},{3}}",
+        "  {{1},{2},{3}}  {{1},{2},{3}}  {{1},{2},{3}}"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Union[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Sum[Length[Select[Subsets[Complement[Subsets[Range[n],{2}],Union@@Subsets/@stn]],And[Union@@#==Range[n],Length[csm[#]]==1]&]],{stn,sps[Range[n]]}],{n,5}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See A322278 for M.",
+        "seq(n)={concat([1], (M(n)*vectorv(n,i,1))~)} \\\\ _Andrew Howroyd_, Dec 01 2018"
+    ],
+    "xref": [
+        "Row sums of A322278.",
+        "Cf. A000110, A000569, A001187, A006125, A048143, A229048, A240936, A245883, A277203, A321911, A321979, A322063, A322065."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Nov 25 2018",
+    "ext": [
+        "Terms a(7) and beyond from _Andrew Howroyd_, Dec 01 2018"
+    ],
+    "references": 7,
+    "revision": 10,
+    "time": "2018-12-01T21:38:02-05:00",
+    "created": "2018-11-26T17:04:19-05:00"
+}

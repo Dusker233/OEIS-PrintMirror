@@ -1,0 +1,32 @@
+{
+    "number": 345973,
+    "data": "1,1,1,2,3,6,10,20,36,73,138,281,549,1136,2263,4705,9553,20015,41096,86643,179638,380701,795892,1693003,3562217,7612680,16099538,34505797,73345831,157678081,336419942,725236780,1552662599,3354979195,7205601904,15600414855,33594465666",
+    "name": "G.f.: x + x^2 / Product_{n>=1} (1 - a(n)*x^n).",
+    "link": [
+        "David Callan, <a href=\"https://arxiv.org/abs/2108.04969\">A Combinatorial Interpretation for Sequence A345973 in OEIS</a>, arXiv:2108.04969 [math.CO], 2021."
+    ],
+    "formula": [
+        "G.f.: x + x^2 * exp(Sum_{n>=1} Sum_{k>=1} a(n)^k * x^(n*k) / k).",
+        "a(n+2) = (1/n) * Sum_{k=1..n} ( Sum_{d|k} d * a(d)^(k/d) ) * a(n-k+2)."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<3, 1, add(a(n-k)*add(d*",
+        "      a(d)^(k/d), d=numtheory[divisors](k)), k=1..n-2)/(n-2))",
+        "    end:",
+        "seq(a(n), n=1..37);  # _Alois P. Heinz_, Jul 01 2021"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = SeriesCoefficient[x + x^2/Product[(1 - a[k] x^k), {k, 1, n - 1}], {x, 0, n}]; Table[a[n], {n, 1, 37}]",
+        "a[1] = a[2] = 1; a[n_] := a[n] = (1/(n - 2)) Sum[Sum[d a[d]^(k/d), {d, Divisors[k]}] a[n - k], {k, 1, n - 2}]; Table[a[n], {n, 1, 37}]"
+    ],
+    "xref": [
+        "Cf. A007562, A032307, A093637."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Ilya Gutkovskiy_, Jun 30 2021",
+    "references": 2,
+    "revision": 10,
+    "time": "2021-08-12T05:40:49-04:00",
+    "created": "2021-07-01T19:36:01-04:00"
+}

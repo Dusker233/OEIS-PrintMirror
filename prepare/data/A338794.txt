@@ -1,0 +1,39 @@
+{
+    "number": 338794,
+    "data": "39,60,69,72,99,102,105,108,111,150,165,180,192,195,198,225,228,231,240,270,279,282,309,312,315,348,351,381,399,420,441,459,462,465,489,501,522,588,591,600,615,618,642,645,660,675,702,741,759,771,810,822,825,828",
+    "name": "Index k of Fibonacci numbers such that F(k)^2 + 1 has no Fibonacci prime factor, where F(k) is the k-th Fibonacci number.",
+    "comment": [
+        "Or numbers k such that A338762(k) = 0."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A338794/b338794.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "39 is in the sequence because F(39)^2 + 1 = 63245986^2 + 1 = 73*149*2221*2789*59369 with no Fibonacci prime factors.",
+        "38 is not in the sequence because F(38)^2 + 1 = 39088169^2 + 1 =  2*73*149*233*2221*135721. The numbers and 2, 233 are Fibonacci prime factors."
+    ],
+    "maple": [
+        "a:= proc(n) local F, m, t; F, m, t:=",
+        "      [1, 2], 0, (<<0|1>, <1|1>>^n)[2, 1]^2+1;",
+        "      while F[2]<=t do if isprime(F[2]) and irem(t, F[2])=0",
+        "        then m:=F[2] fi; F:= [F[2], F[1]+F[2]]",
+        "      od; m",
+        "    end:",
+        "for n from 1 to 100 do :",
+        "if a(n)=0 then printf(`%d, `,n):else fi:",
+        "od: # program from _Alois P. Heinz_, adapted for the sequence. See A338762."
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(i=0, f=0, x=fibonacci(n)^2+1, m=0); while(f < x, i++; f = fibonacci(i); if (ispseudoprime(f) && (x%f) == 0, return (0));); return(1);} \\\\ _Michel Marcus_, Nov 13 2020"
+    ],
+    "xref": [
+        "Cf. A000045, A005478, A168063, A245306, A338762."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Nov 09 2020",
+    "references": 5,
+    "revision": 37,
+    "time": "2020-11-19T12:30:28-05:00",
+    "created": "2020-11-18T09:26:06-05:00"
+}

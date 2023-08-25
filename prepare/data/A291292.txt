@@ -1,0 +1,45 @@
+{
+    "number": 291292,
+    "data": "1,1,1,3,10,34,116,396,1353,4631,15895,54757,189465,658835,2303381,8098783,28642314,101894922,364614216,1312191768,4748561094,17275277322,63163858146,232041604038,856219298484,3172442815476,11799466553232,44041859928944,164924424558532,619454123593948",
+    "name": "Necklace Catalan numbers.",
+    "comment": [
+        "The n-th term is the number of ways to 'parenthesize' n beads arranged on a necklace. This can be proved."
+    ],
+    "formula": [
+        "a(n) = 3^(n-2) + (Sum_{i=0..n-4} 3^i*(2*(n-i-3))/((n-i-1)*(n-i))*binomial(2*(n-i-2), n-i-2)), for n >= 4. Initial terms are a(1)=a(2)=1, a(3)=3.",
+        "a(n) ~ 2^(2*n-1) / (sqrt(Pi) * n^(3/2)). - _Vaclav Kotesovec_, Oct 22 2018",
+        "From _Peter Luschny_, Oct 25 2018: (Start)",
+        "a(n) = (3^(n-2) + (-4)^n*binomial(3/2, n)*((4/3)*n - 2 + hypergeom([1, -n], [5/2 - n], 3/4)))/2) for n >= 3.",
+        "a(n) = [x^n] (3/2) + (x - sqrt(1 - 4*x))*(2*x - 1)/(6*x - 2). (End)",
+        "Recurrence: 12*(2*n-7)*(n-4)*a(n-3) + (-158*n^2+744*n-862)*a(n-2) + 2*(n-1)*(79*n-143)*a(n-1) - 6*n*(11*n-9)*a(n) + (n+1)*(13*n+2)*a(n+1) - (n+1)*(n+2)*a(n+2) = 0. - _Georg Fischer_, Oct 21 2022"
+    ],
+    "maple": [
+        "a:=n->`if`(n<=2,1,`if`(n=2,3,3^(n-2)+add((3^i)*(2*(n-i-3))/((n-i-1)*(n-i))*binomial(2*(n-i-2),n-i-2),i=0..n-4))); seq(a(n),n=0..30); # _Muniru A Asiru_, Oct 05 2018",
+        "# Alternative:",
+        "ogf := x -> 3/2 + (x - sqrt(1 - 4*x))*(2*x - 1)/(6*x - 2):",
+        "ser := series(ogf(x),x,32):",
+        "seq(coeff(ser, x, n), n=0..29); # _Peter Luschny_, Oct 25 2018",
+        "# Derivation of the recurrence (requires Maple 2022):",
+        "FormalPowerSeries:-FindRE(3/2 + (x - sqrt(1 - 4*x))*(2*x - 1)/(6*x - 2),x,a(n)); # _Georg Fischer_, Oct 21 2022"
+    ],
+    "mathematica": [
+        "Flatten[{1, 1, Table[3^(n - 2) + Sum[3^i*2*(n - i - 3)/((n - i - 1)*(n - i)) * Binomial[2*(n - i - 2), n - i - 2], {i, 0, n - 4}], {n, 2, 30}]}] (* _Vaclav Kotesovec_, Oct 22 2018 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = if (n<=2, 1, if (n==2, 3, 3^(n-2) + sum(i=0, (n-4), (3^i)*(2*(n-i-3))/((n-i-1)*(n-i))*binomial(2*(n-i-2), n-i-2)))); \\\\ _Michel Marcus_, Oct 05 2018",
+        "(GAP) Concatenation([1,1,1,3],List([4..30],n->3^(n-2)+(Sum([0..n-4],i->(3^i)*(2*(n-i-3))/((n-i-1)*(n-i))*Binomial(2*(n-i-2),n-i-2))))); # _Muniru A Asiru_, Oct 05 2018"
+    ],
+    "xref": [
+        "Cf. A320827, A320902."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Sachin J. Valera_, Oct 05 2018",
+    "ext": [
+        "More terms from _Michel Marcus_, Oct 05 2018"
+    ],
+    "references": 2,
+    "revision": 56,
+    "time": "2022-10-21T07:02:07-04:00",
+    "created": "2018-10-26T00:56:20-04:00"
+}

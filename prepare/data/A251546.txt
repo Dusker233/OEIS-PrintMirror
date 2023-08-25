@@ -1,0 +1,37 @@
+{
+    "number": 251546,
+    "data": "2,4,4,6,6,6,6,6,6,10,10,10,10,10,10,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,24,24,30,30,30,30,30,30,38,38,40,40,40,40,40,40,40,46,46,46,46,46,46,46,46,54,54,54",
+    "name": "a(n) = smallest even number not in {A098550(1), A098550(2), ..., A098550(n)}.",
+    "comment": [
+        "A251416(n) = Min{a(n), A251549(n)}. - _Reinhard Zumkeller_, Dec 19 2014"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A251546/b251546.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "David L. Applegate, Hans Havermann, Bob Selcoe, Vladimir Shevelev, N. J. A. Sloane, and Reinhard Zumkeller, <a href=\"http://arxiv.org/abs/1501.01669\">The Yellowstone Permutation</a>, arXiv preprint arXiv:1501.01669 [math.NT], 2015 and <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Sloane/sloane9.html\">J. Int. Seq. 18 (2015) 15.6.7</a>."
+    ],
+    "mathematica": [
+        "terms = 100;",
+        "f[lst_List] := Block[{k = 4}, While[GCD[lst[[-2]], k] == 1 || GCD[lst[[-1]], k] > 1 || MemberQ[lst, k], k++]; Append[lst, k]];",
+        "A098550 = Nest[f, {1, 2, 3}, terms - 3];",
+        "a[1] = 2;",
+        "a[n_] := a[n] = For[k = a[n-1], True, k += 2, If[FreeQ[A098550[[1;;n]], k], Return[k]]];",
+        "Array[a, terms] (* _Jean-Fran\u00e7ois Alcover_, Aug 01 2018, after _Robert G. Wilson v_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List ((\\\\))",
+        "a251546 n = head $ [2, 4 ..] \\\\ filter even (take n a098550_list)",
+        "-- _Reinhard Zumkeller_, Dec 19 2014"
+    ],
+    "xref": [
+        "Cf. A098550, A247253, A251416, A251417, A251547, A251548, A251549, A251550, A251551, A251552.",
+        "See also A251557, A251558, A251559."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Dec 18 2014",
+    "references": 12,
+    "revision": 27,
+    "time": "2018-08-01T09:21:18-04:00",
+    "created": "2014-12-18T15:40:39-05:00"
+}

@@ -1,0 +1,52 @@
+{
+    "number": 352329,
+    "data": "1,13527684,34857216,65318724,73256481,81432576,139854276,152843769,157326849,215384976,245893761,254817369,326597184,361874529,375468129,382945761,385297641,412739856,523814769,529874361,537219684,549386721,587432169,589324176,597362481,615387249",
+    "name": "Squares in A030299.",
+    "comment": [
+        "Conjecture: there are infinitely many terms."
+    ],
+    "reference": [
+        "John D. Dixon and Brian Mortimer, Permutation groups. Graduate Texts in Mathematics, 163. Springer-Verlag, New York, 1996. xii+346 pp. ISBN: 0-387-94599-7 MR1409812 (98m:20003)."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A352329/b352329.txt\">Table of n, a(n) for n = 1..3185</a>"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import permutations",
+        "def pmap(s, m): return sum(s[i-1]*10**(m-i) for i in range(1, len(s)+1))",
+        "def agen():",
+        "  m = 1",
+        "  while True:",
+        "    for s in permutations(range(1, m+1)): yield pmap(s, m)",
+        "    m += 1",
+        "def aupton(terms):",
+        "  alst, g = [], agen()",
+        "  while len(alst) < terms: alst += [next(g)]",
+        "  return alst",
+        "def is_perfect_square(n):",
+        "        return round(n ** 0.5) ** 2 == n",
+        "print([x for x in aupton(5000000) if is_perfect_square(x)])",
+        "(Python)",
+        "from itertools import count, islice, permutations",
+        "from sympy import integer_nthroot",
+        "def A352329_gen(): # generator of terms",
+        "    for l in count(1):",
+        "        if (r := l*(l+1)//2 % 9) == 0 or r == 1 or r == 4 or r == 7:",
+        "            m = tuple(10**(l-i-1) for i in range(l))",
+        "            for p in permutations(range(1,l+1)):",
+        "                if integer_nthroot(n := sum(prod(k) for k in zip(m,p)),2)[1]:",
+        "                    yield n",
+        "A352329_list = list(islice(A352329_gen(),10)) # _Chai Wah Wu_, Mar 21-22 2022"
+    ],
+    "xref": [
+        "Cf. A030299, A240763."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Luca Onnis_ and _Marco Rip\u00e0_, Mar 12 2022",
+    "references": 3,
+    "revision": 39,
+    "time": "2022-04-13T07:44:02-04:00",
+    "created": "2022-03-20T13:30:40-04:00"
+}

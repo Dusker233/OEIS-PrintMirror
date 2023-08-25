@@ -1,0 +1,36 @@
+{
+    "number": 357414,
+    "data": "0,1,1,4,4,5,5,8,12,13,13,20,20,21,21,30,30,59,59,62,62,63,63,94,104,105,187,190,190,191,191,306,306,307,307,564,564,565,565,582,582",
+    "name": "Number of nonempty subsets of {1..n} whose elements have an even geometric mean.",
+    "formula": [
+        "a(p) = a(p-1) for prime p > 2. - _Michael S. Branicky_, Sep 30 2022"
+    ],
+    "example": [
+        "a(8) = 8 subsets: {2}, {4}, {6}, {8}, {1, 4}, {2, 8}, {1, 2, 4} and {2, 4, 8}."
+    ],
+    "program": [
+        "(Python)",
+        "from functools import lru_cache",
+        "from sympy import integer_nthroot",
+        "def cond(p, c): r, b = integer_nthroot(p, c); return b and r&1 == 0",
+        "@lru_cache(maxsize=None)",
+        "def b(n, p, c):",
+        "    if n == 0: return int (c > 0 and cond(p, c))",
+        "    return b(n-1, p, c) + b(n-1, p*n, c+1)",
+        "a = lambda n: b(n, 1, 0)",
+        "print([a(n) for n in range(1, 26)]) # _Michael S. Branicky_, Sep 29 2022"
+    ],
+    "xref": [
+        "Cf. A326027, A357356, A357412, A357413, A357416."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,4",
+    "author": "_Ilya Gutkovskiy_, Sep 27 2022",
+    "ext": [
+        "a(24)-a(41) from _Michael S. Branicky_, Sep 30 2022"
+    ],
+    "references": 3,
+    "revision": 16,
+    "time": "2022-09-30T17:27:46-04:00",
+    "created": "2022-09-28T17:29:53-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 352290,
+    "data": "1,2,3,5,7,8,18,34,55,57,89,123,144,233,239,322,377,411,500,568,610,746,788,843,987,1487,1542,1568,1636,2207,2584,2707,3173,3639,3793,3804,3817,4050,4181,4217,4594,4662,5270,5778,6107,6613,8595,8972,10341,10569",
+    "name": "Numbers m such that the greatest prime factor of m^2 + 1 is a Fibonacci number.",
+    "comment": [
+        "A281618 is a subsequence.",
+        "The corresponding greatest prime Fibonacci factors of the sequence are 2, 5, 5, 13, 5, 13, 13, 89, 89, 13, 233, 89, 233, ...",
+        "The Fibonacci numbers of the sequence are 1, 2, 3, 5, 8, 34, 55, 89, 144, 233, 377, 610, 987, 2584, 4181, 10946, 17711, ... (subsequence of A000045).",
+        "The Lucas numbers of the sequence are 1, 2, 3, 7, 18, 123, 322, 843, 2207, 5778, 39603, 103682, ... (subsequence of A000032).",
+        "The prime numbers of the sequence are 2, 3, 5, 7, 89, 233, 239, 1487, 2207, 2707, 3793, 4217, 11789, 11981, 13763, ... including the prime Fibonacci numbers 2, 3, 5, 89, 233, 1066340417491710595814572169, ... (subsequence of A005478)."
+    ],
+    "example": [
+        "18 is in the sequence because 18^2 + 1 = 5^2*13 and 13 is a Fibonacci number."
+    ],
+    "maple": [
+        "q:= n-> (t-> ormap(issqr, [t+4, t-4]))(5*max(numtheory[factorset](n^2+1))^2):",
+        "select(q, [$1..12000])[];  # _Alois P. Heinz_, Mar 11 2022"
+    ],
+    "mathematica": [
+        "With[{f = Fibonacci[Range[21]], m = f[[-1]]}, Select[Range[m], MemberQ[f, FactorInteger[#^2 + 1][[-1, 1]]] &]] (* _Amiram Eldar_, Mar 11 2022 *)"
+    ],
+    "program": [
+        "(PARI) isfib(n) = my(k=n^2); k+=(k+1)<<2; issquare(k) || (n>0 && issquare(k-8));",
+        "isok(m) = isfib(vecmax(factor(m^2+1)[,1])); \\\\ _Michel Marcus_, Mar 11 2022"
+    ],
+    "xref": [
+        "Cf. A000032, A000045, A002522, A005478, A014442, A248516, A338762, A339461."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Lagneau_, Mar 11 2022",
+    "references": 1,
+    "revision": 12,
+    "time": "2022-03-17T16:59:22-04:00",
+    "created": "2022-03-17T16:59:22-04:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 173290,
+    "data": "1,4,8,14,20,32,40,52,64,82,94,118,132,156,180,204,222,258,278,314,346,382,406,454,484,526,562,610,640,712,744,792,840,894,942,1014,1052,1112,1168,1240,1282,1378,1422,1494,1566,1638,1686,1782,1838,1928,2000,2084",
+    "name": "Partial sums of A001615.",
+    "comment": [
+        "a(n) is even for n >= 2. - _Jianing Song_, Nov 24 2018"
+    ],
+    "reference": [
+        "W. H\u00fcrlimann, Dedekind's arithmetic function and primitive four squares counting functions, Journal of Algebra, Number Theory: Advances and Applications, Volume 14, Number 2, 2015, Pages 73-88; http://scientificadvances.co.in; DOI: http://dx.doi.org/10.18642/jantaa_7100121599"
+    ],
+    "link": [
+        "Enrique P\u00e9rez Herrero, <a href=\"/A173290/b173290.txt\">Table of n, a(n) for n = 1..5000</a>",
+        "W. H\u00fcrlimann, <a href=\"https://www.researchgate.net/publication/295616503_Dedekind&#39;s_arithmetic_function_and_primitive_four_squares_counting_functions\">Dedekind's arithmetic function and primitive four squares counting functions</a>, Journal of Algebra, Number Theory: Advances and Applications, Volume 14, Number 2, 2015, Pages 73-88."
+    ],
+    "formula": [
+        "a(n) = Sum_{i=1..n} A001615(i) = Sum_{i=1..n} (n * Product_{p|n, p prime} (1 + 1/p)).",
+        "a(n) = 15*n^2/(2*Pi^2) + O(n*log(n)). - _Enrique P\u00e9rez Herrero_, Jan 14 2012",
+        "a(n) = Sum_{i=1..n} A063659(i) * floor(n/i). - _Enrique P\u00e9rez Herrero_, Feb 23 2013",
+        "a(n) = (1/2)*Sum_{k=1..n} mu(k)^2 * floor(n/k) * floor(1+n/k), where mu(k) is the Moebius function. - _Daniel Suteu_, Nov 19 2018",
+        "a(n) = (Sum_{k=1..floor(sqrt(n))} k*(k+1) * (A013928(1+floor(n/k)) - A013928(1+floor(n/(k+1)))) + Sum_{k=1..floor(n/(1+floor(sqrt(n))))} mu(k)^2 * floor(n/k) * floor(1+n/k))/2. - _Daniel Suteu_, Nov 23 2018"
+    ],
+    "maple": [
+        "with(numtheory): a:=n->(1/2)*add(mobius(k)^2*floor(n/k)*floor(1+n/k),k=1..n); seq(a(n),n=1..55); # _Muniru A Asiru_, Nov 24 2018"
+    ],
+    "mathematica": [
+        "Table[Sum[DirichletConvolve[j, MoebiusMu[j]^2, j, k], {k,1,n}], {n,60}] (* _G. C. Greubel_, Nov 23 2018 *)",
+        "psi[n_] := If[n==1, 1, n*Times@@(1 + 1/FactorInteger[n][[;;,1]])]; Accumulate[Array[psi, 50]] (* _Amiram Eldar_, Nov 23 2018 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "S(n) = sum(k=1, sqrtint(n), moebius(k)*(n\\(k*k))); \\\\ see: A013928",
+        "a(n) = sum(k=1, sqrtint(n), k*(k+1) * (S(n\\k) - S(n\\(k+1))))/2 + sum(k=1, n\\(1+sqrtint(n)), moebius(k)^2*(n\\k)*(1+n\\k))/2; \\\\ _Daniel Suteu_, Nov 23 2018",
+        "(Sage)",
+        "def A173290(n) :",
+        "    return add(k*mul(1+1/p for p in prime_divisors(k)) for k in (1..n))",
+        "[A173290(n) for n in (1..52)]  # _Peter Luschny_, Jun 10 2012",
+        "(Magma) [(&+[MoebiusMu(k)^2*Floor(n/k)*Floor(1 + n/k): k in [1..n]])/2: n in [1..60]]; // _G. C. Greubel_, Nov 23 2018"
+    ],
+    "xref": [
+        "Cf. A001615, A063659.",
+        "Cf. A082020.",
+        "Cf. A175836 (partial products of the Dedekind psi function)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jonathan Vos Post_, Feb 15 2010",
+    "references": 10,
+    "revision": 58,
+    "time": "2022-09-08T08:45:50-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

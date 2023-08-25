@@ -1,0 +1,34 @@
+{
+    "number": 298533,
+    "data": "1,1,2,4,8,15,31,64,144,333,808,2004,5109,13199,34601,91539,244307,656346,1774212,4820356,13157591,36060811,99198470,273790194,757971757,2104222594,5856496542,16338140048,45678276507,127964625782,359155302204,1009790944307",
+    "name": "Number of unlabeled rooted trees with n vertices such that every branch of the root has the same number of leaves.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A298533/b298533.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "The a(5) = 8 trees: ((((o)))), (((oo))), ((o(o))), ((ooo)), (o((o))), ((o)(o)), (oo(o)), (oooo)"
+    ],
+    "mathematica": [
+        "rut[n_]:=rut[n]=If[n===1,{{}},Join@@Function[c,Union[Sort/@Tuples[rut/@c]]]/@IntegerPartitions[n-1]];",
+        "Table[Length[Select[rut[n],SameQ@@(Count[#,{},{0,Infinity}]&/@#)&]],{n,15}]"
+    ],
+    "program": [
+        "(PARI) \\\\ here R is A055277 as vector of polynomials",
+        "EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "R(n) = {my(A = O(x)); for(j=1, n, A = x*(y - 1  + exp( sum(i=1, j, 1/i * subst( subst( A + x * O(x^(j\\i)), x, x^i), y, y^i) ) ))); Vec(A)};",
+        "seq(n)={my(M=Mat(apply(p->Colrev(p,n), R(n-1)))); concat([1],sum(i=2, #M, EulerT(M[i,])))} \\\\ _Andrew Howroyd_, May 20 2018"
+    ],
+    "xref": [
+        "Cf. A000081, A003238, A004111, A032305, A289079, A290689, A291443, A297791, A298422, A298534, A298535."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Jan 20 2018",
+    "ext": [
+        "Terms a(19) and beyond from _Andrew Howroyd_, May 20 2018"
+    ],
+    "references": 6,
+    "revision": 9,
+    "time": "2018-05-21T15:09:25-04:00",
+    "created": "2018-01-22T03:07:24-05:00"
+}

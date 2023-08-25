@@ -1,0 +1,63 @@
+{
+    "number": 320122,
+    "data": "12,30,390,1170,1200,1560,2340,2760,3120,3900,4680,6120,6240,7680,7800,8460,10020,10140,10950,11580,15090,15480,17160,17580,18360,19140,20280,20700,20940,21480,23040,23280,24060,24210,24960,26550,28740,29250,29520,29670,30060,31080,32400",
+    "name": "Numbers that are not Keith numbers in any base.",
+    "comment": [
+        "A number N >= 2 is a Keith number in a base b <= N if the Fibonacci sequence u(i) whose initial terms are the t digits of N in the base b, and later terms are given by rule that u(i) = sum of t previous terms, contains N itself. Here a(n) is the n-th number N that is not a Keith number in any base b <= N."
+    ],
+    "link": [
+        "Arie Bos, <a href=\"https://www.researchgate.net/publication/280932154_Inventory_of_n-step_Fibonacci_sequences\">Inventory of n-step Fibonacci sequences</a>, 2015."
+    ],
+    "example": [
+        "a(1) = 12 because 12 is not a Keith number in any base from 2 to 12, while all previous numbers are in some base.",
+        "For example, with b = 2, the sequence is : 1, 1, 0, 0, 2, 3, 5, 10, 20, ...; it doesn't contain 12. See A251703."
+    ],
+    "maple": [
+        "fibo:=proc(n, b) local L,m,M,k:",
+        "L:=convert(n,base,b):m:=nops(L):M:=seq(L[m+1-k],k=1..m):",
+        "while M[m]<n do M:=M,add(M[q],q=1..m): M:=seq(M[q],q=2..m+1) od:",
+        "if M[m]=n then true else false fi end:",
+        "test:=proc(n) local b:",
+        "for b from 2 to n do if fibo(n, b) then return(true) fi od:",
+        "return(false) end:",
+        "L:=NULL:for n from 2 to 1200 do if not(test(n)) then  L:=L,n fi od:L;"
+    ],
+    "program": [
+        "(Python)",
+        "def digits(n, b):",
+        "    r = []",
+        "    m = n",
+        "    while m > 0:",
+        "        r = [m % b] + r",
+        "        m = m // b",
+        "    return r",
+        "def fibo(n, b):",
+        "    L = digits(n, b)",
+        "    m = len(L) - 1",
+        "    while L[m] < n:",
+        "        L.append(sum(k for k in L))",
+        "        L.pop(0)",
+        "    return L[m] == n",
+        "def test(n):",
+        "    for b in range(2, n + 1):",
+        "        if fibo(n, b):",
+        "            return True",
+        "    return False",
+        "print([n for n in range(2, 2001) if not test(n)])",
+        "(PARI) iskb(n, b) = if(n<b, return(0)); my(v=digits(n, b), t=#v); while(v[#v]<n, v=concat(v, sum(i=0, t-1, v[#v-i]))); v[#v]==n; \\\\ after A007629",
+        "isok(n) = if (n<=2, 0, for(b=2, n-1, if (iskb(n, b), return(0))); return (1)); \\\\ _Michel Marcus_, Oct 08 2018"
+    ],
+    "xref": [
+        "Cf. A007629 (Keith numbers in base 10)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert FERREOL_, Oct 06 2018",
+    "ext": [
+        "More terms from _Michel Marcus_, Oct 08 2018"
+    ],
+    "references": 0,
+    "revision": 30,
+    "time": "2023-03-21T15:35:14-04:00",
+    "created": "2018-11-15T13:54:11-05:00"
+}

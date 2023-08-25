@@ -1,0 +1,33 @@
+{
+    "number": 329004,
+    "data": "1,2,3,4,4,6,6,8,8,10,10,12,12,12,12,12,12,18,18,20,20,20,20,24,24,24,24,24,24,30,30,30,30,30,30,36,36,36,36,36,36,36,36,36,36,36,36,48,48,48,48,48,48,48,48,48,48,48,48,60,60,60,60,60,60,60,60,60,60,60,60,72",
+    "name": "a(n) is the largest index in [n] that maximizes tau.",
+    "link": [
+        "Peter Andrew, <a href=\"/A329004/b329004.txt\">Table of n, a(n) for n = 1..20000</a>"
+    ],
+    "formula": [
+        "a(n) = n <=> n in { A067128 }. - _Alois P. Heinz_, Jun 11 2020"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; uses numtheory; `if`(n=1, 1,",
+        "      (t-> `if`(tau(n)<tau(t), t, n))(a(n-1)))",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Jun 11 2020"
+    ],
+    "mathematica": [
+        "dmax = 0; nmax = 1; seq = {}; Do[If[(d = DivisorSigma[0, n]) >= dmax, dmax = d; nmax = n]; AppendTo[seq, nmax], {n, 1, 72}]; seq (* _Amiram Eldar_, Jun 11 2020 *)"
+    ],
+    "program": [
+        "(Haskell) a329004 = map fst $ scanl1 (\\x y -> maximumBy (comparing snd) [x,y]) $ zip [1..] a000005"
+    ],
+    "xref": [
+        "Cf. A000005, A067128."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Peter Andrew_, Jun 10 2020",
+    "references": 1,
+    "revision": 64,
+    "time": "2020-06-11T16:51:50-04:00",
+    "created": "2020-06-11T16:51:50-04:00"
+}

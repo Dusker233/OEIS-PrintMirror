@@ -1,0 +1,67 @@
+{
+    "number": 351013,
+    "data": "1,1,2,4,7,14,26,48,88,161,294,512,970,1634,2954,5156,9119,15618,27354,46674,80130,138078,232286,394966,665552,1123231,1869714,3146410,5186556,8620936,14324366,23529274,38564554,63246744,103578914,167860584,274465845",
+    "name": "Number of integer compositions of n with all distinct runs.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A351013/b351013.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Mathematics Stack Exchange, <a href=\"https://math.stackexchange.com/q/87559\">What is a sequence run? (answered 2011-12-01)</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(5) = 14 compositions:",
+        "  (1)  (2)    (3)      (4)        (5)",
+        "       (1,1)  (1,2)    (1,3)      (1,4)",
+        "              (2,1)    (2,2)      (2,3)",
+        "              (1,1,1)  (3,1)      (3,2)",
+        "                       (1,1,2)    (4,1)",
+        "                       (2,1,1)    (1,1,3)",
+        "                       (1,1,1,1)  (1,2,2)",
+        "                                  (2,2,1)",
+        "                                  (3,1,1)",
+        "                                  (1,1,1,2)",
+        "                                  (1,1,2,1)",
+        "                                  (1,2,1,1)",
+        "                                  (2,1,1,1)",
+        "                                  (1,1,1,1,1)",
+        "For example, the composition c = (3,1,1,1,1,2,1,1,3,4,1,1) has runs (3), (1,1,1,1), (2), (1,1), (3), (4), (1,1), and since (3) and (1,1) both appear twice, c is not counted under a(20)."
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],UnsameQ@@Split[#]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI) \\\\ here LahI is A111596 as row polynomials.",
+        "LahI(n,y) = {sum(k=1, n, y^k*(-1)^(n-k)*(n!/k!)*binomial(n-1, k-1))}",
+        "S(n) = {my(p=prod(k=1, n, 1 + y*x^k + O(x*x^n))); 1 + sum(i=1, (sqrtint(8*n+1)-1)\\2, polcoef(p,i,y)*LahI(i,y))}",
+        "seq(n)={my(q=S(n)); [subst(serlaplace(p),y,1) | p<-Vec(prod(k=1, n, subst(q + O(x*x^(n\\k)), x, x^k)))]} \\\\ _Andrew Howroyd_, Feb 12 2022"
+    ],
+    "xref": [
+        "The version for run-lengths instead of runs is A329739, normal A329740.",
+        "These compositions are ranked by A351290, complement A351291.",
+        "A000005 counts constant compositions, ranked by A272919.",
+        "A005811 counts runs in binary expansion.",
+        "A011782 counts integer compositions.",
+        "A059966 counts binary Lyndon compositions, necklaces A008965, aperiodic A000740.",
+        "A116608 counts compositions by number of distinct parts.",
+        "A238130 and A238279 count compositions by number of runs.",
+        "A242882 counts compositions with distinct multiplicities.",
+        "A297770 counts distinct runs in binary expansion.",
+        "A325545 counts compositions with distinct differences.",
+        "A329744 counts compositions by runs-resistance.",
+        "A351014 counts distinct runs in standard compositions.",
+        "Counting words with all distinct runs:",
+        "- A351016 = binary words, for run-lengths A351017.",
+        "- A351018 = binary expansions, for run-lengths A032020, ranked by A175413.",
+        "- A351200 = patterns, for run-lengths A351292.",
+        "- A351202 = permutations of prime factors.",
+        "Cf. A003242, A025047, A044813, A098504, A098859, A106356, A329738, A328592, A334028, A351015, A351201, A351204."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Feb 09 2022",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Feb 12 2022"
+    ],
+    "references": 36,
+    "revision": 10,
+    "time": "2022-02-16T15:39:32-05:00",
+    "created": "2022-02-13T09:52:08-05:00"
+}

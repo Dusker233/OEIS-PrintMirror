@@ -1,0 +1,46 @@
+{
+    "number": 320452,
+    "data": "1,2,4,8,15,28,52,96,177,326,600,1104,2030,3732,6858,12600,23144,42504,78048,143296,263068,482904,886392,1626912,2985943,5480012,10056946,18456056,33868851,62151788,114050884,209284710,384034660",
+    "name": "Number of possible states when placing n tokens of 2 alternating types on 2 piles.",
+    "comment": [
+        "Piles start empty and have no height limit. A token can only be placed on top of a pile. The starting token is fixed.",
+        "Up to a(11) the terms are matching A008937(n+1)."
+    ],
+    "example": [
+        "With alternating symbols A and B on two piles (starting with A), the following states emerge after placing 4 symbols in all 2^4 possible ways:",
+        "  B                                                            B",
+        "  A   A   B       B            B  B            B       B   A   A",
+        "  B   B   B   BB  A   AB  BA   A  A   AB  BA   A  BB   B   B   B",
+        "  A_  AB  AA  AA  AB  AB  AB  AB  BA  BA  BA  BA  AA  AA  BA  _A",
+        "All states are different, except the 13th state is a duplicate of the 4th.",
+        "Hence a(4)=15."
+    ],
+    "program": [
+        "(Python)",
+        "def fill(patterns, state_in, ply_nr, n_plies, n_players, n_stacks):",
+        "....if ply_nr>=n_plies:",
+        "........patterns.add(tuple(state_in))",
+        "....else:",
+        "........symbol=chr(ord('A')+ply_nr%n_players)",
+        "........for st in range(n_stacks):",
+        "............state_out=list(state_in)",
+        "............state_out[st]+=symbol",
+        "............fill(patterns, state_out, ply_nr+1, n_plies, n_players, n_stacks)",
+        "def A320452(n):",
+        "....n_plies,n_players,n_stacks = n,2,2",
+        "....patterns=set()",
+        "....state=[\"\"]*n_stacks",
+        "....fill(patterns, state, 0, n_plies, n_players, n_stacks)",
+        "....return len(patterns)"
+    ],
+    "xref": [
+        "For 2 token types on 3 piles, see A320731."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Bert Dobbelaere_, Oct 20 2018",
+    "references": 2,
+    "revision": 19,
+    "time": "2018-11-06T13:26:42-05:00",
+    "created": "2018-11-06T13:26:42-05:00"
+}

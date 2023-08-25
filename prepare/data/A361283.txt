@@ -1,0 +1,36 @@
+{
+    "number": 361283,
+    "data": "1,1,9,85,961,13041,207001,3746149,75832065,1693615681,41302616041,1090835399061,30988423000129,941461990360945,30439632977968761,1042973073239321701,37731609890300935681,1436586994020158747649",
+    "name": "Expansion of e.g.f. exp(x/(1-x)^4).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A361283/b361283.txt\">Table of n, a(n) for n = 0..414</a>"
+    ],
+    "formula": [
+        "a(n) = n! * Sum_{k=0..n} (-1)^(n-k) * binomial(-4*k,n-k)/k! = n! * Sum_{k=0..n} binomial(n+3*k-1,n-k)/k!.",
+        "a(0) = 1; a(n) = (n-1)! * Sum_{k=1..n} (-1)^(k-1) * k * binomial(-4,k-1) * a(n-k)/(n-k)!.",
+        "D-finite with recurrence a(n) +(-5*n+4)*a(n-1) +(n-1)*(10*n-23)*a(n-2) -10*(n-1)*(n-2)*(n-3)*a(n-3) +5*(n-1)*(n-2)*(n-3)*(n-4)*a(n-4) -(n-5)*(n-1)*(n-2)*(n-3)*(n-4)*a(n-5)=0. - _R. J. Mathar_, Mar 12 2023"
+    ],
+    "maple": [
+        "A361283 := proc(n)",
+        "    n!*add(binomial(n+3*k-1,n-k)/k!,k=0..n) ;",
+        "end proc:",
+        "seq(A361283(n),n=0..40) ; # _R. J. Mathar_, Mar 12 2023"
+    ],
+    "program": [
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(serlaplace(exp(x/(1-x)^4)))",
+        "(PARI) a(n) = n!*sum(k=0, n, (-1)^(n-k)*binomial(-4*k, n-k)/k!);",
+        "(PARI) a(n) = n!*sum(k=0, n, binomial(n+3*k-1, n-k)/k!);",
+        "(PARI) a_vector(n) = my(v=vector(n+1)); v[1]=1; for(i=1, n, v[i+1]=(i-1)!*sum(j=1, i, (-1)^(j-1)*j*binomial(-4, j-1)*v[i-j+1]/(i-j)!)); v;"
+    ],
+    "xref": [
+        "Column k=4 of A293012.",
+        "Cf. A361280."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Mar 06 2023",
+    "references": 3,
+    "revision": 15,
+    "time": "2023-03-12T09:58:05-04:00",
+    "created": "2023-03-07T10:37:30-05:00"
+}

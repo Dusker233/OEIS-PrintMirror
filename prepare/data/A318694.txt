@@ -1,0 +1,31 @@
+{
+    "number": 318694,
+    "data": "1,1,2,10,40,248,1868,14516,131920,1409040,15697872,191687472,2663239104,37878672960,582357866400,9898540886880,172534018584960,3192686545714560,63844374067107840,1309775114921541120,28512040933544970240,656888836504576112640,15495311684125737031680",
+    "name": "Expansion of e.g.f. Product_{i>=1, j>=1} (1 + x^(i*j)/(i*j)).",
+    "link": [
+        "Robert Israel, <a href=\"/A318694/b318694.txt\">Table of n, a(n) for n = 0..447</a>"
+    ],
+    "formula": [
+        "E.g.f.: Product_{k>=1} (1 + x^k/k)^tau(k), where tau = number of divisors (A000005).",
+        "E.g.f.: exp(Sum_{k>=1} ( Sum_{d|k} (-d)^(1-k/d)*tau(d) ) * x^k/k)."
+    ],
+    "maple": [
+        "seq(n!*coeff(series(mul((1+x^k/k)^tau(k),k=1..100),x=0,23),x,n),n=0..22); # _Paolo P. Lava_, Jan 09 2019"
+    ],
+    "mathematica": [
+        "nmax = 22; CoefficientList[Series[Product[Product[(1 + x^(i j)/(i j)), {i, 1, nmax}], {j, 1, nmax}], {x, 0, nmax}], x] Range[0, nmax]!",
+        "nmax = 22; CoefficientList[Series[Product[(1 + x^k/k)^DivisorSigma[0, k], {k, 1, nmax}], {x, 0, nmax}], x] Range[0, nmax]!",
+        "nmax = 22; CoefficientList[Series[Exp[Sum[Sum[(-d)^(1 - k/d) DivisorSigma[0, d], {d, Divisors[k]}] x^k/k, {k, 1, nmax}]], {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[(-d)^(1 - k/d) DivisorSigma[0, d], {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[n! a[n], {n, 0, 22}]"
+    ],
+    "xref": [
+        "Cf. A000005, A007838, A107742, A181541, A318416, A318693."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Aug 31 2018",
+    "references": 3,
+    "revision": 10,
+    "time": "2020-07-27T15:51:44-04:00",
+    "created": "2018-09-01T03:53:01-04:00"
+}

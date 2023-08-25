@@ -1,0 +1,42 @@
+{
+    "number": 303830,
+    "data": "0,1,2,10,56,477,5879,117729,4014125,242887444,26562628943,5300430360196,1941457570816837,1311926679135555495,1643205542452252078848,3831756372376104769454402,16704363592309800046798746041,136665888984665718748205681747780",
+    "name": "The number of edge-rooted unlabeled connected graphs with n nodes.",
+    "link": [
+        "Jean-Fran\u00e7ois Alcover, <a href=\"/A303830/b303830.txt\">Table of n, a(n) for n = 1..40</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies: A(x)*A000088(x) = A126122(x)."
+    ],
+    "example": [
+        "a(4)=10: The quadrangle with 1 choice of rooting. The star graph with 1 choice. The triangle with one protruding edge with 3 choices. The quadrangle with a diagonal with 2 choices. The tretrahedron graph with 1 choice. The linear tree with 2 choices (middle or end edge)."
+    ],
+    "mathematica": [
+        "nmax = 20;",
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length@v, i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_] := (Sum[GCD[v[[i]], v[[j]]], {i, 2, Length@v}, {j, 1, i - 1}] + Total[Quotient[v, 2]]);",
+        "cross[u_, v_] := Sum[ GCD[u[[i]], v[[j]]], {i, 1, Length@u}, {j, 1, Length@v}];",
+        "a22[n_] := If[n < 2, 0, s = 0; Do[s += permcount[p]*(2^(edges[p])*(2^cross[{1, 1}, p] + 2^cross[{2}, p])), {p, IntegerPartitions[n - 2]}]; s/(2 (n - 2)!)];",
+        "a88[n_] := Module[{s = 0}, Do[s += permcount[p]*2^edges[p], {p, IntegerPartitions[n]}]; s/n!];",
+        "A[x_] = Sum[a22[n] x^n, {n, 0, nmax}] / Sum[a88[n] x^n, {n, 0, nmax}] + O[x]^nmax;",
+        "CoefficientList[A[x], x] // Rest (* _Jean-Fran\u00e7ois Alcover_, Jul 07 2018, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, gcd(v[i], v[j]))) + sum(i=1, #v, v[i]\\2)}",
+        "cross(u,v) = {sum(i=1, #u, sum(j=1, #v, gcd(u[i], v[j])))}",
+        "gs(N,u) = {1+x*Ser(vector(N,n,my(s=0); forpart(p=n, s+=permcount(p)*(2^(edges(p)+cross(u,p)))); s/n!))}",
+        "seq(n)={concat([0], Vec((gs(n, [1,1]) + gs(n, [2]))/(2*gs(n, []))))} \\\\ _Andrew Howroyd_, May 04 2018"
+    ],
+    "xref": [
+        "Cf. A126122 (not necessarily connected), A000088, A001349."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_R. J. Mathar_, May 01 2018",
+    "references": 4,
+    "revision": 24,
+    "time": "2019-09-21T14:40:34-04:00",
+    "created": "2018-05-04T11:43:18-04:00"
+}

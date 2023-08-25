@@ -1,0 +1,55 @@
+{
+    "number": 3381,
+    "data": "3,258,513,768,6563,6818,7073,13123,13378,19683,65538,65793,66048,72098,72353,78658,131073,131328,137633,196608,390627,390882,391137,397187,397442,403747,456162,456417,462722,521697,781251,781506,787811,846786",
+    "name": "Numbers that are the sum of 3 nonzero 8th powers.",
+    "link": [
+        "R. J. Mathar, <a href=\"/A003381/b003381.txt\">Table of n, a(n) for n = 1..8000</a> (replacing an earlier b-file that missed terms)."
+    ],
+    "maple": [
+        "A003381 := proc(nmax::integer)",
+        "    local xyzmax, ins, x,x8,y,y8,z,z8 ;",
+        "        xyzmax := ceil(root[8](nmax/3)) ;",
+        "        a := {} ;",
+        "        for x from 1 to xyzmax do",
+        "                x8 := x^8 ;",
+        "                if 3*x8 > nmax then",
+        "                        break;",
+        "                end if;",
+        "                for y from x do",
+        "                        y8 := y^8 ;",
+        "                        if x8+2*y8 > nmax then",
+        "                                break;",
+        "                        end if;",
+        "                        for z from y do",
+        "                                z8 := z^8 ;",
+        "                                if x8+y8+z8 > nmax then",
+        "                                        break;",
+        "                                end if;",
+        "                                if x8+y8+z8 <= nmax then",
+        "                                        a := a  union {x8+y8+z8} ;",
+        "                                end if;",
+        "                        end do:",
+        "                end do:",
+        "        end do:",
+        "        sort(convert(a,list)) ;",
+        "end proc:",
+        "nmax := 6755626171875 ;",
+        "L:= A003381(nmax) ;",
+        "LISTTOBFILE(L,\"b003381.txt\",1) ; # _R. J. Mathar_, Aug 01 2020"
+    ],
+    "mathematica": [
+        "kmax = 4*10^12;",
+        "m = kmax^(1/8) // Ceiling;",
+        "Table[k = x^8 + y^8 + z^8; If[k <= kmax, k, Nothing], {x, 1, m}, {y, x, m}, {z, y, m}] // Flatten // Union (* _Jean-Fran\u00e7ois Alcover_, May 02 2023 *)"
+    ],
+    "xref": [
+        "Cf. A001016 (8th powers)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "references": 32,
+    "revision": 25,
+    "time": "2023-05-02T11:11:46-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

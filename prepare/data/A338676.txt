@@ -1,0 +1,24 @@
+{
+    "number": 338676,
+    "data": "1,1,8,57,449,3193,25145,178809,1391314,9996498,76955586,552257546,4255024523,30502987019,232969386483,1682476714724,12762937304013,92019035596293,698222541789109,5030814634614406,37955614705675479,274741644961416648,2061916926761604144,14909943849253537057",
+    "name": "Expansion of Product_{k>=1} 1 / (1 - 7^(k-1)*x^k).",
+    "formula": [
+        "a(n) = Sum_{k=0..n} p(n,k) * 7^(n-k), where p(n,k) = number of partitions of n into k parts.",
+        "a(n) ~ sqrt(6) * polylog(2, 1/7)^(1/4) * 7^(n - 1/2) * exp(2*sqrt(polylog(2, 1/7)*n)) / (2*sqrt(Pi)*n^(3/4)). - _Vaclav Kotesovec_, May 09 2021"
+    ],
+    "mathematica": [
+        "nmax = 23; CoefficientList[Series[Product[1/(1 - 7^(k - 1) x^k), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "Table[Sum[Length[IntegerPartitions[n, {k}]] 7^(n - k), {k, 0, n}], {n, 0, 23}]",
+        "a[n_] := a[n] = If[n == 0, 1, (1/n) Sum[Sum[d 7^(k - k/d), {d, Divisors[k]}] a[n - k], {k, 1, n}]]; Table[a[n], {n, 0, 23}]"
+    ],
+    "xref": [
+        "Cf. A008284, A075900, A246939, A300579, A338673, A338674, A338675, A338677, A338678, A338679."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 23 2021",
+    "references": 9,
+    "revision": 13,
+    "time": "2021-05-09T02:28:16-04:00",
+    "created": "2021-04-23T20:52:33-04:00"
+}

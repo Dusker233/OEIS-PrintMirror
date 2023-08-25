@@ -1,0 +1,39 @@
+{
+    "number": 64825,
+    "data": "12,17,19,21,22,23,26,27,28,31,32,33,34,35,39,41,42,43,44,46,47,51,54,56,62,64,65,68,74,80,88,89,90,92,95,106,113,123,128,137,141,146,153,164,179,194,200,218,245,281,326,335",
+    "name": "Numbers which are the sums of three positive triangular numbers in exactly two different ways.",
+    "comment": [
+        "Checked up to 1000000 but haven't found any other values.",
+        "A063993(a(n)) = 2. - _Reinhard Zumkeller_, Jul 20 2012",
+        "Without the qualifier \"positive\" in the Name, sequence A071530 would result. - _Jon E. Schoenfield_, Jan 01 2020",
+        "No further terms <= 3*10^7. - _Michael S. Branicky_, Dec 17 2021"
+    ],
+    "example": [
+        "19 = 10 + 6 + 3 = 15 + 3 + 1."
+    ],
+    "program": [
+        "(Magma) [k:k in [1..350]|#RestrictedPartitions(k, 3, {m*(m+1) div 2:m in [1..200]}) eq 2 ]; // _Marius A. Burtea_, Jan 01 2020",
+        "(Python)",
+        "from collections import Counter",
+        "from itertools import count, takewhile, combinations_with_replacement as mc",
+        "def aupto(N):",
+        "    tris = takewhile(lambda x: x <= N, (i*(i+1)//2 for i in count(1)))",
+        "    sum3 = filter(lambda x: x <= N, (sum(c) for c in mc(tris, 3)))",
+        "    sum3counts = Counter(sum3)",
+        "    return sorted(k for k in sum3counts if sum3counts[k] == 2)",
+        "print(aupto(1000)) # _Michael S. Branicky_, Dec 17 2021"
+    ],
+    "xref": [
+        "Cf. A063993, A064816, A002097, A071530, A111638."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Jonathan Ayres (jonathan.ayres(AT)btinternet.com), Oct 23 2001",
+    "ext": [
+        "Offset changed to 1 by _Michel Marcus_, Jan 14 2014"
+    ],
+    "references": 6,
+    "revision": 24,
+    "time": "2022-09-08T08:45:04-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 156361,
+    "data": "1,6,42,288,2016,14040,98280,686880,4808160,33638976,235472832,1647983232,11535882624,80745019776,565215138432,3956385876480,27694701135360,193860506096640,1357023542676480,9499115800977408",
+    "name": "a(2*n+2) = 7*a(2*n+1), a(2*n+1) = 7*a(2*n) - 6^n*A000108(n), a(0) = 1.",
+    "comment": [
+        "Hankel transform is 6^C(n+1, 2)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A156361/b156361.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Paul Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL12/Barry2/barry73.html\">A Note on a One-Parameter Family of Catalan-Like Numbers</a>, JIS 12 (2009) 09.5.4."
+    ],
+    "formula": [
+        "a(n) = Sum{k=0..n} A120730(n,k) * 6^k.",
+        "(n+1)*a(n) = 7*(n+1)*a(n-1) + 24*(n-2)*a(n-2) - 168*(n-2)*a(n-3). - _R. J. Mathar_, Jul 21 2016"
+    ],
+    "maple": [
+        "A156361 := proc(n)",
+        "    option remember;",
+        "    local nh;",
+        "    if n= 0 then",
+        "        1;",
+        "    elif  type(n,'even') then",
+        "        7*procname(n-1);",
+        "    else",
+        "        nh := floor(n/2) ;",
+        "        7*procname(n-1)-6^nh*A000108(nh) ;",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Jul 21 2016"
+    ],
+    "mathematica": [
+        "a[n_]:= a[n]= If[n==0, 1, 7*a[n-1] -If[EvenQ[n], 0, 6^((n-1)/2)* CatalanNumber[(n-1)/2]]];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Aug 04 2022 *)"
+    ],
+    "program": [
+        "(Magma) [n le 3 select Factorial(n+4)/120 else (7*n*Self(n-1) + 24*(n-3)*Self(n-2) - 168*(n-3)*Self(n-3))/n: n in [1..30]]; // _G. C. Greubel_, Nov 09 2022",
+        "(SageMath)",
+        "def a(n): # a = A156361",
+        "    if (n==0): return 1",
+        "    elif (n%2==1): return 7*a(n-1) - 6^((n-1)/2)*catalan_number((n-1)/2)",
+        "    else: return 7*a(n-1)",
+        "[a(n) for n in (0..30)] # _G. C. Greubel_, Nov 09 2022"
+    ],
+    "xref": [
+        "Cf. A000108, A001405, A156128, A151162, A156195, A151254, A151281."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Philippe Del\u00e9ham_, Feb 08 2009",
+    "references": 5,
+    "revision": 14,
+    "time": "2022-11-09T19:17:49-05:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

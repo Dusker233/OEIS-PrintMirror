@@ -1,0 +1,48 @@
+{
+    "number": 98129,
+    "data": "1,122,122333,1223334444,122333444455555,122333444455555666666,1223334444555556666667777777,122333444455555666666777777788888888,122333444455555666666777777788888888999999999",
+    "name": "Concatenate 1 once, 2 twice, 3 three times, up to n n times.",
+    "comment": [
+        "a(n) is composite for all 2 <= n <= 1000. - _David Cleaver_, Mar 22 2023"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A098129/b098129.txt\">Table of n, a(n) for n = 1..31</a>"
+    ],
+    "formula": [
+        "a(n+1) = a(n)*floor(log_10(A000461(n+1)) + 1) + A000461(n+1). - _Paolo P. Lava_, Mar 15 2010"
+    ],
+    "example": [
+        "a(4) = 1223334444 because 1 concatenated once then concatenated with 2 twice and 3 three times and 4 four times gives 1223334444."
+    ],
+    "maple": [
+        "P:=proc(i) local a,j,n; a:=0; for n from 1 by 1 to i do j:=n*(10^(n*floor(log10(10*n)))-1)/(10^floor(log10(10*n))-1); a:=a*10^floor(log10(j)+1)+j; print(a); od; end: P(12); # _Paolo P. Lava_, Mar 15 2010",
+        "# second Maple program:",
+        "a:= n-> parse(cat(seq(i$i, i=1..n))):",
+        "seq(a(n), n=1..12);  # _Alois P. Heinz_, Mar 07 2018"
+    ],
+    "mathematica": [
+        "nn = 12; a[0] = {}; Do[Set[a[n], Join[a[n - 1], Flatten@ ConstantArray[IntegerDigits[n], n]]], {n, nn}]; Array[FromDigits @* a, nn] (* _Michael De Vlieger_, Mar 29 2023 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "a(n) = {my(a=0,i,k);",
+        "  for(i=1,n, k = logint(i,10)+1;",
+        "    a = a*10^(i*k) + i*(10^(i*k)-1)/(10^k-1);",
+        "); return(a); } \\\\ _David Cleaver_, Mar 29 2023",
+        "(Python)",
+        "def A098129(n): return int(''.join(str(j)*j for j in range(1,n+1))) # _Chai Wah Wu_, Mar 29 2023"
+    ],
+    "xref": [
+        "Cf. A000461, A300517, A361751 (number of decimal digits)."
+    ],
+    "keyword": "easy,nonn,base",
+    "offset": "1,2",
+    "author": "_Michael Joseph Halm_, Jan 04 2005",
+    "ext": [
+        "Offset and a(8) corrected by _Seiichi Manyama_, Mar 07 2018"
+    ],
+    "references": 8,
+    "revision": 61,
+    "time": "2023-04-15T08:23:21-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

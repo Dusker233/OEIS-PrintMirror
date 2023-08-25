@@ -1,0 +1,45 @@
+{
+    "number": 346194,
+    "data": "0,1,3,11,40,148,555,2100,7997,30605,117602,453421,1753176,6795248,26393431,102702230,400277998,1562292741,6105426033,23887275883,93554945414,366754396228,1438986625349,5650409534767,22203298031827,87306238753663,343511939707274",
+    "name": "Total sum of the left-to-right strict peak maxima in all Dyck paths of semilength n.",
+    "comment": [
+        "Sum of all peak heights in Dyck paths of semilength n is A000302(n-1) for n>0.",
+        "Sum of all heights in Dyck paths of semilength n is A008549(n)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A346194/b346194.txt\">Table of n, a(n) for n = 0..650</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "example": [
+        "a(3) = 1 + (1+2) + 2 + 2 + 3 = 11:",
+        "                                         /\\",
+        "                  /\\    /\\      /\\/\\    /  \\",
+        "       /\\/\\/\\  /\\/  \\  /  \\/\\  /    \\  /    \\ ."
+    ],
+    "maple": [
+        "b:= proc(x, y, t, h) option remember; `if`(x=0, [1, 0], `if`(y>0,",
+        "     (p-> p+[0, `if`(t=1, p[1]*h, 0)])(b(x-1, y-1, 0, h)), 0)+",
+        "     `if`(y<x-1, b(x-1, y+1, `if`(y+1>h, 1, 0), max(h, y+1)), 0))",
+        "    end:",
+        "a:= n-> b(2*n, 0$3)[2]:",
+        "seq(a(n), n=0..32);"
+    ],
+    "mathematica": [
+        "b[x_, y_, t_, h_] := b[x, y, t, h] = If[x == 0, {1, 0}, If[y > 0,",
+        "   With[{p = b[x-1, y-1, 0, h]}, p+{0, If[t == 1, p[[1]]*h, 0]}]], {0, 0}]+",
+        "   If[y < x - 1, b[x-1, y+1, If[y+1 > h, 1, 0], Max[h, y+1]], {0, 0}] /.",
+        "   Null -> 0;",
+        "a[n_] := b[2*n, 0, 0, 0][[2]];",
+        "Table[a[n], {n, 0, 32}] (* _Jean-Fran\u00e7ois Alcover_, Apr 04 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000108, A000302, A008549, A346157, A346195."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 09 2021",
+    "references": 3,
+    "revision": 21,
+    "time": "2022-04-04T16:49:50-04:00",
+    "created": "2021-07-09T20:15:19-04:00"
+}

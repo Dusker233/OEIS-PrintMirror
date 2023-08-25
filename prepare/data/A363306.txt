@@ -1,0 +1,41 @@
+{
+    "number": 363306,
+    "data": "1,2,5,12,30,79,217,615,1789,5315,16054,49139,152056,474825,1494245,4733780,15084326,48314504,155459331,502270013,1628784446,5299630868,17296306669,56607473796,185740962586,610896675767,2013615610286,6650666759129,22007563999578",
+    "name": "Expansion of g.f. A(x) satisfying 1 = Sum_{n>=0} x^n / (1 - (-x)^(n+1)*A(x)).",
+    "comment": [
+        "The g.f. of this sequence is motivated by the following identity:",
+        "Sum_{n>=0} p^n/(1 - q*r^n) = Sum_{n>=0} q^n/(1 - p*r^n) = Sum_{n>=0} p^n*q^n*r^(n^2)*(1 - p*q*r^(2*n))/((1 - p*r^n)*(1-q*r^n)) ;",
+        "here, p = x, q = -x*A(x), and r = -x."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A363306/b363306.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n satisfies the following formulas.",
+        "(1) 1 = Sum_{n>=0} x^n / (1 - (-x)^(n+1)*A(x)).",
+        "(2) 1 = Sum_{n>=0} (-x)^n * A(x)^n / (1 + (-x)^(n+1)).",
+        "(3) 1 = Sum_{n>=0} x^(n^2 + 2*n) * A(x)^n * (1 + x^(2*n+2)*A(x)) / ((1 + (-x)^(n+1))*(1 - (-x)^(n+1)*A(x)))."
+    ],
+    "example": [
+        "G.f.: A(x) =  1 + 2*x + 5*x^2 + 12*x^3 + 30*x^4 + 79*x^5 + 217*x^6 + 615*x^7 + 1789*x^8 + 5315*x^9 + 16054*x^10 + 49139*x^11 + 152056*x^12 + ...",
+        "where",
+        "1 = 1/(1 + x*A(x)) + x/(1 - x^2*A(x)) + x^2/(1 + x^3*A(x)) + x^3/(1 - x^4*A(x)) + x^4/(1 + x^5*A(x)) + x^5/(1 - x^6*A(x)) + x^6/(1 + x^7*A(x)) + ...",
+        "also,",
+        "1 = 1/(1 - x) - x*A(x)/(1 + x^2) + x^2*A(x)^2/(1 - x^3) - x^3*A(x)^3/(1 + x^4) + x^4*A(x)^4/(1 - x^5) - x^5*A(x)^5/(1 + x^6) + x^6*A(x)^6/(1 - x^7) + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1]); for(i=1,n, A=concat(A,0);",
+        "A[#A] = polcoeff(-1 + sum(m=0,#A, x^m / (1 - (-x)^(m+1)*Ser(A)) ),#A); ); A[n+1]}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A340329."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jun 23 2023",
+    "references": 1,
+    "revision": 10,
+    "time": "2023-06-23T19:17:21-04:00",
+    "created": "2023-06-23T16:58:49-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 344375,
+    "data": "23,29,33,39,43,49,53,59,63,69,73,79,83,89,93,99,103,109,113,119,123,129,133,139,143,149,153,159,163,169,173,179,183,189,193,199,203,209,211,213,219,223,229,233,239,243,249,253,259,263,269,273,279,283,289,293,299,303,309,311,313,319,323",
+    "name": "Numbers n that can be written as the concatenation ab such that n mod (a*b) = a+b.",
+    "comment": [
+        "Leading zeros are not allowed in b.",
+        "Includes all n >= 23 with n == 3 or 9 (mod 10), and all n >= 211 with n == 11 (mod 100).",
+        "Are there terms not of these forms?",
+        "Includes forms n == 142857 (mod 1000000) for n >= 2142857. - _Michael S. Branicky_, May 16 2021"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A344375/b344375.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(25) = 143 is a term because 143 mod (14*3) = 17 = 14+3."
+    ],
+    "maple": [
+        "filter:= proc(n) local k,a,b;",
+        "  for k from 1 to ilog10(n) do",
+        "    a:= n mod 10^k;",
+        "    b:= (n-a)/10^k;",
+        "    if a < 10^(k-1) then next fi;",
+        "    if n mod (a*b) = a+b then return true fi",
+        "  od;",
+        "  false",
+        "end proc:",
+        "select(filter, [$10..1000]);"
+    ],
+    "program": [
+        "(Python)",
+        "def ok(n):",
+        "  s = str(n)",
+        "  for i in range(1, len(s)):",
+        "    if s[i] == '0': continue",
+        "    a, b = int(s[:i]), int(s[i:])",
+        "    if n%(a*b) == a+b: return True",
+        "  return False",
+        "print(list(filter(ok, range(1, 324)))) # _Michael S. Branicky_, May 16 2021"
+    ],
+    "xref": [
+        "Cf. A268044."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, May 16 2021",
+    "references": 1,
+    "revision": 15,
+    "time": "2021-05-16T21:27:44-04:00",
+    "created": "2021-05-16T12:25:18-04:00"
+}

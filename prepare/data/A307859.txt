@@ -1,0 +1,44 @@
+{
+    "number": 307859,
+    "data": "24,112,189,578,1984,2125,3993,5043,9583,19197,32512,126445,149565,175689,225578,236883,1589949,1862935,1928125,3171174,5860526,6149405,11442047,16731741,60634549,75062535,134201344,177816209,1162143369,4474779517,10369035821",
+    "name": "Consider the non-unitary aliquot parts, in ascending order, of a composite number. Take their sum and repeat the process deleting the minimum number and adding the previous sum. The sequence lists the numbers that after some iterations reach a sum equal to themselves.",
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/UnitaryDivisor.html\">Unitary Divisor</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Unitary_divisor\">Unitary divisor</a>"
+    ],
+    "example": [
+        "Divisors of 578 are 1, 2, 17, 34, 289, 578. Non-unitary aliquot parts are 17 and 34.",
+        "We have:",
+        "   17 +  34 =  51;",
+        "   34 +  51 =  85;",
+        "   51 +  85 = 136;",
+        "   85 + 136 = 221;",
+        "  136 + 221 = 357;",
+        "  221 + 357 = 578."
+    ],
+    "maple": [
+        "with(numtheory):P:=proc(q,h) local a,b,c,k,n,t,v; v:=array(1..h);",
+        "for n from 1 to q do if not isprime(n) then b:=sort([op(divisors(n))]);",
+        "a:=[]; for k from 2 to nops(b)-1 do if gcd(b[k],n/b[k])>1 then",
+        "a:=[op(a),b[k]]; fi; od; b:=nops(a); if b>1 then c:=0;",
+        "for k from 1 to b do v[k]:=a[k]; c:=c+a[k]: od;",
+        "t:=b+1; v[t]:=c; while v[t]<n do t:=t+1; v[t]:=add(v[k], k=t-b..t-1);",
+        "od; if v[t]=n then print(n); fi; fi; fi; od; end: P(10^9,1000);"
+    ],
+    "mathematica": [
+        "aQ[n_] := CompositeQ[n] && Module[{s = Select[Divisors[n], GCD[#, n/#] != 1 &]}, If[Length[s] < 2, False, While[Total[s] < n, AppendTo[s, Total[s]]; s = Rest[s]]; Total[s] == n]]; Select[Range[10^4], aQ] (* _Amiram Eldar_, May 07 2019 *)"
+    ],
+    "xref": [
+        "Cf. A002827, A034444, A246544, A247012, A247013, A248134, A258142."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, May 02 2019",
+    "ext": [
+        "a(20)-a(31) from _Amiram Eldar_, May 07 2019"
+    ],
+    "references": 0,
+    "revision": 15,
+    "time": "2021-02-07T19:19:36-05:00",
+    "created": "2019-05-03T08:41:09-04:00"
+}

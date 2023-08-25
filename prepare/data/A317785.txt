@@ -1,0 +1,42 @@
+{
+    "number": 317785,
+    "data": "1,1,1,1,2,2,4,4,7,8,12,14,21,24,34,42,55,67,91,109,144,177,228,281,366,448,579,720,916,1142",
+    "name": "Number of locally connected rooted trees with n nodes.",
+    "comment": [
+        "An unlabeled rooted tree is locally connected if the branches directly under any given node are connected as a hypergraph."
+    ],
+    "link": [
+        "Gus Wiseman, <a href=\"/A317785/a317785.png\">All 42 locally connected rooted trees with 16 nodes.</a>"
+    ],
+    "example": [
+        "The a(11) = 12 locally connected rooted trees:",
+        "  ((((((((((o))))))))))",
+        "  ((((((((o)(o))))))))",
+        "  (((((((o))((o)))))))",
+        "  ((((((o)))(((o))))))",
+        "  (((((o))))((((o)))))",
+        "  ((((((o)(o)(o))))))",
+        "  (((((o))((o)(o)))))",
+        "  ((((o))((o))((o))))",
+        "  ((((o)(o)(o)(o))))",
+        "  (((o))((o)(o)(o)))",
+        "  (((o)(o))((o)(o)))",
+        "  ((o)(o)(o)(o)(o))"
+    ],
+    "mathematica": [
+        "multijoin[mss__]:=Join@@Table[Table[x, {Max[Count[#, x]&/@{mss}]}], {x, Union[mss]}];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Union[Append[Delete[s,List/@c[[1]]],multijoin@@s[[c[[1]]]]]]]]];",
+        "rurt[n_]:=If[n==1,{{}},Join@@Table[Select[Union[Sort/@Tuples[rurt/@ptn]],Or[Length[#]==1,Length[csm[#]]==1]&],{ptn,IntegerPartitions[n-1]}]];",
+        "Table[Length[rurt[n]],{n,10}]"
+    ],
+    "xref": [
+        "Cf. A000081, A276625, A286518, A286520, A301700, A304714, A316473, A316475, A317077, A317078, A317708, A317787."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,5",
+    "author": "_Gus Wiseman_, Aug 06 2018",
+    "references": 4,
+    "revision": 9,
+    "time": "2018-08-08T07:53:16-04:00",
+    "created": "2018-08-08T07:53:16-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 300613,
+    "data": "1,1,8,324,35840,7906250,2931489792,1645181968584,1302784779485184,1384565648740109550,1902231808400000000000,3281726715984295577534536,6946466406905591840863420416,17702487251379919853870809258728,53467000591059566447137539120168960",
+    "name": "Number of partitions of the n-dimensional hypercube resulting from a sequence of n n-sections, each of which divides any part perpendicular to any of the axes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A300613/b300613.txt\">Table of n, a(n) for n = 0..25</a>"
+    ],
+    "example": [
+        "a(2) = 8:",
+        "  ._______.  ._______.  ._______.  ._______.",
+        "  | | |   |  |   | | |  |_______|  |       |",
+        "  | | |   |  |   | | |  |_______|  |_______|",
+        "  | | |   |  |   | | |  |       |  |_______|",
+        "  |_|_|___|  |___|_|_|  |_______|  |_______|",
+        "  ._______.  ._______.  ._______.  ._______.",
+        "  |   |   |  |   |   |  |   |   |  |       |",
+        "  |___|   |  |   |___|  |___|___|  |_______|",
+        "  |   |   |  |   |   |  |       |  |   |   |",
+        "  |___|___|  |___|___|  |_______|  |___|___|."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<2, 1, coeff(series(",
+        "      RootOf(x*(-1)^n=add(binomial(n, i)*(G*x)^(n^(n-i))*",
+        "       (-1)^i, i=0..n), G), x, n^2-n+1), x, n^2-n))",
+        "    end:",
+        "seq(a(n), n=0..12);",
+        "# second Maple program:",
+        "b:= proc(n, k, t, d) option remember; `if`(t=0, 1, `if`(t=1,",
+        "      g(n-1, k, d), add(g(j, k, d)*b(n-j-1, k, t-1, d), j=0..n-2)))",
+        "    end:",
+        "g:= proc(n, k, d) option remember; `if`(n=0, 1,",
+        "      -add(binomial(k, j)*(-1)^j*b(n+1, k, d^j, d), j=1..k))",
+        "    end:",
+        "a:= n-> g(n^2-n, n$2):",
+        "seq(a(n), n=0..14);"
+    ],
+    "mathematica": [
+        "b[n_, k_, t_, d_] := b[n, k, t, d] = If[t == 0, 1, If[t == 1, g[n - 1, k, d], Sum[g[j, k, d] b[n - j - 1, k, t - 1, d], {j, 0, n - 2}]]];",
+        "g[n_, k_, d_] := g[n, k, d] = If[n == 0, 1, -Sum[Binomial[k, j] (-1)^j b[n + 1, k, d^j, d], {j, 1, k}]];",
+        "a[n_] := g[n^2 - n, n, n];",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 0, 14}] (* _Jean-Fran\u00e7ois Alcover_, Dec 30 2018, from second Maple program *)"
+    ],
+    "xref": [
+        "Cf. A300474."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Dec 15 2018",
+    "references": 2,
+    "revision": 31,
+    "time": "2018-12-30T03:45:29-05:00",
+    "created": "2018-12-17T11:27:52-05:00"
+}

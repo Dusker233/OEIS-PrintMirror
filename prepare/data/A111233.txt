@@ -1,0 +1,44 @@
+{
+    "number": 111233,
+    "data": "1,1,1,1,1,3,3,3,3,3,3,5,5,5,11,11,11,21,21,43,43,43,43,83,83,83,83,255,255,449,449,449,895,895,1407,2111,2111,2111,2111,4159,4159,8319,8319",
+    "name": "Number of nonempty subsets of {1, 1/2, 1/3, ..., 1/n} that sum to an integer.",
+    "comment": [
+        "If the set was {1/2, 1/3, 1/4, ..., 1/n}, that is, the set is lacking the element 1, then the sequence would be (a(n)-1)/2. - _Robert G. Wilson v_, Sep 23 2006"
+    ],
+    "formula": [
+        "a(p^e) = a(p^e-1). - _Robert G. Wilson v_, Sep 23 2006"
+    ],
+    "example": [
+        "1, 1/2 + 1/3 + 1/6 = 1 and 1 + 1/2 + 1/3 + 1/6 = 2 are integers, so a(6)=3."
+    ],
+    "mathematica": [
+        "Needs[\"DiscreteMath`Combinatorica`\"]",
+        "f[1] = 1; f[n_] := Block[{c = 0, k = 2, lmt = 2^n/2, int = Range[2, n]}, While[k < lmt, If[IntegerQ[Plus @@ (1/NthSubset[k, int])], c++ ]; k++ ]; 2c+1];",
+        "Do[Print[{n, f[n] // Timing}], {n, 40}]",
+        "(* _Robert G. Wilson v_, Sep 23 2006 *)",
+        "(* Second program (not needing Combinatorica): *)",
+        "a[n_] := a[n] = If[n == 1, 1, If[PrimePowerQ[n], a[n-1], Count[Total /@ Subsets[1/Range[n], {1, 2^(n-1)}], _?IntegerQ]]];",
+        "Table[Print[n, \" \", a[n] // Timing]; a[n], {n, 1, 25}] (* _Jean-Fran\u00e7ois Alcover_, Aug 11 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from fractions import Fraction",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def b(n, soh, c):",
+        "    if n == 0: return int(soh.denominator == 1)",
+        "    return b(n-1, soh, c) + b(n-1, soh+Fraction(1, n), c+1)",
+        "a = lambda n: b(n, 0, 0) - 1 # subtract empty set",
+        "print([a(n) for n in range(1, 21)]) # _Michael S. Branicky_, Aug 11 2022"
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,6",
+    "author": "_John W. Layman_, Oct 28 2005",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Sep 23 2006"
+    ],
+    "references": 2,
+    "revision": 32,
+    "time": "2022-08-11T14:47:57-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

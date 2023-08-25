@@ -1,0 +1,32 @@
+{
+    "number": 355441,
+    "data": "2,3,4,8,12,15,16,20,24,40,43,52,55,60,63,68,72,79,87,95,96,108,111,120,123,136,140,148,151,160,184,211,215,216,227,232,235,239,252,255,256,260,264,280,283,288,299,307,323,324,327,332,360,363,371,372,375,379",
+    "name": "Numbers k such that the sum of the least prime factors of i=2..k is prime.",
+    "link": [
+        "Jean-Marc Rebert, <a href=\"/A355441/b355441.txt\">Table of n, a(n) for n = 1..5676</a>"
+    ],
+    "example": [
+        "8 is a term since the least prime factors of 2..8 are 2, 3, 2, 5, 2, 7, 2 and their sum 23 is prime."
+    ],
+    "mathematica": [
+        "Position[Accumulate[Join[{0}, Table[FactorInteger[k][[1, 1]], {k, 2, 400}]]], _?PrimeQ] // Flatten (* _Amiram Eldar_, Jul 02 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, factorint",
+        "from itertools import accumulate, count, islice",
+        "def agen(): yield from (k for k, sk in enumerate(accumulate(min(factorint(i)) for i in count(2)), 2) if isprime(sk))",
+        "print(list(islice(agen(), 75))) # _Michael S. Branicky_, Jul 02 2022",
+        "(PARI) isok(k) = isprime(sum(i=2, k, factor(i)[1,1])); \\\\ _Michel Marcus_, Jul 04 2022"
+    ],
+    "xref": [
+        "Cf. A088821."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jean-Marc Rebert_, Jul 02 2022",
+    "references": 1,
+    "revision": 45,
+    "time": "2022-07-09T06:53:32-04:00",
+    "created": "2022-07-03T20:11:17-04:00"
+}

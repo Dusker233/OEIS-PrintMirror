@@ -1,0 +1,63 @@
+{
+    "number": 79545,
+    "data": "2,3,5,11,17,19,37,41,53,59,73,83,101,107,131,137,149,163,179,181,197,227,233,251,257,293,307,347,389,401,443,467,491,521,523,563,577,587,593,613,641,677,739,773,809,811,821,883",
+    "name": "Primes of the form x^2 + y^2 + 1 with x,y >= 0.",
+    "comment": [
+        "Bredihin proves that this sequence is infinite. Motohashi improves the upper and lower bounds. - _Charles R Greathouse IV_, Sep 16 2011",
+        "Sun & Pan prove that there are arbitrarily long arithmetic progressions in this sequence. - _Charles R Greathouse IV_, Mar 03 2018",
+        "For this sequence in short intervals, see Wu and Matom\u00e4ki; for its Goldbach problem, see Ter\u00e4v\u00e4inen. - _Charles R Greathouse IV_, Oct 10 2018"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A079545/b079545.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "B. M. Bredihin, <a href=\"http://mi.mathnet.ru/eng/izv3124\">Binary additive problems of indeterminate type II. Analogue of the problem of Hardy and Littlewood</a> (in Russian). Izvestiya Akademii Nauk SSSR Seriya Matematicheskaya 27 (1963), pp. 577-612.",
+        "M. N. Huxley and H. Iwaniec, <a href=\"https://doi.org/10.1112/S0025579300006069\">Bombieri's theorem in short intervals</a>, Mathematika 22 (1975), pp. 188-194.",
+        "Henryk Iwaniec, <a href=\"http://matwbn.icm.edu.pl/ksiazki/aa/aa21/aa21118.pdf\">Primes of the type \u03c6(x, y) + A where \u03c6 is a quadratic form</a>, Acta Arithmetica 21 (1972), pp. 203-234.",
+        "Kaisa Matom\u00e4ki, <a href=\"http://users.utu.fi/ksmato/papers/Primesm2n2p1.pdf\">Prime numbers of the form p = m^2 + n^2 + 1 in short intervals</a>, Acta Arithmetica 128 (2007), pp. 193-200.",
+        "Y. Motohashi, <a href=\"http://matwbn.icm.edu.pl/ksiazki/aa/aa16/aa1642.pdf\">On the distribution of prime numbers which are of the form x^2 + y^2 + 1</a>. Acta Arithmetica 16 (1969), pp. 351-364.",
+        "Y. Motohashi, <a href=\"https://doi.org/10.1007/BF01896011\">On the distribution of prime numbers which are of the form x^2 + y^2 + 1. II\"</a>, Acta Mathematica Academiae Scientiarum Hungaricae 22 (1971), pp. 207-210.",
+        "Yu-Chen Sun and Hao Pan, <a href=\"https://arxiv.org/abs/1708.08629\">The Green-Tao theorem for primes of the form x^2 + y^2 + 1</a>, arXiv:1708.08629 [math.NT], 2017.",
+        "Joni Ter\u00e4v\u00e4inen, <a href=\"https://arxiv.org/abs/1611.08585\">The Goldbach problem for primes that are sums of two squares plus one</a>, Mathematika 64 (2018), pp. 20-70. arXiv:1611.08585 [math.NT], 2016-2017.",
+        "J. Wu, <a href=\"https://doi.org/10.1090/S0002-9939-98-04414-1\">Primes of the form p = 1 + m^2 + n^2 in short intervals</a>, Proceedings of the American Mathematical Society 126 (1998), pp. 1-8."
+    ],
+    "formula": [
+        "Iwaniec proves that a(n) \u224d n (log n)^(3/2), that is, n (log n)^(3/2) << a(n) << n (log n)^(3/2). - _Charles R Greathouse IV_, Mar 06 2018"
+    ],
+    "example": [
+        "17 = 0^2 + 4^2 + 1 is prime so in this sequence."
+    ],
+    "mathematica": [
+        "Select[Select[Range[1000], SquaresR[2, #] != 0&]+1, PrimeQ] (* _Jean-Fran\u00e7ois Alcover_, Aug 31 2018 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)={",
+        "    my(A,t,v=List([2]));",
+        "    forstep(a=2,sqrt(lim-1),2,",
+        "        A=a^2+1;",
+        "        forstep(b=0,min(a,sqrt(lim-A)),2,",
+        "            if(isprime(t=A+b^2),listput(v,t))",
+        "        )",
+        "    );",
+        "    forstep(a=1,sqrt(lim-2),2,",
+        "        A=a^2+1;",
+        "        forstep(b=1,min(a,sqrt(lim-A)),2,",
+        "            if(isprime(t=A+b^2),listput(v,t))",
+        "        )",
+        "    );",
+        "    vecsort(Vec(v),,8)",
+        "}; \\\\ _Charles R Greathouse IV_, Sep 16 2011",
+        "(PARI) is(n)=for(x=sqrtint(n\\2),sqrtint(n-1), if(issquare(n-x^2-1), return(isprime(n)))); 0 \\\\ _Charles R Greathouse IV_, Jun 12 2015",
+        "(PARI) B=bnfinit('x^2+1);",
+        "is(n)=!!#bnfisintnorm(B,n-1) && isprime(n) \\\\ _Charles R Greathouse IV_, Jun 13 2015"
+    ],
+    "xref": [
+        "Primes in A166687.",
+        "Cf. A079544, A079739, A079740."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Jan 23 2003",
+    "references": 10,
+    "revision": 41,
+    "time": "2022-03-26T00:36:59-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

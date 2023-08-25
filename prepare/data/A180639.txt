@@ -1,0 +1,44 @@
+{
+    "number": 180639,
+    "data": "0,0,1,1,2,2,3,3,4,4,5,5,6,7,8,8,9,9,10,10,11,11,12,12,13,14,15,15,16,16,17,17,18,19,20,20,21,22,23,23,24,24,25,25,26,26,27,27,28,29,30,30,31,31,32,32,33,33,34,34,35,36,37,37,38,38,39,40,41,41",
+    "name": "a(n) is the number of integers k <= n that are not solution of phi(x) = k for any x, where phi is the Euler totient function A000010.",
+    "comment": [
+        "Not all integers give the number of integers less than or equal to some k that are prime to k (Euler totient function A000010): the sequence counts how many of them there are up to n."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A180639/b180639.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "D. Bressoud, <a href=\"http://www.macalester.edu/~bressoud/books/CNT.m\">CNT.m</a> Computational Number Theory Mathematica package."
+    ],
+    "formula": [
+        "a(n) = Sum_{k = 1..n} 1-A264739(k). - _Reinhard Zumkeller_, Nov 26 2015",
+        "a(n) = n - A264810(n). - _M. F. Hasler_, Aug 15 2021"
+    ],
+    "example": [
+        "a(16) = 8 since 3, 5, 7, 9, 11, 13, 14, 15 are not values of phi(n) for any n <= 16."
+    ],
+    "mathematica": [
+        "Needs[\"CNT`\"]; tot = 0; Table[If[PhiInverse[n] == {}, tot++]; tot, {n, 100}]"
+    ],
+    "program": [
+        "(Haskell)",
+        "a180639 n = a180639_list !! (n-1)",
+        "a180639_list = scanl1 (+) $ map ((1 -) . a264739) [1..]",
+        "-- _Reinhard Zumkeller_, Nov 26 2015",
+        "(PARI) A180639(n)=sum(k=1,n,!istotient(k)) \\\\ _M. F. Hasler_, Aug 15 2021",
+        "(PARI) A180639_vec(n,s=0)=vector(n,k,s+=!istotient(k)) \\\\ _M. F. Hasler_, Aug 15 2021"
+    ],
+    "xref": [
+        "Cf. A000010, A007617.",
+        "Cf. A264739, A264810."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_Carmine Suriano_, Sep 14 2010",
+    "ext": [
+        "Definition corrected by _M. F. Hasler_, Sep 01 2021"
+    ],
+    "references": 4,
+    "revision": 18,
+    "time": "2021-09-29T08:54:33-04:00",
+    "created": "2010-10-02T03:00:00-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 309310,
+    "data": "70,286,646,648,18048,26752,39128,40000,55648,60760,64798,72928,73726,164736,167440,174018,298298,324478,332748,352798,361788,373246,434928,649798,719998,862750,871198",
+    "name": "Intersection of A046346 and (A046346-2).",
+    "comment": [
+        "Numbers k such that both k and k+2 are composite and each is divisible by the sum of its prime factors (counted with multiplicity).",
+        "There are at least two cases where k, k+2 and k+4 are all in A046346: k=646 and k=38104990.  Are there more?",
+        "Up to 3*10^12 there is only one other such triple for k=590269019100. - _Giovanni Resta_, Jul 24 2019"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A309310/b309310.txt\">Table of n, a(n) for n = 1..2000</a> (terms 1..200 from Robert Israel)"
+    ],
+    "example": [
+        "a(1)=70 is a term because 70=2*5*7 is divisible by 2+5+7=14 and 72=2^3*3^2 is divisible by 2*3+3*2=12."
+    ],
+    "maple": [
+        "filter:= proc(n) local E,t;",
+        "  if isprime(n) then return false fi;",
+        "  E:= ifactors(n)[2];",
+        "  n mod add(t[1]*t[2],t=E) = 0",
+        "end proc:",
+        "A046346:= select(filter, {$2..10^6}):",
+        "sort(convert(A046346 intersect map(`-`,A046346,2),list));"
+    ],
+    "mathematica": [
+        "Select[Partition[Select[Range[2, 10^6], And[! PrimeQ[#], IntegerQ[#/Total[Times @@@ FactorInteger[#]]]] &], 2, 1], Subtract @@ # == -2 &][[All, 1]] (* _Michael De Vlieger_, Jul 22 2019 *)",
+        "cdsQ[n_]:=CompositeQ[n]&&Divisible[n,Total[Times@@@FactorInteger[n]]]; SequencePosition[Table[If[cdsQ[n],1,0],{n,872000}],{1,_,1}][[All,1]] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Jul 23 2019 *)"
+    ],
+    "xref": [
+        "Cf. A046346."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jul 22 2019",
+    "references": 1,
+    "revision": 25,
+    "time": "2023-06-11T14:21:20-04:00",
+    "created": "2019-07-22T14:46:04-04:00"
+}

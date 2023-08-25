@@ -1,0 +1,49 @@
+{
+    "number": 325119,
+    "data": "1,2,3,5,7,10,11,13,15,17,19,22,23,29,30,31,34,37,39,41,43,46,47,51,53,55,59,61,62,65,67,71,73,77,79,82,83,85,87,89,91,93,94,97,101,102,103,107,109,110,113,115,118,119,127,129,130,131,134,137,139,141",
+    "name": "Heinz numbers of binary carry-connected strict integer partitions.",
+    "comment": [
+        "A binary carry of two positive integers is an overlap of the positions of 1's in their reversed binary expansion. An integer partition is binary carry-connected if the graph whose vertices are the parts and whose edges are binary carries is connected.",
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1) * ... * prime(y_k), so these are squarefree numbers whose prime indices are binary carry-connected. A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798."
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices begins:",
+        "   1: {}",
+        "   2: {1}",
+        "   3: {2}",
+        "   5: {3}",
+        "   7: {4}",
+        "  10: {1,3}",
+        "  11: {5}",
+        "  13: {6}",
+        "  15: {2,3}",
+        "  17: {7}",
+        "  19: {8}",
+        "  22: {1,5}",
+        "  23: {9}",
+        "  29: {10}",
+        "  30: {1,2,3}",
+        "  31: {11}",
+        "  34: {1,7}",
+        "  37: {12}",
+        "  39: {2,6}",
+        "  41: {13}",
+        "  43: {14}"
+    ],
+    "mathematica": [
+        "binpos[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Select[Range[100],SquareFreeQ[#]&&Length[csm[binpos/@PrimePi/@First/@FactorInteger[#]]]<=1&]"
+    ],
+    "xref": [
+        "Cf. A019565, A048143, A056239, A112798, A304714, A304716, A305078.",
+        "Cf. A325098, A325099, A325100, A325105, A325110, A325118."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Mar 28 2019",
+    "references": 8,
+    "revision": 5,
+    "time": "2019-07-27T14:57:51-04:00",
+    "created": "2019-03-29T08:15:39-04:00"
+}

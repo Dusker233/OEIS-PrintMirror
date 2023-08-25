@@ -1,0 +1,44 @@
+{
+    "number": 102038,
+    "data": "1,2,5,17,73,382,2365,16937,137861,1257686,12714721,141119617,1706150125,22321071242,314201147513,4735338283937,76079613690505,1298088771022522,23441677492095901,446689961120844641",
+    "name": "a(n+1) = n*a(n) + a(n-1), a(1)=1, a(2)=2.",
+    "comment": [
+        "a(n) = x(n) + y(n) where x(n)/y(n) is the continued fraction [1,2,3,4,...,n].",
+        "Using a(n) = x(n) - y(n) instead of a(n) = x(n) + y(n) would give A058307."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A102038/b102038.txt\">Table of n, a(n) for n = 1..449</a>",
+        "Juan S. Auli and Sergi Elizalde, <a href=\"https://arxiv.org/abs/2003.11533\">Wilf equivalences between vincular patterns in inversion sequences</a>, arXiv:2003.11533 [math.CO], 2020.",
+        "Zhicong Lin, Sherry H. F. Yan, <a href=\"https://doi.org/10.1016/j.amc.2019.124672\">Vincular patterns in inversion sequences</a>, Applied Mathematics and Computation (2020), Vol. 364, 124672."
+    ],
+    "formula": [
+        "a(n) = A001040(n) + A001053(n) for n>1.",
+        "From _Paul D. Hanna_, Oct 31 2006: (Start)",
+        "a(n+1) = Sum_{k=0..n} k!*C(floor((n+k)/2),k)*C(floor((n+k+1)/2),k)).",
+        "a(n+1) = Sum_{k=0..n} k!*A124428(n+k,k). (End)"
+    ],
+    "mathematica": [
+        "a[1]= 1; a[2]= 2; a[n_]:= a[n] = (n-1)*a[n-1]+a[n-2]; Table[a[n], {n,20}] (* _Robert G. Wilson v_, Feb 14 2005 *)",
+        "RecurrenceTable[{a[1]==1,a[2]==2,a[n+1]==n*a[n]+a[n-1]},a,{n,20}] (* _Harvey P. Dale_, Sep 04 2018 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=sum(k=0,n,k!*binomial((n+k)\\2,k)*binomial((n+k+1)\\2,k)) \\\\ _Paul D. Hanna_, Oct 31 2006",
+        "(Magma) I:=[1,2]; [n le 2 select I[n] else (n-1)*Self(n-1) +Self(n-2): n in [1..30]]; // _G. C. Greubel_, Feb 23 2019",
+        "(Sage) [sum(factorial(k)*binomial(floor((n+k-1)/2), k)*binomial(floor((n+k)/2), k) for k in (0..n)) for n in (1..30)] # _G. C. Greubel_, Feb 23 2019",
+        "(GAP) a:=[1,2];; for n in [3..30] do a[n]:=(n-1)*a[n-1]+a[n-2]; od; a; # _G. C. Greubel_, Feb 23 2019"
+    ],
+    "xref": [
+        "Numerators are in A001040 and denominators in A001053.",
+        "Cf. A124428."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,2",
+    "author": "_Eric Angelini_, Feb 12 2005",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Feb 14 2005"
+    ],
+    "references": 9,
+    "revision": 30,
+    "time": "2022-09-08T08:45:16-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

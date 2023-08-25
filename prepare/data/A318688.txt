@@ -1,0 +1,53 @@
+{
+    "number": 318688,
+    "data": "1,7,73,487,511,2593,3409,18151,35551,39367,71119,80191,97687,189289,209953,248857,262657,275569,379081,472393,497833,561337,683809,1262791,1299079,1325023,1469671,1838599,2653567,2873791,3306751,5191687,5853943,7131151,8839537,9093553,15326569,19171729",
+    "name": "Numbers k such that 2^(3^j) == 1 (mod k) for some j.",
+    "comment": [
+        "Numbers k such that the multiplicative order of 2 mod k is a power of 3.",
+        "If x and y are coprime members of the sequence, then x*y is in the sequence.",
+        "All divisors of a member of the sequence are in the sequence.",
+        "All prime-power divisors of 2^(3^k)-1 are in the sequence.  In particular, the sequence contains infinitely many primes. - _Robert Israel_, Sep 02 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A318688/b318688.txt\">Table of n, a(n) for n = 1..82</a>"
+    ],
+    "example": [
+        "a(3) = 73 is in the sequence because the multiplicative order of 2 mod 73 is 9 which is a power of 3."
+    ],
+    "maple": [
+        "N:= 10^6: # to get all terms <= N",
+        "Res:= NULL:",
+        "p:= 5:",
+        "do",
+        "  p:= nextprime(p);",
+        "  if p > N then break fi;",
+        "  q:= 1: t:= 2:",
+        "  while q < p-1 do",
+        "    q:= 3*q;",
+        "    t:= t^3 mod p;",
+        "    if t = 1 then",
+        "      Res:= Res, p;",
+        "      v:= 1;",
+        "      while 2 &^ t mod (p^(v+1)) = 1 do v:= v+1 od:",
+        "      V[p]:= v;",
+        "      break",
+        "    fi",
+        "  od",
+        "od:",
+        "S:= {1}:",
+        "for p in Res do",
+        "  S:= `union`(S, seq(map(`*`,select(`<=`,S,N/p^i),p^i),i=1..V[p]))",
+        "od:",
+        "sort(convert(S, list));"
+    ],
+    "xref": [
+        "Cf. A000244, A002326"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Aug 31 2018",
+    "references": 1,
+    "revision": 17,
+    "time": "2021-02-10T01:09:38-05:00",
+    "created": "2018-08-31T22:53:05-04:00"
+}

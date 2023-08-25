@@ -1,0 +1,43 @@
+{
+    "number": 234962,
+    "data": "71,101,109,151,181,191,229,233,239,241,269,283,311,349,367,373,379,409,419,433,439,461,463,467,479,487,491,569,571,593,599,601,607,643,647,653,659,683,727,733,739,743,751,757,811,821,823,827,829,857,877,881",
+    "name": "Primes missing from the tree generated at A234960.",
+    "comment": [
+        "According to the conjecture at A234961, the limiting relative density of these primes is 1."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A234962/b234962.txt\">Table of n, a(n) for n = 1..7000</a>"
+    ],
+    "mathematica": [
+        "t = NestList[DeleteDuplicates[Flatten[Map[{#, NextPrime[2 #, -1], NextPrime[2 #, 1]} &, #]]] &, {2}, 12]; Complement[Map[Prime, Range[PrimePi[Last[#]]]], #] &[Last[t]] (* _Peter J. C. Moses_, Dec 30 2013 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import prevprime, nextprime, primerange",
+        "def aupto(limit):",
+        "    reach, expand = {2}, [2]",
+        "    while True:",
+        "        newreach = set()",
+        "        while len(expand) > 0:",
+        "            p = expand.pop()",
+        "            for q in prevprime(2*p), nextprime(2*p):",
+        "                if q not in reach:",
+        "                    newreach.add(q)",
+        "        reach |= newreach",
+        "        expand = list(newreach)",
+        "        if prevprime(2*min(expand)) > limit:",
+        "            in_tree = set(r for r in reach if r <= limit)",
+        "            return sorted(set(primerange(1, limit+1)) - in_tree)",
+        "print(aupto(881)) # _Michael S. Branicky_, Jul 24 2022"
+    ],
+    "xref": [
+        "Cf. A234960, A234961."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jan 01 2014",
+    "references": 3,
+    "revision": 13,
+    "time": "2022-07-25T01:12:12-04:00",
+    "created": "2014-01-14T12:54:01-05:00"
+}

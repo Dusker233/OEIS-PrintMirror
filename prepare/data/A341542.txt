@@ -1,0 +1,40 @@
+{
+    "number": 341542,
+    "data": "12,72,1152,1452,1950,3672,5520,6660,8232,10302,10890,13218,15288,15360,16062,18042,20898,21018,23628,25998,27918,32190,37812,42018,42462,48858,55818,57192,80832,80910,83340,91368,97848,98640,104472,111492,117498,119550",
+    "name": "Numbers on the square spiral board that are enclosed by four primes.",
+    "comment": [
+        "This sequence is similar to A172294, in which the starting number of the square spiral is 0 instead of 1. For a(n) < 10000000, 4 out of the 782 terms in this sequence, 72, 10302, 415380 and 1624350 are absent in A172294, while 6 out of the 784 terms in A172294, 42, 23562, 83232, 205662, 5805690 and 7019850 are absent in this sequence.",
+        "Conjecture: This sequence is infinite. If the conjecture holds, then the twin prime conjecture is true.",
+        "The 4 neighbors of n in the spiral are A068225, A068226, A334751, and A334752. - _Kevin Ryde_, Feb 13 2021"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from math import sqrt, ceil",
+        "m, m_max = 2, 1000000",
+        "while m <= m_max:",
+        "    L = [0, 0, 0, 0]",
+        "    n = int(ceil((sqrt(m) + 1.0)/2.0))",
+        "    z1 = 4*n*n - 12*n + 10",
+        "    z2 = 4*n*n - 10*n + 7",
+        "    z3 = 4*n*n - 8*n + 5",
+        "    z4 = 4*n*n - 6*n + 3",
+        "    z5 = 4*n*n - 4*n + 1",
+        "    if m > z1 and m < z2: L = [m + 1, m - 8*n + 15, m - 1, m + 8*n - 7]",
+        "    elif m > z2 and m < z3: L = [m + 8*n - 5, m + 1, m - 8*n + 13, m - 1]",
+        "    elif m > z3 and m < z4: L = [m - 1, m + 8*n - 3, m + 1, m - 8*n + 11]",
+        "    elif m > z4 and m < z5: L = [m - 8*n + 9, m - 1, m + 8*n - 1, m + 1]",
+        "    if isprime(L[0]) == 1 and isprime(L[1]) == 1 and isprime(L[2]) == 1 and isprime(L[3]) == 1: print(m)",
+        "    m += 2"
+    ],
+    "xref": [
+        "Cf. A341541, A341672, A172294, A068225, A068226, A334751, and A334752."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ya-Ping Lu_, Feb 13 2021",
+    "references": 6,
+    "revision": 8,
+    "time": "2021-02-18T00:47:45-05:00",
+    "created": "2021-02-18T00:47:45-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 45878,
+    "data": "1,2,3,12,14,25,108,122,216,310,1222,2028,2527,3042,11802,12222,13704,24865,25185,26053,30494,122222,208148,247137,312222,1125786,1222222,1325080,2084388,2551071,3025794,3037736,3126582,10716846,10787208",
+    "name": "Numbers k such that rotating digits of k^2 left once still yields a square.",
+    "comment": [
+        "Squares resulting in leading zeros are excluded.",
+        "A090843 is a subsequence. - _Chai Wah Wu_, Apr 23 2022"
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SquareNumber.html\">Square Number</a>"
+    ],
+    "example": [
+        "11303148^2 = {1}27761154709904 -> 277611547099041{1} = 16661679^2."
+    ],
+    "mathematica": [
+        "rlsQ[n_]:=Module[{idnrl=RotateLeft[IntegerDigits[n^2]]},First[idnrl]>0 && IntegerQ[Sqrt[FromDigits[idnrl]]]]; Select[Range[11000000],rlsQ] (* _Harvey P. Dale_, Nov 03 2013 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy.solvers.diophantine.diophantine import diop_DN",
+        "def A045878_gen(): # generator of terms",
+        "    for l in count(0):",
+        "        l1, l2 = 10**(l+1), 10**l",
+        "        yield from sorted(set(abs(y) for z in (diop_DN(10,m*(1-l1)) for m in range(10)) for x, y in z if l1 >= x**2 >= l2))",
+        "A045878_list = list(islice(A045878_gen(), 30)) # _Chai Wah Wu_, Apr 23 2022"
+    ],
+    "xref": [
+        "Cf. A000290, A045877, A035129, A090843."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Erich Friedman_",
+    "ext": [
+        "More terms from _Patrick De Geest_, Nov 15 1998"
+    ],
+    "references": 4,
+    "revision": 20,
+    "time": "2022-04-24T01:23:02-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

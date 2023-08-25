@@ -1,0 +1,65 @@
+{
+    "number": 319596,
+    "data": "2,5,7,11,17,19,23,29,47,53,59,61,71,73,83,89,101,107,137,167,173,179,181,191,197,223,233,251,263,269,317,431,461,491,503,509,521,541,547,557,569,587,593,653,659,673,677,683,701,709,719,809,911,947,953",
+    "name": "Base-3 deletable primes (written in base 10).",
+    "comment": [
+        "A prime p is a base-b deletable prime if when written in base b it has the property that removing some digit leaves either the empty string or another deletable prime.",
+        "Deleting a digit cannot leave any leading zeros in the new string. For example, deleting the 2 in 2003 to obtain 003 is not allowed."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A319596/b319596.txt\">Table of n, a(n) for n = 1..10000</a> (first 177 terms from Robert Price)"
+    ],
+    "maple": [
+        "S:= {2}: count:= 0:",
+        "p:= 2;",
+        "while count < 200 do",
+        "  p:= nextprime(p);",
+        "  d:= floor(log[3](p));",
+        "  for i from 0 to d do",
+        "    x:= p mod 3^(i+1);",
+        "    q:= (x mod 3^i) + (p-x)/3;",
+        "    if q >= 3^(d-1) and member(q,S) then",
+        "       S:= S union {p}; count:= count+1; break",
+        "      fi",
+        "  od;",
+        "od:",
+        "sort(convert(S,list)); # _Robert Israel_, Nov 26 2020"
+    ],
+    "mathematica": [
+        "b = 3; d = {};",
+        "p = Select[Range[2, 10000], PrimeQ[#] &];",
+        "For[i = 1, i <= Length[p], i++,",
+        "  c = IntegerDigits[p[[i]], b];",
+        "  If[Length[c] == 1, AppendTo[d, p[[i]]]; Continue[]];",
+        "  For[j = 1, j <= Length[c], j++,",
+        "   t = Delete[c, j];",
+        "   If[t[[1]] == 0, Continue[]];",
+        "   If[MemberQ[d, FromDigits[t, b]], AppendTo[d, p[[i]]]; Break[]]]];",
+        "d (* _Robert Price_, Dec 05 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from sympy.ntheory.digits import digits",
+        "def ok(n, base=3):",
+        "    if not isprime(n): return False",
+        "    if n < 3: return True",
+        "    s = \"\".join(str(d) for d in digits(n, base)[1:])",
+        "    si = (s[:i]+s[i+1:] for i in range(len(s)))",
+        "    return any(t[0] != '0' and ok(int(t, base)) for t in si)",
+        "print([k for k in range(954) if ok(k)]) # _Michael S. Branicky_, Jan 14 2022"
+    ],
+    "xref": [
+        "Cf. A080608, A080603, A096235-A096246."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Robert Price_, Nov 14 2018",
+    "ext": [
+        "Removed the term 3. As pointed out by _Kevin Ryde_, there is no need to \"seed\" the list using base-2 assumptions. - _Robert Price_, Dec 05 2018"
+    ],
+    "references": 3,
+    "revision": 54,
+    "time": "2022-01-14T10:34:35-05:00",
+    "created": "2018-11-14T20:30:37-05:00"
+}

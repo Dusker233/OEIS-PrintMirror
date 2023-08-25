@@ -1,0 +1,68 @@
+{
+    "number": 221697,
+    "data": "2,22,121,202,211,1021,1201,2011,2111,2221,2222,10201,10211,12011,12101,12211,12221,20011,20021,20101,20201,20222,21001,21011,21101,21121,21211,21221,22111,22121,101021,101221,102001,102101,102121,110221,111121,111211,111221,112111,112121",
+    "name": "Numbers whose largest digit of all divisors is 2.",
+    "comment": [
+        "Also numbers k such that the largest digit of the concatenation of all the divisors (A037278) of k is 2.",
+        "Numbers k such that A209928(k) = 2.",
+        "Union of A221698 and A106100."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A221697/b221697.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "10201 is a term because the largest digit of all the divisors of 10201 (1, 101, 10201) is 2."
+    ],
+    "maple": [
+        "isA221697 := proc(n)",
+        "      local dgs,d;",
+        "      dgs := {} ;",
+        "    for d in numtheory[divisors](n) do",
+        "        dgs := dgs union convert(convert(d,base,10),set) ;",
+        "    end do:",
+        "    if max(op(dgs)) = 2 then",
+        "        true;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 2 to 112121 do",
+        "    if isA221697(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 30 2013"
+    ],
+    "mathematica": [
+        "Select[Range[115000],Max[Flatten[IntegerDigits/@Divisors[#]]]==2&] (* _Harvey P. Dale_, Dec 15 2014 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "def ok(n): return '2' == max(\"\".join(map(str, divisors(n))))",
+        "print([m for m in range(1, 112122) if ok(m)]) # _Michael S. Branicky_, Feb 22 2021",
+        "(Python)",
+        "from sympy import isprime, divisors",
+        "from itertools import count, islice, product",
+        "def agen(): # generator of terms",
+        "    yield 2",
+        "    for d in count(2):",
+        "        for f in \"12\":",
+        "            for mid in product(\"012\", repeat=d-2):",
+        "                for e in \"12\": # ending in zero has 5 as divisor",
+        "                    s = f+\"\".join(mid)+e",
+        "                    t = int(s)",
+        "                    if \"2\" in s and isprime(t): yield t; continue",
+        "                    if \"2\" == max(\"\".join(map(str, divisors(t)))): yield t",
+        "print(list(islice(agen(), 50))) # _Michael S. Branicky_, Aug 03 2022"
+    ],
+    "xref": [
+        "Cf. A037278, A106100, A209928 (largest digit of all divisors of n), A221698."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jaroslav Krizek_, Jan 22 2013, corrected Jan 29 2013",
+    "references": 3,
+    "revision": 33,
+    "time": "2022-08-03T10:48:34-04:00",
+    "created": "2013-01-24T14:10:26-05:00"
+}

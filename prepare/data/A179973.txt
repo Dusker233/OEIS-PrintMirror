@@ -1,0 +1,49 @@
+{
+    "number": 179973,
+    "data": "1,1,2,4,12,42,216,1200,8664,66384,612264,5910024,66723384,776642664,10311400344,141065450904,2153769250584,33743736435864,583781959921944,10308436641381144,198863818304824344,3914117125411211544,83301822014343774744,1805447764831655109144",
+    "name": "Number of permutations of [n] whose cycle lengths are nondecreasing when cycles are ordered by their minima and these minima are {1..k} (for some k <= n).",
+    "comment": [
+        "The original name was: Row sums of A179972 and also of A179974."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A179973/b179973.txt\">Table of n, a(n) for n = 0..450</a>"
+    ],
+    "formula": [
+        "From _Alois P. Heinz_, Jul 09 2023: (Start)",
+        "a(n) = Sum_{lambda in partitions(n)} (n - |lambda|)!.",
+        "Limit_{n->oo} A004086(a(n))/10^A055642(a(n)) = A364128. (End)"
+    ],
+    "example": [
+        "a(4) = 12 = 6 + 2 + 2 + 1 + 1: (1234), (1243), (1324), (1342), (1423), (1432),",
+        "  (13)(24), (14)(23), (1)(234), (1)(243), (1)(2)(34), (1)(2)(3)(4)."
+    ],
+    "maple": [
+        "a:= n-> add((n-nops(p))!, p=combinat[partition](n)):",
+        "seq(a(n), n=0..24);  # _Alois P. Heinz_, Jul 09 2023",
+        "# second Maple program:",
+        "b:= proc(n, i, p) option remember; `if`(n=0 or i=1,",
+        "     (p-n)!, b(n, i-1, p)+b(n-i, min(n-i, i), p-1))",
+        "    end:",
+        "a:= n-> b(n$3):",
+        "seq(a(n), n=0..24);  # _Alois P. Heinz_, Jul 09 2023"
+    ],
+    "mathematica": [
+        "b[n_, i_, p_] := b[n, i, p] = If[n == 0 || i == 1, (p - n)!, b[n, i - 1, p] + b[n - i, Min[n - i, i], p - 1]];",
+        "a[n_] := b[n, n, n];",
+        "Table[a[n], {n, 0, 24}] (* _Jean-Fran\u00e7ois Alcover_, Aug 16 2023, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000041, A000142, A000522, A004086, A053529, A179972, A179974, A327711, A362362, A364128."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,3",
+    "author": "_Alford Arnold_, Aug 05 2010",
+    "ext": [
+        "Edited by _R. J. Mathar_, May 17 2016",
+        "a(0), a(9)-a(23) and new name from _Alois P. Heinz_, Jul 09 2023"
+    ],
+    "references": 6,
+    "revision": 35,
+    "time": "2023-08-16T14:44:17-04:00",
+    "created": "2010-08-27T03:00:00-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 306358,
+    "data": "25,65,85,125,145,169,185,205,221,225,265,289,305,325,365,377,425,445,481,485,493,505,533,545,565,585,625,629,685,689,697,725,745,765,785,793,841,845,865,901,905,925,949,965,985,1025,1037,1073,1105,1125,1145,1157,1165,1189,1205,1225,1241",
+    "name": "Odd numbers which are the sum of two squares in two or more different ways.",
+    "comment": [
+        "Odd terms of A118882.",
+        "Odd numbers k such that A000161(k) >= 2."
+    ],
+    "example": [
+        "The decompositions of the first terms are",
+        "25: [[4, 3], [5, 0]]",
+        "65: [[7, 4], [8, 1]]",
+        "85: [[7, 6], [9, 2]]",
+        "125: [[10, 5], [11, 2]]",
+        "145: [[9, 8], [12, 1]]",
+        "169: [[12, 5], [13, 0]]",
+        "185: [[11, 8], [13, 4]]",
+        "205: [[13, 6], [14, 3]]",
+        "221: [[11, 10], [14, 5]]",
+        "225: [[12, 9], [15, 0]]",
+        "265: [[12, 11], [16, 3]]",
+        "289: [[15, 8], [17, 0]]",
+        "305: [[16, 7], [17, 4]]",
+        "325: [[15, 10], [17, 6], [18, 1]]",
+        "365: [[14, 13], [19, 2]]",
+        "377: [[16, 11], [19, 4]]"
+    ],
+    "program": [
+        "(PARI) A000161(n)=sum(k=sqrtint((n-1)\\2)+1, sqrtint(n), issquare(n-k^2));",
+        "is(n)=if(n%2==1, A000161(n)>1, 0);",
+        "select(is,vector(1300,n,n))",
+        "(Python)",
+        "from itertools import count, islice",
+        "from math import prod",
+        "from sympy import factorint",
+        "def A306358_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue+1-(startvalue&1),1),2):",
+        "        f = factorint(n)",
+        "        if 1<int(not any(e&1 for e in f.values())) + (((m:=prod(1 if p==2 else (e+1 if p&3==1 else (e+1)&1) for p, e in f.items()))+((((~n & n-1).bit_length()&1)<<1)-1 if m&1 else 0))>>1):",
+        "            yield n",
+        "A306358_list = list(islice(A306358_gen(),30)) # _Chai Wah Wu_, Sep 09 2022"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Joerg Arndt_, Feb 10 2019",
+    "references": 1,
+    "revision": 11,
+    "time": "2022-09-10T02:22:04-04:00",
+    "created": "2019-02-10T01:40:30-05:00"
+}

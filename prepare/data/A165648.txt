@@ -1,0 +1,32 @@
+{
+    "number": 165648,
+    "data": "0,1,2,4,7,13,23,41,77,149,397,1246,21135,430933,51156773,3044120326,1704554902881,446193132548644,650868899188542416,431014163502227412545,2886915606822315071638459,8841362446647790021087061250,152946959203764346079534774815394,1208238394473886999896406262410758886",
+    "name": "Number of disconnected simple graphs on n vertices with each component regular.",
+    "formula": [
+        "a(n) = A165647(n) - A005177(n)",
+        "     = Euler_transformation(A005177)(n) - A005177(n)."
+    ],
+    "example": [
+        "The a(2)=1 graph is: 2K_1. The a(3)=2 graphs are: 3K_1, K_1+K_2. The a(4)=4 graphs are: 4K_1, 2K_1+K_2, K_1+K_3, 2K_2."
+    ],
+    "mathematica": [
+        "A005177 = Cases[Import[\"https://oeis.org/A005177/b005177.txt\", \"Table\"], {_, _}][[All, 2]]~Join~{0};",
+        "etr[p_] := Module[{b}, b[n_] := b[n] = If[n == 0, 1, Sum[DivisorSum[j, # p[#]&] b[n - j], {j, 1, n}]/n]; b];",
+        "b = etr[A005177[[# + 1]]&];",
+        "a[n_] := b[n] - A005177[[n + 1]];",
+        "a /@ Range[17] (* _Jean-Fran\u00e7ois Alcover_, Dec 02 2019 *)"
+    ],
+    "xref": [
+        "Cf. A005177, A165647."
+    ],
+    "keyword": "nonn,hard",
+    "offset": "1,3",
+    "author": "_Jason Kimberley_, Sep 23 2009",
+    "ext": [
+        "Terms a(18) and beyond from _Andrew Howroyd_, May 21 2020"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2020-05-21T12:46:15-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

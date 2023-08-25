@@ -1,0 +1,55 @@
+{
+    "number": 323640,
+    "data": "6,20,56,70,110,182,272,286,308,506,646,650,812,884,992,1150,1406,1672,1748,1798,1892,2162,2756,2990,3422,3526,3782,4030,4466,4556,4606,4930,5402,5510,5704,6032,6068,6806,7198,7310,7378,7832,7904,8084,8170,8246,8584,8710",
+    "name": "Numbers m having at least one pair (x,y) of divisors with x<y such that x+y is also a divisor of m but no proper divisor of m has this property.",
+    "comment": [
+        "Primitive terms of A094519.",
+        "From _Bernard Schott_, Aug 31 2019: (Start)",
+        "Some subsequences (this list is not exhaustive):",
+        "1) Oblong numbers of the form (3*k+1)*(3*k+2). These are in A001504 and the pair (x,y) = (1,3*k+1). Only 6 is oblong and not of this form. The first few terms are 20, 56, 110, 182, 272, ...",
+        "2) Numbers of the form 2*p*q  where (p, q) is a twin prime pair. These terms are precisely A071142 \\ {30} and the pair (x,y) = (2,p). The first few terms are 70, 286, 646, ...",
+        "3) Numbers of the form 2^2 * p * q where p and q = p+4 are primes and p > 3. These primes p are in A023200 \\ {3} and the pair (x,y) = (4,p). The first few terms are 308, 884, ...",
+        "4) More generally, numbers of the form 2^k * p * q where p and q = p+2^k are primes and the pair (x,y) = (2^k,p). For k = 3, the smallest such term is 1672 with p = 11. (End)"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A323640/b323640.txt\">Table of n, a(n) for n = 1..11106</a> (terms <= 5*10^7)"
+    ],
+    "example": [
+        "56 is in the sequence as 1, 7 and 1 + 7 = 8 are divisors of 56 and no divisor of 56 is in the sequence."
+    ],
+    "maple": [
+        "filter:= proc(n) local D,i,j,nD;",
+        "  D:= numtheory:-divisors(n);",
+        "  nD:= nops(D);",
+        "  for i from 1 to nD-1 do",
+        "    for j from i+1 to nD do",
+        "      if (n/(D[i]+D[j]))::integer then return true fi",
+        "  od od;",
+        "  false",
+        "end proc:",
+        "N:= 10000: # for terms <= N",
+        "C:= Vector(N):",
+        "R:= NULL:",
+        "for i from 1 to N do",
+        "  if C[i]=0 and filter(i) then",
+        "    R:= R, i;",
+        "    C[[seq(i*j,j=2..N/i)]]:= 1",
+        "  fi",
+        "od:",
+        "R; # _Robert Israel_, Sep 02 2019"
+    ],
+    "program": [
+        "(PARI) upto(n) = {my(charprim = vector(n, i, 1), res = List()); for(i = 1, n, if(charprim[i] == 1, if(isA094519(i), listput(res, i); for(k = 2, n \\ i, charprim[i*k] = 0 ) , charprim[i] = 0; ) ) ); res }",
+        "isA094519(n) = {my(d = divisors(n)); for(i = 1, #d - 2, for(j = i + 1, #d - 1, if(n % (d[i] + d[j]) == 0, return(1) ) ) ); 0 }"
+    ],
+    "xref": [
+        "Cf. A094519."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David A. Corneth_, Aug 31 2019",
+    "references": 1,
+    "revision": 33,
+    "time": "2019-09-14T16:44:07-04:00",
+    "created": "2019-09-13T22:19:12-04:00"
+}

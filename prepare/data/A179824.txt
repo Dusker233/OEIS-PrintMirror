@@ -1,0 +1,54 @@
+{
+    "number": 179824,
+    "data": "2,24,108,320,750,1512,2744,4608,7290,11000,15972,22464,30758,41160,54000,69632,88434,110808,137180,168000,203742,244904,292008,345600,406250,474552,551124,636608,731670,837000,953312,1081344,1221858",
+    "name": "Chromatic polynomial of the star graph on 4 vertices (claw graph) and the path graph on 4 vertices.",
+    "comment": [
+        "To generate a Pythagorean triangle one uses (a,b) to get sides b^2-a^2, 2*a*b, and a^2+b^2, having a perimeter of 2*b*(a+b). If for a one uses the triangular number n*(n+1)/2 and for b the next triangular number (n+1)*(n+2)/2, the perimeter of the triangle so formed is (n+1)^3 * (n+2), which will give the same results as this sequence starting at the second term. - _J. M. Bergot_, Apr 01 2012",
+        "Define b(0)=0 and b(n)=A179824(n+1) for n > 0. Then b(n) is the number of 4-tuples (w,x,y,z) having all terms in {0,...,n} and no two consecutive terms equal. - _Clark Kimberling_, May 31 2012",
+        "Let n points in the plane each become the centers of n-1 concentric circles, circles that pass through only one of each of the other points. The maximum number of intersections of these circles is this sequence. [The solution was given by _Andrew Weimholt_ in the Sequence Fans Mailing List] - _J. M. Bergot_, Mar 10 2014",
+        "Both the 'claw graph', a graph with 4 vertices where one vertex is adjacent to the other three, and the path graph on 4 vertices (per _Clark Kimberling_'s comment), have this sequence as their chromatic polynomial, or the number of proper colorings of the graph using at most n colors. This is the standard example of two graphs which are not isomorphic, but which have the same chromatic polynomial."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A179824/b179824.txt\">Table of n, a(n) for n = 2..1000</a>",
+        "Andrew Weimholt, <a href=\"http://list.seqfan.eu/oldermail/seqfan/2014-March/012685.html\">Re: Intersecting circles</a>, SeqFan post Mar 09 2014.",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (5,-10,10,-5,1)."
+    ],
+    "formula": [
+        "a(n) = n*(n-1)^3. - Jaime Soffer (jaime.soffer(AT)gmail.com), Jul 30 2010",
+        "G.f.: 2*x^2*(1 + 7*x + 4*x^2)/(1-x)^5. - _Colin Barker_, Jan 30 2012",
+        "a(n) = 2*A019582(n). - _R. J. Mathar_, Jun 09 2013",
+        "a(n) = 5*a(n-1) - 10*a(n-2) + 10*a(n-3) - 5*a(n-4) + a(n-5). - _Vincenzo Librandi_, Mar 12 2014",
+        "Sum_{n>=2} 1/a(n) = A249649. - _R. J. Mathar_, Oct 18 2019",
+        "Sum_{n>=2} (-1)^n/a(n) = 3*zeta(3)/4 + 2*log(2) - Pi^2/12 - 1. - _Amiram Eldar_, Nov 05 2020"
+    ],
+    "example": [
+        "From _Jack W Grahl_, Jul 16 2018: (Start)",
+        "Consider the claw graph, which has vertices A, B, C, D, and edges AB, AC, AD. To color this graph with 3 colors, we can choose any of the 3 colors for A. Then each of the other vertices can be colored with any of the remaining two colors, giving 3 * 2 * 2 * 2 = 24 choices in all.",
+        "Similarly, consider the path graph with the same vertices and edges AB, BC, CD. We have 3 choices for the color of A, then 2 choices for the color of B (any color except that chosen for A), 2 choices for the color of C (any color except B's) etc. (End)"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[2 (1 + 7 x + 4 x^2)/(1 - x)^5, {x, 0, 50}], x] (* _Vincenzo Librandi_, Mar 12 2014 *)",
+        "Table[n^3+n^4,{n,40}] (* or *) LinearRecurrence[{5,-10,10,-5,1},{2,24, 108,320,750},40] (* _Harvey P. Dale_, Sep 05 2015 *)"
+    ],
+    "program": [
+        "(Haskell) let f n = [ (x,a,b,c) | let t = [1..n], x <- t, a <- t, x /= a, b <- t, x /= b, c <- t, x /= c ] in map (length.f) [2..]",
+        "(Haskell) let f n = n*(n-1)^3 in map f [2..]",
+        "(PARI) a(n) = n*(n-1)^3 \\\\ _Charles R Greathouse IV_, Mar 11 2014",
+        "(Magma) I:=[2,24,108,320,750]; [n le 5 select I[n] else 5*Self(n-1)-10*Self(n-2)+10*Self(n-3)-5*Self(n-4)+Self(n-5): n in [1..50]]; // _Vincenzo Librandi_, Mar 12 2014",
+        "(Sage) [n*(n-1)^3 for n in (2..40)] # _G. C. Greubel_, Aug 10 2019",
+        "(GAP) List([2..40], n-> n*(n-1)^3 ); # _G. C. Greubel_, Aug 10 2019"
+    ],
+    "xref": [
+        "Cf. A019582, A179824."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "2,1",
+    "author": "Jaime Soffer (jaime.soffer(AT)gmail.com), Jul 28 2010",
+    "ext": [
+        "Name edited by _Jack W Grahl_, Jul 16 2018"
+    ],
+    "references": 4,
+    "revision": 57,
+    "time": "2023-01-02T12:30:47-05:00",
+    "created": "2010-07-31T03:00:00-04:00"
+}

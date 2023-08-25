@@ -1,0 +1,38 @@
+{
+    "number": 339148,
+    "data": "7,13,23,37,53,67,89,103,113,131,139,157,173,181,193,211,233,277,293,337,359,389,409,421,449,479,491,509,547,577,607,631,653,691,709,751,761,797,811,823,839,863,887,919,953,983",
+    "name": "Insulated primes (see Comments for definition).",
+    "comment": [
+        "Let the degree of insulation D(p) for a prime p be defined to be the largest m such that the only prime between p-m and p+m inclusive is p. Then the n-th prime is said to be insulated if and only if D(prime(n)) > D(prime(n+1)) and D(prime(n)) > D(prime(n-1))."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A339148/b339148.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Abhimanyu Kumar and Anuraag Saxena, <a href=\"https://arxiv.org/abs/2011.14210\">Insulated primes</a>, arXiv:2011.14210 [math.NT], 2020."
+    ],
+    "formula": [
+        "a(n) ~ 19.18*n^1.093 (heuristically accurate fit for n up to one million).",
+        "a(n) ~ c*n^(1+epsilon) (conjectured for some constant c,epsilon as n->oo)."
+    ],
+    "example": [
+        "For the prime triplet (19,23,29), we have D(19)=2, D(23)=4, and D(29)=1. Hence, 23 is an insulated prime."
+    ],
+    "mathematica": [
+        "Select[Prime@ Range[2, 166], And[#2 > #1, #2 > #3] & @@ Map[Min[NextPrime[# + 1] - # - 1, # - NextPrime[# - 1, -1]] &, {NextPrime[# + 1], #, NextPrime[# - 1, -1]}] &] (* _Michael De Vlieger_, Mar 17 2021 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "D(p)={min(nextprime(p+1)-p-1, p-precprime(p-1))}",
+        "ok(p)={my(d=D(p)); d>D(nextprime(p+1)) && d>D(precprime(p-1))}",
+        "forprime(p=3, 1000, if(ok(p), print1(p, \", \"))) \\\\ _Andrew Howroyd_, Nov 25 2020"
+    ],
+    "xref": [
+        "Cf. A000040, A000720."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Abhimanyu Kumar_, Nov 25 2020",
+    "references": 3,
+    "revision": 30,
+    "time": "2021-03-17T15:58:09-04:00",
+    "created": "2020-11-26T22:33:00-05:00"
+}

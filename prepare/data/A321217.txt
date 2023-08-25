@@ -1,0 +1,48 @@
+{
+    "number": 321217,
+    "data": "17,31,37,41,43,59,67,73,89,97,101,103,109,113,127,131,137,149,151,157,193,223,229,233,241,251,257,263,271,277,281,283,293,307,311,313,331,337,347,353,379,389,397,401,409,421,431,433,439,449,457,461,463,467,491,499",
+    "name": "Genocchi irregular primes.",
+    "comment": [
+        "An odd prime p is G-irregular if it divides at least one of the integers G2, G4, ..., G(p-3).",
+        "Conjecture (Hu et al., 2019): The asymptotic density of this sequence within the primes is 1 - 3*A/(2*sqrt(e)) = 0.659776..., where A is Artin's constant (A005596). - _Amiram Eldar_, Dec 06 2022"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A321217/b321217.txt\">Table of n, a(n) for n = 1..1024</a>",
+        "Su Hu, Min-Soo Kim, Pieter Moree, and Min Sha, <a href=\"https://doi.org/10.1016/j.jnt.2019.03.012\">Irregular primes with respect to Genocchi numbers and Artin's primitive root conjecture</a>, Journal of Number Theory, Vol. 205 (2019), pp. 59-80, <a href=\"https://arxiv.org/abs/1809.08431\">preprint</a>, arXiv:1809.08431 [math.NT], 2019.",
+        "Peter Luschny, <a href=\"http://www.luschny.de/math/primes/irregular.html\">Irregular Bernoulli and Euler Primes</a>.",
+        "Pieter Moree and Min Sha, <a href=\"https://doi.org/10.1017/S0004972719000443\">Primes in arithmetic progressions and nonprimitive roots</a>, Bulletin of the Australian Mathematical Society (2019), <a href=\"https://arxiv.org/abs/1901.02650\">preprint</a>, arXiv:1901.02650 [math.NT], 2019.",
+        "Pieter Moree and Pietro Sgobba, <a href=\"https://arxiv.org/abs/2209.08047\">Prime divisors of l-Genocchi numbers and the ubiquity of Ramanujan-style congruences of level l</a>, arXiv:2209.08047 [math.NT], 2022."
+    ],
+    "maple": [
+        "A321217_list := proc(bound)",
+        "   local ae, F, p, m, maxp; F := NULL;",
+        "   for m from 2 by 2 to bound do",
+        "      p := nextprime(m+1);",
+        "      ae := abs(m*euler(m-1, 0));",
+        "      maxp := min(ae, bound);",
+        "      while p <= maxp do",
+        "          if ae mod p = 0 then F := F, p fi;",
+        "          p := nextprime(p)",
+        "      od",
+        "   od;",
+        "sort({F}) end: A321217_list(500); # _Peter Luschny_, Nov 11 2018"
+    ],
+    "mathematica": [
+        "G[n_] := G[n] = n EulerE[n - 1, 0];",
+        "GenocchiIrregularQ[p_] := AnyTrue[Table[G[k], {k, 2, p-3, 2}], Divisible[#, p]&];",
+        "Select[Prime[Range[2, 100]], GenocchiIrregularQ] (* _Jean-Fran\u00e7ois Alcover_, Nov 16 2018 *)"
+    ],
+    "xref": [
+        "Cf. A036968 (Genocchi numbers), A000928 (irregular primes), A120337 (Euler-irregular primes), A128197 (strong irregular primes), A250216 (weak irregular primes), A005596."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Oct 31 2018",
+    "ext": [
+        "More terms from _Peter Luschny_, Nov 11 2018"
+    ],
+    "references": 2,
+    "revision": 28,
+    "time": "2022-12-06T07:57:25-05:00",
+    "created": "2018-10-31T21:52:30-04:00"
+}

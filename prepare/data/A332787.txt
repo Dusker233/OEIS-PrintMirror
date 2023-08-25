@@ -1,0 +1,53 @@
+{
+    "number": 332787,
+    "data": "2,3,7,11,13,17,19,23,29,37,41,43,47,53,61,67,71,73,79,83,89,97,101,103,109,113,127,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,211,227,229,233,239,241,251,257,263,277,281,283,293,307,311,317,331,337,347,349,353,359,367",
+    "name": "Negative-pan primes (see Comments).",
+    "comment": [
+        "Take a double-pan balance scale and name the pans \"negative\" and \"positive\". At each step, the question is: \"Is there an unused prime that would balance the scale if added to the positive pan?\" If the answer is yes, add that prime to the positive pan. Otherwise, add the smallest unused prime to the negative pan.",
+        "The negative pan N can be fractalized, i.e., subdivided into NN and NP pans, where NN ={{2,3,7,11},{13,17,19,29,37,41,43},...} and NP = {{23},{199},...}. Can this fractalization be continued infinitely?"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A332787/b332787.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "First division: 2 and 3 unbalance the scale (and go to the negative pan N), but 5 = 2 + 3 balances it (and goes to the positive pan P).",
+        "Second division: 2,3,7 and 11 unbalance the N pan (and go to the NN subpan), but 23 balances it (and goes to NP subpan)."
+    ],
+    "mathematica": [
+        "a[1]=-2;",
+        "a[n_]:=a[n]=Module[{tab=Table[a[i],{i,1,n-1}],",
+        "totalN=Abs[Total[Select[Table[a[i],{i,1,n-1}],Negative]]],",
+        "totalP=Total[Select[Table[a[i],{i,1,n-1}],Positive]],",
+        "l=NextPrime[Last[Select[Table[a[i],{i,1,n-1}],Negative]],-1]},",
+        "If[ totalN==totalP,",
+        "If[ PrimePi[tab[[-1]]]-PrimePi[Abs[tab[[-2]]]]==1,-NextPrime[tab[[-1]]],",
+        "NextPrime[tab[[-2]],-1]],",
+        "If[PrimeQ[totalN-totalP]&&FreeQ[Abs[tab],totalN-totalP],totalN-totalP,",
+        "If[FreeQ[Abs[tab], Abs[l]], l, While[!FreeQ[Abs[tab],Abs[l]],l=NextPrime[l,-1]];l]",
+        "]]];Abs[Select[a/@Range[78],Negative]]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime",
+        "def agen(): # generator of terms",
+        "    used, d, nextp = set(), 0, 2",
+        "    while True:",
+        "        if d > 0 and d not in used and isprime(d):",
+        "            used.add(d); d = 0",
+        "        while nextp in used:",
+        "            nextp = nextprime(nextp)",
+        "        used.add(nextp); yield nextp; d += nextp",
+        "print(list(islice(agen(), 65))) # _Michael S. Branicky_, May 12 2022"
+    ],
+    "xref": [
+        "Cf. A249031, A332341, A332788."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Ivan N. Ianakiev_, Feb 24 2020",
+    "references": 3,
+    "revision": 20,
+    "time": "2022-05-12T10:01:41-04:00",
+    "created": "2020-04-13T07:19:46-04:00"
+}

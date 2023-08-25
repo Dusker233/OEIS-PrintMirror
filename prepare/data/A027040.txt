@@ -1,0 +1,39 @@
+{
+    "number": 27040,
+    "data": "1,3,9,31,129,531,2129,8351,32177,122211,458801,1706015,6293169,23057651,83992313,304424639,1098525761,3948727555,14145206209,50515602111,179904080257,639103899411,2265253438745,8012421964063",
+    "name": "a(n) = self-convolution of row n of array T given by A027023.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A027040/b027040.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..2*n} T(n,k)*T(n,2*n-k), where T = A027023. - _G. C. Greubel_, Nov 05 2019"
+    ],
+    "maple": [
+        "T:= proc(n, k) option remember;",
+        "      if (n<0 or k>2*n) then 0",
+        "    elif k<3 or k=2*n then 1",
+        "    else add(T(n-1, k-j), j=1..3)",
+        "      fi",
+        "    end:",
+        "seq( add(T(n,k)*T(n,2*n-k), k=0..2*n), n=0..30); # _G. C. Greubel_, Nov 05 2019"
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[n<0 || k>2*n, 0, If[k<3 || k==2*n, 1, Sum[T[n-1, k-j], {j, 3}]]]; Table[Sum[T[n, k]*T[n, 2*n-k], {k, 0, 2*n}], {n, 0, 30}] (* _G. C. Greubel_, Nov 05 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n, k):",
+        "    if (n<0 or k>2*n): return 0",
+        "    elif (k<3 or k==2*n): return 1",
+        "    else: return sum(T(n-1, k-j) for j in (1..3))",
+        "[sum(T(n,k)*T(n,2*n-k) for k in (0..2*n)) for n in (4..30)] # _G. C. Greubel_, Nov 05 2019"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_",
+    "references": 2,
+    "revision": 11,
+    "time": "2019-11-06T22:35:48-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

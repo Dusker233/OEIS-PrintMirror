@@ -1,0 +1,56 @@
+{
+    "number": 358421,
+    "data": "23,37,53,73,1117,1123,1129,1153,1171,1319,1361,1367,1373,1723,1741,1747,1753,1759,1783,1789,1913,1931,1973,1979,1997,2311,2341,2347,2371,2383,2389,2917,2953,2971,3119,3137,3167,3719,3761,3767,3779,3797,4111,4129,4153,4159,4337,4373,4397,4723,4729",
+    "name": "Primes that are the concatenation of two primes with the same number of digits.",
+    "comment": [
+        "It appears that there are ~ 0.81*100^k/(k^2 log^2 10) 2k-digit numbers in this sequence, making their relative density 0.9/(k^2 log^2 10) among 2k-digit numbers. Of course there are no 2k+1-digit terms in the sequence. - _Charles R Greathouse IV_, Nov 15 2022",
+        "The second Mathematica program below generates all 2-digit and 4-digit terms of the sequence. To generate all 2,753 6-digit terms of the sequence, use this Mathematica program: Select[1000#[[1]]+#[[2]]&/@Tuples[Prime[Range[26,168]],2],PrimeQ]. There are 112,649 8-digit terms of the sequence.  - _Harvey P. Dale_, Feb 28 2023"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A358421/b358421.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(5) = 1117 is a term because 11 and 17 are both 2-digit primes and 1117 is prime."
+    ],
+    "maple": [
+        "Res:= NULL: count:= 0:",
+        "for d from 2 by 2 while count < 100 do",
+        "  pq:= 10^(d-1);",
+        "  while count < 100 do",
+        "    pq:= nextprime(pq);",
+        "    if pq > 10^d then break fi;",
+        "    q:= pq mod 10^(d/2);",
+        "    if q < 10^(d/2-1) then next fi;",
+        "    p:= (pq-q)/10^(d/2);",
+        "    if isprime(p) and isprime(q) then Res:= Res,pq; count:= count+1 fi",
+        "od od:",
+        "Res;"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[640]], EvenQ[(s = IntegerLength[#])] && IntegerDigits[#][[s/2 + 1]] > 0 && And @@ PrimeQ[QuotientRemainder[#, 10^(s/2)]] &] (* _Amiram Eldar_, Nov 15 2022 *)",
+        "Join[Select[FromDigits/@Tuples[Prime[Range[4]],2],PrimeQ],Select[100#[[1]]+ #[[2]]&/@ Tuples[Prime[Range[5,25]],2],PrimeQ]] (* _Harvey P. Dale_, Feb 28 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime, primerange",
+        "def agen(): # generator of terms",
+        "    for d in count(1):",
+        "        pow = 10**d",
+        "        for p in primerange(10**(d-1), pow):",
+        "            for q in primerange(10**(d-1), pow):",
+        "                t = p*pow + q",
+        "                if isprime(t): yield t",
+        "print(list(islice(agen(), 51))) # _Michael S. Branicky_, Nov 15 2022"
+    ],
+    "xref": [
+        "Subsequence of A000040 and of A001637."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Nov 15 2022",
+    "references": 3,
+    "revision": 25,
+    "time": "2023-02-28T14:21:28-05:00",
+    "created": "2022-11-19T20:22:57-05:00"
+}

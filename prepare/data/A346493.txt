@@ -1,0 +1,40 @@
+{
+    "number": 346493,
+    "data": "251,503,971,1223,1907,2579,2897,3191,3761,3797,4397,4919,5003,5147,5261,5273,5483,6047,6263,6353,6911,7523,7541,8069,8501,8807,9413,9467,10853,11471,11483,11897,11933,12473,13751,14741,15161,15461,15629,15767,16091,16301,16889,16937,18077,18143,18329,19163",
+    "name": "Primes p such that the sum of digits of p and digits of the next prime q is equal to the sum of digits of p*q",
+    "link": [
+        "Robert Israel, <a href=\"/A346493/b346493.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 971 is a term because 971 is prime, the next prime is 977, 971*977 = 948667, and 9+7+1+9+7+7 = 40 = 9+4+8+6+6+7."
+    ],
+    "maple": [
+        "q:= 2: sq:= q;",
+        "R:= NULL: count:= 0:",
+        "while count < 100 do",
+        "  p:= q; sp:= sq;",
+        "  q:= nextprime(q);",
+        "  sq:= convert(convert(q,base,10),`+`);",
+        "  if sp+sq = convert(convert(p*q,base,10),`+`) then",
+        "    R:= R,p; count:= count+1;",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Prime@Range@3000,Total@Flatten[IntegerDigits/@(t=NextPrime[#,{0,1}])]==Total@IntegerDigits[Times@@t]&] (* _Giorgos Kalogeropoulos_, Jul 20 2021 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = if (isprime(p), my(q=nextprime(p+1)); sumdigits(p)+sumdigits(q) == sumdigits(p*q)); \\\\ _Michel Marcus_, Jul 20 2021"
+    ],
+    "xref": [
+        "Cf. A007605"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jul 19 2021",
+    "references": 1,
+    "revision": 13,
+    "time": "2021-07-20T16:53:36-04:00",
+    "created": "2021-07-20T03:11:22-04:00"
+}

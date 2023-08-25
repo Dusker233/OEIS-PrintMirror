@@ -1,0 +1,53 @@
+{
+    "number": 337221,
+    "data": "2,3,7,31,2111,89599,44102911,35014031359,42884741301247,4322284854745087,571673085017796607,2374135870748049407",
+    "name": "Starts of record-length sequences of primes under iteration of the map x goes to (3*x+1)/2.",
+    "comment": [
+        "Dickson's conjecture implies this sequence is infinite.",
+        "For all n > 2, a(n) mod 10 == 1, 7 or 9. - _Chai Wah Wu_, Aug 21 2020"
+    ],
+    "example": [
+        "a(3)=7 is in the sequence because iterating x -> (3*x+1)/2 starting with 7 we get a sequence of three primes 7 -> 11 -> 17, and there is no such sequence of three or more primes starting with a prime less than 7."
+    ],
+    "maple": [
+        "f:= proc(n) local R,x;",
+        "  if not isprime(n) then return 0 fi;",
+        "  x:= n;",
+        "  R:= 1;",
+        "  do",
+        "    x:= (3*x+1)/2;",
+        "    if not (x::integer and isprime(x)) then return R fi;",
+        "    R:= R+1;",
+        "  od",
+        "end proc:",
+        "R:= 2: x:= 2: rec:= 1:",
+        "while rec < 10 do",
+        "  for x from ceil(x/2^rec)*2^rec-1 by 2^rec do",
+        "    v:= f(x);",
+        "    if v > rec then rec:= v; R:= R, x; break fi",
+        "od od:",
+        "R;"
+    ],
+    "mathematica": [
+        "g[n_] := Length@NestWhileList[(3 # + 1)/2 &, n, PrimeQ] - 1;",
+        "r = {2}; x = 2; rec = 1;",
+        "While[rec < 10,",
+        "  For[x = Ceiling[x/2^rec]*2^rec-1, x<Infinity, x=x+2^rec,",
+        "   v = g[x];",
+        "If[v > rec, rec = v; AppendTo[r, x]; Break[]]]]; r (* _Robert Price_, Aug 28 2020, based on Maple program by Robert Israel *)"
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Aug 19 2020",
+    "ext": [
+        "a(8) from _Chai Wah Wu_, Aug 20 2020",
+        "a(9) from _Chai Wah Wu_, Aug 21 2020",
+        "a(10) from _Bert Dobbelaere_, Aug 27 2020",
+        "a(11) from _Bert Dobbelaere_, Aug 29 2020",
+        "a(12) from _Bert Dobbelaere_, Aug 30 2020"
+    ],
+    "references": 0,
+    "revision": 35,
+    "time": "2020-08-30T09:22:58-04:00",
+    "created": "2020-08-20T01:16:59-04:00"
+}

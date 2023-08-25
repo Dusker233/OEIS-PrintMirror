@@ -1,0 +1,35 @@
+{
+    "number": 307595,
+    "data": "1,2,6,27,156,1097,9054,85603,910840,10760273,139634314,1973272939,30150497652,495099175625,8692428215982,162444828319579,3218819701723504,67394536781529505,1486511667262146322,34446575597797488843,836556499627929889964,21244918075422301609817",
+    "name": "Expansion of e.g.f. (sec(x) + tan(x))*exp(x/(1 - x)).",
+    "comment": [
+        "Boustrophedon transform of A000262."
+    ],
+    "link": [
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "mathematica": [
+        "nmax = 21; CoefficientList[Series[(Sec[x] + Tan[x]) Exp[x/(1 - x)], {x, 0, nmax}], x] Range[0, nmax]!",
+        "t[n_, 0] := If[n < 1, 1, n! Sum[Binomial[n - 1, j]/(j + 1)!, {j, 0, n - 1}]]; t[n_, k_] := t[n, k] = t[n, k - 1] + t[n - 1, n - k]; a[n_] := t[n, n]; Array[a, 22, 0]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, accumulate",
+        "from sympy import hyper, hyperexpand",
+        "def A307595_gen(): # generator of terms",
+        "    blist = tuple()",
+        "    for i in count(0):",
+        "        yield (blist := tuple(accumulate(reversed(blist),initial=hyperexpand(hyper((1-i, -i), [], 1)))))[-1]",
+        "A307595_list = list(islice(A307595_gen(),20)) # _Chai Wah Wu_, Jun 11 2022"
+    ],
+    "xref": [
+        "Cf. A000111, A000262."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Apr 17 2019",
+    "references": 0,
+    "revision": 9,
+    "time": "2022-06-11T01:20:28-04:00",
+    "created": "2019-04-17T19:07:30-04:00"
+}

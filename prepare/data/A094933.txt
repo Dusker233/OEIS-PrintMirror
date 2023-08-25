@@ -1,0 +1,51 @@
+{
+    "number": 94933,
+    "data": "127,149,431,967,1031,1061,1597,2437,2833,2953,3793,5923,6449,6701,6959,7103,8803,11467,11617,11717,11923,12611,13291,13327,13397,13679,13721,14533,14713,15787,16087,17417,17921,18539,20021,21269,21467,22027",
+    "name": "Primes prime(k) such that (prime(k-1) + prime(k+1) + prime(k+2))/prime(k) = 3.",
+    "link": [
+        "Robert Israel, <a href=\"/A094933/b094933.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "127 is OK since 127 is p(31) and (p(n-1) + p(n+1)+ p(n+2))/p(n)=(113+131+137)/127=3. - _Zak Seidov_, Aug 04 2006"
+    ],
+    "maple": [
+        "p:= 2: q:= 3: r:= 5: s:= 7:",
+        "count:= 0: Res:= NULL:",
+        "while count < 100 do",
+        "  if p + r + s = 3*q then count:= count+1; Res:= Res, q fi;",
+        "  p:= q; q:= r; r:= s; s:= nextprime(s)",
+        "od:",
+        "Res; # _Robert Israel_, May 06 2019"
+    ],
+    "mathematica": [
+        "a=Table[If[(Prime[n-3]+Prime[n-2]+Prime[n-1]+Prime[n])/4-Prime[n-2]==0, Prime[n-2], 0], {n, 4, 2004}] a0=Delete[Union[Sort[a]], 1]",
+        "Select[Prime[Range[2,3000]],Prime[PrimePi[ # ]-1]+Prime[PrimePi[ # ]+1]+Prime[PrimePi[ # ]+2]==3#&] (* _Zak Seidov_, Aug 04 2006 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "[NthPrime(n):n in [2..3000]|NthPrime(n-1)+NthPrime(n+1)+NthPrime(n+2)- 3*NthPrime(n) eq 0]; // _Marius A. Burtea_, May 06 2019",
+        "(MATLAB)",
+        "p=primes(30000);",
+        "m=1;",
+        "for u=2:length(p)-2",
+        "  if p(u-1)+p(u+1)+p(u+2)-3*p(u)==0;",
+        "     sol(m)=p(u);  m=m+1;",
+        "  end",
+        "end",
+        "sol % _Marius A. Burtea_, May 06 2019"
+    ],
+    "xref": [
+        "Cf. A119381."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Roger L. Bagula_, Jun 17 2004",
+    "ext": [
+        "More terms from _Zak Seidov_, Aug 04 2006",
+        "Edited by _N. J. A. Sloane_, Aug 08 2008"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2022-09-08T08:45:13-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

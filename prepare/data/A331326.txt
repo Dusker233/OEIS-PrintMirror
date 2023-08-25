@@ -1,0 +1,54 @@
+{
+    "number": 331326,
+    "data": "0,1,4,19,112,801,6756,65563,717760,8729857,116570980,1693096131,26548383984,446689827169,8023582921732,153192673528651,3097301219335936,66095983547942913,1484384376886189380,34991710162280602867,863797053818651591920,22282392569877969167521",
+    "name": "a(n) = n!*[x^n] sinh(x/(1 - x))/(1 - x).",
+    "link": [
+        "Robert Israel, <a href=\"/A331326/b331326.txt\">Table of n, a(n) for n = 0..443</a>"
+    ],
+    "formula": [
+        "a(n) + A331325(n) = A002720(n).",
+        "A331325(n) - a(n) = A009940(n).",
+        "a(n) = Sum_{k=0..n/2} |A021009(n, 2*k+1)|.",
+        "a(n) = Sum_{k=0..n} binomial(n, 2*k+1)*n!/(2*k+1)!.",
+        "a(n) = n*n!*hypergeom([1/2 - n/2, 1 - n/2], [1, 3/2, 3/2], 1/4).",
+        "(n+1)^2*(n+2)^2*a(n) - 4*(n+2)^3*a(n+1) + (6*n^2+30*n+37)*a(n+2) - 4*(n+3)*a(n+3)+a(n+4) = 0. - _Robert Israel_, Jan 22 2020",
+        "Sum_{n>=0} a(n) * x^n / (n!)^2 = (1/2) * exp(x) * (BesselI(0,2*sqrt(x)) - BesselJ(0,2*sqrt(x))). - _Ilya Gutkovskiy_, Jul 17 2020"
+    ],
+    "maple": [
+        "gf := sinh(x/(1 - x))/(1 - x): ser := series(gf, x, 22):",
+        "seq(n!*coeff(ser, x, n), n=0..20);",
+        "# Alternative: seq(add(abs(A021009(n, 2*k+1)), k=0..n/2), n=0..21);",
+        "A331326 := proc(n) local S; S := proc(n, k) option remember; `if`(k = 0, 1,",
+        "`if`(k > n, 0, S(n-1, k-1)/k + S(n-1, k))) end: n!*add(S(n, 2*k+1), k=0..n) end:",
+        "seq(A331326(n), n=0..21);"
+    ],
+    "mathematica": [
+        "a[n_] := n n! HypergeometricPFQ[{1/2 - n/2, 1 - n/2}, {1, 3/2, 3/2}, 1/4];",
+        "Array[a, 22, 0]"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^22); concat(0,Vec(serlaplace(sinh(x/(1-x))/(1-x))))",
+        "(Python)",
+        "def A331326():",
+        "    sa, sb, ta, tb, n = 1, 2, 1, 0, 2",
+        "    yield 0",
+        "    yield ta",
+        "    while(True):",
+        "        s = 2*n*sb - ((n-1)**2)*sa",
+        "        t = 2*(n-1)*tb - ((n-1)**2)*ta",
+        "        sa, sb, ta, tb = sb, s, tb, t",
+        "        n += 1",
+        "        yield (s - t)//2",
+        "a = A331326(); print([next(a) for _ in range(22)])"
+    ],
+    "xref": [
+        "Cf. A002720, A009940, A021009, A331325."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, Jan 21 2020",
+    "references": 2,
+    "revision": 21,
+    "time": "2020-07-17T22:59:32-04:00",
+    "created": "2020-01-21T18:23:14-05:00"
+}

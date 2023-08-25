@@ -1,0 +1,41 @@
+{
+    "number": 127305,
+    "data": "2,13,47,71,101,151,193,239,241,293,331,337,359,383,397,401,421,463,487,557,577,709,773,797,821,929,1019,1031,1069,1093,1103,1181,1217,1249,1327,1367,1423,1499,1571,1759,1787,1789,1831,1871,1877,1913,1933,2053",
+    "name": "Primes p such that p + (sum of the prime factors of p-1) + (sum of prime factors of p+1) is prime.",
+    "comment": [
+        "The primes are taken \"with multiplicity\"."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A127305/b127305.txt\">Table of n, a(n) for n = 1..1000</a> (updated by _Robert Israel_, May 25 2022)"
+    ],
+    "example": [
+        "2 is a term, since 2 + 0 + 3 = 5 is a prime.",
+        "13 is a term since 13 + (2+2+3) + (2+7) = 29 is prime, i.e. the prime factors are added with multiplicity.",
+        "151 is prime, 150 = 2*3*5*5, 152 = 2*2*2*19. 151 + 2+3+5+5 + 2+2+2+19 = 191 is prime, hence 151 is a term."
+    ],
+    "maple": [
+        "spf:= proc(n) local t; add(t[1]*t[2], t = ifactors(n)[2]) end proc:",
+        "filter:= proc(p) isprime(p) and isprime(p+spf(p-1)+spf(p+1)) end proc:",
+        "select(filter, [$2..10000]); # _Robert Israel_, May 25 2022"
+    ],
+    "mathematica": [
+        "pspfQ[n_] := PrimeQ[n + Total[Flatten[Table[#[[1]], {#[[2]]}] & /@ Flatten[FactorInteger[n + {1,-1}], 1] ] ] ]; {2}~Join~Select[Prime[Range[400]], pspfQ] (* _Harvey P. Dale_, Jan 08 2015, corrected by _Michael De Vlieger_, May 25 2022 *)"
+    ],
+    "program": [
+        "(Magma) [ p: p in PrimesInInterval(3, 2100) | IsPrime(&+[ &+[ k[1]*k[2]: k in Factorization(n)]: n in [p-1..p+1] ] ) ]; /* _Klaus Brockhaus_, Apr 06 2007 */"
+    ],
+    "xref": [
+        "Cf. A210934, A210936."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_, Mar 28 2007",
+    "ext": [
+        "Edited and extended by _Klaus Brockhaus_, Apr 06 2007",
+        "Edited by _N. J. A. Sloane_, May 25 2022"
+    ],
+    "references": 2,
+    "revision": 33,
+    "time": "2022-09-08T08:45:29-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

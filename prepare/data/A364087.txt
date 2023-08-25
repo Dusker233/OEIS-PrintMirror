@@ -1,0 +1,38 @@
+{
+    "number": 364087,
+    "data": "799,1751,2987,3149,3713,4841,5321,6157,6283,6901,7003,7849,8137,8143,8777,8789,9071,9077,10523,10609,10727,10763,10951,11189,12079,12223,12361,12875,12931,13193,13493,13891,14008,14711,14899,14909,15247,15347,15611,15839,15929,16171,16309,16873",
+    "name": "Integers k for which A000594(k)^2 > 4 k^11, where A000594 is Ramanujan's tau function.",
+    "comment": [
+        "Ramanujan conjectured that for prime values of k, A000594(k)^2 > 4 k^11, where A000594 is Ramanujan's tau function. This followed from Deligne's proof of the Weil Conjectures. This sequence demonstrates the sparsity of small integers k such that the absolute value of tau(k) is greater than this bound."
+    ],
+    "example": [
+        "799 is a term: tau(799) = -18558651348375264 while 2*799^(11/2) = 18409300288204184."
+    ],
+    "program": [
+        "(Julia)",
+        "using Nemo",
+        "function bigger_than_prime_bound(len)",
+        "    R, z = PolynomialRing(ZZ, \"z\")",
+        "    exp = eta_qexp(24, len, z)",
+        "    t = BigInt.([coeff(exp, j) for j in 0:len - 1])",
+        "    n_vals = []",
+        "    for i in eachindex(t)",
+        "        if abs(t[i]) > 2 * i ^ (11/2)",
+        "            push!(n_vals, i)",
+        "        end",
+        "    end",
+        "    n_vals",
+        "end",
+        "(PARI) isok(k) = ramanujantau(k)^2 > 4*k^11; \\\\ _Michel Marcus_, Jul 05 2023"
+    ],
+    "xref": [
+        "Cf. A000594."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jack Gilchrist_, Jul 04 2023",
+    "references": 0,
+    "revision": 18,
+    "time": "2023-08-05T22:48:27-04:00",
+    "created": "2023-08-05T22:48:27-04:00"
+}

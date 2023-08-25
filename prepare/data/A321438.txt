@@ -1,0 +1,32 @@
+{
+    "number": 321438,
+    "data": "1,3,28,239,3126,45990,823544,16711423,387440173,9990235398,285311670612,8913939907598,302875106592254,11111328602501550,437893920912786408,18446462594437808127,827240261886336764178,39346258082220810086373,1978419655660313589123980,104857499999905732078938574",
+    "name": "a(n) = Sum_{d|n} (-1)^(n/d+1)*d^n.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A321438/b321438.txt\">Table of n, a(n) for n = 1..386</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=1} (k*x)^k/(1 + (k*x)^k).",
+        "L.g.f.: log(Product_{k>=1} (1 + k^k*x^k)^(1/k)) = Sum_{n>=1} a(n)*x^n/n.",
+        "a(n) ~ n^n. - _Vaclav Kotesovec_, Nov 10 2018"
+    ],
+    "mathematica": [
+        "Table[Sum[(-1)^(n/d + 1) d^n, {d, Divisors[n]}], {n, 20}]",
+        "nmax = 20; Rest[CoefficientList[Series[Sum[(k x)^k/(1 + (k x)^k), {k, 1, nmax}], {x, 0, nmax}], x]]",
+        "nmax = 20; Rest[CoefficientList[Series[Log[Product[(1 + k^k x^k)^(1/k), {k, 1, nmax}]], {x, 0, nmax}], x] Range[0, nmax]]"
+    ],
+    "program": [
+        "(PARI) a(n) = sumdiv(n, d, (-1)^(n/d+1)*d^n); \\\\ _Michel Marcus_, Nov 09 2018",
+        "(Magma) m:=20; R<x>:=PowerSeriesRing(Integers(), m); Coefficients(R!( (&+[(k*x)^k/(1+(k*x)^k): k in [1..m]]) ));  // _G. C. Greubel_, Nov 11 2018"
+    ],
+    "xref": [
+        "Cf. A000593, A023887, A078306, A078307, A186633, A284900, A284926, A284927, A321385."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Nov 09 2018",
+    "references": 4,
+    "revision": 16,
+    "time": "2022-09-08T08:46:23-04:00",
+    "created": "2018-11-13T03:23:48-05:00"
+}

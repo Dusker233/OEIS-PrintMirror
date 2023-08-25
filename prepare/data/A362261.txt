@@ -1,0 +1,34 @@
+{
+    "number": 362261,
+    "data": "1,1,1,1,2,4,8,12,22,40,73,146,292,560,1120,2532,5040,10080,22176,44352,88704,192272,384384,768768,1647360,3294720,6589440,14003120,28006240,56012480,126028080,266053680,532107360,1182438400,2483130720,4966261440,10925775168",
+    "name": "Maximum number of ways in which a set of integer-sided squares can tile an n X 3 rectangle, up to rotations and reflections.",
+    "formula": [
+        "a(n) >= A362144(n)/4."
+    ],
+    "program": [
+        "(Python)",
+        "from math import comb",
+        "def F(i,j,k):",
+        "    # total number of tilings using i, j, and 2*j+3*k squares of side lengths 3, 2, and 1, respectively",
+        "    return comb(i+j+k,i)*comb(j+k,j)*2**j",
+        "def F0(i,j,k):",
+        "    # number of inequivalent tilings",
+        "    x = F(i,j,k)",
+        "    if j == 0: x += comb(i+k,i) # horizontal line of symmetry",
+        "    if i%2+j%2+k%2 <= 1: x += 2*F(i//2,j//2,k//2) # vertical line of symmetry or rotational symmetry",
+        "    return x//4",
+        "def A362261(n):",
+        "    return max(F0(i,j,n-3*i-2*j) for i in range(n//3+1) for j in range((n-3*i)//2+1))"
+    ],
+    "xref": [
+        "Third column of A362258.",
+        "Cf. A359019, A361225 (rectangular pieces), A362144."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Pontus von Br\u00f6mssen_, Apr 15 2023",
+    "references": 2,
+    "revision": 5,
+    "time": "2023-04-16T08:38:09-04:00",
+    "created": "2023-04-16T08:38:09-04:00"
+}

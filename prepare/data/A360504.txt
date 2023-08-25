@@ -1,0 +1,49 @@
+{
+    "number": 360504,
+    "data": "1,121,121021,1210111021,12101112111021,121011122012111021,1210111220212012111021,12101112202122212012111021,1210111220212210022212012111021,1210111220212210010110022212012111021,1210111220212210010110210110022212012111021,1210111220212210010110211010210110022212012111021",
+    "name": "Concatenate the ternary strings for 1,2,...,n-1, n, n-1, ..., 2,1.",
+    "comment": [
+        "If the terms are read as ternary strings and converted to base 10, we get A260853. For example, a(3) = 121021_3 = 439_10, which is A260853(3). This is a prime. What is the next prime term?",
+        "If the terms are read as decimal numbers, which of them are primes? a(3) = 121021_10 is a decimal prime, but what is the next one?  It is a surprise that 121021 is a prime in both base 3 and base 10."
+    ],
+    "link": [
+        "Winston de Greef, <a href=\"/A360504/b360504.txt\">Table of n, a(n) for n = 1..123</a>",
+        "<a href=\"/index/Mo#MWP\">Index entries for sequences related to Most Wanted Primes video</a>"
+    ],
+    "example": [
+        "To get a(3) we concatenate 1, 2, 10, 2, and 1, getting 121021."
+    ],
+    "maple": [
+        "t:= n-> (l-> parse(cat(seq(l[-i], i=1..nops(l)))))(convert(n, base, 3)):",
+        "a:= n-> parse(cat(map(t, [$1..n, n-i$i=1..n-1])[])):",
+        "seq(a(n), n=1..12);  # _Alois P. Heinz_, Feb 17 2023"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory import digits",
+        "def a(n): return int(\"\".join(\"\".join(map(str, digits(k, 3)[1:])) for k in list(range(1, n+1))+list(range(n-1, 0, -1))))",
+        "print([a(n) for n in range(1, 16)]) # _Michael S. Branicky_, Feb 18 2023",
+        "(Python) # faster version for initial segment of sequence",
+        "from sympy.ntheory import digits",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    sf, sr = \"\", \"\"",
+        "    for n in count(1):",
+        "        sn = \"\".join(map(str, digits(n, 3)[1:]))",
+        "        sf += sn",
+        "        yield int(sf + sr)",
+        "        sr = sn + sr",
+        "print(list(islice(agen(), 15))) # _Michael S. Branicky_, Feb 18 2023"
+    ],
+    "xref": [
+        "Cf. A007089, A360502, A360503.",
+        "This is the ternary analog of A173426."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Feb 17 2023",
+    "references": 3,
+    "revision": 29,
+    "time": "2023-02-19T16:21:44-05:00",
+    "created": "2023-02-17T01:40:39-05:00"
+}

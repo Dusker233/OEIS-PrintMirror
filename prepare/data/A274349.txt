@@ -1,0 +1,41 @@
+{
+    "number": 274349,
+    "data": "6,8,12,14,21,22,28,33,36,44,54,58,72,77,87,94,116,126,141,152,188,198,203,228,246,304,319,329,369,398,492,517,522,532,597,644,796,836,846,861,966,1042,1288,1353,1363,1368,1393,1563,1686,2084,2189,2204,2214",
+    "name": "Products of two distinct Lucas numbers (2,3,4,7,11,18,...).",
+    "link": [
+        "Robert Israel, <a href=\"/A274349/b274349.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "6 = 2*3, 44 = 4*11."
+    ],
+    "maple": [
+        "N:= 10000: # for terms <= N",
+        "L:= gfun:-rectoproc({f(n)=f(n-1)+f(n-2),f(0)=2,f(1)=1},f(n),remember):",
+        "S:= {}:",
+        "for i from 2 do",
+        "  u:= L(i);",
+        "  if u > N then break fi;",
+        "  for j from 0 to i-1 do",
+        "    if j = 1 then next fi;",
+        "    v:= u*L(j);",
+        "    if v > N then break fi;",
+        "    S:= S union {v};",
+        "od od:",
+        "sort(convert(S,list)); # _Robert Israel_, Jan 01 2021"
+    ],
+    "mathematica": [
+        "z = 100; f[n_] := LucasL[n]; f[1] = 2 ;",
+        "Take[Sort[Flatten[Table[f[u] f[v], {u, 1, z}, {v, 1, u - 1}]]], z]",
+        "Take[Times@@@Subsets[Join[{2},LucasL[Range[2,20]]],{2}]//Union,60] (* _Harvey P. Dale_, Aug 13 2019 *)"
+    ],
+    "xref": [
+        "Cf. A000032, A274348, A274347, A271354."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jun 18 2016",
+    "references": 6,
+    "revision": 14,
+    "time": "2021-01-01T11:38:25-05:00",
+    "created": "2016-06-19T03:46:04-04:00"
+}

@@ -1,0 +1,80 @@
+{
+    "number": 63539,
+    "data": "1,8,12,16,18,24,27,30,32,36,40,45,48,50,54,56,60,63,64,70,72,75,80,81,84,90,96,98,100,105,108,112,120,125,126,128,132,135,140,144,147,150,154,160,162,165,168,175,176,180,182,189,192,195,196",
+    "name": "Numbers n that are sqrt(n-1)-smooth: largest prime factor of n (=A006530(n)) < sqrt(n).",
+    "comment": [
+        "Sometimes (Weisstein) called the \"usual numbers\" as opposed to what Greene and Knuth define as \"unusual numbers\" (A063538), which turn out to not be so unusual after all (Greene and Knuth 1990, Finch 2001). - _Jonathan Vos Post_, Sep 11 2010",
+        "If we define a divisor d|n to be superior if d >= n/d, then superior divisors are counted by A038548 and listed by A161908. This sequence lists numbers without a superior prime divisor, which is unique (A341676) when it exists. For example, the set of superior prime divisors of each n starts: {},{2},{3},{2},{5},{3},{7},{},{3},{5},{11},{},{13},{7}. The positions of empty sets give the sequence. - _Gus Wiseman_, Feb 24 2021",
+        "As _Jonathan Vos Post_'s comment suggests, the sqrt(n-1)-smooth numbers are asymptotically less dense than their \"unusual\" complement. This is part of a larger picture of \"typical\" relative sizes of a number's prime factors: see, for example, the medians of the n-th smallest prime factors of the positive integers in A281889. - _Peter Munn_, Mar 03 2021"
+    ],
+    "reference": [
+        "Greene, D. H. and Knuth, D. E., Mathematics for the Analysis of Algorithms, 3rd ed. Boston, MA: Birkh\u00e4user, pp. 95-98, 1990."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A063539/b063539.txt\">Table of a(n) for n = 1..10622</a> [Extending and correcting earlier b-files from T. D. Noe and Marius A. Burtea]",
+        "M. Beeler, R. W. Gosper and R. Schroeppel, <a href=\"http://www.inwap.com/pdp10/hbaker/hakmem/number.html#item29\">HAKMEM, ITEM 29</a>",
+        "Steven Finch, <a href=\"https://listserv.nodak.edu/cgi-bin/wa.exe?A2=NMBRTHRY;1bd7a1c2.0108\">\"RE: Unusual Numbers.\"</a>, Aug 27 2001.",
+        "Hugo Pfoertner, <a href=\"/A063539/a063539.png\">Illustration of deviation from linear fit 3.7642*n</a>, (2020).",
+        "Hugo Pfoertner, <a href=\"/A063539/a063539_1.png\">Illustration of relative error of asymptotic approximation</a>, (2020).",
+        "Project Euler, <a href=\"https://projecteuler.net/problem=668\">Problem 668: Square root smooth numbers</a>",
+        "V. Ramaswami, <a href=\"https://doi.org/10.1090/S0002-9904-1949-09337-0\">On the number of positive integers less than x and free of prime divisors greater than x^c</a>, Bull. Amer. Math. Soc. 55 (1949), 1122-1127.",
+        "Eric W. Weisstein, <a href=\"http://mathworld.wolfram.com/RoughNumber.html\">Rough Number.</a> [From _Jonathan Vos Post_, Sep 11 2010]",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Dickman_function\">Dickman function</a>"
+    ],
+    "formula": [
+        "From _Hugo Pfoertner_, Apr 02 - Apr 12 2020: (Start)",
+        "For small n (e.g. n < 10000) a(n) can apparently be approximated by 3.7642*n.",
+        "Asymptotically, the number of sqrt(n)-smooth numbers < x is known to be (1-log(2))*x + O(x/log(x)), see Ramaswami (1949).",
+        "n = (1-log(2))*a(n) - 0.59436*a(n)/log(a(n)) is a fitted approximation. (End)"
+    ],
+    "example": [
+        "a(100) = 360; a(1000) = 3744; a(10000) = 37665; a(100000)=375084;",
+        "a(10^6) = 3697669; a(10^7) = 36519633; a(10^8) = 360856296;",
+        "a(10^9) = 3571942311; a(10^10) = 35410325861; a(10^11) = 351498917129. - _Giovanni Resta_, Apr 12 2020"
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "Primes:= select(isprime, [2, seq(2*i+1, i=1..floor((N-1)/2))]):",
+        "S:= {$1..N} minus {seq(seq(m*p, m = 1 .. min(p, N/p)), p=Primes)}:",
+        "sort(convert(S, list)); # _Robert Israel_, Sep 02 2015"
+    ],
+    "mathematica": [
+        "Prepend[Select[Range[192], FactorInteger[#][[-1, 1]] < Sqrt[#] &], 1] (* _Ivan Neretin_, Sep 02 2015 *)"
+    ],
+    "program": [
+        "(Magma) [1] cat [m:m in [2..200]| Max(PrimeFactors(m)) lt Sqrt(m) ]; // _Marius A. Burtea_, May 08 2019"
+    ],
+    "xref": [
+        "Set difference of A048098 and A001248.",
+        "Complement of A063538.",
+        "Cf. A006530.",
+        "The following are all different versions of sqrt(n)-smooth numbers: A048098, A063539, A064775, A295084, A333535, A333536.",
+        "Positions of zeros in A341591.",
+        "A001221 counts prime divisors, with sum A001414.",
+        "A001222 counts prime-power divisors.",
+        "A033677 selects the smallest superior divisor.",
+        "A038548 counts superior (or inferior) divisors.",
+        "A051283 lists numbers without a superior prime-power divisor.",
+        "A056924 counts strictly superior (or strictly inferior) divisors.",
+        "A059172 lists numbers without a superior squarefree divisor.",
+        "A063962 counts inferior prime divisors.",
+        "A116882/A116883 list numbers with/without a superior odd divisor.",
+        "A161908 lists superior divisors.",
+        "A207375 lists central divisors.",
+        "A217581 selects the greatest inferior prime divisor.",
+        "A341642 counts strictly superior prime divisors.",
+        "A341676 gives unique superior prime divisors, with strict case A341643.",
+        "- Inferior: A033676, A066839, A069288, A161906, A333749, A333750.",
+        "- Superior: A070038, A072500, A341592, A341593, A341675.",
+        "- Strictly inferior: A060775, A070039, A333805, A333806, A341596, A341674.",
+        "- Strictly superior: A064052, A140271, A238535, A341594, A341595, A341644, A341645, A341646, A341673.",
+        "Cf. A000005, A000203, A020639, A112798, A281889."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Aug 14 2001",
+    "references": 45,
+    "revision": 92,
+    "time": "2022-09-08T08:45:04-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

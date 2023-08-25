@@ -1,0 +1,44 @@
+{
+    "number": 360769,
+    "data": "45,63,75,99,117,135,147,153,171,175,189,207,225,245,261,275,279,297,315,325,333,351,363,369,375,387,405,423,425,441,459,475,477,495,507,513,525,531,539,549,567,575,585,603,605,621,637,639,657,675,693,711,725,735,747,765,775,783,801,819,825",
+    "name": "Odd numbers that are neither prime powers nor squarefree.",
+    "comment": [
+        "Odd numbers k such that A001222(k) > A001221(k) > 1."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A360769/b360769.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Michael De Vlieger, <a href=\"/A360769/a360769.png\">2048 pixel square bitmap</a> of n = 1..4194304, read left to right, top to bottom, showing odd A126706(n) in black."
+    ],
+    "formula": [
+        "a(n) = { A005408 INTERSECT A126706 } = intersection of A005418, A013929, and A024619."
+    ],
+    "maple": [
+        "filter:= proc(n) local F;",
+        "F:= ifactors(n)[2];",
+        "nops(F)>1 and max(F[..,2]) > 1",
+        "end proc:",
+        "select(filter, [seq(i, i = 1 .. 1000, 2)]); # _Robert Israel_, Mar 01 2023"
+    ],
+    "mathematica": [
+        "Select[Range[1, 825, 2], Nor[PrimePowerQ[#], SquareFreeQ[#]] &]"
+    ],
+    "program": [
+        "(PARI) isok(k) = (k%2) && !isprimepower(k) && !issquarefree(k); \\\\ _Michel Marcus_, Feb 28 2023",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import factorint",
+        "def A360769_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n: sum(f:=factorint(n).values()) > len(f) > 1,count(max(startvalue+(startvalue&1^1),1),2))",
+        "A360769_list = list(islice(A360769_gen(),20)) # _Chai Wah Wu_, Mar 01 2023"
+    ],
+    "xref": [
+        "Cf. A001221, A001222, A005418, A013929, A024619, A126706."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michael De Vlieger_, Feb 28 2023",
+    "references": 4,
+    "revision": 21,
+    "time": "2023-03-04T02:08:28-05:00",
+    "created": "2023-03-01T02:38:54-05:00"
+}

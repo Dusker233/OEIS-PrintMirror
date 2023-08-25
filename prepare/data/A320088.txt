@@ -1,0 +1,38 @@
+{
+    "number": 320088,
+    "data": "1,4,19,79,334,1339,5434,21754,87274,349159,1397734,5590954,22368169,89472934,357908119,1431633559,5726600854,22906403494,91625880229,366503524969,1466015148634,5864060611159,23456246655574,93824986622614,375299963333014,1501199853398419",
+    "name": "Number of primitive (=aperiodic) 4-ary words with length less than or equal to n which are earlier in lexicographic order than any other word derived by cyclic shifts of the alphabet.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A320088/b320088.txt\">Table of n, a(n) for n = 1..1661</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=1..n} Sum_{d|j} 4^(d-1) * mu(j/d).",
+        "a(n) = A143327(n,4).",
+        "a(n) = Sum_{j=1..n} A143325(j,4).",
+        "a(n) = A143326(n,4) / 4.",
+        "G.f.: (1/(1 - x)) * Sum_{k>=1} mu(k) * x^k / (1 - 4*x^k). - _Ilya Gutkovskiy_, Dec 11 2020"
+    ],
+    "maple": [
+        "b:= n-> add(`if`(d=n, 4^(n-1), -b(d)), d=numtheory[divisors](n)):",
+        "a:= proc(n) option remember; b(n)+`if`(n<2, 0, a(n-1)) end:",
+        "seq(a(n), n=1..30);"
+    ],
+    "mathematica": [
+        "nmax = 20; Rest[CoefficientList[Series[1/(1-x) * Sum[MoebiusMu[k] * x^k / (1 - 4*x^k), {k, 1, nmax}], {x, 0, nmax}], x]] (* _Vaclav Kotesovec_, Dec 11 2020 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(j=1, n, sumdiv(j, d, 4^(d-1)*moebius(j/d))); \\\\ _Michel Marcus_, Dec 11 2020"
+    ],
+    "xref": [
+        "Column k=4 of A143327.",
+        "Partial sums of A295505.",
+        "Cf. A008683, A143325, A143326."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Oct 05 2018",
+    "references": 3,
+    "revision": 11,
+    "time": "2020-12-11T06:15:04-05:00",
+    "created": "2018-10-05T17:11:38-04:00"
+}

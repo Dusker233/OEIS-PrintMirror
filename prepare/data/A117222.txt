@@ -1,0 +1,36 @@
+{
+    "number": 117222,
+    "data": "1,2,3,5,10,18,23,53,128,194,586,947,2070,3667,16762,33036,93402,200626,445869,1517300,3715025,14526494,39369076,111448616,541299314,1713653236,5690596129,9832997667,35075665070,131672592907,973547058482,4162255238584,18810021557460",
+    "name": "Number of partitions of 3-smooth numbers into 3-smooth numbers.",
+    "link": [
+        "David A. Corneth, <a href=\"/A117222/b117222.txt\">Table of n, a(n) for n = 1..200</a> (first 100 terms from Andrew Howroyd)"
+    ],
+    "formula": [
+        "a(n) = A105420(A003586(n))."
+    ],
+    "mathematica": [
+        "is[n_] := n/2^IntegerExponent[n, 2]/3^IntegerExponent[n, 3] == 1;",
+        "MkS[n_] := Module[{A = {}, i = 0}, While[Length[A] < n, i++; If[is[i], AppendTo[A, i]]]; A];",
+        "seq[n_] := Module[{A = MkS[n], p}, p = 1/Product[1 - x^A[[i]] + O[x]^(1 + A[[Length[A]]]), {i, Length[A]}] // Normal; Table[Coefficient[p, x, A[[i]]], {i, Length[A]}]];",
+        "seq[33] (* _Jean-Fran\u00e7ois Alcover_, Oct 13 2021, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI) \\\\ here is(n) is test for A003586 inclusion.",
+        "is(n)={forprime(p=2, 3, n/=p^valuation(n,p)); n==1}",
+        "MkS(n)={my(A=List(), i=0); while(#A<n, i++; if(is(i), listput(A,i))); Vec(A)}",
+        "seq(n)={my(A=MkS(n), p=1/prod(i=1, #A, 1 - x^A[i] + O(x*x^A[#A]))); vector(#A, i, polcoef(p,A[i]))} \\\\ _Andrew Howroyd_, Jan 02 2020"
+    ],
+    "xref": [
+        "Cf. A003586, A090184, A105420, A117220, A117221."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Mar 04 2006",
+    "ext": [
+        "Terms a(23) and beyond from _Andrew Howroyd_, Jan 02 2020"
+    ],
+    "references": 6,
+    "revision": 21,
+    "time": "2021-10-13T19:28:32-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

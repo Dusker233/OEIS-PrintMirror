@@ -1,0 +1,38 @@
+{
+    "number": 304677,
+    "data": "1,1,4,9,27,60,170,377,996,2288,5715,13002,32321,72864,175137,400039,943454,2133159,4993737,11236889,25995341,58480330,133650880,299347432,681346296,1519116099,3427954877,7631479391,17122129103,37958987956,84819325972,187405201004",
+    "name": "Total number of tilings of Ferrers-Young diagrams using dominoes and monominoes summed over all partitions of n.",
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FerrersDiagram.html\">Ferrers Diagram</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Domino_(mathematics)\">Domino</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Domino_tiling\">Domino tiling</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Ferrers_diagram\">Ferrers diagram</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Polyomino\">Polyomino</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau#Diagrams\">Young tableau, Diagrams</a>"
+    ],
+    "maple": [
+        "h:= proc(l, f) option remember; local k; if min(l[])>0 then",
+        "     `if`(nops(f)=0, 1, h(map(x-> x-1, l[1..f[1]]), subsop(1=[][], f)))",
+        "    else for k from nops(l) while l[k]>0 by -1 do od; h(subsop(k=1, l), f)+",
+        "        `if`(nops(f)>0 and f[1]>=k, h(subsop(k=2, l), f), 0)+",
+        "        `if`(k>1 and l[k-1]=0, h(subsop(k=1, k-1=1, l), f), 0)",
+        "      fi",
+        "    end:",
+        "g:= l-> `if`(l=[], 1, h([0$l[1]], subsop(1=[][], l))):",
+        "b:= (n, i, l)-> `if`(n=0 or i=1, g([l[], 1$n]), b(n, i-1, l)",
+        "                  +b(n-i, min(n-i, i), [l[], i])):",
+        "a:= n-> b(n$2, []):",
+        "seq(a(n), n=0..23);"
+    ],
+    "xref": [
+        "Cf. A304662, A304680."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, May 16 2018",
+    "references": 2,
+    "revision": 8,
+    "time": "2018-05-19T15:36:11-04:00",
+    "created": "2018-05-19T15:36:11-04:00"
+}

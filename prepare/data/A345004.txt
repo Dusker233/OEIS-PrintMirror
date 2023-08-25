@@ -1,0 +1,32 @@
+{
+    "number": 345004,
+    "data": "6,28,496,5292,8128,33550336",
+    "name": "Numbers k such that A345001(k)*A048250(k) is equal to A342001(k)*A344753(k) and A345001(n)/A342001(n) is an integer.",
+    "comment": [
+        "Equally, we may require that A344753(k)/A048250(k) is an integer, thus this is a subsequence of A344754."
+    ],
+    "link": [
+        "<a href=\"/index/O#opnseqs\">Index entries for sequences where odd perfect numbers must occur, if they exist at all</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "A003415(n) = if(n<=1, 0, my(f=factor(n)); n*sum(i=1, #f~, f[i, 2]/f[i, 1]));",
+        "A003557(n) = (n/factorback(factorint(n)[, 1]));",
+        "A048250(n) = factorback(apply(p -> p+1,factor(n)[,1]));",
+        "A344753(n) = sumdiv(n,d,(d<n)*(d+(issquarefree(n/d) * d)));",
+        "A342001(n) = (A003415(n) / A003557(n));",
+        "A345001(n) = (sigma(n)+A003415(n)-(2*n));",
+        "isA345004(n) = { my(u=A345001(n),v=A342001(n)); (v>0&&1==denominator(u/v)&&(u*A048250(n) == v*A344753(n))); };"
+    ],
+    "xref": [
+        "Cf. A000396 (subsequence), A003415, A003557, A048250, A342001, A344753, A345001.",
+        "Intersection of A344754 and A345003."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jun 05 2021",
+    "references": 4,
+    "revision": 11,
+    "time": "2021-06-07T06:50:21-04:00",
+    "created": "2021-06-07T06:50:21-04:00"
+}

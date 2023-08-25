@@ -1,0 +1,37 @@
+{
+    "number": 305349,
+    "data": "183,295,583,799,943,7042,10978,13581,18658,20652,22402,22898,29698,40162,43522,48442,54778,59362,62338,68098,74938,82618,87418,89722,97282,99298,102202,108418,110842,113122,116602,118498,122362,123322,123778,128482,128698",
+    "name": "Numbers k such that sopfr(k) = tau(k)^3.",
+    "comment": [
+        "Numbers k such that A001414(k) = A000005(k)^3.",
+        "For numbers k that satisfy the condition, tau(k) will always be even because tau(k) is odd only if k is a square, but if k is a square then sopfr(k) is even (because every prime appears with an even exponent) and thus it cannot be equal to tau(k)^3 which is odd as tau(k).",
+        "A squarefree number k = p_1*...*p_j is in the sequence if p_1 + ... + p_j = 8^j.  It is likely that 8^j is the sum of j distinct primes for all j >= 2. - _Robert Israel_, Dec 10 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A305349/b305349.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "maple": [
+        "filter:= proc(n) local F;",
+        "  F:= ifactors(n)[2];",
+        "  add(t[1]*t[2],t=F) = mul(t[2]+1,t=F)^3",
+        "end proc:",
+        "select(filter, [$1..200000]); # _Robert Israel_, Dec 10 2018"
+    ],
+    "mathematica": [
+        "sopf[n_] := If[n==1,0,Plus@@Times@@@FactorInteger@ n];Select[Range[200000],sopf[#]==DivisorSigma[0,#]^3 &] (* _Amiram Eldar_, Nov 01 2018 *)"
+    ],
+    "program": [
+        "(PARI) sopfr(n) = my(f=factor(n)); sum(k=1, matsize(f)[1], f[k, 1]*f[k, 2]);",
+        "isok(n) = sopfr(n) == numdiv(n)^3; \\\\ _Michel Marcus_, Nov 02 2018"
+    ],
+    "xref": [
+        "Cf. A000005, A001414, A078511, A305026."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Parker Grootenhuis_, May 30 2018",
+    "references": 1,
+    "revision": 20,
+    "time": "2019-10-10T04:08:56-04:00",
+    "created": "2018-12-10T03:01:36-05:00"
+}

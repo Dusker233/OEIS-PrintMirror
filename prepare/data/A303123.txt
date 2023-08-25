@@ -1,0 +1,46 @@
+{
+    "number": 303123,
+    "data": "1,364,1080,1782,8736,30256,86800,90768,149856,632400,828816,1033560,2467600,8182944,9587160,10593720,12239136,15487600,16702800,23194080,23556960,25371360,33330528,35746920,35889480,36036000,40753440,44013120,45890208,46462800,49035168",
+    "name": "Numbers whose sum of divisors is the square of one of their divisors.",
+    "comment": [
+        "Subset of A090777 and A300906.",
+        "From _Robert Israel_, May 10 2018: (Start)",
+        "If m and n are coprime members of the sequence, then m*n is in the sequence.",
+        "However, it is not clear whether there are such m and n where neither is 1: in particular, are there odd members other than 1?",
+        "Any odd member > 1 is a square greater than 10^14. (End)"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A303123/b303123.txt\">Table of n, a(n) for n = 1..900</a> (terms < 10^13)"
+    ],
+    "example": [
+        "Divisors of 364 are 1, 2, 4, 7, 13, 14, 26, 28, 52, 91, 182, 364 and their sum is 784 = 28^2."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,k,n;",
+        "for n from 1 to q do a:=sort([op(divisors(n))]);",
+        "for k from 1 to nops(a) do if sigma(n)=a[k]^2 then print(n); break;",
+        "fi; od; od; end: P(10^9);",
+        "# Alternative:",
+        "filter:= proc(n) local s;",
+        "  s:= numtheory:-sigma(n);",
+        "  issqr(s) and n^2 mod s = 0",
+        "end proc:",
+        "select(filter, [$1..10^7]); # _Robert Israel_, May 10 2018"
+    ],
+    "mathematica": [
+        "Reap[For[k = 1, k <= 10^7, k++, If[AnyTrue[Divisors[k], DivisorSigma[1, k] == #^2&], Print[k]; Sow[k]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Jun 05 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = (s = sigma(n)) && issquare(s) && !(n % sqrtint(s)); \\\\ _Michel Marcus_, May 04 2018"
+    ],
+    "xref": [
+        "Cf. A000203, A090777, A300906, A303993, A303994, A303995, A303996."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, May 04 2018",
+    "references": 7,
+    "revision": 33,
+    "time": "2020-06-05T04:17:23-04:00",
+    "created": "2018-05-07T05:34:35-04:00"
+}

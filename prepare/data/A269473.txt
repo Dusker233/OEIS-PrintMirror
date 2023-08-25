@@ -1,0 +1,45 @@
+{
+    "number": 269473,
+    "data": "1,28,664,14912,326496,7048192,150820608,3208396800,67968706048,1435486650368,30246600953856,636154755940352,13360333295173632,280258138588839936,5873204471357374464,122980760637407232000,2573349967992101142528,53815038103588370907136",
+    "name": "a(n) is the number of rooted 2n-face triangulations in an orientable surface of genus 1.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A269473/b269473.txt\">Table of n, a(n) for n = 1..750</a>",
+        "I. P. Goulden and D. M. Jackson, <a href=\"https://www.math.uwaterloo.ca/~ipgoulde/KPpapermar08.pdf\">The KP hierarchy, branched covers, and triangulations</a>, Advances in Mathematics, Volume 219, Issue 3, 20 October 2008, Pages 932-951.",
+        "Evgeniy Krasko, Alexander Omelchenko, <a href=\"https://arxiv.org/abs/1709.03225\">Enumeration of r-regular Maps on the Torus. Part I: Enumeration of Rooted and Sensed Maps</a>, arXiv:1709.03225 [math.CO], 2017.",
+        "Evgeniy Krasko, Alexander Omelchenko, <a href=\"https://doi.org/10.1016/j.disc.2018.07.013\">Enumeration of r-regular maps on the torus. Part I: Rooted maps on the torus, the projective plane and the Klein bottle. Sensed maps on the torus</a>, Discrete Mathematics, Volume 342, Issue 2, February 2019, Pages 584-599."
+    ],
+    "formula": [
+        "Recurrence: (n-1)*n*(15*n - 46)*a(n) = 48*(270*n^3 - 1503*n^2 + 2478*n - 1280)*a(n-2) - 20736*(3*n - 10)*(3*n - 8)*(15*n - 16)*a(n-4).",
+        "a(n) ~ 2^(2*n-3) * 3^(3*n/2).",
+        "From _Gheorghe Coserea_, Jul 27 2018: (Start)",
+        "a(n+1) = 4^n * n!!/(n+1)! * Sum_{k=0..n} 3^k*(3*n-2*k+1)!!/(n-k)!. (see Krasko link)",
+        "G.f. y(x) satisfies:",
+        "0 = 2*(432*x^2 - 1)^2*y^3 + (432*x^2 - 1)*y^2 + 54*x^2*y + x^2.",
+        "0 = x*(432*x^2 - 1)*(108*x^2 + 1)*deriv(y,x) + 2*(432*x^2 - 1)*(648*x^2 + 1)*y^2 + (31104*x^4 + 1116*x^2 + 1)*y + 30*x^2.",
+        "0 = (5184*x^2 - 7)*(432*x^2 - 1)^2*y''' + 1296*x*(432*x^2 - 1)*(12096*x^2 - 13)*y'' + 48*(199314432*x^4 - 479088*x^2 + 581)*y' + 663552*x*(2592*x^2 - 11)*y.",
+        "(End)"
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[InverseSeries[Series[Sqrt[1728 - 432/x + (30*Sqrt[1 + 48*x] - 54)/x^2 + (Sqrt[1 + 48*x] - 1)/x^3]/864, {x, 0, 20}], x], x]] (* _Vaclav Kotesovec_, Jul 28 2018 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "factorial2(n) = my(x = (2^(n\\2)*(n\\2)!)); if (n%2, n!/x, x);",
+        "a(n) = {",
+        "  my(f2 = factorial2);",
+        "  4^(n-1)*f2(n-1)/n! * sum(k=0, n-1, 3^k * f2(3*n-2*k-2)/(n-1-k)!);",
+        "};",
+        "\\\\ test: y='x*Ser(vector(303, n, a(n))); 0 == 2*(432*x^2 - 1)^2*y^3 + (432*x^2 - 1)*y^2 + 54*x^2*y + x^2",
+        "\\\\ _Gheorghe Coserea_, Jul 27 2018"
+    ],
+    "xref": [
+        "Column k=1 of A266240."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vaclav Kotesovec_, Feb 27 2016",
+    "references": 2,
+    "revision": 36,
+    "time": "2018-12-30T04:13:40-05:00",
+    "created": "2016-02-27T13:29:23-05:00"
+}

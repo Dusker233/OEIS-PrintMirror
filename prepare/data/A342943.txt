@@ -1,0 +1,30 @@
+{
+    "number": 342943,
+    "data": "13,19,31,37,79,103,113,127,139,163,179,181,193,199,307,353,719,727,773,787,907,937,967,983,1093,1117,1123,1129,1153,1163,1193,1201,1303,1327,1409,1447,1489,1579,1583,1597,1609,1657,1777,1823,1831,1879,1951,1987,1993,3001",
+    "name": "Primes whose palindromization is a prime.",
+    "comment": [
+        "Palindromization is the function that extends the string representation of a number into a palindrome.",
+        "Even palindromization is the concatenation of a number and its reversal. Odd palindromization excludes the first digit of the reversal."
+    ],
+    "link": [
+        "Michel Marcus, <a href=\"/A342943/b342943.txt\">Table of n, a(n) for n = 1..11962</a>"
+    ],
+    "mathematica": [
+        "Select[Prime@Range[5,500],Or@@(PrimeQ/@FromDigits/@(Join[a,Reverse@#]&/@{a=IntegerDigits@#,Most@a}))&] (* _Giorgos Kalogeropoulos_, Mar 30 2021 *)",
+        "plndrQ[n_]:=Module[{a=n 10^IntegerLength[n]+IntegerReverse[n],b=n 10^ (IntegerLength[ n]-1)+IntegerReverse[Floor[n/10]]},AnyTrue[{a,b},PrimeQ]]; Select[Prime[Range[5,500]],plndrQ] (* _Harvey P. Dale_, Nov 20 2022 *)"
+    ],
+    "program": [
+        "(PARI) rev(x) = strjoin(Vecrev(Str(x)));",
+        "isok(p) = isprime(p) && (isprime(eval(Str(p, rev(p)))) || isprime(eval(Str(p, rev(p\\10)))));"
+    ],
+    "xref": [
+        "Cf. A002113, A002385."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Mar 30 2021",
+    "references": 1,
+    "revision": 14,
+    "time": "2022-11-20T18:41:17-05:00",
+    "created": "2021-03-31T04:37:29-04:00"
+}

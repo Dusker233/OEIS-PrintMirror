@@ -1,0 +1,43 @@
+{
+    "number": 297306,
+    "data": "7,43,79,163,673,853,919,1063,1429,1549,1663,2143,2683,3229,3499,4993,5119,5653,5779,6229,6343,7333,7459,7669,8353,8539,8719,9829,10009,10243,10303,11383,11689,12583,13399,14149,14653,14923,15649,16603,17053,17389,17749",
+    "name": "Primes p such that q = 4*p+1 and r = (2*p+1)/3 are also primes.",
+    "comment": [
+        "This sequence was suggested by _Moshe Shmuel Newman_. It has its source in his study of finite groups."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A297306/b297306.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Prime p = 7 is in the sequence because q = 4*7+1 = 29 and r = (2*7+1)/3 = 5 are also primes."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local p; p:= `if`(n=1, 1, a(n-1));",
+        "      do p:= nextprime(p); if irem(p, 3)=1 and",
+        "         isprime(4*p+1) and isprime((2*p+1)/3) then break fi",
+        "      od; p",
+        "    end:",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Jan 07 2018"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = Module[{p}, p = If[n == 1, 1, a[n-1]]; While[True, p = NextPrime[p]; If[Mod[p, 3] == 1 && PrimeQ[4p+1] && PrimeQ[(2p+1)/3], Break[]]]; p];",
+        "Array[a, 50] (* _Jean-Fran\u00e7ois Alcover_, Nov 27 2020, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = isprime(p) && isprime(4*p+1) && iferr(isprime((2*p+1)/3), E, 0); \\\\ _Michel Marcus_, Nov 27 2020"
+    ],
+    "xref": [
+        "Cf. A000040.",
+        "Intersection of A023212 and A104163."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David S. Newman_, Jan 04 2018",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jan 07 2018"
+    ],
+    "references": 1,
+    "revision": 48,
+    "time": "2020-11-27T02:08:14-05:00",
+    "created": "2018-01-31T15:34:34-05:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 360506,
+    "data": "1,7,34,358,4003,43369,456712,4708240,47754961,1339156591,39693785002,1169411930926,34213667699203,995038950807565,28790341783585180,829295063367580492,23793774263808446005,680307709052882601259,19390954850541496025998",
+    "name": "Read A360505(n) as if it were a base-3 string and write it in base 10.",
+    "comment": [
+        "This has the same relationship to A0360505 as A048435 does to AA360502.",
+        "The primes in A048435 are in A360503. What are the primes in the present sequence?",
+        "Answer: The first primes are a(2) = 7, a(5) = 4003, a(13) = 34213667699203, a(57) and a(109). See A360507. - _R\u00e9my Sigrist_, Feb 18 2023"
+    ],
+    "link": [
+        "Winston de Greef, <a href=\"/A360506/b360506.txt\">Table of n, a(n) for n = 1..407</a>",
+        "<a href=\"/index/Mo#MWP\">Index entries for sequences related to Most Wanted Primes video</a>"
+    ],
+    "formula": [
+        "a(n) = A028898(A360505(n)). - _R\u00e9my Sigrist_, Feb 18 2023"
+    ],
+    "example": [
+        "A360505(4) = 111021 and 111021_3 = 358_10 = a(4)."
+    ],
+    "program": [
+        "(PARI) a(n) = fromdigits(concat([digits(k, 3) | k <- Vecrev([1..n])]), 3) \\\\ _R\u00e9my Sigrist_, Feb 18 2023",
+        "(Python)",
+        "from sympy.ntheory import digits",
+        "def a(n): return int(\"\".join(\"\".join(map(str, digits(k, 3)[1:])) for k in range(n, 0, -1)), 3)",
+        "print([a(n) for n in range(1, 21)]) # _Michael S. Branicky_, Feb 19 2023",
+        "(Python) # faster version for initial segment of sequence",
+        "from sympy.ntheory import digits",
+        "from itertools import count, islice",
+        "def agen(s=\"\"): yield from (int(s:=\"\".join(map(str, digits(n, 3)[1:]))+s, 3) for n in count(1))",
+        "print(list(islice(agen(), 20))) # _Michael S. Branicky_, Feb 19 2023"
+    ],
+    "xref": [
+        "Cf. A048435, A028898, A360502, A360503, A360505, A360507."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Feb 17 2023",
+    "ext": [
+        "More terms from _R\u00e9my Sigrist_, Feb 18 2023"
+    ],
+    "references": 3,
+    "revision": 21,
+    "time": "2023-02-19T18:44:41-05:00",
+    "created": "2023-02-18T03:31:45-05:00"
+}

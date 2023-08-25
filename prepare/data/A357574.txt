@@ -1,0 +1,60 @@
+{
+    "number": 357574,
+    "data": "0,1,2,4,5,7,9,11,13,15,17,19,21,24,26,29,31,34,36,39,41,44,46,49,51,54,56,59,62,65,68,71,74,77,80,83,86,89,92,95,98,101,104,107,110,113,116,119,122,125,128,131,134,137,140,143,146,150,153,157,160,164,167",
+    "name": "a(n) is the maximum number of pairs that sum to a power of 2 in a set of n consecutive odd numbers.",
+    "comment": [
+        "An optimal set delivering a(n) pairs summing to powers of 2 can be formed by n-A357409(n) first negative odd numbers and A357409(n) first positive odd numbers, that is, by the odd numbers in the interval [-2*(n-A357409(n))+1, 2*A357409(n)-1].",
+        "a(n) is in many cases equal to A347301(n) but there are some deviations: a(3) = 2 but A347301(3) = 3, a(29) = 62 but A347301(29) = 61, a(31) = 68 but A347301(32) = 67, a(33) = 74 but A347301(33) = 73, ... . Hence it appears that a(n) may be used as an improved lower bound for A352178(n) in many cases.",
+        "Conjecture: a(n+1) - a(n) = k, if n is even then A129868(k-1) < n < A129868(k), if n is odd then A020515(k) <= n < A020515(k+1)."
+    ],
+    "link": [
+        "Thomas Scheuerle, <a href=\"/A357574/a357574.png\">a(n+1) - a(n) for n = 1..500</a>",
+        "Max A. Alekseyev, <a href=\"https://arxiv.org/abs/2303.02872\">On computing sets of integers with maximum number of pairs summing to powers of 2</a>, arXiv:2303.02872 [math.CO], 2023."
+    ],
+    "formula": [
+        "a(n) <= A352178(n).",
+        "a(n) >= n-1. This would be the maximum value that could be attained for a set of only positive odd numbers and size n."
+    ],
+    "example": [
+        "a(5) = 5 because A357409(5) = 4, for which the corresponding set {-1, 1, 3, 5, 7} produces 5 powers of 2: 1+3, 1+7, 3+5, 3-1, 5-1."
+    ],
+    "program": [
+        "(MATLAB)",
+        "function a = A357574( max_n )",
+        "    a(1) = 0; q = [];",
+        "    for n = 1:max_n",
+        "        c = 0;",
+        "        for k = 0:n",
+        "            s = (2*([0:n]-k))+1;",
+        "            r = countpowtwo(s);",
+        "            if c < r",
+        "                c = r;",
+        "                q = s;",
+        "            end",
+        "        end",
+        "        a(n+1) = c;",
+        "    end",
+        "end",
+        "function c = countpowtwo(s)",
+        "    M = repmat(s, [length(s), 1]);",
+        "    M = M+M';",
+        "    M(M<=0) = 7;",
+        "    M = bitand(M, M-1);",
+        "    M = M + eye(size(M));",
+        "    c = length(find(M == 0))/2;",
+        "end"
+    ],
+    "xref": [
+        "Cf. A020515, A129868, A274089, A347301, A352178, A357409."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Thomas Scheuerle_, Oct 04 2022",
+    "ext": [
+        "Edited by _Max Alekseyev_, Mar 09 2023"
+    ],
+    "references": 2,
+    "revision": 43,
+    "time": "2023-03-10T09:10:58-05:00",
+    "created": "2022-10-27T12:49:05-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 194374,
+    "data": "4,8,12,16,72,76,80,84,88,144,148,152,156,160,216,220,224,228,232,288,292,296,300,304,1292,1296,1300,1304,1308,1364,1368,1372,1376,1380,1436,1440,1444,1448,1452,1508,1512,1516,1520,1524,1580,1584,1588,1592,1596,2584,2588,2592,2596",
+    "name": "Numbers m such that Sum_{k=1..m} (<1/2 + k*r> - <k*r>) = 0, where r=sqrt(5) and < > denotes fractional part.",
+    "comment": [
+        "See A194368."
+    ],
+    "mathematica": [
+        "r = Sqrt[5]; c = 1/2;",
+        "x[n_] := Sum[FractionalPart[k*r], {k, 1, n}]",
+        "y[n_] := Sum[FractionalPart[c + k*r], {k, 1, n}]",
+        "t1 = Table[If[y[n] < x[n], 1, 0], {n, 1, 100}];",
+        "Flatten[Position[t1, 1]]   (* empty *)",
+        "t2 = Table[If[y[n] == x[n], 1, 0], {n, 1, 800}];",
+        "Flatten[Position[t2, 1]]   (* A194374 *)",
+        "t3 = Table[If[y[n] > x[n], 1, 0], {n, 1, 100}];",
+        "Flatten[Position[t3, 1]]   (* A194375 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = my(r=sqrt(5)); sum(k=1, m, frac(1/2+k*r)-frac(k*r)) == 0; \\\\ _Michel Marcus_, Jan 31 2023"
+    ],
+    "xref": [
+        "Cf. A194368, A194375."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Aug 23 2011",
+    "ext": [
+        "More terms from _Michel Marcus_, Jan 31 2023"
+    ],
+    "references": 3,
+    "revision": 13,
+    "time": "2023-01-31T08:47:27-05:00",
+    "created": "2011-08-23T15:44:58-04:00"
+}

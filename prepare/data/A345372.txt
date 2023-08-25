@@ -1,0 +1,40 @@
+{
+    "number": 345372,
+    "data": "1,2,4,8,16,31,60,114,217,411,780,1481,2820,5379,10288,19720,37884,72924,140640,271695,525698,1018611,1976276,3838889,7465191,14531683,28313776,55214993,107762464,210477611,411387724,804609206,1574671586,3083549861,6041628460",
+    "name": "a(n) = Sum_{i=1..n} nac(i,n) where nac(i,n) is the n-th i-bonacci number. The n-th i-bonacci number here is equal to 1 for the first i terms, with subsequent terms equaling the sum of the previous n terms.",
+    "comment": [
+        "a(n) is the sum of the first n elements of the n-th column of the following array:",
+        "  1, 1, 1, 1, 1, ... (1-bonacci numbers)",
+        "  1, 1, 2, 3, 5, ... (2-bonacci or Fibonacci numbers)",
+        "  1, 1, 1, 3, 5, ... (3-bonacci or tribonacci numbers)",
+        "  1, 1, 1, 1, 4, ... (4-bonacci or tetranacci numbers)",
+        "  ...",
+        "For n >= 3, this sequence is 2 + antidiagonal sums of A061451."
+    ],
+    "formula": [
+        "a(n) = Sum_{i=1..n} nac(i,n) where nac(i,n) = 1 if 1 <= n <= i, Sum_{k=1..i} nac(i,n-k) if n > i."
+    ],
+    "maple": [
+        "b:= proc(i, n) option remember; `if`(n=0, 0,",
+        "      `if`(n<=i, 1, add(b(i, n-j), j=1..i)))",
+        "    end:",
+        "a:= n-> add(b(i, n), i=1..n):",
+        "seq(a(n), n=1..36);  # _Alois P. Heinz_, Jun 16 2021"
+    ],
+    "mathematica": [
+        "b[i_, n_] := b[i, n] = If[n==0, 0,",
+        "     If[n<=i, 1, Sum[b[i, n-j], {j, 1, i}]]];",
+        "a[n_] := Sum[b[i, n], {i, 1, n}];",
+        "Table[a[n], {n, 1, 36}] (* _Jean-Fran\u00e7ois Alcover_, May 29 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000045, A000213, A000288, A000322, A000383, A060455, A061451."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Christoph B. Kassir_, Jun 16 2021",
+    "references": 0,
+    "revision": 43,
+    "time": "2022-05-29T12:45:53-04:00",
+    "created": "2021-06-30T13:09:04-04:00"
+}

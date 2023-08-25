@@ -1,0 +1,26 @@
+{
+    "number": 353223,
+    "data": "1,1,1,1,13,61,181,2101,19321,107353,1338121,18021961,153519301,2162889301,37434929533,437750929981,7054260835441,146656527486001,2197288472426641,40414798347009553,970905798377330941,17791752518018762221,370864149434372540101",
+    "name": "Expansion of e.g.f. (1 - x^3)^(-1/x^2).",
+    "formula": [
+        "a(0) = 1; a(n) = (n-1)! * Sum_{k=1..floor((n+2)/3)} (3*k-2)/k * a(n-3*k+2)/(n-3*k+2)!.",
+        "a(n) = n! * Sum_{k=0..floor(n/3)} |Stirling1(n-2*k,n-3*k)|/(n-2*k)!.",
+        "a(n) ~ sqrt(2*Pi) * n^(n + 1/2) / (3*exp(n)). - _Vaclav Kotesovec_, May 04 2022"
+    ],
+    "program": [
+        "(PARI) my(N=30, x='x+O('x^N)); Vec(serlaplace((1-x^3)^(-1/x^2)))",
+        "(PARI) my(N=30, x='x+O('x^N)); Vec(serlaplace(exp(-log(1-x^3)/x^2)))",
+        "(PARI) a_vector(n) = my(v=vector(n+1)); v[1]=1; for(i=1, n, v[i+1]=(i-1)!*sum(j=1, (i+2)\\3, (3*j-2)/j*v[i-3*j+3]/(i-3*j+2)!)); v;",
+        "(PARI) a(n) = n!*sum(k=0, n\\3, abs(stirling(n-2*k, n-3*k, 1))/(n-2*k)!);"
+    ],
+    "xref": [
+        "Cf. A121452, A246689, A353222, A353225."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Seiichi Manyama_, May 01 2022",
+    "references": 6,
+    "revision": 22,
+    "time": "2022-05-04T05:03:00-04:00",
+    "created": "2022-05-03T03:11:40-04:00"
+}

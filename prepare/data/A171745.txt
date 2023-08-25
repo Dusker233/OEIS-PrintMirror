@@ -1,0 +1,33 @@
+{
+    "number": 171745,
+    "data": "26,38,39,41,42,43,45,46,50,51,53,54,55,57,58,70,71,73,74,75,77,78,82,83,85,86,87,89,90,91,93,94,95,97,98,99,101,102,103,104,105,106,107,109,110,111,113,114,115,117,118,119,121,122,123,125,126,130,131,133",
+    "name": "Nonnegative integers that cannot be obtained using six or fewer 4's with any combination of addition, subtraction, multiplication, or division.",
+    "comment": [
+        "Derived from the Numbers game from the British game show Countdown."
+    ],
+    "link": [
+        "DataGenetics blog, <a href=\"http://datagenetics.com/blog/august32014/index.html\">Countdown's Numbers Game</a>"
+    ],
+    "example": [
+        "1 = 4 / 4",
+        "2 = (4 + 4) / 4",
+        "3 = 4 - (4 / 4)",
+        "... ...",
+        "25 = (4 * 4) + 4 + 4 + (4 / 4)",
+        "26 cannot be solved",
+        "27 = ((4 + 4) * 4) - 4 - (4 / 4)"
+    ],
+    "mathematica": [
+        "ops = {Plus, Subtract, Times, Divide}; ex[w_] := Block[{s = {}}, Do[If[e==0, AppendTo[s, 4], s[[-2]] = Quiet[s[[-2]]~ops[[e]]~s[[-1]]]; s = Most[s]], {e, w}]; s[[1]]]; ric[w_, tg_, no_, n4_, trg_] := Block[{v}, If[tg == 0, v = ex[w]; If[Quiet[v >= 0 && IntegerQ[v]], Sow[v]], If[n4 < trg, ric[Append[w, 0], tg-1, no, n4+1, trg]]; If[no < n4-1, Do[ric[Append[w, j], tg-1, no+1, n4, trg], {j, 4}]]]]; do[n4_] := Union[Reap[ric[{}, 2*n4-1, 0, 0, n4]][[2, 1]]]; Complement[ Range[0, 150], Union @@ Array[do, 6]] (* _Giovanni Resta_, Nov 01 2019 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Hong Shao Yang (hongsy2006(AT)gmail.com), Dec 17 2009",
+    "ext": [
+        "More terms from _Giovanni Resta_, Nov 01 2019"
+    ],
+    "references": 0,
+    "revision": 19,
+    "time": "2019-11-03T01:41:43-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

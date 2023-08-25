@@ -1,0 +1,66 @@
+{
+    "number": 325098,
+    "data": "1,1,2,2,4,4,7,7,13,15,23,27,42,50,72,88,125,153,211,258,349,430,569,698,914,1119,1444,1765,2252,2745,3470,4214,5276,6387,7934,9568,11800,14181,17379,20818,25351,30264,36668,43633,52589,62394,74872,88576,105818",
+    "name": "Number of binary carry-connected integer partitions of n.",
+    "comment": [
+        "A binary carry of two positive integers is an overlap of the positions of 1's in their reversed binary expansion. An integer partition is binary carry-connected if the graph whose vertices are the parts and whose edges are binary carries is connected."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A325098/b325098.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(8) = 13 partitions:",
+        "  (1)  (2)   (3)    (4)     (5)      (6)       (7)        (8)",
+        "       (11)  (111)  (22)    (32)     (33)      (322)      (44)",
+        "                    (31)    (311)    (51)      (331)      (53)",
+        "                    (1111)  (11111)  (222)     (511)      (62)",
+        "                                     (321)     (3211)     (71)",
+        "                                     (3111)    (31111)    (332)",
+        "                                     (111111)  (1111111)  (2222)",
+        "                                                          (3221)",
+        "                                                          (3311)",
+        "                                                          (5111)",
+        "                                                          (32111)",
+        "                                                          (311111)",
+        "                                                          (11111111)"
+    ],
+    "maple": [
+        "h:= proc(n, s) local i, m; m:= n;",
+        "      for i in s do m:= Bits[Or](m, i) od; {m}",
+        "    end:",
+        "g:= (n, s)-> (w-> `if`(w={}, s union {n}, s minus w union",
+        "              h(n, w)))(select(x-> Bits[And](n, x)>0, s)):",
+        "b:= proc(n, i, s) option remember; `if`(n=0, `if`(nops(s)>1, 0, 1),",
+        "      `if`(i<1, 0, b(n, i-1, s)+ b(n-i, min(i, n-i), g(i, s))))",
+        "    end:",
+        "a:= n-> b(n$2, {}):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Mar 29 2019"
+    ],
+    "mathematica": [
+        "binpos[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[IntegerPartitions[n],Length[csm[binpos/@#]]<=1&]],{n,0,20}]",
+        "(* Second program: *)",
+        "h[n_, s_] := Module[{i, m = n}, Do[m = BitOr[m, i], {i, s}]; {m}];",
+        "g[n_, s_] := Function[w, If[w == {}, s ~Union~ {n}, (s ~Complement~ w) ~Union~",
+        "    h[n, w]]][Select[s, BitAnd[n, #] > 0&]];",
+        "b[n_, i_, s_] := b[n, i, s] = If[n == 0, If[Length[s] > 1, 0, 1],",
+        "    If[i < 1, 0, b[n, i - 1, s] + b[n - i, Min[i, n - i], g[i, s]]]];",
+        "a[n_] := b[n, n, {}];",
+        "a /@ Range[0, 50] (* _Jean-Fran\u00e7ois Alcover_, May 11 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A050315, A080572, A247935, A267610, A267700.",
+        "Cf. A325096, A325099, A325104, A325106, A325108, A325110, A325118, A325119."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Mar 28 2019",
+    "ext": [
+        "a(21)-a(48) from _Alois P. Heinz_, Mar 29 2019"
+    ],
+    "references": 12,
+    "revision": 20,
+    "time": "2021-05-11T06:15:38-04:00",
+    "created": "2019-03-28T08:50:19-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 336351,
+    "data": "1,1,1,1,1,1,1,2,3,4,5,7,9,12,16,22,30,41,55,74,100",
+    "name": "Number of cyclic arrangements of S = {1,2,...,6n - 3} such that any three neighbors can be reordered in an arithmetic progression.",
+    "comment": [
+        "Reversals of these circular permutations are not counted as different.",
+        "Lemma: In S = {1,2,...,k} with k mod 3 <> 0 these cyclic arrangements are not possible.",
+        "It seems that in S = {1,2,...,k} with k == 0 (mod 6) these cyclic arrangements are not possible, hence the definition of the sequence. Computationally, this conjecture is valid for k <= 114.",
+        "Lemma: In a cyclic arrangement of S = {1,2,...,k} the absolute difference between any two neighbors is a nonnegative power of 2.",
+        "a(2..19) coincide with A290137(0..17). - _Georg Fischer_, Aug 14 2020"
+    ],
+    "link": [
+        "Fausto A. C. Cariboni, <a href=\"/A336351/a336351_5.txt\">Complete solutions for a(1)-a(21)</a>"
+    ],
+    "example": [
+        "The cycle with n=1 is {1,2,3}.",
+        "The cycle with n=2 is {1,3,2,4,6,8,7,9,5}."
+    ],
+    "program": [
+        "(PARI) getval(va, pos, typ) = {my(vr = vecsort([va[pos-2], va[pos-1]])); if (typ==0, return (2*vr[1] - vr[2])); if (typ==1, return ((vr[1]+vr[2])/2)); if (typ==2, return (2*vr[2] - vr[1])); error(\"typ is wrong\");}",
+        "okval(val, n) = {if ((val < 0) || (val > n) || (denominator(val) != 1), return (0)); return (1);}",
+        "ok3(v3) = my(vs=vecsort(v3)); (vs[3]-vs[2] == vs[2]-vs[1]);",
+        "oklast(va, n, val) = ok3([va[n-1], val, va[1]]) && ok3([val, va[1], va[2]]);",
+        "a(n) = {my(va = vector(n), vp = vector(n)); va[1] = 1; my(nb = 0); for (k=2, n, va[2] = k; my(end = 0, pos = 3, vp = vector(n)); while (! end, my(val = getval(va, pos, vp[pos])); if (okval(val, n) && ! vecsearch(vecsort(va), val), my(ok = 1); if (pos == n, ok = oklast(va, n, val)); if (ok, va[pos] = val; if (pos == n, nb++; vp[pos]++; , pos++;); , vp[pos]++;);, vp[pos]++;); while((pos>=3) && (vp[pos] == 3) && !end, if (pos == 3, end=1, vp[pos] = 0; va[pos] = 0; pos --);););); nb;}",
+        "for (n=1, 10, print1(a(6*n-3)/2, \", \")) \\\\ _Michel Marcus_, Aug 02 2020"
+    ],
+    "xref": [
+        "Cf. A334625."
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "1,8",
+    "author": "_Fausto A. C. Cariboni_, Jul 19 2020",
+    "ext": [
+        "a(21) from _Fausto A. C. Cariboni_, Aug 22 2020"
+    ],
+    "references": 3,
+    "revision": 68,
+    "time": "2021-01-09T02:08:57-05:00",
+    "created": "2020-08-05T01:35:13-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 359399,
+    "data": "1,2,5,11,16,31,38,62,80,105,116,194,207,242,287,383,400,526,545,675,738,793,816,1200,1250,1315,1423,1605,1634,1979,2010,2394,2493,2578,2683,3475,3512,3607,3724,4364,4405,4888,4931,5217,5577,5692,5739,7563,7661,8011",
+    "name": "a(1) = 1; a(n) = Sum_{k=2..n} k * a(floor(n/k)).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A359399/b359399.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies A(x) = x + (1/(1 - x)) * Sum_{k>=2} k * (1 - x^k) * A(x^k)."
+    ],
+    "program": [
+        "(Python)",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A359399(n):",
+        "    if n <= 1:",
+        "        return 1",
+        "    c, j = 0, 2",
+        "    k1 = n//j",
+        "    while k1 > 1:",
+        "        j2 = n//k1 + 1",
+        "        c += (j2*(j2-1)-j*(j-1)>>1)*A359399(k1)",
+        "        j, k1 = j2, n//j2",
+        "    return c+(n*(n+1)-(j-1)*j>>1) # _Chai Wah Wu_, Mar 31 2023"
+    ],
+    "xref": [
+        "Cf. A022825."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, Mar 31 2023",
+    "references": 1,
+    "revision": 16,
+    "time": "2023-04-01T11:23:52-04:00",
+    "created": "2023-03-31T13:22:34-04:00"
+}

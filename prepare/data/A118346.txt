@@ -1,0 +1,41 @@
+{
+    "number": 118346,
+    "data": "1,1,5,30,201,1445,10900,85128,682505,5585115,46461437,391743850,3340361700,28755475180,249572076200,2181469638880,19186562661273,169677521094215,1507881643936015,13458730170115778,120599648894147185",
+    "name": "Central terms of pendular triangle A118345.",
+    "comment": [
+        "Also, g.f. A(x) = (1/x)*series_reversion of x/(1 + x*GF(A005572)), where GF(A005572) is the g.f. of A005572, which is the number of walks on cubic lattice starting and finishing on the xy plane and never going below it."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A118346/b118346.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: A=A(x) satisfies A = 1 - 2*x*A + 2*x*A^2 + x*A^3.",
+        "G.f.: A(x) = 1 + series_reversion( x/((1+x)*(1+4*x+x^2)) ).",
+        "G.f.: A(x) = (1/x)*series_reversion( x*(1-2*x + sqrt((1-2*x)*(1-6*x)))/(2*(1-2*x)) ).",
+        "For n>0: a(n) = (1/n)*Sum_{j=0..n} Sum_{i=0..n-1} ( binomial(n,j) * binomial(j,i) * binomial(n-j,2*j-n-i-1) * 5^(2*n-3*j+2*i+1) ). -_Vladimir Kruchinin_, Dec 26 2010"
+    ],
+    "mathematica": [
+        "CoefficientList[1 +InverseSeries[Series[x/((1+x)*(1+4*x+x^2)), {x,0,30}]], x] (* _G. C. Greubel_, Mar 17 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff(serreverse( x*(1-2*x+sqrt((1-2*x)*(1-6*x)+x*O(x^n)))/(2*(1-2*x)))/x, n)}",
+        "(Sage)",
+        "def A118346_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( ( x/((1+x)*(1+4*x+x^2)) ).reverse() ).list()",
+        "a=A118346_list(31); [1]+a[1:] # _G. C. Greubel_, Mar 17 2021",
+        "(Magma)",
+        "R<x>:=PowerSeriesRing(Rationals(), 30);",
+        "[1] cat Coefficients(R!( Reversion( x/((1+x)*(1+4*x+x^2)) ) )); // _G. C. Greubel_, Mar 17 2021"
+    ],
+    "xref": [
+        "Cf. A118345, A118347, A118348, A118349."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 26 2006",
+    "references": 6,
+    "revision": 19,
+    "time": "2021-03-17T22:50:59-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

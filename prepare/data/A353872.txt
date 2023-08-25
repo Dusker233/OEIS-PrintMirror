@@ -1,0 +1,60 @@
+{
+    "number": 353872,
+    "data": "12,29,49,69,108,120,203,243,285,382,404,453,592,645,677,788,848,996,1140,1149,1241,1365,1779,1796,1797,1857,2032,2236,2649,2704,2812,2870,3143,3188,3388,3443,3525,3831,4372,4379,4592,4799,4911,5204,5364,5520,5814",
+    "name": "Numbers k such that the arithmetic differential equation m'' - m'm + k = 0 has exactly one positive solution in m with two prime factors (counted with multiplicity).",
+    "comment": [
+        "This is a second-order nonlinear ADE. It is known that many linear second-order ADEs have infinitely many solutions (A334261), but nonlinear cases haven't been studied."
+    ],
+    "link": [
+        "Nathan Mabey, <a href=\"https://drive.google.com/file/d/1XLmndd9TBYff15kszUTgIvlFqoInLrSo/view?usp=sharing\">C Script</a>"
+    ],
+    "example": [
+        "k = 12 is in the sequence, since for m = 4, we have m' = m'' = 4, so m'm - m'' = 16 - 4 = 12 = k."
+    ],
+    "program": [
+        "(C) See Link",
+        "(MATLAB)",
+        "function a = A353872( max_pow_2 )",
+        "    a = [];",
+        "    maxad2 = ad(ad(2^max_pow_2));",
+        "    for m = 1:2^max_pow_2",
+        "        if length(factor(m)) == 2",
+        "            d = ad(m); b = ad(d); c = d*m;",
+        "            k(m) = b - c;",
+        "        end",
+        "    end",
+        "    for n = 1:length(k)",
+        "        if k(n) > -maxad2;",
+        "            if isempty(find(a == k(n),1))",
+        "                if 1 == length(find(k == k(n)))",
+        "                   a = [a k(n)];",
+        "                end",
+        "            end",
+        "        end",
+        "    end",
+        "    a = sort(-a);",
+        "end",
+        "function y = ad( x )",
+        "    y = 0;",
+        "    if(x > 1)",
+        "        p = factor(x); pu = unique(p);",
+        "        for n = 1:length(pu);",
+        "            y = y + (x*length(find(p == pu(n))))/pu(n);",
+        "        end",
+        "    end",
+        "end % _Thomas Scheuerle_, Jun 15 2022"
+    ],
+    "xref": [
+        "Cf. A003415 (n'), A068346 (n''), A334261 (2m'' - m' - 4 = 0)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Nathan Mabey_, May 08 2022",
+    "ext": [
+        "More terms from _Jinyuan Wang_, Jun 15 2022"
+    ],
+    "references": 1,
+    "revision": 42,
+    "time": "2022-08-04T16:09:56-04:00",
+    "created": "2022-08-04T16:09:56-04:00"
+}

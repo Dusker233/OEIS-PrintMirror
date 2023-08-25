@@ -1,0 +1,35 @@
+{
+    "number": 361820,
+    "data": "0,2,3,5,7,11,22,33,55,77,202,222,232,252,272,303,313,323,333,353,373,505,525,535,555,575,707,717,727,737,757,777,1111,2002,2112,2222,2332,2552,2772,3003,3113,3223,3333,3553,3773,5005,5115,5225,5335,5555,5775,7007,7117",
+    "name": "Palindromes in A329150.",
+    "comment": [
+        "If m is a palindrome with no digit greater than 5 in A118597, then A329147(m) is a term, but there exist terms that are not of this form as 313, 717, ..."
+    ],
+    "example": [
+        "232 is a term which has two preimages since A329147(91) = A329147(121) = 232.",
+        "313 = A329147(26) is a term whose preimage is not in A118597.",
+        "2002 is a term since A329147(1001) = 2002.",
+        "2112 is a term since A329147(151) = 2112.",
+        "27172 = A329147(1471) is a term whose preimage is not in A118597."
+    ],
+    "mathematica": [
+        "p[n_] := If[n > 0, Prime[n], 0]; seq[ndigmax_] := Module[{t = Table[FromDigits[ Flatten@ IntegerDigits@ (p /@ IntegerDigits[n])], {n, 0, 10^ndigmax - 1}]}, Union@ Select[t, # < 10^ndigmax && PalindromeQ[#] &]]; seq[4] (* _Amiram Eldar_, Mar 26 2023 *)"
+    ],
+    "program": [
+        "(PARI) ispal(n) = my(d=digits(n)); d==Vecrev(d);",
+        "f(n) = if (n, fromdigits(concat(apply(d -> if (d, digits(prime(d)), [0]), digits(n)))), 0); \\\\ A329147",
+        "lista(nn) = my(list = List(), m); for (n=0, nn, m = f(n); if ((m <= nn) && ispal(m), listput(list, m));); vecsort(Set(list)); \\\\ _Michel Marcus_, Mar 26 2023"
+    ],
+    "xref": [
+        "Intersection of A002113 and A329150.",
+        "Cf. A118597, A329147, A361750, A361821.",
+        "Subsequences: A002276, A002277, A002279, A002281, A099814."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Bernard Schott_, Mar 25 2023",
+    "references": 0,
+    "revision": 26,
+    "time": "2023-04-06T06:36:27-04:00",
+    "created": "2023-04-06T06:36:27-04:00"
+}

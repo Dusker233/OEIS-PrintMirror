@@ -1,0 +1,42 @@
+{
+    "number": 346156,
+    "data": "3,7,11,13,19,31,43,67,73,131,157,211,223,241,307,421,463,521,601,631,733,739,757,1123,1303,1483,1723,1741,2551,2971,3307,3391,3541,3907,4099,4423,4831,4931,5113,5701,5851,6007,6163,6481,6571,8011,8191,9283,9901,10303,11131,12211,12433,13807",
+    "name": "Primes of the form x^k+x+1 where k >= 2 and x >= 1.",
+    "comment": [
+        "Primes p such that p-1 is in A253913.",
+        "Primes with more than one representation of this form include 31 = 3^3+3+1 = 5^2+5+1 and 131 = 2^7+2+1 = 5^3+5+1.  Are there any others?",
+        "There are no others with more than one representation (except 3, trivially) < 10^19 (first 170385840 terms). - _Michael S. Branicky_, Jul 08 2021"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A346156/b346156.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 11 is a term because 11 = 2^3+2+1 and is prime."
+    ],
+    "maple": [
+        "N:= 10^8: # for terms <= N",
+        "S:= {3}:",
+        "for k from 2 to ilog2(N-1) do",
+        "  S:= S union select(t -> t<= N and isprime(t),{seq(x^k+x+1,x=2..floor(N^(1/k)))}):",
+        "od:",
+        "sort(convert(S,list));"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def aupto(lim):",
+        "    xkx = set(x**k + x + 1 for k in range(2, lim.bit_length()) for x in range(int(lim**(1/k))+2))",
+        "    return sorted(filter(isprime, filter(lambda t: t<=lim, xkx)))",
+        "print(aupto(14000)) # _Michael S. Branicky_, Jul 07 2021"
+    ],
+    "xref": [
+        "Cf. A253913, A346154."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jul 07 2021",
+    "references": 1,
+    "revision": 21,
+    "time": "2021-07-13T01:37:08-04:00",
+    "created": "2021-07-09T22:58:28-04:00"
+}

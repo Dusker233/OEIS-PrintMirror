@@ -1,0 +1,35 @@
+{
+    "number": 342600,
+    "data": "0,1,3,7,17,39,91,211,487,1123,2589,5963,13725,31583,72661,167131,384377,883951,2032723,4674299,10748631,24716955,56839003,130710843,300603331,691345931,1590077703,3657329539,8412668791,19352107787,44519281727,102422137915",
+    "name": "a(n) = f(n,n) where f(m,n) = max(m,n) if m < 2 or n < 2; f(m,n) = f(m-1,n-1) + f(m-1,n-2) + f(m-2,n-1) otherwise. Diagonal of A342859.",
+    "comment": [
+        "It appears that a(n+1)/a(n) tends to 2.314...."
+    ],
+    "formula": [
+        "a(n) = A342859(n, n)."
+    ],
+    "mathematica": [
+        "B[m_,n_] := B[m,n] = Which[m < n, B[n,m], n < 2 || m < 2, Max[m, n],True,",
+        "  B[m-1, n-1] + B[m-1,n-2] + B[m-2,n-1]]; Table[B[m,m],{m, 1, 55}]"
+    ],
+    "program": [
+        "(PARI) A342600(n) = A342859(n,n); \\\\ (Also uses code from A342859.) - _Antti Karttunen_, Mar 28 2021",
+        "(Python)",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A342600(n,m=None): # A342600(n) = A342600(n,n)",
+        "    if m == None: m = n",
+        "    return max(m,n) if m < 2 or n < 2 else A342600(n-1,m-1)+A342600(n-1,m-2)+A342600(n-2,m-1)",
+        "for i in range(32): print(i,A342600(i)) # _Chai Wah Wu_, Apr 22 2021"
+    ],
+    "xref": [
+        "Main diagonal of A342859. Cf. A001850."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Jos\u00e9 Mar\u00eda Grau Ribas_, Mar 25 2021",
+    "references": 2,
+    "revision": 53,
+    "time": "2021-04-22T22:10:12-04:00",
+    "created": "2021-04-22T11:55:39-04:00"
+}

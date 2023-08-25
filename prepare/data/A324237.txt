@@ -1,0 +1,35 @@
+{
+    "number": 324237,
+    "data": "1,1,3,14,84,633,5730,60485,729710,9904064,149358998,2477662364,44837516675,879028693860,18558771941586,419815668642109,10129704474860688,259695154154923814,7049438079064414206,201988316828399901634,6092203404985463075656",
+    "name": "Expansion of e.g.f. 1 / (1 - Sum_{k>=1} q(k)*x^k/k!), where q(k) = number of partitions of k into distinct parts (A000009).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A324237/b324237.txt\">Table of n, a(n) for n = 0..419</a>"
+    ],
+    "formula": [
+        "a(0) = 1; a(n) = Sum_{k=1..n} binomial(n,k) * q(k) * a(n-k).",
+        "a(n) ~ c * d^n * n!, where d = 1.5080583621492799630678624980320180394686208919872154400104169910221003637... and c = 0.67652958824662835367141799671720225317465169475061770258661897351... - _Vaclav Kotesovec_, Sep 03 2019"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1, add(b(n-j)*add(",
+        "     `if`(d::odd, d, 0), d=numtheory[divisors](j)), j=1..n)/n)",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      a(n-k)*binomial(n, k)*b(k), k=1..n))",
+        "    end:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Sep 02 2019"
+    ],
+    "mathematica": [
+        "nmax = 21; CoefficientList[Series[1/(1 - Sum[PartitionsQ[k] x^k/k!, {k, 1, nmax}]), {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[0] = 1; a[n_] := a[n] = Sum[Binomial[n, k] PartitionsQ[k] a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 21}]"
+    ],
+    "xref": [
+        "Cf. A000009, A266232, A300514, A304969, A324236."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Sep 02 2019",
+    "references": 2,
+    "revision": 21,
+    "time": "2019-09-03T03:54:55-04:00",
+    "created": "2019-09-03T03:54:01-04:00"
+}

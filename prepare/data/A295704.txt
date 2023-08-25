@@ -1,0 +1,36 @@
+{
+    "number": 295704,
+    "data": "1,1,2,4,10,26,66,169,437,1130,2926,7597,19749,51381,133812,348755,909464,2372862,6193720",
+    "name": "Number of equivalence classes of 132-avoiding permutations of [n], where two permutations are equivalent if they have the same set of pure descents.",
+    "comment": [
+        "As defined in Baril et al., a pure descent of a permutation p is a pair of the form (p_i, p_(i+1)) such that p_i > p_(i+1) and there is no j < i such that p_i > p_j > p_(i+1)."
+    ],
+    "link": [
+        "Jean-Luc Baril, Sergey Kirgizov, Armen Petrossian, <a href=\"http://jl.baril.u-bourgogne.fr/forest.pdf\">Forests and pattern-avoiding permutations modulo pure descents</a>, Permutation Patterns 2017, Reykjavik University, Iceland, June 26-30, 2017. See Section 5."
+    ],
+    "program": [
+        "(Sage)",
+        "def DD(p) :",
+        "    pure_descents = []",
+        "    occur = 0",
+        "    for i in range(len(p)-1) :",
+        "        hi = p[i]; lo = p[i+1]",
+        "        mask = ((1 << (hi - lo)) - 1) << lo",
+        "        if hi > lo and not (occur & mask) :",
+        "            pure_descents.append((hi, lo))",
+        "        occur |= 1 << hi",
+        "    pure_descents.sort()",
+        "    return pure_descents",
+        "def a(n): return len({tuple(DD(p)) for p in Permutations(n, avoiding=[1,3,2])})"
+    ],
+    "xref": [
+        "Cf. A005773 (analogous sequence for 123-avoiding permutations), A152225 (conjecturally analogous sequence for 213-avoiding permutations)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Eric M. Schmidt_, Nov 25 2017",
+    "references": 0,
+    "revision": 17,
+    "time": "2020-03-17T11:56:47-04:00",
+    "created": "2017-12-07T02:59:39-05:00"
+}

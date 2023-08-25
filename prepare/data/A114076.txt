@@ -1,0 +1,46 @@
+{
+    "number": 114076,
+    "data": "1,4,32,50,72,225,256,400,576,900,1944,2048,2166,2312,2646,3200,4107,4563,4608,5202,6075,6250,7200,7225,15125,15552,16384,16428,17328,18252,18496,21168,23762,24300,25600,28125,28900,35378,36864,41616,50000,52488,57600",
+    "name": "Numbers k such that k * phi(k) is a cube.",
+    "comment": [
+        "From _Robert Israel_, Sep 06 2020: (Start)",
+        "If n > 1 is in the sequence, A071178(n) == 2 (mod 3).",
+        "If p=2^(2^k)+1 is in A019434, includes 2^a*p^b where a == 2^k-1 (mod 3) and b == 2 (mod 3).",
+        "If members m and n are coprime, then m*n is in the sequence.",
+        "If n is in the sequence and prime p divides n, then p^3*n is in the sequence. (End)"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A114076/b114076.txt\">Table of n, a(n) for n = 1..2396</a> (first 300 terms from Robert Israel)"
+    ],
+    "example": [
+        "phi(1944) * 1944 = 1259712 = 108^3."
+    ],
+    "maple": [
+        "filter:= proc(n) local F;",
+        "  F:= ifactors(n*numtheory:-phi(n))[2];",
+        "  type(map(t -> t[2]/3, F), list(integer));",
+        "end proc:",
+        "select(filter, [$1..10^5]); # _Robert Israel_, Sep 06 2020"
+    ],
+    "program": [
+        "(PARI) isok(n) = ispower(n*eulerphi(n), 3); \\\\ _Michel Marcus_, Jan 22 2014",
+        "(PARI) upto(n) = { res = List(); forfactored(i = 1, n, if(ispower(i[1] * eulerphi(i[2]), 3), listput(res, i[1]); ) ); res } \\\\ _David A. Corneth_, Dec 08 2022",
+        "(Python)",
+        "from sympy import integer_nthroot, totient as phi",
+        "def ok(k): return integer_nthroot(k * phi(k), 3)[1]",
+        "print([k for k in range(1, 60000) if ok(k)]) # _Michael S. Branicky_, Dec 08 2022"
+    ],
+    "xref": [
+        "Includes A013731. Cf. A000010, A071178, A019434."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Giovanni Resta_, Feb 13 2006",
+    "ext": [
+        "More terms from _Michel Marcus_, Jan 22 2014"
+    ],
+    "references": 2,
+    "revision": 26,
+    "time": "2022-12-13T08:32:34-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 245797,
+    "data": "0,1,6,49,710,19011,954184,90154415,16108626420,5481798833245,3582369649269620,4532127781040045649,11177949079089720090800,54050029251399545975868271,514598463471970554205910304780,9677402372862708729859372687791391",
+    "name": "The number of labeled graphs of n vertices that have endpoints, where an endpoint is a vertex with degree 1.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A245797/b245797.txt\">Table of n, a(n) for n = 1..50</a>"
+    ],
+    "formula": [
+        "a(n) = 2^(n*(n+1)/2) - A059167(n).",
+        "Binomial transform of A327227 (assuming a(0) = 0)."
+    ],
+    "mathematica": [
+        "m = 16;",
+        "egf = Exp[x^2/2]*Sum[2^Binomial[n, 2]*(x/Exp[x])^n/n!, {n, 0, m}];",
+        "A059167[n_] := SeriesCoefficient[egf, {x, 0, n}]*n!;",
+        "a[n_] := 2^(n(n-1)/2) - A059167[n];",
+        "Array[a, m] (* _Jean-Fran\u00e7ois Alcover_, Feb 23 2019 *)",
+        "Table[Length[Select[Subsets[Subsets[Range[n],{2}]],Min@@Length/@Split[Sort[Join@@#]]==1&]],{n,0,5}] (* _Gus Wiseman_, Sep 11 2019 *)"
+    ],
+    "xref": [
+        "Equal to row sums of A245796.",
+        "The covering case is A327227.",
+        "The connected case is A327362.",
+        "The generalization to set-systems is A327228.",
+        "BII-numbers of set-systems with minimum degree 1 are A327105.",
+        "Cf. A001187, A006129, A059166, A059167, A100743, A136284, A327079, A327098, A327103, A327229, A327230."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Chai Wah Wu_, Aug 01 2014",
+    "ext": [
+        "a(9)-a(16) from _Andrew Howroyd_, Oct 26 2017"
+    ],
+    "references": 22,
+    "revision": 19,
+    "time": "2021-01-11T15:11:01-05:00",
+    "created": "2014-08-11T23:21:27-04:00"
+}

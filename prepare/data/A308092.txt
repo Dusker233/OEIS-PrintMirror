@@ -1,0 +1,50 @@
+{
+    "number": 308092,
+    "data": "1,2,3,7,14,28,56,112,224,448,896,1791,3583,7166,14332,28663,57326,114653,229306,458612,917223,1834446,3668892,7337785,14675570,29351140,58702279,117404558,234809116,469618232,939236465,1878472930,3756945860,7513891719",
+    "name": "The sum of the first n terms of the sequence is the concatenation of the first n bits of the sequence read as binary, with a(1) = 1.",
+    "comment": [
+        "In binary, the sequence begins 1, 10, 11, 111, 1110, 11100, 111000, 1110000, 11100000, 111000000, 1110000000, 11011111111, 110111111111, 1101111111110, 11011111111100, ...",
+        "Conjecture: The number of 1's in the binary representation of each term is weakly increasing, i.e., A000120(a(n)) >= A000120(a(n-1)).",
+        "Proved by _Matthew Scroggs_; see link. - _Peter Kagey_, Jun 19 2019"
+    ],
+    "link": [
+        "Peter Kagey, <a href=\"/A308092/b308092.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Matthew Scroggs, <a href=\"http://www.mscroggs.co.uk/blog/65\">Number of 1s in A308092</a>"
+    ],
+    "formula": [
+        "a(n) = c(n) - c(n-1) for n > 2, where c(n) is the concatenation of the first n bits of the sequence."
+    ],
+    "example": [
+        "For n=5, 1 + 2 + 3 + 7 + 14 = 1_2 + 10_2 + 11_2 + 111_2 + 1110_2 = 11011_2, the first five bits of the sequence."
+    ],
+    "mathematica": [
+        "a[1]=1;a[2]=2;a[n_]:=a[n]=FromDigits[Flatten[IntegerDigits[#,2]&/@Table[a[k],{k,n-1}]][[;;n]],2]-Total@Table[a[m],{m,n-1}]",
+        "Table[a[l],{l,40}] (* _Giorgos Kalogeropoulos_, Mar 30 2021 *)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def first_bits(n, seq); seq.map { |i| i.to_s(2) }.join[0...n].to_i(2) end",
+        "def next_term(n, seq); first_bits(n,seq) - first_bits(n-1,seq) end",
+        "def a308092_list(n)",
+        "  (3..n).reduce([1,2]) { |accum, i| accum << next_term(i, accum) }",
+        "end",
+        "(Python)",
+        "def aupton(terms):",
+        "  alst, bstr = [1, 2], \"110\"",
+        "  for n in range(3, terms+1):",
+        "    an = int(bstr[:n], 2) - int(bstr[:n-1], 2)",
+        "    alst, bstr = alst + [an], bstr + bin(an)[2:]",
+        "  return alst",
+        "print(aupton(34)) # _Michael S. Branicky_, Mar 30 2021"
+    ],
+    "xref": [
+        "Cf. A000120, A300000 (decimal analog)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Peter Kagey_, May 12 2019",
+    "references": 4,
+    "revision": 34,
+    "time": "2021-04-10T16:34:05-04:00",
+    "created": "2019-05-23T08:39:57-04:00"
+}

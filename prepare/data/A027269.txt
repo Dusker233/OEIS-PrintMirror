@@ -1,0 +1,41 @@
+{
+    "number": 27269,
+    "data": "1,5,19,150,561,4797,18089,156900,596674,5205950,19932353,174609162,672106267,5906040623,22829936683,201114700568,780077588440,6885880226784,26784015828458,236826459554380,923352937530146,8175978023317170,31940549289135429,283166067626865540",
+    "name": "a(n) = Sum_{k=0..2n-2} T(n,k) * T(n,k+2), with T given by A026536.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A027269/b027269.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..2n-2} A026536(n,k) * A026536(n,k+2)."
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[k==0 || k==2*n, 1, If[k==1 || k==2*n-1, Floor[n/2], If[EvenQ[n], T[n-1, k-2] +T[n-1, k-1] +T[n-1, k], T[n-1, k-2] +T[n-1, k]] ]];",
+        "Table[Sum[T[n,k]*T[n,k+2], {k,0,2*n-2}], {n,40}] (* _G. C. Greubel_, Apr 12 2022 *)"
+    ],
+    "program": [
+        "(SageMath)",
+        "@CachedFunction",
+        "def T(n, k): # A026536",
+        "    if k < 0 or n < 0: return 0",
+        "    elif k == 0 or k == 2*n: return 1",
+        "    elif k == 1 or k == 2*n-1: return n//2",
+        "    elif n % 2 == 1: return T(n-1, k-2) + T(n-1, k)",
+        "    return T(n-1, k-2) + T(n-1, k-1) + T(n-1, k)",
+        "def A027269(n): return sum(T(n,k)*T(n,k+2) for k in (0..2*n-2))",
+        "[A027269(n) for n in (1..40)] # _G. C. Greubel_, Apr 12 2022"
+    ],
+    "xref": [
+        "Cf. A026536, A027267, A027268, A027270."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "More terms from _Sean A. Irvine_, Oct 26 2019",
+        "a(1) = 1 prepended by _G. C. Greubel_, Apr 12 2022"
+    ],
+    "references": 4,
+    "revision": 14,
+    "time": "2022-04-12T04:19:56-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,31 @@
+{
+    "number": 305081,
+    "data": "2,3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73,79,81,83,89,91,97,101,103,107,109,113,121,125,127,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,203,211,223,227,229",
+    "name": "Heinz numbers of z-trees. Heinz numbers of connected integer partitions with pairwise indivisible parts and z-density -1.",
+    "comment": [
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k).",
+        "Given a finite set S of positive integers greater than one, let G(S) be the simple labeled graph with vertex set S and edges between any two vertices with a common divisor greater than 1. For example, G({6,14,15,35}) is a 4-cycle. A multiset S is said to be connected if G(S) is a connected graph.",
+        "The clutter density of a multiset S of positive integers is Sum_{s in S} (omega(s) - 1) - omega(lcm(S)) where omega = A001221."
+    ],
+    "example": [
+        "4331 is the Heinz number of {18,20}, which is a z-tree corresponding to the multiset multisystem {{1,2,2},{1,1,3}}.",
+        "17927 is the Heinz number of {4,6,45}, which is a z-tree corresponding to the multiset multisystem {{1,1},{1,2},{2,2,3}}.",
+        "27391 is the Heinz number of {4,4,6,14}, which is a z-tree corresponding to the multiset multisystem {{1,1},{1,1},{1,2},{1,4}}."
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n===1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "zsm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[Less@@#,GCD@@s[[#]]]>1&]},If[c=={},s,zsm[Union[Append[Delete[s,List/@c[[1]]],LCM@@s[[c[[1]]]]]]]]];",
+        "zens[n_]:=If[n==1,0,Total@Cases[FactorInteger[n],{p_,k_}:>k*(PrimeNu[PrimePi[p]]-1)]-PrimeNu[LCM@@Cases[FactorInteger[n],{p_,k_}:>PrimePi[p]]]];",
+        "Select[Range[300],And[zens[#]==-1,Length[zsm[primeMS[#]]]==1,Select[Tuples[primeMS[#],2],UnsameQ@@#&&Divisible@@#&]=={}]&]"
+    ],
+    "xref": [
+        "Cf. A001221, A030019, A056239, A112798, A286520, A302242, A303362, A303837, A304118, A304714, A304716, A305052, A305078, A305079."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, May 25 2018",
+    "references": 4,
+    "revision": 5,
+    "time": "2018-05-25T21:59:22-04:00",
+    "created": "2018-05-25T21:59:22-04:00"
+}

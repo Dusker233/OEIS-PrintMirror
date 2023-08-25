@@ -1,0 +1,52 @@
+{
+    "number": 301595,
+    "data": "1,1,4,10,34,80,254,604,1785,4370,11986,29286,80355,193137,505952,1239348,3181970,7686199,19520906,46931241,117334784,282021070,693721166,1659075192,4063164983,9651686516,23347635094,55405326513,133021397071,313842472333,749299686508",
+    "name": "Number of thrice-partitions of n.",
+    "comment": [
+        "A thrice-partition of n is a choice of a twice-partition of each part in a partition of n. Thrice-partitions correspond to intervals in the lattice form of the multiorder of integer partitions."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A301595/b301595.txt\">Table of n, a(n) for n = 0..3244</a>",
+        "Gus Wiseman, <a href=\"/A301595/a301595.png\">The a(4) = 34 thrice-partitions of 4.</a>"
+    ],
+    "formula": [
+        "O.g.f.: Product_{n > 0} 1/(1 - A063834(n) x^n)."
+    ],
+    "example": [
+        "The a(3) = 10 thrice-partitions:",
+        "  ((3)), ((21)), ((111)), ((2)(1)), ((11)(1)), ((1)(1)(1)),",
+        "  ((2))((1)), ((11))((1)), ((1)(1))((1)),",
+        "  ((1))((1))((1))."
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0 or k=0 or i=1,",
+        "      1, b(n, i-1, k)+b(i$2, k-1)*b(n-i, min(n-i, i), k))",
+        "    end:",
+        "a:= n-> b(n$2, 3):",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, Jan 25 2019"
+    ],
+    "mathematica": [
+        "twie[n_]:=Sum[Times@@PartitionsP/@ptn,{ptn,IntegerPartitions[n]}];",
+        "thrie[n_]:=Sum[Times@@twie/@ptn,{ptn,IntegerPartitions[n]}];",
+        "Array[thrie,30]",
+        "(* Second program: *)",
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0 || k == 0 || i == 1,",
+        "     1, b[n, i - 1, k] + b[i, i, k - 1]*b[n - i, Min[n - i, i], k]];",
+        "a[n_] := b[n, n, 3];",
+        "a /@ Range[0, 35] (* _Jean-Fran\u00e7ois Alcover_, May 19 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000041, A001383, A001970, A061260, A063834, A119442, A196545, A281113, A289501, A300383, A301422, A301462, A301480, A301595, A301598, A301706.",
+        "Column k=3 of A323718."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Mar 24 2018",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Jan 25 2019"
+    ],
+    "references": 5,
+    "revision": 18,
+    "time": "2021-05-19T05:14:19-04:00",
+    "created": "2018-03-26T20:02:05-04:00"
+}

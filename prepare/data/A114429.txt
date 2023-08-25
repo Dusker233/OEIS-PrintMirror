@@ -1,0 +1,48 @@
+{
+    "number": 114429,
+    "data": "7,73,883,9931,99991,999961,9999973,99999589,999999193,9999999703,99999999763,999999999961,9999999998491,99999999999973,999999999997969,9999999999999643,99999999999998809,999999999999998929",
+    "name": "Larger of the greatest twin prime pair with n digits.",
+    "comment": [
+        "Also the denominator of the largest prime over prime fraction less than 10^n."
+    ],
+    "link": [
+        "Abhiram R Devesh, <a href=\"/A114429/b114429.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "formula": [
+        "a(n) = A092250(n) + 2. - _M. F. Hasler_, Jan 17 2022"
+    ],
+    "program": [
+        "(Python)",
+        "import sympy",
+        "for i in range(1,100):",
+        "    p=sympy.prevprime(10**i)",
+        "    while not sympy.isprime(p-2):",
+        "        p=sympy.prevprime(p)",
+        "    print(p)",
+        "# _Abhiram R Devesh_, Aug 02 2014",
+        "(PARI)",
+        "a(n)=my(p=precprime(10^n)); while(!ispseudoprime(p-2),p=precprime(p-1)); return(p)",
+        "vector(50, n, a(n)) \\\\ _Derek Orr_, Aug 02 2014",
+        "(PARI) apply( {A114429(n,p=10^n)=until(2==p-p=precprime(p-1),);p+2}, [1..22]) \\\\ twice as fast by avoiding additional ispseudoprime(). - _M. F. Hasler_, Jan 17 2022",
+        "(Python)",
+        "from sympy import prevprime",
+        "def a(n):",
+        "    p = prevprime(10**n); pp = prevprime(p)",
+        "    while p - pp != 2: p, pp = pp, prevprime(pp)",
+        "    return p",
+        "print([a(n) for n in range(1, 19)]) # _Michael S. Branicky_, Jan 17 2022"
+    ],
+    "xref": [
+        "Cf. A092250 (a(n)-2: lesser of the pair)."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Feb 13 2006",
+    "ext": [
+        "Corrected by _T. D. Noe_, Nov 15 2006"
+    ],
+    "references": 4,
+    "revision": 28,
+    "time": "2022-01-18T02:29:59-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

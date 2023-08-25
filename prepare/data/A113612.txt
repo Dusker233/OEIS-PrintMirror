@@ -1,0 +1,57 @@
+{
+    "number": 113612,
+    "data": "3,13,313,13313,631331313313,10131331313313631331313313,1331363133131331310131331313313631331313313",
+    "name": "a(1) = 3. For n > 1, a(n) = smallest prime not already seen forming a palindrome when a(n) and all previous terms are concatenated",
+    "comment": [
+        "From _Michael S. Branicky_, Aug 12 2022: (Start)",
+        "If terms are not constrained to be distinct, then 3, 3, 3, 3, ... and 3, 13, 13, 13, ... would be solutions.",
+        "a(12) has 1528 digits. (End)"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A113612/b113612.txt\">Table of n, a(n) for n = 1..11</a>"
+    ],
+    "example": [
+        "3, 313, 313313, 31331313313, ... are all palindromes."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, islice, product",
+        "def pals(digs):",
+        "    yield from digs",
+        "    for d in count(2):",
+        "        for p in product(digs, repeat=d//2):",
+        "            left = \"\".join(p)",
+        "            for mid in [[\"\"], digs][d%2]:",
+        "                yield left + mid + left[::-1]",
+        "def folds(s): # generator of suffixes of palindromes starting with s",
+        "    for i in range((len(s)+1)//2, len(s)+1):",
+        "        for mid in [True, False]:",
+        "            t = s[:i] + (s[:i-1][::-1] if mid else s[:i][::-1])",
+        "            if t.startswith(s):",
+        "                yield t[len(s):]",
+        "    yield from (\"\".join(p)+s[::-1] for p in pals(\"0123456789\"))",
+        "def agen():",
+        "    s, seen = \"3\", {\"3\"}; yield from [3]",
+        "    while True:",
+        "        for t in folds(s):",
+        "            if len(t) and t[0] != \"0\" and t not in seen and isprime(int(t)):",
+        "                break",
+        "        s += t; seen.add(t); yield int(t)",
+        "print(list(islice(agen(), 7))) # _Michael S. Branicky_, Aug 12 2022"
+    ],
+    "xref": [
+        "Cf. A113613."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Nov 09 2005",
+    "ext": [
+        "Definition clarified by _Felix Fr\u00f6hlich_, Oct 27 2014",
+        "Name clarified, a(2)-a(4) corrected, and a(5) and beyond from _Michael S. Branicky_, Aug 12 2022"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2022-08-13T05:16:05-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

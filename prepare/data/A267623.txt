@@ -1,0 +1,73 @@
+{
+    "number": 267623,
+    "data": "1,10,101,1011,10111,101111,1011111,10111111,101111111,1011111111,10111111111,101111111111,1011111111111,10111111111111,101111111111111,1011111111111111,10111111111111111,101111111111111111,1011111111111111111,10111111111111111111",
+    "name": "Binary representation of the middle column of the \"Rule 187\" elementary cellular automaton starting with a single ON (black) cell.",
+    "comment": [
+        "Also, The binary representation of the x-axis, from the left edge to the origin, of the n-th stage of growth of the two-dimensional cellular automaton defined by \"Rule 643\", based on the 5-celled von Neumann neighborhood, initialized with a single black (ON) cell at stage zero. See A283508."
+    ],
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 55."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A267623/b267623.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "S. Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>"
+    ],
+    "formula": [
+        "Conjectures from _Colin Barker_, Jan 19 2016 and Apr 16 2019: (Start)",
+        "a(n) = 11*a(n-1)-10*a(n-2) for n>2.",
+        "G.f.: (1-x+x^2) / ((1-x)*(1-10*x)).",
+        "(End)",
+        "Empirical: a(n) = (91*10^n - 10) / 90 for n>0. - _Colin Barker_, Mar 10 2017",
+        "It also appears that a(n) = floor(91*10^n/90). - _Karl V. Keller, Jr._, May 28 2022"
+    ],
+    "maple": [
+        "# Rule 187: value in generation r and column c, where c=0 is the central one",
+        "r187 := proc(r::integer,c::integer)",
+        "    option remember;",
+        "    local up ;",
+        "    if r = 0 then",
+        "        if c = 0 then",
+        "            1;",
+        "        else",
+        "            0;",
+        "        end if;",
+        "    else",
+        "        # previous 3 bits",
+        "        [procname(r-1,c+1),procname(r-1,c),procname(r-1,c-1)] ;",
+        "        up := op(3,%)+2*op(2,%)+4*op(1,%) ;",
+        "        # rule 187 = 10111011_2: {6,2}->0, all others ->1",
+        "        if up in {6,2} then",
+        "            0;",
+        "        else",
+        "            1 ;",
+        "        end if;",
+        "    end if;",
+        "end proc:",
+        "A267623 := proc(n)",
+        "    b := [seq(r187(r,0),r=0..n)] ;",
+        "    add(op(-i,b)*2^(i-1),i=1..nops(b)) ;",
+        "    A007088(%) ;",
+        "end proc:",
+        "smax := 30 ;",
+        "L := [seq(A267623(n),n=0..smax)] ; # _R. J. Mathar_, Apr 12 2019"
+    ],
+    "mathematica": [
+        "rule=187; rows=20; ca=CellularAutomaton[rule,{{1},0},rows-1,{All,All}]; (* Start with single black cell *) catri=Table[Take[ca[[k]],{rows-k+1,rows+k-1}],{k,1,rows}]; (* Truncated list of each row *) mc=Table[catri[[k]][[k]],{k,1,rows}]; (* Keep only middle cell from each row *) Table[FromDigits[Take[mc,k]],{k,1,rows}]  (* Binary Representation of Middle Column *)"
+    ],
+    "xref": [
+        "Cf. A267621, A283508, A083329."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Robert Price_, Jan 18 2016",
+    "ext": [
+        "Removed an unjustified claim that _Colin Barker_'s conjectures are correct. Removed a program based on a conjecture. - _N. J. A. Sloane_, Jun 13 2022"
+    ],
+    "references": 4,
+    "revision": 48,
+    "time": "2023-07-06T13:25:14-04:00",
+    "created": "2016-01-18T21:37:03-05:00"
+}

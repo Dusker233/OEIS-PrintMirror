@@ -1,0 +1,31 @@
+{
+    "number": 240591,
+    "data": "8,25,32,121,288,675,1331,1369,1936,2187,2700,3125,5324,6724,9800,10800,12167,15125,32761,39200,48668,70225,79507,88200,97336,107648,143641,156800,212521,228484,235224,280900,312481,332928,456968,465124,574564,674028,744769,829921,830297,857476,877952,940896",
+    "name": "The smaller of a pair of successive powerful numbers (A001694) without any prime number between them.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A240591/b240591.txt\">Table of n, a(n) for n = 1..103</a> (terms below 10^9)"
+    ],
+    "example": [
+        "25 is in the sequence because A001694(6)=25, A001694(7)=27, without primes between them."
+    ],
+    "mathematica": [
+        "Select[Partition[Join[{1},Select[Range[10^6],Min@FactorInteger[#][[All, 2]]> 1&]],2,1],PrimePi[#[[1]]]==PrimePi[#[[2]]]&][[All,1]] (* _Harvey P. Dale_, Mar 28 2018 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "ispowerful(n)={local(h);if(n==1,h=1,h=(vecmin(factor(n)[, 2])>1));return(h)}",
+        "nextpowerful(n)={local(k);k=n+1;while(!ispowerful(k),k+=1);return(k)}",
+        "{for(i=1,10^6,if(ispowerful(i),if(nextprime(i)>=nextpowerful(i),print1(i, \", \"))))}"
+    ],
+    "xref": [
+        "Supersequence of A060355.",
+        "Cf. A001694, A240590."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antonio Rold\u00e1n_, Apr 08 2014",
+    "references": 2,
+    "revision": 19,
+    "time": "2023-01-30T02:38:59-05:00",
+    "created": "2014-04-13T14:11:43-04:00"
+}

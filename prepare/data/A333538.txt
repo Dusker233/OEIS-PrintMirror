@@ -1,0 +1,48 @@
+{
+    "number": 333538,
+    "data": "1,5,21,91,355,456,666,2927,4946,6064,6188,6192,13858,14884,39592,54429,77603,87566,210905,245770,422097,585876,908602,976209,1240768,1340675,1573890,2589172,4740893,5168099,8525972,8646462,10478354,12636785,17943798,19524935",
+    "name": "Indices of records in A333537.",
+    "comment": [
+        "The first few primes that are not record values of A333537 are 2, 11, 53, 59, 71, 73, 89, 97, 103, 107 (see A333541, A333542). - _Robert Israel_, Apr 12 2020",
+        "a(72) > 5*10^9. - _David A. Corneth_, Apr 14 2020"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A333538/b333538.txt\">Table of n, a(n) for n = 1..71</a> (first 36 terms from Robert Israel)",
+        "J. S. Myers, R. Schroeppel, S. R. Shannon, N. J. A. Sloane, and P. Zimmermann, <a href=\"http://arxiv.org/abs/2004.14000\">Three Cousins of Recaman's Sequence</a>, arXiv:2004:14000 [math.NT], April 2020."
+    ],
+    "maple": [
+        "f:= proc(n) local k, p;",
+        "  p:= n;",
+        "  for k from 1 do",
+        "    p:= p*(n+k);",
+        "    if (p/(n+k+1))::integer then return n+k+1 fi",
+        "  od",
+        "end proc:",
+        "R:= 1: g:= 3: count:= 1:",
+        "for n from 2 while count < 20 do",
+        "  x:= max(numtheory:-factorset(f(n)));",
+        "  if x > g then count:= count+1; g:= x; R:= R, n;  fi",
+        "od:",
+        "R; # _Robert Israel_, Apr 12 2020"
+    ],
+    "mathematica": [
+        "f[n_] := Module[{k, p = n}, For[k = 1, True, k++, p *= (n+k); If[Divisible[ p, n + k + 1], Return[FactorInteger[n + k + 1][[-1, 1]]]]]];",
+        "R = {1}; g = 3; count = 1;",
+        "For[n = 2, count < 20, n++, x = f[n]; If[x > g, count++; g = x; AppendTo[R, n]]];",
+        "R (* _Jean-Fran\u00e7ois Alcover_, Aug 17 2020, after _Robert Israel_ *)"
+    ],
+    "xref": [
+        "Cf. A061836, A332558, A332559, A333537, A333541, A333542."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Apr 12 2020",
+    "ext": [
+        "a(13)-a(20) from _Robert Israel_, Apr 12 2020",
+        "More terms from _Jinyuan Wang_, Apr 12 2020"
+    ],
+    "references": 4,
+    "revision": 29,
+    "time": "2021-04-25T13:12:29-04:00",
+    "created": "2020-04-12T14:58:55-04:00"
+}

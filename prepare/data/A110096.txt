@@ -1,0 +1,37 @@
+{
+    "number": 110096,
+    "data": "1,1,3,3,15,15,1605,1605,19425,2397347205,153535525935,29503289812425,29503289812425,32467505340816975,143924005810811655,143924005810811655",
+    "name": "Least positive integer which, when added to each of 2^1, ..., 2^n, yields all primes; or 0 if none exists.",
+    "comment": [
+        "Dickson's conjecture implies that a(n) > 0 for all n. - _Charles R Greathouse IV_, Oct 11 2011",
+        "From _David A. Corneth_, Jul 30 2020: (Start)",
+        "We can restrict the search using the Chinese Remainder Theorem as follows: there are 4 possible residues mod 7 for a term; 0, 1, 2 and 4. There are 4 possible residues mod 19 for a term; 0, 9, 14 and 18.",
+        "Combining this we can find all 4*4 = 16 possible residues mod (19*7) = mod 133. These residues are 0, 9, 14, 18, 28, 37, 56, 57, 71, 85, 95, 109, 113, 114, 123, 128.",
+        "I did this for the primes up to 41, except 31, giving 13837825 numbers to check per 9814524629910 such that on average 1 in about 7*10^5 numbers had to be checked. (End)"
+    ],
+    "example": [
+        "a(5)=15 is the least positive integer which, when added to 2^1, 2^2, 2^3, 2^4, 2^5, yields all primes: 17, 19, 23, 31, 47."
+    ],
+    "mathematica": [
+        "p[n_] := Table[2^i, {i, 1, n}]; f[k_, n_] := MemberQ[PrimeQ[k + p[n]], False]; r = {}; For[n = 1, n <= 9, n++, k = 1; While[f[k, n], k = k + 1]; r = Append[r, k]]; r"
+    ],
+    "program": [
+        "(PARI) is(k, n) = for(i=1, n, if(!isprime(k+2^i), return(0))); 1;",
+        "a(n) = {my(s=2); forprime(p=3, n, if(znorder(Mod(2, p))==(p-1), s*=p)); forstep(k=s/2, oo, s, if(is(k, n), return(k))); } \\\\ _Jinyuan Wang_, Jul 30 2020"
+    ],
+    "xref": [
+        "Cf. A193109."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,3",
+    "author": "_Joseph L. Pe_, Sep 05 2005",
+    "ext": [
+        "a(10) from _T. D. Noe_, Sep 06 2005",
+        "a(11) from _Don Reble_, Sep 17 2005",
+        "a(14)-a(16) from _Bert Dobbelaere_, Apr 24 2021"
+    ],
+    "references": 2,
+    "revision": 25,
+    "time": "2021-04-25T03:21:10-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

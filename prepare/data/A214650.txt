@@ -1,0 +1,33 @@
+{
+    "number": 214650,
+    "data": "0,0,0,1,1,5,10,34,85,254,690,1997,5582,15975,45244,129254,368215,1052961,3010169,8622273,24709964,70902886,203594559,585163116,1683079071,4844758076,13955265122,40225474849,116021495035,334843170810,966929417619,2793756318793",
+    "name": "Number of distinct connected unicyclic bipartite graphs with n vertices.",
+    "comment": [
+        "The graphs also have n edges."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A214650/b214650.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/UnicyclicGraph.html\">Unicyclic Graph</a>"
+    ],
+    "example": [
+        "a(5)=1, a 4-cycle plus a pendant edge."
+    ],
+    "program": [
+        "(PARI) \\\\ TreeGf gives gf of A000081",
+        "TreeGf(N)={my(A=vector(N, j, 1)); for (n=1, N-1, A[n+1] = 1/n * sum(k=1, n, sumdiv(k, d, d*A[d]) * A[n-k+1] ) ); x*Ser(A)}",
+        "seq(n)={concat([0,0,0], if(n<4, [], my(t=TreeGf(n-2)); my(g(e)=subst(t + O(x*x^(n\\e)), x, x^e) + O(x*x^n)); Vec(sum(k=2, n\\2, sumdiv(2*k, d, eulerphi(d)*g(d)^(2*k/d))/k + (g(1)^2+g(2))*g(2)^(k-1))/4)))} \\\\ _Andrew Howroyd_, May 22 2018"
+    ],
+    "xref": [
+        "Cf. A001429."
+    ],
+    "keyword": "nonn",
+    "offset": "1,6",
+    "author": "_David Bevan_, Jul 24 2012",
+    "ext": [
+        "Terms a(16) and beyond from _Andrew Howroyd_, May 22 2018"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2018-05-22T03:38:53-04:00",
+    "created": "2012-07-26T12:55:52-04:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 357077,
+    "data": "27,44,63,75,80,98,99,104,116,124,125,135,147,152,153,164,170,171,174,175,188,189,195,207,224,230,231,242,243,244,245,255,260,272,275,279,284,285,296,315,324,332,342,343,344,350,351,356,363,368,369,374,375,384,387,399",
+    "name": "The lesser of two consecutive numbers with at least 3 prime factors (counted with multiplicity).",
+    "comment": [
+        "The first of two consecutive numbers in A033942."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A357077/b357077.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "27 = 3^3 and 28 = 2^2 * 7. Thus, 27 and 28 both have at least three prime factors. Thus, 27 is in this sequence."
+    ],
+    "maple": [
+        "R:= NULL: count:= 0: state:= 0:",
+        "for n from 1 while count < 100 do",
+        "  if numtheory:-bigomega(n) >= 3 then",
+        "     if state = 1 then R:= R, n-1; count:= count+1",
+        "     else state:= 1",
+        "     fi",
+        "  else state := 0",
+        "  fi",
+        "od:",
+        "R; # _Robert Israel_, Sep 16 2022"
+    ],
+    "mathematica": [
+        "Select[Range[1000], Total[Transpose[FactorInteger[#]][[2]]] >= 3 && Total[Transpose[FactorInteger[# + 1]][[2]]] >= 3 &]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def is033942(n): return sum(factorint(n).values()) > 2",
+        "def ok(n): return is033942(n) and is033942(n+1)",
+        "print([k for k in range(400) if ok(k)]) # _Michael S. Branicky_, Sep 10 2022"
+    ],
+    "xref": [
+        "Cf. A033942, A344843."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Sep 10 2022",
+    "references": 1,
+    "revision": 12,
+    "time": "2022-09-16T13:39:25-04:00",
+    "created": "2022-09-14T08:25:47-04:00"
+}

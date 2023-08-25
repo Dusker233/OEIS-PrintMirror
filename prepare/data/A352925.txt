@@ -1,0 +1,45 @@
+{
+    "number": 352925,
+    "data": "11,19,23,43,67,103,151,163,211,223,283,331,383,487,523,547,607,631,691,787,823,907,991,1051,1123,1171,1303,1447,1531,1543,1663,1723,1783,1831,1867,1951,2011,2083,2143,2251,2347,2371,2467,2503,2647,2707,2731,2791",
+    "name": "Primes p such that there exist primes q, r (r != 2) such that p+1 = 2^q*r.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A352925/b352925.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Roberto Conti and Pierluigi Contucci, <a href=\"https://arxiv.org/abs/2204.08982\">A Natural Avenue</a>, arXiv:2204.08982 [math.NT], 2022."
+    ],
+    "maple": [
+        "f:= p-> (q-> andmap(isprime, [q, (p+1)/2^q]))(padic[ordp](p+1, 2)):",
+        "select(f, [ithprime(i)$i=1..500])[];  # _Alois P. Heinz_, May 01 2022"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[400]], PrimeQ[(q = IntegerExponent[# + 1, 2])] && PrimeQ[(# + 1)/2^q] &] (* _Amiram Eldar_, May 01 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, nextprime",
+        "from itertools import islice",
+        "def valuation(n, p):",
+        "    v = 0",
+        "    while n%p == 0: n //= p; v += 1",
+        "    return v, n",
+        "def agen(): # generator of terms",
+        "    p = 2",
+        "    while True:",
+        "        q, r = valuation(p+1, 2)",
+        "        if isprime(q) and isprime(r): yield p",
+        "        p = nextprime(p)",
+        "print(list(islice(agen(), 49))) # _Michael S. Branicky_, May 01 2022"
+    ],
+    "xref": [
+        "Cf. A005383, A352926."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, May 01 2022",
+    "ext": [
+        "a(12) and beyond from _Michael S. Branicky_, May 01 2022"
+    ],
+    "references": 2,
+    "revision": 15,
+    "time": "2022-05-01T13:22:10-04:00",
+    "created": "2022-05-01T12:31:32-04:00"
+}

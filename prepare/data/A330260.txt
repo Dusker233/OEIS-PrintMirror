@@ -1,0 +1,33 @@
+{
+    "number": 330260,
+    "data": "1,2,17,352,13505,830126,74717857,9263893892,1513712421377,315230799073690,81499084718806001,25612081645835777192,9615370149488574778177,4250194195208050117007942,2184834047906975645398282625,1292386053018890618812398220876",
+    "name": "a(n) = n! * Sum_{k=0..n} binomial(n,k) * n^(n - k) / k!.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A330260/b330260.txt\">Table of n, a(n) for n = 0..232</a>"
+    ],
+    "formula": [
+        "a(n) = n! * [x^n] exp(x/(1 - n*x)) / (1 - n*x).",
+        "a(n) = Sum_{k=0..n} binomial(n,k)^2 * n^k * k!.",
+        "a(n) ~ sqrt(2*Pi) * BesselI(0,2) * n^(2*n + 1/2) / exp(n). - _Vaclav Kotesovec_, Dec 18 2019"
+    ],
+    "mathematica": [
+        "Join[{1}, Table[n! Sum[Binomial[n, k] n^(n - k)/k!, {k, 0, n}], {n, 1, 15}]]",
+        "Join[{1}, Table[n^n n! LaguerreL[n, -1/n], {n, 1, 15}]]",
+        "Table[n! SeriesCoefficient[Exp[x/(1 - n x)]/(1 - n x), {x, 0, n}], {n, 0, 15}]"
+    ],
+    "program": [
+        "(PARI) a(n) = n! * sum(k=0, n, binomial(n,k) * n^(n-k)/k!); \\\\ _Michel Marcus_, Dec 18 2019",
+        "(Magma) [Factorial(n)*&+[Binomial(n,k)*n^(n-k)/Factorial(k):k in [0..n]]:n in [0..15]]; // _Marius A. Burtea_, Dec 18 2019"
+    ],
+    "xref": [
+        "Cf. A002720, A025167, A061711, A102757, A102773, A187021, A277373, A277452, A293146, A330497.",
+        "Main diagonal of A341014."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Dec 18 2019",
+    "references": 4,
+    "revision": 29,
+    "time": "2022-09-08T08:46:24-04:00",
+    "created": "2019-12-20T03:32:37-05:00"
+}

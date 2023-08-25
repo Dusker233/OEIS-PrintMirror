@@ -1,0 +1,40 @@
+{
+    "number": 193227,
+    "data": "9,15,25,39,65,111,169,183,185,219,305,365,471,481,579,785,793,831,939,949,965,1191,1263,1369,1371,1385,1565,1623,1839,1983,1985,2019,2041,2105,2199,2257,2271,2285,2509,2631,2701,2705,2991",
+    "name": "Semiprimes p*q such that p+1 and q+1 are semiprimes.",
+    "comment": [
+        "Numbers of the form A005383(i)*A005383(j) for i,j >= 1. - _Altug Alkan_, Mar 22 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A193227/b193227.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "1371 is in the sequence because 1371 = 3 * 457, and 3 + 1 = 4 and 457 + 1 = 2 * 229 are semiprimes."
+    ],
+    "maple": [
+        "with(numtheory):for n from 2 to 3000 do: x:=factorset(n):y:=bigomega(n):z:=x[1]:zz:=n/z:if y=2 and type(z,prime)=true and type(zz,prime) = true and bigomega(z+1)=2 and bigomega(zz+1)=2 then printf(`%d, `, n): else fi:od:",
+        "# Alternate:",
+        "N:= 10000: # to get all terms <= N",
+        "P:= select(p -> isprime(p) and numtheory:-bigomega(p+1)=2, [$1..N/3]):",
+        "nP:= nops(P):",
+        "sort(select(`<=`, [seq(seq(P[i]*P[j],i=1..j),j=1..nP)],N)); # _Robert Israel_, Mar 22 2018"
+    ],
+    "mathematica": [
+        "Take[Sort[Times@@@Select[Flatten[Table[{Prime[p], Prime[q]}, {p, 2, 200}, {q, p}], 1], PrimeOmega[#[[1]] + 1] == 2 && PrimeOmega[#[[2]] + 1] == 2 &]], 45] (* _Alonso del Arte_, Jul 18 2011 *)",
+        "cQ[n_]:=Module[{fi=FactorInteger[n]},Which[PrimeOmega[n]==2&&IntegerQ[Sqrt[ n]],PrimeOmega[ Sqrt[n]+1]==2,PrimeOmega[n] == 2,PrimeOmega[ 1+ fi[[All,1]]] =={2,2},True,False]]; Select[Range[3000],cQ]"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List(),u=List(),t);forprime(p=3,lim\\3,if(isprime((p+1)/2),listput(v,p)));for(i=1,#v,for(j=i,#v,t=v[i]*v[j];if(t>lim,break);listput(u,t)));vecsort(Vec(u)) \\\\ _Charles R Greathouse IV_, Jul 18 2011"
+    ],
+    "xref": [
+        "Subsequence of A001358.",
+        "Cf. A005383, A193165."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Jul 18 2011",
+    "references": 2,
+    "revision": 22,
+    "time": "2019-11-29T19:15:35-05:00",
+    "created": "2011-07-18T17:25:09-04:00"
+}

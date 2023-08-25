@@ -1,0 +1,41 @@
+{
+    "number": 303112,
+    "data": "2,5,7,11,13,17,37,41,67,89,97,101,103,107,191,193,223,227,277,307,311,347,389,397,449,457,461,479,487,491,503,613,641,739,757,761,821,823,853,857,877,881,907,929,991,1087,1091,1231,1277,1297,1301,1423,1427,1439,1447,1453",
+    "name": "Primes p such that (r-q)/(q-p) = 2 or 1/2, and p < q < r are three consecutive primes.",
+    "comment": [
+        "Conjecture: The two most frequent ratios between consecutive prime gaps are 2 and 1/2, and both ratios occur with about the same frequency."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A303112/b303112.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "Conjecture: lim_{n->inf} n/primepi(a(n)) > k > 0 for some k."
+    ],
+    "example": [
+        "The first three consecutive primes are 2, 3 and 5, and (5-3)/(3-2)=2, so the first term is a(1)=2, that is, the first prime of (2,3,5).",
+        "The next three consecutive primes are 3, 5 and 7, and (7-5)/(5-3)=1, so the first prime of (3,5,7) is not in the list.",
+        "The next three consecutive primes are 5, 7 and 11, and (11-7)/(7-5)=2, so the second term is a(2)=5, that is, the first prime of (5,7,11).",
+        "The prime 13 is also in the list because (19-17)/(17-13)=1/2."
+    ],
+    "mathematica": [
+        "b={};",
+        "Do[If[Abs[Log[2,(Prime[j+2]-Prime[j+1])/(Prime[j+1]-Prime[j])]]==1,AppendTo[b,Prime[j]]],{j,1,200}];",
+        "Print@b",
+        "Select[Partition[Prime[Range[250]],3,1],(#[[3]]-#[[2]])/(#[[2]]-#[[1]]) == 2||(#[[3]]-#[[2]])/(#[[2]]-#[[1]])==1/2&][[All,1]] (* _Harvey P. Dale_, Mar 14 2022 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = my(q = nextprime(p+1), r = nextprime(q+1), f = (r-q)/(q-p)); (f == 2) || (f == 1/2);",
+        "forprime(p=2, 1000, if (isok(p), print1(p, \", \"))); \\\\ _Michel Marcus_, Apr 23 2018"
+    ],
+    "xref": [
+        "Cf. A001223, A274263, A276309, A022885.",
+        "Cf. A257762 (indices of primes with above ratio = 2)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Andres Cicuttin_, Apr 18 2018",
+    "references": 1,
+    "revision": 31,
+    "time": "2022-03-14T19:31:19-04:00",
+    "created": "2018-06-10T12:52:31-04:00"
+}

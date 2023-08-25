@@ -1,0 +1,45 @@
+{
+    "number": 354430,
+    "data": "1,7,22,58,142,334,766,1726,3837,8435,18364,39646,84986,181117,384160,811676,1709425,3590213,7522354,15728427,32827027,68405533,142344708,295824870,614046159,1273068141,2636250146,5452584131,11264148401,23242423457,47903544728",
+    "name": "First diagonal of an array, generated from the sequence of the nonprimes.",
+    "comment": [
+        "Mirroring the idea in A048457, here with nonprimes, and including 1 of the first generation.",
+        "We write down the sequence of the nonprimes 1, 4, 6, ... in the first row of the array. Nonprime(k) + nonprime(k+2) will generate the second row. Thereafter we generate the further rows in a similar manner. The leftmost diagonal gives the sequence."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A354430/b354430.txt\">Table of n, a(n) for n = 1..3311</a>"
+    ],
+    "example": [
+        "1    4    6    8    9   10   12   14   15   16   18   20   21 ...",
+        "     7   12   15   18   21   24   27   30   33   36   39 ...",
+        "         22   30   36   42   48   54   60   66   72 ...",
+        "              58   72   84   96  108  120  132 ...",
+        "                  142  168  192  216  240 ...",
+        "                       334  384  432 ...",
+        "                            766 ..."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import composite",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def T(r, k):",
+        "    if r == 1: return 1 if k == 1 else composite(k-1)",
+        "    return T(r-1, k) + T(r-1, k+2)",
+        "def a(n): return T(n, 1)",
+        "print([a(n) for n in range(1, 30)]) # _Michael S. Branicky_, May 28 2022"
+    ],
+    "xref": [
+        "Cf. A001787, A018252, A048457, A048448, A099862."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Tamas Sandor Nagy_, May 27 2022",
+    "ext": [
+        "a(8) and beyond from _Michael S. Branicky_, May 28 2022"
+    ],
+    "references": 1,
+    "revision": 27,
+    "time": "2022-07-23T19:23:50-04:00",
+    "created": "2022-07-19T05:49:01-04:00"
+}

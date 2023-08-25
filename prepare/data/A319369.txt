@@ -1,0 +1,44 @@
+{
+    "number": 319369,
+    "data": "1,3,28,430,9376,269675,9632960,411395268,20445999734,1159248404721,73846864163348,5221802726902476,405858598184643930,34392275731729465799,3155760058245300968416,311720334688779807141832,32980137195294216968253900,3720954854814866649904474180",
+    "name": "Number of series-reduced rooted trees with n leaves of n colors.",
+    "comment": [
+        "Not all of the n colors need to be used."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A319369/b319369.txt\">Table of n, a(n) for n = 1..340</a>",
+        "V. P. Johnson, <a href=\"http://people.math.sc.edu/czabarka/Theses/JohnsonThesis.pdf\">Enumeration Results on Leaf Labeled Trees</a>, Ph. D. Dissertation, Univ. Southern Calif., 2012."
+    ],
+    "formula": [
+        "a(n) ~ c * d^n * n^(n - 3/2), where d = 2.588699449562089830805384431942090... and c = 0.2580000331300831455241033648... - _Vaclav Kotesovec_, Sep 18 2019"
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(binomial(A(i, k)+j-1, j)*b(n-i*j, i-1, k), j=0..n/i)))",
+        "    end:",
+        "A:= (n, k)-> `if`(n<2, n*k, b(n, n-1, k)):",
+        "a:= n-> A(n$2):",
+        "seq(a(n), n=1..20);  # _Alois P. Heinz_, Sep 18 2018"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0, 1, If[i < 1, 0, Sum[Binomial[A[i, k] + j - 1, j]*b[n - i*j, i - 1, k], {j, 0, n/i}]]];",
+        "A[n_, k_] := If[n < 2, n*k, b[n, n - 1, k]];",
+        "a[n_] := A[n, n];",
+        "a /@ Range[1, 20] (* _Jean-Fran\u00e7ois Alcover_, Sep 24 2019, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v, vector(#v, n, 1/n))))-1, -#v)}",
+        "a(n)={my(v=[n]); for(n=2, n, v=concat(v, EulerT(concat(v, [0]))[n])); v[n]}"
+    ],
+    "xref": [
+        "Main diagonal of A319254.",
+        "Cf. A000311 (1 leaf of each color), A316651."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Andrew Howroyd_, Sep 17 2018",
+    "references": 4,
+    "revision": 17,
+    "time": "2019-09-24T06:43:51-04:00",
+    "created": "2018-09-17T20:09:12-04:00"
+}

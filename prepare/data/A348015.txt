@@ -1,0 +1,49 @@
+{
+    "number": 348015,
+    "data": "1,2,13,365,43801,21725297,43798198753,355991759464385,11619571028917526401,1520025803718875133673217,796153035368657542014822907393,1668838669721233396228446711227874305,13995815633937307151473642050515241531340801",
+    "name": "Number of periodic n X n matrices over GF(2).",
+    "comment": [
+        "Here, T is a periodic matrix if T = T^k for some k > 1.  T is periodic iff image(T) = image(T^2) iff x^2 does not divide the minimal polynomial of T."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A348015/b348015.txt\">Table of n, a(n) for n = 0..57</a>",
+        "Geoffrey Critzer, <a href=\"/A348015/a348015_1.pdf\">Enumeration of matrices over finite fields</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/PeriodicMatrix.html\">Periodic Matrix</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{d=0...n} A002884(n)/A002884(n-d). - _Geoffrey Critzer_, Oct 30 2021",
+        "Sum_{n>=0} a(n)u^n/A002884(n) = E(u)/(1-u) where E(u) = Sum_{n>=0} u^n/A002884(n). - _Geoffrey Critzer_, Oct 30 2021",
+        "Limit_{n->infinity} a(n)/2^(n^2) = (Product_{r>=1} (1-1/2^r)) * Sum_{n>=0} 1/A002884(n) = 0.62744086981206237307... . - _Geoffrey Critzer_, Oct 30 2021"
+    ],
+    "example": [
+        "a(2) = 13 because there are 16 2 X 2 matrices over GF(2) and all are recurrent except for {{0,0},{1,0}}, {{0,1},{0,0}}, and {{1,1},{1,1}}.  16-3 = 13."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; mul(2^n-2^i, i=0..n-1) end:",
+        "a:= n-> add(b(n)/b(n-k), k=0..n):",
+        "seq(a(n), n=0..14);  # _Alois P. Heinz_, Oct 30 2021"
+    ],
+    "mathematica": [
+        "nn=12; q = 2; b[p_, i_] := Count[p, i];",
+        "s[p_, i_] := Sum[j b[p, j], {j, 1, i}] + i Sum[b[p, j], {j, i + 1, Total[p]}];",
+        "aut[deg_, p_] := Product[Product[q^(s[p, i] deg) - q^((s[p, i] - k) deg), {k, 1, b[p, i]}], {i, 1,Total[p]}]; \\[Nu] =Table[1/n Sum[MoebiusMu[n/m] q^m, {m, Divisors[n]}], {n, 1,nn}];l[greatestpart_] := Level[Table[IntegerPartitions[n, {0, n}, Range[greatestpart]], {n, 0, nn}], {2}];",
+        "g1[u_, v_, deg_] :=Total[Map[v u^(deg Total[#])/aut[deg, #] &, l[1]]];",
+        "g2[u_, v_, deg_] :=Total[Map[v u^(deg Total[#])/aut[deg, #] &, l[nn]]];",
+        "Table[Product[q^n - q^i, {i, 0, n - 1}], {n, 0, nn}] CoefficientList[",
+        "  Series[g1[u, 1, 1] g2[u, 1, 1] Product[g2[u, 1, d]^\\[Nu][[d]], {d, 2, nn}] , {u, 0, nn}], u]"
+    ],
+    "xref": [
+        "Cf. A002884, A348622."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Geoffrey Critzer_, Sep 24 2021",
+    "ext": [
+        "Data terms for n >= 3 corrected by _Geoffrey Critzer_, Oct 30 2021",
+        "Title improved by _Geoffrey Critzer_, Sep 16 2022"
+    ],
+    "references": 3,
+    "revision": 42,
+    "time": "2022-09-17T13:15:21-04:00",
+    "created": "2021-09-27T18:29:38-04:00"
+}

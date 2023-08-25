@@ -1,0 +1,38 @@
+{
+    "number": 303477,
+    "data": "1,1,2,5,16,51,186,675,2619,10222,41278,168322,699654,2936170,12472461,53415773,230718087,1003219186,4390238536,19317023478,85423978859,379448391283,1692394492863,7576241773049,34031365237595,153338751409238,692894165597139",
+    "name": "Number of self-avoiding planar walks starting at (0,0), ending at (n,0), remaining in the first quadrant and using steps (0,1), (1,0), (1,1), (-1,1), and (1,-1) with the restrictions that (0,1) and (1,-1) are never used above the diagonal and (1,0) and (-1,1) are never used below the diagonal and (1,1) can only be used below the diagonal.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A303477/b303477.txt\">Table of n, a(n) for n = 0..1470</a>",
+        "Alois P. Heinz, <a href=\"/A303477/a303477.gif\">Animation of a(6)=186 walks</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path\">Lattice path</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Self-avoiding_walk\">Self-avoiding walk</a>"
+    ],
+    "maple": [
+        "b:= proc(x, y) option remember; `if`(x<0 or y<0, 0,",
+        "     `if`(x=0 and y=0, 1, `if`(x>y-2, b(x, y-1), 0)+",
+        "     `if`(x<y+2, b(x-1, y), 0)+`if`(x>y, b(x-1, y-1), 0)+",
+        "     `if`(x<y-1, b(x+1, y-1), 0)+`if`(x>y+1, b(x-1, y+1), 0)))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "b[x_, y_] := b[x, y] = If[x < 0 || y < 0, 0,",
+        "  If[x == 0 && y == 0, 1, If[x > y - 2, b[x, y - 1], 0] +",
+        "  If[x < y + 2, b[x - 1, y], 0] + If[x > y, b[x - 1, y - 1], 0] +",
+        "  If[x < y - 1, b[x + 1, y - 1], 0] + If[x > y + 1, b[x - 1, y + 1], 0]]];",
+        "a[n_] := b[n, 0];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Jun 02 2018, from Maple *)"
+    ],
+    "xref": [
+        "Cf. A303478."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Apr 24 2018",
+    "references": 2,
+    "revision": 18,
+    "time": "2019-10-09T13:35:30-04:00",
+    "created": "2018-04-27T18:01:50-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 361181,
+    "data": "2,3,4,5,6,7,8,9,11,12,16,18,24,25,27,32,36,48,49,54,64,72,81,96,101,108,121,125,128,131,144,151,162,181,191,192,216,243,256,288,313,324,343,353,373,383,384,432,486,512,576,625,648,717,727,729,757,768,787,797,864,919,929,972,989",
+    "name": "Numbers such that both sum and product of the prime factors (without multiplicity) are palindromic.",
+    "comment": [
+        "A002385 (Palindromic primes) is a subsequence of this sequence."
+    ],
+    "example": [
+        "2151 is a term because 2151=3^2*239; 3+239=242; 3*239=717."
+    ],
+    "mathematica": [
+        "Select[Range[2, 1000], And @@ PalindromeQ /@ {Plus @@ (p = FactorInteger[#][[;; , 1]]), Times @@ p} &] (* _Amiram Eldar_, Mar 06 2023 *)"
+    ],
+    "program": [
+        "(PARI) ispal(n) = my(d=digits(n)); d == Vecrev(d) \\\\ A002113",
+        "for(n=2,1e5; f=factor(n); sf=0; mf=1;for(j=1,#f~, sf+=f[j,1]; mf*=f[j,1]); if(ispal(sf) && ispal(mf),print1(n,\", \")))",
+        "(Python)",
+        "from math import prod",
+        "from sympy import factorint",
+        "def ispal(n): return (s:=str(n)) == s[::-1]",
+        "def ok(n): return ispal(sum(f:=factorint(n))) and ispal(prod(f))",
+        "print([k for k in range(2, 999) if ok(k)]) # _Michael S. Branicky_, Mar 06 2023"
+    ],
+    "xref": [
+        "Cf. A002113 (palindromes), A008472, A007947."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alexandru Petrescu_, Mar 06 2023",
+    "references": 0,
+    "revision": 40,
+    "time": "2023-03-06T10:19:16-05:00",
+    "created": "2023-03-06T10:19:16-05:00"
+}

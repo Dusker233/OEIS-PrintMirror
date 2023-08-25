@@ -1,0 +1,56 @@
+{
+    "number": 309594,
+    "data": "13,37,277,613,12157,14557,23053,55213,81013,203317,331333,393853,824773,867253,1008037,2038573,3026053,3322213,5198197,5497237,5793517,5984053,9107173,17246413,20850757,20871853,21327997,25363573,25678573,27258613,29134597,30153037,33313333",
+    "name": "Smallest members of prime triples, the sum of which results in a perfect square.",
+    "comment": [
+        "A prime triple is a set of three prime numbers of the form (p, p+2, p+6) or (p, p+4, p+6).",
+        "The smallest prime of the first form of these triples is not part of this sequence because p + (p+2) + (p+6) = 3p +8 and a number of this form is never a square.",
+        "PROOF:",
+        "From _Bernard Schott_, Aug 09 2019: (Start)",
+        "If a == 0 (mod 3) ==> a^2 == 0 (mod 3),",
+        "If a == 1 (mod 3) ==> a^2 == 1 (mod 3),",
+        "If a == 2 (mod 3) ==> a^2 == 4 == 1 (mod 3).",
+        "Hence, a square is always == 0 or == 1 (mod 3)",
+        "As p + (p+2) + (p+6) = 3*p+8, and 3*p+8 == 2 (mod 3), there is no prime triple of the form (p, p+2, p+6) whose sum 3*p + 8 can be a square. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A309594/b309594.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Let p = 277 (prime), q = p+4 = 281 (prime), r = p+6 = 283 (prime). We now have a prime triple. p+q+r = 841 = 29^2, a perfect square."
+    ],
+    "maple": [
+        "Res:= NULL: count:= 0:",
+        "for k from 0 while count < 100 do",
+        "  for x in [6*k+1,6*k+5] do",
+        "    p:= (x^2-10)/3;",
+        "    if isprime(p) and isprime(p+4) and isprime(p+6) then",
+        "      count:= count+1;",
+        "      Res:= Res, p",
+        "    fi",
+        "od od:",
+        "Res; # _Robert Israel_, Aug 13 2019"
+    ],
+    "mathematica": [
+        "ok[p_] := If[AllTrue[{p, p+4, p+6}, PrimeQ], Sow@p]; Reap[Do[ok[3 y^2 + 2 y - 3]; ok[3 y^2 + 4 y - 2], {y, 4000}]][[2, 1]] (* _Giovanni Resta_, Aug 09 2019 *)"
+    ],
+    "program": [
+        "(PARI) issq(p) = issquare(3*p+10);",
+        "istriple(p) = isprime(p+4) && isprime(p+6);",
+        "isok(p) = isprime(p) && istriple(p) && issq(p); \\\\ _Michel Marcus_, Aug 10 2019"
+    ],
+    "xref": [
+        "Cf. A130621.",
+        "Intersection of A022005 and A206279."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Philip Mizzi_, Aug 09 2019",
+    "ext": [
+        "More terms from _Michel Marcus_, Aug 09 2019"
+    ],
+    "references": 1,
+    "revision": 45,
+    "time": "2019-08-13T13:17:27-04:00",
+    "created": "2019-08-12T15:37:22-04:00"
+}

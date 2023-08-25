@@ -1,0 +1,43 @@
+{
+    "number": 361388,
+    "data": "1,2,8,96,5376,1981440,5722536960,138430238607360",
+    "name": "Number of orders of distances to vertices of n-dimensional cube.",
+    "comment": [
+        "Let C be an n-dimensional cube and p be a point in R^n such that the distances from p to the 2^n vertices of C are all different. List the vertices in order of their distance from p. The number of different orders of vertices is given by a(n).",
+        "Equality of any two distances defines a hyperplane in R^n, although different pairs of distances may define the same hyperplane. All these hyperplanes partition the space into cells, and the interior of each (n-dimensional) cell corresponds to a particular strong order of the differences. Hence, a(n) equals the number of cells in the partition of R^n by the hyperplanes. The given SageMath code implements this approach. - _Max Alekseyev_, Mar 10 2023",
+        "Computing the sequence is slow. The Sage program took 20 minutes to compute a(5) on Lucas Brown's box; the C++ program took 3.5 seconds to compute a(5) on Pierre Abbat's box, a 12-thread Ryzen. The C++ program took 6 hours to compute a(6). Neither of us has computed a(7) with the program; that's from A009997.",
+        "For n >= 4 the frequencies of the orders appear to vary widely."
+    ],
+    "link": [
+        "Pierre Abbat, <a href=\"https://github.com/phma/cubeorders\">Cubeorders</a>"
+    ],
+    "formula": [
+        "a(n) = 2^n*n!*A009997(n)."
+    ],
+    "example": [
+        "For n=3, a 3-dimensional cube has 8 corners, numbered 0 to 7. A point can be closest to any of the 8 corners. A point closest to 0 can have distances to corners 1, 2, and 4 in any of 6 orders. A point whose distances to corners 0, 1, 2, and 4 are in increasing order can be closer to 3 than to 4, or closer to 4 than to 3. So the total number of orders is 8*6*2=96."
+    ],
+    "program": [
+        "(Sage)",
+        "def a(n):",
+        "    x = polygens(QQ,n,'x')",
+        "    dist2 = [sum((xi - ti)^2 for xi,ti in zip(x,t)) for t in Tuples(range(2),n)]    # squared distances",
+        "    diffs = {p[0]-p[1] for p in Combinations(dist2,2)}     # set of pairwise differences of squared distances",
+        "    H = HyperplaneArrangements(QQ, tuple(map(str,x)))",
+        "    A = H([[[d.coefficient({xi:1}) for xi in x], d.constant_coefficient()] for d in diffs])",
+        "    return A.n_regions()",
+        "print( [a(n) for n in (1..4)] ) # _Max Alekseyev_, Mar 10 2023",
+        "(C++) // See Cubeorders link.",
+        "(PARI) A361388(n) = A009997(n)*n!<<n \\\\ _M. F. Hasler_, Mar 10 2023"
+    ],
+    "xref": [
+        "Cf. A009997."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "0,2",
+    "author": "_Pierre Abbat_, Mar 10 2023",
+    "references": 2,
+    "revision": 19,
+    "time": "2023-03-27T07:53:00-04:00",
+    "created": "2023-03-10T07:29:01-05:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 308448,
+    "data": "1,1,3,6,14,28,64,135,300,653,1458,3223,7240,16228,36678,83025,188910,430730,985752,2260866,5199612,11982591,27673826,64027215,148399514,344490100,800886300,1864461210,4346031950,10142519585,23696421808,55420499295,129742683174,304014091125",
+    "name": "Expansion of Sum_{k>=1} mu(k)*log(1 + x^k/(1 - 2*x^k - x^(2*k)))/k.",
+    "comment": [
+        "Inverse Euler transform of A000129."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A308448/b308448.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "-1 + Product_{n>=1} 1/(1 - x^n)^a(n) = g.f. of A000129.",
+        "a(n) ~ (1 + sqrt(2))^n/n. - _Vaclav Kotesovec_, May 28 2019",
+        "\"CHK\" (necklace, identity, unlabeled) transform of A000045. - _Alois P. Heinz_, May 19 2022"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(binomial(j-1-a(i), j)*b(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "a:= n-> combinat[fibonacci](n)+b(n, n-1):",
+        "seq(a(n), n=1..34);  # _Alois P. Heinz_, May 19 2022"
+    ],
+    "mathematica": [
+        "nmax = 34; CoefficientList[Series[Sum[MoebiusMu[k] Log[1 + x^k/(1 - 2 x^k - x^(2 k))]/k, {k, 1, nmax}], {x, 0, nmax}], x] // Rest",
+        "nmax = 40; s = ConstantArray[0, nmax]; Do[s[[j]] = j*Fibonacci[j, 2] - Sum[s[[d]]*Fibonacci[j - d, 2], {d, 1, j - 1}], {j, 1, nmax}]; Table[Sum[MoebiusMu[k/d]*s[[d]], {d, Divisors[k]}]/k, {k, 1, nmax}] (* _Vaclav Kotesovec_, Aug 10 2019 *)"
+    ],
+    "xref": [
+        "Cf. A000045, A000129, A006206, A008683, A060280, A261329."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Ilya Gutkovskiy_, May 27 2019",
+    "references": 1,
+    "revision": 13,
+    "time": "2022-05-20T04:56:48-04:00",
+    "created": "2019-05-28T17:26:47-04:00"
+}

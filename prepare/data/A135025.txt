@@ -1,0 +1,39 @@
+{
+    "number": 135025,
+    "data": "4,9,22,57,146,367,946,2507,6634,17777,48522,133107,369020,1028405,2880288,8100949,22877146,64823569,184274932,525282741,1501215194,4299836187,12340952050,35486796313,102220582466,294917666855,852123981582,2465458792769",
+    "name": "Let b(1) = 2; and for n>= 2, if b(n-1) < prime(n) then b(n) = b(n-1) + prime(n) otherwise b(n) = b(n-1) - prime(n). The sequence gives the indices n where b(n-1) < b(n) < b(n+1).",
+    "comment": [
+        "The b sequence, prefixed by 0, is A008348. The low points in b are 1 less than the terms of the present sequence, and are given in A309226. - _N. J. A. Sloane_, Aug 31 2019"
+    ],
+    "example": [
+        "b(1) = 2",
+        "b(2) = 5",
+        "b(3) = 0",
+        "b(4) = 7",
+        "b(5) = 18",
+        "b(3) < b(4) < b(5), so 4 is the first term of the sequence."
+    ],
+    "maple": [
+        "B := proc(n) option remember ; if n = 1 then 2; else if procname(n-1)-ithprime(n) < 0 then procname(n-1)+ithprime(n) ; else procname(n-1)-ithprime(n) ; fi; fi; end: A135025 := proc(n) option remember ; if n = 1 then 4; else for a from procname(n-1)+1 do if B(a-1) < B(a) and B(a) < B(a+1) then RETURN(a) ; fi; od: fi; end: for n from 1 do printf(\"%d,\\n\",A135025(n)) ; od: # _R. J. Mathar_, Feb 06 2009"
+    ],
+    "mathematica": [
+        "B[n_] := B[n] = If[n == 1, 2, If[B[n-1] - Prime[n] < 0, B[n-1] + Prime[n], B[n-1] - Prime[n]]];",
+        "a[n_] := a[n] = If[n == 1, 4, For[k = a[n-1]+1, True, k++, If[B[k-1] < B[k] && B[k] < B[k+1], Return[k]]]];",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 1, 16}] (* _Jean-Fran\u00e7ois Alcover_, Aug 16 2022, after _R. J. Mathar_ *)"
+    ],
+    "xref": [
+        "Cf. A008348, A135026, A309226."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "Lior Deutsch (liorde(AT)gmail.com), Feb 10 2008",
+    "ext": [
+        "New term added by Lior Deutsch (liorde(AT)gmail.com), Oct 17 2008",
+        "Definition corrected and entry revised by _Robert Israel_, _Michel Marcus_, and _N. J. A. Sloane_, Sep 29 2014",
+        "a(17)-a(28) from _Giovanni Resta_, Oct 02 2019"
+    ],
+    "references": 5,
+    "revision": 29,
+    "time": "2022-08-16T07:39:47-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

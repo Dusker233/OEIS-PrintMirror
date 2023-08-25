@@ -1,0 +1,39 @@
+{
+    "number": 318929,
+    "data": "1,14,22,28,44,46,56,88,92,94,112,118,166,176,184,188,214,224,236,332,334,352,358,368,376,428,448,454,472,526,664,668,694,704,716,718,736,752,766,856,896,908,934,944,958,1006,1052,1126,1174,1328,1336,1388,1408,1432,1436,1438,1472",
+    "name": "Intersection of A300216 and A306146.",
+    "comment": [
+        "Except for a(1) every element is either twice a prime or twice a previous element.",
+        "Primes obtained when a term is divided by 2 are of the form 4k + 3, k > 0."
+    ],
+    "maple": [
+        "isA318929 := proc(n)",
+        "    simplify(isA300216(n) and isA306146(n)) # reuses code of the other seqs.",
+        "end proc:",
+        "for n from 1 to 1500 do",
+        "    if isA318929(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Feb 14 2019"
+    ],
+    "program": [
+        "(PARI)",
+        "is300216(k) = vecsort(factor(k)[, 2]) == vecsort(factor(eulerphi(k))[, 2]);",
+        "a023900(n) = sumdivmult(n, d, d*moebius(d));",
+        "is306146(n) = sdm = a023900(n); if(sdm < 0, return(0), sdmphi = a023900(eulerphi(n)); eulerphi(sdm) == sdmphi);",
+        "isok(n) = is300216(n) && is306146(n); \\\\ _Michel Marcus_, Sep 13 2018"
+    ],
+    "xref": [
+        "Cf. A300216, A306146."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Torlach Rush_, Sep 11 2018",
+    "ext": [
+        "More terms from _Michel Marcus_, Sep 15 2018"
+    ],
+    "references": 0,
+    "revision": 23,
+    "time": "2019-02-14T12:45:10-05:00",
+    "created": "2018-09-15T15:28:04-04:00"
+}

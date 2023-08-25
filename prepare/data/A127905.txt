@@ -1,0 +1,42 @@
+{
+    "number": 127905,
+    "data": "0,1,2,3,8,25,66,168,456,1269,3490,9581,26544,73944,206220,576045,1613264,4527661,12725946,35818135,100950440,284869263,804726934,2275500998,6440230392,18242735800,51714552656",
+    "name": "Construct triangle in which n-th row is obtained by expanding (1+x+x^3)^n and take the next-to-central column.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A127905/b127905.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = n*A071879(n-1).",
+        "a(n) = n*Sum_{k=0..floor((n-1)/3)} C(n-1,3*k)*C(3*k,k)/(2*k+1).",
+        "a(n) = Sum_{k=0..floor((n-1)/3)} (3*k+1)*C(n,3*k+1)*C(3*k,k)/(2k+1).",
+        "a(n) = Sum_{k=0..n-1} Sum_{j=0..floor(k/3)} C(k,3*j)*C(3*j+1,j).",
+        "Conjecture: 2*(2*n+1)*(n-1)^2*a(n) -2*n*(6*n^2-12*n+5)*a(n-1) +6*n*(n-1)*(2*n-3)*a(n-2) -31*n*(n-1)*(n-2)*a(n-3)=0. - _R. J. Mathar_, Feb 23 2015",
+        "a(n) ~ (1 + 3/2^(2/3))^(n + 1/2) / sqrt(12*Pi*n). - _Vaclav Kotesovec_, May 01 2018"
+    ],
+    "maple": [
+        "A127905 := proc(n)",
+        "    n*add(binomial(n-1,3*k)*binomial(3*k,k)/(2*k+1),k=0..floor((n-1)/3)) ;",
+        "end proc: # _R. J. Mathar_, Feb 23 2015"
+    ],
+    "mathematica": [
+        "Table[n*Sum[Binomial[n-1,3*k]*Binomial[3*k,k]/(2*k+1), {k, 0, Floor[(n -1)/3]}], {n, 0, 50}] (* _G. C. Greubel_, Apr 30 2018 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0, 0, polcoeff((1+x+x^3)^n, n-1));",
+        "(PARI) a(n)=if(n<0, 0, n++; n*polcoeff(serreverse(x/(1+x+x^3)+x*O(x^n)), n))",
+        "(Magma) [0] cat [n*(&+[Binomial(n-1,3*k)*Binomial(3*k,k)/(2*k+1): k in [0..Floor((n-1)/3)]]): n in [1..30]]; // _G. C. Greubel_, Apr 30 2018"
+    ],
+    "xref": [
+        "Cf. A005717."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Paul Barry_, Feb 05 2007",
+    "ext": [
+        "Edited by _Charles R Greathouse IV_, Oct 28 2009"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2022-09-08T08:45:29-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

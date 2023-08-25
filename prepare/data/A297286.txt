@@ -1,0 +1,34 @@
+{
+    "number": 297286,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,16,32,48,64,80,96,112,128,144,160,176,192,208,224,226,241,256,271,286,301,316,331,346,361,376,391,406,421,436,452,467,482,497,512,527,542,557,572,587,602,617,632,647",
+    "name": "Numbers whose base-15 digits have equal down-variation and up-variation; see Comments.",
+    "comment": [
+        "Suppose that n has base-b digits b(m), b(m-1), ..., b(0).  The base-b down-variation of n is the sum DV(n,b) of all d(i)-d(i-1) for which d(i) > d(i-1); the base-b up-variation of n is the sum UV(n,b) of all d(k-1)-d(k) for which d(k) < d(k-1).  The total base-b variation of n is the sum TV(n,b) = DV(n,b) + UV(n,b).  See the guide at A297330.",
+        "Differs from A029960 after the zero first for 3391 = 1011_15, which is not in A029960 but in this sequence. - _R. J. Mathar_, Jan 23 2018"
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A297286/b297286.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "647 in base-15:  2,13,2 having DV = 11, UV = 11, so that 647 is in the sequence."
+    ],
+    "mathematica": [
+        "g[n_, b_] := Map[Total, GatherBy[Differences[IntegerDigits[n, b]], Sign]];",
+        "x[n_, b_] := Select[g[n, b], # < 0 &]; y[n_, b_] := Select[g[n, b], # > 0 &];",
+        "b = 15; z = 2000; p = Table[x[n, b], {n, 1, z}]; q = Table[y[n, b], {n, 1, z}];",
+        "w = Sign[Flatten[p /. {} -> {0}] + Flatten[q /. {} -> {0}]];",
+        "Take[Flatten[Position[w, -1]], 120]   (* A297285 *)",
+        "Take[Flatten[Position[w, 0]], 120]    (* A297286 *)",
+        "Take[Flatten[Position[w, 1]], 120]    (* A297287 *)"
+    ],
+    "xref": [
+        "Cf. A297330, A297285, A297287."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Jan 17 2018",
+    "references": 4,
+    "revision": 8,
+    "time": "2018-01-23T20:32:25-05:00",
+    "created": "2018-01-17T14:24:16-05:00"
+}

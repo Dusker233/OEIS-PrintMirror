@@ -1,0 +1,28 @@
+{
+    "number": 343354,
+    "data": "1,1,10,91,865,8155,77251,730435,6905560,65233120,615847378,5810270782,54784324495,516250199827,4862041512625,45765734635702,430560567351208,4048630897384450,38051334554031551,357459295903931045,3356488167698692226,31503001136703776561",
+    "name": "Expansion of Product_{k>=1} 1 / (1 - x^k)^(9^(k-1)).",
+    "formula": [
+        "a(n) ~ exp(2*sqrt(n/9) - 1/18 + c/9) * 9^(n - 1/4) / (2*sqrt(Pi)*n^(3/4)), where c = Sum_{j>=2} 1/(j * (9^(j-1) - 1)). - _Vaclav Kotesovec_, Apr 12 2021"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(a(n-j)*add(",
+        "      d*9^(d-1), d=numtheory[divisors](j)), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..21);  # _Alois P. Heinz_, Apr 12 2021"
+    ],
+    "mathematica": [
+        "nmax = 21; CoefficientList[Series[Product[1/(1 - x^k)^(9^(k - 1)), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, (1/n) Sum[Sum[d 9^(d - 1), {d, Divisors[k]}] a[n - k], {k, 1, n}]]; Table[a[n], {n, 0, 21}]"
+    ],
+    "xref": [
+        "Cf. A034691, A104460, A144073, A343349, A343350, A343351, A343352, A343353, A343355."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 12 2021",
+    "references": 7,
+    "revision": 9,
+    "time": "2021-04-12T12:14:48-04:00",
+    "created": "2021-04-12T09:24:44-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 296227,
+    "data": "1,2,8,34,146,628,2703,11632,50057,215415,927016,3989317,17167612,73879038,317930779,1368182139,5887829959,25337665679,109038016813,469233798454,2019298993572,8689843823858,37395841786394,160929127296116,692541811472532",
+    "name": "Solution of the complementary equation a(n) = a(0)*b(n-1) + a(1)*b(n-2) + ... + a(n-1)*b(0) - n, where a(0) = 1, a(1) = 2, b(0) = 3, and (a(n)) and (b(n)) are increasing complementary sequences.",
+    "comment": [
+        "The increasing complementary sequences a() and b() are uniquely determined by the titular equation and initial values. See A295862 for a guide to related sequences."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL10/Kimberling/kimberling26.html\">Complementary equations</a>, J. Int. Seq. 19 (2007), 1-13."
+    ],
+    "example": [
+        "a(0) = 1, a(1) = 2, b(0) = 3, b(1) = 4",
+        "a(2) = a(0)*b(1) + a(1)*b(0) - 2 = 8",
+        "Complement: (b(n)) = (3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, ...)"
+    ],
+    "mathematica": [
+        "mex[list_] := NestWhile[# + 1 &, 1, MemberQ[list, #] &];",
+        "a[0] = 1; a[1] = 2; b[0] = 3;",
+        "a[n_] := a[n] = - n + Sum[a[k]*b[n - k - 1], {k, 0, n - 1}];",
+        "b[n_] := b[n] = mex[Flatten[Table[Join[{a[n]}, {a[i], b[i]}], {i, 0, n - 1}]]];",
+        "Table[a[n], {n, 0, 200}]  (* A296227 *)",
+        "Table[b[n], {n, 0, 20}]",
+        "N[Table[a[n]/a[n - 1], {n, 1, 200, 10}], 200];",
+        "RealDigits[Last[t], 10][[1]] (* A296228 *)"
+    ],
+    "xref": [
+        "Cf. A296000, A296228."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, Dec 10 2017",
+    "references": 2,
+    "revision": 5,
+    "time": "2017-12-11T14:31:00-05:00",
+    "created": "2017-12-11T14:31:00-05:00"
+}

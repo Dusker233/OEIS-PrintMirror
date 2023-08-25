@@ -1,0 +1,48 @@
+{
+    "number": 172055,
+    "data": "10,19,22,30,36,45,49,63,66,85,93,98,100,110,115,122,126,132,138,143,155,158,168,171,178,185,187,198,206,213,217,229,231,236,239,243,248,255,269,275,284,293,300,309,317,321,325,331,337,343,349,351,357,378",
+    "name": "n-th number k such that 6*k-1 is composite while 6*k+1 is prime plus n-th number m such that 6*m-1 is prime while 6*m+1 is composite.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A172055/b172055.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = A121765(n) + A121763(n)."
+    ],
+    "maple": [
+        "A121765:=select(k->not isprime(6*k-1) and isprime(6*k+1),[$1..350]):",
+        "A121763:=select(n->not isprime(6*n+1) and isprime(6*n-1),[$1..350]):",
+        "seq(A121765[m]+A121763[m],m=1..60); # _Muniru A Asiru_, Feb 21 2019"
+    ],
+    "mathematica": [
+        "A121765:= Select[Range[350], !PrimeQ[6#-1] && PrimeQ[6#+1] &];",
+        "A121763:= Select[Range[350], PrimeQ[6#-1] && !PrimeQ[6#+1] &];",
+        "Table[A121765[[n]] + A121763[[n]], {n, 1, 80}] (* _G. C. Greubel_, Feb 20 2019 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "A121765:=[n: n in [1..350] | not IsPrime(6*n-1) and  IsPrime(6*n+1)];",
+        "A121763:=[n: n in [1..350] | IsPrime(6*n-1) and not IsPrime(6*n+1)];",
+        "[A121765[n] + A121763[n]: n in [1..80]]; // _G. C. Greubel_, Feb 20 2019",
+        "(Sage)",
+        "A121765=[n for n in (1..350) if not is_prime(6*n-1) and is_prime(6*n+1)];",
+        "A121763=[n for n in (1..350) if is_prime(6*n-1) and not is_prime(6*n+1)];",
+        "[A121765[n] + A121763[n] for n in (0..80)] # _G. C. Greubel_, Feb 20 2019",
+        "(GAP)",
+        "A121765:=Filtered([1..350],k-> not IsPrime(6*k-1) and IsPrime(6*k+1));;",
+        "A121763:=Filtered([1..350],n-> not IsPrime(6*n+1) and IsPrime(6*n-1));;",
+        "Print(List([1..80],j->A121765[j]+A121763[j])); # _G. C. Greubel_, Feb 20 2019"
+    ],
+    "xref": [
+        "Cf. A121763, A171765, A172054."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Jan 24 2010",
+    "ext": [
+        "Entries checked by _R. J. Mathar_, May 22 2010"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2022-09-08T08:45:50-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

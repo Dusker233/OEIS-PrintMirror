@@ -1,0 +1,47 @@
+{
+    "number": 356475,
+    "data": "2,3,5,7,17,29,37,41,43,67,83,103,137,157,179,181,193,227,277,283,347,359,383,431,457,461,607,661,701,709,757,773,823,827,839,859,937,967,1013,1051,1061,1109,1129,1187,1201,1213,1249,1283,1307,1327,1373,1423,1439,1471,1481,1487,1543,1567",
+    "name": "First of three consecutive primes p,q,r such that p*q + q*r + r*p is prime.",
+    "link": [
+        "Robert Israel, <a href=\"/A356475/b356475.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(4) = 7 is a term because 7, 11, 13 are three consecutive primes with 7*11 + 11*13 + 13*7 = 311 which is prime."
+    ],
+    "maple": [
+        "R:= NULL: count:= 0:",
+        "P:= Vector(3,ithprime):",
+        "while count < 100 do",
+        "  x:= P[1]*P[2]+P[2]*P[3]+P[3]*P[1];",
+        "  if isprime(x) then R:= R, P[1]; count:= count+1 fi;",
+        "  P[1..2]:= P[2..3];",
+        "  P[3]:= nextprime(P[3]);",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Partition[Prime[Range[250]], 3, 1], PrimeQ[Total[# * RotateLeft[#]]] &][[;; , 1]] (* _Amiram Eldar_, Aug 08 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime",
+        "def agen():",
+        "    p, q, r = 2, 3, 5",
+        "    while True:",
+        "        if isprime(p*q + q*r + r*p): yield p",
+        "        p, q, r = q, r, nextprime(r)",
+        "print(list(islice(agen(), 58))) # _Michael S. Branicky_, Aug 08 2022",
+        "(PARI) list(lim)=my(v=List(),p=2,q=3); forprime(r=5,nextprime(nextprime(lim\\1+1)+1), if(isprime(p*q + q*r + r*p), listput(v,p)); p=q; q=r); Vec(v) \\\\ _Charles R Greathouse IV_, Sep 06 2022"
+    ],
+    "xref": [
+        "Cf. A189759, A356471, A356477."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Aug 08 2022",
+    "references": 4,
+    "revision": 17,
+    "time": "2022-09-06T10:54:16-04:00",
+    "created": "2022-08-17T23:08:35-04:00"
+}

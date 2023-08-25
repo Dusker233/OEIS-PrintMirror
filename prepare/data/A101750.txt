@@ -1,0 +1,38 @@
+{
+    "number": 101750,
+    "data": "2,29,293,2649,23760,215594,1983334,18451711,173211045,1637570777,15570353488",
+    "name": "Number of integers <= 10^n that are the sum of 2 distinct nonzero squares.",
+    "comment": [
+        "Integers of the form m^2 + n^2 with m > n > 0 are given by A004431."
+    ],
+    "example": [
+        "a(2) = 29 because there are 29 terms in A004431 which are less than or equal to 100: {5, 10, 13, 17, 20, 25, 26, 29, 34, 37, 40, 41, 45, 50, 52, 53, 58, 61, 65, 68, 73, 74, 80, 82, 85, 89, 90, 97, 100}"
+    ],
+    "mathematica": [
+        "hyp = Union[ Flatten[ Table[ m^2 + n^2, {n, 2, 100000}, {m, n - 1}]]]; Table[ Length[ Select[ hyp, #<=10^n &]], {n, 8}]"
+    ],
+    "program": [
+        "(Python)",
+        "from math import isqrt",
+        "from itertools import combinations",
+        "def a(n):",
+        "    ub = 10**n",
+        "    sqs = [i**2 for i in range(1, isqrt(ub)+1)]",
+        "    return len(set(sum(c) for c in combinations(sqs, 2) if sum(c) <= ub))",
+        "print([a(n) for n in range(1, 8)]) # _Michael S. Branicky_, Jun 19 2022"
+    ],
+    "xref": [
+        "Cf. A004431."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Nov 09 2004",
+    "ext": [
+        "Definition edited and a(7)-a(9) from _Andrew Howroyd_, Apr 14 2021",
+        "a(10)-a(11) from _Michael S. Branicky_, Jun 19 2022"
+    ],
+    "references": 0,
+    "revision": 14,
+    "time": "2022-06-20T04:41:40-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

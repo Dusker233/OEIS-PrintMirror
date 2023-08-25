@@ -1,0 +1,41 @@
+{
+    "number": 343726,
+    "data": "0,4,16,25,36,49,81,121,169,196,361,529,576,729,961,1156,1369,1521,1936,3136,3721,3969,5329,5776,5929,7396,7569,7921,15129,15376,17161,17956,19321,31329,35721,51529,53361,57121,59536,97969,111556,113569,119716,131769",
+    "name": "Squares with exactly one even digit.",
+    "comment": [
+        "The even digit is always one of the last two digits.",
+        "The only squares with no digits even are the one-digit odd squares 1 and 9."
+    ],
+    "link": [
+        "Jianing Song, <a href=\"/A343726/b343726.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "Intersection of A000290 and A118070."
+    ],
+    "maple": [
+        "q:= n-> (l-> is(add(i mod 2, i=l)=nops(l)-1))(convert(n, base, 10)):",
+        "select(q, [i^2$i=0..400])[];  # _Alois P. Heinz_, May 22 2021"
+    ],
+    "mathematica": [
+        "Select[Range[0, 400]^2, Count[IntegerDigits[#], _?EvenQ] == 1 &] (* _Amiram Eldar_, May 21 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def ok(sq): return sum(d in \"02468\" for d in str(sq)) == 1",
+        "def aupto(limit):",
+        "  sqs = (i*i for i in range(int(limit**.5)+2) if i*i <= limit)",
+        "  return list(filter(ok, sqs))",
+        "print(aupto(131769)) # _Michael S. Branicky_, May 20 2021",
+        "(PARI) isA343726(n) = if(issquare(n) && (n!=0), my(d=digits(n)); #d - vecsum(d%2) == 1, n==0) \\\\ _Jianing Song_, May 22 2021"
+    ],
+    "xref": [
+        "Cf. A000290, A030098, A118070, A343724, A343725."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Jon E. Schoenfield_, May 19 2021",
+    "references": 2,
+    "revision": 19,
+    "time": "2021-05-23T00:19:22-04:00",
+    "created": "2021-05-22T08:32:36-04:00"
+}

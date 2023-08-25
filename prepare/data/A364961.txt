@@ -1,0 +1,54 @@
+{
+    "number": 364961,
+    "data": "1,3,5,25,45,49,40131,50575,79625,1486485,1872507,3403125",
+    "name": "Odd numbers k such that A005940(k) is either k itself or its descendant in Doudna-tree, A005940.",
+    "comment": [
+        "Odd numbers k such that A252464(k) is equal to A364569(k).",
+        "Apparently, A364960 without the even terms of A029747.",
+        "Note that 1, 25, 45, 49 are so far only known such terms x for which A005940(x) = A003961(x)."
+    ],
+    "example": [
+        "Term (and its factorization)            A005940(term) (and its factorization)",
+        "      1                              -> 1",
+        "      3                              -> 3",
+        "      5                              -> 5",
+        "     25 = 5^2                        -> 49        = 7^2",
+        "     45 = 3^2 * 5                    -> 175       = 5^2 * 7",
+        "     49 = 7^2                        -> 121       = 11^2",
+        "  40131 = 3^2 * 7^3 * 13             -> 100847877 = 3 * 13^2 * 19^3 * 29",
+        "  50575 = 5^2 * 7 * 17^2             -> 22467159  = 3^3 * 11^2 * 13 * 23^2",
+        "  79625 = 5^3 * 7^2 * 13             -> 787365187 = 7 * 19^3 * 23^2 * 31",
+        "1486485 = 3^3 * 5 * 7 * 11^2 * 13    -> 25468143451205",
+        "                                        = 5 * 7 * 13 * 17^3 * 19 * 23 * 29^2 * 31",
+        "1872507 = 3 * 7 * 13 * 19^3          -> 240245795625",
+        "                                        = 3 * 5^4 * 11 * 17 * 23 * 31^3,",
+        "3403125 = 3^2 * 5^5 * 11^2           -> 2394659631669305",
+        "                                        = 5 * 7^3 * 11 * 13^2 * 17^5 * 23^2."
+    ],
+    "program": [
+        "(PARI)",
+        "Abincompreflen(n, m) = { my(x=binary(n), y=binary(m), u=min(#x, #y)); for(i=1, u, if(x[i]!=y[i], return(i-1))); (u); };",
+        "A156552(n) = {my(f = factor(n), p, p2 = 1, res = 0); for(i = 1, #f~, p = 1 << (primepi(f[i, 1]) - 1); res += (p * p2 * (2^(f[i, 2]) - 1)); p2 <<= f[i, 2]); res}; \\\\ From A156552",
+        "A364569(n) = Abincompreflen(A156552(n), (n-1));",
+        "A061395(n) = if(n>1, primepi(vecmax(factor(n)[, 1])), 0);",
+        "A252464(n) = if(1==n,0,(bigomega(n) + A061395(n) - 1));",
+        "isA364961(n) = ((n%2)&&(A252464(n)==A364569(n)));",
+        "(PARI)",
+        "A005940(n) = { my(p=2, t=1); n--; until(!n\\=2, if((n%2), (t*=p), p=nextprime(p+1))); (t); };",
+        "A064989(n) = {my(f); f = factor(n); if((n>1 && f[1,1]==2), f[1,2] = 0); for (i=1, #f~, f[i,1] = precprime(f[i,1]-1)); factorback(f)};",
+        "A252463(n) = if(!(n%2),n/2,A064989(n));",
+        "isA364961(n) = if(!(n%2),0,my(k=A005940(n)); while(k>n, k = A252463(k)); (k==n));"
+    ],
+    "xref": [
+        "Odd terms in A364960.",
+        "Cf. A003961, A005940, A029747, A156552, A252464, A364569, A364570.",
+        "Cf. also A364962."
+    ],
+    "keyword": "nonn,hard,more,new",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Aug 14 2023",
+    "references": 2,
+    "revision": 9,
+    "time": "2023-08-14T17:01:03-04:00",
+    "created": "2023-08-14T17:01:03-04:00"
+}

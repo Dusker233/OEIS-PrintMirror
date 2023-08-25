@@ -1,0 +1,31 @@
+{
+    "number": 321277,
+    "data": "0,1,2,12,61,367,2805,23372,213317,2189823,24882811,305633678,4037554628,57447084699,877263905683,14276260437624,246201450585329,4487236144246511,86286209907252739,1746559569805617910,37106502447954647906,825196425771658993531",
+    "name": "One half of the sum over all permutations of [n] of the absolute difference between the length of the longest increasing subsequence and the length of the longest decreasing subsequence.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A321277/b321277.txt\">Table of n, a(n) for n = 1..80</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Longest_increasing_subsequence\">Longest increasing subsequence</a>"
+    ],
+    "formula": [
+        "a(n) = (1/2) * Sum_{k=1-n..n-1} abs(k) * A321316(n,k)."
+    ],
+    "maple": [
+        "h:= l-> (n-> add(i, i=l)!/mul(mul(1+l[i]-j+add(`if`(j>",
+        "    l[k], 0, 1), k=i+1..n), j=1..l[i]), i=1..n))(nops(l)):",
+        "f:= l-> h(l)^2*abs(l[1]-nops(l))/2:",
+        "g:= (n, i, l)-> `if`(n=0 or i=1, f([l[], 1$n]),",
+        "     g(n, i-1, l) +g(n-i, min(i, n-i), [l[], i])):",
+        "a:= n-> g(n$2, []):",
+        "seq(a(n), n=1..23);"
+    ],
+    "xref": [
+        "Cf. A003316, A321273, A321274, A321275, A321276, A321278, A321316."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Alois P. Heinz_, Nov 01 2018",
+    "references": 7,
+    "revision": 16,
+    "time": "2019-04-01T15:26:52-04:00",
+    "created": "2018-11-03T18:58:57-04:00"
+}

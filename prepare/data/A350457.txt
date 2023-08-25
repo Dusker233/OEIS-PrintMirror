@@ -1,0 +1,37 @@
+{
+    "number": 350457,
+    "data": "1,1,1,2,2,2,4,4,7,10,16,27,45,79,139,249,439,784,1419,2574,4703,8682,16021,29720,55146,102170,190274,356804,671224,1269022,2404289,4521836,8535117,16134474,30635869,58062404,110496946,210500898,401422210,767158570,1467402238",
+    "name": "Maximal coefficient of (1 + x^2) * (1 + x^3) * (1 + x^5) * ... * (1 + x^prime(n)).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A350457/b350457.txt\">Table of n, a(n) for n = 0..700</a>"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1,",
+        "      expand((1+x^ithprime(n))*b(n-1)))",
+        "    end:",
+        "a:= n-> max(coeffs(b(n))):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jan 01 2022"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n == 0, 1, Expand[(1 + x^Prime[n])*b[n - 1]]];",
+        "a[n_] := Max[CoefficientList[b[n], x]];",
+        "Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Feb 26 2022, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) a(n) = vecmax(Vec(prod(k=1, n, 1 + x^prime(k)))); \\\\ _Michel Marcus_, Jan 01 2022",
+        "(Python)",
+        "from sympy.abc import x",
+        "from sympy import prime, prod",
+        "def A350457(n): return 1 if n == 0 else max(prod(1+x**prime(i) for i in range(1,n+1)).as_poly().coeffs()) # _Chai Wah Wu_, Jan 03 2022"
+    ],
+    "xref": [
+        "Cf. A000040, A000586, A007504, A025591, A160235."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Ilya Gutkovskiy_, Jan 01 2022",
+    "references": 4,
+    "revision": 22,
+    "time": "2022-02-26T04:56:56-05:00",
+    "created": "2022-01-02T19:17:30-05:00"
+}

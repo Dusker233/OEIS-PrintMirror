@@ -1,0 +1,44 @@
+{
+    "number": 168600,
+    "data": "1,1,9,265,19889,3506801,1417530745,1302573091513,2700478102745057,12518436654808255585,128568477648089286062441,2900655737241126221237790185,142677722979145454671155940121233,15200178301599487957128451391538504145",
+    "name": "E.g.f. satisfies: A(x) = exp( x*A(2x)^2 ).",
+    "link": [
+        "Robert Israel, <a href=\"/A168600/b168600.txt\">Table of n, a(n) for n = 0..76</a>"
+    ],
+    "example": [
+        "E.g.f: A(x) = 1 + x + 9*x^2/2! + 265*x^3/3! + 19889*x^4/4! +..."
+    ],
+    "maple": [
+        "F:= A -> A(x) - exp(x*A(2*x)^2):",
+        "Extend:= proc(ff)",
+        "  local f1x, m, f2, S, R, i;",
+        "  f1x:= ff(x); m:= degree(f1x,x);",
+        "  f2:= unapply(ff(x) + add(a[i]*x^i,i=m+1..2*m+1),x);",
+        "  S:= series(F(f2),x,2*m+2);",
+        "  R:= solve(identity(convert(S,polynom),x),{seq(a[i],i=m+1..2*m+1)});",
+        "  unapply(subs(R, f2(x)),x);",
+        "end proc:",
+        "g:= 1:",
+        "for iter from 1 to 5 do g:= Extend(g) od:",
+        "seq(coeff(g(x),x,j)*j!,j=0..31); # _Robert Israel_, Feb 22 2019"
+    ],
+    "mathematica": [
+        "nmax = 13; sol = {a[0] -> 1};",
+        "Do[A[x_] = Sum[a[k] x^k, {k, 0, n}] /. sol; eq = CoefficientList[A[x] - Exp[x A[2 x]^2] + O[x]^(n + 1), x] == 0 /. sol; sol = sol ~Join~ Solve[eq][[1]], {n, 1, nmax}];",
+        "sol /. HoldPattern[a[n_] -> k_] :> Set[a[n], k n!];",
+        "a /@ Range[0, nmax] (* _Jean-Fran\u00e7ois Alcover_, Nov 01 2019 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1+x+x*O(x^n)); for(i=0, n, A=exp(x*subst(A, x, 2*x)^2) ); n!*polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A096538, A168601."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 05 2009",
+    "references": 2,
+    "revision": 10,
+    "time": "2019-11-01T18:36:26-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

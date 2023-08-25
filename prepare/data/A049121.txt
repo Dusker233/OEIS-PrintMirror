@@ -1,0 +1,48 @@
+{
+    "number": 49121,
+    "data": "0,1,11,111,337,3371,33711,317661,3195573,33134361,313849599,3714945219,33412771691,1341179350213,7181173232711,28979247806109,3318731171903071,191053757165759337,3505114323880284323,131572281752894106563,1091640386973585393403",
+    "name": "If a(n) is prime, a(n+1) = a(n) followed by a 1; if a(n) is composite, a(n+1) = concatenation of prime factors of a(n) (with multiplicity).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A049121/b049121.txt\">Table of n, a(n) for n = 0..60</a>"
+    ],
+    "example": [
+        "a(3)=111=3*37, so a(4)=3_37=337. 337 is prime, so a(5)=337_1=3371."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 0, (t-> parse(cat(`if`(isprime(t) or",
+        "      t<2, [t, 1][], sort(map(i-> i[1]$i[2], ifactors(t)[2]))[]))))(a(n-1)))",
+        "    end:",
+        "seq(a(n), n=0..21);  # _Alois P. Heinz_, Apr 04 2022"
+    ],
+    "mathematica": [
+        "nxt[n_]:=If[n==0||n==1||PrimeQ[n],FromDigits[Join[IntegerDigits[n],{1}]],FromDigits[Flatten[IntegerDigits/@(Table[#[[1]],{#[[2]]}]&/@ FactorInteger[n])]]]; NestList[nxt,0,20] (* _Harvey P. Dale_, May 02 2012 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime, factorint",
+        "def agen():",
+        "    yield from [0, 1]",
+        "    an = 11",
+        "    for n in count(3):",
+        "        yield an",
+        "        if isprime(an):",
+        "            an = 10*an + 1",
+        "        else:",
+        "            an = int(\"\".join(str(p) for p in factorint(an, multiple=True)))",
+        "print(list(islice(agen(), 21))) # _Michael S. Branicky_, Apr 04 2022"
+    ],
+    "xref": [
+        "Cf. A049201, A037274, A055657."
+    ],
+    "keyword": "nonn,easy,base,nice",
+    "offset": "0,3",
+    "author": "Mark Alexiuk (alexiuk(AT)ee.umanitoba.ca)",
+    "ext": [
+        "More terms from _Michel ten Voorde_ Corrected by _Harvey P. Dale_, Jun 06 2000."
+    ],
+    "references": 3,
+    "revision": 16,
+    "time": "2022-04-04T11:40:04-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

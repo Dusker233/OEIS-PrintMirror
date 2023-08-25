@@ -1,0 +1,52 @@
+{
+    "number": 301506,
+    "data": "0,0,0,0,0,1,1,1,1,1,2,2,2,2,2,3,3,3,3,3,4,4,4,4,4,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,11,11,11,11,11",
+    "name": "Number of integers less than or equal to n whose largest prime factor is 5.",
+    "comment": [
+        "a(n) increases when n has the form 2^a*3^b*5^c, with a,b >= 0 and c > 0.",
+        "A distinct sequence can be generated for each prime number; this sequence is for the prime number 5. For an example using another prime number see A301461."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A301506/b301506.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "example": [
+        "a(15) = a(2^0 * 3^1 * 5^1); 5 is the largest prime factor, so a(15) exceeds the previous term by 1. For a(16) = a(2^4), there is no increase from the previous term."
+    ],
+    "maple": [
+        "N:= 100: # for a(0)..a(N)",
+        "L:= sort([seq(seq(seq(2^a*3^b*5^c, c=1..floor(log[5](N/(2^a*3^b)))),",
+        "  b = 0..floor(log[3](N/2^a))), a = 0 .. floor(log[2](N)))]):",
+        "V:= Array(0..N):",
+        "V[L]:= 1:",
+        "ListTools:-PartialSums(convert(V,list)); # _Robert Israel_, Sep 22 2020"
+    ],
+    "mathematica": [
+        "Accumulate@ Array[Boole[FactorInteger[#][[-1, 1]] == 5] &, 80, 0] (* _Michael De Vlieger_, Apr 21 2018 *)"
+    ],
+    "program": [
+        "(MATLAB)",
+        "clear;clc;",
+        "prime = 5;",
+        "limit = 10000;",
+        "largest_divisor = ones(1,limit+1);",
+        "for k = 0:limit",
+        "    f = factor(k);",
+        "    largest_divisor(k+1) = f(end);",
+        "end",
+        "for i = 1:limit+1",
+        "    FQN(i) = sum(largest_divisor(1:i)==prime);",
+        "end",
+        "output = [0:limit;FQN]'"
+    ],
+    "xref": [
+        "Cf. A080193.",
+        "Cf. A301461."
+    ],
+    "keyword": "nonn",
+    "offset": "0,11",
+    "author": "_Ralph-Joseph Tatt_, Mar 22 2018",
+    "references": 2,
+    "revision": 32,
+    "time": "2020-09-23T02:48:13-04:00",
+    "created": "2018-06-14T17:52:02-04:00"
+}

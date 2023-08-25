@@ -1,0 +1,71 @@
+{
+    "number": 65619,
+    "data": "1,2,3,8,25,96,427,2176,12465,79360,555731,4245504,35135945,313155584,2990414715,30460116992,329655706465,3777576173568,45692713833379,581777702256640,7777794952988025,108932957168730112,1595024111042171723,24370173276164456448",
+    "name": "Expansion of e.g.f. x * (tan(x) + sec(x)).",
+    "comment": [
+        "a(n) is the number of down-up permutations w on [n+1] such that w_2 = 1. For example, a(3)=3 counts 2143, 3142, 4132. - _David Callan_, Oct 25 2004",
+        "A signed variant of this sequence, prefaced with an 0, is column 1 of the inverse of triangle A178616. - _Gary W. Adamson_, May 30 2010",
+        "a(n) is the number of ranked unlabeled binary tree shapes compatible with the binary perfect phylogeny (n,2). - _Noah A Rosenberg_, Jun 03 2022"
+    ],
+    "link": [
+        "Bishal Deb and Alan D. Sokal, <a href=\"https://arxiv.org/abs/2212.07232\">Classical continued fractions for some multivariate polynomials generalizing the Genocchi and median Genocchi numbers</a>, arXiv:2212.07232 [math.CO], 2022. See p. 11.",
+        "S. Kitaev and T. Mansour, <a href=\"https://arxiv.org/abs/math/0205182\">Simultaneous avoidance of generalized patterns</a>, arXiv:math/0205182 [math.CO], 2002.",
+        "H. D. Nguyen and D. Taggart, <a href=\"http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.391.2522&amp;rep=rep1&amp;type=pdf\">Mining the OEIS: Ten Experimental Conjectures</a>, 2013. Mentions this sequence. - From _N. J. A. Sloane_, Mar 16 2014",
+        "J. A. Palacios, A. Bhaskar, F. Disanto and N. A. Rosenberg, <a href=\"https://doi.org/10.1007/s00285-022-01748-w\">Enumeration of binary trees compatible with a perfect phylogeny</a>, J. Math. Biol. 84 (2022), 54."
+    ],
+    "formula": [
+        "E.g.f.: x*(tan(x)+sec(x)).",
+        "a(n) = n*A000111(n-1). - _R. J. Mathar_, Nov 27 2006",
+        "a(n) = n*2^(n-1)*|E_{n-1}(1/2)+E_{n-1}(1)| for n > 1; E_{n}(x) Euler polynomial. - _Peter Luschny_, Nov 25 2010",
+        "E.g.f.: x*(tan(x)+sec(x))=x+x^2/U(0);U(k)=4k+1-x/(2-x/(4k+3+x/(2+x/U(k+1))));(continued fraction). - _Sergei N. Gladkovskii_, Nov 14 2011",
+        "E.g.f.: x*( tan(x) + sec(x) )= x + 2*x^2/(U(0)-x) where U(k)= 4*k+2 - x^2/U(k+1);(continued fraction, 1-step). - _Sergei N. Gladkovskii_, Nov 07 2012",
+        "a(n) = (n + 1)!*Re([x^n](1 + i^((n - 1)*n)*(2 - 2*i)/(exp(x) + i))), assuming offset = 0. - _Peter Luschny_, Aug 09 2021",
+        "a(n) = 2*n*i^n*PolyLog(1 - n, -i) for n >= 2. - _Peter Luschny_, Aug 17 2021"
+    ],
+    "maple": [
+        "A065619 := n -> `if`(n=1,1,2^(n-1)*abs(euler(n-1,1/2)+euler(n-1,1))*n): # _Peter Luschny_, Nov 25 2010",
+        "# Alternatively (after _Alois P. Heinz_):",
+        "b := proc(u, o) option remember;",
+        "`if`(u + o = 0, 1, add(b(o - 1 + j, u - j), j = 1..u)) end:",
+        "a := n -> n*b(n-1, 0): seq(a(n), n = 1..24); # _Peter Luschny_, Oct 27 2017"
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := 2^(n-1)*Abs[EulerE[n - 1, 1/2] + EulerE[n - 1, 1]]*n; Array[a, 24] (* _Jean-Fran\u00e7ois Alcover_, Nov 05 2017, after _Peter Luschny_ *)",
+        "Table[Re[2 n I^n PolyLog[1 - n, -I]], {n, 1, 19}] (* _Peter Luschny_, Aug 17 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if( n<0, 0 ,n! * polcoeff( x * (tan(x + x * O(x^n)) + 1 / cos(x + x * O(x^n))), n))}",
+        "(PARI)",
+        "x='x+O('x^66);",
+        "egf=x*(tan(x)+1/cos(x));",
+        "Vec(serlaplace(egf))",
+        "/* _Joerg Arndt_, May 28 2012 */",
+        "(Sage) # Algorithm of L. Seidel (1877)",
+        "def A065619_list(n) : # starts with a(0) = 0.",
+        "    R = []; A = {-1:1, 0:0}; k = 0; e = 1",
+        "    for i in (0..n) :",
+        "        Am = 0; A[k + e] = 0; e = -e",
+        "        for j in (0..i) : Am += A[k]; A[k] = Am; k += e",
+        "        R.append(A[-i//2] if i%2 == 0 else A[i//2])",
+        "    return R",
+        "A065619_list(22) # _Peter Luschny_, May 27 2012",
+        "(Python)",
+        "from itertools import accumulate",
+        "def A065619(n):",
+        "    if n <= 2: return n",
+        "    blist = (0,1)",
+        "    for _ in range(n-2):",
+        "        blist = tuple(accumulate(reversed(blist),initial=0))",
+        "    return blist[-1]*n # _Chai Wah Wu_, Apr 25 2023"
+    ],
+    "xref": [
+        "Cf. A000111, A099028, A178616."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michael Somos_, Dec 03 2001",
+    "references": 11,
+    "revision": 79,
+    "time": "2023-04-26T08:54:17-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

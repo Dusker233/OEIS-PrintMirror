@@ -1,0 +1,32 @@
+{
+    "number": 307225,
+    "data": "1,6,12,24,30,36,48,60,72,84,90,96,108,120,168,180,240,336,360,420,480,504,540,600,630,660,672,720,840,1008,1080,1260,1440,1680,2160,2520,3360,3780,3960,4200,4320,4620,4680,5040,6300,6720,7560,9240,10080,12600,13860,15120,18480",
+    "name": "Superpractical numbers: practical numbers m with a record total number of combinations for presenting the set of numbers 1 <= k <= sigma(m) as sums of distinct divisors of m.",
+    "comment": [
+        "Let c(m, k) be the number of ways to present k as the sum of distinct divisors of m, for k=1..sigma(m) (A307223).",
+        "Let C(m) = Product_{k=1..sigma(m)} c(m, k) (A307224).",
+        "This sequence list (practical) numbers m with a record value of C(m).",
+        "The corresponding values of C(m) are 1, 8, 1088391168, 103312130400000000000000000000000000, ..."
+    ],
+    "mathematica": [
+        "T[n_, k_] := Module[{d = Divisors[n]}, SeriesCoefficient[Series[Product[1 + x^d[[i]], {i, Length[d]}], {x, 0, k}], k]]; f[n_] := Times @@ (T[n, #] & /@ Range[DivisorSigma[1, n]]); s = {}; fmax = 0; Do[f1 = f[n]; If[f1 > fmax, fmax = f1; AppendTo[s, n]], {n, 1, 100}]; s"
+    ],
+    "program": [
+        "(PARI) upto(n) = {my(v = vector(n, i, print1(i\", \"); C(i)), r = -1, res = List());",
+        "for(i = 1, n, c = v[i]; if(c > r, listput(res, i); r = c)); res}",
+        "C(n) = {my(v = vector(sigma(n) + 1), t = 1, d = divisors(n)); v[1] = 1; for(i = 1, #d, for(j = 1, t, v[j + d[i]] += v[j] ); t+=d[i] ); vecprod(v) } \\\\ _David A. Corneth_, Mar 29 2019"
+    ],
+    "xref": [
+        "Cf. A005153, A307223, A307224."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Mar 29 2019",
+    "ext": [
+        "More terms from _David A. Corneth_, Mar 29 2019"
+    ],
+    "references": 0,
+    "revision": 16,
+    "time": "2020-06-04T04:39:33-04:00",
+    "created": "2019-04-29T21:02:33-04:00"
+}

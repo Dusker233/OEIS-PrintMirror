@@ -1,0 +1,72 @@
+{
+    "number": 348056,
+    "data": "0,1,10,12,21,100,103,120,123,132,210,213,301,321,1000,1004,1030,1034,1043,1200,1204,1230,1234,1243,1320,1324,1402,1432,2100,2104,2130,2134,2143,3010,3014,3210,3214,3412,4001,4031,4201,4231,4321,10000,10005,10040,10045,10054,10300,10305,10340,10345,10354,10430,10435,10503,10543",
+    "name": "Numbers k where the d(j)-th digit is j for d(j) and j > 0 and d(j) = 0 if and only if j is not a digit of k.",
+    "comment": [
+        "Sequence consists of the numbers in which, for each j in 1..N (where N is the number of digits), j is the j-th digit, or is the k-th digit where k is the j-th digit, or is 0.",
+        "Equivalently, numbers that can be obtained from the number 1234..N (where N is the number of digits) by swapping the positions of zero or more pairs of digits and replacing zero or more unswapped digits with 0's. (Leading zeros are not allowed, so the '1' cannot be replaced with a 0.)",
+        "The maximum number of digits N is 9.",
+        "The last term is 987654321.",
+        "From _Michael S. Branicky_, Sep 26 2021: (Start)",
+        "The sequence has 29186 terms with <= 9 digits.",
+        "If a(n) is a term, then so is 10*a(n), up to the digit limit.",
+        "Terms with a higher number of digits could satisfy the property if d(j) = 0 for j >= 10. (End)"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A348056/a348056.txt\">Python program for complete sequence</a>"
+    ],
+    "example": [
+        "103 is a term, 1 is the 1st digit, 3 is the 3rd digit, and there is no digit 2, so the 2nd digit is 0.",
+        "    1  2  3",
+        "    |  .  |",
+        "    |  .  |",
+        "    1  0  3",
+        "2143 is a term, 1 and 2 are the 2nd and 1st digits, respectively, and 3 and 4 are the 4th and 3rd digits, respectively.",
+        "    1   2   3   4",
+        "     \\ /     \\ /",
+        "      X       X",
+        "     / \\     / \\",
+        "    2   1   4   3",
+        "146203 is a term, 1 is the 1st digit, 2 and 4 are the 4th and 2nd digits, respectively, 3 and 6 are the 6th and 3rd digits, respectively, and there is no digit 5, so the 5th digit is a 0:",
+        "    1   2   3   4   5   6",
+        "    |    \\   \\ /    .  /",
+        "    |     \\   X__   __/",
+        "    |      \\ /   \\ /.",
+        "    |       X     X .",
+        "    |      / \\ __/ \\__",
+        "    |     /   X     . \\",
+        "    |    /   / \\    .  \\",
+        "    1   4   6   2   0   3",
+        ".",
+        "         1  2  3  4  5  6    digit positions",
+        "  term = 1  4  6  2  0  3",
+        "            ^-----^          2,4 swapped",
+        "               ^--------^    3,6 swapped"
+    ],
+    "mathematica": [
+        "q[n_] := Module[{d = IntegerDigits[n], nd}, nd = Length[d]; AllTrue[Range[nd], d[[#]] == 0 || (d[[#]] <= nd && d[[d[[#]]]] == # ) &]]; Select[Range[0, 13245], q] (* _Amiram Eldar_, Sep 26 2021 *)"
+    ],
+    "program": [
+        "(Python) # see links for faster version generating entire sequence",
+        "def ok(n):",
+        "    digs = str(n)",
+        "    if int(max(digs)) > len(digs): return False",
+        "    for j, dj in enumerate(digs, start=1):",
+        "        if dj != '0' and digs[int(dj)-1] != str(j): return False",
+        "    return True",
+        "print(list(filter(ok, range(100001)))) # _Michael S. Branicky_, Sep 26 2021"
+    ],
+    "xref": [
+        "Primes are in A346499."
+    ],
+    "keyword": "nonn,base,fini",
+    "offset": "1,3",
+    "author": "_Rodolfo Kurchan_, Sep 26 2021",
+    "ext": [
+        "More terms added by _Claudio Meller_, Sep 26 2021"
+    ],
+    "references": 3,
+    "revision": 32,
+    "time": "2021-10-21T01:38:36-04:00",
+    "created": "2021-10-21T01:38:36-04:00"
+}

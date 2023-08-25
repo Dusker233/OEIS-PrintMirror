@@ -1,0 +1,38 @@
+{
+    "number": 15469,
+    "data": "0,1,1,12,133,16105,1963358,2595689713,3480804151551,50586130104323474,746191869036731097905,119280194867984161366496439,19354414621214347335584253057344,34032051023004810891710239239325511573",
+    "name": "q-Fibonacci numbers for q=11.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A015469/b015469.txt\">Table of n, a(n) for n = 0..60</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1) + 11^(n-2)*a(n-2)."
+    ],
+    "maple": [
+        "q:=11; seq(add((product((1-q^(n-j-1-k))/(1-q^(k+1)), k=0..j-1))*q^(j^2), j = 0..floor((n-1)/2)), n = 0..20); # _G. C. Greubel_, Dec 17 2019"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[0]==0, a[1]==1, a[n]==a[n-1]+a[n-2]*11^(n-2)},  a, {n, 61}] (* _Vincenzo Librandi_, Nov 09 2012 *)",
+        "F[n_, q_]:= Sum[QBinomial[n-j-1, j, q]*q^(j^2), {j, 0, Floor[(n-1)/2]}];",
+        "Table[F[n, 11], {n, 0, 20}] (* _G. C. Greubel_, Dec 17 2019 *)"
+    ],
+    "program": [
+        "(Magma) [0] cat[n le 2 select 1 else Self(n-1) + Self(n-2)*(11^(n-2)): n in [1..15]]; // _Vincenzo Librandi_, Nov 09 2012",
+        "(PARI) q=11; m=20; v=concat([0,1], vector(m-2)); for(n=3, m, v[n]=v[n-1]+q^(n-3)*v[n-2]); v \\\\ _G. C. Greubel_, Dec 17 2019",
+        "(Sage)",
+        "def F(n,q): return sum( q_binomial(n-j-1, j, q)*q^(j^2) for j in (0..floor((n-1)/2)))",
+        "[F(n,11) for n in (0..20)] # _G. C. Greubel_, Dec 17 2019",
+        "(GAP) q:=11;; a:=[0,1];; for n in [3..20] do a[n]:=a[n-1]+q^(n-3)*a[n-2]; od; a; # _G. C. Greubel_, Dec 17 2019"
+    ],
+    "xref": [
+        "q-Fibonacci numbers: A000045 (q=1), A015459 (q=2), A015460 (q=3), A015461 (q=4),",
+        "A015462 (q=5), A015463 (q=6), A015464 (q=7), A015465 (q=8), A015467 (q=9), A015468 (q=10), this sequence (q=11), A015470 (q=12)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 13,
+    "revision": 11,
+    "time": "2022-09-08T08:44:40-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

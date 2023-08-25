@@ -1,0 +1,47 @@
+{
+    "number": 178354,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,100,101,110,111,120,121,130,131,140,141,150,151,160,161,170,171,180,181,190,191,202,212,222,232,242,252,262,272,282,292,303,313,323,333,343,353,363,373,383,393,404,414,424,434,444,454",
+    "name": "Numbers m such that d(1)^1 + d(2)^2 + ... + d(p)^p = d(1)^p + d(2)^(p-1) +... + d(p)^1, where d(i), i=1..p, are the digits of m.",
+    "comment": [
+        "A179309 is included in this sequence.",
+        "All palindromes are in this sequence. - _Harvey P. Dale_, Mar 03 2013"
+    ],
+    "link": [
+        "Carole Dubois, <a href=\"/A178354/b178354.txt\">Table of n, a(n) for n = 1..34794</a>",
+        "Carole Dubois, <a href=\"/A178354/a178354.jpg\">Scatterplot of a(n) vs Sum of powers in definition.</a>"
+    ],
+    "example": [
+        "14603 is in the sequence because :",
+        "1 + 4^2 + 6^3 + 0^4 + 3^5 = 3 + 0^2 + 6^3 + 4^4 + 1^5 = 476."
+    ],
+    "maple": [
+        "with(numtheory):for n from 1 to 50000 do:l:=length(n):n0:=n:s1:=0:s2:=0:for",
+        "  m from 1 to l do:q:=n0:u:=irem(q,10):v:=iquo(q,10):n0:=v :s1:=s1+u^(l-m+1):s2:=s2+u^m:od:",
+        "  if s1=s2 then printf(`%d, `,n):else fi:od:"
+    ],
+    "mathematica": [
+        "drQ[n_]:=Module[{id=IntegerDigits[n],len},len=Length[id];Total[ id^Range[ len]] == Total[id^Range[len,1,-1]]]; Select[Range[500],drQ] (* _Harvey P. Dale_, Aug 04 2018 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = my(d=digits(m), p=#d); sum(k=1, p, d[k]^k) == sum(k=1, p, d[k]^(p-k+1)); \\\\ _Michel Marcus_, Mar 22 2021",
+        "(Python)",
+        "def digpow(s): return sum(int(d)**i for i, d in enumerate(s, start=1))",
+        "def aupto(limit):",
+        "  alst = []",
+        "  for k in range(1, limit+1):",
+        "    s = str(k)",
+        "    if digpow(s) == digpow(s[::-1]): alst.append(k)",
+        "  return alst",
+        "print(aupto(454)) # _Michael S. Branicky_, Mar 23 2021"
+    ],
+    "xref": [
+        "Cf. A002113, A179309."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Michel Lagneau_, Dec 21 2010",
+    "references": 4,
+    "revision": 21,
+    "time": "2021-03-25T05:08:10-04:00",
+    "created": "2010-11-12T14:26:53-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 359281,
+    "data": "0,1,8,208,977,1007,4938,24709,24733,24853,124274,3105928",
+    "name": "Numbers k such that the digit sum of 5^k is a power of 5.",
+    "comment": [
+        "The number of digits in the decimal expansion of 5^k is 1 + floor(log_10(5^k)). If the average digit value is approximately (0 + 9)/2 = 9/2, then for large values of k, the digit sum will be approximately (9/2)*log_10(5^k) = (9/2)*k*log_10(5). The digit sum will then tend to be in the vicinity of a power of 5 when log_5((9/2)*k*log_10(5)) is near an integer, i.e., when log_5((9/2)*log_10(5)) + log_5(k) = 0.7120063... + log_5(k) is near an integer, which happens when k is near 5^(j - 0.7120063...) for integers j, i.e., around k = 1.59, 7.95, 39.7, 199, 993, 4968, 24838, 124191, 620953, etc. - _Jon E. Schoenfield_, Dec 24 2022"
+    ],
+    "formula": [
+        "A067502(n) = 5^a(n)."
+    ],
+    "example": [
+        "5^8 = 390625 and 3+9+0+6+2+5 = 5^2, so 8 is a term."
+    ],
+    "maple": [
+        "filter:= proc(n) local x;",
+        " x:= convert(convert(5^n,base,10),`+`);",
+        "   x = 5^padic:-ordp(x,5)",
+        "end proc:",
+        "select(filter, [$0..10^5]); # _Robert Israel_, Jan 18 2023"
+    ],
+    "mathematica": [
+        "Do[If[IntegerQ[Log[5, Plus @@ IntegerDigits[5^n]]], Print[n]], {n, 0, 150000}];"
+    ],
+    "program": [
+        "(PARI) isok5(k) = (k==1) || (k==5) || (ispower(k,,&p) && (p==5));",
+        "isok(k) = isok5(sumdigits(5^k)); \\\\ _Michel Marcus_, Dec 24 2022"
+    ],
+    "xref": [
+        "Cf. A000351, A066001 (sum of digits of 5^n), A067502."
+    ],
+    "keyword": "nonn,base,more,hard",
+    "offset": "1,3",
+    "author": "_David Radcliffe_, Dec 23 2022",
+    "ext": [
+        "a(11) from _Michal Paulovic_, Jan 18 2023"
+    ],
+    "references": 0,
+    "revision": 25,
+    "time": "2023-02-13T05:54:05-05:00",
+    "created": "2023-01-17T22:41:00-05:00"
+}

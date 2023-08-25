@@ -1,0 +1,47 @@
+{
+    "number": 78348,
+    "data": "3313,3331,32233,32323,33223,123323,132233,223133,223313,223331,231323,233231,312233,321323,323123,3344443,3434443,3443443,4434343,4443433,14334443,14443343,14443433,31434443,31443443,33434441,33555553",
+    "name": "Primes p such that every decimal digit d in p appears exactly d times.",
+    "comment": [
+        "The largest term is the prime 99999999988888888777777766666655555444223343."
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A078348/b078348.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "In the prime 3313 the digit \"1\" appears exactly one time and the digit \"3\" appears exactly three times."
+    ],
+    "mathematica": [
+        "ddp[x_]:=Select[FromDigits/@Permutations[Flatten[PadRight[{},#,#]&/@x]], PrimeQ]; Take[Flatten[ddp/@Subsets[Range[5]]]//Sort,40] (* _Harvey P. Dale_, May 13 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import chain, combinations as C, count, islice",
+        "from sympy.utilities.iterables import multiset_permutations as mp",
+        "def powerset(s):",
+        "    return chain.from_iterable(C(s, r) for r in range(len(s)+1))",
+        "def agen():",
+        "    sumlst = [[] for i in range(46)]",
+        "    for s in powerset(range(1, 10)): sumlst[sum(s)].append(s)",
+        "    for numdigits in count(1):",
+        "        found = set()",
+        "        for t in sumlst[numdigits]:",
+        "            diglst = \"\".join(str(i)*i for i in t)",
+        "            for m in mp(diglst, numdigits):",
+        "                t = int(\"\".join(m))",
+        "                if isprime(t): found.add(t)",
+        "        yield from sorted(found)",
+        "print(list(islice(agen(), 30))) # _Michael S. Branicky_, Aug 10 2022"
+    ],
+    "xref": [
+        "Primes in A108571."
+    ],
+    "keyword": "base,easy,fini,nonn",
+    "offset": "1,1",
+    "author": "_Carlos Rivera_, Nov 22 2002",
+    "references": 3,
+    "revision": 18,
+    "time": "2022-08-11T03:19:19-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

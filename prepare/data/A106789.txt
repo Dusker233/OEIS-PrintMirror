@@ -1,0 +1,41 @@
+{
+    "number": 106789,
+    "data": "10,10,58,170,562,1962,6562,22202,75242,254330,860474,2911226,9848050,33316090,112707970,381286954,1289885834,4363653034,14762129274,49939929610,168945571442,571538767370,1933501811618,6540989771354",
+    "name": "Sum of two consecutive squares of Lucas 3-step numbers (A001644).",
+    "comment": [
+        "A106729 is sum of two consecutive squares of Lucas numbers (A001254), for which L(n)^2 + L(n+1)^2 = 5*{F(n)^2 + F(n+1)^2} = 5*A001519(n). Sum of two consecutive squares of Lucas 3-step numbers can be expressed in terms of tribonacci numbers, but not quite as neatly, as derived from the identity A001644(n) = T(n) + 2*T(n-1) + 3*T(n-2) = 3*T(n+1) - 2*T(n) - T(n-1) where the tribonacci numbers T(n) = A000073(n)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A106789/b106789.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A001644(n)^2 + A001644(n+1)^2.",
+        "G.f.: 2*(5 - 5*x + 4*x^2 - 18*x^3 - x^4 - 5*x^5)/((1+x+x^2-x^3)*(1-3*x-x^2-x^3))."
+    ],
+    "example": [
+        "a(0) = A001644(0)^2 + A001644(1)^2 = 3^2 + 1^2 = 9 + 1 = 10.",
+        "a(1) = A001644(1)^2 + A001644(2)^2 = 1^2 + 3^2 = 1 + 9 = 10.",
+        "a(2) = A001644(2)^2 + A001644(3)^2 = 3^2 + 7^2 = 9 + 49 = 58.",
+        "a(3) = A001644(3)^2 + A001644(4)^2 = 7^2 + 11^2 = 49 + 121 = 170 = 13^2 + 1."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[2*(5-5*x+4*x^2-18*x^3-x^4-5*x^5)/(1-2*x-3*x^2 -6*x^3+x^4+x^6), {x,0,40}], x] (* _G. C. Greubel_, Apr 21 2019 *)",
+        "Total/@Partition[LinearRecurrence[{1,1,1},{3,1,3},40]^2,2,1] (* _Harvey P. Dale_, Apr 03 2022 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^40)); Vec(2*(5-5*x+4*x^2-18*x^3-x^4-5*x^5)/(1-2*x-3*x^2-6*x^3+x^4+x^6)) \\\\ _G. C. Greubel_, Apr 21 2019",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 40); Coefficients(R!( 2*(5-5*x+4*x^2-18*x^3-x^4-5*x^5)/(1-2*x-3*x^2-6*x^3+x^4+x^6) )); // _G. C. Greubel_, Apr 21 2019",
+        "(Sage) (2*(5-5*x+4*x^2-18*x^3-x^4-5*x^5)/(1-2*x-3*x^2-6*x^3+x^4+x^6)).series(x, 40).coefficients(x, sparse=False) # _G. C. Greubel_, Apr 21 2019"
+    ],
+    "xref": [
+        "Cf. A000073, A001644.",
+        "Cf. A001254, A001519, A106729."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,1",
+    "author": "_Jonathan Vos Post_, May 16 2005",
+    "references": 2,
+    "revision": 15,
+    "time": "2022-09-08T08:45:18-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

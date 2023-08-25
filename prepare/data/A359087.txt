@@ -1,0 +1,72 @@
+{
+    "number": 359087,
+    "data": "1,4,19,78,301,1108,3951,13758,47049,158616,528619,1745098,5715429,18593032,60136183,193525002,620046513,1978886448,6293809971,19955385762,63094947981,198990438408,626141673375,1966085927898,6161660863929,19276374528468,60206635741131",
+    "name": "a(n) is equal to the last point of a reverse pyramid summation with base 1, 2, 3, ..., n-2, n-1, n, n-1, n-2, ..., 3, 2, 1.",
+    "comment": [
+        "Each element in the pyramid below the base is equal to the sum of the top left, top, and top right elements.",
+        "Each row has 2*n-(1+2*r) elements where r is the row number starting from 0.",
+        "The sum of elements in the first row is n^2.",
+        "The total number of elements in the pyramid is n^2."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..2*n-1} A004737(k + (n-1)^2) * A027907(k + (n-1)^2 - 1).",
+        "Empirical g.f.: x/(1-3*x)^2 - 2*x^2/((1+x)^(1/2)*(1-3*x)^(3/2)). - _Robert Israel_, Dec 17 2022",
+        "a(n) = n*3^(n-1) - 2*A132894(n-1) (conjectured). - _Bernard Schott_, Dec 20 2022"
+    ],
+    "example": [
+        "For n = 3:",
+        "  1  2  3  2  1",
+        "     6  7  6",
+        "       19",
+        "so a(3) = 19.",
+        "For n = 4:",
+        "  1   2   3   4   3   2   1",
+        "      6   9  10   9   6",
+        "         25  28  25",
+        "             78",
+        "so a(4) = 78."
+    ],
+    "maple": [
+        "f:= proc(n) local L,i;",
+        "  L:= [seq(i,i=1..n),seq(n-i,i=1..n-1)];",
+        "  for i from 1 to n-1 do",
+        "    L:= L[1..-3] + L[2..-2] + L[3..-1]",
+        "  od;",
+        "  op(L)",
+        "end proc:",
+        "map(f, [$1..30]); # _Robert Israel_, Dec 17 2022"
+    ],
+    "mathematica": [
+        "f[n_] := Module[{L, i}, L = Range[n]~Join~Table[n-i, {i, 1, n-1}]; For[i = 1, i <= n-1, i++, L = L[[1;;-3]] + L[[2;;-2]] + L[[3;;-1]]]; L[[1]]];",
+        "f /@ Range[30] (* _Jean-Fran\u00e7ois Alcover_, Jan 25 2023, after _Robert Israel_ *)"
+    ],
+    "program": [
+        "(C)",
+        "unsigned long tri(int n, int k)",
+        "{",
+        "    if (n == 0 && k == 0) return 1;",
+        "    if(k < -n || k > n) return 0;",
+        "    return tri(n - 1, k - 1) + tri(n - 1, k) + tri(n - 1, k + 1);",
+        "}",
+        "unsigned long a(int n)",
+        "{",
+        "    unsigned long sum = 0;",
+        "    sum += tri(n - 1,0) * n;",
+        "    for (int i = 1; i < n; i++)",
+        "    {",
+        "        sum += 2 * tri(n - 1,n - i) * i;",
+        "    }",
+        "    return sum;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A004737, A027907, A132894."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Moosa Nasir_, Dec 15 2022",
+    "references": 1,
+    "revision": 52,
+    "time": "2023-01-25T09:47:46-05:00",
+    "created": "2023-01-20T09:03:31-05:00"
+}

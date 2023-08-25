@@ -1,0 +1,45 @@
+{
+    "number": 135934,
+    "data": "1,1,2,4,9,24,77,299,1419,8312,60452,547939,6213566,88468601,1585646789,35846274127,1023893974778,37005881297226,1694206791508891,98335493373334998,7241161595237290969,676871453643079089963,80351261743964014059133,12117563014768206457325416",
+    "name": "O.g.f.: A(x) = Sum_{n>=0} x^n / Product_{k=0..n} (1 - Fibonacci(k)*x).",
+    "comment": [
+        "After the first term, row sums of triangle A111669. - _Emanuele Munarini_, Dec 05 2017"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A135934/b135934.txt\">Table of n, a(n) for n = 0..140</a>"
+    ],
+    "formula": [
+        "G.f.: (1 - G(0) )/(1-x) where G(k) = 1 - 1/(1-Fibonacci(k)*x)/(1-x/(x-1/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Jan 17 2013",
+        "G.f.: 1/(x*(1-x)*G(0)) - 1/x where G(k) = 1 - x/(x - 1/(1 + 1/(x*Fibonacci(k)-1)/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Feb 13 2013"
+    ],
+    "example": [
+        "A(x) = 1 + x/(1-x) + x^2/((1-x)*(1-x)) + x^3/((1-x)*(1-x)*(1-2*x)) +",
+        "x^4/((1-x)*(1-x)*(1-2*x)(1-3*x)) + x^5/((1-x)*(1-x)*(1-2*x)*(1-3*x)*(1-5*x)) + x^6/((1-x)*(1-x)*(1-2*x)*(1-3*x)*(1-5*x)*(1-8*x)) +..."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0, 1,",
+        "      (<<0|1>, <1|1>>^m)[1, 2]*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Aug 08 2021"
+    ],
+    "mathematica": [
+        "b[n_, m_] := b[n, m] = If[n == 0, 1,",
+        "   MatrixPower[{{0, 1}, {1, 1}}, m][[1, 2]]*b[n-1, m]+b[n-1, m+1]];",
+        "a[n_] :=  b[n, 0];",
+        "Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Sep 07 2022, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sum(k=0, n, x^k/prod(j=0, k, 1-fibonacci(j)*x+x*O(x^n))), n)}"
+    ],
+    "xref": [
+        "Cf. A000045, A006116, A111669."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 07 2007",
+    "references": 2,
+    "revision": 25,
+    "time": "2022-09-07T07:28:00-04:00",
+    "created": "2007-12-09T03:00:00-05:00"
+}

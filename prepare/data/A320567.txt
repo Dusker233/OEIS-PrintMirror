@@ -1,0 +1,39 @@
+{
+    "number": 320567,
+    "data": "1,2,4,11,32,97,355,1423,5696,23141,108149,559693,2913971,14806365,75692999,432849976,2780749376,18237870285,115493756737,708062095921,4354275076517,29539724932771,227955214198529,1836106089485736,14279737884301139,105409744347318897",
+    "name": "Expansion of e.g.f. exp(x) * Product_{k>=1} (1 + x^k/k!).",
+    "comment": [
+        "Binomial transform of A007837."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A320567/b320567.txt\">Table of n, a(n) for n = 0..692</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(x + Sum_{k>=1} Sum_{j>=1} (-1)^(k+1)*x^(j*k)/(k*(j!)^k)).",
+        "a(n) = Sum_{k=0..n} binomial(n,k)*A007837(k)."
+    ],
+    "maple": [
+        "seq(coeff(series(factorial(n)*exp(x)*mul(1+x^k/factorial(k),k=1..n),x,n+1), x, n), n = 0 .. 25); # _Muniru A Asiru_, Oct 15 2018",
+        "# second Maple program:",
+        "b:= proc(n) option remember; `if`(n=0, 1, add(add((-d)*(-d!)^(-k/d),",
+        "       d=numtheory[divisors](k))*(n-1)!/(n-k)!*b(n-k), k=1..n))",
+        "    end:",
+        "a:= n-> add(b(n-i)*binomial(n, i), i=0..n):",
+        "seq(a(n), n=0..27);  # _Alois P. Heinz_, Sep 27 2019"
+    ],
+    "mathematica": [
+        "nmax = 25; CoefficientList[Series[Exp[x] Product[(1 + x^k/k!), {k, 1, nmax}], {x, 0, nmax}], x] Range[0, nmax]!",
+        "nmax = 25; CoefficientList[Series[Exp[x + Sum[Sum[(-1)^(k + 1) x^(j k)/(k (j!)^k), {j, 1, nmax}], {k, 1, nmax}]], {x, 0, nmax}], x] Range[0, nmax]!"
+    ],
+    "xref": [
+        "Cf. A007837, A320566."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Oct 15 2018",
+    "references": 3,
+    "revision": 9,
+    "time": "2019-09-27T22:47:07-04:00",
+    "created": "2018-10-15T22:20:13-04:00"
+}

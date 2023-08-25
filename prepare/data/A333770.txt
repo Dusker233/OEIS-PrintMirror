@@ -1,0 +1,51 @@
+{
+    "number": 333770,
+    "data": "1,3,9,33,88,252,737,2222,6666,19691,59095,177771,532235,1594951,4783874,14355341,43055034,129141921,387424783,1162332611,3486886843,10460406401,31381118313,94143234149,282429924282,847288882748",
+    "name": "Smallest palindromic number >= 3^n.",
+    "link": [
+        "Robert Israel, <a href=\"/A333770/b333770.txt\">Table of n, a(n) for n = 0..2093</a>"
+    ],
+    "formula": [
+        "a(n) = A262038(A000244(n)). - _Michel Marcus_, May 04 2020"
+    ],
+    "example": [
+        "a(10) = 59095, because 3^10 = 59049 and 59095 is the smallest palindromic number >= 59049."
+    ],
+    "maple": [
+        "digrev:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "f:= proc(n) local d,x,y,t;",
+        "  d:= ilog10(n)+1;",
+        "  if d::even then",
+        "    x:= floor(n/10^(d/2));",
+        "    t:= x*10^(d/2)+digrev(x);",
+        "    if t >= n then return t fi;",
+        "    (x+1)*10^(d/2)+digrev(x+1);",
+        "  else",
+        "    x:= floor(n/10^((d-1)/2));",
+        "    t:= x*10^((d-1)/2)+digrev(floor(x/10));",
+        "    if t >= n then return t fi;",
+        "    y:= x mod 10;",
+        "    if y < 9 then return t + 10^((d-1)/2) fi;",
+        "    x:= x+1;",
+        "    x*10^((d-1)/2)+digrev(floor(x/10));",
+        "  fi",
+        "end proc:",
+        "seq(f(3^i),i=0..30); # _Robert Israel_, May 04 2020"
+    ],
+    "program": [
+        "(PARI) a(n) = for(k=3^n, oo, if(Vecrev(v=digits(k))==v, return(k)));"
+    ],
+    "xref": [
+        "Cf. A000244, A002113, A262038, A333016."
+    ],
+    "keyword": "easy,nonn,base",
+    "offset": "0,2",
+    "author": "_Eder Vanzei_, Apr 04 2020",
+    "references": 2,
+    "revision": 14,
+    "time": "2020-05-04T13:08:53-04:00",
+    "created": "2020-05-02T23:45:59-04:00"
+}

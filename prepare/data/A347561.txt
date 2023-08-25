@@ -1,0 +1,52 @@
+{
+    "number": 347561,
+    "data": "4,11,13,19,47,719,1439,2879,4079,4127,5807,6047,7247,7727,9839,10799,11279,13967,14159,15647,21599,24527,28319,28607,42767,44687,45887,48479,51599,51839,67247,68639,72767,77279,79967,81647,84047,84719,89087",
+    "name": "Numbers m such that Conv(b,m) = b has a unique nontrivial solution (b = 0 and b = 1 are considered trivial solutions). Here, Conv(b,m) denotes the limit of b^^t (mod m) as t goes to infinity.",
+    "comment": [
+        "A101793 is a subsequence.",
+        "It appears that a(n) = A101793(n-4) for n>=5.",
+        "Except for n = 1, a(n) is prime."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Tetration\">Tetration</a>",
+        "<a href=\"/index/Te#tetration\">Index entries for sequences related to tetration</a>"
+    ],
+    "example": [
+        "For a(2), we have:",
+        "Conv(2,11) = 9",
+        "Conv(3,11) = 9",
+        "Conv(4,11) = 4",
+        "Conv(5,11) = 1",
+        "Conv(6,11) = 5",
+        "Conv(7,11) = 2",
+        "Conv(8,11) = 3",
+        "Conv(9,11) = 5",
+        "Conv(10,11) = 1",
+        "Therefore, the only solution is Conv(4,11) = 4."
+    ],
+    "mathematica": [
+        "Conv[b_,m_] :=",
+        "Which[",
+        "Mod[b,m]==0,Return[0],",
+        "Mod[b,m]==1,Return[1],",
+        "GCD[b,m]==1,Return[PowerMod[b,Conv[b,MultiplicativeOrder[b,m]],m]],",
+        "True,Return[PowerMod[b,EulerPhi[m]+Conv[b,EulerPhi[m]],m]]",
+        "]",
+        "a[m_] := Count[Table[Conv[b,m]==b,{b,0,m-1}],True]",
+        "Table[If[a[i]==3,i,## &[]],{i,2,800}]"
+    ],
+    "program": [
+        "(PARI) conv(b, n) = {if (b % n == 0, return (0)); if (b % n == 1, return (1)); if (gcd(b, n)==1, return (lift(Mod(b, n)^conv(b, lift(znorder(Mod(b, n))))))); lift(Mod(b, n)^(eulerphi(n) + conv(b, eulerphi(n))));}",
+        "isok(m) = sum(b=2, m-1, conv(b, m) == b) == 1; \\\\ _Michel Marcus_, Sep 13 2021"
+    ],
+    "xref": [
+        "Cf. A347560, A343073, A000040, A101793, A183613."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernat Pag\u00e8s Vives_, Sep 06 2021",
+    "references": 1,
+    "revision": 30,
+    "time": "2021-10-24T08:45:42-04:00",
+    "created": "2021-10-24T08:45:42-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 317807,
+    "data": "1,1,68,187,27763,108516,25958279,100664383,26388943467,109026138857,33100108402861,139752234469078,46498731704890104,200612215343574676,71799817534098086846,314741192906319529056",
+    "name": "Number of set partitions of [k] into 5 blocks with equal element sum, where k is the n-th positive integer that allows such a partition.",
+    "comment": [
+        "k = 9, 10, 14, 15, 19, ... A047208(n+3) for n = 1, 2, 3, 4, 5, ... ."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "formula": [
+        "a(n) = A275714(A047208(n+3),5)."
+    ],
+    "example": [
+        "a(1) = 1: 18|27|36|45|9 with k = 9.",
+        "a(2) = 1: 1(10)|29|38|47|56 with k = 10."
+    ],
+    "maple": [
+        "b:= proc() option remember; local i, j, t; `if`(args[1]=0,",
+        "      `if`(nargs=2, 1, b(args[t] $t=2..nargs)), add(",
+        "      `if`(args[j] -args[nargs]<0, 0, b(sort([seq(args[i]-",
+        "      `if`(i=j, args[nargs], 0), i=1..nargs-1)])[],",
+        "                args[nargs]-1)), j=1..nargs-1))",
+        "    end:",
+        "a:= proc(n) option remember; (k-> (m->",
+        "      b((m/5)$5, k)/5!)(k*(k+1)/2))(5+5*n/2+3/4*(1-(-1)^n))",
+        "    end:",
+        "seq(a(n), n=1..8);"
+    ],
+    "mathematica": [
+        "b[args_List] := b[args] = Module[{nargs = Length[args]}, If[args[[1]] == 0, If[nargs == 3, 1, b[args // Rest]], Sum[If[args[[j]] - Last[args] < 0, 0, b[Append[Sort[Flatten[Table[args[[i]] - If[i == j, Last[args], 0], {i, 1, nargs - 1}]]], Last[args] - 1]]], {j, 1, nargs - 1}]]];",
+        "a[n_] := a[n] = Function[k, Function[m, b[Append[Table[m/5, {5}], k]]/5!][k (k + 1)/2]][5 + 5n/2 + (3/4)(1 - (-1)^n)];",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 1, 12}] (* _Jean-Fran\u00e7ois Alcover_, Dec 16 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A047208, A275714."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Alois P. Heinz_, Aug 07 2018",
+    "references": 2,
+    "revision": 18,
+    "time": "2020-12-16T08:56:20-05:00",
+    "created": "2018-08-08T21:51:34-04:00"
+}

@@ -1,0 +1,52 @@
+{
+    "number": 241177,
+    "data": "10,12,24,32,36,48,54,60,72,76,84,96,98,109,112,123,125,127,129,131,132,133,135,137,139,141,145,147,149,151,153,155,157,159,161,163,167,169,171,172,173,175,177,179,181,183,185,189,191,193,195,197,199,201,209,211,213,215,217,219,224,233,235,237,239,241,245",
+    "name": "Numbers n such that there are exactly two numbers m with m + (some digit of m) = n.",
+    "comment": [
+        "The numbers 12, 112, 1112, ..., 111...112, ... are terms of the sequence. - _Marius A. Burtea_, Feb 18 2020"
+    ],
+    "reference": [
+        "Eric Angelini, Posting to Sequence Fans Mailing List, Apr 20 2014."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A241177/b241177.txt\">Table of n, a(n) for n = 1..13111</a> (Terms <= 10^6)"
+    ],
+    "example": [
+        "12 = 6 + 6 = 11 + 1.",
+        "32 = 26 + 6 = 31 + 1.",
+        "112 = 106 + 6 = 111 + 1."
+    ],
+    "maple": [
+        "M:=2000;",
+        "M2:=M+10;",
+        "A:=Array[0..M2];",
+        "for n from 0 to M2 do A[n]:=0; od:",
+        "for n from 0 to M do",
+        "t1:=convert(n,base,10);",
+        "t2:=convert(t1,set); t3:=convert(t2,list);",
+        "for i from 1 to nops(t3) do A[n+t3[i]]:= A[n+t3[i]]+1; od:",
+        "                  od:",
+        "ans:=[];",
+        "for n from 0 to M do if A[n]=2 then ans:=[op(ans),n]; fi; od:",
+        "[seq(ans[i],i=1..nops(ans))];"
+    ],
+    "mathematica": [
+        "A241177[n_] := Module[{m, c = 0},",
+        "   Do[c = c + Count[m + Union[IntegerDigits[m]], n], {m, 0, n}]; c];",
+        "Select[Range[0, 245], A241177[#] == 2 &] (* _Robert Price_, Mar 20 2019 *)"
+    ],
+    "program": [
+        "(PARI) upto(n) = {my(v = vector(n + 9)); for(i = 1, n, d = Set(digits(i)); for(j = 1, #d, v[i + d[j]]++ ) ); for(i = n + 1, n + 9, v[i] = 0); select(x -> x == 2, v, 1) } \\\\ _David A. Corneth_, Mar 20 2019",
+        "(Magma) f:=func<n,m|exists(c){a:a in Intseq(m)|m+a eq n }>; [k:k in [1..250]| #[m:m in [1..k]| f(k,m)] eq 2]; // _Marius A. Burtea_, Feb 18 2020"
+    ],
+    "xref": [
+        "Related sequences: A241173, A241174, A241175, A241176, A241177, A241178, A241179, A241180, A241181, A241182, A241183."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Apr 23 2014",
+    "references": 12,
+    "revision": 33,
+    "time": "2022-09-08T08:46:07-04:00",
+    "created": "2014-04-23T12:44:08-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 336632,
+    "data": "0,0,1,3,6,15,33,74,160,344,731,1544,3237,6753,14022,29009,59819,123010,252341,516560,1055476,2153115,4385889,8922556,18131000,36805009,74643126,151255021,306267833,619719217,1253191291,2532750315,5116124712,10329574480",
+    "name": "Number of prime parts, counted without multiplicity, in all compositions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A336632/b336632.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "a(4) = 0 + 1 + 1 + 1 + 1 + 1 + 1 + 0 = 6: 1111, 11(2), 1(2)1, (2)11, (2)2, 1(3), (3)1, 4."
+    ],
+    "maple": [
+        "b:= proc(n, i, p) option remember; `if`(n=0, [p!, 0],",
+        "      `if`(i<1, 0, add((h-> [0, `if`(j>0 and isprime(i),",
+        "       h[1], 0)]+h)(b(n-i*j, i-1, p+j)/j!), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2, 0)[2]:",
+        "seq(a(n), n=0..38);"
+    ],
+    "mathematica": [
+        "b[n_, i_, p_] := b[n, i, p] = If[n == 0, {p!, 0},",
+        "     If[i < 1, 0, Sum[Function[h, {0, If[j > 0 && PrimeQ[i],",
+        "     h[[1]], 0]} + h][b[n - i*j, i - 1, p + j]/j!], {j, 0, n/i}]]];",
+        "a[n_] := b[n, n, 0][[2]];",
+        "Table[a[n], {n, 0, 38}] (* _Jean-Fran\u00e7ois Alcover_, May 30 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000040, A102291, A336579."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jul 28 2020",
+    "references": 3,
+    "revision": 12,
+    "time": "2022-05-30T08:14:58-04:00",
+    "created": "2020-07-28T11:48:14-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 308113,
+    "data": "1,1,1,2,7,22,68,205,634,2011,6490,21178,69785,231940,776794,2618951,8881373,30274185,103673227,356500914,1230497234,4261633997,14805279769,51580807121,180173390369,630864082719,2213834486422,7784823272163,27427361186479",
+    "name": "Number of lattice paths from (0,0) to (n,n) that do not go above the diagonal x=y and consist of steps (h,v) with min(h,v) > 0 and gcd(h,v) = 1.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A308113/b308113.txt\">Table of n, a(n) for n = 0..550</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * d^n / n^(3/2), where d = 3.7137893481485186502229788321701955452444... and c = 0.47404607017890475336081188752626598456... - _Vaclav Kotesovec_, May 24 2019"
+    ],
+    "maple": [
+        "b:= proc(x, y) option remember; `if`(y=0, 1, add(add(`if`(x+v",
+        "      >y+h or igcd(h, v)>1, 0, b(x-h, y-v)), v=1..y), h=1..x))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "b[x_, y_] := b[x, y] = If[y == 0, 1, Sum[Sum[If[x + v > y + h || GCD[h, v] > 1, 0, b[x - h, y - v]], {v, 1, y}], {h, 1, x}]];",
+        "a[n_] := b[n, n];",
+        "a /@ Range[0, 30] (* _Jean-Fran\u00e7ois Alcover_, Jan 02 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A308087, A308114."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, May 13 2019",
+    "references": 3,
+    "revision": 18,
+    "time": "2021-01-02T15:01:53-05:00",
+    "created": "2019-05-15T15:45:58-04:00"
+}

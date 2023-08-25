@@ -1,0 +1,46 @@
+{
+    "number": 299144,
+    "data": "5,10,18,30,30,30,30,180,180,180,180,840,840,1260,1260,1260,1260,24480,24480,63000,63000,63000,63000,63000,63000,63000,63000,63000,63000,356400,356400,356400,356400,356400,356400,356400,356400,5783400,5783400,5783400,5783400,5783400,5783400",
+    "name": "a(n) is the least i such that gcd(Fibonacci(i), i+x) > 1 for all x=0..n.",
+    "example": [
+        "5 is the smallest integer i such that gcd(F(i), i) > 1, because F(5)=5. Therefore a(0)=5.",
+        "10 is the smallest integer i such that gcd(F(i), i) > 1 and gcd(F(i), i+1) > 1, because F(10)=55, not coprime to 10 nor 11. Therefore a(1)=10."
+    ],
+    "mathematica": [
+        "Nest[Function[a, Append[a, SelectFirst[Range[10^5], Function[i, AllTrue[i + Range[0, Length@ a], ! CoprimeQ[Fibonacci@ i, #] &]]]]], {}, 29] (* _Michael De Vlieger_, Feb 05 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "p0=0",
+        "p1=1",
+        "def GCD(x,y):",
+        "    tmp = y",
+        "    y = x % y",
+        "    if y==0: return tmp",
+        "    return GCD(tmp, y)",
+        "n=0",
+        "for i in range(1,1000000):",
+        "    p0,p1 = p1, p0+p1",
+        "    for x in range(1000000):",
+        "        if GCD(p0,i+x)==1: break",
+        "    for j in range(n, x):",
+        "        print i",
+        "    if x>n: n=x",
+        "(PARI) isok(k, n) = {for (x=0, n, if (gcd(fibonacci(k), k+x) == 1, return(0));); return(1);}",
+        "a(n) = {my(k=1); while (!isok(k,n), k++); k;} \\\\ _Michel Marcus_, Feb 05 2018"
+    ],
+    "xref": [
+        "Cf. A000045, A104714."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Alex Ratushnyak_, Feb 03 2018",
+    "ext": [
+        "a(29)-a(36) from _Michael De Vlieger_, Feb 05 2018",
+        "a(37)-a(42) from _Jon E. Schoenfield_, Apr 24 2018"
+    ],
+    "references": 0,
+    "revision": 27,
+    "time": "2018-04-25T11:50:37-04:00",
+    "created": "2018-04-16T13:37:17-04:00"
+}

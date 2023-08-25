@@ -1,0 +1,34 @@
+{
+    "number": 298759,
+    "data": "2,6,30,42,1722,1806,19977474",
+    "name": "Numbers k such that bphi(k) = k/2, where bphi is the bi-unitary analog of Euler's totient function (A116550).",
+    "comment": [
+        "With Euler's totient function, phi(k) = k/2 only for powers of 2 (A000079, except for 1). With the unitary totient function (A047994) the corresponding sequence is A030163.",
+        "a(8) > 2*10^9, if it exists. - _Amiram Eldar_, Jul 16 2022"
+    ],
+    "example": [
+        "42 is in the sequence since bphi(42) = 21 = 42/2."
+    ],
+    "mathematica": [
+        "bphi[1] = 1; bphi[n_] :=  With[{pp = Power @@@ FactorInteger[n]},   Count[Range[n], m_ /; Intersection[pp, Power @@@ FactorInteger[m]] == {}]]; aQ[n_] := bphi[n] == n/2; Select[Range[10000], aQ]"
+    ],
+    "program": [
+        "(PARI) udivs(n) = {my(d = divisors(n)); select(x->(gcd(x, n/x)==1), d); }",
+        "gcud(n, m) = vecmax(setintersect(udivs(n), udivs(m)));",
+        "bphi(n) = if (n==1, 1, sum(k=1, n-1, gcud(n, k) == 1));",
+        "isok(n) = bphi(n) == n/2; \\\\ _Michel Marcus_, Jan 26 2018"
+    ],
+    "xref": [
+        "Cf. A047994, A030163, A116550."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jan 26 2018",
+    "ext": [
+        "a(7) from _Amiram Eldar_, Jul 16 2022"
+    ],
+    "references": 0,
+    "revision": 11,
+    "time": "2022-07-16T07:14:03-04:00",
+    "created": "2018-02-12T11:14:07-05:00"
+}

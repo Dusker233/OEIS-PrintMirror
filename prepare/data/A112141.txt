@@ -1,0 +1,83 @@
+{
+    "number": 112141,
+    "data": "4,24,216,2160,30240,453600,9525600,209563200,5239080000,136216080000,4495130640000,152834441760000,5349205461600000,203269807540800000,7927522494091200000,364666034728195200000,17868635701681564800000,911300420785759804800000",
+    "name": "Product of the first n semiprimes.",
+    "comment": [
+        "Semiprime analog of primorial (A002110). Equivalent for product of what A062198 is for sum."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A112141/b112141.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "formula": [
+        "a(n) = Product_{i=1..n} A001358(i).",
+        "A001222(a(n)) = 2*n."
+    ],
+    "example": [
+        "a(10) = 4*6*9*10*14*15*21*22*25*26 = 136216080000, the product of the first 10 semiprimes.",
+        "From _Gus Wiseman_, Dec 06 2020: (Start)",
+        "The sequence of terms together with their prime signatures begins:",
+        "                        4: (2)",
+        "                       24: (3,1)",
+        "                      216: (3,3)",
+        "                     2160: (4,3,1)",
+        "                    30240: (5,3,1,1)",
+        "                   453600: (5,4,2,1)",
+        "                  9525600: (5,5,2,2)",
+        "                209563200: (6,5,2,2,1)",
+        "               5239080000: (6,5,4,2,1)",
+        "             136216080000: (7,5,4,2,1,1)",
+        "            4495130640000: (7,6,4,2,2,1)",
+        "          152834441760000: (8,6,4,2,2,1,1)",
+        "         5349205461600000: (8,6,5,3,2,1,1)",
+        "       203269807540800000: (9,6,5,3,2,1,1,1)",
+        "      7927522494091200000: (9,7,5,3,2,2,1,1)",
+        "    364666034728195200000: (10,7,5,3,2,2,1,1,1)",
+        "  17868635701681564800000: (10,7,5,5,2,2,1,1,1)",
+        "(End)"
+    ],
+    "maple": [
+        "A112141 := proc(n)",
+        "    mul(A001358(i),i=1..n) ;",
+        "end proc:",
+        "seq(A112141(n),n=1..10) ; # _R. J. Mathar_, Jun 30 2020"
+    ],
+    "mathematica": [
+        "NextSemiPrime[n_, k_: 1] := Block[{c = 0, sgn = Sign[k]}, sp = n + sgn; While[c < Abs[k], While[ PrimeOmega[sp] != 2, If[sgn < 0, sp--, sp++]]; If[sgn < 0, sp--, sp++]; c++]; sp + If[sgn < 0, 1, -1]]; f[n_] := Times @@ NestList[ NextSemiPrime@# &, 2^2, n - 1]; Array[f, 18] (* _Robert G. Wilson v_, Jun 13 2013 *)",
+        "FoldList[Times,Select[Range[30],PrimeOmega[#]==2&]] (* _Gus Wiseman_, Dec 06 2020 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=my(v=vector(n),i,k=3);while(i<n,if(bigomega(k++)==2,v[i++]=k)); prod(i=1,n,v[i]) \\\\ _Charles R Greathouse IV_, Apr 04 2013",
+        "(Python)",
+        "from sympy import factorint",
+        "def aupton(terms):",
+        "    alst, k, p = [], 1, 1",
+        "    while len(alst) < terms:",
+        "        if sum(factorint(k).values()) == 2:",
+        "            p *= k",
+        "            alst.append(p)",
+        "        k += 1",
+        "    return alst",
+        "print(aupton(18)) # _Michael S. Branicky_, Aug 31 2021"
+    ],
+    "xref": [
+        "Partial sums of semiprimes are A062198.",
+        "First differences of semiprimes are A065516.",
+        "A000040 lists primes, with partial products A002110 (primorials).",
+        "A000142 lists factorials, with partial products A000178 (superfactorials).",
+        "A001358 lists semiprimes, with partial products A112141 (this sequence).",
+        "A005117 lists squarefree numbers, with partial products A111059.",
+        "A006881 lists squarefree semiprimes, with partial products A339191.",
+        "A101048 counts partitions into semiprimes (restricted: A338902).",
+        "A320655 counts factorizations into semiprimes.",
+        "A338898/A338912/A338913 give the prime indices of semiprimes, with product/sum/difference A087794/A176504/A176506.",
+        "A338899/A270650/A270652 give the prime indices of squarefree semiprimes, with product/sum/difference A339361/A339362/A338900.",
+        "Cf. A001222, A084126, A084127, A115392, A168472, A320732, A320892."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, Nov 28 2005",
+    "references": 23,
+    "revision": 30,
+    "time": "2021-08-31T21:21:37-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

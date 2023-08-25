@@ -1,0 +1,41 @@
+{
+    "number": 326878,
+    "data": "1,2,7,45,500,9053,257151,11161244,725343385,69407094565,9639771895398,1919182252611715,541764452276876719,214777343584048313318,118575323291814379721651,90492591258634595795504697,94844885130660856889237907260,135738086271526574073701454370969,263921383510041055422284977248713291",
+    "name": "Number of topologies whose points are a subset of {1..n}.",
+    "link": [
+        "Wikipedia <a href=\"https://en.wikipedia.org/wiki/Topological_space\">Topological space</a>"
+    ],
+    "formula": [
+        "From _Geoffrey Critzer_, Jul 12 2022: (Start)",
+        "E.g.f.: exp(x)*A(exp(x)-1) where A(x) is the e.g.f. for A001035.",
+        "a(n) = Sum_{k=0..n} binomial(n,k)*A000798(k). (End)"
+    ],
+    "example": [
+        "The a(0) = 1 through a(2) = 7 topologies:",
+        "  {{}}  {{}}      {{}}",
+        "        {{},{1}}  {{},{1}}",
+        "                  {{},{2}}",
+        "                  {{},{1,2}}",
+        "                  {{},{1},{1,2}}",
+        "                  {{},{2},{1,2}}",
+        "                  {{},{1},{2},{1,2}}"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Subsets[Subsets[Range[n]]],MemberQ[#,{}]&&SubsetQ[#,Union[Union@@@Tuples[#,2],Intersection@@@Tuples[#,2]]]&]],{n,0,4}]",
+        "(* Second program: *)",
+        "A000798 = Cases[Import[\"https://oeis.org/A000798/b000798.txt\", \"Table\"], {_, _}][[All, 2]];",
+        "a[n_] := Sum[Binomial[n, k]*A000798[[k+1]], {k, 0, n}];",
+        "a /@ Range[0, Length[A000798]-1] (* _Jean-Fran\u00e7ois Alcover_, Dec 30 2019 *)"
+    ],
+    "xref": [
+        "Binomial transform of A000798 (the covering case).",
+        "Cf. A001035, A001930, A003465, A014466, A102896, A102897, A306445, A326866, A326876."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Jul 30 2019",
+    "references": 23,
+    "revision": 18,
+    "time": "2022-07-12T21:22:14-04:00",
+    "created": "2019-07-31T08:48:55-04:00"
+}

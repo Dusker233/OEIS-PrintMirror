@@ -1,0 +1,55 @@
+{
+    "number": 239480,
+    "data": "0,1,2,3,4,5,6,7,8,9,11,22,33,99,101,111,121,131,141,151,161,171,202,212,222,262,282,303,313,393,404,424,454,474,525,545,565,585,595,636,656,676,757,838,858,959,1001,1111,1221,1331,1441,1991,2002,2112,2552",
+    "name": "Palindromes such that additive and multiplicative persistences coincide.",
+    "comment": [
+        "Palindromes k for which A031286(k) = A031346(k)."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A239480/b239480.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/AdditivePersistence.html\">Additive Persistence</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/MultiplicativePersistence.html\">Multiplicative Persistence</a>",
+        "<a href=\"/index/Pac#palindromes\">Index entries for sequences related to palindromes</a>"
+    ],
+    "formula": [
+        "A002113 INTERSECT A239427."
+    ],
+    "example": [
+        "99 -> 18 -> 9 has additive persistence 2. 99 -> 81 -> 8 has multiplicative persistence 2. The palindromic number 99 is therefore in the sequence."
+    ],
+    "program": [
+        "(PARI) for(n=0, 2552, s=Vec(Str(n)); if(s==vecextract(s, \"-1..1\"), v=n; a=0; while(n>9, a++; n=sumdigits(n)); n=v; m=0; while(n>9, m++; d=digits(n); n=prod(k=1, #d, d[k])); n=v; if(a==m, print1(n, \", \"))));",
+        "(Python)",
+        "from math import prod",
+        "from itertools import count, islice, product",
+        "def A031286(n):",
+        "    ap = 0",
+        "    while n > 9: n, ap = sum(map(int, str(n))), ap+1",
+        "    return ap",
+        "def A031346(n):",
+        "    mp = 0",
+        "    while n > 9: n, mp = prod(map(int, str(n))), mp+1",
+        "    return mp",
+        "def is_pal(n): return (s:=str(n)) == s[::-1]",
+        "def pals(base=10): # all d-digit palindromes",
+        "    digits = \"\".join(str(i) for i in range(base))",
+        "    for d in count(1):",
+        "        for p in product(digits, repeat=d//2):",
+        "            if d > 1 and p[0] == \"0\": continue",
+        "            left = \"\".join(p); right = left[::-1]",
+        "            for mid in [[\"\"], digits][d%2]: yield int(left + mid + right)",
+        "def ok(n): return is_pal(n) and A031286(n) == A031346(n)",
+        "def agen(): yield from filter(ok, pals())",
+        "print(list(islice(agen(), 20))) # _Michael S. Branicky_, Jun 22 2023"
+    ],
+    "xref": [
+        "Cf. A002113, A031286, A031346, A239427."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Arkadiusz Wesolowski_, Mar 20 2014",
+    "references": 2,
+    "revision": 11,
+    "time": "2023-06-22T14:59:10-04:00",
+    "created": "2014-03-24T04:38:07-04:00"
+}

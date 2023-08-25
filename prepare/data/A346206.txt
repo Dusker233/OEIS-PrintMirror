@@ -1,0 +1,36 @@
+{
+    "number": 346206,
+    "data": "11,21673,27367,32611,33311,41141,48821,82781,171263,211441,243433,323443,343243,449699,632623,663661,727271,772127,847871,882881,944969,1129699,1192699,1193939,1262633,1334341,1342433,1343423,1361441,1388641,1399193,1461883,1613441",
+    "name": "Primes p, with k digits, such that the Sum_{i=1..k} (p without its i-th digit)/(its i-th digit) is a prime.",
+    "link": [
+        "Michel Marcus, <a href=\"/A346206/b346206.txt\">Table of n, a(n) for n = 1..441</a>",
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_1045.htm\">Puzzle 1045. One nice puzzle from Paolo Lava</a>, The Prime Puzzles and Problems Connection."
+    ],
+    "example": [
+        "21673 gives 1673/2 + 2673/1 + 2173/6 + 2163/7 + 2167/3 = 4903; so 21673 is a term."
+    ],
+    "program": [
+        "(PARI) subs(d, j) = {my(x=\"\"); for (k=1, #d, if (j != k, x = concat(x, d[k]));); eval(x);}",
+        "isok(p) = {my(d=digits(p), res);  if (isprime(p) && vecmin(d), res = sum(j=1, #d, subs(d, j)/d[j]); (denominator(res)==1) && isprime(res););}",
+        "(Python)",
+        "from sympy import isprime, primerange",
+        "from fractions import Fraction",
+        "def ok(p):",
+        "    s = str(p)",
+        "    if '0' in s or len(s) == 1: return False",
+        "    f = sum(Fraction(int(s[:i]+s[i+1:]), int(s[i])) for i in range(len(s)))",
+        "    return f.denominator == 1 and isprime(f.numerator)",
+        "def aupto(lim): return [p for p in primerange(1, lim+1) if ok(p)]",
+        "print(aupto(1620000)) # _Michael S. Branicky_, Jul 11 2021"
+    ],
+    "xref": [
+        "Subsequence of A038618 (zeroless primes)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Jul 10 2021",
+    "references": 2,
+    "revision": 16,
+    "time": "2022-06-03T11:17:54-04:00",
+    "created": "2021-07-10T14:42:56-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 309488,
+    "data": "101,103,107,109,307,401,409,503,509,601,607,701,709,809,907,10103,10301,10303,10501,10601,10607,10709,10903,10909,20101,20107,20201,20407,20507,20509,20707,20807,20809,20903,30103,30109,30203,30307,30403,30509,30703,30707,30803,30809",
+    "name": "Primes whose decimal expansion is of the form d_1+0+d_2+0+d_3+0+...+0+d_k where d_i are digits with 1 <= d_i <= 9,  k > 1 and + stands for concatenation.",
+    "comment": [
+        "The terms of this sequence have necessarily an odd number >= 3 of digits.",
+        "There is only one term whose digits > 0 are all equal: 101.",
+        "The only cyclops primes (A134809) of this sequence are the first 15 terms from 101 to 907.",
+        "The first palindromes of this sequence are 101, 10301, 10501, 10601, 30103, 30203, 30403, 30703, 30803, ...",
+        "Intersection with A309101 = {503, 10103, 10303, 10903, ...}."
+    ],
+    "example": [
+        "103 is the smallest term with two distinct digits > 0.",
+        "10607 is the smallest term with three distinct digits > 0."
+    ],
+    "mathematica": [
+        "aQ[n_] := PrimeQ[n] && OddQ[(m = Length[(d = IntegerDigits[n])])] && Flatten@Position[d, _?(# == 0 &)] == Range[2, m, 2]; Select[Range[100, 31000], aQ] (* _Amiram Eldar_, Aug 04 2019 *)"
+    ],
+    "program": [
+        "(Magma) sol:=[]; m:=1; for p in PrimesInInterval(101,50000) do  v:=Reverse(Intseq(p)); test:=0; for u in [1..#v-1] do if u mod 2 eq 0 and v[u] eq 0 and v[u+1] ne 0 then test:=test+1; end if; end for; if test eq (#v-1)/2 then sol[m]:=p; m:=m+1; end if; end for; sol; // _Marius A. Burtea_, Aug 04 2019",
+        "(PARI) eva(n) = subst(Pol(n), x, 10)",
+        "f(n) = my(d=digits(n)); eva(vector(2*#d-1, k, if (k%2, d[1+k\\2]))) \\\\ from _Michel Marcus_",
+        "terms(n) = my(i=0); for(k=10, oo, if(i>=n, break); if(vecmin(digits(k)) > 0, my(iz=f(k)); if(ispseudoprime(iz), print1(iz, \", \"); i++)))",
+        "/* Print initial 40 terms as follows: */",
+        "terms(40) \\\\ _Felix Fr\u00f6hlich_, Aug 08 2019"
+    ],
+    "xref": [
+        "Cf. A000040, A002385, A134809, A309101.",
+        "Subsequence of A059168 (undulating primes)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Aug 04 2019",
+    "references": 0,
+    "revision": 39,
+    "time": "2022-09-08T08:46:21-04:00",
+    "created": "2019-08-09T04:55:05-04:00"
+}

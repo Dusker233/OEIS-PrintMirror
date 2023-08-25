@@ -1,0 +1,59 @@
+{
+    "number": 326064,
+    "data": "117,775,10309,56347,88723,2896363,9597529,12326221,12654079,25774633,29817121,63455131,105100903,203822581,261019543,296765173,422857021,573332713,782481673,900952687,1129152721,3350861677,3703086229,7395290407,9347001661,9350506057",
+    "name": "Odd composite numbers n, not squares of primes, such that (A001065(n) - A032742(n)) divides (n - A032742(n)), where A032742 gives the largest proper divisor, and A001065 is the sum of proper divisors.",
+    "comment": [
+        "Nineteen initial terms factored:",
+        "   n       a(n)   factorization   A060681(a(n))/A318505(a(n))",
+        "   1:       117 =   3^2 *    13,           (3)",
+        "   2:       775 =   5^2 *    31,          (10)",
+        "   3:     10309 =  13^2 *    61,          (39)",
+        "   4:     56347 =  29^2 *    67,          (58)",
+        "   5:     88723 =  17^2 *   307,         (136)",
+        "   6:   2896363 =  41^2 *  1723,         (820)",
+        "   7:   9597529 =  73^2 *  1801,        (1314)",
+        "   8:  12326221 =  59^2 *  3541,        (1711)",
+        "   9:  12654079 = 113^2 *   991,         (904)",
+        "  10:  25774633 =  71^2 *  5113,        (2485)",
+        "  11:  29817121 =  97^2 *  3169,        (2328)",
+        "  12:  63455131 =  89^2 *  8011,        (3916)",
+        "  13: 105100903 = 101^2 * 10303,        (5050)",
+        "  14: 203822581 = 157^2 *  8269,        (6123)",
+        "  15: 261019543 = 349^2 *  2143,        (2094)",
+        "  16: 296765173 = 131^2 * 17293,        (8515)",
+        "  17: 422857021 = 233^2 *  7789,        (6757)",
+        "  18: 573332713 = 331^2 *  5233,        (4965)",
+        "  19: 782481673 = 167^2 * 28057,       (13861).",
+        "Note how the quotient (in the rightmost column) seems always to be a multiple of non-unitary prime factor and less than the unitary prime factor.",
+        "For p, q prime, if p^2+p+1 = kq and k+1|p-1, then p^2*q is in this sequence. - _Charlie Neder_, Jun 09 2019"
+    ],
+    "link": [
+        "<a href=\"/index/O#opnseqs\">Index entries for sequences where any odd perfect numbers must occur</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "mathematica": [
+        "Select[Range[15, 10^6 + 1, 2], And[! PrimePowerQ@ #1, Mod[#1 - #2, #2 - #3] == 0] & @@ {#, DivisorSigma[1, #] - #, Divisors[#][[-2]]} &] (* _Michael De Vlieger_, Jun 22 2019 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A032742(n) = if(1==n,n,n/vecmin(factor(n)[,1]));",
+        "A060681(n) = (n-A032742(n));",
+        "A318505(n) = if(1==n,0,(sigma(n)-A032742(n))-n);",
+        "isA326064(n) = if((n%2)&&(2!=isprimepower(n)), my(s=A032742(n), t=sigma(n)-s); (gcd(t-n, n-A032742(n)) == t-n), 0);"
+    ],
+    "xref": [
+        "Subsequence of A326063.",
+        "Cf. A032742, A060681, A246282, A318505.",
+        "Cf. also A228058, A325981, A326131, A326141."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jun 06 2019",
+    "ext": [
+        "More terms from _Amiram Eldar_, Dec 24 2020"
+    ],
+    "references": 6,
+    "revision": 24,
+    "time": "2020-12-24T04:48:12-05:00",
+    "created": "2019-06-09T11:04:20-04:00"
+}

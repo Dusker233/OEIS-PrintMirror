@@ -1,0 +1,58 @@
+{
+    "number": 299636,
+    "data": "3,9,16,19,22,28,36,41,48,57,61,66,74,77,83,89,94,97,101,103,108,115,121,130,133,136,139,146,154,157,161,166,171,178,183,191,200,209,214,217,222,229,238,241,244,248,253,257,265,275,282,290,295,298,306,317",
+    "name": "Solution (c(n)) of the system of 3 complementary equations in Comments.",
+    "comment": [
+        "Define sequences a(n), b(n), c(n) recursively, starting with a(0) = 1, b(0) = 2:",
+        "a(n) = least new k >= 2*b(n-1);",
+        "b(n) = least new k;",
+        "c(n) = a(n) + b(n);",
+        "where \"least new k\" means the least positive integer not yet placed.",
+        "***",
+        "The sequences a,b,c partition the positive integers.",
+        "***",
+        "Let x = 11/6.  Conjectures:",
+        "a(n) - 2*n*x = 0 for infinitely many n;",
+        "b(n) - n*x = 0 for infinitely many n;",
+        "c(n) - 3*n*x = 0 for infinitely many n;",
+        "(a(n) - 2*n*x) is unbounded below and above;",
+        "(b(n) - n*x) is unbounded below and above;",
+        "(c(n) - 3*n*x) is unbounded below and above;",
+        "***",
+        "Let d(a), d(b), d(c) denote the respective difference sequences. Conjectures:",
+        "12 occurs infinitely many times in d(a); 6 occurs infinitely many times in d(b);",
+        "2 occurs infinitely many times in d(c)."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A299636/b299636.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "n:   0    1    2    3    4    5    6    7    8    9",
+        "a:   1    4   10   12   14   17   23   26   30   37",
+        "b:   2    5    6    7    8   11   13   15   18   20",
+        "c:   3    9   16   19   22   28   36   41   48   57"
+    ],
+    "mathematica": [
+        "z = 1000;",
+        "mex[list_, start_] := (NestWhile[# + 1 &, start, MemberQ[list, #] &]);",
+        "a = {1}; b = {2}; c = {}; AppendTo[c, Last[a] + Last[b]];",
+        "Do[{",
+        "  AppendTo[a, mex[Flatten[{a, b, c}], 2 Last[b]]],",
+        "  AppendTo[b, mex[Flatten[{a, b, c}], 1]],",
+        "  AppendTo[c, Last[a] + Last[b]]}, {z}];",
+        "Take[a, 100] (* A299634 *)",
+        "Take[b, 100] (* A299635 *)",
+        "Take[c, 100] (* A299636 *)",
+        "(* _Peter J. C. Moses_, Apr 08 2018 *)"
+    ],
+    "xref": [
+        "Cf. A299634, A299635."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "_Clark Kimberling_, Apr 17 2018",
+    "references": 3,
+    "revision": 8,
+    "time": "2018-05-05T04:18:27-04:00",
+    "created": "2018-04-17T23:08:15-04:00"
+}

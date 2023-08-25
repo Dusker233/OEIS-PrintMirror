@@ -1,0 +1,34 @@
+{
+    "number": 360232,
+    "data": "1,1,2,6,16,51,172,626,2409,9791,41671,185224,855865,4100761,20314349,103827684,546388333,2955518901,16407286272,93350267922,543674327227,3237568471183,19693508812475,122249256779882,773797772369256,4990290667614087,32766888950422831",
+    "name": "G.f. Sum_{n>=0} a(n)*x^n = Sum_{n>=0} (1 + n*x + x^2)^n * x^n.",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A360232/b360232.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n}(Sum_{j=0..k} binomial(k,j) * binomial(j,n-k-j) * k^(2*j-n+k)). - _Vaclav Kotesovec_, Feb 14 2023"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 6*x^3 + 16*x^4 + 51*x^5 + 172*x^6 + 626*x^7 + 2409*x^8 + 9791*x^9 + 41671*x^10 + 185224*x^11 + 855865*x^12 + ...",
+        "where",
+        "A(x) = 1 + (1 + x + x^2)*x + (1 + 2*x + x^2)^2*x^2 + (1 + 3*x + x^2)^3*x^3 + (1 + 4*x + x^2)^4*x^4 + ... + (1 + n*x + x^2)^n*x^n + ..."
+    ],
+    "mathematica": [
+        "nmax = 30; CoefficientList[Series[Sum[(1 + k*x + x^2)^k * x^k, {k, 0, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Feb 13 2023 *)",
+        "Flatten[{1, Table[Sum[Sum[Binomial[k,j] * Binomial[j,n-k-j] * k^(2*j - n + k), {j, 0, k}], {k, 1, n}], {n, 1, 30}]}] (* _Vaclav Kotesovec_, Feb 14 2023 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff( sum(m=0,n, (1 + m*x + x^2)^m * x^m +x*O(x^n)),n)}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A294573, A360348, A360592."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Feb 12 2023",
+    "references": 2,
+    "revision": 13,
+    "time": "2023-02-14T05:15:35-05:00",
+    "created": "2023-02-13T03:27:13-05:00"
+}

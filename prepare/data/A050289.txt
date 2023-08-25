@@ -1,0 +1,44 @@
+{
+    "number": 50289,
+    "data": "123456789,123456798,123456879,123456897,123456978,123456987,123457689,123457698,123457869,123457896,123457968,123457986,123458679,123458697,123458769,123458796,123458967,123458976,123459678,123459687,123459768,123459786,123459867,123459876,123465789",
+    "name": "Zeroless pandigital numbers: numbers containing the digits 1-9 (each appearing at least once) and no 0's.",
+    "comment": [
+        "The first 9! = 362880 terms of this sequence are permutations of the digits 1-9 with a(9!) = 987654321. - _Jeremy Gardiner_, May 28 2010",
+        "First differences are given in A209280 (for the first 9! terms) or in A219664 (for at least as much initial terms). - _M. F. Hasler_, Mar 03 2013",
+        "A230959(a(n)) = 0. - _Reinhard Zumkeller_, Nov 02 2013",
+        "After the first 9! terms, 8! + 7! = 9*7! of the initial terms are repeated with a leading '1' prefixed, cf. formula. However, a(9!+8!+7!) = 1219...3 is followed by 122...9 and permutations of the last 7 digits, before 12314..9. - _M. F. Hasler_, Jan 08 2020, corrected Aug 11 2022 thanks to a remark from _Michael S. Branicky_"
+    ],
+    "link": [
+        "H. Fripertinger, <a href=\"http://www-ang.kfunigraz.ac.at/~fripert/fga/k1elsn.html\">Operate on \"9\" to display zeroless pandigitals</a>",
+        "James Grime and Brady Haran, <a href=\"https://www.youtube.com/watch?v=gaVMrqzb91w\">Why 381,654,729 is awesome</a>, Numberphile video (2013).",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PandigitalNumber.html\">Pandigital Number</a>"
+    ],
+    "formula": [
+        "a(n + 9!) = a(n) + 10^9 for 1 <= n <= 8! + 7!. - _M. F. Hasler_, Jan 08 2020, corrected Aug 11 2022"
+    ],
+    "program": [
+        "(PARI) apply( {A050289(n)=if(n<=7!*81, fromdigits(Vec(numtoperm(9,n-1)))+(n-1)\\9!*10^9, \"not yet implemented\")}, [1..25]) \\\\ _M. F. Hasler_, Jan 07 2020, corrected Aug 11 2022",
+        "(Python)",
+        "from itertools import count, islice, permutations, product",
+        "def c(t): return len(set(t)) == 9",
+        "def t2i(t): return int(\"\".join(map(str, t)))",
+        "def agen():",
+        "    yield from (t2i(p) for p in permutations(range(1, 10)))",
+        "    for d in count(10):",
+        "        yield from (t2i(p) for p in product(range(1, 10), repeat=d) if c(p))",
+        "print(list(islice(agen(), 25))) # _Michael S. Branicky_, May 30 2022, updated Aug 05 2022"
+    ],
+    "xref": [
+        "Cf. A050290, A133360, A171102."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Eric W. Weisstein_",
+    "ext": [
+        "Name clarified by _Michael S. Branicky_, Aug 05 2022"
+    ],
+    "references": 48,
+    "revision": 54,
+    "time": "2022-08-11T08:53:22-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

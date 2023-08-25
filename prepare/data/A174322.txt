@@ -1,0 +1,50 @@
+{
+    "number": 174322,
+    "data": "6,10,106,1003,10001,100001,1000001,10000001,100000001,1000000006,10000000003,100000000007,1000000000007,10000000000015,100000000000013,1000000000000003,10000000000000003,100000000000000015,1000000000000000007,10000000000000000001",
+    "name": "a(n) is the smallest n-digit number with exactly 4 divisors.",
+    "comment": [
+        "a(n) = the smallest n-digit number of the form p^3 or p^1*q^1, (p, q = distinct primes)."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A174322/b174322.txt\">Table of n, a(n) for n = 1..70</a>"
+    ],
+    "formula": [
+        "A000005(a(n)) = 4."
+    ],
+    "mathematica": [
+        "Table[k=10^(n-1); While[DivisorSigma[0, k] != 4, k++]; k, {n, 10}]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "def a(n):",
+        "    k = 10**(n-1)",
+        "    while len(divisors(k)) != 4: k += 1",
+        "    return k",
+        "print([a(n) for n in range(1, 21)]) # _Michael S. Branicky_, Jun 10 2021",
+        "(Python) # faster alternative for larger terms",
+        "from sympy import divisors",
+        "def a(n):",
+        "    k = 10**(n-1) - 1",
+        "    divs = -1",
+        "    while divs != 4:",
+        "      k += 1",
+        "      divs = 0",
+        "      for d in divisors(k, generator=True):",
+        "        divs += 1",
+        "        if divs > 4: break",
+        "    return k",
+        "print([a(n) for n in range(1, 22)]) # _Michael S. Branicky_, Jun 10 2021"
+    ],
+    "xref": [
+        "Subsequence of A030513.",
+        "Cf. A182648 (largest n-digit numbers with exactly 4 divisors)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jaroslav Krizek_, Nov 27 2010",
+    "references": 2,
+    "revision": 21,
+    "time": "2021-06-11T05:39:33-04:00",
+    "created": "2010-11-12T14:23:21-05:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 327553,
+    "data": "0,1,1,4,6,11,20,33,57,100,165,254,417,649,1039,1648,2540,3836,6020,9035,13645,20752,31054,45993,68668,101511,149525,220132,321614,468031,684124,989703,1427054,2064859,2964987,4254028,6090453,8686574,12366583,17598885",
+    "name": "Number of partitions in all twice partitions of n where both partitions are strict.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327553/b327553.txt\">Table of n, a(n) for n = 0..5000</a>"
+    ],
+    "example": [
+        "a(3) = 4 = 1+1+2 counting the partitions in 3, 21, 2|1."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n=0, 1, add(g(n-j)*add(",
+        "     `if`(d::odd, d, 0), d=numtheory[divisors](j)), j=1..n)/n)",
+        "    end:",
+        "b:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0,",
+        "     `if`(n=0, [1, 0], b(n, i-1)+(p-> p+[0, p[1]])(",
+        "       g(i)*b(n-i, min(n-i, i-1)))))",
+        "    end:",
+        "a:= n-> b(n$2)[2]:",
+        "seq(a(n), n=0..42);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = If[n == 0, 1, Sum[g[n - j] Sum[If[OddQ[d], d, 0], {d, Divisors[j]}], {j, 1, n}]/n];",
+        "b[n_, i_] := b[n, i] = If[i(i+1)/2 < n, {0, 0}, If[n==0, {1, 0}, b[n, i-1] + Function[p, p + {0, p[[1]]}][g[i] b[n-i, Min[n-i, i-1]]]]];",
+        "a[n_] := b[n, n][[2]];",
+        "a /@ Range[0, 42] (* _Jean-Fran\u00e7ois Alcover_, Dec 18 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000009, A279785, A327605."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Sep 16 2019",
+    "references": 4,
+    "revision": 16,
+    "time": "2020-12-18T04:00:17-05:00",
+    "created": "2019-09-16T18:43:02-04:00"
+}

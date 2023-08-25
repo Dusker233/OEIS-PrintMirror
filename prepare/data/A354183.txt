@@ -1,0 +1,26 @@
+{
+    "number": 354183,
+    "data": "17,109,151,241,251,257,331,433,631,641,673,683,1321,1429,1459,1613,2917,3191,3457,3889,4733,4861,5153,5419,6337,7001,7351,8581,9719,11119,11251,11471,12101,13367,13553,13669,14323,14449,15121,17539,18503,20231,20857",
+    "name": "Primes p such that p divides 2^((p-1)/x) - 1, where x is the greatest prime factor of p - 1.",
+    "comment": [
+        "Together with 3 and 5, supersequence of A023394.",
+        "Are there any odd integers k (k is not a Sierpi\u0144ski number) such that every prime of the form k*2^m + 1 (m >= 1) does not belong to the sequence?"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[2500]], PowerMod[2, (# - 1)/FactorInteger[# - 1][[-1, 1]], #] == 1 &] (* _Amiram Eldar_, May 19 2022 *)"
+    ],
+    "program": [
+        "(Magma) gpf:=func<n | #f eq 0 select 1 else f[#f][1] where f is Factorization(n)>; [p: p in PrimesUpTo(20857) | Modexp(2, Truncate((p-1)/gpf(p-1)), p) eq 1];",
+        "(PARI) isok(p) = if (isprime(p) && (p>2), my(x=vecmax(factor(p-1)[,1])); ((2^((p-1)/x) - 1) % p) == 0); \\\\ _Michel Marcus_, May 19 2022"
+    ],
+    "xref": [
+        "Cf. A023394."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Arkadiusz Wesolowski_, May 18 2022",
+    "references": 0,
+    "revision": 11,
+    "time": "2022-07-07T02:27:51-04:00",
+    "created": "2022-07-07T02:27:51-04:00"
+}

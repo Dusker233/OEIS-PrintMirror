@@ -1,0 +1,42 @@
+{
+    "number": 298872,
+    "data": "2,6,11,18,26,35,45,57,70,84,99,116,135,155,176,198,221,245,270,298,327,357,388,420,453,487,523,560,598,637,677,718,760,804,850,897,945,994,1044,1095,1147,1200,1254,1309,1365,1423,1482,1543,1605,1668,1732",
+    "name": "Solution (b(n)) of the system of 3 complementary equations in Comments.",
+    "comment": [
+        "Define sequences a(n), b(n), c(n) recursively, starting with a(0) = 1, b(0) = 2:",
+        "a(n) = least new;",
+        "b(n) = least new k >= a(n) + b(n-1);",
+        "c(n) = a(n) + 2 b(n);",
+        "where \"least new k\" means the least positive integer not yet placed. The sequences a,b,c partition the positive integers."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A298872/b298872.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "n:   0    1    2    3    4    5    6    7    8   9",
+        "a:   1    4    5    7    8    9   10   12   13   14",
+        "b:   2    6   11   18   26   35   45   57   70   84",
+        "c:   3   16   27   43   60   30   79  100  126  153"
+    ],
+    "mathematica": [
+        "z = 400;",
+        "mex[list_, start_] := (NestWhile[# + 1 &, start, MemberQ[list, #] &]);",
+        "a = {1}; b = {2}; c = {3};",
+        "Do[{AppendTo[a, mex[Flatten[{a, b, c}], 1]],",
+        "   AppendTo[b, mex[Flatten[{a, b, c}], Last[a] + Last[b]]],",
+        "   AppendTo[c, Last[a] + 2 Last[b]]}, {z}];",
+        "Take[a, 100]  (* A298871 *)",
+        "Take[b, 100]  (* A298872 *)",
+        "Take[c, 100]  (* A298873 *)"
+    ],
+    "xref": [
+        "Cf. A299634, A298871, A298873, A298875."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "_Clark Kimberling_, Apr 18 2018",
+    "references": 6,
+    "revision": 5,
+    "time": "2018-04-18T19:49:31-04:00",
+    "created": "2018-04-18T19:49:31-04:00"
+}

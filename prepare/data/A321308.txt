@@ -1,0 +1,44 @@
+{
+    "number": 321308,
+    "data": "2,16,28,160,280,512,520,644,820,1040,1204,1640,2000,2072,2288,2720,2920,3416,3800,3976,4648,4664,4736,5312,5600,6136,6188,6496,6968,7936,8080,8300,8944,11792,11984,12512,12656,13624,14060,14416,14768,15680,16000,16384",
+    "name": "Practical numbers k such that k^4 + 2 is also practical.",
+    "comment": [
+        "There are infinitely many practical numbers k such that k^4 + 2 is also practical (see Wang and Sun Theorem 1.3). - _Michel Marcus_, Nov 03 2018"
+    ],
+    "link": [
+        "Li-Yuan Wang and Zhi-Wei Sun, <a href=\"https://arxiv.org/abs/1809.01532\">On practical numbers of some special forms</a>, arXiv preprint arXiv:1809.01532 [math.NT], 2018. See Theorem 1.3 p. 3."
+    ],
+    "example": [
+        "2 and 18 = 2^4 + 2 are practical, hence 2 is a term. - _Michel Marcus_, Nov 03 2018"
+    ],
+    "mathematica": [
+        "PracticalQ[n_] := Module[{f, p, e, prod=1, ok=True}, If[n<1 || (n>1 && OddQ[n]), False, If[n==1, True, f=FactorInteger[n]; {p, e} = Transpose[f]; Do[If[p[[i]] > 1+DivisorSigma[1, prod], ok=False; Break[]]; prod=prod*p[[i]]^e[[i]], {i, Length[p]}]; ok]]]; (* A005153 *)",
+        "a[q_]:=If[PracticalQ[q] && PracticalQ[q^4+2],q]; DeleteCases[Array[a, 25000], Null]"
+    ],
+    "program": [
+        "(PARI)",
+        "is_A321308(n) = is_A005153(n) && is_A005153(n^4+2); \\\\ _Michel Marcus_, Nov 03 2018. [Stale copy of is_A005153 removed here. Please do not duplicate code, it will necessarily become obsolete or worse. - _M. F. Hasler_, Jun 19 2023]",
+        "(Python)",
+        "from itertools import count, islice",
+        "from math import prod",
+        "from sympy import factorint",
+        "def A321308_gen(startvalue=2): # generator of terms >= startvalue",
+        "    for m in count(max(startvalue,2)+(max(startvalue,2)&1),2):",
+        "        f = list(factorint(m).items())",
+        "        if all(f[i][0] <= 1+prod((f[j][0]**(f[j][1]+1)-1)//(f[j][0]-1) for j in range(i)) for i in range(len(f))):",
+        "            f = list(factorint(m**4+2).items())",
+        "            if all(f[i][0] <= 1+prod((f[j][0]**(f[j][1]+1)-1)//(f[j][0]-1) for j in range(i)) for i in range(len(f))):",
+        "                yield m",
+        "A321308_list = list(islice(A321308_gen(),20)) # _Chai Wah Wu_, Aug 04 2023"
+    ],
+    "xref": [
+        "Cf. A005153 (practical numbers), A000583."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Stefano Spezia_, Nov 03 2018",
+    "references": 1,
+    "revision": 37,
+    "time": "2023-08-04T18:58:51-04:00",
+    "created": "2018-12-10T03:02:33-05:00"
+}

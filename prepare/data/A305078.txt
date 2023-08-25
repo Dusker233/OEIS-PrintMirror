@@ -1,0 +1,67 @@
+{
+    "number": 305078,
+    "data": "2,3,5,7,9,11,13,17,19,21,23,25,27,29,31,37,39,41,43,47,49,53,57,59,61,63,65,67,71,73,79,81,83,87,89,91,97,101,103,107,109,111,113,115,117,121,125,127,129,131,133,137,139,147,149,151,157,159,163,167",
+    "name": "Heinz numbers of connected integer partitions.",
+    "comment": [
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k).",
+        "Given a finite multiset S of positive integers greater than one, let G(S) be the simple labeled graph with vertex set S and edges between any two vertices with a common divisor greater than 1. For example, G({6,14,15,35}) is a 4-cycle. This sequence lists all Heinz numbers of multisets S such that G(S) is a connected graph."
+    ],
+    "link": [
+        "Madeline Locus Dawsey, Tyler Russell and Dannie Urban, <a href=\"https://arxiv.org/abs/2108.00943\">Polynomials Associated to Integer Partitions</a>, arXiv:2108.00943 [math.NT], 2021."
+    ],
+    "example": [
+        "The sequence of all connected multiset multisystems (see A302242, A112798) begins:",
+        "   2: {{}}",
+        "   3: {{1}}",
+        "   5: {{2}}",
+        "   7: {{1,1}}",
+        "   9: {{1},{1}}",
+        "  11: {{3}}",
+        "  13: {{1,2}}",
+        "  17: {{4}}",
+        "  19: {{1,1,1}}",
+        "  21: {{1},{1,1}}",
+        "  23: {{2,2}}",
+        "  25: {{2},{2}}",
+        "  27: {{1},{1},{1}}",
+        "  29: {{1,3}}",
+        "  31: {{5}}",
+        "  37: {{1,1,2}}",
+        "  39: {{1},{1,2}}",
+        "  41: {{6}}",
+        "  43: {{1,4}}",
+        "  47: {{2,3}}",
+        "  49: {{1,1},{1,1}}",
+        "  53: {{1,1,1,1}}",
+        "  57: {{1},{1,1,1}}",
+        "  59: {{7}}",
+        "  61: {{1,2,2}}",
+        "  63: {{1},{1},{1,1}}",
+        "  65: {{2},{1,2}}",
+        "  67: {{8}}",
+        "  71: {{1,1,3}}",
+        "  73: {{2,4}}",
+        "  79: {{1,5}}",
+        "  81: {{1},{1},{1},{1}}",
+        "  83: {{9}}",
+        "  87: {{1},{1,3}}",
+        "  89: {{1,1,1,2}}",
+        "  91: {{1,1},{1,2}}",
+        "  97: {{3,3}}"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n===1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "zsm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[Less@@#,GCD@@s[[#]]]>1&]},If[c=={},s,zsm[Union[Append[Delete[s,List/@c[[1]]],LCM@@s[[c[[1]]]]]]]]];",
+        "Select[Range[300],Length[zsm[primeMS[#]]]==1&]"
+    ],
+    "xref": [
+        "Cf. A001221, A048143, A056239, A112798, A286518, A286520, A290103, A302242, A303837, A304118, A304714, A304716, A305052, A305055, A305079."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, May 24 2018",
+    "references": 79,
+    "revision": 10,
+    "time": "2021-08-03T01:55:00-04:00",
+    "created": "2018-05-25T18:57:26-04:00"
+}

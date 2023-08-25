@@ -1,0 +1,40 @@
+{
+    "number": 344208,
+    "data": "1,2,3,6,9,10,11,12,15,18,19,20,21,24,27,28,30,33,36,37,39,42,45,46,48,51,54,55,57,60,63,64,66,69,72,73,75,78,81,82,84,87,90,91,93,96,99,100,101,102,105,108,109,110,111,114,117,118,120,123,126,127",
+    "name": "Numbers k such that iterating x -> digsum(x)^2 + 1 from k one or more times results in a number < 10.",
+    "comment": [
+        "The number of iterations must be nonzero.",
+        "From _Michael S. Branicky_, May 15 2021: (Start)",
+        "f(x) = digsum(x)^2 + 1 < x for x >= 400.",
+        "All iterations terminate or lead to the cycle 65 -> 122 -> 26.",
+        "There are 5, 47, 395, 3213, 27724, 253490, 2362998, 22649995, 224689951, 2236788357 terms with 1..10 digits, resp. (End)"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A344208/b344208.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "15 is a term because (1+5)^2 + 1 = 37, (3+7)^2 + 1 = 101, (1+0+1)^2 + 1 = 5.",
+        "13 is not a term in this sequence because iterating 13 through this function will never yield a single-digit number.  Specifically, 13 -> 17 -> 65 -> 122 -> 26 -> 65 -> ... ."
+    ],
+    "program": [
+        "(Python)",
+        "def f(x): return sum(map(int, str(x)))**2 + 1",
+        "def ok(n):",
+        "  iter = f(n)  # set to n for number of iterations >= 0",
+        "  while iter > 9:",
+        "    if iter in {65, 122, 26}: return False",
+        "    iter = f(iter)",
+        "  return True",
+        "print(list(filter(ok, range(1, 128)))) # _Michael S. Branicky_, May 14 2021"
+    ],
+    "xref": [
+        "Cf. A007953, A344214."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Joseph Brown_, May 11 2021",
+    "references": 2,
+    "revision": 49,
+    "time": "2021-06-13T16:09:24-04:00",
+    "created": "2021-06-12T14:15:06-04:00"
+}

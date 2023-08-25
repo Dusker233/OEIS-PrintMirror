@@ -1,0 +1,59 @@
+{
+    "number": 113166,
+    "data": "0,1,1,3,3,8,8,17,23,41,55,102,144,247,387,631,987,1636,2584,4233,6787,11011,17711,28794,46380,75181,121441,196685,317811,514712,832040,1346921,2178429,3525581,5702937,9229314,14930352,24160419,39088469,63250315,102334155",
+    "name": "Total number of white pearls remaining in the chest - see Comments.",
+    "comment": [
+        "Define a(1) = 0. To calculate a(n):",
+        "1. Expand (A + B)^n into 2^n words of length n consisting of letters A and B (i.e., use of the distributive and associative laws of multiplication but assume A and B do not commute).",
+        "2. To each of the 2^n words, associate a free binary necklace consisting of n \"black and white pearls\". Figuratively, all 2^n necklaces can be placed inside a treasure chest.",
+        "3. Remove all n-pearled necklaces which are found to have (at least) two adjacent white pearls from the chest.",
+        "4. If two necklaces are found to be equivalent, remove one of them from the chest. Continue until no two equivalent necklaces can be found in the chest.",
+        "5. Counting the total number of white pearls left in the chest gives a(n)."
+    ],
+    "reference": [
+        "Creighton Dement, Floretion-generated Integer Sequences (work in progress)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A113166/b113166.txt\">Table of n, a(n) for n = 1..2000</a> (first 50 terms from Max Alekseyev)",
+        "Creighton Dement and Max Alekseyev, <a href=\"/A113166/a113166.txt\">Notes on A113166</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..floor(n/2)} (k/(n-k))*Sum_{j=1..gcd(n,k)} binomial((n-k)*gcd(n,k,j)/gcd(n,k), k*gcd(n,k,j)/gcd(n,k)) (Alekseyev).",
+        "a(p) = Fibonacci(p-1) for all primes p. (_Creighton Dement_ and _Antti Karttunen_, proved by _Max Alekseyev_).",
+        "a(n) = Sum_{d|n} phi(n/d)*Fibonacci(d-1), where phi=A000010. - _Maxim Karimov_ and Vladislav Sulima, Aug 20 2021"
+    ],
+    "maple": [
+        "with(numtheory): with(combinat):",
+        "a:= n-> add(phi(d)*fibonacci(n/d-1), d=divisors(n)):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Aug 21 2021"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[EulerPhi[d]*Fibonacci[n/d - 1], {d, Divisors[n]}];",
+        "Array[a, 50] (* _Jean-Fran\u00e7ois Alcover_, Jan 03 2022 *)"
+    ],
+    "program": [
+        "(PARI) A113166(n) = sum(k=1,n\\2, k/(n-k) * sum(j=1,gcd(n,k), binomial((n-k)*gcd([n,k,j])/gcd(n,k),k*gcd([n,k,j])/gcd(n,k)) ))",
+        "(MATLAB)",
+        "function [res] = calcA113166(n)",
+        "    d=divisors(n);",
+        "    res=0;",
+        "    for i=1:length(d)",
+        "        res=res+eulerPhi(n/d(i))*fibonacci(d(i)-1);",
+        "    end",
+        "end",
+        "% _Maxim Karimov_, Aug 21 2021"
+    ],
+    "xref": [
+        "Cf. A000010, A034748, A006206, A000358, A000045, A000204, A000010."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Creighton Dement_, Jan 05 2006; Jan 08 2006; Jul 29 2006",
+    "ext": [
+        "More terms from _Max Alekseyev_, Jun 20 2006"
+    ],
+    "references": 3,
+    "revision": 72,
+    "time": "2022-01-03T21:54:01-05:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 99781,
+    "data": "1,4,16,65,268,1120,4737,20244,87280,379073,1656348,7272896,32060673,141775396,628505296,2791696705,12419264300,55315472416,246607247233,1100229683508,4911436984752,21934428189121,97992663440444",
+    "name": "a(n) = Sum_{k=0..floor(n/3)} C(n-k,2*k) * 4^(n-3*k).",
+    "comment": [
+        "In general a(n) = Sum_{k=0..floor(n/3)} C(n-k,2*k) * u^k * v^(n-3*k) has g.f. (1-v*x)/((1-v*x)^2 - u*x^2) and satisfies the recurrence a(n) = 2*u*v*a(n-1) - v^2*a(n-2) + u*a(n-3)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A099781/b099781.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (8,-16,1)."
+    ],
+    "formula": [
+        "G.f.: (1-4*x)/((1-4*x)^2 - x^3).",
+        "a(n) = 8*a(n-1) - 16*a(n-2) + a(n-3)."
+    ],
+    "maple": [
+        "seq(coeff(series((1-4*x)/((1-4*x)^2 -x^3), x, n+1), x, n), n = 0..30); # _G. C. Greubel_, Sep 04 2019"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{8,-16,1},{1,4,16},30] (* _Harvey P. Dale_, Jul 07 2013 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^30)); Vec((1-4*x)/((1-4*x)^2 -x^3)) \\\\ _G. C. Greubel_, Sep 04 2019",
+        "(Magma) I:=[1,4,16]; [n le 3 select I[n] else 8*Self(n-1) - 16*Self(n-2) + Self(n-3): n in [1..30]];",
+        "(Sage)",
+        "def A099781_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P((1-4*x)/((1-4*x)^2 -x^3)).list()",
+        "A099781_list(30) # _G. C. Greubel_, Sep 04 2019",
+        "(GAP) a:=[1,4,16];; for n in [4..30] do a[n]:=8*a[n-1]-16*a[n-2]+a[n-3]; od; a; # _G. C. Greubel_, Sep 04 2019"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Paul Barry_, Oct 26 2004",
+    "references": 7,
+    "revision": 11,
+    "time": "2022-09-08T08:45:15-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

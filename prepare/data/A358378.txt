@@ -1,0 +1,46 @@
+{
+    "number": 358378,
+    "data": "1,2,3,4,5,7,8,9,11,13,15,16,17,21,25,27,29,31,32,37,41,43,49,53,57,59,61,63,64,65,73,81,85,101,105,107,113,117,121,123,125,127,128,129,137,145,165,169,171,193,201,209,213,229,233,235,241,245,249,251",
+    "name": "Numbers k such that the k-th standard ordered rooted tree is fully canonically ordered (counted by A000081).",
+    "comment": [
+        "The ordering of finitary multisets is first by length and then lexicographically. This is also the ordering used for Mathematica expressions.",
+        "We define the n-th standard ordered rooted tree to be obtained by taking the (n-1)-th composition in standard order (graded reverse-lexicographic, A066099) as root and replacing each part with its own standard ordered rooted tree. This ranking is an ordered variation of Matula-Goebel numbers, giving a bijective correspondence between positive integers and unlabeled ordered rooted trees."
+    ],
+    "link": [
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/e/2PACX-1vTCPiJVFUXN8IqfLlCXkgP15yrGWeRhFS4ozST5oA4Bl2PYS-XTA3sGsAEXvwW-B0ealpD8qnoxFqN3/pub\">Statistics, classes, and transformations of standard compositions</a>"
+    ],
+    "example": [
+        "The terms together with their corresponding ordered rooted trees begin:",
+        "   1: o",
+        "   2: (o)",
+        "   3: ((o))",
+        "   4: (oo)",
+        "   5: (((o)))",
+        "   7: (o(o))",
+        "   8: (ooo)",
+        "   9: ((oo))",
+        "  11: ((o)(o))",
+        "  13: (o((o)))",
+        "  15: (oo(o))",
+        "  16: (oooo)",
+        "  17: ((((o))))",
+        "  21: ((o)((o)))"
+    ],
+    "mathematica": [
+        "stc[n_]:=Differences[Prepend[Join@@Position[Reverse[IntegerDigits[n,2]],1],0]]//Reverse;",
+        "srt[n_]:=If[n==1,{},srt/@stc[n-1]];",
+        "Select[Range[1000],FreeQ[srt[#],_[__]?(!OrderedQ[#]&)]&]"
+    ],
+    "xref": [
+        "These trees are counted by A000081.",
+        "A358371 and A358372 count leaves and nodes in standard ordered rooted trees.",
+        "Cf. A001263, A004249, A005043, A032027, A063895, A276625, A358373-A358377."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Nov 14 2022",
+    "references": 14,
+    "revision": 5,
+    "time": "2022-11-15T10:12:45-05:00",
+    "created": "2022-11-15T10:12:45-05:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 104265,
+    "data": "1,16,121,1156,11236,111556,1115136,11115556,111112681,1111155556,11111478921,111111555556,1111118377216,11111115555556,111111226346761,1111111155555556,11111112515384644,111111111555555556,1111111112398242916,11111111115555555556,111111111113333185156,1111111111155555555556",
+    "name": "Smallest n-digit square with no zero digits.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A104265/b104265.txt\">Table of n, a(n) for n = 1..362</a>"
+    ],
+    "formula": [
+        "From _Chai Wah Wu_, Mar 24 2020: (Start)",
+        "a(n) >= (10^n-1)/9.",
+        "a(2n) = (10^n+2)^2/9 = A102807(n). Proof: the smallest 2n-digit number without zero digits is (10^(2n)-1)/9. ((10^n-1)/3)^2 = (10^(2n)-2*10^n+1)/9 < (10^(2n)-1)/9 for n >= 1. Thus a(2n) > ((10^n-1)/3)^2. The next square is ((10^n+2)/3)^2 = (10^(2n)-1)/9 + 4*(10^(n)-1)/9 + 1, i.e. it is n 1's followed by n-1 5's followed by the digit 6, and has no zero digits.",
+        "(End)"
+    ],
+    "example": [
+        "a(3) = Min{121, 144, 169, 196, ....} = 121."
+    ],
+    "mathematica": [
+        "f[n_] := Block[{k = Ceiling[ Sqrt[10^n]]}, While[ Union[ IntegerDigits[ k^2]][[1]] == 0, k++ ]; k^2]; Table[ f[n], {n, 0, 20}] (* _Robert G. Wilson v_, Mar 02 2005 *)",
+        "snds[n_]:=Module[{c=Ceiling[Sqrt[FromDigits[Join[PadRight[{},n-1,1], {0}]]]]^2},While[DigitCount[c,10,0]>0,c=(1+Sqrt[c])^2];c]; Array[ snds,22] (* _Harvey P. Dale_, Jun 12 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import integer_nthroot",
+        "def A104265(n):",
+        "    m, a = integer_nthroot((10**n-1)//9,2)",
+        "    if not a:",
+        "        m += 1",
+        "    k = m**2",
+        "    while '0' in str(k):",
+        "        m += 1",
+        "        k += 2*m-1",
+        "    return k # _Chai Wah Wu_, Mar 24 2020"
+    ],
+    "xref": [
+        "Cf. A102807, A104266, A104264, A052041."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Feb 26 2005",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Mar 02 2005",
+        "Two more terms from _Jon E. Schoenfield_, Mar 29 2015",
+        "a(21)-a(22) from _Chai Wah Wu_, Mar 24 2020"
+    ],
+    "references": 4,
+    "revision": 24,
+    "time": "2020-06-12T14:08:13-04:00",
+    "created": "2005-04-09T03:00:00-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 338446,
+    "data": "3,5,7,8,11,12,13,15,17,18,19,23,24,26,29,30,31,36,37,39,41,42,43,47,48,49,52,53,56,59,60,61,67,68,71,72,73,75,78,79,83,84,88,89,90,95,97,98,100,101,102,103,107,109,112,113,119,120,121,124,127,128,131,132,137",
+    "name": "Numbers that are sums of consecutive odd primes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A338446/b338446.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "67 is in the sequence because 67 = 7 + 11 + 13 + 17 + 19."
+    ],
+    "maple": [
+        "q:= proc(n) local p, q, s; p, q, s:= prevprime(n+1)$3;",
+        "      do if p=2 then return false",
+        "       elif s=n then return true",
+        "       elif s<n then p:= prevprime(p); s:= s+p;",
+        "                else s:= s-q; q:= prevprime(q)",
+        "         fi",
+        "      od",
+        "    end:",
+        "select(q, [$3..150])[];  # _Alois P. Heinz_, Oct 31 2020"
+    ],
+    "mathematica": [
+        "okQ[n_] := Module[{p, q, s}, {p, q, s} = Table[NextPrime[n + 1, -1], {3}]; While[True, Which[",
+        "     p == 2, Return@ False,",
+        "     s == n, Return@ True,",
+        "     s < n, p = NextPrime[p, -1]; s = s + p,",
+        "     True, s = s - q; q = NextPrime[q, -1]]]];",
+        "Select[Range[3, 150], okQ] (* _Jean-Fran\u00e7ois Alcover_, Feb 21 2022, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import prevprime",
+        "def ok(n):",
+        "    if n < 2: return False",
+        "    p, q, s = [prevprime(n+1)] * 3",
+        "    while True:",
+        "        if p == 2: return False",
+        "        if s == n: return True",
+        "        elif s < n: p = prevprime(p); s += p",
+        "        else: s -= q; q = prevprime(q)",
+        "print([k for k in range(150) if ok(k)]) # _Michael S. Branicky_, Feb 21 2022 after _Alois P. Heinz_"
+    ],
+    "xref": [
+        "Cf. A007504, A034707, A050936, A053790, A065091, A071148."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ilya Gutkovskiy_, Oct 28 2020",
+    "references": 1,
+    "revision": 14,
+    "time": "2022-02-21T23:38:50-05:00",
+    "created": "2020-10-31T18:05:48-04:00"
+}

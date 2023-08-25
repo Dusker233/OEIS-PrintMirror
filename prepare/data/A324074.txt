@@ -1,0 +1,46 @@
+{
+    "number": 324074,
+    "data": "0,0,1,6,48,360,2880,25200,262080,2903040,34473600,439084800,5987520000,87178291200,1351263513600,22230464256000,397533007872000,7469435990016000,147254595231744000,3041127510220800000,65688354220769280000,1481637322979573760000",
+    "name": "Total number of distorted ancestor-successor pairs in all defective (binary) heaps on n elements.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A324074/b324074.txt\">Table of n, a(n) for n = 0..100</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Heap.html\">Heap</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Binary_heap\">Binary heap</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..A061168(n)} k * A306393(n,k)."
+    ],
+    "maple": [
+        "b:= proc(u, o) option remember; local n, g, l; n:= u+o;",
+        "      if n=0 then 1",
+        "    else g:= 2^ilog2(n); l:= min(g-1, n-g/2); expand(",
+        "         add(x^(n-j)*add(binomial(j-1, i)*binomial(n-j, l-i)*",
+        "         b(i, l-i)*b(j-1-i, n-l-j+i), i=0..min(j-1, l)), j=1..u)+",
+        "         add(x^(j-1)*add(binomial(j-1, i)*binomial(n-j, l-i)*",
+        "         b(l-i, i)*b(n-l-j+i, j-1-i), i=0..min(j-1, l)), j=1..o))",
+        "      fi",
+        "    end:",
+        "a:= n-> (p-> add(coeff(p, x, i)*i, i=0..degree(p)))(b(n, 0)):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[u_, o_] := b[u, o] = Module[{n, g, l}, n = u + o; If[n == 0, 1,",
+        "     g = 2^(Length[IntegerDigits[n, 2]]-1); l = Min[g-1, n-g/2]; Expand[",
+        "     Sum[x^(n - j)*Sum[Binomial[j - 1, i]*Binomial[n - j, l - i]*",
+        "     b[i, l-i]*b[j-1-i, n-l-j+i], {i, 0, Min[j - 1, l]}], {j, 1, u}] +",
+        "     Sum[x^(j - 1)*Sum[Binomial[j - 1, i]*Binomial[n - j, l - i]*",
+        "     b[l-i, i]*b[n-l-j+i, j-1-i], {i, 0, Min[j - 1, l]}], {j, 1,o}]]]];",
+        "a[n_] := With[{p=b[n, 0]}, CoefficientList[p, x].Range[0, Exponent[p, x]]];",
+        "a /@ Range[0, 25] (* _Jean-Fran\u00e7ois Alcover_, Apr 23 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000523, A061168, A306393."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Feb 14 2019",
+    "references": 2,
+    "revision": 13,
+    "time": "2021-04-23T05:06:48-04:00",
+    "created": "2019-02-14T10:14:07-05:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 88639,
+    "data": "2,11,223,3331,44449,555557,66666629,777777701,888888883,99999999907,1010101010101010101039,11111111111111111111111,12121212121212121212121223,1313131313131313131313131301,141414141414141414141414141497,15151515151515151515151515151501",
+    "name": "Smallest prime beginning with at least n n's (in decimal notation).",
+    "link": [
+        "M. F. Hasler, <a href=\"/A088639/b088639.txt\">Table of n, a(n) for n=0..100</a>"
+    ],
+    "maple": [
+        "a:= proc(n) local d, h, s;",
+        "      s:= parse(cat(0, n$n));",
+        "      for d from 0 do",
+        "        for h to 10^d-1 do",
+        "          if isprime(s+h) then return s+h fi",
+        "        od:",
+        "        s:= s*10;",
+        "      od",
+        "    end:",
+        "seq(a(n), n=0..16);  # _Alois P. Heinz_, Feb 11 2021"
+    ],
+    "program": [
+        "(PARI) A088639(n)={ local(p=10^#Str(n),d=1); n*=(p^n-1)/(p-1); until( (d*=10)*(n+1)>p=nextprime(n*d), );p} /* _M. F. Hasler_, Jan 13 2009 */",
+        "(Python)",
+        "from sympy import isprime",
+        "def a(n):",
+        "  if n == 0: return 2",
+        "  nns, i, pow10 = int(str(n)*n), 1, 1",
+        "  while True:",
+        "    i = 1",
+        "    while i < pow10:",
+        "      t = nns * pow10 + i",
+        "      if isprime(t): return t",
+        "      i += 2",
+        "    pow10 *= 10",
+        "print([a(n) for n in range(16)]) # _Michael S. Branicky_, Feb 11 2021"
+    ],
+    "xref": [
+        "Cf. A088640. See A068120 for another version. See also A065584 - A065592."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "0,1",
+    "author": "_Amarnath Murthy_, Oct 27 2003",
+    "ext": [
+        "More terms from _Ray Chandler_, Nov 01 2003",
+        "More cross-references and initial term added by _M. F. Hasler_, Jan 13 2009"
+    ],
+    "references": 3,
+    "revision": 21,
+    "time": "2021-02-11T19:21:51-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

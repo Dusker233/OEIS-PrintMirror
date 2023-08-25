@@ -1,0 +1,42 @@
+{
+    "number": 302565,
+    "data": "1,1,7,85,1429,30517,792007,24293389,862902745,34918162057,1587910815271,80217252865861,4457823231346717,270261899977497325,17749585402744292215,1255201826997862952845,95083758340337074058545,7680863233559647281837265,659040900304099125516970375,59855299015030039092312638965",
+    "name": "G.f. A(x) satisfies: A(x) = Sum_n>=0} x^n * A(x)^n * Product_{k=0..n-1} (5*k + 1).",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A302565/b302565.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = Sum_n>=0} x^n * A(x)^n * Product_{k=0..n-1} (5*k + 1).",
+        "(2) A(x) = (1/x)*Series_Reversion( x/F(x) ), where F(x) = Sum_{n>=0} A008548(n)*x^n, the o.g.f. of the quintuple factorials.",
+        "(3) A(x) = 1 + x*A(x)^2 * (A(x) + 6*x*A'(x)) / (A(x) + x*A'(x)).",
+        "(4) A(x) = 1/(1 - x*A(x)/(1 - 5*x*A(x)/(1 - 6*x*A(x)/(1 - 10*x*A(x)/(1 - 11*x*A(x)/(1 - 15*x*A(x)/(1 - 16*x*A(x)/(1 - ...)))))))), a continued fraction.",
+        "a(n) ~ sqrt(2*Pi) * 5^n * n^(n - 3/10) / (Gamma(1/5) * exp(n - 1/5)). - _Vaclav Kotesovec_, Jun 18 2019"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 7*x^2 + 85*x^3 + 1429*x^4 + 30517*x^5 + 792007*x^6 + 24293389*x^7 + 862902745*x^8 + 34918162057*x^9 + ...",
+        "such that",
+        "A(x) = 1 + x*A(x) + 6*x^2*A(x)^2 + 66*x^3*A(x)^3 + 1056*x^4*A(x)^4 + 22176*x^5*A(x)^5 + ... + x^n*A(x)^n * Product_{k=0..n-1} (5*k + 1) + ..."
+    ],
+    "program": [
+        "(PARI) /* Series Reversion of Quintuple Factorials g.f.: */",
+        "{a(n) = polcoeff((1/x) * serreverse(x/sum(m=0, n, x^m * prod(k=0, m-1, 5*k + 1)) +x^2*O(x^n)), n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) /* Differential Equation: */",
+        "{a(n) = my(A=1); for(i=0, n, A = 1 + x*A^2*(A + 6*x*A')/(x*A +x^2*O(x^n))'); polcoeff(A, n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) /* Continued fraction: */",
+        "{a(n) = my(A=1, CF = 1+x +x*O(x^n)); for(i=1, n, A=CF; for(k=0, n, CF = 1/(1 - floor(5*floor(3*(n-k+1)/2)/3)*x*A*CF ) )); polcoeff(CF, n)}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A008548, A088368, A301363, A302100, A302535."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 09 2018",
+    "references": 4,
+    "revision": 11,
+    "time": "2019-06-18T04:51:56-04:00",
+    "created": "2018-04-09T18:17:35-04:00"
+}

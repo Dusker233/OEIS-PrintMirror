@@ -1,0 +1,38 @@
+{
+    "number": 357417,
+    "data": "1,5,12,27,43,76,109,168,218,301,383,499,591,779,904,1153,1322,1555,1817,2143,2379,2790,3164,3627,3957,4546,5034,5599,6062,6937,7456,8369,8973,9896,10678,11663,12430,13732,14618,15920,16996,18471,19570,20934,22189,24080",
+    "name": "Row sums of the triangular array A357431.",
+    "comment": [
+        "The rows of the triangular array A357431 are chains of numbers that end with the positive terms of A007952.",
+        "It appears that lim_{n->oo} a(n)/A002411(n) will converge to a number close to 0.464401.. . - _Thomas Scheuerle_, Sep 27 2022"
+    ],
+    "example": [
+        "For n = 6, the numbers of the chain that are divisible by 6, 5, 4, 3, 2, and 1 are 6, 10, 12, 15, 16, and 17, these forming row 6 of A357431. The sum of this row is a(6) = 76."
+    ],
+    "mathematica": [
+        "a[n_] := Module[{k = n, s = n, r}, Do[k++; k += If[(r = Mod[k, i]) == 0, 0, i - Mod[k, i]]; s += k, {i, n - 1, 1, -1}]; s]; Array[a, 50] (* _Amiram Eldar_, Sep 27 2022 *)"
+    ],
+    "program": [
+        "(MATLAB)",
+        "function a = A357417( max_n )",
+        "    for n = 1:max_n",
+        "        k = [n:-1:1];",
+        "        for m = 2:length(k)",
+        "            k(m) = k(m)*(floor(k(m-1)/k(m))+1);",
+        "        end",
+        "        a(n) = sum(k);",
+        "    end",
+        "end % _Thomas Scheuerle_, Sep 27 2022",
+        "(PARI) a(n) = my(t=0); sum(k=0,n-1, t++; t+=(-t)%(n-k)); \\\\ _Kevin Ryde_, Sep 27 2022"
+    ],
+    "xref": [
+        "Cf. A357431, A002411."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Tamas Sandor Nagy_, Sep 27 2022",
+    "references": 2,
+    "revision": 38,
+    "time": "2022-11-20T05:54:38-05:00",
+    "created": "2022-11-15T21:51:13-05:00"
+}

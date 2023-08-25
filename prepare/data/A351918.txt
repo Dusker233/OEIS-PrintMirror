@@ -1,0 +1,44 @@
+{
+    "number": 351918,
+    "data": "1,2,16,262,6688,231938,10130888,532099310,32582983264,2275724862530,178357712565096,15489332978290006,1475661504819976992,152969444613431797250,17137064243138924753480,2062951616302994096028894",
+    "name": "G.f. A(x) satisfies: [x^n] (1 + n*x - A(x))^(2*n+1) = 0, for n > 0.",
+    "comment": [
+        "Compare to: [x^n] (1 + n*x - C(x))^(n+1) = 0, for n>0, where C(x) = x + C(x)^2 is a g.f. of the Catalan numbers",
+        "Compare to: [x^n] (1 + n*x - W(x))^n = 0, for n>0, where W(x) = Sum_{n>=1} (n-1)^(n-1)*x^n/n! = 1 + x/LambertW(-x)."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A351918/b351918.txt\">Table of n, a(n) for n = 1..330</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * d^n * n! / n^2, where d = (1+r) / ((-1 + exp(r + LambertW(-1, -exp(-r)*r))) * LambertW(-exp(-1-r)*(1+r))) = 8.406107401279769476199925123910168..., r = 0.7545302104650497245839827141610818561001159135034... is the root of the equation r*(1 + r + LambertW(-exp(-1 - r)*(1 + r))) = -(1 + r)*(r + LambertW(-1, -exp(-r)*r)) and c = 0.053954066... - _Vaclav Kotesovec_, Feb 27 2022"
+    ],
+    "example": [
+        "G.f.: A(x) = x + 2*x^2 + 16*x^3 + 262*x^4 + 6688*x^5 + 231938*x^6 + 10130888*x^7 + 532099310*x^8 + 32582983264*x^9 + 2275724862530*x^10 + ...",
+        "Related table.",
+        "Here we illustrate the formula [x^n] (1 + n*x - A(x))^(2*n+1) = 0 (n > 0).",
+        "The table of coefficients of x^k in (1 + n*x - A(x))^(2*n+1) begins:",
+        "n=0: [1, -1,   -2,   -16,   -262,   -6688,  -231938, ...];",
+        "n=1: [1,  0,   -6,   -48,   -774,  -19872,  -691910, ...];",
+        "n=2: [1,  5,    0,  -110,  -1645,  -38439, -1286640, ...];",
+        "n=3: [1, 14,   70,     0,  -3374,  -74928, -2272326, ...];",
+        "n=4: [1, 27,  306,  1692,      0, -144342, -4262946, ...];",
+        "n=5: [1, 44,  858,  9504,  58938,       0, -7887286, ...];",
+        "n=6: [1, 65, 1924, 33982, 388401, 2694523,        0, ...]; ...",
+        "in which the main diagonal is all zeros after the initial term, illustrating that [x^n] (1 + n*x - A(x))^(2*n+1) = 0, for n > 0."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1], m=1); for(i=1, n, A=concat(A, 0); m=#A;",
+        "A[m] = polcoeff( (1 + m*x - x*Ser(A))^(2*m+1), m)/(2*m+1) ); A[n]}",
+        "for(n=1, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A338408, A337758."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Feb 25 2022",
+    "references": 1,
+    "revision": 10,
+    "time": "2022-02-28T13:38:13-05:00",
+    "created": "2022-02-27T03:46:10-05:00"
+}

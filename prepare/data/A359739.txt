@@ -1,0 +1,30 @@
+{
+    "number": 359739,
+    "data": "1,1,5,28,865,9626,758701,12606280,1872570113,41351249980,9925656304501,273345587759696,96567039881462305,3185756105692821688,1555524449985942662045,59790093545794928817376,38565845285812075675023361,1692346747225524397926264080,1393672439437011815394433559653",
+    "name": "a(n) = Sum_{j=0..n, j even} binomial(n, j) * oddfactorial(j/2) * n^j, where oddfactorial(n) = (2*n)! / (2^n*n!).",
+    "formula": [
+        "Let K(n, x) = 2^(n/2)*(-1/x^2)^(-n/2)*KummerU(-n/2, 1/2, -1/(2*x^2)) denote the Kummer polynomials, defined in A359760.",
+        "a(n) = K(n, n) for n >= 1."
+    ],
+    "maple": [
+        "A359739 := n -> ifelse(n=0, 1, KummerU(-n/2, 1/2, -1/(2*n^2))*(-1/(2*n^2))^(-n/2)): seq(simplify(A359739(n)), n = 0..18);"
+    ],
+    "program": [
+        "(Python)",
+        "from math import factorial, comb",
+        "def oddfactorial(n: int) -> int: return factorial(2 * n) // (2**n * factorial(n))",
+        "def a(n: int) -> int:",
+        "    return sum(comb(n, j) * oddfactorial(j//2) * n**j for j in range(0, n+1, 2))",
+        "print([a(n) for n in range(19)])"
+    ],
+    "xref": [
+        "Cf. A359760."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, Jan 12 2023",
+    "references": 2,
+    "revision": 9,
+    "time": "2023-01-18T09:34:20-05:00",
+    "created": "2023-01-18T09:34:20-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 7836,
+    "data": "1,1,1,5,23,151,1141,10205,103823,1190191,15151981,212222405,3242472023,53670028231,956685677221,18271360434605,372221031054623,8056751598834271,184647141575344861,4466900836910758805",
+    "name": "Springer numbers associated with symplectic group.",
+    "comment": [
+        "Comments from _F. Chapoton_, Oct 30 2009: To compute this sequence, I used something similar to the Boustrophedon definition of the Euler numbers, but with two triangles instead of one. This is described (page 94) in Arnold's article in \"Le\u00e7ons de math\u00e9matiques d'aujourd'hui, volume 1\" Editions Cassini. This is very similar to A001586, except that the initial conditions ( (0,1) at top of the two triangles ) are exchanged."
+    ],
+    "reference": [
+        "V. I. Arnold, The calculus of snakes and the combinatorics of Bernoulli, Euler and Springer numbers of Coxeter groups, Uspekhi Mat. Nauk., 47 (#1, 1992), 3-45 = Russian Math. Surveys, Vol. 47 (1992), 1-51.",
+        "V. I. Arnold, Nombres d'Euler, de Bernoulli et de Springer pour les groupes de Coxeter et les espaces de morsification : le calcul des serpents, in \"Le\u00e7ons de math\u00e9matiques d'aujourd'hui, volume 1\", Editions Cassini."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A007836/b007836.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Michael E. Hoffman, <a href=\"https://doi.org/10.37236/1453\">Derivative Polynomials, Euler Polynomials, and Associated Integer Sequences</a>, The Electronic Journal of Combinatorics, Volume 6.1 (1999): Research paper R21, 13 p.",
+        "M. Josuat-Verges, J.-C. Novelli and J.-Y. Thibon, <a href=\"http://arxiv.org/abs/1110.5272\">The algebraic combinatorics of snakes</a>, arXiv preprint arXiv:1110.5272 [math.CO], 2011.",
+        "A. Vieru, <a href=\"http://arxiv.org/abs/1107.2938\">Agoh's conjecture: its proof, its generalizations, its analogues</a>, arXiv preprint arXiv:1107.2938 [math.NT], 2011-2012."
+    ],
+    "formula": [
+        "a(n) = P_n(1) - Q_n(1) (see A155100 and A104035), defining Q_{-1} = 0. Cf. A156142.",
+        "From _Vaclav Kotesovec_, Dec 08 2020: (Start)",
+        "E.g.f.: (2*cos(x) - 1) / (cos(x) - sin(x)).",
+        "a(n) ~ (2 - sqrt(2)) * 2^(2*n + 3/2) * n^(n + 1/2) / (Pi^(n + 1/2) * exp(n)). (End)"
+    ],
+    "mathematica": [
+        "p[n_, u_] := D[Tan[x], {x, n}] /. Tan[x] -> u /. Sec[x] -> Sqrt[1+u^2] // Expand; p[-1, u_] = 1; t[n_, k_] := t[n, k] = k*t[n-1, k-1]+(k+1)*t[n-1, k+1]; t[0, 0] = 1; t[0, _] = 0; t[-1, _] = 0; q[n_, u_] := Sum[t[n, k]*u^k, {k, 0, n}]; a[n_] := p[n, 1]-q[n, 1]; a[0]=1; Table[a[n], {n, 0, 19}] (* _Jean-Fran\u00e7ois Alcover_, Feb 05 2014 *)",
+        "nmax = 20; CoefficientList[Series[1 + (Sin[x] + Cos[x] - 1) / (Cos[x] - Sin[x]), {x, 0, nmax}], x] * Range[0,nmax]! (* _Vaclav Kotesovec_, Dec 08 2020 *)"
+    ],
+    "xref": [
+        "Cf. A001586, A155100, A104035, A156142."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _F. Chapoton_, Oct 30 2009"
+    ],
+    "references": 5,
+    "revision": 49,
+    "time": "2021-12-17T05:28:29-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

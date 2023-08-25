@@ -1,0 +1,62 @@
+{
+    "number": 332280,
+    "data": "1,1,2,3,5,7,11,15,22,30,41,55,75,97,129,166,215,273,352,439,557,692,865,1066,1325,1614,1986,2413,2940,3546,4302,5152,6207,7409,8862,10523,12545,14814,17562,20690,24397,28615,33645,39297,46009,53609,62504,72581,84412",
+    "name": "Number of integer partitions of n with unimodal run-lengths.",
+    "comment": [
+        "First differs from A000041 at a(10) = 41, A000041(10) = 42.",
+        "A sequence of positive integers is unimodal if it is the concatenation of a weakly increasing followed by a weakly decreasing sequence."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A332280/b332280.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/UnimodalSequence.html\">Unimodal Sequence</a>"
+    ],
+    "example": [
+        "The a(10) = 41 partitions (A = 10) are:",
+        "  (A)     (61111)   (4321)     (3211111)",
+        "  (91)    (55)      (43111)    (31111111)",
+        "  (82)    (541)     (4222)     (22222)",
+        "  (811)   (532)     (42211)    (222211)",
+        "  (73)    (5311)    (421111)   (2221111)",
+        "  (721)   (5221)    (4111111)  (22111111)",
+        "  (7111)  (52111)   (3331)     (211111111)",
+        "  (64)    (511111)  (3322)     (1111111111)",
+        "  (631)   (442)     (331111)",
+        "  (622)   (4411)    (32221)",
+        "  (6211)  (433)     (322111)",
+        "Missing from this list is only (33211)."
+    ],
+    "maple": [
+        "b:= proc(n, i, m, t) option remember; `if`(n=0, 1,",
+        "     `if`(i<1, 0, add(b(n-i*j, i-1, j, t and j>=m),",
+        "      j=1..min(`if`(t, [][], m), n/i))+b(n, i-1, m, t)))",
+        "    end:",
+        "a:= n-> b(n$2, 0, true):",
+        "seq(a(n), n=0..65);  # _Alois P. Heinz_, Feb 20 2020"
+    ],
+    "mathematica": [
+        "unimodQ[q_]:=Or[Length[q]<=1,If[q[[1]]<=q[[2]],unimodQ[Rest[q]],OrderedQ[Reverse[q]]]]",
+        "Table[Length[Select[IntegerPartitions[n],unimodQ[Length/@Split[#]]&]],{n,0,30}]",
+        "(* Second program: *)",
+        "b[n_, i_, m_, t_] := b[n, i, m, t] = If[n == 0, 1, If[i < 1, 0, Sum[b[n - i*j, i - 1, j, t && j >= m], {j, 1, Min[If[t, Infinity, m], n/i]}] + b[n, i - 1, m, t]]];",
+        "a[n_] := b[n, n, 0, True];",
+        "a /@ Range[0, 65] (* _Jean-Fran\u00e7ois Alcover_, May 10 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "The complement is counted by A332281.",
+        "Heinz numbers of these partitions are the complement of A332282.",
+        "Taking 0-appended first-differences instead of run-lengths gives A332283.",
+        "The normal case is A332577.",
+        "The opposite version is A332638.",
+        "Unimodal compositions are A001523.",
+        "Unimodal normal sequences are A007052.",
+        "Numbers whose unsorted prime signature is unimodal are A332288.",
+        "Cf. A007052, A025065, A072706, A100883, A115981, A227038, A317086, A328509, A329398, A332284, A332285, A332294, A332578, A332579."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Feb 18 2020",
+    "references": 34,
+    "revision": 18,
+    "time": "2021-05-10T03:57:08-04:00",
+    "created": "2020-02-20T22:27:48-05:00"
+}

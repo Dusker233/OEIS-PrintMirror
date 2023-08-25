@@ -1,0 +1,36 @@
+{
+    "number": 332229,
+    "data": "290,434,550,826,858,1394,1798,2254,2418,2546,2950,3094,3910,4150,4382,4930,5590,6138,6358,6390,6710,6966,7514,7546,7622,7658,7990,8550,8798,8906,9230",
+    "name": "Even numbers k such that A156552(k) is not a power of prime, and for which A323243(k) = sigma(A156552(k)) is congruent to 2 modulo 8.",
+    "comment": [
+        "Numbers k for which A156552(k) is in A332228.",
+        "Sequence A005940(1+A332228(n)), n >= 1, sorted into ascending order."
+    ],
+    "link": [
+        "<a href=\"/index/Pri#prime_indices\">Index entries for sequences computed from indices in prime factorization</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "A156552(n) = {my(f = factor(n), p2 = 1, res = 0); for(i = 1, #f~, p = 1 << (primepi(f[i, 1]) - 1); res += (p * p2 * (2^(f[i, 2]) - 1)); p2 <<= f[i, 2]); res}; \\\\ From A156552",
+        "isA332228(n) = ((n%2)&&!isprimepower(n)&&2==(sigma(n)%8));",
+        "isA332229(n) = isA332228(A156552(n));",
+        "(PARI)",
+        "v156552sigs = readvec(\"a156552.txt\"); \\\\ Factorization file for A156552 prepared by Hans Havermann, available at https://oeis.org/A156552/a156552.txt",
+        "isA156552not_a_primepower(n) = if(n<=2,0,my(prsig=v156552sigs[n]); length(prsig[1])>1);",
+        "A323243(n) = if(n<=2,n-1,my(prsig=v156552sigs[n],ps=prsig[1],es=prsig[2]); prod(i=1,#ps,((ps[i]^(1+es[i]))-1)/(ps[i]-1)));",
+        "isA332229(n) = (!(n%2)&&isA156552not_a_primepower(n)&&(2==(A323243(n)%8)));",
+        "k=0; for(n=1,10000,if(isA332229(n),k++; print1(n,\", \")));"
+    ],
+    "xref": [
+        "Cf. A000203, A005940, A156552, A323243, A332225, A332228.",
+        "Subsequence of A324814."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Feb 13 2020",
+    "references": 2,
+    "revision": 11,
+    "time": "2020-02-13T20:16:29-05:00",
+    "created": "2020-02-13T20:16:29-05:00"
+}

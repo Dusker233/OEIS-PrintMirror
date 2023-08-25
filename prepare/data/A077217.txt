@@ -1,0 +1,36 @@
+{
+    "number": 77217,
+    "data": "2,5,17,29,41,101,107,137,149,179,197,269,281,457,461,499,521,569,593,617,641,673,727,809,821,827,857,881,1049,1061,1229,1277,1289,1301,1321,1451,1453,1481,1483,1619,1697,1721,1753,1777,1861,1873,1877,1949,1997,2027",
+    "name": "Prime(k) such that the prime power with largest exponent that divides the product P(k) of composite numbers between prime(k) and prime(k+1) is an odd number, i.e., if p^r and 2^s divide P(k) then r >= s, p is an odd prime.",
+    "comment": [
+        "In most cases a power of 2 has a larger exponent than any odd prime power.",
+        "Primes p = prime(k) such that A051903(A000265(A061214(k))) >= A007814(A061214(k)). - _Amiram Eldar_, Apr 01 2021"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A077217/b077217.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "5 is a member as 6 is divisible by 3^1 as well as by 2^1.",
+        "17 is a member as 18 is divisible by 3^2 but not by 2^2."
+    ],
+    "mathematica": [
+        "q[p_] := Module[{prod = Product[k, {k, p + 1, NextPrime[p] - 1}], e2}, e2 = IntegerExponent[prod, 2]; Max[FactorInteger[prod/2^e2][[;; , 2]]] >= e2]; Select[Range[2000], PrimeQ[#] && q[#] &] (* _Amiram Eldar_, Apr 01 2021 *)"
+    ],
+    "program": [
+        "(PARI) f(p) = prod(k=p+1, nextprime(p+1)-1, k);\\\\ A061214",
+        "isok(p) = {my(prd = f(p), e = valuation(prd, 2), ofprd = prd/2^e); if (prd > 1, (ofprd == 1) || (e <= vecmax(factor(ofprd)[,2])));} \\\\ _Michel Marcus_, Apr 01 2021"
+    ],
+    "xref": [
+        "Cf. A000265, A007814, A051903, A061214."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Nov 02 2002",
+    "ext": [
+        "Wrong term removed and more terms added by _Amiram Eldar_, Apr 01 2021"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2021-04-01T08:28:03-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

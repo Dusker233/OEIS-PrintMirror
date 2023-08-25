@@ -1,0 +1,62 @@
+{
+    "number": 175413,
+    "data": "1,2,3,4,6,7,8,11,12,13,14,15,16,19,23,24,25,28,29,30,31,32,35,38,39,44,47,48,49,50,52,55,56,57,59,60,61,62,63,64,67,70,71,78,79,88,92,95,96,97,98,103,104,111,112,113,114,115,116,120,121,123,124,125",
+    "name": "Those positive integers n that when written in binary, the lengths of the runs of 1 are distinct and the lengths of the runs of 0's are distinct.",
+    "comment": [
+        "A044813 contains those positive integers that when written in binary, have all run-lengths (of both 0's and 1's) distinct.",
+        "A175414 contains those positive integers in A175413 that are not in A044813. (A175414 contains those positive integers that when written in binary, at least one run of 0's is the same length as one run of 1's, even though all run of 0 are of distinct length and all runs of 1's are of distinct length.)",
+        "Also numbers whose binary expansion has all distinct runs (not necessarily run-lengths). - _Gus Wiseman_, Feb 21 2022"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A175413/b175413.txt\">Table of n, a(n) for n = 1..20000</a>"
+    ],
+    "maple": [
+        "q:= proc(n) uses ListTools; (l-> is(nops(l)=add(",
+        "      nops(i), i={Split(`=`, l, 1)}) +add(",
+        "      nops(i), i={Split(`=`, l, 0)})))(Bits[Split](n))",
+        "    end:",
+        "select(q, [$1..200])[];  # _Alois P. Heinz_, Mar 14 2022"
+    ],
+    "mathematica": [
+        "f[n_] := And@@Unequal@@@Transpose[Partition[Length/@Split[IntegerDigits[n, 2]], 2, 2, {1,1}, 0]]; Select[Range[125], f] (* _Ray Chandler_, Oct 21 2011 *)",
+        "Select[Range[0,100],UnsameQ@@Split[IntegerDigits[#,2]]&] (* _Gus Wiseman_, Feb 21 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import groupby, product",
+        "def ok(n):",
+        "    runs = [(k, len(list(g))) for k, g in groupby(bin(n)[2:])]",
+        "    return len(runs) == len(set(runs))",
+        "print([k for k in range(1, 125) if ok(k)]) # _Michael S. Branicky_, Feb 22 2022"
+    ],
+    "xref": [
+        "Cf. A044813, A175414.",
+        "Runs in binary expansion are counted by A005811, distinct A297770.",
+        "The complement is A351205.",
+        "The version for standard compositions is A351290, complement A351291.",
+        "A000120 counts binary weight.",
+        "A242882 counts compositions with distinct multiplicities.",
+        "A318928 gives runs-resistance of binary expansion.",
+        "A325545 counts compositions with distinct differences.",
+        "A333489 ranks anti-runs, complement A348612, counted by A003242.",
+        "A334028 counts distinct parts in standard compositions.",
+        "A351014 counts distinct runs in standard compositions.",
+        "Counting words with all distinct runs:",
+        "- A351013 = compositions, for run-lengths A329739.",
+        "- A351016 = binary words, for run-lengths A351017.",
+        "- A351018 = binary expansions, for run-lengths A032020.",
+        "- A351200 = patterns, for run-lengths A351292.",
+        "- A351202 = permutations of prime factors.",
+        "Cf. A070939, A085207, A098859, A233564, A238130 or A238279, A283353, A328592, A350952, A351015, A351203."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, May 07 2010",
+    "ext": [
+        "Extended by _Ray Chandler_, Oct 21 2011"
+    ],
+    "references": 41,
+    "revision": 26,
+    "time": "2022-03-14T09:13:25-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

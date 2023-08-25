@@ -1,0 +1,37 @@
+{
+    "number": 301363,
+    "data": "1,1,4,25,202,1966,22306,289969,4272934,70792318,1308702592,26791202362,602762346088,14795609964448,393567982759966,11276489767853569,346158428070229414,11331678979354212886,393967314482937530248,14495027742943618066030,562600190990455844759356",
+    "name": "G.f. A(x) satisfies: A(x) = 1/(1 - x*A(x)/(1 - 2*x*A(x)/(1 - 3*x*A(x)/(1 - 4*x*A(x)/(1 - ...))))), a continued fraction.",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A301363/b301363.txt\">Table of n, a(n) for n = 0..400</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies: A(x) = 1 + x * (x*A(x)^3)' / (x*A(x))'. - _Paul D. Hanna_, Apr 01 2018",
+        "G.f. A(x) satisfies: A(x) = (1/x)*Series_Reversion(x/F(x)) where F(x) = A(x/F(x)) = Sum_{n>=0} (2*n)!/(n!*2^n)*x^n is an o.g.f. of A001147. - _Paul D. Hanna_, Apr 05 2018",
+        "G.f. A(x) satisfies: A(x) = Sum_{n>=0} (2*n)!/(n!*2^n) * x^n * A(x)^n. - _Paul D. Hanna_, Apr 09 2018",
+        "a(n) ~ 2^(n + 1/2) * n^n / exp(n - 1/2). - _Vaclav Kotesovec_, Jun 18 2019"
+    ],
+    "example": [
+        "G.f. A(x) = 1 + x + 4*x^2 + 25*x^3 + 202*x^4 + 1966*x^5 + 22306*x^6 + 289969*x^7 + 4272934*x^8 + ...",
+        "The g.f. also satisfies:",
+        "A(x) = 1 + x*A(x) + 3*x^2*A(x) + 15*x^3*A(x)^3 + 105*x^4*A(x)^4 + 945*x^5*A(x)^5 + 10395*x^6*A(x)^6 + ... + (2*n)!/(n!*2^n) * x^n * A(x)^n + ..."
+    ],
+    "program": [
+        "(PARI) /* Continued Fraction */",
+        "{a(n) = my(A=1, CF = 1+x +x*O(x^n)); for(i=1,n, A=CF; for(k=0, n, CF = 1/(1 - (n-k+1)*x*A*CF ) )); polcoeff(CF, n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) /* Differential Equation */",
+        "{a(n) = my(A=1); for(i=0,n, A = 1 + x*(x*A^3)'/(x*A +x^2*O(x^n))'); polcoeff(A,n)}",
+        "for(n=0, 30, print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A001147, A088368, A302100, A302535, A302565."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Mar 19 2018",
+    "references": 8,
+    "revision": 21,
+    "time": "2019-06-18T04:55:07-04:00",
+    "created": "2018-03-19T22:13:20-04:00"
+}

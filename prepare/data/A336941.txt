@@ -1,0 +1,57 @@
+{
+    "number": 336941,
+    "data": "1,1,8,604,691968,16359233536,10083474928244288,195661337707783118840768,139988400203593571474134024847360,4231553868972506381329450624389969130848256,6090860257621637852755610879241895108657182173073604608,464479854191019594417264488167571483344961210693790188774166838214656",
+    "name": "Number of strict chains of divisors starting with the superprimorial A006939(n) and ending with 1.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A336941/b336941.txt\">Table of n, a(n) for n = 0..25</a>"
+    ],
+    "formula": [
+        "a(n) = A337070(n)/2 for n > 0.",
+        "a(n) = A074206(A006939(n))."
+    ],
+    "example": [
+        "The a(2) = 8 chains:",
+        "  12/1",
+        "  12/2/1",
+        "  12/3/1",
+        "  12/4/1",
+        "  12/6/1",
+        "  12/4/2/1",
+        "  12/6/2/1",
+        "  12/6/3/1"
+    ],
+    "mathematica": [
+        "chern[n_]:=Product[Prime[i]^(n-i+1),{i,n}];",
+        "chns[n_]:=If[n==1,1,Sum[chns[d],{d,Most[Divisors[n]]}]];",
+        "Table[chns[chern[n]],{n,0,3}]"
+    ],
+    "program": [
+        "(PARI) a(n)={my(sig=vector(n,i,i), m=vecsum(sig)); sum(k=0, m, prod(i=1, #sig, binomial(sig[i]+k-1, k-1))*sum(r=k, m, binomial(r,k)*(-1)^(r-k)))} \\\\ _Andrew Howroyd_, Aug 30 2020"
+    ],
+    "xref": [
+        "A022915 is the maximal case.",
+        "A076954 can be used instead of A006939.",
+        "A336571 is the case with distinct prime multiplicities.",
+        "A336942 is the case using members of A130091.",
+        "A337070 is the version ending with any divisor of A006939(n).",
+        "A000005 counts divisors.",
+        "A074206 counts chains of divisors from n to 1.",
+        "A006939 lists superprimorials or Chernoff numbers.",
+        "A067824 counts divisor chains starting with n.",
+        "A181818 gives products of superprimorials, with complement A336426.",
+        "A253249 counts chains of divisors.",
+        "A317829 counts factorizations of superprimorials.",
+        "A336423 counts chains using A130091, with maximal case A336569.",
+        "Cf. A000142, A001055, A002033, A008480, A022559, A027423, A124010, A167865, A181796, A336417, A336420, A337069."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Aug 13 2020",
+    "ext": [
+        "Terms a(8) and beyond from _Andrew Howroyd_, Aug 30 2020"
+    ],
+    "references": 9,
+    "revision": 14,
+    "time": "2020-08-30T20:23:11-04:00",
+    "created": "2020-08-14T16:28:41-04:00"
+}

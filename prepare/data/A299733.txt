@@ -1,0 +1,66 @@
+{
+    "number": 299733,
+    "data": "19,97,33751",
+    "name": "Prime numbers represented in more than one way by cyclotomic binary forms f(x,y) with x and y prime numbers and y < x.",
+    "comment": [
+        "A cyclotomic binary form over Z is a homogeneous polynomial in two variables which has the form f(x, y) = y^EulerPhi(k)*CyclotomicPolynomial(k, x/y) where k is some integer >= 3. An integer n is represented by f if f(x,y) = n has an integer solution.",
+        "There are only three prime numbers below 600000 which satisfy the given conditions. No prime number below 600000 exists which has more than one representation if we require a representation by odd prime numbers y < x."
+    ],
+    "link": [
+        "Etienne Fouvry, Claude Levesque, Michel Waldschmidt, <a href=\"https://arxiv.org/abs/1712.09019\">Representation of integers by cyclotomic binary forms</a>, arXiv:1712.09019 [math.NT], 2017."
+    ],
+    "example": [
+        "33751 = f(131,79) for f(x,y) = x^2 + x*y + y^2.",
+        "33751 = f( 13, 2) for f(x,y) = x^4+x^3*y+x^2*y^2+x*y^3+y^4."
+    ],
+    "program": [
+        "(Pari)",
+        "A299733(upto) =",
+        "{",
+        "    my(K, M, phi, multi);",
+        "    forprime(n = 2, upto, multi = 0;",
+        "        K = floor(5.383*log(n)^1.161);",
+        "        M = floor(2*sqrt(n/3));",
+        "        for(k = 3, K,",
+        "            phi = eulerphi(k);",
+        "            forprime(y = 2, M,",
+        "                forprime(x = y + 1, M,",
+        "                    if(n == y^phi*polcyclo(k, x/y),",
+        "                        multi += 1",
+        "                    )",
+        "                )",
+        "            )",
+        "        );",
+        "        if(multi > 1, print(n,\" has multiple reps!\"))",
+        "    )",
+        "}",
+        "A299733(100000)",
+        "(Julia) using Nemo",
+        "function isA299733(n)",
+        "    if n < 3 || !isprime(ZZ(n)) return false end",
+        "    R, x = PolynomialRing(ZZ, \"x\")",
+        "    K = floor(Int, 5.383*log(n)^1.161) # Bounds from",
+        "    M = floor(Int, 2*sqrt(n/3)) # Fouvry & Levesque & Waldschmidt",
+        "    N = QQ(n); multi = 0",
+        "    for k in 3:K",
+        "        e = Int(eulerphi(ZZ(k)))",
+        "        c = cyclotomic(k, x)",
+        "        for m in 2:M if isprime(ZZ(m))",
+        "            for j in m:M if isprime(ZZ(j))",
+        "                if N == m^e*subst(c, QQ(j,m)) multi += 1",
+        "    end end end end end end",
+        "    multi > 1",
+        "end # _Peter Luschny_, May 16 2019"
+    ],
+    "xref": [
+        "Subsequence of A299929.",
+        "Cf. A293654, A296095, A299214, A299498, A299928, A299930, A299956, A299964."
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Feb 21 2018",
+    "references": 9,
+    "revision": 18,
+    "time": "2019-05-16T07:24:56-04:00",
+    "created": "2018-02-26T09:32:19-05:00"
+}

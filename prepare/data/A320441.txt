@@ -1,0 +1,76 @@
+{
+    "number": 320441,
+    "data": "3,7,10,15,21,31,36,42,45,54,63,73,85,91,109,127,136,146,153,170,173,181,182,187,204,219,221,238,255,273,292,307,341,365,375,409,438,443,477,511,528,546,561,585,594,614,627,660,682,685,693,725,726,731,750",
+    "name": "Numbers whose binary expansion is quasiperiodic.",
+    "comment": [
+        "The binary representation of a term (ignoring leading zeros) can be covered by (possibly overlapping) occurrences of one of its proper prefix.",
+        "This sequence contains A121016.",
+        "For any k > 0, there are A320434(k)/2 terms with binary length k."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A320441/b320441.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "R\u00e9my Sigrist, <a href=\"/A320441/a320441.png\">Scatterplot of the first difference of the first 100000 terms</a>"
+    ],
+    "formula": [
+        "A020330(a(n)) belongs to the sequence for any n > 0.",
+        "A297405(a(n)) belongs to the sequence for any n > 0."
+    ],
+    "example": [
+        "The first terms, alongside their binary representations and prefixes, are:",
+        "  n   a(n)  bin(a(n))  prefix",
+        "  --  ----  ---------  ------",
+        "   1     3         11       1",
+        "   2     7        111       1",
+        "   3    10       1010      10",
+        "   4    15       1111       1",
+        "   5    21      10101     101",
+        "   6    31      11111       1",
+        "   7    36     100100     100",
+        "   8    42     101010      10",
+        "   9    45     101101     101",
+        "  10    54     110110     110",
+        "  11    63     111111       1",
+        "  12    73    1001001    1001"
+    ],
+    "program": [
+        "(PARI) isok(w) = { my (tt=0); for (l=1, oo, my (t=w%(2^l)); if (t!=tt, if (t==w, return (0)); my (r=w, g=l); while (g-->=0 && r>=t, r \\= 2; if (r%(2^l)==t, if (r==t, return (1), g=l))); tt = t)) }",
+        "(Python)",
+        "def qp(w):",
+        "    for i in range(1, len(w)):",
+        "        prefix, covered = w[:i], set()",
+        "        for j in range(len(w)-i+1):",
+        "            if w[j:j+i] == prefix:",
+        "                covered |= set(range(j, j+i))",
+        "        if covered == set(range(len(w))):",
+        "            return True",
+        "    return False",
+        "def ok(n): return qp(bin(n)[2:])",
+        "print([k for k in range(751) if ok(k)]) # _Michael S. Branicky_, Mar 20 2022",
+        "(Python)",
+        "def binary_period(n):",
+        "  l = 0",
+        "  i=n",
+        "  while i > 0:",
+        "    l += 1",
+        "    i >>= 1",
+        "  shifted = n",
+        "  mask = (1 << l) - 1",
+        "  for period in range(1, (l >> 1) + 1):",
+        "    shifted >>= 1",
+        "    mask >>= 1",
+        "    if (((n ^ shifted) & mask) == 0):",
+        "      return period",
+        "  return -1",
+        "def isok(n): return binary_period(n) > -1 # _Dar\u00edo Clavijo_, Jan 16 2023"
+    ],
+    "xref": [
+        "Cf. A020330, A121016, A297405, A320434."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_R\u00e9my Sigrist_, Jan 09 2019",
+    "references": 2,
+    "revision": 24,
+    "time": "2023-02-10T14:46:38-05:00",
+    "created": "2019-01-09T13:06:42-05:00"
+}

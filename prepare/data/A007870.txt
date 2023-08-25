@@ -1,0 +1,54 @@
+{
+    "number": 7870,
+    "data": "1,1,2,6,96,2880,9953280,100329062400,10651768002183168000,150283391703941024789299200000,9263795272057860957392207640004657152000000000,16027108137650009941734148595388542471170145479274004480000000000000",
+    "name": "Determinant of character table of symmetric group S_n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A007870/b007870.txt\">Table of n, a(n) for n = 0..18</a>",
+        "Amritanshu Prasad, <a href=\"https://doi.org/10.1017/CBO9781139976824\">Symmetric Functions</a>, Chapter 5, Representation Theory: a Combinatorial Viewpoint, Cambridge Studies in Adv. Math. 147 (2014), p. 107.",
+        "F. W. Schmidt and R. Simion, <a href=\"http://dx.doi.org/10.1016/0097-3165(84)90012-8\">On a partition identity</a>, J. Combin. Theory, A 36 (1984), 249-252.",
+        "D. Vaintrob, <a href=\"http://mathoverflow.net/questions/99271/\">A product identity for partitions</a>, MathOverflow, June 2012."
+    ],
+    "formula": [
+        "Product of all parts of all partitions of n.",
+        "From _Gus Wiseman_, May 09 2019: (Start)",
+        "a(n) = A003963(A325501(n)).",
+        "A001222(a(n)) = A325536(n).",
+        "A001221(a(n)) = A000720(n).",
+        "(End)"
+    ],
+    "example": [
+        "1 + x + 2*x^2 + 6*x^3 + 96*x^4 + 2880*x^5 + 9953280*x^6 + 100329062400*x^7 + ...",
+        "The integer partitions of 4 are {(4), (3,1), (2,2), (2,1,1), (1,1,1,1)} with product 4*3*1*2*2*2*1*1*1*1*1*1 = 96. - _Gus Wiseman_, May 09 2019"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, [1$2], ((f, g)->",
+        "      [f[1]+g[1], f[2]*g[2]*i^g[1]])(b(n, i-1), b(n-i, min(n-i, i))))",
+        "    end:",
+        "a:= n-> b(n$2)[2]:",
+        "seq(a(n), n=0..12);  # _Alois P. Heinz_, Jul 30 2013",
+        "# Alternative:",
+        "with(combinat): P:=proc(n) local a,k; a:=partition(n);",
+        "a:=mul(convert(a[k],`*`),k=1..nops(a)); end: seq(P(i),i=0..12);",
+        "# _Paolo P. Lava_, Dec 21 2018"
+    ],
+    "mathematica": [
+        "Needs[\"Combinatorica`\"]; Table[Times@@Flatten[Partitions[n]], {n, 10}]",
+        "a[ n_] := If[n < 0, 0, Times @@ Flatten @ IntegerPartitions @ n] (* _Michael Somos_, Jun 11 2012 *)",
+        "Table[Exp[Total[Map[Log, IntegerPartitions [n]], 2]], {n, 1, 25}] (* _Richard R. Forberg_, Dec 08 2014 *)",
+        "b[n_, i_] := b[n, i] = If[n == 0, {1, 1}, Function[{f, g}, {f[[1]] + g[[1]], f[[2]]*g[[2]]*i^g[[1]]}][If[i < 2, {0, 1}, b[n, i - 1]], If[i > n, {0, 1}, b[n - i, i]]]]; a[n_] := b[n, n][[2]]; Table[a[n], {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Aug 29 2016, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(GAP) List(List([0..11],n->Flat(Partitions(n))),Product); # _Muniru A Asiru_, Dec 21 2018"
+    ],
+    "xref": [
+        "Row-products of A302246 and A302247.",
+        "Cf. A006128, A006906, A066186, A066633, A086644, A325501, A325504, A325507, A325536."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter J. Cameron_, G\u00f6tz Pfeiffer [ goetz(AT)dcs.st-and.ac.uk ]",
+    "references": 14,
+    "revision": 52,
+    "time": "2021-08-03T17:59:05-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

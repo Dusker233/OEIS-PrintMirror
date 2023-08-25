@@ -1,0 +1,30 @@
+{
+    "number": 323498,
+    "data": "2131991,2917927,3776273,4742407,6853409,16850609,21789233,24095791,24810251,26316233,27470537,27667529,28962127,29896439,30949327,31289527,36123853,36443893,38824913,40941233,41660009,42533551,44233193,45868967,48313567,49265009,51135991",
+    "name": "Primes p such that p - k and p + k have the same number of prime factors (with multiplicity), for k = 1..6.",
+    "comment": [
+        "At least one of p - k and p + k must be composite for each k in for k = 1..5.",
+        "Proof: If k = 3 then p - k and p + k are even. If k isn't three then exactly one of p - k, p and p + k is divisible by 3. QED. - _David A. Corneth_, Jan 18 2019"
+    ],
+    "example": [
+        "For p = 2131991 is in the sequence because for k=1, p - 1 = 2*5*7*7*9*229 and p + 1 = 2*2*2*3*3*29611 are both 6-almost primes, for k=2, p - 2 = 3*710663 and p + 2 = 29*73517 are both semiprimes, etc."
+    ],
+    "program": [
+        "(PARI) upto(n) = {my(res = List(), q = 5); forprime(p = 7, n, t = 1; for(m = 1, 2, for(i = 0, 2, if(bigomega(p + 2*i + m) != bigomega(p - 2*i - m), t = 0; next(2) ) ) ); if(t == 1, listput(res, p)); q = p; ); res } \\\\ _David A. Corneth_, Jan 17 2019",
+        "(PARI) is(n) = if(!isprime(n) || n < 7, return(0)); for(k = 1, 6, if(bigomega(n + k) != bigomega(n - k), return(0))); 1 \\\\ _David A. Corneth_, Jan 17 2019",
+        "(Perl) use ntheory ':all'; for (my($p,$k)=(2,6); $p <= 10**7; $p = next_prime($p)) { print \"$p\\n\" if vecall {factor($p-$_) == factor($p+$_)} 1..$k } # _Daniel Suteu_, Jan 17 2019"
+    ],
+    "xref": [
+        "Cf. A115103 (k=1), A323536 (k=7), A323537 (k=8)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, Jan 16 2019",
+    "ext": [
+        "a(23)-a(27) from _David A. Corneth_, Jan 17 2019"
+    ],
+    "references": 2,
+    "revision": 29,
+    "time": "2019-02-13T10:08:53-05:00",
+    "created": "2019-02-13T09:45:31-05:00"
+}

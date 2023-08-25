@@ -1,0 +1,66 @@
+{
+    "number": 23143,
+    "data": "1,2,5,6,12,14,181,6459,6460,6466,100362,251712,251732,637236,10553504,10553505,10553547,10553827,10553851,10553852,69709709,69709724,69709728,69709869,69709961,69709962,179992920,179992922,179993170,465769815,465769819,465769840,3140421737,3140421744,3140421767,3140421892,3140421935",
+    "name": "Numbers k such that prime(k) == 1 (mod k).",
+    "comment": [
+        "A004648(a(n)) <= 1. - _Reinhard Zumkeller_, Jul 30 2012"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A023143/b023143.txt\">Table of n, a(n) for n = 1..94</a>"
+    ],
+    "example": [
+        "6 is in the sequence because the 6th prime, 13, is congruent to 1 (mod 6)."
+    ],
+    "mathematica": [
+        "Do[ If[ IntegerQ[ (Prime[ n ] - 1) / n ], Print[ n ] ], {n, 1, 10^8} ]"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndices)",
+        "a023143 n = a023143_list !! (n-1)",
+        "a023143_list = 1 : map (+ 1) (elemIndices 1 a004648_list)",
+        "-- _Reinhard Zumkeller_, Jul 30 2012, Jun 08 2011",
+        "(Python)",
+        "def A023143(end):",
+        "    primes=[2,3]",
+        "    a023143_list=[1]",
+        "    num=3",
+        "    while len(primes)<=end:",
+        "        num+=1",
+        "        prime=False",
+        "        length=len(primes)",
+        "        for y in range(0,length):",
+        "            if num % primes[y]!=0:",
+        "                prime=True",
+        "            else:",
+        "                prime=False",
+        "                break",
+        "        if (prime):",
+        "            primes.append(num)",
+        "    for x in range(2, len(primes)):",
+        "        if (primes[x-1]%(x))==1:",
+        "            a023143_list.append(x)",
+        "    return a023143_list",
+        "# _Conner L. Delahanty_, Apr 19 2014",
+        "(Python)",
+        "from sympy import primerange",
+        "def A023143(end): return [n+1 for n, p in enumerate(primerange(2, end)) if (p-1) % (n-1) == 0] # _David Radcliffe_, Jun 27 2016",
+        "(PARI) n=0; print1(1); forprime(p=2,1e9, if(p%n++==1, print1(\", \"n))) \\\\ _Charles R Greathouse IV_, Apr 28 2015",
+        "(Magma) [n: n in [1..10000] | IsIntegral((NthPrime(n)-1)/n)]; // _Marius A. Burtea_, Dec 30 2018"
+    ],
+    "xref": [
+        "Cf. A048891, A045924, A052013, A023144, A023145, A023146, A023147, A023148, A023149, A023150, A023151, A023152."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_David W. Wilson_ and _G. L. Honaker, Jr._, Jun 14 1998",
+    "ext": [
+        "More terms from _Jud McCranie_, Dec 11 1999",
+        "a(30)-a(37) from _Zak Seidov_, Apr 19 2014",
+        "Terms a(33)-a(37) sorted in correct order by _Giovanni Resta_, Feb 23 2020"
+    ],
+    "references": 26,
+    "revision": 65,
+    "time": "2022-08-14T15:27:08-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

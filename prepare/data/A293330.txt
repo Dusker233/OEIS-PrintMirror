@@ -1,0 +1,73 @@
+{
+    "number": 293330,
+    "data": "0,0,2,7,12,21,32,40,57,72,96",
+    "name": "Minimum number of points of the square lattice falling strictly inside a square of side n that is not perfectly aligned with the square lattice.",
+    "comment": [
+        "This kind of sequence is related to the practical problem of detecting regular polygons of a given size in pixellated images. This is why it explicitly excludes the minimum number of points that can be obtained with the singular case of squares that are perfectly aligned with the square lattice. Similarly for A291259 and A292060, the different regions for the centers of squares of side n (with a constant minimum number of lattice points inside them) seem to become very complex and irregular as n increases (see density plots in Links).",
+        "I tried several alternative algorithms to compute this sequence but they all involved some numerical procedure without exact results. These terms are estimates obtained with the proposed algorithm which for every square size: (i) makes a discrete exploration of the continuous tridimensional space that determines the container square (two coordinates for the center and one for the orientation), (ii) checks the number of points falling inside, and (iii) picks the lowest obtained number.",
+        "In short, these numbers have not been rigorously proved to be correct. - _N. J. A. Sloane_, Mar 31 2018"
+    ],
+    "link": [
+        "Andres Cicuttin, <a href=\"/A293330/a293330.pdf\">Plots of different regions for the centers of squares of side n with constant minimum numbers of lattice points inside them</a>",
+        "Hugo Pfoertner, <a href=\"/A293330/a293330_2.pdf\">Illustrations of upper bounds for the terms a(1)..a(25)</a>"
+    ],
+    "formula": [
+        "a(n) ~ n^2."
+    ],
+    "mathematica": [
+        "(* This gives a polar function of a k-sides regular polygon with side length \"side\" *)",
+        "PolarPolygonSide[sidelength_, theta_,",
+        "   k_] := ((sidelength/2)/Tan[Pi/k])/",
+        "   Cos[Mod[theta - Pi/k, 2 Pi/k] - Pi/k];",
+        "(* {x,y}: coordinate of the test point,",
+        "   phase: angle offset,",
+        "   sides: number of sides *)",
+        "TruePointInsidePhase[x_, y_, sidelength_, phase_, sides_] :=",
+        "  Module[{theta}, theta = ArcTan[x, y] + phase;",
+        "   If[x^2 + y^2 == 0, 1,",
+        "     If[x^2 + y^2 - (PolarPolygonSide[sidelength, theta, sides]^2) < 0, 1, 0]] // Return];",
+        "sides = 4; dstep = 0.025; phasestep = 2 Pi/300;",
+        "epsilon = 2Pi*10^-6; (* small initial angle to avoid a perfectly aligned square *)",
+        "seq = {};",
+        "Do[npoints = {}; k = 0;",
+        "Do[Do[Do[",
+        "     Do[Do[k =",
+        "        k + TruePointInsidePhase[i + di, j + dj, sidelength, phase, sides],",
+        "{i, -sidelength - 1, sidelength + 1, 1}],",
+        "{j, -sidelength - 1, sidelength + 1, 1}];",
+        "     AppendTo[npoints, k];     k = 0;,",
+        "{dj, 0, 1/2, dstep}],",
+        "{di, 0, 1/2, dstep}],",
+        "{phase, epsilon, 2 Pi/sides, phasestep}] // Quiet;",
+        "temp = npoints // Min;",
+        "AppendTo[seq, temp]; Print[seq // Last], {sidelength, 0, 10, 1}]",
+        "Print[seq]",
+        "(*",
+        "(*This gives the number of points strictly inside a polygone given by",
+        "function \"PolarPolygonSide\" of \"sides\" sides, side length: \"sidelength\", centered in (-di,-dj) and rotated by \"phasestep\" radians wrt to initial orientation: *)",
+        "FaeDensityPlot[sides_, sidelength_, di_, dj_, phasestep_] :=",
+        "Module[{npoints = {}, kamin = {}, k = 0},",
+        "  Quiet[Do[Do[",
+        "     Do[k = k +",
+        "        TruePointInsidePhase[i + di, j + dj, sidelength, phase,",
+        "         sides], {i, -sidelength - 1, sidelength + 1,",
+        "       1}], {j, -sidelength - 1, sidelength + 1, 1}];",
+        "    AppendTo[npoints, k];",
+        "    k = 0;, {phase, 0, (2 \\[Pi])/sides, phasestep}]];",
+        "  Return[Min[npoints]]]",
+        "(*This plots the regions for the centers of squares of side \"sidelength\" with constant minimum numbers of lattice points inside*)",
+        "sidelength=6;",
+        "DensityPlot[FaeDensityPlot[4, sidelength, x, y, (2 \\[Pi])/300] ,{x, 0, 1/2}, {y, 0, 1/2}, PlotPoints -> 100, PlotRange -> All, ColorFunction -> \"DeepSeaColors\", MaxRecursion -> 3, PerformanceGoal -> \"Quality\", PlotTheme -> \"Detailed\", PlotLegends -> Automatic]",
+        "*)"
+    ],
+    "xref": [
+        "Cf. A291259, A292060."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "0,3",
+    "author": "_Andres Cicuttin_, Oct 06 2017",
+    "references": 5,
+    "revision": 38,
+    "time": "2022-07-26T22:03:29-04:00",
+    "created": "2018-03-31T14:51:21-04:00"
+}

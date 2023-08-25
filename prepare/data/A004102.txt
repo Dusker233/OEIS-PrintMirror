@@ -1,0 +1,57 @@
+{
+    "number": 4102,
+    "id": "M2874",
+    "data": "1,1,3,10,66,792,25506,2302938,591901884,420784762014,819833163057369,4382639993148435207,64588133532185722290294,2638572375815762804156666529,300400208094064113266621946833097,95776892467035669509813163910815022152",
+    "name": "Number of signed graphs with n nodes. Also number of 2-multigraphs on n nodes.",
+    "comment": [
+        "A 2-multigraph is similar to an ordinary graph except there are 0, 1 or 2 edges between any two nodes (self-loops are not allowed)."
+    ],
+    "reference": [
+        "F. Harary and R. W. Robinson, Exposition of the enumeration of point-line-signed graphs, pp. 19 - 33 of Proc. Second Caribbean Conference Combinatorics and Computing (Bridgetown, 1977). Ed. R. C. Read and C. C. Cadogan. University of the West Indies, Cave Hill Campus, Barbados, 1977. vii+223 pp.",
+        "R. W. Robinson, personal communication.",
+        "R. W. Robinson, Numerical implementation of graph counting algorithms, AGRC Grant, Math. Dept., Univ. Newcastle, Australia, 1976.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A004102/b004102.txt\">Table of n, a(n) for n = 0..50</a> (terms 1..22 from R. W. Robinson)",
+        "M. Adamaszek, <a href=\"https://doi.org/10.7151/dmgt.1766\">The smallest nonevasive graph property</a>, Disc. Mathem. Graph Theory 34 (2014) 857",
+        "Edward A. Bender and E. Rodney Canfield, <a href=\"https://doi.org/10.1016/0095-8956(83)90040-0\">Enumeration of connected invariant graphs</a>, Journal of Combinatorial Theory, Series B 34.3 (1983): 268-278. See p. 273.",
+        "J. Cummings, D. Kral, F. Pfender, K. Sperfeld et al., <a href=\"http://arxiv.org/abs/1206.1987\">Monochromatic triangles in three-coloured graphs</a>, arXiv preprint arXiv:1206.1987 [math.CO]. 2012. - From _N. J. A. Sloane_, Nov 25 2012",
+        "Harald Fripertinger, <a href=\"http://www.mathe2.uni-bayreuth.de/frib/html/book/hyl00_42.html\">The cycle type of the induced action on 2-subsets</a>",
+        "Harary, Frank; Palmer, Edgar M.; Robinson, Robert W.; Schwenk, Allen J.; <a href=\"http://dx.doi.org/10.1002/jgt.3190010405\">Enumeration of graphs with signed points and lines</a>, J. Graph Theory 1 (1977), no. 4, 295-308.",
+        "Vladeta Jovovic, <a href=\"/A063843/a063843.rtf\">Formulae for the number T(n,k) of n-multigraphs on k nodes</a>",
+        "R. W. Robinson, <a href=\"/A000666/a000666_2.pdf\">Notes - \"A Present for Neil Sloane\"</a>",
+        "R. W. Robinson, <a href=\"/A004102/a004102_1.pdf\">Notes - computer printout</a>",
+        "R. W. Robinson & N. J. A. Sloane, <a href=\"/A004102/a004102.pdf\">Correspondence, 1970-1980</a>"
+    ],
+    "formula": [
+        "Euler transform of A053465. - _Andrew Howroyd_, Sep 25 2018"
+    ],
+    "mathematica": [
+        "permcount[v_] := Module[{m=1, s=0, k=0, t}, For[i=1, i <= Length[v], i++, t = v[[i]]; k = If[i>1 && t == v[[i-1]], k+1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_] := Sum[Sum[GCD[v[[i]], v[[j]]], {j, 1, i-1}], {i, 2, Length[v]}] + Sum[Quotient[v[[i]], 2], {i, 1, Length[v]}];",
+        "a[n_] := Module[{s = 0}, Do[s += permcount[p]*3^edges[p], {p, IntegerPartitions[n]}]; s/n!];",
+        "Array[a, 16, 0] (* _Jean-Fran\u00e7ois Alcover_, Aug 17 2019, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, gcd(v[i], v[j]))) + sum(i=1, #v, v[i]\\2)}",
+        "a(n) = {my(s=0); forpart(p=n, s+=permcount(p)*3^edges(p)); s/n!} \\\\ _Andrew Howroyd_, Sep 25 2018"
+    ],
+    "xref": [
+        "A column of A063841.",
+        "Cf. A053465."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Jan 06 2000",
+        "a(0)=1 prepended and a(15) added by _Andrew Howroyd_, Sep 25 2018"
+    ],
+    "references": 20,
+    "revision": 56,
+    "time": "2020-11-13T11:13:17-05:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

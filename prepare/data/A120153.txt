@@ -1,0 +1,38 @@
+{
+    "number": 120153,
+    "data": "7,10,13,17,23,31,41,55,73,97,130,173,231,308,410,547,729,972,1296,1728,2304,3072,4096,5462,7282,9710,12946,17262,23016,30688,40917,54556,72741,96988,129318,172424,229898,306531,408708,544944",
+    "name": "a(n) = 7 + floor((2 + Sum_{j=1..n-1} a(j))/3).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A120153/b120153.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "mathematica": [
+        "nxt[{t_,a_}]:=Module[{c=Floor[(23+t)/3]},{t+c,c}]; Rest[Transpose[ NestList[ nxt,{0,7},40]][[2]]] (* _Harvey P. Dale_, Oct 08 2015 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "function f(n,a,b)",
+        "  t:=0;",
+        "    for k in [1..n-1] do",
+        "      t+:= a+Floor((b+t)/3);",
+        "    end for;",
+        "  return t;",
+        "end function;",
+        "g:= func< n,a,b | f(n+1,a,b)-f(n,a,b) >;",
+        "A120153:= func< n | g(n,7,2) >;",
+        "[A120153(n): n in [1..60]]; // _G. C. Greubel_, Jun 15 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def A120153(n): return 7 + (2 + sum(A120153(k) for k in range(1,n)))//3",
+        "[A120153(n) for n in range(1,61)] # _G. C. Greubel_, Jun 15 2023"
+    ],
+    "xref": [
+        "Cf. A072493, A073941, A112088."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Graeme McRae_, Jun 10 2006",
+    "references": 1,
+    "revision": 10,
+    "time": "2023-06-16T11:37:24-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 118928,
+    "data": "1,1,1,2,4,8,17,38,92,238,643,1790,5076,14573,42241,123484,364052,1082602,3247759,9829820,30019326,92517644,287805801,903822922,2865339252,9168572009,29601077285,96377791839,316264456921",
+    "name": "a(n) = Sum_{k=0..floor(n/2)} C(n-k,k)*C(n-k,k+1)/(n-k) * a(k), with a(0)=1.",
+    "comment": [
+        "Invariant column vector V under matrix product A089732 *V = V: a(n) = Sum_{k=0,[n/2]} A089732 (n,k)*a(k), where A089732(n,k) = number of peakless Motzkin paths of length n having k (1,1) steps."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A118928/b118928.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..floor(n/2)} C(n-k,k)*C(n-k,k+1)/(n-k) * a(k), with a(0)=1."
+    ],
+    "mathematica": [
+        "a[n_]:= a[n]= If[n==0, 1, Sum[Binomial[n-k, k]*Binomial[n-k, k+1]*a[k]/(n-k), {k, 0, Floor[n/2]}]];",
+        "Table[a[n], {n, 0, 30}] (* _G. C. Greubel_, Nov 24 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1,sum(k=0,n\\2,binomial(n-k,k)*binomial(n-k,k+1)/(n-k)*a(k)))}",
+        "(Sage)",
+        "@CachedFunction",
+        "def A118928(n):",
+        "    if (n==0): return 1",
+        "    else: return sum( binomial(n-k, k)*binomial(n-k, k+1)*A118928(k)/(n-k) for k in (0..n//2) )",
+        "[A118928(n) for n in (0..30)] # _G. C. Greubel_, Nov 24 2021"
+    ],
+    "xref": [
+        "Cf. A089732."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, May 06 2006",
+    "references": 1,
+    "revision": 9,
+    "time": "2021-11-24T20:13:20-05:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

@@ -1,0 +1,59 @@
+{
+    "number": 350868,
+    "data": "2,3,29,569,6701,64919,1720289,256828391,33090566651,248804328761,55130906480861,119321483551349",
+    "name": "a(n) is the first prime p such that the next n primes are p+2*k^2 for k=1..n.",
+    "comment": [
+        "If p = prime(m) is a prime such that the next n primes are p+2*k^2 for k=1..n, then A212769(m+k-1) = 2*p+1 for k=1..n.",
+        "a(12) > 10^15. - _Martin Ehrenstein_, Jan 31 2022"
+    ],
+    "example": [
+        "a(3) = 569 because the next 3 primes after 569 are 571 = 569 + 2*1^2, 577 = 569 + 2*2^2, 587 = 569 + 2*3^2, and 569 is the first prime that works."
+    ],
+    "maple": [
+        "P:= select(isprime, [2,seq(i,i=3..2*10^6,2)]):",
+        "f:= proc(n) local k;",
+        "     for k from 1 do",
+        "       if P[n+k] <> P[n]+2*k^2 then return k-1 fi",
+        "     od",
+        "end proc:",
+        "V:= Array(0..6):",
+        "for n from 1 to nops(P)-21 do",
+        "  v:= H(n);",
+        "  if V[v] = 0 then V[v]:= P[n] fi;",
+        "od:",
+        "convert(V,list);"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import prime, nextprime",
+        "def A350868(n):",
+        "    if n < 2:",
+        "        return 2+n",
+        "    qlist = [prime(i)-2 for i in range(2,n+2)]",
+        "    p = prime(n+1)",
+        "    mlist = [2*k**2 for k in range(1,n+1)]",
+        "    while True:",
+        "        if qlist == mlist:",
+        "            return p-mlist[-1]",
+        "        qlist = [q-qlist[0] for q in qlist[1:]]",
+        "        r = nextprime(p)",
+        "        qlist.append(r-p+qlist[-1])",
+        "        p = r # _Chai Wah Wu_, Jan 24 2022"
+    ],
+    "xref": [
+        "Cf. A212769."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 20 2022",
+    "ext": [
+        "a(7) from _David A. Corneth_, Jan 20 2022",
+        "a(8) from _Chai Wah Wu_, Jan 25 2022",
+        "a(9) from _Martin Ehrenstein_, Jan 26 2022",
+        "a(10)-a(11) from _Martin Ehrenstein_, Jan 31 2022"
+    ],
+    "references": 1,
+    "revision": 26,
+    "time": "2022-01-31T06:46:20-05:00",
+    "created": "2022-01-24T16:06:30-05:00"
+}

@@ -1,0 +1,31 @@
+{
+    "number": 347915,
+    "data": "1,1,4,24,150,1235,11725,126987,1512084,20313897,296921623,4700713787,80221988726,1468879687145,28661345212981,594457831566757,13027193829914920,301079987772726257,7318797530268562203,186496088631167771143,4971371842655844396298,138384071439982000722737",
+    "name": "Expansion of e.g.f. Product_{k>=1} (1 + x^k)^exp(x).",
+    "formula": [
+        "E.g.f.: exp( exp(x) * Sum_{k>=1} A000593(k)*x^k/k ).",
+        "E.g.f.: exp( exp(x) * Sum_{k>=1} x^k/(k*(1 - x^(2*k))) ).",
+        "a(0) = 1; a(n) = Sum_{k=1..n} A354507(k) * binomial(n-1,k-1) * a(n-k). - _Seiichi Manyama_, Aug 16 2022"
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[Product[(1 + x^k)^Exp[x], {k, 1, nmax}], {x, 0, nmax}], x] * Range[0, nmax]! (* _Vaclav Kotesovec_, Aug 17 2022 *)"
+    ],
+    "program": [
+        "(PARI) N=40; x='x+O('x^N); Vec(serlaplace(prod(k=1, N, (1+x^k)^exp(x))))",
+        "(PARI) N=40; x='x+O('x^N); Vec(serlaplace(exp(exp(x)*sum(k=1, N, sigma(k>>valuation(k, 2))*x^k/k))))",
+        "(PARI) N=40; x='x+O('x^N); Vec(serlaplace(exp(exp(x)*sum(k=1, N, x^k/(k*(1-x^(2*k)))))))",
+        "(PARI) a354507(n) = n!*sum(k=1, n, sumdiv(k, d, (-1)^(k/d+1)*d)/(k*(n-k)!));",
+        "a_vector(n) = my(v=vector(n+1)); v[1]=1; for(i=1, n, v[i+1]=sum(j=1, i, a354507(j)*binomial(i-1, j-1)*v[i-j+1])); v; \\\\ _Seiichi Manyama_, Aug 16 2022"
+    ],
+    "xref": [
+        "Cf. A000593, A088311, A346547, A347916, A354507.",
+        "Cf. A354503, A354504."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Sep 18 2021",
+    "references": 3,
+    "revision": 21,
+    "time": "2022-08-17T02:26:56-04:00",
+    "created": "2021-09-19T08:03:21-04:00"
+}

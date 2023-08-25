@@ -1,0 +1,82 @@
+{
+    "number": 300660,
+    "data": "0,1,1,2,3,6,13,30,72,182,467,1222,3245,8722,23663,64758,178459,494922,1380105,3867414,10884821,30756410,87215419,248117618,707952902,2025479210,5809424605,16700811214,48113496645,138884979562,401645917999,1163530868090",
+    "name": "Number of unlabeled rooted phylogenetic trees with n (leaf-) nodes such that for each inner node all children are either leaves or roots of distinct subtrees.",
+    "comment": [
+        "From _Gus Wiseman_, Jul 31 2018 and Feb 06 2020: (Start)",
+        "a(n) is the number of lone-child-avoiding rooted identity trees whose leaves form an integer partition of n. For example, the following are the a(6) = 13 lone-child-avoiding rooted identity trees whose leaves form an integer partition of 6.",
+        "  6,",
+        "  (15),",
+        "  (24),",
+        "  (123), (1(23)), (2(13)), (3(12)),",
+        "  (1(14)),",
+        "  (1(1(13))),",
+        "  (12(12)), (1(2(12))), (2(1(12))),",
+        "  (1(1(1(12)))).",
+        "(End)"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A300660/b300660.txt\">Table of n, a(n) for n = 0..2079</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Phylogenetic_tree\">Phylogenetic tree</a>",
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/e/2PACX-1vS1zCO9fgAIe5rGiAhTtlrOTuqsmuPos2zkeFPYB80gNzLb44ufqIqksTB4uM9SIpwlvo-oOHhepywy/pub\">Sequences counting series-reduced and lone-child-avoiding trees by number of vertices.</a>",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * d^n / n^(3/2), where d = 3.045141208159736483720243229947630323380565686... and c = 0.2004129296838557718008171812000512670126... - _Vaclav Kotesovec_, Aug 27 2018"
+    ],
+    "example": [
+        ":   a(3) = 2:        :   a(4) = 3:                      :",
+        ":      o       o     :        o         o        o      :",
+        ":     / \\     /|\\    :       / \\       / \\     /( )\\    :",
+        ":    o   N   N N N   :      o   N     o   N   N N N N   :",
+        ":   ( )              :     / \\       /|\\                :",
+        ":   N N              :    o   N     N N N               :",
+        ":                    :   ( )                            :",
+        ":                    :   N N                            :",
+        "From _Gus Wiseman_, Feb 06 2020: (Start)",
+        "The a(2) = 1 through a(6) = 13 unlabeled rooted phylogenetic semi-identity trees:",
+        "  (oo) (ooo)     (oooo)         (ooooo)             (oooooo)",
+        "       ((o)(oo)) ((o)(ooo))     ((o)(oooo))         ((o)(ooooo))",
+        "                 ((o)((o)(oo))) ((oo)(ooo))         ((oo)(oooo))",
+        "                                ((o)((o)(ooo)))     ((o)(oo)(ooo))",
+        "                                ((oo)((o)(oo)))     (((o)(oo))(ooo))",
+        "                                ((o)((o)((o)(oo)))) ((o)((o)(oooo)))",
+        "                                                    ((o)((oo)(ooo)))",
+        "                                                    ((oo)((o)(ooo)))",
+        "                                                    ((o)(oo)((o)(oo)))",
+        "                                                    ((o)((o)((o)(ooo))))",
+        "                                                    ((o)((oo)((o)(oo))))",
+        "                                                    ((oo)((o)((o)(oo))))",
+        "                                                    ((o)((o)((o)((o)(oo)))))",
+        "(End)"
+    ],
+    "maple": [
+        "b:= proc(n,i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(b(n-i*j, i-1)*binomial(a(i), j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> `if`(n=0, 0, 1+b(n, n-1)):",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "b[0, _] = 1; b[_, _?NonPositive] = 0;",
+        "b[n_, i_] := b[n, i] = Sum[b[n-i*j, i-1]*Binomial[a[i], j], {j, 0, n/i}];",
+        "a[0] = 0; a[n_] := a[n] = 1 + b[n, n-1];",
+        "Table[a[n], {n, 0, 31}] (* _Jean-Fran\u00e7ois Alcover_, May 03 2019, from Maple *)",
+        "ursit[n_]:=Prepend[Join@@Table[Select[Union[Sort/@Tuples[ursit/@ptn]],UnsameQ@@#&],{ptn,Select[IntegerPartitions[n],Length[#]>1&]}],n];",
+        "Table[Length[ursit[n]],{n,10}] (* _Gus Wiseman_, Feb 06 2020 *)"
+    ],
+    "xref": [
+        "Cf. A000081, A004111, A141268, A289501, A301467.",
+        "Cf. A000669, A001678, A005804, A292504, A300660, A316653, A316654, A316656.",
+        "The locally disjoint case is A316694.",
+        "Cf. A276625, A306200, A319312, A331679, A331686, A331875."
+    ],
+    "keyword": "nonn,eigen",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jun 18 2018",
+    "references": 37,
+    "revision": 37,
+    "time": "2020-02-07T09:04:42-05:00",
+    "created": "2018-06-21T12:29:42-04:00"
+}

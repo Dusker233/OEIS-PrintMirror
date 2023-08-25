@@ -1,0 +1,67 @@
+{
+    "number": 131455,
+    "data": "1,2,18,284,7280,273246,14144592,965491288,84027112704,9081387766810,1193283000239616,187340544144604212,34633340434838499328,7446726867419368499894,1842612127654047957411840,519870106084045866346942256,165896395346243470375430193152,59450668490817059243377908811698,23773400714993519201980928470155264",
+    "name": "Number of inequivalent properly oriented and labeled planar chord diagrams whose associated planar tree is a path on n + 1 vertices.",
+    "comment": [
+        "a(n) = n times the number of \"2 up, 2 down\" permutations of length 2*n-1 = n*A005981(n-1) for n >= 2.",
+        "a(n) ~ (c_1)*n*(2*n - 1)!/(c_2)^(2n), where c_1 is a constant and c_2 = 1.87510... is the smallest positive solution of the equation cos(z)* cosh(z) + 1 = 0."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A131455/b131455.txt\">Table of n, a(n) for n = 1..250</a>",
+        "Guo-Niu Han, <a href=\"/A196265/a196265.pdf\">Enumeration of Standard Puzzles</a>, 2011. [Cached copy]",
+        "Guo-Niu Han, <a href=\"https://arxiv.org/abs/2006.14070\">Enumeration of Standard Puzzles</a>, arXiv:2006.14070 [math.CO], 2020.",
+        "B. Shapiro and A. Vainshtein, <a href=\"http://arXiv.org/abs/math.AG/0209062\">Counting real rational functions with all real critical values</a>, arXiv:math/0209062 [math.AG], 2002.",
+        "B. Shapiro and A. Vainshtein, <a href=\"http://www.mathnet.ru/php/archive.phtml?wshow=paper&amp;jrnid=mmj&amp;paperid=103&amp;option_lang=eng\">Counting real rational functions with all real critical values</a>, Moscow Math. J., 3 (2003), 647-659.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/GeneralizedHyperbolicFunctions.html\">Generalized Hyperbolic Functions</a>."
+    ],
+    "formula": [
+        "E.g.f.: Sum_{n >= 1} a(n)*(x^(2*n))/(2*n)! = (x/2)*(f(0,x)*f(1,x) - f(2,x)*f(3,x) + f(3,x))/(f(0,x)^2 - f(1,x)*f(3,x)), where f(j,x) = Sum_{k >= 0} (x^(4*k + j))/(4*k + j)!, j = 0, 1, 2, 3, is the j-th generalized hyperbolic function."
+    ],
+    "example": [
+        "From _Petros Hadjicostas_, Jul 25 2020: (Start)",
+        "For n = 2, the a(2)/2 = 1 \"2 up, 2 down\" permutation of length 2*2 - 1 = 3 is the following:",
+        "         3",
+        "        /",
+        "       2",
+        "      /",
+        "     1",
+        "For n = 3, the a(3)/3 = 6 \"2 up, 2 down\" permutations of length 2*3 - 1 = 5 are the following:",
+        "        5          5          5          5          5          5",
+        "       / \\        / \\        / \\        / \\        / \\        / \\",
+        "      3   4      4   3      2   4      3   4      4   3      4   2",
+        "     /     \\    /     \\    /     \\    /     \\    /     \\    /     \\",
+        "    1       2  1       2  1       3  2       1  2       1  3       1",
+        "(End)"
+    ],
+    "maple": [
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, 1, add(",
+        "     `if`(t=2, b(o-j, u+j-1, 1), b(u+j-1, o-j, t+1)), j=1..o))",
+        "    end:",
+        "a:= n-> n*b(0, 2*n-1, 0):",
+        "seq(a(n), n=1..19);  # _Alois P. Heinz_, Nov 23 2021"
+    ],
+    "mathematica": [
+        "b[u_, o_, t_] := b[u, o, t] = If[u + o == 0, 1, Sum[If[t == 2,",
+        "     b[o - j, u + j - 1, 1], b[u + j - 1, o - j, t + 1]], {j, 1, o}]];",
+        "a[n_] := n*b[0, 2*n - 1, 0];",
+        "Table[a[n], {n, 1, 19}] (* _Jean-Fran\u00e7ois Alcover_, Mar 07 2022, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) f(j,x,nn) = sum(k=0, 2*nn, (x^(4*k + j))/(4*k + j)!);",
+        "g(x,nn) = (x/2)*(f(0,x,nn)*f(1,x,nn) - f(2,x,nn)*f(3,x,nn) + f(3,x,nn))/(f(0,x,nn)^2 - f(1,x,nn)*f(3,x,nn));",
+        "lista(nn) = {default(seriesprecision, 2*nn); my(a=vector(nn)); for(n=1, nn, a[n] = (2*n)!*polcoef(Ser(g(x,nn)), 2*n)); a;} \\\\ _Petros Hadjicostas_, Jul 25 2020"
+    ],
+    "xref": [
+        "Cf. A005981, A131453, A131454."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Peter Bala_, Jul 13 2007",
+    "ext": [
+        "More terms from _Petros Hadjicostas_, Jul 25 2020"
+    ],
+    "references": 4,
+    "revision": 35,
+    "time": "2022-03-07T07:55:12-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

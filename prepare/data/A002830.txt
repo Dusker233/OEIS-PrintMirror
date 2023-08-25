@@ -1,0 +1,48 @@
+{
+    "number": 2830,
+    "id": "M3871 N1586",
+    "data": "1,1,5,16,86,448,3580,34981,448628,6854130,121173330,2403140605,52655943500,1260724587515,32726520985365,915263580719998,27432853858637678,877211481667946811,29807483816421710806,1072542780403547030073,40739888428757581326987",
+    "name": "Number of 3-edge-colored trivalent graphs with 2n nodes.",
+    "reference": [
+        "R. C. Read, Some Enumeration Problems in Graph Theory. Ph.D. Dissertation, Department of Mathematics, Univ. London, 1958.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A002830/b002830.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Nicholas Dub, <a href=\"https://tel.archives-ouvertes.fr/tel-03641958/\">Enumeration of triangulations modulo symmetries and of rooted triangulations counted by their number of (d - 2)-simplices in dimension d \u2265 2</a>, tel-03641958 [cs.OH], Universit\u00e9 Paris-Nord - Paris XIII, 2021.",
+        "Sean A. Irvine, <a href=\"/A002830/a002830.gif\">Illustration of initial terms</a>",
+        "R. C. Read, <a href=\"/A002831/a002831.pdf\">Letter to N. J. A. Sloane, Feb 04 1971</a> (gives initial terms of this sequence)"
+    ],
+    "formula": [
+        "G.f.: exp(Sum_{k >= 1} F(x^k) / k) where F(x) is the g.f. for A002831. - _Sean A. Irvine_, Sep 09 2014"
+    ],
+    "mathematica": [
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t k; s += t]; s!/m];",
+        "b[k_, q_] := If[OddQ[q], If[OddQ[k], 0, j = k/2; q^j (2 j)!/(j! 2^j)], Sum[ Binomial[k, 2 j] q^j (2 j)!/(j! 2^j), {j, 0, Quotient[k, 2]}]];",
+        "pm[v_] := Module[{p = Total[x^v]}, Product[b[Coefficient[p, x, i], i], {i, 1, Exponent[p, x]}]];",
+        "a[n_] := Module[{s = 0}, Do[s += permcount[p] pm[p]^3, {p, IntegerPartitions[2 n]}]; s/(2 n)!];",
+        "Table[an = a[n]; Print[\"a(\", n, \") = \", an]; an, {n, 1, 30}] (* _Jean-Fran\u00e7ois Alcover_, Jul 02 2018, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "b(k,r) = {if(k%2, if(r%2, 0, my(j=r/2); k^j*(2*j)!/(j!*2^j)), sum(j=0, r\\2, binomial(r, 2*j)*k^j*(2*j)!/(j!*2^j)))}",
+        "g(n,k)={sum(r=0, n\\k,  x^(k*r)*b(k,r)^3/(r!*k^r)) + O(x*x^n)}",
+        "seq(n)={Vec(substpol(prod(k=1, 2*n, g(2*n,k)), x^2, x))} \\\\ _Andrew Howroyd_, Dec 14 2017; updated May 02 2023"
+    ],
+    "xref": [
+        "Cf. A002831, A006712, A006713."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "a(7)-a(8) from _Sean A. Irvine_, Sep 08 2014",
+        "Terms a(9) and beyond from _Andrew Howroyd_, Dec 14 2017",
+        "a(0)=1 prepended by _Andrew Howroyd_, May 02 2023"
+    ],
+    "references": 4,
+    "revision": 41,
+    "time": "2023-05-03T09:14:20-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

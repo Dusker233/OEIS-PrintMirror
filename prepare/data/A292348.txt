@@ -1,0 +1,46 @@
+{
+    "number": 292348,
+    "data": "6,7,15,19,21,23,27,43,45,63,71,75,77,81,99,101,105,111,135,147,159,165,175,183,189,195,225,231,235,237,243,255,261,273,285,309,315,335,345,357,363,375,381,423,435,483,495,507,553,555,573,585,645,663,669,675",
+    "name": "\"Pri-most\" numbers: the majority of bits in the binary representation of these numbers satisfy the following: complementing this bit produces a prime number.",
+    "comment": [
+        "Conjecture: the sequence is infinite."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A292348/b292348.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "23 is 10111 in binary, 23 XOR {1,2,4,8,16} = {22,21,19,31,7}, three times a prime was produced, namely 19,31,7, versus two composites, 22 and 21. More primes than composites, therefore 23 is a term."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k; for k from 1+a(n-1) while add(",
+        "     `if`(isprime(Bits[Xor](k, 2^i)), 1, -1), i=0..ilog2(k))<1 do od; k",
+        "    end: a(0):=0:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Dec 07 2017"
+    ],
+    "mathematica": [
+        "okQ[n_] := Module[{cnt, f}, cnt = Thread[f[n, 2^Range[0, Log[2, n] // Floor]]] /. f -> BitXor // PrimeQ; Count[cnt, True] > Length[cnt]/2];",
+        "Select[Range[1000], okQ] (* _Jean-Fran\u00e7ois Alcover_, Oct 04 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "for i in range(1000):",
+        "  delta = 0  # foundPrime - nonPrime",
+        "  bit = 1",
+        "  while  bit <= i:",
+        "    if isprime(i^bit): delta += 1",
+        "    else:              delta -= 1",
+        "    bit*=2",
+        "  if delta > 0:  print(str(i), end=',')"
+    ],
+    "xref": [
+        "Cf. A000040, A137985, A292349."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, Dec 07 2017",
+    "references": 2,
+    "revision": 28,
+    "time": "2021-05-24T07:33:50-04:00",
+    "created": "2017-12-08T22:57:55-05:00"
+}

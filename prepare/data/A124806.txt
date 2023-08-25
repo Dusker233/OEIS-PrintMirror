@@ -1,0 +1,41 @@
+{
+    "number": 124806,
+    "data": "1,5,19,65,247,955,3733,14649,57583,226505,891219,3507047,13801285,54313277,213745019,841177105,3310392415,13027820227,51270096661,201769982673,794052091767,3124938240153,12297982928987,48397879544975",
+    "name": "Number of circular n-letter words over the alphabet {0,1,2,3,4} with adjacent letters differing by at most 2.",
+    "comment": [
+        "Empirical: a(base, n) = a(base-1, n) + A005191(n+1) for base >= 2*floor(n/2) + 1 where base is the number of letters in the alphabet."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A124806/b124806.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (5,-3,-5,1,1)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Jun 04 2017: (Start)",
+        "G.f.: (1 - 3*x^2 - 10*x^3 + 3*x^4 + 4*x^5) / ((1 - x - x^2)*(1 - 4*x + x^3)).",
+        "a(n) = 5*a(n-1) - 3*a(n-2) - 5*a(n-3) + a(n-4) + a(n-5) for n>5. (End)",
+        "a(n) = -4*[n=0] + LucasL(n-1) + 3*A099503(n) - 8*A099503(n-1). - _G. C. Greubel_, Aug 03 2023"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{5,-3,-5,1,1}, {1,5,19,65,247,955}, 60] (* _G. C. Greubel_, Aug 03 2023 *)"
+    ],
+    "program": [
+        "(S/R) stvar $[N]:(0..M-1) init $[]:=0 asgn $[]->{*} kill +[i in 0..N-1](($[i]`-$[(i+1)mod N]`>2)+($[(i+1)mod N]`-$[i]`>2))",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 30); Coefficients(R!( (1-3*x^2-10*x^3+3*x^4+4*x^5)/((1-x-x^2)*(1-4*x+x^3)) )); // _G. C. Greubel_, Aug 03 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def a(n): # a = A124806",
+        "    if (n<6): return (1,5,19,65,247,955)[n]",
+        "    else: return 5*a(n-1)-3*a(n-2)-5*a(n-3)+a(n-4)+a(n-5)",
+        "[a(n) for n in range(31)] # _G. C. Greubel_, Aug 03 2023"
+    ],
+    "xref": [
+        "Cf. A000032, A005191, A099503, A124805, A124807."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_R. H. Hardin_, Dec 28 2006",
+    "references": 4,
+    "revision": 22,
+    "time": "2023-08-05T21:31:54-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

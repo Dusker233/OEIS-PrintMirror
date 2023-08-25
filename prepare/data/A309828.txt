@@ -1,0 +1,64 @@
+{
+    "number": 309828,
+    "data": "25,49,1225,4489,112225,444889,11122225,44448889,816416329,1111222225,1451229025,3832476649,4444488889,111112222225,444444888889,10185602037121,11111122222225,44444448888889,46355849271169,997230019944601,1111111222222225,1231148024622961",
+    "name": "Squares formed by concatenating k and 2*k+1.",
+    "comment": [
+        "The sequence is infinite. The squares of the form 66...67^2 = 4..48..89 are terms.",
+        "Another infinite family is the squares 33...35^2 = 1...122...25. - _Robert Israel_, Aug 20 2019"
+    ],
+    "reference": [
+        "Ion Cucurezeanu, Perfect squares and cubes of integers, Ed. Gil, Zal\u0103u, (2007), ch. 4, p. 25, pr. 211, 212 (in Romanian)."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A309828/b309828.txt\">Table of n, a(n) for n = 1..286</a>"
+    ],
+    "example": [
+        "5^2 = 25 = 2_(2 * 2 + 1);",
+        "7^2 = 49 = 4_(2 * 4 + 1);",
+        "35^2 = 1225 = 12_(2 * 12 + 1);",
+        "61907^2 = 3832476649 = 38324_(2 * 38324 + 1)."
+    ],
+    "maple": [
+        "F:= proc(m) local x,X,A;",
+        "  X:= [numtheory:-rootsunity(2,10^m+2)];",
+        "  A:= map(x -> (x^2-1)/(10^m+2), X);",
+        "  A:= sort(select(x -> 2*x+1>=10^(m-1) and 2*x+1<10^m, A));",
+        "  op(map(x -> x*10^m+2*x+1, A))",
+        "end proc:",
+        "subsop(1=NULL, [seq(F(m),m=1..10)]); # _Robert Israel_, Aug 20 2019"
+    ],
+    "mathematica": [
+        "Select[Array[FromDigits@ Flatten@ IntegerDigits[{#, 2 # + 1}] &, 10^5],",
+        "IntegerQ@ Sqrt@ # &] (* _Michael De Vlieger_, Aug 19 2019 *)"
+    ],
+    "program": [
+        "(Magma) [a:n in [1..30000000]|IsSquare(a) where a is 10^(#Intseq(2*n+1))*n+2*n+1];",
+        "(Python)",
+        "def Test(n):",
+        "    s = str(n)",
+        "    ps, ss = s[0:len(s)//2], s[len(s)//2:len(s)]",
+        "    return int(ss) == 2*int(ps)+1 and s[len(s)//2] != \"0\"",
+        "n, a = 1, 4",
+        "while n < 23:",
+        "    if Test(a*a):",
+        "        print(n,a*a)",
+        "        n = n+1",
+        "    a = a+1 # _A.H.M. Smeets_, Aug 19 2019",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy.ntheory.primetest import is_square",
+        "def A309828_gen(): # generator of terms",
+        "    return filter(is_square,(int(str(k)+str((k<<1)+1)) for k in count(1)))",
+        "A309828_list = list(islice(A309828_gen(),20)) # _Chai Wah Wu_, Feb 20 2023"
+    ],
+    "xref": [
+        "Cf. A000290, A030466, A054215, A109344, A181719, A309808, A309809."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Marius A. Burtea_, Aug 18 2019",
+    "references": 2,
+    "revision": 52,
+    "time": "2023-03-18T16:27:32-04:00",
+    "created": "2019-08-21T10:56:07-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 359920,
+    "data": "1,1,6,29,137,690,3815,22579,138353,862692,5451339,34911444,226475135,1485571965,9833401534,65578882177,440170565711,2971402946711,20161828468803,137434420403678,940701180157773,6462787501335564,44550102080595910,308041365014677804,2135938633975050831",
+    "name": "a(n) = coefficient of x^n in A(x) such that x = Sum_{n=-oo..+oo} x^(n*(3*n+1)/2) * (A(x)^(3*n) - 1/A(x)^(3*n+1)).",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A359920/b359920.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Weisstein, Eric W., <a href=\"https://mathworld.wolfram.com/QuintupleProductIdentity.html\">Quintuple Product Identity</a> from MathWorld."
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n satisfies the following.",
+        "(1) x = Sum_{n=-oo..+oo} x^(n*(3*n+1)/2) * (A(x)^(3*n) - 1/A(x)^(3*n+1)).",
+        "(2) x = Sum_{n=-oo..+oo} x^(n*(3*n-1)/2) * A(x)^(3*n) * (x^n - 1/A(x)).",
+        "(3) x = Product_{n>=1} (1 - x^n) * (1 - x^n*A(x)) * (1 - x^(n-1)/A(x)) * (1 - x^(2*n-1)*A(x)^2) * (1 - x^(2*n-1)/A(x)^2), by the Watson quintuple product identity.",
+        "a(n) ~ c * d^n / n^(3/2), where d = 7.388458151593... and c = 0.36167254645... - _Vaclav Kotesovec_, Mar 19 2023"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 6*x^2 + 29*x^3 + 137*x^4 + 690*x^5 + 3815*x^6 + 22579*x^7 + 138353*x^8 + 862692*x^9 + 5451339*x^10 + 34911444*x^11 + 226475135*x^12 + ...",
+        "where A = A(x) satisfies the doubly infinite sum",
+        "x = ... + x^12*(1/A^9 - A^8) + x^5*(1/A^6 - A^5) + x*(1/A^3 - A^2) + (1 - 1/A) + x^2*(A^3 - 1/A^4) + x^7*(A^6 - 1/A^7) + x^15*(A^9 - 1/A^10) + ... + x^(n*(3*n+1)/2) * (A(x)^(3*n) - 1/A(x)^(3*n+1)) + ...",
+        "also, by the Watson quintuple product identity,",
+        "x = (1-x)*(1-x*A)*(1-1/A)*(1-x*A^2)*(1-x/A^2) * (1-x^2)*(1-x^2*A)*(1-x/A)*(1-x^3*A^2)*(1-x^3/A^2) * (1-x^3)*(1-x^3*A)*(1-x^2/A)*(1-x^5*A^2)*(1-x^5/A^2) * (1-x^4)*(1-x^4*A)*(1-x^3/A)*(1-x^7*A^2)*(1-x^7/A^2) * ...",
+        "SPECIFIC VALUES.",
+        "A(x) at x = 100/738 diverges.",
+        "A(100/739) = 1.680090298639836342808608867776256534712736768391...",
+        "A(1/8) = 1.40048762211279862753069563580599076131617792526323...",
+        "A(1/9) = 1.28067125711115350114265686789651886973848631068277..."
+    ],
+    "program": [
+        "(PARI) /* Using the doubly infinite series */",
+        "{a(n) = my(A=[1]); for(i=1,n, A = concat(A,0);",
+        "A[#A] = polcoeff(x - sum(m=-#A,#A, (Ser(A)^(3*m) - 1/Ser(A)^(3*m+1)) * x^(m*(3*m+1)/2) ),#A-1) ); A[n+1]}",
+        "for(n=0,30, print1(a(n),\", \"))",
+        "(PARI) /* Using the quintuple product */",
+        "{a(n) = my(A=[1]); for(i=1,n, A = concat(A,0);",
+        "A[#A] = polcoeff(x - prod(m=1,#A, (1 - x^m) * (1 - x^m*Ser(A)) * (1 - x^(m-1)/Ser(A)) * (1 - x^(2*m-1)*Ser(A)^2) * (1 - x^(2*m-1)/Ser(A)^2) ),#A-1) ); A[n+1]}",
+        "for(n=0,30, print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A359915, A359916, A359919, A359921, A359924, A359719.",
+        "Cf. A359914."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jan 22 2023",
+    "references": 14,
+    "revision": 27,
+    "time": "2023-03-19T05:08:06-04:00",
+    "created": "2023-01-23T09:08:47-05:00"
+}

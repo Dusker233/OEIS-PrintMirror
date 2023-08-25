@@ -1,0 +1,48 @@
+{
+    "number": 130153,
+    "data": "0,1,8,52,362,2779,23749,224570,2334827,26504418,326476313,4338953453,61908434299,944065986251,15325676747363,263910466293264,4805394642545408,92254524334410750,1862526899218400010,39449927915059031609,874745258339527435041,20265180489604116160763",
+    "name": "For each permutation p of {1,2,...,n} define maxabsjump(p) = max(|p(i) - i|, 1<=i<=n); a(n) is the sum of maxabsjumps of all p.",
+    "comment": [
+        "a(n) = Sum_{k=0..n-1} k*A130152(n,k). For the case when in the definition |p(i)-i| is replaced by p(i)-i, see A018927."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A130153/b130153.txt\">Table of n, a(n) for n = 1..23</a>"
+    ],
+    "example": [
+        "a(3) = 8 because the permutations 123,132,213,231,312 and 321 have maxabsjumps 0,1,1,2,2 and 2, respectively."
+    ],
+    "maple": [
+        "with(combinat): for n from 1 to 7 do P:=permute(n): for i from 0 to n-1 do ct[i]:=0 od: for j from 1 to n! do if max(seq(abs(P[j][i]-i),i=1..n))=0 then ct[0]:=ct[0]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=1 then ct[1]:=ct[1]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=2 then ct[2]:=ct[2]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=3 then ct[3]:=ct[3]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=4 then ct[4]:=ct[4]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=5 then ct[5]:=ct[5]+1 elif max(seq(abs(P[j][i]-i),i=1..n))=6 then ct[6]:=ct[6]+1 else fi od: a[n]:=sum(k*ct[k],k=0..n-1): od: seq(a[n],n=1..7); # a cumbersome program to obtain the first 7 terms of the sequence",
+        "n := 8: st := proc (p) max(seq(abs(p[j]-j), j = 1 .. nops(p))) end proc: with(combinat): P := permute(n): f := sort(add(t^st(P[i]), i = 1 .. factorial(n))): subs(t = 1, diff(f, t)); # program yields a(n) for the specified n - _Emeric Deutsch_, Aug 13 2009",
+        "# second Maple program:",
+        "b:= proc(s) option remember; (n-> `if`(n=0, 1, add((p-> add(",
+        "      coeff(p, x, i)*x^max(i, abs(n-j)), i=0..degree(p)))(",
+        "        b(s minus {j})), j=s)))(nops(s))",
+        "    end:",
+        "a:= n-> (p-> add(coeff(p, x, i)*i, i=1..n-1))(b({$1..n})):",
+        "seq(a(n), n=1..15);  # _Alois P. Heinz_, Jan 21 2019"
+    ],
+    "mathematica": [
+        "b[s_] := b[s] = Function[n, If[n == 0, 1, Sum[Function[p, Sum[Coefficient[p, x, i] x^Max[i, Abs[n-j]], {i, 0, Exponent[p, x]}]][b[s ~Complement~ {j}]], {j, s}]]][Length[s]];",
+        "a[n_] := Function[p, Sum[Coefficient[p, x, i] i, {i, 1, n-1}]][b[Range[n]]];",
+        "Array[a, 15] (* _Jean-Fran\u00e7ois Alcover_, Nov 02 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A130152, A018927."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Emeric Deutsch_, May 27 2007",
+    "ext": [
+        "Corrected by _Vladeta Jovovic_, Jun 07 2007",
+        "a(10) from _Emeric Deutsch_, Aug 13 2009",
+        "a(11)-a(14) from _Donovan Johnson_, Sep 24 2010",
+        "a(15) from _Alois P. Heinz_, Sep 29 2011",
+        "a(16)-a(21) from _Alois P. Heinz_, Jan 21 2019",
+        "a(22) from _Alois P. Heinz_, Jan 28 2019"
+    ],
+    "references": 4,
+    "revision": 32,
+    "time": "2020-11-02T09:09:59-05:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

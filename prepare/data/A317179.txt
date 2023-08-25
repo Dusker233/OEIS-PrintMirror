@@ -1,0 +1,37 @@
+{
+    "number": 317179,
+    "data": "16661,19991,1160611,1190911,1688861,1988891,101616101,101919101,106111601,106191601,109111901,109161901,116010611,116696611,119010911,119969911,160080061,160101061,166080661,169060961,188868881,188898881,190080091,190101091,196090691,199080991",
+    "name": "Palindromic invertible primes.",
+    "comment": [
+        "a(38) = 10886968801 is the first term that uses all of the invertible digits (0, 1, 6, 8, 9).",
+        "Number of terms < 10^(2k-1): 0, 0, 2, 6, 26, 78, 314, 1010, 3976, 15174, ..., . - _Robert G. Wilson v_, Jul 24 2018",
+        "Intersection of A002385 and A048890, or, respectively, A002113 and A048890. - _Felix Fr\u00f6hlich_, Jul 24 2018"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A317179/b317179.txt\">Table of n, a(n) for n = 1..15175</a>",
+        "C. K. Caldwell, The Prime Glossary, <a href=\"https://t5k.org/glossary/page.php?sort=Strobogrammatic\">strobogrammatic</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Strobogrammatic_number\">Strobogrammatic number</a>"
+    ],
+    "example": [
+        "16661 is a term because it is a prime and a palindrome as well; when rotated by 180 degrees it becomes 19991 that is also a prime."
+    ],
+    "mathematica": [
+        "Select[ lst = {}; fQ[n_] :=  Block[{allset = {0, 1, 6, 8, 9}, id = IntegerDigits@n},  rid = Reverse[id /. {6 -> 9, 9 -> 6}];Union@Join[id, allset] == allset && PrimeQ@FromDigits@rid &&  rid != id]; Do[If[PrimeQ@n && fQ@n,  AppendTo[lst, n]], {n, 1090000000}]; lst, # ==FromDigits[Reverse[IntegerDigits[#]]]  &]"
+    ],
+    "program": [
+        "(PARI) is_palandinv(n) = my(d=digits(n), ineligible_d=[2, 3, 4, 5, 7]); d==Vecrev(d) && #setintersect(vecsort(d), ineligible_d)==0",
+        "invert(n) = my(d=digits(n), e=[]); for(k=1, #d, if(d[k]==0, e=concat(e, [0])); if(d[k]==1, e=concat(e, [1])); if(d[k]==6, e=concat(e, [9])); if(d[k]==8, e=concat(e, [8])); if(d[k]==9, e=concat(e, [6]))); subst(Pol(e), x, 10)",
+        "is(n) = my(d=digits(n)); is_palandinv(n) && n!=invert(n) && ispseudoprime(invert(n))",
+        "forprime(p=1, 2e8, if(is(p), print1(p, \", \"))) \\\\ _Felix Fr\u00f6hlich_, Jul 24 2018"
+    ],
+    "xref": [
+        "Cf. A000040, A002113, A002385, A045574, A048890."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_K. D. Bajpai_, Jul 23 2018",
+    "references": 1,
+    "revision": 19,
+    "time": "2023-04-03T10:36:13-04:00",
+    "created": "2018-08-31T22:32:08-04:00"
+}

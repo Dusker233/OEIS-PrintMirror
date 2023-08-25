@@ -1,0 +1,60 @@
+{
+    "number": 330210,
+    "data": "10,14,16,18,20,22,24,26,28,30,32,38,40,44,48,52,54,56,62,64,68,70,74,76,78,82,86,94,96,98,104,112,124,128,130,136,140,144,148,156,158,164,168,174,176,178,186,188,192,194,198,206,208,210,216,218,222,224",
+    "name": "Numbers that can be expressed as the sum of 2 prime numbers in a prime number of different ways.",
+    "example": [
+        "24 can be expressed as the sum of 2 prime numbers in 3 different ways (5+19, 7+17, and 11+13), and 3 is prime."
+    ],
+    "mathematica": [
+        "Select[Range[2, 224, 2], PrimeQ@ Length@ IntegerPartitions[#, {2}, Prime@ Range@ PrimePi@ #] &] (* _Giovanni Resta_, Dec 06 2019 *)"
+    ],
+    "program": [
+        "(Python 3)",
+        "import math",
+        "from sympy import isprime",
+        "def main(n):",
+        "    x = {}",
+        "    a = 1",
+        "    b = 1",
+        "    for i in range(2, n):",
+        "        x[i] = []",
+        "        while a < i:",
+        "            if a + b == i:",
+        "                x[i].append(str(a) + \"+\" + str(b))",
+        "            b += 1",
+        "            if b == i:",
+        "                a += 1",
+        "                b = 1",
+        "        a = 1",
+        "        b = 1",
+        "    for i in x:",
+        "        x[i] = x[i][0:math.ceil(len(x[i])/2)]",
+        "    x[2] = [\"1+1\"]",
+        "    newdict = {}",
+        "    for i in x:",
+        "        newdict[i] = []",
+        "        for j in x[i]:",
+        "            if isprime(int(j.split(\"+\")[0])) and isprime(int(j.split(\"+\")[1])):",
+        "                newdict[i].append(j)",
+        "    finaloutput = []",
+        "    for i in newdict:",
+        "        if isprime(len(newdict[i])):",
+        "            finaloutput.append(i)",
+        "    return finaloutput",
+        "def a(n):",
+        "    x = 0",
+        "    while len(main(x)) != n:",
+        "        x += 1",
+        "    return main(x)[-1]"
+    ],
+    "xref": [
+        "Cf. A000040, A014091, A061358."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Pietro Saia_, Dec 05 2019",
+    "references": 0,
+    "revision": 12,
+    "time": "2019-12-07T00:50:13-05:00",
+    "created": "2019-12-07T00:50:13-05:00"
+}

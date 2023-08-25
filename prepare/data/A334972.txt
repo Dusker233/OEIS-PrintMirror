@@ -1,0 +1,30 @@
+{
+    "number": 334972,
+    "data": "24,30,40,42,48,54,56,66,70,78,80,88,102,104,114,120,138,150,162,174,186,222,224,246,258,270,282,294,318,354,360,366,402,420,426,438,448,474,498,534,540,582,606,618,630,642,654,660,672,678,720,726,762,780,786",
+    "name": "Bi-unitary admirable numbers: numbers k such that there is a proper bi-unitary divisor d of k such that bsigma(k) - 2*d = 2*k, where bsigma is the sum of bi-unitary divisors function (A188999).",
+    "comment": [
+        "Equivalently, numbers that are equal to the sum of their proper bi-unitary divisors, with one of them taken with a minus sign.",
+        "Admirable numbers (A111592) that are exponentially odd (A268335) are also bi-unitary admirable numbers since all of their divisors are bi-unitary. Terms that are not exponentially odd are 48, 80, 150, 162, 294, 360, 420, 448, 540, 630, 660, 720, 726, 780, 832, 990, ..."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A334972/b334972.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "48 is in the sequence since 48 = 1 + 2 + 3 - 6 + 8 + 16 + 24 is the sum of its proper bi-unitary divisors with one of them, 6, taken with a minus sign."
+    ],
+    "mathematica": [
+        "fun[p_, e_] := If[OddQ[e], (p^(e + 1) - 1)/(p - 1), (p^(e + 1) - 1)/(p - 1) - p^(e/2)]; bsigma[1] = 1; bsigma[n_] := Times @@ (fun @@@ FactorInteger[n]); buDivQ[n_, 1] = True; buDivQ[n_, div_] := If[Mod[#2, #1] == 0, Last@Apply[Intersection, Map[Select[Divisors[#], Function[d, CoprimeQ[d, #/d]]] &, {#1, #2/#1}]] == 1, False] & @@ {div, n}; buAdmQ[n_] := (ab = bsigma[n] - 2 n) > 0 && EvenQ[ab] && ab/2 < n && Divisible[n, ab/2] && buDivQ[n, ab/2]; Select[Range[1000], buAdmQ]"
+    ],
+    "xref": [
+        "The bi-unitary version of A111592.",
+        "Subsequence of A292982.",
+        "Cf. A188999, A222266, A268335, A328328, A334974."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, May 18 2020",
+    "references": 5,
+    "revision": 10,
+    "time": "2020-05-23T05:44:11-04:00",
+    "created": "2020-05-18T19:57:40-04:00"
+}

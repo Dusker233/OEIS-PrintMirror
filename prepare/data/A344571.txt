@@ -1,0 +1,64 @@
+{
+    "number": 344571,
+    "data": "1,2,5,14,42,130,412,1326,4318,14188,46950,156258,522523,1754254,5909419,19964450,67618388,229526054,780633253,2659600616,9075301990,31010850632,106100239080,363428599306,1246172974048,4277163883744,14693260749888,50516757992258",
+    "name": "Number of subgraphs of the directed square lattice with n edges and all vertices reachable from the origin.",
+    "comment": [
+        "Equivalently, the number of fixed polysticks (see A096267) that can be constructed starting from a fixed vertex by only adding edges on top of an existing vertex or to the right of an existing vertex. If the polystick is rotated counterclockwise by 45 degrees, then the polystick is supported from the starting vertex. - _Andrew Howroyd_, May 24 2021"
+    ],
+    "link": [
+        "Roman Hros, <a href=\"http://www2.fiit.stuba.sk/iitsrc/iit-src2018-proceedings.pdf#page=14\">Generating Subgraphs of Finite Grids</a>, IIT.SRC 2018: 14th Student Research Conference in Informatics and Information Technologies.",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/Polystick.html\">Polystick</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Polystick\">Polystick</a>"
+    ],
+    "formula": [
+        "a(n) >= 2*a(n-1) for n > 0."
+    ],
+    "example": [
+        "In the following examples, the origin is in the bottom left corner and graph edges are directed upwards and to the right.",
+        "The a(1) = 2 graphs are:",
+        "  |   __",
+        ".",
+        "The a(2) = 5 graphs are:",
+        "  |   __",
+        "  |  |     __.__    __|   |__",
+        ".",
+        "The a(3) = 14 graphs are:",
+        "  |    __",
+        "  |   |     |__    __|    __.__    |      __",
+        "  |   |     |     |      |         |__   |__",
+        ".",
+        "                               __    |",
+        "  __.__.__   __.__|  __|__  __|    __|   |____  |_|",
+        ".",
+        "Other examples with 4, 6, and 7 edges respectively include:",
+        "     __      __.__      __|__|",
+        "    |__|    |__.__|    |__|"
+    ],
+    "program": [
+        "(PARI)",
+        "a(n)={",
+        "  local(M=Map());",
+        "  my(acc(hk, r)=my(z); mapput(M, hk, if(mapisdefined(M,hk,&z),z+r,r)));",
+        "  my(recurse(w,f,b,r) =",
+        "    if(w<=0, if(w==0, acc([w,1],r)), if(f==0, if(b, acc([w,b>>valuation(b,2)],r)),",
+        "    my(t=1<<logint(f,2)); f-=t; self()(w,f,b,r); self()(w-1,f,bitor(b,t),r); self()(w-1,f,bitor(b,2*t),r); self()(w-2,f,bitor(b,3*t),r)  )));",
+        "  mapput(M, [n,1], 1);",
+        "  for(n=1, n, my(L=Mat(M)); M=Map();",
+        "    for(i=1, matsize(L)[1], my([hk,r]=L[i,]); recurse(hk[1], hk[2], 0, r)));",
+        "  mapget(M, [0,1]);",
+        "} \\\\ _Andrew Howroyd_, May 24 2021"
+    ],
+    "xref": [
+        "Cf. A096267, A353028."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Roman Hros_, May 23 2021",
+    "ext": [
+        "Terms a(25) and beyond from _Andrew Howroyd_, May 24 2021"
+    ],
+    "references": 1,
+    "revision": 20,
+    "time": "2022-06-11T13:48:06-04:00",
+    "created": "2021-06-24T02:18:13-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 298855,
+    "data": "21,33,39,51,55,57,65,69,85,87,93,95,111,115,119,123,129,133,141,145,155,159,161,177,183,185,201,203,205,213,215,217,219,235,237,249,253,259,265,267,287,291,295,301,303,305,309,319,321,327,329,335,339,341,355,365,371,377,381,393,395",
+    "name": "Squarefree semiprimes p*q for which the symmetric representation of sigma(p*q) has four parts, in increasing order.",
+    "comment": [
+        "All numbers in this sequence are odd since the symmetric representation of 2*p, p prime > 3, has two parts each of size 3*(p+1)/2, and that for 6 has one part of size 12.",
+        "A number in this sequence has the form p*q, p and q prime, 3 <= p and 2*p < q, since in this case 2*p <= floor((sqrt(8*p*q + 1) - 1)/2) < q so that 1's in row p*q of A237048 occur only in positions 1, 2, p and 2*p.",
+        "This sequence is a subsequence of A046388, hence of A006881, as well as of A174905, A241008 and A280107.",
+        "The two central parts of the symmetric representation of sigma(p*q), each of size (p+q)/2, meet on the diagonal when q = 2*p + 1 since in this case 2*p = floor((sqrt(8*p*q + 1) - 1)/2). These triangular numbers p*(2p+1) form sequence A156592, except for its first element 10, and form a subsequence of the diagonal in the associated irregular triangle of this sequence given in the Example section. They also are a subsequence of A264104. A function to compute the coordinates on the diagonal where the two central parts meet is defined in sequence A240542.",
+        "Except for missing 10 the intersection of this sequence and A298856 equals A156592."
+    ],
+    "example": [
+        "21=3*7 is the smallest number in the sequence since 2*3<7.",
+        "1081=23*(2*23+1) is in the sequence; its central parts meet at 751 on the diagonal.",
+        "The semiprimes p*q can be arranged as an irregular triangle with rows and columns labeled by the respective odd primes:",
+        "  q\\p|   3    5    7   11   13   17   19   23",
+        "  ---+---------------------------------------",
+        "   7 |  21",
+        "  11 |  33   55",
+        "  13 |  39   65",
+        "  17 |  51   85  119",
+        "  19 |  57   95  133",
+        "  23 |  69  115  161  253",
+        "  29 |  87  145  203  319  377",
+        "  31 |  93  155  217  341  403",
+        "  37 | 111  185  259  407  481  629",
+        "  41 | 123  205  287  451  533  697  779",
+        "  43 | 129  215  301  473  559  731  817",
+        "  47 | 141  235  329  517  611  799  893 1081"
+    ],
+    "mathematica": [
+        "(* Function a237270[] is defined in A237270 *)",
+        "a006881Q[n_] := Module[{f=FactorInteger[n]}, Length[f]==2 && AllTrue[Last[Transpose[f]], #==1&]]",
+        "a298855[m_, n_] := Select[Range[m, n], a006881Q[#] && Length[a237270[#]]==4 &]",
+        "a298855[1, 400] (* data *)",
+        "(* column for prime p through number n *)",
+        "stalk[n_, p_] := Select[a298855[1, n], First[First[FactorInteger[#]]]==p&]"
+    ],
+    "xref": [
+        "Cf. A001358, A005384, A005385, A006881, A046388, A068443, A156592, A174905, A237048, A237270, A237593, A240542, A241008, A264104, A280107, A298856."
+    ],
+    "keyword": "nonn,tabf",
+    "offset": "1,1",
+    "author": "_Hartmut F. W. Hoft_, Jan 27 2018",
+    "references": 2,
+    "revision": 13,
+    "time": "2018-01-28T13:14:50-05:00",
+    "created": "2018-01-28T13:14:50-05:00"
+}

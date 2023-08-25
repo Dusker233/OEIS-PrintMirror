@@ -1,0 +1,47 @@
+{
+    "number": 350115,
+    "data": "20,52,68,116,148,164,171,212,244,292,333,356,388,404,436,452,548,596,628,657,692,724,772,788,916,932,964,981,1028,1076,1108,1124,1143,1172,1252,1268,1348,1396,1412,1467,1492,1556,1588,1604,1629,1636,1684,1732,1791,1796,1828,1844",
+    "name": "Numbers p^2*q, p<q primes such that p^2 divides q-1.",
+    "comment": [
+        "For these terms m, there are precisely 5 groups of order m, so this is a subsequence of A054397.",
+        "Two of them are abelian: C_{p^2*q}, C_q X C_p X C_p = C_q X (C_p)^2, and the three others that are nonabelian are C_q : (C_p x C_p), and two nonisomorphic semi-direct products C_q : C_p^2. Here C means cyclic groups of the stated order, the symbols X and : mean direct and semidirect products respectively."
+    ],
+    "reference": [
+        "Pascal Ortiz, Exercices d'Alg\u00e8bre, Collection CAPES / Agr\u00e9gation, Ellipses, probl\u00e8me 1.35, pp. 70-74, 2004."
+    ],
+    "example": [
+        "20 = 2^2*5 and 2^2 divides 5-1, hence 20 is a term.",
+        "171 = 3^2*19 and 3^2 divides 19-1, hence 171 is another term."
+    ],
+    "mathematica": [
+        "q[n_] := Module[{f = FactorInteger[n], p, e}, p = f[[;; , 1]]; e = f[[;; , 2]]; e == {2, 1} && Divisible[p[[2]] - 1, p[[1]]^2]]; Select[Range[2000], q] (* _Amiram Eldar_, Dec 14 2021 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = {my(f=factor(m)); if (f[,2] == [2,1]~, my(p=f[1,1], q=f[2,1]); ((q-1) % p^2) == 0;);} \\\\ _Michel Marcus_, Dec 14 2021",
+        "(Python)",
+        "from sympy import integer_nthroot, isprime, primerange",
+        "def aupto(limit):",
+        "    aset, maxp = set(), integer_nthroot(limit, 4)[0]",
+        "    for p in primerange(1, maxp+1):",
+        "        m = p**2",
+        "        for t in range(m, limit//m, m):",
+        "            if isprime(t+1):",
+        "                aset.add(p**2*(t+1))",
+        "    return sorted(aset)",
+        "print(aupto(1844)) # _Michael S. Branicky_, Dec 14 2021"
+    ],
+    "xref": [
+        "Other subsequences of A054397: A030078, A079704, A143928.",
+        "Subsequence of A054753."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Dec 14 2021",
+    "ext": [
+        "More terms from _Michel Marcus_, Dec 14 2021"
+    ],
+    "references": 7,
+    "revision": 22,
+    "time": "2021-12-17T20:40:35-05:00",
+    "created": "2021-12-17T20:40:35-05:00"
+}

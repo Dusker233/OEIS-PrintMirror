@@ -1,0 +1,47 @@
+{
+    "number": 343021,
+    "data": "1,2,6,90,15120,983010",
+    "name": "Positions of records in A343016.",
+    "comment": [
+        "Numbers k such that A343016(k) > A343016(j) for all j < k.",
+        "a(n) is divisible by 6 for n >= 3, by 30 for n >= 4, by 210 for n >= 5.",
+        "a(7) > 10^9 if it exists."
+    ],
+    "example": [
+        "A343016(1) = 0.",
+        "A343016(2) = 1 is the first value > 0 in A343016.",
+        "A343016(6) = 5 is the first value > 1.",
+        "A343016(90) = 6 is the first value > 5.",
+        "A343016(15120) = 7 is the first value > 6.",
+        "A343016(983010) = 8 is the first value > 7."
+    ],
+    "maple": [
+        "R:= 1,2:",
+        "vmax:= 2:",
+        "f:= proc(n) local s, t, k;",
+        "  s:= add(t[1]*t[2], t = ifactors(n)[2]);",
+        "  for k from 0 do if not isprime(k*n+s) then return k fi od;",
+        "end proc:",
+        "for n from 6 by 6 to 10^6 do",
+        "  v:= f(n);",
+        "  if v > vmax then",
+        "    vmax:= v;",
+        "    R:= R, n;",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "With[{s = Array[Block[{m = 0, k = Plus @@ Times @@@ FactorInteger[#]}, While[PrimeQ[# m + k], m++]; m] &, 10^6]}, Map[FirstPosition[s, #][[1]] &, Union@ FoldList[Max, s]]] (* _Michael De Vlieger_, Apr 13 2021 *)"
+    ],
+    "xref": [
+        "Cf. A343016."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Apr 02 2021",
+    "references": 0,
+    "revision": 13,
+    "time": "2021-04-14T01:17:59-04:00",
+    "created": "2021-04-02T21:19:44-04:00"
+}

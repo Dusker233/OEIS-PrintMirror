@@ -1,0 +1,59 @@
+{
+    "number": 326116,
+    "data": "1,2,4,8,16,28,56,100,200,364,728,1232,2464,4592,8296,15920,31840,55952,111904,195712,362336,697360,1394720,2334112,4668224,9095392,17225312,31242784,62485568,106668608,213337216,392606528,755131840,1491146912,2727555424,4947175712",
+    "name": "Number of subsets of {2..n} containing no products of two or more distinct elements.",
+    "comment": [
+        "First differs from A308542 at a(12) = 1232, A308542(12) = 1184.",
+        "If this sequence counts product-free sets, A308542 counts product-closed sets."
+    ],
+    "link": [
+        "Fausto A. C. Cariboni, <a href=\"/A326116/b326116.txt\">Table of n, a(n) for n = 1..47</a>"
+    ],
+    "formula": [
+        "For n > 0, a(n) = A326117(n) - 1."
+    ],
+    "example": [
+        "The a(6) = 28 subsets:",
+        "  {}  {2}  {2,3}  {2,3,4}  {2,3,4,5}",
+        "      {3}  {2,4}  {2,3,5}  {2,4,5,6}",
+        "      {4}  {2,5}  {2,4,5}  {3,4,5,6}",
+        "      {5}  {2,6}  {2,4,6}",
+        "      {6}  {3,4}  {2,5,6}",
+        "           {3,5}  {3,4,5}",
+        "           {3,6}  {3,4,6}",
+        "           {4,5}  {3,5,6}",
+        "           {4,6}  {4,5,6}",
+        "           {5,6}"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Subsets[Range[2,n]],Intersection[#,Select[Times@@@Subsets[#,{2}],#<=n&]]=={}&]],{n,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "a(n)={",
+        "   my(recurse(k, ep)=",
+        "    if(k > n, 1,",
+        "      my(t = self()(k + 1, ep));",
+        "      if(!bittest(ep,k),",
+        "         forstep(i=n\\k, 1, -1, if(bittest(ep,i), ep=bitor(ep,1<<(k*i))));",
+        "         t += self()(k + 1, ep);",
+        "      );",
+        "      t);",
+        "   );",
+        "   recurse(2, 2);",
+        "} \\\\ _Andrew Howroyd_, Aug 25 2019"
+    ],
+    "xref": [
+        "Cf. A007865, A051026, A103580, A196724, A326020, A326023, A326076, A326078, A326079, A326081, A326117, A308542."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jun 06 2019",
+    "ext": [
+        "Terms a(21)-a(36) from _Andrew Howroyd_, Aug 25 2019"
+    ],
+    "references": 8,
+    "revision": 17,
+    "time": "2021-04-11T23:51:13-04:00",
+    "created": "2019-06-07T07:46:22-04:00"
+}

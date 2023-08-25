@@ -1,0 +1,38 @@
+{
+    "number": 330527,
+    "data": "1,3,8,41,136,1381,5312,70265,491776,5977561,40270592,1021246445,6249389056,135671657941,1919826163712,36481192888145,355897293438976,12422529973051441,121674189293944832,4514836332133978325",
+    "name": "Expansion of e.g.f. Sum_{k>=1} (sec(x^k) + tan(x^k) - 1).",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A330527/b330527.txt\">Table of n, a(n) for n = 1..449</a>"
+    ],
+    "formula": [
+        "a(n) = n! * Sum_{d|n} A000111(d) / d!."
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[Sum[(Sec[x^k] + Tan[x^k] - 1), {k, 1, nmax}], {x, 0, nmax}], x] Range[0, nmax]! // Rest",
+        "Table[n! DivisorSum[n, If[EvenQ[#], Abs[EulerE[#]], Abs[(2^(# + 1) (2^(# + 1) - 1) BernoulliB[# + 1])/(# + 1)]]/#! &], {n, 1, 20}]"
+    ],
+    "program": [
+        "(Python)",
+        "from math import factorial",
+        "from itertools import accumulate",
+        "def A330527(n):",
+        "    c = a = factorial(n)",
+        "    blist = (0,1)",
+        "    for d in range(2,n+1):",
+        "        blist = tuple(accumulate(reversed(blist),initial=0))",
+        "        if n % d == 0:",
+        "            c += a*blist[-1]//factorial(d)",
+        "    return c # _Chai Wah Wu_, Apr 19 2023"
+    ],
+    "xref": [
+        "Cf. A000111, A176475, A330504, A330528."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Dec 17 2019",
+    "references": 2,
+    "revision": 13,
+    "time": "2023-04-20T02:10:36-04:00",
+    "created": "2019-12-17T13:51:25-05:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 319272,
+    "data": "1,2,3,4,5,7,8,9,11,12,16,17,18,19,20,23,24,25,27,28,31,32,37,40,44,45,48,49,50,53,54,56,59,61,63,64,67,68,71,72,75,76,80,81,83,88,89,92,96,97,98,99,103,107,108,112,121,124,125,127,128,131,135,136,144,147,148",
+    "name": "Numbers whose prime multiplicities are distinct and whose prime indices are term of the sequence.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n.",
+        "Also Matula-Goebel numbers of rooted trees in which the multiplicities in the multiset of branches directly under any given node are distinct."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A319272/b319272.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "36 is not in the sequence because 36 = 2^2 * 3^2 does not have distinct prime multiplicities.",
+        "The sequence of terms of the sequence followed by their Matula-Goebel trees begins:",
+        "   1: o",
+        "   2: (o)",
+        "   3: ((o))",
+        "   4: (oo)",
+        "   5: (((o)))",
+        "   7: ((oo))",
+        "   8: (ooo)",
+        "   9: ((o)(o))",
+        "  11: ((((o))))",
+        "  12: (oo(o))",
+        "  16: (oooo)",
+        "  17: (((oo)))",
+        "  18: (o(o)(o))",
+        "  19: ((ooo))",
+        "  20: (oo((o)))",
+        "  23: (((o)(o)))",
+        "  24: (ooo(o))",
+        "  25: (((o))((o)))",
+        "  27: ((o)(o)(o))",
+        "  28: (oo(oo))",
+        "  31: (((((o)))))"
+    ],
+    "mathematica": [
+        "mgsiQ[n_]:=Or[n==1,And[UnsameQ@@Last/@FactorInteger[n],And@@Cases[FactorInteger[n],{p_,_}:>mgsiQ[PrimePi[p]]]]];",
+        "Select[Range[100],mgsiQ]"
+    ],
+    "program": [
+        "(PARI) is(n)={my(f=factor(n)); if(#Set(f[,2])<#f~, 0, for(i=1, #f~, if(!is(primepi(f[i,1])), return(0))); 1)}",
+        "{ select(is, [1..200]) } \\\\ _Andrew Howroyd_, Mar 01 2020"
+    ],
+    "xref": [
+        "Cf. A000081, A004111, A007097, A061775, A098859, A130091, A255231, A276625, A316793, A316794, A316795, A316796."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Sep 16 2018",
+    "ext": [
+        "Terms a(53) and beyond from _Andrew Howroyd_, Mar 01 2020"
+    ],
+    "references": 1,
+    "revision": 12,
+    "time": "2021-05-08T08:28:55-04:00",
+    "created": "2018-09-17T08:34:21-04:00"
+}

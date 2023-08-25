@@ -1,0 +1,32 @@
+{
+    "number": 340771,
+    "data": "4,9,13,25,34,38,49,74,83,87,121,169,170,195,204,208,289,290,339,361,364,373,377,458,529,579,628,650,653,662,666,819,841,890,940,961,989,1014,1023,1027,1179,1348,1369,1370,1469,1518,1543,1552,1556,1681,1731,1802,1849",
+    "name": "Numbers which are the sum of some number of consecutive prime squares.",
+    "link": [
+        "Cathal O'Sullivan, Jonathan P. Sorenson, and Aryn Stahl, <a href=\"https://arxiv.org/abs/2204.10930\">An Algorithm to Find Sums of Consecutive Powers of Primes</a>, arXiv:2204.10930 [math.NT], 2022. See S2 p. 10.",
+        "Janyarak Tongsomporn, Saeree Wananiyakul, and J\u00f6rn Steuding, <a href=\"https://arxiv.org/abs/2101.07558\">Sums of Consecutive Prime Squares</a>, arXiv:2101.07558 [math.NT], 2021.",
+        "Janyarak Tongsomporn, Saeree Wananiyakul, and J\u00f6rn Steuding, <a href=\"http://math.colgate.edu/~integers/w9/w9.pdf\">Sums of Consecutive Prime Squares</a>, #A9 INTEGERS 22 (2022)."
+    ],
+    "example": [
+        "The initial terms are 2^2, 3^2, 2^2+3^2, 5^2, 3^2+5^2, ..."
+    ],
+    "maple": [
+        "N:= 10000: # for terms <= N",
+        "PS:= [0,seq(ithprime(i)^2,i=1..numtheory:-pi(floor(sqrt(N))))]:",
+        "SPS:= ListTools:-PartialSums(PS):",
+        "sort(convert(select(`<=`,{seq(seq(SPS[t]-SPS[s],s=1..t-1),t=2..nops(SPS))},N),list)); # _Robert Israel_, Jan 20 2021"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {my(list = List(), ip = primepi(nn), vp = primes(ip)); for(i=1, ip, my(s=vp[i]^2); listput(list, s); for (j=i+1, ip, s += vp[j]^2; if (s >vp[ip]^2, break); listput(list, s););); Vec(vecsort(list,,8));} \\\\ _Michel Marcus_, Jan 20 2021"
+    ],
+    "xref": [
+        "Cf. A001248, A034707."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Jan 20 2021",
+    "references": 2,
+    "revision": 17,
+    "time": "2022-04-26T03:04:25-04:00",
+    "created": "2021-01-20T18:44:46-05:00"
+}

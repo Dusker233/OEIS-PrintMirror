@@ -1,0 +1,35 @@
+{
+    "number": 340053,
+    "data": "13,17,37,41,43,73,89,103,127,151,157,167,239,257,271,281,337,353,379,401,409,419,421,443,521,557,587,601,607,683,719,743,839,883,941,953,983,1093,1097,1297,1361,1409,1427,1429,1511,1543,1583,1597,1637,1657,1741,1801,1913,1973,1993,2017,2281",
+    "name": "First of three consecutive primes p,q,r such that p*q*r mod (p+q), p*q*r mod (p+r) and p*q*r mod (q+r) are all primes.",
+    "link": [
+        "Robert Israel, <a href=\"/A340053/b340053.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 37 is a term because 37, 41, 43 are consecutive primes, 37*41*43 = 65231, and 65231 mod (37+41) = 23, 65231 mod (37+43) = 31, and 65321 mod (41+43) = 47 are all primes."
+    ],
+    "maple": [
+        "q:= 2: r:= 3:",
+        "R:= NULL: count:= 0:",
+        "while count < 100 do",
+        "  p:= q; q:= r; r:= nextprime(r);",
+        "  if  isprime(p*q*r mod (p+q)) and isprime(p*q*r mod (p+r)) and isprime(p*q*r mod (q+r)) then",
+        "    count:= count+1; R:= R, p;",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "tcpQ[{a_,b_,c_}]:=Module[{t=a b c},AllTrue[{Mod[t,a+b],Mod[t,b+c],Mod[t,a+c]},PrimeQ]]; Select[Partition[Prime[Range[400]],3,1],tcpQ][[;;,1]] (* _Harvey P. Dale_, Jul 21 2023 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = if (isprime(p), my(q=nextprime(p+1), r = nextprime(q+1), pqr = p*q*r); isprime(pqr % (p+q)) && isprime(pqr % (p+r)) && isprime(pqr % (q+r))); \\\\ _Michel Marcus_, Dec 28 2020"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Dec 27 2020",
+    "references": 1,
+    "revision": 13,
+    "time": "2023-07-21T20:27:35-04:00",
+    "created": "2020-12-27T19:28:51-05:00"
+}

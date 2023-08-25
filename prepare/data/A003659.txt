@@ -1,0 +1,55 @@
+{
+    "number": 3659,
+    "id": "M1681",
+    "data": "1,1,2,6,26,152,1144,10742,122772,1673856,26780972,496090330,10519217930,252851833482,6832018188414,205985750827854,6885220780488694,253685194149119818,10250343686634687424,452108221967363310278,21676762640915055856716",
+    "name": "Shifts left under Stirling2 transform.",
+    "comment": [
+        "Apart from leading term, number of M-sequences from multicomplexes on at most 4 variables with no monomial of degree more than n+1.",
+        "Stirling2 transform of a(n) = [1, 1, 2, 6, 26, ...] is a(n+1) = [1, 2, 6, 26, ...].",
+        "Eigensequence of Stirling2 triangle A008277. - _Philippe Del\u00e9ham_, Mar 23 2007"
+    ],
+    "reference": [
+        "S. Linusson, The number of M-sequences and f-vectors, Combinatorica, 19 (1999), 255-266.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A003659/b003659.txt\">Table of n, a(n) for n = 1..330</a>",
+        "M. Bernstein and N. J. A. Sloane, <a href=\"https://arxiv.org/abs/math/0205301\">Some canonical sequences of integers</a>, arXiv:math/0205301 [math.CO], 2002; Linear Alg. Applications, 226-228 (1995), 57-72; erratum 320 (2000), 210. [Link to arXiv version]",
+        "M. Bernstein and N. J. A. Sloane, <a href=\"/A003633/a003633_1.pdf\">Some canonical sequences of integers</a>, Linear Alg. Applications, 226-228 (1995), 57-72; erratum 320 (2000), 210. [Link to Lin. Alg. Applic. version together with omitted figures]",
+        "M. Janjic, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL15/Janjic/janjic42.html\">Determinants and Recurrence Sequences</a>, Journal of Integer Sequences, 2012, Article 12.3.5. [_N. J. A. Sloane_, Sep 16 2012]",
+        "Istvan Mezo, <a href=\"http://arxiv.org/abs/0812.4047\">On powers of Stirling matrices</a>, arXiv:0812.4047 [math.CO], 2008. [_Jonathan Vos Post_, Dec 22 2008]",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies A(x)' = 1+A(exp(x)-1).",
+        "G.f. satisfies: Sum_{n>=1} a(n)*x^n = x * (1 + Sum_{n>=1} a(n) * x^n / Product_{j=1..n} (1 - j*x)). - _Ilya Gutkovskiy_, May 09 2019",
+        "a(1) = 1; a(n+1) = Sum_{k=1..n} Stirling2(n,k) * a(k). - _Seiichi Manyama_, Jun 24 2022"
+    ],
+    "maple": [
+        "stirtr:= proc(p)",
+        "           proc(n) add(p(k)*Stirling2(n,k), k=0..n) end",
+        "         end:",
+        "a:= proc(n) option remember; `if`(n<3, 1, aa(n-1)) end:",
+        "aa:= stirtr(a):",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Jun 22 2012"
+    ],
+    "mathematica": [
+        "terms = 21; A[_] = 0; Do[A[x_] = Normal[Integrate[1 + A[Exp[x] - 1 + O[x]^(terms + 1)], x] + O[x]^(terms + 1)], terms];",
+        "CoefficientList[A[x], x]*Range[0, terms]! // Rest (* _Jean-Fran\u00e7ois Alcover_, May 23 2012, updated Jan 12 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A, E); if(n<0, 0, A=O(x); E=exp(x+x*O(x^n))-1; for(m=1, n, A=intformal( subst( 1+A, x, E+x*O(x^m)))); n!*polcoeff(A, n))} /* _Michael Somos_, Mar 08 2004 */",
+        "(PARI) a_vector(n) = my(v=vector(n)); v[1]=1; for(i=1, n-1, v[i+1]=sum(j=1, i, stirling(i, j, 2)*v[j])); v; \\\\ _Seiichi Manyama_, Jun 24 2022"
+    ],
+    "xref": [
+        "Cf. A048801.",
+        "Cf. A153277, A153278. - _Jonathan Vos Post_, Dec 22 2008"
+    ],
+    "keyword": "nonn,nice,eigen",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, _Mira Bernstein_",
+    "references": 18,
+    "revision": 76,
+    "time": "2022-06-24T08:29:48-04:00",
+    "created": "1994-09-19T03:00:00-04:00"
+}

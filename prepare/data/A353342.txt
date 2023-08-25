@@ -1,0 +1,34 @@
+{
+    "number": 353342,
+    "data": "0,2,4,20,40,200,202,400,2000,2002,2020,4000,20000,20002,20020,20200,40000,200000,200002,200020,200200,202000,400000,2000000,2000002,2000020,2000200,2002000,2020000,4000000,20000000,20000002,20000020,20000200,20000202,20002000,20002002,20020000,20200000",
+    "name": "Numbers k such that k and k^3 use only even digits.",
+    "comment": [
+        "Numbers k such that k^3 has only even digits are in A052004."
+    ],
+    "mathematica": [
+        "seq[ndigmax_] := Module[{nums = Tuples[{0, 2, 4, 6, 8}, ndigmax]}, Select[FromDigits /@ nums, AllTrue[IntegerDigits[#^3], EvenQ] &]]; seq[8] (* _Amiram Eldar_, May 06 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, product",
+        "def agen(): # generator of terms",
+        "    for digits in count(1):",
+        "        for p in product(\"02468\", repeat=digits):",
+        "            if len(p) > 1 and p[0] == \"0\": continue",
+        "            k = int(\"\".join(p))",
+        "            if set(str(k**3)) <= set(\"02468\"):",
+        "                yield k",
+        "print(list(islice(agen(), 40))) # _Michael S. Branicky_, May 06 2022"
+    ],
+    "xref": [
+        "Cf. A085597 (similar, but with odd digits).",
+        "Intersection of A014263 and A052004."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Bernard Schott_, May 06 2022",
+    "references": 0,
+    "revision": 15,
+    "time": "2022-05-06T19:59:58-04:00",
+    "created": "2022-05-06T19:59:58-04:00"
+}

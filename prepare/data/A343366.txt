@@ -1,0 +1,35 @@
+{
+    "number": 343366,
+    "data": "1,1,9,90,846,8055,76224,721389,6819192,64422126,608173020,5737815756,54100140735,509794737636,4801164836634,45192001954005,425156458320783,3997756503852489,37572655020653089,352957677187938076,3314174696310855888,31105460092251410001,291818245344169918725",
+    "name": "Expansion of Product_{k>=1} (1 + x^k)^(9^(k-1)).",
+    "comment": [
+        "In general, if m > 1 and g.f. = Product_{k>=1} (1 + x^k)^(m^(k-1)), then a(n, m) ~ exp(2*sqrt(n/m) - 1/(2*m) - c(m)/m) * m^(n - 1/4) / (2*sqrt(Pi)*n^(3/4)), where c(m) = Sum_{j>=2} (-1)^j / (j * (m^(j-1) - 1)). - _Vaclav Kotesovec_, Apr 13 2021"
+    ],
+    "formula": [
+        "a(n) ~ exp(2*sqrt(n/9) - 1/18 - c/9) * 9^(n - 1/4) / (2*sqrt(Pi)*n^(3/4)), where c = Sum_{j>=2} (-1)^j / (j * (9^(j-1) - 1)). - _Vaclav Kotesovec_, Apr 13 2021"
+    ],
+    "maple": [
+        "h:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(h(n-i*j, i-1)*binomial(9^(i-1), j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> h(n$2):",
+        "seq(a(n), n=0..22);  # _Alois P. Heinz_, Apr 12 2021"
+    ],
+    "mathematica": [
+        "nmax = 22; CoefficientList[Series[Product[(1 + x^k)^(9^(k - 1)), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, (1/n) Sum[Sum[(-1)^(k/d + 1) d 9^(d - 1), {d, Divisors[k]}] a[n - k], {k, 1, n}]]; Table[a[n], {n, 0, 22}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={Vec(prod(k=1, n, (1 + x^k + O(x*x^n))^(9^(k-1))))} \\\\ _Andrew Howroyd_, Apr 12 2021"
+    ],
+    "xref": [
+        "Cf. A098407, A292843, A343354, A343360, A343361, A343362, A343363, A343364, A343365."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 12 2021",
+    "references": 7,
+    "revision": 11,
+    "time": "2021-04-13T04:47:07-04:00",
+    "created": "2021-04-12T16:27:28-04:00"
+}

@@ -1,0 +1,33 @@
+{
+    "number": 91404,
+    "data": "22,23,26,28,29,31,37,50",
+    "name": "Numbers n such that genus of group Gamma_0(n) is 2.",
+    "comment": [
+        "I assume it is known that there are no further terms? A reference for this would be nice."
+    ],
+    "reference": [
+        "B. Schoeneberg, Elliptic Modular Functions, Springer-Verlag, NY, 1974, p. 103.",
+        "G. Shimura, Introduction to the Arithmetic Theory of Automorphic Functions, Princeton, 1971, see Prop. 1.40 and 1.43."
+    ],
+    "formula": [
+        "Numbers n such that A001617(n) = 2."
+    ],
+    "mathematica": [
+        "a89[n_] := a89[n] = Product[{p, e} = pe; Which[p < 3 && e == 1, 1, p == 2 && e > 1, 0, Mod[p, 4] == 1, 2, Mod[p, 4] == 3, 0, True, a89[p^e]], {pe, FactorInteger[n]}];",
+        "a86[n_] := a86[n] = Product[{p, e} = pe; Which[p == 1 || p == 3 && e == 1, 1, p == 3 && e > 1, 0, Mod[p, 3] == 1, 2, Mod[p, 3] == 2, 0, True, a86[p^e]], {pe, FactorInteger[n]}];",
+        "a1615[n_] := n Sum[MoebiusMu[d]^2/d, {d, Divisors[n]}];",
+        "a1616[n_] := Sum[EulerPhi[GCD[d, n/d]], {d, Divisors[n]}];",
+        "a1617[n_] := 1 + a1615[n]/12 - a89[n]/4 - a86[n]/3 - a1616[n]/2;",
+        "Position[Array[a1617, 100], 2] // Flatten (* _Jean-Fran\u00e7ois Alcover_, Oct 19 2018 *)"
+    ],
+    "xref": [
+        "Cf. A001617, A001615, A000089, A000086, A001616, A091401, A091403."
+    ],
+    "keyword": "nonn,fini,full",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Mar 02 2004",
+    "references": 4,
+    "revision": 10,
+    "time": "2018-10-19T03:26:01-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

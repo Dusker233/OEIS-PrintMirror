@@ -1,0 +1,49 @@
+{
+    "number": 338297,
+    "data": "6,228,4800,76116,1094316,14557092,183735204,2230289220,26275912776,302338568832,3412921463352,37923555328200,415863933818988,4509400849281240,48428461587426108,515767225814395500,5452991323044249720,57282647077608267072,598324561437126968664,6217929367753246782612",
+    "name": "Number of Hamiltonian paths in C_6 X P_n.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A338297/b338297.txt\">Table of n, a(n) for n = 1..25</a>"
+    ],
+    "program": [
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_CnXPk(n, k):",
+        "    grids = []",
+        "    for i in range(1, k + 1):",
+        "        for j in range(1, n):",
+        "            grids.append((i + (j - 1) * k, i + j * k))",
+        "        grids.append((i + (n - 1) * k, i))",
+        "    for i in range(1, k * n, k):",
+        "        for j in range(1, k):",
+        "            grids.append((i + j - 1, i + j))",
+        "    return grids",
+        "def A(start, goal, n, k):",
+        "    universe = make_CnXPk(n, k)",
+        "    GraphSet.set_universe(universe)",
+        "    paths = GraphSet.paths(start, goal, is_hamilton=True)",
+        "    return paths.len()",
+        "def B(n, k):",
+        "    m = k * n",
+        "    s = 0",
+        "    for i in range(1, m):",
+        "        for j in range(i + 1, m + 1):",
+        "            s += A(i, j, n, k)",
+        "    return s",
+        "def A338297(n):",
+        "    return B(6, n)",
+        "print([A338297(n) for n in range(1, 11)])"
+    ],
+    "xref": [
+        "Cf. A003689 (C_3 X P_n), A003752 (C_4 X P_n), A003732 (C_5 X P_n), A268894 (C_n X P_n).",
+        "Cf. A180582, A339143, A338962."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Seiichi Manyama_, Dec 18 2020",
+    "references": 1,
+    "revision": 44,
+    "time": "2021-01-12T02:50:43-05:00",
+    "created": "2020-12-19T08:04:50-05:00"
+}

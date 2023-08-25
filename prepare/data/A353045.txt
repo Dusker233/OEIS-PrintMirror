@@ -1,0 +1,41 @@
+{
+    "number": 353045,
+    "data": "421,3433,431881,746353,2122213,84287689,161242273,574990681,1372256173,6589289569,8315492209,13246972549,40692828541,52396140061,75866105281,77916431221,82987207333,91919299573,140685402049,152665872493,188144420089,199536434869,265301989801,404110652329,406594932241",
+    "name": "Primes of the form p*q*(p+q)+1 where (p,q) is a twin prime pair.",
+    "link": [
+        "Robert Israel, <a href=\"/A353045/b353045.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 431881 is a term because (59, 61) is a twin prime pair with 59*61*(59+61)+1 = 431881, and 431881 is prime."
+    ],
+    "maple": [
+        "P:= select(isprime, {seq(i,i=3..10^6,2)}):",
+        "T:= P intersect map(`-`,P,2):",
+        "R:= map(t -> t*(t+2)*(2*t+2)+1, T):",
+        "sort(convert(select(isprime,R),list));"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime",
+        "def agen(): # generator of terms",
+        "    p, q = 3, 5",
+        "    while True:",
+        "        if q == p+2:",
+        "            t = p*q*(p+q)+1",
+        "            if isprime(t):",
+        "                yield t",
+        "        p, q = q, nextprime(q)",
+        "print(list(islice(agen(), 25))) # _Michael S. Branicky_, Apr 19 2022"
+    ],
+    "xref": [
+        "Cf. A001359."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Apr 19 2022",
+    "references": 1,
+    "revision": 12,
+    "time": "2022-04-25T18:24:17-04:00",
+    "created": "2022-04-20T00:08:49-04:00"
+}

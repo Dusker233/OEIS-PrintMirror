@@ -1,0 +1,38 @@
+{
+    "number": 307900,
+    "data": "1,2,4,10,24,61,150,382,964,2452,6307,16379,42989,113965,305035,823632,2241814,6145670,16956972,47059076,131279567",
+    "name": "Number of functions constructed from n instances of variable x using operators + (add), * (multiply), and parentheses.",
+    "comment": [
+        "Structurally different expressions that represent the same function of x are only counted once. So, a(n) <= A052701(n)."
+    ],
+    "example": [
+        "For n = 1, we have only one function {x}, so a(1) = 1.",
+        "For n = 2, we have {x*x, x + x} = {x^2, 2*x}, so a(2) = 2.",
+        "For n = 3, we have {x^2*x, 2*x*x, x^2 + x, 2*x + x} = {x^3, 2*x^2, x^2 + x, 3*x}, so a(3) = 4.",
+        "For n = 4, we have {x^4, 2*x^3, x^3 + x^2, x^3 + x, 4*x^2, 3*x^2, 2*x^2 + x, 2*x^2, x^2 + 2*x, 4*x}, so a(4) = 10."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=1, {x}, {seq(seq(seq([f+g,",
+        "        expand(f*g)][], g=b(n-i)), f=b(i)), i=1..iquo(n, 2))})",
+        "    end:",
+        "a:= n-> nops(b(n)):",
+        "seq(a(n), n=1..12);  # _Alois P. Heinz_, May 04 2019"
+    ],
+    "mathematica": [
+        "ClearAll[a, f, x, n, k]; f[1] = {x}; f[n_Integer] := f[n] = DeleteDuplicates[Expand[Flatten[Table[Outer[#1[#2, #3] &, {Times, Plus}, f[k], f[n - k]], {k, n/2}]]]]; a[n_Integer] := Length[f[n]]; Table[a[n], {n, 15}]"
+    ],
+    "xref": [
+        "Cf. A048249, A052701."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Vladimir Reshetnikov_, May 04 2019",
+    "ext": [
+        "a(19)-a(20) from _Alois P. Heinz_, May 04 2019",
+        "a(21) from _Vladimir Reshetnikov_, May 05 2019"
+    ],
+    "references": 0,
+    "revision": 32,
+    "time": "2019-05-06T01:32:25-04:00",
+    "created": "2019-05-05T08:39:27-04:00"
+}

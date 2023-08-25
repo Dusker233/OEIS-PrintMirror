@@ -1,0 +1,35 @@
+{
+    "number": 327556,
+    "data": "1,1,15,319,10305,456540,26189661,1870454452,161632399892,16535827882568,1968749174314009,269023182822761584,41709476698204311667,7266527579101535573799,1410853257166617346437587,303111227353456160724127886,71611509245127165374518157052",
+    "name": "Number of colored integer partitions of 2n using all colors of an n-set such that all parts have different color patterns and a pattern for part i has i colors in (weakly) increasing order.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327556/b327556.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = A327116(2n,n)."
+    ],
+    "maple": [
+        "C:= binomial:",
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1, `if`(i<1, 0, add(",
+        "      b(n-i*j, min(n-i*j, i-1), k)*C(C(k+i-1, i), j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> add(b(2*n$2, i)*(-1)^(n-i)*C(n, i), i=0..n):",
+        "seq(a(n), n=0..17);"
+    ],
+    "mathematica": [
+        "c = Binomial;",
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0, 1, If[i < 1, 0, Sum[b[n - i*j, Min[n - i*j, i - 1], k] c[c[k + i - 1, i], j], {j, 0, n/i}]]];",
+        "a[n_] := Sum[b[2n, 2n, i] (-1)^(n - i) c[n, i], {i, 0, n}];",
+        "a /@ Range[0, 17] (* _Jean-Fran\u00e7ois Alcover_, Dec 16 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A327116."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 16 2019",
+    "references": 2,
+    "revision": 9,
+    "time": "2020-12-16T16:04:18-05:00",
+    "created": "2019-09-16T17:58:43-04:00"
+}

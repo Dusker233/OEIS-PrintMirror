@@ -1,0 +1,45 @@
+{
+    "number": 323580,
+    "data": "1,1,3,6,13,23,45,76,136,225,381,611,1001,1570,2489,3842,5948,9022,13714,20501,30649,45262,66721,97393,141888,204993",
+    "name": "Number of ways to fill a Young diagram with positive integers summing to n such that the rows are weakly decreasing and the columns are weakly increasing.",
+    "link": [
+        "nLab, <a href=\"https://ncatlab.org/nlab/show/Young+diagram\">Young Diagram</a>."
+    ],
+    "example": [
+        "The a(5) = 23 tableaux:",
+        "  5   41   32   311   221   2111   11111",
+        ".",
+        "  1   2   11   21   11   111   111   1111",
+        "  4   3   3    2    21   2     11    1",
+        ".",
+        "  1   1   11   11   111",
+        "  1   2   1    11   1",
+        "  3   2   2    1    1",
+        ".",
+        "  1   11",
+        "  1   1",
+        "  1   1",
+        "  2   1",
+        ".",
+        "  1",
+        "  1",
+        "  1",
+        "  1",
+        "  1"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "facs[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[facs[n/d],Min@@#>=d&]],{d,Rest[Divisors[n]]}]];",
+        "Table[Sum[Length[Select[Reverse/@Sort/@Map[primeMS,facs[y],{2}],And@@(GreaterEqual@@@Transpose[PadRight[#]])&]],{y,Times@@Prime/@#&/@IntegerPartitions[n]}],{n,10}]"
+    ],
+    "xref": [
+        "Cf. A000085, A000219, A003293, A114736, A138178, A299968, A323436, A323437, A323438, A323439, A323581."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jan 18 2019",
+    "references": 3,
+    "revision": 6,
+    "time": "2019-01-20T08:55:55-05:00",
+    "created": "2019-01-20T08:55:55-05:00"
+}

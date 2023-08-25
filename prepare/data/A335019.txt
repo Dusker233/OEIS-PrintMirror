@@ -1,0 +1,51 @@
+{
+    "number": 335019,
+    "data": "1,2,4,8,16,32,42,64,70,128,256,390,512,1024,1122,1764,2002,2048,2210,4096,4900,6270,7854,8192,9450,15470,15750,16384,26460,32768,36366,54978,58786,65536,66990,73500,74088,86710,108290,123480,131072,152100,162690",
+    "name": "Numbers whose prime exponents generates rotationally symmetric XOR-triangles.",
+    "comment": [
+        "For any positive number with prime factorization Product_{k = 1..m} prime(k)^e_k (where prime(k) denotes the k-th prime number and e_m > 0), we build a XOR-triangle with (e_m, ..., e_1) as top row, and having each entry in the subsequent rows be the XOR of the two values above it. This sequence lists integers whose XOR-triangle has 3-fold rotational symmetry. A334990 gives the second row of such XOR-triangles for numbers that are not powers of 2.",
+        "This sequence has strong connections with A334556: for any n > 0 and k > 0, A019565(A334556(n))^k belongs to this sequence.",
+        "Every power of 2 belongs to the sequence.",
+        "If m belongs to this sequence, then m^2 also belongs to this sequence."
+    ],
+    "link": [
+        "<a href=\"/index/X#XOR-triangles\">Index entries for sequences related to XOR-triangles</a>"
+    ],
+    "formula": [
+        "A067029(a(n)) = A071178(a(n))."
+    ],
+    "example": [
+        "The number 15750 = 7^1 * 5^2 * 3^3 * 2^1 yields the following XOR-triangle:",
+        "     1 2 3 1",
+        "      3 1 2",
+        "       2 3",
+        "        1",
+        "As this XOR-triangle has rotational symmetry, 15750 belongs to this sequence."
+    ],
+    "program": [
+        "(PARI) is(n) = {",
+        "    my (e);",
+        "    if (n==1, e=[],",
+        "        my (f=factor(n), m=primepi(f[#f~,1]));",
+        "        e=vector(m, k, valuation(n, prime(m+1-k)))",
+        "    );",
+        "    my (x=e);",
+        "    for (k=1, #e,",
+        "        if (e[k]!=x[#x], return (0));",
+        "        if (x[1]!=e[#e+1-k], return (0));",
+        "        x=vector(#x-1, k, bitxor(x[k], x[k+1]));",
+        "    );",
+        "    return (1);",
+        "}"
+    ],
+    "xref": [
+        "Cf. A019565, A067029, A071178, A334556, A334990."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_R\u00e9my Sigrist_, May 19 2020",
+    "references": 1,
+    "revision": 10,
+    "time": "2020-05-24T18:33:30-04:00",
+    "created": "2020-05-24T18:33:30-04:00"
+}

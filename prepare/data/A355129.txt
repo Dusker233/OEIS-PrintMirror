@@ -1,0 +1,49 @@
+{
+    "number": 355129,
+    "data": "2,3,7,40,856,91821,60080136,279276911843,10503211888973754,3585680755683196123365,12323227994417456429490342865,468378989392773003347310901356953089,214565221409985003242070442557341938941878313,1282499669290042152350268651085002913530161723080398635",
+    "name": "a(n) is the number of integer sequences b(0..n) of length n+1, with 0 <= b(k) <= k! and monotonic b(k) <= b(k+1).",
+    "comment": [
+        "List of the possible cases regarding the patterns of the numbers in the sequence b:",
+        "Length:  1    2    3    4    5    6",
+        "Pos 0:   1    1    1    1    1    1",
+        "Pos 1:   1    2    3    4    5    6",
+        "Pos 2:   0    0    3    7   12   18",
+        "Pos 3:   0    0    0    7   19   37",
+        "Pos 4:   0    0    0    7   26   63",
+        "Pos 5:   0    0    0    7   33   96",
+        "Pos 6:   0    0    0    7   40  136",
+        "Pos 7:   0    0    0    0   40  176",
+        "Pos 8:   0    0    0    0   40  216",
+        "   ...  ...  ...  ...  ... ...  ...",
+        "    Sum: 2    3    7   40  856 91821",
+        "Each row counts the number of possible distributions of numbers, row \"Pos 0\" is the number of possible distributions with only the number zero. The row \"Pos 1\" counts the distributions of zeros and ones. The row \"Pos 2\" the possible distributions of {0,1,2} and so forth.",
+        "From top to down: If a number in the column length = k has reached the value of the sum of the column length = k-1, this number will be k!-(k-1)!+1 times repeated. Before this limit is reached each number is the sum of the neighbor one step above and the neighbor one step to the left."
+    ],
+    "formula": [
+        "a(n) = binomial((n-1)! + n-1, n-1) + binomial((n-1)! + n-2, n-1) + Sum_{r = 1..n-2} Sum_{k = 0..r-1} binomial((n-1)! - r! - k+n - 2, n-1)*binomial(r-1,k)*a(r)*(-1)^(k+1)."
+    ],
+    "example": [
+        "For a(0) we get two possible sequences:",
+        "  {0}, {1}.",
+        "For a(1) we get three possible sequences:",
+        "  {0, 0}, {0, 1}, {1, 1}.",
+        "For a(2) = 7 we get:",
+        "  {0, 0, 0}, {0, 0, 1}, {0, 0, 2}, {0, 1, 1},",
+        "  {0, 1, 2}, {1, 1, 1}, {1, 1, 2}."
+    ],
+    "program": [
+        "(PARI)",
+        "a(n) = binomial((n-1)! + n-1, n-1) + binomial((n-1)! + n-2, n-1) + sum(r = 1, n-2, sum(k = 0, r-1 ,binomial((n-1)! - r! - k+n - 2, n-1)*binomial(r-1,k)*a(r)*(-1)^(k+1)))"
+    ],
+    "xref": [
+        "Cf. A000108 (if we change the definition into 0 <= b(k) <= k).",
+        "Cf. A005269, A005270, A008934, A016121, A128094, A242105."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Thomas Scheuerle_, Aug 04 2022",
+    "references": 0,
+    "revision": 65,
+    "time": "2022-08-06T08:05:36-04:00",
+    "created": "2022-08-06T08:05:36-04:00"
+}

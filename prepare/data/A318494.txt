@@ -1,0 +1,46 @@
+{
+    "number": 318494,
+    "data": "1,2,10,50,285,1696,10647,68842,456922,3091546,21252396,147992264,1041779912,7401119718,52996414666,382095695324,2771458821772,20209364313202,148064910503435,1089415620952020,8046283404651000,59635009544475814,443380411766040664",
+    "name": "Number of rooted connected graphs on n unlabeled nodes where every block is a complete graph with nonroot nodes of two colors.",
+    "comment": [
+        "Number of rooted spanning hypertrees on n unlabeled nodes with edges of size 1 allowed.",
+        "Shifts left when Euler transform is applied twice to double this sequence."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A318494/b318494.txt\">Table of n, a(n) for n = 1..1116</a> (first 200 terms from Andrew Howroyd)"
+    ],
+    "example": [
+        "a(3) = 10 because there are three possible rooted graphs which are illustrated below and these can be colored up to isomorphism in 3, 3 and 4 ways respectively.",
+        "  o---o   o   o   o---o",
+        "   \\ /     \\ /     \\",
+        "    *       *       *"
+    ],
+    "maple": [
+        "b:= ((proc(p) local b; b:= proc(n) option remember; `if`(n=0, 1,",
+        "        add(add(d*p(d), d=numtheory[divisors](j))*b(n-j), j=1..n)/n)",
+        "      end end)@@2)(2*a):",
+        "a:= n-> b(n-1):",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Aug 27 2018"
+    ],
+    "mathematica": [
+        "etr[p_] := etr[p] = Module[{b}, b[n_] := b[n] = If[n == 0, 1, Sum[Sum[d p[d], {d, Divisors[j]}] b[n-j], {j, 1, n}]/n]; b];",
+        "a[n_] := b[n-1];",
+        "b = etr@etr@(2a[#]&);",
+        "Array[a, 25] (* _Jean-Fran\u00e7ois Alcover_, Nov 01 2020 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "seq(n)={my(v=[1]); for(i=2, n, v=concat([1], EulerT(EulerT(2*v)))); v}"
+    ],
+    "xref": [
+        "Cf. A007563, A134959."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Andrew Howroyd_, Aug 27 2018",
+    "references": 5,
+    "revision": 27,
+    "time": "2020-11-01T06:07:15-05:00",
+    "created": "2018-08-27T22:33:25-04:00"
+}

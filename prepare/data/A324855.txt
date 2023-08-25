@@ -1,0 +1,61 @@
+{
+    "number": 324855,
+    "data": "2,3,5,11,15,31,33,47,55,93,127,137,141,155,165,211,235,257,341,381,411,465,487,517,633,635,685,705,709,771,773,811,907,977,1023,1055,1285,1297,1397,1457,1461,1483,1507,1551,1621,1705,1905,2055,2127,2293,2319",
+    "name": "Lexicographically earliest sequence containing 2 and all squarefree numbers > 2 whose prime indices already belong to the sequence.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A324855/b324855.txt\">Table of n, a(n) for n = 1..1567</a>",
+        "Gus Wiseman, <a href=\"/A324855/a324855_1.png\">The rooted identity trees whose Matula-Goebel numbers are the first 64 terms</a>."
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices begins:",
+        "    2: {1}",
+        "    3: {2}",
+        "    5: {3}",
+        "   11: {5}",
+        "   15: {2,3}",
+        "   31: {11}",
+        "   33: {2,5}",
+        "   47: {15}",
+        "   55: {3,5}",
+        "   93: {2,11}",
+        "  127: {31}",
+        "  137: {33}",
+        "  141: {2,15}",
+        "  155: {3,11}",
+        "  165: {2,3,5}",
+        "  211: {47}",
+        "  235: {3,15}",
+        "  257: {55}",
+        "  341: {5,11}",
+        "  381: {2,31}"
+    ],
+    "maple": [
+        "S:= {2}: count:= 1:",
+        "for n from 3 by 2 while count < 100 do",
+        "  F:= ifactors(n)[2];",
+        "  if max(map(t -> t[2],F))=1 and {seq(numtheory:-pi(t[1]),t=F)} subset S then",
+        "     S:= S union {n}; count:= count+1;",
+        "  fi",
+        "od:",
+        "sort(convert(S,list)); # _Robert Israel_, Mar 22 2019"
+    ],
+    "mathematica": [
+        "aQ[n_]:=Switch[n,1,False,2,True,_?(!SquareFreeQ[#]&),False,_,And@@Cases[FactorInteger[n],{p_,k_}:>aQ[PrimePi[p]]]];",
+        "Select[Range[1000],aQ]"
+    ],
+    "xref": [
+        "Cf. A000002, A000720, A001462, A079254, A109298, A112798, A276625, A290822.",
+        "Cf. A324697, A324698, A324736, A324748, A324753, A324843, A324850, A324854.",
+        "Contains A007097 except for 1."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Mar 18 2019",
+    "references": 2,
+    "revision": 10,
+    "time": "2019-03-23T02:37:19-04:00",
+    "created": "2019-03-19T07:16:33-04:00"
+}

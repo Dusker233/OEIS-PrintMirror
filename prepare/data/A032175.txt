@@ -1,0 +1,44 @@
+{
+    "number": 32175,
+    "data": "1,1,2,4,9,18,42,91,208,470,1089,2509,5869,13730,32371,76510,181708,432635,1033656,2475384,5943395,14299532,34475030,83263872,201441431,488092897,1184353643,2877611984,7000359244,17049288304,41568056484,101449503960,247828380511",
+    "name": "Number of connected functions of n points with no symmetries.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A032175/b032175.txt\">Table of n, a(n) for n = 1..2503</a> (first 500 terms from Andrew Howroyd)",
+        "C. G. Bower, <a href=\"/transforms2.html\">Transforms (2)</a>"
+    ],
+    "formula": [
+        "\"CHK\" (necklace, identity, unlabeled) transform of A004111."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n<2, n, add(g(n-k)*add(g(d)*d*",
+        "       (-1)^(k/d+1), d=numtheory[divisors](k)), k=1..n-1)/(n-1))",
+        "    end:",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(binomial(j-1-a(i), j)*b(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "a:= n-> g(n)+b(n, n-1):",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, May 19 2022"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = If[n < 2, n, Sum[g[n - k]*Sum[g[d]*d*(-1)^(k/d + 1), {d, Divisors[k]}], {k, 1, n - 1}]/(n - 1)];",
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, If[i < 1, 0, Sum[Binomial[j - 1 - a[i], j]*b[n - i*j, i - 1], {j, 0, n/i}]]];",
+        "a[n_] := g[n] + b[n, n - 1];",
+        "Table[a[n], {n, 1, 40}] (* _Jean-Fran\u00e7ois Alcover_, May 20 2022, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) \\\\ here IdTreeGf is g.f. of A004111.",
+        "IdTreeGf(N)={my(A=vector(N, j, 1)); for (n=1, N-1, A[n+1] = 1/n * sum(k=1, n, sumdiv(k, d, (-1)^(k/d+1) * d*A[d]) * A[n-k+1] ) ); x*Ser(A)}",
+        "CHK(p,n)={sum(d=1, n, moebius(d)/d*log(subst(1/(1+O(x*x^(n\\d))-p), x, x^d)))}",
+        "seq(n)={Vec(CHK(IdTreeGf(n), n))} \\\\ _Andrew Howroyd_, Aug 31 2018"
+    ],
+    "xref": [
+        "Cf. A002861, A004111."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Christian G. Bower_",
+    "references": 3,
+    "revision": 20,
+    "time": "2022-05-20T08:03:06-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

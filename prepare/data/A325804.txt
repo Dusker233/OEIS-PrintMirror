@@ -1,0 +1,40 @@
+{
+    "number": 325804,
+    "data": "0,1,3,6,7,12,14,15,24,25,28,29,30,31,48,50,51,56,57,58,60,61,62,63,96,97,100,101,102,103,112,113,114,115,116,117,120,121,122,123,124,125,126,127,192,194,195,200,201,202,204,205,206,207,224,225,226,228",
+    "name": "Positions of nonzero terms of Product_{k=0..floor(log_2(n))} (1 + A004718(floor(n/(2^k)))).",
+    "link": [
+        "Mikhail Kurkov, <a href=\"/A325804/b325804.txt\">Table of n, a(n) for n = 1..13495</a>"
+    ],
+    "formula": [
+        "a(n) - a(n-1) belongs to A094373 (conjectured). - _Mikhail Kurkov_, Feb 20 2021"
+    ],
+    "program": [
+        "(PARI) b(n) = if(n==0, 0, (-1)^(n+1)*b(n\\2) + n%2); \\\\ A004718",
+        "f(n) = if(n==0, 1, prod(k=0, logint(n,2), 1+b(n\\2^k)));",
+        "isok(n) = f(n)!=0; \\\\ _Michel Marcus_, May 24 2019",
+        "(Python)",
+        "from itertools import count, islice",
+        "def A325804_gen(startvalue=0): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,0)):",
+        "        c, s = [0]*(m:=n.bit_length()), bin(n)[2:]",
+        "        for i in range(m):",
+        "            if s[i]=='1':",
+        "                for j in range(m-i):",
+        "                    c[j] = c[j]+1",
+        "            else:",
+        "                for j in range(m-i):",
+        "                    c[j] = -c[j]",
+        "        if all(1+d for d in c): yield n",
+        "A325804_list = list(islice(A325804_gen(),20)) # _Chai Wah Wu_, Mar 03 2023"
+    ],
+    "xref": [
+        "Cf. A004718, A325803."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Mikhail Kurkov_, May 22 2019",
+    "references": 3,
+    "revision": 34,
+    "time": "2023-03-03T13:36:13-05:00",
+    "created": "2019-07-09T13:30:07-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 346852,
+    "data": "11,30,105,426,1940,9722,52902,309546,1933171,12809264,89613587,659255660,5082342477,40936552022,343612396821,2998777788602,27155414911274,254692965196866,2470107851719160,24734913573251578,255396574564032443,2715780007867965824",
+    "name": "Number of partitions of the (n+6)-multiset {0,...,0,1,2,...,n} with six 0's.",
+    "comment": [
+        "Also number of factorizations of 2^6 * Product_{i=1..n} prime(i+1)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A346852/b346852.txt\">Table of n, a(n) for n = 0..571</a>"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors, isprime, primorial",
+        "from functools import cache",
+        "@cache",
+        "def T(n, m): # after Indranil Ghosh in A001055",
+        "    if isprime(n): return 1 if n <= m else 0",
+        "    s = sum(T(n//d, d) for d in divisors(n)[1:-1] if d <= m)",
+        "    return s + 1 if n <= m else s",
+        "def a(n): return (lambda x: T(x, x))(2**5 * primorial(n))",
+        "print([a(n) for n in range(1, 11)]) # _Michael S. Branicky_, Nov 30 2021"
+    ],
+    "xref": [
+        "Row n=6 of A346426.",
+        "Cf. A346816."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Alois P. Heinz_, Aug 06 2021",
+    "references": 3,
+    "revision": 10,
+    "time": "2021-11-30T08:41:18-05:00",
+    "created": "2021-08-06T06:59:51-04:00"
+}

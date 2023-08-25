@@ -1,0 +1,72 @@
+{
+    "number": 32153,
+    "data": "1,1,1,2,2,3,5,6,8,11,19,22,32,41,57,92,114,155,209,280,364,587,707,984,1280,1737,2213,2990,4390,5491,7361,9650,12708,16451,21567,27506,40100,49201,65701,84128,111278,140595,184661,232356,300680",
+    "name": "Number of ways to partition n elements into pie slices of different sizes.",
+    "comment": [
+        "Number of strict necklace compositions of n. A strict necklace composition of n is a finite sequence of distinct positive integers summing to n that is lexicographically minimal among all of its cyclic rotations. In other words, it is a strict composition of n starting with its least part. - _Gus Wiseman_, May 31 2019"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A032153/b032153.txt\">Table of n, a(n) for n = 0..5000</a> (first 2001 terms from Robert Israel)",
+        "C. G. Bower, <a href=\"/transforms2.html\">Transforms (2)</a>",
+        "<a href=\"/index/Lu#Lyndon\">Index entries for sequences related to Lyndon words</a>"
+    ],
+    "formula": [
+        "\"CGK\" (necklace, element, unlabeled) transform of 1, 1, 1, 1, ...",
+        "G.f.: Sum_{k >= 1} (k-1)! * x^((k^2+k)/2) / (Product_{j=1..k} 1-x^j). - _Vladeta Jovovic_, Sep 21 2004",
+        "a(n) = Sum_{k=1..floor((sqrt(8*n+1)-1)/2)} (k-1)! * A008289(n,k) for n > 0. - _Alois P. Heinz_, Aug 07 2020"
+    ],
+    "example": [
+        "From _Gus Wiseman_, May 31 2019: (Start)",
+        "Inequivalent representatives of the a(1) = 1 through a(9) = 11 ways to slice a pie:",
+        "  (1)  (2)  (3)   (4)   (5)   (6)    (7)    (8)    (9)",
+        "            (12)  (13)  (14)  (15)   (16)   (17)   (18)",
+        "                        (23)  (24)   (25)   (26)   (27)",
+        "                              (123)  (34)   (35)   (36)",
+        "                              (132)  (124)  (125)  (45)",
+        "                                     (142)  (134)  (126)",
+        "                                            (143)  (135)",
+        "                                            (152)  (153)",
+        "                                                   (162)",
+        "                                                   (234)",
+        "                                                   (243)",
+        "(End)"
+    ],
+    "maple": [
+        "N:= 100: # to get a(0)..a(N)",
+        "K:= floor(isqrt(1+8*N)/2):",
+        "S:= series(1+add((k-1)!*x^((k^2+k)/2)/mul(1-x^j,j=1..k),k=1..K),x,N+1):",
+        "seq(coeff(S,x,j),j=0..N); # _Robert Israel_, Jul 15 2016",
+        "# second Maple program:",
+        "b:= proc(n, i, p) option remember; `if`(i*(i+1)/2<n, 0,",
+        "     `if`(n=0, p!, b(n, i-1, p)+b(n-i, min(n-i, i-1), p+1)))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, b(n$2, -1)):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Aug 12 2020"
+    ],
+    "mathematica": [
+        "max=50; s=Sum[(x^(k(k+1)/2-1)*(k-1)!)/QPochhammer[x, x, k], {k, 1, max}] + O[x]^max; CoefficientList[s, x] (* _Jean-Fran\u00e7ois Alcover_, Jan 19 2016 *)",
+        "neckQ[q_]:=Array[OrderedQ[{q,RotateRight[q,#]}]&,Length[q]-1,1,And];",
+        "Table[Length[Select[Join@@Permutations/@Select[IntegerPartitions[n],UnsameQ@@#&],neckQ]],{n,30}] (* _Gus Wiseman_, May 31 2019 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=66;  q='q+O('q^N);",
+        "gf=sum(n=1,N, (n-1)!*q^(n*(n+1)/2) / prod(k=1,n, 1-q^k ) );",
+        "Vec(gf)",
+        "/* _Joerg Arndt_, Oct 20 2012 */",
+        "(PARI) seq(n)=[subst(serlaplace(p/y),y,1) | p <- Vec(y-1+prod(k=1, n, 1 + x^k*y + O(x*x^n)))] \\\\ _Andrew Howroyd_, Sep 13 2018"
+    ],
+    "xref": [
+        "Cf. A000079, A008289, A008965, A032020, A275972, A325676, A325788."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,4",
+    "author": "_Christian G. Bower_",
+    "ext": [
+        "a(0)=1 prepended by _Andrew Howroyd_, Sep 13 2018"
+    ],
+    "references": 17,
+    "revision": 39,
+    "time": "2020-08-12T10:28:16-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 344939,
+    "data": "0,1,2,3,10,11,12,20,21,22,100,101,102,103,110,111,112,120,121,122,200,201,202,210,211,212,213,220,221,222,300,301,1000,1001,1002,1010,1011,1012,1020,1021,1022,1100,1101,1102,1103,1110,1111,1112,1120,1121,1122",
+    "name": "The part of n left of the decimal point when written in base Pi.",
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Non-integer_base_of_numeration\">Non-integer base of numeration</a>."
+    ],
+    "example": [
+        "a(5) = 11 because 5 in base Pi is 11.22012202..."
+    ],
+    "maple": [
+        "A344939 := proc(n)",
+        "    local e,ntrunc,a,d;",
+        "    Digits := 1000 ;",
+        "    if n = 0 then",
+        "        return 0 ;",
+        "    end if;",
+        "    ntrunc := n ;",
+        "    e := floor(log(n)/log(Pi)) ;",
+        "    a := 0 ;",
+        "    while e >= 0 do",
+        "        d := floor(ntrunc/Pi^e) ;",
+        "        a := 10*a+d ;",
+        "        ntrunc := evalf(ntrunc-d*Pi^e) ;",
+        "        e := e-1 ;",
+        "    end do:",
+        "    a ;",
+        "end proc:",
+        "seq(A344939(n),n=0..15) ; # _R. J. Mathar_, Aug 16 2021"
+    ],
+    "mathematica": [
+        "nterms=50;Table[FromDigits[Take[First[d=RealDigits[n,Pi,Automatic]],Last[d]]],{n,0,nterms-1}]"
+    ],
+    "xref": [
+        "Cf. A000796 (Pi digits). Subsequence of A007090.",
+        "Cf. A105116 (base e), A105424 (base phi)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Paolo Xausa_, Jun 03 2021",
+    "references": 1,
+    "revision": 21,
+    "time": "2023-05-02T12:02:36-04:00",
+    "created": "2021-08-16T07:15:49-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 353613,
+    "data": "5,15,25,45,50,125,150,165,225,250,375,450,495,500,1125,1250,1500,1515,1650,1665,2145,2250,2475,2500,3465,3750,4065,4095,4125,4500,4545,4950,4995,5000,11250,12195,12375,12500,15000,15015,15150,15625,16425,16500,16650",
+    "name": "Integers m such that the decimal expansion of 1/m contains only even digits.",
+    "comment": [
+        "If m is a term, 10*m is also a term, so terms with no trailing zeros are all primitive terms.",
+        "The numbers 165, 1515, 15015, 150015, ..., 15*(10^k + 1), k >= 1, are terms. - _Marius A. Burtea_, Apr 30 2022"
+    ],
+    "link": [
+        "<a href=\"/index/1#1overn\">Index entries for sequences related to decimal expansion of 1/n</a>."
+    ],
+    "example": [
+        "m = 45 is a term since 1/45 = 0.02222222222...",
+        "m = 165 is a term since 1/165 = 0.00606060606...",
+        "m = 34965 is a term since 1/34965 = 0.0000286000286000..."
+    ],
+    "mathematica": [
+        "f[n_] := Union[ Flatten[ RealDigits[ 1/n][[1]] ]]; Select[ Range@ 50000, ArrayQ[f@#, _, EvenQ] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import multiplicity, n_order",
+        "def A353613_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for m in count(max(startvalue,1)):",
+        "        m2, m5 = multiplicity(2,m), multiplicity(5,m)",
+        "        if set(str(10**(max(m2,m5)+n_order(10,m//2**m2//5**m5))//m)) <= {'0','2','4','6','8'}:",
+        "            yield m",
+        "A353613_list = list(islice(A353613_gen(),20)) # _Chai Wah Wu_, May 07 2022"
+    ],
+    "xref": [
+        "Cf. A353614."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_ and _Robert G. Wilson v_, Apr 30 2022",
+    "references": 1,
+    "revision": 32,
+    "time": "2023-07-01T16:54:49-04:00",
+    "created": "2022-04-30T14:12:09-04:00"
+}

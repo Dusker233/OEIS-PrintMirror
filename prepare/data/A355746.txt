@@ -1,0 +1,60 @@
+{
+    "number": 355746,
+    "data": "1,1,1,1,1,2,2,2,2,4,4,6,6,12,20,20,20,26,26,36,58,116,116,140,140,280,280,384,384,536,536,536,844,1688,2380,2716,2716,5432,8484,10152,10152,13308,13308,18064,21616,43232,43232,47648,47648,54656,84480,114304,114304",
+    "name": "Number of different multisets that can be obtained by choosing a prime index (or a prime factor) of each integer from 2 to n.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A355746/b355746.txt\">Table of n, a(n) for n = 1..75</a>"
+    ],
+    "formula": [
+        "a(n) = A355744(A070826(n)).",
+        "a(p) = a(p-1) for p prime. - _Michael S. Branicky_, Aug 03 2022"
+    ],
+    "example": [
+        "The a(n) multisets for n = 2, 6, 10, 12:",
+        "  {1}  {1,1,1,2,3}  {1,1,1,1,1,2,2,3,4}  {1,1,1,1,1,1,2,2,3,4,5}",
+        "       {1,1,2,2,3}  {1,1,1,1,2,2,2,3,4}  {1,1,1,1,1,2,2,2,3,4,5}",
+        "                    {1,1,1,1,2,2,3,3,4}  {1,1,1,1,1,2,2,3,3,4,5}",
+        "                    {1,1,1,2,2,2,3,3,4}  {1,1,1,1,2,2,2,2,3,4,5}",
+        "                                         {1,1,1,1,2,2,2,3,3,4,5}",
+        "                                         {1,1,1,2,2,2,2,3,3,4,5}"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "Table[Length[Union[Sort/@Tuples[primeMS/@Range[2,n]]]],{n,15}]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "from itertools import count, islice",
+        "def agen():",
+        "    s = {(1,)}",
+        "    for n in count(2):",
+        "        yield len(s)",
+        "        s = set(tuple(sorted(t+(d,))) for t in s for d in factorint(n))",
+        "print(list(islice(agen(), 53))) # _Michael S. Branicky_, Aug 03 2022"
+    ],
+    "xref": [
+        "The sum of the same integers is A000096.",
+        "The product of the same integers is A000142, Heinz number A070826.",
+        "The integers themselves are the rows of A131818 (shifted).",
+        "Counting sequences instead of multisets: A355537, with multiplicity A327486.",
+        "Using prime indices instead of 2..n gives A355744, for sequences A355741.",
+        "The version for divisors instead of prime factors is A355747.",
+        "A000040 lists the prime numbers.",
+        "A001221 counts distinct prime factors, with sum A001414.",
+        "A001222 counts prime factors with multiplicity.",
+        "A003963 multiplies together the prime indices of n.",
+        "A056239 adds up prime indices, row sums of A112798.",
+        "Cf. A000720, A002110, A076610, A355538, A355731, A355733, A355740, A355742, A355745."
+    ],
+    "keyword": "nonn",
+    "offset": "1,6",
+    "author": "_Gus Wiseman_, Jul 20 2022",
+    "ext": [
+        "a(28) and beyond from _Michael S. Branicky_, Aug 03 2022"
+    ],
+    "references": 9,
+    "revision": 16,
+    "time": "2022-08-03T12:40:02-04:00",
+    "created": "2022-07-21T07:40:45-04:00"
+}

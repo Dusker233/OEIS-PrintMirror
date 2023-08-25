@@ -1,0 +1,57 @@
+{
+    "number": 235224,
+    "data": "0,1,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+    "name": "a(0) = 0, and for n > 0, a(n) = largest k such that A002110(k-1) <= n, where A002110(k) gives the k-th primorial number.",
+    "comment": [
+        "For n > 0: a(n) = (length of row n in A235168) = A055642(A049345(n)).",
+        "For n > 0, a(n) gives the length of primorial base expansion of n. Also, after zero, each value n occurs A061720(n-1) times. - _Antti Karttunen_, Oct 19 2019"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A235224/b235224.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "<a href=\"/index/Pri#primorialbase\">Index entries for sequences related to primorial base</a>"
+    ],
+    "formula": [
+        "From _Antti Karttunen_, Oct 19 2019: (Start)",
+        "a(n) = A061395(A276086(n)).",
+        "For all n >= 0, a(n) >= A267263(n).",
+        "For all n >= 1, A000040(a(n)) > A328114(n). (End)"
+    ],
+    "maple": [
+        "A235224 := proc(n)",
+        "    local k;",
+        "    if n = 0 then",
+        "        0;",
+        "    else",
+        "        for k from 0 do",
+        "            if A002110(k-1) > n then",
+        "                return k-1 ;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Apr 19 2021"
+    ],
+    "mathematica": [
+        "primorial[n_] := Times @@ Prime[Range[n]];",
+        "a[n_] := TakeWhile[primorial /@ Range[0, n], # <= n &] // Length;",
+        "Table[a[n], {n, 0, 100}] (* _Jean-Fran\u00e7ois Alcover_, Oct 27 2021 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a235224 n = length $ takeWhile (<= n) a002110_list",
+        "(PARI) A235224(n) = { my(s=0, p=2); while(n, s++; n = n\\p; p = nextprime(1+p)); (s); }; \\\\ _Antti Karttunen_, Oct 19 2019",
+        "(PARI) A235224(n, p=2) = if(!n,n,if(n<p, 1, 1+A235224(n\\p, nextprime(p+1)))); \\\\ (Recursive implementation) - _Antti Karttunen_, Oct 19 2019"
+    ],
+    "xref": [
+        "Cf. A000040, A002110, A049345, A055642, A061395, A061720, A084558, A267263, A276086, A235168, A328114, A328404, A328405, A328406."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Reinhard Zumkeller_, Jan 05 2014",
+    "ext": [
+        "Name corrected to match the data by _Antti Karttunen_, Oct 19 2019"
+    ],
+    "references": 18,
+    "revision": 31,
+    "time": "2023-07-23T15:43:50-04:00",
+    "created": "2014-01-05T11:50:24-05:00"
+}

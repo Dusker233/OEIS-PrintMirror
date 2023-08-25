@@ -1,0 +1,38 @@
+{
+    "number": 352423,
+    "data": "8,27,35,125,152,160,343,468,495,503,1331,1674,1799,1826,1834,2197,3528,3871,3996,4023,4031,4913,6859,7110,8441,8784,8909,8936,8944,11772,12167,13969,15300,15643,15768,15795,15803,19026,23939,24389,26136,27467,27810,27935,27962,27970,29791",
+    "name": "Numbers that are the sum of some number of consecutive prime cubes.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A352423/b352423.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Cathal O'Sullivan, Jonathan P. Sorenson, and Aryn Stahl, <a href=\"https://arxiv.org/abs/2204.10930\">An Algorithm to Find Sums of Consecutive Powers of Primes</a>, arXiv:2204.10930 [math.NT], 2022. See S3 p. 10."
+    ],
+    "program": [
+        "(PARI) lista(nn) = {my(list = List(), ip = primepi(nn), vp = primes(ip)); for(i=1, ip, my(s=vp[i]^3); listput(list, s); for (j=i+1, ip, s += vp[j]^3; if (s >vp[ip]^3, break); listput(list, s); ); ); Vec(vecsort(list, , 8)); }",
+        "(Python)",
+        "import heapq",
+        "from sympy import prime",
+        "from itertools import islice",
+        "def agen(): # generator of terms",
+        "    p = prime(1)**3; h = [(p, 1, 1)]; nextcount = 2",
+        "    while True:",
+        "        (v, s, l) = heapq.heappop(h)",
+        "        yield v",
+        "        if v >= p:",
+        "            p += prime(nextcount)**3",
+        "            heapq.heappush(h, (p, 1, nextcount))",
+        "            nextcount += 1",
+        "        v -= prime(s)**3; s += 1; l += 1; v += prime(l)**3",
+        "        heapq.heappush(h, (v, s, l))",
+        "print(list(islice(agen(), 47))) # _Michael S. Branicky_, Apr 26 2022"
+    ],
+    "xref": [
+        "Cf. A030078, A034707, A340771."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Apr 26 2022",
+    "references": 1,
+    "revision": 10,
+    "time": "2022-04-26T12:28:16-04:00",
+    "created": "2022-04-26T07:27:42-04:00"
+}

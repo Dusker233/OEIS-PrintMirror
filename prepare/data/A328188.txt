@@ -1,0 +1,55 @@
+{
+    "number": 328188,
+    "data": "1,1,1,2,2,3,3,4,5,6,7,8,9,12,15,15,19,23,25,30,35,39,47,52,58,65,75,86,95,109,124,144,165,181,203,221,249,285,316,352,392,438,484,538,599,666,737,813,899,992,1102,1215,1335,1472,1621,1776,1946,2137,2336",
+    "name": "Number of strict integer partitions of n with all pairs of consecutive parts relatively prime.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A328188/b328188.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(15) = 15 partitions (A..F = 10..15):",
+        "  1  2  3   4   5   6    7   8    9    A     B     C    D     E     F",
+        "        21  31  32  51   43  53   54   73    65    75   76    95    87",
+        "                41  321  52  71   72   91    74    B1   85    B3    B4",
+        "                         61  431  81   532   83    543  94    D1    D2",
+        "                             521  432  541   92    651  A3    653   E1",
+        "                                  531  721   A1    732  B2    743   654",
+        "                                       4321  731   741  C1    752   753",
+        "                                             5321  831  652   761   852",
+        "                                                   921  751   851   951",
+        "                                                        832   941   A32",
+        "                                                        5431  A31   B31",
+        "                                                        7321  B21   6531",
+        "                                                              5432  7431",
+        "                                                              6521  7521",
+        "                                                              8321  54321"
+    ],
+    "maple": [
+        "b:= proc(n, i, s) option remember; `if`(i*(i+1)/2<n, 0, `if`(n=0, 1,",
+        "      `if`(andmap(j-> igcd(i, j)=1, s), b(n-i, min(n-i, i-1),",
+        "           numtheory[factorset](i)), 0)+b(n, i-1, s)))",
+        "    end:",
+        "a:= n-> b(n$2, {}):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Oct 13 2019"
+    ],
+    "mathematica": [
+        "Table[Length[Select[IntegerPartitions[n],UnsameQ@@#&&!MatchQ[#,{___,x_,y_,___}/;GCD[x,y]>1]&]],{n,0,30}]",
+        "(* Second program: *)",
+        "b[n_, i_, s_] := b[n, i, s] = If[i(i + 1)/2 < n, 0, If[n == 0, 1, If[AllTrue[s,  GCD[i, #] == 1&], b[n - i, Min[n - i, i - 1], FactorInteger[i][[All, 1]]], 0] + b[n, i - 1, s]]];",
+        "a[n_] := b[n, n, {}];",
+        "a /@ Range[0, 60] (* _Jean-Fran\u00e7ois Alcover_, May 10 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "The case of compositions is A167606.",
+        "The non-strict case is A328172.",
+        "The Heinz numbers of these partitions are given by A328335.",
+        "Partitions with no pairs of consecutive parts relatively prime are A328187.",
+        "Cf. A000837, A018783, A178470, A328028, A328170, A328171, A328187, A328220."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Oct 13 2019",
+    "references": 10,
+    "revision": 15,
+    "time": "2021-05-10T06:41:13-04:00",
+    "created": "2019-10-13T09:35:16-04:00"
+}

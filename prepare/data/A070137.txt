@@ -1,0 +1,35 @@
+{
+    "number": 70137,
+    "data": "17,212,493,1297,2574,4298,5251,14414,16365,21231,26125,39056,42597,55042,63770,75052,91121,97256,124355,164640,200999,213083,253721,275999,367997,384154,415778,478343,511633,518370,606417,665040,689356,755435,846571",
+    "name": "Numbers k such that [A070080(k), A070081(k), A070082(k)] is a right integer triangle with relatively prime side lengths.",
+    "comment": [
+        "Right integer triangles have integer areas: see A070143."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HeronianTriangle.html\">Heronian Triangle</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RightTriangle.html\">Right Triangle</a>.",
+        "Reinhard Zumkeller, <a href=\"/A070080/a070080.txt\">Integer-sided triangles</a>"
+    ],
+    "example": [
+        "493 is a term: [A070080(493), A070081(493), A070082(493)]=[8,15,17], A070084(493)=gcd(8,15,17)=1, A070085(493)=8^2+15^2-17^2=64+225-289=0."
+    ],
+    "mathematica": [
+        "m = 500 (* max perimeter *);",
+        "sides[per_] := Select[Reverse /@ IntegerPartitions[per, {3}, Range[ Ceiling[per/2]]], #[[1]] < per/2 && #[[2]] < per/2 && #[[3]] < per/2 &];",
+        "triangles = DeleteCases[Table[sides[per], {per, 3, m}], {}] // Flatten[#, 1] & // SortBy[Total[#] m^3 + #[[1]] m^2 + #[[2]] m + #[[1]] &];",
+        "Position[triangles, {a_, b_, c_} /; GCD[a, b, c] == 1 && a^2 + b^2 - c^2 == 0] // Flatten (* _Jean-Fran\u00e7ois Alcover_, Oct 04 2021 *)"
+    ],
+    "xref": [
+        "Cf. A070109, A070136."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, May 05 2002",
+    "ext": [
+        "More terms from _Jean-Fran\u00e7ois Alcover_, Oct 04 2021"
+    ],
+    "references": 5,
+    "revision": 20,
+    "time": "2021-10-04T08:40:25-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

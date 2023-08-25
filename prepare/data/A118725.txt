@@ -1,0 +1,39 @@
+{
+    "number": 118725,
+    "data": "2,3,5,7,11,13,17,31,71,101,107,113,131,149,157,167,179,181,191,199,311,347,353,359,389,701,743,751,761,787,797,919,941,953,971,983,991,1009,1031,1061,1091,1097,1109,1151,1217,1229,1259,1283,1301,1409,1439",
+    "name": "Chen primes for which the reversal is also a Chen prime.",
+    "link": [
+        "Robert Israel, <a href=\"/A118725/b118725.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "17 and its reversal 71 are both Chen primes."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,k;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-k]*10^(k-1),k=1..nops(L))",
+        "end proc:",
+        "filter:= proc(n) local r;",
+        "  if not isprime(n) then return false fi;",
+        "  r:= revdigs(n);",
+        "  isprime(r) and numtheory:-bigomega(n+2) <= 2 and numtheory:-bigomega(r+2) <= 2",
+        "end proc:",
+        "select(filter, [2,seq(i,i=3..2000,2)]); # _Robert Israel_, Jun 16 2020"
+    ],
+    "mathematica": [
+        "cpQ[n_]:=Module[{rev=FromDigits[Reverse[IntegerDigits[n]]]}, PrimeOmega[ n+2]<3 && PrimeQ[rev]&&PrimeOmega[rev+2]<3]; Select[Prime[ Range[ 400]], cpQ] (* _Harvey P. Dale_, Jul 17 2011 *)"
+    ],
+    "xref": [
+        "Cf. A109611."
+    ],
+    "keyword": "base,nonn,less",
+    "offset": "1,1",
+    "author": "Luc Stevens (lms022(AT)yahoo.com), May 21 2006",
+    "ext": [
+        "Corrected by _Harvey P. Dale_, Jul 17 2011"
+    ],
+    "references": 3,
+    "revision": 14,
+    "time": "2020-06-17T02:08:31-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

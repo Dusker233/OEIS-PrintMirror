@@ -1,0 +1,41 @@
+{
+    "number": 332861,
+    "data": "2,3,7,13,23,31,41,79,101,107,149,163,173,191,197,269,271,293,347,419,443,523,557,647,761,769,787,1013,1153,1373,1613,1619,1669,1693,1777,1783,1873,2153,2161,2207,2399,2447,2801,2939,2999,3011,3049,3253,3319,3413",
+    "name": "Primes p with the property that if q<p is the least part of a partition of p into primes, then p has at least one other prime partition with the same least part.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A332861/b332861.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "Prime 13 is a member, because the minimal primes in partitions of 13 into prime parts smaller than 13 occur at least twice: [2,2,2,2,2,3], [2,2,3,3,3], [2,2,2,2,5], [2,3,3,5], [2,2,2,7], [2,11], [3,3,7], [3,5,5]; 3 occurs twice, 2 occurs 6 times.",
+        "Prime 11 is not a member, because 3 occurs only once as a minimal prime in partitions of 11 into smaller primes: [2,2,2,2,3], [2,3,3,3], [2,2,2,5], [2,2,7], [3,3,5]."
+    ],
+    "maple": [
+        "b:= proc(n, p, t) option remember; `if`(n=0, 1, `if`(p>n, 0, (q->",
+        "      add(b(n-p*j, q, 1), j=1..n/p)*t^p+b(n, q, t))(nextprime(p))))",
+        "    end:",
+        "a:= proc(n) option remember; local p; p:= a(n-1); do",
+        "      p:= nextprime(p); if (f-> andmap(i-> coeff(f, x, i)",
+        "          <>1, [$2..p-1]))(b(p, 2, x)) then return p fi od",
+        "    end: a(1):=2:",
+        "seq(a(n), n=1..33);  # _Alois P. Heinz_, Mar 13 2020"
+    ],
+    "mathematica": [
+        "b[n_, p_, t_] := b[n, p, t] = If[n == 0, 1, If[p > n, 0, With[{q = NextPrime[p]}, Sum[b[n - p j, q, 1], {j, 1, n/p}] t^p + b[n, q, t]]]];",
+        "a[n_] := a[n] = Module[{p = a[n - 1]}, While[True, p = NextPrime[p]; If[AllTrue[Range[2, p-1], SeriesCoefficient[b[p, 2, x], {x, 0, #}] != 1&], Return [p]]]];",
+        "a[1] = 2;",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 1, 33}] (* _Jean-Fran\u00e7ois Alcover_, Nov 23 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000607, A331634."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David James Sycamore_, Feb 27 2020",
+    "ext": [
+        "a(13)-a(50) from _Alois P. Heinz_, Feb 28 2020"
+    ],
+    "references": 4,
+    "revision": 33,
+    "time": "2020-11-23T07:03:38-05:00",
+    "created": "2020-02-29T12:06:00-05:00"
+}

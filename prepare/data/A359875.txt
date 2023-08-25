@@ -1,0 +1,30 @@
+{
+    "number": 359875,
+    "data": "1,6,10,12,14,20,22,24,26,28,34,38,40,44,46,52,56,58,62,68,74,76,80,82,86,88,92,94,104,106,116,118,122,124,134,136,142,146,148,152,158,164,166,172,178,184,188,194,202,206,208,212,214,218,226,232,236,244,248",
+    "name": "Numbers k such that A002322(k) = A023900(k).",
+    "comment": [
+        "Question: Does the multiplicity of any prime factor greater than 2 rise above the multiplicity of 2?",
+        "Answer: Yes, the first examples are 26617248, 117876384, 120115872, 124968096, 132433056, ... . - _Amiram Eldar_, Jan 20 2023"
+    ],
+    "mathematica": [
+        "q[n_] := CarmichaelLambda[n] ==  Times @@ (1 - First[#]& /@ FactorInteger[n]); q[1] = True; Select[Range[250], q] (* _Amiram Eldar_, Jan 17 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors, mobius, reduced_totient",
+        "def a002322(n): return reduced_totient(n)",
+        "def a023900(n): return sum([d*mobius(d) for d in divisors(n)])",
+        "print([k for k in range(1, 254) if a002322(k) == a023900(k)])",
+        "(PARI) isok(k) = lcm(znstar(k)[2]) == sumdivmult(k, d, d*moebius(d)); \\\\ _Michel Marcus_, Jan 20 2023"
+    ],
+    "xref": [
+        "Cf. A002322, A023900."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Torlach Rush_, Jan 16 2023",
+    "references": 0,
+    "revision": 21,
+    "time": "2023-02-17T22:34:25-05:00",
+    "created": "2023-02-17T22:34:25-05:00"
+}

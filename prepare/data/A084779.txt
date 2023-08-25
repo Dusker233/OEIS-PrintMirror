@@ -1,0 +1,40 @@
+{
+    "number": 84779,
+    "data": "1,7,41,207,1313,7807,42593,232463,1290433,7604415,42034721,236031231,1363681121,7457831007,39670144513,231087069823,1291433872385,7373001299199,41437235793921,229538650588863,1268719471103233",
+    "name": "a(n) = sum of absolute-valued coefficients of (1+2*x-4*x^2)^n.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A084779/b084779.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..2*n} abs(f(n, k)), where f(n, k) = (n!/(2*n-k)!)*i*(k-n)*2^k*5^(n/2)*LegendreP(n, n-k, 1/sqrt(5)). - _G. C. Greubel_, Jun 04 2023"
+    ],
+    "mathematica": [
+        "T[n_,k_]:=T[n,k]=SeriesCoefficient[Series[(1+2*x-4*x^2)^n,{x,0,2n}],k];",
+        "a[n_]:= a[n]= Sum[Abs[T[n,k]], {k,0,2n}];",
+        "Table[a[n], {n,0,40}] (* _G. C. Greubel_, Jun 04 2023 *)"
+    ],
+    "program": [
+        "(PARI) for(n=0,40,S=sum(k=0,2*n,abs(polcoeff((1+2*x-4*x^2)^n,k,x))); print1(S\",\"))",
+        "(Magma)",
+        "m:=40;",
+        "R<x>:=PowerSeriesRing(Integers(), 2*(m+2));",
+        "f:= func< n,k | Coefficient(R!( (1+2*x-4*x^2)^n ), k) >;",
+        "[(&+[ Abs(f(n,k)): k in [0..2*n]]): n in [0..m]]; // _G. C. Greubel_, Jun 04 2023",
+        "(SageMath)",
+        "def f(n,k):",
+        "    P.<x> = PowerSeriesRing(QQ)",
+        "    return P( (1+2*x-4*x^2)^n ).list()[k]",
+        "def a(n): return sum( abs(f(n,k)) for k in range(2*n+1) )",
+        "[a(n) for n in range(41)] # _G. C. Greubel_, Jun 04 2023"
+    ],
+    "xref": [
+        "Cf. A084775, A084776, A084777, A084778, A084780."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jun 14 2003",
+    "references": 8,
+    "revision": 9,
+    "time": "2023-06-05T08:52:41-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

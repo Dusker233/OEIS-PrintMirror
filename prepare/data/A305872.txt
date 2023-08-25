@@ -1,0 +1,45 @@
+{
+    "number": 305872,
+    "data": "1,1,17,1259,200589,54766516,22839203295,13532959408258,10826939105517381,11256605684271733244,14762470788227855508388,23845795018908512860754771,46527914721396710095597849515,107904469663880176355586920421756,293401777662120053352713701982623322",
+    "name": "Number of nonseparable rooted maps of genus n with one vertex and one face.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A305872/b305872.txt\">Table of n, a(n) for n = 0..200</a>",
+        "T. R. S. Walsh, A. B. Lehman, <a href=\"https://dx.doi.org/10.1016/0095-8956(75)90050-7\">Counting rooted maps by genus. III: Nonseparable maps</a>, J. Combinatorial Theory Ser. B 18 (1975), 222-259."
+    ],
+    "formula": [
+        "The g.f. A(x) satisfies A035319(x) = A[x*(A035319(x)^4)], where A035319 is the o.g.f. of A035319."
+    ],
+    "maple": [
+        "g := 1+x ;",
+        "for itr from 2 to 14 do",
+        "    g := g+a*x^itr;",
+        "    Ax := add(A035319(i)*x^i,i=0..itr+1) ;",
+        "    x*Ax^4 ;",
+        "    z := subs(x=%,g)-Ax ;",
+        "    z := expand(z) ;",
+        "    z := taylor(z,x=0,itr+1) ;",
+        "    z := convert(z,polynom) ;",
+        "    aa := solve(z,a) ;",
+        "    g := g-a*x^itr+aa*x^itr ;",
+        "    print(g) ;",
+        "end do:"
+    ],
+    "program": [
+        "(PARI)",
+        "seq(N) = {",
+        "  my(s = 1+'x*Ser(vector(N, n, (4*n)!/((2*n+1)!*4^n))));",
+        "  Vec(subst(s, 'x, serreverse('x*s^4)));",
+        "};",
+        "seq(14) \\\\ _Gheorghe Coserea_, Jun 13 2018"
+    ],
+    "xref": [
+        "Cf. A035319."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_R. J. Mathar_, Jun 12 2018",
+    "references": 1,
+    "revision": 16,
+    "time": "2018-06-14T06:36:09-04:00",
+    "created": "2018-06-12T13:26:34-04:00"
+}

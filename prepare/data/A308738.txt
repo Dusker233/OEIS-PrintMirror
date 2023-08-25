@@ -1,0 +1,36 @@
+{
+    "number": 308738,
+    "data": "100,161,198,217,224,225,252,289,308,315,316,350,369,376,377,379,406,413,414,416,432,433,435,440,442,443,477,496,503,504,533,540,541,548,559,560,567,568,585,587,594,595,604,611,612,624,631,632,646,650,651,658,665,672,673,685,692,693,702",
+    "name": "Numbers that can be written as the sum of five distinct nonnegative cubes.",
+    "comment": [
+        "It is possible that this sequence contains all sufficiently large numbers.",
+        "The smallest number with more than one representation is 756 = 0^3 + 1^3 + 3^3 + 6^3 + 8^3 = 2^3 + 4^3 + 5^3 + 6^3 + 7^3."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A308738/b308738.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3)=198 is in the sequence because 198 = 0^3 + 1^3 + 2^3 + 4^3 + 5^3."
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "S:= {}:",
+        "for a from 0 while 5*a^3 < N do",
+        "  for b from a+1 while a^3 + 4*b^3 < N do",
+        "    for c from b+1 while a^3 + b^3 + 3*c^3 < N do",
+        "      for d from c+1 while a^3 + b^3 + c^3 + 2*d^3 < N do",
+        "        S:= S union {seq(a^3 + b^3 + c^3 + d^3 + e^3, e=d+1..floor((N-a^3-b^3-c^3-d^3)^(1/3)))}",
+        "od od od od:",
+        "sort(convert(S,list));"
+    ],
+    "mathematica": [
+        "With[{nn=10},Select[Union[Total/@Subsets[Range[0,nn]^3,{5}]],#<=nn^3-36&]] (* _Harvey P. Dale_, Nov 19 2022 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Jun 21 2019",
+    "references": 1,
+    "revision": 14,
+    "time": "2022-11-19T15:59:29-05:00",
+    "created": "2019-06-21T22:46:38-04:00"
+}

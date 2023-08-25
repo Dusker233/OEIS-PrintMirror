@@ -1,0 +1,63 @@
+{
+    "number": 353867,
+    "data": "1,2,4,6,8,16,20,30,32,56,64,90,128,140,176,210,256,416,512,616,990,1024,1088,1540,2048,2288,2310,2432,2970,4096,4950,5888,7072,7700,8008,8192,11550,12870,14848,16384,20020,20672,30030,31744,32768,38896,50490,55936",
+    "name": "Heinz numbers of integer partitions where every partial run (consecutive constant subsequence) has a different sum, and these sums include every integer from 0 to the greatest part.",
+    "comment": [
+        "The Heinz number of a partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k). This gives a bijective correspondence between positive integers and integer partitions.",
+        "Related concepts:",
+        "- A partition whose submultiset sums cover an initial interval is said to be complete (A126796, ranked by A325781).",
+        "- In a knapsack partition (A108917, ranked by A299702), every submultiset has a different sum.",
+        "- A complete partition that is also knapsack is said to be perfect (A002033, ranked by A325780).",
+        "- A partition whose partial runs have all different sums is said to be rucksack (A353864, ranked by A353866, complement A354583)."
+    ],
+    "example": [
+        "The terms together with their prime indices begin:",
+        "    1: {}",
+        "    2: {1}",
+        "    4: {1,1}",
+        "    6: {1,2}",
+        "    8: {1,1,1}",
+        "   16: {1,1,1,1}",
+        "   20: {1,1,3}",
+        "   30: {1,2,3}",
+        "   32: {1,1,1,1,1}",
+        "   56: {1,1,1,4}",
+        "   64: {1,1,1,1,1,1}",
+        "   90: {1,2,2,3}",
+        "  128: {1,1,1,1,1,1,1}",
+        "  140: {1,1,3,4}",
+        "  176: {1,1,1,1,5}",
+        "  210: {1,2,3,4}",
+        "  256: {1,1,1,1,1,1,1,1}"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "norqQ[m_]:=Sort[m]==Range[0,Max[m]];",
+        "msubs[s_]:=Join@@@Tuples[Table[Take[t,i],{t,Split[s]},{i,0,Length[t]}]];",
+        "Select[Range[1000],norqQ[Total/@Select[msubs[primeMS[#]],SameQ@@#&]]&]"
+    ],
+    "xref": [
+        "Knapsack partitions are counted by A108917, ranked by A299702.",
+        "Complete partitions are counted by A126796, ranked by A325781.",
+        "These partitions are counted by A353865.",
+        "This is a special case of A353866, counted by A353864, complement A354583.",
+        "A001222 counts prime factors, distinct A001221.",
+        "A056239 adds up prime indices, row sums of A112798 and A296150.",
+        "A073093 counts prime-power divisors.",
+        "A124010 gives prime signature, sorted A118914.",
+        "A300273 ranks collapsible partitions, counted by A275870.",
+        "A353832 represents the operation of taking run-sums of a partition.",
+        "A353833 ranks partitions with all equal run-sums, nonprime A353834.",
+        "A353836 counts partitions by number of distinct run-sums.",
+        "A353852 ranks compositions with all distinct run-sums, counted by A353850.",
+        "A353863 counts partitions whose weak run-sums cover an initial interval.",
+        "Cf. A018818, A181819, A182857, A304442, A316413, A325862, A353835, A353838, A353839, A353861, A353931."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jun 07 2022",
+    "references": 19,
+    "revision": 13,
+    "time": "2022-06-11T07:54:50-04:00",
+    "created": "2022-06-11T07:54:50-04:00"
+}

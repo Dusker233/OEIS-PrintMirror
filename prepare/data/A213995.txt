@@ -1,0 +1,36 @@
+{
+    "number": 213995,
+    "data": "2,5,29,37,61,89,97,157,181,197,233,317,337,349,401,457,521,557,577,593,613,701,797,829,877,1021,1229,1289,1301,1361,1429,1493,1549,1637,1657,1789,1873,1973,2273,2281,2297,2357,2473,2521,2617,2621,2677,2689,2917,3061,3169,3209,3257,3301",
+    "name": "Primes p=u^2+v^2 such that p+u or p+v is prime.",
+    "link": [
+        "Robert Israel, <a href=\"/A213995/b213995.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "29=5^2+2^2 is in the sequence because 29+2=31 is prime."
+    ],
+    "maple": [
+        "f:= proc(p) local F;",
+        "  if not isprime(p) then return false fi;",
+        "  F:= GaussInt:-GIfactors(p)[2][1][1];",
+        "  isprime(p+abs(Re(F))) or isprime(p+abs(Im(F)))",
+        "  end proc:",
+        "select(f, [2,seq(i,i=5..10000,4)]); # _Robert Israel_, Apr 14 2020"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(L=List([2]),u2,p); for(u=2,sqrtint(lim\\=1), u2=u^2; forstep(v=if(u%2,2,1),min(sqrtint(lim-u2),u-1),2, if(isprime(p=u2+v^2) && (isprime(p+u) || isprime(p+v)), listput(L, p)))); Set(L) \\\\ _Charles R Greathouse IV_, Apr 14 2020"
+    ],
+    "xref": [
+        "Subsequence of A002313.",
+        "Cf. A213996."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Thomas Ordowski_, Jun 30 2012",
+    "ext": [
+        "Terms >=61 by _R. J. Mathar_, Jun 30 2012"
+    ],
+    "references": 2,
+    "revision": 20,
+    "time": "2020-04-14T12:25:29-04:00",
+    "created": "2012-07-01T08:48:11-04:00"
+}

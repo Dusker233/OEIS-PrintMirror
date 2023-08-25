@@ -1,0 +1,46 @@
+{
+    "number": 297624,
+    "data": "2,3,6,216,285",
+    "name": "Numbers k such that Fibonacci(2*k+1) and Fibonacci(2*k-1) are prime.",
+    "comment": [
+        "a(6) > 1622184 if it exists (see A001605). - _Chai Wah Wu_, Jan 23 2018"
+    ],
+    "formula": [
+        "From _Chai Wah Wu_, Jan 23 2018: (Start)",
+        "a(n) = (A279795(n)-1)/2 = (A281087(n)+1)/2 = (A073340(2n-1)+1)/2.",
+        "For n > 1, a(n) == 0 mod 3 as otherwise Fibonacci(2*k+1) or Fibonacci(2*k-1) is even. (End)"
+    ],
+    "example": [
+        "2 is in the sequence because F(3)=2 and F(5)=5 are prime.",
+        "6 is in the sequence because F(11)=89 and F(13)=233 are prime."
+    ],
+    "maple": [
+        "with(combinat, fibonacci): select(k -> isprime(fibonacci(2*k+1)) and isprime(fibonacci(2*k-1)), [$1..500]); # _Muniru A Asiru_, Jan 25 2018"
+    ],
+    "mathematica": [
+        "Select[Range[0, 3000], PrimeQ[Fibonacci[2 # + 1]] && PrimeQ[Fibonacci[2 # - 1]] &]"
+    ],
+    "program": [
+        "(Magma) [n: n in [0..700] | IsPrime(Fibonacci(2*n+1)) and  IsPrime(Fibonacci(2*n-1))];",
+        "(PARI) isok(n) = isprime(fibonacci(2*n-1)) && isprime(fibonacci(2*n+1)); \\\\ _Michel Marcus_, Jan 08 2018",
+        "(Python)",
+        "from sympy import isprime",
+        "A297624_list, k, a, b, c, aflag = [], 1, 1, 1, 2, False",
+        "while k < 1000:",
+        "    cflag = isprime(c)",
+        "    if aflag and cflag:",
+        "        A297624_list.append(k)",
+        "    k, a, b, c, aflag = k + 1, c, b + c, b + 2*c, cflag # _Chai Wah Wu_, Jan 23 2018",
+        "(GAP) o := [];; for k in [1..500] do if IsPrime(Fibonacci(2*k+1)) and IsPrime(Fibonacci(2*k-1)) then Add(o,k); fi; od; A297624 := o; # _Muniru A Asiru_, Jan 25 2018"
+    ],
+    "xref": [
+        "Cf. A000045, A001605, A073340, A117517, A117595, A279795, A281087."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Vincenzo Librandi_, Jan 08 2018",
+    "references": 1,
+    "revision": 41,
+    "time": "2022-09-08T08:46:20-04:00",
+    "created": "2018-01-23T14:20:28-05:00"
+}

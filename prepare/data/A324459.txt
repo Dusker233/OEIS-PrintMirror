@@ -1,0 +1,43 @@
+{
+    "number": 324459,
+    "data": "24,45,48,72,96,120,144,189,192,216,224,225,231,240,280,288,315,320,325,336,352,360,378,384,405,432,450,480,525,540,560,561,567,576,594,600,637,640,648,672,704,720,768,792,819,825,832,850,864,891,896,924,945",
+    "name": "Numbers m > 1 that have an s-decomposition.",
+    "comment": [
+        "The sequence is infinite, since it contains A324460 and the Carmichael numbers A002997.",
+        "A number m > 1 has an s-decomposition if there exists a decomposition in n proper factors g_k with exponents e_k >= 1 (the factors g_k being strictly increasing but not necessarily coprime) such that",
+        "    m = g_1^e_1 * ... * g_n^e_n, where s_{g_k}(m) >= g_k for all k,",
+        "  and s_g(m) gives the sum of the base-g digits of m.",
+        "A term m has the following properties:",
+        "m must have at least 2 factors g_k. If m = g_1^e_1 * g_2^e_2 with exactly two factors, then e_1 + e_2 >= 3.",
+        "Each factor g_k of m satisfies the inequalities 1 < g_k < m^(1/(ord_{g_k}(m)+1)) <= sqrt(m), where ord_g(m) gives the maximum exponent e such that g^e divides m.",
+        "See Kellner 2019."
+    ],
+    "link": [
+        "Bernd C. Kellner, <a href=\"/A324459/b324459.txt\">Table of n, a(n) for n = 1..532</a>",
+        "Bernd C. Kellner, <a href=\"https://arxiv.org/abs/1902.11283\">On primary Carmichael numbers</a>, arXiv:1902.11283 [math.NT], 2019."
+    ],
+    "example": [
+        "Since 225 = 5^2 * 9 with s_5(225) = 5 and s_9(225) = 9, 225 is a member."
+    ],
+    "mathematica": [
+        "s[n_, g_] := If[n < 1 || g < 2, 0, Plus @@ IntegerDigits[n, g]];",
+        "HasDecomp[m_] := Module[{E0, EV, G, R, k, n, v},",
+        "If[m < 1 || !CompositeQ[m], Return[False]];",
+        "G = Select[Divisors[m], s[m, #] >= # &];",
+        "n = Length[G]; If[n < 2, Return[False]];",
+        "E0 = Array[0 &, n]; EV = Array[v, n];",
+        "R = Solve[Product[G[[k]]^EV[[k]], {k, 1, n}] == m && EV >= E0, EV, Integers]; Return[R != {}]];",
+        "Select[Range[10^3], HasDecomp[#] &]"
+    ],
+    "xref": [
+        "Subsequences are A002997, A324457, A324458, A324460.",
+        "Cf. A324455, A324456."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernd C. Kellner_, Feb 28 2019",
+    "references": 6,
+    "revision": 21,
+    "time": "2019-03-15T06:09:38-04:00",
+    "created": "2019-03-11T10:29:04-04:00"
+}

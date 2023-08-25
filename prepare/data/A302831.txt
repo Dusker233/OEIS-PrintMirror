@@ -1,0 +1,36 @@
+{
+    "number": 302831,
+    "data": "1,2,4,9,16,31,56,99,163,283,469,757,1220,1915,3020,4748,7273,11014,16789,25033,37480,55782,82206,120033,174762,253092,364276,523814,749438,1064853,1509561,2128227,2986392,4186093,5832169,8121130,11272081,15576076,21446615,29479186,40360980",
+    "name": "Expansion of (1/(1 - x))*Product_{k>=1} (1 + k*x^k).",
+    "comment": [
+        "Partial sums of A022629."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A302831/b302831.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "<a href=\"/index/Par#part\">Index entries for sequences related to partitions</a>"
+    ],
+    "formula": [
+        "G.f.: (1/(1 - x))*exp(Sum_{j>=1} Sum_{k>=1} (-1)^(j+1)*k^j*x^(j*k)/j)."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0,",
+        "     `if`(n=0, 1, b(n, i-1)+`if`(i>n, 0, i*b(n-i, i-1))))",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n<0, 0, a(n-1)+b(n$2)) end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Apr 13 2018"
+    ],
+    "mathematica": [
+        "nmax = 40; CoefficientList[Series[1/(1 - x) Product[(1 + k x^k), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 40; CoefficientList[Series[1/(1 - x) Exp[Sum[Sum[(-1)^(j + 1) k^j x^(j k)/j, {k, 1, nmax}], {j, 1, nmax}]], {x, 0, nmax}], x]"
+    ],
+    "xref": [
+        "Cf. A000009, A022629, A036469, A302830, A302832."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Apr 13 2018",
+    "references": 3,
+    "revision": 9,
+    "time": "2018-04-14T15:22:40-04:00",
+    "created": "2018-04-13T21:52:57-04:00"
+}

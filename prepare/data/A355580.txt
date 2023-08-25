@@ -1,0 +1,45 @@
+{
+    "number": 355580,
+    "data": "1,4,8,9,16,27,32,36,64,72,81,108,128,144,216,243,256,288,324,432,512,576,648,729,864,972,1024,1152,1296,1728,1944,2048,2187,2304,2592,2916,3456,3888,4096,4608,5184,5832,6561,6912,7776,8192,8748,9216,10368,11664",
+    "name": "Powerful 3-smooth numbers: numbers of the form 2^i * 3^j with i, j != 1.",
+    "comment": [
+        "This sequence is closed under multiplication."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A355580/b355580.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "Sum_{n>=1} 1/a(n) = 7/4."
+    ],
+    "example": [
+        "a(2) = 4 = 2^2.",
+        "a(3) = 8 = 2^3.",
+        "a(8)= 36 = 2^2 * 3^2."
+    ],
+    "mathematica": [
+        "q[n_] := Module[{e = IntegerExponent[n, {2, 3}]}, e[[1]] != 1 && e[[2]] != 1 && Times@@({2, 3}^e) == n]; Select[Range[12000], q]"
+    ],
+    "program": [
+        "(PARI) is(n) = {my(f=factor(n)); n == 1 || (vecmax(f[,1]) <= 3 && vecmin(f[,2]) > 1)};",
+        "(Python)",
+        "from itertools import count, takewhile",
+        "def aupto(lim):",
+        "    pows2 = list(takewhile(lambda x: x<lim, (2**i for i in count(2))))",
+        "    pows3 = list(takewhile(lambda x: x<lim, (3**i for i in count(2))))",
+        "    return sorted(c*d for c in [1]+pows2 for d in [1]+pows3 if c*d <= lim)",
+        "print(aupto(12000)) # _Michael S. Branicky_, Jul 08 2022"
+    ],
+    "xref": [
+        "Intersection of A001694 and A003586.",
+        "Union of A151821, (A000244 \\ {3}) and 36*A003586.",
+        "A003586 \\ (Union of A007283 and A008776).",
+        "Cf. A355581."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Jul 08 2022",
+    "references": 2,
+    "revision": 11,
+    "time": "2022-07-10T03:56:33-04:00",
+    "created": "2022-07-09T12:17:59-04:00"
+}

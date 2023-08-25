@@ -1,0 +1,58 @@
+{
+    "number": 327750,
+    "data": "28,128,214,239,266,318,326,364,494,497,563,598,613,637,695,819,1128,1214,1239,1266,1318,1326,1364,1494,1497,1563,1598,1613,1637,1695,1819,2114,2139,2168,2285,2313,2356,2369,2419,2594,2639,2791,3118,3126,3148,3213,3235",
+    "name": "Numbers without zero digits such that after adding the product of its digits to it, a number with the same product of digits is obtained.",
+    "comment": [
+        "The idea of this sequence comes from a problem in the annual Moscow Mathematical Olympiad (MMO) in 2003: Level A, problem 2. The problem only asks to find a ten-digit number that has the property of the name.",
+        "When an integer k belongs to this sequence, the integer 111..11//k obtained by concatenation // of 111..11 and k is also a term; hence, there are primitive terms as 28, 214, 239, 266, 318, 326, ... (A340908).",
+        "A subset of it is formed by the numbers 239, 326, 364, 497, 563, 598, 613, 637, 695, 819, 1239, 1326, 1364, 1497, 1563, 1598, 1613, 1637, 1695, 1819, 2139, 2313, 2356, 2369, ... for which the number obtained after adding the product of the digits has exactly the same digits (they are obtained by permuting the digits of the initial number). So, 239 + 2*3*9 = 239 + 54 = 293, 326 + 3*2*6 = 326 + 36 = 362, 3235 + 3*2*3*5 = 3235 + 90 = 3325, 23286 + 2*3*2*8*6 = 23286 + 576 = 23862. - _Marius A. Burtea_, Sep 24 2019",
+        "This subset is A247888. - _Bernard Schott_, Jul 22 2020"
+    ],
+    "link": [
+        "Michel Marcus, <a href=\"/A327750/b327750.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Roman Fedorov, Alexei Belov, Alexander Kovaldzhi, Ivan Yashchenko, <a href=\"https://bookstore.ams.org/mcl-7/\">Moscow Mathematical Olympiads, 2000-2005</a>, Level A, Problem 2, 2003; MSRI, 2011, p. 15 and 97.",
+        "<a href=\"/index/O#Olympiads\">Index to sequences related to Olympiads</a>."
+    ],
+    "example": [
+        "28 + 2*8 = 44 and 2*8 = 4*4 hence 28 is a term.",
+        "326 + 3*2*6 = 362 and 3*2*6 = 3*6*2 hence 326 is another term."
+    ],
+    "mathematica": [
+        "pd[n_] := Times @@ IntegerDigits[n]; aQ[n_] := (p = pd[n]) > 0 && pd[n + p] == p; Select[Range[5000], aQ] (* _Amiram Eldar_, Sep 24 2019 *)"
+    ],
+    "program": [
+        "(Magma) [k:k in [1..3500]| not 0 in Intseq(k) and &*Intseq(k) eq &*(Intseq(k+&*Intseq(k)))]; // _Marius A. Burtea_, Sep 24 2019",
+        "(PARI) isok(n) = my(d = digits(n), p); vecmin(d) && (p=vecprod(d)) && (vecprod(digits(n+p)) == p); \\\\ _Michel Marcus_, Sep 24 2019",
+        "(Python)",
+        "def test(n):",
+        "    m, p = n, 1",
+        "    while m > 0:",
+        "        m, p = m//10, p*(m%10)",
+        "    if p == 0:",
+        "        return 0",
+        "    m, q = n+p, 1",
+        "    while m > 0:",
+        "        m, q = m//10, q*(m%10)",
+        "    return p == q",
+        "n, a = 0, 0",
+        "while n < 100:",
+        "    a = a+1",
+        "    if test(a):",
+        "        n = n+1",
+        "    print(n,a) # _A.H.M. Smeets_, Sep 25 2019"
+    ],
+    "xref": [
+        "Cf. A007954, A009994, A052382.",
+        "Subsequences: A247888, A340907, A340908 (primitives)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Sep 24 2019",
+    "ext": [
+        "More terms from _Amiram Eldar_, Sep 24 2019"
+    ],
+    "references": 3,
+    "revision": 54,
+    "time": "2022-09-08T08:46:24-04:00",
+    "created": "2019-09-25T16:59:12-04:00"
+}

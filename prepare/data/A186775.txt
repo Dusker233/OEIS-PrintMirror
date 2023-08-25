@@ -1,0 +1,35 @@
+{
+    "number": 186775,
+    "data": "3,4,8,9,15,16,20,21,23,24,26,28,29,33,34,36,39,40,41,46,48,51,52,55,56,57,60,63,64,67,68,69,74,75,76,77,80,82,83,85,86,88,91,92,94,95,97,98,100,102,106,108,112,113,116,118,121,124,126",
+    "name": "Numbers k such that digitsum(2^k) > digitsum(2^(k+1)).",
+    "comment": [
+        "If 2^k and 2^(k+1) acted like random numbers of their size, the probability that k would be in the sequence would be 1/2 + O(1/k). So very possibly a(n) ~ 2n. - _Charles R Greathouse IV_, Aug 08 2022"
+    ],
+    "link": [
+        "J.W.L. (Jan) Eerland, <a href=\"/A186775/b186775.txt\">Table of n, a(n) for n = 1..49688</a>"
+    ],
+    "example": [
+        "3 is in the sequence because digitsum(2^3) = 8 > 7 = digitsum(2^4)."
+    ],
+    "mathematica": [
+        "DeleteCases[Table[If[Total[Total[IntegerDigits[2^n]]]>Total[IntegerDigits[2^(n+1)]],n,k],{n,0, 10^5}],k] (* _J.W.L. (Jan) Eerland_, Aug 08 2022 *)"
+    ],
+    "program": [
+        "(Sage) def is_A186775(n): return sum((2^n).digits()) > sum((2^(n+1)).digits()) # _D. S. McNeil_, Feb 27 2011",
+        "(Python)",
+        "from itertools import count, islice, pairwise",
+        "def ds2(n): return sum(map(int, str(1<<n)))",
+        "def agen(): yield from (k for k, t in enumerate(pairwise(map(ds2, count(1))), 1) if t[0] > t[1])",
+        "print(list(islice(agen(), 60))) # _Michael S. Branicky_, Aug 08 2022"
+    ],
+    "xref": [
+        "Cf. A001370."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,1",
+    "author": "_Thomas Nordhaus_, Feb 26 2011",
+    "references": 2,
+    "revision": 20,
+    "time": "2022-10-01T01:13:35-04:00",
+    "created": "2011-02-26T12:26:53-05:00"
+}

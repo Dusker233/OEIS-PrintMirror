@@ -1,0 +1,39 @@
+{
+    "number": 29803,
+    "data": "0,1,2,3,4,5,6,7,9,18,27,36,45,54,63,65,73,81,89,97,105,113,121,130,138,146,154,162,170,178,186,195,203,211,219,227,235,243,251,260,268,276,284,292,300,308,316,325,333,341,349,357,365,373,381,390,398",
+    "name": "Numbers that are palindromic in base 8.",
+    "comment": [
+        "Cilleruelo, Luca, & Baxter prove that this sequence is an additive basis of order (exactly) 3. - _Charles R Greathouse IV_, May 03 2020"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A029803/b029803.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Javier Cilleruelo, Florian Luca and Lewis Baxter, <a href=\"https://doi.org/10.1090/mcom/3221\">Every positive integer is a sum of three palindromes</a>, Mathematics of Computation, Vol. 87, No. 314 (2018), pp. 3023-3055, <a href=\"http://arxiv.org/abs/1602.06208\">arXiv preprint</a>, arXiv:1602.06208 [math.NT], 2017.",
+        "Patrick De Geest, <a href=\"http://www.worldofnumbers.com/nobase10.htm\">Palindromic numbers beyond base 10</a>.",
+        "Phakhinkon Phunphayap and Prapanpong Pongsriiam, <a href=\"https://doi.org/10.13140/RG.2.2.23202.79047\">Estimates for the Reciprocal Sum of b-adic Palindromes</a>, 2019.",
+        "<a href=\"/index/Ab#basis_03\">Index entries for sequences that are an additive basis</a>, order 3."
+    ],
+    "formula": [
+        "Sum_{n>=2} 1/a(n) = 3.2188878... (Phunphayap and Pongsriiam, 2019). - _Amiram Eldar_, Oct 17 2020"
+    ],
+    "mathematica": [
+        "f[n_,b_] := Module[{i=IntegerDigits[n,b]}, i==Reverse[i]]; lst={}; Do[If[f[n,8], AppendTo[lst,n]], {n,1000}]; lst (* _Vladimir Joseph Stephan Orlovsky_, Jul 08 2009 *)"
+    ],
+    "program": [
+        "(PARI) ispal(n,b=8)=my(d=digits(n,b)); d==Vecrev(d) \\\\ _Charles R Greathouse IV_, May 03 2020",
+        "(Python)",
+        "from itertools import chain, count, islice",
+        "def A029803_gen(): # generator of terms",
+        "    return chain((0,),chain.from_iterable(chain((int((s:=oct(d)[2:])+s[-2::-1],8) for d in range(8**l,8**(l+1))), (int((s:=oct(d)[2:])+s[::-1],8) for d in range(8**l,8**(l+1)))) for l in count(0)))",
+        "A029803_list = list(islice(A029803_gen(),20)) # _Chai Wah Wu_, Jun 23 2022"
+    ],
+    "xref": [
+        "Palindromes in bases 2 through 10: A006995, A014190, A014192, A029952, A029953, A029954, A029803, A029955, A002113."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,3",
+    "author": "_Patrick De Geest_",
+    "references": 34,
+    "revision": 26,
+    "time": "2022-06-23T15:42:41-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

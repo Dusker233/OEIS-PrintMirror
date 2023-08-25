@@ -1,0 +1,55 @@
+{
+    "number": 114805,
+    "data": "1,2,4,7,11,16,22,36,60,96,146,212,380,692,1196,1946,3002,5858,11474,21050,36050,58226,121058,250226,480050,855050,1431626,3128090,6744794,13409690,24659690,42533546,96820394,216171626,442778090,836528090",
+    "name": "Cumulative sum of quintuple factorial numbers n!!!!! (A085157).",
+    "comment": [
+        "a(1) = 2 is prime; a(3) = 7 is prime; a(4) = 11 is prime; and there are no more primes in the sequence. Semiprime values are: a(2) = 4 = 2^2, a(6) = 22, a(10) = 146 = 2 * 73, a(18) = 11474 = 2 * 5737, a(23) = 250226 = 2 * 125113."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A114805/b114805.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=0..n} j!5.",
+        "a(n) = Sum_{j=0..n} j!!!!!.",
+        "a(n) = Sum_{j=0..n} A085157(j)."
+    ],
+    "example": [
+        "a(10) = 0!5 + 1!5 + 2!5 + 3!5 + 4!5 + 5!5 + 6!5 + 7!5 + 8!5 + 9!5 + 10!5 =",
+        "1 + 1 + 2 + 3 + 4 + 5 + 6 + 14 + 24 + 36 + 50 = 146 = 2 * 73."
+    ],
+    "maple": [
+        "b:= n-> `if`(n < 1, 1, n*b(n-5)); a:= n-> sum(b(j), j = 0..n); seq(a(n), n = 0..40); # _G. C. Greubel_, Aug 21 2019"
+    ],
+    "mathematica": [
+        "f5[0]=1; f5[n_]:= f5[n]= If[n<=6, n, n f5[n-5]]; Accumulate[f5/@Range[0, 35]] (* _Giovanni Resta_, Jun 15 2016 *)"
+    ],
+    "program": [
+        "(PARI) b(n)=if(n<1, 1, n*b(n-5));",
+        "vector(40, n, n--; sum(j=0,n, b(j)) ) \\\\ _G. C. Greubel_, Aug 21 2019",
+        "(Magma) b:= func< n | n eq 0 select 1 else (n lt 6) select n else n*Self(n-5) >;",
+        "[(&+[b(j): j in [0..n]]): n in [0..40]]; // _G. C. Greubel_, Aug 21 2019",
+        "(Sage)",
+        "@CachedFunction",
+        "def b(n):",
+        "    if (n<1): return 1",
+        "    else: return n*b(n-5)",
+        "[sum(b(j) for j in (0..n)) for n in (0..40)] # _G. C. Greubel_, Aug 21 2019",
+        "(GAP)",
+        "b:= function(n)",
+        "    if n<1 then return 1;",
+        "    else return n*b(n-5);",
+        "    fi;",
+        "  end;",
+        "List([0..40], n-> Sum([0..n], j-> b(j)) ); # _G. C. Greubel_, Aug 21 2019"
+    ],
+    "xref": [
+        "Cf. A007662, A085157, A114347."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Jonathan Vos Post_, Feb 18 2006",
+    "references": 1,
+    "revision": 12,
+    "time": "2022-09-08T08:45:23-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

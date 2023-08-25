@@ -1,0 +1,47 @@
+{
+    "number": 357891,
+    "data": "1,2,4,11,34,152,1079,6610,93221",
+    "name": "a(1) = 1; a(n+1) is the smallest integer > 0 that cannot be obtained from the integers {a(1), ..., a(n)} using each number exactly once and the operators +, -, *, /.",
+    "program": [
+        "(Python)",
+        "from fractions import Fraction",
+        "def a(n, v):",
+        "    R = dict() # index of each reachable subset is [card(s)-1][s]",
+        "    for i in range(n): R[i] = dict()",
+        "    for i in range(n): R[0][(v[i], )] = {v[i]}",
+        "    #reach = set(v)",
+        "    for j in range(1, n):",
+        "        for i in range((j+1)//2):",
+        "            for s1 in R[i]:",
+        "                for s2 in R[j-1-i]:",
+        "                    if set(s1) & set(s2) == set():",
+        "                        s12 = tuple(sorted(set(s1) | set(s2)))",
+        "                        if s12 not in R[len(s12)-1]:",
+        "                            R[len(s12)-1][s12] = set()",
+        "                        for a in R[i][s1]:",
+        "                            for b in R[j-1-i][s2]:",
+        "                                allowed = [a+b, a*b, a-b, b-a]",
+        "                                if a!=0: allowed.append(Fraction(b, a))",
+        "                                if b!=0: allowed.append(Fraction(a, b))",
+        "                                R[len(s12)-1][s12].update(allowed)",
+        "    k = 1",
+        "    while k in R[n-1][tuple(v)]: k += 1",
+        "    return k",
+        "alst = [1]",
+        "[alst.append(a(n, alst)) for n in range(1, 6)]",
+        "print(alst) # _Michael S. Branicky_, Nov 01 2022"
+    ],
+    "xref": [
+        "Cf. A071115, A217043, A358075."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,2",
+    "author": "_Rainer Rosenthal_ and _Hugo Pfoertner_, Nov 01 2022",
+    "ext": [
+        "a(9) from _Michael S. Branicky_, Nov 10 2022"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2022-11-10T12:35:59-05:00",
+    "created": "2022-11-01T13:48:06-04:00"
+}

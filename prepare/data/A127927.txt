@@ -1,0 +1,34 @@
+{
+    "number": 127927,
+    "data": "1,1,3,9,31,108,391,1431,5319,19926,75252,285750,1090491,4177774,16060401,61916977,239307063,926929746,3597296770,13984508500,54448030092,212282062488,828673761978,3238495227846,12669206034339",
+    "name": "G.f. A(x) satisfies: [x^(2n)] A(x)/Catalan(x)^n = A001764(n) = C(3n,n)/(2n+1) and [x^(2n+1)] A(x)/Catalan(x)^n = A001764(n+1) for n>=0, where Catalan(x) is the g.f. of A000108.",
+    "comment": [
+        "Main diagonal of triangle A062745: a(n) = A062745(n,n) (see formula given in A062745 by Emeric Deutsch)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A127927/b127927.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = C(2*n,n) - (-1)^(n-1)*Sum_{i=0..[(n-1)/2]} C(3*i,i)*C(i-n-1,n-1-2*i)/(2*i+1).",
+        "From _Vaclav Kotesovec_, May 01 2018: (Start)",
+        "Recurrence: 2*(n-1)*n*(2*n + 1)*(5*n - 6)*a(n) = (n-1)^2*(115*n^2 - 138*n + 56)*a(n-1) + 4*(n-2)*(n+1)*(2*n - 3)*(5*n - 11)*a(n-2) - 36*(n-2)*(2*n - 5)*(2*n - 3)*(5*n - 1)*a(n-3).",
+        "a(n) ~ 4^n / (phi^2 * sqrt(Pi*n)), where phi = A001622 = (1 + sqrt(5))/2 is the golden ratio. (End)"
+    ],
+    "mathematica": [
+        "a[n_] := Binomial[2*n, n] - (-1)^(n-1)*Sum[ Binomial[3*k, k]*Binomial[k - n-1, n-1-2*k]/(2*k+1), {k, 0, Floor[(n-1)/2]}]; Table[a[n], {n, 0, 50}] (* _G. C. Greubel_, Apr 30 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=binomial(2*n,n)+(-1)^n*sum(i=0,(n-1)\\2, binomial(3*i,i) *binomial(i-n-1,n-1-2*i)/(2*i+1))}",
+        "(Magma) [1] cat [Binomial(2*n,n) - (-1)^(n-1)*(&+[Binomial(3*k, k)*Binomial(k-n - 1, n-2*k-1)/(2*k+1): k in [0..Floor((n-1)/2)]]): n in [1..50]]; // _G. C. Greubel_, Apr 30 2018"
+    ],
+    "xref": [
+        "Cf. A062745; A001764 (ternary trees), A000108 (Catalan)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Feb 06 2007",
+    "references": 2,
+    "revision": 12,
+    "time": "2022-09-08T08:45:29-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

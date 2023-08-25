@@ -1,0 +1,39 @@
+{
+    "number": 341712,
+    "data": "3,12,39,112,292,710,1629,3567,7505,15266,30140,57983,108981,200625,362433,643653,1125269,1939149,3297411,5538254,9195371,15104245,24561098,39562657,63160404,99987453,157029090,244754385,378754786,582124254,888874067,1348842728",
+    "name": "a(n) = A120963(2*n)/2.",
+    "comment": [
+        "A bisection of A341710."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; nops(invphi(n)) end:",
+        "g:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      g(n-j)*add(d*b(d), d=divisors(j)), j=1..n)/n)",
+        "    end:",
+        "a:= n-> g(2*n)/2:",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, Feb 19 2021"
+    ],
+    "mathematica": [
+        "terms = 64; (* number of terms of A120963 *)",
+        "nmax = Floor[terms/2];",
+        "S[m_] := S[m] = CoefficientList[Product[1/(1 - x^EulerPhi[k]),",
+        "     {k, 1, m*terms}] + O[x]^(terms+1), x];",
+        "S[m = 1];",
+        "S[m++];",
+        "While[S[m] != S[m-1], m++];",
+        "A120963 = S[m];",
+        "a[n_ /; 1 <= n <= nmax] := A120963[[2n+1]]/2;",
+        "Table[a[n], {n, 1, nmax}] (* _Jean-Fran\u00e7ois Alcover_, May 12 2022 *)"
+    ],
+    "xref": [
+        "Cf. A120963, A341710, A341711."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Feb 19 2021",
+    "references": 3,
+    "revision": 19,
+    "time": "2022-05-12T14:04:09-04:00",
+    "created": "2021-02-19T15:41:44-05:00"
+}

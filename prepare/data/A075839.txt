@@ -1,0 +1,72 @@
+{
+    "number": 75839,
+    "data": "1,19,379,7561,150841,3009259,60034339,1197677521,23893516081,476672644099,9509559365899,189714514673881,3784780734111721,75505900167560539,1506333222617099059,30051158552174420641,599516837820871313761,11960285597865251854579",
+    "name": "Numbers k such that 11*k^2 - 2 is a square.",
+    "comment": [
+        "Lim_{n -> infinity} a(n)/a(n-1) = 10 + 3*sqrt(11).",
+        "Positive values of x (or y) satisfying x^2 - 20xy + y^2 + 18 = 0. - _Colin Barker_, Feb 18 2014"
+    ],
+    "reference": [
+        "A. H. Beiler, \"The Pellian\", ch. 22 in Recreations in the Theory of Numbers: The Queen of Mathematics Entertains. Dover, New York, New York, pp. 248-268, 1966.",
+        "L. E. Dickson, History of the Theory of Numbers, Vol. II, Diophantine Analysis. AMS Chelsea Publishing, Providence, Rhode Island, 1999, pp. 341-400.",
+        "Peter G. L. Dirichlet, Lectures on Number Theory (History of Mathematics Source Series, V. 16); American Mathematical Society, Providence, Rhode Island, 1999, pp. 139-147."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A075839/b075839.txt\">Table of n, a(n) for n = 1..750</a> (terms 1..200 from Vincenzo Librandi)",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "J. J. O'Connor and E. F. Robertson, <a href=\"http://www-gap.dcs.st-and.ac.uk/~history/HistTopics/Pell.html\">Pell's Equation</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PellEquation.html\">Pell Equation.</a>",
+        "<a href=\"/index/Tu#2wis\">Index entries for two-way infinite sequences</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (20,-1)."
+    ],
+    "formula": [
+        "11*a(n)^2 - 9*A083043(n)^2 = 2.",
+        "a(n) = ((3+sqrt(11))*(10+3*sqrt(11))^(n-1) - (3-sqrt(11))*(10-3*sqrt(11))^(n-1) )/(2*sqrt(11)). - _Dean Hickerson_, Dec 09 2002",
+        "From _Michael Somos_, Oct 29 2002: (Start)",
+        "G.f.: x*(1-x)/(1-20*x+x^2).",
+        "a(n) = 20*a(n-1) - a(n-2), n>1. (End)",
+        "Let q(n, x) = Sum_{i=0..n} x^(n-i)*binomial(2*n-i, i) then a(n) = q(n, 18). - _Benoit Cloitre_, Dec 06 2002",
+        "a(-n+1) = a(n). - _Michael Somos_, Apr 18 2003",
+        "E.g.f.: (1/11)*exp(10*x)*(11*cosh(3*sqrt(11)*x) - 3*sqrt(11)*sinh(3*sqrt(11)*x)) - 1. - _Stefano Spezia_, Dec 06 2019"
+    ],
+    "maple": [
+        "seq(coeff(series( x*(1-x)/(1-20*x+x^2), x, n+1), x, n), n = 1..20); # _G. C. Greubel_, Dec 06 2019"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{20,-1},{1,19},20] (* _Harvey P. Dale_, Apr 13 2012 *)",
+        "Rest@CoefficientList[Series[x*(1-x)/(1-20x+x^2), {x, 0, 20}], x] (* _Vincenzo Librandi_, Feb 20 2014 *)",
+        "a[c_, n_] := Module[{},",
+        "   p := Length[ContinuedFraction[ Sqrt[ c]][[2]]];",
+        "   d := Denominator[Convergents[Sqrt[c], n p]];",
+        "   t := Table[d[[1 + i]], {i, 0, Length[d] - 1, p}];",
+        "   Return[t];",
+        "] (* Complement of A041015 *)",
+        "a[11, 20] (* _Gerry Martens_, Jun 07 2015 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=subst(poltchebi(n+1)+poltchebi(n),x,10)/11",
+        "(Magma) I:=[1,19]; [n le 2 select I[n] else 20*Self(n-1)-Self(n-2): n in [1..20]]; // _Vincenzo Librandi_, Feb 20 2014",
+        "(Sage)",
+        "def A075839_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( x*(1-x)/(1-20*x+x^2) ).list()",
+        "a=A075839_list(20); a[1:] # _G. C. Greubel_, Dec 06 2019",
+        "(GAP) a:=[1,19];; for n in [3..20] do a[n]:=20*a[n-1]-a[n-2]; od; a; # _G. C. Greubel_, Dec 06 2019"
+    ],
+    "xref": [
+        "Row 20 of array A094954.",
+        "Cf. A075844, A221762, A041015.",
+        "Cf. similar sequences listed in A238379."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Gregory V. Richardson_, Oct 14 2002",
+    "ext": [
+        "More terms from _Colin Barker_, Feb 18 2014",
+        "Offset changed to 1 by _G. C. Greubel_, Dec 06 2019"
+    ],
+    "references": 10,
+    "revision": 58,
+    "time": "2022-09-08T08:45:07-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

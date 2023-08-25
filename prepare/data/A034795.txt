@@ -1,0 +1,36 @@
+{
+    "number": 34795,
+    "data": "2,3,7,11,23,29,53,59,71,73,79,83,109,113,127,131,151,167,173,179,191,193,197,223,227,239,241,251,263,269,283,293,307,311,313,317,353,383,389,409,419,431,433,439,443,457,461,467,479,487,491,503,509,523,547",
+    "name": "a(n) is the least prime > a(n-1) that is a quadratic residue mod a(n-1).",
+    "link": [
+        "Robert Israel, <a href=\"/A034795/b034795.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "f:= proc(p) local q;",
+        "   q:= p;",
+        "   do",
+        "     q:= nextprime(q);",
+        "     if NumberTheory:-QuadraticResidue(q,p)=1 then return q fi",
+        "   od",
+        "end proc:",
+        "A[1]:= 2: for i from 2 to 100 do A[i]:= f(A[i-1]) od:",
+        "seq(A[i],i=1..100); # _Robert Israel_, Jan 06 2023"
+    ],
+    "mathematica": [
+        "a[1] = 2; a[2] = 3; a[n_] := a[n] = For[p = NextPrime[a[n-1]], True, p = NextPrime[p], If[JacobiSymbol[p, a[n-1]] == 1, Return[p]]];",
+        "a /@ Range[55] (* _Jean-Fran\u00e7ois Alcover_, Dec 28 2019 *)"
+    ],
+    "xref": [
+        "Cf. A034795."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "ext": [
+        "Name corrected by _Robert Israel_, Jan 06 2023"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2023-01-08T10:13:51-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

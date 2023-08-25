@@ -1,0 +1,43 @@
+{
+    "number": 307495,
+    "data": "1,1,3,12,57,312,1950,13848,111069,998064,9957186,109305240,1309637274,17006109072,237888664572,3566114897520,57030565449765,969154436550240,17439499379433690,331268545604793240,6624013560942038670,139080391965533653200,3059323407592802838180,70355685298375014175440",
+    "name": "Expansion of Sum_{k>=0} k!*((1 - sqrt(1 - 4*x))/2)^k.",
+    "comment": [
+        "Catalan transform of A000142 (factorial numbers).",
+        "From _Peter Bala_, Jan 27 2020: (Start)",
+        "This sequence is the main diagonal of the lower triangular array formed by putting the sequence of factorial numbers in the first column (k = 0) of the array and then completing the triangle using the relation T(n,k) = T(n-1,k) + T(n,k-1) for k >= 1.",
+        "    1",
+        "    1    1",
+        "    2    3    3",
+        "    6    9   12   12",
+        "   24   33   45   57   57",
+        "  120  153  198  255  312  312",
+        "  ...",
+        "Alternatively, the sequence can be obtained by multiplying the sequence of factorial numbers by the array A106566.",
+        "(End)"
+    ],
+    "link": [
+        "P. Bala, <a href=\"/A001517/a001517.pdf\">A note on the Catalan transform of a sequence</a>"
+    ],
+    "formula": [
+        "G.f.: 1 /(1 - x*c(x)/(1 - x*c(x)/(1 - 2*x*c(x)/(1 - 2*x*c(x)/(1 - 3*x*c(x)/(1 - 3*x*c(x)/(1 - ...))))))), a continued fraction, where c(x) = g.f. of Catalan numbers (A000108).",
+        "Sum_{n>=0} a(n)*(x*(1 - x))^n = g.f. of A000142.",
+        "a(n) = (1/n) * Sum_{k=1..n} binomial(2*n-k-1,n-k)*k*k! for n > 0.",
+        "a(n) ~ exp(1) * n!. - _Vaclav Kotesovec_, Aug 10 2019"
+    ],
+    "mathematica": [
+        "nmax = 23; CoefficientList[Series[Sum[k! ((1 - Sqrt[1 - 4 x])/2)^k, {k, 0, nmax}], {x, 0, nmax}], x]",
+        "nmax = 23; CoefficientList[Series[1/(1 + ContinuedFractionK[-Floor[(k + 1)/2] (1 - Sqrt[1 - 4 x])/2, 1, {k, 1, nmax}]), {x, 0, nmax}], x]",
+        "Join[{1}, Table[1/n Sum[Binomial[2n - k - 1, n - k] k k!, {k, n}], {n, 23}]]"
+    ],
+    "xref": [
+        "Cf. A000108, A000142, A013999, A100100, A106566, A307496."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 10 2019",
+    "references": 2,
+    "revision": 13,
+    "time": "2020-01-28T12:13:11-05:00",
+    "created": "2019-04-10T21:56:26-04:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 353654,
+    "data": "1,3,7,10,15,22,26,31,36,46,54,58,63,76,84,94,100,110,118,122,127,136,156,172,180,190,204,212,222,228,238,246,250,255,280,296,316,328,348,364,372,382,392,412,428,436,446,460,468,478,484,494,502,506,511,528,568",
+    "name": "Numbers whose binary expansion has the same number of trailing 0 bits as other 0 bits.",
+    "comment": [
+        "Numbers k such that A007814(k) = A086784(k).",
+        "To reproduce the sequence through itself, use the following rule: if binary 1xyz is a term then so are 11xyz and 10xyz0 (except for 1 alone where 100 is not a term).",
+        "The number of terms with bit length k is equal to Fibonacci(k-1) for k > 1.",
+        "2*A247648(n-1) + 1 with rewrite 1 -> 1, 01 -> 0 applied to binary expansion is the same as a(n) without trailing 0 bits in binary.",
+        "Odd terms are positive Mersenne numbers (A000225), because there is no 0 in their binary expansion. - _Bernard Schott_, Oct 12 2022"
+    ],
+    "formula": [
+        "a(n) = a(n-1) + A356385(n-1) for n > 1 with a(1) = 1.",
+        "a(n) = 2^g(n-1)*(h(n-1) + 2^A000523(h(n-1))*(2 - g(n-1))) for n > 2 with a(1) = 1, a(2) = 3 where f(n) = n - A130312(n), g(n) = [n > 2*f(n)] and where h(n) = a(f(n) + 1).",
+        "a(n) = 1 + 2^r(n-1) + Sum_{k=1..r(n-1)} (1 - g(s(n-1, k)))*2^(r(n-1) - k) for n > 1 with a(1) = 1 where r(n) = A072649(n) and where s(n, k) = f(s(n, k-1)) for n > 0, k > 1 with s(n, 1) = n.",
+        "a(n) = 2*(2 + Sum_{k=1..n-2} 2^(A213911(A280514(k)-1) + 1)) - 2^A200650(n) for n > 1 with a(1) = 1.",
+        "A025480(a(n)-1) = A348366(A343152(n-1)) for n > 1.",
+        "a(A000045(n)) = 2^(n-1) - 1 for n > 1."
+    ],
+    "mathematica": [
+        "Join[{1}, Select[Range[2, 600], IntegerExponent[#, 2] == Floor[Log2[# - 1]] - DigitCount[# - 1, 2, 1] &]] (* _Amiram Eldar_, Jul 16 2022 *)"
+    ],
+    "program": [
+        "(PARI) Zeckendorf(n)=my(A=n, B, m=1, v=[1]); while(fibonacci(m+1)<=n, m++); m--; A-=fibonacci(m+1); while(m>1, m--; B=0; if(A-fibonacci(m+1)>=0, A-=fibonacci(m+1); B=1); v=concat(v,B)); v \\\\ A189920",
+        "b1(n)=local(m); if(n<1, 0, m=0; until(fibonacci(m)>n, m++); m-2) \\\\ A072649",
+        "b2(n)=my(A=concat(Zeckendorf(fibonacci(b1(n)+3)-n-1), 0), B, x=3, v=[1]); while(x<=#A, B=0; if(A[x]==1, x++; B=1); v=concat(v, 1-A[x-B]); x++); fromdigits(v, 2) \\\\ A247648 with rewrite 1 -> 1, 01 -> 0 applied to binary expansion",
+        "a(n)=if(n<5, 4*(n-1) - hammingweight(n-1) + (n==1), my(A=2*b2(n-1) + 1); A*2^(logint(A, 2) - hammingweight(A) + 1))",
+        "(PARI) isok(k) = if (k==1, 1, (logint(k-1, 2)-hammingweight(k-1) == valuation(k, 2))); \\\\ _Michel Marcus_, Jul 16 2022",
+        "(Python)",
+        "from itertools import islice, count",
+        "def A353654_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:(m:=(~n & n-1).bit_length()) == bin(n>>m)[2:].count('0'),count(max(startvalue,1)))",
+        "A353654_list = list(islice(A353654_gen(),30)) # _Chai Wah Wu_, Oct 14 2022"
+    ],
+    "xref": [
+        "Cf. A000045, A000120, A000523, A007814, A010056, A025480, A030109, A054429, A060142, A072649, A084471, A086784, A091892, A132665, A133512, A200650, A213911, A232559, A280514, A343152, A348366.",
+        "Cf. A356385 (first differences).",
+        "Subsequences with same number k of trailing 0 bits and other 0 bits: A000225 (k=0), 2*A190620 (k=1), 4*A357773 (k=2), 8*A360573 (k=3)."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Mikhail Kurkov_, Jul 15 2022",
+    "references": 5,
+    "revision": 142,
+    "time": "2023-02-20T07:52:01-05:00",
+    "created": "2022-10-02T00:29:03-04:00"
+}

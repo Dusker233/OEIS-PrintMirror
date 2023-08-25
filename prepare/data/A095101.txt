@@ -1,0 +1,38 @@
+{
+    "number": 95101,
+    "data": "19,43,51,67,91,99,107,115,123,127,139,147,155,163,179,187,195,203,207,211,219,223,227,235,247,259,267,275,283,291,307,315,323,331,339,347,355,367,379,387,403,411,423,427,435,443,451,459,463,467",
+    "name": "Integers m of the form 4k+3 for which some of the sums Sum_{i=1..u} J(i/m) (with u ranging from 1 to (m-1)) is negative, where J(i/m) is Jacobi symbol of i and m.",
+    "comment": [
+        "Integers whose Jacobi-vector does not form a valid Motzkin-path."
+    ],
+    "link": [
+        "A. Karttunen and J. Moyer, <a href=\"/A095062/a095062.c.txt\">C-program for computing the initial terms of this sequence</a>"
+    ],
+    "formula": [
+        "a(n) = 4*A095275(n) + 3."
+    ],
+    "program": [
+        "(Sage)",
+        "def is_Motzkin(n, k):",
+        "    s = 0",
+        "    for i in (1..k) :",
+        "        s += jacobi_symbol(i, n)",
+        "        if s < 0 : return False",
+        "    return True",
+        "def A095101_list(n):",
+        "    return [m for m in range(3, n+1, 4) if not is_Motzkin(m, m//2)]",
+        "A095101_list(467) # _Peter Luschny_, Aug 08 2012",
+        "(PARI) isok(m) = {my(s=0); if(m%4==3, for(i=1, m-1, if((s+=kronecker(i, m))<0, return(1)))); 0; } \\\\ _Jinyuan Wang_, Jul 20 2020"
+    ],
+    "xref": [
+        "Subset of A095103. Complement of A095100 in A004767.",
+        "Cf. A095091."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_ and Jun 01 2004",
+    "references": 6,
+    "revision": 15,
+    "time": "2020-07-20T06:42:14-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

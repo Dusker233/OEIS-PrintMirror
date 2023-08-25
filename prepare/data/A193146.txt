@@ -1,0 +1,48 @@
+{
+    "number": 193146,
+    "data": "1,1,2,2,4,5,8,10,15,20,29,39,55,75,105,144,200,275,381,525,726,1001,1383,1908,2635,3636,5020,6928,9564,13200,18221,25149,34714,47914,66136,91285,126000,173914,240051",
+    "name": "Expansion of 1/(1 - x - x^2 + x^3 - x^4 + x^6).",
+    "comment": [
+        "The Gi2 sums, see A180662 for the definition of these sums, of the \"Races with Ties\" triangle A035317 equal this sequence."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A193146/b193146.txt\">Table of n, a(n) for n = 0..300</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,-1,1,0,-1)."
+    ],
+    "formula": [
+        "G.f.: 1/(1 - x - x^2 + x^3 - x^4 + x^6).",
+        "a(n) = a(n-1) + a(n-2) - a(n-3) + a(n-4) - a(n-6) with a(n) = 0 for n = -5, -4, -3, -2, -1 and a(0) = 1.",
+        "a(n) = b(n) + b(n-1) + b(n-3) - (1-(-1)^n)/2 with b(n) = A003269(n) and b(-3) = b(-2) = b(-1) = 0.",
+        "a(n) = Sum_{k=0..floor(n/2)} binomial(floor(n-3*k/2)+1, n-2*k+1). - _Taras Goy_, Dec 24 2019"
+    ],
+    "maple": [
+        "A193146 := proc(n) option remember: if n>=-5 and n<=-1 then 0 elif n=0 then 1 else procname(n-1) + procname(n-2) - procname(n-3) + procname(n-4) - procname(n-6) fi: end: seq(A193146(n), n=0..40);"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/(1-x-x^2+x^3-x^4+x^6), {x, 0, 40}], x] (* _Michael De Vlieger_, Dec 24 2019 *)",
+        "LinearRecurrence[{1,1,-1,1,0,-1},{1,1,2,2,4,5},50] (* _Harvey P. Dale_, Mar 27 2022 *)"
+    ],
+    "program": [
+        "Contribution by _Bruno Berselli_, Jul 22 2011:  (Start)",
+        "(PARI) Vec(1/(1-x-x^2+x^3-x^4+x^6) +O(x^40))  /* show terms */",
+        "(Maxima) makelist(coeff(taylor(1/(1-x-x^2+x^3-x^4+x^6), x, 0, n), x, n), n, 0, 40);",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 40); Coefficients(R!(1/(1-x-x^2+x^3-x^4+x^6)));  (End)",
+        "(Sage)",
+        "def A193146_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( 1/(1-x-x^2+x^3-x^4+x^6) ).list()",
+        "A193146_list(40) # _G. C. Greubel_, Jan 01 2020",
+        "(GAP) a:=[1,1,2,2,4,5];; for n in [7..40] do a[n]:=a[n-1]+a[n-2]-a[n-3]+a[n-4]-a[n-6]; od; a; # _G. C. Greubel_, Jan 01 2020"
+    ],
+    "xref": [
+        "Cf. A003269.",
+        "Cf. A035317, A180662."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Johannes W. Meijer_, Jul 20 2011",
+    "references": 2,
+    "revision": 30,
+    "time": "2022-09-08T08:45:58-04:00",
+    "created": "2011-07-24T19:31:07-04:00"
+}

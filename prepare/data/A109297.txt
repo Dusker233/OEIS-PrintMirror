@@ -1,0 +1,67 @@
+{
+    "number": 109297,
+    "data": "1,2,9,12,18,40,112,125,250,352,360,540,600,675,832,1008,1125,1350,1500,2176,2250,2268,2352,2401,3168,3969,4802,4864,7488,7938,10692,11616,11776,14000,19584,21609,27440,28812,29403,29696,32448,35000,37908,43218,43776",
+    "name": "Primal codes of finite permutations on positive integers.",
+    "comment": [
+        "A finite permutation is a bijective mapping from a finite set to itself, counting the empty mapping as a permutation of the empty set.",
+        "Also Heinz numbers of integer partitions where the set of distinct parts is equal to the set of distinct multiplicities. These partitions are counted by A114640. The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k). - _Gus Wiseman_, Apr 02 2019"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A109297/b109297.txt\">Table of n, a(n) for n = 1..300</a> (terms 1..100 from Alois P. Heinz)",
+        "Jon Awbrey, <a href=\"https://oeis.org/wiki/Riffs_and_Rotes\">Riffs and Rotes</a>."
+    ],
+    "example": [
+        "Writing (prime(i))^j as i:j, we have the following table:",
+        "Primal Codes of Finite Permutations on Positive Integers",
+        "` ` ` 1 = { }",
+        "` ` ` 2 = 1:1",
+        "` ` ` 9 = 2:2",
+        "` ` `12 = 1:2 2:1",
+        "` ` `18 = 1:1 2:2",
+        "` ` `40 = 1:3 3:1",
+        "` ` 112 = 1:4 4:1",
+        "` ` 125 = 3:3",
+        "` ` 250 = 1:1 3:3",
+        "` ` 352 = 1:5 5:1",
+        "` ` 360 = 1:3 2:2 3:1",
+        "` ` 540 = 1:2 2:3 3:1",
+        "` ` 600 = 1:3 2:1 3:2",
+        "` ` 675 = 2:3 3:2",
+        "` ` 832 = 1:6 6:1",
+        "` `1008 = 1:4 2:2 4:1",
+        "` `1125 = 2:2 3:3",
+        "` `1350 = 1:1 2:3 3:2",
+        "` `1500 = 1:2 2:1 3:3",
+        "` `2176 = 1:7 7:1",
+        "` `2250 = 1:1 2:2 3:3"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k; for k from 1+`if`(n=1, 0,",
+        "      a(n-1)) while (l-> sort(map(i-> i[2], l)) <> sort(map(",
+        "      i-> numtheory[pi](i[1]), l)))(ifactors(k)[2]) do od; k",
+        "    end:",
+        "seq(a(n), n=1..45);  # _Alois P. Heinz_, Mar 08 2019"
+    ],
+    "mathematica": [
+        "Select[Range[1000],#==1||Union[PrimePi/@First/@FactorInteger[#]]==Union[Last/@FactorInteger[#]]&] (* _Gus Wiseman_, Apr 02 2019 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = {my(f = factor(n), p = f[,1], e = vecsort(f[,2])); for(i=1, #p, if(primepi(p[i]) != e[i], return(0))); 1}; \\\\ _Amiram Eldar_, Jul 30 2022"
+    ],
+    "xref": [
+        "Subsequence of A130091.",
+        "Cf. A076954, A106177, A108352, A108371, A109298, A109301, A056239, A112798, A114640, A118914.",
+        "Cf. A324524, A324525, A324571, A325127, A325128, A325130, A325131."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jon Awbrey_, Jul 08 2005",
+    "ext": [
+        "More terms from _Franklin T. Adams-Watters_, Dec 19 2005",
+        "Offset set to 1 by _Alois P. Heinz_, Mar 08 2019"
+    ],
+    "references": 24,
+    "revision": 30,
+    "time": "2022-08-07T07:53:09-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

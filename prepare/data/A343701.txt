@@ -1,0 +1,49 @@
+{
+    "number": 343701,
+    "data": "347,743,15581,42451,51581,54421,58151,58511,81551,112583,115823,118253,121853,122443,123581,125183,125813,128153,128351,132851,135281,138251,144223,152183,152381,153281,158231,181253,181523,185123,211583,214243,215183,215381,218513,218531,223441,235181,235811,238151,242413",
+    "name": "Prime numbers such that the product of their digits equals twice the number of their digits times the sum of their digits.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A343701/b343701.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "347 is a 3-digit prime number. The product of its digits is 84. The sum of its digits is 14. As 84 = 2*3*14, this number is in the sequence."
+    ],
+    "maple": [
+        "q:= n-> (l-> mul(i,i=l)=2*nops(l)*add(i,i=l))(convert(n, base, 10)):",
+        "select(q, [ithprime(j)$j=1..100000])[];  # _Alois P. Heinz_, May 30 2021"
+    ],
+    "mathematica": [
+        "Select[Range[1000000], PrimeQ[#] && Times@@IntegerDigits[#] == 2 Length[IntegerDigits[#]] Total[IntegerDigits[#]] &]",
+        "Select[Prime[Range[22000]],Times@@IntegerDigits[#]==2(IntegerLength[#]Total[ IntegerDigits[ #]])&] (* _Harvey P. Dale_, Jun 30 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from math import prod",
+        "from sympy import isprime",
+        "from sympy.utilities.iterables import multiset_permutations as mp",
+        "from itertools import count, islice, combinations_with_replacement as mc",
+        "def c(s):",
+        "    d = list(map(int, s))",
+        "    return prod(d) == 2*len(d)*sum(d)",
+        "def agen():",
+        "    for d in count(2):",
+        "        okset = set()",
+        "        for cand in (\"\".join(m) for m in mc(\"987654321\", d)):",
+        "            if c(cand):",
+        "                for p in mp(cand, d):",
+        "                    t = int(\"\".join(p))",
+        "                    if isprime(t): okset.add(t)",
+        "        yield from sorted(okset)",
+        "print(list(islice(agen(), 41))) # _Michael S. Branicky_, Nov 30 2022"
+    ],
+    "xref": [
+        "Cf. A064155."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, May 26 2021",
+    "references": 1,
+    "revision": 17,
+    "time": "2023-06-30T16:32:23-04:00",
+    "created": "2021-05-30T16:43:01-04:00"
+}

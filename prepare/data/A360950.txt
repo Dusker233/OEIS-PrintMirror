@@ -1,0 +1,41 @@
+{
+    "number": 360950,
+    "data": "1,2,12,108,1240,16932,264740,4631320,89270316,1875586380,42610756408,1040307155304,27157913296228,754950111249488,22267948484559720,694746226969477744,22863695087986373968,791675941860401322852,28776089467457429038620,1095679176790207081120360",
+    "name": "Expansion of g.f. A(x) satisfying A(x) = Sum_{n>=0} d^n/dx^n x^(2*n) * A(x)^n / n!.",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A360950/b360950.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n satisfies:",
+        "(1) A(x) = Sum_{n>=0} d^n/dx^n x^(2*n) * A(x)^n / n!.",
+        "(2) A(x) = d/dx Series_Reversion(x - x^2*A(x)).",
+        "(3) B(x - x^2*A(x)) = x where B(x) = x * exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(2*n-1) * A(x)^n / n! ) is the g.f. of A229619.",
+        "(4) a(n) = (n+1) * A229619(n+1) for n >= 0.",
+        "a(n) ~ c * n! * n^alfa / LambertW(1)^n, where alfa = 3*LambertW(1) + 1/(1 + LambertW(1)) = 2.33953361459... and c = 0.1926079501120681239... - _Vaclav Kotesovec_, Feb 27 2023"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 12*x^2 + 108*x^3 + 1240*x^4 + 16932*x^5 + 264740*x^6 + 4631320*x^7 + 89270316*x^8 + 1875586380*x^9 + ...",
+        "where",
+        "A(x) = 1 + (d/dx x^2*A(x)) + (d^2/dx^2 x^4*A(x)^2)/2! + (d^3/dx^3 x^6*A(x)^3)/3! + (d^4/dx^4 x^8*A(x)^4)/4! + (d^5/dx^5 x^10*A(x)^5)/5! + (d^6/dx^6 x^12*A(x)^6)/6! + ... + (d^n/dx^n x^(2*n)*A(x)^n)/n! + ...",
+        "Related series.",
+        "Let B(x) = Series_Reversion(x - x^2*A(x)), which begins",
+        "B(x) = x + x^2 + 4*x^3 + 27*x^4 + 248*x^5 + 2822*x^6 + 37820*x^7 + 578915*x^8 + 9918924*x^9 + 187558638*x^10 + ... + A229619(n)*x^n + ...",
+        "then A(x) = B'(x) and",
+        "B(x) = x * exp( x*A(x) + (d/dx x^3*A(x)^2)/2! + (d^2/dx^2 x^5*A(x)^3)/3! + (d^3/dx^3 x^7*A(x)^4)/4! + (d^4/dx^4 x^9*A(x)^5)/5! + (d^5/dx^5 x^11*A(x)^6)/6! + ... + (d^(n-1)/dx^(n-1) x^(2*n-1)*A(x)^n)/n! + ... )."
+    ],
+    "program": [
+        "(PARI) {Dx(n, F) = my(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n) = my(A=1); for(i=1, n, A = sum(m=0, n, Dx(m, x^(2*m)*A^m/m!)) +O(x^(n+1))); polcoeff(A, n)}",
+        "for(n=0, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A229619, A356848, A088714, A303063."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Feb 26 2023",
+    "references": 12,
+    "revision": 17,
+    "time": "2023-02-27T05:19:24-05:00",
+    "created": "2023-02-27T02:30:54-05:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 339736,
+    "data": "1,2,4,6,10,12,18,28,36,40,42,66,82,88,100,102,150,180,210,226,228,256,262,268,270,408,420,456,540,732,738,808,810,906,910,1030,1032,1090,1092,1380,1458,1480,1620,1876,1888,2212,3270,3300,3528,4000,4132,4138,4152,4156,4158,4512,4950,5208,5652,5688,6300",
+    "name": "Numbers which, in every base B, either have a digit 0, do not have a digit B-1, or only have one digit.",
+    "comment": [
+        "Without the digit 0 requirement, every number greater than one could be represented in base 2 with more than one digit and would contain the digit 1. Without the single-digit requirement, every number m greater than zero could be represented as \"m\" in base m+1.",
+        "From _Alex Stefanov_, Sep 13 2021: (Start)",
+        "The sequence appears to be infinite. Every term other than a(1)=1 is even because every odd number 2k+1 can be represented as \"1k\" in base k+1 (for k>0).",
+        "Every term is 1 less than a prime number because, for all numbers m, if m+1 is not prime then, in base b = largest divisor of m+1, m is a two digit number ending in b-1 (since m+1 is a two digit number ending in 0), thus proving m is not in the sequence. (End)"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A339736/b339736.txt\">Table of n, a(n) for n = 1..456</a>"
+    ],
+    "example": [
+        "3 is \"11\" in base 2 so it's not in the sequence.",
+        "4 is either \"100\" in base 2 (contains a 0), \"11\" in base 3 (doesn't contain a 2), \"10\" in base 4 (contains a 0) or \"4\" in base 5 and higher (has only one digit), so it's in the sequence.",
+        "5 is \"12\" in base 3 so it's not in the sequence.",
+        "45 is \"231\" in base 4 so it's not in the sequence."
+    ],
+    "mathematica": [
+        "Select[Range@6300,(k=2;While[FreeQ[l=IntegerDigits[#,k],k-1]||MemberQ[l,0]||Length@l==1&&k<#,k++];k-1==#)&] (* _Giorgos Kalogeropoulos_, Sep 13 2021 *)"
+    ],
+    "program": [
+        "(Haskell) convertToBase b 0 = []; convertToBase b n = convertToBase b (n `div` b) ++ [n `mod` b]; convertToDynamic n = head $ filter (not.(0`elem`)) $ map snd $ filter (\\(b,n) -> (b-1)`elem` n) $ map (\\b -> (b, convertToBase b n)) [2..n+1]; main = print $ concat $ filter ((==1).length) $ map convertToDynamic [1..]",
+        "(PARI) isoknb(n, b) = my(d=digits(n,b)); (#d == 1) || (vecmin(d) == 0) || (vecmax(d) < b-1);",
+        "isok(n) = for (b=2, n-1, if (!isoknb(n, b), return (0))); return (1); \\\\ _Michel Marcus_, Dec 15 2020",
+        "(PARI) bad(n,b)=my(d=Set(digits(n,b))); b-d[#d]==1 && d[1];",
+        "ok(n,L)=for(b=2,L, if(bad(n,b), return(0))); 1;",
+        "list(lim)=my(v=List([1])); forprime(p=3,lim+1, if(ok(p-1,sqrtint(p)+1), listput(v,p-1))); Vec(v) \\\\ _Charles R Greathouse IV_, Sep 17 2021",
+        "(Python)",
+        "from sympy.ntheory.digits import digits",
+        "def okb(n, b):",
+        "    d = digits(n, b)[1:]",
+        "    return (len(d) == 1) or (0 in d) or (b-1 not in d)",
+        "def ok(n):",
+        "    return all(okb(n, b) for b in range(2, n+1))",
+        "print(list(filter(ok, range(1, 6301)))) # _Michael S. Branicky_, Sep 13 2021"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Alex Stefanov_, Dec 14 2020",
+    "references": 1,
+    "revision": 53,
+    "time": "2021-09-17T13:16:39-04:00",
+    "created": "2020-12-25T07:44:39-05:00"
+}

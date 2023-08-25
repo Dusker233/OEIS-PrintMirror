@@ -1,0 +1,66 @@
+{
+    "number": 137591,
+    "data": "1,1,6,54,660,10260,194040,4326840,111177360,3234848400,105135861600,3775206204000,148426878600000,6341634955656000,292576856395824000,14496220038251952000,767691210706291872000,43274547687106768032000,2587028200730649643968000,163484729048197101504960000",
+    "name": "Number of parenthesizings of products formed by n factors assuming nonassociativity and partial commutativity: individual factors commute, but bracketed expressions don't commute with anything.",
+    "comment": [
+        "See the double factorials A001147 for the case when the product is commutative and nonassociative.",
+        "Another interpretation is possible in terms of dendrograms. A001147 gives the number labeled, non-ranked, binary dendrograms, so-called L-NR dendrograms. This sequence gives the number of L-NR dendrograms if the order of objects counts within a dendrogram class.",
+        "See the Murtagh paper cited in A001147 for more on dendrograms. See also Vandev.",
+        "Vandev's formula (1) is our recurrence for this sequence, but it seems that Vandev meant a(n) = Sum_{k=1..n-1} binomial(n-1, k)*a(k)*a(n-k) with a(1)=1, a(2)=1. This recurrence gives the double factorials."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A137591/b137591.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Dimitar L. Vandev, <a href=\"http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.118.4950&amp;rep=rep1&amp;type=pdf\">Random Dendrograms. Statistical Data Analysis</a>, Proceedings SDA-95, SDA-96, pp. 186-196. [Cached copy from citeseerx.ist.psu.edu]"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n-1} binomial(n,k)*a(k)*a(n-k), with a(1)=1, a(2)=1.",
+        "E.g.f.: (1-x)/sqrt(1-4*x+2*x^2). - _Thomas Wieder_, May 02 2009",
+        "a(n) ~ sqrt(2+2*sqrt(2))/2 * n^n * (2+sqrt(2))^n / exp(n). - _Vaclav Kotesovec_, Oct 07 2013"
+    ],
+    "example": [
+        "a(4)=54 because we have",
+        "w(x(yz)), w((yz)x), (x(yz))w, ((yz)x)w,",
+        "w(y(xz)), w((xz)y), (y(xz))w, ((xz)y)w,",
+        "w(z(xy)), w((xy)z), (z(xy))w, ((xy)z)w,",
+        "x(w(yz)), x((yz)w), (w(yz))x, ((yz)w)x,",
+        "x(y(wz)), x((wz)y), (y(wz))x, ((wz)y)x,",
+        "x(z(wy)), x((wy)z), (z(wy))x, ((wy)z)x,",
+        "y(w(xz)), y((xz)w), (w(xz))y, ((xz)w)y,",
+        "y(x(wz)), y((wz)x), (x(wz))y, ((wz)x)y,",
+        "y(z(wx)), y((wx)z), (z(wx))y, ((wx)z)y,",
+        "z(w(xy)), z((xy)w), (w(xy))z, ((xy)w)z,",
+        "z(x(wy)), z((wy)x), (x(wy))z, ((wy)x)z,",
+        "z(y(wx)), z((wx)y), (y(wx))z, ((wx)y)z,",
+        "(wx)(yz), (yz)(wx)",
+        "(wy)(xz), (xz)(wy)",
+        "(wz)(xy), (xy)(wz)",
+        "and 12*4 + 3*2 = 48 + 6 = 54.",
+        "Note that:",
+        "w(x(yz)) is equivalent to w(x(zy)) but not to (x(yz))w or w((yz)x);",
+        "(wx)(yz) is equivalent to (xw)(yz) or (wx)(zy) but not to (yz)(wx)."
+    ],
+    "maple": [
+        "H(1):=1; H(2):=1; for n from 3 to 12 do H(n):=0: for k from 1 to n-1 do H(n):= H(n)+binomial(n,k)*H(k)*H(n-k) od: print(H(n)); od:"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1-x)/Sqrt[1-4*x+2*x^2], {x, 0, 20}], x]* Range[0, 20]! (* _Vaclav Kotesovec_, Oct 07 2013 *)"
+    ],
+    "program": [
+        "(PARI)  x='x+O('x^66); Vec( serlaplace((1-x)/sqrt(1-4*x+2*x^2)) ) \\\\ _Joerg Arndt_, Oct 08 2013",
+        "(GAP) a := [1,1];; for n in [3..10^2] do a[n] := Sum([1..n-1],k->Binomial(n,k)*a[k]*a[n-k]); od; a; # _Muniru A Asiru_, Jan 30 2018"
+    ],
+    "xref": [
+        "Cf. A001147, A137051."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Thomas Wieder_, Jan 28 2008, Feb 07 2008",
+    "ext": [
+        "Added more terms, _Joerg Arndt_, Oct 08 2013",
+        "Name corrected by _Andrey Zabolotskiy_, Mar 06 2018"
+    ],
+    "references": 3,
+    "revision": 45,
+    "time": "2018-12-29T16:28:19-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

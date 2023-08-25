@@ -1,0 +1,68 @@
+{
+    "number": 323450,
+    "data": "1,1,3,6,14,26,56,103,203,374,702,1262,2306,4078,7242,12628,21988,37756,64682,109606,185082,309958,516932,856221,1412461,2316416,3783552",
+    "name": "Number of ways to fill a Young diagram with positive integers summing to n such that all rows and columns are weakly increasing.",
+    "comment": [
+        "A generalized Young tableau of shape y is an array obtained by replacing the dots in the Ferrers diagram of y with positive integers."
+    ],
+    "link": [
+        "nLab, <a href=\"https://ncatlab.org/nlab/show/Young+diagram\">Young Diagram</a>.",
+        "The Unapologetic Mathematician weblog, <a href=\"https://unapologetic.wordpress.com/2011/02/02/generalized-young-tableaux/\">Generalized Young Tableaux</a>."
+    ],
+    "example": [
+        "The a(4) = 14 generalized Young tableaux:",
+        "  4   1 3   2 2   1 1 2   1 1 1 1",
+        ".",
+        "  1   2   1 1   1 2   1 1   1 1 1",
+        "  3   2   2     1     1 1   1",
+        ".",
+        "  1   1 1",
+        "  1   1",
+        "  2   1",
+        ".",
+        "  1",
+        "  1",
+        "  1",
+        "  1",
+        "The a(5) = 26 generalized Young tableaux:",
+        "  5   1 4   2 3   1 1 3   1 2 2   1 1 1 2   1 1 1 1 1",
+        ".",
+        "  1   2   1 1   1 3   1 2   1 1   1 1 1   1 1 2   1 1 1   1 1 1 1",
+        "  4   3   3     1     2     1 2   2       1       1 1     1",
+        ".",
+        "  1   1   1 1   1 2   1 1   1 1 1",
+        "  1   2   1     1     1 1   1",
+        "  3   2   2     1     1     1",
+        ".",
+        "  1   1 1",
+        "  1   1",
+        "  1   1",
+        "  2   1",
+        ".",
+        "  1",
+        "  1",
+        "  1",
+        "  1",
+        "  1"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "facs[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[facs[n/d],Min@@#>=d&]],{d,Rest[Divisors[n]]}]];",
+        "ptnplane[n_]:=Union[Map[primeMS,Join@@Permutations/@facs[n],{2}]];",
+        "Table[Sum[Length[Select[ptnplane[Times@@Prime/@y],And@@(LessEqual@@@Transpose[PadRight[#]/.(0->Infinity)])&]],{y,IntegerPartitions[n]}],{n,10}]"
+    ],
+    "xref": [
+        "Cf. A000085, A000219, A003293, A053529, A114736, A138178, A296188, A299968.",
+        "Cf. A323436, A323437, A323438, A323439, A323451."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jan 16 2019",
+    "ext": [
+        "a(16)-a(26) from _Seiichi Manyama_, Aug 19 2020"
+    ],
+    "references": 5,
+    "revision": 16,
+    "time": "2020-08-19T10:07:49-04:00",
+    "created": "2019-01-17T09:58:01-05:00"
+}

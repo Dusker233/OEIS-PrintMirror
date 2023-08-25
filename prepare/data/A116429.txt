@@ -1,0 +1,28 @@
+{
+    "number": 116429,
+    "data": "1,4,26,181,1095,6416,35285,187929,973404,4934952,24628655,121375817,592337729,2868086641,13798982719,66043675287,314715355786,1494166794434,7071357084444,33374079939405",
+    "name": "The number of n-almost primes less than or equal to 9^n, starting with a(0)=1.",
+    "mathematica": [
+        "AlmostPrimePi[k_Integer, n_] := Module[{a, i}, a[0] = 1; If[k == 1, PrimePi[n], Sum[PrimePi[n/Times @@ Prime[ Array[a, k - 1]]] - a[k - 1] + 1, Evaluate[ Sequence @@ Table[{a[i], a[i - 1], PrimePi[(n/Times @@ Prime[Array[a, i - 1]])^(1/(k - i + 1))]}, {i, k - 1}]] ]]]; (* _Eric W. Weisstein_, Feb 07 2006 *)",
+        "Table[ AlmostPrimePi[n, 9^n], {n, 13}]"
+    ],
+    "program": [
+        "(PARI)",
+        "almost_prime_count(N, k) = if(k==1, return(primepi(N))); (f(m, p, k, j=0) = my(c=0, s=sqrtnint(N\\m, k)); if(k==2, forprime(q=p, s, c += primepi(N\\(m*q))-j; j += 1), forprime(q=p, s, c += f(m*q, q, k-1, j); j += 1)); c); f(1, 2, k);",
+        "a(n) = if(n == 0, 1, almost_prime_count(9^n, n)); \\\\ _Daniel Suteu_, Jul 10 2023"
+    ],
+    "xref": [
+        "Cf. A078840, A078841, A078842, A116432, A078843, A116426, A078844, A116427, A078845, A116428, A116429, A116430, A078846, A116431."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Robert G. Wilson v_, Feb 10 2006",
+    "ext": [
+        "a(14)-a(16) from _Donovan Johnson_, Oct 01 2010",
+        "a(16) corrected and a(17)-a(19) from _Daniel Suteu_, Jul 10 2023"
+    ],
+    "references": 8,
+    "revision": 11,
+    "time": "2023-08-05T22:00:05-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

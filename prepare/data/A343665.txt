@@ -1,0 +1,30 @@
+{
+    "number": 343665,
+    "data": "1,1,2,5,15,51,197,835,3860,19257,102997,586170,3535645,22496437,150454918,1054235150,7718958995,58905868192,467530598983,3851775136517,32881385742460,290387471713872,2649226725182823,24934118754400767,241809265181914545,2413608066257526577",
+    "name": "Number of partitions of an n-set without blocks of size 5.",
+    "formula": [
+        "E.g.f.: exp(exp(x) - 1 - x^5/5!).",
+        "a(n) = n! * Sum_{k=0..floor(n/5)} (-1)^k * Bell(n-5*k) / ((n-5*k)! * k! * (5!)^k)."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      `if`(j=5, 0, a(n-j)*binomial(n-1, j-1)), j=1..n))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Apr 25 2021"
+    ],
+    "mathematica": [
+        "nmax = 25; CoefficientList[Series[Exp[Exp[x] - 1 - x^5/5!], {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[n! Sum[(-1)^k BellB[n - 5 k]/((n - 5 k)! k! (5!)^k), {k, 0, Floor[n/5]}], {n, 0, 25}]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[If[k == 5, 0, Binomial[n - 1, k - 1]  a[n - k]], {k, 1, n}]]; Table[a[n], {n, 0, 25}]"
+    ],
+    "xref": [
+        "Cf. A000110, A000296, A027339, A097514, A124504, A343664, A343666, A343667, A343668, A343669."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 25 2021",
+    "references": 7,
+    "revision": 7,
+    "time": "2021-04-25T20:07:38-04:00",
+    "created": "2021-04-25T20:07:38-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 26526,
+    "data": "1,2,9,32,130,516,2107,8632,35703,148390,619850,2598960,10933507,46124274,195055005,826617216,3509650697,14926011714,63572290247,271125967840,1157705297385,4948808238110,21175676836110,90692557152240,388751132082600,1667665994149376,7159105163384127,30753762496639504",
+    "name": "a(n) = T(2n,n-1), T given by A026519.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A026526/b026526.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A026519(2*n, n-1).",
+        "a(n) = A026536(2*n, n-1)."
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[k<0 || k>2*n, 0, If[k==0 || k==2*n, 1, If[k==1 || k==2*n-1, Floor[(n+1)/2], If[EvenQ[n], T[n-1, k-2] + T[n-1, k], T[n-1, k-1] + T[n-1, k-2] + T[n-1, k] ]]]]; (* T = A026519 *)",
+        "a[n_] := a[n] = Block[{$RecursionLimit = Infinity}, T[2*n, n-1] ];",
+        "Table[a[n], {n,40}] (* _G. C. Greubel_, Dec 20 2021 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n,k): # T = A026519",
+        "    if (k<0 or k>2*n): return 0",
+        "    elif (k==0 or k==2*n): return 1",
+        "    elif (k==1 or k==2*n-1): return (n+1)//2",
+        "    elif (n%2==0): return T(n-1, k) + T(n-1, k-2)",
+        "    else: return T(n-1, k) + T(n-1, k-1) + T(n-1, k-2)",
+        "[T(2*n,n-1) for n in (1..40)] # _G. C. Greubel_, Dec 20 2021"
+    ],
+    "xref": [
+        "Cf. A026519, A026520, A026521, A026522, A026523, A026524, A026525, A026527, A026528, A026529, A026530, A026531, A026533, A026534, A027262, A027263, A027264, A027265, A027266.",
+        "Cf. A026536."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Terms a(20) onward added by _G. C. Greubel_, Dec 20 2021"
+    ],
+    "references": 21,
+    "revision": 10,
+    "time": "2021-12-21T02:34:14-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

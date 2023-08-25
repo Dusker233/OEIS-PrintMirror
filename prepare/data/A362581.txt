@@ -1,0 +1,45 @@
+{
+    "number": 362581,
+    "data": "1,2,6,80,1750,64512,3438204,253913088,24687555750,3062092267520,471565937953396,88298062293762048,19753693667117055100,5203824518733863321600,1594426273578194363292600,562191171748426920367226880,226024705816530632892282399750",
+    "name": "Number of alternating permutations on [2n+1] with 1 in position n+1.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A362581/b362581.txt\">Table of n, a(n) for n = 0..242</a>"
+    ],
+    "formula": [
+        "a(n) = binomial(2*n,n)*A000111(n)^2:",
+        "a(n) = A104345(2*n,n)."
+    ],
+    "example": [
+        "a(0) = 1: 1.",
+        "a(1) = 2: 213, 312.",
+        "a(2) = 6: 23154, 24153, 25143, 34152, 35142, 45132."
+    ],
+    "maple": [
+        "b:= proc(u, o) option remember; `if`(u+o=0, 1,",
+        "      add(b(o-1+j, u-j), j=1..u))",
+        "    end:",
+        "a:= n-> binomial(2*n, n)*b(n, 0)^2:",
+        "seq(a(n), n=0..20);"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import accumulate",
+        "from math import comb",
+        "def A362581(n):",
+        "    if n <= 1: return n+1",
+        "    blist = (0,1)",
+        "    for _ in range(n-1):",
+        "        blist = tuple(accumulate(reversed(blist),initial=0))",
+        "    return blist[-1]**2*comb(n<<1,n) # _Chai Wah Wu_, Apr 25 2023"
+    ],
+    "xref": [
+        "Cf. A000111, A104345."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Apr 25 2023",
+    "references": 2,
+    "revision": 17,
+    "time": "2023-04-26T07:46:07-04:00",
+    "created": "2023-04-25T16:42:05-04:00"
+}

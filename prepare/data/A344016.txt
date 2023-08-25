@@ -1,0 +1,46 @@
+{
+    "number": 344016,
+    "data": "2,16,32,45,60,79,91,105,120,136,154,165,180,197,211,225,240,256,272,285,300,318,331,345,360,376,393,405,420,437,451,465,480,496,512,525,540,564,571,585,600,616,635,645,660,677,691,705,720,736,752,765,780,798,811,825,840,856",
+    "name": "2-adic valuation of coefficients of expansion of the operator T_3 applied to j^-1, the inverse of the Klein j-invariant, with respect to powers of j^-1.",
+    "comment": [
+        "Jan Vonk observed that a(n) ~ 15*n. - _Robin Visser_, Jul 30 2023"
+    ],
+    "link": [
+        "Robin Visser, <a href=\"/A344016/b344016.txt\">Table of n, a(n) for n = 1..250</a>",
+        "Jan Vonk, <a href=\"https://doi.org/10.1090/bull/1700\">Overconvergent modular forms and their explicit arithmetic</a>, Bulletin of the American Mathematical Society 58.3 (2021): 313-356."
+    ],
+    "example": [
+        "From _Robin Visser_, Jul 30 2023: (Start)",
+        "An expansion for T_3 j^_1 in terms of powers of j^-1 is given by T_3 j^-1 = 356652*j^-1 - 16114360320000*j^-2 + 1298216343568384000000/3*j^-3 - ....",
+        "The first coefficient factors as 356652 = 2^2 * 3^2 * 9907, so a(1) = 2.",
+        "The second coefficient factors as -16114360320000 = -2^16 * 3^5 * 5^4 * 1619, so a(2) = 16.",
+        "The third coefficient factors as 1298216343568384000000/3 = 2^32 * 3^-1 * 5^6 * 19344931, so a(3) = 32. (End)"
+    ],
+    "program": [
+        "(Sage)",
+        "def a(n):",
+        "    j1 = sum([1]+[240*sigma(k,3)*x^k for k in range(1, 3*n)])",
+        "    j2 = product([x]+[(1-x^k)^24 for k in range(1, 3*n)])",
+        "    jinv = (j2/j1^3).taylor(x, 0, 3*n)",
+        "    T3jinv = sum([jinv.coefficient(x^(3*k))*x^k for k in range(n+1)]+",
+        "                 [jinv.coefficient(x^k)*x^(3*k)/3 for k in range(n)])",
+        "    for k in range(1, n):",
+        "        c = T3jinv.taylor(x, 0, k).coefficient(x^k)",
+        "        T3jinv -= c*(jinv^k)",
+        "    coeff = T3jinv.taylor(x, 0, n).coefficient(x^n)",
+        "    return Rational(coeff).valuation(2)  # _Robin Visser_, Jul 30 2023"
+    ],
+    "xref": [
+        "Cf. A000521, A344014, A344015, A344017."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Jun 17 2021",
+    "ext": [
+        "More terms from _Robin Visser_, Jul 30 2023"
+    ],
+    "references": 4,
+    "revision": 21,
+    "time": "2023-07-31T02:51:53-04:00",
+    "created": "2021-06-17T15:34:58-04:00"
+}

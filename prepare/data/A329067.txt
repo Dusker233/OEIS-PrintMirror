@@ -1,0 +1,32 @@
+{
+    "number": 329067,
+    "data": "1,20,2100,423440,117234740,36938855520,12321942357648,4240628338620960,1489773976776270900,531369088429408040240,191788135117910898767200,69889981814391283195249872,25671987914195551303751107472,9493180954173722971961114187200",
+    "name": "Constant term in the expansion of ((x^5 + x^3 + x + 1/x + 1/x^3 + 1/x^5)*(y^5 + y^3 + y + 1/y + 1/y^3 + 1/y^5) - (x^3 + x + 1/x + 1/x^3)*(y^3 + y + 1/y + 1/y^3))^(2*n).",
+    "comment": [
+        "Also number of (2*n)-step closed paths (from origin to origin) in 2-dimensional lattice, using steps (t_1,t_2) (|t_1| + |t_2| = 5)."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A329067/b329067.txt\">Table of n, a(n) for n = 0..300</a> (terms 0..100 from Vaclav Kotesovec)",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Taxicab_geometry\">Taxicab geometry</a>."
+    ],
+    "formula": [
+        "Conjecture: a(n) ~ 400^n / (17*Pi*n). - _Vaclav Kotesovec_, Nov 04 2019"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoef(polcoef(((x^5+x^3+x+1/x+1/x^3+1/x^5)*(y^5+y^3+y+1/y+1/y^3+1/y^5)-(x^3+x+1/x+1/x^3)*(y^3+y+1/y+1/y^3))^(2*n), 0), 0)}",
+        "(PARI) {a(n) = polcoef(polcoef((sum(k=0, 5, (x^k+1/x^k)*(y^(5-k)+1/y^(5-k)))-x^5-1/x^5-y^5-1/y^5)^(2*n), 0), 0)}",
+        "(PARI) f(n) = (x^(2*n+2)-1/x^(2*n+2))/(x-1/x);",
+        "a(n) = sum(k=0, 2*n, (-1)^k*binomial(2*n, k)*polcoef(f(2)^k*f(1)^(2*n-k), 0)^2)"
+    ],
+    "xref": [
+        "Row n=2 of A329066.",
+        "Cf. A094061, A329075."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Seiichi Manyama_, Nov 03 2019",
+    "references": 5,
+    "revision": 33,
+    "time": "2019-11-05T14:07:47-05:00",
+    "created": "2019-11-04T05:43:27-05:00"
+}

@@ -1,0 +1,32 @@
+{
+    "number": 341206,
+    "data": "1,9,45,165,495,1287,3003,6435,12870,24301,43686,75249,124809,200115,311157,470415,693000,996633,1401436,1929465,2603979,3448440,4485267,5734395,7211718,8927523,10885050,13079257,15496065,18112050,20894757,23803659,26791749,29807697,32798448",
+    "name": "Number of ways to write n as an ordered sum of 9 nonzero decimal palindromes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A341206/b341206.txt\">Table of n, a(n) for n = 9..10000</a>"
+    ],
+    "maple": [
+        "p:= proc(n) option remember; local i, s; s:= \"\"||n;",
+        "      for i to iquo(length(s), 2) do if",
+        "        s[i]<>s[-i] then return false fi od; true",
+        "    end:",
+        "b:= proc(n, t) option remember; `if`(n=0, `if`(t=0, 1, 0),",
+        "      `if`(t<1, 0, add(`if`(p(j), b(n-j, t-1), 0), j=1..n)))",
+        "    end:",
+        "a:= n-> b(n, 9):",
+        "seq(a(n), n=9..43);  # _Alois P. Heinz_, Feb 07 2021"
+    ],
+    "mathematica": [
+        "nmax = 43; CoefficientList[Series[Sum[Boole[PalindromeQ[k]] x^k, {k, 1, nmax}]^9, {x, 0, nmax}], x] // Drop[#, 9] &"
+    ],
+    "xref": [
+        "Cf. A002113, A136522, A319474, A341167, A341184, A341191, A341192, A341193, A341203, A341204, A341205, A341207."
+    ],
+    "keyword": "nonn,base",
+    "offset": "9,2",
+    "author": "_Ilya Gutkovskiy_, Feb 06 2021",
+    "references": 6,
+    "revision": 10,
+    "time": "2021-02-07T13:14:12-05:00",
+    "created": "2021-02-07T07:06:21-05:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 354463,
+    "data": "0,0,0,1,3,7,14,31,63,126,253,509,1021,2045,4094,8189,16380,32763,65531,131067,262140,524285,1048571,2097146,4194297,8388603,16777208,33554424,67108858,134217720,268435446,536870902,1073741816,2147483642,4294967289,8589934584,17179869176,34359738358,68719476729",
+    "name": "a(n) is the number of trailing zeros in (2^n)!.",
+    "link": [
+        "William Boyles, <a href=\"/A354463/b354463.txt\">Table of n, a(n) for n = 0..650</a>"
+    ],
+    "formula": [
+        "a(n) = A027868(A000079(n)). - _Michel Marcus_, Jun 01 2022",
+        "a(n) = 2^(n-2) - A055223(n) for n >= 2. - _John Keith_, Jun 06 2022"
+    ],
+    "example": [
+        "For n = 4, (2^4)! = 20922789888000, which has a(4) = 3 trailing zeros."
+    ],
+    "mathematica": [
+        "a[n_]:=IntegerExponent[(2^n)!]; Array[a,38,0] (* _Stefano Spezia_, Jun 01 2022 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "seq n = aux (2 ^ n) 0",
+        "  where",
+        "    aux x acc",
+        "      | x < 5 = acc",
+        "      | otherwise = aux y (acc + y)",
+        "      where",
+        "        y = x `div` 5",
+        "(PARI) a(n) = val(1<<n, 5)",
+        "val(n, p) = my(r=0); while(n, r+=n\\=p); r \\\\ _David A. Corneth_, Jun 01 2022",
+        "(Python)",
+        "from sympy import factorial, multiplicity",
+        "def a(n): return multiplicity(5, factorial(2**n, evaluate=False))",
+        "print([a(n) for n in range(39)]) # _Michael S. Branicky_, Jun 01 2022",
+        "(Python)",
+        "def A354463(n):",
+        "    c, m = 0, 2**n",
+        "    while m >= 5:",
+        "        m //= 5",
+        "        c += m",
+        "    return c # _Chai Wah Wu_, Jun 02 2022"
+    ],
+    "xref": [
+        "Cf. A000079, A027868."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "0,5",
+    "author": "_William Boyles_, May 31 2022",
+    "references": 1,
+    "revision": 32,
+    "time": "2022-06-25T21:44:36-04:00",
+    "created": "2022-06-02T10:10:35-04:00"
+}

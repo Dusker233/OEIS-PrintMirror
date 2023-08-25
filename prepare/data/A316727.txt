@@ -1,0 +1,47 @@
+{
+    "number": 316727,
+    "data": "1,1,5,87,3337,223333,23068057,3403720071,679894572497,176710079709345,57967294285022281,23427042148948682599,11437832700333350250001,6637473822604173137681381,4515971399162518697397538173,3560540787622773257563653593551",
+    "name": "Number of permutations of {0,1,...,2n} with first element n whose sequence of ascents and descents forms a Dyck path.",
+    "comment": [
+        "All terms are odd."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A316727/b316727.txt\">Table of n, a(n) for n = 0..225</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "formula": [
+        "a(n) = A316728(n,n).",
+        "a(n) ~ c * 4^n * (n!)^2 / n^2, where c = 0.47441051698109564449415497840875665319801746745142596395217012466627... - _Vaclav Kotesovec_, Jul 15 2018"
+    ],
+    "example": [
+        "a(0) = 1: 0.",
+        "a(1) = 1: 120.",
+        "a(2) = 5: 23041, 23140, 23410, 24031, 24130.",
+        "a(3) = 87: 3401652, 3402165, 3402651, 3405162, ..., 3625041, 3625140, 3645021, 3645120."
+    ],
+    "maple": [
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, 1,",
+        "      `if`(t>0,   add(b(u-j, o+j-1, t-1), j=1..u), 0)+",
+        "      `if`(o+u>t, add(b(u+j-1, o-j, t+1), j=1..o), 0))",
+        "    end:",
+        "a:= n-> b(n$2, 0):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "b[u_, o_, t_] := b[u, o, t] = If[u + o == 0, 1,",
+        "    If[t > 0, Sum[b[u - j, o + j - 1, t - 1], {j, 1, u}], 0] +",
+        "    If[o + u > t, Sum[b[u + j - 1, o - j, t + 1], {j, 1, o}], 0]];",
+        "a[n_] := b[n, n, 0];",
+        "a /@ Range[0, 20] (* _Jean-Fran\u00e7ois Alcover_, Jan 03 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A303285, A316728."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 11 2018",
+    "references": 3,
+    "revision": 16,
+    "time": "2021-01-03T06:39:52-05:00",
+    "created": "2018-07-11T18:18:13-04:00"
+}

@@ -1,0 +1,28 @@
+{
+    "number": 349515,
+    "data": "1,5,35,320,3415,39805,490660,6288120,82935615,1118324655,15346920635,213637539620,3009391426340,42817011909180,614411343795960,8881874095390320,129224763346019215,1890813939312392755,27805864640943573385,410748152876389349720",
+    "name": "G.f. A(x) satisfies: A(x) = (1 + x * A(x)^3) / (1 - 4 * x).",
+    "formula": [
+        "a(0) = 1; a(n) = 4 * a(n-1) + Sum_{i=0..n-1} Sum_{j=0..n-i-1} a(i) * a(j) * a(n-i-j-1).",
+        "a(n) = Sum_{k=0..n} binomial(n+2*k,3*k) * binomial(3*k,k) * 4^(n-k) / (2*k+1).",
+        "a(n) ~ 2^(4*n + 1/2) / (sqrt(3*Pi) * n^(3/2)). - _Vaclav Kotesovec_, Nov 21 2021"
+    ],
+    "mathematica": [
+        "nmax = 19; A[_] = 0; Do[A[x_] = (1 + x A[x]^3)/(1 - 4 x) + O[x]^(nmax + 1) // Normal, nmax + 1]; CoefficientList[A[x], x]",
+        "a[0] = 1; a[n_] := a[n] = 4 a[n - 1] + Sum[Sum[a[i] a[j] a[n - i - j - 1], {j, 0, n - i - 1}], {i, 0, n - 1}]; Table[a[n], {n, 0, 19}]",
+        "Table[Sum[Binomial[n + 2 k, 3 k] Binomial[3 k, k] 4^(n - k)/(2 k + 1), {k, 0, n}], {n, 0, 19}]"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=0, n, binomial(n+2*k,3*k) * binomial(3*k,k) * 4^(n-k) / (2*k+1)) \\\\ _Andrew Howroyd_, Nov 20 2021"
+    ],
+    "xref": [
+        "Cf. A001764, A082301, A346626, A348793, A349514."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Nov 20 2021",
+    "references": 1,
+    "revision": 8,
+    "time": "2021-11-21T04:21:01-05:00",
+    "created": "2021-11-20T20:58:18-05:00"
+}

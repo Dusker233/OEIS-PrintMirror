@@ -1,0 +1,73 @@
+{
+    "number": 333197,
+    "data": "1,4,6,8,10,12,14,16,20,22,24,28,32,38,40,44,46,48,58,62,74,80,82,88,96,106,148,158,164,166,178,194,212,226,262,278,314,316,332,346,358,382,388,398,422,458,466,478,502,524,542,556,562,586,614,632,662,674",
+    "name": "Nonprime numbers k such that each nonprime divisor of k is 1 away from a prime number.",
+    "comment": [
+        "Let {d(i), i = 1..q} the set of the q nonprime divisors of a number m. The sequence lists the nonprime numbers such that |d(i) - p(i)| = 1 for all i, where p(i) is prime.",
+        "Conjecture: except for a(n) = 4, 8, 16 and 32, a(n) is of the form 2^i*p^j with p = 3, 5, 7, 11, 19, 23, 29, 31, ... ({A120628} minus {2}).",
+        "Consequence: 2 * A120628(k) is in the sequence for k >= 1.",
+        "From _Robert Israel_, Apr 12 2020: (Start)",
+        "Note that all nonprime divisors of a member of the sequence must be 1 or even.  Thus a member of the sequence can have at most one odd prime divisor, i.e. it is a power of 2 or 2^i*p where p is an odd prime. In the latter case, since 2*p is a nonprime divisor, p must be in A120628. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A333197/b333197.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "48 is in the sequence because the nonprime divisors of 48 are  {1, 4, 6, 8, 12, 16, 24, 48} and:",
+        "|1 - 2| = 1,",
+        "|4 - 5| = 1 (or |4 - 3| = 1),",
+        "|6 - 7| = 1 (or |6 - 5| = 1,",
+        "|8 - 7|  = 1,",
+        "|12 - 13| = 1 (or |12 - 11| = 1),",
+        "|16 - 17| = 1,",
+        "|24 - 23| = 1,",
+        "|48 - 47| = 1."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "for n from 1 to 50 do:",
+        "if type(n,prime)=false",
+        "  then",
+        "d:=divisors(n):n0:=nops(d):it:=0:",
+        "  for k from 1 to n0 do :",
+        "   if nextprime(d[k])- d[k]= 1",
+        "      or",
+        "      d[k] - prevprime(d[k])= 1",
+        "      or",
+        "      isprime(d[k])",
+        "       then",
+        "       it:=it+1:",
+        "       eles",
+        "    fi:",
+        "   od:",
+        "   if it=n0",
+        "   then",
+        "   printf(`%d, `,n):",
+        "     else fi:",
+        "  fi:",
+        "od:",
+        "# Alternative:",
+        "N:= 1000: # for terms <= N",
+        "P,NP:= selectremove(isprime, [$1..N]):",
+        "P:= convert(P,set):",
+        "P1:= P union map(`+`,P,1) union map(`-`,P,1):",
+        "filter:= proc(n) numtheory:-divisors(n) subset P1 end proc:",
+        "select(filter, NP); # _Robert Israel_, Apr 12 2020"
+    ],
+    "mathematica": [
+        "seqQ[n_] := !PrimeQ[n] &&  AllTrue[Divisors[n], AnyTrue[# + {-1,0,1}, PrimeQ] &]; Select[Range[700], seqQ] (* _Amiram Eldar_, Mar 11 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = !isprime(m) && (sumdiv(m, d, !isprime(d) && (isprime(d+1) || ((d>1) && isprime(d-1)))) == sumdiv(m, d, !isprime(d))); \\\\ _Michel Marcus_, Mar 11 2020"
+    ],
+    "xref": [
+        "Cf. A002808, A018252, A120628, A334026."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Lagneau_, Mar 11 2020",
+    "references": 2,
+    "revision": 20,
+    "time": "2020-04-13T07:13:48-04:00",
+    "created": "2020-04-10T16:00:36-04:00"
+}

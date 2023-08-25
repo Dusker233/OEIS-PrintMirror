@@ -1,0 +1,30 @@
+{
+    "number": 343666,
+    "data": "1,1,2,5,15,52,202,870,4084,20727,112825,654546,4026487,26145511,178550986,1278168860,9564026947,74615547996,605593775899,5103054929621,44564754448972,402677613100491,3759094788129312,36205919126040190,359340174509911325,3670825700549853053",
+    "name": "Number of partitions of an n-set without blocks of size 6.",
+    "formula": [
+        "E.g.f.: exp(exp(x) - 1 - x^6/6!).",
+        "a(n) = n! * Sum_{k=0..floor(n/6)} (-1)^k * Bell(n-6*k) / ((n-6*k)! * k! * (6!)^k)."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      `if`(j=6, 0, a(n-j)*binomial(n-1, j-1)), j=1..n))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Apr 25 2021"
+    ],
+    "mathematica": [
+        "nmax = 25; CoefficientList[Series[Exp[Exp[x] - 1 - x^6/6!], {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[n! Sum[(-1)^k BellB[n - 6 k]/((n - 6 k)! k! (6!)^k), {k, 0, Floor[n/6]}], {n, 0, 25}]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[If[k == 6, 0, Binomial[n - 1, k - 1]  a[n - k]], {k, 1, n}]]; Table[a[n], {n, 0, 25}]"
+    ],
+    "xref": [
+        "Cf. A000110, A000296, A027340, A097514, A124504, A343664, A343665, A343667, A343668, A343669."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 25 2021",
+    "references": 7,
+    "revision": 7,
+    "time": "2021-04-25T20:07:47-04:00",
+    "created": "2021-04-25T20:07:47-04:00"
+}

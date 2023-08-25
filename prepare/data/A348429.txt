@@ -1,0 +1,55 @@
+{
+    "number": 348429,
+    "data": "1,4,8,9,121,343,484,1331,10201,12321,14641,40804,44944,1002001,1030301,1234321,1367631,4008004,100020001,102030201,104060401,121242121,123454321,125686521,400080004,404090404,1003003001,10000200001,10221412201,12102420121,12345654321,40000800004",
+    "name": "Perfect powers m^k, m >= 1, k >= 2 such that m and m^k both are palindromes.",
+    "comment": [
+        "Complement of A348319 relative to the positive perfect powers A001597.",
+        "This sequence is infinite since each square (10^m+1)^2 is a term for m >= 0 and A033934 is a subsequence.",
+        "Observation: terms always contain an odd number of digits.",
+        "For k = 2, subsequence of palindromes whose square root is a palindrome is A057136 (see A057135).",
+        "For k = 3, except for 2201^3 = 10662526601, all known palindromic cubes have a palindromic rootnumber (see A002780 and A002781).",
+        "For k = 4, all known integers whose fourth power is a palindrome are also palindromes (see A056810 and subsequence A186080).",
+        "For k >= 5, G. J. Simmons conjectured there are no palindromes of the form m^k for k >= 5 and m > 1 (see Simmons link p. 98); according to this conjecture, all the terms are of the form (palindrome)^k, with 2 <= k <= 4."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A348429/b348429.txt\">Table of n, a(n) for n = 1..1024</a> (all terms with <= 40 digits)",
+        "Michael S. Branicky, <a href=\"/A348429/a348429.txt\">Python program</a>",
+        "Gustavus J. Simmons, <a href=\"/A002778/a002778_2.pdf\">Palindromic Powers</a>, J. Rec. Math., Vol. 3, No. 2 (1970), pp. 93-98 [Annotated scanned copy]."
+    ],
+    "example": [
+        "First few terms are equal to 1, 2^2, 2^3, 3^2, 11^2, 7^3, 22^2, 11^3, 101^2, 111^2, 11^4 = 121^2, 202^2, 212^2, 1001^2, 101^3, 1111^2, 111^3."
+    ],
+    "mathematica": [
+        "Block[{n = 10^6, nn, s}, s = Select[Range[2, n], PalindromeQ]; nn = Max[s]^2; {1}~Join~Union@ Reap[Table[Do[If[PalindromeQ[m^k], Sow[m^k]], {k, 2, Log[m, nn]}], {m, s}]][[-1, -1]]] (* _Michael De Vlieger_, Oct 18 2021 *)"
+    ],
+    "program": [
+        "(Python) # see link for faster version",
+        "def ispal(n): s = str(n); return s == s[::-1]",
+        "def aupto(limit):",
+        "    aset, m, mm = {1}, 2, 4",
+        "    while mm <= limit:",
+        "        if ispal(m):",
+        "            mk = mm",
+        "            while mk <= limit:",
+        "                if ispal(mk): aset.add(mk)",
+        "                mk *= m",
+        "        mm += 2*m + 1",
+        "        m += 1",
+        "    return sorted(aset)",
+        "print(aupto(10**11)) # _Michael S. Branicky_, Oct 18 2021",
+        "(PARI) ispal(x) = my(d=digits(x)); d == Vecrev(d); \\\\ A002113",
+        "isok(m) = if (m==1, return (1)); my(p); ispal(m) && ispower(m, , &p) && ispal(p); \\\\ _Michel Marcus_, Oct 19 2021",
+        "(PARI) ispal(x) = my(d=digits(x)); d == Vecrev(d); \\\\ A002113",
+        "lista(nn) = {my(list = List(1)); for (k=2, sqrtint(nn), if (ispal(k), my(q = k^2); until (q > nn, if (ispal(q), listput(list, q)); q *= k;););); vecsort(list,,8);} \\\\ _Michel Marcus_, Oct 20 2021"
+    ],
+    "xref": [
+        "Cf. A001597, A002113, A033934, A056810, A186080, A348319, A348320."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Bernard Schott_, Oct 18 2021",
+    "references": 1,
+    "revision": 41,
+    "time": "2021-10-21T10:40:58-04:00",
+    "created": "2021-10-21T01:35:28-04:00"
+}

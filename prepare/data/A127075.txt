@@ -1,0 +1,34 @@
+{
+    "number": 127075,
+    "data": "1,2,5,11,25,67,178,287,863,2092,5612,6871,22885,53613,69597,223822,385931,802877,2308019,5936156,12937623,29456690,81587807,166703456,437728341,973247233,2233938123,4919445412,13784085189,14842425156",
+    "name": "a(1)=1. a(n) = a(n-1) + (sum of the earlier terms {among terms a(1) through a(n-1)} which are coprime to n).",
+    "link": [
+        "Robert Israel, <a href=\"/A127075/b127075.txt\">Table of n, a(n) for n = 1..3121</a>"
+    ],
+    "example": [
+        "The terms of the sequence, among terms a(1) through a(5), which are coprime to 6 are a(1)=1, a(3)=5, a(4)=11 and a(5)=25. So a(6) = a(5) +1 +5 +11 +25 = 67."
+    ],
+    "maple": [
+        "A[1]:= 1:",
+        "for n from 2 to 100 do",
+        "  A[n]:= A[n-1]+convert(select(t -> igcd(t,n)=1, [seq(A[i],i=1..n-1)]),`+`)",
+        "od:",
+        "seq(A[i],i=1..100); # _Robert Israel_, Aug 23 2019"
+    ],
+    "mathematica": [
+        "f[l_List] := Append[l, l[[ -1]] + Plus @@ Select[l, GCD[ #, Length[l] + 1] == 1 &]];Nest[f, {1}, 30] (* _Ray Chandler_, Jan 06 2007 *)"
+    ],
+    "xref": [
+        "Cf. A127076."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Jan 04 2007",
+    "ext": [
+        "Extended by _Ray Chandler_, Jan 06 2007"
+    ],
+    "references": 2,
+    "revision": 13,
+    "time": "2019-10-10T11:52:00-04:00",
+    "created": "2007-01-12T03:00:00-05:00"
+}

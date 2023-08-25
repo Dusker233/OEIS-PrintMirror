@@ -1,0 +1,42 @@
+{
+    "number": 320289,
+    "data": "0,1,1,4,11,86,477,4810,40679,496522,5662933,81759910,1169640551,19622623190,336215135973,6455705990674,128445712218263,2785761076726066,62980942321570981,1525318051255683598,38566041706375722071,1032726237783455193662",
+    "name": "Number of phylogenetic trees with n labels and no singleton leaves.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320289/b320289.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "The a(2) = 1 through a(5) = 11 phylogenetic trees:",
+        "  (12)  (123)  (1234)      (12345)",
+        "               ((12)(34))  ((12)(345))",
+        "               ((13)(24))  ((13)(245))",
+        "               ((14)(23))  ((14)(235))",
+        "                           ((15)(234))",
+        "                           ((23)(145))",
+        "                           ((24)(135))",
+        "                           ((25)(134))",
+        "                           ((34)(125))",
+        "                           ((35)(124))",
+        "                           ((45)(123))"
+    ],
+    "mathematica": [
+        "numSetPtnsOfType[ptn_]:=Total[ptn]!/Times@@Factorial/@ptn/Times@@Factorial/@Length/@Split[ptn];",
+        "rotf[n_]:=rotf[n]=If[n==1,0,1+Sum[numSetPtnsOfType[p]*Times@@rotf/@p,{p,Select[IntegerPartitions[n],Length[#]>1&]}]];",
+        "Array[rotf,20]"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "b(n,k)={my(v=vector(n)); for(n=2, n, v[n]=binomial(n+k-1, n) + EulerT(v[1..n])[n]); v}",
+        "seq(n)={my(M=Mat(vectorv(n, k, b(n,k)))); vector(n, k, sum(i=1, k, binomial(k, i)*(-1)^(k-i)*M[i,k]))} \\\\ _Andrew Howroyd_, Oct 26 2018"
+    ],
+    "xref": [
+        "Cf. A000311, A000669, A002865, A005804, A141268, A300660, A304966, A304967, A319312, A320294, A320295."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Gus Wiseman_, Oct 09 2018",
+    "references": 5,
+    "revision": 8,
+    "time": "2018-10-27T01:07:41-04:00",
+    "created": "2018-10-10T20:05:59-04:00"
+}

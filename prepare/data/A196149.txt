@@ -1,0 +1,53 @@
+{
+    "number": 196149,
+    "data": "1,2,3,4,6,8,9,10,12,15,16,18,20,21,24,27,28,30,32,36,40,42,44,45,48,50,54,56,60,63,64,66,70,72,75,78,80,81,84,88,90,96,99,100,102,104,105,108,110,112,117,120,126,128,130,132,135,136,140,144,147,150",
+    "name": "Numbers whose divisors increase by a factor of 3 or less.",
+    "comment": [
+        "The polymath8 project led by Terry Tao refers to these numbers as \"3-densely divisible\". In general they say that n is y-densely divisible if its divisors increase by a factor of y or less, or equivalently, if for every R with 1 <= R <= n, there is a divisor in the interval [R/y,R]. They use this as a weakening of the condition that n be y-smooth. - _David S. Metzler_, Jul 02 2013",
+        "Let D(x) denote the number of such integers up to x. D(x) has order of magnitude x/log(x)  (See Saias 1997). Moreover, we have D(x) = c*x/log(x) + O(x/(log(x))^2), where c = 2.05544... (See Weingartner 2015, 2019). As a result, a(n) = C*n*log(n*log(n)) + O(n), where C = 1/c = 0.486513... - _Andreas Weingartner_, Jun 25 2021"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A196149/b196149.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Saias, <a href=\"https://doi.org/10.1006/jnth.1997.2057\">Entiers \u00e0 diviseurs denses 1</a>, Journal of Number Theory, Vol. 62, No. 1 (1997), pp. 163-191.",
+        "Terence Tao, <a href=\"http://terrytao.wordpress.com/2013/06/18/a-truncated-elementary-selberg-sieve-of-pintz/\">A Truncated Elementary Selberg Sieve of Pintz</a>. (blog entry defining y-densely divisible)",
+        "Terence Tao et al., <a href=\"http://michaelnielsen.org/polymath1/index.php?title=Bounded_gaps_between_primes\">Polymath8 home page</a>.",
+        "Andreas Weingartner, <a href=\"https://doi.org/10.1093/qmath/hav006\">Practical numbers and the distribution of divisors</a>, The Quarterly Journal of Mathematics, Vol. 66, No. 2 (2015), pp. 743-758; <a href=\"https://arxiv.org/abs/1405.2585\">arXiv preprint</a>, arXiv:1405.2585 [math.NT], 2014-2015.",
+        "Andreas Weingartner, <a href=\"https://doi.org/10.1090/mcom/3402\">On the constant factor in several related asymptotic estimates</a>, Math. Comp., Vol. 88, No. 318 (2019), pp. 1883-1902; <a href=\"https://arxiv.org/abs/1705.06349\">arXiv preprint</a>, arXiv:1705.06349 [math.NT], 2017-2018."
+    ],
+    "formula": [
+        "a(n) = A052287(n) / 3.",
+        "a(n) = C*n*log(n*log(n)) + O(n), where C = 0.486513\u2026 (See comments). - _Andreas Weingartner_, Jun 25 2021"
+    ],
+    "example": [
+        "14 is not a term because its divisors are 1,2,7,14, and the gap from 2 to 7 is more than a factor of 3. - _N. J. A. Sloane_, Aug 03 2015"
+    ],
+    "mathematica": [
+        "dif3[n_]:=Max[#[[2]]/#[[1]]&/@Partition[Divisors[n],2,1]]<=3; Select[ Range[ 200],dif3] (* _Harvey P. Dale_, Jun 08 2015 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a196149 n = a196149_list !! (n-1)",
+        "a196149_list = filter f [1..] where",
+        "   f n = all (<= 0) $ zipWith (-) (tail divs) (map (* 3) divs)",
+        "                      where divs = a027750_row' n",
+        "-- _Reinhard Zumkeller_, Jun 25 2015, Sep 28 2011",
+        "(PARI) is(n)=my(d=divisors(n));for(i=2,#d,if(d[i]>3*d[i-1],return(0)));1 \\\\ _Charles R Greathouse IV_, Jul 06 2013",
+        "(Python)",
+        "from sympy import divisors",
+        "def ok(n):",
+        "    d = divisors(n)",
+        "    return all(d[i]/d[i-1] <= 3 for i in range(1, len(d)))",
+        "print(list(filter(ok, range(1, 151)))) # _Michael S. Branicky_, Jun 25 2021"
+    ],
+    "xref": [
+        "A174973 is a subsequence.",
+        "Cf. A027750."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Sep 28 2011",
+    "references": 4,
+    "revision": 30,
+    "time": "2021-06-26T02:31:30-04:00",
+    "created": "2011-09-28T15:03:36-04:00"
+}

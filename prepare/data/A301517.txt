@@ -1,0 +1,50 @@
+{
+    "number": 301517,
+    "data": "8,24,27,32,40,54,56,88,96,104,120,125,128,135,136,152,160,168,184,189,216,224,232,243,248,250,264,270,280,296,297,312,328,343,344,351,352,375,376,378,384,408,416,424,440,456,459,472,480,486,488,512,513,520",
+    "name": "Numbers whose ratio (sum of nonsquarefree divisors)/(sum of squarefree divisors) is a positive integer.",
+    "comment": [
+        "Or numbers m such that r = A162296(m) / A048250(m) is a positive integer.",
+        "Conjecture: if r = A162296(a(n)) / A048250(a(n)) is a perfect square, r belongs to A001248.",
+        "The corresponding sequence b(n) = {r} begins with {4, 4, 9, 20, 4, 9, 4, 4, 20, 4, 4, 25, 84, 9, 4, 4, 20, 4, 4, 9, 49, 20, 4, 90, 4, 25, ... }. A majority of numbers of b(n) are perfect squares.",
+        "The numbers 2^(2n+1) with k > 0 are in the sequence (A004171).",
+        "The numbers prime(n)^3 are in the sequence (A030078).",
+        "The numbers 8*prime(n) with n > 1 are in the sequence.",
+        "Note that \"positive integer\", in the definition, eliminates squarefree numbers (A005117) from this sequence. - _Michel Marcus_, Mar 24 2018",
+        "From _Robert Israel_, Mar 29 2018: (Start)",
+        "If n is in the sequence, then so is n*p for any prime p coprime to n.",
+        "If m and n are in the sequence and are coprime, then m*n is in the sequence. (End)",
+        "The exponentially odd numbers (A268335) that are not squarefree are in the sequence. - _Amiram Eldar_, Jul 04 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A301517/b301517.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "27 is in the sequence because A162296(27) / A048250(27) = 36/4 = 9."
+    ],
+    "maple": [
+        "filter:= proc(n) local S,N; uses numtheory;",
+        "  S, N:= selectremove(issqrfree, divisors(n));",
+        "  N <> {} and type(convert(N,`+`)/convert(S,`+`),integer)",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Mar 29 2018"
+    ],
+    "mathematica": [
+        "lst={};Do[If[DivisorSigma[1,n]-Total[Select[Divisors[n],SquareFreeQ]]>0&&IntegerQ[(DivisorSigma[1,n]-Total[Select[Divisors[n],SquareFreeQ]])/Total[Select[Divisors[n],SquareFreeQ]]],AppendTo[lst,n]],{n,520}];lst",
+        "rpiQ[n_]:=Module[{d=Divisors[n],sf,ot,ra},sf=Select[d,SquareFreeQ];ot=Complement[ d, sf];ra= Total[ ot]/Total[sf];ra>0&&IntegerQ[ra]]; Select[Range[600],rpiQ] (* _Harvey P. Dale_, Mar 19 2019 *)",
+        "f[p_, e_] := (p^(e + 1) - 1)/(p^2 - 1); ratio[n_] := Times @@ (f @@@ FactorInteger[n]); Select[Range[2, 520], (r = ratio[#]) > 1 && IntegerQ[r] &] (* _Amiram Eldar_, Jul 04 2020 *)"
+    ],
+    "program": [
+        "isok(n) = my(s = sumdiv(n, d, !issquarefree(d)*d)); s && !(s % (sigma(n) - s)); \\\\ _Michel Marcus_, Mar 24 2018"
+    ],
+    "xref": [
+        "Cf. A004171, A005117, A030078, A048250, A162296, A268335, A335989.",
+        "Contains A056824."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Mar 23 2018",
+    "references": 2,
+    "revision": 25,
+    "time": "2020-07-04T09:23:15-04:00",
+    "created": "2018-03-28T13:08:15-04:00"
+}

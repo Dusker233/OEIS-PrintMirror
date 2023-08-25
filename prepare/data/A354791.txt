@@ -1,0 +1,48 @@
+{
+    "number": 354791,
+    "data": "1,7,14,15,17,29,31,35,59,63,64,71,79,119,120,127,129,143,159,223,239,241,255,259,260,287,288,319,320,447,479,483,484,511,512,519,521,575,577,639,641,895,959,960,967,968,969,1023,1025,1039,1043,1044,1151,1152",
+    "name": "Indices of nonprime terms in A354790.",
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A354791/b354791.txt\">Table of n, a(n) for n = 1..5715</a>",
+        "R\u00e9my Sigrist, <a href=\"/A354791/a354791.txt\">C program</a>"
+    ],
+    "program": [
+        "(Python)",
+        "from math import lcm, gcd",
+        "from itertools import count, islice",
+        "from collections import deque",
+        "from sympy import factorint",
+        "def A354791_gen(): # generator of terms",
+        "    aset, aqueue, c, b, f, i = {1}, deque([1]), 2, 1, True, 1",
+        "    yield 1",
+        "    while True:",
+        "        for m in count(c):",
+        "            if m not in aset and gcd(m,b) == 1 and all(map(lambda n:n<=1,fs:=factorint(m).values())):",
+        "                i += 1",
+        "                if len(fs) > 1:",
+        "                    yield i",
+        "                aset.add(m)",
+        "                aqueue.append(m)",
+        "                if f: aqueue.popleft()",
+        "                b = lcm(*aqueue)",
+        "                f = not f",
+        "                while c in aset:",
+        "                    c += 1",
+        "                break",
+        "A354791_list = list(islice(A354791_gen(),30)) # _Chai Wah Wu_, Jul 17 2022",
+        "(C) See Links section."
+    ],
+    "xref": [
+        "Cf. A354790, A354792."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michael De Vlieger_ and _N. J. A. Sloane_, Jul 17 2022",
+    "ext": [
+        "More terms from _R\u00e9my Sigrist_, Jul 17 2022"
+    ],
+    "references": 5,
+    "revision": 17,
+    "time": "2022-07-18T09:49:02-04:00",
+    "created": "2022-07-17T16:25:25-04:00"
+}

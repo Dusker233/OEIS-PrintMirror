@@ -1,0 +1,58 @@
+{
+    "number": 92315,
+    "data": "1,7,56,418,3091,22845,168803,1247297,9216353,68100150,503195828,3718142207,27473561357,203003686105,1500005624923,11083625711270,81897532160124,605145459495140,4471453748222756,33039822589391675,244133102611731230,1803913190804074903",
+    "name": "a(n) is the smallest m such that the partial sum of the odd harmonic series Sum_{j=0..m} 1/(2j+1) is > n.",
+    "comment": [
+        "From _Gerhard Kirchner_, May 21 2020: (Start)",
+        "The terms a(n), evaluated by the formula, should pass the test OH(a(n))=n and OH(a(n)-1)=n-1, where OH(m) is the odd harmonic series, see above.",
+        "Another formula, see link Asymptotic formulas, formula 1, is OH(m) = (log(4*m)+gamma)/2+1/(2*m)-11/(48*m^2)+1/(8*m^3)-127*t/(1920*m^4), 0<t<1. The test can be carried out with t=0. Additionally, the precision can be tested by checking if t=1 makes a difference.",
+        "The Maxima code includes both tests and creates a b-file in the current directory. For n<=1000, the case \"Precision too low\" does not occur. (End)",
+        "a(2) = 7 and a(3) = 56 are related to the Borwein integrals. Concretely, a(2) = 7 is the smallest m such that the integral Integral_{x=-oo..oo} Product_{k=0..m} (sin((2*k+1)*x)/((2*k+1)*x)) dx is slightly less than Pi, and a(3) = 56 is the smallest m such that the integral Integral_{x=-oo..oo} cos(x) * Product_{k=0..m} (sin((2*k+1)*x)/((2*k+1)*x)) dx is slightly less than Pi/2. See the Wikipedia link and the 3Blue1Brown video link below. - _Jianing Song_, Dec 10 2022"
+    ],
+    "link": [
+        "Gerhard Kirchner, <a href=\"/A092315/b092315.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Gerhard Kirchner, <a href=\"/A092315/a092315.pdf\">Asymptotic formulas</a>",
+        "Grant Sanderson, <a href=\"https://www.youtube.com/watch?v=851U557j6HE\">Researchers thought this was a bug (Borwein integrals)</a>, 3Blue1Brown video (2022).",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Borwein_integral\">Borwein integral</a>"
+    ],
+    "formula": [
+        "a(n) = floor(exp(2*n-gamma)/4+1/8) for all n >= 1 (conjectured; see also comments in A002387). - _M. F. Hasler_, Jan 22 2017",
+        "a(n) = floor(exp(2*n-gamma)/4). - _Gerhard Kirchner_, Jul 23 2020"
+    ],
+    "mathematica": [
+        "A092315[n_] := Floor[Exp[2*n - EulerGamma]/4]; Table[A092315[n], {n, 1, 22}] (* _Robert P. P. McKone_, Jul 13 2021 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "block(",
+        "fpprec:1000, gam: %gamma, nmax:1000,",
+        "fl: openw(\"bfile1000.txt\"),",
+        "OH(k,t):=(log(4*k)+gam)/2+1/(2*k)-11/(48*k^2)+1/(8*k^3)-127*t/(1920*k^4),",
+        "printf(fl, \"1 1\"),   newline(fl),",
+        "for n from 2 thru nmax do",
+        "(u: bfloat(exp(2*n-gam)/4), k: floor(u),",
+        "x0: bfloat(OH(k,0)), x01: bfloat(OH(k,1)), x1: bfloat(OH(k-1,0)),",
+        "n0: floor(x0), n01: floor(x01), n1: floor(x1),  m: n,",
+        "if n0=n and n01=n and n1=n-1 then",
+        "         (h: concat(n, \" \", k), printf(fl, h),  newline(fl)) else n: nmax),",
+        "if m<nmax then print(concat(\"Precision too low: Stop at n= \",m)),",
+        "close(fl));",
+        "/* _Gerhard Kirchner_, Jul 23 2020 */",
+        "/* The first nmax terms are saved as a b-file */"
+    ],
+    "xref": [
+        "Except for first term, same as A092318. Equals (A056053-1)/2.",
+        "Cf. A074599, A025547, A281355."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Feb 16 2004",
+    "ext": [
+        "More terms from _M. F. Hasler_, Jan 24 2017",
+        "a(17) in the data section and 127 terms in the b-file corrected by _Gerhard Kirchner_, Jul 23 2020"
+    ],
+    "references": 10,
+    "revision": 52,
+    "time": "2022-12-10T18:34:43-05:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

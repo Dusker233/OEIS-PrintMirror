@@ -1,0 +1,42 @@
+{
+    "number": 333394,
+    "data": "0,1,4,9,18,34,62,110,192,331,565,958,1615,2710,4531,7552,12554,20823,34472,56972,94020,154959,255102,419532,689312,1131632,1856382,3043208,4985674,8163321,13359207,21851594,35726470,58386958,95383471,155766277,254288786",
+    "name": "Total length of all longest runs of 0's in solus bitstrings of length n.",
+    "comment": [
+        "A bitstring is solus if all of its 1's are isolated.",
+        "The number of these bitstrings is A000045(n+2)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A333394/b333394.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Steven Finch, <a href=\"https://arxiv.org/abs/2003.09458\">Cantor-solus and Cantor-multus distributions</a>, arXiv:2003.09458 [math.CO], 2020."
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=1} (1+x)/(1-x-x^2)-(1+x-x^k-x^(k+1))/(1-x-x^2+x^(k+1))."
+    ],
+    "example": [
+        "a(4) = 18 because the A000045(6) = 8 solus bitstrings of length 4 are 0000, 1000, 0100, 0010, 0001, 1010, 0101, 1001 and the longest 0-runs contribute 4+3+2+2+3+1+1+2 = 18."
+    ],
+    "maple": [
+        "b:= proc(n, w, m, s) option remember; `if`(n=0, m,",
+        "      b(n-1, w+1, max(m, w+1), irem(s, 10)*10+0)+",
+        "     `if`(s in [01, 21], 0, b(n-1, 0, m, irem(s, 10)*10+1)))",
+        "    end:",
+        "a:= n-> b(n, 0, 0, 22):",
+        "seq(a(n), n=0..39);  # _Alois P. Heinz_, Mar 18 2020"
+    ],
+    "mathematica": [
+        "b[n_, w_, m_, s_] := b[n, w, m, s] = If[n == 0, m, b[n-1, w+1, Max[m, w+1], Mod[s, 10]*10+0]+If[MatchQ[s, 01|21], 0, b[n-1, 0, m, Mod[s, 10]*10+1]]];",
+        "a[n_] := b[n, 0, 0, 22];",
+        "a /@ Range[0, 39] (* _Jean-Fran\u00e7ois Alcover_, Aug 21 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000045, A119706, A333395, A333396."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Steven Finch_, Mar 18 2020",
+    "references": 3,
+    "revision": 22,
+    "time": "2020-08-21T05:49:05-04:00",
+    "created": "2020-03-18T18:38:21-04:00"
+}

@@ -1,0 +1,30 @@
+{
+    "number": 44126,
+    "data": "24,60,96,132,144,168,204,240,276,312,348,360,384,420,456,492,528,564,576,600,636,672,708,744,780,792,816,852,864,924,960,996,1008,1032,1068,1104,1140,1176,1212,1224,1248,1284,1320,1356",
+    "name": "Numbers n such that string 4,0 occurs in the base 6 representation of n but not of n-1.",
+    "comment": [
+        "All terms == 4*6^k (mod 6^(k+1)) for some k >= 1. However, not all numbers of this form are in the sequence, e.g., 888. - _Robert Israel_, Jun 13 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A044126/b044126.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "N:= 10^4: # for all terms <= N",
+        "filter:= proc(n) local L;",
+        "    L:= convert(n-1,base,6);",
+        "    select(t -> L[t]=0 and L[t+1]=4, [$1..nops(L)-1])=[]",
+        "end proc:",
+        "S:= convert(`union`(seq({seq(i, i=4*6^k .. N, 6^(k+1))},k=1..floor(log[6](N/4)))),list):",
+        "sort(select(filter, S)); # _Robert Israel_, Jun 13 2018"
+    ],
+    "mathematica": [
+        "SequencePosition[Table[If[SequenceCount[IntegerDigits[n,6],{4,0}]>0,1,0],{n,1500}],{0,1}][[All,2]] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Jul 17 2020 *)"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "references": 1,
+    "revision": 14,
+    "time": "2020-07-17T14:47:56-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

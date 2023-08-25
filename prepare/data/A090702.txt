@@ -1,0 +1,44 @@
+{
+    "number": 90702,
+    "data": "0,0,1,1,1,2,2,2,3,4,4,4,5,5,5,6,7,7,7,8,8,8,9,10,10,10,11,11,11,12,13,13,13,14,14",
+    "name": "a(n) is the minimal number k such that every binary word of length n can be transformed into a palindrome or an antipalindrome by deleting at most k letters.",
+    "comment": [
+        "A word l_0...l_n is called a palindrome if l_i = l_{n-i} for all i <= n.",
+        "A binary word l_0...l_n is called an antipalindrome if l_i <> l_{n-i} for all i <= n."
+    ],
+    "link": [
+        "Sean A. Irvine, <a href=\"https://github.com/archmageirvine/joeis/blob/master/src/irvine/oeis/a090/A090702.java\">Java program</a> (github).",
+        "I. Protasov, <a href=\"http://matstud.org.ua/texts/2000/14_1/14_1_111.pdf\">Palindromial equivalence: one theorem and two problems</a>, Matem. Studii, 14, #1, (2000), p. 111.",
+        "O. V. Ravsky, <a href=\"https://doi.org/10.25596/jalc-2003-071\">A New Measure of Asymmetry of Binary Words</a>, Journal of Automata, Languages and Combinatorics, 8, #1 (2003), p. 75-83."
+    ],
+    "formula": [
+        "a(n) >= floor((n+2*floor((n-3)/7))/3) for every n and for 2 <= n <= 35 equality holds."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "from functools import lru_cache",
+        "def ispal(w): return all(w[i] == w[-1-i] for i in range(len(w)//2+1))",
+        "def isantipal(w): return all(w[i] != w[-1-i] for i in range(len(w)//2+1))",
+        "@lru_cache(maxsize=None)",
+        "def d(w): # min deletions needed to transform w into a pal or antipal",
+        "    if ispal(w) or isantipal(w): return 0",
+        "    ch = set(w[:i] + w[i+1:] for i in range(len(w)))",
+        "    return 1 + min(d(wc) for wc in ch)",
+        "def a(n): return max(d(\"0\"+\"\".join(w)) for w in product(\"01\", repeat=n-1))",
+        "print([a(n) for n in range(1, 18)]) # _Michael S. Branicky_, Jul 25 2022"
+    ],
+    "xref": [
+        "Cf. A090701."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,6",
+    "author": "Sasha Ravsky (oravsky(AT)mail.ru), Jan 12 2004",
+    "ext": [
+        "a(21)-a(35) from _Sean A. Irvine_, Jul 15 2022"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2022-07-26T13:37:48-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

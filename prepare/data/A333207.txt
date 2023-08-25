@@ -1,0 +1,37 @@
+{
+    "number": 333207,
+    "data": "3,5,7,11,13,17,31,71,101,151,181,191,313,1031,1033,1231,1279,1301,1321,1429,1453,1933,3301,3391,3541,3583,3853,7349,7457,7547,7589,9241,9437,9679,9721,9769,9857,10007,10067,10273,10301,10429,10457,10501,10711,10859,11057,11701,11717,11777,11833",
+    "name": "Twin primes whose base-10 digit reversals are also twin primes.",
+    "comment": [
+        "Intersection of A001097 and A004086(A001097)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A333207/b333207.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(5) = 13 is in the sequence because both 13 and its reversal 31 are twin primes."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,k;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-k]*10^(k-1),k=1..nops(L))",
+        "end proc:",
+        "Pr:= select(isprime, {seq(i,i=3..10^5,2)}):",
+        "TL:= Pr intersect map(`-`,Pr,2):",
+        "T:= TL union map(`+`,TL,2):",
+        "sort(convert(select(t-> member(revdigs(t),T), T),list));"
+    ],
+    "mathematica": [
+        "tpQ[p_]:=PrimeQ[IntegerReverse[p]]&&AnyTrue[p+{2,-2},PrimeQ]; Select[ Prime[ Range[1500]],tpQ[#]&&tpQ[IntegerReverse[#]]&] (* _Harvey P. Dale_, Jan 16 2022 *)"
+    ],
+    "xref": [
+        "Cf. A004086, A001097.  Includes A083840."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Mar 11 2020",
+    "references": 1,
+    "revision": 9,
+    "time": "2022-01-16T13:35:48-05:00",
+    "created": "2020-03-11T13:45:11-04:00"
+}

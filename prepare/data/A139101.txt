@@ -1,0 +1,45 @@
+{
+    "number": 139101,
+    "data": "1,10,1001,100101,1001010111,100101011101,1001010111010111,100101011101011101,1001010111010111010111,1001010111010111010111011111,100101011101011101011101111101,100101011101011101011101111101011111,1001010111010111010111011111010111110111",
+    "name": "Numbers that show the distribution of prime numbers up to the n-th prime minus 1, using \"0\" for primes and \"1\" for nonprime numbers.",
+    "comment": [
+        "a(n) has A000040(n)-1 digits, n-1 digits \"0\" and A000040(n)-n digits \"1\"."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A139101/b139101.txt\">Table of n, a(n) for n = 1..168</a>",
+        "Omar E. Pol, <a href=\"http://polprimos.com\">Determinacion geometrica de los numeros primos y perfectos</a>."
+    ],
+    "mathematica": [
+        "Table[ sum = 0; For[i = 1, i <= Prime[n] - 1 , i++, sum = sum*2;",
+        "If[! PrimeQ[i], sum++]]; IntegerString[sum, 2], {n, 1, 13}] (* _Robert Price_, Apr 03 2019 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = fromdigits(vector(prime(n)-1, k, !isprime(k)), 10); \\\\ _Michel Marcus_, Apr 04 2019",
+        "(Python)",
+        "from sympy import isprime, prime",
+        "def a(n): return int(\"\".join(str(1-isprime(i)) for i in range(1, prime(n))))",
+        "print([a(n) for n in range(1, 14)]) # _Michael S. Branicky_, Jan 10 2022",
+        "(Python) # faster version for initial segment of sequence",
+        "from sympy import isprime",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    an = 0",
+        "    for k in count(1):",
+        "        an = 10 * an + int(not isprime(k))",
+        "        if isprime(k+1):",
+        "            yield an",
+        "print(list(islice(agen(), 13))) # _Michael S. Branicky_, Jan 10 2022"
+    ],
+    "xref": [
+        "Binary representation of A139102.",
+        "Subset of A118256.",
+        "Cf. A000040, A018252, A139103, A139104, A139119, A139120, A139122."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Omar E. Pol_, Apr 08 2008",
+    "references": 11,
+    "revision": 25,
+    "time": "2022-01-10T06:52:08-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

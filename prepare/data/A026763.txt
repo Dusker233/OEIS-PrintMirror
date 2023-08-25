@@ -1,0 +1,43 @@
+{
+    "number": 26763,
+    "data": "1,7,38,190,918,4365,20594,96804,454362,2132121,10010203,47042042,221337726,1042837195,4920447410,23250646651,110029743083,521462857972,2474929099976,11762845907633,55982738983975,266789302547057",
+    "name": "a(n) = T(2n-1,n-2), T given by A026758.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A026763/b026763.txt\">Table of n, a(n) for n = 2..500</a>"
+    ],
+    "maple": [
+        "T:= proc(n,k) option remember;",
+        "   if n<0 then 0;",
+        "   elif k=0 or k = n then 1;",
+        "   elif type(n,'odd') and k <= (n-1)/2 then",
+        "        procname(n-1,k-1)+procname(n-2,k-1)+procname(n-1,k) ;",
+        "   else",
+        "       procname(n-1,k-1)+procname(n-1,k) ;",
+        "   end if ;",
+        "end proc;",
+        "seq(T(2*n-1,n-2), n=2..30); # _G. C. Greubel_, Oct 31 2019"
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[n<0, 0, If[k==0 || k==n, 1, If[OddQ[n] && k<=(n - 1)/2, T[n-1, k-1] + T[n-2, k-1] + T[n-1, k], T[n-1, k-1] + T[n-1, k] ]]]; Table[T[2n-1, n-2], {n, 2, 30}] (* _G. C. Greubel_, Oct 31 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n, k):",
+        "    if (n<0): return 0",
+        "    elif (k==0 or k==n): return 1",
+        "    elif (mod(n,2)==1 and k<=(n-1)/2): return T(n-1,k-1) + T(n-2,k-1) + T(n-1,k)",
+        "    else: return T(n-1,k-1) + T(n-1,k)",
+        "[T(2*n-1, n-2) for n in (2..30)] # _G. C. Greubel_, Oct 31 2019"
+    ],
+    "xref": [
+        "Cf. A026758, A026759, A026760, A026761, A026762, A026764, A026765, A026766, A026767, A026768."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_Clark Kimberling_",
+    "references": 10,
+    "revision": 8,
+    "time": "2019-11-01T03:53:38-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

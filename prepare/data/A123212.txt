@@ -1,0 +1,46 @@
+{
+    "number": 123212,
+    "data": "1,3,7,31,383,71679,4313284607,18447026747376402431,340282367000167840050178713574329810943,115792089237316195429848086745536112650120661123018741407845920610578123980799",
+    "name": "Let S(1) = {1} and, for n > 1, let S(n) be the smallest set containing x, 2x and x^2 for each element x in S(n-1). a(n) is the sum of the elements in S(n).",
+    "comment": [
+        "If we take the cardinality of the set S(n) instead of the sum, we get the Fibonacci numbers 1,2,3,5,8,13,21,34,... If the set mapping uses x -> x, 2x and 3x instead of x -> x, 2x, and x^2, the corresponding sequence consists of the Stirling numbers of the second kind: 1, 6, 25, 90, 301, 966, 3025, ... (A000392)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A123212/b123212.txt\">Table of n, a(n) for n = 1..13</a>"
+    ],
+    "example": [
+        "Under the indicated set mapping we have {1} -> {1,2} -> {1,2,4} -> {1,2,4,8,16}, giving the sums a(1)=1, a(2)=3, a(3)=7, a(4)=31, etc."
+    ],
+    "maple": [
+        "s:= proc(n) option remember; `if`(n=1, 1,",
+        "      map(x-> [x, 2*x, x^2][], {s(n-1)})[])",
+        "    end:",
+        "a:= n-> add(i, i=s(n)):",
+        "seq(a(n), n=1..10);  # _Alois P. Heinz_, Jan 12 2022"
+    ],
+    "mathematica": [
+        "S[n_] := S[n] = If[n == 1, {1}, {#, 2#, #^2}& /@ S[n-1] // Flatten // Union];",
+        "a[n_] := S[n] // Total;",
+        "Table[a[n], {n, 1, 10}] (* _Jean-Fran\u00e7ois Alcover_, Apr 22 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import chain, islice",
+        "def A123212_gen(): # generator of terms",
+        "    s = {1}",
+        "    while True:",
+        "        yield sum(s)",
+        "        s = set(chain.from_iterable((x,2*x,x**2) for x in s))",
+        "A123212_list = list(islice(A123212_gen(),10)) # _Chai Wah Wu_, Jan 12 2022"
+    ],
+    "xref": [
+        "Cf. A000045, A000392, A122554."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_John W. Layman_, Oct 05 2006",
+    "references": 1,
+    "revision": 21,
+    "time": "2022-04-22T04:23:32-04:00",
+    "created": "2006-10-09T03:00:00-04:00"
+}

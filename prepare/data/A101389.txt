@@ -1,0 +1,37 @@
+{
+    "number": 101389,
+    "data": "1,1,1,3,21,369,16929,1913682,546626268,406959998851,808598348346150,4358157210587930509,64443771774627635711718,2636248889492487709302815665,300297332862557660078111708007894,95764277032243987785712142452776403618,85885545190811866954428990373255822969983915",
+    "name": "Number of n-vertex unlabeled oriented graphs without endpoints.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A101389/b101389.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "example": [
+        "a(3) = 3 because there are 2 distinct orientations of the triangle K_3 plus the empty graph on 3 vertices."
+    ],
+    "program": [
+        "(PARI) \\\\ See links in A339645 for combinatorial species functions.",
+        "oedges(v) = {sum(i=2, #v, sum(j=1, i-1, gcd(v[i], v[j]))) + sum(i=1, #v, (v[i]-1)\\2)}",
+        "ographsCycleIndex(n)={my(s=0); forpart(p=n, s+=permcount(p) * 3^oedges(p) * sMonomial(p)); s/n!}",
+        "ographs(n)={sum(k=0, n, ographsCycleIndex(k)*x^k) + O(x*x^n)}",
+        "trees(n,k)={sRevert(x*sv(1)/sExp(k*x*sv(1) + O(x^n)))}",
+        "cycleIndexSeries(n)={my(g=ographs(n), tr=trees(n,2), tu=tr-tr^2); sSolve( g/sExp(tu), tr )*symGroupSeries(n)}",
+        "NumUnlabeledObjsSeq(cycleIndexSeries(15)) \\\\ _Andrew Howroyd_, Dec 27 2020",
+        "(PARI) \\\\ faster stand-alone version",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, gcd(v[i],v[j]))) + sum(i=1, #v, (v[i]-1)\\2)}",
+        "seq(n)={Vec(sum(k=0, n, my(s=0); forpart(p=k, s+=permcount(p) * 3^edges(p) * prod(i=1, #p, my(d=p[i]); (1-x^d)^2 + O(x*x^(n-k))) ); x^k*s/k!)/(1-x^2))} \\\\ _Andrew Howroyd_, Jan 22 2021"
+    ],
+    "xref": [
+        "Cf. A100569 (labeled case), A100548, A101388, A004110, A004108, A059166, A059167, A001174."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "Goran Kilibarda, _Vladeta Jovovic_, Jan 14 2005",
+    "ext": [
+        "a(0)=1 prepended and terms a(9) and beyond from _Andrew Howroyd_, Dec 27 2020"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2021-01-25T19:56:56-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

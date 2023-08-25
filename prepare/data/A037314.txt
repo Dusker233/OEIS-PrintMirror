@@ -1,0 +1,45 @@
+{
+    "number": 37314,
+    "data": "0,1,2,9,10,11,18,19,20,81,82,83,90,91,92,99,100,101,162,163,164,171,172,173,180,181,182,729,730,731,738,739,740,747,748,749,810,811,812,819,820,821,828,829,830,891,892,893,900,901,902,909,910,911",
+    "name": "Numbers whose base-3 and base-9 expansions have the same digit sum.",
+    "comment": [
+        "a(n) = Sum_{i=0..m} d(i)*9^i, where Sum_{i=0..m} d(i)*3^i is the base-3 representation of n.",
+        "Numbers that can be written using only digits 0, 1 and 2 in base 9. Also, write n in base 3, read as base 9: (3) [n] (9) in base change notation. a(3n+k) = 9a(n)+k for k in {0,1,2}. - _Franklin T. Adams-Watters_, Jul 24 2006"
+    ],
+    "formula": [
+        "G.f. f(x) = Sum_{j>=0} 9^j*x^(3^j)*(1+x^(3^j)-2*x^(2*3^j))/((1-x)*(1-x^(3^(j+1)))) satisfies f(x) = 9*(x^2+x+1)*f(x^3) + x*(1+2*x)/(1-x^3). - _Robert Israel_, Apr 13 2015"
+    ],
+    "mathematica": [
+        "Table[FromDigits[RealDigits[n, 3], 9], {n, 1, 100}]",
+        "(* _Clark Kimberling_, Aug 14 2012 *)",
+        "Select[Range[0,1000],Total[IntegerDigits[#,3]]==Total[IntegerDigits[#,9]]&] (* _Harvey P. Dale_, Feb 17 2020 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = {my(d = digits(n, 3)); subst(Pol(d), x, 9);} \\\\ _Michel Marcus_, Apr 09 2015",
+        "(Julia)",
+        "function a(n)",
+        "    m, r, b = n, 0, 1",
+        "    while m > 0",
+        "        m, q = divrem(m, 3)",
+        "        r += b * q",
+        "        b *= 9",
+        "    end",
+        "r end",
+        "[a(n) for n in 0:53] |> println # _Peter Luschny_, Jan 03 2021"
+    ],
+    "xref": [
+        "Cf. A007089, A208665, A338086 (ternary digit duplication).",
+        "Cf. A053735, A053830."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Edited by _N. J. A. Sloane_ at the suggestion of _Andrew S. Plewe_, Jun 08 2007",
+        "Offset changed to 0 by _Clark Kimberling_, Aug 14 2012"
+    ],
+    "references": 15,
+    "revision": 62,
+    "time": "2021-06-20T03:09:31-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

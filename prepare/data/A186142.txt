@@ -1,0 +1,43 @@
+{
+    "number": 186142,
+    "data": "7,7,29,907,32207,573217,3136717,4128253,2181953771,2181953771,2181953771",
+    "name": "a(n) is the smallest suffix such that the numbers with k digits \"9\" prepended are primes for k = 1, 2, ..., n.",
+    "comment": [
+        "See A186143 for the digit \"3\" case. The corresponding sequences with the digits \"1\" or \"7\" are not possible because if Xn and XXn are prime, then XXXn will be a multiple of 3 when X is 1 or 7.",
+        "By construction, a(n+1) >= a(n). - _Michael S. Branicky_, Jul 07 2021",
+        "From _Bernard Schott_, Dec 20 2021: (Start)",
+        "If the restriction \"but not for k = n+1\" is added, the terms become 11, 7, 29, 907, 32207, 573217, 3136717, ... In this case, the 1st term becomes 11 because 911 is prime while 9911 is divisible by 11.",
+        "In complement of 1st comment, the corresponding sequences with the digits \"2\", \"4\", \"5\" or \"8\" are not also possible for the same reasons. See A350216 for the digit \"6\" case. (End)"
+    ],
+    "example": [
+        "a(3) = 29 because 929, 9929, 99929 are primes."
+    ],
+    "mathematica": [
+        "m=1; Table[While[d=IntegerDigits[m]; k=0; While[k++; PrependTo[d, 9]; k <= n && PrimeQ[FromDigits[d]]]; k <= n, m++]; m, {n, 6}]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def a(n, startfrom=1):",
+        "  an = startfrom + (1 - startfrom%2)",
+        "  while not all(isprime(int(\"9\"*k+str(an))) for k in range(1, n+1)): an+=2",
+        "  return an",
+        "def afind(nn):",
+        "  an = 1",
+        "  for n in range(1, nn+1): an = a(n, startfrom=an); print(an, end=\", \")",
+        "afind(8) # _Michael S. Branicky_, Jul 07 2021"
+    ],
+    "xref": [
+        "Cf. A186069, A186070, A186143, A350214, A350216."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Feb 13 2011",
+    "ext": [
+        "a(9)-a(11) from _Michael S. Branicky_, Jul 07 2021"
+    ],
+    "references": 3,
+    "revision": 24,
+    "time": "2021-12-20T18:49:38-05:00",
+    "created": "2011-02-13T11:35:07-05:00"
+}

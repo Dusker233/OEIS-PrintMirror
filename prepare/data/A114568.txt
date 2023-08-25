@@ -1,0 +1,40 @@
+{
+    "number": 114568,
+    "data": "0,1,1,4694,14074,22043016,110093076,103601931224,723540388824,487340138218336,4368084700020976,2294361417644038304,25075040078386453024,10810705128907312553856,139223348225447089786176,50980653751026190057165184,754918810679399231211479424",
+    "name": "a(n) = 4694*a(n-2) + 9380*a(n-3) for n >= 3 with a(0) = 0 and a(1) = a(2) = 1.",
+    "link": [
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (0,4694,9380)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Jan 21 2013: (Start)",
+        "a(n) = 4694*a(n-2) + 9380*a(n-3) for n >= 3 with a(0) = 0 and a(1) = a(2) = 1.",
+        "G.f.: -x * (x + 1) / ((2*x + 1) * (4690*x^2 + 2*x - 1)). (End)"
+    ],
+    "maple": [
+        "with(LinearAlgebra);",
+        "M := Matrix([[0, 1, 0], [0, 0, 1], [9380, 4694, 0]]);",
+        "w := proc(n) option remember;",
+        "     if n = 0 then Matrix([[0], [1], [1]]); elif n >= 1 then",
+        "     MatrixMatrixMultiply(M, w(n - 1)); end if;",
+        "  end proc;",
+        "seq(w(n)[1, 1], n = 0..40); # _Petros Hadjicostas_, Nov 20 2019"
+    ],
+    "mathematica": [
+        "M = {{0, 1, 0}, {0, 0, 1}, {9380, 4694, 0}};",
+        "w[0] = {{0}, {1}, {1}};",
+        "w[n_] := w[n] = M.w[n - 1];",
+        "a = Flatten[Table[w[n][[1]], {n, 0, 25}]]; (* Modified by _Petros Hadjicostas_, Nov 20 2019 *)",
+        "LinearRecurrence[{0,4694,9380},{0,1,1},20] (* _Harvey P. Dale_, Apr 11 2020 *)"
+    ],
+    "keyword": "nonn,less,easy",
+    "offset": "0,4",
+    "author": "_Roger L. Bagula_, Feb 16 2006",
+    "ext": [
+        "More terms from _Colin Barker_, Jan 21 2013",
+        "Edited and new name using formula from _Colin Barker_, _Joerg Arndt_, Nov 21 2019"
+    ],
+    "references": 0,
+    "revision": 56,
+    "time": "2020-04-11T18:52:38-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

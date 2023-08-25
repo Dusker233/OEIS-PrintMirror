@@ -1,0 +1,46 @@
+{
+    "number": 358350,
+    "data": "3,6,9,11,12,14,15,17,18,20,21,22,23,24,26,27,29,30,32,33,34,35,38,42,43,44,46,48,50,53,54,55,56,58,62,63,66,68,69,73,74,76,77,78,80,82,83,86,88,90,92,95,97,98,99,101,103,104,105,106,107,108,109,110",
+    "name": "Numbers that can be written as (m + sum of digits of m + product of digits of m) for some m.",
+    "comment": [
+        "Integers that are in A161351.",
+        "(i) Can arbitrarily long sets of consecutive integers be found in this sequence?",
+        "(ii) Is the gap between two consecutive terms bounded?",
+        "A000533 \\ {1} is a subsequence.",
+        "This has the same asymptotic density, approximately 0.9022222, as A176995, since the asymptotic density of non-pandigital numbers is 0. - _Charles R Greathouse IV_, Nov 16 2022"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A358350/b358350.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) ~ kn with k approximately 1.108374, see comments. - _Charles R Greathouse IV_, Nov 16 2022"
+    ],
+    "example": [
+        "A161351(23) = 23 + (2+3) + (2*3) = 34 so 34 is a term.",
+        "There is no integer du_10 such that du + (d+u) + (d*u) = 31, so 31 is not a term."
+    ],
+    "mathematica": [
+        "f[n_] := n + Total[(d = IntegerDigits[n])] + Times @@ d; With[{m = 110}, Select[Union[Table[f[n], {n, 1, m}]], # <= m &]] (* _Amiram Eldar_, Nov 11 2022 *)"
+    ],
+    "program": [
+        "(PARI) f(n) = my(d=digits(n)); n + vecsum(d) + vecprod(d); \\\\ A161351",
+        "lista(nn) = select(x->(x<=nn), Set(vector(nn, k, f(k)))); \\\\ _Michel Marcus_, Nov 12 2022",
+        "(Python)",
+        "from math import prod",
+        "def sp(n): d = list(map(int, str(n))); return sum(d) + prod(d)",
+        "def ok(n): return any(m + sp(m) == n for m in range(n))",
+        "print([k for k in range(111) if ok(k)]) # _Michael S. Branicky_, Dec 19 2022"
+    ],
+    "xref": [
+        "Range of A161351.",
+        "Similar: A176995 (m+digitsum), A336826 (m*digitprod), A337718 (m+digitprod).",
+        "Cf. A000533."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Nov 11 2022",
+    "references": 5,
+    "revision": 33,
+    "time": "2022-12-19T15:05:18-05:00",
+    "created": "2022-11-16T13:57:01-05:00"
+}

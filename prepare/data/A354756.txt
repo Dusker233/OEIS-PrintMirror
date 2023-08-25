@@ -1,0 +1,38 @@
+{
+    "number": 354756,
+    "data": "1,1,2,3,8,10,56,64,192,332,1184,1264,12192,12872,37568,100836,311760,322320,2338368,2408848,14433408,32058912,76931008,78528704,919469408,1158792224,2689828672,4675217824,21679173184,21984820864,381078324992,386159441600",
+    "name": "a(n) is the number of permutations p of [n] such that lcm(i, p(i)) <= n for all i in [n].",
+    "link": [
+        "Carl Pomerance, <a href=\"https://arxiv.org/abs/2206.01699\">Permutations with arithmetic constraints</a>, arXiv:2206.01699 [math.NT], 2022."
+    ],
+    "maple": [
+        "b:= proc(s, m) option remember; `if`(s={}, 1, add(",
+        "     `if`(ilcm(nops(s), i)>m, 0, b(s minus {i}, m)), i=s))",
+        "    end:",
+        "a:= n-> b({$1..n}, n):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Jun 06 2022"
+    ],
+    "mathematica": [
+        "b[s_, m_] := b[s, m] = If[s == {}, 1, Sum[",
+        "     If[LCM[Length[s], i]>m, 0, b[s~Complement~{i}, m]], {i, s}]];",
+        "a[n_] := b[Range[n], n];",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 0, 28}] (* _Jean-Fran\u00e7ois Alcover_, Jun 25 2022, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) a(n) = {my(nb=0); for (i=1, n!, my(p=numtoperm(n, i), ok=1); for (k=1, #p, if (lcm(k, p[k]) > n, ok = 0; break);); if (ok, nb++);); nb;}"
+    ],
+    "xref": [
+        "Cf. A320843."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Michel Marcus_, Jun 06 2022",
+    "ext": [
+        "a(12)-a(20) from _Seiichi Manyama_, Jun 06 2022",
+        "a(0), a(21)-a(31) from _Alois P. Heinz_, Jun 06 2022"
+    ],
+    "references": 0,
+    "revision": 31,
+    "time": "2022-06-25T10:01:53-04:00",
+    "created": "2022-06-06T08:15:49-04:00"
+}

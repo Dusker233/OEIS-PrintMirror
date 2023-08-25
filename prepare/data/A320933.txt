@@ -1,0 +1,55 @@
+{
+    "number": 320933,
+    "data": "0,0,2,5,13,28,60,123,251,506,1018,2041,4089,8184,16376,32759,65527,131062,262134,524277,1048565,2097140,4194292,8388595,16777203,33554418,67108850,134217713,268435441,536870896",
+    "name": "a(n) = 2^n - floor((n+3)/2).",
+    "comment": [
+        "The sequence 0, 0, a(n) is an autosequence of the second kind. The difference table is:",
+        "   0,   0,   0,   0,   2,   5,  13, ...",
+        "   0,   0,   0,   2,   3,   8,  15, ...",
+        "   0,   0,   2,   1,   5,   7,  17, ...",
+        "   0,   2,  -1,   4,   2,  10,  14, ...",
+        "   2,  -3,   5,  -2,   8,   4,  20, ...",
+        "  -5,   8,  -7,  10,  -4,  16,   8, ...",
+        "  13, -15,  17, -14,  20,  -8,  32, ...",
+        "etc."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A320933/b320933.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "OEIS Wiki, <a href=\"https://oeis.org/wiki/Autosequence\">Autosequence</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-1,-3,2)."
+    ],
+    "formula": [
+        "a(n) = 3*a(n-1) - a(n-2) - 3*a(n-3) + a(n-4).",
+        "a(n+1) = a(n) + A166920(n).",
+        "a(n+4) - a(n) = 13, 28, 58, 118, ... = 15*2^n - 2 = A060182(n+2).",
+        "With b(n) = 0, 0, 0, A011377(n) = 0, 0, 0, 1, 3, 8, 18, ..., then a(n) = 2*b(n+1) - b(n).",
+        "a(n+2) - 2*a(n+1) + a(n) = A014551(n).",
+        "G.f.: x^2*(2 - x)/((1-x)^2*(1 - x - 2*x^2)). - _Stefano Spezia_, Oct 28 2018",
+        "a(n) = ((-1)^n + 2^(n+2) - 2*n - 5) / 4. - _Colin Barker_, Oct 28 2018"
+    ],
+    "maple": [
+        "seq(2^n-floor((n+3)/2),n=0..40); # _Muniru A Asiru_, Oct 28 2018"
+    ],
+    "mathematica": [
+        "a[n_]:=2^n - Floor[(n+3)/2]; Array[a, 40, 0] (* or *) CoefficientList[ Series[x^2*(2-x)/((1-x)^2*(1-x-2*x^2)), {x, 0, 40}], x] (* _Stefano Spezia_, Oct 28 2018 *)"
+    ],
+    "program": [
+        "(GAP) List([0..40],n->2^n-Int((n+3)/2)); # _Muniru A Asiru_, Oct 28 2018",
+        "(PARI) concat([0,0], Vec(x^2*(2-x)/((1-x)^2*(1+x)*(1-2*x)) + O(x^40))) \\\\ _Colin Barker_, Oct 28 2018",
+        "(Magma) [((-1)^n+2^(n+2)-2*n-5)/4: n in [0..40]]; // _G. C. Greubel_, Jun 04 2019",
+        "(Sage) [((-1)^n+2^(n+2)-2*n-5)/4 for n in (0..40)] # _G. C. Greubel_, Jun 04 2019"
+    ],
+    "xref": [
+        "Cf. A000079, A004526, A011377, A014551, A060182, A166920."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Paul Curtz_, Oct 28 2018",
+    "ext": [
+        "Three terms corrected by _Colin Barker_, Oct 28 2018"
+    ],
+    "references": 2,
+    "revision": 39,
+    "time": "2022-09-08T08:46:23-04:00",
+    "created": "2018-10-30T15:58:09-04:00"
+}

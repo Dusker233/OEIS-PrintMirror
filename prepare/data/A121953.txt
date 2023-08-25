@@ -1,0 +1,50 @@
+{
+    "number": 121953,
+    "data": "0,1,1,2,4,9,22,58,163,486,1525,5023,17261,61801,229416,882475,3503041,14349016,60434172,261785329,1162598284,5296140752,24676349293,117677694828,572852174491,2848941025165,14438982057103,74645318828781",
+    "name": "a(n) = (n-2)*a(n-2) + a(n-3), with a(1)=0, a(2)=1, a(3)=1.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A121953/b121953.txt\">Table of n, a(n) for n = 1..800</a>"
+    ],
+    "maple": [
+        "with(combinat);",
+        "a:= proc(n) option remember;",
+        "if n < 4 then fibonacci(n-1)",
+        "else (n-2)*a(n-2) + a(n-3)",
+        "fi;",
+        "end proc;",
+        "seq(a(n), n = 1..30); # _G. C. Greubel_, Oct 07 2019"
+    ],
+    "mathematica": [
+        "M[n_] = {{0,1,0}, {0,0,1}, {1,n,0}}; v[1]= {0,1,1}; v[n_]:= v[n]= M[n].v[n-1]; Table[v[n][[1]], {n,30}]",
+        "RecurrenceTable[{a[1]==0,a[2]==a[3]==1,a[n]==(n-2)a[n-2]+a[n-3]},a,{n,30}] (* _Harvey P. Dale_, Oct 10 2013 *)"
+    ],
+    "program": [
+        "(PARI) my(m=30, v=concat([0,1,1], vector(m-3))); for(n=4, m, v[n] = (n-2)*v[n-2] + v[n-3]); v \\\\ _G. C. Greubel_, Oct 07 2019",
+        "(Magma) I:=[0,1,1]; [n le 3 select I[n] else (n-2)*Self(n-2) + Self(n-3): n in [1..30]]; // _G. C. Greubel_, Oct 07 2019",
+        "(Sage)",
+        "def a(n):",
+        "    if (n<4): return fibonacci(n-1)",
+        "    else: return (n-2)*a(n-2) + a(n-3)",
+        "[a(n) for n in (1..30)] # _G. C. Greubel_, Oct 07 2019",
+        "(GAP)",
+        "a:= function(n)",
+        "    if n<4 then return Fibonacci(n-1);",
+        "    else return (n-2)*a(n-2) + a(n-3);",
+        "    fi;",
+        "  end;",
+        "List([1..30], n-> a(n) ); # _G. C. Greubel_, Oct 07 2019"
+    ],
+    "xref": [
+        "Cf. A001053."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Roger L. Bagula_, Sep 01 2006",
+    "ext": [
+        "Definition replaced by recurrence - The Assoc. Editors of the OEIS, Oct 14 2009"
+    ],
+    "references": 1,
+    "revision": 13,
+    "time": "2022-09-08T08:45:27-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

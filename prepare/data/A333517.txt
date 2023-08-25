@@ -1,0 +1,44 @@
+{
+    "number": 333517,
+    "data": "1,1,2,3,7,9,25,30,78,138,342,386,1307,1448,3406,6818,18907,20478,65901,70781,213704,397874,885118,939377,3624495,5034048,11032794,20966732,59398560,62307000,225641196,235937708,682530590,1183122260,2540294162,4026533578,15943721982,16555409210,35301649136,59929463166",
+    "name": "Number of set partitions of {1, 2, ..., n} such that, for any two numbers in the same part, one divides the other.",
+    "comment": [
+        "a(n) <= A000110(n) for all n since a(n) counts set partitions.",
+        "a(n) >= n for all n, since the singletons form a suitable partition and separately moving 1 into each set creates n - 1 new suitable partitions."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A333517/b333517.txt\">Table of n, a(n) for n = 0..48</a> (terms n = 0..45 from Giovanni Resta)"
+    ],
+    "example": [
+        "For n = 3, the suitable partitions are {{1}, {2}, {3}}, {{1, 3}, {2}}, and {{1, 2}, {3}}, so a(3) = 3."
+    ],
+    "maple": [
+        "g:= proc(n, s) `if`(n<2, 1+nops(s),",
+        "      b(n, sort(map(i-> `if`(isprime(i), 1, i), s))))",
+        "    end:",
+        "b:= proc(n, s) option remember; add(`if`(irem(s[j], n)>0, 0,",
+        "      g(n-1, subsop(j=n, s))), j=1..nops(s))+g(n-1, [s[], n])",
+        "    end:",
+        "a:= n-> g(n, []):",
+        "seq(a(n), n=0..28);  # _Alois P. Heinz_, Mar 26 2020"
+    ],
+    "mathematica": [
+        "g[n_, s_] := If[n<2, 1+Length[s], b[n, Sort[If[PrimeQ[#], 1, #]& /@ s]]];",
+        "b[n_, s_] := b[n, s] = Sum[If[Mod[s[[j]], n] > 0, 0, g[n-1, ReplacePart[s, j -> n]]], {j, 1, Length[s]}] + g[n-1, Append[s, n]];",
+        "a[n_] := g[n, {}];",
+        "a /@ Range[0, 28] (* _Jean-Fran\u00e7ois Alcover_, Nov 14 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000110, A320430."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Robert Dougherty-Bliss_, Mar 26 2020",
+    "ext": [
+        "a(25)-a(39) from _Alois P. Heinz_, Mar 26 2020"
+    ],
+    "references": 2,
+    "revision": 43,
+    "time": "2020-11-14T09:46:53-05:00",
+    "created": "2020-03-26T11:41:47-04:00"
+}

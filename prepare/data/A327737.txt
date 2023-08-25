@@ -1,0 +1,58 @@
+{
+    "number": 327737,
+    "data": "1,4,7,11,14,17,20,24,28,31,34,37,40,43,46,51,54,57,60,63,66,69,72,75,79,82,86,89,92,95,98,102,105,108,111,115,118,121,124,127,130,133,136,139,142,145,148,151,155,158,161,164,167,170,173,176,179,182,185",
+    "name": "a(n) is the sum of the lengths of the base-b expansions of n for all b with 1 <= b <= n.",
+    "formula": [
+        "a(n) = A043000(n) + n. - _A.H.M. Smeets_, Sep 23 2019"
+    ],
+    "example": [
+        "a(5) = 14 because 5 has the following representations in bases 1 to 5: 11111, 101, 12, 11, 10 giving a total length of 5+3+2+2+2 = 14.",
+        "a(12) = 37 because 12 in bases 1 through 12 is 1...1 (12 1's), 1100, 110, and for bases 4 through 12 we get a 2-digit number, for a total length of 12+4+3+9*2 = 37. - _N. J. A. Sloane_, Sep 23 2019"
+    ],
+    "program": [
+        "(Go)",
+        "package main",
+        "import (",
+        "    \"fmt\"",
+        "    \"strconv\"",
+        ")",
+        "func main() {",
+        "    // Due to limitations in strconv, this will only work for the first 36 terms",
+        "    for i := 1; i <= 36; i++ {",
+        "        count := i",
+        "        for base := 2; base <= i; base++ {",
+        "            count += len(strconv.FormatInt(int64(i), base))",
+        "        }",
+        "        fmt.Printf(\"%d, \", count)",
+        "    }",
+        "}",
+        "(PARI) a(n) = my(i=n); for(b=2, n, i+=#digits(n, b)); i \\\\ _Felix Fr\u00f6hlich_, Sep 23 2019",
+        "(Python)",
+        "def count(n,b):",
+        "    c = 0",
+        "    while n > 0:",
+        "        n, c = n//b, c+1",
+        "    return c",
+        "n = 0",
+        "while n < 60:",
+        "    n = n+1",
+        "    a, b = n, 1",
+        "    while b < n:",
+        "        b = b+1",
+        "        a = a + count(n,b)",
+        "    print(n,a) # _A.H.M. Smeets_, Sep 23 2019"
+    ],
+    "xref": [
+        "Cf. A043000."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Steve Engledow_, Sep 23 2019",
+    "ext": [
+        "More terms from _Felix Fr\u00f6hlich_, Sep 23 2019"
+    ],
+    "references": 0,
+    "revision": 24,
+    "time": "2019-09-23T21:11:52-04:00",
+    "created": "2019-09-23T21:11:52-04:00"
+}

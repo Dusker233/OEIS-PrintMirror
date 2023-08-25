@@ -1,0 +1,52 @@
+{
+    "number": 358521,
+    "data": "1,2,3,4,5,6,8,9,10,11,12,16,17,18,19,20,22,24,32,33,34,35,36,37,38,40,43,44,48,64,66,67,68,69,70,72,74,75,76,80,86,88,96,128,129,131,132,133,134,136,137,138,139,140,144,147,148,150,152,160,171,172",
+    "name": "Sorted list of positions of first appearances in the sequence of Matula-Goebel numbers of standard ordered trees (A358506).",
+    "comment": [
+        "The Matula-Goebel number of a rooted tree is the product of primes indexed by the Matula-Goebel numbers of the branches of its root, which gives a bijective correspondence between positive integers and unlabeled rooted trees.",
+        "We define the n-th standard ordered rooted tree to be obtained by taking the (n-1)-th composition in standard order (graded reverse-lexicographic, A066099) as root and replacing each part with its own standard ordered rooted tree. This ranking is an ordered variation of Matula-Goebel numbers, giving a bijective correspondence between positive integers and unlabeled ordered rooted trees."
+    ],
+    "link": [
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/e/2PACX-1vTCPiJVFUXN8IqfLlCXkgP15yrGWeRhFS4ozST5oA4Bl2PYS-XTA3sGsAEXvwW-B0ealpD8qnoxFqN3/pub\">Statistics, classes, and transformations of standard compositions</a>"
+    ],
+    "example": [
+        "The terms together with their standard ordered trees begin:",
+        "   1: o",
+        "   2: (o)",
+        "   3: ((o))",
+        "   4: (oo)",
+        "   5: (((o)))",
+        "   6: ((o)o)",
+        "   8: (ooo)",
+        "   9: ((oo))",
+        "  10: (((o))o)",
+        "  11: ((o)(o))",
+        "  12: ((o)oo)",
+        "  16: (oooo)",
+        "  17: ((((o))))",
+        "  18: ((oo)o)",
+        "  19: (((o))(o))",
+        "  20: (((o))oo)"
+    ],
+    "mathematica": [
+        "stc[n_]:=Differences[Prepend[Join @@ Position[Reverse[IntegerDigits[n,2]],1],0]]//Reverse;",
+        "srt[n_]:=If[n==1,{},srt/@stc[n-1]];",
+        "mgnum[t_]:=If[t=={},1,Times@@Prime/@mgnum/@t];",
+        "fir[q_]:=Select[Range[Length[q]],!MemberQ[Take[q,#-1],q[[#]]]&];",
+        "fir[Table[mgnum[srt[n]],{n,100}]]"
+    ],
+    "xref": [
+        "Positions of first appearances in A358506.",
+        "The unsorted version is A358522.",
+        "A000108 counts ordered rooted trees, unordered A000081.",
+        "A214577 and A358377 rank trees with no permutations.",
+        "Cf. A001263, A014486, A061775, A127301, A196050, A206487, A358371, A358372, A358378, A358379, A358505."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Nov 20 2022",
+    "references": 4,
+    "revision": 7,
+    "time": "2022-11-20T18:30:21-05:00",
+    "created": "2022-11-20T18:30:21-05:00"
+}

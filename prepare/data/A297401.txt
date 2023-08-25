@@ -1,0 +1,47 @@
+{
+    "number": 297401,
+    "data": "24,40,54,56,88,104,128,135,136,152,184,189,232,248,250,296,297,328,344,351,375,376,424,459,472,488,513,536,568,584,621,632,664,686,712,776,783,808,824,837,856,872,875,904,999,1016,1029,1048,1096,1107,1112,1161,1192",
+    "name": "Non-sphenic numbers with exactly 8 divisors.",
+    "comment": [
+        "These are the numbers of the form p^3*q (with primes p and q distinct) or p^7. Thus it is the union of A065036 and A092759, and this can be used for direct enumeration. - _Alex Meiburg_, Dec 31 2017"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A297401/b297401.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Caldwell and Honaker, <a href=\"https://t5k.org/curios/page.php?curio_id=31757\">Prime Curios!</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Sphenic_number\">Sphenic number</a>"
+    ],
+    "formula": [
+        "Equals {A030626} \\ {A007304}. - _Omar E. Pol_, Dec 30 2017"
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "P:= select(isprime, [2,seq(i,i=3..N)]):",
+        "R:= NULL:",
+        "for p in P do",
+        "  if p^7 <= N then R:= R, p^7 fi;",
+        "  if p^3 > N then break fi;",
+        "  for q in P while p^3*q <= N do if q <> p then R:= R, p^3*q fi od:",
+        "od:",
+        "sort([R]); # _Robert Israel_, Dec 31 2017"
+    ],
+    "mathematica": [
+        "Select[Range@ 1200, And[DivisorSigma[0, #] == 8, Nand[PrimeNu[#] == 3, PrimeOmega[#] == 3]] &] (* _Michael De Vlieger_, Dec 29 2017 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = !((bigomega(n)==3) && (omega(n)==3)) && (numdiv(n) == 8); \\\\ _Michel Marcus_, Dec 29 2017"
+    ],
+    "xref": [
+        "Subsequence of A030626.",
+        "Cf. A000005, A030626, A065036, A092759."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_G. L. Honaker, Jr._, Dec 29 2017",
+    "ext": [
+        "More terms from _Michel Marcus_, Dec 29 2017"
+    ],
+    "references": 1,
+    "revision": 49,
+    "time": "2023-04-03T10:36:13-04:00",
+    "created": "2017-12-30T16:53:30-05:00"
+}

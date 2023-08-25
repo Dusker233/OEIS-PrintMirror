@@ -1,0 +1,48 @@
+{
+    "number": 334259,
+    "data": "37,3790,4991,38073,908979,8378611,62110713,87126031,8490820681,9514920697,24717215429,784191725098,836390891918",
+    "name": "Self-locating numbers within the Copeland-Erd\u0151s constant: numbers k such that the string k is at the 0-indexed position k in the decimal digits of the concatenation of the prime numbers as a decimal sequence.",
+    "comment": [
+        "This is inspired by the self-locating digits in Pi (A057680). Similar to A064810, these digits are 0-indexed, whereas in A057680 the sequence is 1-indexed.",
+        "The first two terms of the 1-indexed sequence are 8031711 and 648967141. - _Giovanni Resta_, Apr 22 2020"
+    ],
+    "example": [
+        "37 is a term because the 3 digit of 37 appears in the 37th 0-indexed position of the Copeland-Erd\u0151s constant."
+    ],
+    "mathematica": [
+        "q=23; p=3; dq=2; dn=dp=1; L={}; n=-1; pP=nP=10; While[++n < 10^6, If[n == nP, nP *= 10; dn++]; While[ q<n, p = NextPrime[p]; If[p > pP, pP *= 10; dp++]; q = q pP + p; dq += dp]; If[n == Floor[ q/10^(dq - dn)], Print@ AppendTo[L, n]]; q = Mod[q, 10^(--dq)]]; L (* _Giovanni Resta_, Apr 21 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import sympy",
+        "from sympy import sieve",
+        "def digits_at(ss, n):",
+        "    ''' Extracts len(str(n)) digits at position n.'''",
+        "    t = len(str(n))",
+        "    s = ss[n:n+t]",
+        "    if s == '':",
+        "        return -1",
+        "    return int(s)",
+        "def self_locating(ss, n):",
+        "    return digits_at(ss,n) == n",
+        "SS = \"\"",
+        "for p in sieve.primerange(2, 100000):",
+        "    SS += str(p)",
+        "for i in range(100000):",
+        "    if self_locating(SS, i):",
+        "        print(i,end=\",\")"
+    ],
+    "xref": [
+        "Cf. A006880, A033308, A057680, A064810."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Soren Telfer_, Apr 20 2020",
+    "ext": [
+        "a(3)-a(13) from _Giovanni Resta_, Apr 22 2020"
+    ],
+    "references": 0,
+    "revision": 38,
+    "time": "2021-07-17T04:29:23-04:00",
+    "created": "2020-04-22T14:54:39-04:00"
+}

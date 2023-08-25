@@ -1,0 +1,50 @@
+{
+    "number": 352611,
+    "data": "1401400,28028000,333533200,3073270200,24234675465,172096749825,1134040872965,7069307049805,42240545297951,244205509154607,1375458924105651,7586883537988755,41147137237012950,220107145169421510,1164186829638102270,6100518487069916910",
+    "name": "a(n) is the number of different ways to partition the set of vertices of a convex n-gon into 5 polygons.",
+    "formula": [
+        "Let S(n,k) be the number of different ways to partition the set of vertices of a convex n-gon into k polygons, where each partition contains at least 3 objects (vertices).",
+        "By the k-associated Stirling numbers of second kind, it can be deduced that S(n,k) = k*S(n-1,k) + C(n-1,2)*S(n-3,k-1).",
+        "When k = 5 this gives the required formula for this particular case,",
+        "  a(n) = S(n,5) = 5*S(n-1,5) + C(n-1,2)*S(n-3,4)",
+        "  where n > 14 and S(14,5) = 0."
+    ],
+    "example": [
+        "For n=17, the set of vertices of a convex 17-gon can be partitioned into 5 polygons in 333533200 different ways:",
+        "- as 4 triangles and one pentagon ((1/4!)*C(17,3)*C(14,3)*C(11,3)*C(8,3)*C(5,5) = 95295200 different ways) or",
+        "- as 3 triangles and 2 quadrilaterals ((1/3!)*(1/2!)*C(17,3)*C(14,3)*C(11,3)*C(8,4)*C(4,4) = 238238000 different ways)."
+    ],
+    "maple": [
+        "A059022 := proc(n,k)",
+        "    option remember;",
+        "    if n<3 then",
+        "        0;",
+        "    elif n < 6 and k=1 then",
+        "        1 ;",
+        "    else",
+        "        k*procname(n-1,k)+binomial(n-1,2)*procname(n-3,k-1) ;",
+        "    end if;",
+        "end proc:",
+        "A352611 := proc(n)",
+        "    A059022(n,5) ;",
+        "end proc:",
+        "seq(A352611(n),n=15..50) ; # _R. J. Mathar_, Apr 08 2022"
+    ],
+    "mathematica": [
+        "S3[3, 1] = S3[4, 1] = S3[5, 1] = 1;",
+        "S3[n_, k_] /; 1 <= k <= Floor[n/3] := S3[n, k] = k*S3[n-1, k] + Binomial[n-1, 2]*S3[n-3, k-1];",
+        "S3[_, _] = 0;",
+        "a[n_] := S3[n, 5];",
+        "Table[a[n], {n, 15, 50}] (* _Jean-Fran\u00e7ois Alcover_, Jul 06 2022 *)"
+    ],
+    "xref": [
+        "Column 5 of A059022."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "15,1",
+    "author": "_Janaka Rodrigo_, Mar 23 2022",
+    "references": 2,
+    "revision": 24,
+    "time": "2022-07-06T11:00:05-04:00",
+    "created": "2022-04-03T08:58:37-04:00"
+}

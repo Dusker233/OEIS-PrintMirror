@@ -1,0 +1,39 @@
+{
+    "number": 33448,
+    "data": "74453,76543,132893,182243,202823,297403,358793,485923,655453,735883,759113,780613,797833,849143,1260383,1306033,1442173,1531093,1534153,1586953,1691033,1717063,1877243,1945763,1973633,2035513,2067083,2216803,2266993,2542513,2556803,2565203,2805773",
+    "name": "Initial prime in set of 4 consecutive primes in arithmetic progression with common difference 18.",
+    "comment": [
+        "Up to n = 10^4, the smallest difference a(n+1) - a(n) is 60 and occurs at n = 8571. - _M. F. Hasler_, Oct 26 2018",
+        "Each term is congruent to 3 mod 10 (as noted by Zak Seidov in the SeqFan email list). This means the three following consecutive primes are always congruent to 1, 9, and 7 mod 10, respectively (i.e., final digits for these primes are 3, 1, 9, 7, in that order). There cannot be a set of 5 such consecutive primes because a(n) + 4*18 == 5 (mod 10) so is a multiple of 5. - _Rick L. Shepherd_, Mar 27 2023"
+    ],
+    "link": [
+        "M. F. Hasler, <a href=\"/A033448/b033448.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Pri#primes_AP\">Index entries for sequences related to primes in arithmetic progressions</a>"
+    ],
+    "example": [
+        "{74453, 74471, 74489, 74507} is the first such set of 4 consecutive primes with common difference 18, so a(1) = 74453."
+    ],
+    "mathematica": [
+        "A033448 = Reap[For[p = 2, p < 2100000, p = NextPrime[p], p2 = NextPrime[p]; If[p2 - p == 18, p3 = NextPrime[p2]; If[p3 - p2 == 18, p4 = NextPrime[p3]; If[p4 - p3 == 18, Sow[p]]]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Jun 28 2012 *)",
+        "Transpose[Select[Partition[Prime[Range[160000]],4,1],Union[ Differences[ #]] == {18}&]][[1]] (* _Harvey P. Dale_, Jun 17 2014 *)"
+    ],
+    "program": [
+        "(PARI) A033448(n,show_all=1,g=18,p=2,o,c)={forprime(q=p+1,,if(p+g!=p=q,next, q!=o+2*g, c=3, c++>4, print1(o-g\",\"); n--||break); o=q-g);o-g} \\\\ Can be used as nxt(p)=A033448(1,,,p+1), e.g.: {p=0;vector(20,i,p=nxt(p))} or {p=0;for(i=1,1e4,write(\"b.txt\",i\" \"nxt(p)))}. - _M. F. Hasler_, Oct 26 2018"
+    ],
+    "xref": [
+        "Analogous sequences (start of CPAP-4 with common difference in square brackets): A033451 [6], A033447 [12], A033448 [this: 18], A052242 [24], A052243 [30], A058252 [36], A058323 [42], A067388 [48], A259224 [54], A210683 [60].",
+        "Cf. A033450, A052189."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jeff Burch_",
+    "ext": [
+        "More terms from _Labos Elemer_, Jan 31 2000",
+        "Definition clarified by _Harvey P. Dale_, Jun 17 2014",
+        "Example reflecting final digits given by _Rick L. Shepherd_, Mar 27 2023"
+    ],
+    "references": 17,
+    "revision": 37,
+    "time": "2023-03-28T02:14:51-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

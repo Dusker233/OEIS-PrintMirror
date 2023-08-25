@@ -1,0 +1,92 @@
+{
+    "number": 362344,
+    "data": "1,2,2,2,2,2,3,3,3,4,4,4,4,4,4,4,4,4,5",
+    "name": "Maximum number of distinct real roots of degree-n polynomial with coefficients 0,1.",
+    "link": [
+        "Enrico Bertolazzi, <a href=\"https://github.com/ebertolazzi/Sturm\">Sturm</a>"
+    ],
+    "example": [
+        "For n = 7, the maximum number of distinct real roots of a degree-7 polynomial with coefficients 0,1 is 3; e.g., the polynomial x^7 + x^4 + x^2 + x has 3 distinct real roots."
+    ],
+    "maple": [
+        "f:= proc(n) local i,j,L,p,v,m;",
+        "  m:= 0:",
+        "  for i from 2^n to 2^(n+1)-1 do",
+        "    L:= convert(i,base,2);",
+        "    p:= add(L[j]*x^(j-1),j=1..n+1);",
+        "    v:= sturm(sturmseq(p,x),x,-infinity,infinity);",
+        "    if v > m then m:= v fi;",
+        "  od;",
+        "m",
+        "end proc:",
+        "map(f, [$1..19]); # _Robert Israel_, May 07 2023"
+    ],
+    "mathematica": [
+        "For[n=1,n<=8,n++,Print[Max[Length@DeleteDuplicates@NSolve[Total[x^#]+x^n==0,x,Reals]&/@Subsets[Range[0,n-1]]]]]"
+    ],
+    "program": [
+        "(MATLAB)",
+        "% uses the Sturm toolbox; see links",
+        "for i=2:13",
+        "    display([i-1 maxroots(i)]);",
+        "end",
+        "function max_len=maxroots(n)",
+        "    max_len = 0;",
+        "    combinations = dec2bin(1:2:2^n-1) - '0';",
+        "    for i = 1:2^(n-1)",
+        "        c = combinations(i,:);",
+        "        if sum(c, 2) == 1",
+        "            continue;",
+        "        end",
+        "        len = distinct_real_roots(c);",
+        "        if len > max_len",
+        "            max_len = len;",
+        "        end",
+        "    end",
+        "end",
+        "function sign_var=distinct_real_roots(a)",
+        "S=Sturm();",
+        "S.build(Poly(a));",
+        "sign_var=0;",
+        "last_sign=0;",
+        "last_sign_parity=0;",
+        "parity=1;",
+        "for i=1:length(S.m_sturm)",
+        "    v=S.m_sturm{i}.m_coeffs(end);",
+        "    if v>0",
+        "        if last_sign<0",
+        "            sign_var = sign_var - 1;",
+        "        end",
+        "        if last_sign_parity == -parity",
+        "            sign_var = sign_var + 1;",
+        "        end",
+        "        last_sign = 1;",
+        "        last_sign_parity = parity;",
+        "    elseif v<0",
+        "        if last_sign>0",
+        "            sign_var = sign_var - 1;",
+        "        end",
+        "        if last_sign_parity == parity",
+        "            sign_var = sign_var + 1;",
+        "        end",
+        "        last_sign = -1;",
+        "        last_sign_parity = -parity;",
+        "    end",
+        "    parity = -parity;",
+        "end",
+        "end"
+    ],
+    "xref": [
+        "possible duplicate of A090735 or A090736"
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Keyang Li_, May 05 2023",
+    "ext": [
+        "a(14) on corrected by _Robert Israel_, May 07 2023"
+    ],
+    "references": 0,
+    "revision": 33,
+    "time": "2023-05-20T16:06:44-04:00",
+    "created": "2023-05-20T16:06:44-04:00"
+}

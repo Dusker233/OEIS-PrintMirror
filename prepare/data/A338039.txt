@@ -1,0 +1,53 @@
+{
+    "number": 338039,
+    "data": "18,81,198,576,675,819,891,918,1131,1304,1311,1818,1998,2262,2622,3393,3933,4031,4154,4514,4636,6364,8181,8749,8991,9478,12441,14269,14344,14421,15167,15602,16237,18018,18449,18977,19998,20651,23843,24882,26677,26892,27225",
+    "name": "Numbers m such that A338038(m) = A338038(A004086(m)) where A004086(i) is i read backwards and A338038(i) is the sum of the primes and exponents in the prime factorization of i ignoring 1-exponents; palindromes and multiples of 10 are excluded.",
+    "comment": [
+        "Palindromes (A002113) are excluded from the sequence because they obviously satisfy the condition.",
+        "Sequence is infinite since it includes 18, 1818, 181818, .... See link.",
+        "There are many cases of terms that are the repeated concatenation of integers like: 1818, 8181, 181818, ... , but also 131313131313131313131313131313 and more. See A338166.",
+        "If n is in the sequence and has d digits, and gcd(n, x) = gcd(A004086(n), x) where x = (10^((k+1)*d)-1)/(10^d-1), then the concatenation of k copies of n is also in the sequence. - _Robert Israel_, Oct 13 2020"
+    ],
+    "link": [
+        "Michel Marcus, <a href=\"/A338039/b338039.txt\">Table of n, a(n) for n = 1..2998</a>",
+        "Muhammet Boran, Garam Choi, Steven J. Miller, Jesse Purice, and Daniel Tsai, <a href=\"https://arxiv.org/abs/2307.00770\">A characterization of prime v-palindromes</a>, arXiv:2307.00770 [math.NT], 2023.",
+        "Daniel Tsai, <a href=\"https://arxiv.org/abs/2010.03151\">A recurring pattern in natural numbers of a certain property</a>, arXiv:2010.03151 [math.NT], 2020.",
+        "Daniel Tsai, <a href=\"http://math.colgate.edu/~integers/v32/v32.mail.html\">A recurring pattern in natural numbers of a certain property</a>, Integers (2021) Vol. 21, Article #A32.",
+        "Daniel Tsai, <a href=\"https://arxiv.org/abs/2111.10211\">v-palindromes: an analogy to the palindromes</a>, arXiv:2111.10211 [math.HO], 2021."
+    ],
+    "example": [
+        "For m = 18 = 2*3^2, A338038(18) = 2 + (3+2) = 7 and for m = 81 = 3^4, A338038(81) = 7, so 18 and 81 are terms."
+    ],
+    "maple": [
+        "rev:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "g:= proc(n) local t;",
+        "  add(t[1]+t[2],t=subs(1=0,ifactors(n)[2]))",
+        "end proc:",
+        "filter:= proc(n) local r;",
+        "  if n mod 10 = 0 then return false fi;",
+        "  r:= rev(n);",
+        "  r <> n and g(r)=g(n)",
+        "end proc:",
+        "select(filter, [$1..30000]); # _Robert Israel_, Oct 13 2020"
+    ],
+    "mathematica": [
+        "s[1] = 0; s[n_] := Plus @@ First /@ (f = FactorInteger[n]) + Plus @@ Select[Last /@ f, # > 1 &]; Select[Range[30000], !Divisible[#, 10] && (r = IntegerReverse[#]) != # &&  s[#] == s[r] &] (* _Amiram Eldar_, Oct 08 2020 *)"
+    ],
+    "program": [
+        "(PARI) f(n) = my(f=factor(n)); vecsum(f[,1]) + sum(k=1, #f~, if (f[k,2]!=1, f[k,2])); \\\\ A338038",
+        "isok(m) = my(r=fromdigits(Vecrev(digits(m)))); (m % 10) && (m != r) && (f(r) == f(m));"
+    ],
+    "xref": [
+        "Cf. A004086 (read n backwards), A002113, A029742 (non-palindromes), A338038, A338166."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Oct 08 2020",
+    "references": 5,
+    "revision": 44,
+    "time": "2023-07-04T08:18:32-04:00",
+    "created": "2020-10-09T03:47:47-04:00"
+}

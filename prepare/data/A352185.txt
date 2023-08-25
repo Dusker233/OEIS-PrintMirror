@@ -1,0 +1,53 @@
+{
+    "number": 352185,
+    "data": "3,5,7,11,11,13,19,19,19,31,31,31,31,31,31,31,31,47,47,61,61,61,61,127,127,127,127,127,139,139,139,139,139,193,193,229,229,229,229,283,283,283,283,283,283,337,337,337,337,337,409,409,409,409,409,409,409,461",
+    "name": "a(n) = smallest integer m for which there is an integer k, with 0 < k < m and gcd(k,m)=1, such that the arithmetic progression m+k, 2*m+k, ..., n*m+k contains only composite numbers.",
+    "comment": [
+        "Richard Guy reports that the sequence originated with Victor Pambuccian, who asks, among other things, if a(n) is always prime. [The answer is no - read on. - _N. J. A. Sloane_, Mar 13 2022]",
+        "For the corresponding values of k see A352186.",
+        "a(135) = 8207 is the first nonprime term and there are many other counterexamples to the conjecture: a(150..173) = 12311, a(193..195) = 40247, a(196..202) = 40951, ... . - _Michael S. Branicky_, Mar 13 2022"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A352185/b352185.txt\">Table of n, a(n) for n = 1..232</a>",
+        "Richard K. Guy, <a href=\"http://www.jstor.org/stable/2322320\">What are the smallest arithmetic progressions of composite numbers?</a>, Amer. Math. Monthly, Vol. 93, No. 8 (1986), p. 627."
+    ],
+    "formula": [
+        "a(n+1) >= a(n) by construction. - _Michael S. Branicky_, Mar 12 2022"
+    ],
+    "example": [
+        "For n=1, m=3, k=1, the AP is [4].",
+        "For n=4, m=11, k=5, the AP is [16, 27, 38, 49]."
+    ],
+    "program": [
+        "(Python)",
+        "from math import gcd",
+        "from sympy import isprime",
+        "from itertools import count, islice, takewhile",
+        "def comp(n): return not isprime(n)",
+        "def agen(): # generator of terms",
+        "    n = 1",
+        "    for m in count(2):",
+        "        for k in range(1, m):",
+        "            if gcd(k, m) != 1:",
+        "                continue",
+        "            ap = len(list(takewhile(comp, (i*m+k for i in count(1)))))",
+        "            if ap >= n:",
+        "                for i in range(n, ap+1):",
+        "                    yield m",
+        "                n = ap + 1",
+        "print(list(islice(agen(), 58)))  # _Michael S. Branicky_, Mar 12 2022"
+    ],
+    "xref": [
+        "Cf. A352186."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Mar 12 2022",
+    "ext": [
+        "a(24) and beyond from _Michael S. Branicky_, Mar 12 2022."
+    ],
+    "references": 3,
+    "revision": 44,
+    "time": "2022-03-21T09:11:16-04:00",
+    "created": "2022-03-12T12:28:26-05:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 322842,
+    "data": "173,277,457,607,727,929,1087,1129,1181,1223,1237,1307,1423,1433,1447,1493,1523,1549,1597,1613,1627,1811,1861,1973,2011,2063,2137,2297,2347,2377,2399,2423,2677,2693,2753,2767,2797,2819,2851,2917,3023,3313,3323,3449",
+    "name": "Primes p such that both p+2 and p-2 are neither prime nor semiprime.",
+    "comment": [
+        "Also: Primes p such that both p+2 and p-2 have at least three prime divisors. - _David A. Corneth_, Dec 28 2018"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A322842/b322842.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "q:= n-> numtheory[bigomega](n)>2:",
+        "a:= proc(n) option remember; local p;",
+        "      p:= `if`(n=1, 1, a(n-1));",
+        "      do p:= nextprime(p);",
+        "         if q(p-2) and q(p+2) then break fi",
+        "      od; p",
+        "    end:",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Dec 28 2018"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[1000]], PrimeOmega[#-2] > 2 && PrimeOmega[#+2] > 2&] (* _Jean-Fran\u00e7ois Alcover_, Nov 26 2020 *)"
+    ],
+    "program": [
+        "(Java)",
+        "boolean isIsolatedPrime(int num){",
+        "    int upper = num + 2;",
+        "    int lower = num - 2;",
+        "    return isPrime(num) &&",
+        "          !isPrime(upper) &&",
+        "          !isPrime(lower) &&",
+        "          !isSemiPrime(upper) &&",
+        "          !isSemiPrime(lower);",
+        "   }",
+        "(PARI) is(n) = isprime(n) && bigomega(n + 2) > 2 && bigomega(n - 2) > 2 \\\\ _David A. Corneth_, Dec 28 2018"
+    ],
+    "xref": [
+        "Cf. A000040, A001358, A007510, A134797."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Kyle Buscaglia_, Cory Baker, Dec 28 2018",
+    "references": 1,
+    "revision": 26,
+    "time": "2020-11-26T07:48:02-05:00",
+    "created": "2019-01-28T02:28:36-05:00"
+}

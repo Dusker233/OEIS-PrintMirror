@@ -1,0 +1,46 @@
+{
+    "number": 204235,
+    "data": "1,5,42,632,14124,449652,19200336,1063272704,74068997888,6344884818304,655635015988864,80447681129070080,11565193558509497088,1925787312858332101888,367762470538537620457472,79847718328265949957881856,19560087897336150724249288704",
+    "name": "Permanent of the n-th principal submatrix of A143182.",
+    "comment": [
+        "The n-th principal submatrix of A143182 is an n X n symmetric Toeplitz matrix whose first row consists of successive natural numbers 1, ..., n. - _Stefano Spezia_, Sep 23 2018",
+        "Conjecture: a(1) and a(2) are the only terms that are odd numbers. - _Stefano Spezia_, Oct 28 2018"
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A204235/b204235.txt\">Table of n, a(n) for n = 1..35</a> (terms 1..14 from Clark Kimberling, terms 15..22 from Stefano Spezia)"
+    ],
+    "maple": [
+        "f:= proc(n) uses LinearAlgebra;",
+        "Permanent(ToeplitzMatrix([seq(i, i=1 ..n)], n, symmetric))",
+        "end proc:",
+        "map(f, [$1..20]); # _Stefano Spezia_, Oct 28 2018"
+    ],
+    "mathematica": [
+        "f[i_, j_] := Max[i - j + 1, j - i + 1];  (* A143182 *)",
+        "m[n_] := Table[f[i, j], {i, 1, n}, {j, 1, n}]",
+        "TableForm[m[4]] (* 4 X 4 principal submatrix *)",
+        "Table[Det[m[n]], {n, 1, 22}]  (* A001792 - signed *)",
+        "Permanent[m_] :=",
+        "  With[{a = Array[x, Length[m]]},",
+        "   Coefficient[Times @@ (m.a), Times @@ a]];",
+        "Table[Permanent[m[n]], {n, 1, 14}]  (* A204235 *)",
+        "b[i_]:=i; a[n_]:=Permanent[ToeplitzMatrix[Array[b, n], Array[b, n]]]; Array[a, 22] (* _Stefano Spezia_, Sep 23 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = matpermanent(matrix(n, n, i, j, max(i - j + 1, j - i + 1)))}",
+        "for(n=1, 20, print1(a(n), \", \")) \\\\ _Vaclav Kotesovec_, Apr 29 2019"
+    ],
+    "xref": [
+        "Cf. A143182."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Jan 13 2012",
+    "ext": [
+        "Extended by _Stefano Spezia_, Oct 28 2018"
+    ],
+    "references": 9,
+    "revision": 28,
+    "time": "2019-04-30T02:31:54-04:00",
+    "created": "2012-01-13T21:16:24-05:00"
+}

@@ -1,0 +1,74 @@
+{
+    "number": 339508,
+    "data": "1,1,2,4,6,7,8,10,11,13,13,33,43,56,70,73,99,114,134,151,151,185,333,372,445,456,558,565,672,1031,1031,1220,1518,1967,2161,2176,2238,5399,5543,6720,6720,8857,10019,11819,16882,16896,18072,19299,21267,23405,23405,24686",
+    "name": "Number of subsets of {2..n} such that the product of the elements is a decimal palindrome.",
+    "comment": [
+        "a(k*10) = a(k*10-1) because all new products end in 0, thus not palindromes. - _Michael S. Branicky_, Dec 08 2020"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A339508/a339508.gp.txt\">List of factorizations of the a(n) products for n = 1..51</a>.",
+        "David A. Corneth, <a href=\"/A339508/a339508_2.gp.txt\">Lower bounds on a(n) for n = 0..100</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PalindromicNumber.html\">Palindromic Number</a>",
+        "<a href=\"/index/Pac#palindromes\">Index entries for sequences related to palindromes</a>"
+    ],
+    "example": [
+        "a(9) = 13 subsets: {}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {2, 3}, {2, 4}, {4, 7, 9} and {2, 3, 6, 7}."
+    ],
+    "program": [
+        "(Python)",
+        "from numpy import prod",
+        "from itertools import combinations",
+        "def a(n):",
+        "    ans = 1  # empty set",
+        "    for r in range(1, n):",
+        "        for s in combinations(range(2, n+1), r):",
+        "            strsp = str(prod(s))",
+        "            ans += strsp==strsp[::-1]",
+        "    return ans",
+        "print([a(n) for n in range(20)])  # _Michael S. Branicky_, Dec 08 2020",
+        "(Python)",
+        "from functools import lru_cache, reduce",
+        "from operator import mul",
+        "from itertools import combinations",
+        "@lru_cache(maxsize=None)",
+        "def A339508(n):",
+        "    nlist = [i for i in range(2,n) if i % 10 != 0]",
+        "    if n == 0 or n == 1:",
+        "        return 1",
+        "    c = A339508(n-1)",
+        "    if n % 10 != 0:",
+        "        if str(n) == str(n)[::-1]:",
+        "            c += 1",
+        "        for i in range(1,len(nlist)+1):",
+        "            for d in combinations(nlist,i):",
+        "                s = str(reduce(mul,d)*n)",
+        "                if s == s[::-1]:",
+        "                    c += 1",
+        "    return c # _Chai Wah Wu_, Dec 08 2020",
+        "(Python)",
+        "from functools import lru_cache",
+        "def cond(p): sp = str(p); return sp == sp[::-1]",
+        "@lru_cache(maxsize=None)",
+        "def b(n, p):",
+        "    if n == 1: return int(cond(p))",
+        "    return b(n-1, p) + b(n-1, p*n) if p*n%10 else b(n-1, p)",
+        "def a(n): return 1 if n < 2 else b(n, 1)",
+        "print([a(n) for n in range(36)]) # _Michael S. Branicky_, Oct 05 2022"
+    ],
+    "xref": [
+        "Cf. A002113, A093888, A339507."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Dec 07 2020",
+    "ext": [
+        "a(23)-a(32) from _Michael S. Branicky_, Dec 08 2020",
+        "a(33)-a(42) from _Chai Wah Wu_, Dec 08 2020",
+        "a(43)-a(48) from _Chai Wah Wu_, Dec 11 2020",
+        "a(49)-a(51) from _Michael S. Branicky_, Oct 05 2022"
+    ],
+    "references": 2,
+    "revision": 44,
+    "time": "2022-10-11T00:55:39-04:00",
+    "created": "2020-12-08T02:37:50-05:00"
+}

@@ -1,0 +1,82 @@
+{
+    "number": 347608,
+    "data": "1,2,20,1744,2002568,42263042752,21686691099024768,344069541824691045987328,226788686879114461294165127878656",
+    "name": "Number of interlacing triangles of size n.",
+    "comment": [
+        "An interlacing triangle of size n is a triangular array of the numbers 1, 2, ..., (n+1)*n/2 such that if T(i,j) denotes the j-th number in the i-th row then either T(i-1,j+1) < T(i,j) < T(i-1,j) or T(i-1,j) < T(i,j) < T(i-1,j+1) for 1 < i <= n and 1 <= j <= n-i+1.",
+        "Generalizes A003121 for the case when rows are not strictly increasing. See comment from Mar 25 2012 and comment from Dec 02 2014."
+    ],
+    "link": [
+        "James B. Sidoli, <a href=\"/A347608/a347608_2.pdf\">On the number of interlacing triangles of size n</a>"
+    ],
+    "example": [
+        "For n = 2, a(2) = 2. The interlacing triangles are given below:",
+        "    2             2",
+        "  1   3   and   3   1."
+    ],
+    "program": [
+        "(Sage)",
+        "def interlacing(n):",
+        "    C_2=[]",
+        "    part=[j for j in range(n-1,-1,-1)]",
+        "    box=[]",
+        "    big_box=[]",
+        "    pos=0",
+        "    d=0",
+        "    C_2_star=[]",
+        "    for g in Words([0,1],n*(n-1)/2).list():",
+        "        C_2.append(list(g))",
+        "    for h in C_2:",
+        "        relations=[]",
+        "        pos=0",
+        "        big_box=[]",
+        "        for j in range(len(part)-1):",
+        "            for k in list(h)[pos:pos+part[j]]:",
+        "                box.append(k)",
+        "            big_box.append(box)",
+        "            box=[]",
+        "            pos=pos+part[j]",
+        "        x=0",
+        "        for k in range(1,len(big_box)):",
+        "            for r in range(len(big_box[k])):",
+        "                if big_box[k][r]==1 and big_box[k-1][r]==0 and big_box[k-1][r+1]==0 or big_box[k][r]==0 and big_box[k-1][r]==1 and big_box[k-1][r+1]==1:",
+        "                    continue",
+        "                else:",
+        "                    x=x+1",
+        "        if x==(n-1)*(n-2)/2:",
+        "            q=q+1",
+        "            C_2_star.append(big_box)",
+        "    position=range(n*(n+1)/2)",
+        "    for tri in C_2_star:",
+        "        P=[]",
+        "        relations=[]",
+        "        counter=0",
+        "        collect=[]",
+        "        for j in range(len(tri)):",
+        "            for r in range(len(tri[j])):",
+        "                if tri[j][r]==0:",
+        "                    relations.append([position[counter],position[counter+n-j]])",
+        "                    relations.append([position[counter+n-j],position[counter+1]])",
+        "                if tri[j][r]==1:",
+        "                    relations.append([position[counter+n-j],position[counter]])",
+        "                    relations.append([position[counter+1],position[counter+n-j]])",
+        "                counter=counter+1",
+        "            counter=counter+1",
+        "        P=Poset([range(n*(n+1)/2),relations])",
+        "        d=d+P.linear_extensions().cardinality()",
+        "    return d"
+    ],
+    "xref": [
+        "Cf. A003121."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_James B. Sidoli_, Sep 08 2021",
+    "ext": [
+        "a(7)-a(9) from _Dylan Nelson_, May 09 2022"
+    ],
+    "references": 1,
+    "revision": 37,
+    "time": "2023-05-02T16:04:42-04:00",
+    "created": "2021-10-28T03:12:09-04:00"
+}

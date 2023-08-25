@@ -1,0 +1,43 @@
+{
+    "number": 363453,
+    "data": "0,0,1,2,12,35,206,780,4949,22686,156972,837333,6301550,38122554,310279615,2090641920,18293310174,135445359397,1267153412532,10202944645270,101557600812015,881921432827544,9299499328238110,86508104545175503,962663031508255416",
+    "name": "Total number of blocks containing only even elements in all partitions of [n].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A363453/b363453.txt\">Table of n, a(n) for n = 0..250</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..floor(n/2)} k * A124422(n,k).",
+        "a(n) = A363434(n) - A363452(n).",
+        "a(2n) = A363452(2n).",
+        "a(2n+1) = A363452(2n+1) - A094577(n)."
+    ],
+    "example": [
+        "a(3) = 2 = 0 + 0 + 1 + 0 + 1 : 123, 12|3, 13|2, 1|23, 1|2|3."
+    ],
+    "maple": [
+        "b:= proc(n, k) local g, u; g:= floor(n/2); u:=ceil(n/2);",
+        "      add(Stirling2(i, k)*binomial(g, i)*",
+        "      add(Stirling2(u, j)*j^(g-i), j=0..u), i=k..g)",
+        "    end:",
+        "a:= n-> add(b(n, k)*k, k=0..floor(n/2)):",
+        "seq(a(n), n=0..25);",
+        "# second Maple program:",
+        "b:= proc(n, x, y, m) option remember; `if`(n=0, x,",
+        "      `if`(x+m>0, b(n-1, y, x, m)*(x+m), 0)+b(n-1, y, x+1, m)+",
+        "      `if`(y>0, b(n-1, y-1, x, m+1)*y, 0))",
+        "    end:",
+        "a:= n-> b(n, 0$3):",
+        "seq(a(n), n=0..25);"
+    ],
+    "xref": [
+        "Cf. A000110, A094577, A124422, A363434, A363452."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jun 02 2023",
+    "references": 3,
+    "revision": 17,
+    "time": "2023-06-05T09:25:02-04:00",
+    "created": "2023-06-05T09:25:02-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 302699,
+    "data": "1,1,3,13,71,469,3711,35181,398791,5352149,83650687,1494274301,29988083447,666634964197,16233361360559,429237520044813,12237655701598503,374023408217062261,12195222470567359071,422440153967133458205,15490152522612488256855,599350023954941335582725,24401304036660493806643215",
+    "name": "G.f. A(x) satisfies: A(x) = 1 + x * A(x) * (A(x) + 3*x*A'(x)) / (A(x) + x*A'(x)).",
+    "comment": [
+        "Compare to: C(x) = 1 + x*C(x) * (C(x) + 2*x*C'(x)) / (C(x) + x*C'(x)) holds when C(x) = 1 + x*C(x)^2 is a g.f. of the Catalan numbers (A000108)."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A302699/b302699.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = 1 + x*A(x) * (A(x) + 3*x*A'(x)) / (A(x) + x*A'(x)).",
+        "(2) A(x) = 1/(1 - x*A(x)/(1 - x*A(x)/(1 - 2*x*A(x)/(1 - 3*x*A(x)/(1 - 4*x*A(x)/(1 - 5*x*A(x)/(1 - ...)))))), a continued fraction.",
+        "(3) A(x) = Series_Reversion( x - x^2*F(x) ) where F(x) = Sum_{n>=0} (2*n)!/(n!*2^n)*x^n (g.f. of the odd double factorials A001147).",
+        "a(n) ~ 2^(n - 1/2) * n^(n-1) / exp(n - 1/2). - _Vaclav Kotesovec_, Aug 11 2021"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 3*x^2 + 13*x^3 + 71*x^4 + 469*x^5 + 3711*x^6 + 35181*x^7 + 398791*x^8 + 5352149*x^9 + 83650687*x^10 + ...",
+        "RELATED SERIES.",
+        "A'(x)/A(x) = 1 + 5*x + 31*x^2 + 225*x^3 + 1891*x^4 + 18473*x^5 + 210939*x^6 + 2815137*x^7 + 43551715*x^8 + 770297385*x^9 + ...",
+        "A(x) + x*A'(x) = 1 + 2*x + 9*x^2 + 52*x^3 + 355*x^4 + 2814*x^5 + 25977*x^6 + 281448*x^7 + 3589119*x^8 + 53521490*x^9 + ..."
+    ],
+    "program": [
+        "(PARI) /* Differential equation: */",
+        "{a(n) = my(A=1); for(i=0, n, A = 1 + x*A*(A + 3*x*A')/(x*A +x^2*O(x^n))'); polcoeff(G=A, n)}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) /* Continued fraction: */",
+        "{a(n) = my(A=1, CF = 1+x +x*O(x^n)); for(i=1, n, for(k=0, n, CF = 1/(1 - (n-k+1)*x*A*CF ) ); A=1/(1 - x*A*CF) ); polcoeff(A, n)}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A001147, A112934."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 11 2018",
+    "references": 1,
+    "revision": 14,
+    "time": "2021-08-11T12:37:36-04:00",
+    "created": "2018-04-11T23:39:46-04:00"
+}

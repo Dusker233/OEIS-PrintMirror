@@ -1,0 +1,44 @@
+{
+    "number": 362066,
+    "data": "17,12491,14723,42437,57089,58193,61051,63131,63347,64553,64567,64577,64591,64601,64661,64679,64951,65071,65173,65293,65881,66863,69931,79817,99551,129083,165103,263071,284833,1407647,1515259,4303027,6440999,14968819,95517973,527737957,1893230839,1950929941,1964567161",
+    "name": "Primes associated with the indices in A362060.",
+    "comment": [
+        "Is this the same as A114924, or are there base-10 expressions of pi(p) which become p after striking 2 or more digits? - _R. J. Mathar_, Apr 18 2023"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A362066/b362066.txt\">Table of n, a(n) for n = 1..54</a> (n=1..50 from Jean-Marc Rebert)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import sieve",
+        "def okA362060(n):",
+        "    p = sieve[n]",
+        "    while n and p:",
+        "        if n%10 == p%10:",
+        "            n //= 10",
+        "        p //= 10",
+        "    return n == 0",
+        "print([sieve[k] for k in range(1, 10**6) if okA362060(k)]) # _Michael S. Branicky_, Apr 07 2023",
+        "(Python)",
+        "from sympy import prime, nextprime",
+        "from itertools import count, islice",
+        "def A362066_gen(startvalue=1): # generator of terms >= startvalue",
+        "    p = prime(max(startvalue,1))",
+        "    for k in count(max(startvalue,1)):",
+        "        c = iter(str(p))",
+        "        if all(map(lambda b:any(map(lambda a:a==b,c)),str(k))):",
+        "            yield p",
+        "        p = nextprime(p)",
+        "A362066_list = list(islice(A362066_gen(),20)) # _Chai Wah Wu_, Apr 07 2023"
+    ],
+    "xref": [
+        "Cf. A362060."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jean-Marc Rebert_, Apr 07 2023",
+    "references": 2,
+    "revision": 26,
+    "time": "2023-04-18T10:24:38-04:00",
+    "created": "2023-04-07T14:07:06-04:00"
+}

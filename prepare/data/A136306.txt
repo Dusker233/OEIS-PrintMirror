@@ -1,0 +1,43 @@
+{
+    "number": 136306,
+    "data": "1,2,6,78,8112,81160560,8116056486963360,81160564869633656812395408743520,8116056486963365681239540874352649284518957069254499163269948160",
+    "name": "a(n) = a(n-1)*(10^K) + n*a(n-1); a(0)=1; K=floor(log_10 (n*a(n-1))).",
+    "comment": [
+        "Sequence generalized :",
+        "a(n)=[a(n-1)*B^F(a(n-1),n)]+G(a(n-1),n); a(0)=1; F(t),G(t)integer functions."
+    ],
+    "formula": [
+        "a(n)=a(n-1)*(10^K) + n + a(n-1); a(0)=1; K=floor(log_10 n + a(n-1)) + 1."
+    ],
+    "maple": [
+        "A136306 := proc(n)",
+        "    option remember;",
+        "    local k ;",
+        "    if n = 0 then",
+        "        1;",
+        "    else",
+        "        if n*procname(n-1) < 1 then",
+        "            k := 0;",
+        "        else",
+        "            k := floor(log[10](n*procname(n-1))) ;",
+        "        end if ;",
+        "        procname(n-1)*(n+10^k)  ;",
+        "    end if;",
+        "end proc:",
+        "seq(A136306(n),n=0..10) ; # _R. J. Mathar_, Jun 19 2021"
+    ],
+    "program": [
+        "(PARI) a(n) = if (n==0, 1, my(x=a(n-1), K=log(n*x)\\log(10)); x*(10^K) + n*x); \\\\ _Michel Marcus_, Mar 16 2022"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Ctibor O. Zizka_, Mar 22 2008",
+    "ext": [
+        "Offset corrected by _R. J. Mathar_, Jun 19 2021",
+        "More terms from _Michel Marcus_, Mar 16 2022"
+    ],
+    "references": 1,
+    "revision": 9,
+    "time": "2022-03-16T10:33:44-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

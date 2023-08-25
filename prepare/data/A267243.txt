@@ -1,0 +1,51 @@
+{
+    "number": 267243,
+    "data": "7,50,475,6292,107015,2093467,43555569,924051709,19614050515,413556580944,8645774602327,179276181587698,3691120876565687,75550095426967737,1538986699132717645,31229753343696948035",
+    "name": "Number of n X 6 binary arrays with row sums nondecreasing and columns lexicographically nondecreasing.",
+    "comment": [
+        "Column 6 of A267245."
+    ],
+    "link": [
+        "R. H. Hardin, <a href=\"/A267243/b267243.txt\">Table of n, a(n) for n = 1..210</a>",
+        "Robert Israel, <a href=\"/A267243/a267243.pdf\">Maple-assisted proof of empirical recurrence</a>"
+    ],
+    "formula": [
+        "Empirical: a(n) = 114*a(n-1) - 5915*a(n-2) + 186008*a(n-3) - 3982785*a(n-4) + 61835542*a(n-5) - 723657627*a(n-6) + 6549515604*a(n-7) - 46652032035*a(n-8) + 264676225246*a(n-9) - 1205477853945*a(n-10) + 4427867737616*a(n-11) - 13139368875011*a(n-12) + 31468929403866*a(n-13) - 60602488003009*a(n-14) + 93197329064964*a(n-15) - 113220771193368*a(n-16) + 106920682204032*a(n-17) - 76630180181904*a(n-18) + 40173465734208*a(n-19) - 14497964755200*a(n-20) + 3213273369600*a(n-21) - 329204736000*a(n-22).",
+        "Empirical formula verified (see link). - _Robert Israel_, Sep 08 2019"
+    ],
+    "example": [
+        "Some solutions for n=4:",
+        "  0 0 0 0 1 1   0 0 0 0 1 1   0 0 0 0 1 1   0 0 0 1 1 1",
+        "  0 0 0 1 0 1   0 0 1 1 0 0   0 0 1 1 0 0   0 1 1 0 0 1",
+        "  0 1 1 1 1 0   0 0 0 1 1 1   0 1 0 0 0 1   1 1 1 1 1 0",
+        "  0 0 1 1 1 1   0 1 0 1 0 1   1 1 0 1 0 1   1 0 1 1 1 1"
+    ],
+    "maple": [
+        "S[2]:= [[0,0,0],[0,0,1],[0,1,1],[1,0,1],[1,1,0],[1,1,1]]:",
+        "for i from 3 to 6 do",
+        "  S[i]:= map(proc(t) [op(t[1..i-1]),t[i-1],op(t[i..-1]),0], [op(t[1..i-1]),t[i-1],op(t[i..-1]),1],",
+        "     [op(t[1..i-1]),1-t[i-1],op(t[i..-1]),1] end proc, S[i-1])",
+        "od:",
+        "states:= S[6]:",
+        "T:= Matrix(486,486,proc(i,j) local k;",
+        "  if add(states[j,k]-states[i,k],k=1..6) > 0 then return 0 fi;",
+        "  for k from 7 to 11 do if states[j,k]>states[i,k] then return 0 fi od;",
+        "  for k from 1 to 5 do if states[i,k]>=states[i,k+1] and states[j,k+6]<>states[i,k+6] then return 0 fi od;",
+        "1",
+        "end proc):",
+        "E:= Vector(486): E[1]:= 1:",
+        "U[0]:= Vector[row](486,1):",
+        "for k from 1 to 25 do U[k]:= U[k-1].T od:",
+        "seq(U[j] . E, j=1..25); # _Robert Israel_, Sep 08 2019"
+    ],
+    "xref": [
+        "Cf. A267245."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. H. Hardin_, Jan 12 2016",
+    "references": 1,
+    "revision": 10,
+    "time": "2019-09-09T04:31:23-04:00",
+    "created": "2016-01-12T09:05:51-05:00"
+}

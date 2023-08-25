@@ -1,0 +1,62 @@
+{
+    "number": 324989,
+    "data": "1,2,3,4,5,7,11,22,101,111,121,131,151,181,191,202,313,353,373,383,727,757,787,797,919,929,1001,1111,10001,10201,10301,10501,10601,11111,11311,11411,12421,12721,12821,13331,13831,13931,14341,14741,15451,15551,16061",
+    "name": "Palindromes whose product of divisors is palindromic.",
+    "comment": [
+        "Numbers m such that m and A007955(m) = pod(m) are both in A002113.",
+        "Of 48025 terms < 10^11, all but 30 are prime. - _Robert Israel_, Apr 23 2019"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A324989/b324989.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Product of divisors of palindrome number 22 with divisors 1, 2, 11 and 22 is 484 (palindrome number)."
+    ],
+    "maple": [
+        "revdigs:= proc(n)",
+        "local L, nL, i;",
+        "L:= convert(n, base, 10);",
+        "nL:= nops(L);",
+        "add(L[i]*10^(nL-i), i=1..nL);",
+        "end:",
+        "pals:= proc(d) local x, y;",
+        "  if d::even then [seq(x*10^(d/2)+revdigs(x), x=10^(d/2-1)..10^(d/2)-1)]",
+        "  else [seq(seq(x*10^((d+1)/2)+y*10^((d-1)/2)+revdigs(x), y=0..9), x=10^((d-1)/2-1)..10^((d-1)/2)-1)]",
+        "  fi",
+        "end proc:",
+        "pals(1):= [$1..9]:",
+        "filter:= proc(n) local v;",
+        "  v:= convert(numtheory:-divisors(n),`*`);",
+        "  revdigs(v)=v",
+        "end proc:",
+        "seq(op(select(filter, pals(d))),d=1..5); # _Robert Israel_, Apr 23 2019"
+    ],
+    "mathematica": [
+        "Select[Range[10^5], And[PalindromeQ@ #, PalindromeQ[Times @@ Divisors@ #]] &] (* _Michael De Vlieger_, Mar 24 2019 *)",
+        "Select[Range[17000],AllTrue[{#,Times@@Divisors[#]},PalindromeQ]&] (* _Harvey P. Dale_, Oct 13 2021 *)"
+    ],
+    "program": [
+        "(Magma) [n: n in [1..100000] | Intseq(n, 10) eq Reverse(Intseq(n, 10)) and Intseq(&*[d: d in Divisors(n)], 10) eq Reverse(Intseq(&*[d: d in Divisors(n)], 10))]",
+        "(PARI) ispal(n) = my(d=digits(n)); Vecrev(d) == d;",
+        "isok(n) = ispal(n) && ispal(vecprod(divisors(n))); \\\\ _Michel Marcus_, Mar 23 2019",
+        "(Python)",
+        "from math import isqrt",
+        "from itertools import chain, count, islice",
+        "from sympy import divisor_count",
+        "def A324989_gen(): # generator of terms",
+        "    return filter(lambda n:(s:=str(isqrt(n)**d if (d:=divisor_count(n)) & 1 else n**(d//2)))[:(t:=(len(s)+1)//2)]==s[:-t-1:-1],chain.from_iterable(chain((int((s:=str(d))+s[-2::-1]) for d in range(10**l,10**(l+1))), (int((s:=str(d))+s[::-1]) for d in range(10**l,10**(l+1)))) for l in count(0)))",
+        "A324989_list = list(islice(A324989_gen(),20)) # _Chai Wah Wu_, Jun 24 2022"
+    ],
+    "xref": [
+        "Cf. A007955, A002113, A069747.",
+        "Includes A002385.",
+        "Similar sequences for functions sigma(m) and tau(m): A028986, A324988."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Jaroslav Krizek_, Mar 23 2019",
+    "references": 3,
+    "revision": 30,
+    "time": "2022-06-25T02:21:04-04:00",
+    "created": "2019-04-22T15:33:03-04:00"
+}

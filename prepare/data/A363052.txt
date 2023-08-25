@@ -1,0 +1,44 @@
+{
+    "number": 363052,
+    "data": "4,18,24,32,36,50,60,108,140,144,150,192,252,256,288,300,360,392,400,480,486,500,540,588,648,780,816,864,882,900,972,1008,1014,1050,1120,1152,1156,1176,1200,1350,1372,1452,1536,1620,1764,1800,1848,2016,2040,2048,2178",
+    "name": "Integers m for which there exist positive integers j, k such that j*k*(j+k) = m^2.",
+    "comment": [
+        "All terms are even."
+    ],
+    "example": [
+        "24 is a term: j*k*(j+k) = 24^2 for j=2, k=16."
+    ],
+    "mathematica": [
+        "Select[2*Range@500,",
+        " Length@Select[Table[(Sqrt[b^2 + 4 #^2/b] - b)/2, {b, #}], IntegerQ] >",
+        "    0 &]",
+        "Select[Union@",
+        "  Flatten@Table[Sqrt[a*b (a + b)], {a, 1, 80}, {b, a, 500}],",
+        " IntegerQ[#] && # < 1000 &]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import integer_nthroot, divisors",
+        "def A363052_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for m in count(max(startvalue,1)):",
+        "        for k in divisors(m**2,generator=True):",
+        "            p, q = integer_nthroot(k**4+(k*m**2<<2),2)",
+        "            if q:",
+        "                a, b = divmod(p-k**2,k<<1)",
+        "                if a > 0 and not b:",
+        "                    yield m",
+        "                    break",
+        "A363052_list = list(islice(A363052_gen(),20)) # _Chai Wah Wu_, Jul 03 2023"
+    ],
+    "xref": [
+        "Cf. A088915."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Zhining Yang_, May 15 2023",
+    "references": 0,
+    "revision": 27,
+    "time": "2023-07-03T12:20:37-04:00",
+    "created": "2023-07-03T08:03:06-04:00"
+}

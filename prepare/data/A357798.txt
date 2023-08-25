@@ -1,0 +1,37 @@
+{
+    "number": 357798,
+    "data": "1,2,6,20,78,364,1758,9144,48508,264014,1457624,8158260,46134878,263312552,1514534512,8771202984,51101608190,299306977508,1761377916048,10409550718692,61755225688926,367639850029404,2195551697108888,13149811270786752,78967249613057836,475373797733460598",
+    "name": "a(n) = coefficient of x^n in the power series A(x) such that: 1 = Sum_{n=-oo..+oo} x^(n+1) * (2 - x^(n+1))^n * A(x)^n.",
+    "comment": [
+        "Related identity: 0 = Sum_{n=-oo..+oo} x^n * (y - x^n)^n, which holds formally for all y."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A357798/b357798.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n satisfies the following.",
+        "(1) 1 = Sum_{n=-oo..+oo} x^(n+1) * (2 - x^(n+1))^n * A(x)^n.",
+        "(2) 1 = Sum_{n=-oo..+oo} (-1)^(n+1) * x^(n^2) / ((1 - 2*x^n)^(n+1) * A(x)^(n+1))."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 6*x^2 + 20*x^3 + 78*x^4 + 364*x^5 + 1758*x^6 + 9144*x^7 + 48508*x^8 + 264014*x^9 + 1457624*x^10 + 8158260*x^11 + 46134878*x^12 + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1]); for(i=1, n, A=concat(A, 0);",
+        "A[#A] = polcoeff( sum(n=-#A, #A, x^(n+1) * (2 - x^(n+1) +x*O(x^#A) )^n * Ser(A)^n ), #A-1) ); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n) = my(A=[1]); for(i=1, n, A=concat(A, 0);",
+        "A[#A] = polcoeff( sum(n=-#A, #A, (-1)^(n+1) * x^(n^2) / ((1 - 2*x^n +x*O(x^#A) )^(n+1) * Ser(A)^(n+1)) ), #A-1) ); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A357797."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 22 2022",
+    "references": 2,
+    "revision": 7,
+    "time": "2022-12-24T11:16:59-05:00",
+    "created": "2022-12-24T11:16:59-05:00"
+}

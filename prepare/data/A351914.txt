@@ -1,0 +1,48 @@
+{
+    "number": 351914,
+    "data": "2,3,4,5,6,7,8,11,13,19",
+    "name": "Numbers m such that the average of the prime numbers up to m is greater than or equal to m/2.",
+    "comment": [
+        "The average of the prime numbers up to m is asymptotically equal to m/2 by the prime number theorem. It is shown by Mandl's inequality that m/2 is strictly greater than the average if m > 19 and thus the sequence is complete."
+    ],
+    "link": [
+        "Hassani Mehdi, <a href=\"https://vuir.vu.edu.au/18085/\">A Refinement of Mandl's Inequality</a>, report collection, 8 (2) (2005).",
+        "Eric Bach and Jefrey Shallit, <a href=\"https://www.amazon.com/exec/obidos/ISBN%3D0262024055/ericstreasuretroA/\"> Algorithmic Number Theory, Vol. 1: Efficient Algorithms</a>, Section 2.7, Cambridge, MA: MIT Press, 1996.",
+        "Math Stackexchange, <a href=\"https://math.stackexchange.com/questions/4391776/is-the-average-of-primes-up-to-n-smaller-than-fracn2-if-n-19\">Is the average of primes up to n smaller than n/2, if n>19?</a>"
+    ],
+    "formula": [
+        "2*A034387(a(n))/A000720(a(n)) >= a(n)."
+    ],
+    "example": [
+        "5 is a term since the average of the primes up to 5 is (2 + 3 + 5)/3 = 10/3, which is greater than 5/2.",
+        "8 is a term since the average of the primes up to 8 is (2 + 3 + 5 + 7)/4 = 17/4 = 4.25, which is greater than 8/2 = 4."
+    ],
+    "maple": [
+        "s:= proc(n) s(n):= `if`(n=0, 0, `if`(isprime(n), n, 0)+s(n-1)) end:",
+        "q:= n-> is(2*s(n)/numtheory[pi](n)>=n):",
+        "select(q, [$2..20])[];  # _Alois P. Heinz_, Feb 25 2022"
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = If[n == 0, 0, If[PrimeQ[n], n, 0] + s[n-1]];",
+        "Select[Range[2, 20], 2 s[#]/PrimePi[#] > #&] (* _Jean-Fran\u00e7ois Alcover_, Dec 26 2022, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primerange",
+        "def average_of_primes_up_to(i):",
+        "    primes_up_to_i =  list(primerange(2, i+1))",
+        "    return sum(primes_up_to_i) / len(primes_up_to_i)",
+        "def a_list():",
+        "    return [i for i in range(2, 20) if average_of_primes_up_to(i) >= i / 2]"
+    ],
+    "xref": [
+        "Cf. A000040, A000720, A034387."
+    ],
+    "keyword": "nonn,fini,full",
+    "offset": "1,1",
+    "author": "_Masahiko Shin_, Feb 25 2022",
+    "references": 0,
+    "revision": 48,
+    "time": "2022-12-26T11:38:24-05:00",
+    "created": "2022-03-07T08:57:12-05:00"
+}

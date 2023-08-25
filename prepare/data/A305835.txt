@@ -1,0 +1,51 @@
+{
+    "number": 305835,
+    "data": "19,23,29,41,43,47,53,59,61,67,83,89,1163,1321,1361,1783,1933,1997,2113,2161,2333,2339,2347,2381,2389,2393,2729,2741,2777,2927,2963,2999,3319,3323,3347,3389,3391,3923,4127,4157,4349,4357,4363,4397,4723,4733,4751,4787,4943,4957,4969,4973,4999",
+    "name": "Primes which oscillate from prime to composite under a cyclic shift of digits.",
+    "comment": [
+        "Numbers with a zero digit have been excluded as cycling through these numbers would generate leading zeros, which is problematic as you continue to cycle.",
+        "All terms have even length.",
+        "The smallest terms with 6, 8,..., 18 digits are 112927, 11117363, 1111319791, 111111335143, 11112333396319, 1111115783474981, and 111111119937131947, respectively. - _Giovanni Resta_, Jun 13 2018"
+    ],
+    "link": [
+        "Philip Mizzi, <a href=\"/A305835/b305835.txt\">Table of n, a(n) for n = 1..101</a>"
+    ],
+    "example": [
+        "n=1",
+        "N_0 = 19 (prime)",
+        "N_1 = 91 (nonprime)",
+        "N_2 = N_0 = 19 (prime)",
+        ".",
+        ".",
+        "n=13 [left cyclic shift]",
+        "N_0 = 1163 (prime)",
+        "N_1 = 1631 (nonprime)",
+        "N_2 = 6311 (prime)",
+        "N_3 = 3116 (nonprime)",
+        "N_4 = N_0 = 1163 (prime)",
+        ".",
+        ".",
+        "n=13 [right cyclic shift]",
+        "N_0 = 1163 (prime)",
+        "N_1 = 3116 (nonprime)",
+        "N_2 = 6311 (prime)",
+        "N_3 = 1631 (nonprime)",
+        "N_4 = N_0 = 1163 (prime)"
+    ],
+    "mathematica": [
+        "ok[n_] := Catch[Block[{d = IntegerDigits[n]}, If[Min[d] == 0 || OddQ[ Length[d]], Throw@ False]; Do[If[PrimeQ[ FromDigits@ RotateLeft[d, j]] == OddQ[j], Throw@ False], {j, Length[d]-1}]; True]]; Select[ Prime@ Range@ 670], ok] (* _Giovanni Resta_, Jun 12 2018 *)"
+    ],
+    "program": [
+        "(PARI) ok(p)={my(k=logint(p,10)); k%2 && isprime(p) && vecmin(digits(p))>0 && !#select(i->isprime(p\\10^i + p%10^i*10^(k+1-i))==i%2, [1..k])} \\\\ _Andrew Howroyd_, Jun 11 2018"
+    ],
+    "xref": [
+        "Cf. A286415 (provides the first terms only)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Philip Mizzi_, Jun 11 2018",
+    "references": 1,
+    "revision": 35,
+    "time": "2018-07-03T10:10:48-04:00",
+    "created": "2018-07-03T10:10:48-04:00"
+}

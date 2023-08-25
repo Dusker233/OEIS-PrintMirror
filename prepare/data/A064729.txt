@@ -1,0 +1,28 @@
+{
+    "number": 64729,
+    "data": "14,957,1334,1634,2685,20145,33998,42818,74918,79826,79833,84134,111506,122073,138237,147454,166934,201597,274533,289454,347738,383594,416577,440013,544334,605985,649154,655005,1642154,1857513,2168906,2284814",
+    "name": "Numbers k such that k and k+1 have the same sum of unitary and nonunitary divisors.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A064729/b064729.txt\">Table of n, a(n) for n = 1..1375</a> (terms 1..190 from Harry J. Smith)"
+    ],
+    "mathematica": [
+        "g[1]={1, 1}; g[n_] := { Times @@ (1 + Power @@@ (f = FactorInteger[n])), Times @@ ((f[[;; , 1]]^(f[[;;,2]]+1)- 1)/(f[[;;,1]]-1))}; s={}; g1={0, 0}; Do[g2=g[n]; If[g1==g2, AppendTo[s, n-1]]; g1=g2, {n, 1, 50000}]; s (* _Amiram Eldar_, Jun 19 2019 *)"
+    ],
+    "program": [
+        "(PARI) {usigma(n, s=1, fac, i) = fac=factor(n); for(i=1,matsize(fac)[1],s=s*(1+fac[i,1]^fac[i,2])); return(s); } nu(n) = sigma(n)-usigma(n); for(n=1,10^7, if(usigma(n)==usigma(n+1) && nu(n)==nu(n+1), print1(n,\",\")))",
+        "(PARI) usigma(n)= { local(f,s=1); f=factor(n); for(i=1, matsize(f)[1], s*=1 + f[i, 1]^f[i, 2]); return(s) } nu(n)= { sigma(n) - usigma(n) } { n=0; for (m = 1, 10^10, if(usigma(m)==usigma(m + 1) && nu(m)==nu(m + 1), write(\"b064729.txt\", n++, \" \", m); if (n==190, break)) ) } \\\\ _Harry J. Smith_, Sep 24 2009"
+    ],
+    "xref": [
+        "Cf. A034448, A048146, A064125."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jason Earls_, Oct 17 2001",
+    "ext": [
+        "a(27)-a(32) from _Harry J. Smith_, Sep 24 2009"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2019-06-19T08:16:40-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

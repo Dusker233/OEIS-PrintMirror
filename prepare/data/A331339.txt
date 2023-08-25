@@ -1,0 +1,34 @@
+{
+    "number": 331339,
+    "data": "1,1,5,32,292,3294,44918,714468,13002456,266275200,6060498672,151750887936,4145522908272,122690391196944,3910569680464848,133549150323123744,4864927063250290176,188297220693251438208,7716800776602560577408",
+    "name": "E.g.f.: 1 / (1 + log(1 - x - x^2)).",
+    "formula": [
+        "a(0) = 1; a(n) = Sum_{k=1..n} binomial(n,k) * (k - 1)! * Lucas(k) * a(n-k).",
+        "a(n) ~ n! * 2^(n+1) * exp(n/2) / (sqrt(5*exp(1) - 4) * (sqrt(5*exp(1) - 4) - exp(1/2))^(n+1)). - _Vaclav Kotesovec_, Jan 26 2020"
+    ],
+    "maple": [
+        "A331339 := proc(n)",
+        "    option remember;",
+        "    if n = 0 then",
+        "        1;",
+        "    else",
+        "        add(binomial(n,k)*(k-1)!*A000204(k)*procname(n-k),k=1..n) ;",
+        "    end if;",
+        "end proc:",
+        "seq(A331339(n),n=0..42) ; # _R. J. Mathar_, Aug 20 2021"
+    ],
+    "mathematica": [
+        "nmax = 18; CoefficientList[Series[1/(1 + Log[1 - x - x^2]), {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[0] = 1; a[n_] := a[n] = Sum[Binomial[n, k] (k - 1)! LucasL[k] a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 18}]"
+    ],
+    "xref": [
+        "Cf. A000204, A007840, A039647."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Jan 14 2020",
+    "references": 1,
+    "revision": 8,
+    "time": "2021-08-20T05:44:19-04:00",
+    "created": "2020-01-14T09:57:55-05:00"
+}

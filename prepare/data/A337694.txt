@@ -1,0 +1,74 @@
+{
+    "number": 337694,
+    "data": "1,2,3,5,7,9,11,13,17,19,21,23,25,27,29,31,37,39,41,43,47,49,53,57,59,61,63,65,67,71,73,79,81,83,87,89,91,97,101,103,107,109,111,113,115,117,121,125,127,129,131,133,137,139,147,149,151,157,159,163,167,169,171,173,179,181,183,185,189,191,193,197,199",
+    "name": "Numbers with no two relatively prime prime indices.",
+    "comment": [
+        "First differs from A305078 in having 1 and lacking 195.",
+        "First differs from A305103 in having 1 and 169 and lacking 195.",
+        "First differs from A328336 in lacking 897, with prime indices (2,6,9).",
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798.",
+        "Also Heinz numbers of integer partitions in which no two parts are relatively prime. The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A337694/b337694.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices begins:",
+        "   1: {}      37: {12}     79: {22}      121: {5,5}",
+        "   3: {2}     39: {2,6}    81: {2,2,2,2} 125: {3,3,3}",
+        "   5: {3}     41: {13}     83: {23}      127: {31}",
+        "   7: {4}     43: {14}     87: {2,10}    129: {2,14}",
+        "   9: {2,2}   47: {15}     89: {24}      131: {32}",
+        "  11: {5}     49: {4,4}    91: {4,6}     133: {4,8}",
+        "  13: {6}     53: {16}     97: {25}      137: {33}",
+        "  17: {7}     57: {2,8}   101: {26}      139: {34}",
+        "  19: {8}     59: {17}    103: {27}      147: {2,4,4}",
+        "  21: {2,4}   61: {18}    107: {28}      149: {35}",
+        "  23: {9}     63: {2,2,4} 109: {29}      151: {36}",
+        "  25: {3,3}   65: {3,6}   111: {2,12}    157: {37}",
+        "  27: {2,2,2} 67: {19}    113: {30}      159: {2,16}",
+        "  29: {10}    71: {20}    115: {3,9}     163: {38}",
+        "  31: {11}    73: {21}    117: {2,2,6}   167: {39}"
+    ],
+    "maple": [
+        "filter:= proc(n) local F,i,j,np;",
+        "  if n::even and n>2 then return false fi;",
+        "  F:= map(t -> numtheory:-pi(t[1]), ifactors(n)[2]);",
+        "  np:= nops(F);",
+        "  for i from 1 to np-1 do",
+        "    for j from i+1 to np do",
+        "      if igcd(F[i],F[j])=1 then return false fi",
+        "  od od;",
+        "  true",
+        "end proc:",
+        "select(filter, [$1..300]); # _Robert Israel_, Oct 06 2020"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "stabQ[u_,Q_]:=Array[#1==#2||!Q[u[[#1]],u[[#2]]]&,{Length[u],Length[u]},1,And];",
+        "Select[Range[100],stabQ[primeMS[#],CoprimeQ]&]"
+    ],
+    "xref": [
+        "A200976 and A328673 count these partitions.",
+        "A302696 and A302569 are pairwise coprime instead of pairwise non-coprime.",
+        "A318719 is the squarefree case.",
+        "A328867 looks at distinct prime indices.",
+        "A337666 is the version for standard compositions.",
+        "A101268 counts pairwise coprime or singleton compositions.",
+        "A318717 counts strict pairwise non-coprime partitions.",
+        "A327516 counts pairwise coprime partitions.",
+        "A333227 ranks pairwise coprime compositions.",
+        "A333228 ranks compositions whose distinct parts are pairwise coprime.",
+        "A335236 ranks compositions neither a singleton nor pairwise coprime.",
+        "A337462 counts pairwise coprime compositions.",
+        "A337667 counts pairwise non-coprime compositions.",
+        "Cf. A051185, A051424, A056239, A112798, A220377, A284825, A302797, A303282, A305843, A319752, A336737, A337599, A337604, A337605."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Sep 23 2020",
+    "references": 14,
+    "revision": 15,
+    "time": "2020-10-06T14:46:25-04:00",
+    "created": "2020-10-05T01:01:40-04:00"
+}

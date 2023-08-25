@@ -1,0 +1,56 @@
+{
+    "number": 111156,
+    "data": "0,8,69,88,96,609,689,808,888,906,986,6009,6699,6889,6969,8008,8698,8888,8968,9006,9696,9886,9966,60009,60809,66099,66899,68089,68889,69069,69869,80008,80808,86098,86898,88088,88888,89068,89868,90006,90806,96096,96896,98086,98886,99066,99866,600009",
+    "name": "Numbers that look the same when printed upside down.",
+    "comment": [
+        "Numbers with 1's are excluded.",
+        "Numbers written with digits 0,6,8,9, with 6 and 9 interchanged when reversed. - _Robert Israel_, Jul 02 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A111156/b111156.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "f:= proc(n) local L,Lp,nl;",
+        "   L:= subs(1=6,2=8,3=9,convert(n,base,4));",
+        "   nl:= nops(L);",
+        "   Lp:= subs([6=9,9=6],L);",
+        "   add(Lp[-i]*10^(i-1),i=1..nl)+add(L[i]*10^(nl+i-1),i=1..nl);",
+        "end proc:",
+        "g:= proc(n) local L,Lp,nl;",
+        "   L:= subs(1=6,2=8,3=9,convert(n,base,4));",
+        "   nl:= nops(L);",
+        "   Lp:= subs([6=9,9=6],L);",
+        "   seq(add(Lp[-i]*10^(i-1),i=1..nl)+x*10^nl+add(L[i]*10^(nl+i),i=1..nl),x=[0,8]);",
+        "end proc:",
+        "0,8,seq(op([seq(f(n),n=4^i..4^(i+1)-1),seq(g(n),n=4^i..4^(i+1)-1)]),i=0..2); # _Robert Israel_, Jul 02 2018"
+    ],
+    "program": [
+        "(Haskell) main=print$\"0\":concat[concat[[reverse(reverse(map f x)++z++x)|x<-y]|z<-[\"\",\"0\"]]|y<-s(iterate i\"6\")];f '0'='0';f '6'='9';f '8'='8';f '9'='6';i('0':x)='6':x;i('6':x)='8':x;i('8':x)='9':x;i('9':x)='0':i x;i\"\"=\"6\";s(x:y@(z:_))=let w:v=s y in if length x==length z then(x:w):v else[x]:w:v",
+        "(Python)",
+        "from itertools import count, islice, product",
+        "def ud(s): return s[::-1].translate({ord('6'):ord('9'), ord('9'):ord('6')})",
+        "def agen():",
+        "    yield from [0, 8]",
+        "    for d in count(2):",
+        "        for start in \"689\":",
+        "            for rest in product(\"0689\", repeat=d//2-1):",
+        "                left = start + \"\".join(rest)",
+        "                right = ud(left)",
+        "                for mid in [[\"\"], [\"0\", \"8\"]][d%2]:",
+        "                    yield int(left + mid + right)",
+        "print(list(islice(agen(), 48))) # _Michael S. Branicky_, Mar 29 2022"
+    ],
+    "xref": [
+        "Cf. strobogrammatic numbers A000787. If 8's are excluded we get A111065."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,2",
+    "author": "Paul Stoeber (pstoeber(AT)uni-potsdam.de), Oct 09 2005",
+    "ext": [
+        "Corrected by _Robert Israel_, Jul 02 2018"
+    ],
+    "references": 3,
+    "revision": 12,
+    "time": "2022-03-29T08:37:45-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

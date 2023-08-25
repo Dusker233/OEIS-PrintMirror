@@ -1,0 +1,32 @@
+{
+    "number": 344523,
+    "data": "1,17,84,276,649,1417,2528,4432,7033,10905,15556,22836,30673,41729,54944,71968,89969,115457,140820,175444,212537,257113,302720,366160,426505,500873,580676,677108,769761,895377,1008928,1153120,1300417,1469073,1640020,1860340,2054921",
+    "name": "a(n) = Sum_{1 <= i, j, k, l <= n} gcd(i,j,k,l).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A344523/b344523.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} phi(k) * floor(n/k)^4.",
+        "G.f.: (1/(1 - x)) * Sum_{k >= 1} phi(k) * x^k * (1 + 11*x^k + 11*x^(2*k) + x^(3*k))/(1 - x^k)^4.",
+        "a(n) ~ 90 * zeta(3) * n^4 / Pi^4. - _Vaclav Kotesovec_, May 23 2021"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[EulerPhi[k] * Quotient[n, k]^4, {k, 1, n}]; Array[a, 50] (* _Amiram Eldar_, May 22 2021 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(i=1, n, sum(j=1, n, sum(k=1, n, sum(l=1, n, gcd([i, j, k, l])))));",
+        "(PARI) a(n) = sum(k=1, n, eulerphi(k)*(n\\k)^4);",
+        "(PARI) my(N=40, x='x+O('x^N)); Vec(sum(k=1, N, eulerphi(k)*x^k*(1+11*x^k+11*x^(2*k)+x^(3*k))/(1-x^k)^4)/(1-x))"
+    ],
+    "xref": [
+        "Column k=4 of A344479.",
+        "Cf. A082540, A343498, A344138, A344522, A344524, A344525."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, May 22 2021",
+    "references": 6,
+    "revision": 26,
+    "time": "2021-05-23T07:08:00-04:00",
+    "created": "2021-05-22T04:33:44-04:00"
+}

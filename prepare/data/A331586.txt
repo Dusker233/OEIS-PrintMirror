@@ -1,0 +1,43 @@
+{
+    "number": 331586,
+    "data": "174,398,474,934,1214,1934,2254,2638,2966,3806,3886,4024,4574,4696,4718,4928,4958,4990,5014,5246,5290,5438,6698,6934,7028,7136,7258,7266,7424,7694,7838,8176,8448,8574,8720,8958,9854,9974,10174,10334,10448,11338,11374,12094,12102,12220,12462,12626",
+    "name": "Even numbers n such that A048633(n+1) = A048633(n).",
+    "comment": [
+        "binomial(2k+1,k)/binomial(2k,k) = (2k+1)/(k+1), so 2k is a member if and only if every prime dividing 2k+1 divides binomial(2k,k) and every prime dividing k+1 divides binomial(2k+1,k).",
+        "A048633(n+1)=A048633(n) for all odd numbers n except the Mersenne numbers (A000225)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A331586/b331586.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1)=174 is a member because 174 is even and A048633(174)=A048633(175)=632127493640977953733428652337034082437215015190."
+    ],
+    "maple": [
+        "g:= proc(m,n,p)",
+        "  local Lm, Ln;",
+        "   Lm:= convert(m,base,p);",
+        "   Ln:= convert(n,base,p);",
+        "   min(Lm[1..nops(Ln)]-Ln) < 0",
+        "end proc:",
+        "filter:= proc(n) local p;",
+        "  for p in numtheory:-factorset(n+1) do",
+        "     if not g(n,n/2,p) then return false fi;",
+        "  od;",
+        "  for p in numtheory:-factorset(n/2+1) do",
+        "     if not g(n+1,n/2,p) then return false fi",
+        "  od;",
+        "  true",
+        "end proc:",
+        "select(filter, [seq(i,i=2..15000,2)]);"
+    ],
+    "xref": [
+        "Cf. A000225, A048633."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Jan 21 2020",
+    "references": 1,
+    "revision": 8,
+    "time": "2020-01-21T20:40:26-05:00",
+    "created": "2020-01-21T18:24:32-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 346290,
+    "data": "24,26,28,36,39,42,46,48,62,63,64,68,69,82,84,86,93,96,132,143,144,154,156,165,168,169,176,187,198,204,206,208,224,226,228,231,244,246,248,252,253,264,266,268,273,275,276,284,286,288,294,297,299,306,309",
+    "name": "Numbers k = s * t such that reverse(k) = reverse(s) * reverse(t) where reverse(k) is k with its digits reversed. A single-digit number is its own reversal and neither s nor t has a leading zero. No pair (s, t) has both s and t palindromic or single-digit.",
+    "comment": [
+        "This sequence looks like A346133 but reversed products are here included."
+    ],
+    "example": [
+        "a(1) = 24 = 2 * 12 and 2 * 21 = 42 (which is 24 reversed);",
+        "a(2) = 26 = 2 * 13 and 2 * 31 = 62 (which is 26 reversed);",
+        "a(3) = 28 = 2 * 14 and 2 * 41 = 82 (which is 28 reversed);",
+        "a(4) = 36 = 3 * 12 and 3 * 21 = 63 (which is 36 reversed); etc."
+    ],
+    "mathematica": [
+        "q[n_] := AnyTrue[Rest @ Take[(d = Divisors[n]), Ceiling[Length[d]/2]], (# > 9 || n/# > 9) && !Divisible[#, 10] && !Divisible[n/#, 10] && (!PalindromeQ[#] || !PalindromeQ[n/#]) && IntegerReverse[#] * IntegerReverse[n/#] == IntegerReverse[n] &]; Select[Range[2, 300], q] (* _Amiram Eldar_, Jul 13 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "def rev(n): return int(str(n)[::-1])",
+        "def ok(n):",
+        "    divs = divisors(n)",
+        "    for a in divs[1:(len(divs)+1)//2]:",
+        "        b = n // a",
+        "        reva, revb, revn = rev(a), rev(b), rev(n)",
+        "        if a%10 == 0 or b%10 == 0: continue",
+        "        if (reva != a or revb != b) and revn == reva * revb: return True",
+        "    return False",
+        "print(list(filter(ok, range(310)))) # _Michael S. Branicky_, Jul 13 2021"
+    ],
+    "xref": [
+        "Cf. A066531, A346133."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Eric Angelini_ and _Carole Dubois_, Jul 13 2021",
+    "references": 0,
+    "revision": 17,
+    "time": "2021-08-21T22:37:49-04:00",
+    "created": "2021-08-21T22:37:49-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 346622,
+    "data": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,4,4,4,4,5,5,5,5,5,5,6,6,6,6,6,6,7,7,7,7,8,8,9,9,9,9,9,9,10,10,11,11,11,11,12,12,12,12,12,12,13,13,14,14,14,14,14,14,14,14,15,15,16",
+    "name": "a(n) = card{ x <= n : x odd and omega(x) = 2 }.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A346622/b346622.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 0, a(n-1)+",
+        "     `if`(n::odd and nops(ifactors(n)[2])=2, 1, 0))",
+        "    end:",
+        "seq(a(n), n=1..87);  # _Alois P. Heinz_, Aug 23 2021"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n==0, 0, a[n-1]+If[OddQ[n] && PrimeNu[n]==2, 1, 0]];",
+        "Table[a[n], {n, 1, 87}] (* _Jean-Fran\u00e7ois Alcover_, Apr 07 2022 *)",
+        "nxt[{n_,a_}]:={n+1,If[EvenQ[n]&&PrimeNu[n+1]==2,1,0]+a}; NestList[nxt,{1,0},90][[All,2]] (* _Harvey P. Dale_, Oct 05 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primefactors",
+        "def A346622(n):",
+        "    return 0 if n <= 2 else A346622(n-1) + (1 if n % 2 and len(primefactors(n)) == 2 else 0) # _Chai Wah Wu_, Aug 23 2021"
+    ],
+    "xref": [
+        "Cf. A007774, A082997, A146167, A346623."
+    ],
+    "keyword": "nonn",
+    "offset": "1,21",
+    "author": "_N. J. A. Sloane_, Aug 23 2021",
+    "references": 3,
+    "revision": 14,
+    "time": "2022-10-05T13:40:42-04:00",
+    "created": "2021-08-23T13:26:46-04:00"
+}

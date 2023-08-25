@@ -1,0 +1,40 @@
+{
+    "number": 324298,
+    "data": "3,9,15,21,25,27,33,39,41,45,51,57,63,67,69,73,75,81,87,89,93,99,105,111,117,119,121,123,129,135,137,141,145,147,153,159,165,169,171,177,183,185,189,195,197,201,207,211,213,217,219,223,225,231,233,237,243,249",
+    "name": "Positive integers k such that 10*k+6 is equal to the product of two integers ending with 6 (A324297).",
+    "comment": [
+        "All the terms of this sequence are odd.",
+        "Why? If an integer 10*k+6 = (10*a+6) * (10*b+6), then k = 10*a*b + 6*(a+b) + 3, so k is odd. - _Bernard Schott_, May 13 2019"
+    ],
+    "link": [
+        "Stefano Spezia, <a href=\"/A324298/b324298.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = (A324297(n) - 6)/10.",
+        "Conjecture: lim_{n->infinity} a(n)/a(n-1) = 1.",
+        "The conjecture is true since a(n) = (A324297(n) - 6)/10 and lim_{n->infinity} A324297(n)/A324297(n-1) = 1. - _Stefano Spezia_, Aug 21 2021"
+    ],
+    "example": [
+        "145 is a term because 26*56 = 1456 = 145*10 + 6. - _Bernard Schott_, May 13 2019"
+    ],
+    "mathematica": [
+        "a={}; For[n=0,n<=250,n++,For[k=0,k<=n,k++,If[Mod[10*n+6,10*k+6]==0 && Mod[(10*n+6)/(10*k+6),10]==6 && 10*n+6>Max[10*a+6],AppendTo[a,n]]]]; a"
+    ],
+    "program": [
+        "(PARI) isok6(n) = (n%10) == 6; \\\\ A017341",
+        "isok(k) = {my(n=10*k+6, d=divisors(n)); fordiv(n, d, if (isok6(d) && isok6(n/d), return(1))); return (0);} \\\\ _Michel Marcus_, Apr 14 2019",
+        "(Python)",
+        "def aupto(lim): return sorted(set(a*b//10 for a in range(6, 10*lim//6+2, 10) for b in range(a, 10*lim//a+2, 10) if a*b//10 <= lim))",
+        "print(aupto(249)) # _Michael S. Branicky_, Aug 21 2021"
+    ],
+    "xref": [
+        "Cf. A017341, A053742 (ending with 5), A324297, A337856, A346389."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Stefano Spezia_, Mar 16 2019",
+    "references": 7,
+    "revision": 57,
+    "time": "2021-09-11T17:16:30-04:00",
+    "created": "2019-04-20T03:03:37-04:00"
+}

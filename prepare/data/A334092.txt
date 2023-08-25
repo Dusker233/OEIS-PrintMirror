@@ -1,0 +1,36 @@
+{
+    "number": 334092,
+    "data": "7,11,13,41,97,137,193,641,769,12289,40961,163841,557057,786433,167772161,2281701377,3221225473,206158430209,2748779069441,6597069766657,38280596832649217,180143985094819841,221360928884514619393,188894659314785808547841,193428131138340667952988161",
+    "name": "Primes p of the form of the form q*2^h + 1, where q is one of the Fermat primes; Primes p for which A329697(p) == 2.",
+    "comment": [
+        "Primes p such that p-1 is not a power of two, but for which A171462(p-1) = (p-1-A052126(p-1)) is [a power of 2].",
+        "Primes of the form ((2^(2^k))+1)*2^h + 1, where ((2^(2^k))+1) is one of the Fermat primes, A019434, 3, 5, 17, 257, ..., ."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A334092/b334092.txt\">Table of n, a(n) for n = 1..53</a>"
+    ],
+    "program": [
+        "(PARI) isA334092(n) = (isprime(n)&&2==A329697(n));",
+        "(PARI)",
+        "A052126(n) = if(1==n,n,n/vecmax(factor(n)[, 1]));",
+        "A209229(n) = (n && !bitand(n,n-1));",
+        "isA334092(n) = (isprime(n)&&(!A209229(n-1))&&A209229(n-1-A052126(n-1)));",
+        "(PARI) list(lim)=if(exponent(lim\\=1)>=2^33, error(\"Verify composite character of more Fermat primes before checking this high\")); my(v=List(),t); for(e=0,4, t=2^2^e+1; while((t<<=1)<lim, if(isprime(t+1), listput(v,t+1)))); Set(v) \\\\ _Charles R Greathouse IV_, Apr 14 2020"
+    ],
+    "xref": [
+        "Primes in A334102.",
+        "Intersection of A081091 and A147545.",
+        "Subsequences: A039687, A050526, A300407.",
+        "Cf. A000040, A010051, A019434, A052126, A171462, A329697. Cf. also A334093, A334094, A334095, A334096."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Apr 14 2020",
+    "ext": [
+        "More terms from _Giovanni Resta_, Apr 14 2020"
+    ],
+    "references": 14,
+    "revision": 24,
+    "time": "2020-04-20T00:28:33-04:00",
+    "created": "2020-04-14T16:39:37-04:00"
+}

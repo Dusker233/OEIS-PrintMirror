@@ -1,0 +1,46 @@
+{
+    "number": 317714,
+    "data": "0,0,1,2,10,18,45,72,136,200,325,450,666,882,1225,1568,2080,2592,3321,4050,5050,6050,7381,8712,10440,12168,14365,16562,19306,22050,25425,28800,32896,36992,41905,46818,52650,58482,65341,72200,80200,88200,97461,106722,117370",
+    "name": "Chessboard rectangles sequence (see Comments), also A037270 interleaved with A163102.",
+    "comment": [
+        "Take a chessboard of n X n unit squares in which the a1 square is black. a(n) is the number of composite rectangles of p x q unit squares whose vertices are covered by black unit squares (1 < p <= n, 1 < q <= n)."
+    ],
+    "link": [
+        "Jinyuan Wang, <a href=\"/A317714/b317714.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Rec#order_08\">Index entries for linear recurrences with constant coefficients</a>, signature (2,2,-6,0,6,-2,-2,1)."
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1) + 2*a(n-2) - 6*a(n-3) + 6*a(n-5) - 2*a(n-6) - 2*a(n-7) + a(n-8), with a(1)=0, a(2)=0, a(3)=1, a(4)=2, a(5)=10, a(6)=18, a(7)=45, a(8)=72.",
+        "G.f.: -(x^3*(1+ 4*x^2 + x^4))/((-1+x)^5*(1+x)^3).",
+        "a(n) = (5 - 5*(-1)^n - 12*n + 12*(-1)^n*n + 14*n^2 - 6*(-1)^n*n^2 - 8*n^3 + 2*n^4)/64.",
+        "a(n) = Sum_{i=1..n-1} floor(i/2)^3. - _Ridouane Oudra_, Jul 24 2019",
+        "E.g.f.: (1/64)*exp(-x)*(-5-6*x-6*x^2+exp(2*x)*(5-4*x+4*x^2+4*x^3+2*x^4)). - _Stefano Spezia_, Aug 14 2019",
+        "a(n) = (1/2)*(t^2 + 2*(n-1)*t^3 - 3*t^4), where t = floor(n/2). - _Ridouane Oudra_, Aug 15 2019"
+    ],
+    "example": [
+        "In a 4 X 4 chessboard there are two such rectangles (for both p=q=3) and the coordinates of their lower left vertices are a1 and b2). Therefore, a(4)=2."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[-((x^2 (1+4 x^2+x^4))/((-1+x)^5 (1+x)^3)),{x,0,44}],x]",
+        "LinearRecurrence[{2, 2, -6, 0, 6, -2, -2, 1}, {0, 0, 1, 2, 10, 18, 45, 72}, 80] (* _Vincenzo Librandi_, Aug 06 2018 *)"
+    ],
+    "program": [
+        "(Magma) [(5-5*(-1)^n-12*n+12*(-1)^n*n+14*n^2-6*(-1)^n*n^2-8*n^3+2*n^4)/64: n in [1..50]]; // _Vincenzo Librandi_, Aug 05 2018",
+        "(Python)",
+        "n, a = 0, 0",
+        "while n < 10:",
+        "    print(n,a)",
+        "n, a = n+1, a+((n+1)//2)**3 # _A.H.M. Smeets_, Aug 09 2019",
+        "(PARI) a(n) = sum(i = 1, n-1, floor(i/2)^3); \\\\ _Jinyuan Wang_, Aug 12 2019"
+    ],
+    "xref": [
+        "Cf. A005993, A037270, A163102."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,4",
+    "author": "_Ivan N. Ianakiev_, Aug 05 2018",
+    "references": 2,
+    "revision": 30,
+    "time": "2022-09-08T08:46:22-04:00",
+    "created": "2018-08-16T06:46:33-04:00"
+}

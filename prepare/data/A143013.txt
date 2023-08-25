@@ -1,0 +1,48 @@
+{
+    "number": 143013,
+    "data": "1,2,3,7,17,43,114,310,861,2433,6970,20198,59101,174373,518179,1549545,4659399,14079553,42732230,130208246,398174723,1221573603,3758835953,11597578995,35872937745,111216324015,345539568900,1075693015920",
+    "name": "Number of Motzkin n-paths with two kinds of level steps one of which is a final step.",
+    "comment": [
+        "Hankel transform is the (4,-5) Somos-4 variant A171422. - _Paul Barry_, Dec 08 2009"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A143013/b143013.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Jean-Luc Baril and Jos\u00e9 Luis Ram\u00edrez, <a href=\"https://arxiv.org/abs/2302.12741\">Descent distribution on Catalan words avoiding ordered pairs of Relations</a>, arXiv:2302.12741 [math.CO], 2023.",
+        "Paul Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL26/Barry/barry601.html\">On Motzkin-Schr\u00f6der Paths, Riordan Arrays, and Somos-4 Sequences</a>, J. Int. Seq. (2023) Vol. 26, Art. 23.4.7."
+    ],
+    "formula": [
+        "Words on alphabet {U,D,L,F} of length n where U is upstep, D is downstep, L and F are level steps and F can only be immediately followed by D or end of word with defining equation A = 1 + F + LA + UADA.",
+        "When convolved with itself yields first difference shifted left one place.",
+        "G.f. A(x) satisfies: A(x) = 1 + x + A(x)*x + (A(x)*x)^2.",
+        "G.f.: (1+x) / (1-x -(x^2 + x^3) / (1-x -(x^2 + x^3) / (1-x -...))).",
+        "G.f.: (1 - x - sqrt(1 - 2*x - 3*x^2 - 4*x^3)) / (2*x^2).",
+        "Given an integer t >= 1 and initial values u = [a_0, a_1, ..., a_{t-1}], we may define an infinite sequence Phi(u) by setting a_n = a_{n-1} + a_0*a_{n-1} + a_1*a_{n-2} + ... + a_{n-2}*a_1 for n >= t. For example Phi([1]) is the Catalan numbers A000108. The present sequence is Phi([0,1,2]). - _Gary W. Adamson_, Oct 27 2008",
+        "Conjecture: (n+2)*a(n) -(2*n+1)*a(n-1) +3*(1-n)*a(n-2) +2*(5-2*n)*a(n-3)=0. - _R. J. Mathar_, Oct 25 2012",
+        "a(n) = Sum_{i=0..n+2} Sum_{k=1..n-i+2} C(i-1,k-1)*C(k,n-k-i+2)*C(k+i-2,i-1)/k. - _Vladimir Kruchinin_, May 06 2018"
+    ],
+    "example": [
+        "A = 1 + (L + F) + (LL + LF + UD) + (LLL + LLF + LUD + UDL + UDF + ULD + UFD) + ...",
+        "G.f. = 1 + 2*x + 3*x^2 + 7*x^3 + 17*x^4 + 43*x^5 + 114*x^6 + 310*x^7 + 861*x^8 + ..."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1-x -Sqrt[1-2*x-3*x^2-4*x^3])/(2*x^2), {x, 0, 30}], x] (* _G. C. Greubel_, Feb 26 2019 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if(n<0, 0, polcoeff( (1 - x - sqrt(1 - 2*x - 3*x^2 - 4*x^3 + x^3*O(x^n))) / (2*x^2), n))}",
+        "(PARI) x='x+O('x^30); Vec((1-x-(1-2*x-3*x^2-4*x^3)^(1/2))/(2*x^2)) \\\\ _Altug Alkan_, May 06 2018",
+        "(Maxima)",
+        "a(n):=sum(sum((binomial(i-1,k-1)*binomial(k,n-k-i+2)*binomial(k+i-2,i-1))/k,k,1,n-i+2),i,0,n+2); /* _Vladimir Kruchinin_, May 06 2018 */",
+        "(Magma) R<x>:=PowerSeriesRing(Rationals(), 30); Coefficients(R!( (1-x -Sqrt(1-2*x-3*x^2-4*x^3))/(2*x^2) )); // _G. C. Greubel_, Feb 26 2019",
+        "(Sage) ((1-x -sqrt(1-2*x-3*x^2-4*x^3))/(2*x^2)).series(x, 30).coefficients(x, sparse=False) # _G. C. Greubel_, Feb 26 2019"
+    ],
+    "xref": [
+        "Cf. A000108, A007477, A171422."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Michael Somos_, Jul 15 2008",
+    "references": 3,
+    "revision": 34,
+    "time": "2023-06-06T18:00:13-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

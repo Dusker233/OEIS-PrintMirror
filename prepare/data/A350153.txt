@@ -1,0 +1,40 @@
+{
+    "number": 350153,
+    "data": "12343,1234543,12345678910987,12345678910987654321,12345678910111213141516171819202122212019181716151413,12345678910111213141516171819202122232425262728293029",
+    "name": "Prime numbers created by concatenating all numbers 1 through k for some k > 1, then continuing to concatenate all numbers from k-1 towards 1. Primes are added to the sequence as they are found as k increases.",
+    "comment": [
+        "A173426(n) is the concatenation of all numbers from 1 up to k and then back down to 1. The prime terms of A173426 have been called \"memorable primes\" (see the Numberphile video). These \"unmemorable primes\" are a superset created by concatenating 1..k in ascending order followed by concatenating the numbers k-1..1 in descending order. Any primes found during either concatenation process are added to the sequence (e.g., k = 5, 1234543 is included. If 12345 were prime, it would be included as well)."
+    ],
+    "link": [
+        "Patrick Quam, <a href=\"/A350153/b350153.txt\">Table of n, a(n) for n = 1..29</a>",
+        "Brady Haran and Neil Sloane, <a href=\"https://www.youtube.com/watch?v=vKlVNFOHJ9I\">The Most Wanted Prime Number</a>, Numberphile video (2021)."
+    ],
+    "example": [
+        "For k=10, the first prime obtained by concatenating the numbers 1..10 and then concatenating the first one or more numbers from 9..1 is 12345678910987."
+    ],
+    "maple": [
+        "select(isprime, [seq(seq(parse(cat($1..n, n-i$i=1..t)),",
+        "                t=0..n-1), n=1..30)])[];  # _Alois P. Heinz_, Dec 19 2021"
+    ],
+    "mathematica": [
+        "lst={};Table[s=Flatten[IntegerDigits/@Range@n];k=n-1;",
+        "While[k!=-1,If[PrimeQ[p=FromDigits@s],AppendTo[lst,p]];s=Join[s,IntegerDigits@k];k--],{n,100}];lst (* _Giorgos Kalogeropoulos_, Dec 17 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, chain, islice, accumulate",
+        "from sympy import isprime",
+        "def A350153gen(): return filter(lambda p:isprime(p),(int(s) for n in count(1) for s in accumulate(str(d) for d in chain(range(1,n+1),range(n-1,0,-1)))))",
+        "A350153_list = list(islice(A350153gen(),20)) # _Chai Wah Wu_, Dec 20 2021"
+    ],
+    "xref": [
+        "Cf. A048847, A007908, A173426, A260343, A323532."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Patrick Quam_, Dec 16 2021",
+    "references": 1,
+    "revision": 64,
+    "time": "2021-12-21T02:32:28-05:00",
+    "created": "2021-12-20T19:11:52-05:00"
+}

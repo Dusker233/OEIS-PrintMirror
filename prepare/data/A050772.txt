@@ -1,0 +1,41 @@
+{
+    "number": 50772,
+    "data": "18,24,25,46,57,161,203,209,288,319,323,391,736,798,837,858,928,930,1035,1088,1089,1218,1300,1376,1690,2254,2418,2478,2673,2842,2871,3045,3220,3325,3458,3510,3588,4186,4508,4617,4824,5054,5180,5248,5472,6069",
+    "name": "Iterated procedure 'composite k added to sum of its prime factors reaches a prime' yields 5 skipped primes.",
+    "link": [
+        "Robert Israel, <a href=\"/A050772/b050772.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "18 is a term because 18 + (2+3+3) = 26 + (2+13) = ending prime 41. Between 18 and 41 one finds 5 primes 19, 23, 29, 31 and 37."
+    ],
+    "maple": [
+        "filter:= proc(n) local r, s, t;",
+        "  if isprime(n) then return false fi;",
+        "  t:= 0: s:= n;",
+        "  do",
+        "   r:= s;",
+        "   s:= s + add(p[1]*p[2],p=ifactors(s)[2]);",
+        "   t:= t + numtheory:-pi(s-1) - numtheory:-pi(r);",
+        "   if isprime(s) then return t=5 fi;",
+        "   if t > 5 then return false fi;",
+        "  od;",
+        "end proc:",
+        "select(filter, [$2..10000]); # _Robert Israel_, May 08 2020"
+    ],
+    "mathematica": [
+        "ok[n_] := CompositeQ[n] && Block[{k=n, p = NextPrime[n, 6]}, While[k < p, k += Total[ Times @@@ FactorInteger[k]]]; k == p]; Select[Range@ 6069, ok] (* _Giovanni Resta_, May 08 2020 *)"
+    ],
+    "xref": [
+        "Cf. A050703, A050710."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Sep 15 1999",
+    "ext": [
+        "Offset changed to 1 by _Robert Israel_, May 08 2020"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2021-11-22T10:10:13-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

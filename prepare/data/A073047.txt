@@ -1,0 +1,41 @@
+{
+    "number": 73047,
+    "data": "2,3,3,4,4,5,5,5,5,6,6,7,7,7,7,7,7,8,8,8,8,9,9,9,9,9,9,9,9,10,10,10,10,11,11,11,11,11,11,11,11,12,12,12,12,12,12,13,13,13,13,13,13,13,13,13,13,14,14,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,16,16",
+    "name": "Least k such that x(k)=0 where x(1)=n and x(k)=k*floor(x(k-1)/k).",
+    "comment": [
+        "Length of n-th run of consecutive identical terms is given by A028913 - _Ralf Stephan_."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A073047/b073047.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "Presumably a(n) = sqrt(Pi*n)+O(1)."
+    ],
+    "example": [
+        "If x(1)=4, x(2)= 2*floor(4/2)=4, x(3)=3*floor(4/3)=3; x(4)=4*floor(3/4)=0 hence a(4)=4."
+    ],
+    "maple": [
+        "f:= proc(n,k) option remember;",
+        "  if n = 0 then return k-1 fi;",
+        "  procname(k*floor(n/k),k+1)",
+        "end proc:",
+        "map(f, [$1..100], 1); # _Robert Israel_, Jul 25 2019"
+    ],
+    "mathematica": [
+        "a[n_] := Module[{x}, x[1] = n; x[k_] := x[k] = k Floor[x[k-1]/k]; For[k = 1, True, k++, If[x[k] == 0, Return[k]]]];",
+        "Array[a, 100] (* _Jean-Fran\u00e7ois Alcover_, Jun 07 2020 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<0,0,s=n; c=1; while(s-s%c>0,s=s-s%c; c++); c)"
+    ],
+    "xref": [
+        "Cf. A002491, A007952, A082527, A082528."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, Aug 31 2002; revised May 03 2003",
+    "references": 4,
+    "revision": 15,
+    "time": "2020-06-07T08:16:17-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

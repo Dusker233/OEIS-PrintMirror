@@ -1,0 +1,42 @@
+{
+    "number": 360225,
+    "data": "2,3,23,3023,2393023,3023172393023,2393023313023172393023,3023172393023282393023313023172393023,239302331302317239302383023172393023282393023313023172393023",
+    "name": "a(1) = 2, a(2) = 3, a(n) = the smallest prime whose digits consist of a(n-2), followed by zero or more digits, followed by a(n).",
+    "example": [
+        "a(4) = 3023 because int(concat('3', '23')) is not prime, and int(concat('3', '0', '23')) is prime."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "max_n = 10",
+        "prev_prev = 2",
+        "prev = 3",
+        "seq = [prev_prev, prev]",
+        "for n in range(3, max_n+1):",
+        "    result = int(str(prev_prev) + str(prev))",
+        "    if not isprime(result):",
+        "        middle_length = 1",
+        "        keep_searching = True",
+        "        while keep_searching:",
+        "            for middle in range(0, 10**middle_length):",
+        "                result = int(str(prev_prev) + str(middle).zfill(middle_length) + str(prev))",
+        "                if isprime(result):",
+        "                    keep_searching = False",
+        "                    break",
+        "            middle_length = middle_length + 1",
+        "    seq.append(result)",
+        "    prev_prev = prev",
+        "    prev = result",
+        "print(seq)"
+    ],
+    "xref": [
+        "Cf. A024770, A024785, A048549, A053583, A085823, A211682, A250052,"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert C. Lyons_, Jan 30 2023",
+    "references": 0,
+    "revision": 9,
+    "time": "2023-01-31T08:36:26-05:00",
+    "created": "2023-01-31T08:36:26-05:00"
+}

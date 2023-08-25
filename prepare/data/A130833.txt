@@ -1,0 +1,49 @@
+{
+    "number": 130833,
+    "data": "97,641,706,722,2417,2482,2498,3026,3042,3107,3123,14657,14722,14738,15266,15282,15347,15363,17042,17058,17123,17139,17667,17683,17748,17764,28577,28642,28658,29186,29202,29267,29283,30962,30978,31043,31059,31587,31603",
+    "name": "Sums of two or more distinct 4th powers of primes.",
+    "comment": [
+        "This is to cubes and A030078 as A192926 is to 4th powers and A030514. The subsequence of primes which are sums of two or more distinct 4th powers of primes begins 97, 641, 2417 (A193411).",
+        "The first term that arises in more than one way is 6539044 = 11^4 + 23^4 + 41^4 + 43^4 = 13^4 + 29^4 + 31^4 + 47^4. - _Robert Israel_, Apr 27 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A130833/b130833.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "{A030078(i) + A030078(j) for i not equal to j} UNION {A030078(i) + A030078(j) + A030078(k) for i not equal to j not equal to k} UNION {A030078(i) + A030078(j) + A030078(k) + A030078(L) for i not equal to j not equal to k not equal to L}..."
+    ],
+    "example": [
+        "a(1) = 97 = 2^4 + 3^4.",
+        "a(2) = 641 = 2^4 + 5^4.",
+        "a(3) = 706 = 3^4 + 5^4.",
+        "a(4) = 722 = 2^4 + 3^4 + 5^4."
+    ],
+    "maple": [
+        "N:= 40000: # for all terms <= N",
+        "S1:= {}:",
+        "S2:= {}:",
+        "p:= 1:",
+        "do",
+        "  p:= nextprime(p);",
+        "  if p^4 > N then break fi;",
+        "  s:= p^4;",
+        "  S2:= S2 union select(`<=`,map(`+`,S1 union S2, s), N);",
+        "  S1:= S1 union {s};",
+        "od:",
+        "sort(convert(S2,list)); # _Robert Israel_, Apr 27 2020"
+    ],
+    "mathematica": [
+        "nn=6; t = Sort@ Flatten@ Table[ n^4, {n, Prime@ Range@ nn}]; Select[Sort[",
+        "Plus @@@ Subsets[t, {2, nn}]], # < Prime[nn-1]^4 + Prime[nn]^4 &] (* _Robert G. Wilson v_, Jul 22 2011 *)"
+    ],
+    "xref": [
+        "Cf. A000040, A000583, A030514, A192926, A193411."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_, Jul 21 2011",
+    "references": 2,
+    "revision": 24,
+    "time": "2020-04-27T17:34:53-04:00",
+    "created": "2011-07-27T18:56:01-04:00"
+}

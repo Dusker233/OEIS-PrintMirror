@@ -1,0 +1,39 @@
+{
+    "number": 358178,
+    "data": "0,1,1,1,1,2,2,2,3,4,4,4,4,4,4,5,6,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,10,10,11,12,12,12,13,14,14,15,15,15,15,16,16,16,16,16,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,18,18,18,18,18,18,18,18,18",
+    "name": "a(n) is the cardinality of the set of distinct pairwise gcd's of {1! + 1, ..., n! + 1}.",
+    "example": [
+        "For n = 6 initial set is {1+1, 2+1, 6+1, 24+1, 120+1, 720+1} and after applying gcd for each distinct pair of elements we get {1, 7} set with cardinality of a(6) = 2."
+    ],
+    "program": [
+        "(Python)",
+        "from math import gcd, factorial",
+        "from itertools import combinations",
+        "f, terms = [2,], []",
+        "for i in range(2,100):",
+        "    f.append(factorial(i)+1)",
+        "    terms.append(len(set([gcd(*t) for t in combinations(f, 2)])))",
+        "print(terms)",
+        "(Python)",
+        "from math import gcd",
+        "from itertools import count, islice",
+        "def A358178_gen(): # generator of terms",
+        "    m, f, g = 1, [], set()",
+        "    for n in count(1):",
+        "        m *= n",
+        "        g |= set(gcd(d,m+1) for d in f)",
+        "        f.append(m+1)",
+        "        yield len(g)",
+        "A358178_list = list(islice(A358178_gen(),20)) # _Chai Wah Wu_, Dec 15 2022"
+    ],
+    "xref": [
+        "Cf. A038507, A358127, A356371, A214799."
+    ],
+    "keyword": "nonn",
+    "offset": "1,6",
+    "author": "_Gleb Ivanov_, Nov 02 2022",
+    "references": 0,
+    "revision": 16,
+    "time": "2022-12-16T09:00:57-05:00",
+    "created": "2022-12-15T14:19:38-05:00"
+}

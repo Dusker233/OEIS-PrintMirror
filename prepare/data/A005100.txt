@@ -1,0 +1,85 @@
+{
+    "number": 5100,
+    "id": "M0514",
+    "data": "1,2,3,4,5,7,8,9,10,11,13,14,15,16,17,19,21,22,23,25,26,27,29,31,32,33,34,35,37,38,39,41,43,44,45,46,47,49,50,51,52,53,55,57,58,59,61,62,63,64,65,67,68,69,71,73,74,75,76,77,79,81,82,83,85,86",
+    "name": "Deficient numbers: numbers k such that sigma(k) < 2k.",
+    "comment": [
+        "A number k is abundant if sigma(k) > 2k (cf. A005101), perfect if sigma(k) = 2k (cf. A000396), or deficient if sigma(k) < 2k (this sequence), where sigma(k) is the sum of the divisors of k (A000203).",
+        "Also, numbers k such that A033630(k) = 1. - _Reinhard Zumkeller_, Mar 02 2007",
+        "According to Del\u00e9glise (1998), the abundant numbers have natural density 0.2474 < A(2) < 0.2480. Since the perfect numbers have density 0, the deficient numbers have density 0.7520 < 1 - A(2) < 0.7526. Thus the n-th deficient number is asymptotic to 1.3287*n < n/(1 - A(2)) < 1.3298*n. - _Daniel Forgues_, Oct 10 2015",
+        "The data begins with 3 runs of 5 consecutive terms, from 1 to 5, 7 to 11 and 13 to 17. The maximal length of a run of consecutive terms is 5 because 6 is a perfect number and its proper multiples are abundant numbers. - _Bernard Schott_, May 19 2019"
+    ],
+    "reference": [
+        "Richard K. Guy, Unsolved Problems in Number Theory, 3rd Edition, Springer, 2004, Section B2, pp. 74-84.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A005100/b005100.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "J. Britton, <a href=\"http://britton.disted.camosun.bc.ca/perfect/jbperfect.htm\">Perfect Number Analyser</a>.",
+        "Marc Del\u00e9glise, <a href=\"http://projecteuclid.org/euclid.em/1048515661\">Bounds for the density of abundant integers</a>, Experiment. Math. Volume 7, Issue 2 (1998), pp. 137-143.",
+        "Jose Arnaldo Bebita Dris, <a href=\"https://arxiv.org/abs/1308.6767\">A Criterion for Deficient Numbers Using the Abundancy Index and Deficiency Functions</a>, arXiv:1308.6767 [math.NT], 2013-2016; Journal for Algebra and Number Theory Academia, Volume 8, Issue 1 (February 2018), 1-9.",
+        "Walter Nissen, <a href=\"http://upforthecount.com/math/abundance.html\">Abundancy : Some Resources </a>.",
+        "Paul Pollack and Carl Pomerance, <a href=\"https://doi.org/10.1090/btran/10\">Some problems of Erd\u0151s on the sum-of-divisors function</a>, For Richard Guy on his 99th birthday: May his sequence be unbounded, Trans. Amer. Math. Soc. Ser. B, Vol. 3 (2016), pp. 1-26; <a href=\"http://pollack.uga.edu/reversal-errata.pdf\">Errata</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/DeficientNumber.html\">Deficient Number</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Abundance.html\">Abundance</a>.",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Deficient_number\">Deficient number</a>.",
+        "<a href=\"/index/Cor#core\">Index entries for \"core\" sequences</a>."
+    ],
+    "formula": [
+        "A001065(a(n)) < a(n). - _Reinhard Zumkeller_, Oct 31 2015"
+    ],
+    "maple": [
+        "with(numtheory); s := proc(n) local i,j,ans; ans := [ ]; j := 0; for i while j<n do if sigma(i)<2*i then ans := [ op(ans),i ]; j := j+1; fi; od; RETURN(ans); end; # s(k) returns terms of sequence through k",
+        "isA005100 := proc(n)",
+        "    numtheory[sigma](n) < 2*n ;",
+        "end proc:",
+        "A005100 := proc(n)",
+        "    option remember;",
+        "    local a;",
+        "    if n = 1 then",
+        "        1;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if isA005100(a) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc: # _R. J. Mathar_, Jul 08 2015"
+    ],
+    "mathematica": [
+        "Select[Range[100], DivisorSigma[1, # ] < 2*# &] (* _Stefan Steinerberger_, Mar 31 2006 *)"
+    ],
+    "program": [
+        "(PARI) isA005100(n) = (sigma(n) < 2*n) \\\\ _Michael B. Porter_, Nov 08 2009",
+        "(PARI) for(n=1, 100, if(sigma(n) < 2*n, print1(n\", \"))) \\\\  _Altug Alkan_, Oct 15 2015",
+        "(Haskell)",
+        "a005100 n = a005100_list !! (n-1)",
+        "a005100_list = filter (\\x -> a001065 x < x) [1..]",
+        "-- _Reinhard Zumkeller_, Oct 31 2015",
+        "(Python)",
+        "from sympy import divisors",
+        "def ok(n): return sum(divisors(n)) < 2*n",
+        "print(list(filter(ok, range(1, 87)))) # _Michael S. Branicky_, Aug 29 2021",
+        "(Python)",
+        "from sympy import divisor_sigma",
+        "from itertools import count, islice",
+        "def A005100_gen(startvalue=1): return filter(lambda n:divisor_sigma(n) < 2*n,count(max(startvalue,1))) # generator of terms >= startvalue",
+        "A005100_list = list(islice(A005100_gen(),20)) # _Chai Wah Wu_, Jan 14 2022"
+    ],
+    "xref": [
+        "Cf. A005101 (abundant), A125499 (even deficient), A247328 (odd deficient), A023196 (complement).",
+        "By definition, the weird numbers A006037 are not in this sequence.",
+        "Cf. A001065, A318172."
+    ],
+    "keyword": "nonn,easy,core,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Stefan Steinerberger_, Mar 31 2006"
+    ],
+    "references": 198,
+    "revision": 83,
+    "time": "2022-01-15T15:34:25-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

@@ -1,0 +1,61 @@
+{
+    "number": 326118,
+    "data": "0,1,2,5,6,9,14,21,24,29,36,45,50,57,66,77,84,93,104,117,126,137,150,165,176,189,204,221,234,249,266,285,300,317,336,357,374,393,414,437,456,477,500,525,546,569,594,621,644,669,696,725,750,777,806,837,864,893",
+    "name": "a(n) is the largest number of squares of unit area connected only at corners and without holes that can be inscribed in an n X n square.",
+    "comment": [
+        "a(n) is equal to h_4(n) as defined in A309038.",
+        "a(n) is the maximum size of an induced subtree in the graph of the black squares of an n X n checkerboard, where edges connect diagonally adjacent squares. - _Andrew Howroyd_, Sep 10 2019"
+    ],
+    "link": [
+        "Stefano Spezia, <a href=\"/A326118/b326118.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (2,-1,0,1,-2,1)."
+    ],
+    "formula": [
+        "O.g.f.: x*(1 + 2*x^2 - 2*x^3 + x^4 + 2*x^5 - 2*x^7)/((1 - x)^3*(1 + x)*(1 + x^2)).",
+        "E.g.f.: -3*exp(-x)/8 + (2 + x)^2 + exp(x)/8*(-29 + 2*x*(7 + x)) - 3*sin(x)/2.",
+        "a(n) = 2*a(n-1) - a(n-2) + a(n-4) - 2*a(n-5) + a(n-6) for n > 8.",
+        "a(n) = (1/8)*(-29 + 12*n + 2*n^2 - 3*(-1)^n - 12*sin(n*Pi/2)) for n > 2, a(0) = 0, a(1) = 1, a(2) = 2.",
+        "Limit_{n->oo} a(n)/A000290(n) = 1/4."
+    ],
+    "example": [
+        "Illustrations for n = 1..7:",
+        "     __              __              __    __",
+        "    |__|            |__|__          |__|__|__|",
+        "                       |__|          __|__|__",
+        "                                    |__|  |__|",
+        "    a(1) = 1        a(2) = 2         a(3) = 5",
+        "     __    __                  __    __",
+        "    |__|__|__|                |__|__|__|",
+        "     __|__|__                  __|__|__    __",
+        "    |__|  |__|__              |__|  |__|__|__|",
+        "             |__|                    __|__|__",
+        "                                    |__|  |__|",
+        "        a(4) = 6                  a(5) = 9",
+        "     __    __    __      __    __    __    __",
+        "    |__|__|__|  |__|__  |__|__|__|  |__|__|__|",
+        "     __|__|__    __|__|  __|__|__    __|__|__",
+        "    |__|  |__|__|__|    |__|  |__|__|__|  |__|",
+        "     __    __|__|__      __    __|__|__    __",
+        "    |__|__|__|  |__|__  |__|__|__|  |__|__|__|",
+        "       |__|        |__|  __|__|__    __|__|__",
+        "                        |__|  |__|  |__|  |__|",
+        "       a(6) = 14              a(7) = 21"
+    ],
+    "mathematica": [
+        "Join[{0,1,2},Table[(1/8)*(-29+12*n+2*n^2-3(-1)^n-12*Sin[n*Pi/2]),{n,3,57}]]"
+    ],
+    "program": [
+        "(Magma) I:=[0, 1, 2, 5, 6, 9, 14, 21, 24]; [n le 9 select I[n] else 2*Self(n-1)-Self(n-2)+Self(n-4)-2*Self(n-5)+Self(n-6): n in [1..58]];",
+        "(PARI) concat([0], Vec(x*(-1-2*x^2+2*x^3-x^4-2*x^5+2*x^7)/((-1+x)^3*(1+x)*(1+x^2))+O(x^58)))"
+    ],
+    "xref": [
+        "Cf. A000290, A309038, A338329 (1st differences)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Stefano Spezia_, Sep 10 2019",
+    "references": 6,
+    "revision": 68,
+    "time": "2023-04-23T07:27:23-04:00",
+    "created": "2019-09-11T10:56:41-04:00"
+}

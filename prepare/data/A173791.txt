@@ -1,0 +1,37 @@
+{
+    "number": 173791,
+    "data": "1,518,15960915,4828311488700,6893870205562754400,32978529689054529966170400,428543560497255413435939747983950,13079873402738505705048288877402275168000,841990488872507644104617260743341546194585260000",
+    "name": "a(n) is The number of (0,1)-matrices, A = (a_{ij}), of size (3n) X (2n) such that each row has exactly two 1's and each column has exactly three 1's and with the restriction that no 1 stands on the line from a_{11} to a_{22}.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A173791/b173791.txt\">Table of n, a(n) for n = 1..50</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..2n} ( Sum_{s=0..k} ( Sum_{j=0..2*n-k} ( Sum_{t=0..min(j, k-s)} ( (-1)^(k+s+j)*B(k, s)*B(2*n, k)*B(j, t)*B(2*n-k, j)*B(3*n-k, j)*j!*(6*n-k-2*j-s)!/(B(2*n-k, t)*2^(3*n-s-t)*6^(2*n-k-j+t)) )))), where B = binomial."
+    ],
+    "mathematica": [
+        "a[n_]:= a[n]= With[{B=Binomial}, Sum[(-1)^(k+s+j)*B[k, s]*B[2*n, k]*B[j, t]*B[2*n-k, j]*B[3*n-k, j]*j!*(6*n-k-2*j-s)!/(B[2*n-k, t]*2^(3*n-s-t)*6^(2*n-k-j+t)), {k,0,2*n}, {s,0,k}, {j,0,2*n-k}, {t,0,Min[j, k-s]}]];",
+        "Table[a[n], {n, 12}] (* _G. C. Greubel_, Jul 13 2021 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "B = binomial;",
+        "f = factorial;",
+        "@CachedFunction",
+        "def c(n,k): return sum( sum( sum( (-1)^(s+j)*B(k, s)*B(j, t)*B(2*n-k, j)*B(3*n-k, j)*f(j)*f(6*n-k-2*j-s)*2^s*6^j/(B(2*n-k, t)*3^t) for t in [0..min(k-s,j)] ) for j in [0..2*n-k]) for s in [0..k]  )",
+        "def a(n): return sum( (-1)^k*B(2*n, k)*c(n,k)/(8^n*6^(2*n-k)) for k in [0..2*n] )",
+        "[a(n) for n in (1..12)] # _G. C. Greubel_, Jul 13 2021"
+    ],
+    "xref": [
+        "Cf. A174789, A173790."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Shanzhen Gao_, Feb 24 2010",
+    "ext": [
+        "Edited by _G. C. Greubel_, Jul 13 2021"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2021-07-14T07:05:03-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

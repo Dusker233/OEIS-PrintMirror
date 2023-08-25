@@ -1,0 +1,56 @@
+{
+    "number": 333091,
+    "data": "1,5,57,761,10817,159005,2386857,36348401,559362561,8676917429,135445348057,2125030235113,33479772021953,529326516063181,8393856020704841,133449301759137761,2126391547960594433,33948765589280671589,542950968447834265209,8697032976559212532953",
+    "name": "a(n) is the n-th order Taylor polynomial (centered at 0) of S(x)^(2*n ) evaluated at x = 1, where S(x) = (1 - x - sqrt(1 - 6*x + x^2))/(2*x) is the o.g.f. of the Schr\u00f6der numbers A006318.",
+    "comment": [
+        "The sequence satisfies the Gauss congruences: a(n*p^k) == a(n*p^(k-1)) ( mod p^k ) for all prime p and positive integers n and k.",
+        "We conjecture that the sequence satisfies the stronger supercongruences a(n*p^k) == a(n*p^(k-1)) ( mod p^(3*k) ) for prime p >= 5 and positive integers n and k. Examples of these congruences are given below.",
+        "More generally, for each integer m, we conjecture that the sequence a_m(n), defined as the n-th order Taylor polynomial of S(x)^(m*n) evaluated at x = 1 satisfies the same congruences. For cases see A333090 (m = 1) and A333092 (m = 3). For similarly defined sequences see A333093 through A333097."
+    ],
+    "formula": [
+        "a(n) = [x^n] ( (1 + x)*S^2(x/(1 + x)) )^n",
+        "O.g.f.: ( 1 + x*f'(x)/f(x) )/( 1 - x*f(x) ), where f(x) = 1 + 4*x + 32*x^2 + 324*x^3 + 3696*x^4 + ... = (1/x)*Revert( x/S^2(x) ).",
+        "Row sums of the Riordan array ( 1 + x*f'(x)/f(x), x*f(x) ) belonging to the Hitting time subgroup of the Riordan group.",
+        "a(n) ~ sqrt(120 + 39*sqrt(10)) * (223 + 70*sqrt(10))^n / (30*sqrt(Pi*n) * 3^(3*n)). - _Vaclav Kotesovec_, Mar 28 2020"
+    ],
+    "example": [
+        "n-th order Taylor polynomial of S(x)^(2*n):",
+        "  n = 0: S(x)^0 = 1 + O(x)",
+        "  n = 1: S(x)^2 = 1 + 4*x + O(x^2)",
+        "  n = 2: S(x)^4 = 1 + 8*x + 48*x^2 + O(x^3)",
+        "  n = 3: S(x)^6 = 1 + 12*x + 96*x^2 + 652*x^3 + O(x^4)",
+        "  n = 4: S(x)^8 = 1 + 16*x + 160*x^2 + 1296*x^3 + 9344*x^4 + O(x^5)",
+        "Setting x = 1 gives a(0) = 1, a(1) = 1 + 4 = 5, a(2) = 1 + 8 + 48 = 57, a(3) = 1 + 12 + 96 + 652 = 761 and a(4) = 1 + 16 + 160 + 1296 + 9344 = 10817.",
+        "The triangle of coefficients of the n-th order Taylor polynomial of S(x)^(2*n), n >= 0, in descending powers of x begins",
+        "                                          row sums",
+        "  n = 0 |    1                                1",
+        "  n = 1 |    4    1                           5",
+        "  n = 2 |   48    8    1                     57",
+        "  n = 3 |  652   96   12   1                761",
+        "  n = 4 | 9344 1296  160  16   1          10817",
+        "   ...",
+        "This is a Riordan array belonging to the Hitting time subgroup of the Riordan group. The first column sequence [1, 4, 48, 652, 9344, 138004, ...]  = [x^n] S(x)^(2*n), and may also satisfy the above congruences.",
+        "Examples of congruences:",
+        "a(13) - a(1) = 529326516063181 - 5 = (2^3)*(13^3)*30116438101 == 0 ( mod 13^3 ).",
+        "a(3*7) - a(3) = 2240508640665255893197949 - 761 = (2^2)*3*(7^3)*11* 49485569411283149863 == 0 ( mod 7^3 ).",
+        "a(5^2) - a(5) = 150633078429259494145205034005 - 159005 = (2^3)*(3^3)*(5^6)*11*23*61*2663*28097*119633*323083 == 0 ( mod 5^6 )."
+    ],
+    "maple": [
+        "S:= x -> (1/2)*(1-x-sqrt(1-6*x+x^2))/x:",
+        "G := (x,n) -> series(S(x)^(2*n), x, 76):",
+        "seq(add(coeff(G(x, n), x, n-k), k = 0..n), n = 0..25);"
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[((1+x) * (1 - 2*x*(1+x) - Sqrt[1 - 4*x*(1+x)]) / (2*x^2))^n, {x, 0, n}], {n, 0, 20}] (* _Vaclav Kotesovec_, Mar 28 2020 *)"
+    ],
+    "xref": [
+        "A006318, A333090 through A333097."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Peter Bala_, Mar 22 2020",
+    "references": 2,
+    "revision": 23,
+    "time": "2023-05-01T09:28:54-04:00",
+    "created": "2020-03-28T07:44:50-04:00"
+}

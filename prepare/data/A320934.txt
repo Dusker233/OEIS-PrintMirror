@@ -1,0 +1,46 @@
+{
+    "number": 320934,
+    "data": "0,0,1,4,20,80,336,1344,5440,21760,87296,349184,1397760,5591040,22368256,89473024,357908480,1431633920,5726601216,22906404864,91625881600,366503526400,1466015154176,5864060616704,23456246661120,93824986644480,375299963355136,1501199853420544,6004799480791040",
+    "name": "Number of chiral pairs of color patterns (set partitions) for a row of length n using 4 or fewer colors (subsets).",
+    "comment": [
+        "Two color patterns are equivalent if the colors are permuted.",
+        "A chiral row is not equivalent to its reverse.",
+        "There are nonrecursive formulas, generating functions, and computer programs for A124303 and A305750, which can be used in conjunction with the first formula."
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (4,4,-16)."
+    ],
+    "formula": [
+        "a(n) = (A124303(n) - A305750(n))/2.",
+        "a(n) = A124303(n) - A056323(n).",
+        "a(n) = A056323(n) - A305750(n).",
+        "a(n) = A122746(n-2) + A320526(n) + A320527(n).",
+        "a(n) = Sum_{j=1..k} (S2(n,j) - Ach(n,j)) / 2, where k=4 is the maximum number of colors, S2 is the Stirling subset number A008277, and Ach(n,k) = [n>=0 & n<2 & n==k] + [n>1]*(k*Ach(n-2,k) + Ach(n-2,k-1) + Ach(n-2,k-2)).",
+        "a(2*m) = (16^m - 4*4^m)/48.",
+        "a(2*m-1) = (16^m - 4*4^m)/192.",
+        "a(n) = (4^n - 4^floor(n/2+1))/48.",
+        "G.f.: x^2/((-1 + 4*x)*(-1 + 4*x^2)). - _Stefano Spezia_, Oct 29 2018",
+        "a(n) = 2^n*(2^n - (-1)^n - 3)/48. - _Bruno Berselli_, Oct 31 2018"
+    ],
+    "example": [
+        "For a(4)=4, the chiral pairs are AAAB-ABBB, AABA-ABAA, AABC-ABCC, and ABAC-ABCB."
+    ],
+    "mathematica": [
+        "Table[(4^n - 4^Floor[n/2+1])/48, {n, 40}] (* or *)",
+        "LinearRecurrence[{4, 4, -16}, {0, 0, 1}, 40] (* or *)",
+        "Ach[n_, k_] := Ach[n, k] = If[n<2, Boole[n==k && n>=0], k Ach[n-2,k] + Ach[n-2,k-1] + Ach[n-2,k-2]] (* A304972 *)",
+        "k=4; Table[Sum[StirlingS2[n,j]-Ach[n,j],{j,k}]/2,{n,40}]",
+        "CoefficientList[Series[x^2/((-1 + 4 x) (-1 + 4 x^2)), {x, 0, 50}], x] (* _Stefano Spezia_, Oct 29 2018 *)"
+    ],
+    "xref": [
+        "Column 4 of A320751.",
+        "Cf. A124303 (oriented), A056323 (unoriented), A305750 (achiral)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,4",
+    "author": "_Robert A. Russell_, Oct 27 2018",
+    "references": 3,
+    "revision": 21,
+    "time": "2019-02-28T19:58:35-05:00",
+    "created": "2018-10-31T05:31:04-04:00"
+}

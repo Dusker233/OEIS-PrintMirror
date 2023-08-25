@@ -1,0 +1,48 @@
+{
+    "number": 364265,
+    "data": "323567034,431684330,468780388,481098980,577922904,639336984,715008644,720990620,726167154,735965384,769385252,808810638,822981560,831034918,839075510,847765554,879549670,895723268,902976710,903293468,904796814,918520420,940737005,944087484,982059364",
+    "name": "The first term in a chain of at least 3 consecutive numbers each with exactly 6 distinct prime factors (i.e., belonging to A074969).",
+    "comment": [
+        "To distinguish this from A259349: \"Numbers n with exactly k distinct prime factors\" means numbers with A001221(n) = omega(n) = k, which specifies that in the prime factorization n = Product_{i>=1} p_i^(e_i), e_i >= 1, the exponents are ignored, and only the size of the set of the (distinct) p_i is considered. In A259349, the numbers n are products of k distinct primes, which means in the prime factorization of n, all exponents e_i are equal to 1. (If all exponents e_i = 1, the n are squarefree, i.e., in A005117). Rephrased: the n which are products of k distinct primes have A001221(n) = omega(n) = A001222(n) = bigomega(n) = k, whereas the n which have exactly k distinct prime factors are the superset of (weaker) requirement A001221(n) = omega(n) = k. - _R. J. Mathar_, Jul 18 2023"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A364265/b364265.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(1) = A138206(3).",
+        "{k: A001221(k) = A001221(k+1) = A001221(k+2) = 6}."
+    ],
+    "maple": [
+        "omega := proc(n)",
+        "    nops(numtheory[factorset](n)) ;",
+        "end proc:",
+        "for k from 1 do",
+        "    if omega(k) = 6 then",
+        "        if omega(k+1) = 6 then",
+        "            if omega(k+2) = 6 then",
+        "                print(k) ;",
+        "            end if;",
+        "        end if;",
+        "    end if;",
+        "end do:"
+    ],
+    "program": [
+        "(PARI) upto(n) = {my(res = List(), streak = 0); forfactored(i = 2, n, if(#i[2]~ == 6, streak++; if(streak >= 3, listput(res, i[1] - 2)), streak = 0)); res} \\\\ _David A. Corneth_, Jul 18 2023"
+    ],
+    "xref": [
+        "Cf. A259349 (requires squarefree). Subsequence of A273879.",
+        "Cf. A364266 (5 distinct factors).",
+        "See also A001221, A001222, A005117.",
+        "Numbers divisible by d distinct primes: A246655 (d=1), A007774 (d=2), A033992 (d=3), A033993 (d=4), A051270 (d=5), A074969 (d=6), A176655 (d=7), A348072 (d=8), A348073 (d=9)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. J. Mathar_, Jul 16 2023",
+    "ext": [
+        "More terms from _David A. Corneth_, Jul 18 2023"
+    ],
+    "references": 8,
+    "revision": 32,
+    "time": "2023-08-02T14:31:17-04:00",
+    "created": "2023-07-16T10:49:22-04:00"
+}

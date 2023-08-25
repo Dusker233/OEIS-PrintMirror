@@ -1,0 +1,36 @@
+{
+    "number": 332533,
+    "data": "1,4,15,92,790,9384,137326,2397352,48428487,1111122360,28531183329,810554859732,25239592620853,854769763924104,31278135039463245,1229782938533709200,51702516368332126932,2314494592676172411516,109912203092257573556274,5518821052632117898282620",
+    "name": "a(n) = (1/n) * Sum_{k=1..n} floor(n/k) * n^k.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A332533/b332533.txt\">Table of n, a(n) for n = 1..387</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n] (1/(1 - x)) * Sum_{k>=1} x^k / (1 - n*x^k).",
+        "a(n) = (1/n) * Sum_{k=1..n} Sum_{d|k} n^d.",
+        "a(n) ~ n^(n-1). - _Vaclav Kotesovec_, May 28 2021",
+        "a(n) = (1/(n-1)) * Sum_{k=1..n} (n^floor(n/k) - 1), for n>=2. - _Ridouane Oudra_, Mar 05 2023"
+    ],
+    "maple": [
+        "seq(add(n^(k-1)*floor(n/k), k=1..n), n=1..60); # _Ridouane Oudra_, Mar 05 2023"
+    ],
+    "mathematica": [
+        "Table[(1/n) Sum[Floor[n/k] n^k, {k, 1, n}], {n, 1, 20}]",
+        "Table[(1/n) Sum[Sum[n^d, {d, Divisors[k]}], {k, 1, n}], {n, 1, 20}]",
+        "Table[SeriesCoefficient[(1/(1 - x)) Sum[x^k/(1 - n x^k), {k, 1, n}], {x, 0, n}], {n, 1, 20}]"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, (n\\k)*n^k)/n; \\\\ _Michel Marcus_, Feb 16 2020",
+        "(PARI) a(n) = sum(k=1, n, sumdiv(k, d, n^(d-1))); \\\\ _Seiichi Manyama_, May 29 2021"
+    ],
+    "xref": [
+        "Cf. A006218, A024916, A268235, A308313, A308814, A319194, A320095."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Feb 16 2020",
+    "references": 10,
+    "revision": 34,
+    "time": "2023-03-07T11:13:19-05:00",
+    "created": "2020-02-16T14:41:50-05:00"
+}

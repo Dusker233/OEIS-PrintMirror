@@ -1,0 +1,42 @@
+{
+    "number": 341711,
+    "data": "1,5,19,59,165,419,1001,2257,4877,10133,20399,39881,76085,141877,259373,465493,821813,1428725,2449573,4145249,6931259,11459483,18749007,30373189,48752125,77568683,122406223,191651957,297856813,459652759,704595749,1073152385",
+    "name": "a(n) = A120963(2*n+1)/2.",
+    "comment": [
+        "A bisection of A341710."
+    ],
+    "link": [
+        "D. Weigel, R. Veysseyre, T. Phan, J. M. Effantin, and Y. Billiet, <a href=\"https://doi.org/10.1107/S0108767384000702\">Crystallography, geometry and physics in higher dimensions. I. Point-symmetry operations</a>, Acta Cryst., A40 (1984), 323-330 (see Table 3)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; nops(invphi(n)) end:",
+        "g:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      g(n-j)*add(d*b(d), d=divisors(j)), j=1..n)/n)",
+        "    end:",
+        "a:= n-> g(2*n+1)/2:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Feb 19 2021"
+    ],
+    "mathematica": [
+        "terms = 64; (* number of terms of A120963 *)",
+        "nmax = Floor[terms/2] - 1;",
+        "S[m_] := S[m] = CoefficientList[Product[1/(1 - x^EulerPhi[k]),",
+        "     {k, 1, m*terms}] + O[x]^(terms + 1),x];",
+        "S[m = 1];",
+        "S[m++];",
+        "While[S[m] != S[m - 1], m++];",
+        "A120963 = S[m];",
+        "a[n_ /; 0 <= n <= nmax] := A120963[[2 n + 2]]/2;",
+        "Table[a[n], {n, 0, nmax}] (* _Jean-Fran\u00e7ois Alcover_, May 12 2022 *)"
+    ],
+    "xref": [
+        "Cf. A120963, A341710, A341712."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Feb 19 2021",
+    "references": 5,
+    "revision": 19,
+    "time": "2023-03-03T09:31:36-05:00",
+    "created": "2021-02-19T15:40:44-05:00"
+}

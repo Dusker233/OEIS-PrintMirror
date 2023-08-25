@@ -1,0 +1,43 @@
+{
+    "number": 269986,
+    "data": "20,28,34,35,40,45,46,47,50,51,56,60,63,65,69,75,77,80,82,84,90,91,102,110,112,116,117,120,123,124,133,135,144,147,148,150,152,156,159,160,165,167,171,172,194,206,208,209,216,217,222,223,234,236,239,240",
+    "name": "Numbers having factorial fractility A269982(n) = 4.",
+    "comment": [
+        "See A269982 for a definition of factorial fractility and guide to related sequences."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A269986/b269986.txt\">Table of n, a(n) for n = 1..116</a>"
+    ],
+    "example": [
+        "NI(1/20) = (3, 3, 2, 3, 2, 1, 1, 1, 2, 3, 2, 1, 1, 1, 2, 3, 2, ...)",
+        "NI(5/20) = (2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, ...)",
+        "NI(6/20) = (2, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, ...)",
+        "NI(10/20) = (2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...).",
+        "These 4 equivalence classes represent all the classes for n = 20, so that the factorial fractility of 20 is 4."
+    ],
+    "mathematica": [
+        "A269982[n_] := CountDistinct[With[{l = NestWhileList[",
+        "        Rescale[#, {1/(Floor[x] + 1)!, 1/Floor[x]!} /.",
+        "           FindRoot[1/x! == #, {x, 1}]] &, #, UnsameQ, All]},",
+        "     Min@l[[First@First@Position[l, Last@l] ;;]]] & /@",
+        "   Range[1/n, 1 - 1/n, 1/n]]; (* from Davin Park,Nov 19 2016 *)",
+        "Select[Range[2, 500], A269982[#] == 4 &] (* _Robert Price_, Sep 19 2019 *)"
+    ],
+    "program": [
+        "(PARI) select( is_A269986(n)=A269982(n)==4, [1..200]) \\\\ _M. F. Hasler_, Nov 05 2018"
+    ],
+    "xref": [
+        "Cf. A000142 (factorial numbers), A269982 (factorial fractility of n); A269983, A269984, A269985, A269987, A269988 (numbers with factorial fractility 1, 2, ..., 6, respectively).",
+        "Cf. A269570 (binary fractility), A270000 (harmonic fractility)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_ and _Peter J. C. Moses_, Mar 11 2016",
+    "ext": [
+        "Edited by _M. F. Hasler_, Nov 05 2018"
+    ],
+    "references": 7,
+    "revision": 14,
+    "time": "2019-09-19T21:12:35-04:00",
+    "created": "2016-03-12T21:54:45-05:00"
+}

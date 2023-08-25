@@ -1,0 +1,33 @@
+{
+    "number": 250216,
+    "data": "19,31,37,43,47,59,61,67,71,79,101,103,131,137,139,149,157,193,223,233,241,251,257,263,271,277,283,293,307,311,347,349,353,359,373,379,389,401,409,419,421,433,461,463,467,491,509,523,541,547,557,563,571,577,587,593",
+    "name": "Weak irregular primes. A prime is weak irregular iff it is a Bernoulli irregular prime or an Euler irregular prime.",
+    "comment": [
+        "Primes p which divide A241601(k) for some k."
+    ],
+    "link": [
+        "Peter Luschny, <a href=\"http://www.luschny.de/math/primes/irregular.html\">Irregular Bernoulli and Euler Primes</a>.",
+        "The Prime Pages, <a href=\"https://t5k.org/top20/page.php?id=26\">Irregular Primes</a>",
+        "The Prime Pages, <a href=\"https://t5k.org/top20/page.php?id=25\">Euler Irregular</a>"
+    ],
+    "mathematica": [
+        "pmax = 593; m0 = 200; dm = 100;",
+        "b[n_] := Numerator[BernoulliB[2 n]/(2 n)];",
+        "c[n_] := Numerator[SeriesCoefficient[Log[Tan[x]+1/Cos[x]], {x, 0, 2n+1}]];",
+        "(* a1 = A241601 *) a1[0] = 1; a1[n_] := a1[n] = If[EvenQ[n], b[n/2] // Abs, c[(n - 1)/2]];",
+        "f[m_] := f[m] = Module[{}, aa = Table[a1[n], {n, 0, m}]; okQ[p_] := AnyTrue[aa, Divisible[#, p] &]; Reap[For[p = 2, p <= pmax, p = NextPrime[p], If[okQ[p], Sow[p]]]][[2, 1]]];",
+        "f[m = m0]; f[m = m + dm];",
+        "While[Print[\"m = \", m]; f[m] != f[m - dm], m = m + dm];",
+        "A250216 = f[m] (* _Jean-Fran\u00e7ois Alcover_, Jul 23 2019 *)"
+    ],
+    "xref": [
+        "Cf. A000928, A120337, A128197."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Eric Chen_, Dec 24 2014",
+    "references": 5,
+    "revision": 15,
+    "time": "2023-04-03T10:36:13-04:00",
+    "created": "2014-12-24T23:17:02-05:00"
+}

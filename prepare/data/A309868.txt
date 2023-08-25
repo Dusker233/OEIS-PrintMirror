@@ -1,0 +1,43 @@
+{
+    "number": 309868,
+    "data": "1,2,4,8,20,78,2459,14028740,29284932080025185,468863491068204454517854447175206,1994324729204021501147398087008429477142243091610827370319897909501551",
+    "name": "Number of uniform hypergraphs on n unlabeled nodes with at least one (possibly empty) hyperedge.",
+    "comment": [
+        "A hypergraph is called uniform if all hyperedges have the same cardinality."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A309868/b309868.txt\">Table of n, a(n) for n = 0..14</a>",
+        "Jianguo Qian, <a href=\"https://doi.org/10.1016/j.disc.2014.03.005\">Enumeration of unlabeled uniform hypergraphs</a>, Discrete Math. 326 (2014), 66--74. MR3188989.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Hypergraph\">Hypergraph</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} (A309865(n,k) - 1)."
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(3) = 8 uniform hypergraphs on 3 unlabeled nodes with at least one hyperedge: {{}}, {1}, {1,2}, {1,2,3}, {12}, {12,13}, {12,13,23}, {123}."
+    ],
+    "maple": [
+        "g:= (l, i, n)-> `if`(i=0, `if`(n=0, [[]], []), [seq(map(x->",
+        "     [x[], j], g(l, i-1, n-j))[], j=0..min(l[i], n))]):",
+        "h:= (p, v)-> (q-> add((s-> add(`if`(andmap(i-> irem(k[i], p[i]",
+        "     /igcd(t, p[i]))=0, [$1..q]), mul((m-> binomial(m, k[i]*m",
+        "     /p[i]))(igcd(t, p[i])), i=1..q), 0), t=1..s)/s)(ilcm(seq(",
+        "    `if`(k[i]=0, 1, p[i]), i=1..q))), k=g(p, q, v)))(nops(p)):",
+        "b:= (n, i, l, v)-> `if`(n=0 or i=1, 2^((p-> h(p, v))([l[], 1$n]))",
+        "     /n!, add(b(n-i*j, i-1, [l[], i$j], v)/j!/i^j, j=0..n/i)):",
+        "T:= proc(n, k) T(n, k):=`if`(k>n-k, T(n, n-k), b(n$2, [], k)) end:",
+        "a:= n-> add(T(n, k)-1, k=0..n):",
+        "seq(a(n), n=0..10);"
+    ],
+    "xref": [
+        "Row sums of A309876.",
+        "Cf. A309865."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Peter Dolland_ and _Alois P. Heinz_, Aug 20 2019",
+    "references": 2,
+    "revision": 16,
+    "time": "2019-08-22T20:38:33-04:00",
+    "created": "2019-08-22T20:38:33-04:00"
+}

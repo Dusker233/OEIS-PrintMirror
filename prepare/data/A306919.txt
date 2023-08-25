@@ -1,0 +1,41 @@
+{
+    "number": 306919,
+    "data": "1,1,2,4,5,14,24,122,318,2417851639229258349414245,14134776518227074636666380005943348126619871175004951664972849610340964762",
+    "name": "Sum over all partitions of n into distinct parts of the power tower evaluation x^y^...^z, where x, y, ..., z are the parts in increasing order.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A306919/b306919.txt\">Table of n, a(n) for n = 0..11</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PowerTower.html\">Power Tower</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Exponentiation\">Exponentiation</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Identity_element\">Identity element</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Operator_associativity\">Operator associativity</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>"
+    ],
+    "example": [
+        "a(0) = 1 because the empty partition () has no parts, the exponentiation operator ^ is right-associative, and 1 is the right identity of exponentiation.",
+        "a(6) = 1^2^3 + 2^4 + 1^5 + 6 = 1 + 16 + 1 + 6 = 24."
+    ],
+    "maple": [
+        "d:= proc(l) local i; for i to nops(l)-1 do",
+        "       if l[i]=l[i+1] then return fi od; l",
+        "    end:",
+        "f:= l-> `if`(l=[], 1, l[1]^f(subsop(1=(), l))):",
+        "a:= n-> add(f(l), l=map(l->d(sort(l, `<`)), combinat[partition](n))):",
+        "seq(a(n), n=0..11);"
+    ],
+    "mathematica": [
+        "d[l_] := Module[{i}, For[i = 1, i <= Length[l]-1 , i++, If[l[[i]] == l[[i+1]], Return[]]]; l];",
+        "f[l_] := If[l == {}, 1, l[[1]]^f[Delete[l, 1]]];",
+        "a[n_] := Sum[f[l], {l, Sort /@ Select[IntegerPartitions[n], Length@# == Length @ Union@#&]}];",
+        "a /@ Range[0, 11] (* _Jean-Fran\u00e7ois Alcover_, May 03 2020, after Maple *)"
+    ],
+    "xref": [
+        "Cf. A022629, A066189, A306895, A306918."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Mar 16 2019",
+    "references": 3,
+    "revision": 16,
+    "time": "2020-05-03T15:33:24-04:00",
+    "created": "2019-03-17T12:13:45-04:00"
+}

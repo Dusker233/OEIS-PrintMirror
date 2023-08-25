@@ -1,0 +1,49 @@
+{
+    "number": 309883,
+    "data": "0,1,10,35,100,152,350,377,452,539,709,1000,1299,1398,1439,1519,1520,1569,1591,1679,1965,2599,2838,3332,3500,3598,3770,4520,4586,4754,4854,5390,5501,5835,5857,6388,6595,6735,6861,6951,7090,7349,7887,8395,9795,10000,10056,10159,10389,11055,11091,12990,12999",
+    "name": "Numbers k such that A003132(k^2) = A003132(k), where A003132(n) is the sum of the squares of the digits of n.",
+    "comment": [
+        "If k is in the sequence, then so are k*10^r, r >= 1."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A309883/b309883.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "377^2 = 142129, A003132(377) = 3^2 + 7^2 + 7^2 = 107, A003132(142129) = 1^2 + 4^2 + 2^2 + 1^2 + 2^2 + 9^2 = 107."
+    ],
+    "maple": [
+        "filter:= proc(n) local t;",
+        "  add(t^2, t = convert(n,base,10)) = add(t^2, t = convert(n^2,base,10))",
+        "end proc:",
+        "select(filter, [$0..20000]); # _Robert Israel_, Apr 30 2023"
+    ],
+    "mathematica": [
+        "digSum[n_] := Total[IntegerDigits[n]^2]; Select[Range[0, 13000], digSum[#] == digSum[#^2] &] (* _Amiram Eldar_, Aug 22 2019 *)"
+    ],
+    "program": [
+        "(PARI) for(i = 0, 30000, if(norml2(digits(i^2)) == norml2(digits(i)), print1(i, \", \")))",
+        "(Python)",
+        "def A003132(n):",
+        "    s = 0",
+        "    while n > 0:",
+        "        s, n = s+(n%10)**2, n//10",
+        "    return s",
+        "n, a = 0, 0",
+        "while n < 50:",
+        "    if A003132(a) == A003132(a*a):",
+        "        n = n+1",
+        "        print(n,a)",
+        "    a = a+1 # _A.H.M. Smeets_, Aug 23 2019",
+        "(Magma) [0] cat [k:k in [1..13000]| &+[c^2: c in Intseq(k)] eq &+[c^2: c in Intseq(k^2)]]; // _Marius A. Burtea_, Aug 24 2019"
+    ],
+    "xref": [
+        "Cf. A003132, A058369, A070276, A174460, A176670, A178213, A307735, A309884."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Antonio Rold\u00e1n_, Aug 21 2019",
+    "references": 2,
+    "revision": 41,
+    "time": "2023-04-30T17:18:48-04:00",
+    "created": "2019-08-27T10:58:26-04:00"
+}

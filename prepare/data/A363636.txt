@@ -1,0 +1,53 @@
+{
+    "number": 363636,
+    "data": "0,3,7,13,17,18,21,31,38,43,47,57,68,73,91,99,111,117,123,132,133,157,183,211,241,242,253,255,268,273,293,302,307,313,322,327,343,381,413,421,438,443,463,487,507,515,553,557,577,593,601,651,693,697,703,707",
+    "name": "Indices of numbers of the form k^2+1, k >= 0, that can be written as a product of smaller numbers of that same form.",
+    "comment": [
+        "For the corresponding sequence for numbers of the form k^3+1 instead of k^2+1, the only terms known to me are 0 and 26, with 26^3+1 = (2^3+1)^2*(6^3+1)."
+    ],
+    "link": [
+        "David Trimas, <a href=\"/A363636/b363636.txt\">Table of n, a(n) for n = 1..2260</a>"
+    ],
+    "example": [
+        "0 is a term because 0^2+1 = 1 equals the empty product.",
+        "3 is a term because 3^2+1 = 10 = 2*5 = (1^2+1)*(2^2+1).",
+        "38 is a term because 38^2+1 = 1445 = 5*17*17 = (2^2+1)*(4^2+1)^2. (This is the first term that requires more than two factors.)"
+    ],
+    "mathematica": [
+        "g[lst_, p_] :=",
+        "  Module[{t, i, j},",
+        "   Union[Flatten[Table[t = lst[[i]]; t[[j]] = p*t[[j]];",
+        "      Sort[t], {i, Length[lst]}, {j, Length[lst[[i]]]}], 1],",
+        "    Table[Sort[Append[lst[[i]], p]], {i, Length[lst]}]]];",
+        "multPartition[n_] :=",
+        "  Module[{i, j, p, e, lst = {{}}}, {p, e} =",
+        "    Transpose[FactorInteger[n]];",
+        "   Do[lst = g[lst, p[[i]]], {i, Length[p]}, {j, e[[i]]}]; lst];",
+        "output = Join[{0}, Flatten[Position[Table[",
+        "     test = Sqrt[multPartition[n^2 + 1][[2 ;; All]] - 1];",
+        "     Count[AllTrue[#, IntegerQ] & /@ test, True] > 0",
+        "     , {n, 707}], True]]]",
+        "(* _David Trimas_, Jul 23 2023 *)"
+    ],
+    "xref": [
+        "Sequences that list those terms (or their indices or some other key) of a given sequence that are products of smaller terms of the same sequence (in other words, the nonprimitive terms of the multiplicative closure of the sequence):",
+        "  A018252 (A000027),",
+        "  A034878 (A000142),",
+        "  A068143 (A000217),",
+        "  A363492 (A000041),",
+        "  A363634 (A000959),",
+        "  A363635 (A003309),",
+        "  this sequence (A002522),",
+        "  A363637 (A005563),",
+        "  A363638 (A008864),",
+        "  A363750 (A006093),",
+        "  A364151 (A000292)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Pontus von Br\u00f6mssen_, Jun 19 2023",
+    "references": 8,
+    "revision": 28,
+    "time": "2023-07-29T04:32:08-04:00",
+    "created": "2023-07-15T06:36:21-04:00"
+}

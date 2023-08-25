@@ -1,0 +1,47 @@
+{
+    "number": 302249,
+    "data": "1,3,5,6,7,12,20,24,28,40,45,56,60,63,72,80,90,96,112,126,160,162,180,224,240,252,288,360,384,504,540,640,648,720,756,896,960,1008,1152,1440,2016,2160,2592,3024,3168,3584,3888,4032",
+    "name": "a(n) is the number of divisors of A279254(n) in Gaussian integers.",
+    "comment": [
+        "The divisors are counted mod associates.",
+        "Conjecture: a(14) = 63 is the largest odd term."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A302249/b302249.txt\">Table of n, a(n) for n = 1..394</a> (calculated from the b-file at A279254)",
+        "<a href=\"/index/Ga#gaussians\">Index entries for Gaussian integers and primes</a>"
+    ],
+    "formula": [
+        "a(n) = A062327(A279254(n))."
+    ],
+    "example": [
+        "A279254(14) = 200 and 200 has 63 divisors in Gaussian integers (up to association), so a(14) = 63."
+    ],
+    "mathematica": [
+        "With[{s = Array[DivisorSigma[0, #, GaussianIntegers -> True] &, 10^6]}, Union@ FoldList[Max, s]] (* _Michael De Vlieger_, Apr 05 2018 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "b(n)= \\\\ A062327",
+        "{",
+        "    my(r=1, f=factor(n));",
+        "    for(j=1, #f[, 1], my(p=f[j, 1], e=f[j, 2]);",
+        "        if(p==2, r*=(2*e+1));",
+        "        if(p%4==1, r*=(e+1)^2);",
+        "        if(p%4==3, r*=(e+1));",
+        "    );",
+        "    return(r);",
+        "}",
+        "{ my(r=0, t); for(n=1, 10^6, t=b(n); if(t>r, r=t; print1(t, \", \"))); }",
+        "\\\\ _Joerg Arndt_, Apr 04 2018"
+    ],
+    "xref": [
+        "Cf. A062327, A279254."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jianing Song_, Apr 04 2018",
+    "references": 2,
+    "revision": 20,
+    "time": "2020-02-19T07:23:52-05:00",
+    "created": "2018-04-29T02:23:21-04:00"
+}

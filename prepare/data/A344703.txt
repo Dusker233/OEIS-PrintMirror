@@ -1,0 +1,35 @@
+{
+    "number": 344703,
+    "data": "14,21,26,28,35,38,39,42,52,56,57,62,63,65,70,74,76,77,78,82,84,86,93,95,98,99,104,105,111,112,114,117,119,122,124,126,129,130,133,134,140,143,146,148,152,154,155,156,158,161,166,168,171,172,175,182,183,185,186,189,190,194,195,198,201,203,206,208,209",
+    "name": "Numbers k for which sigma(k^2) and psi(k^2) share a factor, where sigma is the sum of divisors, A000203, and psi is the Dedekind psi function, A001615.",
+    "comment": [
+        "Numbers k for which A344695(k^2) > 1.",
+        "It can be shown that sigma(m) and psi(m) share a factor if m is nonsquare. (See A344695 for more detail.) So here we consider only square numbers, m = k^2.",
+        "For prime p, sigma(p^2) and psi(p^2) are coprime, since sigma(p^2) = p^2 + p + 1 = psi(p^2) + 1. So all terms are composite. We can say more, since for prime p and positive integer e, psi(p^(2*e)) = p^(2*e-1) * (p+1), whereas sigma(p^(2*e)) can be shown to be congruent to 1 modulo p and to 1 modulo p+1, so shares no factors with p^(2*e-1) * (p+1). So all terms are divisible by more than one prime.",
+        "If k is in the sequence, m*k is also present for any positive integer m coprime to k."
+    ],
+    "example": [
+        "Sigma (A000203) and the Dedekind psi function (A001615) are both multiplicative, so we gain insight by showing the values of these functions using their multiplicative properties:-",
+        "sigma(14^2) = sigma(2^2) * sigma(7^2) = 7 * 57 = 7 * (3*19).",
+        "psi(14^2) = psi(2^2) * psi(7^2) = 6 * 56 = (2*3) * (2^3*7).",
+        "So sigma(14^2) and psi(14^2) share factors 3 and 7, so 14 is in the sequence.",
+        "Looking in particular at the shared factor 3, we see it is present in sigma(7^2) and psi(2^2). For prime p, sigma(p^2) and psi(p^2) equate to polynomials in p, so we deduce 3 divides sigma(p^2) for p congruent to 7 modulo 3, and divides psi(p^2) for p congruent to 2 modulo 3. From this we see all products of a prime of the form 3m+1 and a prime of the form 3m+2 are in the sequence; for instance (3*4+1) * (3*1+2) = 13 * 5 = 65."
+    ],
+    "program": [
+        "(PARI)",
+        "A001615(n) = if(1==n,n, my(f=factor(n)); prod(i=1, #f~, f[i, 1]^f[i, 2] + f[i, 1]^(f[i, 2]-1))); \\\\ After code in A001615",
+        "A344695(n) = gcd(sigma(n), A001615(n));",
+        "isA344703(n) = (A344695(n^2)>1);"
+    ],
+    "xref": [
+        "Cf. A000203, A000290, A001615, A344695.",
+        "Subsequences: A344872."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_ and _Peter Munn_, May 27 2021",
+    "references": 2,
+    "revision": 14,
+    "time": "2021-06-03T09:30:43-04:00",
+    "created": "2021-06-03T09:30:43-04:00"
+}

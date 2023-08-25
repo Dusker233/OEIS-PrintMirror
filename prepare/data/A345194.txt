@@ -1,0 +1,74 @@
+{
+    "number": 345194,
+    "data": "1,1,2,6,22,102,562,3618,26586,219798,2018686,20393790,224750298,2683250082,34498833434,475237879950,6983085189454,109021986683046,1802213242949602,31447143854808378,577609702827987882,11139837273501641502,225075546284489412854",
+    "name": "Number of alternating patterns of length n.",
+    "comment": [
+        "We define a pattern to be a finite sequence covering an initial interval of positive integers. Patterns are counted by A000670 and ranked by A333217.",
+        "A sequence is alternating if it is alternately strictly increasing and strictly decreasing, starting with either. For example, the partition (3,2,2,2,1) has no alternating permutations, even though it does have the anti-run permutations (2,3,2,1,2) and (2,1,2,3,2). An alternating pattern is necessarily an anti-run (A005649).",
+        "The version with twins (A344605) is identical to this sequence except with a(2) = 3 instead of 2.",
+        "From _Gus Wiseman_, Jan 16 2022: (Start)",
+        "Conjecture: Also the number of weakly up/down patterns of length n, where a sequence is weakly up/down if it is alternately weakly increasing and weakly decreasing, starting with an increase. For example, the a(0) = 1 through a(3) = 6 weakly up/down patterns are:",
+        "  ()  (1)  (1,1)  (1,1,1)",
+        "           (2,1)  (1,1,2)",
+        "                  (2,1,1)",
+        "                  (2,1,2)",
+        "                  (2,1,3)",
+        "                  (3,1,2)",
+        "(End)"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A345194/b345194.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = 2*A350354(n) for n >= 2. - _Andrew Howroyd_, Feb 04 2022"
+    ],
+    "example": [
+        "The a(0) = 1 through a(3) = 6 alternating patterns:",
+        "  ()  (1)  (1,2)  (1,2,1)",
+        "           (2,1)  (1,3,2)",
+        "                  (2,1,2)",
+        "                  (2,1,3)",
+        "                  (2,3,1)",
+        "                  (3,1,2)"
+    ],
+    "mathematica": [
+        "wigQ[y_]:=Or[Length[y]==0,Length[Split[y]]== Length[y]&&Length[Split[Sign[Differences[y]]]]==Length[y]-1];",
+        "allnorm[n_]:=If[n<=0,{{}},Function[s, Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "Table[Length[Select[Join@@Permutations/@allnorm[n],wigQ]],{n,0,6}]"
+    ],
+    "program": [
+        "(PARI)",
+        "F(p,x) = {sum(k=0, p, (-1)^((k+1)\\2)*binomial((p+k)\\2, k)*x^k)}",
+        "R(n,k) = {Vec(if(k==1, x, 2*F(k-2,-x)/F(k-1,x)-2-(k-2)*x) + O(x*x^n))}",
+        "seq(n)= {concat([1], sum(k=1, n, R(n, k)*sum(r=k, n, binomial(r, k)*(-1)^(r-k)) ))} \\\\ _Andrew Howroyd_, Feb 04 2022"
+    ],
+    "xref": [
+        "The version for permutations is A001250, complement A348615.",
+        "The version for compositions is A025047, complement A345192.",
+        "The version with twins (x,x) is A344605.",
+        "The version for perms of prime indices is A345164, complement A350251.",
+        "The version for factorizations is A348610, complement A348613, weak A349059.",
+        "The weak version is A349058, complement A350138, compositions A349052.",
+        "The complement is counted by A350252.",
+        "A000670 = patterns, ranked by A333217.",
+        "A003242 = anti-run compositions.",
+        "A005649 = anti-run patterns, complement A069321.",
+        "A019536 = necklace patterns.",
+        "A129852 and A129853 = up/down and down/up compositions.",
+        "A226316 = patterns avoiding (1,2,3), weakly A052709, complement A335515.",
+        "A345170 = partitions w/ alternating permutation, complement A345165.",
+        "A349055 = normal multisets w/ alternating permutation, complement A349050.",
+        "Cf. A006330, A049774, A128761, A335456, A335457, A335517, A344614, A344615, A345167, A345168."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jun 17 2021",
+    "ext": [
+        "a(10)-a(18) from _Alois P. Heinz_, Dec 10 2021",
+        "Terms a(19) and beyond from _Andrew Howroyd_, Feb 04 2022"
+    ],
+    "references": 27,
+    "revision": 23,
+    "time": "2022-02-04T18:09:27-05:00",
+    "created": "2021-06-18T01:13:59-04:00"
+}

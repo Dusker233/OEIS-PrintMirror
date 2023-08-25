@@ -1,0 +1,62 @@
+{
+    "number": 19589,
+    "data": "1,1,2,5,16,59,246,1105,5270,26231,135036,713898,3857113,21220020,118547774,671074583",
+    "name": "Number of nondecreasing sequences that are differences of two permutations of 1,2,...,n.",
+    "comment": [
+        "Also, number of nondecreasing sequences that are sums of two permutations of order n. If nondecreasing requirement is dropped, the sequence becomes A175176. - _Max Alekseyev_, Jun 19 2023",
+        "From _Olivier G\u00e9rard_, Sep 18 2007: (Start)",
+        "Number of classes of permutations arrays giving the same partition by the following transformation (equivalent in this case to X-rays but more general): on the matrix representation of a permutation of order n, the sum (i.e., here, number of ones) in the i-th antidiagonal is the number of copies of i in the partition.",
+        "This gives an injection of permutations of n into partitions with parts at most 2n-1. The first or the last antidiagonal can be omitted, reducing the size of parts to 2n-2 without changing the number of classes.",
+        "This sequence is called Lambda_{n,1} in Louck's paper and appears explicitly on p. 758. Terms up to 10 were computed by Myron Stein (arXiv).",
+        "This is similar to the number of Schur functions studied by Di Francesco et al. (A007747) related to the powers of the Vandermonde determinant. Also number of classes of straight (monotonic) crossing bi-permutations. (End)",
+        "Also number of monomials in expansion of permanent of an n X n Hankel matrix [t(i+j)] in terms of its entries (cf. A019448). - _Vaclav Kotesovec_, Mar 29 2019"
+    ],
+    "reference": [
+        "Olivier G\u00e9rard and Karol Penson, Set partitions, multiset permutations and bi-permutations, in preparation."
+    ],
+    "link": [
+        "C. Bebeacua, T. Mansour, A. Postnikov and S. Severini, <a href=\"https://arxiv.org/abs/math/0506334\">On the X-rays of permutations</a>, arXiv:math/0506334 [math.CO], 2005.",
+        "David A. Corneth, <a href=\"/A019589/a019589.gp.txt\">Nondecreasing sequences for a(n) where n = 0..8</a>.",
+        "J.-P. Davalan, <a href=\"http://jeux-et-mathematiques.davalan.org/mots/suites/tomo/index.html\">Permutations et tomographie - X-rays</a>.",
+        "James D. Louck, <a href=\"https://www.emis.de/journals/HOA/IJMMS/Volume22_4/840789.pdf\">Power of a determinant with two physical applications</a>, Internat. J. Math. & Math. Sci., Vol. 22, No 4(1999) pp. 745-759 - S 0161-1712(99)22745-7"
+    ],
+    "formula": [
+        "a(n) <= A007747(n) <= A362967(n). - _Max Alekseyev_, Jun 19 2023"
+    ],
+    "maple": [
+        "with(LinearAlgebra): f:=n->nops([coeffs(Permanent(Matrix(n, (i, j) -> a[i+j])))]): [seq(f(n), n=1..10)]; # _Vaclav Kotesovec_, Mar 29 2019"
+    ],
+    "mathematica": [
+        "a[n_] := Table[b[i+j], {i, n}, {j, n}] // Permanent // Expand // Length;",
+        "Array[a, 10, 0] (* _Jean-Fran\u00e7ois Alcover_, May 29 2019, after _Vaclav Kotesovec_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "import itertools",
+        "def a019589(n):",
+        "    s = set()",
+        "    for p in itertools.permutations(range(n)):",
+        "        s.add(tuple(sorted([k - p[k] for k in range(n)])))",
+        "    return len(s)",
+        "print([a019589(n) for n in range(10)])",
+        "# _Bert Dobbelaere_, Jan 19 2019",
+        "(PARI) a(n) = my(l=List(), v=[1..n]);for(i=0, n!-1, listput(l, vecsort(v-numtoperm(n,i)))); listsort(l, 1); #l"
+    ],
+    "xref": [
+        "Cf. A007747, A019447, A019448, A086647, A175176, A290052, A289971, A362967."
+    ],
+    "keyword": "nonn,more,nice",
+    "offset": "0,3",
+    "author": "Alex Postnikov (apost(AT)math.mit.edu)",
+    "ext": [
+        "More terms from _Olivier G\u00e9rard_, Sep 18 2007",
+        "Two more terms from _Vladeta Jovovic_, Oct 04 2007",
+        "a(0)=1 prepended by _Alois P. Heinz_, Jul 24 2017",
+        "a(13)-a(14) from _Bert Dobbelaere_, Jan 19 2019",
+        "a(15) from _Max Alekseyev_, Jun 28 2023"
+    ],
+    "references": 7,
+    "revision": 60,
+    "time": "2023-06-30T02:38:36-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

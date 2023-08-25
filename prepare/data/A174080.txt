@@ -1,0 +1,34 @@
+{
+    "number": 174080,
+    "data": "1,1,2,5,21,100,597,4113,32842,292379,2925367,31983248,383514347,4966286235,69508102006,1039315462467,16627618496319,282023014602100,5075216962675445,96263599713301975,1925002914124917950",
+    "name": "Number of permutations of length n with no consecutive triples i,i+d,i+2d for all d>0.",
+    "example": [
+        "For n=4, there are 4!-a(4)=3 permutations with some consecutive triple i,i+d,i+2d. Note for n=4, only d=1 applies. Hence those three permutations are (0,1,2,3), (1,2,3,0), and (3,0,1,2). Since here only d=1, this is the same value of a(4) in A002628."
+    ],
+    "maple": [
+        "b:= proc(s, x, y) option remember; `if`(s={}, 1, add(",
+        "      `if`(x=0 or x<y or x-y<>y-j,",
+        "         b(s minus {j}, y, j), 0), j=s))",
+        "    end:",
+        "a:= n-> b({$1..n}, 0$2):",
+        "seq(a(n), n=0..14);  # _Alois P. Heinz_, Apr 13 2021"
+    ],
+    "mathematica": [
+        "b[s_, x_, y_] := b[s, x, y] = If[s == {}, 1, Sum[If[x == 0 || x < y || x-y != y-j, b[s~Complement~{j}, y, j], 0], {j, s}]];",
+        "a[n_] := b[Range[n], 0, 0];",
+        "Table[a[n], {n, 0, 14}] (* _Jean-Fran\u00e7ois Alcover_, Sep 27 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A002628, A174072, A174081, A174082, A174083, A295370."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Isaac Lambert_, Mar 15 2010",
+    "ext": [
+        "a(0)-a(3) and a(10)-a(20) from _Alois P. Heinz_, Apr 13 2021"
+    ],
+    "references": 5,
+    "revision": 16,
+    "time": "2022-09-27T07:56:01-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

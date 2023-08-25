@@ -1,0 +1,35 @@
+{
+    "number": 180283,
+    "data": "3,12,50,195,735,2716,9912,35850,128865,461175,1645215,5855941,20810153,73870748,262029364,929031504,3293120337,11672207262,41373395052,146674116501,520093043437,1844704839175,6544970763175,23229252652125",
+    "name": "Number of arrangements of n indistinguishable balls in n boxes with the maximum number of balls in any box equal to 3.",
+    "link": [
+        "Robert Israel, <a href=\"/A180283/b180283.txt\">Table of n, a(n) for n = 3..1795</a> (n=3..59 from R. H. Hardin)"
+    ],
+    "maple": [
+        "f:= proc(m,n) option remember;",
+        "  if m > 3*n or m < 3 then return 0 fi;",
+        "  g(m-3,n-1) + add(procname(m-i,n-1),i=0..2)",
+        "end proc:",
+        "g:= proc(m,n) option remember;",
+        "  if m > 3*n then return 0 fi;",
+        "  add(procname(m-i,n-1), i=0..min(m,3))",
+        "end proc:",
+        "g(0,0):= 1:",
+        "seq(f(n,n),n=3..30); # _Robert Israel_, May 03 2018"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0, 1, If[i == 0, 0, Sum[b[n-j, i-1, k], {j, 0, Min[n, k]}]]];",
+        "a[n_] := b[n, n, 3] - b[n, n, 2];",
+        "Table[a[n], {n, 3, 30}] (* _Jean-Fran\u00e7ois Alcover_, Aug 28 2022, after _Alois P. Heinz_ in A180281 *)"
+    ],
+    "xref": [
+        "Column 3 of A180281."
+    ],
+    "keyword": "nonn",
+    "offset": "3,1",
+    "author": "_R. H. Hardin_, Aug 24 2010",
+    "references": 1,
+    "revision": 16,
+    "time": "2022-08-28T04:17:57-04:00",
+    "created": "2010-08-27T03:00:00-04:00"
+}

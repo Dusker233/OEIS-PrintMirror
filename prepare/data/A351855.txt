@@ -1,0 +1,66 @@
+{
+    "number": 351855,
+    "data": "5,64,506,64325,268723,480129,6282620,64548862,9657523883,13480852825,29766135708,105223301080,519861666225,851245744041,1378216791896,581522966976875,583298551668358,885441628670251,1651966084813205,16868988672306046,17170433482837259",
+    "name": "Partial sums of nonsquares that are partial sums of nonprimes.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A351855/b351855.txt\">Table of n, a(n) for n = 1..26</a>"
+    ],
+    "example": [
+        "a(2) = 64 is a term because 64 = 1+4+6+8+9+10+12+14 = 2+3+5+6+7+8+10+11+12 is the sum of the first 8 nonprimes and the sum of the first 9 nonsquares."
+    ],
+    "maple": [
+        "i:= 0: j:= 0: s:= 0: t:= 0:",
+        "R:= NULL: count:= 0:",
+        "while count < 13 do",
+        "  if s <= t then",
+        "     i:= i+1;",
+        "     if not issqr(i) then",
+        "       s:= s+i;",
+        "       if s=t then R:= R,s; count:= count+1 fi;",
+        "     fi",
+        "  else",
+        "     j:= j+1;",
+        "     if not isprime(j) then",
+        "       t:= t+j;",
+        "       if s=t then R:= R,t; count:= count+1 fi;",
+        "     fi",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import nextprime",
+        "def A351855_gen(): # generator of terms",
+        "    c, k, ks, m, p, q = 0, 1, 2, 1, 4, 5",
+        "    while True:",
+        "        for n in range(ks,ks+2*k):",
+        "            c += n",
+        "            if c == m:",
+        "                yield c",
+        "            else:",
+        "                while c > m:",
+        "                    m += p",
+        "                    p += 1",
+        "                    if p == q:",
+        "                        q = nextprime(q)",
+        "                        p += 1",
+        "        ks += 2*k+1",
+        "        k += 1",
+        "A351855_list = list(islice(A351855_gen(),20)) # _Chai Wah Wu_, Apr 04 2022"
+    ],
+    "xref": [
+        "Intersection of A051349 and A086849."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Mar 31 2022",
+    "ext": [
+        "a(20)-a(21) from _Jon E. Schoenfield_, Mar 31 2022"
+    ],
+    "references": 1,
+    "revision": 31,
+    "time": "2022-04-05T17:06:35-04:00",
+    "created": "2022-04-04T10:19:47-04:00"
+}

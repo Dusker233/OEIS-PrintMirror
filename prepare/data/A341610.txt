@@ -1,0 +1,38 @@
+{
+    "number": 341610,
+    "data": "8,12,16,18,20,24,27,28,30,32,36,40,42,44,45,48,50,52,54,56,60,63,64,66,68,70,72,75,76,78,80,81,84,88,90,92,96,98,99,100,102,104,105,108,110,112,114,116,117,120,124,126,128,130,132,135,136,138,140,144,147,148,150,152,153,154,156,160,162,164,165",
+    "name": "Nonprimitive terms of A246282: numbers k that have more than one divisor d|k such that A003961(d) > 2*d.",
+    "comment": [
+        "Numbers k for which A337345(k) > 1, or equally, for which A337346(k) > 0.",
+        "Obviously A337346(n) = 0 for any noncomposite and for any semiprime, thus this is a subsequence of A033942. The first term of A033942 not present here is 125, as A337345(125) = 1.",
+        "Empirically checked: in range 1 .. 2^31, all abundant numbers are found in this sequence. For proving this, we should concentrate only on checking A091191, as the set A005101 \\ A091191 (non-primitive abundant numbers) is certainly included, as for any divisor d for which sigma(d) > 2*d (or even sigma(d) >= 2*d), we also have A003961(d) > 2*d."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A341610/b341610.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Pri#prime_indices\">Index entries for sequences computed from indices in prime factorization</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "mathematica": [
+        "Block[{nn = 165, s}, s = {1}~Join~Array[Times @@ Map[#1^#2 & @@ # &, FactorInteger[#] /. {p_, e_} /; e > 0 :> {Prime[PrimePi@ p + 1], e}] &, nn - 1, 2]; Select[Range[nn], 1 < DivisorSum[#, 1 &, s[[#]] > 2 # &] &]] (* _Michael De Vlieger_, Feb 22 2021 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A003961(n) = { my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); };",
+        "isA341610(n) = (1<sumdiv(n,d,A003961(d)>(d+d)));"
+    ],
+    "xref": [
+        "Cf. A337345.",
+        "Positions of nonzero terms in A337346.",
+        "Setwise difference A246282 \\ A337372.",
+        "Conjectured subsequence: A005101. (Clearly abundant numbers are all in A246282).",
+        "Cf. A341611, A341614.",
+        "Differs from its subsequence A033942 for the first time at n=52, with a(52) = 126, while A033942(52) = 125."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Feb 22 2021",
+    "references": 5,
+    "revision": 17,
+    "time": "2021-03-06T01:34:03-05:00",
+    "created": "2021-03-06T01:34:03-05:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 340508,
+    "data": "12,132,876,4416,18624,69060,232044,720648,2097612,5781120,15203904,38387556,93503052,220586244,505673280,1129518564,2464116480,5260683840,11010018840,22623235620,45700246668,90863466372,178000194348,343888491684,655760533632,1235186054724",
+    "name": "Let ped(n) denote the number of partitions of n in which the even parts are distinct (A001935); a(n) = ped(9*n+7).",
+    "comment": [
+        "These are the coefficients in the left-hand side of a \"surprising identity\" [Hirschhorn]."
+    ],
+    "reference": [
+        "M. D. Hirschhorn, The Power of q, Springer, 2017. See (33.1.3) page 303."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A340508/b340508.txt\">Table of n, a(n) for n = 0..5000</a>"
+    ],
+    "formula": [
+        "a(n) = 12 * A226034(n)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; `if`(n=0, 1, add(b(n-j)*add(",
+        "     `if`(irem(d, 4)=0, 0, d), d=divisors(j)), j=1..n)/n)",
+        "    end:",
+        "a:= n-> b(9*n+7):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jan 26 2021"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n == 0, 1, Sum[b[n - j]*Sum[",
+        "   If[Mod[d, 4] == 0, 0, d], {d, Divisors[j]}], {j, 1, n}]/n];",
+        "a[n_] := b[9n+7];",
+        "a /@ Range[0, 25] (* _Jean-Fran\u00e7ois Alcover_, Jan 29 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "A subsequence of A001935.",
+        "Cf. A226034."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_, Jan 26 2021",
+    "references": 1,
+    "revision": 30,
+    "time": "2021-01-29T08:13:12-05:00",
+    "created": "2021-01-26T02:19:57-05:00"
+}

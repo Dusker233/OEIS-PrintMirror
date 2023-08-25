@@ -1,0 +1,49 @@
+{
+    "number": 347930,
+    "data": "1,1,3,16,88,625,5527,55760,640540,8329326,120212331,1905939913,32987637967,618591571085,12489644875037,270193806214360,6235154917414954,152875655211527878,3968729594485785289,108754865309750398187,3137052120203959610759",
+    "name": "3-Springer numbers.",
+    "comment": [
+        "a(n) is also the volume of a certain flow polytope."
+    ],
+    "link": [
+        "Arvind Ayyer, Matthieu Josuat-Verg\u00e8s, and Sanjay Ramassamy, <a href=\"https://doi.org/10.5802/ahl.33\">Extensions of partial cyclic orders and consecutive coordinate polytopes</a>, Ann. H. Lebesgue, 3 (2020), 275-297.",
+        "R. S. Gonzalez D'Leon, A. H. Morales, C. R. H. Hanusa, and M. Yip, <a href=\"https://arxiv.org/abs/2107.07326\">Column convex matrices, G-cyclic orders, and flow polytopes</a>, arXiv:2107.07326 [math.CO], 2021.",
+        "S. Ramassamy, <a href=\"https://doi.org/10.37236/7145\">Extensions of partial cyclic orders, Euler numbers and multidimensional boustrophedons</a>, Electron. J. Combin., 25 (2018), #P1.66."
+    ],
+    "formula": [
+        "a(n) = Sum_{(x,y,z), x+y+z=n-2} ((n-2)!/(x!*y!*z!))*b(x,y,z), where b(x,y,z) are the 3-Entringer numbers defined by Ramassamy."
+    ],
+    "maple": [
+        "wcomps:=proc(n,k)",
+        "       option remember;",
+        "local ocomps,ncomps,i;",
+        "ocomps:=combinat:-composition(n+k,k);",
+        "ncomps:={};",
+        "for i from 1 to nops(ocomps) do",
+        "   ncomps:=ncomps union{[seq(ocomps[i][j]-1,j=1..k)]};",
+        "end do;",
+        "return [op(ncomps)];",
+        "end proc:",
+        "b:=proc(s) option remember;",
+        "   local k;",
+        "   k := nops(s);",
+        "   if s = [seq(0,i=1..k)] then",
+        "      return(1);",
+        "   elif s[1]>0 then",
+        "      return(add(b([s[2]+j,op(s[3..k]),s[1]-j-1]),j=0..s[1]-1));",
+        "   else",
+        "      return(0);",
+        "   end if;",
+        "end proc:a:=proc(n)   local N,S:   N := n-2;   S := wcomps(N,3);   return add(combinat:-multinomial(N,op(s))*b(s), s in S);end proc:seq(a(n),n=2..10);"
+    ],
+    "xref": [
+        "Cf. A001586, A008282, A000111."
+    ],
+    "keyword": "nonn",
+    "offset": "2,3",
+    "author": "_Alejandro H. Morales_, Sep 19 2021",
+    "references": 0,
+    "revision": 13,
+    "time": "2021-09-20T09:40:07-04:00",
+    "created": "2021-09-20T09:40:07-04:00"
+}

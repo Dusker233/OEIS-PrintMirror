@@ -1,0 +1,33 @@
+{
+    "number": 337863,
+    "data": "0,0,2,8,32,123,459,1715,6432,24256,91993,350817,1344559,5176106,20003683,77567894,301667089,1176204195,4596267116,17995972170,70581437130,277244854010,1090484851145,4294324521033,16929104620229,66801975748076,263827090563129",
+    "name": "Twice the total area of all nonnegative lattice paths from (0,0) to (n,0) where the allowed steps at (x,y) are (h,v) with h in {1..max(1,y)} and v in {-1,0,1}.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A337863/b337863.txt\">Table of n, a(n) for n = 0..1663</a>"
+    ],
+    "maple": [
+        "b:= proc(x, y) option remember; `if`(x=0, [1, 0],",
+        "      add(add((p-> p+[0, p[1]*h*(2*y-v)])(b(x-h, y-v)),",
+        "      h=1..min(x-y+v, max(1, y-v))), v=-1..min(y, 1)))",
+        "    end:",
+        "a:= n-> b(n, 0)[2]:",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "b[x_, y_] := b[x, y] = If[x == 0, {1, 0},",
+        "     Sum[Sum[Function[p, p + {0, p[[1]]*h*(2*y - v)}][b[x - h, y - v]],",
+        "     {h, 1, Min[x - y + v, Max[1, y - v]]}], {v, -1, Min[y, 1]}]];",
+        "a[n_] := b[n, 0][[2]];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Mar 24 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A337067, A337318."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Oct 12 2020",
+    "references": 3,
+    "revision": 18,
+    "time": "2022-03-24T03:59:07-04:00",
+    "created": "2020-10-13T21:04:40-04:00"
+}

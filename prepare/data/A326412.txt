@@ -1,0 +1,38 @@
+{
+    "number": 326412,
+    "data": "1,1,2,5,17,69,330,1797,11028,74932,559351,4540088,39840318,375421225,3782383945,40548234374,460956742449,5536790753853,70077462043662,931945968071778,12993337101354500,189485727877247991,2884989393948284323,45772604755492432599",
+    "name": "Number of inversion sequences of length n where all consecutive subsequences i,j,k satisfy i >= j <= k or i <= j >= k.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A326412/b326412.txt\">Table of n, a(n) for n = 0..483</a>",
+        "Juan S. Auli and Sergi Elizalde, <a href=\"https://arxiv.org/abs/1906.07365\">Consecutive patterns in inversion sequences II: avoiding patterns of relations</a>, arXiv:1906.07365 [math.CO], 2019."
+    ],
+    "formula": [
+        "a(n) ~ n! * c * 2^n * n^((Pi+1)/2) / Pi^n, where c = 0.0662002484840446134... - _Vaclav Kotesovec_, Oct 31 2019"
+    ],
+    "example": [
+        "a(4) = 17: 0000, 0001, 0002, 0003, 0010, 0011, 0020, 0021, 0022, 0100, 0101, 0102, 0103, 0110, 0111, 0112, 0113."
+    ],
+    "maple": [
+        "b:= proc(n, j, t, u, c) option remember; `if`(n=0, 1, add(",
+        "      `if`(c>0 or i>=j and t or i<=j and u, b(n-1, i,",
+        "        is(i<=j), is(i>=j), max(0, c-1)), 0), i=1..n))",
+        "    end:",
+        "a:= n-> b(n, 0, true$2, 2):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[n_, j_, t_, u_, c_] := b[n, j, t, u, c] = If[n == 0, 1, Sum[If[c > 0 || i >= j && t || i <= j && u, b[n - 1, i, i <= j,  i >= j , Max[0, c - 1]], 0], {i, 1, n}]];",
+        "a[n_] := b[n, 0, True, True, 2];",
+        "a /@ Range[0, 25] (* _Jean-Fran\u00e7ois Alcover_, Mar 01 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000108, A000142, A000225, A001250, A328357, A328358, A328409, A328425, A328491, A326308."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Oct 17 2019",
+    "references": 2,
+    "revision": 19,
+    "time": "2020-03-01T04:23:39-05:00",
+    "created": "2019-10-18T11:51:31-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 35127,
+    "data": "1,4,9,144,196,625,11664,14884,46656,96100,1493284,4112784,6385729,9253764,139287204,149377284,187799616,618268225,634284225,678758809,929884036,14938217284,43325589904,61076696769,97482577284",
+    "name": "Squares which when digits are rotated left once remain square.",
+    "comment": [
+        "Those resulting in leading zeros are excluded."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SquareNumber.html\">Square Number</a>"
+    ],
+    "example": [
+        "2527^2 = 6385729 -> 3857296 = 1964^2."
+    ],
+    "mathematica": [
+        "okQ[n_]:=Module[{idn=IntegerDigits[n]},idn[[2]]!=0&&IntegerQ[Sqrt[ FromDigits[RotateLeft[idn]]]]]; Join[{1,4,9},Select[Range[4,320000]^2, okQ]] (* _Harvey P. Dale_, Apr 30 2011 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy.solvers.diophantine.diophantine import diop_DN",
+        "def A035127_gen(): # generator of terms",
+        "    for l in count(0):",
+        "        l1, l2 = 10**(l+1), 10**l",
+        "        yield from sorted(set(y**2 for z in (diop_DN(10,m*(1-l1)) for m in range(10)) for x, y in z if l1 >= x**2 >= l2))",
+        "A035127_list = list(islice(A035127_gen(),20)) # _Chai Wah Wu_, Apr 23 2022"
+    ],
+    "xref": [
+        "Subsequence of A000290.",
+        "Cf. A045878, A035131."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Patrick De Geest_, Nov 15 1998",
+    "references": 1,
+    "revision": 21,
+    "time": "2022-04-24T02:32:39-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

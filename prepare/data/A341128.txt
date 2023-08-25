@@ -1,0 +1,39 @@
+{
+    "number": 341128,
+    "data": "84,154,364,390,418,420,440,510,760,870,874,900,966,1102,1144,1330,1380,1406,1428,1575,1610,1624,1674,1702,1736,1776,1886,1890,1924,1998,2030,2052,2146,2220,2256,2320,2322,2378,2542,2584,2666,2800,2862,3034,3074,3132,3168,3192,3224,3248,3286,3344",
+    "name": "Numbers k such that A341117(k) is prime.",
+    "comment": [
+        "Contains no prime powers or semiprimes."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A341128/b341128.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 364 is a term because A341117(364) = 609149 is prime."
+    ],
+    "maple": [
+        "f:= proc(n) local D, S,i;",
+        "  D:= sort(convert(numtheory:-divisors(n),list),`>`);",
+        "  S:= ListTools:-PartialSums(D);",
+        "  add(D[i]*S[-i],i=1..nops(D))",
+        "end proc:",
+        "select(t -> isprime(f(t)), [$1..4000]);"
+    ],
+    "mathematica": [
+        "Position[Array[Sum[#1[[k]]*Sum[#1[[j]], {j, #2 - k + 1, #2}], {k, #2}] & @@ {Divisors[#], DivisorSigma[0, #]} &, 3400], _?PrimeQ][[All, 1]] (* _Michael De Vlieger_, Feb 05 2021 *)"
+    ],
+    "program": [
+        "(PARI) f(n) = my(d=divisors(n)); sum(k=1, #d, d[k]*sum(i=#d-k+1, #d, d[i])); \\\\ A341117",
+        "isok(m) = isprime(f(m)); \\\\ _Michel Marcus_, Feb 05 2021"
+    ],
+    "xref": [
+        "Cf. A341117."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Feb 05 2021",
+    "references": 1,
+    "revision": 14,
+    "time": "2021-02-07T19:38:55-05:00",
+    "created": "2021-02-05T22:21:16-05:00"
+}

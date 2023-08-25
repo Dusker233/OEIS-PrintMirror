@@ -1,0 +1,37 @@
+{
+    "number": 352192,
+    "data": "1,2,3,4,6,7,11,12,15,16,19,20,23,25,28,29,34,38,41,45,49,82,141,216,219,239,266,273,420,610,666,756,841,928,1199,1216,1271,2023,2050,2584,3090,3818,4934,5744,5752,5780,6040,6052,6155,7559,9006,9419,9611,10114,10205,10605,10818,13539,17136,17992,18172",
+    "name": "Indices of records in A352187.",
+    "program": [
+        "(Python)",
+        "from math import gcd",
+        "from itertools import count, islice",
+        "from sympy import primefactors",
+        "def A352192_gen(): # generator of terms",
+        "    bset, blist, mmax, c = {1,2}, [1,2], 3, 2",
+        "    yield from blist",
+        "    for n in count(3):",
+        "        for m in count(mmax):",
+        "            if gcd(m,blist[-1]) > 1 and m not in bset:",
+        "                if all(blist[-2] % p == 0 for p in primefactors(blist[-1])) or gcd(m,blist[-2]) == 1:",
+        "                    if m > c:",
+        "                        yield n",
+        "                        c = m",
+        "                    blist = [blist[-1],m]",
+        "                    bset.add(m)",
+        "                    while mmax in bset:",
+        "                        mmax += 1",
+        "                    break",
+        "A352192_list = list(islice(A352192_gen(),30)) # _Chai Wah Wu_, Mar 14 2022"
+    ],
+    "xref": [
+        "Cf. A352187, A352191."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Mar 13 2022",
+    "references": 4,
+    "revision": 7,
+    "time": "2022-03-14T14:03:39-04:00",
+    "created": "2022-03-13T21:43:57-04:00"
+}

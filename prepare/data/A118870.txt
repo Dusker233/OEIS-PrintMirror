@@ -1,0 +1,44 @@
+{
+    "number": 118870,
+    "data": "1,2,4,8,15,28,53,100,188,354,667,1256,2365,4454,8388,15796,29747,56020,105497,198672,374140,704582,1326871,2498768,4705689,8861770,16688516,31427872,59185079,111457548,209897245,395279228,744391228,1401840170",
+    "name": "Number of binary sequences of length n with no subsequence 0101.",
+    "comment": [
+        "Column 0 of A118869 and column 10 of A209972."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A118870/b118870.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (2,-1,2,-1)."
+    ],
+    "formula": [
+        "G.f.: (1 +x^2)/(1 -2*x +x^2 -2*x^3 +x^4).",
+        "a(n) = 2*a(n-1) - a(n-2) + 2*a(n-3) - a(n-4) for n>=4.",
+        "a(n) = A112575(n-1) + A112575(n+1). - _R. J. Mathar_, Dec 10 2011"
+    ],
+    "example": [
+        "a(5) = 28 because among the 32 (=2^5) binary sequences of length 5 only 01010, 01011, 00101 and 10101 contain the subsequence 0101."
+    ],
+    "maple": [
+        "a[0]:=1:a[1]:=2:a[2]:=4:a[3]:=8: for n from 4 to 35 do a[n]:=2*a[n-1]-a[n-2]+2*a[n-3]-a[n-4] od: seq(a[n], n=0..35);"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1+x^2)/(1-2x+x^2-2x^3+x^4),{x,0,40}],x] (* _Geoffrey Critzer_, Nov 28 2013 *)"
+    ],
+    "program": [
+        "(Magma) [n le 4 select 2^(n-1) else 2*Self(n-1) -Self(n-2) +2*Self(n-3) -Self(n-4): n in [1..41]]; // _G. C. Greubel_, Jan 14 2022",
+        "(Sage)",
+        "@CachedFunction",
+        "def A112575(n): return sum((-1)^k*binomial(n-k, k)*lucas_number1(n-2*k, 2, -1) for k in (0..(n/2)))",
+        "def A118870(n): return A112575(n-1) + A112575(n+1)",
+        "[A118870(n) for n in (0..40)] # _G. C. Greubel_, Jan 14 2022"
+    ],
+    "xref": [
+        "Cf. A000071, A000073, A005251, A112575, A118869, A209972, A332052."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Emeric Deutsch_, May 03 2006",
+    "references": 6,
+    "revision": 21,
+    "time": "2022-09-08T08:45:25-04:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

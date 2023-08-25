@@ -1,0 +1,37 @@
+{
+    "number": 357796,
+    "data": "1,5,40,635,12095,248245,5381435,121355095,2817706420,66909209195,1617401484401,39668321722180,984661725380420,24690230217076810,624476169158179615,15912858189842638180,408139640637624168780,10528308534373198776840,272970775748658547320275",
+    "name": "a(n) = coefficient of x^n in the power series A(x) such that: 1 = Sum_{n=-oo..+oo} n*(n+1)*(n+2)*(n+3)/4! * x^n * (1 - x^(n+3))^n * A(x)^(n+3).",
+    "comment": [
+        "Related identity: 0 = Sum_{n=-oo..+oo} n*(n+1)*(n+2)*(n+3)/4! * x^(4*n) * (y - x^n)^(n-1), which holds formally for all y."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A357796/b357796.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n satisfies the following.",
+        "(1) 1 = Sum_{n=-oo..+oo} n*(n+1)*(n+2)*(n+3)/4! * x^n * (1 - x^(n+3))^n * A(x)^(n+3).",
+        "(2) 1 = Sum_{n=-oo..+oo} (-1)^n * n*(n-1)*(n-2)*(n-3)/4! * x^(n*(n-4)) / ((1 - x^(n-3))^n * A(x)^(n-3))."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 5*x + 40*x^2 + 635*x^3 + 12095*x^4 + 248245*x^5 + 5381435*x^6 + 121355095*x^7 + 2817706420*x^8 + 66909209195*x^9 + 1617401484401*x^10 + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1]); for(i=1, n, A=concat(A, 0);",
+        "A[#A] = polcoeff( sum(n=-#A-2, #A+2, n*(n+1)*(n+2)*(n+3)/4! * x^n * if(n==-3,0, (1 - x^(n+3) +x*O(x^#A) )^n) * Ser(A)^(n+3) ), #A-1) ); H=A; A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) {a(n) = my(A=[1]); for(i=1, n, A=concat(A, 0);",
+        "A[#A] = polcoeff( sum(n=-#A-2, #A+2, (-1)^n * n*(n-1)*(n-2)*(n-3)/4! * x^(n*(n-4)) * if(n==3,0, 1/(1 - x^(n-3) +x*O(x^#A) )^n) / Ser(A)^(n-3) ), #A-1) ); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A357158, A357794, A357795."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 22 2022",
+    "references": 3,
+    "revision": 7,
+    "time": "2022-12-24T11:16:50-05:00",
+    "created": "2022-12-24T11:16:50-05:00"
+}

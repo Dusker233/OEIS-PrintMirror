@@ -1,0 +1,78 @@
+{
+    "number": 351017,
+    "data": "1,2,2,6,6,10,22,26,38,54,114,130,202,266,386,702,870,1234,1702,2354,3110,5502,6594,9514,12586,17522,22610,31206,48630,60922,83734,111482,149750,196086,261618,336850,514810,631946,862130,1116654,1502982,1916530,2555734,3242546",
+    "name": "Number of binary words of length n with all distinct run-lengths.",
+    "formula": [
+        "a(n>0) = 2 * A032020(n)."
+    ],
+    "example": [
+        "The a(0) = 1 through a(6) = 22 words:",
+        "  {}  0   00   000   0000   00000   000000",
+        "      1   11   001   0001   00001   000001",
+        "               011   0111   00011   000011",
+        "               100   1000   00111   000100",
+        "               110   1110   01111   000110",
+        "               111   1111   10000   001000",
+        "                            11000   001110",
+        "                            11100   001111",
+        "                            11110   011000",
+        "                            11111   011100",
+        "                                    011111",
+        "                                    100000",
+        "                                    100011",
+        "                                    100111",
+        "                                    110000",
+        "                                    110001",
+        "                                    110111",
+        "                                    111001",
+        "                                    111011",
+        "                                    111100",
+        "                                    111110",
+        "                                    111111"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Tuples[{0,1},n],UnsameQ@@Length/@Split[#]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import groupby, product",
+        "def adrl(s):",
+        "    runlens = [len(list(g)) for k, g in groupby(s)]",
+        "    return len(runlens) == len(set(runlens))",
+        "def a(n):",
+        "    if n == 0: return 1",
+        "    return 2*sum(adrl(\"1\"+\"\".join(w)) for w in product(\"01\", repeat=n-1))",
+        "print([a(n) for n in range(20)]) # _Michael S. Branicky_, Feb 08 2022"
+    ],
+    "xref": [
+        "Using binary expansions instead of words gives A032020, ranked by A044813.",
+        "The version for partitions is A098859.",
+        "The complement is counted by twice A261982.",
+        "The version for compositions is A329739, for runs A351013.",
+        "For runs instead of run-lengths we have A351016, twice A351018.",
+        "The version for patterns is A351292, for runs A351200.",
+        "A000120 counts binary weight.",
+        "A001037 counts binary Lyndon words, necklaces A000031, aperiodic A027375.",
+        "A005811 counts runs in binary expansion.",
+        "A011782 counts integer compositions.",
+        "A242882 counts compositions with distinct multiplicities.",
+        "A297770 counts distinct runs in binary expansion.",
+        "A325545 counts compositions with distinct differences.",
+        "A329767 counts binary words by runs-resistance.",
+        "A351014 counts distinct runs in standard compositions.",
+        "A351204 counts partitions where every permutation has all distinct runs.",
+        "A351290 ranks compositions with all distinct runs.",
+        "Cf. A003242, A098504, A106356, A116608, A175413, A233564, A238130 or A238279, A328592, A334028, A350952."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Feb 07 2022",
+    "ext": [
+        "a(25)-a(32) from _Michael S. Branicky_, Feb 08 2022",
+        "More terms from _David A. Corneth_, Feb 08 2022 using data from A032020"
+    ],
+    "references": 30,
+    "revision": 14,
+    "time": "2022-02-12T13:41:22-05:00",
+    "created": "2022-02-12T13:41:22-05:00"
+}

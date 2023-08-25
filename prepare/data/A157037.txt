@@ -1,0 +1,52 @@
+{
+    "number": 157037,
+    "data": "6,10,22,30,34,42,58,66,70,78,82,105,114,118,130,142,154,165,174,182,202,214,222,231,238,246,255,273,274,282,285,286,298,310,318,345,357,358,366,370,382,385,390,394,399,418,430,434,442,454,455,465,474,478",
+    "name": "Numbers with prime arithmetic derivative A003415.",
+    "comment": [
+        "Only about 5% of these numbers have n' > n. For example, for n up to 10^6 we have 72754 prime n', with 69420 such that n' < n and 3334 such that n' > n. - _Paolo P. Lava_, May 20 2013, corrected by _M. F. Hasler_, Apr 07 2015",
+        "Equivalently, solutions to n'' = 1, since n' = 1 iff n is prime. Twice the lesser of the twin primes, 2*A001359 = A108605, are a subsequence. - _M. F. Hasler_, Apr 07 2015",
+        "All terms are squarefree, because if there would be a prime p whose square p^2 would divide n, then A003415(n) = (A003415(p^2) * (n/p^2)) + (p^2 * A003415(n/p^2)) = p*[(2 * (n/p^2)) + (p * A003415(n/p^2))], which certainly is not a prime. - _Antti Karttunen_, Oct 10 2019"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A157037/b157037.txt\">Table of n, a(n) for n = 1..10001</a> (first 1000 terms from Reinhard Zumkeller)"
+    ],
+    "formula": [
+        "A010051(A003415(a(n))) = 1; A068346(a(n)) = 1; A099306(a(n)) = 0.",
+        "A003415(a(n)) = A328385(a(n)) = A241859(n); A327969(a(n)) = 3. - _Antti Karttunen_, Oct 19 2019"
+    ],
+    "example": [
+        "A003415(42) = A003415(2*3*7) = 2*3+3*7+7*2 = 41 = A000040(13), therefore 42 is a term."
+    ],
+    "mathematica": [
+        "dn[0] = 0; dn[1] = 0; dn[n_?Negative] := -dn[-n]; dn[n_] := Module[{f = Transpose[FactorInteger[n]]}, If[PrimeQ[n], 1, Total[n*f[[2]]/f[[1]]]]]; Select[Range[500], dn[dn[#]] == 1 &] (* _T. D. Noe_, Mar 07 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a157037 n = a157037_list !! (n-1)",
+        "a157037_list = filter ((== 1) . a010051' . a003415) [1..]",
+        "-- _Reinhard Zumkeller_, Apr 08 2015",
+        "(PARI)",
+        "A003415(n) = if(n<=1, 0, my(f=factor(n)); n*sum(i=1, #f~, f[i, 2]/f[i, 1]));",
+        "isA157037(n) = isprime(A003415(n)); \\\\ _Antti Karttunen_, Oct 19 2019",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime, factorint",
+        "def A157037_gen(): # generator of terms",
+        "    return filter(lambda n:isprime(sum(n*e//p for p,e in factorint(n).items())), count(2))",
+        "A157037_list = list(islice(A157037_gen(),20)) # _Chai Wah Wu_, Jun 23 2022"
+    ],
+    "xref": [
+        "Cf. A003415, A010051, A038554, A192082, A192189, A192190,  A327978, A328233, A328240, A328384, A328385.",
+        "Cf. A189441 (primes produced by these numbers), A241859.",
+        "Cf. A192192, A328239 (numbers whose 2nd and numbers whose 3rd arithmetic derivative is prime).",
+        "Cf. A108605, A256673 (subsequences).",
+        "Subsequence of following sequences: A005117, A099308, A235991, A328234 (A328393), A328244, A328321."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Feb 22 2009",
+    "references": 25,
+    "revision": 46,
+    "time": "2022-06-23T12:03:38-04:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

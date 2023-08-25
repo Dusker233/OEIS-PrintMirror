@@ -1,0 +1,55 @@
+{
+    "number": 71985,
+    "data": "1,3,7,17,47,158,681,3209,17989,104289,635867",
+    "name": "a(n) is the smallest positive integer that cannot be obtained using at most n-1 of the integers {1, 2, ..., n} using each number at most once and the operators +, -, *, /.",
+    "comment": [
+        "For all n>=2, A060315(n+1) > a(n) > A060315(n)."
+    ],
+    "link": [
+        "Gilles Bannay, <a href=\"https://web.archive.org/web/20061201125224/http://gilles.bannay.free.fr/jeux_us.html\">Countdown Problem</a>",
+        "<a href=\"/index/Fo#4x4\">Index entries for similar sequences</a>"
+    ],
+    "example": [
+        "a(3)=7 because using two of the numbers {1,2,3} with the four operations we can obtain 1=1, 2=2, 3=3, 3+1=4, 3+2=5, 3*2=6 but we cannot obtain 7 in the same way."
+    ],
+    "program": [
+        "(Python)",
+        "def a(n):",
+        "    R = dict() # index of each reachable subset is [card(s)-1][s]",
+        "    for i in range(n): R[i] = dict()",
+        "    for i in range(1, n+1): R[0][(i,)] = {i}",
+        "    reach = set(i for i in range(1, n+1)) if n > 1 else set()",
+        "    for j in range(1, n-1):",
+        "        for i in range((j+1)//2):",
+        "            for s1 in R[i]:",
+        "                for s2 in R[j-1-i]:",
+        "                    if set(s1) & set(s2) == set():",
+        "                        s12 = tuple(sorted(set(s1) | set(s2)))",
+        "                        if s12 not in R[len(s12)-1]:",
+        "                            R[len(s12)-1][s12] = set()",
+        "                        for a in R[i][s1]:",
+        "                            for b in R[j-1-i][s2]:",
+        "                                allowed = [a+b, a*b, a-b, b-a]",
+        "                                if a!=0 and b%a==0: allowed.append(b//a)",
+        "                                if b!=0 and a%b==0: allowed.append(a//b)",
+        "                                R[len(s12)-1][s12].update(allowed)",
+        "                                reach.update(allowed)",
+        "    k = 1",
+        "    while k in reach: k += 1",
+        "    return k",
+        "print([a(n) for n in range(1, 6)]) # _Michael S. Branicky_, Jul 29 2022"
+    ],
+    "xref": [
+        "Cf. A060315."
+    ],
+    "keyword": "hard,more,nonn",
+    "offset": "1,2",
+    "author": "Koksal Karakus (karakusk(AT)hotmail.com), Jun 17 2002",
+    "ext": [
+        "a(11) from _Michael S. Branicky_, Jul 29 2022"
+    ],
+    "references": 0,
+    "revision": 12,
+    "time": "2022-12-29T06:46:29-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

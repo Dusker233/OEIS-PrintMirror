@@ -1,0 +1,30 @@
+{
+    "number": 38868,
+    "data": "16,21,25,50,66,102,115,154,193,291,471,573,675,777,879,2372,3668,4770,6867,22502,22790,32084,41666,46457,167151,331341,490740,1750051,2125176,2275226,2425276,2575326,2725376,2875426,22597419,73941113,167637057,188784525",
+    "name": "If a Fibonacci sequence is formed with first term = number of digits in n and second term = sum of decimal digits in n, then n itself occurs as a term in the sequence after the first two terms.",
+    "link": [
+        "Giovanni Resta, <a href=\"/A038868/b038868.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Felice Russo, <a href=\"http://dx.doi.org/10.5281/zenodo.8795\">A Set of New Smarandache Functions, Sequences and Conjectures in Number Theory</a>, Lupton, AZ: American Research Press, 2000."
+    ],
+    "example": [
+        "16 is a member because 2,7,9,16,25,... does contain 16."
+    ],
+    "mathematica": [
+        "aQ[n_] := Module[{d = IntegerDigits[n], a}, a[1] = Length[d]; a[2] = Total[d]; a[k_] := a[k] = a[k - 1] + a[k - 2]; k = 1; While[a[k] <= n, k++]; k--; k > 2 && a[k] == n]; Select[Range[1000], aQ] (* _Amiram Eldar_, Feb 17 2019 *)",
+        "gen[d_, s_, mx_] := Block[{a=d, b=s, v = {}, t}, While[True, t=a+b; If[t <= mx, If[d == IntegerLength@ t && s == Total@ IntegerDigits@ t, AppendTo[v, t]], Break[]]; a=b; b=t]; v]; upto[mxd_] := Sort@ Flatten@ Table[gen[d, s, 10^d], {d, mxd}, {s, 9*d}]; upto[20] (* terms < 10^20, _Giovanni Resta_, Feb 18 2019 *)"
+    ],
+    "xref": [
+        "Cf. A007629, A042983."
+    ],
+    "keyword": "easy,nonn,base",
+    "offset": "1,1",
+    "author": "_Felice Russo_",
+    "ext": [
+        "Corrected and extended by Larry Reeves (larryr(AT)acm.org), Sep 28 2000",
+        "a(37)-a(38) from _Amiram Eldar_, Feb 17 2019"
+    ],
+    "references": 2,
+    "revision": 15,
+    "time": "2019-02-18T16:05:05-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

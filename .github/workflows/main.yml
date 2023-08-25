@@ -1,0 +1,93 @@
+name: Daily Update OEIS Printed Mirror
+
+# on:
+#   schedule:
+#     - cron: '0 8 * * *'
+on: workflow_dispatch
+
+jobs:
+  Update-Printed-Mirror:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+    - name: Set up g++
+      run: |
+        sudo apt-get update -q
+        sudo apt-get install -y build-essential
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Get Latest Data
+      run: |
+        cd prepare
+        wget http://oeis.org/stripped.gz
+        gzip -d stripped.gz
+        g++ a.cpp -o a -std=c++11
+        sudo chmod 777 a
+        ./a
+        cat verified | wc -l > end.txt
+        echo -e "taskId\n$(cat verified)" > allNeed.csv
+        cat allNeed.csv | tail -n 1 > lastSeq.txt
+        python3 fetch.py
+
+    - name: Get tex.txt
+      run: |
+        cd result_sort
+        python3 to_csv.py
+        g++ main.cpp -o main -std=c++11
+        sudo chmod 777 main
+        ./main
+
+    - name: Set up TeX Live
+      run: |
+        sudo apt-get update -q
+        sudo apt-get install -y texlive-full
+
+    - name: Compile TeX File into pdf File
+      run: |
+        cd print
+        xelatex -synctex=1 -interaction=nonstopmode oeis.tex
+
+    - name: Commit and Push Changes
+      run: |
+        git add .
+        git commit -m "Daily document update"
+        git push
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: Daily_Update
+        release_name: Daily Update
+        body: Daily update pdf
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./print/oeis.pdf
+        asset_name: oeis.pdf
+        asset_content_type: application/pdf

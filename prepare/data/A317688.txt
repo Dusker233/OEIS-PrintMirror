@@ -1,0 +1,38 @@
+{
+    "number": 317688,
+    "data": "2,3,5,7,13,17,31,37,71,73,79,97,113,131,199,311,337,373,733,919,991",
+    "name": "Absolute primes that are not repunits: primes where the number resulting from any permutation of the digits is also prime, excluding repunit primes.",
+    "comment": [
+        "Any term with two or more digits contains exactly two different digits from the set {1, 3, 7, 9} (cf. Erd\u0151s et al., 1977, Solution 953).",
+        "Conjecture: The sequence is finite, with 991 being the last term.",
+        "The known terms are those terms of A293663 where membership in A293663 trivially implies membership in this sequence, i.e., the numbers resulting from all cyclic permutations of the digits of these terms are the same as the numbers resulting from all permutations of the digits of these terms. This is the case only for terms with less than four digits."
+    ],
+    "link": [
+        "P. Erd\u0151s et al., <a href=\"https://doi.org/10.2307/2689738\">Problems</a>, Mathematics Magazine, Vol. 50, No. 2 (1977), 99-104.",
+        "Arkadii Slinko, <a href=\"https://arxiv.org/abs/1811.08613\">Absolute Primes</a>, arXiv:1811.08613 [math.NT], 2018.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutable_prime\">Permutable prime</a>"
+    ],
+    "example": [
+        "The other numbers resulting from all possible permutations of the digits of 113 are 131 and 311. 113, 131 and 311 are all primes, so all three numbers are terms of this sequence."
+    ],
+    "program": [
+        "(PARI) eva(n) = subst(Pol(n), x, 10)",
+        "find_index_a(vec) = my(r=#vec-1); while(1, if(vec[r] < vec[r+1], return(r)); r--; if(r==0, return(-1)))",
+        "find_index_b(r, vec) = my(s=#vec); while(1, if(vec[r] < vec[s], return(s)); s--; if(s==r, return(-1)))",
+        "switch_elements(vec, firstpos, secondpos) = my(g); g=vec[secondpos]; vec[secondpos]=vec[firstpos]; vec[firstpos] = g; vec",
+        "reverse_order(vec, r) = my(v=[], w=[]); for(x=1, r, v=concat(v, vec[x])); for(y=r+1, #vec, w=concat(w, vec[y])); w=Vecrev(w); concat(v, w)",
+        "next_permutation(vec) = my(r=find_index_a(vec)); if(r==-1, return(0), my(s=find_index_b(r, vec)); vec=switch_elements(vec, r, s); vec=reverse_order(vec, r)); vec",
+        "is(n) = if(n < 10, return(1)); my(d=vecsort(digits(n))); if(vecmin(d)==0 || vecmax(d)==1, return(0)); while(1, if(!ispseudoprime(eva(d)), return(0)); d=next_permutation(d); if(d==0, return(1)))",
+        "forprime(p=1, , if(is(p), print1(p, \", \")))"
+    ],
+    "xref": [
+        "Relative complement of A004022 in A003459. Supersequence of A129338. Subsequence of A293663."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Aug 04 2018",
+    "references": 2,
+    "revision": 17,
+    "time": "2018-11-22T02:42:08-05:00",
+    "created": "2018-08-09T13:50:05-04:00"
+}

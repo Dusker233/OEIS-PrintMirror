@@ -1,0 +1,58 @@
+{
+    "number": 224915,
+    "data": "0,1,5,6,22,23,27,28,92,93,97,98,114,115,119,120,376,377,381,382,398,399,403,404,468,469,473,474,490,491,495,496,1520,1521,1525,1526,1542,1543,1547,1548,1612,1613,1617,1618,1634,1635,1639,1640,1896,1897,1901,1902,1918",
+    "name": "a(n) = Sum_{k=0..n} n XOR k where XOR is the bitwise logical exclusive-or operator.",
+    "link": [
+        "Michael De Vlieger, <a href=\"/A224915/b224915.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=1..n} 4^(v_2(j)), where v_2(j) is the exponent of highest power of 2 dividing j. - _Ridouane Oudra_, Jun 08 2019",
+        "a(n) = n + 3*Sum_{j=1..floor(log_2(n))} 4^(j-1)*floor(n/2^j), for n>=1. - _Ridouane Oudra_, Dec 09 2020",
+        "From _Kevin Ryde_, Dec 17 2021: (Start)",
+        "a(2*n+b) = 4*a(n) + n + b where b = 0 or 1.",
+        "a(n) = (A001196(n) - n)/2.",
+        "a(n) = A350093(n) - A222423(n), being XOR = OR - AND.",
+        "(End)"
+    ],
+    "example": [
+        "a(2) = (0 xor 2) + (1 xor 2) = 2 + 3 = 5."
+    ],
+    "maple": [
+        "read(\"transforms\"):",
+        "A051933 := proc(n,k)",
+        "    XORnos(n,k) ;",
+        "end proc:",
+        "A224915 := proc(n)",
+        "    add(A051933(n,k),k=0..n) ;",
+        "end proc: # _R. J. Mathar_, Apr 26 2013",
+        "# second Maple program:",
+        "with(MmaTranslator[Mma]):",
+        "seq(add(BitXor(n,i),i=0..n),n=0..60); # _Ridouane Oudra_, Dec 09 2020"
+    ],
+    "mathematica": [
+        "Array[Sum[BitXor[#, k], {k, 0, #}] &, 53, 0] (* _Michael De Vlieger_, Dec 09 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "for n in range(59):",
+        "    s = 0",
+        "    for k in range(n):  s += n ^ k",
+        "    print(s, end=',')",
+        "(Python)",
+        "def A224915(n): return 3*int(bin(n)[2:],4)-n>>1 # _Chai Wah Wu_, Aug 21 2023",
+        "(PARI) a(n) = sum(k=0, n, bitxor(n, k)); \\\\ _Michel Marcus_, Jun 08 2019",
+        "(PARI) a(n) = (3*fromdigits(binary(n),4) - n) >>1; \\\\ _Kevin Ryde_, Dec 17 2021"
+    ],
+    "xref": [
+        "Cf. A001196 (bit doubling).",
+        "Row sums of A051933.",
+        "Other sums: A222423 (AND), A350093 (OR), A265736 (IMPL), A350094 (CNIMPL), A004125 (mod)."
+    ],
+    "keyword": "nonn,easy,changed",
+    "offset": "0,3",
+    "author": "_Alex Ratushnyak_, Apr 19 2013",
+    "references": 6,
+    "revision": 37,
+    "time": "2023-08-22T08:01:42-04:00",
+    "created": "2013-04-26T14:39:35-04:00"
+}

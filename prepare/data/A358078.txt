@@ -1,0 +1,34 @@
+{
+    "number": 358078,
+    "data": "0,0,0,1,4,7,18,37,76,149,293,575,1106,2162,4161,8068,15604,30181,58449,113179,219587,425951,827393,1608250,3128647,6090677,11867571,23139485,45148817,88155104,172231561,336713062,658655523,1289140675,2524520079,4946303842",
+    "name": "a(n) is the number of squarefree semiprimes <= 2^n.",
+    "comment": [
+        "I.e., number of numbers <= 2^n that are the product of two distinct primes."
+    ],
+    "example": [
+        "a(5) = 7 because there are 7 squarefree semiprimes <= 2^5 = 32:",
+        "   2*3 = 6, 2*5 = 10, 2*7 = 14, 2*11 = 22, 2*13 = 26,",
+        "            3*5 = 15, 3*7 = 21.",
+        "a(6) = 18 because there are 18 squarefree semiprimes <= 2^6 = 64:",
+        "  2*{3,5,7,11,13,17,19,23,29,31} = {6,10,14,22,26,34,38,46,58,62},",
+        "    3*{5,7,11,13,17,19}          = {15,21,33,39,51,57},",
+        "      5*{7,11}                   = {35,55}."
+    ],
+    "mathematica": [
+        "Reap[Do[Do[If[And[PrimeOmega[#] == 2, SquareFreeQ[#]], c++] &[k], {k, 2^(n - 1) + 1, 2^n}]; Sow[c], {n, 0, 16}]][[-1, -1]] (* _Michael De Vlieger_, Oct 30 2022 *)",
+        "Module[{nn=22,sfsp},sfsps=Table[If[PrimeOmega[n]==2&&SquareFreeQ[n],1,0],{n,2^nn}];Table[ Total[ Take[sfsps,2^x]],{x,0,nn}]] (* _Harvey P. Dale_, Apr 02 2023 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, 2^n, bigomega(k)==2&&issquarefree(k)); \\\\ _Michel Marcus_, Oct 30 2022"
+    ],
+    "xref": [
+        "Cf. A006881, A007053, A036351."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Jon E. Schoenfield_, Oct 29 2022",
+    "references": 0,
+    "revision": 18,
+    "time": "2023-04-02T09:02:13-04:00",
+    "created": "2022-10-30T09:10:49-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 364189,
+    "data": "3,7,17,31,71,232,412,1756,2759,3763,4881,4881,26812,125804,566658,566658,1601927,1601927,18641185,42401324,131296837,136407785",
+    "name": "a(n) is the smallest k such that A000005(j) = A000005(j-m) for j = k..k+n-1 for some m > 0.",
+    "comment": [
+        "Equivalently, a(n) is the smallest index at which there begins an n-term subsequence of A000005 that has occurred before."
+    ],
+    "example": [
+        "Let d(j) = A000005(j) (i.e., the number of divisors of j). The sequence {d(j)} = A000005 begins as follows:",
+        ".",
+        "     j: 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 ...",
+        "  d(j): 1  2  2  3  2  4  2  4  3  4  2  6  2  4  4  5  2  6  2  6 ...",
+        ".",
+        "The first value of d(j) that appears more than once is 2, which appears for the first time at j=2 and for the second time at j=3. Thus a(1) = 3.",
+        "Similarly, of all the subsequences of {d(j)} consisting of two consecutive terms, the first one to appear more than once is {2,4}, which first appears beginning at j=5 and then appears the second time beginning at j=7. Thus a(2) = 7.",
+        "Likewise, the first subsequence of {d(j)} consisting of three consecutive terms to appear a second time is {2,6,2}, which first appears beginning at j=11 and then reappears beginning at j=17, so a(3) = 17.",
+        "The first repeated 1-, 2-, and 3-term subsequences and the corresponding terms a(1), a(2), and a(3) are illustrated below.",
+        ".",
+        "            a(1)        a(2)                          a(3)",
+        "              |           |                             |",
+        "     j: 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20",
+        "  d(j): 1  2  2  3  2  4  2  4  3  4  2  6  2  4  4  5  2  6  2  6",
+        "           ^  ^     ^--^  ^--^        ^--^--^           ^--^--^"
+    ],
+    "mathematica": [
+        "nn = 25000; s = {}; k = 1; f[x_] := DivisorSigma[0, x]; Monitor[Do[AppendTo[s, f[n]]; t = SequencePosition[s[[1 ;; n - k]], s[[-k ;; -1]]]; If[Length[t] > 0, k++; a[k-1] = n - k + 2], {n, nn}], n]; TakeWhile[Array[a, k], IntegerQ] (* _Michael De Vlieger_, Aug 07 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        "from sympy import divisor_count",
+        "def A364189(n):",
+        "    b = {a:=tuple(divisor_count(i) for i in range(1,n+1)),}",
+        "    for m in count(n+1):",
+        "        if (a:=a[1:]+(divisor_count(m),)) in b:",
+        "            return m-n+1",
+        "        b.add(a) # _Chai Wah Wu_, Aug 07 2023"
+    ],
+    "xref": [
+        "Cf. A000005."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Jon E. Schoenfield_, Aug 07 2023",
+    "ext": [
+        "a(14) from _Michael De Vlieger_, Aug 07 2023",
+        "a(15)-a(22) from _Chai Wah Wu_, Aug 07 2023"
+    ],
+    "references": 1,
+    "revision": 63,
+    "time": "2023-08-07T14:22:41-04:00",
+    "created": "2023-08-07T08:24:31-04:00"
+}

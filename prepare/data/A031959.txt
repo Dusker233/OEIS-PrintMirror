@@ -1,0 +1,39 @@
+{
+    "number": 31959,
+    "data": "51,52,53,54,55,63,66,67,68,69,70,72,74,75,76,77,79,80,82,83,84,86,87,88,90,91,93,94,95,96,99,101,102,103,104,105,108,109,110,111,119,120,123,124,125,126,127,129,131,132,133,134,136",
+    "name": "Numbers with exactly three distinct base-7 digits.",
+    "link": [
+        "Robert Israel, <a href=\"/A031959/b031959.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "f:= proc(d)  uses combinat; local S,Res,A1,A1p,A2,x1,x2;",
+        "     Res:= NULL:",
+        "     for S in choose({$0..6},3) do",
+        "       x1:= S[3]*(7^d-1)/6;",
+        "       for A1 in powerset(d) minus {{}} do",
+        "         if S[1]=0 and member(d,A1) then next fi;",
+        "         x2:= x1 + (S[1]-S[3])*add(7^(j-1),j=A1);",
+        "         A1p:= {$1..d} minus A1;",
+        "         for A2 in powerset(A1p) minus {{},A1p} do",
+        "           Res:= Res, x2 + (S[2]-S[3])*add(7^(j-1),j=A2);",
+        "         od",
+        "       od",
+        "     od;",
+        "     sort([Res]);",
+        "end proc:",
+        "op(f(3)),op(f(4)); # _Robert Israel_, Oct 29 2018"
+    ],
+    "mathematica": [
+        "Select[Range[150],Length[Union[IntegerDigits[#,7]]]==3&] (* _Harvey P. Dale_, Mar 29 2019 *)"
+    ],
+    "xref": [
+        "Cf. A007093."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "references": 2,
+    "revision": 18,
+    "time": "2021-08-10T18:46:54-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

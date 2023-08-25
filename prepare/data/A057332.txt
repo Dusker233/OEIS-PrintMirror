@@ -1,0 +1,78 @@
+{
+    "number": 57332,
+    "data": "4,15,52,210,1007,5156,25571,133293,727082,3874464,21072166,117829671,654556778",
+    "name": "a(n) is the number of (2n+1)-digit palindromic primes that undulate.",
+    "comment": [
+        "'Undulate' means that the alternate digits are consistently greater than or less than the digits adjacent to them (e.g., 906343609). Smoothly undulating palindromic primes (e.g., 323232323) are a subset and included in the count."
+    ],
+    "reference": [
+        "C. A. Pickover, \"Wonders of Numbers\", Oxford New York 2001, Chapter 52, pp. 123-124, 316-317."
+    ],
+    "link": [
+        "C. K. Caldwell, <a href=\"https://t5k.org/curios/page.php?short=906343609\">Prime Curios! 906343609</a> and <a href=\"https://t5k.org/curios/page.php?short=1007\">Prime Curios! 1007</a>.",
+        "C. A. Pickover, \"Wonders of Numbers, Adventures in Mathematics, Mind and Meaning,\" <a href=\"http://www.zentralblatt-math.org/zmath/en/search/?q=an:0983.00008&amp;format=complete\">Zentralblatt review</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/UndulatingNumber.html\">Undulating Number.</a>"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import product",
+        "def sign(n): return (n > 0) - (n < 0)",
+        "def unds(n):",
+        "  s = str(n)",
+        "  if len(s) == 1: return True",
+        "  signs = set(sign(int(s[i-1]) - int(s[i])) for i in range(1, len(s), 2))",
+        "  if len(signs) > 1: return False",
+        "  if len(s) % 2 == 0: return signs == {1} or signs == {-1}",
+        "  return sign(int(s[-1]) - int(s[-2])) in signs - {0}",
+        "def candidate_pals(n): # of length 2n + 1",
+        "  if n == 0: yield from [2, 3, 5, 7]; return # one-digit primes",
+        "  for rightbutend in product(\"0123456789\", repeat=n-1):",
+        "    rightbutend = \"\".join(rightbutend)",
+        "    for end in \"1379\": # multi-digit primes must end in 1, 3, 7, or 9",
+        "      left = end + rightbutend[::-1]",
+        "      for mid in \"0123456789\": yield int(left + mid + rightbutend + end)",
+        "def a(n): return sum(1 for p in candidate_pals(n) if unds(p) and isprime(p))",
+        "print([a(n) for n in range(6)]) # _Michael S. Branicky_, Apr 15 2021",
+        "(Python)",
+        "from sympy import isprime",
+        "def f(w,dir):",
+        "    if dir == 1:",
+        "        for s in w:",
+        "            for t in range(int(s[-1])+1,10):",
+        "                yield s+str(t)",
+        "    else:",
+        "        for s in w:",
+        "            for t in range(0,int(s[-1])):",
+        "                yield s+str(t)",
+        "def A057332(n):",
+        "    c = 0",
+        "    for d in '123456789':",
+        "        x = d",
+        "        for i in range(1,n+1):",
+        "            x = f(x,(-1)**i)",
+        "        c += sum(1 for p in x if isprime(int(p+p[-2::-1])))",
+        "        if n > 0:",
+        "            y = d",
+        "            for i in range(1,n+1):",
+        "                y = f(y,(-1)**(i+1))",
+        "            c += sum(1 for p in y if isprime(int(p+p[-2::-1])))",
+        "    return c # _Chai Wah Wu_, Apr 25 2021"
+    ],
+    "xref": [
+        "Cf. A046075, A033619, A032758, A039944, A016073, A046076, A046077, A057333."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "0,1",
+    "author": "_Patrick De Geest_, Sep 15 2000",
+    "ext": [
+        "a(5) from _Donovan Johnson_, Aug 08 2010",
+        "a(6)-a(10) from _Lars Blomberg_, Nov 19 2013",
+        "a(11) from _Chai Wah Wu_, Apr 25 2021",
+        "a(12) from _Chai Wah Wu_, May 02 2021"
+    ],
+    "references": 4,
+    "revision": 34,
+    "time": "2023-04-03T10:36:09-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

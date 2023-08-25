@@ -1,0 +1,31 @@
+{
+    "number": 239769,
+    "data": "1,1,10,195,7000,397445,32540976,3612881587",
+    "name": "Number of pairs of functions (f, g) from a size n set into itself satisfying f(g(f(x))) = g(g(f(x))).",
+    "maple": [
+        "s:= proc(n, i) option remember; `if`(i=0, [[]],",
+        "       map(x-> seq([j, x[]], j=1..n), s(n, i-1)))",
+        "    end:",
+        "a:= proc(n) (l-> add(add(`if`([true$n]=[seq(evalb(",
+        "       f[g[f[i]]]=g[g[f[i]]]), i=1..n)], 1, 0), g=l), f=l))(s(n$2))",
+        "    end:",
+        "seq(a(n), n=0..5);  # _Alois P. Heinz_, Jul 16 2014"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n == 0, 1, Module[{f, g, T}, T = Tuples[Range[n], n]; Table[f = T[[j, #]]&; g = T[[k, #]]&; Table[True, {n}] == Table[f[g[f[i]]] == g[g[f[i]]], {i, n}], {j, n^n}, {k, n^n}] // Flatten // Count[#, True]&]];",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 0, 5}] (* _Jean-Fran\u00e7ois Alcover_, Sep 22 2022 *)"
+    ],
+    "xref": [
+        "Cf. A181162, A239773."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Chad Brewbaker_, Mar 26 2014",
+    "ext": [
+        "a(6)-a(7) from _Giovanni Resta_, Mar 28 2014"
+    ],
+    "references": 12,
+    "revision": 16,
+    "time": "2022-09-22T08:58:31-04:00",
+    "created": "2014-07-16T18:57:33-04:00"
+}

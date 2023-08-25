@@ -1,0 +1,39 @@
+{
+    "number": 330021,
+    "data": "1,1,2,6,25,128,754,5001,37048,303930,2732395,26657106,280039786,3149224991,37729906686,479570263690,6442902231289,91186621152460,1355582225366134,21112253012491481,343672026658191836,5834977672879651390,103130592695715620419",
+    "name": "Expansion of e.g.f. exp(sinh(exp(x) - 1)).",
+    "comment": [
+        "Stirling transform of A003724.",
+        "Exponential transform of A024429."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A330021/b330021.txt\">Table of n, a(n) for n = 0..485</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} Stirling2(n,k) * A003724(k).",
+        "a(0) = 1; a(n) = Sum_{k=1..n} binomial(n-1,k-1) * A024429(k) * a(n-k)."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      binomial(n-1, j-1)*irem(j, 2)*g(n-j), j=1..n))",
+        "    end:",
+        "b:= proc(n, m) option remember; `if`(n=0,",
+        "      g(m), m*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..22);  # _Alois P. Heinz_, Jun 23 2023"
+    ],
+    "mathematica": [
+        "nmax = 22; CoefficientList[Series[Exp[Sinh[Exp[x] - 1]], {x, 0, nmax}], x] Range[0, nmax]!"
+    ],
+    "xref": [
+        "Cf. A003724, A009218, A011800, A024429, A080831."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Nov 27 2019",
+    "references": 2,
+    "revision": 9,
+    "time": "2023-06-23T18:04:13-04:00",
+    "created": "2019-11-27T12:53:14-05:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 299024,
+    "data": "1,1,3,4,7,13,21,34,58,98,158,258,421,676,1108,1777,2836,4544,7220,11443,18215,28729,45203,71139,111518,174402,272367,424892,660563,1025717,1590448,2460346,3800816,5862640,9026963,13885425,21321663,32695098,50073855",
+    "name": "Number of compositions of n whose standard factorization into Lyndon words has distinct strict compositions as factors.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A299024/b299024.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "Weigh transform of A032153."
+    ],
+    "example": [
+        "The a(5) = 7 compositions:",
+        "      (5) = (5)",
+        "     (41) = (4)*(1)",
+        "     (14) = (14)",
+        "     (32) = (3)*(2)",
+        "     (23) = (23)",
+        "    (131) = (13)*(1)",
+        "    (212) = (2)*(12)",
+        "Not included:",
+        "    (311) = (3)*(1)*(1)",
+        "    (113) = (113)",
+        "    (221) = (2)*(2)*(1)",
+        "    (122) = (122)",
+        "   (2111) = (2)*(1)*(1)*(1)",
+        "   (1211) = (12)*(1)*(1)",
+        "   (1121) = (112)*(1)",
+        "   (1112) = (1112)",
+        "  (11111) = (1)*(1)*(1)*(1)*(1)"
+    ],
+    "mathematica": [
+        "nn=50;",
+        "ser=Product[(1+x^n)^Total[(Length[#]-1)!&/@Select[IntegerPartitions[n],UnsameQ@@#&]],{n,nn}];",
+        "Table[SeriesCoefficient[ser,{x,0,n}],{n,nn}]"
+    ],
+    "program": [
+        "(PARI) WeighT(v)={Vec(exp(x*Ser(dirmul(v, vector(#v,n,(-1)^(n-1)/n))))-1,-#v)}",
+        "seq(N)={WeighT(Vec(sum(n=1, N-1, (n-1)!*x^(n*(n+1)/2)/prod(k=1, n, 1-x^k + O(x^N)))))} \\\\ _Andrew Howroyd_, Dec 01 2018"
+    ],
+    "xref": [
+        "Cf. A001045, A032020, A032153, A034691, A049311, A050342, A059966, A089259, A098407, A116540, A185700, A270995, A283877,  A292432, A296373, A299023, A299026, A299027."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Jan 31 2018",
+    "references": 4,
+    "revision": 9,
+    "time": "2018-12-02T03:21:11-05:00",
+    "created": "2018-02-09T12:05:53-05:00"
+}

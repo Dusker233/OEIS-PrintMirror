@@ -1,0 +1,45 @@
+{
+    "number": 142591,
+    "data": "15,35,95,119,143,209,287,319,323,377,527,559,779,899,923,989,1007,1189,1199,1343,1349,1763,1919,2159,2507,2759,2911,3239,3599,3827,4031,4607,5183,5207,5249,5459,5543,6439,6887,7067,7279,7739,8159,8639,9179,9593",
+    "name": "Composite terms in A143578.",
+    "comment": [
+        "Conjecture: This consists exactly of the semiprimes pq for which p + q divides pq + 1. - _Mohamed Bouhamida_, Aug 17 2009] (Comment edited by _N. J. A. Sloane_, Sep 01 2019.)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A142591/b142591.txt\">Table of n, a(n) for n = 1..2100</a>"
+    ],
+    "maple": [
+        "filter:= proc(n) local k,D,j,t;",
+        "  D:= select(t -> t^2 <= n, numtheory:-divisors(n));",
+        "  j:= max(D);",
+        "  t:= j+n/j;",
+        "  andmap(k -> (k+n/k) mod t = 0, D);",
+        "end proc:",
+        "count:= 0: S:= NULL:",
+        "for n from 2  while count < 100 do",
+        "  if  isprime(n) then next",
+        "  elif filter(n) then",
+        "    count:= count+1;",
+        "    S:= S, n;",
+        "  fi",
+        "od:",
+        "S; # _Robert Israel_, Sep 01 2019"
+    ],
+    "mathematica": [
+        "Select[Reap[Module[{n, k}, For[n = 1, n < 10000, n++, k = Max[Select[Divisors[n], # <= Sqrt[n]&]]; If[Length[Union[ Mod[Divisors[n] + n/Divisors[n], k+n/k]]] == 1, Sow[n]]]]][[2, 1]], CompositeQ] (* _Jean-Fran\u00e7ois Alcover_, Feb 07 2023 *)"
+    ],
+    "xref": [
+        "Cf. A143578."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Leroy Quet_, Aug 24 2008",
+    "ext": [
+        "More terms from _M. F. Hasler_, Aug 25 2008",
+        "a(33)-a(46) from _Ray Chandler_, Jun 21 2009"
+    ],
+    "references": 3,
+    "revision": 19,
+    "time": "2023-02-07T08:14:29-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

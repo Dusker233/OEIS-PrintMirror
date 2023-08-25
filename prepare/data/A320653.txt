@@ -1,0 +1,43 @@
+{
+    "number": 320653,
+    "data": "2,21,588,28230,2092206,220611384,31373370936,5785037767440,1342136211324090,382559909729171328,131411551493995125828,53537846795391076075776,25523603120175022166538150,14076445847378724286239575040,8892219411843450738850246324464",
+    "name": "a(n) is the associated coefficient of the n-uniform simplex.",
+    "comment": [
+        "The associated coefficient of a hypergraph is the weight assigned to it in the generalized Harary-Sachs formula (arxiv link to be posted).  For example, the 2-uniform simplex is a triangle and a(2) = 2.  Famously the codegree 3 coefficient of the adjacency characteristic polynomial of a graph is -a(2)(# of triangles in G).  The quantity a(n)=C_n as mentioned in Cooper and Dutle wherein the authors computed the values up to n=5."
+    ],
+    "link": [
+        "Gregory Clark and Joshua Cooper, <a href=\"https://arxiv.org/abs/1812.00468\">A Harary-Sachs Theorem for Hypergraphs</a>, arXiv:1812.00468 [math.CO], 2018.",
+        "Gregory J. Clark and Joshua Cooper, <a href=\"https://arxiv.org/abs/2107.10781\">Applications of the Harary-Sachs Theorem for Hypergraphs</a>, arXiv:2107.10781 [math.CO], 2021.",
+        "J. Cooper and A. Dutle, <a href=\"https://doi.org/10.1016/j.laa.2011.11.018\">Spectra of uniform hypergraphs</a>, Linear Algebra Appl. 436 (2012) 3268-3292."
+    ],
+    "formula": [
+        "Let P(n,2) denote the set of partitions of n where each part is of size at least 2.  Let L(p) denote the length of p, let p(i) denote the size of part i of p, and let V(p,i) denote the number of parts of p which have size i.  For p in P(n,2) let f(n,p)= n!/((Product_{i=1..L(p)} p(i))(Product_{i=2..n}V(p,i)).  Then a(n) = (1/((n-1)*(n+1)^2))*Sum_{p in P(n+1,2)}(f(n+1,p)*Product_{i=1 .. L(p)}(n^(p(i)) + (-1)^(p(i)+1))).",
+        "a(n) = exp(n*log(n)(2+o(1))."
+    ],
+    "program": [
+        "(Sage)",
+        "def simplex_coefficient(n):",
+        "    P=Partitions(n+1, min_part=2)",
+        "    x=0",
+        "    for p in P:",
+        "        E = p.evaluation()",
+        "        tau=1",
+        "        c = 1",
+        "        d=1",
+        "        for i in p:",
+        "            tau = tau*(n^i+(-1)^(i+1))",
+        "            c = c * i",
+        "        for i in E:",
+        "            d = d * factorial(i)",
+        "        x= x + tau/(c * d)",
+        "    return factorial(n+1)*x/((n-1)*(n+1)^2)",
+        "[simplex_coefficient(n) for n in range(2,4)]"
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Gregory J. Clark_, Oct 18 2018",
+    "references": 0,
+    "revision": 37,
+    "time": "2021-12-03T17:06:52-05:00",
+    "created": "2018-12-14T20:44:19-05:00"
+}

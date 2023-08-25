@@ -1,0 +1,64 @@
+{
+    "number": 360570,
+    "data": "6,12,21,34,49,51,58,68,72,92,100,106,121,133,138,156,172,175,195,196,219,243,262,274,297,327,337,359,373,405,409,428,466,491,506,531,548,551,583,593,614,658,681,685,689,740,753,778,800,804,830,851,857,884",
+    "name": "Numbers m such that m concatenated with k produces a cube for some 0 <= k <= m.",
+    "comment": [
+        "Numbers k such that A243092(k) <> A245631(k)."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A360570/b360570.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "64 = 4^3 is a cube and 4 <= 6, thus 6 is a term.",
+        "343 = 7^3 is a cube and 3 <= 34, thus 34 is a term.",
+        "1000 = 10^3 is a cube and 0 <= 100, thus 100 is a term.",
+        "5359375 = 175^3 is a cube and 375 <= 5359, thus 5359 is a term."
+    ],
+    "maple": [
+        "filter:= proc(n) local d,a,b,r,rmin,i;",
+        "  for d from 1 to ilog10(n)+1 do",
+        "    a:=ceil((10^d*n)^(1/3));",
+        "    b:= floor((10^d*(n+1))^(1/3));",
+        " if d = 1 then rmin:= 0 else rmin:= 10^(d-1) fi;",
+        "    for i from a to b do",
+        "      r:= i^3 -10^d*n;",
+        "      if r >= min(10^d,n+1) then break fi;",
+        "      if r < rmin then next fi;",
+        "      return true",
+        "    od",
+        "  od;",
+        "  false",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Feb 22 2023"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import integer_nthroot",
+        "def A360570_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        if integer_nthroot(m:=10*n,3)[1]:",
+        "            yield n",
+        "        else:",
+        "            a = 1",
+        "            while (k:=(integer_nthroot(a*(m+1)-1,3)[0]+1)**3-m*a)>=10*a:",
+        "                a *= 10",
+        "                if a > n:",
+        "                    break",
+        "            else:",
+        "                if k <= n:",
+        "                    yield n",
+        "A360570_list = list(islice(A360570_gen(),20))",
+        "(PARI) is(n) = { for (k=0, n, if (ispower(n*10^max(1,#digits(k))+k, 3), return (1))); return (0) } \\\\ _R\u00e9my Sigrist_, Feb 20 2023"
+    ],
+    "xref": [
+        "Cf. A243092, A245631."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Chai Wah Wu_, Feb 20 2023",
+    "references": 1,
+    "revision": 36,
+    "time": "2023-03-01T14:29:04-05:00",
+    "created": "2023-03-01T11:27:18-05:00"
+}

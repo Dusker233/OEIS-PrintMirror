@@ -1,0 +1,42 @@
+{
+    "number": 322386,
+    "data": "1,2,4,7,8,14,16,19,28,32,38,43,49,53,56,64,76,86,98,106,107,112,128,131,133,152,163,172,196,212,214,224,227,256,262,263,266,301,304,311,326,343,344,361,371,383,392,424,428,443,448,454,512,521,524,526,532",
+    "name": "Numbers whose prime indices are not prime and already belong to the sequence.",
+    "comment": [
+        "Union of A291636 (Matula-Goebel numbers of series-reduced rooted trees) and A322385.",
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798.",
+        "A multiplicative semigroup: if x and y are in the sequence, then so is x*y. - _Robert Israel_, Dec 06 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A322386/b322386.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "1 has no prime indices, so the definition is satisfied vacuously. - _Robert Israel_, Dec 07 2018",
+        "We have 301 = prime(4) * prime(14). Since 4 and 14 already belong to the sequence, so does 301."
+    ],
+    "maple": [
+        "Res:= 1: S:= {1}:",
+        "for n from 2 to 1000 do",
+        "  F:= map(numtheory:-pi, numtheory:-factorset(n));",
+        "  if F subset S then",
+        "    Res:= Res, n;",
+        "    if not isprime(n) then S:= S union {n} fi",
+        "fi",
+        "od:",
+        "Res; # _Robert Israel_, Dec 06 2018"
+    ],
+    "mathematica": [
+        "tnpQ[n_]:=With[{m=PrimePi/@First/@If[n==1,{},FactorInteger[n]]},And[!MemberQ[m,_?PrimeQ],And@@tnpQ/@m]]",
+        "Select[Range[1000],tnpQ]"
+    ],
+    "xref": [
+        "Cf. A000002, A001462, A007097, A079000, A079254, A214577, A276625, A291636, A304360, A320628, A322385."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Dec 05 2018",
+    "references": 2,
+    "revision": 15,
+    "time": "2018-12-07T12:28:28-05:00",
+    "created": "2018-12-06T06:51:49-05:00"
+}

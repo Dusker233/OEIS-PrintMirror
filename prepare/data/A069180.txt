@@ -1,0 +1,50 @@
+{
+    "number": 69180,
+    "data": "1,2,7,11,13,17,19,22,23,26,29,31,34,37,41,43,46,47,53,58,59,61,62,67,71,73,79,82,83,86,89,94,97,101,103,106,107,109,113,118,122,127,131,134,137,139,142,146,149,151,157,163,166,167,169,173,178,179,181,191",
+    "name": "F(n) and n! are relatively prime where F(n) are the Fibonacci numbers.",
+    "comment": [
+        "Are there any primes p >5 such that F(p) and p! are not relatively primes?",
+        "From _Robert Israel_, May 31 2018: (Start)",
+        "n is in the sequence if and only if there is no prime q = prime(k) <= n such that A001602(k) | n.",
+        "All primes > 5 are in the sequence, because A001602(k) < prime(k) for k > 3, and we can't have n prime unless A001602(k)=n.",
+        "(End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A069180/b069180.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "Conjecture : a(n) = C*n*Log(n) + 0(n*Log(n)) with 0, 6 < C < 0, 7"
+    ],
+    "maple": [
+        "N:= 200: # for all terms <= N",
+        "V:= Vector(N,1):",
+        "F:= proc(n) option remember; procname(n-1)+procname(n-2) end proc:",
+        "F(0):= 0: F(1):= 1:",
+        "K:= proc(q) local k;",
+        "   for k from 1 do if F(k) mod q = 0 then return k fi",
+        "     od",
+        "end proc:",
+        "p:= 1:",
+        "do",
+        "  p:= nextprime(p);",
+        "  if p > N then break fi;",
+        "  k:= K(p);",
+        "  k0:= k*ceil(p/k);",
+        "  V[[seq(i,i=k0..N,k)]]:= 0",
+        "od:",
+        "select(t -> V[t]=1, [$1..N]); # _Robert Israel_, May 31 2018"
+    ],
+    "mathematica": [
+        "Select[Range[1000], CoprimeQ[Fibonacci[#], #!]&] (* _Jean-Fran\u00e7ois Alcover_, Jun 07 2020 *)"
+    ],
+    "xref": [
+        "Cf. A000045, A001602."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Benoit Cloitre_, Apr 10 2002",
+    "references": 4,
+    "revision": 17,
+    "time": "2020-06-07T08:16:10-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

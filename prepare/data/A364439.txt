@@ -1,0 +1,52 @@
+{
+    "number": 364439,
+    "data": "1,1,4,33,367,4844,71597,1147653,19559062,349766457,6502419671,124822220086,2461515013103,49668479230825,1022258042480874,21406231023989503,455112508356168561,9807294681518154334,213897254891041613995,4715809234441541498539",
+    "name": "a(n) is the number of paths with length 3*n that begin at (0,0), end at (0,0), and do not reach (0,0) at any point in between while 0 <= y <= x at every step, where a path is a sequence of steps in the form (1,1), (1,-1), and (-2,0).",
+    "comment": [
+        "If the constraint is removed that the sequence does not reach (0,0) at any point other than the beginning and end of the sequence, this sequence becomes A005789."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A364439/b364439.txt\">Table of n, a(n) for n = 0..707</a>",
+        "Marshall Hamon, <a href=\"/A364439/a364439.c.txt\">A364439.c</a>"
+    ],
+    "formula": [
+        "From _Alois P. Heinz_, Jul 29 2023: (Start)",
+        "INVERTi transform of A005789.",
+        "a(n) mod 2 = A011655(n+1). (End)"
+    ],
+    "example": [
+        "Let A represent the (1,1) step, B represent the (1,-1) step, and C represent the (-2,0) step.",
+        "For n = 1, the only valid path is ABC.",
+        "For n = 2, the 4 valid paths are AABBCC, AABCBC, ABABCC, ABACBC."
+    ],
+    "maple": [
+        "b:= proc(n, l) option remember; `if`(n<1, 1, add((h->",
+        "      `if`(h[2]>h[1] or h[1]>=n or min(h)<0 or n>1 and h=[0$2],",
+        "           0, b(n-1, h)))(l-w), w=[[1, 1], [1, -1], [-2, 0]]))",
+        "    end:",
+        "a:= n-> b(3*n-1, [2, 0]):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jul 28 2023",
+        "# second Maple program:",
+        "f:= proc(n) option remember; (3*n)!*mul(i!/(n+i)!, i=0..2) end:\t",
+        "a:= proc(n) option remember; `if`(n=0, 1,",
+        "      f(n)-add(f(n-i)*a(i), i=1..n-1))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jul 29 2023"
+    ],
+    "program": [
+        "(C) /* See Hamon Link */"
+    ],
+    "xref": [
+        "Cf. A005789, A011655."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Marshall Hamon_, Jul 24 2023",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jul 27 2023"
+    ],
+    "references": 1,
+    "revision": 37,
+    "time": "2023-07-29T18:28:14-04:00",
+    "created": "2023-07-29T17:57:31-04:00"
+}

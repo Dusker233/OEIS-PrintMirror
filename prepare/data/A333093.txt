@@ -1,0 +1,63 @@
+{
+    "number": 333093,
+    "data": "1,2,8,41,232,1377,8399,52138,327656,2077934,13270633,85226594,549837391,3560702069,23132584742,150695482041,984021596136,6438849555963,42208999230224,277144740254566,1822379123910857,11998811140766701,79095365076843134",
+    "name": "a(n) is the n-th order Taylor polynomial (centered at 0) of c(x)^n evaluated at x = 1, where c(x) = (1 - sqrt(1 - 4*x))/(2*x) is the o.g.f. of the Catalan numbers A000108.",
+    "comment": [
+        "The sequence satisfies the Gauss congruences: a(n*p^k) == a(n*p^(k-1)) ( mod p^k ) for all prime p and positive integers n and k.",
+        "We conjecture that the sequence satisfies the stronger congruences a(n*p^k) == a(n*p^(k-1)) ( mod p^(3*k) ) for prime p >= 5 and positive integers n and k. Examples of these congruences are given below.",
+        "More generally, for each integer m, we conjecture that the sequence",
+        "  a_m(n) defined as the n-th order Taylor polynomial of c(x)^(m*n) evaluated at x = 1 satisfies the same congruences. For cases, see A099837 (m = -2), A100219 (m = -1), A000012 (m = 0), A333094 (m = 2), A333095 (m = 3), A333096 (m = 4), A333097 (m = 5)."
+    ],
+    "link": [
+        "Peter Bala, <a href=\"/A333093/a333093.pdf\">Notes on A333093</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k = 0..n} n/(n+k)*binomial(n+2*k-1,k) for n >= 1.",
+        "a(n) = [x^n] ( (1 + x)*c(x/(1 + x)) )^n = [x^n] ( (1 + x)*(1 + x*M(x)) )^n, where M(x) = ( 1 - x - sqrt(1 - 2*x - 3*x^2) ) / (2*x^2) is the o.g.f. of the Motzkin numbers A001006.",
+        "O.g.f.: ( 1 + x*f'(x)/f(x) )/( 1 - x*f(x) ), where f(x) = 1 + x + 3*x^2 + 12*x^3 + 55*x^4 + ... = (1/x)*Revert( x/c(x) ) is the o.g.f. of A001764.",
+        "Row sums of the Riordan array ( 1 + x*f'(x)/f(x), x*f(x) ) belonging to the Hitting time subgroup of the Riordan group.",
+        "a(n) ~ 3^(3*n + 3/2) / (7 * sqrt(Pi*n) * 2^(2*n+1)). - _Vaclav Kotesovec_, Mar 28 2020"
+    ],
+    "example": [
+        "n-th order Taylor polynomial of c(x)^n:",
+        "  n = 0: c(x)^0 = 1 + O(x)",
+        "  n = 1: c(x)^1 = 1 + x + O(x^2)",
+        "  n = 2: c(x)^2 = 1 + 2*x + 5*x^2 + O(x^3)",
+        "  n = 3: c(x)^3 = 1 + 3*x + 9*x^2 + 28*x^3 + O(x^4)",
+        "  n = 4: c(x)^4 = 1 + 4*x + 14*x^2 + 48*x^3 + 165*x^4 + O(x^5)",
+        "Setting x = 1 gives a(0) = 1, a(1) = 1 + 1 = 2, a(2) = 1 + 2 + 5 = 8, a(3) = 1 + 3 + 9 + 28 = 41 and a(4) = 1 + 4 + 14 + 48 + 165 = 232.",
+        "The triangle of coefficients of the n-th order Taylor polynomial of c(x)^n, n >= 0, in descending powers of x begins",
+        "                                        row sums",
+        "  n = 0 |   1                               1",
+        "  n = 1 |   1   1                           2",
+        "  n = 2 |   5   2    1                      8",
+        "  n = 3 |  28   9    3   1                 41",
+        "  n = 4 | 165  48   14   4   1            232",
+        "   ...",
+        "This is a Riordan array belonging to the Hitting time subgroup of the Riordan group. The first column sequence [1, 1, 5, 28, 165, ...] = [x^n] c(x)^n = A025174(n).",
+        "Examples of congruences:",
+        "a(13) - a(1) = 3560702069 - 2 = (3^2)*(13^3)*31*37*157 == 0 ( mod 13^3 ).",
+        "a(3*7) - a(3) = 11998811140766701 - 41 = (2^2)*5*(7^4)*32213*7756841 == 0 ( mod 7^3 ).",
+        "a(5^2) - a(5) = 22794614296746579502 - 1377 = (5^6)*7*53*6491*605796421 == 0 ( mod 5^6 )."
+    ],
+    "maple": [
+        "seq(add(n/(n+k)*binomial(n+2*k-1,k), k = 0..n), n = 1..25);",
+        "#alternative program",
+        "c:= x -> (1/2)*(1-sqrt(1-4*x))/x:",
+        "G := (x,n) -> series(c(x)^n, x, 51):",
+        "seq(add(coeff(G(x, n), x, n-k), k = 0..n), n = 0..25);"
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[((1 + x)^2 * (1 - Sqrt[(1 - 3*x)/(1 + x)]) / (2*x))^n, {x, 0, n}], {n, 0, 25}] (* _Vaclav Kotesovec_, Mar 28 2020 *)"
+    ],
+    "xref": [
+        "Cf. A000108, A001006, A001764, A005554, A025174, A333090 through A333097."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Peter Bala_, Mar 07 2020",
+    "references": 11,
+    "revision": 30,
+    "time": "2021-10-06T14:13:58-04:00",
+    "created": "2020-03-28T07:42:50-04:00"
+}

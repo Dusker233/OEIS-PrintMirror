@@ -1,0 +1,53 @@
+{
+    "number": 322495,
+    "data": "1,1,2,8,68,1262,51420,4577274,888837716,376116199534,346688563051200,695975307003529228",
+    "name": "Number of tilings of an n X n square using V (2m+1)-ominoes (m >= 0) in standard orientation.",
+    "comment": [
+        "The shapes of the tiles are:",
+        "                       ._.",
+        "              ._.      | |",
+        "       ._.    | |      | |",
+        "  ._.  | |_.  | |_._.  | |_._._.",
+        "  |_|  |___|  |_____|  |_______|  ... ."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Polyomino\">Polyomino</a>"
+    ],
+    "example": [
+        "a(3) = 8:",
+        "  ._____.  ._____.  ._____.  ._____.  ._____.  ._____.  ._____.  ._____.",
+        "  |_|_|_|  | |_|_|  |_|_|_|  |_| |_|  |_|_|_|  |_| |_|  | |_|_|  | | |_|",
+        "  |_|_|_|  |___|_|  | |_|_|  |_|___|  |_| |_|  | |___|  | |_|_|  | |___|",
+        "  |_|_|_|  |_|_|_|  |___|_|  |_|_|_|  |_|___|  |___|_|  |_____|  |_____|.",
+        "."
+    ],
+    "maple": [
+        "b:= proc(n, l) option remember; local k, m, r;",
+        "      if n=0 or l=[] then 1",
+        "    elif min(l)>0 then (t-> b(n-t, map(h->h-t, l)))(min(l))",
+        "    elif l[-1]=n then b(n, subsop(-1=[][], l))",
+        "    else for k while l[k]>0 do od; r:= 0;",
+        "         for m from 0 while k+m<=nops(l) and l[k+m]=0 and n>m do",
+        "           r:= r+b(n, [l[1..k-1][], 1$m, m+1, l[k+m+1..nops(l)][]])",
+        "         od; r",
+        "      fi",
+        "    end:",
+        "a:= n-> b(n, [0$n]):",
+        "seq(a(n), n=0..9);"
+    ],
+    "mathematica": [
+        "b[n_, l_] := b[n, l] = Module[{k, m, r}, Which[n == 0 || l == {}, 1, Min[l] > 0, Function[t, b[n-t, l-t]][Min[l]], l[[-1]] == n, b[n, ReplacePart[l, -1 -> Nothing]], True, For[k = 1, l[[k]] > 0, k++]; r = 0; For[m = 0, k + m <= Length[l] && l[[k+m]] == 0 && n > m, m++, r = r + b[n, Join[l[[1 ;; k-1]], Array[1&, m], {m+1}, l[[k+m+1 ;; Length[l]]]]]]; r]];",
+        "a[n_] := b[n, Array[0&, n]];",
+        "a /@ Range[0, 9] (* _Jean-Fran\u00e7ois Alcover_, Apr 22 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Main diagonal of A322494."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Dec 12 2018",
+    "references": 1,
+    "revision": 14,
+    "time": "2021-04-22T08:48:36-04:00",
+    "created": "2018-12-12T17:10:44-05:00"
+}

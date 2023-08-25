@@ -1,0 +1,30 @@
+{
+    "number": 355167,
+    "data": "1,4,20,128,1008,9280,96704,1120768,14274816,197833728,2958521344,47415508992,809838505984,14670950907904,280760761434112,5655835404271616,119561580162646016,2645030742360588288,61087848487323959296,1469652941137655103488,36758243982057508175872,954111239026567129595904",
+    "name": "a(n) = exp(-1/4) * Sum_{k>=0} (4*k + 3)^n / (4^k * k!).",
+    "link": [
+        "Michael De Vlieger, <a href=\"/A355167/b355167.txt\">Table of n, a(n) for n = 0..464</a>",
+        "Adam Buck, Jennifer Elder, Azia A. Figueroa, Pamela E. Harris, Kimberly Harry, and Anthony Simpson, <a href=\"https://arxiv.org/abs/2306.13034\">Flattened Stirling Permutations</a>, arXiv:2306.13034 [math.CO], 2023. See p. 14."
+    ],
+    "formula": [
+        "E.g.f.: exp(3*x + (exp(4*x) - 1) / 4).",
+        "a(0) = 1; a(n) = 3 * a(n-1) + Sum_{k=1..n} binomial(n-1,k-1) * 4^(k-1) * a(n-k).",
+        "a(n) = Sum_{k=0..n} binomial(n,k) * 3^(n-k) * A004213(k).",
+        "a(n) ~ 2^(2*n + 3/2) * n^(n + 3/4) * exp(n/LambertW(4*n) - n - 1/4) / (sqrt(1 + LambertW(4*n)) * LambertW(4*n)^(n + 3/4)). - _Vaclav Kotesovec_, Jun 27 2022"
+    ],
+    "mathematica": [
+        "nmax = 21; CoefficientList[Series[Exp[3 x + (Exp[4 x] - 1)/4], {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[0] = 1; a[n_] := a[n] = 3 a[n - 1] + Sum[Binomial[n - 1, k - 1] 4^(k - 1) a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 21}]",
+        "Table[Sum[Binomial[n, k] 3^(n - k) 4^k BellB[k, 1/4], {k, 0, n}], {n, 0, 21}]"
+    ],
+    "xref": [
+        "Cf. A003576, A004213, A285064, A355164, A355165."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Jun 22 2022",
+    "references": 4,
+    "revision": 12,
+    "time": "2023-06-27T11:35:26-04:00",
+    "created": "2022-06-24T08:35:09-04:00"
+}

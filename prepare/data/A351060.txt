@@ -1,0 +1,37 @@
+{
+    "number": 351060,
+    "data": "1,111,120,121,123,131,132,133,134,141,142,144,145,151,152,155,156,161,162,166,167,171,172,177,178,181,182,188,189,191,192,199,219,221,231,232,234,242,243,244,245,252,253,255,256,262,263,266,267,272,273,277",
+    "name": "a(n) is the smallest number larger than a(n-1) that has only three digits in common with a(n-1).",
+    "comment": [
+        "Terms computed by _Claudio Meller_."
+    ],
+    "example": [
+        "a(10) = 141 because it is the smallest number greater than a(9) = 134 that has exactly three digits in common.",
+        "Similarly, a(33) = 219 because it is the smallest number greater than a(32) = 199 that has exactly three digits in common (the digit 9 of 219 is in common with the first and second 9 of 199)."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "def c(s, t): return sum(t.count(si) for si in s)",
+        "def agen(): # generator of terms",
+        "    an, target = 1, \"1\"",
+        "    while True:",
+        "        yield an",
+        "        k = an + 1",
+        "        while c(str(k), target) != 3: k += 1",
+        "        an, target = k, str(k)",
+        "print(list(islice(agen(), 52))) # _Michael S. Branicky_, Jan 30 2022",
+        "(PARI) isok(k, d, va) = {if (#select(x->(x==k), va), return(0)); my(dk=digits(k)); sum(i=1, #dk, #select(x->(x==dk[i]), d)) == 3;}",
+        "lista(nn) = {my(va = vector(nn)); va[1] = 1; for (n=2, nn, my(k=va[n-1], d = digits(va[n-1])); while(!isok(k,d,va), k++); va[n] = k;); va;} \\\\ _Michel Marcus_, Jan 31 2022"
+    ],
+    "xref": [
+        "Cf. A350444, A350445, A350671, A350672, A351059."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Rodolfo Kurchan_, Jan 30 2022",
+    "references": 0,
+    "revision": 20,
+    "time": "2022-02-20T23:05:32-05:00",
+    "created": "2022-02-20T23:05:32-05:00"
+}

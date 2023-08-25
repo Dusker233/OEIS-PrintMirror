@@ -1,0 +1,68 @@
+{
+    "number": 357063,
+    "data": "1,4,13,42,127,382,1149,3448,10345,31044,93133,279400,838203,2514610,7543831,22631496,67894489,203683468,611050413,1833151240,5499453721,16498361166,49495083499,148485250498,445455751497,1336367254492,4009101763477,12027305290463,36081915871390,108245747614173,324737242842520,974211728527561,2922635185582686,8767905556748059,26303716670244178,78911150010732543,236733450032197630,710200350096592891",
+    "name": "Lengths of the B blocks associated with A091787.",
+    "comment": [
+        "The B blocks are explained in the article \"A slow-growing sequence defined by an unusual occurrence\". They have superscript (2)."
+    ],
+    "link": [
+        "F. J. van de Bult, D. C. Gijswijt, J. P. Linderman, N. J. A. Sloane and Allan Wilks, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL10/Sloane/sloane55.html\">A Slow-Growing Sequence Defined by an Unusual Recurrence</a>, J. Integer Sequences, Vol. 10 (2007), Article 07.1.2."
+    ],
+    "example": [
+        "The third B-block of order 2 is B_3^{(2)}=2223222322233. Therefore, a(3)=13."
+    ],
+    "program": [
+        "(Python)",
+        "number_of_terms=38",
+        "def Cn(X):",
+        "    l=len(X)",
+        "    cn=1",
+        "    for i in range(1,int(l/2)+1):",
+        "        j=i",
+        "        while(X[l-j-1]==X[l-j-1+i]):",
+        "            j=j+1",
+        "            if j>=l:",
+        "                break",
+        "        candidate=int(j/i)",
+        "        if candidate>cn:",
+        "            cn=candidate",
+        "    return cn",
+        "# This algorithm generates a prefix of the level-3 Gijswijt sequence",
+        "def Generate_A3(number):",
+        "  glue_lengths=[]",
+        "  A3=[3]",
+        "  S=[3]",
+        "  i=0",
+        "  while(True):",
+        "      c=Cn(A3)",
+        "      if c<3:",
+        "        glue_lengths.append(len(S))",
+        "        i=i+1",
+        "        if i==number:",
+        "            break",
+        "        S=[]",
+        "      A3.append(max(c,3))",
+        "      S.append(max(c,3))",
+        "  return glue_lengths",
+        "glue_lengths=Generate_A3(number_of_terms-1)",
+        "beta_lengths=[1]",
+        "beta_length=1",
+        "for l in glue_lengths:",
+        "    beta_length=3*beta_length+l",
+        "    beta_lengths.append(beta_length)",
+        "print(beta_lengths)"
+    ],
+    "xref": [
+        "Cf. A091787, A357068."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Levi van de Pol_, Sep 10 2022",
+    "ext": [
+        "By special permission, more than the usual number of terms are shown. - _N. J. A. Sloane_, Oct 23 2022"
+    ],
+    "references": 2,
+    "revision": 31,
+    "time": "2022-11-22T22:36:40-05:00",
+    "created": "2022-10-23T02:05:03-04:00"
+}

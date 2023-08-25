@@ -1,0 +1,26 @@
+{
+    "number": 316604,
+    "data": "11,101,131,133,1013,2111,2619,3173,3301,4111,5907,8463,9101,10033,10111,12881,13833,14021,14821,15443,16771,17501,17831,18621,21519,21567,28609,29309,31133,31233,33131,41621,42621,44181,44421,44669,45921,52707,55847,59023",
+    "name": "Replacing each digit d in decimal expansion of n with d^2 yields a new prime when done recursively three times.",
+    "example": [
+        "2619 is a term because replacing each digit d by d^2, recursively three times, a prime number is obtained: 2619 -> 436181 (prime); 436181 -> 169361641 (prime); 169361641 -> 13681936136161 (prime).",
+        "3173 is a term because replacing each digit d by d^2, recursively three times, a prime number is obtained: 3173 -> 91499 (prime); 91499 -> 811168181 (prime); 811168181 -> 6411136641641 (prime)."
+    ],
+    "mathematica": [
+        "A316604 = {}; Do[ a=FromDigits[Flatten[IntegerDigits /@ (IntegerDigits[n]^2)]]; b=FromDigits[Flatten[IntegerDigits /@ (IntegerDigits[a]^2)]]; c=FromDigits[Flatten[IntegerDigits /@ (IntegerDigits[b]^2)]]; If[PrimeQ[a] && PrimeQ[b] && PrimeQ[c], AppendTo[A316604,n]], {n,100000}]; A316604"
+    ],
+    "program": [
+        "(PARI) replace_digits(n) = my(d=digits(n), s=\"\"); for(k=1, #d, s=concat(s, d[k]^2)); eval(s)",
+        "is(n) = my(x=n, i=0); while(1, x=replace_digits(x); if(!ispseudoprime(x), return(0), i++); if(i==3, return(1))) \\\\ _Felix Fr\u00f6hlich_, Jul 08 2018"
+    ],
+    "xref": [
+        "Cf. A048385, A048388, A048390, A048393."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_K. D. Bajpai_, Jul 08 2018",
+    "references": 2,
+    "revision": 14,
+    "time": "2018-07-16T04:55:35-04:00",
+    "created": "2018-07-16T04:55:35-04:00"
+}

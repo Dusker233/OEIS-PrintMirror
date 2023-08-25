@@ -1,0 +1,45 @@
+{
+    "number": 230960,
+    "data": "1,2,5,17,73,381,2347,16701,134993,1222873,12279251,135425553,1627809401,21183890469,296773827547,4453511170517,71275570240417,1211894559430065,21816506949416611,414542720924028441,8291224789668806345,174120672081098057341",
+    "name": "Boustrophedon transform of factorials, cf. A000142.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A230960/b230960.txt\">Table of n, a(n) for n = 0..400</a>",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/SeidelTransform\">An old operation on sequences: the Seidel transform</a>",
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon transform, J. Combin. Theory, 17A 44-54 1996 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Boustrophedon_transform\">Boustrophedon_transform</a>",
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A109449(n,k)*A000142(k).",
+        "E.g.f.: (tan(x)+sec(x))/(1-x) = (1- 12*x/(Q(0)+6*x+3*x^2))/(1-x), where Q(k) = 2*(4*k+1)*(32*k^2+16*k-x^2-6) - x^4*(4*k-1)*(4*k+7)/Q(k+1) ; (continued fraction). - _Sergei N. Gladkovskii_, Nov 18 2013",
+        "a(n) ~ n! * (1+sin(1))/cos(1). - _Vaclav Kotesovec_, Jun 12 2015",
+        "a(n) = Sum_{k=0..n} (k+1) * A092580(n,k). - _Alois P. Heinz_, Apr 27 2023"
+    ],
+    "mathematica": [
+        "T[n_, k_] := (n!/k!) SeriesCoefficient[(1 + Sin[x])/Cos[x], {x, 0, n - k}];",
+        "a[n_] := Sum[T[n, k] k!, {k, 0, n}];",
+        "Table[a[n], {n, 0, 21}] (* _Jean-Fran\u00e7ois Alcover_, Jul 02 2019 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a230960 n = sum $ zipWith (*) (a109449_row n) a000142_list",
+        "(Python)",
+        "from itertools import count, islice, accumulate",
+        "def A230960_gen(): # generator of terms",
+        "    blist, m = tuple(), 1",
+        "    for i in count(1):",
+        "        yield (blist := tuple(accumulate(reversed(blist),initial=m)))[-1]",
+        "        m *= i",
+        "A230960_list = list(islice(A230960_gen(),30)) # _Chai Wah Wu_, Jun 11 2022"
+    ],
+    "xref": [
+        "Cf. A000142, A092580, A109449, A230961."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Reinhard Zumkeller_, Nov 05 2013",
+    "references": 10,
+    "revision": 24,
+    "time": "2023-04-27T14:24:59-04:00",
+    "created": "2013-11-06T20:31:19-05:00"
+}

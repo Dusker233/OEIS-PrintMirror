@@ -1,0 +1,41 @@
+{
+    "number": 294027,
+    "data": "945,8505,15015,19305,21735,33345,34125,21961263753,39891817245",
+    "name": "Odd bi-unitary abundant numbers with a record small gap to the next term odd bi-unitary abundant number.",
+    "comment": [
+        "The corresponding gaps are 7560, 1890, 1050, 330, 210, 150, 30, 12, 6.",
+        "The upper ends are 8505, 10395, 16065, 19635, 21945, 33495, 34155, 21961263765, 39891817251.",
+        "The bi-unitary version of A294025."
+    ],
+    "example": [
+        "Odd bi-unitary abundant numbers are 945, 8505, 10395, 12285, 15015, 16065, 17955, 19305, 19635, 21735, 21945, ...",
+        "Their differences are 7560, 1890, 1890, 2730, 1050, 1890, 1350, 330, 2100, 210, ...",
+        "The records of small differences are 7560, 1890, 1050, 330, 210, ...",
+        "And the corresponding terms are 945, 8505, 15015, 19305, 21735, ..."
+    ],
+    "mathematica": [
+        "f[n_] := Select[Divisors[n], Function[d, CoprimeQ[d, n/d]]]; bsigma[m_] := DivisorSum[m, # &, Last@Intersection[f@#, f[m/#]] == 1 &]; bOddAbundantQ[n_] := OddQ[n] && bsigma[n] > 2 n; s = Select[Range[1000000], bOddAbundantQ]; a = {}; dmin = 50000; Do[d = s[[j + 1]] - s[[j]]; If[d < dmin, AppendTo[a, s[[j]]]; dmin = d], {j, 1, Length[s] - 1}]; a"
+    ],
+    "program": [
+        "(PARI) udivs(n) = {my(d = divisors(n)); select(x->(gcd(x, n/x)==1), d); }",
+        "gcud(n, m) = vecmax(setintersect(udivs(n), udivs(m)));",
+        "biudivs(n) = select(x->(gcud(x, n/x)==1), divisors(n));",
+        "biusig(n) = vecsum(biudivs(n));",
+        "isok(n) = (n % 2) && (biusig(n) > 2*n);",
+        "lista(nn) = {last = 0; gap = oo; forstep(n=1, nn, 2, if (isok(n), if (last, if (n - last < gap, print1(last, \", \"); gap = n - last)); last = n;););} \\\\ _Michel Marcus_, Dec 15 2017"
+    ],
+    "xref": [
+        "Cf. A293186, A294025."
+    ],
+    "keyword": "nonn,fini,more",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Oct 22 2017",
+    "ext": [
+        "a(1) added by _Amiram Eldar_, Aug 22 2018.",
+        "a(8)-a(9) from _Giovanni Resta_, Aug 22 2018"
+    ],
+    "references": 0,
+    "revision": 21,
+    "time": "2018-08-23T02:13:13-04:00",
+    "created": "2017-12-27T01:28:56-05:00"
+}

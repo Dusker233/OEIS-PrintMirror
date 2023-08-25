@@ -1,0 +1,49 @@
+{
+    "number": 340535,
+    "data": "1,1,5,41,2245,185921,106912793,90124167441,540061286536921,4652799879944138561,289415868852204573601981,25545661075321867247577262777,16457725663617130715785831809325501,14905470663149838513993965664256435411841,99323759360556656337166635121447749135517599089",
+    "name": "Number of domino tilings (or dimer coverings) of the 2n X n grid.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A340535/b340535.txt\">Table of n, a(n) for n = 0..63</a>"
+    ],
+    "formula": [
+        "a(n) = A187596(2n,n) = A187596(n,2n) = A187616(2n,n).",
+        "a(n) = A099390(2n,n) = A099390(n,2n) for n >= 1."
+    ],
+    "example": [
+        "a(2) = 5:",
+        "   .___.   .___.   .___.   .___.   .___.",
+        "   |___|   |___|   |___|   | | |   | | |",
+        "   |___|   |___|   | | |   |_|_|   |_|_|",
+        "   |___|   | | |   |_|_|   |___|   | | |",
+        "   |___|   |_|_|   |___|   |___|   |_|_|",
+        "."
+    ],
+    "maple": [
+        "b:= proc(m, n) option remember; local i, j, t, M;",
+        "       M:= Matrix(n*m, shape=skewsymmetric);",
+        "       for i to n do for j to m do t:= (i-1)*m+j;",
+        "          if j<m then M[t, t+1]:= 1 fi;",
+        "          if i<n then M[t, t+m]:= 1-2*irem(j, 2) fi",
+        "       od od;",
+        "       isqrt(LinearAlgebra[Determinant](M))",
+        "    end:",
+        "a:= n-> b(2*n, n):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "T[_?OddQ, _?OddQ] = 0;",
+        "T[m_, n_] := Product[2(2+Cos[2 j Pi/(m+1)]+Cos[2 k Pi/(n+1)]), {k, 1, n/2}, {j, 1, m/2}];",
+        "a[n_] := T[2n, n] // Round;",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, May 27 2022 *)"
+    ],
+    "xref": [
+        "Cf. A004003, A099390, A187596, A187616."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jan 10 2021",
+    "references": 1,
+    "revision": 20,
+    "time": "2022-05-27T15:34:34-04:00",
+    "created": "2021-01-11T03:54:28-05:00"
+}

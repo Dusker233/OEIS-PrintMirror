@@ -1,0 +1,56 @@
+{
+    "number": 329269,
+    "data": "0,1,2,3,5,6,9,10,11,12,14,15,17,21,24,28,29,30,32,35,36,39,42,44,45,50,51,54,55,56,57,65,66,71,72,74,75,77,78,80,84,91,95,96,101,105,107,110,116,117,119,120,122,126,129,131,136,137,141,144,149,150",
+    "name": "Integers k such that 8*k + 1 is a prime or a square.",
+    "comment": [
+        "All odd squares have the form 8*n + 1."
+    ],
+    "reference": [
+        "G. H. Hardy and E. M. Wright, An Introduction to the Theory of Numbers, 5th ed., Oxford Univ. Press, 1979, theorem 14 and ch. 4.5"
+    ],
+    "example": [
+        "8*0 + 1 =  1 = 1^2, so 0 is a term;",
+        "8*1 + 1 =  9 = 3^2, so 1 is a term;",
+        "8*2 + 1 = 17 = prime(7), so 2 is a term;",
+        "8*3 + 1 = 25 = 5^2, so 3 is a term;",
+        "8*4 + 1 = 33 is neither prime nor square, so 4 is not a term;",
+        "8*5 + 1 = 41 = prime(13), so 5 is a term."
+    ],
+    "maple": [
+        "q:= k-> (t-> isprime(t) or issqr(t))(8*k+1):",
+        "select(q, [$0..200])[];  # _Alois P. Heinz_, Feb 25 2020"
+    ],
+    "mathematica": [
+        "Select[Range[0, 150], PrimeQ[(m = 8*# + 1)] || IntegerQ @ Sqrt[m] &] (* _Amiram Eldar_, Feb 29 2020 *)"
+    ],
+    "program": [
+        "(REXX)",
+        "S = 0 ;  U = 1 ;  P = 1",
+        "do N = 1 while length( S ) < 256",
+        "   C = 8 * N + 1",
+        "   do I = U by 2",
+        "      K = I * I      ;  if K > C then  leave I",
+        "      U = I          ;  if K < C then  iterate I",
+        "      S = S || ',' N ;  iterate N",
+        "   end I",
+        "   do I = P",
+        "      K = PRIME( I ) ;  if K > C then  leave I",
+        "      P = I          ;  if K < C then  iterate I",
+        "      S = S || ',' N ;  iterate N",
+        "   end I",
+        "end N",
+        "say S ;  return S",
+        "(PARI) isok(k) = my(x=8*k+1); isprime(x) || issquare(x); \\\\ _Michel Marcus_, Feb 27 2020"
+    ],
+    "xref": [
+        "Union of the triangular numbers A000217 and A005123.",
+        "Cf. A000040, A016754 (odd squares)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Frank Ellermann_, Feb 23 2020",
+    "references": 0,
+    "revision": 50,
+    "time": "2020-03-19T19:35:38-04:00",
+    "created": "2020-03-19T19:35:38-04:00"
+}

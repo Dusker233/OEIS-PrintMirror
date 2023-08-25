@@ -1,0 +1,36 @@
+{
+    "number": 339225,
+    "data": "1,2,4,11,30,98,328,1193,4459,17287,68283,274726,1118960,4607578,19135274,80063095,337104367,1427274619,6072510001,25949049372,111319539096,479243000380,2069825207344,8965693829582,38940393808337,169546919220357,739895248735963",
+    "name": "Number of unoriented series-parallel networks with n elements.",
+    "comment": [
+        "A series configuration is the unit element or an ordered concatenation of two or more parallel configurations and a parallel configuration is the unit element or a multiset of two or more series configurations. a(n) is the number of distinct series or parallel configurations with n unit elements modulo reversing the order of all series configurations."
+    ],
+    "formula": [
+        "a(n) = (A003430(n) + A339159(n))/2.",
+        "a(n) = A339223(n) + A339224(n) for n > 1.",
+        "A000084(n) <= a(n) <= A003430(n)."
+    ],
+    "example": [
+        "In the following examples of series-parallel networks, elements in series are juxtaposed and elements in parallel are separated by '|'. The unit element is denoted by 'o'.",
+        "a(1) = 1: (o).",
+        "a(2) = 2: (oo), (o|o).",
+        "a(3) = 4: (ooo), (o(o|o)), (o|o|o), (o|oo).",
+        "a(4) = 11: (oooo), (oo(o|o)), (o(o|o)o), ((o|o)(o|o)), (o(o|oo)), (o(o|o|o)),  (o|o|o|o), (o|o|oo), (oo|oo), (o|ooo), (o|o(o|o))."
+    ],
+    "program": [
+        "(PARI) \\\\ here B(n) gives A003430 as a power series.",
+        "EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "B(n)={my(p=x+O(x^2)); for(n=2, n, p=x*Ser(EulerT(Vec(p^2/(1+p)+x)))); p}",
+        "seq(n)={my(q=subst(B((n+1)\\2), x, x^2), s=x^2+q^2/(1+q), p=x+O(x^2), t=p); for(n=1, n\\2, t=x + q*(1 + p); p=x + x*Ser(EulerT(Vec(t+(s-subst(t,x,x^2))/2))) - t); Vec(p+t-x+B(n))/2}"
+    ],
+    "xref": [
+        "Cf. A000084, A003430 (oriented), A339159 (achiral), A339223, A339224."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Andrew Howroyd_, Nov 27 2020",
+    "references": 13,
+    "revision": 10,
+    "time": "2020-11-28T19:55:32-05:00",
+    "created": "2020-11-28T19:55:32-05:00"
+}

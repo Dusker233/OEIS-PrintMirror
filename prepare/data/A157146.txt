@@ -1,0 +1,44 @@
+{
+    "number": 157146,
+    "data": "23,127,239,251,263,271,283,293,521,823,827,1123,1213,1217,1231,1259,1279,1283,1297,1321,1423,1427,1627,1721,1823,2003,2017,2039,2063,2083,2087,2113,2131,2143,2179,2237,2273,2309,2311,2341,2381,2389,2399,2417",
+    "name": "Prime numbers containing equal number of odd prime digits and even prime digits.",
+    "comment": [
+        "Odd prime digits are 3, 5 or 7 and even prime digit = 2.",
+        "The definition also requires that the two digit counts are both larger than zero. [_R. J. Mathar_, Feb 26 2009]"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A157146/b157146.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "F:= proc(d) uses combinat; local A, m,s2,s2p, s3,CP, T,i,L,v;",
+        "A:= NULL;",
+        "for m from 1 to d/2 do",
+        "   for s2 in choose({$2..d}, m) do",
+        "     s2p:= {$1..d} minus s2;",
+        "     for s3 in choose(s2p, m) do",
+        "       CP:= [seq(`if`(member(i,s2),[2], `if`(member(i,s3), [3,5,7], [0,1,4,6,8,9])),i=1..d)];",
+        "       T:= cartprod(CP);",
+        "       while not T[finished] do",
+        "         L:= T[nextvalue]();",
+        "         v:= add(L[i]*10^(i-1),i=1..nops(L));",
+        "         if isprime(v) then A:= A, v fi;",
+        "       od",
+        "od od od;",
+        "sort([A]);",
+        "end proc:",
+        "F(4); # _Robert Israel_, Jan 27 2019"
+    ],
+    "mathematica": [
+        "opepQ[n_]:=Module[{t=DigitCount[n,10,2]},t>0&&Count[IntegerDigits[ n], _?PrimeQ]==2t]; Select[Prime[Range[400]],opepQ] (* _Harvey P. Dale_, Jun 29 2018 *)"
+    ],
+    "keyword": "nonn,base,less",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Feb 24 2009",
+    "ext": [
+        "Missing numbers inserted by _R. J. Mathar_, Feb 26 2009"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2019-01-27T03:19:36-05:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

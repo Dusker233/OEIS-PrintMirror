@@ -1,0 +1,58 @@
+{
+    "number": 226148,
+    "data": "2,3,619,1123,3373,4603,6829,9067,18973,25933,29179,29741,33211,40583,48313,72923,74923,117991,130973,202201,231067,253993,255217,267317,291491,339139,346309,363829,423191,449621,476279,489337,519487,533713,539093,592507,602603,621133",
+    "name": "Smallest of three consecutive primes whose sum is a triangular number.",
+    "link": [
+        "Robert Israel, <a href=\"/A226148/b226148.txt\">Table of n, a(n) for n = 1..2300</a>"
+    ],
+    "maple": [
+        "R:= 2: count:= 1:",
+        "for k from 1 while count < 100 do",
+        " for j from 1 to 2 do",
+        "  m:= 4*k+j;",
+        "  x:= m*(m+1)/2;",
+        "  q= prevprime(ceil(x/3));",
+        "  p:= prevprime(q); r:= nextprime(q);",
+        "  t:= p+q+r;",
+        "  if t < x then while t < x do p:= q; q:= r; r:= nextprime(r); t:=p+q+r od",
+        "  elif t > x then while t > x do r:= q; q:= p; p:= prevprime(p); t:= p+q+r od",
+        "  fi;",
+        "  if t = x then  R:= R,p; count:= count+1; fi",
+        "od od :",
+        "R; # _Robert Israel_, Oct 18 2021"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <stdlib.h>",
+        "#include <math.h>",
+        "#define TOP (1ULL<<30)",
+        "int main() {",
+        "  unsigned long long i, j, p1, p2, r, s;",
+        "  unsigned char *c = (unsigned char *)malloc(TOP/8);",
+        "  memset(c, 0, TOP/8);",
+        "  for (i=3; i < TOP; i+=2)",
+        "    if ((c[i>>4] & (1<<((i>>1) & 7)))==0 /*&& i<(1ULL<<32)*/)",
+        "        for (j=i*i>>1; j<TOP; j+=i)  c[j>>3] |= 1 << (j&7);",
+        "  for (p2=2, p1=3, i=5; i < TOP; i+=2)",
+        "    if ((c[i>>4] & (1<<((i>>1) & 7)))==0) {",
+        "      s = p2 + p1 + i;",
+        "      r = sqrt(s*2);",
+        "      if (r*(r+1)==s*2) printf(\"%llu, \", p2);",
+        "      p2 = p1, p1 = i;",
+        "    }",
+        "  return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A076304, A206279, A226145, A226146, A226147, A226149, A226150.",
+        "Cf. A167788 (the resulting triangular numbers)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, May 28 2013",
+    "references": 3,
+    "revision": 13,
+    "time": "2021-10-18T11:16:56-04:00",
+    "created": "2013-05-29T12:17:08-04:00"
+}

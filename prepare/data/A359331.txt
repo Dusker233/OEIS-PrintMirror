@@ -1,0 +1,32 @@
+{
+    "number": 359331,
+    "data": "1,34,44,49,121,476,524,533,1808,6797,7326,10016,10201,10403,10817,16019,17831,26322,33898,55198,57247,74711,87241,131395,148753,156029,239593,240021,289831,295022,423758,441691,595777,725754,900009,2568543,2910271,2981619",
+    "name": "Nonprime numbers k for which k*k' is a palindrome, where k' is the arithmetic derivative of k (A003415).",
+    "example": [
+        "1*1' = 1*0 = 0, so 1 is a term.",
+        "34*34' = 34*19 = 646, so 34 is a term.",
+        "49*49' = 49*14 = 686, so 49 is a term."
+    ],
+    "maple": [
+        "d:= n-> n*add(i[2]/i[1], i=ifactors(n)[2]):",
+        "q:= n-> not isprime(n) and StringTools[IsPalindrome](\"\"||(n*d(n))):",
+        "select(q, [$1..3000000])[];  # _Alois P. Heinz_, Jan 29 2023"
+    ],
+    "mathematica": [
+        "d[0] = d[1] = 0; d[n_] := n * Plus @@ ((Last[#]/First[#]) & /@ FactorInteger[n]); Select[Range[3*10^6], ! PrimeQ[#] && PalindromeQ[# * d[#]] &] (* _Amiram Eldar_, Jan 29 2023 *)"
+    ],
+    "program": [
+        "(Magma) f:=func<h |h le 1 select 0 else  h*(&+[Factorisation(h)[i][2] /",
+        "Factorisation(h)[i][1]: i in [1..#Factorisation(h)]])>; pal:=func<n|Intseq(n) eq Reverse(Intseq(n))>; [n:n in [1..3000000]|not IsPrime(n) and pal(n*Floor(f(n)))];"
+    ],
+    "xref": [
+        "Cf. A002113, A003415, A018252, A190116."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Marius A. Burtea_, Jan 29 2023",
+    "references": 0,
+    "revision": 18,
+    "time": "2023-02-17T22:07:43-05:00",
+    "created": "2023-02-17T22:07:43-05:00"
+}

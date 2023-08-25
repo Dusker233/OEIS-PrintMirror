@@ -1,0 +1,41 @@
+{
+    "number": 346133,
+    "data": "24,26,28,36,39,46,48,68,69,132,143,144,154,156,165,168,169,176,187,198,204,206,208,224,226,228,244,246,248,252,253,264,266,268,273,275,276,284,286,288,294,297,299,306,309,336,339,366,369,374,384,385,396,399",
+    "name": "Numbers N = A * B such that N (reversed digits) = A (reversed digits) * B (reversed digits). A single-digit number is its own reversal and neither A nor B has a leading zero. No pair (A, B) has both A and B palindromic or simple-digit. The reversed products are not included in the sequence.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A346133/b346133.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1) = 24 = 2 * 12 and 2 * 21 = 42 (which is 24 reversed);",
+        "a(2) = 26 = 2 * 13 and 2 * 31 = 62 (which is 26 reversed);",
+        "a(3) = 28 = 2 * 14 and 2 * 41 = 82 (which is 28 reversed);",
+        "a(4) = 36 = 3 * 12 and 3 * 21 = 63 (which is 36 reversed); etc."
+    ],
+    "mathematica": [
+        "q[n_] := IntegerReverse[n] >= n && AnyTrue[Rest @ Take[(d = Divisors[n]), Ceiling[Length[d]/2]], (# > 9 || n/# > 9) && !Divisible[#, 10] && !Divisible[n/#, 10] && (!PalindromeQ[#] || !PalindromeQ[n/#]) && IntegerReverse[#] * IntegerReverse[n/#] == IntegerReverse[n] &]; Select[Range[2, 400], q] (* _Amiram Eldar_, Jul 07 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "def rev(n): return int(str(n)[::-1])",
+        "def ok(n):",
+        "    divs = divisors(n)",
+        "    for a in divs[1:(len(divs)+1)//2]:",
+        "        b = n // a",
+        "        reva, revb, revn = rev(a), rev(b), rev(n)",
+        "        if revn < n or a%10 == 0 or b%10 == 0: continue",
+        "        if (reva != a or revb != b) and revn == reva * revb: return True",
+        "    return False",
+        "print(list(filter(ok, range(400)))) # _Michael S. Branicky_, Jul 06 2021"
+    ],
+    "xref": [
+        "Cf. A066531."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Eric Angelini_ and _Carole Dubois_, Jul 05 2021",
+    "references": 4,
+    "revision": 28,
+    "time": "2023-06-06T07:40:35-04:00",
+    "created": "2021-07-07T11:36:32-04:00"
+}

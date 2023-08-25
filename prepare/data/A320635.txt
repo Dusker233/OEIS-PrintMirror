@@ -1,0 +1,51 @@
+{
+    "number": 320635,
+    "data": "13,377,611,1363,16211,17719,26273,27521,44603,56173,58609,83291,91031,91039,99499,141401,147533,203087,301129,315433,467711,761917,1183403,1280669,1293487,1917929,2075567,2174159,2220907,2415439,2640131",
+    "name": "MM-numbers of simple labeled connected graphs spanning an initial interval of positive integers.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798. The multiset multisystem with MM-number n is formed by taking the multiset of prime indices of each part of the multiset of prime indices of n. For example, the prime indices of 78 are {1,2,6}, so the multiset multisystem with MM-number 78 is {{},{1},{1,2}}."
+    ],
+    "example": [
+        "The sequence of terms together with their multiset multisystems begins:",
+        "       13: {{1,2}}",
+        "      377: {{1,2},{1,3}}",
+        "      611: {{1,2},{2,3}}",
+        "     1363: {{1,3},{2,3}}",
+        "    16211: {{1,2},{1,3},{1,4}}",
+        "    17719: {{1,2},{1,3},{2,3}}",
+        "    26273: {{1,2},{1,4},{2,3}}",
+        "    27521: {{1,2},{1,3},{2,4}}",
+        "    44603: {{1,2},{2,3},{2,4}}",
+        "    56173: {{1,2},{1,3},{3,4}}",
+        "    58609: {{1,3},{1,4},{2,3}}",
+        "    83291: {{1,2},{1,4},{3,4}}",
+        "    91031: {{1,3},{1,4},{2,4}}",
+        "    91039: {{1,2},{2,3},{3,4}}",
+        "    99499: {{1,3},{2,3},{2,4}}",
+        "   141401: {{1,2},{2,4},{3,4}}",
+        "   147533: {{1,4},{2,3},{2,4}}",
+        "   203087: {{1,3},{2,3},{3,4}}",
+        "   301129: {{1,4},{2,3},{3,4}}",
+        "   315433: {{1,3},{2,4},{3,4}}",
+        "   467711: {{1,4},{2,4},{3,4}}",
+        "   761917: {{1,2},{1,3},{1,4},{2,3}}",
+        "  1183403: {{1,2},{1,3},{1,4},{2,4}}",
+        "  1280669: {{1,2},{1,3},{1,4},{1,5}}"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "normQ[sys_]:=Or[Length[sys]==0,Union@@sys==Range[Max@@Max@@sys]];",
+        "zsm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[Less@@#,GCD@@s[[#]]]>1&]},If[c=={},s,zsm[Union[Append[Delete[s,List/@c[[1]]],LCM@@s[[c[[1]]]]]]]]];",
+        "Select[Range[10000],And[SquareFreeQ[#],normQ[primeMS/@primeMS[#]],And@@(And[SquareFreeQ[#],Length[primeMS[#]]==2]&/@primeMS[#]),Length[zsm[primeMS[#]]]==1]&]"
+    ],
+    "xref": [
+        "Cf. A001222, A007717, A055932, A056239, A112798, A255906, A290103, A302242, A302491, A305078, A320456, A320458."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Oct 18 2018",
+    "references": 2,
+    "revision": 4,
+    "time": "2018-10-19T09:47:34-04:00",
+    "created": "2018-10-19T09:47:34-04:00"
+}

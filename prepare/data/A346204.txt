@@ -1,0 +1,91 @@
+{
+    "number": 346204,
+    "data": "0,0,2,5,24,128,795,5686,46090,418519,4213098,46595650,561773033,7333741536,103065052300,1551392868821,24902155206164,424588270621876,7663358926666175,145967769353476594,2926073829112697318,61577929208485406331,1357369100658321844470,31276096500003460511422",
+    "name": "a(n) is the number of permutations on [n] with at least one strong fixed point and at least one small descent.",
+    "comment": [
+        "A small descent in a permutation p is a position i such that p(i)-p(i+1)=1.",
+        "A strong fixed point is a fixed point (or splitter) p(k)=k such that p(i) < k for i < k and p(j) > k for j > k."
+    ],
+    "reference": [
+        "E. R. Berlekamp, J. H. Conway, and R. K. Guy, Winning Ways For Your Mathematical Plays, Vol. 1, CRC Press, 2001."
+    ],
+    "link": [
+        "M. Lind, E. Fiorini, A. Woldar, and W. H. T. Wong, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL24/Wong/wong31.html\">On Properties of Pebble Assignment Graphs</a>, Journal of Integer Sequences, 24(6), 2020."
+    ],
+    "formula": [
+        "a(n) = A006932(n) - A346199(n)."
+    ],
+    "example": [
+        "For n=4, the a(4)=5 permutations on [4] with strong fixed points and small descents: {(1*, 2*, [4, 3]), (1*, [3, 2], 4*), (1*, <4, 3, 2>), ([2, 1], 3*, 4*), (<3, 2, 1>, 4*)}. *strong fixed point, []small descent, <>consecutive small descents."
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "bn = [1,1,1]",
+        "wn = [0,0,0]",
+        "kn = [1,1,1]",
+        "def summation(n):",
+        "    final = bn[n] - bn[n-1]",
+        "    for k in range(4,n+1):",
+        "        final -= wn[k-1]*bn[n-k]",
+        "    return final",
+        "def smallsum(n):",
+        "    final = bn[n-1]",
+        "    for k in range(4,n+1):",
+        "        final += wn[k-1]*bn[n-k]",
+        "    return final",
+        "def derrangement(n):",
+        "    finalsum = 0",
+        "    for i in range(n+1):",
+        "        if i%2 == 0:",
+        "            finalsum += math.factorial(n)*1//math.factorial(i)",
+        "        else:",
+        "            finalsum -= math.factorial(n)*1//math.factorial(i)",
+        "    if finalsum != 0:",
+        "        return finalsum",
+        "    else:",
+        "        return 1",
+        "def fixedpoint(n):",
+        "    finalsum = math.factorial(n-1)",
+        "    for i in range(2,n):",
+        "        finalsum += math.factorial(i-i)*math.factorial(n-i-1)",
+        "        print(math.factorial(i-i)*math.factorial(n-i-1))",
+        "    return finalsum",
+        "def no_cycles(n):",
+        "    goal = n",
+        "    cycles = [0, 1]",
+        "    current = 2",
+        "    while current<= goal:",
+        "        new = 0",
+        "        k = 1",
+        "        while k<=current:",
+        "            new += (math.factorial(k-1)-cycles[k-1])*(math.factorial(current-k))",
+        "            k+=1",
+        "        cycles.append(new)",
+        "        current+=1",
+        "    return cycles",
+        "def total_func(n):",
+        "    for i in range(3,n+1):",
+        "        bn.append(derrangement(i+1)//(i))",
+        "        kn.append(smallsum(i))",
+        "        wn.append(summation(i))",
+        "    an = no_cycles(n)",
+        "    tl = [int(an[i]-kn[i]) for i in range(n+1)]",
+        "    factorial = [math.factorial(x) for x in range(0,n+1)]",
+        "    print(\"A346189 :\" + str(wn[1:]))",
+        "    print(\"A346198 :\" + str([factorial[i]-wn[i]-tl[i]-kn[i] for i in range(n+1)][1:]))",
+        "    print(\"A346199 :\" + str(kn[1:]))",
+        "    print(\"A346204 :\" + str(tl[1:]))",
+        "total_func(20)"
+    ],
+    "xref": [
+        "Cf. A000255, A000166, A000153, A000261, A001909, A001910, A055790, A346189, A346198, A346199."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,3",
+    "author": "_Eugene Fiorini_, _Jared Glassband_, _Garrison Lee Koch_, _Sophia Lebiere_, _Xufei Liu_, _Evan Sabini_, _Nathan B. Shank_, _Andrew Woldar_, Jul 10 2021",
+    "references": 4,
+    "revision": 47,
+    "time": "2021-08-07T04:15:05-04:00",
+    "created": "2021-07-17T03:49:07-04:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 160138,
+    "data": "0,0,1,2,3,4,6,7,9,11,13,15,18,20,23,26,29,32,36,39,43,47,51,55,60,64,69,74,79,84,90,95,101,107,113,119,126,132,139,146,153,160,168,175,183,191,199,207,216,224,233,242,251,260,270,279,289,299,309,319,330,340",
+    "name": "a(n) = number of solutions to the system: x + y + z + w = n, -2x - y + z + 2w = 5 with nonnegative x, y, z, w.",
+    "comment": [
+        "Number of ways in which playing n one-card-poker games results in a payoff of $5.",
+        "x = # of games where player loses $2,",
+        "y = # of games where player loses $1,",
+        "z = # of games where player wins $1,",
+        "w = # of games where player wins $2.",
+        "The events i.e. winning $1, losing $2 etc. are mutually exclusive.",
+        "Hence in n games",
+        "x+y+z+w = n",
+        "-2x-y+z+2w = $5"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A160138/b160138.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"http://www.swansonsite.com/W/instructional/game_theory.pdf\">One Card Poker</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1,0,-1,-1,1)."
+    ],
+    "formula": [
+        "From _Andrew Howroyd_, Jan 12 2020: (Start)",
+        "a(n) = A253186(n-1).",
+        "a(n) = a(n-1) + a(n-2) - a(n-4) - a(n-5) + a(n-6) for n > 6.",
+        "G.f.: x^3*(1 + x - x^3)/((1 - x)^3*(1 + x)*(1 + x + x^2)).",
+        "(End)"
+    ],
+    "example": [
+        "For n = 3, a(3) = 1, since the four-tuple <x=0, y=0, z=1, w=2> allows you to win $5 in 3 games. x + y + z + w = 1 + 2 =3, -2x - y + z + 2w = 1 + 2*2 = 5, as desired."
+    ],
+    "maple": [
+        "> fourples2 := proc (n) local i, c1, c2, c3, c4, c3positive, mylist, cash, k, howmanyways; cash := 2*n; for k from -cash to cash do i := 0; unassign(mylist); for c1 from 0 to n do c3positive := true; for c2 from 0 to n-c1 while c3positive do c3 := 2*n-4*c1-3*c2-k; if 0 <= c3 then c4 := n-c1-c2-c3; if 0 <= c4 then i := i+1; mylist[i] := [c1, c2, c3, c4] end if else c3positive := false end if end do end do; howmanyways[k] := [i, [seq(mylist[j], j = 1 .. i)]] end do; return howmanyways end proc; N := 20; for n to N do a := fourples2(n); points[n] := [n, a[5][1]] end do; seq(points[n], n = 1 .. N);"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1, 1, 0, -1, -1, 1}, {0, 0, 1, 2, 3, 4}, 100] (* _Jean-Fran\u00e7ois Alcover_, Apr 11 2020 *)"
+    ],
+    "program": [
+        "(PARI) concat([0, 0], Vec((1 + x - x^3)/((1 - x)^3*(1 + x)*(1 + x + x^2)) + O(x^60))) \\\\ _Andrew Howroyd_, Jan 12 2020"
+    ],
+    "xref": [
+        "Cf. A008806 is the number of ways in which playing n one-card-poker games results in a payoff of $0, i.e., the n-th term is the number of solutions to the system: x + y + z + w = n, -2x - y + z + 2w = 0, with nonnegative x, y, z, w.",
+        "Except for offset, same as A253186."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "Krishnan Sundararaman (krishnan.sundararaman(AT)enmu.edu), May 02 2009",
+    "ext": [
+        "Terms a(13) and beyond from _Andrew Howroyd_, Jan 12 2020"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2020-04-11T15:33:06-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

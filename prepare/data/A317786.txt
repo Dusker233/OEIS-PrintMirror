@@ -1,0 +1,42 @@
+{
+    "number": 317786,
+    "data": "1,2,3,5,9,11,23,25,27,31,81,83,97,103,115,121,125,127,243,419,431,509,515,529,563,575,625,631,661,691,709,729,961,1067,1331,1543,2095,2187,2369,2575,2645,2875,2897,3001,3125,3637,3691,3803,4091,4201,4637,4663",
+    "name": "Matula-Goebel numbers of locally connected rooted trees.",
+    "comment": [
+        "An unlabeled rooted tree is locally connected if the branches directly under any given node are connected as a hypergraph."
+    ],
+    "example": [
+        "The sequence of locally connected trees together with their Matula-Goebel numbers begins:",
+        "   1: o",
+        "   2: (o)",
+        "   3: ((o))",
+        "   5: (((o)))",
+        "   9: ((o)(o))",
+        "  11: ((((o))))",
+        "  23: (((o)(o)))",
+        "  25: (((o))((o)))",
+        "  27: ((o)(o)(o))",
+        "  31: (((((o)))))",
+        "  81: ((o)(o)(o)(o))",
+        "  83: ((((o)(o))))",
+        "  97: ((((o))((o))))"
+    ],
+    "mathematica": [
+        "multijoin[mss__]:=Join@@Table[Table[x,{Max[Count[#,x]&/@{mss}]}],{x,Union[mss]}];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]], 2], And[OrderedQ[#], UnsameQ@@#, Length[Intersection@@s[[#]]]>0]&]}, If[c=={}, s, csm[Union[Append[Delete[s, List/@c[[1]]], multijoin@@s[[c[[1]]]]]]]]];",
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "rupQ[n_]:=Or[n==1,If[PrimeQ[n],rupQ[PrimePi[n]],And[Length[csm[primeMS/@primeMS[n]]]==1,And@@rupQ/@PrimePi/@FactorInteger[n][[All,1]]]]];",
+        "Select[Range[1000],rupQ[#]&]"
+    ],
+    "xref": [
+        "A subset of A184155.",
+        "Cf. A000081, A276625, A286518, A286520, A304714, A316470, A316495, A316502, A317077, A317078, A317785."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Aug 07 2018",
+    "references": 1,
+    "revision": 8,
+    "time": "2018-08-08T07:53:25-04:00",
+    "created": "2018-08-08T07:53:25-04:00"
+}

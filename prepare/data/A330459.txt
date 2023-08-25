@@ -1,0 +1,54 @@
+{
+    "number": 330459,
+    "data": "1,1,1,4,6,11,26,42,78,148,280,481,867,1569,2742,4933,8493,14857,25925,44877,77022,132511,226449,385396,657314,1111115,1875708,3157379,5309439,8885889,14861478,24760339,41162971,68328959,113099231,186926116,308230044",
+    "name": "Number of set partitions of set-systems with total sum n.",
+    "comment": [
+        "Number of sets of disjoint nonempty sets of nonempty sets of positive integers with total sum n."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A330459/b330459.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_k A330462(n,k) * A000110(k)."
+    ],
+    "example": [
+        "The a(6) = 26 partitions:",
+        "  ((6))  ((15))      ((123))          ((1)(2)(12))",
+        "         ((24))      ((1)(14))        ((1))((2)(12))",
+        "         ((1)(5))    ((1)(23))        ((12))((1)(2))",
+        "         ((2)(4))    ((2)(13))        ((2))((1)(12))",
+        "         ((1))((5))  ((3)(12))        ((1))((2))((12))",
+        "         ((2))((4))  ((1))((14))",
+        "                     ((1))((23))",
+        "                     ((1)(2)(3))",
+        "                     ((2))((13))",
+        "                     ((3))((12))",
+        "                     ((1))((2)(3))",
+        "                     ((2))((1)(3))",
+        "                     ((3))((1)(2))",
+        "                     ((1))((2))((3))"
+    ],
+    "mathematica": [
+        "ppl[n_,k_]:=Switch[k,0,{n},1,IntegerPartitions[n],_,Join@@Table[Union[Sort/@Tuples[ppl[#,k-1]&/@ptn]],{ptn,IntegerPartitions[n]}]];",
+        "Table[Length[Select[ppl[n,3],And[UnsameQ@@Join@@#,And@@UnsameQ@@@Join@@#]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI) \\\\ here L is A000009 and BellP is A000110 as series.",
+        "L(n)={eta(x^2 + O(x*x^n))/eta(x + O(x*x^n))}",
+        "BellP(n)={serlaplace(exp( exp(x + O(x*x^n)) - 1))}",
+        "seq(n)={my(c=L(n), b=BellP(n), v=Vec(prod(k=1, n, (1 + x^k*y + O(x*x^n))^polcoef(c, k)))); vector(#v, n, my(r=v[n]); sum(k=0, n-1, polcoeff(b,k)*polcoef(r,k)))} \\\\ _Andrew Howroyd_, Dec 29 2019"
+    ],
+    "xref": [
+        "Cf. A007713, A050342, A050343, A279375, A279785, A283877, A294617, A330460, A330462, A323787-A323795, A330452-A330459."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Dec 17 2019",
+    "ext": [
+        "Terms a(18) and beyond from _Andrew Howroyd_, Dec 29 2019"
+    ],
+    "references": 10,
+    "revision": 10,
+    "time": "2020-02-28T12:55:19-05:00",
+    "created": "2019-12-18T09:02:11-05:00"
+}

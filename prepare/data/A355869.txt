@@ -1,0 +1,40 @@
+{
+    "number": 355869,
+    "data": "1,1,3,8,26,69,186,554,1606,4772,14825,45920,143586,455561,1446777,4622609,14885492,48099814,156175165,509527438,1667502213,5475430124,18036181574,59562083008,197197284543,654439115129,2176448986396,7252784407286,24214655260997",
+    "name": "G.f. A(x) satisfies: x = Sum_{n=-oo..+oo} (-x)^n * (1 + A(x)*x^n)^n.",
+    "comment": [
+        "Related identity: Sum_{n=-oo..+oo} (-x)^n * (x^n + y)^n = 0 for all y.",
+        "Related identity: Sum_{n=-oo..+oo} (-1)^n * x^(n*(n-1)) / (1 + y*x^n)^n = 0 for all y."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A355869/b355869.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) x = Sum_{n=-oo..+oo} (-x)^n * (1 + A(x)*x^n)^n.",
+        "(2) 0 = Sum_{n=-oo..+oo} (-x)^n * (1 + A(x)*x^n)^n / A(x)^n.",
+        "(3) x = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n-1)) / (x^n + A(x))^n.",
+        "(4) 0 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n-1)) * A(x)^n / (x^n + A(x))^n.",
+        "(5) 0 = Sum_{n=-oo..+oo} (-x)^n * (1 + A(x)^(n+1)*x^n)^n."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 3*x^2 + 8*x^3 + 26*x^4 + 69*x^5 + 186*x^6 + 554*x^7 + 1606*x^8 + 4772*x^9 + 14825*x^10 + 45920*x^11 + 143586*x^12 + ...",
+        "where",
+        "x = ... - x^(-3)/(1 + A(x)*x^(-3))^3 + x^(-2)/(1 + A(x)*x^(-2))^2 - x^(-1)/(1 + A(x)*x^(-1)) + 1 - x*(1 + A(x)*x) + x^2*(1 + A(x)*x^2)^2 - x^3*(1 + A(x)*x^3)^3 + ... + (-x)^n*(1 + A(x)*x^n)^n + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1,1]); for(i=1,n, A=concat(A,0);",
+        "A[#A] = -polcoeff( sum(m=-#A,#A, (-x)^m*(1 + Ser(A)*x^m)^m ), #A-1));A[n+1]}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) {a(n) = my(A=[1,1]); for(i=1,n, A=concat(A,0);",
+        "A[#A] = -polcoeff( sum(m=-#A,#A, (-1)^m*x^(m*(m-1))/(x^m + Ser(A))^m ), #A-1));A[n+1]}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Aug 09 2022",
+    "references": 2,
+    "revision": 6,
+    "time": "2022-08-11T07:23:50-04:00",
+    "created": "2022-08-11T07:23:50-04:00"
+}

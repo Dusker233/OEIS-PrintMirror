@@ -1,0 +1,35 @@
+{
+    "number": 355161,
+    "data": "29,37,53,59,67,79,89,127,137,149,157,163,173,179,191,211,223,239,251,257,263,269,277,293,307,331,337,347,359,373,379,389,419,431,439,449,479,509,521,541,547,557,563,569,577,587,593,599,607,613",
+    "name": "Primes p such that p - prevprime(p) is not a power of 2.",
+    "comment": [
+        "A130796(n) is prevprime(p).",
+        "A031925 and A031931 are subsequences, as 6 and 12 are not powers of 2."
+    ],
+    "formula": [
+        "a(n) = A151800(A130796(n))."
+    ],
+    "mathematica": [
+        "Select[Prime[Range[2, 120]], (d = # - NextPrime[#, -1]) != 2^IntegerExponent[d, 2] &] (* _Amiram Eldar_, Jun 22 2022 *)"
+    ],
+    "program": [
+        "(PARI) isp2(n) = my(p); (n==1) || (isprimepower(n, &p) && (p==2)); \\\\ A000079",
+        "isok(p) = isprime(p) && !isp2(p-precprime(p-1)) \\\\ _Michel Marcus_, Jun 22 2022",
+        "(Python)",
+        "from itertools import islice, count",
+        "from sympy import prime, prevprime",
+        "def A355161_gen(): # generator of terms",
+        "    return filter(lambda n:((~(m:=n-prevprime(n))+1)&m)-m, (prime(n) for n in count(2)))",
+        "A355161_list = list(islice(A355161_gen(),30)) # _Chai Wah Wu_, Aug 23 2022"
+    ],
+    "xref": [
+        "Cf. A000079, A031925, A031931, A130796, A151800."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reed Michael Upson_, Jun 21 2022",
+    "references": 0,
+    "revision": 38,
+    "time": "2022-08-23T09:41:21-04:00",
+    "created": "2022-08-22T22:16:03-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 225559,
+    "data": "1,2,2,3,3,4,4,5,5,5,5,6,6,6,6,7,7,8,8,9,9,9,9,10,10,10,10,11,11,12,12,13,13,13,13,14,14,14,14,15,15,16,16,16,16,16,16,17,17,17,17,17,17,18,18,19,19,19,19,20,20,20,20,21,21,22,22",
+    "name": "The number of practical numbers <= n where the practical numbers are A005153.",
+    "comment": [
+        "a(n) is analogous to A000720."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A225559/b225559.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric W. Weisstein, <a href=\"http://mathworld.wolfram.com/PracticalNumber.html\">MathWorld: Practical number</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Practical_number\">Practical number</a>"
+    ],
+    "example": [
+        "a(13)=6 as there are 6 practical numbers <= 13, namely 1, 2, 4, 6, 8 and 12."
+    ],
+    "maple": [
+        "isprac:= proc(n) local L,i,P;",
+        "  L:= sort(ifactors(n)[2],(a,b) -> a[1]<b[1]);",
+        "  if L[1][1] <> 2 then return false fi;",
+        "  P:= 2^(L[1][2]+1)-1;",
+        "  for i from 2 to nops(L) do",
+        "    if L[i][1] > P+1 then return false fi;",
+        "    P:= P*(L[i][1]^(L[i][2]+1)-1)/(L[i][1]-1);",
+        "  od;",
+        "  true",
+        "end proc:",
+        "isprac(1):= true:",
+        "N:= 100: # to get a(1)..a(N)",
+        "P:= select(isprac,[1,seq(i,i=2..N,2)]):",
+        "V:= Vector(N):",
+        "for n from 2 to nops(P) do V[P[n-1] .. P[n]-1]:= n-1 od:",
+        "V[P[-1]..N]:= n:",
+        "convert(V,list); # _Robert Israel_, May 29 2019"
+    ],
+    "mathematica": [
+        "PracticalQ[n_] := Module[{f, p, e, prod=1, ok=True}, If[n<1 || (n>1 && OddQ[n]), False, If[n==1, True, f=FactorInteger[n]; {p, e}=Transpose[f]; Do[If[p[[i]] > 1+DivisorSigma[1, prod], ok=False; Break[]]; prod=prod*p[[i]]^e[[i]], {i, Length[p]}]; ok]]]; t={}; n3=1; n4=0; While[n3<100, (If[PracticalQ[n3], n4++]; AppendTo[t, n4]; n3++)]; t (* using _T. D. Noe_'s program A005153 *)"
+    ],
+    "xref": [
+        "Cf. A000720, A005153."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Frank M Jackson_, May 10 2013",
+    "references": 2,
+    "revision": 15,
+    "time": "2019-06-13T08:16:05-04:00",
+    "created": "2013-05-10T14:01:07-04:00"
+}

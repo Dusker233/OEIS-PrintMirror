@@ -1,0 +1,31 @@
+{
+    "number": 332444,
+    "data": "2,8,32,36,72,98,128,144,162,196,225,242,288,289,324,484,512,576,882,968,1058,1152,1444,1458,1521,1681,1764,1922,1936,2048,2178,2304,2500,2809,2888,2916,3025,3528,3698,3872,4418,4608,4802,5000,5329,5776,5832,6498,7056,7396,7569,7688,7744,7921,7938,8192,8281",
+    "name": "Numbers k that are squares or twice-squares, but for which A087808(sigma(k)) is even.",
+    "comment": [
+        "Numbers k for which A000203(k) is odd and A332224(k) is even."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A332444/b332444.txt\">Table of n, a(n) for n = 1..19515</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "A087808(n) = if(n<1, 0, if(n%2==0, 2*A087808(n/2), A087808((n-1)/2)+1));",
+        "isA332444(n) = (((!(n%2)&&issquare(n/2))||issquare(n)) && !(A087808(sigma(n))%2));",
+        "A332444list(u) = { my(v1=vector(2*u,n,2*(n^2)), v2=vector(sqrtint(v1[#v1]),n,n^2)); select(isA332444,Vec(setunion(v1,v2))); };",
+        "v332444 = A332444list(12000);",
+        "A332444(n) = v332444[n];"
+    ],
+    "xref": [
+        "Setwise difference of A028982 \\ A332443.",
+        "Cf. A000203, A087808, A332224, A332225."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Feb 13 2020",
+    "references": 2,
+    "revision": 11,
+    "time": "2020-02-15T08:05:08-05:00",
+    "created": "2020-02-14T18:55:17-05:00"
+}

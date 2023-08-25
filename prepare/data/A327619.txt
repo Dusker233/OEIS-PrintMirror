@@ -1,0 +1,37 @@
+{
+    "number": 327619,
+    "data": "0,1,5,25,219,1596,19844,208377,3394835,46799236,886886076,15668835975,366602236558,7582277939549,199035634246870,4962275379320665,150339081311823341,4214812414260868163,141823733752997729872,4533014863242019822308,169587948261109794026999",
+    "name": "Number of parts in all n-times partitions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327619/b327619.txt\">Table of n, a(n) for n = 0..300</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>"
+    ],
+    "example": [
+        "a(2) = 5: 2, 11, 1|1."
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0, [1, 0],",
+        "     `if`(k=0, [1, 1], `if`(i<2, 0, b(n, i-1, k))+",
+        "         (h-> (f-> f +[0, f[1]*h[2]/h[1]])(h[1]*",
+        "        b(n-i, min(n-i, i), k)))(b(i$2, k-1))))",
+        "    end:",
+        "a:= n-> b(n$3)[2]:",
+        "seq(a(n), n=0..21);"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0, {1, 0}, If[k == 0, {1, 1}, If[i < 2, 0, b[n, i - 1, k]] + Function[h, Function[f, f + {0, f[[1]] h[[2]]/ h[[1]]}][h[[1]] b[n - i, Min[n - i, i], k]]][b[i, i, k - 1]]]];",
+        "a[n_] := b[n, n, n][[2]];",
+        "a /@ Range[0, 21] (* _Jean-Fran\u00e7ois Alcover_, May 01 2020, after Maple *)"
+    ],
+    "xref": [
+        "Main diagonal of A327618.",
+        "Cf. A306187, A327623."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 19 2019",
+    "references": 4,
+    "revision": 17,
+    "time": "2020-05-04T12:35:53-04:00",
+    "created": "2019-09-19T11:55:51-04:00"
+}

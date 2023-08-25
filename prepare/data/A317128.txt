@@ -1,0 +1,35 @@
+{
+    "number": 317128,
+    "data": "1,1,2,6,23,112,652,4425,34358,299971,2910304,31059715,361603228,4560742758,61947243329,901511878198,13994262184718,230811430415207,4030772161073249,74301962970014978,1441745847111969415,29374226224980834077,626971133730275593916",
+    "name": "Number of permutations of [n] whose lengths of increasing runs are Fibonacci numbers.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A317128/b317128.txt\">Table of n, a(n) for n = 0..400</a>"
+    ],
+    "maple": [
+        "g:= n-> (t-> `if`(issqr(t+4) or issqr(t-4), 1, 0))(5*n^2):",
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, g(t),",
+        "      `if`(g(t)=1, add(b(u-j, o+j-1, 1), j=1..u), 0)+",
+        "       add(b(u+j-1, o-j, t+1), j=1..o))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..27);"
+    ],
+    "mathematica": [
+        "g[n_] := With[{t = 5n^2}, If[IntegerQ@Sqrt[t+4] || IntegerQ@Sqrt[t-4], 1, 0]];",
+        "b[u_, o_, t_] := b[u, o, t] = If[u + o == 0, g[t],",
+        "     If[g[t] == 1, Sum[b[u - j, o + j - 1, 1], {j, 1, u}], 0] +",
+        "     Sum[b[u + j - 1, o - j, t + 1], {j, 1, o}]];",
+        "a[n_] := b[n, 0, 0];",
+        "a /@ Range[0, 27] (* _Jean-Fran\u00e7ois Alcover_, Mar 29 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000045, A097597, A273001, A317111, A317129, A317130, A317131, A317132, A317444."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 21 2018",
+    "references": 7,
+    "revision": 16,
+    "time": "2021-03-29T08:00:25-04:00",
+    "created": "2018-07-22T11:19:20-04:00"
+}

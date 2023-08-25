@@ -1,0 +1,52 @@
+{
+    "number": 36774,
+    "data": "0,1,2,9,60,540,6120,83790,1345680,24811920,516650400,11992503600,307069963200,8598348158400,261387760233600,8573572885878000,301809119163552000,11349727401396384000,454104511068656448000,19261139319649202976000",
+    "name": "Number of labeled rooted unordered binary trees (each node has out-degree <= 2).",
+    "link": [
+        "Fung Lam, <a href=\"/A036774/b036774.txt\">Table of n, a(n) for n = 0..394</a>",
+        "B. Otto, <a href=\"https://arxiv.org/abs/1903.00542\">Coalescence under Preimage Constraints</a>, arXiv:1903.00542 [math.CO], 2019.",
+        "L. Takacs, <a href=\"http://www.appliedprobability.org/data/files/TMS%20articles/18_1_1.pdf\">Enumeration of rooted trees and forests</a>, Math. Scientist 18 (1993), 1-10, esp. Eq. (14) with r = 2.",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "E.g.f.: (1 - x - sqrt(1-2*x-x^2))/x.",
+        "E.g.f. A(x) satisfies x*A(x)^2 + 2*(x-1)*A(x) + 2*x = 0, A(0)=0 and A(x) = x/(1-x-(x/2)*A(x)). - _Michael Somos_, Sep 06 2003",
+        "a(n) = n!*Sum_{k=0..floor((n-1)/2)} binomial(n-1, 2k)*binomial(2k, k)/(2^k*(k+1)). - _Emanuele Munarini_, Feb 06 2013",
+        "a(n) ~ sqrt(2-sqrt(2))*n^(n-1)/(exp(n)*(sqrt(2)-1)^(n+1)). - _Vaclav Kotesovec_, Sep 24 2013",
+        "Recurrence: (n+1)*a(n) = n*(n-1)*(n-2)*a(n-2) + n*(2*n-1)*a(n-1), n >= 3, a(1)=1, a(2)=2. - _Fung Lam_, Feb 24 2014",
+        "a(n) = n!*hypergeom([(1 - n)/2, 1 - n/2], [2], 2) for n >= 1. _Peter Luschny_, Apr 20 2020"
+    ],
+    "maple": [
+        "# This is a crude Maple program based on Eq. (14), p. 4, in Takacs (1993). It calculates a(n) for n >= 2. Here, r = 2 is the maximum out-degree of each node.",
+        "ff := proc(r, n) simplify(subs(x = 0, diff(sum(x^k/k!, k = 0 .. r)^n, x$(n - 1)))); end;",
+        "seq(ff(2, i), i = 2 .. 40); # _Petros Hadjicostas_, Jun 09 2019"
+    ],
+    "mathematica": [
+        "Range[0, 20]! CoefficientList[Series[(1 - x - ((x - 1)^2 - 2 x^2)^(1/2))/x, {x, 0, 20}], x] (* _Geoffrey Critzer_, Nov 22 2011 *)",
+        "f[r_, n_][x_] := Sum[x^k/k!, {k, 0, r}]^n;",
+        "a[n_] := If[n == 1, 1, Derivative[n - 1][f[2, n]][0]];",
+        "a /@ Range[0, 19] (* _Jean-Fran\u00e7ois Alcover_, Apr 20 2020, after _Petros Hadjicostas_ *)",
+        "a[n_] := n! Hypergeometric2F1[1/2 - n/2, 1 - n/2, 2, 2]; a[0] = 0;",
+        "Array[a, 20, 0] (* _Peter Luschny_, Apr 20 2020 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,0,n!*polcoeff(2*x/(1-x+sqrt(1-2*x-x^2+O(x^n))),n))",
+        "(PARI) a(n)=if(n<1,0,n!*polcoeff(serreverse(2*x/(2+2*x+x^2)+x*O(x^n)),n))",
+        "(Maxima) makelist(n!*sum(binomial(n-1,2*k)*binomial(2*k,k)/(2^k*(k+1)),k,0,floor((n-1)/2)),n,0,20); /* _Emanuele Munarini_, Feb 06 2013 */"
+    ],
+    "xref": [
+        "A071356(n) = a(n + 1) * 2^n/(n + 1)!.",
+        "Cf. A036775 (outdegree <= r = 3), A036776 (out-degree <= r = 4), A036777 (out-degree <= r = 5)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Better description and formula from _Christian G. Bower_, Nov 29 2001",
+        "\"unordered\" added to the name by _David Callan_, Apr 22 2012"
+    ],
+    "references": 14,
+    "revision": 50,
+    "time": "2020-04-20T16:38:16-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

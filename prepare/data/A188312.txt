@@ -1,0 +1,43 @@
+{
+    "number": 188312,
+    "data": "1,1,4,12,45,174,709,2978,12825,56303,251060,1133943,5176926,23851690,110759081,517853840,2435786531,11517940357,54722081630,261089977806,1250479470053,6009884614944,28975052979797,140098515402139,679189779433800,3300702453217325,16076773046682690",
+    "name": "Expansion of (1/(1-x^2))*c(x/((1-x)*(1-x^2))) where c(x) is the g.f. of A000108.",
+    "comment": [
+        "Hankel transform is the (25,-29) Somos-4 sequence A188313. Image of Catalan numbers by A188316."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A188312/b188312.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: (1-x^2 - sqrt(1-4*x-6*x^2+x^4))/(2*x*(1+x)).",
+        "G.f.: u(x)=1/(1-x^2-x/(1-x-x*u(x))).",
+        "G.f.: 1/(1-x^2-x/(1-x-x/(1-x^2-x/(1-x-x/(1-...))))) (continued fraction).",
+        "Conjecture: (n+1)*a(n) +(3-4*n)*a(n-1) + (7-6*n)*a(n-2) -a(n-3) +(n-4)*a(n-4)=0. - _R. J. Mathar_, Nov 15 2011",
+        "a(n) = a(n-1) + Sum_{i=0..n-1) a(i)*a(n-1-i) + (-1)^n. - _Vladimir Kruchinin_, May 03 2018",
+        "a(n) = Sum_{i=0..n} Sum_{k=1..n-i} (-1)^(n-k-i)*C(k+i-1,k-1)*C(2*k+i-2,k+i-1)*C(n-i-1,n-k-i)/k. -  _Vladimir Kruchinin_, May 03 2018",
+        "a(n) = Sum_{i=0..n} (-1)^(n-i)*hypergeom([(i+1)/2, i/2+1, i-n], [1, 2], 4). - _Peter Luschny_, May 03 2018"
+    ],
+    "maple": [
+        "a := n -> add((-1)^(n-i)*hypergeom([(i+1)/2, i/2+1, i-n], [1, 2], 4), i=0..n);",
+        "seq(simplify(a(n)), n=0..26); # _Peter Luschny_, May 03 2018"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1-x^2 -Sqrt[1-4*x-6*x^2+x^4])/(2*x*(1+x)), {x, 0, 50}], x] (* _G. C. Greubel_, Aug 14 2018 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum(sum((-1)^(n-k-i)*binomial(k+i-1, k-1)*binomial(2*k+i-2, k+i-1)* binomial(n-i-1, n-k-i)/k,k,1,n-i),i,0,n); /* _Vladimir Kruchinin_, May 03 2018 */",
+        "(PARI) x='x+O('x^50); Vec((1-x^2 -sqrt(1-4*x-6*x^2+x^4))/(2*x*(1+x))) \\\\ _G. C. Greubel_, Aug 14 2018",
+        "(Magma) m:=25; R<x>:=PowerSeriesRing(Rationals(), m); Coefficients(R!((1-x^2 -Sqrt(1-4*x-6*x^2+x^4))/(2*x*(1+x)))); // _G. C. Greubel_, Aug 14 2018"
+    ],
+    "xref": [
+        "Cf. A188314."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul Barry_, Mar 28 2011",
+    "references": 4,
+    "revision": 26,
+    "time": "2023-02-06T12:46:35-05:00",
+    "created": "2011-03-30T13:38:39-04:00"
+}

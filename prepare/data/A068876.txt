@@ -1,0 +1,56 @@
+{
+    "number": 68876,
+    "data": "2,23,101,2129,10103,210101,1010129,21010127,101010167,2101010147,10101010163,210101010187,1010101010341,21010101010147,101010101010323,2101010101010141,10101010101010141,210101010101010323,1010101010101010143",
+    "name": "Smallest n-digit prime with property that digits alternate in parity.",
+    "link": [
+        "Robert Israel, <a href=\"/A068876/b068876.txt\">Table of n, a(n) for n = 1..700</a>"
+    ],
+    "example": [
+        "a(4) = 2129 as 2, 1, 2 and 9 have even and odd parity alternately."
+    ],
+    "maple": [
+        "alp:= proc(n) local L,d;",
+        "L:= convert(n,base,10);",
+        "d:= nops(L);",
+        "if d::even then L:= L + map(op, [[0,1]$(d/2)]) else L:= L + map(op, [[0,1]$((d-1)/2),[0]]) fi;",
+        "nops(convert(L mod 2, set))=1",
+        "end proc:",
+        "f:= proc(d) local s;",
+        "  if d::even then s:= 2*10^(d-1)+(10^d-1)/99-1",
+        "  else s:= (10^(d+1)-1)/99-1",
+        "  fi;",
+        "  do s:= nextprime(s);",
+        "     if alp(s) then return s fi",
+        "  od",
+        "end proc:",
+        "seq(f(d),d=1..20); # _Robert Israel_, Aug 14 2018"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{m = Mod[ IntegerDigits@ n, 2]}, m == Split[m, UnsameQ][[1]]]; f[n_] := Block[{c = 1 + 100 (100^Ceiling[n/2 - 1] - 1)/99, k}, k = If[ OddQ@ n, c, 2*10^(n - 1) + c]; k = NextPrime[k - 1]; While[ !fQ@ k, k = NextPrime@ k]; k]; Array[f, 21] (* _Robert G. Wilson v_, Apr 01 2011 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "concat = lambda x: Integer(''.join(map(str,x)),base=10)",
+        "def A068876(n):",
+        "    dd = {0:range(0,10,2), 1: range(1,10,2)}",
+        "    for d0 in [1..9]:",
+        "        if n % 2 == 0 and d0 % 2 == 1: continue # optimization",
+        "        ds = [dd[(d0+1+i) % 2] for i in range(n-1)]",
+        "        for dr in cartesian_product(ds):",
+        "            c = concat([d0]+dr)",
+        "            if is_prime(c): return c  # _D. S. McNeil_, Apr 02 2011"
+    ],
+    "xref": [
+        "Cf. A030144, A068877, A056830."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Mar 19 2002",
+    "ext": [
+        "a(9)-a(13) corrected and a(14)-a(19) from _Donovan Johnson_, Apr 01 2011"
+    ],
+    "references": 7,
+    "revision": 26,
+    "time": "2020-03-08T00:04:17-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

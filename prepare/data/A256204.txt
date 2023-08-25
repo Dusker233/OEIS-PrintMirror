@@ -1,0 +1,34 @@
+{
+    "number": 256204,
+    "data": "1,1,2,6,24,119,694,4581,33284,260847,2172454,19015582,173461305,1638327423,15939733122,159099927785,1623799173782,16900201391546,178967276844263,1924689980696921,20987593594256974,231734179050033660,2587835777992844938,29198736751160012102",
+    "name": "Number of permutations in S_n that avoid the pattern 32541.",
+    "link": [
+        "Anthony Guttmann, <a href=\"/A256204/b256204.txt\">Table of n, a(n) for n = 0..26</a>",
+        "Nathan Clisby, Andrew R. Conway, Anthony J. Guttmann, Yuma Inoue, <a href=\"https://arxiv.org/abs/2109.13485\">Classical length-5 pattern-avoiding permutations</a>, arXiv:2109.13485 [math.CO], 2021.",
+        "Zvezdelina Stankova-Frenkel and Julian West, <a href=\"http://arxiv.org/abs/math/0103152\">A new class of Wilf-equivalent permutations</a>, arXiv:math/0103152 [math.CO], 2001."
+    ],
+    "mathematica": [
+        "avoid[n_, pat_] := Module[{p1 = pat[[1]], p2 = pat[[2]], p3 = pat[[3]], p4 = pat[[4]], p5 = pat[[5]], lseq = {}, i, p,",
+        "    lpat = Subsets[(n + 1) - Range[n], {Length[pat]}],",
+        "    psn = Permutations[Range[n]]},",
+        "   For[i = 1, i <= Length[lpat], i++,",
+        "    p = lpat[[i]];",
+        "    AppendTo[lseq, Select[psn, MemberQ[#, {___, p[[p1]], ___, p[[p2]], ___, p[[p3]], ___, p[[p4]], ___, p[[p5]], ___}, {0}] &]];",
+        "    ]; n! - Length[Union[Flatten[lseq, 1]]]];",
+        "Table[avoid[n, {3, 2, 5, 4, 1}], {n, 0, 8}]  (* _Robert Price_, Mar 27 2020 *)"
+    ],
+    "xref": [
+        "Representatives for the 16 Wilf-equivalence patterns of length 5 are given in A116485, A047889, and A256195-A256208.",
+        "Cf. A099952."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Mar 19 2015",
+    "ext": [
+        "More terms from _Anthony Guttmann_, Sep 29 2021"
+    ],
+    "references": 1,
+    "revision": 21,
+    "time": "2021-09-29T02:38:36-04:00",
+    "created": "2015-03-19T14:43:44-04:00"
+}

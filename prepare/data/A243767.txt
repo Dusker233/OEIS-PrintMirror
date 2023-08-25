@@ -1,0 +1,36 @@
+{
+    "number": 243767,
+    "data": "223,227,337,353,373,557,577,733,757,773,111119,111317,111323,111337,111347,111373,111731,111773,111779,111913,111953,111959,111973,111997,112337,112397,112913,112919,112967,112997,113111,113117,113131,113147,113159,113161",
+    "name": "Decimal prime numbers which can be split into three equal-sized prime parts whose sum is prime. No leading zeros.",
+    "comment": [
+        "It appears that the sequence is infinite."
+    ],
+    "link": [
+        "Andreas Boe, <a href=\"/A243767/b243767.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Prime number 112337 -> 11(prime) + 23(prime) + 37(prime) = 71(prime)."
+    ],
+    "mathematica": [
+        "Join[Select[FromDigits/@Select[Tuples[Prime[Range[4]],3],PrimeQ[Total[ #]]&],PrimeQ],Select[ FromDigits[Flatten[IntegerDigits/@#]]&/@Select[ Tuples[ Prime[Range[5,25]],3],PrimeQ[Total[#]]&],PrimeQ]] (* The program generates the first 1283 terms of the sequence, i.e., all terms with six digits or less. *) (* _Harvey P. Dale_, Dec 04 2022 *)"
+    ],
+    "program": [
+        "(PARI) first(n) = { my(res = List()); for(i = 1, oo, pow10 = 10^i; pow100 = 100^i; forprime(p = 10^(i-1), 10^i, firstidigs = pow100 * p; forprime(q = 10^(i-1), 10^i, pandq = p+q; first2idigs = firstidigs + pow10*q; forprime(r = 10^(i-1), 10^i, if(isprime(pandq + r), c = first2idigs + r; if(isprime(c), listput(res, c); if(#res >= n, return(res) ) ) ) ) ) ) ) } \\\\ _David A. Corneth_, Dec 04 2022",
+        "(Python)",
+        "from sympy import isprime, primerange",
+        "from itertools import count, islice, product",
+        "def agen(): yield from filter(isprime, (a*10**(2*i) + b*10**i + c for i in count(1) for a, b, c in product(primerange(10**(i-1), 10**i), repeat=3) if isprime(a+b+c)))",
+        "print(list(islice(agen(), 36))) # _Michael S. Branicky_, Dec 04 2022"
+    ],
+    "xref": [
+        "Subset of A243766.",
+        "Cf. A006879."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Andreas Boe_, Jun 10 2014",
+    "references": 1,
+    "revision": 20,
+    "time": "2022-12-06T09:59:11-05:00",
+    "created": "2014-06-14T21:14:18-04:00"
+}

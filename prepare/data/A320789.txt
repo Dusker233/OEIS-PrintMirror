@@ -1,0 +1,38 @@
+{
+    "number": 320789,
+    "data": "1,1,3,5,11,18,34,55,96,152,248,386,607,921,1405,2092,3112,4551,6635,9545,13683,19401,27393,38346,53441,73928,101840,139398,190020,257601,347836,467381,625686,833917,1107547,1465136,1931754,2537747,3323490,4338012,5645645",
+    "name": "Number of multisets of exactly four partitions of positive integers into distinct parts with total sum of parts equal to n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A320789/b320789.txt\">Table of n, a(n) for n = 4..1000</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n y^4] Product_{j>=1} 1/(1-y*x^j)^A000009(j)."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n=0, 1, add(add(`if`(d::odd,",
+        "      d, 0), d=numtheory[divisors](j))*g(n-j), j=1..n)/n)",
+        "    end:",
+        "b:= proc(n, i) option remember; series(`if`(n=0, 1, `if`(i<1, 0,",
+        "      add(b(n-i*j, i-1)*x^j*binomial(g(i)+j-1, j), j=0..n/i))), x, 5)",
+        "    end:",
+        "a:= n-> coeff(b(n$2), x, 4):",
+        "seq(a(n), n=4..60);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = If[n == 0, 1, Sum[Sum[If[OddQ[d], d, 0], {d, Divisors[j]}]* g[n - j], {j, 1, n}]/n];",
+        "b[n_, i_] := b[n, i] = Series[If[n == 0, 1, If[i < 1, 0, Sum[b[n - i*j, i - 1]*x^j*Binomial[g[i] + j - 1, j], {j, 0, n/i}]]], {x, 0, 5}];",
+        "a[n_] := SeriesCoefficient[b[n, n], {x, 0, 4}];",
+        "a /@ Range[4, 60] (* _Jean-Fran\u00e7ois Alcover_, Dec 14 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=4 of A285229.",
+        "Cf. A000009."
+    ],
+    "keyword": "nonn",
+    "offset": "4,3",
+    "author": "_Alois P. Heinz_, Oct 21 2018",
+    "references": 2,
+    "revision": 7,
+    "time": "2020-12-14T05:14:01-05:00",
+    "created": "2018-10-21T09:27:23-04:00"
+}

@@ -1,0 +1,27 @@
+{
+    "number": 354264,
+    "data": "1,4,36,488,8824,199456,5410208,171209664,6192052800,251937937920,11389639660032,566394573855744,30726758349800448,1805828538127687680,114293350061315678208,7750480651439579529216,560615413313367534698496,43085423893717998388740096",
+    "name": "Expansion of e.g.f. 1/(1 + 4 * log(1-x)).",
+    "formula": [
+        "E.g.f.: 1/(1 + 4 * log(1-x)).",
+        "a(0) = 1; a(n) = 4 * Sum_{k=1..n} (k-1)! * binomial(n,k) * a(n-k).",
+        "a(n) = Sum_{k=0..n} 4^k * k! * |Stirling1(n, k)|.",
+        "a(n) ~ n! * exp(n/4) / (4 * (exp(1/4) - 1)^(n+1)). - _Vaclav Kotesovec_, Jun 04 2022"
+    ],
+    "program": [
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(serlaplace(1/(1+4*log(1-x))))",
+        "(PARI) a_vector(n) = my(v=vector(n+1)); v[1]=1; for(i=1, n, v[i+1]=4*sum(j=1, i, (j-1)!*binomial(i, j)*v[i-j+1])); v;",
+        "(PARI) a(n) = sum(k=0, n, 4^k*k!*abs(stirling(n, k, 1)));"
+    ],
+    "xref": [
+        "Column k=4 of A320079.",
+        "Cf. A094417, A354147, A354241."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Seiichi Manyama_, May 21 2022",
+    "references": 3,
+    "revision": 20,
+    "time": "2023-03-15T15:02:44-04:00",
+    "created": "2022-05-22T09:50:43-04:00"
+}

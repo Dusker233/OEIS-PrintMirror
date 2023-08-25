@@ -1,0 +1,39 @@
+{
+    "number": 321875,
+    "data": "1,5,19,101,601,4343,35281,322661,3265939,36288605,439084801,5748023639,80951270401,1220496112085,19615115520619,334764638530661,6046686277632001,115242726706374263,2311256907767808001,48658040163569088701,1072909785605898275299",
+    "name": "a(n) = Sum_{d|n} d*d!.",
+    "comment": [
+        "Inverse M\u00f6bius transform of A001563."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A321875/b321875.txt\">Table of n, a(n) for n = 1..448</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=1} k*k!*x^k/(1 - x^k).",
+        "L.g.f.: -log(Product_{k>=1} (1 - x^k)^(k!)) = Sum_{n>=1} a(n)*x^n/n.",
+        "a(n) = Sum_{d|n} A001563(d)."
+    ],
+    "mathematica": [
+        "Table[Sum[d d!, {d, Divisors[n]}], {n, 21}]",
+        "nmax = 21; Rest[CoefficientList[Series[Sum[k k! x^k/(1 - x^k), {k, 1, nmax}], {x, 0, nmax}], x]]",
+        "nmax = 21; Rest[CoefficientList[Series[-Log[Product[(1 - x^k)^k!, {k, 1, nmax}]], {x, 0, nmax}], x] Range[0, nmax]]"
+    ],
+    "program": [
+        "(PARI) a(n) = sumdiv(n, d, d*d!); \\\\ _Michel Marcus_, Nov 20 2018",
+        "(Magma) m:=25; R<x>:=PowerSeriesRing(Integers(), m); Coefficients(R!( (&+[k*Factorial(k)*x^k/(1 - x^k): k in [1..(m+2)]]) )); // _G. C. Greubel_, Nov 20 2018",
+        "(Sage)",
+        "s = sum(k*factorial(k)*x^k/(1-x^k) for k in (1..24));",
+        "(s/x).series(x, 21).coefficients(x, sparse=false) # _Peter Luschny_, Nov 21 2018"
+    ],
+    "xref": [
+        "Cf. A000142, A001563, A062363, A107895."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Nov 20 2018",
+    "references": 2,
+    "revision": 16,
+    "time": "2022-09-08T08:46:23-04:00",
+    "created": "2018-11-21T04:15:43-05:00"
+}

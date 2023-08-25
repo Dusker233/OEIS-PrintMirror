@@ -1,0 +1,33 @@
+{
+    "number": 320527,
+    "data": "0,0,0,0,4,28,167,824,3840,16920,72655,305140,1265264,5193188,21173607,85887984,347150080,1399355440,5629755935,22615859180,90754215024,363888497148,1458169977847,5840524999144,23385639542720,93613165023560,374664497695215,1499293455643620,5999080285068784,24002040333605908",
+    "name": "Number of chiral pairs of color patterns (set partitions) in a row of length n using exactly 4 colors (subsets).",
+    "comment": [
+        "Two color patterns are equivalent if we permute the colors. Chiral color patterns must not be equivalent if we reverse the order of the pattern."
+    ],
+    "formula": [
+        "a(n) = (S2(n,k) - A(n,k))/2, where k=4 is the number of colors (sets), S2 is the Stirling subset number A008277 and A(n,k) = [n>1] * (k*A(n-2,k) + A(n-2,k-1) + A(n-2,k-2)) + [n<2 & n==k & n>=0].",
+        "G.f.: (x^4 / Product_{k=1..4} (1 - k*x) - x^4*(1 + x)^2*(1 - 2 x^2) / Product_{k=1..4} (1 - k*x^2)) / 2.",
+        "a(n) = (A000453(n) - A304974(n)) / 2 = A000453(n) - A056328(n) = A056328(n) - A304974(n)."
+    ],
+    "example": [
+        "For a(5)=4, the chiral pairs are AABCD-ABCDD, ABACD-ABCDC, ABBCD-ABCCD and ABCAD-ABCDB."
+    ],
+    "mathematica": [
+        "k=4; Table[(StirlingS2[n,k] - If[EvenQ[n], StirlingS2[n/2+2,4] - StirlingS2[n/2+1,4] - 2StirlingS2[n/2,4], 2StirlingS2[(n+3)/2,4] - 4StirlingS2[(n+1)/2,4]])/2, {n,30}]",
+        "Ach[n_, k_] := Ach[n, k] = If[n<2, Boole[n==k && n>=0], k Ach[n-2,k] + Ach[n-2,k-1] + Ach[n-2,k-2]] (* A304972 *)",
+        "k = 4; Table[(StirlingS2[n, k] - Ach[n, k])/2, {n, 1, 30}]",
+        "LinearRecurrence[{8, -12, -44, 121, 12, -228, 144}, {0, 0, 0, 0, 4, 28, 167}, 30]"
+    ],
+    "xref": [
+        "Col. 4 of A320525.",
+        "Cf. A000453 (oriented), A056328 (unoriented), A304974 (achiral)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,5",
+    "author": "_Robert A. Russell_, Oct 14 2018",
+    "references": 5,
+    "revision": 14,
+    "time": "2018-10-22T13:49:25-04:00",
+    "created": "2018-10-22T13:49:25-04:00"
+}

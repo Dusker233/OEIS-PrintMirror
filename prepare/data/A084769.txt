@@ -1,0 +1,45 @@
+{
+    "number": 84769,
+    "data": "1,9,121,1809,28401,458649,7544041,125700129,2114588641,35836273449,610897146201,10463745263409,179939616743121,3104680678772409,53721299280288201,931852905510160449,16198821321758152641",
+    "name": "P_n(9), where P_n is n-th Legendre polynomial; also, a(n) = central coefficient of (1 + 9*x + 20*x^2)^n.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A084769/b084769.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Hac\u00e8ne Belbachir and Abdelghani Mehdaoui, <a href=\"https://doi.org/10.2989/16073606.2020.1729269\">Recurrence relation associated with the sums of square binomial coefficients</a>, Quaestiones Mathematicae (2021) Vol. 44, Issue 5, 615-624.",
+        "Hac\u00e8ne Belbachir, Abdelghani Mehdaoui, and L\u00e1szl\u00f3 Szalay, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL22/Szalay/szalay42.html\">Diagonal Sums in the Pascal Pyramid, II: Applications</a>, J. Int. Seq., Vol. 22 (2019), Article 19.3.5.",
+        "V. Kotesovec, <a href=\"http://www.kotesovec.cz/math_articles/kotesovec_binomial_asymptotics.pdf\">Asymptotic of a sums of powers of binomial coefficients * x^k</a>, 2012.",
+        "Tony D. Noe, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL9/Noe/noe35.html\">On the Divisibility of Generalized Central Trinomial Coefficients</a>, Journal of Integer Sequences, Vol. 9 (2006), Article 06.2.7."
+    ],
+    "formula": [
+        "G.f.: 1/sqrt(1-18*x+x^2).",
+        "Also a(n) = (n+1)-th term of the binomial transform of 1/(1-4x)^(n+1).",
+        "From _Paul Barry_, May 25 2005: (Start)",
+        "E.g.f.: exp(9*x)*Bessel_I(0, 2*sqrt(20)*x);",
+        "a(n) = Sum_{k=0..n} C(n, k)*C(n+k, k)4^k. (End)",
+        "D-finite with recurrence: n*a(n) + 9*(1-2*n)*a(n-1) + (n-1)*a(n-2) = 0. - _R. J. Mathar_, Sep 27 2012",
+        "a(n) = Sum_{k=0..n} binomial(n,k)^2 * 4^k * 5^(n-k). - _Paul D. Hanna_, Sep 29 2012",
+        "a(n) ~ sqrt(200 + 90*sqrt(5))*(9 + 4*sqrt(5))^n/(20*sqrt(Pi*n)) = (2 + sqrt(5))^(2*n+1)/(5^(1/4)*2*sqrt(2*Pi*n)). - _Vaclav Kotesovec_, Oct 14 2012",
+        "a(n) = hypergeom([-n, n+1], [1], -4). - _Peter Luschny_, May 23 2014",
+        "x*exp(Sum_{n >= 1} a(n)*x^n/n) = x + 9*x^2 + 101*x^3 + 1269*x^4 + ... is an integral power series, the o.g.f. for A269732. - _Peter Bala_, Jan 25 2018"
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[1/Sqrt[1-18*x+x^2],{x,0,n}],{n,0,20}] (* _Vaclav Kotesovec_, Oct 14 2012 *)",
+        "LegendreP[Range[0, 40], 9] (* _G. C. Greubel_, May 17 2023 *)"
+    ],
+    "program": [
+        "(PARI) for(n=0,30,print1(subst(pollegendre(n),x,9)\",\"))",
+        "(PARI) {a(n)=sum(k=0, n, binomial(n, k)^2*4^k*5^(n-k))} \\\\ _Paul D. Hanna_, Sep 29 2012",
+        "(Magma) [Evaluate(LegendrePolynomial(n), 9) : n in [0..40]]; // _G. C. Greubel_, May 17 2023",
+        "(SageMath) [gen_legendre_P(n,0,9) for n in range(41)] # _G. C. Greubel_, May 17 2023"
+    ],
+    "xref": [
+        "Sequences of the form LegendreP(n, 2*m+1): A000012 (m=0), A001850 (m=1), A006442 (m=2), A084768 (m=3), this sequence (m=4).",
+        "Cf. A243007 (a(n)^2), A269732."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jun 03 2003",
+    "references": 13,
+    "revision": 58,
+    "time": "2023-05-20T15:20:27-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

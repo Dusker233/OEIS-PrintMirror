@@ -1,0 +1,44 @@
+{
+    "number": 354212,
+    "data": "11688,116688,126888,1166688,1266888,11666688,12446778,12666888,116666688,123456789,124466778,126666888",
+    "name": "Numbers k such that A297330(k)*k and k have the same digits but in a different order.",
+    "comment": [
+        "Contains all numbers of the forms 116...688, 12446...6778, and 126...6888 (with at least one 6).",
+        "All terms are divisible by 3."
+    ],
+    "example": [
+        "a(1) = 11688 is a term because A297330(11688) = 7 and 7*11688 = 81816 has the same digits as 11688 in a different order."
+    ],
+    "maple": [
+        "filter:= proc(n) local L,m;",
+        "  L:= convert(n,base,10);",
+        "  m:= convert(map(abs,L[2..-1]-L[1..-2]),`+`);",
+        "  if m = 1 then return false fi;",
+        "  sort(L) = sort(convert(m*n,base,10))",
+        "end proc:",
+        "select(filter, [seq(i,i=3..10^7,3)]);"
+    ],
+    "program": [
+        "(PARI) f(n) = my(d=digits(n)); sum(i=2, #d, if (d[i]<d[i-1], d[i-1]-d[i])) + sum(i=2, #d, if (d[i]>d[i-1], d[i]-d[i-1])); \\\\ A297330",
+        "isok(k) = my(d=digits(k), dd = digits(k*f(k))); (d != dd) && vecsort(d) == vecsort(dd); \\\\ _Michel Marcus_, May 19 2022",
+        "(Python)",
+        "from itertools import count, islice",
+        "def A354212_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        s = str(n)",
+        "        t = str(n*sum(abs(int(s[i])-int(s[i+1])) for i in range(len(s)-1)))",
+        "        if s != t and sorted(s) == sorted(t):",
+        "            yield n",
+        "A354212_list = list(islice(A354212_gen(),5)) # _Chai Wah Wu_, May 31 2022"
+    ],
+    "xref": [
+        "Cf. A297330."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, May 19 2022",
+    "references": 0,
+    "revision": 18,
+    "time": "2022-05-31T11:02:10-04:00",
+    "created": "2022-05-30T10:30:59-04:00"
+}

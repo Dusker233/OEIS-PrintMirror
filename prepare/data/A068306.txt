@@ -1,0 +1,44 @@
+{
+    "number": 68306,
+    "data": "4,8,12,16,18,20,24,27,32,36,40,48,54,56,64,72,80,81,88,96,104,108,112,128,144,160,162,176,192,208,216,224,243,256,272,288,304,320,324,352,368,384,416,432,448,464,486,512,544,576,608,640,704,729,736,768,832",
+    "name": "Numbers n such that n*tau(n) < sigma(n)*bigomega(n) where tau(n)=A000005(n), sigma(n)=A000203(n), and bigomega(n)=A001222(n).",
+    "comment": [
+        "This sequence contains numbers of the form p^u, u >= p, p prime; numbers of the form 2^k*p, p odd prime and k >= floor(log(p)/log(2)). Example: the first number of the form 2^k*67 in the sequence is 2^6*67=4288 because floor(log(67)/log(2))=6.",
+        "[Are we to understand that these are all the numbers in the sequence, or just some of them? - _N. J. A. Sloane_, Dec 27 2018]",
+        "If n=p^(p-1) with p prime, n*tau(n) - sigma(n)*bigomega(n) = 1.",
+        "From _David A. Corneth_, Aug 24 2020: (Start)",
+        "If n > 1 then each of n, tau(n), sigma(n) and bigomega(n) are > 0. We can then write the inequality as tau(n)/bigomega(n) < sigma(n)/n.",
+        "Note that tau(n) and bigomega(n) only depend on the prime signature of n.",
+        "Suppose we choose some k from A025487. If k is not a term then no number with that prime signature is not a term. k is the number with the value for sigma(m)/m for numbers m with the same prime signature as k. (End)"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A068306/b068306.txt\">Table of n, a(n) for n = 1..10000</a> (first 4000 terms from Robert Israel)"
+    ],
+    "maple": [
+        "filter:= proc(n) local L,t,j;",
+        "  L:= ifactors(n)[2];",
+        "  n * mul(t[2]+1,t=L) < mul(add(t[1]^j,j=0..t[2]),t=L)*add(t[2],t=L)",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Dec 26 2018"
+    ],
+    "mathematica": [
+        "filterQ[n_] := n DivisorSigma[0, n] < DivisorSigma[1, n] PrimeOmega[n];",
+        "Select[Range[1000], filterQ] (* _Jean-Fran\u00e7ois Alcover_, Aug 24 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = n*numdiv(n) < sigma(n)*bigomega(n); \\\\ _Michel Marcus_, Dec 27 2018"
+    ],
+    "xref": [
+        "Cf. A000005, A000203, A001222."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, Feb 24 2002",
+    "ext": [
+        "Corrected by _Robert Israel_, Dec 26 2018"
+    ],
+    "references": 1,
+    "revision": 31,
+    "time": "2020-08-29T02:18:29-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

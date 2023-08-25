@@ -1,0 +1,54 @@
+{
+    "number": 10000,
+    "data": "1,3,6,11,18,27,38,51,66,83,102,123,146,171,198,227,258,291,326,363,402,443,486,531,578,627,678,731,786,843,902,963,1026,1091,1158,1227,1298,1371,1446,1523,1602,1683,1766,1851,1938,2027,2118,2211,2306,2403",
+    "name": "a(0) = 1, a(n) = n^2 + 2 for n > 0.",
+    "comment": [
+        "Least k such that A070864(k) = 2n-1. - _Robert G. Wilson v_ and _Benoit Cloitre_, May 20 2002",
+        "With an offset of 3, beginning with 6 (deleting first two terms) n*(n+a(n)) + 1 is a cube = (n+1)^3: 1*(1+6) + 1 = 8, 2*(2+11) + 1 = 27, etc. - _Amarnath Murthy_ and Meenakshi Srikanth (menakan_s(AT)yahoo.com), May 03 2003",
+        "For n >= 2, a(n) is the maximum element in the continued fraction for Sum_{k>=1} 1/n^(2^k) (for n=2 see A006464). - _Benoit Cloitre_, Jun 12 2007",
+        "Equals binomial transform of [1, 2, 1, 1, -1, 1, -1, 1, ...]. - _Gary W. Adamson_, Apr 23 2008",
+        "Minimum Wiener index of 3-degenerate graphs with n+2 vertices.  A maximal 3-degenerate graph can be constructed from a 3-clique by iteratively adding a new 3-leaf (vertex of degree 3) adjacent to three existing vertices.  The extremal graphs are maximal 3-degenerate graphs with diameter at most 2. - _Allan Bickle_, Oct 14 2022",
+        "a(n-1) is the number of unit triangles enclosed by the triangular spiral drawn on a isometric grid of which the n-th side has length n. The picture in the link shows how the spiral is constructed. - _Bob Andriesse_, Feb 14 2023"
+    ],
+    "link": [
+        "Bruno Berselli, <a href=\"/A010000/b010000.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Bob Andriesse, <a href=\"/A010000/a010000.jpg\">Graphical representation of the first 21 segments of the spiral with grid.</a>",
+        "Allan Bickle, <a href=\"https://allanbickle.files.wordpress.com/2016/05/degeneratediam2-2.pdf\">Wiener indices of maximal k-degenerate graphs</a>, International Journal of Mathematical Combinatorics 2 (2021) 68-79.",
+        "Allan Bickle and Zhongyuan Che, <a href=\"https://arxiv.org/abs/1908.09202\">Wiener indices of maximal k-degenerate graphs</a>, arXiv:1908.09202 [math.CO], 2019.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-3,1)."
+    ],
+    "formula": [
+        "a(n) = A000217(n-2) + A000217(n+1) for n > 0. - _Jon Perry_, Jul 23 2003",
+        "Euler transform of length 6 sequence [ 3, 0, 1, 0, 0, -1]. - _Michael Somos_, Aug 11 2009",
+        "From _Michael Somos_, Aug 11 2009: (Start)",
+        "G.f.: (1 + x^3) / (1 - x)^3.",
+        "a(n) = a(-n) for all n in Z. (End)",
+        "E.g.f.: (x*(x+1) + 2)*e^x - 1. - _Gopinath A. R._, Feb 14 2012",
+        "a(n) = (2*n/(n+1)!)*Sum_{j=0..n} (-1)^(n-j)*binomial(n,j)*(j+1/n)^(n+1), n > 0, a(0)=1. - _Vladimir Kruchinin_, Jun 03 2013"
+    ],
+    "example": [
+        "G.f. = 1 + 3*x + 6*x^2 + 11*x^3 + 18*x^4 + 27*x^5 + 38*x^6 + 51*x^7 + 66*x^8 + ..."
+    ],
+    "mathematica": [
+        "a[1] = a[2] = 1; a[n_] := a[n] = 2 + a[n - a[n - 1]]; b = Table[0, {100}]; Do[c = (a[n] + 1)/2; If[c < 101 && b[[c]] == 0, b[[c]] = n], {n, 1, 10^4}]; b",
+        "Join[{1}, Range[50]^2 + 2] (* _Bruno Berselli_, Feb 08 2012 *)",
+        "a[ n_] := n^2 + 2 - Boole[n == 0]; (* _Michael Somos_, May 05 2015 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = n^2 + 2 - (n==0)}; /* _Michael Somos_, Aug 11 2009 */",
+        "(Maxima)",
+        "a(n):=if n=0 then 1 else 2*n*sum((-1)^(n-j)*binomial(n,j)*(j+1/n)^(n+1),j,0,n)/(n+1)!; \\\\ _Vladimir Kruchinin_, Jun 03 2013"
+    ],
+    "xref": [
+        "Cf. A070864. Apart from initial terms, same as A059100.",
+        "Cf. A206399.",
+        "Cf. A002061 (minimum Weiner index of 2-degenerate graphs)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 17,
+    "revision": 62,
+    "time": "2023-02-23T15:39:29-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

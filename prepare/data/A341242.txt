@@ -1,0 +1,46 @@
+{
+    "number": 341242,
+    "data": "0,1,14,15,50,51,60,61,84,85,90,91,102,103,104,105,150,151,152,153,164,165,170,171,194,195,204,205,240,241,254,255,770,771,780,781,816,817,830,831,854,855,856,857,868,869,874,875,916,917,922,923,934,935,936",
+    "name": "Numbers whose binary representation encodes a subset S of the natural numbers such that the XOR of the binary representations of all s in S gives 0.",
+    "comment": [
+        "The numbers for which the set S of positions of bits 1 in the binary representation, interpreted as a set of distinct-sized Nim heaps (including a possible uninteresting size 0 heap for the least significant bit) is losing for the player to move.",
+        "Viewing the list as a set of valid code words, every natural number N can be \"corrected\" to a valid code word by changing exactly one bit, in exactly one way. The position of that bit is found by computing for N the XOR of its raised-bit positions of the title (if the result is 0, then N is already valid but flipping the irrelevant bit 0 makes it valid again).",
+        "The \"error correcting\" interpretation, applied to 64-bit numbers interpreted as orientation of 64 coins, corresponds to a solution of the \"coins on a chessboard\" puzzle described in the Nick Berry's blog, and also mentioned at A253315.",
+        "Numbers 2*n and 2*n+1 for n = A075926(m).",
+        "Numbers m such that A253315(m) = 0. - _R\u00e9my Sigrist_, Feb 09 2021"
+    ],
+    "link": [
+        "Nick Berry, <a href=\"https://datagenetics.com/blog/december12014/index.html\">Impossible Escape?</a>, DataGenetics blog, December 2014."
+    ],
+    "formula": [
+        "a(2*n+1) = 2*A075926(n), a(2*n+2) = 2*A075926(n) + 1 for any n >= 0. - _R\u00e9my Sigrist_, Feb 09 2021"
+    ],
+    "program": [
+        "(C++) (first 2^12 terms)",
+        "for (int i=0; i<65536; ++i)  {",
+        "    int sum=0;",
+        "    for (int n=i, count=0; n>0; n>>=1,++count)",
+        "      if ((n&1)!=0)",
+        "        sum ^= count;",
+        "    if (sum==0)",
+        "      std::cout << i << \", \";",
+        "  }",
+        "(Python)",
+        "def ok(n):",
+        "  xor, b = 0, (bin(n)[2:])[::-1]",
+        "  for i, c in enumerate(b):",
+        "    if c == '1': xor ^= i",
+        "  return xor == 0",
+        "print([m for m in range(937) if ok(m)]) # _Michael S. Branicky_, Feb 07 2021"
+    ],
+    "xref": [
+        "Cf. A075926, A253315."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Marc A. A. van Leeuwen_, Feb 07 2021",
+    "references": 0,
+    "revision": 22,
+    "time": "2021-02-23T15:05:12-05:00",
+    "created": "2021-02-23T15:05:12-05:00"
+}

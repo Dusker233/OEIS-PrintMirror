@@ -1,0 +1,32 @@
+{
+    "number": 320795,
+    "data": "1,1,3,5,11,19,37,63,115,195,339,565,954,1565,2580,4174,6751,10775,17161,27051,42510,66261,102900,158746,243955,372778,567443,859492,1296958,1948458,2916636,4348377,6460535,9563222,14109242,20744995,30405638,44422190",
+    "name": "Number of multisets of exactly ten partitions of positive integers into distinct parts with total sum of parts equal to n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A320795/b320795.txt\">Table of n, a(n) for n = 10..1000</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n y^10] Product_{j>=1} 1/(1-y*x^j)^A000009(j)."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n=0, 1, add(add(`if`(d::odd,",
+        "      d, 0), d=numtheory[divisors](j))*g(n-j), j=1..n)/n)",
+        "    end:",
+        "b:= proc(n, i) option remember; series(`if`(n=0, 1, `if`(i<1, 0,",
+        "      add(b(n-i*j, i-1)*x^j*binomial(g(i)+j-1, j), j=0..n/i))), x, 11)",
+        "    end:",
+        "a:= n-> coeff(b(n$2), x, 10):",
+        "seq(a(n), n=10..60);"
+    ],
+    "xref": [
+        "Column k=10 of A285229.",
+        "Cf. A000009."
+    ],
+    "keyword": "nonn",
+    "offset": "10,3",
+    "author": "_Alois P. Heinz_, Oct 21 2018",
+    "references": 2,
+    "revision": 4,
+    "time": "2018-10-21T09:45:28-04:00",
+    "created": "2018-10-21T09:45:28-04:00"
+}

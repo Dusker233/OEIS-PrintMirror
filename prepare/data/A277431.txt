@@ -1,0 +1,44 @@
+{
+    "number": 277431,
+    "data": "1,1,4,12,52,260,1568,10976,87824,790416,7904192,86946112,1043353408,13563594304,189890320384,2848354805760,45573676892416,774752507171072,13945545129079808,264965357452516352,5299307149050328064,111285450130056889344,2448279902861251567616",
+    "name": "Expansion of e.g.f.: cosh(sqrt(2)*x)/(1-x).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A277431/b277431.txt\">Table of n, a(n) for n = 0..448</a>",
+        "Eric Weisstein's MathWorld, <a href=\"http://mathworld.wolfram.com/IncompleteGammaFunction.html\">Incomplete Gamma Function</a>"
+    ],
+    "formula": [
+        "a(n) = (Gamma(n+1, sqrt(2))*exp(sqrt(2)) + Gamma(n+1, -sqrt(2))/exp(sqrt(2)))/2.",
+        "a(n) ~ sqrt(2*Pi)*cosh(sqrt(2))*n^(n+1/2)*exp(-n).",
+        "D-finite with recurrence: a(n) = n*a(n-1) + 2*a(n-2) - 2*(n-2)*a(n-3).",
+        "Gamma(n+1, sqrt(2))*exp(sqrt(2)) = a(n) + sqrt(2)*A277432(n).",
+        "Gamma(n+1, -sqrt(2))/exp(sqrt(2)) = a(n) - sqrt(2)*A277432(n).",
+        "a(2*n+1) = (2*n+1)*a(2*n).",
+        "0 = a(n)*(+4*a(n+1) -4*a(n+2) -6*a(n+3) +2*a(n+4)) +a(n+1)*(+4*a(n+1) +2*a(n+2) -4*a(n+3)) +a(n+2)*(+2*a(n+2) +a(n+3) -a(n+4)) + a(n+3)*(+a(n+3)) for all n>-3. - _Michael Somos_, Oct 01 2018"
+    ],
+    "example": [
+        "G.f. = 1 + x + 4*x^2 + 12*x^3 + 52*x^4 + 260*x^5 + 1568*x^6 + ... - _Michael Somos_, Oct 01 2018"
+    ],
+    "maple": [
+        "a:=series(cosh(sqrt(2)*x)/(1-x),x=0,23): seq(n!*coeff(a,x,n),n=0..22); # _Paolo P. Lava_, Mar 27 2019"
+    ],
+    "mathematica": [
+        "Round@Table[(Gamma[n + 1, Sqrt[2]] Exp[Sqrt[2]] + Gamma[n + 1, -Sqrt[2]]/Exp[Sqrt[2]])/2, {n, 0, 20}] (* Round is equivalent to FullSimplify here, but is much faster *)",
+        "Table[SeriesCoefficient[Cosh[Sqrt[2] x]/(1 - x), {x, 0, n}] n!, {n, 0, 20}]",
+        "a[ n_] := If[ n < 0, 0, n! Sum[ 2^k / (2 k)!, 0] {k, 0, n/2}]]; (* _Michael Somos_, Oct 01 2018 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^30); Vec(serlaplace(cosh(sqrt(2)*x)/(1-x))) \\\\ _G. C. Greubel_, Sep 30 2018",
+        "(PARI) {a(n) = if( n<0, 0, n! * sum(k=0, n\\2, 2^k / (2*k)!))}; /* _Michael Somos_, Oct 01 2018 */",
+        "(Magma) I:=[1,4,12]; [1] cat [n le 3 select I[n] else n*Self(n-1) + 2*Self(n-2) - 2*(n-2)*Self(n-3): n in [1..30]]; // _G. C. Greubel_, Sep 30 2018"
+    ],
+    "xref": [
+        "Cf. A000023, A263823, A277345, A277432."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Vladimir Reshetnikov_, Oct 14 2016",
+    "references": 2,
+    "revision": 24,
+    "time": "2022-09-08T08:46:17-04:00",
+    "created": "2016-10-15T11:12:16-04:00"
+}

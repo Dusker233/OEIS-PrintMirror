@@ -1,0 +1,32 @@
+{
+    "number": 336950,
+    "data": "1,1,6,42,392,4600,64752,1063216,19952256,421227648,9880951040,254960721664,7176891675648,218857588139008,7187394935347200,252897556424140800,9491754142468702208,378509920569294684160,15982018774576565649408,712306819507400060502016",
+    "name": "E.g.f.: 1 / (1 - x * exp(2*x)).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A336950/b336950.txt\">Table of n, a(n) for n = 0..394</a>"
+    ],
+    "formula": [
+        "a(n) = n! * Sum_{k=0..n} (2 * (n-k))^k / k!.",
+        "a(0) = 1; a(n) = Sum_{k=1..n} binomial(n,k) * k * 2^(k-1) * a(n-k).",
+        "a(n) ~ n! * (2/LambertW(2))^n / (1 + LambertW(2)). - _Vaclav Kotesovec_, Aug 09 2021"
+    ],
+    "mathematica": [
+        "nmax = 19; CoefficientList[Series[1/(1 - x Exp[2 x]), {x, 0, nmax}], x] Range[0, nmax]!",
+        "Join[{1}, Table[n! Sum[(2 (n - k))^k/k!, {k, 0, n}], {n, 1, 19}]]",
+        "a[0] = 1; a[n_] := a[n] = Sum[Binomial[n, k] k 2^(k - 1) a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 19}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={ Vec(serlaplace(1 / (1 - x*exp(2*x + O(x^n))))) } \\\\ _Andrew Howroyd_, Aug 08 2020"
+    ],
+    "xref": [
+        "Column k=2 of A351790.",
+        "Cf. A001787, A006153, A122704, A216794, A235328, A336947, A336951, A336952."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Aug 08 2020",
+    "references": 6,
+    "revision": 15,
+    "time": "2022-02-20T06:42:12-05:00",
+    "created": "2020-08-09T03:32:40-04:00"
+}

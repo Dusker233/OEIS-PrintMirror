@@ -1,0 +1,42 @@
+{
+    "number": 301809,
+    "data": "1,2,3,9,21,55,140,364,945,2465,6435,16821,43992,115102,301223,788425,2063817,5402651,14143524,37026936,96935685,253777537,664392743,1739393929,4553778096,11921922650,31211961195,81713914569,213929707485,560075086495,1466295355580,3838810662436,10050136117497",
+    "name": "Group the natural numbers such that the first group is (1) then (2),(3),(4,5),(6,7,8),... with the n-th group containing F(n) sequential terms where F(n) is the n-th Fibonacci number (A000045(n)). Sequence gives the sum of terms in the n-th group.",
+    "comment": [
+        "a(n) is the sum of all nodes at height n-1 within a binary tree structure recursively built from the Hofstadter G-sequence (see comments for A005206)."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A301809/b301809.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Wikipedia, <a href=\"https://www.wikipedia.org/wiki/Hofstadter_sequence\">Hofstadter sequence</a>.",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (3,1,-5,-1, 1)."
+    ],
+    "formula": [
+        "a(1) = 1 and for n > 1, a(n) = (F(n+2)+1)*F(n-1)/2, where F(n) is the n-th Fibonacci number (A000045).",
+        "From _Colin Barker_, Mar 27 2018: (Start)",
+        "G.f.: x*(1 - x)*(1 - 4*x^2 - x^3 + x^4) / ((1 + x)*(1 - 3*x + x^2)*(1 - x - x^2)).",
+        "a(n) = 3*a(n-1) + a(n-2) - 5*a(n-3) - a(n-4) + a(n-5) for n>6.",
+        "(End)"
+    ],
+    "example": [
+        "a(7) = 14 + 15 + 16 + ... + 21 = (F(9)+1)*F(6)/2 = 140."
+    ],
+    "mathematica": [
+        "a[n_] := If[n==1, 1, (Fibonacci[n+2]+1)Fibonacci[n-1]/2]; Array[a, 50]",
+        "Join[{1}, LinearRecurrence[{3, 1, -5, -1, 1}, {2, 3, 9, 21, 55}, 40]] (* _Vincenzo Librandi_, Apr 18 2018 *)"
+    ],
+    "program": [
+        "(Magma) [1] cat [(Fibonacci(n+2)+1)*Fibonacci(n-1) div 2 : n in [2..35] ]; // _Vincenzo Librandi_, Apr 18 2018",
+        "(PARI) a(n) = if (n==1, 1, (fibonacci(n+2)+1)*fibonacci(n-1)/2); \\\\ _Michel Marcus_, Apr 21 2018",
+        "(PARI) Vec(x*(1 - x)*(1 - 4*x^2 - x^3 + x^4) / ((1 + x)*(1 - 3*x + x^2)*(1 - x - x^2)) + O(x^60)) \\\\ _Colin Barker_, May 11 2018"
+    ],
+    "xref": [
+        "Cf. A000045, A005206, A122931."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Frank M Jackson_, Mar 27 2018",
+    "references": 1,
+    "revision": 31,
+    "time": "2022-09-08T08:46:20-04:00",
+    "created": "2018-05-09T12:03:24-04:00"
+}

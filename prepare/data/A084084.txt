@@ -1,0 +1,43 @@
+{
+    "number": 84084,
+    "data": "1,3,9,28,86,265,816,2513,7739,23833,73396,226030,696081,2143648,6601569,20330163,62608681,192809420,593775046,1828587033,5631308624,17342153393,53406819691,164471408185,506505428836,1559831901918",
+    "name": "Length of lists created by n substitutions k -> Range[0,1+Mod[k+1,3]] starting with {0}.",
+    "comment": [
+        "Transformation invert T109 gave a match with A078039; T100 binomial gave a match with A012781; equivalent to replacements 0 -> {0,1,2}; 1 -> {0,1,2,3}; 2 -> {0,1}, 3 -> {0,1,2} operating n times with {0}."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A084084/b084084.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Tomislav Doslic and I. Zubac, <a href=\"http://amc-journal.eu/index.php/amc/article/view/851\">Counting maximal matchings in linear polymers</a>, Ars Mathematica Contemporanea 11 (2016) 255-276.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (2,3,1)."
+    ],
+    "formula": [
+        "G.f.: (1+x)/(1-2*x-3*x^2-x^3).",
+        "a(n) = A000931(4*n + 6). - _Michael Somos_, Sep 18 2012"
+    ],
+    "example": [
+        "{0}, {0,1,2}, {0,1,2,0,1,2,3,0,1}, {0,1,2,0,1,2,3,0,1,0,1,2,0,1,2,3,0,1,0,1,2,0,1,2,0,1,2,3} have lengths 1, 3, 9, 28.",
+        "G.f. = 1 + 3*x + 9*x^2 + 28*x^3 + 86*x^4 + 265*x^5 + 816*x^6 + ..."
+    ],
+    "mathematica": [
+        "Length/@Flatten/@NestList[ # /. k_Integer:>Range[0, 1+Mod[k+1, 3]]&, {0}, 8]",
+        "LinearRecurrence[{2,3,1}, {1,3,9}, 41] (* _G. C. Greubel_, Oct 16 2022 *)"
+    ],
+    "program": [
+        "(Magma) [n le 3 select 3^(n-1) else 2*Self(n-1) +3*Self(n-2) +Self(n-3): n in [1..41]]; // _G. C. Greubel_, Oct 16 2022",
+        "(SageMath)",
+        "def A084084_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( (1+x)/(1-2*x-3*x^2-x^3) ).list()",
+        "A084084_list(40) # _G. C. Greubel_, Oct 16 2022"
+    ],
+    "xref": [
+        "Cf. A000931, A078039, A012781."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Wouter Meeussen_, May 11 2003",
+    "references": 1,
+    "revision": 21,
+    "time": "2022-10-17T07:05:04-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

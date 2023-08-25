@@ -1,0 +1,35 @@
+{
+    "number": 321588,
+    "data": "1,1,1,9,29,181,1285",
+    "name": "Number of connected nonnegative integer matrices with sum of entries equal to n, no zero rows or columns, and distinct rows and columns.",
+    "comment": [
+        "A matrix is connected if the positions in each row (or each column) of the nonzero entries form a connected hypergraph."
+    ],
+    "example": [
+        "The a(4) = 29 matrices:",
+        "4 31 13",
+        ".",
+        "3 21 21 20 12 12 11 110 11 110 101 101 1 10 10 02 011 011 01 01",
+        "1 10 01 11 10 01 20 101 02 011 110 011 3 21 12 11 110 101 21 12",
+        ".",
+        "11 11 10 10 01 01",
+        "10 01 11 01 11 10",
+        "01 10 01 11 10 11"
+    ],
+    "mathematica": [
+        "prs2mat[prs_]:=Table[Count[prs,{i,j}],{i,Union[First/@prs]},{j,Union[Last/@prs]}];",
+        "multsubs[set_,k_]:=If[k==0,{{}},Join@@Table[Prepend[#,set[[i]]]&/@multsubs[Drop[set,i-1],k-1],{i,Length[set]}]];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Union[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[multsubs[Tuples[Range[n],2],n],And[Union[First/@#]==Range[Max@@First/@#],Union[Last/@#]==Range[Max@@Last/@#],UnsameQ@@prs2mat[#],UnsameQ@@Transpose[prs2mat[#]],Length[csm[Map[Last,GatherBy[#,First],{2}]]]==1]&]],{n,6}]"
+    ],
+    "xref": [
+        "Cf. A007718, A056156, A059201, A120733, A283877, A316980, A319557, A319558, A319559, A319565, A319647, A319616-A319629, A321446, A321515."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Nov 13 2018",
+    "references": 2,
+    "revision": 5,
+    "time": "2018-11-14T08:10:14-05:00",
+    "created": "2018-11-14T08:10:14-05:00"
+}

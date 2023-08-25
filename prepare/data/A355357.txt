@@ -1,0 +1,42 @@
+{
+    "number": 355357,
+    "data": "1,1,1,4,7,20,43,110,262,674,1684,4397,11320,29938,78641,210044,559724,1507563,4060585,11016027,29919220,81673846,223307300,612851316,1684816018,4645243490,12829177587,35513736868,98465916370,273531234027,760966444416",
+    "name": "G.f. A(x) satisfies: x = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n+1)) * A(x)^n.",
+    "comment": [
+        "a(n) = Sum_{k=0..floor(n/2)} A355350(n-k,n-2*k) for n >= 0.",
+        "a(n) = A359720(n,0), for n >= 0."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A355357/b355357.txt\">Table of n, a(n) for n = 0..400</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) x = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n+1)) * A(x)^n.",
+        "(2) x*P(x^2) = Product_{n>=1} (1 - x^(2*n)*A(x)) * (1 - x^(2*n-2)/A(x)), where P(x) = Product_{n>=1} 1/(1 - x^n) is the partition function (A000041), due to the Jacobi triple product identity."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + x^2 + 4*x^3 + 7*x^4 + 20*x^5 + 43*x^6 + 110*x^7 + 262*x^8 + 674*x^9 + 1684*x^10 + 4397*x^11 + 11320*x^12 + ...",
+        "where",
+        "x = ... + x^12/A(x)^4 - x^6/A(x)^3 + x^2/A(x)^2 - 1/A(x) + 1 - x^2*A(x) + x^6*A(x)^2 - x^12*A(x)^3 + x^20*A(x)^4 -+ ...",
+        "also,",
+        "x*P(x^2) = (1 - x^2*A(x))*(1 - 1/A(x)) * (1 - x^4*A(x))*(1 - x^2/A(x)) * (1 - x^6*A(x))*(1 - x^4/A(x)) * (1 - x^8*A(x))*(1 - x^6/A(x)) * ...",
+        "where P(x) is the partition function and begins",
+        "P(x) = 1 + x + 2*x^2 + 3*x^3 + 5*x^4 + 7*x^5 + 11*x^6 + 15*x^7 + 22*x^8 + 30*x^9 + 42*x^10 + 56*x^11 + 77*x^12 + ... + A000041(n)*x^n + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1,1],t); for(i=1,n, A=concat(A,0); t = ceil(sqrt(n+4));",
+        "A[#A] = -polcoeff( sum(m=-t,t, (-1)^m*x^(m*(m+1))*Ser(A)^m ), #A-1));A[n+1]}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A355350, A355351, A355352, A355353, A355354, A355355, A355356.",
+        "Cf. A359720, A357221, A357222, A357223, A357224, A357225, A357226."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Jun 29 2022",
+    "references": 21,
+    "revision": 9,
+    "time": "2023-01-14T10:11:49-05:00",
+    "created": "2022-06-30T10:40:34-04:00"
+}

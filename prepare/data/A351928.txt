@@ -1,0 +1,56 @@
+{
+    "number": 351928,
+    "data": "2,2,6,8,8,8,20,24,24,24,72,186,186,332,332,1134,1134,1134,1134,1134,1134,25458,25458,25458,25458,25458,25458,159140,249968,249968,249968,249968,249968,249968,249968,249968,9076914,9076914,9076914,9076914,9076914,9076914,90062678",
+    "name": "Smallest positive integer k such that 2^k has no '2' in the last n digits of its ternary expansion.",
+    "comment": [
+        "The powers of two are required to have at least n ternary digits, i.e., 2^k >= 3^(n-1).",
+        "Erd\u0151s (~1978) conjectured that 1, 4, and 256 are the only powers of two whose ternary expansion consists solely of 0's and 1's."
+    ],
+    "link": [
+        "Paul Erd\u0151s, <a href=\"https://www.jstor.org/stable/2689842\">Some unconventional problems in number theory</a>, Mathematics Magazine, Vol. 52, No. 2 (1979), pp. 67-70.",
+        "Robert I. Saye, <a href=\"https://arxiv.org/abs/2202.13256\">On two conjectures concerning the ternary digits of powers of two</a>, arXiv:2202.13256 [math.NT], 2022."
+    ],
+    "mathematica": [
+        "smallest[n_] := Module[{k}, k = Max[1, Ceiling[(n - 1) Log[2, 3]]];  While[MemberQ[Take[IntegerDigits[2^k, 3], -n], 2], ++k]; k]; Table[smallest[n], {n, 1, 20}]"
+    ],
+    "program": [
+        "(PARI) a(n) = my(k=max(1, logint(3^(n-1), 2))); while(#select(x->(x==2), Vec(Vecrev(digits(2^k,3)), n)), k++); k; \\\\ _Michel Marcus_, Feb 26 2022",
+        "(Python)",
+        "from sympy.ntheory.digits import digits",
+        "def a(n, startk=1):",
+        "    k = max(startk, len(bin(3**(n-1))[2:]))",
+        "    pow2 = 2**k",
+        "    while 2 in digits(pow2, 3)[-n:]:",
+        "        k += 1",
+        "        pow2 *= 2",
+        "    return k",
+        "an = 0",
+        "for n in range(1, 22):",
+        "    an = a(n, an)",
+        "    print(an, end=\", \") # _Michael S. Branicky_, Feb 27 2022",
+        "(Python)",
+        "from itertools import count",
+        "def A351928(n):",
+        "    kmax, m = 3**n, (3**(n-1)).bit_length()",
+        "    k2 = pow(2,m,kmax)",
+        "    for k in count(m):",
+        "        a = k2",
+        "        while a > 0:",
+        "            a, b = divmod(a,3)",
+        "            if b == 2:",
+        "                break",
+        "        else:",
+        "            return k",
+        "        k2 = 2*k2 % kmax # _Chai Wah Wu_, Mar 19 2022"
+    ],
+    "xref": [
+        "Cf. A004642, A117971, A351927."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert Saye_, Feb 25 2022",
+    "references": 2,
+    "revision": 42,
+    "time": "2023-03-18T08:49:14-04:00",
+    "created": "2022-03-19T06:36:14-04:00"
+}

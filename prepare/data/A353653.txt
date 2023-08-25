@@ -1,0 +1,61 @@
+{
+    "number": 353653,
+    "data": "2,3,9,10,11,12,13,14,15,21,27,33,39,45,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,93,99,105,111,117,123,129,135,141,147,153,159,165",
+    "name": "Unique monotonic sequence of positive integers satisfying a(a(n)) = k*(n-1) + 3, where k = 6.",
+    "comment": [
+        "Numbers m such that the base-6 representation of (5*m-3) starts with 11 or 12 or 13 or 14 or 15 or ends with 0.",
+        "First differences give a run of 6^i 1's followed by a run of 6^i 6's, for i >= 0."
+    ],
+    "link": [
+        "Yifan Xie, <a href=\"/A353653/b353653.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Aa#aan\">Index entries for sequences of the a(a(n)) = 2n family</a>"
+    ],
+    "formula": [
+        "For n in the range (2*6^i + 3)/5 <= n < (7*6^i + 3)/5, for i >= 0:",
+        "  a(n) = n + 6^i.",
+        "  a(n+1) = 1 + a(n).",
+        "Otherwise, for n in the range (7*6^i + 3)/5 <= n < (12*6^i + 3)/5, for i >= 0:",
+        "  a(n) = 6*(n - 6^i) - 3.",
+        "  a(n+1) = 6 + a(n)."
+    ],
+    "example": [
+        "a(5) = 11 because (2*6^1 + 3)/3 <= 5 < (7*6^1 + 3)/5, hence a(5) = 5 + 6^1 = 11;",
+        "a(10) = 21 because (7*6^1 + 3)/5 <= 10 < (12*6^1 + 3)/5, hence a(10) = 6*(10 - 6^1) - 3 = 21."
+    ],
+    "program": [
+        "(C++)",
+        "/* program used to generate the b-file */",
+        "#include<iostream>",
+        "using namespace std;",
+        "int main(){",
+        "    int cnt1=1, flag=0, cnt2=1, a=2;",
+        "    for(int n=1; n<=10000; n++) {",
+        "        cout<<n<<\" \"<<a<<endl;",
+        "        if(cnt2==cnt1) {",
+        "            flag=1-flag;",
+        "            cnt1=1;",
+        "            if(flag) a+=1;",
+        "            else {",
+        "                a+=6;",
+        "                cnt2*=6;",
+        "            }",
+        "        }",
+        "        else {",
+        "            cnt1++;",
+        "            a+=(flag?6:1);",
+        "        }",
+        "    }",
+        "    return 0;",
+        "}"
+    ],
+    "xref": [
+        "For other values of k: A080637 (k=2), A003605 (k=3), A353651 (k=4), A353652 (k=5), this sequence (k=6)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Yifan Xie_, Jul 15 2022",
+    "references": 3,
+    "revision": 24,
+    "time": "2022-10-24T02:24:15-04:00",
+    "created": "2022-07-20T22:38:09-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 308711,
+    "data": "2,3,5,7,13,17,23,37,43,47,53,67,73,83,97,103,107,113,137,167,173,197,223,283,307,313,317,337,347,353,367,373,383,397,443,467,503,523,547,607,613,617,643,647,653,673",
+    "name": "Left-truncatable primes in base-10 bijective numeration.",
+    "comment": [
+        "Not identical to A033664; in fact a strict subsequence of A033664. For example, 2003 belongs to A033664 but not to this sequence, since in bijective numerals 2003 is 19X3, whose suffix 9X3 = 1003 = 17 * 59."
+    ],
+    "link": [
+        "Robin Houston, <a href=\"/A308711/b308711.txt\">Table of n, a(n) for n = 1..8391</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Bijective_numeration\">Bijective numeration</a>"
+    ],
+    "program": [
+        "(Sage)",
+        "DIGITS = \"123456789X\"",
+        "DECODE = {d: i + 1 for i, d in enumerate(DIGITS)}",
+        "def decode(s):",
+        "    return reduce(lambda n, c: 10 * n + DECODE[c], s, 0)",
+        "def search(s):",
+        "    n = decode(s)",
+        "    if n > 0:",
+        "        if not is_prime(n): return",
+        "        yield n",
+        "    for digit in DIGITS: yield from search(digit + s)",
+        "full = sorted(search(\"\"))",
+        "full[:10]"
+    ],
+    "xref": [
+        "Cf. A024785, A033664."
+    ],
+    "keyword": "nonn,base,easy,fini,full",
+    "offset": "1,1",
+    "author": "_Robin Houston_, Jun 19 2019",
+    "references": 1,
+    "revision": 18,
+    "time": "2020-03-15T04:18:58-04:00",
+    "created": "2019-07-21T05:35:02-04:00"
+}

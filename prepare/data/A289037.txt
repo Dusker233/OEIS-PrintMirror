@@ -1,0 +1,49 @@
+{
+    "number": 289037,
+    "data": "3,6,9,13,16,20,23,26,30,33,37,40,43,47,50,54,57,61,64,67,71,74,78,81,84,88,91,95,98,102,105,108,112,115,119,122,125,129,132,136,139,142,146,149,153,156,160,163,166,170,173,177,180,183,187,190,194,197",
+    "name": "Positions of 1 in A289035; complement of A289036.",
+    "comment": [
+        "Conjecture:  a(n)/n -> 2 + sqrt(2), and 0 < 2 + sqrt(2) - a(n)/n < -1 + sqrt(2) for n >= 1.",
+        "From _Michel Dekking_, Mar 20 2022: (Start)",
+        "Proof of (a part of) Kimberling's conjecture. This is based on the formula for the recursion in the FORMULA section of A293077, where we use that the final-letter-removed version of the String-Replace map has the same fixed point A289035.",
+        "Let N1(n) be the number of 1's in the n-th iterate theta(n) of the final-letter-removed mapping defined in A289035. It was observed in A293077 that  N1(n) = L(n-1)/2, where L(n) = A293077(n) is the length of the n-th iterate theta(n) of the final-letter-removed mapping. As usual, proving a(n)/n -> 2 + sqrt(2) is the same as proving that the frequency of 1's in A293077 is equal to 1/(2 + sqrt(2)) = 1 - sqrt(2)/2 =: mu. Ignoring a proof of the existence of the limit, this means that we have to show that",
+        "      N1(n) /L(n) -> 1 - sqrt(2)/2   as n->oo.",
+        "By the observation above this is the same as proving that",
+        "      L(n-1)/2L(n) -> 1 - sqrt(2)/2   as n->oo.",
+        "We know from A293077 that",
+        "      L(n) = 2 L(n-1) - L(n-2) + 2 floor(L(n-2)/4).",
+        "For the determination of the limit we replace the term 2 floor(L(n-2)/4) by  L(n-2)/2, as we may.",
+        "So we have L(n) ~ 2 L(n-1) - L(n-2)/2, which leads to",
+        "      L(n)/2L(n+1) ~ 2 L(n-1)/2L(n+1) - L(n-2)/4L(n+1).",
+        "Replacing L(n-1)/L(n+1) by L(n-1)/2L(n)*2L(n)/L(n+1), and similarly for the last term, we obtain an equation for mu as n->oo:",
+        "      mu = 4mu^2 - 2mu^3.",
+        "The solutions to this equation are 0, 1+sqrt(2)/2, and 1-sqrt(2)/2. Since 0<mu<1, it follows that mu = 1 - sqrt(2)/2.",
+        "Note: The full conjecture of Kimberling would follow from the conjecture A289035(n) = A171588(n-3) for n>3. (End)",
+        "Conjecture:  a(n+1) - a(n) = A276864(n) for all n. - _Michel Dekking_, Mar 20 2022",
+        "From _Michel Dekking_, Mar 22 2022: (Start)",
+        "The arguments given in the proof above carry over to the positions of 1 in the sequences A288997, A289001, A289011, A289025, A289035, A289071, A289239, and A289242. It follows that for all these sequences x(n)/n -> 2 + sqrt(2), where x(n) is the position of the n-th 1 in these sequences.",
+        "Note that this does not apply to the sequence A289165 where the String-Replace map is not equal to a two-block map because the 2-block 11 occurs at position 85 in A289165. (End)"
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A289037/b289037.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "z = 10; (* number of iterates *)",
+        "s = {0, 0}; w[0] = StringJoin[Map[ToString, s]];",
+        "w[n_] := StringReplace[w[n - 1], {\"00\" -> \"0010\", \"01\" -> \"010\", \"10\" -> \"010\"}]",
+        "TableForm[Table[w[n], {n, 0, 10}]]",
+        "st = ToCharacterCode[w[z]] - 48   (* A289035 *)",
+        "Flatten[Position[st, 0]]  (* A289036 *)",
+        "Flatten[Position[st, 1]]  (* A289037 *)"
+    ],
+    "xref": [
+        "Cf. A289035, A289036."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jun 27 2017",
+    "references": 5,
+    "revision": 13,
+    "time": "2022-03-22T18:47:30-04:00",
+    "created": "2017-06-27T21:37:46-04:00"
+}

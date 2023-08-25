@@ -1,0 +1,33 @@
+{
+    "number": 357262,
+    "data": "2,3,5,7,126,154,315,329,342,418,833,884,1134,1344,1595,1776,1826,1955,2354,4248,4332,5828,7588,7791,9983,14161,15194,16416,21479,22165,23472,25994,26128,27383,33282,42479,42772,43416,43492,44733,45428,51988,55223,61755,72171,72471",
+    "name": "Numbers k such that the product of distinct digits of k equals the sum of the prime divisors of k.",
+    "example": [
+        "329 = 7*47. 3*2*9 = 7+47. Thus 329 is a term."
+    ],
+    "mathematica": [
+        "Select[Range[2, 10^5], !MemberQ[(d = IntegerDigits[#]), 0] && Times @@ Union[d] == Plus @@ FactorInteger[#][[;;,1]] &] (* _Amiram Eldar_, Sep 21 2022 *)"
+    ],
+    "program": [
+        "(PARI) isok(k) = vecprod(Set(digits(k))) == vecsum(factor(k)[, 1]);",
+        "(Python)",
+        "from math import prod",
+        "from sympy import primefactors",
+        "def ok(n): return n and prod(map(int, set(str(n)))) == sum(primefactors(n))",
+        "print([k for k in range(10**5) if ok(k)]) # _Michael S. Branicky_, Sep 21 2022",
+        "(Magma) sp:=func<n|&+PrimeDivisors(n)>; [n:n in [2..80000]|sp(n) eq &*[c:c in Set(Intseq(n))]]; // _Marius A. Burtea_, Sep 21 2022"
+    ],
+    "xref": [
+        "Cf. A008472."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alexandru Petrescu_, Sep 21 2022",
+    "ext": [
+        "More terms from _Marius A. Burtea_, Sep 21 2022"
+    ],
+    "references": 0,
+    "revision": 25,
+    "time": "2022-10-19T05:39:29-04:00",
+    "created": "2022-10-19T05:39:29-04:00"
+}

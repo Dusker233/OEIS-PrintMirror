@@ -1,0 +1,30 @@
+{
+    "number": 303736,
+    "data": "8,76,751,7508,75201,752451,7523259,75239327,752389040,7523761073,75238050781,752382051546,7523801085404,75237991990847,752380354682456,7523805396029055,75238037557271886",
+    "name": "Number of deficient numbers < 10^n.",
+    "comment": [
+        "Limit_{n->oo} a(n)/10^n = 0.752... is the density of deficient numbers (A005100)."
+    ],
+    "mathematica": [
+        "Accumulate@ Array[Count[Range[10^#, 10^(# + 1) - 1], _?(DivisorSigma[1, #] < 2 # &)] &, 6, 0] (* _Michael De Vlieger_, May 20 2018 *)"
+    ],
+    "program": [
+        "(GAP) P:=Filtered([1..10^7],n->Sigma(n)<2*n);;",
+        "o:=List([1..7],j->[]);; for i in [1..Length(P)] do for n in [1..Length(o)] do if P[i]<10^n then Add(o[n],P[i]); fi; od; od;",
+        "a:=List(o,Length);",
+        "(PARI) a(n) = sum(k=1, 10^n-1, sigma(k) < 2*k); \\\\ _Michel Marcus_, May 19 2018"
+    ],
+    "xref": [
+        "Cf. A005100, A302992."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Muniru A Asiru_, May 19 2018",
+    "ext": [
+        "a(11)-a(17) from _Hiroaki Yamanouchi_, Aug 03 2018"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2022-07-02T16:14:00-04:00",
+    "created": "2018-05-26T22:22:53-04:00"
+}

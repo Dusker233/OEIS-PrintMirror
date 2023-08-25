@@ -1,0 +1,40 @@
+{
+    "number": 83264,
+    "data": "198,396,510,594,792,966,990,1020,1188,1386,1530,1566,1584,1782,1932,1980,2040,2178,2376,2550,2590,2772,2898,2970,3060,3132,3168,3198,3564,3570,3864,3960,4080,4158,4230,4356,4590,4698,4752,4830,4950,5100,5180",
+    "name": "Numbers k such that the difference d of the largest and smallest prime factors of k is a composite divisor of k.",
+    "comment": [
+        "From _David A. Corneth_, Jul 14 2018: (Start)",
+        "No term k is a perfect power (or 1). If k is a perfect power then it's divisible by 0, a contradiction. Hence a term k has at least two prime factors.",
+        "All terms are even. Suppose a term k is odd. Then the smallest prime factor is > 2. Since k has at least two prime factors which are odd, the difference between the largest and smallest prime factor is even hence k is even. A contradiction, hence all terms are even.",
+        "All terms are of the form 2 * (p - 2) * p * m where p - 2 is composite, p is prime and m has all, if any, of its prime factors between 2 and p (inclusive). (End)"
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A083264/b083264.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "Solutions to x mod d = 0 where d = A006530(x) - A020639(x) is composite."
+    ],
+    "example": [
+        "198 = 2*3*3*11 = 2*9*11 is in the sequence where d = 11 - 2 = 9 is composite."
+    ],
+    "mathematica": [
+        "ffi[x_] := Flatten[FactorInteger[x]]; ba[x_] := Table[Part[ffi[x], 2*w-1], {w, 1, lf[x]}]; lf[x_] := Length[FactorInteger[x]]; ma[x_] := Max[ba[x]]; mi[x_] := Min[ba[x]] Do[s=ma[ba[n]]-mi[ba[n]]; If[Mod[n, s]==0&&Greater[s, 2]&&!PrimeQ[s], Print[n]], {n, 1, 20000}]",
+        "dllpfQ[n_]:=Module[{c=Transpose[FactorInteger[n]][[1]],d},d=Last[c]-First[ c];If[d==0,d=1];Divisible[n,d]&&d>2&&CompositeQ[d]]; Select[ Range[ 6000],dllpfQ] (* _Harvey P. Dale_, Sep 26 2014 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = if (n>1, my(f=factor(n)[,1], d = vecmax(f) - vecmin(f)); (d > 1) && !isprime(d) && !(n % d)); \\\\ _Michel Marcus_, Jul 09 2018"
+    ],
+    "xref": [
+        "Cf. A025584, A033845, A071141, A006530, A020639, A083263."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Labos Elemer_, May 12 2003",
+    "ext": [
+        "Name, Formula, and Example simplified by _Jon E. Schoenfield_, Jul 14 2018"
+    ],
+    "references": 1,
+    "revision": 26,
+    "time": "2018-07-15T12:23:34-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

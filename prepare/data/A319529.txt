@@ -1,0 +1,59 @@
+{
+    "number": 319529,
+    "data": "1,9,15,25,35,45,49,63,77,81,91,99,117,121,135,143,153,165,169,187,195,209,221,225,231,247,255,273,285,289,299,315,323,325,345,357,361,375,391,399,405,425,435,437,441,459,475,483,493,513,525,527,529,551,561,567,575,589,609,621,625,627,651",
+    "name": "Odd numbers that have middle divisors.",
+    "comment": [
+        "Odd numbers k such that the symmetric representation of sigma(k) has an odd number of parts.",
+        "From _Felix Fr\u00f6hlich_, Sep 25 2018: (Start)",
+        "For the definition of middle divisors, see A067742.",
+        "Let t be a term of A005408. Then t is in this sequence iff A067742(t) != 0. (End)",
+        "From _Hartmut F. W. Hoft_, May 24 2022: (Start)",
+        "By Theorem 1 (iii) in A067742, the number of middle divisors of a(n) equals the width of the symmetric representation of sigma(a(n)) on the diagonal which equals the triangle entry A249223(n, A003056(n)).",
+        "All terms in sequence A016754 have an odd number of middle divisors, forming a subsequence of this sequence; A016754(18) = a(116) = 1225 = 5^2 * 7^2 is the smallest number in A016754 with 3 middle divisors: 25, 35, 49.",
+        "Sequence A259417 is a subsequence of this sequence and of A320137 since an even power of a prime has a single middle divisor.",
+        "The maximum widths of the center part of the symmetric representation of sigma(a(n)), SRS(a(n)), need not occur at the diagonal. For example, a(304) = 3^3 * 5^3 = 3375, SRS(3375) has 3 parts, its center part has maximum width 3 while its width at the diagonal equals 2 = A067742(3375), and divisors 45 and 75 are the two middle divisors of a(304). (End)"
+    ],
+    "example": [
+        "9 is in the sequence because it's an odd number and the symmetric representation of sigma(9) = 13 has an odd number of parts (more exactly three parts), as shown below:",
+        ".",
+        ".     _ _ _ _ _ 5",
+        ".    |_ _ _ _ _|",
+        ".              |_ _ 3",
+        ".              |_  |",
+        ".                |_|_ _ 5",
+        ".                    | |",
+        ".                    | |",
+        ".                    | |",
+        ".                    | |",
+        ".                    |_|",
+        "."
+    ],
+    "mathematica": [
+        "middleDiv[n_] := Select[Divisors[n], Sqrt[n/2]<=#<Sqrt[2n]&]",
+        "a319529[n_] := Select[Range[1, n, 2], middleDiv[#]!={}&]",
+        "a319529[651] (* _Hartmut F. W. Hoft_, May 24 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice, count",
+        "from sympy import divisors",
+        "def A319529_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for k in count(max(1,startvalue+1-(startvalue&1)),2):",
+        "        if any((k <= 2*d**2 < 4*k for d in divisors(k,generator=True))):",
+        "            yield k",
+        "A319529_list = list(islice(A319529_gen(startvalue=11),40)) # _Chai Wah Wu_, Jun 09 2022"
+    ],
+    "xref": [
+        "Intersection of A005408 and A071562.",
+        "For more information about the diagram see A237593.",
+        "Cf. A000203, A067742, A071090, A236104, A237270, A237271, A239931, A239933, A240542, A245092, A280919, A281007, A296508, A299761, A299777, A303297, A319796, A319801, A319802.",
+        "Cf. A016754, A237048, A249223, A259417, A320137."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Omar E. Pol_, Sep 23 2018",
+    "references": 11,
+    "revision": 44,
+    "time": "2022-07-31T07:47:37-04:00",
+    "created": "2018-09-25T08:05:07-04:00"
+}

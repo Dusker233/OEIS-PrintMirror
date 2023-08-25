@@ -1,0 +1,72 @@
+{
+    "number": 356544,
+    "data": "0,1,4,35,857",
+    "name": "Number of strict closure operators on a set of n elements such that all pairs of nonempty disjoint closed sets can be separated by clopen sets.",
+    "comment": [
+        "A closure operator is strict if the empty set is closed.",
+        "Two nonempty disjoint subsets A and B of X are separated by a set H if A is a subset of H and B is not a subset of H.",
+        "Also the number of S_4 (Kakutani separation property) convexities on a set of n elements in the sense of Chepoi."
+    ],
+    "reference": [
+        "G. M. Bergman. Lattices, Closure Operators, and Galois Connections. Springer, Cham. 2015. 173-212."
+    ],
+    "link": [
+        "Victor Chepoi, <a href=\"https://www.researchgate.net/publication/2407147_Separation_Of_Two_Convex_Sets_In_Convexity_Structures\">Separation of Two Convex Sets in Convexity Structures</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Closure_operator\">Closure operator</a>"
+    ],
+    "example": [
+        "The a(3) = 35 set-systems of closed sets:",
+        "{{}, {1, 2, 3}}",
+        "{{}, {1}, {1, 2, 3}}",
+        "{{}, {2}, {1, 2, 3}}",
+        "{{}, {3}, {1, 2, 3}}",
+        "{{}, {1, 2}, {1, 2, 3}}",
+        "{{}, {1, 3}, {1, 2, 3}}",
+        "{{}, {2, 3}, {1, 2, 3}}",
+        "{{}, {1}, {1, 2}, {1, 2, 3}}",
+        "{{}, {1}, {1, 3}, {1, 2, 3}}",
+        "{{}, {1}, {2, 3}, {1, 2, 3}}",
+        "{{}, {2}, {1, 2}, {1, 2, 3}}",
+        "{{}, {2}, {1, 3}, {1, 2, 3}}",
+        "{{}, {2}, {2, 3}, {1, 2, 3}}",
+        "{{}, {3}, {1, 2}, {1, 2, 3}}",
+        "{{}, {3}, {1, 3}, {1, 2, 3}}",
+        "{{}, {3}, {2, 3}, {1, 2, 3}}",
+        "{{}, {1}, {2}, {1, 3}, {1, 2, 3}}",
+        "{{}, {1}, {2}, {2, 3}, {1, 2, 3}}",
+        "{{}, {1}, {3}, {1, 2}, {1, 2, 3}}",
+        "{{}, {1}, {3}, {2, 3}, {1, 2, 3}}",
+        "{{}, {1}, {1, 2}, {1, 3}, {1, 2, 3}}",
+        "{{}, {2}, {3}, {1, 2}, {1, 2, 3}}",
+        "{{}, {2}, {3}, {1, 3}, {1, 2, 3}}",
+        "{{}, {2}, {1, 2}, {2, 3}, {1, 2, 3}}",
+        "{{}, {3}, {1, 3}, {2, 3}, {1, 2, 3}}",
+        "{{}, {1}, {2}, {1, 2}, {1, 3}, {1, 2, 3}}",
+        "{{}, {1}, {2}, {1, 2}, {2, 3}, {1, 2, 3}}",
+        "{{}, {1}, {3}, {1, 2}, {1, 3}, {1, 2, 3}}",
+        "{{}, {1}, {3}, {1, 3}, {2, 3}, {1, 2, 3}}",
+        "{{}, {2}, {3}, {1, 2}, {2, 3}, {1, 2, 3}}",
+        "{{}, {2}, {3}, {1, 3}, {2, 3}, {1, 2, 3}}",
+        "{{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {1, 2, 3}}",
+        "{{}, {1}, {2}, {3}, {1, 2}, {2, 3}, {1, 2, 3}}",
+        "{{}, {1}, {2}, {3}, {1, 3}, {2, 3}, {1, 2, 3}}",
+        "{{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}}"
+    ],
+    "mathematica": [
+        "SeparatedPairQ[A_][B_] := AnyTrue[A, And @@ MapThread[SubsetQ, {#, B}] &];",
+        "Table[Length[With[{X = Range[n]},",
+        "Select[Cases[Subsets@Subsets@X, {{}, ___, X}],",
+        "   F |-> SubsetQ[F, Intersection @@@ Subsets[F, {2}]]",
+        "&& AllTrue[Select[Subsets[Drop[F, 1], {2}], Apply[DisjointQ]], SeparatedPairQ[Select[{#, Complement[X, #]} & /@ F, MemberQ[F, #[[2]]] &]]]]]], {n, 0, 4}]"
+    ],
+    "xref": [
+        "Cf. A334255, A358144, A358152."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "0,3",
+    "author": "_Tian Vlasic_, Aug 11 2022",
+    "references": 2,
+    "revision": 44,
+    "time": "2022-11-01T10:29:00-04:00",
+    "created": "2022-11-01T10:29:00-04:00"
+}

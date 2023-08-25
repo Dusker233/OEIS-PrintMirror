@@ -1,0 +1,48 @@
+{
+    "number": 338960,
+    "data": "12,444,7584,103184,1246892,14010212,150042016,1554630384,15735477148,156604841764,1539509238384,14997746124304,145132198165132,1397493793301476,13407313676392384,128278229316758192,1224872135665718780,11678406201771406628,111224649402691424912,1058446545979095492816",
+    "name": "Number of (undirected) paths in C_4 X P_n.",
+    "link": [
+        "<a href=\"/A338960/b338960.txt\">Table of n, a(n) for n = 1..20</a>"
+    ],
+    "program": [
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_CnXPk(n, k):",
+        "    grids = []",
+        "    for i in range(1, k + 1):",
+        "        for j in range(1, n):",
+        "            grids.append((i + (j - 1) * k, i + j * k))",
+        "        grids.append((i + (n - 1) * k, i))",
+        "    for i in range(1, k * n, k):",
+        "        for j in range(1, k):",
+        "            grids.append((i + j - 1, i + j))",
+        "    return grids",
+        "def A(start, goal, n, k):",
+        "    universe = make_CnXPk(n, k)",
+        "    GraphSet.set_universe(universe)",
+        "    paths = GraphSet.paths(start, goal)",
+        "    return paths.len()",
+        "def B(n, k):",
+        "    m = k * n",
+        "    s = 0",
+        "    for i in range(1, m):",
+        "        for j in range(i + 1, m + 1):",
+        "            s += A(i, j, n, k)",
+        "    return s",
+        "def A338960(n):",
+        "    return B(4, n)",
+        "print([A338960(n) for n in range(1, 11)])"
+    ],
+    "xref": [
+        "Cf. A003752, A338709, A338961, A338962, A338963."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Seiichi Manyama_, Dec 18 2020",
+    "references": 5,
+    "revision": 22,
+    "time": "2020-12-19T14:27:57-05:00",
+    "created": "2020-12-19T08:05:04-05:00"
+}

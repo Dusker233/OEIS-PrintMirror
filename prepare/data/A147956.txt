@@ -1,0 +1,39 @@
+{
+    "number": 147956,
+    "data": "1,7,11,17,19,23,29,31,37,41,43,47,49,53,59,61,67,71,73,77,79,83,97,101,103,107,109,113,119,121,127,131,133,137,139,149,151,157,161,163,167,173,179,181,187,191,193,197,199,203,209,211,217,223,227,229,239,241",
+    "name": "All positive integers that are not multiples of any Fibonacci numbers >= 2.",
+    "comment": [
+        "This sequence contains a 1 and all terms of sequence A092579 that are not prime Fibonacci numbers."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A147956/b147956.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "77 has the divisors 1,7,11,77. None of these divisors is a Fibonacci number >= 2. So 77 is included in the sequence."
+    ],
+    "maple": [
+        "q:= n-> not ormap(d-> (t-> issqr(t+4) or issqr(t-4)",
+        "        )(5*d^2), numtheory[divisors](n) minus {1}):",
+        "select(q, [$1..250])[];  # _Alois P. Heinz_, Jul 15 2022"
+    ],
+    "mathematica": [
+        "fibQ[n_] := IntegerQ @ Sqrt[5 n^2 - 4] || IntegerQ @ Sqrt[5 n^2 + 4]; aQ[n_] := !AnyTrue[Rest[Divisors[n]], fibQ]; Select[Range[250], aQ] (* _Amiram Eldar_, Oct 06 2019 *)"
+    ],
+    "program": [
+        "(PARI) isfib1(n) = if (n>1, my(k=n^2); k+=(k+1)<<2; (issquare(k) || issquare(k-8)));",
+        "isok(k) = fordiv(k, d, if (isfib1(d), return(0))); 1; \\\\ _Michel Marcus_, Jul 15 2022"
+    ],
+    "xref": [
+        "Cf. A092579."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Nov 17 2008",
+    "ext": [
+        "Extended by _Ray Chandler_, Nov 24 2008"
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2022-07-15T13:53:00-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

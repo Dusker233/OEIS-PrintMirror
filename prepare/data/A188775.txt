@@ -1,0 +1,49 @@
+{
+    "number": 188775,
+    "data": "1,2,3,6,14,42,46,1806,2185,4758,5266,10895,24342,26495,44063,52793,381826,543026,547311,805002",
+    "name": "Numbers k such that Sum_{j=1..k} j^j == -1 (mod k).",
+    "comment": [
+        "Numbers k such that A001923(k) == -1 (mod k).",
+        "a(21) > 10^7. - _Hiroaki Yamanouchi_, Aug 25 2015",
+        "Numbers k such that k divides A062970(k). - _Jianing Song_, Feb 03 2019"
+    ],
+    "example": [
+        "6 is a term because 1^1 + 2^2 + 3^3 + 4^4 + 5^5 + 6^6 = 50069 and 50069 + 1 = 6 * 8345. - _Bernard Schott_, Feb 03 2019"
+    ],
+    "maple": [
+        "isA188775 := proc(n) add( modp(k &^ k,n),k=1..n) ; if modp(%,n) = n-1 then true; else false; end if; end proc:",
+        "for n from 1 do if isA188775(n) then printf(\"%d\\n\",n) ; end if; end do: # _R. J. Mathar_, Apr 10 2011"
+    ],
+    "mathematica": [
+        "Union@Table[If[Mod[Sum[PowerMod[i,i,n],{i,1,n}],n]==n-1,Print[n];n],{n,1,10000}]"
+    ],
+    "program": [
+        "(PARI)",
+        "f(n)=lift(sum(k=1,n,Mod(k,n)^k));",
+        "for(n=1,10^6,if(f(n)==n-1,print1(n,\", \"))) \\\\ _Joerg Arndt_, Apr 10 2011",
+        "(PARI) m=0;for(n=1,1000,m=m+n^n;if((m+1)%n==0,print1(n,\", \"))) \\\\ _Jinyuan Wang_, Feb 04 2019",
+        "(Python)",
+        "sum = 0",
+        "for n in range(10000):",
+        "    sum += n**n",
+        "    if sum % (n+1) == 0:",
+        "        print(n+1, end=',')",
+        "# _Alex Ratushnyak_, May 13 2013"
+    ],
+    "xref": [
+        "Cf. A128981 (sum == 0 (mod n)), A188776 (sum == 1 (mod n)).",
+        "Cf. A057245.",
+        "Cf. A001923, A062970."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,2",
+    "author": "_Jos\u00e9 Mar\u00eda Grau Ribas_, Apr 10 2011",
+    "ext": [
+        "a(12)-a(16) from _Joerg Arndt_, Apr 10 2011",
+        "a(17)-a(20) from _Lars Blomberg_, May 10 2011"
+    ],
+    "references": 4,
+    "revision": 45,
+    "time": "2021-05-20T18:29:47-04:00",
+    "created": "2011-04-10T12:14:49-04:00"
+}

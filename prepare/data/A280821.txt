@@ -1,0 +1,35 @@
+{
+    "number": 280821,
+    "data": "1,1,2,6,144,720,518400,54432000,121927680000,23044331520000,83623270219776000000,32194959034613760000000,15421436889514446422016000000000,297710839152076388177018880000000000,267015660792140704250415525396480000000000",
+    "name": "Partial products of A001783.",
+    "comment": [
+        "A001783(n) = the product of totatives of n."
+    ],
+    "link": [
+        "Project Euler, <a href=\"https://projecteuler.net/problem=754\">Problem 754: Product of Gauss Factorials</a>."
+    ],
+    "formula": [
+        "a(n) = Product_{i=1..n} A001783(i)."
+    ],
+    "mathematica": [
+        "FoldList[#1 #2 &, Table[Times @@ Select[Range@ n, CoprimeQ[n, #] &], {n, 15}]] (* _Michael De Vlieger_, Jan 11 2017 *)",
+        "SetAttributes[Phitorial,{Listable}]",
+        "Phitorial[n_]:=n^EulerPhi[n]*Times@@((Factorial[#]/#^#)^MoebiusMu[n/#]&/@Divisors[n])",
+        "FoldList[Times,Phitorial[Range[20]]] (* _Peter Cullen Burbery_, Jul 14 2023 *)"
+    ],
+    "program": [
+        "(Magma) [&*[&*[h: h in [1..k] | GCD(h,k) eq 1]: k in [1..n]]: n in [1..100]]",
+        "(PARI) f(n) = prod(k=2, n-1, k^(gcd(k, n)==1)); \\\\ A001783",
+        "a(n) = prod(i=1, n, f(i)); \\\\ _Michel Marcus_, Jul 14 2023"
+    ],
+    "xref": [
+        "Cf. A001783, A280820."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Jaroslav Krizek_, Jan 11 2017",
+    "references": 1,
+    "revision": 28,
+    "time": "2023-07-27T19:19:16-04:00",
+    "created": "2017-01-12T16:16:20-05:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 330467,
+    "data": "1,1,4,18,154,1614,23733,396190,8066984,183930948,4811382339,138718632336,4451963556127,155416836338920,5920554613563841,242873491536944706,10725017764009207613,505671090907469848248,25415190929321149684700,1354279188424092012064226",
+    "name": "Number of series-reduced rooted trees whose leaves are multisets whose multiset union is a strongly normal multiset of size n.",
+    "comment": [
+        "A multiset is strongly normal if it covers an initial interval of positive integers with weakly decreasing multiplicities.",
+        "Also the number of different colorings of phylogenetic trees with n labels using strongly normal multisets of colors. A phylogenetic tree is a series-reduced rooted tree whose leaves are (usually disjoint) sets."
+    ],
+    "example": [
+        "The a(3) = 18 trees:",
+        "  {1,1,1}          {1,1,2}          {1,2,3}",
+        "  {{1},{1,1}}      {{1},{1,2}}      {{1},{2,3}}",
+        "  {{1},{1},{1}}    {{2},{1,1}}      {{2},{1,3}}",
+        "  {{1},{{1},{1}}}  {{1},{1},{2}}    {{3},{1,2}}",
+        "                   {{1},{{1},{2}}}  {{1},{2},{3}}",
+        "                   {{2},{{1},{1}}}  {{1},{{2},{3}}}",
+        "                                    {{2},{{1},{3}}}",
+        "                                    {{3},{{1},{2}}}"
+    ],
+    "mathematica": [
+        "strnorm[n_]:=Flatten[MapIndexed[Table[#2,{#1}]&,#]]&/@IntegerPartitions[n];",
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "multing[t_,n_]:=Array[(t+#-1)/#&,n,1,Times];",
+        "amemo[m_]:=amemo[m]=1+Sum[Product[multing[amemo[s[[1]]],Length[s]],{s,Split[c]}],{c,Select[mps[m],Length[#]>1&]}];",
+        "Table[Sum[amemo[m],{m,strnorm[n]}],{n,0,5}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See links in A339645 for combinatorial species functions.",
+        "cycleIndexSeries(n)={my(v=vector(n), p=sExp(x*sv(1) + O(x*x^n))); v[1]=sv(1); for(n=2, #v, v[n] = polcoef( sExp(x*Ser(v[1..n])), n ) + polcoef(p, n)); 1 + x*Ser(v)}",
+        "StronglyNormalLabelingsSeq(cycleIndexSeries(15)) \\\\ _Andrew Howroyd_, Dec 28 2020"
+    ],
+    "xref": [
+        "The singleton-reduced version is A316652.",
+        "The unlabeled version is A330465.",
+        "Not requiring weakly decreasing multiplicities gives A330469.",
+        "The case where the leaves are sets is A330625.",
+        "Cf. A000311, A000669, A004114, A005121, A005804, A141268, A292504, A292505, A318812, A318849, A319312, A330471, A330475."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Dec 22 2019",
+    "ext": [
+        "Terms a(10) and beyond from _Andrew Howroyd_, Dec 28 2020"
+    ],
+    "references": 10,
+    "revision": 12,
+    "time": "2020-12-29T16:38:54-05:00",
+    "created": "2019-12-24T17:30:02-05:00"
+}

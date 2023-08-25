@@ -1,0 +1,58 @@
+{
+    "number": 64037,
+    "data": "1,3,24,285,4242,73206,1403028,29082339,640672890,14818136190,356665411440,8874875097270,227135946200940,5955171596514900,159439898653636320,4347741997166750235,120493374240909299130,3387806231071627372590,96488484001399878973200",
+    "name": "Number of walks of length 2n on cubic lattice, starting and finishing at origin and staying in first (nonnegative) octant.",
+    "link": [
+        "Nachum Dershowitz, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL20/Dershowitz/dersh3.html\">Touchard\u2019s Drunkard</a>, Journal of Integer Sequences, Vol. 20 (2017), #17.1.5.",
+        "R. K. Guy, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/GUY/catwalks.html\">Catwalks, sandsteps and Pascal pyramids</a>, J. Integer Sequences, Vol. 3 (2000), Article #00.1.6.",
+        "James Mallos, <a href=\"https://doi.org/10.3390/math7020165\">A 6-Letter 'DNA' for Baskets with Handles</a>, Mathematics (2019) Vol. 7, No. 2, 165.",
+        "G. Xin, <a href=\"http://dx.doi.org/10.1016/j.aam.2007.04.007\">Determinant formulas relating to tableaux of bounded height</a>, Adv. Appl. Math. 45 (2010) 197-211."
+    ],
+    "formula": [
+        "a(n) = Sum_{j=0..n} C(2n, 2j)*c(j)*c(j+1)*c(n-j) where c(k)=A000108(k).",
+        "G.f. is a large expression in terms of hypergeometric functions and sqrt's, see Maple program.  - _Mark van Hoeij_, Apr 19 2013",
+        "a(n) = binomial(2*n,n)*((7*n+11)*A002893(n+1)-(9*n+9)*A002893(n))/(2*(n+1)*(n+2)^2*(n+3)). - _Mark van Hoeij_, Apr 19 2013",
+        "a(n) ~ 2^(2*n - 2) * 3^(2*n + 9/2) / (Pi^(3/2) * n^(9/2)). - _Vaclav Kotesovec_, Jun 09 2019",
+        "D-finite with recurrence: (n+3)*(n+2)*(n+1)*a(n) -4*(2*n-1)*(5*n^2+10*n+3)*a(n-1) +36*(n-1)*(2*n-1)*(2*n-3)*a(n-2)=0. - _R. J. Mathar_, Feb 20 2020"
+    ],
+    "example": [
+        "a(1)=3 and a(2)=24 since if the possible steps are Right, Left, Up, Down, Forwards and Backwards, then the two-step paths are FB, RL and UD, while the four-step paths are FBFB, FBRL, FBUD, FFBB, FRBL, FRLB, FUBD, FUDB, RFBL, RFLB, RLFB, RLRL, RLUD, RRLL, RUDL, RULD, UDFB, UDRL, UDUD, UFBD, UFDB, URDL, URLD, UUDD."
+    ],
+    "maple": [
+        "f := -3*x+(1+sqrt(1-40*x+144*x^2))/4;",
+        "H := (1-2*f)*f*hypergeom([1/6,1/3],[1],27*(1-2*f)*f^2)^2/sqrt(1+6*f);",
+        "r2 := (1-4*x)*(36*x-1)*(1920*x^2+166*x+1)*x^2;",
+        "r1 := -(138240*x^4+7776*x^3+200*x^2-92*x-1)*x;",
+        "r0 := 19800*x^3+764*x^2-86*x-1;",
+        "ogf := (r2*diff(H,x,x)+r1*diff(H,x)+r0*H)/(5760*x^4) + 1/(2*x);",
+        "series(ogf, x=0, 30); # _Mark van Hoeij_, Apr 19 2013",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n<2, 2*n+1, ((8*n-4)*(5*n^2+10*n+3)",
+        "       *a(n-1)-36*(2*n-1)*(2*n-3)*(n-1)*a(n-2))/((n+1)*(n+2)*(n+3)))",
+        "    end:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Mar 29 2019"
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[2*n, 2*j] * CatalanNumber[j] * CatalanNumber[j+1] * CatalanNumber[n-j], {j, 0, n}], {n, 0, 20}] (* _Vaclav Kotesovec_, Jun 09 2019 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "C(n,k) = binomial(n,k);",
+        "c(n) = binomial(2*n,n)/(n+1);",
+        "a(n) = sum(j=0,n, C(2*n, 2*j)*c(j)*c(j+1)*c(n-j));",
+        "/* _Joerg Arndt_, Apr 19 2013 */"
+    ],
+    "xref": [
+        "Cf. A064036. The two- and one-dimensional equivalents are A005568 and A000108."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Henry Bottomley_, Aug 23 2001",
+    "ext": [
+        "Added more terms, _Joerg Arndt_, Apr 19 2013"
+    ],
+    "references": 13,
+    "revision": 39,
+    "time": "2020-02-20T06:26:40-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

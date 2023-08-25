@@ -1,0 +1,57 @@
+{
+    "number": 333629,
+    "data": "1,3,5,11,27,93,859,13789,1530805",
+    "name": "Least k such that the runs-resistance of the k-th composition in standard order is n.",
+    "comment": [
+        "A composition of n is a finite sequence of positive integers summing to n. The k-th composition in standard order (row k of A066099) is obtained by taking the set of positions of 1's in the reversed binary expansion of k, prepending 0, taking first differences, and reversing again.",
+        "For the operation of taking the sequence of run-lengths of a finite sequence, runs-resistance is defined as the number of applications required to reach a singleton."
+    ],
+    "link": [
+        "Claude Lenormand, <a href=\"/A318921/a318921.pdf\">Deux transformations sur les mots</a>, Preprint, 5 pages, Nov 17 2003."
+    ],
+    "example": [
+        "The sequence together with the corresponding compositions begins:",
+        "        1: (1)",
+        "        3: (1,1)",
+        "        5: (2,1)",
+        "       11: (2,1,1)",
+        "       27: (1,2,1,1)",
+        "       93: (2,1,1,2,1)",
+        "      859: (1,2,2,1,2,1,1)",
+        "    13789: (1,2,2,1,1,2,1,1,2,1)",
+        "  1530805: (2,1,1,2,2,1,2,1,1,2,1,2,2,1)",
+        "For example, starting with 13789 and repeatedly applying A333627 gives: 13789 -> 859 -> 110 -> 29 -> 11 -> 6 -> 3 -> 2, corresponding to the compositions: (1,2,2,1,1,2,1,1,2,1) -> (1,2,2,1,2,1,1) -> (1,2,1,1,2) -> (1,1,2,1) -> (2,1,1) -> (1,2) -> (1,1) -> (2)."
+    ],
+    "mathematica": [
+        "nn=1000;",
+        "stc[n_]:=Differences[Prepend[Join@@Position[Reverse[IntegerDigits[n,2]],1],0]]//Reverse;",
+        "stcrun[n_]:=Total[2^(Accumulate[Reverse[Length/@Split[stc[n]]]])]/2;",
+        "seq=Table[Length[NestWhileList[stcrun,n,Length[stc[#]]>1&]]-1,{n,nn}];",
+        "Table[Position[seq,i][[1,1]],{i,Union[seq]}]"
+    ],
+    "xref": [
+        "Positions of first appearances in A333628 = number of times applying A333627 to reach a power of 2, starting with n.",
+        "A subsequence of A333630.",
+        "All of the following pertain to compositions in standard order (A066099):",
+        "- The length is A000120.",
+        "- The partial sums from the right are A048793.",
+        "- The sum is A070939.",
+        "- Adjacent equal pairs are counted by A124762.",
+        "- Equal runs are counted by A124767.",
+        "- Strict compositions are ranked by A233564.",
+        "- The partial sums from the left are A272020.",
+        "- Constant compositions are ranked by A272919.",
+        "- Normal compositions are ranked by A333217.",
+        "- Heinz number is A333219.",
+        "- Anti-runs are counted by A333381.",
+        "- Adjacent unequal pairs are counted by A333382.",
+        "Cf. A029931, A098504, A114994, A225620, A228351, A238279, A242882, A318928, A329744, A329747, A333489."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Mar 31 2020",
+    "references": 6,
+    "revision": 7,
+    "time": "2020-03-31T10:54:29-04:00",
+    "created": "2020-03-31T10:54:29-04:00"
+}

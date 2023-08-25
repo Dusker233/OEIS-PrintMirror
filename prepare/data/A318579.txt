@@ -1,0 +1,34 @@
+{
+    "number": 318579,
+    "data": "1,2,10,30,98,270,786,2046,5418,13556,33726,81002,192902,447562,1027990,2316750,5165398,11345298,24668952,52972902,112688802,237193354,494933514,1023238806,2098662698,4269141516,8620916966,17280687472,34405835066,68044209950,133732805458",
+    "name": "Expansion of Product_{i>=1, j>=1} ((1 + x^(i*j))/(1 - x^(i*j)))^(i*j).",
+    "comment": [
+        "Convolution of A280540 and A280541."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A318579/b318579.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} ((1 + x^k)/(1 - x^k))^(k*tau(k)), where tau(k) = number of divisors of k (A000005).",
+        "G.f.: exp(Sum_{k>=1} ( Sum_{d|k} (1 - (-1)^(k/d))*d^2*tau(d) ) * x^k/k).",
+        "log(a(n)) ~ 3^(2/3) * (7*Zeta(3))^(1/3) * log(n)^(1/3) * n^(2/3) / 2^(4/3). - _Vaclav Kotesovec_, Sep 03 2018"
+    ],
+    "maple": [
+        "a:=series(mul(mul(((1+x^(i*j))/(1-x^(i*j)))^(i*j),j=1..100),i=1..100),x=0,31): seq(coeff(a,x,n),n=0..30); # _Paolo P. Lava_, Apr 02 2019"
+    ],
+    "mathematica": [
+        "nmax = 30; CoefficientList[Series[Product[Product[((1 + x^(i j))/(1 - x^(i j)))^(i j), {i, 1, nmax}], {j, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 30; CoefficientList[Series[Product[((1 + x^k)/(1 - x^k))^(k DivisorSigma[0, k]), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[(1 - (-1)^(k/d)) d^2 DivisorSigma[0, d], {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 30}]"
+    ],
+    "xref": [
+        "Cf. A000005, A038040, A156616, A280540, A280541, A301554, A301555."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Aug 29 2018",
+    "references": 2,
+    "revision": 12,
+    "time": "2019-04-03T02:56:26-04:00",
+    "created": "2018-08-30T03:55:50-04:00"
+}

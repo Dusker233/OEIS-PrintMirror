@@ -1,0 +1,39 @@
+{
+    "number": 298980,
+    "data": "3,6,7,8,10,14,17,20,22,26,28,30,33,36,37,40,41,42,50,57,58,59,60,62,63,64,66,67,69,70,71,72,73,74,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,100,114,118,122,126,130,134,141,148,158,161,164,167,170,173,176,184,187",
+    "name": "Numbers n such that there exists an integer k < n for which the significant decimal digits of k/n (i.e., neglecting leading zeros) are those of n.",
+    "comment": [
+        "Otherwise said, floor(10^m*k/n) = n for some k and m.",
+        "Also, numbers n which have n as a subsequence in the decimal expansion of k/n, 0 < k < n.",
+        "Initially it appears that if n is present so is 10n and 11n. These two statements are false. 14 is present but 140 is not. 1/140 = 0.00714285... 17 is present but 187 is not.",
+        "However if there is a k between 0 and n so that gcd(k,n) = r > 1 and k/r is used to show that n/r is a term, then so is n. As an example, 33 is a term since 11/33 = 1/3 and 3 is a term. See the first example.",
+        "The density of numbers in this sequence appears to increase to above 55% near n ~ 10^9. See A298981 for the complement and A298982 for the k-values."
+    ],
+    "example": [
+        "3 is a term since 1/3 = 0.3333... and its fractional part begins with 3;",
+        "6 is a term since 10/6 = 1.666... and its fractional part begins with 6;",
+        "7 is a term since 5/7 = 0.714285... and its fractional part begins with 7;",
+        "8 is a term since 7/8 = 0.87500... and its fractional part begins with 8;",
+        "10 is a term since 1/10 = 0.1000... and its fractional part begins with 10;",
+        "14 is a term since 2/14 = 0.142857... and its fractional part begins with 14;",
+        "17 is a term since 3/17 = 0.17647058823... and its fractional part begins with 17; etc."
+    ],
+    "mathematica": [
+        "fQ = Compile[{{n, _Integer}}, Block[{k = 1, il = IntegerLength@ n}, While[m = 10^il*k/n; While[ IntegerLength@ Floor@ m < il, m *= 10]; k < n && Floor[m] != n, k++]; k < n]]; Select[Range@200, fQ]"
+    ],
+    "program": [
+        "(PARI) is_A298980(n,k=(n^2-1)\\10^(logint(n,10)+1)+1)={k*10^(logint((n^2-(n>1))\\k,10)+1)\\n==n} \\\\ Or use A298982 to get the k-value if n is in this sequence or 0 otherwise. \\\\ _M. F. Hasler_, Feb 01 2018"
+    ],
+    "xref": [
+        "Inspired by and equal to the range (= sorted terms) of A298232.",
+        "Complement of A298981.",
+        "Cf. A051626, A298982."
+    ],
+    "keyword": "easy,base,nonn",
+    "offset": "1,1",
+    "author": "_Eric Angelini_, _M. F. Hasler_ and _Robert G. Wilson v_, Jan 30 2018",
+    "references": 3,
+    "revision": 21,
+    "time": "2019-10-19T04:12:27-04:00",
+    "created": "2018-01-30T21:12:27-05:00"
+}

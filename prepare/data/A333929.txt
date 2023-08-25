@@ -1,0 +1,28 @@
+{
+    "number": 333929,
+    "data": "220,366,2620,3864,5020,16104,16536,26448,29760,43524,63020,67344,69615,100485,122265,142290,142310,196248,196724,198990,239856,240312,280540,308620,309264,319550,326424,341904,348840,366792,469028,522405,537744,580320,647190,661776",
+    "name": "Lesser of recursive amicable numbers pair: numbers m < k such that m = s(k) and k = s(m), where s(k) = A333926(k) - k is the sum of proper recursive divisors of k.",
+    "comment": [
+        "The larger counterparts are in A333930."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A333929/b333929.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "220 is a terms since A333926(220) - 220 = 284 and A333926(284) - 284 = 220."
+    ],
+    "mathematica": [
+        "recDivQ[n_, 1] = True; recDivQ[n_, d_] := recDivQ[n, d] = Divisible[n, d] && AllTrue[FactorInteger[d], recDivQ[IntegerExponent[n, First[#]], Last[#]] &]; recDivs[n_] := Select[Divisors[n], recDivQ[n, #] &]; f[p_, e_] := 1 + Total[p^recDivs[e]]; recDivSum[1] = 1; recDivSum[n_] := Times @@ (f @@@ FactorInteger[n]); s[n_] := recDivSum[n] - n; seq = {}; Do[m = s[n]; If[m > n && s[m] == n, AppendTo[seq, n]], {n, 1, 10^5}]; seq"
+    ],
+    "xref": [
+        "Cf. A333926, A333927, A333930.",
+        "Analogous sequences: A002025, A002952 (unitary), A126165 (exponential), A126169 (infinitary), A292980 (bi-unitary)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Apr 10 2020",
+    "references": 2,
+    "revision": 8,
+    "time": "2020-04-12T09:50:09-04:00",
+    "created": "2020-04-10T21:33:31-04:00"
+}

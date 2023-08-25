@@ -1,0 +1,39 @@
+{
+    "number": 345664,
+    "data": "1187,1291,1621,1931,3119,3637,3833,3989,7069,7129,7411,9049,9181,9461,9631,10103,10589,10597,10691,12517,12653,12703,13487,13999,14771,14969,15319,15359,16183,16253,16411,16421,16477,16823,16901,17027,17881,18061,18121,19079,19121,19427,19507,19739",
+    "name": "Primes whose digit reversal is the product of two (not necessarily distinct) emirps.",
+    "example": [
+        "a(3) = 1621 is a term because 1621 is prime and its digit reversal is 1261 = 13*97 where 13 and 97 are emirps."
+    ],
+    "maple": [
+        "digrev:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "isemirp:= proc(p) local r;",
+        "  if not isprime(p) then return false fi;",
+        "  r:= digrev(p);",
+        "  r <> p and isprime(r)",
+        "end proc:",
+        "E:= select(isemirp, [seq(seq(seq(i*10^d+j,j=1..10^d-1,2),i=[1,3,7,9]),d=1..3)]):",
+        "R:= NULL:",
+        "for i from 1 to nops(E) do",
+        "for j from 1 to i do",
+        "    v:= E[i]*E[j];",
+        "    if v > 10^5 then break fi;",
+        "    v:= digrev(v);",
+        "    if isprime(v) then R:= R,v fi",
+        "od od:",
+        "sort([R]);"
+    ],
+    "xref": [
+        "Cf. A006567."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jun 21 2021",
+    "references": 0,
+    "revision": 23,
+    "time": "2021-06-21T23:31:55-04:00",
+    "created": "2021-06-21T23:31:55-04:00"
+}

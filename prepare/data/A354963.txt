@@ -1,0 +1,36 @@
+{
+    "number": 354963,
+    "data": "1,2,4,10,36,118,452,1652,6534,25642,103712,422734,1745742,7276826,30571248,129390958,550897752,2358688884,10147228932,43845016012,190190489188,827925869688,3615706459172,15836838277656,69552782684176,306221759777838,1351299183767556",
+    "name": "G.f. A(x) satisfies: 2 = Sum_{n=-oo..+oo} x^(2*n) * (A(x) - x^n)^n * (1 - x^n*A(x))^n.",
+    "comment": [
+        "Compare to identity: 0 = Sum_{n=-oo..+oo} x^(2*n) * (y - x^n)^n * (y + x^n)^n, which holds for all y."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A354963/b354963.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n satisfies:",
+        "(1) 2 = Sum_{n=-oo..+oo} x^(2*n) * (A(x) - x^n)^n * (1 - x^n*A(x))^n.",
+        "(2) 2 = Sum_{n=-oo..+oo} x^(2*n*(n-1)) / ( (A(x) - x^n)^n * (1 - x^n*A(x))^n )."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 4*x^2 + 10*x^3 + 36*x^4 + 118*x^5 + 452*x^6 + 1652*x^7 + 6534*x^8 + 25642*x^9 + 103712*x^10 + 422734*x^11 + ...",
+        "where A = A(x) satisfies",
+        "2 = ... + x^12/((A - x^3)^3*(1 - x^3*A)^3) + x^4/((A - x^2)^2*(1 - x^2*A)^2) + 1/((A - x)*(1 - x*A)) + 1 + x^2*(A - x)*(1 - x*A) + x^4*(A - x^2)^2*(1 - x^2*A)^2 + x^6*(A - x^3)^3*(1 - x^3*A)^3 + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1]); for(i=1, n, A=concat(A, 0);",
+        "A[#A] = -polcoeff(2 - sum(m=-#A, #A, x^(2*m) * (Ser(A) - x^m)^m*(1 - x^m*Ser(A))^m ), #A-1)); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A363138."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Aug 21 2022",
+    "references": 2,
+    "revision": 14,
+    "time": "2023-06-13T07:22:09-04:00",
+    "created": "2022-08-21T09:14:39-04:00"
+}

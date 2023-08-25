@@ -1,0 +1,30 @@
+{
+    "number": 351405,
+    "data": "1,1,3,7,17,33,75,139,289,557,1119,2143,4341,8437,16843,33343,66573,132109,264243,526387,1052549,2101617,4202031,8396335,16792705,33570193,67137403,134248191,268492033,536927489,1073853307,2147595131,4295180241,8590155085",
+    "name": "a(1) = 1; a(n+1) = Sum_{d|n} 2^(n/d - 1) * a(d).",
+    "formula": [
+        "G.f. A(x) satisfies: A(x) = x * ( 1 + A(x) + 2 * A(x^2) + 4 * A(x^3) + ... + 2^(k-1) * A(x^k) + ... ).",
+        "G.f.: x * ( 1 + Sum_{n>=1} a(n) * x^n / (1 - 2 * x^n) ).",
+        "a(n) ~ 2^(n-1). - _Vaclav Kotesovec_, Feb 18 2022"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=1, 1,",
+        "      add(2^((n-1)/d-1)*a(d), d=numtheory[divisors](n-1)))",
+        "    end:",
+        "seq(a(n), n=1..34);  # _Alois P. Heinz_, Feb 10 2022"
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := a[n] = Sum[2^((n - 1)/d - 1) a[d], {d, Divisors[n - 1]}]; Table[a[n], {n, 1, 34}]",
+        "nmax = 34; A[_] = 0; Do[A[x_] = x (1 + Sum[2^(k - 1) A[x^k], {k, 1, nmax}]) + O[x]^(nmax + 1) //Normal, nmax + 1]; CoefficientList[A[x], x] // Rest"
+    ],
+    "xref": [
+        "Cf. A003238, A038046, A054599, A308076."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Ilya Gutkovskiy_, Feb 10 2022",
+    "references": 2,
+    "revision": 7,
+    "time": "2022-02-18T12:44:14-05:00",
+    "created": "2022-02-10T09:08:22-05:00"
+}

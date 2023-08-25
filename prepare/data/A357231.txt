@@ -1,0 +1,43 @@
+{
+    "number": 357231,
+    "data": "1,1,1,109,8689,1053481,243813361,75186825109,31749087943969,17410718947341841,12133565064814788001,10416041727982093437949,10802433235439921115170449,13331645872563084893190746041,19290709211545941944044481913361,32353568912665546881189872548732069",
+    "name": "a(n) = coefficient of x^(2*n)/(2*n)! in the expansion of the even function C(x) = sqrt(1 + S(x)^2) where S(x) is defined by A357230.",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A357231/b357231.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. C(x) = Sum_{n>=0} a(n) * x^(2*n)/(2*n)! and related odd function S(x) satisfies the following relations.",
+        "(1) S(x) = Integral Product_{n>=1} (1 + S(x)^(2*n))^((2*n-1)/(2*n)) dx.",
+        "(2) C(x) = 1 + Integral S(x) * Product_{n>=2} (1 + S(x)^(2*n))^((2*n-1)/(2*n)).",
+        "(3) C(x) = sqrt(1 + S(x)^2).",
+        "(4) C'(x)*C(x) = S'(x)*S(x).",
+        "(5) C(x) + S(x) = exp( Integral S'(x) / C(x) dx ).",
+        "(5.a) C(x) = cosh( Integral S'(x) / C(x) dx ).",
+        "(5.b) S(x) = sinh( Integral S'(x) / C(x) dx ).",
+        "(6) C(x)^2 + S(x)^2 = cosh( 2 * Integral S'(x) / C(x) dx ).",
+        "(6.a) 2*C(x)^2 = 1 + cosh( 2 * Integral S'(x) / C(x) dx ).",
+        "(6.b) 2*S(x)^2 = -1 + cosh( 2 * Integral S'(x) / C(x) dx ).",
+        "(7) S(x) = Series_Reversion( Integral Product_{n>=1} (1 + x^(2*n))^(-(2*n-1)/(2*n)) dx )."
+    ],
+    "example": [
+        "G.f.: C(x) = 1 + x^2/2! + x^4/4! + 109*x^6/6! + 8689*x^8/8! + 1053481*x^10/10! + 243813361*x^12/12! + 75186825109*x^14/14! + 31749087943969*x^16/16! + ...",
+        "where C(x) = sqrt(1 + S^2) and",
+        "S(x) = x + x^3/3! + 19*x^5/5! + 1339*x^7/7! + 126121*x^9/9! + 22936441*x^11/11! + 6074972299*x^13/13! + 2211448022179*x^15/15! + ... + A357230(n)*x^(2*n-1)/(2*n-1)! + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(S); S = serreverse( intformal( prod(k=1, n+1, (1 + x^(2*k) + x*O(x^(2*n)) )^(-(2*k-1)/(2*k)) ) ) ); (2*n)! * polcoeff( sqrt(1 + S^2), 2*n)}",
+        "for(n=0, 20, print1(a(n), \", \"))",
+        "(PARI) {a(n) = my(S=x); for(i=1, n, S = intformal( prod(k=1, n+1, (1 + S^(2*k) + x*O(x^(2*n)))^((2*k-1)/(2*k)) ) ) ); (2*n)! * polcoeff( sqrt(1 + S^2), 2*n)}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A357230, A357551."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Oct 04 2022",
+    "references": 3,
+    "revision": 11,
+    "time": "2022-12-03T12:03:21-05:00",
+    "created": "2022-10-06T14:12:57-04:00"
+}

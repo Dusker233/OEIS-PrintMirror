@@ -1,0 +1,37 @@
+{
+    "number": 82721,
+    "data": "3,8,9,12,22,24,27,30,36,38,40",
+    "name": "There exist no palindromic hexagonals of length n.",
+    "link": [
+        "P. De Geest, <a href=\"http://www.worldofnumbers.com/hexa.htm\">Palindromic hexagonals</a>"
+    ],
+    "mathematica": [
+        "A054969 = {0, 1, 6, 66, 3003, 5995, 15051, 66066, 617716, 828828, 1269621, 1680861, 5073705, 5676765, 1264114621, 5289009825, 6172882716, 13953435931, 1313207023131, 5250178710525, 6874200024786, 61728399382716, 602224464422206, 636188414881636, 1250444114440521, 16588189498188561, 58183932923938185, 66056806460865066, 67898244444289876, 514816979979618415, 3075488771778845703, 6364000440440004636, 15199896744769899151};",
+        "A082721[n_] := Length[Select[A054969, IntegerLength[#] == n || (n == 1 && # == 0) &]];",
+        "Select[Range[19], A082721[#] == 0 &] (* _Robert Price_, Apr 27 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def ispal(n): s = str(n); return s == s[::-1]",
+        "def hexpals(limit):",
+        "  yield from (k*(2*k-1) for k in range(limit+1) if ispal(k*(2*k-1)))",
+        "def aupto(limit):",
+        "  lengths = set(range(1, limit+1))",
+        "  for h in hexpals(10**limit):",
+        "    if len(lengths) == 0: return",
+        "    lh, minlen = len(str(h)), min(lengths)",
+        "    if lh > minlen: print(minlen, \"in A082721\"); lengths.discard(minlen)",
+        "    if lh in lengths: lengths.discard(lh); print(\"... discarding\", lh)",
+        "aupto(14) # _Michael S. Branicky_, Mar 08 2021"
+    ],
+    "xref": [
+        "Cf. A034822, A054969, A059868, A059869, A059870, A082722, A034307."
+    ],
+    "keyword": "nonn,base,hard,more",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Apr 13 2003",
+    "references": 6,
+    "revision": 17,
+    "time": "2021-03-08T22:27:34-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

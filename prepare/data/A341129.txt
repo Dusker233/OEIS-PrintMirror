@@ -1,0 +1,37 @@
+{
+    "number": 341129,
+    "data": "42,54,66,78,102,114,135,138,147,156,162,174,186,192,222,228,246,250,258,282,318,354,366,372,402,426,438,444,474,498,507,516,534,582,606,618,642,654,678,686,732,762,786,804,822,834,845,876,894,906,942,948,978,1002,1029,1038,1074,1083,1086",
+    "name": "Numbers k such that A341117(k) is divisible by k and k is not a prime or power of a prime.",
+    "comment": [
+        "If k is a prime or power of a prime, A341117(k) is divisible by k.",
+        "Contains no semiprimes."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A341129/b341129.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 66 is a term because 66 = 2*3*11 is not a prime or power of a prime and A341117(66) = 20262 = 66*307."
+    ],
+    "maple": [
+        "f:= proc(n) local D, S,i;",
+        "  D:= sort(convert(numtheory:-divisors(n),list),`>`);",
+        "  S:= ListTools:-PartialSums(D);",
+        "  add(D[i]*S[-i],i=1..nops(D))",
+        "end proc:",
+        "select(t -> not isprime(t) and nops(numtheory:-factorset(t))>1 and f(t) mod t = 0, [$2..10000]);"
+    ],
+    "program": [
+        "(PARI) f(n) = my(d=divisors(n)); sum(k=1, #d, d[k]*sum(i=#d-k+1, #d, d[i])); \\\\ A341117",
+        "isok(m) = !(isprimepower(m) || (m==1)) && !(f(m) % m); \\\\ _Michel Marcus_, Feb 05 2021"
+    ],
+    "xref": [
+        "Cf. A341039, A341117."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Feb 05 2021",
+    "references": 1,
+    "revision": 11,
+    "time": "2021-02-06T22:16:48-05:00",
+    "created": "2021-02-05T22:21:23-05:00"
+}

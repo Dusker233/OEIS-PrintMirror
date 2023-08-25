@@ -1,0 +1,26 @@
+{
+    "number": 327145,
+    "data": "0,1,4,56,4640",
+    "name": "Number of connected set-systems with n vertices and at least one bridge (spanning edge-connectivity 1).",
+    "comment": [
+        "A set-system is a finite set of finite nonempty sets. Elements of a set-system are sometimes called edges. The spanning edge-connectivity of a set-system is the minimum number of edges that must be removed (without removing incident vertices) to obtain a disconnected or empty set-system."
+    ],
+    "mathematica": [
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "spanEdgeConn[vts_,eds_]:=Length[eds]-Max@@Length/@Select[Subsets[eds],Union@@#!=vts||Length[csm[#]]!=1&];",
+        "Table[Length[Select[Subsets[Subsets[Range[n],{1,n}]],spanEdgeConn[Range[n],#]==1&]],{n,0,3}]"
+    ],
+    "xref": [
+        "The BII-numbers of these set-systems are A327111.",
+        "Set systems with non-spanning edge-connectivity 1 are A327196, with covering case A327129.",
+        "Set systems with spanning edge-connectivity 2 are A327130.",
+        "Cf. A003465, A323818, A327069, A327071, A327099, A327108, A327144."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Aug 27 2019",
+    "references": 11,
+    "revision": 5,
+    "time": "2019-09-01T08:40:02-04:00",
+    "created": "2019-09-01T08:40:02-04:00"
+}

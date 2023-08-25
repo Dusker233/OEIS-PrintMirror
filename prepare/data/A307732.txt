@@ -1,0 +1,49 @@
+{
+    "number": 307732,
+    "data": "1,2,4,8,12,20,30,46,72,112,164,248,364,542,796,1180,1732,2550,3744,5504,8076,11854,17386,25498,37382,54808,80342,117770,172618,253008,370820,543490,796546,1167424,1710966,2507572,3675050,5386080,7893712,11568832,16954976",
+    "name": "Number of length-n binary words containing no antisquares except 01 and 10.",
+    "comment": [
+        "An antisquare is a word of the form x x', where x' is the bitwise complement of x."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A307732/b307732.txt\">Table of n, a(n) for n = 0..52</a>"
+    ],
+    "example": [
+        "For n = 4 the 12 examples are all length-4 binary words except 0011, 0110, 1001, and 1100."
+    ],
+    "program": [
+        "(Python)",
+        "from numba import njit",
+        "@njit",
+        "def aupto(nn, v=False):",
+        "  alst = [1, 2, 4, 8]",
+        "  if nn <= 4: return alst[:nn+1]",
+        "  n, prev_as = 4, [0, 1, 2, 3]  # |w|=3, w0 = 0, no a.s.'s except 01, 10",
+        "  while n <= nn:",
+        "    new_as = []",
+        "    for w in prev_as:",
+        "      for b in [0, 1]:",
+        "        wb = 2*w + b",
+        "        for k in range(2, n//2+1):",
+        "          mask2 = (1<<k) - 1",
+        "          mask1 = mask2 << k",
+        "          if (wb&mask2)^((wb&mask1)>>k)==mask2: break # wb ends with an a.s.",
+        "        else: new_as.append(wb) # no break",
+        "    alst.append(2*len(new_as))  # twice that starting with 0 by symmetry",
+        "    if v: print(n, 2*len(new_as), alst)",
+        "    prev_as = new_as",
+        "    n += 1",
+        "  return alst",
+        "print(aupto(30)) # _Michael S. Branicky_, Jan 06 2021"
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_Jeffrey Shallit_, Apr 25 2019",
+    "ext": [
+        "a(36) and beyond from _Michael S. Branicky_, Jan 06 2021"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2021-01-06T19:38:55-05:00",
+    "created": "2019-04-26T19:45:44-04:00"
+}

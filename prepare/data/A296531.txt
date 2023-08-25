@@ -1,0 +1,51 @@
+{
+    "number": 296531,
+    "data": "1,1,1,2,3,6,13,32,51,76,161,386,903,2280,5018,12828,19720,27656,48788,100120,220686,537208,1258242,3123166,7056165,17189752,35968308,82137764,189847917,509880208,1322092262,3807727932,5678509066,7721623440,13293899416,23650787296",
+    "name": "Number of non-averaging permutations of [n] with first element ceiling(n/2).",
+    "comment": [
+        "A non-averaging permutation avoids any 3-term arithmetic progression.",
+        "a(0) = 1 by convention."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A296531/b296531.txt\">Table of n, a(n) for n = 0..99</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/NonaveragingSequence.html\">Nonaveraging Sequence</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Arithmetic_progression\">Arithmetic progression</a>",
+        "<a href=\"/index/No#non_averaging\">Index entries related to non-averaging sequences</a>"
+    ],
+    "formula": [
+        "a(n) = A296529(n,ceiling(n/2))."
+    ],
+    "example": [
+        "a(5) = 6: 31254, 31524, 31542, 35124, 35142, 35412.",
+        "a(6) = 13: 312564, 315264, 315426, 315462, 315624, 351264, 351426, 351462, 351624, 354126, 354162, 354612, 356124."
+    ],
+    "maple": [
+        "b:= proc(s) option remember; local n, r, ok, i, j, k;",
+        "      if nops(s) = 1 then 1",
+        "    else n, r:= max(s), 0;",
+        "         for j in s minus {n} do ok, i, k:= true, j-1, j+1;",
+        "           while ok and i>=0 and k<n do ok, i, k:=",
+        "             not i in s xor k in s, i-1, k+1 od;",
+        "           r:= r+ `if`(ok, b(s minus {j}), 0)",
+        "         od; r",
+        "      fi",
+        "    end:",
+        "a:= n-> b({$0..n} minus {ceil(n/2)-1}):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "b[s_] := b[s] = Module[{n = Max[s], r = 0, ok, i, j, k}, If[Length[s] == 1, 1, Do[{ok, i, k} = {True, j - 1, j + 1}; While[ok && i >= 0 && k < n, {ok, i, k} = {FreeQ[s, i] ~Xor~ MemberQ[s, k], i - 1, k + 1}]; r = r + If[ok, b[s ~Complement~ {j}], 0], {j, s ~Complement~ {n}}]; r]];",
+        "a[n_] := b[Complement[Range[0, n], {Ceiling[n/2] - 1}]];",
+        "Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Jun 02 2018, from Maple *)"
+    ],
+    "xref": [
+        "Cf. A003407, A292523, A296529."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Dec 14 2017",
+    "references": 2,
+    "revision": 17,
+    "time": "2018-06-02T10:38:12-04:00",
+    "created": "2017-12-15T09:41:03-05:00"
+}

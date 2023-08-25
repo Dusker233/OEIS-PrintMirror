@@ -1,0 +1,54 @@
+{
+    "number": 123145,
+    "data": "1,2,6,24,24,144,1008,8064,8064,80640,887040,10644480,10644480,149022720,2235340800,35765452800,35765452800,643778150400,12231784857600,244635697152000,244635697152000,5381985337344000,123785662758912000,2970855906213888000",
+    "name": "a(1) = 1, a(n) = a(n-1) if n == 1 (mod 4), otherwise a(n) = n * a(n-1) for n >= 2.",
+    "comment": [
+        "Terms which repeat appear to be denominators of g.f. 0F2(--; 1/2, 3/4; z^4/64), which begin 24, 8064, 10644480, 35765452800, ... - _Benedict W. J. Irwin_, Jun 15 2018"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A123145/b123145.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "Conjecture: E.g.f.: E(x)=d(G(0))/dx  where G(k) = 1 + x/(4*k+1 - x*(4*k+1)/(1 + x - x/(1 + x - x/(x + 1/G(k+1) )))), or shift on 1 left G(0); (continued fraction,5-step). - _Sergei N. Gladkovskii_, Nov 26 2012"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1,",
+        "      `if`(irem(n, 4)=1, 1, n)*a(n-1))",
+        "    end:",
+        "seq(a(n), n=1..24);  # _Alois P. Heinz_, Jul 16 2023"
+    ],
+    "mathematica": [
+        "a[n_]:= a[n]= If[n==1, 1, If[Mod[n,4]==1, a[n-1], n*a[n-1]]];",
+        "Table[a[n], {n,30}]"
+    ],
+    "program": [
+        "(Magma)",
+        "function a(n) // a = A123145",
+        "  if n eq 1 then return 1;",
+        "  elif (n mod 4) eq 1 then return a(n-1);",
+        "  else return n*a(n-1);",
+        "  end if;",
+        "end function;",
+        "[a(n): n in [1..40]]; // _G. C. Greubel_, Jul 16 2023",
+        "(SageMath)",
+        "def a(n): # A123145",
+        "    if (n==1): return 1",
+        "    elif (n%4==1): return a(n-1)",
+        "    else: return n*a(n-1)",
+        "[a(n) for n in range(1,41)] # _G. C. Greubel_, Jul 16 2023"
+    ],
+    "xref": [
+        "Cf. A007559, A007696."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Roger L. Bagula_, Oct 01 2006",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Oct 04 2006",
+        "More terms from _Bruno Berselli_, Nov 27 2012"
+    ],
+    "references": 2,
+    "revision": 31,
+    "time": "2023-07-16T16:56:53-04:00",
+    "created": "2006-10-09T03:00:00-04:00"
+}

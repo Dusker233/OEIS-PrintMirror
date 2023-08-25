@@ -1,0 +1,43 @@
+{
+    "number": 213554,
+    "data": "1,43,334,1406,4271,10577,22764,44220,79437,134167,215578,332410,495131,716093,1009688,1392504,1883481,2504067,3278374,4233334,5398855,6807977,8497028,10505780,12877605,15659631,18902898,22662514",
+    "name": "Principal diagonal of the convolution array A213553.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A213554/b213554.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (6,-15,20,-15,6,-1)."
+    ],
+    "formula": [
+        "a(n) = n*(39*n^4 + 15*n^3 - 25*n^2 + 1)/30.",
+        "a(n) = 6*a(n-1) - 15*a(n-2) + 20*a(n-3) - 15*a(n-4) + 6*a(n-5) - a(n-6).",
+        "G.f.: x*(1 + 37*x  + 91*x^2 + 27*x^3)/(1 - x)^6."
+    ],
+    "mathematica": [
+        "(* First program *)",
+        "b[n_]:= n; c[n_]:= n^3;",
+        "T[n_, k_]:= Sum[b[k-i] c[n+i], {i, 0, k-1}]",
+        "TableForm[Table[T[n, k], {n, 1, 10}, {k, 1, 10}]]",
+        "Flatten[Table[T[n-k+1, k], {n, 12}, {k, n, 1, -1}]]",
+        "r[n_]:= Table[T[n, k], {k, 1, 60}]  (* A213553 *)",
+        "d = Table[T[n, n], {n, 1, 40}] (* A213554 *)",
+        "s[n_]:= Sum[T[i, n+1-i], {i, 1, n}]",
+        "s1 = Table[s[n], {n, 1, 50}] (* A101089 *)",
+        "(* Second program *)",
+        "Table[(39n^5+15n^4-25n^3+n)/30,{n,30}] (* or *) LinearRecurrence[ {6,-15,20,-15,6,-1},{1,43,334,1406,4271,10577},30] (* _Harvey P. Dale_, Jan 15 2013 *)"
+    ],
+    "program": [
+        "(PARI) vector(30, n, n*(39*n^4 +15*n^3 -25*n^2 +1)/30) \\\\ _G. C. Greubel_, Jul 31 2019",
+        "(Magma) [n*(39*n^4 +15*n^3 -25*n^2 +1)/30: n in [1..30]]; // _G. C. Greubel_, Jul 31 2019",
+        "(Sage) [n*(39*n^4 +15*n^3 -25*n^2 +1)/30 for n in (1..30)] # _G. C. Greubel_, Jul 31 2019",
+        "(GAP) List([1..30], n-> n*(39*n^4 +15*n^3 -25*n^2 +1)/30); # _G. C. Greubel_, Jul 31 2019"
+    ],
+    "xref": [
+        "Cf. A213500, A213553."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Jun 17 2012",
+    "references": 3,
+    "revision": 15,
+    "time": "2022-09-08T08:46:02-04:00",
+    "created": "2012-07-03T05:19:00-04:00"
+}

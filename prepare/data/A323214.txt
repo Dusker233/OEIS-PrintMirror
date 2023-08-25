@@ -1,0 +1,62 @@
+{
+    "number": 323214,
+    "data": "4,6,561,1105,1729,2465,2821,6601,8911,10585,15841,29341,41041,46657,52633,62745,63973,75361,101101,115921,126217,162401,172081,188461,252601,278545,294409,314821,334153,340561,399001,410041,449065,488881,512461,530881,552721",
+    "name": "Composite numbers k such that p^(k-1) == 1 (mod k) for every prime p strongly prime to k.",
+    "comment": [
+        "A positive number k <= n is strongly prime to n if and only if k is prime to n and k does not divide n-1. See A322937 and the link to 'Strong Coprimality'.",
+        "Apparently essentially the Carmichael numbers A002997."
+    ],
+    "link": [
+        "K. Bouall\u00e8gue, O. Echi and R. G. E. Pinch, <a href=\"http://dx.doi.org/10.1142/S1793042110002922\">Korselt numbers and sets</a>, International Journal of Number Theory, 6 (2010), 257-269.",
+        "A. Korselt, G. Tarry, I. Franel and G. Vacca, <a href=\"http://oeis.org/wiki/File:Probl%C3%A8me_chinois.pdf\">Probl\u00e8me chinois</a>, L'interm\u00e9diaire des math\u00e9maticiens 6 (1899), 142-144.",
+        "Peter Luschny, <a href=\"http://oeis.org/wiki/User:Peter_Luschny/StrongCoprimality\">Strong Coprimality</a>",
+        "C. Pomerance, J. L. Selfridge, and S. S. Wagstaff, Jr., <a href=\"http://dx.doi.org/10.1090/S0025-5718-1980-0572872-7\">The pseudoprimes to 25*10^9</a>, Math. Comp., 35 (1980), 1003-1026.",
+        "V. \u0160imerka, <a href=\"https://dml.cz/handle/10338.dmlcz/122245\">Zbytky z arithmetick\u00e9 posloupnosti</a>, (On the remainders of an arithmetic progression), \u010casopis pro p\u011bstov\u00e1n\u00ed matematiky a fysiky. 14  (1885), 221-225.",
+        "L. Wang, <a href=\"http://dx.doi.org/10.1142/S1793042118500148\">The Korselt set of a power of a prime</a>, International Journal of Number Theory, 14 (2018), 233-240."
+    ],
+    "example": [
+        "2, 3 and 5 are not in this sequence because primes are not in this sequence.",
+        "4 and 6 are in this sequence because there are no primes strongly prime to 4 respectively 6.",
+        "For n = 1729 there are 1296 test cases using the definition of A002997 but only 264 test cases using the definition of a(n)."
+    ],
+    "program": [
+        "(Sage)",
+        "def is_strongCarmichael(n):",
+        "    if n == 1 or is_prime(n): return False",
+        "    for k in (1..n):",
+        "        if is_prime(k) and not k.divides(n-1) and is_primeto(k, n):",
+        "            if power_mod(k, n-1, n) != 1: return false",
+        "    return true",
+        "def A323214_list(len):",
+        "    return [n for n in (1..len) if is_strongCarmichael(n)]",
+        "print(A323214_list(600000))",
+        "(Julia)",
+        "using IntegerSequences",
+        "PrimesPrimeTo(n) = (p for p in Primes(n) if isPrimeTo(p, n))",
+        "function isStrongCarmichael(n)",
+        "    if isComposite(n)",
+        "        for k in PrimesPrimeTo(n)",
+        "            if ! Divides(k, n-1)",
+        "                if powermod(k, n-1, n) != 1",
+        "                    return false",
+        "                end",
+        "            end",
+        "        end",
+        "        return true",
+        "    end",
+        "    return false",
+        "end",
+        "L323214(len) = [n for n in 1:len if isStrongCarmichael(n)]",
+        "L323214(30000) |> println"
+    ],
+    "xref": [
+        "Cf. A002997, A322937."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Apr 01 2019",
+    "references": 0,
+    "revision": 30,
+    "time": "2021-02-10T01:09:34-05:00",
+    "created": "2019-05-09T05:48:48-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 351579,
+    "data": "3,43,3671,51473,53051,64811,71143,121591,137383,154111,161459,228521,284573,344053,433141,544403,679709,702743,767071,995303,1158139,1267481,1301507,1320023,1342667,1512293,1682987,1839221,1982891,2022101,2174287,2198153,2370943,2403061,2770549,4148923,4368121",
+    "name": "Primes p such that the sum of p and the next two primes is the product of two consecutive primes.",
+    "comment": [
+        "A000040(k) for k such that A034961(k) is in A006094.",
+        "The Generalized Bunyakovsky Conjecture implies that, for example, there are infinitely many terms of the form 12*s^2+12*s-1 where the next two primes are 12*s^2+12*s+1 and 12*s^2+12*s+5 and the sum of these is (6*s+1)*(6*s+5)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A351579/b351579.txt\">Table of n, a(n) for n = 1..120</a>"
+    ],
+    "example": [
+        "a(3) = 3671 is a term because 3671, 3673, 3677 are three consecutive primes with 3671+3673+3677 = 11021 = 103*107 and 103 and 107 are two consecutive primes."
+    ],
+    "maple": [
+        "q:= proc(n) local r,s;",
+        "  r:= nextprime(floor(sqrt(n)));",
+        "  s:= n/r;",
+        "  s::integer and s = prevprime(r)",
+        "end proc:",
+        "P:= select(isprime,[2,seq(i,i=3..10^7)]):",
+        "S:= [0,op(ListTools:-PartialSums(P))]:",
+        "map(t -> P[t], select(i -> q(S[i+3]-S[i]), [$1..nops(S)-3]));"
+    ],
+    "mathematica": [
+        "prodQ[n_] := Module[{f = FactorInteger[n]}, f[[;; , 2]] == {1, 1} && f[[2, 1]] == NextPrime[f[[1, 1]]]]; q[p_] := PrimeQ[p] && prodQ[p + Plus @@ NextPrime[p, {1, 2}]]; Select[Range[5*10^6], q] (* _Amiram Eldar_, Feb 14 2022 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = {if (isprime(p), my(q=nextprime(p+1), f=factor(p+q+nextprime(q+1))); (omega(f) == 2) && (bigomega(f) == 2) && (f[2,1] == nextprime(f[1,1]+1)););} \\\\ _Michel Marcus_, Feb 14 2022"
+    ],
+    "xref": [
+        "Cf. A000040, A006094, A034961."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Feb 13 2022",
+    "references": 1,
+    "revision": 16,
+    "time": "2022-02-20T06:44:37-05:00",
+    "created": "2022-02-18T22:49:43-05:00"
+}

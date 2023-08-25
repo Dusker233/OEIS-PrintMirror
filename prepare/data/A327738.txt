@@ -1,0 +1,36 @@
+{
+    "number": 327738,
+    "data": "1,1,2,4,9,18,37,76,158,326,672,1386,2862,5906,12187,25148,51900,107103,221023,456110,941256,1942423,4008481,8272094,17070712,35227975,72698206,150023632,309596255,638898274,1318462339,2720844607,5614870612,11587126980",
+    "name": "Expansion of 1 / (1 - Sum_{i>=1, j>=1} x^(i*j^2)).",
+    "comment": [
+        "Invert transform of A046951."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327738/b327738.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: 1 / (1 - Sum_{k>=1} x^(k^2) / (1 - x^(k^2))).",
+        "G.f.: 1 / (1 - Sum_{k>=1} (theta_3(x^k) - 1) / 2), where theta_() is the Jacobi theta function.",
+        "a(0) = 1; a(n) = Sum_{k=1..n} A046951(k) * a(n-k)."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<1, 1, add(a(n-i)*",
+        "      nops(select(issqr, numtheory[divisors](i))), i=1..n))",
+        "    end:",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, Sep 23 2019"
+    ],
+    "mathematica": [
+        "nmax = 33; CoefficientList[Series[1/(1 - Sum[x^(k^2)/(1 - x^(k^2)), {k, 1, Floor[Sqrt[nmax]] + 1}]), {x, 0, nmax}], x]",
+        "a[0] = 1; a[n_] := a[n] = Sum[Length[Select[Divisors[k], IntegerQ[Sqrt[#]] &]] a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 33}]"
+    ],
+    "xref": [
+        "Cf. A004101, A046951, A129921, A280451."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Sep 23 2019",
+    "references": 2,
+    "revision": 7,
+    "time": "2019-09-27T15:16:52-04:00",
+    "created": "2019-09-23T15:04:52-04:00"
+}

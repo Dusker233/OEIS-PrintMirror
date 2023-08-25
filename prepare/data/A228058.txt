@@ -1,0 +1,64 @@
+{
+    "number": 228058,
+    "data": "45,117,153,245,261,325,333,369,405,425,477,549,605,637,657,725,801,833,845,873,909,925,981,1017,1025,1053,1233,1325,1341,1377,1413,1421,1445,1525,1557,1573,1629,1737,1773,1805,1813,1825,2009,2057,2061,2097,2169",
+    "name": "Odd numbers of the form p^(1+4k) * r^2, where p is prime of the form 1+4m, r > 1, and gcd(p,r) = 1. (Euler's criteria for odd perfect numbers).",
+    "comment": [
+        "It has been proved that if an odd perfect number exists, it belongs to this sequence. The first term of the form p^5 * n^2 is 28125 = 5^5 * 3^2, occurring in position 520.",
+        "Sequence A228059 lists the subsequence of these numbers that are closer to being perfect than smaller numbers. - _T. D. Noe_, Aug 15 2013",
+        "Sequence A326137 lists terms with at least five distinct prime factors. See further comments there. - _Antti Karttunen_, Jun 13 2019"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A228058/b228058.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Charles Greathouse and Eric W. Weisstein, <a href=\"http://mathworld.wolfram.com/OddPerfectNumber.html\">MathWorld: Odd perfect number</a>",
+        "Oliver Knill, <a href=\"http://www.math.harvard.edu/~knill/seminars/perfect/handout.pdf\">The oldest open problem in mathematics</a>, Handout for NEU Math Circle, December 2, 2007",
+        "P. P. Nielsen, <a href=\"http://arxiv.org/abs/math/0602485\">Odd Perfect Numbers Have At Least Nine Distinct Prime Factors</a>, arXiv:math/0602485 [math.NT], 2006.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Perfect_number#Odd_perfect_numbers\">Perfect number: Odd perfect numbers</a>",
+        "<a href=\"/index/O#opnseqs\">Index entries for sequences where any odd perfect numbers must occur</a>"
+    ],
+    "formula": [
+        "From _Antti Karttunen_, Apr 22 2019 & Jun 03 2019: (Start)",
+        "A325313(a(n)) = -A325319(n).",
+        "A325314(a(n)) = -A325320(n).",
+        "A001065(a(n)) = A325377(n).",
+        "A033879(a(n)) = A325379(n).",
+        "A034460(a(n)) = A325823(n).",
+        "A325814(a(n)) = A325824(n).",
+        "A324213(a(n)) = A325819(n).",
+        "(End)"
+    ],
+    "mathematica": [
+        "nn = 100; n = 1; t = {}; While[Length[t] < nn, n = n + 2; {p, e} = Transpose[FactorInteger[n]]; od = Select[e, OddQ]; If[Length[e] > 1 && Length[od] == 1 && Mod[od[[1]], 4] == 1 && Mod[p[[Position[e, od[[1]]][[1,1]]]], 4] == 1, AppendTo[t, n]]]; t (* _T. D. Noe_, Aug 15 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (partition)",
+        "a228058 n = a228058_list !! (n-1)",
+        "a228058_list = filter f [1, 3 ..] where",
+        "   f x = length us == 1 && not (null vs) &&",
+        "         fst (head us) `mod` 4 == 1 && snd (head us) `mod` 4 == 1",
+        "         where (us,vs) = partition (odd . snd) $",
+        "                         zip (a027748_row x) (a124010_row x)",
+        "-- _Reinhard Zumkeller_, Aug 14 2013",
+        "(PARI)",
+        "up_to = 1000;",
+        "isA228058(n) = if(!(n%2)||(omega(n)<2),0,my(f=factor(n),y=0); for(i=1,#f~,if(1==(f[i,2]%4), if((1==y)||(1!=(f[i,1]%4)),return(0),y=1), if(f[i,2]%2, return(0)))); (y));",
+        "A228058list(up_to) = { my(v=vector(up_to), k=0, n=0); while(k<up_to, n++; if(isA228058(n), k++; v[k] = n)); (v); };",
+        "v228058 = A228058list(up_to);",
+        "A228058(n) = v228058[n]; \\\\ _Antti Karttunen_, Apr 22 2019"
+    ],
+    "xref": [
+        "Subsequence of A191218, and also of A228056 and A228057 (simpler versions of this sequence).",
+        "For various subsequences with additional conditions, see A228059, A325376, A325380, A325822, A326137 and also A324898 (subsequence if it does not contain any prime powers).",
+        "Cf. A027748, A124010, A005408, A324647, A325319, A325320, A325375, A325377, A325378, A325379, A325819, A325823, A325824."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_T. D. Noe_, Aug 13 2013",
+    "ext": [
+        "Note in parentheses added to the definition by _Antti Karttunen_, Jun 03 2019"
+    ],
+    "references": 62,
+    "revision": 38,
+    "time": "2019-06-13T13:07:07-04:00",
+    "created": "2013-08-13T13:02:50-04:00"
+}

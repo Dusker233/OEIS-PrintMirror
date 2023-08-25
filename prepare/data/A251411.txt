@@ -1,0 +1,48 @@
+{
+    "number": 251411,
+    "data": "1,2,3,4,12,50,86",
+    "name": "Numbers n such that A098550(n) = n.",
+    "comment": [
+        "There is a strong conjecture that there are no further terms. See the discussion in the comments in A098550."
+    ],
+    "reference": [
+        "L. Edson Jeffery, Posting to Sequence Fans Mailing List, Nov 30 2014."
+    ],
+    "link": [
+        "Hans Havermann, <a href=\"http://chesswanks.com/num/a098550loops&amp;chains.txt\">Loops and unresolved chains for map n -> A098550(n) trajectories</a>",
+        "David L. Applegate, Hans Havermann, Bob Selcoe, Vladimir Shevelev, N. J. A. Sloane, and Reinhard Zumkeller, <a href=\"http://arxiv.org/abs/1501.01669\">The Yellowstone Permutation</a>, arXiv preprint arXiv:1501.01669, 2015 and <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Sloane/sloane9.html\">J. Int. Seq. 18 (2015) 15.6.7</a>."
+    ],
+    "mathematica": [
+        "max = 100;",
+        "f[lst_] := Block[{k = 4}, While[GCD[lst[[-2]], k] == 1 || GCD[lst[[-1]], k] > 1 || MemberQ[lst, k], k++]; Append[lst, k]];",
+        "A098550 = Nest[f, {1, 2, 3}, max - 3];",
+        "Select[Transpose[{Range[max], A098550}], #[[1]] == #[[2]]&][[All, 1]] (* _Jean-Fran\u00e7ois Alcover_, Sep 05 2018, after _Robert G. Wilson v_ in A098550 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from fractions import gcd",
+        "A251411_list, l1, l2, s, b = [1,2,3], 3, 2, 4, {}",
+        "for n in range(4,10**4):",
+        "....i = s",
+        "....while True:",
+        "........if not i in b and gcd(i,l1) == 1 and gcd(i,l2) > 1:",
+        "............l2, l1, b[i] = l1, i, 1",
+        "............while s in b:",
+        "................b.pop(s)",
+        "................s += 1",
+        "............if i == n:",
+        "................A251411_list.append(n)",
+        "............break",
+        "........i += 1 # _Chai Wah Wu_, Dec 03 2014"
+    ],
+    "xref": [
+        "Cf. A098550, A251412, A251556."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Dec 02 2014",
+    "references": 3,
+    "revision": 21,
+    "time": "2018-09-05T11:38:28-04:00",
+    "created": "2014-12-02T19:21:02-05:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 341370,
+    "data": "1,18,180,1311,7740,39204,176388,721530,2728053,9651056,32246892,102515508,311923386,912771468,2579132196,7060677537,18781247700,48660380190,123061973176,304351869708,737293187286,1752035386188,4089222211212,9384936015492,21201250825554",
+    "name": "Expansion of (1 / theta_4(x) - 1)^9 / 512.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A341370/b341370.txt\">Table of n, a(n) for n = 9..10000</a>"
+    ],
+    "formula": [
+        "G.f.: (1/512) * (-1 + Product_{k>=1} (1 + x^k) / (1 - x^k))^9."
+    ],
+    "maple": [
+        "g:= proc(n, i) option remember; `if`(n=0, 1/2, `if`(i=1, 0,",
+        "      g(n, i-1))+add(2*g(n-i*j, i-1), j=`if`(i=1, n, 1)..n/i))",
+        "    end:",
+        "b:= proc(n, k) option remember; `if`(k=0, 1, `if`(k=1, `if`(n=0, 0,",
+        "      g(n$2)), (q-> add(b(j, q)*b(n-j, k-q), j=0..n))(iquo(k, 2))))",
+        "    end:",
+        "a:= n-> b(n, 9):",
+        "seq(a(n), n=9..33);  # _Alois P. Heinz_, Feb 10 2021"
+    ],
+    "mathematica": [
+        "nmax = 33; CoefficientList[Series[(1/EllipticTheta[4, 0, x] - 1)^9/512, {x, 0, nmax}], x] // Drop[#, 9] &",
+        "nmax = 33; CoefficientList[Series[(1/512) (-1 + Product[(1 + x^k)/(1 - x^k), {k, 1, nmax}])^9, {x, 0, nmax}], x] // Drop[#, 9] &"
+    ],
+    "xref": [
+        "Cf. A002448, A004410, A014968, A015128, A327387, A338223, A340946, A341228, A341364, A341365, A341366, A341367, A341368, A341369."
+    ],
+    "keyword": "nonn",
+    "offset": "9,2",
+    "author": "_Ilya Gutkovskiy_, Feb 10 2021",
+    "references": 8,
+    "revision": 9,
+    "time": "2021-02-10T11:29:22-05:00",
+    "created": "2021-02-10T11:12:41-05:00"
+}

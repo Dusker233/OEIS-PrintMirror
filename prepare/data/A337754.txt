@@ -1,0 +1,59 @@
+{
+    "number": 337754,
+    "data": "7,31,59,59,263,263,263,691,977,1091,1487,1487,2417,2797,4987,4987,6427,9811,9811,12739,12739,12739,17033,17033,17033,17033,17033,17033,67261,77969,77969,77969,77969,77969,140717,140717,140717,169019,169019,169019,180331",
+    "name": "Least prime p such that 2p+1, 2p+3,..., 2p+2n+1 are not prime.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A337754/b337754.txt\">Table of n, a(n) for n = 0..207</a>"
+    ],
+    "example": [
+        "a(1) = 31 because 2*31+1=63 and 2*31+3=65 are not prime."
+    ],
+    "maple": [
+        "nn:=10^8:",
+        "for n from 1 to 50 do:",
+        "ii:=0:",
+        "  for k from 2 to nn while(ii=0)do:",
+        "    p:=ithprime(k):jj:=0:",
+        "     for i from 1 by 2 to 2*n-1 do:",
+        "      if isprime(2*p+i)",
+        "       then",
+        "       jj:=1:",
+        "       else",
+        "      fi:",
+        "     od:",
+        "       if jj=0",
+        "        then",
+        "        ii:=1: printf(`%d, `,p):",
+        "        else",
+        "       fi:",
+        "     od:",
+        "   od:"
+    ],
+    "program": [
+        "(PARI) isok(p, n) = {forstep(k=1, 2*n+1, 2, if (isprime(2*p+k), return (0));); return(1);}",
+        "a(n) = {my(p=2); while(!isok(p, n), p = nextprime(p+1)); p;} \\\\ _Michel Marcus_, Sep 21 2020",
+        "(Python)",
+        "from sympy import isprime, nextprime",
+        "def a(n, startp=2):",
+        "    p = startp",
+        "    while any(isprime(2*p+i) for i in range(1, 2*n+2, 2)): p = nextprime(p)",
+        "    return p",
+        "print([a(n) for n in range(41)]) # _Michael S. Branicky_, Jul 31 2021",
+        "(Python) # uses above to produce initial segment faster",
+        "def aupton(nn):",
+        "    an, alst = 2, []",
+        "    for n in range(nn+1): an = a(n, startp=an); alst.append(an)",
+        "    return alst",
+        "print(aupton(40)) # _Michael S. Branicky_, Jul 31 2021"
+    ],
+    "xref": [
+        "Cf. A230225."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Michel Lagneau_, Sep 21 2020",
+    "references": 1,
+    "revision": 23,
+    "time": "2021-07-31T09:15:11-04:00",
+    "created": "2020-09-25T11:52:57-04:00"
+}

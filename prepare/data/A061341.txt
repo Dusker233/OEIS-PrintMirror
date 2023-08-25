@@ -1,0 +1,42 @@
+{
+    "number": 61341,
+    "data": "22,303,1006,2272,3003,6001,6006,10006,30003,50015,50024,60001,60006,60025,100006,120015,121925,150005,150012,240005,300003,466085,500015,500024,600001,600006,600025,600075,1000006,1200015,1500005,1500012,1500015,2400005,2500006",
+    "name": "Numbers not ending in 0 whose cubes are concatenations of other cubes.",
+    "comment": [
+        "From _Fran\u00e7ois Marques_, Jul 11 2021: (Start)",
+        "If a and b are integers such that 3*a^2*b and 3*a*b^2 can be obtained as concatenations of cubes then a*10^k+b is a term in the list for k greater than the maximum of the number of digits in b^3, 3*a^2*b and 3*a*b^2.",
+        "Conjecture: the last digit of a(n) is in {1, 2, 3, 4, 5, 6, 8} and if it's 3 then there is k>=2 such that a(n) = 3*10^k+3.",
+        "(End)"
+    ],
+    "link": [
+        "Fran\u00e7ois Marques, <a href=\"/A061341/b061341.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "example": [
+        "2272^3 = 11728027648 = 1_1728_0_27_64_8 (where the underscores indicate concatenation)."
+    ],
+    "program": [
+        "(PARI) can_split(v,b=10,p=3)=if(#v==0,1,for(k=1,#v,if(ispower(fromdigits(v[1..k],b),p) && can_split(v[k+1..#v],b,p), return(1))); return(0));",
+        "isok(n,b=10,p=3)=if(n%b==0,return(0)); my(v=digits(n^p,b)); for(k=1,#v-1,if(ispower(fromdigits(v[1..k],b),p) && can_split(v[k+1..#v],b,p), return(1))); return(0); \\\\ _Fran\u00e7ois Marques_, Jul 12 2021",
+        "(Python)",
+        "from sympy import integer_nthroot",
+        "def iscube(n): return integer_nthroot(n, 3)[1]",
+        "def ok3(n, c):",
+        "    if n%10 == 9 or (c == 1 and n%10 == 0): return False",
+        "    if c > 1 and iscube(n): return True",
+        "    d = str(n)",
+        "    for i in range(1, len(d)):",
+        "        if iscube(int(d[:i])) and ok3(int(d[i:]), c+1): return True",
+        "    return False",
+        "print([r for r in range(61000) if ok3(r**3, 1)]) # _Michael S. Branicky_, Jul 11 2021"
+    ],
+    "xref": [
+        "Cf. A000578, A009421."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Erich Friedman_, Jun 06 2001",
+    "references": 2,
+    "revision": 26,
+    "time": "2021-08-08T01:49:11-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

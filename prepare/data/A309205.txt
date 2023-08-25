@@ -1,0 +1,57 @@
+{
+    "number": 309205,
+    "data": "1,2,24,720,8064,3628800,479001600,87178291200,2988969984000,6402373705728000,2432902008176640000,1124000727777607680000,47726800133326110720000,21225866375084507136000000,60977668922342772100300800000,265252859812191058636308480000000",
+    "name": "Denominators of coefficients of odd powers of x in expansion of f(x) = x cos (x cos (x cos( ... .",
+    "comment": [
+        "f(x) satisfies f(x) = x * cos(f(x)), and the coefficients can be determined from this.",
+        "Alternatively, a(n) can be written in terms of (2*n)! as a(n) = (2*n)!/A309206(n)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A309205/b309205.txt\">Table of n, a(n) for n = 1..100</a>",
+        "W. M. Gosper, <a href=\"/A309204/a309204.pdf\">Material from Bill Gosper's Computers & Math talk, M.I.T., 1989</a>, i+38+1 pages, annotated and scanned, included with the author's permission. (There are many blank pages because about half of the original pages were two-sided, half were one-sided.)",
+        "W. M. Gosper, <a href=\"/A309204/a309204_2.png\">Superposition of plots -4<z<4 of z, cos z, z cos z, cos( z cos z), z cos(z cos z), ...</a>, Jul 29 2019"
+    ],
+    "example": [
+        "f(x) = x - (1/2)*x^3 + (13/24)*x^5 - (541/720)*x^7 + (9509/8064)*x^9 - (7231801/3628800)*x^11 + (1695106117/479001600)*x^13 - (567547087381/87178291200)*x^15 + ...",
+        "Coefficients are",
+        "1, -1/2, 13/24, -541/720, 9509/8064, -7231801/3628800, 1695106117/479001600, -567547087381/87178291200, 36760132319047/2988969984000, -151856004814953841/ 6402373705728000, 113144789723082206461/2432902008176640000, ..."
+    ],
+    "maple": [
+        "M := 20;",
+        "f := add(c[i]*z^(2*i+1),i=0..M);",
+        "f := series(f,z,2*M+3);",
+        "f2 := series(z*cos(f)-f,z,2*M+3);",
+        "for i from 0 to M do e[i]:=coeff(f2,z,2*i+1); od:",
+        "elis:=[seq(e[i],i=0..M)]; clis:=[seq(c[i],i=0..M)];",
+        "t1 := solve(elis,clis); t2 := op(t1);",
+        "t3 := subs(t2,clis);",
+        "map(denom, t3);",
+        "# Alternative:",
+        "G:= f -> f - x*cos(f):",
+        "Newt:= unapply( f - G(f)/D(G)(f),f):",
+        "ff:= x:",
+        "for k from 1 to 5 do",
+        "ff:= convert(series(Newt(ff),x,2^(k+1)),polynom)",
+        "od:",
+        "seq(denom(coeff(ff,x,2*i+1),i=0..31); # _Robert Israel_, Aug 18 2019"
+    ],
+    "mathematica": [
+        "seq[n_] := Module[{p, k}, p = 1+O[x]; For[k = 2, k <= n, k++, p = Cos[x*p]]; p] // CoefficientList[#, x^2]& // Denominator;",
+        "seq[16] (* _Jean-Fran\u00e7ois Alcover_, Sep 07 2019, from PARI *)"
+    ],
+    "program": [
+        "(PARI) \\\\ here F(n) gives n terms of power series.",
+        "F(n)={my(p=1+O(x));for(k=2, n, p=cos(x*p)); p}",
+        "seq(n)={my(v=Vec(F(n))); vector(n, k, denominator(v[2*k-1]))} \\\\ _Andrew Howroyd_, Aug 17 2019"
+    ],
+    "xref": [
+        "Cf. A309204, A309206."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jul 28 2019",
+    "references": 3,
+    "revision": 27,
+    "time": "2019-10-15T11:48:45-04:00",
+    "created": "2019-07-28T11:18:47-04:00"
+}

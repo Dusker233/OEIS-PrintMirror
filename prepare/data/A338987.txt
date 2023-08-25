@@ -1,0 +1,52 @@
+{
+    "number": 338987,
+    "data": "1,1,2,6,24,108,596,3674,26068,202470,1753884,16435754,168174596,1842418704,21757407158,272771715272,3649515044178,51532670206504,770442883634326,12093451621846094,199856952123506304,3452120352032161404,62471981051497913826,1177664861561125869100,23163177237781937250558",
+    "name": "Number of rooted graceful labelings with n edges.",
+    "comment": [
+        "A graceful labeling of a graph with n edges assigns distinct labels l(v) to the vertices such that  0<=l(v)<=n and the n differences |l(u)-l(v)| between labels of adjacent vertices are distinct. It is rooted if, in addition, either |l(u)-l(w)|>|l(u)-l(v)| for some neighbor of u or |l(v)-l(w)|>|l(u)-l(v)| for some neighbor of v, whenever |l(u)-l(v)|<n.",
+        "To generate such a labeling, choose one of the k+1 edges 0--(n-k), 1--(n+1-k), ..., k--(n-k), for each k=0, 1, ..., n-1, provided that at least one of the endpoints has already appeared in a previously chosen edge when k>0."
+    ],
+    "link": [
+        "David A. Sheppard, <a href=\"http://dx.doi.org/10.1016/0012-365X(76)90051-0\">The factorial representation of major balanced labelled graphs</a>, Discrete Math., Vol. 15, No. 4 (1976), 379-388."
+    ],
+    "example": [
+        "a(5) = 108 < 120 = 5!, because 0--5,0--4,0--3,3--5,1--2 and 0--5,1--5,2--5,0--2,1--3 are forbidden, as well as five each beginning with 0--5,0--4,2--5,1--3 and 0--5,1--4,0--3,2--4."
+    ],
+    "program": [
+        "(Python)",
+        "def solve(d, m_in):",
+        "....global _n, _cache",
+        "....args = (d, m_in)",
+        "....if args in _cache:",
+        "........return _cache[args]",
+        "....if d == 0:",
+        "........rv = 1",
+        "....else:",
+        "........rv = 0",
+        "........m_test = 1 | (1<<d)",
+        "........for p in range(_n + 1 - d):",
+        "............if m_in & m_test:",
+        "................rv += solve(d-1, m_in | m_test)",
+        "............m_test <<= 1",
+        "...._cache[args] = rv",
+        "....return rv",
+        "def a338987(n):",
+        "....global _cache, _n",
+        "...._cache, _n = {}, n",
+        "....return 1 if n<2 else 2*solve(n-2, 3|(1<<n))",
+        "# _Bert Dobbelaere_, Dec 23 2020"
+    ],
+    "xref": [
+        "Without rootedness, the number of graceful labelings is n!, A000142, as observed by Sheppard in 1976."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Don Knuth_, Dec 20 2020",
+    "ext": [
+        "a(17)-a(24) from _Bert Dobbelaere_, Dec 23 2020"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2020-12-23T19:49:16-05:00",
+    "created": "2020-12-21T06:49:39-05:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 35126,
+    "data": "1,4,9,256,441,961,16641,48841,61009,66564,1127844,2537649,3857296,4932841,182682256,298840369,342842256,392872041,493772841,787588096,877996161,10766967696,33255899044,49382172841,74825772849",
+    "name": "Squares when digits rotated right once remain square.",
+    "comment": [
+        "Those resulting in leading zeros excluded."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A035126/b035126.txt\">Table of n, a(n) for n = 1..1838</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SquareNumber.html\">Square Number</a>"
+    ],
+    "formula": [
+        "a(n) = A045877(n)^2. - _R. J. Mathar_, Jan 25 2017"
+    ],
+    "example": [
+        "2221^2 = 4932841 -> 1493284 = 1222^2. Note that the root behaves accordingly!"
+    ],
+    "mathematica": [
+        "Select[Range[300000]^2,IntegerQ[Sqrt[FromDigits[RotateRight[ IntegerDigits[ #]]]]]&] (* _Harvey P. Dale_, Mar 22 2015 *)"
+    ],
+    "program": [
+        "(Magma) [k:k in [m^2:m in [1..10^6]]| IsSquare(Seqint( (Intseq(Floor(k/10)) cat  [ Intseq(k)[1]])))]; // _Marius A. Burtea_, Oct 08 2019",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy.solvers.diophantine.diophantine import diop_DN",
+        "def A035126_gen(): # generator of terms",
+        "    for l in count(0):",
+        "        l1, l2 = 10**(l+1), 10**l",
+        "        yield from sorted(set(x**2 for z in (diop_DN(10,m*(1-l1)) for m in range(10)) for x, y in z if l1 >= x**2 >= l2))",
+        "A035126_list = list(islice(A035126_gen(),30)) # _Chai Wah Wu_, Apr 23 2022"
+    ],
+    "xref": [
+        "Cf. A045877, A035130."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Patrick De Geest_, Nov 15 1998",
+    "references": 4,
+    "revision": 24,
+    "time": "2022-09-08T08:44:52-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

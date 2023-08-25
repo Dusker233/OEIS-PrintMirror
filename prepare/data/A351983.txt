@@ -1,0 +1,62 @@
+{
+    "number": 351983,
+    "data": "0,0,1,2,5,9,18,35,67,131,257,505,996,1973,3915,7781,15486,30855,61527,122764,245069,489412,977673,1953515,3904108,7803545,15599618,31187269,62355347,124679883,249310255,498540890,996953659,1993701032,3987069747,7973603891",
+    "name": "Number of integer compositions of n with exactly one part above the diagonal.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A351983/b351983.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "The a(2) = 1 through a(6) = 18 compositions:",
+        "  (2)  (3)   (4)    (5)     (6)",
+        "       (21)  (13)   (14)    (15)",
+        "             (22)   (32)    (42)",
+        "             (31)   (41)    (51)",
+        "             (211)  (131)   (114)",
+        "                    (212)   (132)",
+        "                    (221)   (141)",
+        "                    (311)   (213)",
+        "                    (2111)  (222)",
+        "                            (312)",
+        "                            (321)",
+        "                            (411)",
+        "                            (1311)",
+        "                            (2112)",
+        "                            (2121)",
+        "                            (2211)",
+        "                            (3111)",
+        "                            (21111)"
+    ],
+    "mathematica": [
+        "pless[y_]:=Length[Select[Range[Length[y]],#<y[[#]]&]];",
+        "Table[Length[Select[Join@@Permutations/@ IntegerPartitions[n],pless[#]==1&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "S(v,u,c=0)={vector(#v, k, c + sum(i=1, k-1, v[k-i]*u[i]))}",
+        "seq(n)={my(v=vector(1+n), s=0); v[1]=1; for(i=1, n, v=S(v, vector(n, j, if(j>i,'x,1)), O(x^2)); s+=apply(p->polcoef(p,1), v)); s} \\\\ _Andrew Howroyd_, Jan 02 2023"
+    ],
+    "xref": [
+        "The version for permutations is A000295, weak A057427.",
+        "The version for partitions is A002620, weak A001477.",
+        "The weak version is A177510.",
+        "The version for fixed points is A240736, nonfixed A352520.",
+        "This is column k = 1 of A352524; column k = 0 is A008930.",
+        "A238349 counts compositions by fixed points, first column A238351.",
+        "A352521 counts compositions by strong nonexcedances, first column A219282.",
+        "A352522 counts compositions by weak nonexcedances, first column A238874.",
+        "A352523 counts compositions by nonfixed points, first column A010054.",
+        "A352524 counts compositions by strong excedances, first column A008930.",
+        "A352525 counts compositions by weak excedances, first column A177510.",
+        "Cf. A088218, A098825, A115994, A238352, A330644, A352516."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Apr 02 2022",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Jan 02 2023"
+    ],
+    "references": 5,
+    "revision": 13,
+    "time": "2023-01-02T21:55:17-05:00",
+    "created": "2022-05-15T07:31:58-04:00"
+}

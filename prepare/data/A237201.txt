@@ -1,0 +1,46 @@
+{
+    "number": 237201,
+    "data": "2,9,170,4023,632148,4843161124,1981162639374",
+    "name": "Smallest integer m such that the n consecutive numbers m, m+1, ..., m+n-1 have n prime factors each, counted with multiplicity; a(n) = 0 if no such number exists.",
+    "mathematica": [
+        "Table[First@Select[Range[10^6],Union[PrimeOmega[(#+Range[n]-1)]]==={n}&,1],{n,5}] _Wouter Meeussen_, Feb 09 2014",
+        "With[{po=PrimeOmega[Range[633000]]},Table[SequencePosition[po,PadRight[{},n,n],1][[1,1]],{n,5}]] (* Requires Mathematica version 10 or later *) (* The program generates the first 5 terms of the sequence. *) (* _Harvey P. Dale_, Jun 15 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import sympy",
+        "from sympy import isprime",
+        "from sympy import factorint",
+        "def PrimeFact(x):",
+        "..n = 9930000",
+        "..lst = []",
+        "..while n < 10**10:",
+        "....if not isprime(n):",
+        "......count = 0",
+        "......for i in range(n,n+x):",
+        "........if sum(factorint(i).values()) == x:",
+        "..........count += 1",
+        "........else:",
+        "..........n += 1",
+        "..........break",
+        "......if count == x:",
+        "........return n",
+        "....else:",
+        "......n += 1",
+        "(PARI) for(n=1,5,for(k=2^n-1,oo,my(found=1);for(j=1,n, if(bigomega(k+j)!=n,found=0;break)); if(found,print1(k+1,\", \");break))) \\ _Hugo Pfoertner_, Oct 21 2020"
+    ],
+    "xref": [
+        "Cf. A001222."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,1",
+    "author": "_Derek Orr_, Feb 04 2014",
+    "ext": [
+        "a(6) from _Giovanni Resta_, Feb 09 2014",
+        "a(7) from _Giovanni Resta_, Feb 10 2014"
+    ],
+    "references": 1,
+    "revision": 28,
+    "time": "2021-06-15T17:36:21-04:00",
+    "created": "2014-02-09T17:31:38-05:00"
+}

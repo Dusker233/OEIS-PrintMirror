@@ -1,0 +1,33 @@
+{
+    "number": 121158,
+    "data": "1,1,5,10,34,82,240,630,1764,4752,13108,35703,98108,268553,737864,2025779,5572160,15331017,42230755,116395955,321089489,886320404,2448312482,6767186801,18716207007,51792971141,143403624284,397254931272,1101003729796,3052855074597",
+    "name": "Number of spiro bicyclic skeletons with n carbon atoms (see Parks et al. for precise definition).",
+    "comment": [
+        "Equivalently, the number of graphs on n unlabeled nodes with exactly 2 cycles of equal length joined at a single node and all nodes having degree at most 4. - _Andrew Howroyd_, May 24 2018"
+    ],
+    "reference": [
+        "Camden A. Parks and James B. Hendrickson, Enumeration of monocyclic and bicyclic carbon skeletons, J. Chem. Inf. Comput. Sci., vol. 31, 334-339 (1991)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A121158/b121158.txt\">Table of n, a(n) for n = 5..200</a>"
+    ],
+    "program": [
+        "(PARI) \\\\ here G is A000598 as series",
+        "G(n)={my(g=O(x)); for(n=1, n, g = 1 + x*(g^3/6 + subst(g, x, x^2)*g/2 + subst(g, x, x^3)/3) + O(x^n)); g}",
+        "CycleIndex(n)={sum(k=1, (n-1)\\4,  (j1^(4*k) + 2*j1^(2*k)*j2^k + j2^(2*k))*(1 + j1^2) + 2*(j2^(2*k) + j4^k)*(1 + j2))/8}",
+        "seq(n)={my(t=G(n)); t=x*(t^2+subst(t, x, x^2))/2; my(g(e)=subst(t + O(x*x^(n\\e)), x, x^e) + O(x^n)); Vec(substvec(CycleIndex(n), [j1,j2,j4], [g(1),g(2),g(4)]))} \\\\ _Andrew Howroyd_, May 24 2018"
+    ],
+    "xref": [
+        "Cf. A107278, A121158, A121159, A121160."
+    ],
+    "keyword": "nonn",
+    "offset": "5,3",
+    "author": "_Parthasarathy Nambi_, Aug 13 2006",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, May 24 2018"
+    ],
+    "references": 5,
+    "revision": 5,
+    "time": "2018-05-24T22:13:11-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

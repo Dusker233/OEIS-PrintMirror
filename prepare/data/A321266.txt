@@ -1,0 +1,63 @@
+{
+    "number": 321266,
+    "data": "1,2,3,4,6,8,12,16,17,24,32,34,48,64,68,96,128,136,192,256,272,384,512,544,768,1024,1088,1536,2048,2176,3072,4096,4352,6144,8192,8704,12288,16384,17408,24576,32768,34816,49152,65536,69632,98304,131072,139264",
+    "name": "Smallest positive number for which the square cannot be written as sum of distinct squares of any subset of previous terms.",
+    "comment": [
+        "a(n)^2 = A226076(n) forms a sum-free sequence."
+    ],
+    "link": [
+        "Bert Dobbelaere, <a href=\"/A321266/b321266.txt\">Table of n, a(n) for n = 1..89</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Sum-free_sequence\">Sum-free sequence</a>"
+    ],
+    "formula": [
+        "a(n) = 2 * a(n-3) for n > 9 (conjectured)."
+    ],
+    "example": [
+        "0^2 = 0 (sum of squares of the empty set).",
+        "1^2 cannot be written as sum of squares of the empty set, so a(1)=1.",
+        "Suppose we determined all terms up to a(7)=12:",
+        "13^2 = 12^2 + 4^2 + 3^2,",
+        "14^2 = 12^2 + 6^2 + 4^2,",
+        "15^2 = 12^2 + 8^2 + 4^2 + 1^2.",
+        "16^2 cannot be written as sum of squares of distinct smaller terms, hence a(8)=16."
+    ],
+    "program": [
+        "(Python)",
+        "def findSum(nopt, tgt, a, smax, pwr):",
+        "....if nopt==0:",
+        "........return [] if tgt==0 else None",
+        "....if tgt<0 or tgt>smax[nopt-1]:",
+        "........return None",
+        "....rv=findSum(nopt-1, tgt - a[nopt-1]**pwr, a, smax, pwr)",
+        "....if rv!=None:",
+        "........rv.append(a[nopt-1])",
+        "....else:",
+        "........rv=findSum(nopt-1,tgt, a, smax, pwr)",
+        "....return rv",
+        "def A321266(n):",
+        "....POWER=2 ; x=0 ; a=[] ; smax=[] ; sumpwr=0",
+        "....while len(a)<n:",
+        "........while True:",
+        "............x+=1",
+        "............lst=findSum(len(a), x**POWER, a, smax, POWER)",
+        "............if lst==None:",
+        "................break",
+        "............rhs = \" + \".join([\"%d^%d\"%(i,POWER) for i in lst])",
+        "............print(\"    %d^%d = %s\"%(x,POWER,rhs))",
+        "........a.append(x) ; sumpwr+=x**POWER",
+        "........print(\"a(%d) = %d\"%(len(a),x))",
+        "........smax.append(sumpwr)",
+        "....return a[-1]"
+    ],
+    "xref": [
+        "Square root of A226076.",
+        "Other powers: A321290 (3), A321291 (4), A321292 (5), A321293 (6)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Bert Dobbelaere_, Nov 01 2018",
+    "references": 5,
+    "revision": 13,
+    "time": "2018-12-08T17:25:25-05:00",
+    "created": "2018-12-08T17:25:25-05:00"
+}

@@ -1,0 +1,27 @@
+{
+    "number": 341134,
+    "data": "1,5,15,35,70,121,190,280,395,535,711,920,1160,1425,1725,2041,2395,2775,3200,3645,4146,4640,5190,5730,6325,6915,7625,8270,9030,9745,10576,11320,12320,13185,14305,15281,16510,17480,18855,19835,21306,22435,24010,25025,26810,27790,29590",
+    "name": "Number of ways to write n as an ordered sum of 5 prime powers (including 1).",
+    "maple": [
+        "q:= proc(n) option remember; nops(ifactors(n)[2])<2 end:",
+        "b:= proc(n, t) option remember;",
+        "      `if`(n=0, `if`(t=0, 1, 0), `if`(t<1, 0, add(",
+        "      `if`(q(j), b(n-j, t-1), 0), j=1..n)))",
+        "    end:",
+        "a:= n-> b(n, 5):",
+        "seq(a(n), n=5..51);  # _Alois P. Heinz_, Feb 05 2021"
+    ],
+    "mathematica": [
+        "nmax = 51; CoefficientList[Series[Sum[Boole[PrimePowerQ[k] || k == 1] x^k, {k, 1, nmax}]^5, {x, 0, nmax}], x] // Drop[#, 5] &"
+    ],
+    "xref": [
+        "Cf. A000961, A010055, A282062, A282064, A341123, A341133, A341135, A341136, A341137, A341138, A341139."
+    ],
+    "keyword": "nonn",
+    "offset": "5,2",
+    "author": "_Ilya Gutkovskiy_, Feb 05 2021",
+    "references": 8,
+    "revision": 6,
+    "time": "2021-02-05T18:43:12-05:00",
+    "created": "2021-02-05T18:43:12-05:00"
+}

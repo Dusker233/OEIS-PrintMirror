@@ -1,0 +1,62 @@
+{
+    "number": 265225,
+    "data": "1,4,6,12,15,24,28,40,45,60,66,84,91,112,120,144,153,180,190,220,231,264,276,312,325,364,378,420,435,480,496,544,561,612,630,684,703,760,780,840,861,924,946,1012,1035,1104,1128,1200,1225,1300,1326,1404,1431",
+    "name": "Total number of ON (black) cells after n iterations of the \"Rule 54\" elementary cellular automaton starting with a single ON (black) cell.",
+    "comment": [
+        "Take the first 2n positive integers and choose n of them such that their sum: a) is divisible by n, and b) is minimal. It seems their sum equals a(n). - _Ivan N. Ianakiev_, Feb 16 2019"
+    ],
+    "reference": [
+        "S. Wolfram, A New Kind of Science, Wolfram Media, 2002; p. 55."
+    ],
+    "link": [
+        "Robert Price, <a href=\"/A265225/b265225.txt\">Table of n, a(n) for n = 0..999</a>",
+        "Emanuele Munarini, <a href=\"https://doi.org/10.4418/2021.76.1.14\">Topological indices for the antiregular graphs</a>, Le Mathematiche (2021) Vol. 76, No. 1, see p. 301.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>"
+    ],
+    "formula": [
+        "Conjectures from _Colin Barker_, Dec 08 2015 and Apr 20 2019: (Start)",
+        "a(n) = (n+1)*(2*n -(-1)^n +5)/4.",
+        "a(n) = a(n-1) + 2*a(n-2) - 2*a(n-3) - a(n-4) + a(n-5) for n>4.",
+        "G.f.: (1+3*x) / ((1-x)^3*(1+x)^2).",
+        "(End)",
+        "a(n) = n + 1 + (n+1) * floor((n+1)/2), conjectured. - _Wesley Ivan Hurt_, Dec 25 2016",
+        "a(n) = A093353(n) + n + 1, conjectured. - _Matej Veselovac_, Jan 21 2020"
+    ],
+    "example": [
+        "From _Michael De Vlieger_, Dec 14 2015: (Start)",
+        "First 12 rows, replacing \"0\" with \".\" for better visibility of ON cells, followed by the total number of 1's per row, and the running total up to that row:",
+        "                        1                          =  1 ->  1",
+        "                      1 1 1                        =  3 ->  4",
+        "                    1 . . . 1                      =  2 ->  6",
+        "                  1 1 1 . 1 1 1                    =  6 -> 12",
+        "                1 . . . 1 . . . 1                  =  3 -> 15",
+        "              1 1 1 . 1 1 1 . 1 1 1                =  9 -> 24",
+        "            1 . . . 1 . . . 1 . . . 1              =  4 -> 28",
+        "          1 1 1 . 1 1 1 . 1 1 1 . 1 1 1            = 12 -> 40",
+        "        1 . . . 1 . . . 1 . . . 1 . . . 1          =  5 -> 45",
+        "      1 1 1 . 1 1 1 . 1 1 1 . 1 1 1 . 1 1 1        = 15 -> 60",
+        "    1 . . . 1 . . . 1 . . . 1 . . . 1 . . . 1      =  6 -> 66",
+        "  1 1 1 . 1 1 1 . 1 1 1 . 1 1 1 . 1 1 1 . 1 1 1    = 18 -> 84",
+        "1 . . . 1 . . . 1 . . . 1 . . . 1 . . . 1 . . . 1  =  7 -> 91",
+        "(End)"
+    ],
+    "maple": [
+        "A265225:=n->1/4*(n+1)*(2*n-(-1)^n+5): seq(A265225(n), n=0..60); # _Wesley Ivan Hurt_, Dec 25 2016"
+    ],
+    "mathematica": [
+        "rule = 54; rows = 30; Table[Total[Take[Table[Total[Table[Take[CellularAutomaton[rule,{{1},0},rows-1,{All,All}][[k]],{rows-k+1,rows+k-1}],{k,1,rows}][[k]]],{k,1,rows}],k]],{k,1,rows}]",
+        "Accumulate[Total /@ CellularAutomaton[54, {{1}, 0}, 52]]"
+    ],
+    "xref": [
+        "Cf. A071030, A118108, A118109, A133872."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Robert Price_, Dec 05 2015",
+    "references": 3,
+    "revision": 47,
+    "time": "2021-10-21T01:10:58-04:00",
+    "created": "2015-12-05T22:08:40-05:00"
+}

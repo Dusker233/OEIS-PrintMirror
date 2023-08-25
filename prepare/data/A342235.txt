@@ -1,0 +1,70 @@
+{
+    "number": 342235,
+    "data": "1,4,12,28,50,76,110,148,194,244,302,364,434,508,590,676,770,868,974,1084,1202,1324,1454,1588,1730,1876,2030,2188,2354,2524,2702,2884,3074,3268,3470,3676,3890,4108,4334,4564,4802,5044,5294,5548,5810,6076,6350,6628",
+    "name": "Coordination sequence of David Eppstein's \"Tetrastix\" graph.",
+    "comment": [
+        "The graph in question is the subgraph of the adjacency graph of Z^3, induced by the set of vertices whose coordinates are not all of the same parity. The graph is regular of degree 4, and is vertex-transitive, so it only has one vertex coordination sequence. Conjecture: the second differences are 5, 8, 6, [4, 8], where the bracketed portion repeats."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A342235/b342235.txt\">Table of n, a(n) for n = 0..250</a>",
+        "David Eppstein, <a href=\"https://mathstodon.xyz/@11011110/105771494222747316\">Mathstodon post about this graph</a>, Feb 21 2021.",
+        "R\u00e9my Sigrist, <a href=\"/A342235/a342235.gp.txt\">PARI program for A342235</a>"
+    ],
+    "example": [
+        "The vertices at distance 2 from (1,0,0) are (0,-1,0),(0,0,-1),(0,0,1),(0,1,0),(1,-2,0),(1,0,-2),(1,0,2),(1,2,0),(2,-1,0),(2,0,-1),(2,0,1),(2,1,0). There are 12 of them, so a(2) = 12."
+    ],
+    "program": [
+        "(Haskell)",
+        "-- The main entry is the last one.",
+        "-- Rotate a triple",
+        "rot :: Int -> (Int,Int,Int) -> (Int,Int,Int)",
+        "rot 0 (x,y,z) = (x,y,z)",
+        "rot 1 (y,z,x) = (x,y,z)",
+        "rot 2 (z,x,y) = (x,y,z)",
+        "-- Eppstein graph neighbors helper",
+        "egcn' :: Int -> Int -> Int -> Int -> [(Int,Int,Int)]",
+        "egcn' x y z r =",
+        "  if mod (y+z) 2 == 0",
+        "  then []",
+        "  else map (rot r) [(x-1,y,z),(x+1,y,z)]",
+        "-- Eppstein graph neighbors",
+        "egcn :: (Int,Int,Int) -> [(Int,Int,Int)]",
+        "egcn (x,y,z) =",
+        "  egcn' x y z 0 ++",
+        "  egcn' y z x 1 ++",
+        "  egcn' z x y 2",
+        "-- Eppstein graph coordination step helper",
+        "egcstep' :: [(Int,Int,Int)] -> [(Int,Int,Int)] -> [(Int,Int,Int)] -> [(Int,Int,Int)]",
+        "egcstep' _ [] next = next",
+        "egcstep' prev (this:rest) next =",
+        "  egcstep' prev rest (next ++ filter (\\p -> not (elem p prev || elem p next))",
+        "                                     (egcn this))",
+        "-- Eppstein graph coordination step",
+        "egcstep :: [(Int,Int,Int)] -> [(Int,Int,Int)] -> [(Int,Int,Int)]",
+        "egcstep prev curr = egcstep' prev curr []",
+        "-- Eppstein graph circle iterator",
+        "egciter :: Int -> [(Int,Int,Int)] -> [(Int,Int,Int)] -> [(Int,Int,Int)]",
+        "egciter 0 prev curr = curr",
+        "egciter n prev curr = egciter (n - 1) curr (egcstep prev curr)",
+        "-- Eppstein graph circle; points at distance n",
+        "egc :: Int -> [(Int,Int,Int)]",
+        "egc n = egciter n [] [(1,0,0)]",
+        "-- Eppstein graph coordination sequence; main function.",
+        "egcs :: Int -> Int",
+        "egcs = length . egc",
+        "(PARI) See Links section."
+    ],
+    "xref": [
+        "Cf. A091999."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Allan C. Wechsler_, Mar 06 2021",
+    "ext": [
+        "More terms from _R\u00e9my Sigrist_, Mar 07 2021"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2021-03-07T05:53:23-05:00",
+    "created": "2021-03-06T19:25:22-05:00"
+}

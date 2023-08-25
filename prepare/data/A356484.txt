@@ -1,0 +1,40 @@
+{
+    "number": 356484,
+    "data": "1,2,44,5210,1368900,604109562,535920536336",
+    "name": "a(n) is the hafnian of a symmetric Toeplitz matrix M(2*n) whose first row consists of prime(2*n), prime(2*n-1), ..., prime(1).",
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Hafnian\">Hafnian</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Symmetric_matrix\">Symmetric matrix</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Toeplitz_matrix\">Toeplitz Matrix</a>"
+    ],
+    "example": [
+        "a(2) = 44 because the hafnian of",
+        "    7  5  3  2",
+        "    5  7  5  3",
+        "    3  5  7  3",
+        "    2  3  5  7",
+        "equals M_{1,2}*M_{3,4} + M_{1,3}*M_{2,4} + M_{1,4}*M_{2,3} = 44."
+    ],
+    "mathematica": [
+        "k[i_]:=Prime[i]; M[i_, j_, n_]:=Part[Part[ToeplitzMatrix[Reverse[Array[k, n]]], i], j]; a[n_]:=Sum[Product[M[Part[PermutationList[s, 2n], 2i-1], Part[PermutationList[s, 2n], 2i], 2n], {i, n}], {s, SymmetricGroup[2n]//GroupElements}]/(n!*2^n); Array[a, 6, 0]"
+    ],
+    "program": [
+        "(PARI) tm(n) = my(m = matrix(n, n, i, j, if (i==1, prime(n-j+1), if (j==1, prime(n-i+1))))); for (i=2, n, for (j=2, n, m[i, j] = m[i-1, j-1]; ); ); m;",
+        "a(n) = my(m = tm(2*n), s=0); forperm([1..2*n], p, s += prod(j=1, n, m[p[2*j-1], p[2*j]]); ); s/(n!*2^n); \\\\ _Michel Marcus_, May 02 2023"
+    ],
+    "xref": [
+        "Cf. A202038, A336114, A336286, A336400, A338456.",
+        "Cf. A356481, A356482, A356483.",
+        "Cf. A356492 (determinant of M(n)), A356493 (permanent of M(n))."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "0,2",
+    "author": "_Stefano Spezia_, Aug 09 2022",
+    "ext": [
+        "a(6) from _Michel Marcus_, May 02 2023"
+    ],
+    "references": 9,
+    "revision": 12,
+    "time": "2023-05-02T14:41:46-04:00",
+    "created": "2022-08-17T22:58:29-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 62237,
+    "data": "10,20,30,40,50,60,70,80,90,119,1236,19135,19144,261296,3634992,43139968",
+    "name": "Positive numbers k which are (sum of digits of k) concatenated with (product of digits of k).",
+    "comment": [
+        "For a d-digit number with d >= 88, the sum and product of the digits together have fewer than d digits. So every element of this sequence has 87 or fewer digits, hence it is finite. - _David W. Wilson_, Apr 28 2005",
+        "If we exchange sum with product we get 911, 3612, 13519, 14419, 129626, 3499236, 13996843, which are circular permutations of the last seven terms. - _Paolo P. Lava_, Apr 10 2018"
+    ],
+    "example": [
+        "1236 has sum of digits 12 and product of digits 36."
+    ],
+    "maple": [
+        "P:=proc(q) local n; for n from 1 to q do",
+        "if n=parse(cat(convert(convert(n,base,10),`+`), convert(convert(n,base,10),`*`)))",
+        "then print(n); fi; od;  end: P(10^8); # _Paolo P. Lava_, Apr 10 2018"
+    ],
+    "program": [
+        "(Python)",
+        "from math import prod",
+        "from sympy.utilities.iterables import multiset_permutations as mp",
+        "from itertools import count, islice, combinations_with_replacement as mc",
+        "def c(s):",
+        "    d = list(map(int, s))",
+        "    return sorted(s) == sorted(str(sum(d)) + str(prod(d)))",
+        "def ok(s):",
+        "    d = list(map(int, s))",
+        "    return s[0] != '0' and \"\".join(s) == str(sum(d)) + str(prod(d))",
+        "def nd(d): yield from (\"\".join(m) for m in mc(\"0123456789\", d))",
+        "def b(): yield from (s for d in count(1) for s in nd(d) if c(s))",
+        "def a(): yield from (int(\"\".join(p)) for s in b() for p in mp(s) if ok(p))",
+        "print(list(islice(a(), 16))) # _Michael S. Branicky_, Jun 30 2022"
+    ],
+    "xref": [
+        "Cf. A038364, A038369, A066282."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,1",
+    "author": "_Erich Friedman_, Jun 30 2001",
+    "ext": [
+        "More terms from _Harvey P. Dale_, Jul 04 2001",
+        "More terms from _David W. Wilson_, Apr 28 2005; he reports on May 03 2005 that there are no further terms.",
+        "Offset corrected by _Altug Alkan_, Apr 10 2018"
+    ],
+    "references": 4,
+    "revision": 26,
+    "time": "2022-07-22T05:19:30-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

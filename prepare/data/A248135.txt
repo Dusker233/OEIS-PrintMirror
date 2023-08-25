@@ -1,0 +1,64 @@
+{
+    "number": 248135,
+    "data": "1,12,52,840,988,1461,4926,21376,130484,210840,297158",
+    "name": "Nonprime numbers k that divide the sum of remainders of k' mod k, for k from 1 to k', where k' is the arithmetic derivative of k.",
+    "example": [
+        "Arithmetic derivative of 12 is 16.",
+        "16 == 0 mod 1; 16 == 0 mod 2; 16 == 1 mod 3; 16 == 0 mod 4;",
+        "16 == 1 mod 5; 16 == 4 mod 6; 16 == 2 mod 7; 16 == 0 mod 8;",
+        "16 == 7 mod 9; 16 == 6 mod 10; 16 == 5 mod 11; 16 == 4 mod 12;",
+        "16 == 3 mod 13; 16 == 2 mod 14; 16 == 1 mod 15; 16 == 0 mod 16",
+        "and 0 + 0 + 1 + 0 + 1 + 4 + 2 + 0 + 7 + 6 + 5 + 4 + 3 + 2 + 1 + 0 = 36.",
+        "Finally 36 == 0 mod 12."
+    ],
+    "maple": [
+        "isA248135 := proc(n)",
+        "    local adir ;",
+        "    if isprime(n) then",
+        "        false;",
+        "    else",
+        "        adir := A003415(n) ;",
+        "        if modp(add(adir mod k,k=1..adir),n) = 0 then",
+        "            true;",
+        "        else",
+        "            false;",
+        "        end if;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 do",
+        "    if isA248135(n) then",
+        "        print(n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Oct 10 2014"
+    ],
+    "mathematica": [
+        "ad[n_] := Which[n == 0, 0, n == 1, 0, PrimeQ[n], 1, True, Sum[Module[{p, e}, {p, e} = pe; n e/p], {pe, FactorInteger[n]}]];",
+        "okQ[n_] := !PrimeQ[n] && With[{d = ad[n]}, Divisible[Total[Mod[d, Range[d]]], n]];",
+        "For[k = 1, k <= 300000, k++, If[okQ[k], Print[k]]] (* _Jean-Fran\u00e7ois Alcover_, May 29 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, factorint",
+        "A248135_list = []",
+        "for n in range(1,10**6):",
+        "....if not isprime(n):",
+        "........a = sum([int(n*e/p) for p, e in factorint(n).items()]) if n > 1 else 0",
+        "........if not sum(a % i for i in range(1,a)) % n:",
+        "............A248135_list.append(n)",
+        "# _Chai Wah Wu_, Oct 19 2014"
+    ],
+    "xref": [
+        "Cf. A003415, A018252 (nonprime numbers)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Oct 10 2014",
+    "ext": [
+        "a(9)-a(11) from _Chai Wah Wu_, Oct 19 2014",
+        "Name corrected by _Jean-Fran\u00e7ois Alcover_, May 30 2023"
+    ],
+    "references": 0,
+    "revision": 21,
+    "time": "2023-05-30T07:46:44-04:00",
+    "created": "2014-10-10T16:01:33-04:00"
+}

@@ -1,0 +1,30 @@
+{
+    "number": 359545,
+    "data": "30,70,78,105,126,130,138,150,165,174,182,222,238,246,255,258,266,273,282,285,286,306,310,315,318,333,338,342,345,350,357,366,369,370,375,385,390,399,402,414,426,430,442,455,465,474,483,490,494,495,498,510,518,530,546,549,550,555,561,570,574,575",
+    "name": "Numbers that eventually reach zero when iterated with the arithmetic derivative (i.e., are in A099308), but some of their proper divisors will never reach it.",
+    "comment": [
+        "Numbers k for which A341999(k) is zero but A359542(k) is not zero.",
+        "Any such a nonreaching proper divisor must be one of the terms of A359547."
+    ],
+    "example": [
+        "30 = 2*3*5 is included in this sequence, as although it is in A099308, it is not included in A359544 because its proper divisor 15 is not in A099308. Note that 15 is a term of A359547."
+    ],
+    "program": [
+        "(PARI)",
+        "A003415checked(n) = if(n<=1, 0, my(f=factor(n), s=0); for(i=1, #f~, if(f[i, 2]>=f[i, 1], return(0), s += f[i, 2]/f[i, 1])); (n*s));",
+        "A341999(n) = if(!n,n,while(n>1, n = A003415checked(n)); (!n));",
+        "A359542(n) = sumdiv(n,d,A341999(d));",
+        "isA359545(n) = ((0==A341999(n))&&(A359542(n)>0));"
+    ],
+    "xref": [
+        "Setwise difference A099308 \\ A359544.",
+        "Cf. A003415, A341999, A359542, A359547."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jan 05 2023",
+    "references": 3,
+    "revision": 11,
+    "time": "2023-02-11T08:10:00-05:00",
+    "created": "2023-01-05T10:54:29-05:00"
+}

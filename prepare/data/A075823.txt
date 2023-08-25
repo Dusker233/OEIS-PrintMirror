@@ -1,0 +1,32 @@
+{
+    "number": 75823,
+    "data": "2,5,6,10,14,15,18,20,22,26,30,34,35,38,40,42,45,46,50,54,55,58,60,62,65,66,70,74,78,80,82,85,86,90,94,95,98",
+    "name": "Numbers that are not the last two digits (leading zeros omitted) of any perfect power.",
+    "comment": [
+        "With leading zeros, the initial terms are 02, 05, 06.",
+        "To compute the sequence, it is sufficient to consider the residue mod 100 of powers of numbers < 100 until the same value is reached for the second time. - _M. F. Hasler_, Dec 13 2018"
+    ],
+    "example": [
+        "9 (09!) not in the list because the perfect power 2209 = 47^2 ends with 09."
+    ],
+    "maple": [
+        "s:={$(0..99)}: for b from 0 to 99 do for p from 2 to 101 do s:=s minus {b^p mod 100}: od: od: op(s); # _Nathaniel Johnston_, Jun 22 2011"
+    ],
+    "mathematica": [
+        "S=Range[2,99]; Do[n=1; T={}; While[T != (T = Union[T, {PowerMod[k, ++n, 100]}]), S=Complement[S,T]], {k,2,99}]; S (* _Amiram Eldar_, Dec 13 2018 after _M. F. Hasler_'s pari code *)"
+    ],
+    "program": [
+        "(PARI) S=[2..99]; for(k=2,99,my(m=Mod(k,100),n=1,T=[]);while(T!=T=setunion(T,[m^n+=1]),); S=setminus(S,lift(T)));S \\\\ Slightly shorter. - _M. F. Hasler_, Dec 13 2018",
+        "(PARI) S=0;for(k=2,99,my(m=Mod(k,100),n=1,T=0);while(T<T=bitor(T,2^lift(m^n+=1)),);S=bitor(S,T)); vecextract([0..99],2^100-S-1) \\\\ Slightly faster. - _M. F. Hasler_, Dec 13 2018"
+    ],
+    "keyword": "fini,full,easy,nonn,base",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, Oct 14 2002",
+    "ext": [
+        "Edited and confirmed by _Nathaniel Johnston_, Jun 22 2011"
+    ],
+    "references": 3,
+    "revision": 15,
+    "time": "2018-12-14T04:36:49-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

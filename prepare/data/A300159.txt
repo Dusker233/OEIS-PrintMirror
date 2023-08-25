@@ -1,0 +1,68 @@
+{
+    "number": 300159,
+    "data": "0,0,4,30,240,2140,21300,235074,2853760,37819800,543445380,8416452550,139753069104,2476581106740,46648575724660,930581784937770,19597766647728000,434455097953799344,10112163333554834820,246539064280189932270,6282671083849941925360",
+    "name": "Number of ways of converting one set of lists containing n elements to another set of lists containing n elements by removing the last element from one of the lists and either appending it to an existing list or treating it as a new list.",
+    "comment": [
+        "All terms are even."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A300159/b300159.txt\">Table of n, a(n) for n = 0..443</a> (first 71 terms from Mitchell Keith Bloch)",
+        "Mitchell Keith Bloch, <a href=\"/A300159/a300159.cpp.txt\">Program C++</a>",
+        "Mitchell Keith Bloch, <a href=\"/A300159/a300159_1.cpp.txt\">Program C++ with Boost</a>",
+        "<a href=\"/index/La#Laguerre\">Index entries for sequences related to Laguerre polynomials</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{i=1..p(n)} (n!/(Product_{j=1..n} k(i,j)!) * ((Sum_{j=1..n} k(i,j))^2 - k(i,1))) (where p(n) is the number of partitions A000041 and k(i,j) is the number of partitions of size j in partitioning i).",
+        "From _Alois P. Heinz_, Mar 05 2018: (Start)",
+        "E.g.f.: x^2*(2-x)*exp(x/(1-x))/(x-1)^2.",
+        "a(n) = (n*(2*n^2-13*n+16)*a(n-1) - n*(n-1)*(n-3)*(n-4)*a(n-2)) / ((n-2)*(n-5))) for n>5. (End)",
+        "a(n) ~ n^(n + 3/4) * exp(2*sqrt(n) - n - 1/2) / sqrt(2). - _Vaclav Kotesovec_, Jun 02 2018",
+        "a(n) = n!*( 2*LaguerreL(n-2,1,-1) - LaguerreL(n-3,1,-1) ) for n > 1, with a(0) = a(1) = 0. - _G. C. Greubel_, Mar 09 2021"
+    ],
+    "example": [
+        "a(0) = 0 since for 0 lists, 0 conversions are possible.",
+        "a(1) = 0 since for the 1 set of 1 list of length 1, there exist no possible conversions.",
+        "a(2) = 4 since for the 2 sets of 1 list of length 2, there exists only 1 conversion, and for the 1 set of 2 lists of length 1, there exist 2 conversions.",
+        "a(3) = 30 since for the 6 sets of 1 list of length 3, there exists 1 conversion, for the 6 sets of 1 list of length 2 and 1 list of length 1, there exist 3 conversions, and for the 1 set of 3 lists of length 1, there exists 6 conversions."
+    ],
+    "maple": [
+        "b:= proc(n, t, c) option remember; `if`(n=0, t^2-c, add(j!*",
+        "      binomial(n-1, j-1)*b(n-j, t+1, c+`if`(j=1, 1, 0)), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Mar 05 2018",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n<6, [0$2, 4, 30, 240, 2140][n+1],",
+        "     (n*(2*n^2-13*n+16)*a(n-1)-n*(n-1)*(n-3)*(n-4)*a(n-2))/((n-2)*(n-5)))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Mar 05 2018"
+    ],
+    "mathematica": [
+        "(* First program *)",
+        "b[n_, t_, c_]:= b[n,t,c]= If[n==0, t^2 -c, Sum[j! Binomial[n-1, j-1]b[n-j,t+1,c + If[j==1, 1, 0]], {j,n}]];",
+        "a[n_]:= b[n, 0, 0];",
+        "a/@ Range[0, 25] (* _Jean-Fran\u00e7ois Alcover_, Nov 24 2020, after _Alois P. Heinz_ *)",
+        "(* Second program *)",
+        "Table[If[n<2, 0, n!*(2*LaguerreL[n-2,1,-1] -LaguerreL[n-3,1,-1])], {n,0,30}] (* _G. C. Greubel_, Mar 09 2021 *)"
+    ],
+    "program": [
+        "(Sage) [0,0,4]+[factorial(n)*(2*gen_laguerre(n-2,1,-1) - gen_laguerre(n-3,0,-1)) for n in (3..30)] # _G. C. Greubel_, Mar 09 2021",
+        "(Magma)",
+        "l:= func< n,b | Evaluate(LaguerrePolynomial(n,1), b) >;",
+        "[0,0,4]cat[Factorial(n)*( 2*l(n-2,-1) - l(n-3,-1) ): n in [3..30]]; // _G. C. Greubel_, Mar 09 2021"
+    ],
+    "xref": [
+        "Extends A000262 to count conversions in addition to sets of lists.",
+        "Cf. A000041, A006152, A052852, A103194."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Mitchell Keith Bloch_, Feb 26 2018",
+    "ext": [
+        "More terms from _Mitchell Keith Bloch_, Mar 05 2018"
+    ],
+    "references": 1,
+    "revision": 59,
+    "time": "2021-03-10T01:08:18-05:00",
+    "created": "2018-03-04T23:44:14-05:00"
+}

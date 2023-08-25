@@ -1,0 +1,30 @@
+{
+    "number": 24683,
+    "data": "0,0,0,0,0,1,1,2,2,4,5,6,7,8,8,10,12,13,14,15,16,17,18,20,23,24,25,25,26,26,32,33,35,36,39,40,41,43,44,46,48,49,52,53,53,54,58,63,64,65,65,67,68,71,73,75,77,78,79,80,81,84,90,91,92,92,98,100,104,105,105,107,110,112,114",
+    "name": "a(n) is the number of ways prime(n) is a sum of two composite numbers r,s satisfying r < s.",
+    "link": [
+        "J. Stauduhar, <a href=\"/A024683/b024683.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{i=4..floor((prime(n)-1)/2)} c(i) * c(prime(n)-i), where c is the characteristic function of composite numbers (A066247) and prime(n) is the n-th prime (A000040). - _Wesley Ivan Hurt_, Sep 08 2020"
+    ],
+    "mathematica": [
+        "z = 400; c = Select[Range[2, z], ! PrimeQ@# &];  (* A002808 *)",
+        "d = Select[Range[2, z], ! PrimeQ@# && OddQ@# &];  (* A014076 *)",
+        "a[n_] := Length[Intersection[c, Prime[n] - Select[d, # < Prime[n] &]]];",
+        "Table[a[n], {n, 1, 120}] (* A024683 *)",
+        "(* _Clark Kimberling_, Jul 21 2020 *)",
+        "Table[Count[IntegerPartitions[Prime[n],{2}],_?(AllTrue[#,CompositeQ]&&#[[1]]!= #[[2]]&)],{n,80}] (* _Harvey P. Dale_, Feb 24 2023 *)"
+    ],
+    "xref": [
+        "Subsequence of A224708.",
+        "Cf. A000040, A066247."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,8",
+    "author": "_Clark Kimberling_",
+    "references": 1,
+    "revision": 18,
+    "time": "2023-02-24T10:13:31-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

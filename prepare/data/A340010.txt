@@ -1,0 +1,46 @@
+{
+    "number": 340010,
+    "data": "1,2,2,3,3,3,3,7,7,8,8,9,9,9,9,10,10,10,10,12,12,12,12,13,13,21,21,22,22,22,22,24,24,25,25,26,26,26,26,27,27,28,28,33,33,33,33,34,34,36,36,37,37,37,37,39,39,40,40,40,40,40,40,41,41,42,42,44,44",
+    "name": "The order of the largest weakly connected component of the Collatz digraph of order n.",
+    "comment": [
+        "The Collatz digraph of order n is the directed graph with the vertex set V = {1, 2, ..., n} and the arrow set A = {m -> A014682(m) | m and A014682(m) are elements of V}."
+    ],
+    "reference": [
+        "J. C. Lagarias, ed., The Ultimate Challenge: The 3x+1 Problem, Amer. Math. Soc., 2010."
+    ],
+    "link": [
+        "Sebastian Karlsson, <a href=\"/A340010/b340010.txt\">Table of n, a(n) for n = 1..20000</a>",
+        "Lorenzo Sauras Altuzarra, <a href=\"https://arxiv.org/abs/2002.03075\">Some arithmetical problems that are obtained by analyzing proofs and infinite graphs</a>, arXiv:2002.03075 [math.NT], 2020.",
+        "Thijs Laarhoven, <a href=\"https://research.tue.nl/en/studentTheses/the-3n-1-conjecture\">The 3n+1 conjecture</a>, Eindhoven University of Technology, Bachelor thesis (2009). <a href=\"http://thijs.com/docs/bsc09-thesis.pdf\">See also</a>.",
+        "<a href=\"/index/3#3x1\">Index entries for sequences related to 3x+1 (or Collatz) problem</a>"
+    ],
+    "example": [
+        "The weakly connected components of the Collatz digraph of order 3 are 1 -> 2 -> 1 and the singleton 3. The order of the largest component is #{1, 2} = 2.",
+        "The weakly connected components of the Collatz digraph of order 10 correspond to the following partition of {1, 2, ..., 10}: {1, 2, 3, 4, 5, 6, 8, 10}, {7} and {9}. The order of the largest component is #{1, 2, 3, 4, 5, 6, 8, 10} = 8. Hence, a(10) = 8.",
+        "The weakly connected components of the Collatz digraph of order 20 correspond to the partition {1, 2, 3, 4, 5, 6, 8, 10, 12, 13, 16, 20}, {7, 9, 11, 14, 17, 18}, {15} and {19}. The order of the largest component is #{1, 2, 3, 4, 5, 6, 8, 10, 12, 13, 16, 20} = 12. Thus, a(20) = 12."
+    ],
+    "program": [
+        "(Python)",
+        "import networkx as nx",
+        "def T(n): #A014682",
+        "    return n//2 if n%2 == 0 else (3*n+1)//2",
+        "def a(n):",
+        "    G = nx.Graph()",
+        "    G.add_nodes_from(range(1, n+1))",
+        "    G.add_edges_from([(m,T(m)) for m in range(1, n+1) if T(m) <= n])",
+        "    return len(max(nx.connected_components(G)))",
+        "for n in range(1, 70):",
+        "    print(a(n), end=\", \")"
+    ],
+    "xref": [
+        "Cf. A006370, A014682, A127824, A248573, A088975, A008615, A103469.",
+        "Cf. A340985."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Sebastian Karlsson_, Dec 26 2020",
+    "references": 2,
+    "revision": 28,
+    "time": "2021-02-20T03:42:58-05:00",
+    "created": "2021-01-29T04:59:49-05:00"
+}

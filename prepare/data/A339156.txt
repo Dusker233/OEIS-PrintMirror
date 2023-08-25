@@ -1,0 +1,38 @@
+{
+    "number": 339156,
+    "data": "1,1,1,2,4,9,19,43,99,235,562,1370,3369,8380,21000,53038,134759,344390,884376,2281274,5907791,15354795,40037979,104712010,274600650,721931534,1902362100,5023654075,13292543205,35237009037,93570419556,248873359877,662940466647",
+    "name": "Number of oriented series-parallel networks with n elements and without unit elements in parallel.",
+    "comment": [
+        "A series configuration is an ordered concatenation of two or more parallel configurations and a parallel configuration is the unit element or a multiset of two or more series configurations. a(n) is the total number of series and parallel configurations with n unit elements."
+    ],
+    "formula": [
+        "G.f.: A(x) where A(x) satisfies A(x) = x - 1 + exp(Sum_{k>=1} (A(x^k) + 1/(1 + A(x^k)) - 1)/k).",
+        "a(n) = A339154(n) + A339155(n).",
+        "Euler transform of A339154 gives this sequence with a(1) = 0.",
+        "G.f.: P(x)/(1 - P(x)) where P(x) is the g.f. of A339155.",
+        "G.f.: S(x)/2 + sqrt(S(x) + S(x)^2/4) where S(x) is the g.f. of A339154."
+    ],
+    "example": [
+        "In the following examples, elements in series are juxtaposed and elements in parallel are separated by '|'. The unit element is denoted by 'o'.",
+        "a(1) = 1: (o)",
+        "a(2) = 1: (oo).",
+        "a(3) = 1: (ooo).",
+        "a(4) = 2: (oooo), (oo|oo).",
+        "a(5) = 4: (ooooo), (o(oo|oo)), ((oo|oo)o), (oo|ooo).",
+        "a(6) = 9: (oooooo), (oo(oo|oo)), (o(oo|oo)o), ((oo|oo)oo), (o(oo|ooo)), ((oo|ooo)o), (oo|oooo), (ooo|ooo), (oo|oo)."
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "seq(n)={my(p=x+O(x^2)); for(n=2, n, p=x+x*Ser(EulerT(Vec(p^2/(1+p), -n)))); Vec(p)}"
+    ],
+    "xref": [
+        "Cf. A003430, A339153, A339154, A339155."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Andrew Howroyd_, Nov 26 2020",
+    "references": 4,
+    "revision": 10,
+    "time": "2020-11-28T01:21:41-05:00",
+    "created": "2020-11-28T01:21:41-05:00"
+}

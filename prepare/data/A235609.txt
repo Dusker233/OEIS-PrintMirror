@@ -1,0 +1,51 @@
+{
+    "number": 235609,
+    "data": "1,2,11,22,111,121,212,222,1111,1221,2112,2222,11111,11211,12121,12221,21112,21212,22122,22222,111111,112211,121121,122221,211112,212212,221122,222222,1111111,1112111,1121211,1122211,1211121,1212121,1221221,1222221,2111112",
+    "name": "List of privileged words over the alphabet {1,2}.",
+    "comment": [
+        "\"A word w is privileged if (a) it has length <= 1, or (b) it has a privileged border that appears exactly twice in w.\" - from the Forsyth et al. paper.",
+        "The first terms which differ from \"palindromes over the alphabet {1,2}\" (not in the OEIS) are the four 8 digit terms a({48, 49, 60, 61}) = {11212211, 11221211, 22112122, 22121122}, then come 9 digit terms a(71) = 112122211, etc. The first palindromes not in the sequence are the 14-digit terms {11212211221211, 11221211212211, 22112122121122, 22121122112122}. - _M. F. Hasler_, Nov 02 2020"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A235609/b235609.txt\">Table of n, a(n) for n = 1..13752</a> (terms with <= 18 digits; terms 1..4232 from Lars Blomberg)",
+        "M. Forsyth, A. Jayakumar, and J. Shallit, <a href=\"http://arxiv.org/abs/1311.7403\">Remarks on Privileged Words</a>, arXiv preprint arXiv:1311.7403 [cs.FL], 2013.",
+        "J. Peltom\u00e4ki, <a href=\"https://doi.org/10.1016/j.tcs.2013.05.028\">Introducing privileged words: privileged complexity of Sturmian words</a>, Theoret. Comput. Sci. 500 (2013), 57-67."
+    ],
+    "program": [
+        "(PARI) is_A235609(w, n, p)={n || if(#setminus(Set(p=digits(w)),[1,2]), return, w=fromdigits([d-1|d<-p],2); n=#p; p[1]>1 && w=2^n-1-w); !w|| setsearch([2^(n-1)-2, 2^(n-1)+1, 2^n-1], w)|| for(i=1, n-2, (w-p=w>>i)%2^(n-i)&&next; for(j=1, i-1, (w>>j-p)%2^(n-i)||next(2)); is_A235609(p, n-i)&&return(1))} \\\\ _M. F. Hasler_, Nov 02 2020",
+        "(Python)",
+        "from itertools import count, islice, product",
+        "def comp(w): return \"\".join(\"2\" if c == \"1\" else \"1\" for c in w)",
+        "def agen():",
+        "    priv = set(\"1\"); yield from [1, 2]",
+        "    for d in count(2):",
+        "        found = []",
+        "        for p in product(\"12\", repeat=d-1):",
+        "            w, passes = \"1\" + \"\".join(p), False",
+        "            if len(set(w)) == 1: passes = True",
+        "            elif len(w.lstrip(w[0])) != len(w.rstrip(w[0])): passes = False",
+        "            else:",
+        "                for i in range(1, len(w)):",
+        "                    p, s = w[:i], w[-i:]",
+        "                    if p == s and p not in w[1:-1] and p in priv:",
+        "                        passes = True; break",
+        "            if passes: found.append(w); priv.add(w)",
+        "        yield from (int(w) for w in found)",
+        "        yield from sorted(int(comp(w)) for w in found)",
+        "print(list(islice(agen(), 37))) # _Michael S. Branicky_, Jul 01 2022"
+    ],
+    "xref": [
+        "A231208 gives the number of privileged words of given length.",
+        "Subsequence of A007931 (numbers having only digits 1 & 2)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Jan 23 2014",
+    "ext": [
+        "a(29)-a(37) from _Lars Blomberg_, Jun 16 2017"
+    ],
+    "references": 2,
+    "revision": 35,
+    "time": "2022-07-01T22:06:17-04:00",
+    "created": "2014-01-23T11:57:12-05:00"
+}

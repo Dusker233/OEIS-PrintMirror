@@ -1,0 +1,47 @@
+{
+    "number": 178173,
+    "data": "1,2,8,128,11087,2232875,775098224,428188962261,355916994389700,425272149099677521,703909738878615927739,1565842283246869237505246,4565002967677134523844716754,17076464900445281560851997140670,80494979734877344662882495100752511",
+    "name": "Number of collections of nonempty subsets of an n-element set where each element appears in at most 4 subsets.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A178173/b178173.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "program": [
+        "(Python)",
+        "from sets import Set",
+        "from numpy import array",
+        "def toBinary(n,k):",
+        "    ans=[]",
+        "    for i in range(k):",
+        "        ans.insert(0,n%2)",
+        "        n=n>>1",
+        "    return array(ans)",
+        "def powerSet(k): return [toBinary(n,k) for n in range(1,2**k)]",
+        "def courcelle(maxUses,remainingSets,exact=False):",
+        "    if exact and not all(maxUses<=sum(remainingSets)): ans=0",
+        "    elif len(remainingSets)==0: ans=1",
+        "    else:",
+        "        set0=remainingSets[0]",
+        "        if all(set0<=maxUses): ans=courcelle(maxUses-set0,remainingSets[1:],exact=exact)",
+        "        else: ans=0",
+        "        ans+=courcelle(maxUses,remainingSets[1:],exact=exact)",
+        "    return ans",
+        "for i in range(10):",
+        "    print(i, courcelle(array([4]*i),powerSet(i),exact=False))",
+        "(PARI) \\\\ See A330964 for efficient code to compute this sequence. - _Andrew Howroyd_, Jan 04 2020"
+    ],
+    "xref": [
+        "Row n=4 of A330964.",
+        "Replacing limit of 2 with a limit of 1 gives the Bell numbers A000110, limit of 2 gives A178165, limit of 3 gives A178171."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Daniel E. Loeb_, Dec 17 2010",
+    "ext": [
+        "a(6)-a(8) from _Bert Dobbelaere_, Sep 10 2019",
+        "Terms a(9) and beyond from _Andrew Howroyd_, Jan 04 2020"
+    ],
+    "references": 3,
+    "revision": 18,
+    "time": "2021-05-20T08:19:49-04:00",
+    "created": "2010-11-12T14:26:37-05:00"
+}

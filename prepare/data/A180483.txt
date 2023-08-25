@@ -1,0 +1,52 @@
+{
+    "number": 180483,
+    "data": "3,6,11,38,87,354,839,3482,8283,34446,81971,340958,811407,3375114,8032079,33410162,79509363,330726486,787061531,3273854678,7791105927,32407820274,77123997719,320804348042,763448871243,3175635660126,7557364714691,31435552253198",
+    "name": "Expansion of (3+3*x-25*x^2-3*x^3+2*x^4)/((1-x)*(1-10*x^2+x^4)).",
+    "comment": [
+        "Previous name was: Solutions a(n) to (a(n)-2)*(a(n)-3) = 6*b(n)*(b(n)-1).",
+        "The associated b(n) are in A181442.",
+        "Consider an urn with r red and b blue balls. Draw 4 balls without replacement. The probability of picking 4 red balls is r/(r+b) *(r-1)/(r+b-1) *(r-2)/(r+b-2) * (r-3)/(r+b-3). The probability of picking 2 red and 2 blue balls is binomial(2,2) * r*(r-1)*b*(b-1)/ ((r+b)*(r+b-1)..*(r+b-3)). For equal probability we need (r-2)*(r-3)=6*b*(b-1). The current sequence shows the r, the number of red balls which allow such scenario of equal probability.",
+        "The quadratic equation is diagonalized with a(n) = (A(n) + 5)/2 and b(n) = (B(n) + 1)/2, equivalent to the Pell equation A(n)^2 - 6*B(n)^2 = -5 with the 2 fundamental solutions (1; 1); (7; 3) and the solution (5; 2) for the unit form."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A180483/b180483.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,10,-10,-1,1)"
+    ],
+    "formula": [
+        "G.f.: ( 3+3*x-25*x^2-3*x^3+2*x^4 )/( (1-x)*(1-10*x^2+x^4) ). - _R. J. Mathar_, Feb 05 2011",
+        "Let r=sqrt(6), s=5+2*r, and t=5-2*r, then a(2*n) = (10+(1+r)*s^n+(1-r)*t^n))/4 and a(2*n+1) = (10+(7+3*r)*s^n+(7-3*r)*t^n))/4.",
+        "a(n) = 11*a(n-2) - 11*a(n-4) + a(n-6).",
+        "a(n) = +a(n-1) +10*a(n-2) -10*a(n-3) -a(n-4) +a(n-5). - _R. J. Mathar_, Feb 05 2011",
+        "a(n) = (1/2)*(5 +b(n) +7*b(n-1) +7*b(n-2) +b(n-3)), where b(n) = (1/2)*(1+(-1)^n)*ChebyshevU(n/2, 5). - _G. C. Greubel_, Apr 28 2022"
+    ],
+    "example": [
+        "For n=3: a(3) = 38; b(3) = 15; binomial(38,4) = 73815 and  binomial(38, 2)*binomial(15, 2) = 73815.",
+        "The 2-tuples begin (3, 1); (6, 2); (11, 4); (38, 15)."
+    ],
+    "maple": [
+        "n:=0: for s from 1 to 100 do r:=(sqrt(24*s^2-24*s+1)+5)/2: if (r=trunc(r)) then a(n):=r: b(n):=s: n:=n+1: end if: end do:"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1,10,-10,-1,1},{3,6,11,38,87},30] (* _Harvey P. Dale_, Apr 28 2018 *)"
+    ],
+    "program": [
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 40); Coefficients(R!( (3+3*x-25*x^2-3*x^3+2*x^4)/((1-x)*(1-10*x^2+x^4)) )); // _G. C. Greubel_, Apr 28 2022",
+        "(SageMath)",
+        "def b(n): return (1/2)*(1+(-1)^n)*chebyshev_U(n//2, 5)",
+        "def A180483(n): return (1/2)*(5 +b(n) +7*b(n-1) +7*b(n-2) +b(n-3))",
+        "[A180483(n) for n in (0..40)] # _G. C. Greubel_, Apr 28 2022"
+    ],
+    "xref": [
+        "Cf. A004189, A181442."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Paul Weisenhorn_, Jan 20 2011",
+    "ext": [
+        "New name using the g.f. by _R. J. Mathar_ from _Joerg Arndt_, Apr 27 2022"
+    ],
+    "references": 3,
+    "revision": 36,
+    "time": "2022-04-28T03:27:14-04:00",
+    "created": "2010-09-12T03:00:00-04:00"
+}

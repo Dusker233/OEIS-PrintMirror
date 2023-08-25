@@ -1,0 +1,50 @@
+{
+    "number": 330687,
+    "data": "1,4,16,64,144,256,576,1024,1296,2304,5184,9216,20736,82944,186624,331776,746496,1327104,2073600,2985984,5308416,8294400,18662400,21233664,26873856,33177600,47775744,51840000,74649600,107495424,132710400,207360000,429981696,530841600,671846400,829440000,1194393600,1719926784,1866240000,2687385600",
+    "name": "Positions of records in A050377, number of ways to factor n into \"Fermi-Dirac primes\" (A050376).",
+    "comment": [
+        "From _David A. Corneth_, Dec 29 2019: (Start)",
+        "Each term is a perfect square. Proof: A050377(n) is multiplicative with a(p^e) = A018819(e) and A018819(2k) = A018819(2k+1) and this sequence considers just records so we only need exponents of the form 2k; i.e., terms are squares.",
+        "Furthermore, the exponent 2 occurs at most once in the prime factorization of a(n) as A018819(2)^2 = A018819(4) = 4. So if the last two exponents in the prime factorization of m are 2's then setting the first of those two exponents to 4 and the other to 0 gives the same A050377(m).",
+        "Example of an application of this proof: we have 3600 = 2^4 * 3^2 * 5^2. We see the last two exponents are 2's so we can set the first of those two to 4 and the second to 0. This gives 2^4 * 3^4 = 1296 and, indeed, A050377(1296) = A050377(3600) = 16.",
+        "It seems that most exponents of a(n) are divisible by 4.",
+        "More specifically: Let S(n) be the list, possibly with duplicates, of exponents occurring in the prime factorizations of terms with the sum of exponents in the prime factorization <= n.",
+        "Let R(n) = |{x : x==4, S(n)}| / |S(n)|.",
+        "For example, S(8) is found from the following terms: 4, 16, 64, 144, 256, 576 and 1296 as the exponents in the prime factorization are (2), (4), (6), (4, 2), (8), (6, 2), (4, 4). The sums of each of these exponents per term is <= 8. There are 10 exponents listed. Of these 10 there are 5 that are divisible by 4. Therefore R(8) = 5/10.",
+        "Then it seems that R(n) tends to some value > 0.8 as n grows. (End)"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A330687/b330687.txt\">Table of n, a(n) for n = 1..1004</a> (first 294 terms from Antti Karttunen, terms <= 10^100)"
+    ],
+    "formula": [
+        "A050377(a(n)) = A330688(n).",
+        "A329900(a(n)) = A330689(n).",
+        "a(n) = A330684(n)^2."
+    ],
+    "mathematica": [
+        "Block[{s = Rest@ Nest[Function[{a, n, b}, Append[a, {Times @@ Map[a[[# + 1, -1]] &, FactorInteger[n][[All, -1]] ], b}]] @@ {#1, #2, #1[[-1, -1]] + If[EvenQ@ #2, #1[[#2/2 + 1, -1]], 0 ]} & @@ {#, Length@ #} &, {{0, 1}, {1, 1}}, 10^5][[All, 1]], t}, t = Union@ FoldList[Max, s]; Map[FirstPosition[s, #][[1]] &, t]] (* _Michael De Vlieger_, Dec 29 2019 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "upto_e = 101; \\\\ 101 --> 211 terms.",
+        "A018819(n) = if( n<1, n==0, if( n%2, A018819(n-1), A018819(n/2)+A018819(n-1))); \\\\ From A018819",
+        "v018819 = vector(upto_e,n,A018819(n)); \\\\ Precompute.",
+        "A050377(n) = factorback(apply(e -> v018819[e], factor(n)[, 2]));",
+        "A283980(n) = {my(f=factor(n)); prod(i=1, #f~, my(p=f[i, 1], e=f[i, 2]); if(p==2, 6, nextprime(p+1))^e)}; \\\\ From A283980",
+        "A330687list(e) = { my(lista = List([1, 2]), i=2, u = 2^e, t, m=0, v025487); while(lista[i] != u, if(2*lista[i] <= u, listput(lista,2*lista[i]); t = A283980(lista[i]); if(t <= u, listput(lista,t))); i++); v025487 = vecsort(Vec(lista)); lista = List([]); for(i=1,#v025487,if((t=A050377(v025487[i]))>m, listput(lista,v025487[i]); m=t)); Vec(lista); };",
+        "v330687 = A330687list(upto_e);",
+        "A330687(n) = v330687[n];",
+        "for(n=1,#v330687,print1(A330687(n),\", \"));"
+    ],
+    "xref": [
+        "Cf. A018819, A050376, A050377, A329900, A330684 (square roots), A330688 (the record values), A330689 (primorial deflation).",
+        "Subsequence of A025487."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Dec 28 2019",
+    "references": 7,
+    "revision": 36,
+    "time": "2020-01-31T16:07:32-05:00",
+    "created": "2019-12-28T17:02:15-05:00"
+}

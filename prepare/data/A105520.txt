@@ -1,0 +1,58 @@
+{
+    "number": 105520,
+    "data": "18,48,60,90,100,140,144,180,210,270,280,288,294,320,360,378,448,462,480,594,600,648,660,720,728,756,858,900,900,924,980,1008,1008,1078,1080,1120,1170,1210,1260,1344,1496,1530,1530,1568,1584,1584,1680,1700,1728",
+    "name": "Sums of area and perimeter of Pythagorean triples, sorted in increasing order, including duplicates.",
+    "link": [
+        "Giovanni Resta, <a href=\"/A105520/b105520.txt\">Table of n, a(n) for n = 1..10711</a> (terms < 10^7)",
+        "Douglas Butler, <a href=\"https://www.tsm-resources.com/tsm/lists/trip.html\">Pythagorean triples [including multiples] up to 2100</a>, Oundle School iCT Training Centre.",
+        "Ron Knott, <a href=\"http://www.maths.surrey.ac.uk/hosted-sites/R.Knott/Pythag/pythag.html#anyint\">Pythagorean triples</a>."
+    ],
+    "example": [
+        "a(28) = 900 = (18+80+82) + (18*80/2) for 18*18 + 80*80 = 82*82.",
+        "a(29) = 900 = (25+60+65) + (25*60/2) for 25*25 + 60*60 = 65*65.",
+        "a(32) = 1008 = (24+70+74) + (24*70/2) for 24*24 + 70*70 = 74*74.",
+        "a(33) = 1008 = (36+48+60) + (36*48/2) for 36*36 + 48*48 = 60*60."
+    ],
+    "mathematica": [
+        "L = {}; mx = 1728; Do[ Do[ If[ IntegerQ[z = Sqrt[x^2 + y^2]], v = x y/2 + x + y + z; If[v <= mx, AppendTo[L, v], Break[]]], {y, x-1}], {x, 4, 4 + (2 mx^2)^(1/3)}]; Sort@ L (* _Giovanni Resta_, Mar 16 2020 *)"
+    ],
+    "program": [
+        "(REXX)",
+        "T. = 0                        ;  S = ''",
+        "do C = 1 to 999               ;  H = C*C",
+        "   do D = 1 to C              ;  I = D*D",
+        "      do E = 1 to D           ;  J = E*E",
+        "         if I + J < H   then  iterate E",
+        "         if I + J = H   then  do",
+        "            K = T.0 + 1       ;  T.0 = K",
+        "            P = C + D + E     ;  A = ( D * E ) / 2",
+        "            T.K = right( A + P, 6 )",
+        "            T.K = T.K '=' A '+' P '(' E '+' D '+' C ')'",
+        "         end",
+        "         leave E",
+        "      end E",
+        "   end D",
+        "end C",
+        "call KWIK 'T.' /* sort by A+P for area A and perimeter P */",
+        "Y = 0",
+        "do N = 1 to T.0 while length( S ) < 255",
+        "   X = word( T.N, 1 )         ;  say T.N",
+        "   if X <= Y   then  say 'dupe:' N - 1 N ':' Y X",
+        "   S = S || ', ' || X         ;  Y = X",
+        "end N",
+        "say substr( S, 3 )            /* _Frank Ellermann_, Mar 02 2020 */"
+    ],
+    "xref": [
+        "Cf. A103605, A103606, A024364, A024406, A105521."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Alexandre Wajnberg_, May 02 2005",
+    "ext": [
+        "Corrected and extended by _Frank Ellermann_, Mar 02 2020"
+    ],
+    "references": 2,
+    "revision": 37,
+    "time": "2020-08-21T20:19:05-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

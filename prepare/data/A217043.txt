@@ -1,0 +1,53 @@
+{
+    "number": 217043,
+    "data": "1,2,4,11,34,152,1143,8285,98863,1211572",
+    "name": "a(1) = 1; a(n+1) is the smallest integer >=0 that cannot be obtained from the integers {a(1), ..., a(n)} using each number at most once and the operators +, -, *, / and accepting fractional intermediate results.",
+    "link": [
+        "Gilles Bannay, <a href=\"https://web.archive.org/web/20061201125224/http://gilles.bannay.free.fr/jeux_us.html\">Countdown Problem</a>"
+    ],
+    "example": [
+        "a(4)=11 because we can write 4+1=5, 4+2=6, 4+2+1=7, 4*2=8, 4*2+1=9, (4+1)*2=10 by using 1, 2 and 4, but we cannot construct 11 this way.",
+        "a(7)=1143 because 1142 = (152+((34-4)*(11*(2+1)))), and 1143 is impossible.",
+        "a(7) is not 1007 because it can be constructed as 1007 = 152*(11-(34+1)/(4*2)); the fractional intermediate result 35/8, for example, is accepted in the composition."
+    ],
+    "program": [
+        "(Python)",
+        "from fractions import Fraction",
+        "def a(n, v):",
+        "    R = dict() # index of each reachable subset is [card(s)-1][s]",
+        "    for i in range(n): R[i] = dict()",
+        "    for i in range(n): R[0][(v[i],)] = {v[i]}",
+        "    reach = set(v)",
+        "    for j in range(1, n):",
+        "        for i in range((j+1)//2):",
+        "            for s1 in R[i]:",
+        "                for s2 in R[j-1-i]:",
+        "                    if set(s1) & set(s2) == set():",
+        "                        s12 = tuple(sorted(set(s1) | set(s2)))",
+        "                        if s12 not in R[len(s12)-1]:",
+        "                            R[len(s12)-1][s12] = set()",
+        "                        for a in R[i][s1]:",
+        "                            for b in R[j-1-i][s2]:",
+        "                                allowed = [a+b, a*b, a-b, b-a]",
+        "                                if a != 0: allowed.append(Fraction(b, a))",
+        "                                if b != 0: allowed.append(Fraction(a, b))",
+        "                                R[len(s12)-1][s12].update(allowed)",
+        "                                reach.update(allowed)",
+        "    k = 1",
+        "    while k in reach: k += 1",
+        "    return k",
+        "alst = [1]",
+        "[alst.append(a(n, alst)) for n in range(1, 6)]",
+        "print(alst) # _Michael S. Branicky_, Jul 01 2022"
+    ],
+    "xref": [
+        "Cf. A060315, A071115 (disallows intermediate fractions)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Cl\u00e9ment Morelle_, Sep 25 2012",
+    "references": 2,
+    "revision": 24,
+    "time": "2022-12-29T06:46:17-05:00",
+    "created": "2012-09-25T11:59:37-04:00"
+}

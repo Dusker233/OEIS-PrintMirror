@@ -1,0 +1,53 @@
+{
+    "number": 299110,
+    "data": "211,631,673,1801,3181,3271,3343,3571,3943,4561,4813,5431,6673,6883,7321,7573,7603,7963,8443,8641,9643,9733,9781,9871,10513,10723,10903,11083,11131,11731,11953,12391,13411,14401,14461,15373,15661,15901,16843,17203,17431,17761,17851,17971,18301,18553,20161,20521,20563,20731",
+    "name": "Prime(r) for r such that prime(r) - prime(r-1) = 12 and prime(r-1) - prime(r-2) = 2.",
+    "comment": [
+        "These are the primes of a056240-type 2(12,2); k=2 (see definition in A293652). prime(r-2) is the greatest prime factor of the smallest composite number whose prime divisors (with multiplicity) sum to prime(r).",
+        "Conjecture: Sequence has infinitely many terms. Note: p~2(12,2) is just one particular form of a prime of A056240-type k=2; there are others, e.g., 2(18,2), 2(18,4), 2(28,12), 2(24,10). All such prime sequences are also conjectured to produce infinitely many terms."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A299110/b299110.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "For every prime(r) in this sequence A288814(prime(r)) = prime(r-2)*A056240(prime(r) - prime(r-2)) = prime(r-2)*A288814(prime(r) - prime(r-2))."
+    ],
+    "example": [
+        "a(1)=211=prime(47), the first prime of type k=2. prime(46)=199 and prime(45)=197; 211-199=12 and 199-197=2."
+    ],
+    "maple": [
+        "N:=21000:",
+        "for X from 2 to N do",
+        "if isprime(X) then",
+        "A:=prevprime(X);",
+        "B:=prevprime(A);",
+        "a:=X-A;",
+        "b:=A-B;",
+        "if a=12 and b=2 then print(X);",
+        "end if",
+        "end if",
+        "end if",
+        "end do",
+        "# alternative:",
+        "P:= select(isprime, {seq(i,i=3..10^6,2)}):",
+        "Q:= P intersect map(t -> t-12, P) intersect map(t -> t+2, P):",
+        "Q:= remove(t -> ormap(isprime, [seq(t+i,i=2..10,2)]), Q):",
+        "map(t -> t+12, Q); # _Robert Israel_, Feb 16 2018"
+    ],
+    "mathematica": [
+        "Select[Partition[Prime[Range[2500]],3,1],Differences[#]=={2,12}&][[All,3]] (* _Harvey P. Dale_, Feb 29 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) =  isprime(p) && (pp=precprime(p-1)) && (p-pp == 12) && (ppp=precprime(pp-1)) && (pp-ppp == 2); \\\\ _Michel Marcus_, Feb 16 2018"
+    ],
+    "xref": [
+        "Cf. A056240, A288814, A293652, A295185."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David James Sycamore_, Feb 16 2018",
+    "references": 3,
+    "revision": 39,
+    "time": "2020-02-29T12:50:54-05:00",
+    "created": "2018-02-16T13:15:13-05:00"
+}

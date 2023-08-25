@@ -1,0 +1,53 @@
+{
+    "number": 362583,
+    "data": "1,2,5,11,22,44,89,179,358,717,1434,2868,5737,11475,22950,45901,91802,183605,367211,734422,1468845,2937691,5875382,11750764,23501528,47003057,94006115,188012230,376024460,752048921,1504097843,3008195686,6016391373,12032782746",
+    "name": "Concatenation of ((p mod 4) - 1)/2 for the primes from 3 through prime(n), converted from binary to decimal.",
+    "comment": [
+        "This sequence aims to \"encode\" the result of p mod 4 for p > 2. Note that for p > 2, p mod 4 is in {1, 3}",
+        "Start by defining some binary number b. This will be used to store the results of p mod 4 by the following method. For each prime:",
+        "Append \"1\" to b if p mod 4 = 3, or append \"0\" to b if p mod 4 = 1. b is then converted to base 10, which defines the term in the sequence."
+    ],
+    "formula": [
+        "a(n+1) = 2*(a(n)) + floor(prime(n) / 2) mod 2."
+    ],
+    "example": [
+        "   p   p mod 4   b         base 10",
+        "  --------------------------------",
+        "   3      3      1            1",
+        "   5      1      10           2",
+        "   7      3      101          5",
+        "  11      3      1011        11",
+        "  13      1      10110       22",
+        "  17      1      101100      44",
+        "  19      3      1011001     89"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "binary_string = \"\"",
+        "for i in range(3, 300):",
+        "    if isprime(i):",
+        "        num_to_append = str(int(((i % 4)-1)/2))",
+        "        binary_string += num_to_append",
+        "        num_in_base_10 = int(binary_string, 2)",
+        "        print(i, num_to_append, binary_string, num_in_base_10)",
+        "(Python)",
+        "from sympy import prime",
+        "def A362583(n):",
+        "    c = 0",
+        "    for i in range(2,n+1):",
+        "        c = (c<<1)+(prime(i)&3==3)",
+        "    return c # _Chai Wah Wu_, Jun 21 2023",
+        "(PARI) lista(nn) = my(blist = List(), nlist = List()); forprime (p=3, prime(nn), my(x = ((p % 4) - 1)/2); listput(blist, x); listput(nlist, fromdigits(Vec(blist), 2));); Vec(nlist); \\\\ _Michel Marcus_, May 02 2023"
+    ],
+    "xref": [
+        "Cf. A100672."
+    ],
+    "keyword": "nonn,base",
+    "offset": "2,2",
+    "author": "_Eric Vergo_, Apr 30 2023",
+    "references": 1,
+    "revision": 61,
+    "time": "2023-06-23T16:45:54-04:00",
+    "created": "2023-06-21T12:45:56-04:00"
+}

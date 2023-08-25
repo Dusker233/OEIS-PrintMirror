@@ -1,0 +1,72 @@
+{
+    "number": 337564,
+    "data": "1,1,6,80,1540,38808,1206744,44595408,1908389340,92780281880,5050066185736,304196411024688,20087958167374552,1442953024024996400,112007566256683719600,9342904053303870936480,833388624898522799682780,79159669418651567937733080",
+    "name": "Number of sequences of length 2*n covering an initial interval of positive integers and splitting into n maximal runs.",
+    "comment": [
+        "Sequences covering an initial interval of positive integers are counted by A000670 and ranked by A333217."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A337564/b337564.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = A005649(n-1)*binomial(2*n-1,n-1) = A005649(n-1)*A001700(n-1) for n > 0. - _Andrew Howroyd_, Dec 31 2020"
+    ],
+    "example": [
+        "The a(0) = 1 through a(2) = 6 sequences:",
+        "  ()  (1,1)  (1,1,1,2)",
+        "             (1,1,2,2)",
+        "             (1,2,2,2)",
+        "             (2,1,1,1)",
+        "             (2,2,1,1)",
+        "             (2,2,2,1)",
+        "The a(3) = 80 sequences:",
+        "  212222  111121  122233  333112  211133",
+        "  221222  111211  133222  333211  233111",
+        "  222122  112111  222133  112233  331112",
+        "  222212  121111  222331  113322  332111",
+        "  122221  123333  331222  221133  111223",
+        "  211222  133332  332221  223311  111322",
+        "  221122  213333  122223  331122  221113",
+        "  222112  233331  132222  332211  223111",
+        "  112221  333312  222213  112223  311122",
+        "  122211  333321  222231  113222  322111",
+        "  211122  122333  312222  222113  111123",
+        "  221112  133322  322221  222311  111132",
+        "  111221  221333  112333  311222  211113",
+        "  112211  223331  113332  322211  231111",
+        "  122111  333122  211333  111233  311112",
+        "  211112  333221  233311  111332  321111"
+    ],
+    "mathematica": [
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "Table[Length[Select[Join@@Permutations/@allnorm[2*n],Length[Split[#]]==n&]],{n,0,3}]"
+    ],
+    "program": [
+        "(PARI) \\\\ here b(n) is A005649.",
+        "b(n) = {sum(k=0, n, stirling(n,k,2)*(k + 1)!)}",
+        "a(n) = {if(n==0, 1, b(n-1)*binomial(2*n-1,n-1))} \\\\ _Andrew Howroyd_, Dec 31 2020"
+    ],
+    "xref": [
+        "A335461 has this as main diagonal n = 2*k.",
+        "A336108 is the version for compositions.",
+        "A337504 is the version for compositions and anti-runs.",
+        "A337505 is the version for anti-runs.",
+        "A000670 counts sequences covering an initial interval.",
+        "A005649 counts anti-runs covering an initial interval.",
+        "A124767 counts maximal runs in standard compositions.",
+        "A333769 gives run lengths in standard compositions.",
+        "A337504 counts compositions of 2*n with n maximal anti-runs.",
+        "A337565 gives anti-run lengths in standard compositions.",
+        "Cf. A001700, A003242, A052841, A060223, A106351, A106356, A269134, A325535, A333489, A333627, A333755, A335838."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Sep 03 2020",
+    "ext": [
+        "Terms a(5) and beyond from _Andrew Howroyd_, Dec 31 2020"
+    ],
+    "references": 7,
+    "revision": 12,
+    "time": "2020-12-31T17:01:01-05:00",
+    "created": "2020-09-17T20:35:13-04:00"
+}

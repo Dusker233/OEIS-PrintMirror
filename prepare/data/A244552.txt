@@ -1,0 +1,28 @@
+{
+    "number": 244552,
+    "data": "1,2,3,4,181,262,343,424,767,848,929",
+    "name": "Palindromes j such that j +- the sum of digits of j are both palindromes.",
+    "comment": [
+        "This sequence is finite. For any j, the largest digit sum possible is 9*A055642(j). Let j contain M digits. In order for j to be a palindrome and j + digsum(j) to be a palindrome, if digsum(j) affects the k-th digit of j, it must also affect the (M-k)-th digit of j for k = 1, 2, ..., M-1. For example, if j is 5 digits long and digsum(j) is 2 digits long, then j + digsum(j) and j - digsum(j) must affect the digit in the thousands place of j in order to produce a palindrome. This means that digsum(j) must be at least 4 digits long. Generally, we can say that A055642(digsum(j)) >= A055642(j) - A055642(digsum(j)) + 1 and thus, A055642(digsum(j)) >= (1/2)*(A055642(j)+1). This, however, fails when j > 3 digits. When j is 4 digits, the maximum that the digit sum could be is 36, a 2-digit number. Since it is a 2-digit number, it must affect the digit in the hundreds place of j when it is added to or subtracted from j. However, this is not possible since digsum(j) is only 2 digits long. For j > 4 digits the argument is similar."
+    ],
+    "example": [
+        "181 is a palindrome, 181 + (1+8+1) = 191 is a palindrome, and 181 - (1+8+1) = 171 is a palindrome. Thus 181 is a member of this sequence."
+    ],
+    "mathematica": [
+        "palQ[n_]:=Module[{t=Total[IntegerDigits[n]]},AllTrue[{n,n+t,n-t}, PalindromeQ]]; Select[Range[1000],palQ] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Sep 23 2018 *)"
+    ],
+    "program": [
+        "(PARI) rev(n)={r=\"\";for(i=1,#digits(n),r=concat(Str(digits(n)[i]),r));return(eval(r))}",
+        "for(n=1,10^7,if(rev(n)==n,dig=digits(n);s=sum(k=1,#dig,dig[k]);sm=n-s;la=n+s;if(rev(sm)==sm&&rev(la)==la,print1(n,\", \"))))"
+    ],
+    "xref": [
+        "Cf. A007953, A244551."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,2",
+    "author": "_Derek Orr_, Jun 29 2014",
+    "references": 0,
+    "revision": 17,
+    "time": "2021-12-24T16:09:32-05:00",
+    "created": "2014-06-30T12:52:43-04:00"
+}

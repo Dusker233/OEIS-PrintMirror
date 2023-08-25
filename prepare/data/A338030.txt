@@ -1,0 +1,40 @@
+{
+    "number": 338030,
+    "data": "7,17,37,71,73,167,181,191,353,373,389,761,787,797,929,983,1753,1879,3571,7057,7177,7507,7717,7879,9349,9439,9781,9787,15053,15227,15307,15451,15551,15667,15679,15791,15919,16061,16073,16453,16547,16561,16747,16883,16979,17471,17909,17971,18427",
+    "name": "Primes p such that reverse(p), reverse(2*p) and reverse(2*reverse(p)) are all primes, where reverse = A004086.",
+    "link": [
+        "Robert Israel, <a href=\"/A338030/b338030.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 37 is a term because 37, reverse(37)=73, reverse(2*37)=47 and reverse(2*73)=641 are prime."
+    ],
+    "maple": [
+        "rev:= proc(n) local L,k;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-k]*10^(k-1),k=1..nops(L))",
+        "end proc:",
+        "filter:= proc(n) local r;",
+        "if not isprime(n) then return false fi;",
+        "  r:= rev(n);",
+        "isprime(r) and isprime(rev(2*n)) and isprime(rev(2*r))",
+        "end proc:",
+        "select(filter, [seq(i,i=3..20000,2)]);"
+    ],
+    "mathematica": [
+        "With[{rev = IntegerReverse}, Select[Range[20000], AllTrue[{#, rev[#], rev[2*#], rev[2*rev[#]]}, PrimeQ] &]] (* _Amiram Eldar_, Oct 10 2020 *)"
+    ],
+    "program": [
+        "(PARI) rev(n) = fromdigits(Vecrev(digits(n))); \\\\ A004086",
+        "isok(p) = if (isprime(p), my(r=rev(p)); isprime(r) && isprime(rev(2*p)) && isprime(rev(2*r))); \\\\ _Michel Marcus_, Oct 10 2020"
+    ],
+    "xref": [
+        "Cf. A004086, A007500."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Oct 09 2020",
+    "references": 1,
+    "revision": 17,
+    "time": "2020-10-13T19:23:04-04:00",
+    "created": "2020-10-13T14:24:02-04:00"
+}

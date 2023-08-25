@@ -1,0 +1,42 @@
+{
+    "number": 301916,
+    "data": "2,5,7,17,19,29,31,37,41,43,53,61,67,73,79,89,97,101,103,113,127,137,139,149,151,157,163,173,193,197,199,211,223,233,241,257,269,271,281,283,293,307,317,331,337,349,353,367,373,379,389,397,401,409,439",
+    "name": "Primes which divide numbers of the form 3^k + 1.",
+    "comment": [
+        "This sequence can be used to factor P-1 values for prime candidates of the form 3^k+2, to aid with primality testing.",
+        "a(1) = 2 divides every number of the form 3^k+1. It is the only term with this property.",
+        "For k > 2, A000040(k) is a member if and only if A062117(k) is even. - _Robert Israel_, May 23 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A301916/b301916.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Every value of 3^k+1 is an even number, so 2 is in the sequence.",
+        "No values of 3^k+1 is ever a multiple of 3 for any integer k, so 3 is not in the sequence.",
+        "3^2+1 = 10, which is a multiple of 5, so 5 is in the sequence."
+    ],
+    "maple": [
+        "f:= p -> numtheory:-order(3,p)::even:",
+        "f(2):= true:",
+        "select(isprime and f, [2,seq(p,p=5..1000,2)]); # _Robert Israel_, May 23 2018"
+    ],
+    "mathematica": [
+        "Join[{2}, Select[Range[5, 1000, 2], PrimeQ[#] && EvenQ@ MultiplicativeOrder[3, #]&]] (* _Jean-Fran\u00e7ois Alcover_, Feb 02 2023 *)"
+    ],
+    "program": [
+        "(PARI) isok(p)=if (p != 3, m = Mod(3, p); nb = znorder(m); for (k=1, nb, if (m^k == Mod(-1, p), return(1)););); return(0); \\\\ _Michel Marcus_, May 18 2018",
+        "(PARI) list(lim)=my(v=List([2]),t); forfactored(n=4,lim\\1+1, if(n[2][,2]==[1]~, my(p=n[1],m=Mod(3,p)); for(k=2,znorder(m,t), m*=3; if(m==-1, listput(v,p); break))); t=n); Vec(v) \\\\ _Charles R Greathouse IV_, May 23 2018",
+        "(PARI) isok(p)=isprime(p)&&if(p<4,p==2,znorder(Mod(3,p))%2==0) \\\\ _Jeppe Stig Nielsen_, Jun 27 2020",
+        "(PARI) isok(p)=!isprime(p)&&return(0); p<4&&return(p==2); s=valuation(p-1,2); Mod(3,p)^((p-1)>>s)!=1 \\\\ _Jeppe Stig Nielsen_, Jun 27 2020"
+    ],
+    "xref": [
+        "Cf. A000040, A034472, A062117, A301917, A320481."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Luke W. Richards_, Mar 28 2018",
+    "references": 6,
+    "revision": 33,
+    "time": "2023-02-02T15:28:42-05:00",
+    "created": "2018-05-23T13:07:24-04:00"
+}

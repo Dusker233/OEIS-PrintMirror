@@ -1,0 +1,34 @@
+{
+    "number": 339294,
+    "data": "0,1,1,2,5,13,35,101,299,916,2859,9087,29247,95188,312490,1033715,3441280,11520726,38758234,130962986,444251957,1512321767,5164750890,17689837577,60752024243,209154519704,721707099632,2495565928527,8646220929912,30010588561120",
+    "name": "Number of essentially series unoriented series-parallel networks with n elements and without multiple unit elements in parallel.",
+    "comment": [
+        "See A339296 for additional details."
+    ],
+    "formula": [
+        "a(n) = (A339288(n) + A339291(n)) / 2."
+    ],
+    "example": [
+        "In the following examples, elements in series are juxtaposed and elements in parallel are separated by '|'. The unit element is denoted by 'o'.",
+        "a(2) = 1: (oo).",
+        "a(3) = 1: (ooo).",
+        "a(4) = 2: (oooo), (o(o|oo)).",
+        "a(5) = 5: (ooooo), (oo(o|oo)), (o(o|oo)o), (o(o|ooo)), (o(oo|oo))."
+    ],
+    "program": [
+        "(PARI) \\\\ here B(n) gives A339290 as a power series.",
+        "EulerT(v)={Vec(exp(x*Ser(dirmul(v, vector(#v, n, 1/n))))-1, -#v)}",
+        "B(n, Z=x)={my(p=Z+O(x^2)); for(n=2, n, p = Z + (1 + Z)*x*Ser(EulerT( Vec(p^2/(1+p), -n) ))); p}",
+        "seq(n, Z=x)={my(q=subst(B((n+1)\\2, Z), x, x^2), s=q^2/(1+q), p=O(x^2)); forstep(n=2, n, 2, p=q*(1 + Z + (1 + Z)*x*Ser(EulerT(Vec(p+(s-subst(p, x, x^2))/2, 1-n))) - p)); my(t=B(n, Z)); Vec(p + t - t/(1+t), -n)/2}"
+    ],
+    "xref": [
+        "Cf. A339157, A339288 (oriented), A339290, A339291 (achiral), A339295, A339296."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Andrew Howroyd_, Dec 07 2020",
+    "references": 4,
+    "revision": 8,
+    "time": "2020-12-08T15:23:42-05:00",
+    "created": "2020-12-08T02:27:33-05:00"
+}

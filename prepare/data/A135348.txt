@@ -1,0 +1,43 @@
+{
+    "number": 135348,
+    "data": "1,2,6,11,22,37,64,101,161,243,367,535,778,1103,1558,2160,2981,4056,5493,7355,9804,12948,17026,22217,28872,37276,47942,61314,78134,99081,125223,157577,197672,247011,307765,382130,473171,584056,719089,882796",
+    "name": "Total sum of squares of number of distinct parts in all partitions of n.",
+    "formula": [
+        "G.f.: x*(1+x^2)/((1-x)*(1-x^2)*Product_{m>0} (1-x^m)). Euler transform of 2,3,1,0,1,1,1,1,1,... .",
+        "a(n) ~ sqrt(3) * exp(Pi*sqrt(2*n/3)) / (2*Pi^2). - _Vaclav Kotesovec_, May 29 2018",
+        "Convolution of 0, 1, 1, 3, 3, 5, 5, ... (A109613) by A000041. - _R. J. Mathar_, Mar 12 2023"
+    ],
+    "example": [
+        "a(5)=22: the partitions of 5 are 1+1+1+1+1 (1 distinct part), 1+1+1+2 (2 d.p.), 1+2+2 (2 d.p.), 1+1+3 (2 d.p.), 2+3 (2 d.p.), 1+4 (2 d.p.) and 5 (1. d.p.). The sum of the squares of the number of distinct parts is 1 +2^2 +2^2 +2^2 +2^2 +2^2 +1^2= 22. - _R. J. Mathar_, Mar 12 2023"
+    ],
+    "maple": [
+        "A135348 := proc(n)",
+        "    local gf,m ;",
+        "    gf := x*(1+x^2)/(1-x)/(1-x^2) ;",
+        "    for m from 1 to n do",
+        "        gf := taylor(gf/(1-x^m),x=0,n+1)",
+        "    od:",
+        "    coeftayl(gf,x=0,n) ;",
+        "end:",
+        "seq(A135348(n),n=1..80) ; # _R. J. Mathar_, Feb 19 2008"
+    ],
+    "mathematica": [
+        "nmax = 50; Rest[CoefficientList[Series[x*(1 + x^2)/((1 - x)*(1 - x^2)) * Product[1/(1 - x^k), {k, 1, nmax}], {x, 0, nmax}], x]] (* _Vaclav Kotesovec_, May 29 2018 *)"
+    ],
+    "program": [
+        "(PARI) A135348(N,x='x)=Vec((1+x^2)/prod(m=1,N-1,1-x^m,(1-x+O(x^N))*(1-x^2))) \\\\ _M. F. Hasler_, May 13 2018"
+    ],
+    "xref": [
+        "Cf. A000070, A000097, A093695."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Vladeta Jovovic_, Feb 16 2008",
+    "ext": [
+        "More terms from _R. J. Mathar_, Feb 19 2008"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2023-03-12T09:41:59-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

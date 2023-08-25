@@ -1,0 +1,32 @@
+{
+    "number": 331627,
+    "data": "1,2,4,8,10,15,16,21,32,44,45,50,52,63,64,75,99,105,117,128,130,135,136,152,153,154,165,170,182,184,189,190,195,207,230,231,232,238,250,256,266,273,290,297,310,315,322,351,375,399,405,429,434,435,441,459,484,495,512",
+    "name": "Integers that are (exactly) k-deficient-perfect numbers.",
+    "comment": [
+        "An integer m is an exactly k-deficient-perfect number if sigma(n) = 2*n - Sum_{k} d_k, where d_i are distinct proper divisors of n."
+    ],
+    "link": [
+        "Saralee Aursukaree and Prapanpong Pongsriiam, <a href=\"https://arxiv.org/abs/2001.06953\">On Exactly 3-Deficient-Perfect Numbers</a>, arXiv:2001.06953 [math.NT], 2020.",
+        "FengJuan Chen, <a href=\"http://math.colgate.edu/~integers/t37/t37.Abstract.html\">On Exactly k-deficient-perfect Numbers</a>, Integers, 19 (2019), Article A37, 1-9."
+    ],
+    "example": [
+        "117 is an exactly 2-deficient-perfect number with d1=13 and d2=39: sigma(117) = 182 = 2*117 - (13 + 39). See Theorem 1 p. 2 of Chen."
+    ],
+    "mathematica": [
+        "kdef[n_] := n == 1 || Block[{s = 2*n - DivisorSigma[1, n], d}, If[s <= 0, False, d = Most@ Divisors@ n; MemberQ[ Total /@ Subsets[d, {1, Length@ d}], s]]]; Select[ Range[512], kdef] (* _Giovanni Resta_, Jan 23 2020 *)"
+    ],
+    "program": [
+        "(PARI) padbin(n, len) = {my(b = binary(n)); while(length(b) < len, b = concat(0, b);); b;}",
+        "isok(n) = {my(d = divisors(n), s = vecsum(d))); my(nbdd = #d); for (i= 1, 2^nbdd-1, my(vecb = padbin(i, nbdd)); if (sum(j=1, nbdd, vecb[j]*d[j]) == 2*n - s, return(1)););}"
+    ],
+    "xref": [
+        "Cf. A000203 (sigma), A271816 (deficient-perfect numbers  (k=1)), A331628 (2-deficient-perfect), A331629 (3-deficient-perfect)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Marcus_, Jan 23 2020",
+    "references": 2,
+    "revision": 11,
+    "time": "2021-06-15T01:30:15-04:00",
+    "created": "2020-01-24T03:25:00-05:00"
+}

@@ -1,0 +1,66 @@
+{
+    "number": 332578,
+    "data": "1,1,2,4,7,13,21,36,57,91,140,217,323,485,711,1039,1494,2144,3032,4279,5970,8299,11438,15708,21403,29065,39218,52725,70497,93941,124562,164639,216664,284240,371456,484004,628419,813669,1050144,1351757,1734873,2221018,2835613",
+    "name": "Number of compositions of n whose negation is unimodal.",
+    "comment": [
+        "A sequence of integers is unimodal if it is the concatenation of a weakly increasing and a weakly decreasing sequence.",
+        "A composition of n is a finite sequence of positive integers summing to n."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A332578/b332578.txt\">Table of n, a(n) for n = 0..3000</a> (terms 0..1000 from Andrew Howroyd)"
+    ],
+    "formula": [
+        "a(n) + A332669(n) = 2^(n - 1).",
+        "G.f.: 1 + Sum_{j>0} x^j/((1 - x^j)*(Product_{k>j} 1 - x^k)^2). - _Andrew Howroyd_, Mar 01 2020",
+        "a(n) ~ Pi * exp(2*Pi*sqrt(n/3)) / (4 * 3^(5/4) * n^(7/4)). - _Vaclav Kotesovec_, Mar 01 2020"
+    ],
+    "example": [
+        "The a(1) = 1 through a(5) = 13 compositions:",
+        "  (1)  (2)   (3)    (4)     (5)",
+        "       (11)  (12)   (13)    (14)",
+        "             (21)   (22)    (23)",
+        "             (111)  (31)    (32)",
+        "                    (112)   (41)",
+        "                    (211)   (113)",
+        "                    (1111)  (122)",
+        "                            (212)",
+        "                            (221)",
+        "                            (311)",
+        "                            (1112)",
+        "                            (2111)",
+        "                            (11111)"
+    ],
+    "mathematica": [
+        "unimodQ[q_]:=Or[Length[q]<=1,If[q[[1]]<=q[[2]],unimodQ[Rest[q]],OrderedQ[Reverse[q]]]];",
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],unimodQ[-#]&]],{n,0,10}]",
+        "nmax = 50; CoefficientList[Series[1 + Sum[x^j*(1 - x^j)/Product[1 - x^k, {k, j, nmax - j}]^2, {j, 1, nmax}], {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Mar 01 2020 *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={Vec(1 + sum(j=1, n, x^j/((1-x^j)*prod(k=j+1, n-j, 1 - x^k + O(x*x^(n-j)))^2)))} \\\\ _Andrew Howroyd_, Mar 01 2020"
+    ],
+    "xref": [
+        "Dominated by A001523 (unimodal compositions).",
+        "The strict case is A072706.",
+        "The case that is unimodal also is A329398.",
+        "The complement is counted by A332669.",
+        "Row sums of A332670.",
+        "Unimodal normal sequences appear to be A007052.",
+        "Non-unimodal compositions are A115981.",
+        "Non-unimodal normal sequences are A328509.",
+        "Partitions whose run-lengths are unimodal are A332280.",
+        "Partitions whose negated run-lengths are unimodal are A332638.",
+        "Numbers whose unsorted prime signature is not unimodal are A332642.",
+        "Partitions whose negated 0-appended differences are unimodal are A332728.",
+        "Cf. A011782, A072704, A107429, A227038, A332282, A332283, A332639, A332741, A332742, A332744, A332832, A332870."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Feb 28 2020",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Mar 01 2020"
+    ],
+    "references": 43,
+    "revision": 18,
+    "time": "2020-03-01T05:40:27-05:00",
+    "created": "2020-02-28T22:54:44-05:00"
+}

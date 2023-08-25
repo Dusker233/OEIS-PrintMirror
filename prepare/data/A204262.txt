@@ -1,0 +1,49 @@
+{
+    "number": 204262,
+    "data": "1,1,3,19,209,3545,85803,2807723,119377321,6397099105,421772316915,33552418294339,3168847554832961,350514662908385321,44885099167514403963,6587836555407268741019,1098597117953239632728089,206564512095561068049417265",
+    "name": "Permanent of the n-th principal submatrix of A003983.",
+    "link": [
+        "Discussion at dxdy.ru, <a href=\"https://dxdy.ru/topic154879.html\">Permanent of a matrix</a>, (in Russian) (2023).",
+        "Terence Tao, <a href=\"https://mathoverflow.net/a/450607/231922\">Remarkable recursions for the A204262</a>, answer to question on MathOverflow (2023)."
+    ],
+    "formula": [
+        "From _Mikhail Kurkov_, Aug 03 2023: (Start)",
+        "a(n) = f(n, n, 0) for n >= 0 where f(n, q, x) = g(n, q, x) + f(n, q-1, q) - g(n, q, q) for n >= 0, q > 0 with f(n, 0, x) = n!*x^n for n >= 0 and where g(n, q, x) = Integral (n-q)^2*f(n-1, q, x) dx for n > 0, q > 0 (formula due to user with the nickname Null on a scientific forum dxdy.ru).",
+        "a(n) = R(n-1, 0) for n > 0 with a(0) = 1 where R(n, q) = Sum_{j=0..q+1} binomial(q+1, j)*(j+1)*R(n-1, j) for n > 0, q >= 0 with R(0, q) = 1 for q >= 0.",
+        "Both results were proved by _Terence Tao_, see Links section. (End)",
+        "Conjecture: Limit_{n->oo} (a(n)/n!^2)^(1/n) = 2/Pi. - _Vaclav Kotesovec_, Aug 05 2023"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "a:= n-> `if`(n=0, 1, Permanent(Matrix(n, ()-> min(args)))):",
+        "seq(a(n), n=0..16);  # _Alois P. Heinz_, Nov 14 2016"
+    ],
+    "mathematica": [
+        "f[i_, j_] := Min[i, j];",
+        "m[n_] := Table[f[i, j], {i, 1, n}, {j, 1, n}]",
+        "TableForm[m[8]] (* 8x8 principal submatrix *)",
+        "Flatten[Table[f[i, n + 1 - i],",
+        "  {n, 1, 12}, {i, 1, n}]]      (* A003983 *)",
+        "Permanent[m_] :=",
+        "  With[{a = Array[x, Length[m]]},",
+        "   Coefficient[Times @@ (m.a), Times @@ a]];",
+        "Table[Permanent[m[n]], {n, 1, 15}]    (* A204262 *)"
+    ],
+    "program": [
+        "(PARI) a(n)={my(S,z,v=vector(n));for(i=0,n!-1,v=numtoperm(n,i);z=1;for(j=1,n,z*= n+1-max(j,v[j]));S+=z);return(S)} \\\\ _R. J. Cano_, Nov 14 2016",
+        "(PARI) upto(n)=my(v1, x='x); v1=vector(n+1, i, i--; i!*x^i); for(i=1, n, for(j=i, n, my(A=intformal((j-i)^2*v1[j])); v1[j+1] = A + subst(v1[j+1] - A, x, i))); v1 \\\\ _Mikhail Kurkov_, Aug 03 2023"
+    ],
+    "xref": [
+        "Cf. A003983, A204264."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jan 14 2012",
+    "ext": [
+        "a(0)=1 prepended and more terms added by _Alois P. Heinz_, Nov 14 2016"
+    ],
+    "references": 2,
+    "revision": 38,
+    "time": "2023-08-10T11:42:39-04:00",
+    "created": "2012-01-14T22:52:51-05:00"
+}

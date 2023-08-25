@@ -1,0 +1,43 @@
+{
+    "number": 365009,
+    "data": "46,49,69,94,106,146,159,214,219,226,254,259,334,339,346,386,394,415,422,446,451,458,466,469,482,485,493,514,519,554,559,579,586,589,614,622,626,629,633,634,635,649,655,662,669,674,685,687,694,695,699,746,749,779,866,869,879,914,921,922",
+    "name": "Semiprimes that are the concatenation of two or more semiprimes.",
+    "comment": [
+        "Conjecture: The fraction of semiprimes <= N that are in this sequence goes to 1 as N -> infinity.  What is the first N for which that fraction >= 1/2?"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A365009/b365009.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 69 is a term because 69 = 3 * 23 is a semiprime and is the concatenation of the semiprimes 6 = 2 * 3 and 9 = 3 * 3."
+    ],
+    "maple": [
+        "filter:= proc(n) local d,v;",
+        "  if numtheory:-bigomega(n) <> 2 then return false fi;",
+        "  for d from 1 to length(n)-1 do",
+        "     v:= n  mod 10^d;",
+        "     if v >= 10^(d-1) and numtheory:-bigomega(v)=2 and g((n-v)/10^d) then return true fi",
+        "  od;",
+        "  false",
+        "end proc:",
+        "g:= proc(n) local d,v; option remember;",
+        "  if numtheory:-bigomega(n) = 2 then return true fi;",
+        "  for d from 1 to length(n)-1 do",
+        "    v:= n mod 10^d;",
+        "    if v >= 10^(d-1) and numtheory:-bigomega(v)=2 and procname((n-v)/10^d) then return true fi",
+        "  od;",
+        "  false",
+        "end proc:",
+        "select(filter, [$10..1000]);"
+    ],
+    "xref": [
+        "Cf. A001358, A001238, A019549. Contains A107342."
+    ],
+    "keyword": "base,nonn,new",
+    "offset": "1,1",
+    "author": "_Zak Seidov_ and _Robert Israel_, Aug 15 2023",
+    "references": 0,
+    "revision": 15,
+    "time": "2023-08-24T10:16:48-04:00",
+    "created": "2023-08-24T10:16:48-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 352262,
+    "data": "2,12,20,21,45,54,102,112,120,121,145,154,200,201,210,211,225,252,405,415,450,451,504,514,522,540,541,558,585,855,1002,1012,1020,1021,1045,1054,1102,1112,1120,1121,1145,1154,1200,1201,1210,1211,1225,1252,1405,1415,1450,1451",
+    "name": "Integers that need 4 iterations of the map x->A352172(x) to reach 1.",
+    "example": [
+        "2 -> 8 -> 512 -> 1000 -> 1."
+    ],
+    "mathematica": [
+        "f[n_] := (Times @@ Select[IntegerDigits[n], # > 1 &])^3; q[n_, len_] := (v = Nest[f, n, len - 1]) != 1 && f[v] == 1; Select[Range[1451], q[#, 4] &] (* _Amiram Eldar_, Mar 10 2022 *)"
+    ],
+    "program": [
+        "(PARI) f(n) = vecprod(apply(x->x^3, select(x->(x>1), digits(n)))); \\\\ A352172",
+        "isok4(n) = {for (k=1, 4, n = f(n); if ((n==1), return(k==4)););}",
+        "(Python)",
+        "from math import prod",
+        "def A352172(n): return prod(int(d)**3 for d in str(n) if d != '0')",
+        "def ok(x, iters=4):",
+        "    i = 0",
+        "    while i < iters and x != 1: i, x = i+1, A352172(x)",
+        "    return i == iters and x == 1",
+        "print([k for k in range(1452) if ok(k)]) # _Michael S. Branicky_, Mar 10 2022"
+    ],
+    "xref": [
+        "Cf. A352172. Subsequence of A351876.",
+        "Cf. A352260, A352261, A352263, A352264, A352265, A352266, A352267, A352268."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Mar 10 2022",
+    "references": 8,
+    "revision": 13,
+    "time": "2022-03-10T17:32:52-05:00",
+    "created": "2022-03-10T17:32:52-05:00"
+}

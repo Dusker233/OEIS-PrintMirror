@@ -1,0 +1,53 @@
+{
+    "number": 309815,
+    "data": "1,2,3,6,7,13,21,112,243,275,466,761,1128,4704,9523,10730,17579,28085,41041,165312,331299,372815,607754,967441,1410360,5648160,11300259,12713402,20707831,32942845,48005301,192060400,384143763,432165299,703818922,1119543881,1631318640",
+    "name": "a(n) is the smallest positive integer x such that sqrt(2) + sqrt(x) is closer to an integer than any other value already in the sequence.",
+    "comment": [
+        "If b(n) = round(sqrt(2) + sqrt(a(n))), then (b(n)^2 + 2 - a(n))/(2*b(n)) is an approximation for sqrt(2).  Conjecture: all convergents of the continued fraction of sqrt(2) except 1 arise in this way. - _Robert Israel_, Aug 18 2019"
+    ],
+    "example": [
+        "a(6) = 13 because sqrt(2)+sqrt(13) is closer to an integer than any of the previous 5 terms."
+    ],
+    "maple": [
+        "R:= 1: delta:= sqrt(2)-1:",
+        "for r from 2 to 10000 do",
+        "   x0:= ceil((r - sqrt(2)-delta)^2);",
+        "   x1:= floor((r-sqrt(2)+delta)^2);",
+        "   for x from x0 to x1 do",
+        "     dx:= abs(sqrt(2)+sqrt(x)-r);",
+        "     if is(dx < delta) then",
+        "       delta:= dx;",
+        "       R:= R, x;",
+        "     fi",
+        "   od",
+        "od:",
+        "R; # _Robert Israel_, Aug 18 2019"
+    ],
+    "mathematica": [
+        "d[x_] := Abs[x - Round[x]]; dm = 1; s = {}; Do[If[(d1 = d[Sqrt[2] + Sqrt[n]]) < dm, dm = d1; AppendTo[s, n]], {n, 1, 10^5}]; s (* _Amiram Eldar_, Aug 18 2019 *)"
+    ],
+    "program": [
+        "(Python) import math",
+        "a = 2**(1/2)",
+        "l = []",
+        "closest = 1.0",
+        "for i in range(1, 100000000):",
+        "    b = i**(1/2)",
+        "    c = abs(a+b - round(a+b))",
+        "    if c < closest:",
+        "        print(i, c)",
+        "        closest = c",
+        "        l.append(i)",
+        "print(l)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ben Paul Thurston_, Aug 18 2019",
+    "ext": [
+        "More terms from _Giovanni Resta_, Aug 19 2019"
+    ],
+    "references": 0,
+    "revision": 18,
+    "time": "2019-08-20T01:13:28-04:00",
+    "created": "2019-08-20T01:13:28-04:00"
+}

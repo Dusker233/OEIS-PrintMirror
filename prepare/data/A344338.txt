@@ -1,0 +1,47 @@
+{
+    "number": 344338,
+    "data": "9,365,33075",
+    "name": "Smallest number that is the sum of two or more consecutive positive n-th powers in more than one way.",
+    "comment": [
+        "a(4) > 10^24. - _Bert Dobbelaere_, May 16 2021",
+        "Conjecture: no terms exist for n >= 4. - _Jon E. Schoenfield_, May 16 2021"
+    ],
+    "example": [
+        "9 = 2 + 3 + 4 = 4 + 5.",
+        "365 = 10^2 + 11^2 + 12^2 = 13^2 + 14^2.",
+        "33075 = 11^3 + 12^3 + 13^3 + 14^3 + 15^3 + 16^3 + 17^3 + 18^3 + 19^3 = 15^3 + 16^3 + 17^3 + 18^3 + 19^3 + 20^3."
+    ],
+    "program": [
+        "(Python)",
+        "N=3 # <== Adapt here",
+        "import heapq",
+        "sigma=1+2**N",
+        "h=[(sigma,1,2)]",
+        "nextcount=3",
+        "oldv,olds,oldl=0,0,0",
+        "while True:",
+        "    (v,s,l)=heapq.heappop(h)",
+        "    if v==oldv:",
+        "        break",
+        "    if v>=sigma:",
+        "        sigma += nextcount**N",
+        "        heapq.heappush(h, (sigma,1,nextcount))",
+        "        nextcount+=1",
+        "    oldv,olds,oldl = v,s,l",
+        "    v-=s**N ; s+=1 ; l+=1 ;    v+=l**N",
+        "    heapq.heappush(h,(v,s,l))",
+        "print(\"a(%d) = %d = sum(i^%d, i=%d..%d) = sum(i^%d, i=%d..%d)\"%",
+        "    (N,v,N,olds,oldl,N,s,l))",
+        "# _Bert Dobbelaere_, May 16 2021"
+    ],
+    "xref": [
+        "Cf. A062681, A062682, A091414, A105441, A230718."
+    ],
+    "keyword": "nonn,bref,more,hard",
+    "offset": "1,1",
+    "author": "_Ilya Gutkovskiy_, May 15 2021",
+    "references": 1,
+    "revision": 14,
+    "time": "2021-05-17T08:11:24-04:00",
+    "created": "2021-05-15T12:36:06-04:00"
+}

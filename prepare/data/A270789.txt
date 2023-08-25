@@ -1,0 +1,55 @@
+{
+    "number": 270789,
+    "data": "1,1,3,10,37,151,657,2989,14044,67626,332061,1656893,8379773,42871890,221528317,1154624725,6063752579,32058277129,170492969062,911505351447,4896187116904,26411691702030,143019573086693,777143219649275,4236216759058815",
+    "name": "Number of Schur rings over Z_{2^n}.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A270789/b270789.txt\">Table of n, a(n) for n = 0..1001</a>",
+        "Andrew Misseldine, <a href=\"http://arxiv.org/abs/1508.03757\">Counting Schur Rings over Cyclic Groups</a>, arXiv preprint arXiv:1508.03757 [math.RA], 2015."
+    ],
+    "formula": [
+        "G.f.: ((2-x-sqrt(1-4*x) - sqrt(1-6*x+x^2))*(1-x) + 2*(x^2-1))/((2-x-sqrt(1-4*x)-sqrt(1-6*x+x^2))*(1-x-x^2) + 2*(x^3+x^2+x-1)) (see Misseldine link); equivalently, the g.f. can be rewritten as (x - 1)*(y*x - 1)/(y*x*(x^2 + x - 1) - 2*x + 1), where y = A000108(x) + A006318(x) - 1. - _Gheorghe Coserea_, Sep 12 2018"
+    ],
+    "mathematica": [
+        "A000108[x_] = (1 - Sqrt[1 - 4x])/(2x);",
+        "A006318[x_] = (1 - x - (1 - 6x + x^2)^(1/2))/(2x);",
+        "y = A000108[x] + A006318[x] - 1;",
+        "gf = (x-1) (y x-1) / (y x (x^2 + x - 1) - 2x + 1);",
+        "CoefficientList[gf + O[x]^25, x] (* _Jean-Fran\u00e7ois Alcover_, Oct 06 2018, after _Gheorghe Coserea_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "seq(N) = {",
+        "  my(a=vector(N), sv=vector(N), cs=vector(N), c(k)=binomial(2*k, k)/(k+1),",
+        "     s(k) = sum(j=0, k, binomial(2*j, j)*binomial(k + j, 2*j)/(j+1)));",
+        "  a[1] = 1; a[2] = 1; a[3] = 3; a[4] = 10;",
+        "  sv[1] = s(1); cs[1] = c(1) + sv[1];",
+        "  for (j = 2, #cs, sv[j] = s(j); cs[j] = cs[j-1] + c(j) + sv[j]);",
+        "  for (n = 4, #a-1,",
+        "    a[n+1] = sum(k = 1, 3, 2^k * a[n+1-k]) - (c(n-1) + sv[n-1]) +",
+        "             sum(k = 4, n, (c(k-1) + sv[k-1] - cs[k-3]) * a[n+1-k]));",
+        "  return(a);",
+        "};",
+        "seq(25)",
+        "(PARI)",
+        "seq(N) = {",
+        "  my(x='x+O('x^N), c=(1-(1-4*x)^(1/2))/(2*x),",
+        "     s=(1-x-(1-6*x+x^2)^(1/2))/(2*x), y=c+s-1);",
+        "  Vec((x - 1)*(y*x - 1)/(y*x*(x^2 + x - 1) - 2*x + 1));",
+        "};",
+        "seq(25) \\\\ _Gheorghe Coserea_, Sep 12 2018"
+    ],
+    "xref": [
+        "Cf. A000108, A006318, A269750, A270785, A270786, A270787."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Mar 23 2016",
+    "ext": [
+        "More terms from _Gheorghe Coserea_, Mar 24 2016",
+        "a(0)=1 prepended by _Gheorghe Coserea_, Sep 12 2018"
+    ],
+    "references": 2,
+    "revision": 46,
+    "time": "2018-10-25T02:44:17-04:00",
+    "created": "2016-03-23T12:55:48-04:00"
+}

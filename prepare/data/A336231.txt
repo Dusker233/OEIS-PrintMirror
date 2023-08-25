@@ -1,0 +1,38 @@
+{
+    "number": 336231,
+    "data": "0,1,2,3,4,6,7,8,9,12,14,15,16,18,19,24,25,28,30,31,32,33,36,38,39,48,50,51,56,57,60,62,63,64,66,67,72,73,76,78,79,96,97,100,102,103,112,114,115,120,121,124,126,127,128,129,132,134,135,144,146,147,152",
+    "name": "Integers whose binary digit expansion has an even number of 0\u2019s between any two consecutive 1\u2019s.",
+    "comment": [
+        "If m is a term then 2*m is a term too.",
+        "If m is an odd term and k is odd then 2^k*m+1 is a term. - _Robert Israel_, Jul 16 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A336231/b336231.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Daniel Glasscock, Joel Moreira, and Florian K. Richter, <a href=\"https://arxiv.org/abs/2007.05480\">Additive transversality of fractal sets in the reals and the integers</a>, arXiv:2007.05480 [math.NT], 2020. See Aeven p. 34."
+    ],
+    "example": [
+        "9 is 1001 in binary, with 2 (an even number) consecutive zeroes, so 9 is a term."
+    ],
+    "maple": [
+        "B[1]:= {1}: S[0]:= {0}: S[1]:= {1}: count:= 2:",
+        "for d from 2 while count < 200 do",
+        "  B[d]:= map(op, {seq(map(t -> t*2^k+1, B[d-k]), k=1..d-1,2)});",
+        "  S[d]:= B[d] union map(`*`, S[d-1], 2);",
+        "  count:= count+nops(S[d]);",
+        "od:",
+        "[seq(op(sort(convert(S[t], list))), t=0..d-1)]; # _Robert Israel_, Jul 16 2020"
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(vpos = select(x->(x==1), binary(n), 1)); for (i=1, #vpos-1, if ((vpos[i+1]-vpos[i]-1) % 2, return (0));); return(1);}"
+    ],
+    "xref": [
+        "Cf. A007088, A060142, A336232."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Michel Marcus_, Jul 13 2020",
+    "references": 2,
+    "revision": 13,
+    "time": "2020-07-18T02:27:51-04:00",
+    "created": "2020-07-13T21:30:37-04:00"
+}

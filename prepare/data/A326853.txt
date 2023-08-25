@@ -1,0 +1,51 @@
+{
+    "number": 326853,
+    "data": "0,1,2,4,5,6,7,8,16,17,24,25,32,34,40,42,52,53,54,55,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105",
+    "name": "BII-numbers of set-systems where every two covered vertices appear together in some edge (cointersecting).",
+    "comment": [
+        "A set-system is a finite set of finite nonempty sets. Its elements are sometimes called edges. The dual of a set-system has, for each vertex, one edge consisting of the indices (or positions) of the edges containing that vertex. For example, the dual of {{1,2},{2,3}} is {{1},{1,2},{2}}. This sequence gives all BII-numbers (defined below) of set-systems that are cointersecting, meaning their dual is pairwise intersecting.",
+        "A binary index of n is any position of a 1 in its reversed binary expansion. The binary indices of n are row n of A048793. We define the set-system with BII-number n to be obtained by taking the binary indices of each binary index of n. Every set-system has a different BII-number. For example, 18 has reversed binary expansion (0,1,0,0,1), and since the binary indices of 2 and 5 are {2} and {1,3} respectively, the BII-number of {{2},{1,3}} is 18."
+    ],
+    "example": [
+        "The sequence of all cointersecting set-systems together with their BII-numbers begins:",
+        "   0: {}",
+        "   1: {{1}}",
+        "   2: {{2}}",
+        "   4: {{1,2}}",
+        "   5: {{1},{1,2}}",
+        "   6: {{2},{1,2}}",
+        "   7: {{1},{2},{1,2}}",
+        "   8: {{3}}",
+        "  16: {{1,3}}",
+        "  17: {{1},{1,3}}",
+        "  24: {{3},{1,3}}",
+        "  25: {{1},{3},{1,3}}",
+        "  32: {{2,3}}",
+        "  34: {{2},{2,3}}",
+        "  40: {{3},{2,3}}",
+        "  42: {{2},{3},{2,3}}",
+        "  52: {{1,2},{1,3},{2,3}}",
+        "  53: {{1},{1,2},{1,3},{2,3}}",
+        "  54: {{2},{1,2},{1,3},{2,3}}",
+        "  55: {{1},{2},{1,2},{1,3},{2,3}}"
+    ],
+    "mathematica": [
+        "dual[eds_]:=Table[First/@Position[eds,x],{x,Union@@eds}];",
+        "bpe[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "stableQ[u_,Q_]:=!Apply[Or,Outer[#1=!=#2&&Q[#1,#2]&,u,u,1],{0,1}];",
+        "Select[Range[0,100],stableQ[dual[bpe/@bpe[#]],Intersection[#1,#2]=={}&]&]"
+    ],
+    "xref": [
+        "BII-numbers of pairwise intersecting set-systems are A326910.",
+        "Cointersecting set-systems are A327039, with covering version A327040.",
+        "The T_0 or costrict case is A327052.",
+        "Cf. A029931, A048793, A326031, A327020, A327037, A327041, A327053, A327057."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Aug 18 2019",
+    "references": 18,
+    "revision": 4,
+    "time": "2019-08-18T11:26:56-04:00",
+    "created": "2019-08-18T11:26:56-04:00"
+}

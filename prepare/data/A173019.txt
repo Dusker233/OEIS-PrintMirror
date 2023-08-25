@@ -1,0 +1,51 @@
+{
+    "number": 173019,
+    "data": "1,4,16,28,112,448,784,3136,12301,19684,78736,314944,551152,2204608,8818432,15432256,61729024,242132884,387459856,1549839424,6199180549,10848875968,43395503872,173577055372,303766932781,1215067731124",
+    "name": "a(n) is the value of row n in triangle A083093 seen as ternary number.",
+    "comment": [
+        "Previous name was \"Pascal's Triangle mod 3 converted to decimal.\"",
+        "If 2|a(n), then 4|a(n).",
+        "If 8|a(n), then 16|a(n).",
+        "If a(n)=4*a(n-1), then 3 does not divide n.",
+        "The first few odd values for a(n) are a(0)=1, a(8)=12301, a(20)=6199180549, a(24)=303766932781.",
+        "It appears that, as the terms of A001317 (analogous to this sequence, using binary instead of ternary) can be uniquely represented as products of Fermat numbers, the terms of this sequence can be represented as products from a nontrivial set of numbers. - _Thomas Anton_, Oct 27 2018"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A173019/b173019.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "P. Mathonet, M. Rigo, M. Stipulanti and N. Z\u00e9na\u00efdi, <a href=\"https://arxiv.org/abs/2201.06636\">On digital sequences associated with Pascal's triangle</a>, arXiv:2201.06636 [math.NT], 2022."
+    ],
+    "formula": [
+        "a(3^n) = 3^(3^n) + 1.",
+        "a(3^n) = (8*a((3^n)-1) + 12)/5. [5*a(3^n) = 1200...0012 (base 3), 8*a((3^n)-1) = (22)(1212...2121) = 11222...2202 (base 3).]",
+        "For n > 0, a((3^n)+1) = 4*a(3^n) and a((3^n)+2) = 4*a((3^n)+1).",
+        "a(n) = Sum_{k=0..n} A083093(n,k) * 3^k. - _Reinhard Zumkeller_, Jul 11 2013"
+    ],
+    "example": [
+        "a(9) = 3^(3^2) + 1 = 19684;",
+        "a(8) = (5*19684 - 12)/8 = 12301;",
+        "a(10) = 4*19684 = 78736."
+    ],
+    "mathematica": [
+        "FromDigits[#, 3] & /@ Table[Mod[Binomial[n, k], 3], {n, 0, 25}, {k, 0, n}] (* _Michael De Vlieger_, Oct 31 2018 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a173019 = foldr (\\t v -> 3 * v + t) 0 . map toInteger . a083093_row",
+        "-- _Reinhard Zumkeller_, Jul 11 2013",
+        "(PARI) a(n) = my(v = vector(n+1, k, binomial(n, k-1))); fromdigits(apply(x->x % 3, v), 3); \\\\ _Michel Marcus_, Nov 21 2018"
+    ],
+    "xref": [
+        "Cf. A006940 (takes these values and converts them to decimal notation).",
+        "Cf. A001317, A007089, A006943, A083093."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "0,2",
+    "author": "Michael Thaler (michael_thaler(AT)brown.edu), Nov 07 2010",
+    "ext": [
+        "a(13) and a(19) corrected and name clarified by _Tom Edgar_, Oct 11 2015"
+    ],
+    "references": 4,
+    "revision": 53,
+    "time": "2022-01-19T11:15:43-05:00",
+    "created": "2010-11-10T03:00:00-05:00"
+}

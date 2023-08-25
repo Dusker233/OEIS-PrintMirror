@@ -1,0 +1,40 @@
+{
+    "number": 84778,
+    "data": "1,6,28,128,660,3016,13108,64112,304068,1332992,6514356,29341384,131904528,623547112,2990903464,13436119424,61647598484,284398511848,1302463169256,6195158123688,28653898573420,130138400720504",
+    "name": "a(n) = sum of absolute-valued coefficients of (1+2*x-3*x^2)^n.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A084778/b084778.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..2*n} abs(f(n,k)), where f(n, k) = Sum_{j=0..k} binomial(n, j)*binomial(n, k-j)*(-3)^j = binomial(n, k)*Hypergeometric2F1([-n, -k], [n-k+1], -3) = (n!/k!)*4^n*(-3)^((k-n)/2)*LegendreP(n, k-n, -1/2). - _G. C. Greubel_, Jun 04 2023"
+    ],
+    "mathematica": [
+        "T[n_,k_]:=T[n,k]=SeriesCoefficient[Series[(1+2*x-3*x^2)^n,{x,0,2n}], k];",
+        "a[n_]:= a[n]= Sum[Abs[T[n,k]], {k,0,2n}];",
+        "Table[a[n], {n,0,40}] (* _G. C. Greubel_, Jun 04 2023 *)"
+    ],
+    "program": [
+        "(PARI) for(n=0,40,S=sum(k=0,2*n,abs(polcoeff((1+2*x-3*x^2)^n,k,x))); print1(S\",\"))",
+        "(Magma)",
+        "m:=40;",
+        "R<x>:=PowerSeriesRing(Integers(), 2*(m+2));",
+        "f:= func< n,k | Coefficient(R!( (1+2*x-3*x^2)^n ), k) >;",
+        "[(&+[ Abs(f(n,k)): k in [0..2*n]]): n in [0..m]]; // _G. C. Greubel_, Jun 04 2023",
+        "(SageMath)",
+        "def f(n,k):",
+        "    P.<x> = PowerSeriesRing(QQ)",
+        "    return P( (1+2*x-3*x^2)^n ).list()[k]",
+        "def a(n): return sum( abs(f(n,k)) for k in range(2*n+1) )",
+        "[a(n) for n in range(41)] # _G. C. Greubel_, Jun 04 2023"
+    ],
+    "xref": [
+        "Cf. A084775, A084776, A084777, A084779, A084780."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jun 14 2003",
+    "references": 8,
+    "revision": 9,
+    "time": "2023-06-04T02:15:21-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

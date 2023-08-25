@@ -1,0 +1,79 @@
+{
+    "number": 339485,
+    "data": "1,2,3,6,9,12,17,30,51,88,149,264,439,746,1261,2234,4211,7996,14899,28048,54037,106442,208625,398588,735365,1331590,2421573,4481896,8504953,16497150,32595915,64614636,127968263,252470776,495388085,962475122,1847742473,3504948056",
+    "name": "Number of subsets of the first n primes whose elements have a prime average.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A339485/b339485.txt\">Table of n, a(n) for n = 1..150</a>",
+        "Eric W. Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ArithmeticMean.html\">Arithmetic Mean</a>"
+    ],
+    "example": [
+        "a(5) = 9 subsets: {2}, {3}, {5}, {7}, {11}, {3, 7}, {3, 11}, {3, 5, 7} and {3, 7, 11}."
+    ],
+    "maple": [
+        "b:= proc(n, s, c) option remember; `if`(n=0,",
+        "      `if`(c>0 and denom(s)=1 and isprime(s), 1, 0),",
+        "       b(n-1, s, c)+b(n-1, (s*c+ithprime(n))/(c+1), c+1))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, Dec 08 2020"
+    ],
+    "mathematica": [
+        "b[n_, s_, c_] := b[n, s, c] = If[n == 0,",
+        "     If[c > 0 && Denominator[s] == 1 && PrimeQ[s], 1, 0],",
+        "     b[n-1, s, c] + b[n-1, (s*c + Prime[n])/(c+1), c+1]];",
+        "a[n_] := b[n, 0, 0];",
+        "Array[a, 40] (* _Jean-Fran\u00e7ois Alcover_, Jul 09 2021, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import prime, isprime",
+        "from itertools import chain, combinations",
+        "def powerset(s): # skip empty set and singletons",
+        "    return chain.from_iterable(combinations(s, r) for r in range(2,len(s)+1))",
+        "def a(n):",
+        "    out = n  # count all singletons",
+        "    for s in powerset([prime(i) for i in range(1, n+1)]):",
+        "        ss = sum(s)",
+        "        if ss%len(s) == 0:",
+        "            if isprime(ss//len(s)): out += 1",
+        "    return out",
+        "print([a(n) for n in range(1, 21)]) # _Michael S. Branicky_, Dec 06 2020",
+        "(Python)",
+        "from itertools import combinations",
+        "from sympy import prime",
+        "def A339485(n):",
+        "    c, primeset2 = n, set(prime(i) for i in range(1,n))",
+        "    primeset = primeset2 | {prime(n)}",
+        "    for l in range(2,n+1):",
+        "        for d in combinations(primeset,l):",
+        "            a, b = divmod(sum(d),l)",
+        "            if b == 0 and a in primeset2:",
+        "                c += 1",
+        "    return c # _Chai Wah Wu_, Dec 07 2020",
+        "(Python)",
+        "from functools import lru_cache",
+        "from sympy import sieve, isprime",
+        "@lru_cache(maxsize=None)",
+        "def b(n, s, c):",
+        "    if n == 0: return int(c and s%c == 0 and isprime(s//c))",
+        "    return b(n-1, s, c) + b(n-1, s+sieve[n], c+1)",
+        "a = lambda n: b(n, 0, 0)",
+        "print([a(n) for n in range(1, 41)]) # _Michael S. Branicky_, Oct 06 2022"
+    ],
+    "xref": [
+        "Cf. A000040, A051293, A071810, A127542, A309160."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Dec 06 2020",
+    "ext": [
+        "a(10)-a(30) from _Michael S. Branicky_, Dec 06 2020",
+        "a(31)-a(34) from _Chai Wah Wu_, Dec 07 2020",
+        "a(35)-a(36) from _Michael S. Branicky_, Dec 08 2020",
+        "a(37)-a(38) from _Chai Wah Wu_, Dec 08 2020"
+    ],
+    "references": 2,
+    "revision": 39,
+    "time": "2022-10-06T10:58:37-04:00",
+    "created": "2020-12-07T01:31:45-05:00"
+}

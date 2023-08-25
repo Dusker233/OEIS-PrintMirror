@@ -1,0 +1,48 @@
+{
+    "number": 303023,
+    "data": "1,1,1,2,4,8,16,32,66,139,297,642,1404,3097,6888,15428,34770,78785,179397,410264,941935,2170275,5016604,11630024,27034824,63000261,147148341,344419767,807746487,1897829065,4466643367,10529301944,24858143953,58769113863",
+    "name": "Number of anti-binary (no binary branchings) unlabeled rooted trees with n nodes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A303023/b303023.txt\">Table of n, a(n) for n = 1..2000</a>"
+    ],
+    "example": [
+        "The a(6) = 8 rooted trees:",
+        "  (((((o)))))",
+        "  (((ooo)))",
+        "  ((oo(o)))",
+        "  (oo((o)))",
+        "  (o(o)(o))",
+        "  ((oooo))",
+        "  (ooo(o))",
+        "  (ooooo)"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, `if`(t=1, 0, 1), `if`(i<1, 0,",
+        "      add(b(n-i*j, i-1, max(0, t-j))*binomial(a(i)+j-1, j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> `if`(n<2, n, b(n-1$2, 3)):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Aug 27 2018"
+    ],
+    "mathematica": [
+        "burt[n_]:=burt[n]=If[n==1,{{}},Join@@Table[Union[Sort/@Tuples[burt/@c]],{c,Select[IntegerPartitions[n-1],Length[#]!=2&]}]];",
+        "Table[Length[burt[n]],{n,20}]",
+        "(* Second program: *)",
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0, If[t == 1, 0, 1], If[i < 1, 0, Sum[b[n-i*j, i-1, Max[0, t-j]]*Binomial[a[i]+j-1, j], {j, 0, n/i}]]];",
+        "a[n_] := If[n < 2, n, b[n-1, n-1, 3]];",
+        "Array[a, 50] (* _Jean-Fran\u00e7ois Alcover_, May 16 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000081, A000598, A001190, A001678, A102403, A292050, A298204, A298422.",
+        "Cf. A303022, A303024, A303025, A303026, A303027, A318520."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Gus Wiseman_, Aug 15 2018",
+    "ext": [
+        "a(24)-a(34) from _Alois P. Heinz_, Aug 27 2018"
+    ],
+    "references": 7,
+    "revision": 23,
+    "time": "2021-05-17T02:40:07-04:00",
+    "created": "2018-08-16T08:51:11-04:00"
+}

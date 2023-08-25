@@ -1,0 +1,78 @@
+{
+    "number": 326847,
+    "data": "2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,29,30,31,32,37,41,43,47,49,53,59,61,64,67,71,73,79,81,83,84,89,97,101,103,107,109,113,121,125,127,128,131,137,139,149,151,157,163,167,169,173,179,181,191,193,197",
+    "name": "Heinz numbers of integer partitions of m >= 0 using divisors of m whose length also divides m.",
+    "comment": [
+        "First differs from A071139, A089352 and A086486 in lacking 60. First differs from A326837 in lacking 268.",
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k).",
+        "The enumeration of these partitions by sum is given by A326842."
+    ],
+    "link": [
+        "R. J. Mathar, <a href=\"/A326847/b326847.txt\">Table of n, a(n) for n = 1..489</a>"
+    ],
+    "formula": [
+        "Intersection of A326841 and A316413."
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices begins:",
+        "   2: {1}",
+        "   3: {2}",
+        "   4: {1,1}",
+        "   5: {3}",
+        "   7: {4}",
+        "   8: {1,1,1}",
+        "   9: {2,2}",
+        "  11: {5}",
+        "  13: {6}",
+        "  16: {1,1,1,1}",
+        "  17: {7}",
+        "  19: {8}",
+        "  23: {9}",
+        "  25: {3,3}",
+        "  27: {2,2,2}",
+        "  29: {10}",
+        "  30: {1,2,3}",
+        "  31: {11}",
+        "  32: {1,1,1,1,1}",
+        "  37: {12}"
+    ],
+    "maple": [
+        "isA326847 := proc(n)",
+        "    psigsu := A056239(n) ;",
+        "    for ifs in ifactors(n)[2] do",
+        "        p := op(1,ifs) ;",
+        "        psig := numtheory[pi](p) ;",
+        "        if modp(psigsu,psig) <> 0 then",
+        "            return false;",
+        "        end if;",
+        "    end do:",
+        "    psigle := numtheory[bigomega](n) ;",
+        "    if modp(psigsu,psigle) = 0 then",
+        "        true;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "n := 1:",
+        "for i from 2 to 3000 do",
+        "    if isA326847(i) then",
+        "        printf(\"%d %d\\n\",n,i);",
+        "        n := n+1 ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Aug 09 2019"
+    ],
+    "mathematica": [
+        "Select[Range[2,100],With[{y=Flatten[Cases[FactorInteger[#],{p_,k_}:>Table[PrimePi[p],{k}]]]},Divisible[Total[y],Length[y]]&&And@@IntegerQ/@(Total[y]/y)]&]"
+    ],
+    "xref": [
+        "Intersection of A326841 and A316413.",
+        "Cf. A001222, A018818, A056239, A067538, A112798, A316413, A326836, A326842."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Jul 26 2019",
+    "references": 11,
+    "revision": 14,
+    "time": "2019-08-09T12:35:51-04:00",
+    "created": "2019-07-29T13:55:30-04:00"
+}

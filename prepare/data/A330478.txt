@@ -1,0 +1,34 @@
+{
+    "number": 330478,
+    "data": "33,1718,4174,7971,8434,11114,13011,14005,16645,17571,29787,30574,43647,58414,63177,65006,69694,71794,87218,95314,97827,104485,125738,126394,150334,193594,196341,198694,200378,201094,212631,212847,227554,239314,243591,254427,276085,277594,288818,291514",
+    "name": "Semiprimes A001358(k) = p*q such that p*q+p+q and r*s+r+s are consecutive primes, where A001358(k+1)=r*s.",
+    "link": [
+        "Robert Israel, <a href=\"/A330478/b330478.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(3)=4174=2*2087, the next semiprime is 4178=2*2089, and 4174+2+2087=6263 and 4178+2+2089=6269 are consecutive primes."
+    ],
+    "maple": [
+        "g:= proc(n) local F;",
+        "  F:= ifactors(n)[2];",
+        "  if nops(F)=2 then n+F[1][1]+F[2][1] else n+2*F[1][1] fi",
+        "end proc:",
+        "SP:= select(t -> numtheory:-bigomega(t)=2, [seq(i,i=4..3*10^5)]):",
+        "nSP:= nops(SP):",
+        "P1:= map(g, SP):",
+        "SP[select(t -> isprime(P1[t]) and nextprime(P1[t])=P1[t+1], [$1..nSP-1])];"
+    ],
+    "mathematica": [
+        "Select[Partition[Union@ Apply[Join, Table[Flatten@ {p #, Sort[{p, #}]} & /@ Prime@ Range@ PrimePi@ Floor[Max[#]/p], {p, #}]] &@ Prime@ Range[3*10^4], 2, 1], And[AllTrue[{#1, #2}, PrimeQ], #2 == NextPrime@ #1] & @@ {Total@ #1, Total@ #2} & @@ # &][[All, 1, 1]] (* _Michael De Vlieger_, Dec 15 2019 *)"
+    ],
+    "xref": [
+        "Cf. A001358."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Dec 15 2019",
+    "references": 1,
+    "revision": 11,
+    "time": "2019-12-17T07:47:00-05:00",
+    "created": "2019-12-15T21:56:16-05:00"
+}

@@ -1,0 +1,57 @@
+{
+    "number": 340843,
+    "data": "1933,3391,32687,78623,104087,109891,112103,120283,123127,135469,136217,161983,162209,162391,163819,179779,193261,198613,198901,301211,316819,316891,382021,389161,712631,721321,726487,738349,780401,784627,902261,918361,918613,943837,964531,977971,1002247",
+    "name": "Emirps p such that p+(sum of digits of p) and reverse(p)+(sum of digits of p) are emirps.",
+    "link": [
+        "Robert Israel, <a href=\"/A340843/b340843.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(3) = 32687 is an emirp because 32687 and 78623 are distinct primes. The sum of digits of 32687 is 26. 32687+26 = 32713 and 78623+26 = 78649 are emirps because 32713 and 31723 are distinct primes, as are 78649 and 94687."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(10^(i-1)*L[-i],i=1..nops(L))",
+        "end proc:",
+        "filter:= proc(n) local r,t,n2,n3;",
+        "if not isprime(n) then return false fi;",
+        "r:= revdigs(n);",
+        "if r = n or not isprime(r) then return false fi;",
+        "t:= convert(convert(n,base,10),`+`);",
+        "for n2 in [n+t, r+t] do",
+        "  if not isprime(n2) then return false fi;",
+        "  r:= revdigs(n2);",
+        "  if r = n2 or not isprime(r) then return false fi;",
+        "od;",
+        "true",
+        "end proc:",
+        "select(filter, [seq(i,i=13..10^6,2)]);"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def sd(n): return sum(map(int, str(n)))",
+        "def emirp(n):",
+        "  if not isprime(n): return False",
+        "  revn = int(str(n)[::-1])",
+        "  if n == revn: return False",
+        "  return isprime(revn)",
+        "def ok(n):",
+        "  if not emirp(n): return False",
+        "  if not emirp(n + sd(n)): return False",
+        "  revn = int(str(n)[::-1])",
+        "  return emirp(revn + sd(revn))",
+        "def aupto(nn): return [m for m in range(1, nn+1) if ok(m)]",
+        "print(aupto(920000)) # _Michael S. Branicky_, Jan 24 2021"
+    ],
+    "xref": [
+        "Cf. A006567. Contained in A340842."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 23 2021",
+    "references": 2,
+    "revision": 16,
+    "time": "2021-01-25T19:03:05-05:00",
+    "created": "2021-01-24T13:22:36-05:00"
+}

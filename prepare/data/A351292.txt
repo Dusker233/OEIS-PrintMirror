@@ -1,0 +1,87 @@
+{
+    "number": 351292,
+    "data": "1,1,1,5,5,9,57,61,109,161,1265,1317,2469,3577,5785,43901,47165,86337,127665,204853,284197,2280089,2398505,4469373,6543453,10570993,14601745,22502549,159506453,171281529,314077353,462623821,742191037,1031307185,1580543969,2141246229",
+    "name": "Number of patterns of length n with all distinct run-lengths.",
+    "comment": [
+        "We define a pattern to be a finite sequence covering an initial interval of positive integers. Patterns are counted by A000670 and ranked by A333217."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A351292/b351292.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "From _Andrew Howroyd_, Feb 12 2022: (Start)",
+        "a(n) = Sum_{k=1..n} R(n,k)*(Sum_{r=k..n} binomial(r, k)*(-1)^(r-k)), where R(n,k) = Sum_{j=1..floor((sqrt(8*n+1)-1)/2)} k*(k-1)^(j-1) * j! * A008289(n,j).",
+        "G.f.: 1 + Sum_{r>=1} Sum_{k=1..r} R(k,x) * binomial(r, k)*(-1)^(r-k), where R(k,x) = Sum_{j>=1} k*(k-1)^(j-1) * j! * [y^j](Product_{k>=1} 1 + y*x^k).",
+        "(End)"
+    ],
+    "example": [
+        "The a(1) = 1 through a(5) = 9 patterns:",
+        "  (1)  (1,1)  (1,1,1)  (1,1,1,1)  (1,1,1,1,1)",
+        "              (1,1,2)  (1,1,1,2)  (1,1,1,1,2)",
+        "              (1,2,2)  (1,2,2,2)  (1,1,1,2,2)",
+        "              (2,1,1)  (2,1,1,1)  (1,1,2,2,2)",
+        "              (2,2,1)  (2,2,2,1)  (1,2,2,2,2)",
+        "                                  (2,1,1,1,1)",
+        "                                  (2,2,1,1,1)",
+        "                                  (2,2,2,1,1)",
+        "                                  (2,2,2,2,1)",
+        "The a(6) = 57 patterns grouped by sum:",
+        "  111111  111112  111122  112221  111223  111233  112333  122333",
+        "          111211  111221  122211  111322  111332  113332  133322",
+        "          112111  122111  211122  112222  112223  122233  221333",
+        "          211111  221111  221112  211222  113222  133222  223331",
+        "                                  221113  122222  211333  333122",
+        "                                  222112  211133  222133  333221",
+        "                                  222211  221222  222331",
+        "                                  223111  222113  233311",
+        "                                  311122  222122  331222",
+        "                                  322111  222221  332221",
+        "                                          222311  333112",
+        "                                          233111  333211",
+        "                                          311222",
+        "                                          322211",
+        "                                          331112",
+        "                                          332111"
+    ],
+    "mathematica": [
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "Table[Length[Select[Join@@Permutations/@allnorm[n],UnsameQ@@Length/@Split[#]&]],{n,0,6}]"
+    ],
+    "program": [
+        "(PARI)",
+        "P(n) = {Vec(-1 + prod(k=1, n, 1 + y*x^k + O(x*x^n)))}",
+        "R(u,k) = {k*[subst(serlaplace(p)/y, y, k-1) | p<-u]}",
+        "seq(n)={my(u=P(n), c=poldegree(u[#u])); concat([1], sum(k=1, c, R(u, k)*sum(r=k, c, binomial(r, k)*(-1)^(r-k)) ))} \\\\ _Andrew Howroyd_, Feb 11 2022"
+    ],
+    "xref": [
+        "The version for runs instead of run-lengths is A351200.",
+        "A000670 counts patterns, ranked by A333217.",
+        "A005649 counts anti-run patterns, complement A069321.",
+        "A005811 counts runs in binary expansion.",
+        "A032011 counts patterns with distinct multiplicities.",
+        "A044813 lists numbers whose binary expansion has distinct run-lengths.",
+        "A060223 counts Lyndon patterns, necklaces A019536, aperiodic A296975.",
+        "A131689 counts patterns by number of distinct parts.",
+        "A238130 and A238279 count compositions by number of runs.",
+        "A165413 counts distinct run-lengths in binary expansion, runs A297770.",
+        "A345194 counts alternating patterns, up/down A350354.",
+        "Counting words with all distinct runs:",
+        "- A351013 = compositions, for run-lengths A329739, ranked by A351290.",
+        "- A351016 = binary words, for run-lengths A351017.",
+        "- A351018 = binary expansions, for run-lengths A032020, ranked by A175413.",
+        "- A351202 = permutations of prime factors.",
+        "- A351638 = word structures.",
+        "Row sums of A350824.",
+        "Cf. A003242, A098504, A098859, A106356, A239455, A242882, A325545, A328592, A329740, A351014, A351293."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Feb 10 2022",
+    "ext": [
+        "Terms a(10) and beyond from _Andrew Howroyd_, Feb 11 2022"
+    ],
+    "references": 25,
+    "revision": 15,
+    "time": "2022-02-16T15:40:40-05:00",
+    "created": "2022-02-13T09:53:19-05:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 331817,
+    "data": "1,2,9,66,681,9090,148905,2889810,64805265,1648535490,46896669225,1475099460450,50831084252025,1904311245686850,77061447551313225,3349828945512299250,155672917524626126625,7701743926471878533250,404153655359180645543625",
+    "name": "a(n) = (n!)^2 * Sum_{k=0..n} (2*k)! / (2^k * (k!)^3 * (n - k)!).",
+    "link": [
+        "Robert Israel, <a href=\"/A331817/b331817.txt\">Table of n, a(n) for n = 0..380</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1 / sqrt(1 - 4*x + 3*x^2).",
+        "a(n) = Sum_{k=0..n} binomial(n,k)^2 * (2*k - 1)!! * (n - k)!.",
+        "a(n) = n! * 2F1(1/2, -n; 1; -2).",
+        "a(n) ~ 3^(n + 1/2) * n^n / exp(n). - _Vaclav Kotesovec_, Jan 28 2020",
+        "D-finite with recurrence a(n + 2) = 2*(3 + 2*n)*a(n + 1) - 3*(n + 1)^2*a(n). - _Robert Israel_, Feb 17 2020"
+    ],
+    "maple": [
+        "f:= gfun:-rectoproc({a(n + 2) = 2*(3 + 2*n)*a(n + 1) - 3*(n + 1)^2*a(n), a(0)=1, a(1)=2},a(n), remember):",
+        "map(f, [$0..30]); # _Robert Israel_, Feb 17 2020"
+    ],
+    "mathematica": [
+        "Table[n!^2 Sum[(2 k)!/(2^k k!^3 (n - k)!), {k, 0, n}], {n, 0, 18}]",
+        "nmax = 18; CoefficientList[Series[1/Sqrt[1 - 4 x + 3 x^2], {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[n! Hypergeometric2F1[1/2, -n, 1, -2], {n, 0, 18}]"
+    ],
+    "program": [
+        "(PARI) seq(n) = {Vec(serlaplace(1/(sqrt(1 - 4*x + 3*x^2 + O(x*x^n)))))} \\\\ _Andrew Howroyd_, Jan 27 2020",
+        "(Magma) [(Factorial(n))^2*&+[Factorial(2*k)/(2^k*(Factorial(k))^3*Factorial(n-k)):k in [0..n]]:n in [0..18]]; // _Marius A. Burtea_, Jan 27 2020"
+    ],
+    "xref": [
+        "Cf. A000165, A001147, A032031, A034430, A052577."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Jan 27 2020",
+    "references": 1,
+    "revision": 16,
+    "time": "2022-09-08T08:46:25-04:00",
+    "created": "2020-01-27T21:49:57-05:00"
+}

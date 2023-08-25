@@ -1,0 +1,49 @@
+{
+    "number": 117144,
+    "data": "1,1,1,1,2,2,3,3,4,5,6,6,8,9,10,12,15,16,19,21,25,28,32,34,41,46,51,55,64,70,79,86,97,106,119,129,146,159,175,190,214,232,256,277,306,334,367,394,434,472,515,556,607,654,714,770,836,901,978,1048,1140,1226,1322",
+    "name": "Partitions of n in which each part k occurs at least k times.",
+    "comment": [
+        "The Heinz numbers of these integer partitions are given by A324525. - _Gus Wiseman_, Mar 09 2019"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A117144/b117144.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} (1-x^k+x^(k^2))/(1-x^k)."
+    ],
+    "example": [
+        "a(9)=5 because we have [3,3,3], [2,2,2,2,1], [2,2,2,1,1,1], [2,2,1,1,1,1,1] and [1,1,1,1,1,1,1,1,1].",
+        "From _Gus Wiseman_, Mar 09 2019: (Start)",
+        "The a(1) = 1 through a(9) = 5 integer partitions:",
+        "  1  11  111  22    221    222     2221     2222      333",
+        "              1111  11111  2211    22111    22211     22221",
+        "                           111111  1111111  221111    222111",
+        "                                            11111111  2211111",
+        "                                                      111111111",
+        "(End)"
+    ],
+    "maple": [
+        "g:=product((1-x^k+x^(k^2))/(1-x^k),k=1..100): gser:=series(g,x=0,70): seq(coeff(gser,x,n),n=0..66);",
+        "# second Maple program:",
+        "b:= proc(n,i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      b(n, i-1) +add(b(n-i*j, i-1), j=i..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..80);  # _Alois P. Heinz_, Dec 28 2016"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n==0, 1, If[i<1, 0, b[n, i-1] + Sum[b[n-i*j, i-1], {j, i, n/i}]]]; a[n_] := b[n, n]; Table[a[n], {n, 0, 80}] (* _Jean-Fran\u00e7ois Alcover_, Feb 03 2017, after _Alois P. Heinz_ *)",
+        "Table[Length[Select[IntegerPartitions[n],And@@Table[Count[#,i]>=i,{i,Union[#]}]&]],{n,0,30}] (* _Gus Wiseman_, Mar 09 2019 *)"
+    ],
+    "xref": [
+        "Cf. A001462, A003114, A006141, A033461, A039900, A047993, A052335, A064174, A090858, A114638, A115584, A276078, A280204.",
+        "Cf. A324518, A324520, A324525, A324572."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Emeric Deutsch_, Mar 06 2006",
+    "references": 22,
+    "revision": 19,
+    "time": "2021-12-10T03:08:18-05:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

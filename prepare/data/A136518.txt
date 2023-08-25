@@ -1,0 +1,51 @@
+{
+    "number": 136518,
+    "data": "1,2,10,112,3620,360096,116950848,129755798400,507413158135840,7132358041777380352,364730093112968976177664,68393665694364347188157159424,47308574208170527265149009962117120",
+    "name": "a(n) = A027907(2^n, n), where A027907 = triangle of trinomial coefficients.",
+    "comment": [
+        "This is a special case of the more general statement:",
+        "  Sum_{n>=0} m^n * F(q^n*x)^b * log( F(q^n*x) )^n / n! =",
+        "  Sum_{n>=0} x^n * [y^n] F(y)^(m*q^n + b)",
+        "where F(x) = 1+x+x^2, q=2, m=1, b=0."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A136518/b136518.txt\">Table of n, a(n) for n = 0..59</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n] (1 + x + x^2)^(2^n), the coefficient of x^n in (1 + x + x^2)^(2^n).",
+        "O.g.f.: A(x) = Sum_{n>=0} log(1 + 2^n*x + 4^n*x^2)^n / n!."
+    ],
+    "example": [
+        "A(x) = 1 + 2*x + 10*x^2 + 112*x^3 + 3620*x^4 + 360096*x^5 + ...",
+        "A(x) = 1 + log(1 +2*x +4*x^2) + log(1 +4*x +16*x^2)^2/2! + log(1 +8*x +64*x^2)^3/3! + ..."
+    ],
+    "mathematica": [
+        "With[{m=40, f= 1 +2^j*x +4^j*x^2}, CoefficientList[Series[ Sum[Log[f]^j/j!, {j,0,m+1}], {x,0,m}], x]] (* _G. C. Greubel_, Jul 27 2023 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=polcoeff((1+x+x^2+x*O(x^n))^(2^n),n)",
+        "(PARI) /* As coefficient x^n of Series: */ a(n)=polcoeff(sum(i=0,n,log(1+2^i*x+2^(2*i)*x^2 +x*O(x^n))^i/i!),n)",
+        "(Magma)",
+        "m:=40;",
+        "gf:= func< x | (&+[Log(1 +2^j*x +4^j*x^2)^j/Factorial(j): j in [0..m+1]]) >;",
+        "R<x>:=PowerSeriesRing(Rationals(), m);",
+        "Coefficients(R!( gf(x) )); // _G. C. Greubel_, Jul 27 2023",
+        "(SageMath)",
+        "m=40",
+        "def f(x): return sum( log(1 + 2^j*x + 4^j*x^2)^j/factorial(j) for j in range(m+2) )",
+        "def A136518_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P( f(x) ).list()",
+        "A136518_list(m) # _G. C. Greubel_, Jul 27 2023"
+    ],
+    "xref": [
+        "Cf. A027907, A136519."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jan 02 2008",
+    "references": 2,
+    "revision": 12,
+    "time": "2023-07-28T04:58:04-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

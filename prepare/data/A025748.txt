@@ -1,0 +1,57 @@
+{
+    "number": 25748,
+    "data": "1,1,3,15,90,594,4158,30294,227205,1741905,13586859,107459703,859677624,6943550040,56540336040,463630755528,3824953733106,31724616256938,264371802141150,2212374554760150,18583946259985260,156636118477018620,1324287183487521060",
+    "name": "3rd-order Patalan numbers (generalization of Catalan numbers).",
+    "comment": [
+        "G.f. (with a(0)=0) is series reversion of x - 3*x^2 + 3*x^3.",
+        "The Hankel transform of a(n) is A005130(n) * 3^binomial(n,2)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A025748/b025748.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "I. M. Gessel and G. Xin, <a href=\"http://arxiv.org/abs/math/0505217\">The generating function of ternary trees and continued fractions</a>, arXiv:math/0505217 [math.CO], 2005, eq. (5.1).",
+        "Wolfdieter Lang, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/LANG/lang.html\">On generalizations of Stirling number triangles</a>, J. Integer Seqs., Vol. 3 (2000), Article 00.2.4.",
+        "El\u017cbieta Liszewska and Wojciech M\u0142otkowski, <a href=\"https://arxiv.org/abs/1907.10725\">Some relatives of the Catalan sequence</a>, arXiv:1907.10725 [math.CO], 2019.",
+        "Thomas M. Richardson, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Richardson/rich2.html\">The Super Patalan Numbers</a>, J. Int. Seq. 18 (2015), Article 15.3.3; <a href=\"http://arxiv.org/abs/1410.5880\">arXiv preprint</a>, arXiv:1410.5880 [math.CO], 2014."
+    ],
+    "formula": [
+        "From _Wolfdieter Lang_: (Start)",
+        "G.f.: (4 - (1-9*x)^(1/3))/3.",
+        "a(n) = 3^(n-1) * 2 * A034000(n-1)/n!, n >= 2.",
+        "a(n) = 3 * A034164(n-2), n >= 2. (End)",
+        "D-finite with recurrence n*a(n) +3*(4-3*n)*a(n-1) = 0, n >= 2. - _R. J. Mathar_, Oct 29 2012",
+        "For n>0, a(n) = 9^(n-1) * Gamma(n-1/3) / (n * Gamma(2/3) * Gamma(n)). - _Vaclav Kotesovec_, Feb 09 2014",
+        "For n > 0, a(n) = 3^(2*n-1)*(-1)^(n+1)*binomial(1/3, n). - _Peter Bala_, Mar 01 2022",
+        "Sum_{n>=0} 1/a(n) = 37/16 + 3*sqrt(3)*Pi/64 - 9*log(3)/64. - _Amiram Eldar_, Dec 02 2022"
+    ],
+    "maple": [
+        "A025748 :=proc(n)",
+        "        local x;",
+        "        coeftayl(4-(1-9*x)^(1/3),x=0,n) ;",
+        "        %/3 ;",
+        "end proc: # _R. J. Mathar_, Nov 01 2012"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(4-Power[1-9x, (3)^-1])/3,{x,0,25}],x] (* _Harvey P. Dale_, Nov 14 2011 *)",
+        "Flatten[{1,Table[FullSimplify[9^(n-1) * Gamma[n-1/3] / (n * Gamma[2/3] * Gamma[n])],{n,1,25}]}] (* _Vaclav Kotesovec_, Feb 09 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1,n==0,polcoeff(serreverse(x-3*x^2+3*x^3+x*O(x^n)),n))",
+        "(Magma) R<x>:=PowerSeriesRing(Rationals(), 25); Coefficients(R!( (4 - (1-9*x)^(1/3))/3 )); // _G. C. Greubel_, Sep 17 2019",
+        "(Sage)",
+        "def A025748_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P((4 - (1-9*x)^(1/3))/3).list()",
+        "A025748_list(25) # _G. C. Greubel_, Sep 17 2019"
+    ],
+    "xref": [
+        "Apart from the initial 1, identical to A097188.",
+        "Cf. A005130, A034000, A034164."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,3",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 14,
+    "revision": 61,
+    "time": "2023-08-12T23:00:25-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

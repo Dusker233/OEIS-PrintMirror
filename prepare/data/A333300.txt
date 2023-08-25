@@ -1,0 +1,41 @@
+{
+    "number": 333300,
+    "data": "10,30,50,60,68,70,102,119,130,136,153,182,187,204,208,221,222,234,238,260,286,296,333,338,350,364,370,390,407,416,442,444,450,481,494,500,520,546,550,555,572,592,598,600,629,650,666,700,703,715,738,740,750",
+    "name": "Numbers that are of the form abab in some base (a <> b, a <> 0).",
+    "comment": [
+        "The first terms with 2, 3, ..., 6 representations are 520, 4930, 117130, 111270100, and 3142012250. - _Giovanni Resta_, Mar 15 2020"
+    ],
+    "link": [
+        "Rich\u00e1rd Pint\u00e9r, <a href=\"/A333300/b333300.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Rich\u00e1rd Pint\u00e9r, <a href=\"/A333300/a333300.hs.txt\">Haskell source</a>"
+    ],
+    "example": [
+        "10 = 1010_2 is a term, 30 = 1010_3 and 50 = 1212_3 also."
+    ],
+    "mathematica": [
+        "bxy[n_] := Block[{x,y,b,s, bb = Select[Sqrt[ Divisors[n] - 1], IntegerQ[#] && # > 1 && (1 + #^2) # <= n && #^4-#^2-2 >= n &]}, Flatten[ Table[s = Solve[(1 + b^2) (b x + y) == n && 0<x<b && 0<=y<b && x!=y, {x,y}, Integers]; If[s == {}, {}, {b,x,y} /. s], {b, bb}], 1]]; Select[ Range@ 750, bxy[#] != {} &] (* _Giovanni Resta_, Mar 14 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def ok(n):",
+        "    base = 2",
+        "    while True:",
+        "        base3, base2 = base**3, base**2",
+        "        if base3 + base > n: return False",
+        "        for a in range(1, base):",
+        "            for b in range(base):",
+        "                if a == b: continue",
+        "                t = a*(base3 + base) + b*(base2 + 1)",
+        "                if t == n: return True",
+        "                elif t > n: break",
+        "        base += 1",
+        "print([k for k in range(751) if ok(k)]) # _Michael S. Branicky_, Oct 30 2021"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Rich\u00e1rd Pint\u00e9r_, Mar 14 2020",
+    "references": 1,
+    "revision": 26,
+    "time": "2021-10-30T13:42:08-04:00",
+    "created": "2020-03-15T05:30:29-04:00"
+}

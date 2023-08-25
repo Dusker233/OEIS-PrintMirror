@@ -1,0 +1,43 @@
+{
+    "number": 363452,
+    "data": "0,1,1,5,12,62,206,1189,4949,31775,156972,1110280,6301550,48637701,310279615,2591820857,18293310174,164218811718,1267153412532,12152174863961,101557600812015,1035203191874931,9299499328238110,100314319611860936,962663031508255416",
+    "name": "Total number of blocks containing only odd elements in all partitions of [n].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A363452/b363452.txt\">Table of n, a(n) for n = 0..250</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..ceiling(n/2)} k * A124420(n,k).",
+        "a(n) = A363434(n) - A363453(n).",
+        "a(2n) = A363453(2n).",
+        "a(2n+1) = A363453(2n+1) + A094577(n)."
+    ],
+    "example": [
+        "a(3) = 5 = 0 + 1 + 1 + 1 + 2 : 123, 12|3, 13|2, 1|23, 1|2|3."
+    ],
+    "maple": [
+        "b:= proc(n, k) local g, u; g:= floor(n/2); u:=ceil(n/2);",
+        "      add(Stirling2(i, k)*binomial(u, i)*",
+        "      add(Stirling2(g, j)*j^(u-i), j=0..g), i=k..u)",
+        "    end:",
+        "a:= n-> add(b(n, k)*k, k=0..ceil(n/2)):",
+        "seq(a(n), n=0..25);",
+        "# second Maple program:",
+        "b:= proc(n, x, y, m) option remember; `if`(n=0, y,",
+        "      `if`(x+m>0, b(n-1, y, x, m)*(x+m), 0)+b(n-1, y, x+1, m)+",
+        "      `if`(y>0, b(n-1, y-1, x, m+1)*y, 0))",
+        "    end:",
+        "a:= n-> b(n, 0$3):",
+        "seq(a(n), n=0..25);"
+    ],
+    "xref": [
+        "Cf. A000110, A094577, A124420, A363434, A363453."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jun 02 2023",
+    "references": 3,
+    "revision": 15,
+    "time": "2023-06-05T09:14:10-04:00",
+    "created": "2023-06-05T09:14:10-04:00"
+}

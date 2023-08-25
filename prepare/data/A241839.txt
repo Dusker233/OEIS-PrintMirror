@@ -1,0 +1,38 @@
+{
+    "number": 241839,
+    "data": "0,0,1,4,19,107,849,11100,261058,11716404,1006700026,164059811497,50335907479783,29003487412533265,31397381139819043520,63969560111526659139866,245871831681641239553413008,1787331725248249110678608976294,24636021429399437942454151113206764",
+    "name": "Number of simple connected graphs on n nodes that are not regular.",
+    "link": [
+        "Travis Hoppe and Anna Petrone, <a href=\"https://github.com/thoppe/Encyclopedia-of-Finite-Graphs\">Encyclopedia of Finite Graphs</a>",
+        "T. Hoppe and A. Petrone, <a href=\"http://arxiv.org/abs/1408.3644\">Integer sequence discovery from small graphs</a>, arXiv preprint arXiv:1408.3644 [math.CO], 2014.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RegularGraph.html\">Regular Graph</a>"
+    ],
+    "formula": [
+        "a(n) = A001349(n) - A005177(n). - _Andrew Howroyd_, Nov 04 2017"
+    ],
+    "mathematica": [
+        "A005177 = {1, 1, 1, 1, 2, 2, 5, 4, 17, 22, 167, 539, 18979, 389436, 50314796, 2942198440, 1698517036411};",
+        "terms = Length[A005177] - 1;",
+        "mob[m_, n_] := If[Mod[m, n] == 0, MoebiusMu[m/n], 0];",
+        "EULERi[b_] := Module[{a, c, i, d}, c = {}; For[i = 1, i <= Length[b], i++, c = Append[c, i*b[[i]] - Sum[c[[d]]*b[[i - d]], {d, 1, i - 1}]]]; a = {}; For[i = 1, i <= Length[b], i++, a = Append[a, (1/i)*Sum[mob[i, d]*c[[d]], {d, 1, i}]]]; Return[a]];",
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_] := Sum[GCD[v[[i]], v[[j]]], {i, 2, Length[v]}, {j, 1, i - 1}] + Total[Quotient[v, 2]];",
+        "a88[n_] := Module[{s = 0}, Do[s += permcount[p]*2^edges[p], {p, IntegerPartitions[n]}]; s/n!];",
+        "A001349 = Join[{1}, EULERi[Array[a88, terms]]];",
+        "Rest[A001349 - A005177] (* _Jean-Fran\u00e7ois Alcover_, Feb 23 2019, after _Andrew Howroyd_ *)"
+    ],
+    "xref": [
+        "Cf. A002851, A006820, A006822."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Travis Hoppe_ and _Anna Petrone_, Apr 29 2014",
+    "ext": [
+        "a(11)-a(16) from _Andrew Howroyd_, Nov 04 2017",
+        "Terms a(17) and beyond from _Andrew Howroyd_, May 21 2020"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2020-05-21T12:52:46-04:00",
+    "created": "2014-04-30T01:31:07-04:00"
+}

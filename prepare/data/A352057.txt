@@ -1,0 +1,56 @@
+{
+    "number": 352057,
+    "data": "0,1,3,6,10,55,66,300,666,990,3003,5050,10011,66066,500500,600060,50005000,5000050000,500000500000,50000005000000,5000000050000000,500000000500000000,50000000005000000000,5000000000050000000000,500000000000500000000000,50000000000005000000000000",
+    "name": "Triangular numbers whose nonzero digits are all the same.",
+    "comment": [
+        "This sequence may correspond to \"monochromatic step squads\" in the British animation \"Numberblocks\".",
+        "Conjecture: the largest term in this sequence whose nonzero digits are not 5 is 600060."
+    ],
+    "mathematica": [
+        "(* Method1 *)",
+        "NonZeroQ[n_Integer] := n != 0; Select[",
+        "Table[n (n + 1)/2, {n, 0, 1000000}],",
+        "Length[Tally[Select[IntegerDigits[#], NonZeroQ]]] == 1 &]",
+        "(* Method2 *)",
+        "Sort[Select[",
+        "  Flatten[Outer[Times,",
+        "    Table[FromDigits[IntegerDigits[n, 2]], {n, 2^16 - 1}], Range[9]]],",
+        "   IntegerQ[Sqrt[8 # + 1]] &]]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import integer_nthroot",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def istri(n): return integer_nthroot(8*n+1, 2)[1]",
+        "def zplus1(digits):",
+        "    if digits == 1: yield 0",
+        "    for d1 in \"123456789\":",
+        "        digset = \"0\"*(digits-1) + d1*(digits-1)",
+        "        for mp in multiset_permutations(digset, digits-1):",
+        "            t = int(d1 + \"\".join(mp))",
+        "            yield t",
+        "def afind(maxdigits):",
+        "    for digits in range(1, maxdigits+1):",
+        "        for t in zplus1(digits):",
+        "            if istri(t):",
+        "                print(t, end=\", \")",
+        "afind(22) # _Michael S. Branicky_, Mar 02 2022",
+        "(PARI) isok(k) = my(d=digits(k*(k+1)/2)); d = select(x->(x!=0), d); #Set(d)<=1;",
+        "lista(nn) = {for (n=0, nn, if (isok(n), print1(n*(n+1)/2, \", \")););} \\\\ _Michel Marcus_, Mar 02 2022"
+    ],
+    "xref": [
+        "Supersequence of A037156.",
+        "Cf. A000217, A118668, A125289, A343811.",
+        "Cf. A352148 (indices of these triangular numbers)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Steven Lu_, Mar 02 2022",
+    "ext": [
+        "a(24)-a(25) from _Michael S. Branicky_, Mar 02 2022"
+    ],
+    "references": 1,
+    "revision": 45,
+    "time": "2022-04-09T06:36:48-04:00",
+    "created": "2022-04-09T06:36:48-04:00"
+}

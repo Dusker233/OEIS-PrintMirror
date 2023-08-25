@@ -1,0 +1,43 @@
+{
+    "number": 317087,
+    "data": "1,2,4,6,8,16,30,32,36,64,90,128,210,216,256,270,300,512,810,900,1024,1296,2048,2310,2430,2700,2940,3000,3150,4096,7290,7776,8100,8192,9000,11550,16384,21870,24300,27000,30000,30030,32768,41160,44100,46656,47250,48510",
+    "name": "Numbers whose prime factors span an initial interval of prime numbers and whose sequence of prime multiplicities is a palindrome.",
+    "comment": [
+        "3^m*10^k for k, m > 0 are terms of this sequence. - _Chai Wah Wu_, Jun 23 2020"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A317087/b317087.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Palindrome\">Palindrome</a>"
+    ],
+    "example": [
+        "The sequence of rows of A296150 indexed by the terms of this sequence begins: (1), (11), (21), (111), (1111), (321), (11111), (2211), (111111), (3221), (1111111), (4321), (222111), (11111111), (32221), (33211), (111111111), (322221), (332211)."
+    ],
+    "mathematica": [
+        "nrmpalQ[n_]:=With[{f=If[n==1,{},FactorInteger[n]]}, And[PrimePi/@ Sort[First/@f] == Range[ Length[f]], Reverse[Last/@f] == Last/@f]]; Select[Range[100],nrmpalQ]",
+        "upto = 10^20; pL[n_] := Block[{p = Prime@Range@n, h = Ceiling[n/2]}, Take[p, h] Reverse@ If[n == 2 h, Take[p, -h], Prepend[ Take[p, 1-h], 1]]]; ric[v_, p_] := If[p == {}, AppendTo[L, v], Block[{w = v}, While[w <= upto, ric[w, Rest@ p]; w *= First@ p]]]; np = 1; L = {1}; While[(b = Times @@ Prime[Range@ np]) <= upto, ric[b, pL[np++]]]; Sort[L] (* _Giovanni Resta_, Jun 23 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint, primepi",
+        "A317087_list = [1]",
+        "for n in range(1,10**5):",
+        "    d = factorint(n)",
+        "    k, l = sorted(d.keys()), len(d)",
+        "    if l > 0 and l == primepi(max(d)):",
+        "        for i in range(l//2):",
+        "            if d[k[i]] != d[k[l-i-1]]:",
+        "                break",
+        "        else:",
+        "            A317087_list.append(n) # _Chai Wah Wu_, Jun 23 2020"
+    ],
+    "xref": [
+        "Cf. A025065, A055932, A124010, A133808, A242414, A296150, A317085, A317086."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jul 21 2018",
+    "references": 16,
+    "revision": 16,
+    "time": "2020-06-23T05:52:23-04:00",
+    "created": "2018-07-21T15:51:30-04:00"
+}

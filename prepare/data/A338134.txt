@@ -1,0 +1,41 @@
+{
+    "number": 338134,
+    "data": "3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,67,71,83,97,109,127,131,149,167,179,197,251,263,307,337,367,443,587,653,683,743,797,821,907,1087,1291,1493,2003,2237,2243,2333,2447,2791,3019,3691,4583,4787,6287",
+    "name": "Initial terms are the first 11 odd prime numbers. After that each new term in the sequence is the sum of whichever subset of the previous 11 terms gives the smallest prime number that is larger than the largest term so far.",
+    "comment": [
+        "The sequence is finite with the final term a(1022) having 94 decimal digits.",
+        "Instead of 11, other choices k of the number of initial odd primes and number of previous terms to consider when picking the next prime give different sequence lengths L and final terms m. Values are shown in the following table.",
+        "=======================================================",
+        "   k      L   log(m)  m",
+        "-----+-------------------------------------------------",
+        "   4 |   13     6.42  53",
+        "   5 |   18     7.77  2377",
+        "   6 |   26     8.42  4547",
+        "   7 |   66    19.32  246069541",
+        "   8 |  176    46.61  174401554254658978301",
+        "   9 |  313    74.93  348416283338512248746770398000349",
+        "  10 |  657   155.19  25092330625366012736545948...",
+        "  11 | 1022   214.78  18914773701982111040121422...",
+        "  12 | 2575   596.03  71213007235221948920803479...",
+        "  13 | 5142  1172.46  15648776898352974934674946..."
+    ],
+    "link": [
+        "Jinyuan Wang, <a href=\"/A338134/b338134.txt\">Table of n, a(n) for n = 1..1022</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "F(u,m,test)={my(recurse(k,s,b)=if(s<b, if(s>m&&test(s), b=s); while(k<#u, k++; b=self()(k,s+u[k],b))); b); recurse(0, 0, oo)}",
+        "lista(n,k=11)={my(v=vector(k)); for(r=1, n, my(t=if(r<=k, prime(r+1), F(v,v[#v], ispseudoprime))); print1(t, \", \"); if(t==oo, break); v=concat(v[2..k],t))}",
+        "{ lista(60) } \\\\ _Andrew Howroyd_, Oct 13 2020"
+    ],
+    "xref": [
+        "Cf. A065091."
+    ],
+    "keyword": "nonn,fini,full",
+    "offset": "1,1",
+    "author": "_Anthony Winkelspecht_, Oct 11 2020",
+    "references": 2,
+    "revision": 20,
+    "time": "2020-10-18T03:22:32-04:00",
+    "created": "2020-10-14T23:27:25-04:00"
+}

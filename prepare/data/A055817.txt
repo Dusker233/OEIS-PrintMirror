@@ -1,0 +1,41 @@
+{
+    "number": 55817,
+    "data": "1,63,448,2816,16896,99200,575872,3322112,19096064,109541824,627653440,3594256896,20577979392,117814911744,674630384384,3864033226240,22138650598400,126885674577728,727501822004416,4172725286118656",
+    "name": "a(n) = T(2n+5,n), array T as in A055807.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A055817/b055817.txt\">Table of n, a(n) for n = 0..250</a>"
+    ],
+    "formula": [
+        "a(n) = (n+5)*hypergeom([-n-4, n], [2], -1) = Sum_{s=1..n+5} binomial(n+5,s) * binomial(s+n-2,n-1) for n >= 1. - _Petros Hadjicostas_, Feb 13 2021"
+    ],
+    "maple": [
+        "T:= proc(i, j) option remember;",
+        "      if j=0 then 1",
+        "    elif i=0 then 0",
+        "    else add(add(T(h,m), m=0..j), h=0..i-1)",
+        "  fi; end:",
+        "seq(T(n+5, n), n=0..20); # _G. C. Greubel_, Jan 23 2020"
+    ],
+    "mathematica": [
+        "T[i_, j_]:= T[i, j]= If[j==0, 1, If[i==0, 0, Sum[T[h, m], {h,0,i-1}, {m,0,j}]]]; Table[T[n+5, n], {n,0,20}] (* _G. C. Greubel_, Jan 23 2020 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def T(i, j):",
+        "    if (j==0): return 1",
+        "    elif (i==0): return 0",
+        "    else: return sum(sum(T(h,m) for m in (0..j)) for h in (0..i-1))",
+        "[T(n+5, n) for n in (0..20)] # _G. C. Greubel_, Jan 23 2020"
+    ],
+    "xref": [
+        "Cf. A055807, A055809, A055810, A055811, A055815, A055816."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_, May 28 2000",
+    "references": 7,
+    "revision": 11,
+    "time": "2021-02-13T21:30:13-05:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

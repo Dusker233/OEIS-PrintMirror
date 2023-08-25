@@ -1,0 +1,47 @@
+{
+    "number": 305380,
+    "data": "1,2,4,9,19,41,88,195,418,1033,2195,4705,10282,21850,49160,104465,223780,550294,1186344,2525345,5514438,11817057,26297040,56201282,138856076,295217708,632609378,1382640428,2974062096,6603081730,14149570820,34976354857,74361996963",
+    "name": "Tribonacci representation of 2^n, written in base 10.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A305380/b305380.txt\">Table of n, a(n) for n = 0..2000</a>"
+    ],
+    "maple": [
+        "T:= proc(n) T(n):= (<<0|1|0>, <0|0|1>, <1|1|1>>^n)[2, 3] end:",
+        "b:= proc(n) option remember; local j;",
+        "      if n=0 then 0",
+        "    else for j from 2 while T(j+1)<=n do od;",
+        "         b(n-T(j))+2^(j-2)",
+        "      fi",
+        "    end:",
+        "a:= n-> b(2^n):",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, Jun 12 2018"
+    ],
+    "program": [
+        "(Python)",
+        "def A305380(n):",
+        "    m, tlist, s = 2**n, [1,2,4], 0",
+        "    while tlist[-1]+tlist[-2]+tlist[-3] <= m:",
+        "        tlist.append(tlist[-1]+tlist[-2]+tlist[-3])",
+        "    for d in tlist[::-1]:",
+        "        s *= 2",
+        "        if d <= m:",
+        "            s += 1",
+        "            m -= d",
+        "    return s # _Chai Wah Wu_, Jun 12 2018"
+    ],
+    "xref": [
+        "Equals A003726(2^n).",
+        "Cf. A000073, A278038, A305876."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Jun 12 2018",
+    "ext": [
+        "a(9)-a(24) from _Robert Israel_, Jun 12 2018",
+        "Terms a(25) and beyond from _Alois P. Heinz_, Jun 12 2018"
+    ],
+    "references": 2,
+    "revision": 31,
+    "time": "2018-06-14T10:39:16-04:00",
+    "created": "2018-06-12T13:25:55-04:00"
+}

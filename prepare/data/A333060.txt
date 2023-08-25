@@ -1,0 +1,37 @@
+{
+    "number": 333060,
+    "data": "1,7,36,186,1023,5867,34744,211888,1343046,8896185,61801182,449917898,3425580850,27183592435,224196765392,1917038645772,16963064269986,155112925687673,1464150720422785,14253033440621462,142967758696293317,1476398153663677539",
+    "name": "Number of entries in the third blocks of all set partitions of [n] when blocks are ordered by decreasing lengths.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A333060/b333060.txt\">Table of n, a(n) for n = 3..576</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, [1, 0], `if`(i<1, 0,",
+        "      add((p-> p+`if`(t>0 and t-j<1, [0, p[1]*i], 0))(",
+        "       combinat[multinomial](n, i$j, n-i*j)/j!*",
+        "      b(n-i*j, min(n-i*j, i-1), max(0, t-j))), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2, 3)[2]:",
+        "seq(a(n), n=3..24);"
+    ],
+    "mathematica": [
+        "multinomial[n_, k_List] := n!/Times @@ (k!);",
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0, {1, 0}, If[i < 1, {0, 0},",
+        "     Sum[Function[p, p + If[t > 0 && t - j < 1, {0, p[[1]]*i}, {0, 0}]][",
+        "     multinomial[n, Append[Table[i, {j}], n - i*j]]/j!*",
+        "     b[n - i*j, Min[n - i*j, i - 1], Max[0, t - j]]], {j, 0, n/i}]]];",
+        "a[n_] := b[n, n, 3][[2]];",
+        "a /@ Range[3, 24] (* _Jean-Fran\u00e7ois Alcover_, Apr 24 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=3 of A319375."
+    ],
+    "keyword": "nonn",
+    "offset": "3,2",
+    "author": "_Alois P. Heinz_, Mar 06 2020",
+    "references": 2,
+    "revision": 8,
+    "time": "2021-04-24T20:44:58-04:00",
+    "created": "2020-03-06T18:46:24-05:00"
+}

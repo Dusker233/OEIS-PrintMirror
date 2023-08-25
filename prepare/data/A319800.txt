@@ -1,0 +1,35 @@
+{
+    "number": 319800,
+    "data": "3960,5220,1873080,6733440,8447040,18685336320,255306083760,341863562880,357274165248,765899971200,1018887932160",
+    "name": "Numbers k such that Sum_{d|k} nphi(d) = k where the sum is over nonunitary divisors of k and nphi(k) is the nonunitary totient function (A254503).",
+    "comment": [
+        "Ligh and Wall found the first 5 terms and also the terms 18685336320, 341863562880, 357174165248, 1018887932160, 20993596382889043200. They showed that each term has a powerful part with at least 2 distinct prime factors, and conjectured that it is only even."
+    ],
+    "reference": [
+        "Jozsef Sandor and Borislav Crstici, Handbook of Number Theory II, Kluwer Academic Publishers, 2004, Chapter 3, p. 287."
+    ],
+    "link": [
+        "Steve Ligh and Charles R. Wall, <a href=\"https://www.fq.math.ca/Scanned/25-4/ligh.pdf\">Functions of Nonunitary Divisors</a>, Fibonacci Quarterly, Vol. 25 (1987), pp. 333-338."
+    ],
+    "mathematica": [
+        "rad[n_] := Times @@ First /@ FactorInteger[n]; powerFree[n_] := Denominator[ n/rad[n]^2 ]; powerPart[n_] := n/powerFree[n]; nuphi[n_] := powerFree[ n ] * EulerPhi[powerPart[n]]; ndiv[n_] := Block[{d = Divisors[n]}, Select[d, GCD[#, n/#] > 1 &]]; a[n_] := Module[{d = ndiv[n]}, Total@Map[nuphi, d]]; s={}; Do[ If[a[n] == n, AppendTo[s, n]], {n, 1, 10^8}]; s"
+    ],
+    "program": [
+        "nphi(n) = sumdiv(n, d, if(gcd(n/d, d) == 1, moebius(d)^2 * eulerphi(n/d)));",
+        "isok(n) = sumdiv(n, d, if(gcd(n/d, d) != 1, nphi(d))) == n; \\\\ _Michel Marcus_, Sep 28 2018"
+    ],
+    "xref": [
+        "Cf. A057521, A055231, A254503."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Sep 28 2018",
+    "ext": [
+        "a(6)-a(9) from _Giovanni Resta_, Sep 29 2018",
+        "a(10)-a(11) from _Giovanni Resta_, Oct 11 2018"
+    ],
+    "references": 0,
+    "revision": 20,
+    "time": "2021-07-17T06:45:32-04:00",
+    "created": "2018-10-01T06:58:49-04:00"
+}

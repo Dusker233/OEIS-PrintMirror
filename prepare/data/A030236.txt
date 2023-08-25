@@ -1,0 +1,43 @@
+{
+    "number": 30236,
+    "data": "1,2,7,18,49,136,377,1044,2891,8006,22171,61398,170029,470860,1303949,3611016,9999959,27692810,76689487,212375610,588130153,1628704336,4510358465,12490501212,34589849507,95789405774,265268869027",
+    "name": "Cycle-path coverings of a family of digraphs.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A030236/b030236.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "O. M. D'Antona and E. Munarini, <a href=\"https://doi.org/10.1006/aama.2000.0689\">The Cycle-path Indicator Polynomial of a Digraph</a>, Advances in Applied Mathematics 25 (2000), 41-56.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-1,1)."
+    ],
+    "formula": [
+        "a(n+4) = 3*a(n+3) - a(n+2) + a(n+1), n >= 0.",
+        "a(n+3) = 2*a(n+2) + a(n+1) + 2*Sum_{k=0..n} a(k), n >= 0.",
+        "G.f.: (1-x+2*x^2-2*x^3)/(1-3*x+x^2-x^3).",
+        "a(n) = Sum_{k=0..n} binomial(n+k+1,3*k+1)*2^k + 2*Sum_{j=0..n-1}  binomial(n+j-1,3*j+1)*2^j. - _Emanuele Munarini_, Dec 03 2012"
+    ],
+    "maple": [
+        "seq(coeff(series((1-x+2*x^2-2*x^3)/(1-3*x+x^2-x^3), x, n+1), x, n), n = 0 .. 40); # _G. C. Greubel_, Oct 27 2019"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{3,-1,1}, {1,2,7,18}, 40] (* _G. C. Greubel_, Oct 27 2019 *)"
+    ],
+    "program": [
+        "(Maxima) makelist(sum(binomial(n+k+1,3*k+1)*2^k, k,0,n) + 2*sum(2^k* binomial(n+k-1,3*k+1), k,0,n-1), n,0,60); /* _Emanuele Munarini_, Dec 03 2012 */",
+        "(PARI) my(x='x+O('x^40)); Vec((1-x+2*x^2-2*x^3)/(1-3*x+x^2-x^3)) \\\\ _G. C. Greubel_, Oct 27 2019",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 40); Coefficients(R!( (1-x+2*x^2-2*x^3)/(1-3*x+x^2-x^3) )); // _G. C. Greubel_, Oct 27 2019",
+        "(Sage)",
+        "def A030236_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( (1-x+2*x^2-2*x^3)/(1-3*x+x^2-x^3) ).list()",
+        "A030236_list(40) # _G. C. Greubel_, Oct 27 2019",
+        "(GAP) a:=[2,7,18];; for n in [4..40] do a[n]:=3*a[n-1]-a[n-2]+a[n-3]; od; Concatenation([1],a); # _G. C. Greubel_, Oct 27 2019"
+    ],
+    "xref": [
+        "Cf. A030186."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "Ottavio D'Antona (dantona(AT)dsi.unimi.it) and _Emanuele Munarini_",
+    "references": 2,
+    "revision": 15,
+    "time": "2022-09-08T08:44:50-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

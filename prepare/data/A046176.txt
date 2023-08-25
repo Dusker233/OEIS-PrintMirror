@@ -1,0 +1,73 @@
+{
+    "number": 46176,
+    "data": "1,35,1189,40391,1372105,46611179,1583407981,53789260175,1827251437969,62072759630771,2108646576008245,71631910824649559,2433376321462076761,82663163018885960315,2808114166320660573949",
+    "name": "Indices of square numbers that are also hexagonal.",
+    "comment": [
+        "Bisection (even part) of Chebyshev sequence with Diophantine property.",
+        "(3*b(n))^2 - 2*(2*a(n+1))^2 = 1 with companion sequence b(n)=A077420(n), n>=0.",
+        "Sequence also refers to inradius of primitive Pythagorean triangles with consecutive legs, odd followed by even. - _Lekraj Beedassy_, Apr 23 2003",
+        "As n increases, this sequence is approximately geometric with common ratio r = lim(n -> Infinity, a(n)/a(n-1)) = (1 + sqrt(2))^4 = 17 + 12 * sqrt(2). - _Ant King_, Nov 08 2011",
+        "Integers of the form sqrt((m+1)*(2*m+1)). The corresponding values of m form A078522. Subsequence of A284876. - _Jonathan Sondow_, Apr 07 2017"
+    ],
+    "reference": [
+        "M. Rignaux, Query 2175, L'Interm\u00e9diaire des Math\u00e9maticiens, 24 (1917), 80."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A046176/b046176.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "E. Kilic, Y. T. Ulutas, N. Omur, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL14/Omur/omur6.html\">A Formula for the Generating Functions of Powers of Horadam's Sequence with Two Additional Parameters</a>, J. Int. Seq. 14 (2011) #11.5.6, table 4, k=1, t=3.",
+        "Serge Perrine, <a href=\"http://article.scirea.org/pdf/11150.pdf\">About the diophantine equation z^2 = 32y^2 - 16</a>, SCIREA Journal of Mathematics (2019) Vol. 4, Issue 5, 126-139.",
+        "Maciej Ulas, <a href=\"https://arxiv.org/abs/0811.2477\">On certain diophantine equations related to triangular and tetrahedral numbers</a>, arXiv:0811.2477 (2008) , v_n in Theorem 5.6.",
+        "P. H. van der Kamp, <a href=\"https://doi.org/10.1007/s10208-009-9041-9\">Global classification of two-component...</a>, Found. Comput. Math. 9 (5) (2009) 559-597 near Eq. (4.7)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HexagonalSquareNumber.html\">Hexagonal Square Number.</a>",
+        "<a href=\"/index/Ch#Cheby\">Index entries for sequences related to Chebyshev polynomials.</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (34,-1)."
+    ],
+    "formula": [
+        "a(n) = 34*a(n-1) - a(n-2), a(0)=-1, a(1)=1.",
+        "a(n+1) = S(2*n, 6)= S(n, 34) + S(n-1, 34), n>=1, with S(n, x) := U(n, x/2) Chebyshev's polynomials of the second kind. See A049310. S(n, 34)=A029547(n).",
+        "G.f.: x*(1+x)/(1-34*x+x^2).",
+        "a(n+1) = Sum_{k=0..n} (-1)^k*binomial(2*n-k, k)*6^(2*(n-k)), n>=0.",
+        "a(n) = A001109(2n+1). - _Lekraj Beedassy_, Apr 23 2003",
+        "Define f[x,s] = s x + Sqrt[(s^2-1)x^2+1]; f[0,s]=0. a(n) = f[f[a(n-1),3],3]. - Marcos Carreira, Dec 27 2006",
+        "From _Antonio Alberto Olivares_, Mar 22 2008: (Start)",
+        "a(n) = (sqrt(2)/8)*(3 + 2*sqrt(2))*(17 + 12*sqrt(2))^(n-1) - (sqrt(2)/8)*(3 - 2*sqrt(2))*(17 - 12*sqrt(2))^(n-1).",
+        "a(n) = (sqrt(2)/8)*( (17+12*sqrt(2))^(n-1/2) - (17-12*sqrt(2))^(n-1/2) ).",
+        "a(n) = (sqrt(2)/8)*( (3+2*sqrt(2))^(2n-1) - (3-2*sqrt(2))^(2n-1) ).",
+        "a(n) = (sqrt(2)/8)*( (1+sqrt(2))^(4n-2) - (1-sqrt(2))^(4n-2) ).",
+        "a(n) = 35*a(n-1) - 35*a(n-2) + a(n-3). (End)",
+        "a(n+1) = 17*a(n) + 6*sqrt(8*a(n)^2+1) for n>=0. - _Richard Choulet_, May 01 2009",
+        "a(n) = b such that (-1)^(n+1) * Integral_{x=-Pi/2..Pi/2} cos((2*n-1)*x)/(3-sin(x)) dx = c + b*log(2). - _Francesco Daddi_, Aug 01 2011",
+        "a(n) are the nonzero integer square roots of A227970. - _Richard R. Forberg_, Aug 01 2013",
+        "a(n) = y/5, where y are solutions to: y^2 = 2x^2 - x - 3. - _Richard R. Forberg_, Nov 24 2013",
+        "a(n) = sqrt((A078522(n)+1)*(2*A078522(n)+1)). - _Jonathan Sondow_, Apr 07 2017",
+        "a(n) = Pell(4*n-2)/2. - _G. C. Greubel_, Jan 13 2020"
+    ],
+    "maple": [
+        "seq( simplify(ChebyshevU(2*(n-1), 3)), n = 1..20); # _G. C. Greubel_, Jan 13 2020"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{34, -1}, {1, 35}, 15] (* _Ant King_, Nov 08 2011 *)",
+        "Fibonacci[4*Range[20] -2, 2]/2 (* _G. C. Greubel_, Jan 13 2020 *)"
+    ],
+    "program": [
+        "(Magma) I:=[1,35]; [n le 2 select I[n] else 34*Self(n-1)-Self(n-2): n in [1..20]]; // _Vincenzo Librandi_, Nov 22 2011",
+        "(PARI) vector(21, n, polchebyshev(2*(n-1), 2, 3) ) \\\\ _G. C. Greubel_, Jan 13 2020",
+        "(Sage) [lucas_number1(4*n-2, 2,-1)/2 for n in (1..20)] # _G. C. Greubel_, Jan 13 2020",
+        "(GAP) List([0..20], n-> Lucas(2,-1, 4*n-2)[1]/2 ); # _G. C. Greubel_, Jan 13 2020"
+    ],
+    "xref": [
+        "Cf. A000129, A008844, A046177, A078522, A284876.",
+        "Cf. A001109, A001110 (partial sums)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Eric W. Weisstein_",
+    "ext": [
+        "Chebyshev comments from _Wolfdieter Lang_, Nov 29 2002"
+    ],
+    "references": 24,
+    "revision": 81,
+    "time": "2023-03-14T12:21:49-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

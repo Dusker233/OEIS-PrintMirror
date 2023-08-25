@@ -1,0 +1,30 @@
+{
+    "number": 351574,
+    "data": "117,245,333,425,549,605,637,657,725,833,845,873,981,1025,1053,1325,1413,1421,1445,1629,1737,1805,1813,2009,2057,2061,2169,2225,2493,2525,2597,2645,2817,2825,2873,2925,2989,2997,3033,3141,3357,3425,3509,3573,3577,3681,3725,3789,3897,4113,4205,4325,4361,4693,4753",
+    "name": "Terms of A228058 missing from A347874.",
+    "comment": [
+        "Numbers that satisfy Euler's criterion for the odd perfect numbers (A228058), but do not satisfy the criterion specified in A347874."
+    ],
+    "link": [
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "A003415(n) = if(n<=1, 0, my(f=factor(n)); n*sum(i=1, #f~, f[i, 2]/f[i, 1]));",
+        "A342926(n) = (A003415(sigma(n))-n);",
+        "isA228058(n) = if(!(n%2)||(omega(n)<2),0,my(f=factor(n),y=0); for(i=1,#f~,if(1==(f[i,2]%4), if((1==y)||(1!=(f[i,1]%4)),return(0),y=1), if(f[i,2]%2, return(0)))); (y));",
+        "isA347874(n) = ((n%2)&&!isprime(n)&&!(A342926(n)%2)&&!(A342926(2*n)%3));",
+        "isA351574(n) = (isA228058(n) && !isA347874(n));"
+    ],
+    "xref": [
+        "Setwise difference A228058 \\ A347874.",
+        "Cf. A000203, A003415."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Feb 23 2022",
+    "references": 1,
+    "revision": 6,
+    "time": "2022-02-23T21:50:50-05:00",
+    "created": "2022-02-23T21:50:50-05:00"
+}

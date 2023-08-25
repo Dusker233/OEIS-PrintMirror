@@ -1,0 +1,43 @@
+{
+    "number": 320102,
+    "data": "2,5,17,41,73,97,127,137,149,173,191,193,223,233,239,251,257,277,281,307,331,337,349,373,389,401,431,443,491,509,521,547,557,569,577,599,617,641,653,683,701,719,733,757,761,787,809,821,839,853,877,881,907,919,977,997,1019,1033,1087,1093,1153",
+    "name": "Primes where changing any single bit in the binary representation never results in a smaller prime.",
+    "comment": [
+        "Rooms in Paulsen's prime number maze that are not connected to any room with a lesser room number.",
+        "\"The prime number maze is a maze of prime numbers where two primes are connected if and only if their base 2 representations differ in just one bit.\" - William Paulsen (A065123).",
+        "If k is prime and the bit 2^m in k is 0 then 2^m+k is not in the sequence.",
+        "If k is in the sequence then 2^m+k is not where the bit 2^m in k is 0. - _David A. Corneth_, Oct 09 2018"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A320102/b320102.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Paul V. McKinney, <a href=\"/A320102/a320102.txt\">Fortran Program</a>."
+    ],
+    "example": [
+        "7 is not in the sequence because there is a way to change only one single bit of its binary representation that results in a prime smaller than 7 {1(1)1,(1)11} {5,3}.",
+        "41 is in the sequence because changing any single bit of its binary representation binary representation never results in a smaller prime {10100(1),10(1)001,(1)01001} {40,25,9}."
+    ],
+    "mathematica": [
+        "q[p_] := PrimeQ[p] && AllTrue[2^(-1 + Position[Reverse @ IntegerDigits[p, 2], 1] // Flatten), !PrimeQ[p - #] &]; Select[Range[1000], q] (* _Amiram Eldar_, Jan 13 2022 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = if(!isprime(n), return(0)); b = binary(n); for(i=1, #b, if(b[i]==1, if(isprime(n-2^(#b-i)), return(0)))); 1 \\\\ _David A. Corneth_, Oct 09 2018",
+        "(FORTRAN) See \"Links\" for program.",
+        "(Python)",
+        "from sympy import isprime",
+        "def ok(n):",
+        "    if not isprime(n): return False",
+        "    onelocs = (i for i, bi in enumerate(bin(n)[2:][::-1]) if bi == '1')",
+        "    return not any(isprime(n-2**k) for k in onelocs)",
+        "print([k for k in range(1154) if ok(k)]) # _Michael S. Branicky_, Jan 10 2022"
+    ],
+    "xref": [
+        "Cf. A019434, A137985, A065092, A065111, A065123."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Paul V. McKinney_, Oct 06 2018",
+    "references": 2,
+    "revision": 47,
+    "time": "2022-01-13T04:22:02-05:00",
+    "created": "2018-10-10T09:19:02-04:00"
+}

@@ -1,0 +1,56 @@
+{
+    "number": 328146,
+    "data": "10,36,78,120,136,165,210,300,406,462,528,666,820,924,969,990,1140,1176,1378,1596,1716,1830,2080,2346,2380,2628,2926,3060,3240,3276,3570,3654,3876,3916,4278,4656,5050,5460,5886,6328,6786,7260,7750,7770,8256,8436",
+    "name": "Numbers k such that binomial(d(i),d(j)) = k for some proper divisors d(i) > d(j) of k.",
+    "comment": [
+        "The corresponding pairs of divisors (d(i), d(j)) are (5, 2), (9, 2), (13, 2), (10, 3), (17, 2), (11, 3), {(21, 2) and (10, 6)}, (25, 2), (29, 2), (11, 6), ...",
+        "We observe that the term 210 of the sequence generates two pairs of divisors having the property that binomial(d(i),d(j)) = 210 (see the example)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A328146/b328146.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "10 is in the sequence because the proper divisors of 10 are {2, 5} and binomial(5, 2) = 10.",
+        "210 is in the sequence because the proper divisors of 210 are { 2, 3, 5, 6, 7, 10, 14, 15, 21, 30, 35, 42, 70, 105} with binomial(21, 2) = 210 and binomial(10, 6) = 210 where 2, 6, 10, 21 are divisors of 210."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "for n from 3 to 10000 do:",
+        "ii:=0:d:=divisors(n):n0:=nops(d):",
+        "   for i from n0-1 by -1 to 2 while (ii=0) do:",
+        "    for j from i-1 by -1 to 2 while(ii=0) do:",
+        "     f:=binomial(d[i],d[j]):",
+        "       if f=n",
+        "        then",
+        "        ii:=1:printf(`%d, `,n):",
+        "        else",
+        "      fi:",
+        "    od:",
+        "   od:",
+        "od:",
+        "# Alternative:",
+        "N:= 10^6: # for all terms <= N",
+        "S:= {}:",
+        "for n from 2 while (n+1)*(n+2)/2 <= N do",
+        "  for m from n+2 do",
+        "    t:= binomial(m,n);",
+        "    if t > N then break fi;",
+        "    if t mod n = 0 and t mod m = 0 and t > m then S:= S union {t} fi",
+        "od;",
+        "od:",
+        "sort(convert(S,list)); # _Robert Israel_, Oct 06 2019"
+    ],
+    "program": [
+        "(PARI) isok(m) = {my(d=divisors(m)); for (i=1, #d-1, for (j=1, i-1, if (binomial(d[i], d[j]) == m, return(1));););} \\\\ _Michel Marcus_, Oct 05 2019"
+    ],
+    "xref": [
+        "Cf. A007318, A027751, A032741"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Oct 05 2019",
+    "references": 1,
+    "revision": 10,
+    "time": "2019-10-06T18:56:08-04:00",
+    "created": "2019-10-05T10:49:32-04:00"
+}

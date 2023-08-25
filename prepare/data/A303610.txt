@@ -1,0 +1,47 @@
+{
+    "number": 303610,
+    "data": "10,1010,110100,11010100,1101100100,110110100100,11101010101000,1110110101001000,111011010101001000,11101101101001001000,1110111010101010001000,111011101010101010001000,11110110110101010010010000,1111011011010101010010010000,111101110101101010010100010000",
+    "name": "Circle aliasing numbers with 1/n size steps.",
+    "comment": [
+        "Starting from [-1,0] taking 2*n steps of length 1/n each either up or right, follow the path staying as close to the unit circle as possible. Every step up is considered a 1, every step right is considered a 0."
+    ],
+    "example": [
+        "For n=3, we have 110100, meaning if we were to start at [-1, 0] and take 2*n=6 steps of length 1/n = 1/6 which can either be up or to the right, to follow the path of the unit circle the closest we would move up 1, up 1 again, then right, then up again, then right two more times, which we translate to the binary number 110100."
+    ],
+    "program": [
+        "(Python)",
+        "def closer(pos1, pos2):",
+        "    dpos1 = (pos1[0]**2.0+pos1[1]**2.0)**.5",
+        "    dpos2 = (pos2[0]**2.0+pos2[1]**2.0)**.5",
+        "    if (1.0-dpos1)**2.0 < (1.0-dpos2)**2.0:",
+        "        return True",
+        "    else:",
+        "        return False",
+        "def converts(path):",
+        "    return ''.join(path)",
+        "l = []",
+        "for steps in range(1, 20):",
+        "    stepsize = 1.0/steps",
+        "    pos = [-1.0, 0.0]",
+        "    paths = []",
+        "    for i in range(0, 2*steps):",
+        "        if closer([pos[0]+stepsize, pos[1]], [pos[0], pos[1]+stepsize]):",
+        "            pos = [pos[0]+stepsize, pos[1]]",
+        "            paths.append(str(0))",
+        "        else:",
+        "            pos = [pos[0], pos[1]+stepsize]",
+        "            paths.append(str(1))",
+        "    l.append(int(converts(paths)))",
+        "print(l)"
+    ],
+    "xref": [
+        "Subsequence of A035928 in binary."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ben Paul Thurston_, May 06 2018",
+    "references": 0,
+    "revision": 27,
+    "time": "2018-07-05T00:56:15-04:00",
+    "created": "2018-07-05T00:56:15-04:00"
+}

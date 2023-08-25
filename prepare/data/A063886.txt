@@ -1,0 +1,79 @@
+{
+    "number": 63886,
+    "data": "1,2,2,4,6,12,20,40,70,140,252,504,924,1848,3432,6864,12870,25740,48620,97240,184756,369512,705432,1410864,2704156,5408312,10400600,20801200,40116600,80233200,155117520,310235040,601080390,1202160780",
+    "name": "Number of n-step walks on a line starting from the origin but not returning to it.",
+    "comment": [
+        "A Chebyshev transform of A007877(n+1). The g.f. is transformed to (1+x)/((1-x)(1+x^2)) under the mapping G(x)->(1/(1+x^2))G(1/(1+x^2)). - _Paul Barry_, Oct 12 2004",
+        "a(n-1) = 2*C(n-2, floor((n-2)/2)) is also the number of bit strings of length n in which the number of 00 substrings is equal to the number of 11 substrings. For example, when n = 4 we have 4 such bit strings: 0011, 0101, 1010, and 1100. - _Angel Plaza_, Apr 23 2009",
+        "Hankel transform is A120617. - _Paul Barry_, Aug 10 2009",
+        "The Hankel transform of a(n) is (-2)^C(n+1,2). The Hankel transform of (-1)^C(n+1,2)*a(n) is (-1)^C(n+1,2)*A164584(n). - _Paul Barry_, Aug 17 2009",
+        "For n > 1, a(n) is also the number of n-step walks starting from the origin and returning to it exactly once. - _Geoffrey Critzer_, Jan 24 2010",
+        "-a(n) is the Z-sequence for the Riordan array A130777. (See the W. Lang link under A006232 for A- and Z-sequences for Riordan matrices). - _Wolfdieter Lang_, Jul 12 2011",
+        "Number of subsets of {1,...,n} in which the even elements appear as often at even positions as at odd positions. - _Gus Wiseman_, Mar 17 2018"
+    ],
+    "reference": [
+        "D. Perrin, A conjecture on rational sequences, pp. 267-274 of R. M. Capocelli, ed., Sequences, Springer-Verlag, NY 1990."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A063886/b063886.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Paul Barry, <a href=\"https://arxiv.org/abs/1912.01124\">A Note on Riordan Arrays with Catalan Halves</a>, arXiv:1912.01124 [math.CO], 2019.",
+        "Emeric Deutsch, <a href=\"http://www.jstor.org/stable/40391080\">Problem 11424</a>, The American Mathematical Monthly, Vol. 116, No. 3 (March 2009), p. 277."
+    ],
+    "formula": [
+        "G.f.: sqrt((1+2*x)/(1-2*x)).",
+        "a(n+1) = 2*C(n, floor(n/2)) = 2*A001405(n); a(2n) = C(2n, n) = A000984(n) = 4*a(2n-2)-|A002420(n)| = 4*a(2n-2)-2*A000108(n-1) = 2*A001700(n-1); a(2n+1) = 2*a(2n) = A028329(n).",
+        "2*a(n) = A047073(n+1).",
+        "a(n) = Sum_{k=0..n} abs(A106180(n,k)). - _Philippe Del\u00e9ham_, Oct 06 2006",
+        "a(n) = Sum_{k=0..n} (k+1)binomial(n, (n-k)/2) ( 1-cos((k+1)*Pi/2) (1+(-1)^(n-k))/(n+k+2) ). - _Paul Barry_, Oct 12 2004",
+        "G.f.: 1/(1-2*x/(1+x/(1+x/(1-x/(1-x/(1+x/(1+x/(1-x/(1-x/(1+ ... (continued fraction). - _Paul Barry_, Aug 10 2009",
+        "G.f.: 1 + 2*x/(G(0)-x+x^2) where G(k)= 1 - 2*x^2 - x^4/G(k+1); (continued fraction, 1-step). - _Sergei N. Gladkovskii_, Aug 10 2012",
+        "D-finite with recurrence: n*a(n) = 2*a(n-1) + 4*(n-2)*a(n-2). - _R. J. Mathar_, Dec 03 2012",
+        "G.f.: 1/G(0), where G(k) = 1 - 2*x/(1 + 2*x/(1 + 1/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Jul 26 2013",
+        "G.f.: G(0), where G(k) = 1 + 2*x/(1 - 2*x/(1 + 1/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Jul 26 2013",
+        "G.f.: W(0)/2*(1+2*x), where W(k) = 1 + 1/(1 - 2*x/(2*x + (k+1)/(x*(2*k+1))/W(k+1) )), abs(x) < 1/2; (continued fraction). - _Sergei N. Gladkovskii_, Jul 26 2013",
+        "a(n) = 2^n*Product_{k=0..n-1} (k/n + 1/n)^((-1)^k). - _Peter Luschny_, Dec 02 2013",
+        "G.f.: G(0), where G(k) = 1 + 2*x*(4*k+1)/((2*k+1)*(1+2*x) - (2*k+1)*(4*k+3)*x*(1+2*x)/((4*k+3)*x + (k+1)*(1+2*x)/G(k+1) )); (continued fraction). - _Sergei N. Gladkovskii_, Jan 19 2014"
+    ],
+    "example": [
+        "a(4) = 6 because there are six length four walks that do not return to the origin: {-1, -2, -3, -4}, {-1, -2, -3, -2}, {-1, -2, -1, -2}, {1, 2, 1, 2}, {1, 2, 3, 2}, {1, 2, 3, 4}. There are also six such walks that return exactly one time: {-1, -2, -1, 0}, {-1, 0, -1, -2}, {-1, 0, 1, 2}, {1, 0, -1, -2}, {1, 0, 1, 2}, {1, 2, 1, 0}. - _Geoffrey Critzer_, Jan 24 2010",
+        "The a(5) = 12 subsets in which the even elements appear as often at even positions as at odd positions: {}, {1}, {3}, {5}, {1,3}, {1,5}, {2,4}, {3,5}, {1,2,4}, {1,3,5}, {2,4,5}, {1,2,4,5}. - _Gus Wiseman_, Mar 17 2018"
+    ],
+    "maple": [
+        "seq(seq(binomial(2*j,j)*i, i=1..2),j=0..16); # _Zerinvary Lajos_, Apr 28 2007",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n<2, n+1,",
+        "       4*a(n-2) +2*(a(n-1) -4*a(n-2))/n)",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Feb 10 2014"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Map[Accumulate, Strings[{-1, 1}, n]], Count[ #, 0] == 0 &]], {n, 0, 20}] (* _Geoffrey Critzer_, Jan 24 2010 *)",
+        "CoefficientList[Series[Sqrt[(1+2x)/(1-2x)],{x,0,40}],x] (* _Harvey P. Dale_, Apr 28 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from math import ceil",
+        "from sympy import binomial",
+        "def a(n):",
+        "    if n==0: return 1",
+        "    return 2*binomial(n-1,(n-1)//2)",
+        "print([a(n) for n in range(18)])",
+        "# _David Nacin_, Feb 29 2012",
+        "(PARI) a(n)=(n==0)+2*binomial(n-1,(n-1)\\2)",
+        "(PARI) a(n) = 2^n*prod(k=0,n-1,(k/n+1/n)^((-1)^k)); \\\\ _Michel Marcus_, Dec 03 2013",
+        "(Magma) [1] cat [2*Binomial(n-1, Floor((n-1)/2)): n in [1..40]]; // _G. C. Greubel_, Jun 07 2023",
+        "(SageMath) [2*binomial(n-1, (n-1)//2) + int(n==0) for n in range(41)] # _G. C. Greubel_, Jun 07 2023"
+    ],
+    "xref": [
+        "Apart from initial terms, same as A182027.",
+        "Cf. A000108, A000712, A000984, A001405, A001700, A002420, A006232, A007877, A026010, A028329, A045931, A047073, A097613, A106180, A120617, A130777, A130780, A164584, A171966, A239241, A300787, A300788, A300789.",
+        "Cf. A307768 (complementary event)."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Henry Bottomley_, Aug 28 2001",
+    "references": 37,
+    "revision": 111,
+    "time": "2023-06-07T21:15:47-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

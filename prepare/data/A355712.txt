@@ -1,0 +1,34 @@
+{
+    "number": 355712,
+    "data": "28374,133623,136374,187623,190374,298374,349623,352374,457623,460374,511623,619623,622374,673623,676374,781623,838374,943623,946374,997623,1000374,1108374,1159623,1162374,1267623,1270374,1321623,1429623,1432374,1483623,1486374,1591623",
+    "name": "Starts of runs of 4 consecutive numbers with the same number of 5-smooth divisors.",
+    "comment": [
+        "Numbers k such that A355583(k) = A355583(k+1) = A355583(k+2) = A355583(k+3).",
+        "Are there runs of 5 consecutive numbers with the same number of 5-smooth divisors? There are no such runs below 10^10."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A355712/b355712.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "28374 is a term since A355583(28374) = A355583(28375) = A355583(28376) = A355583(28377) = 4."
+    ],
+    "mathematica": [
+        "f[n_] := Times @@ (1 + IntegerExponent[n, {2, 3, 5}]); s = {}; m = 4; fs = f /@ Range[m]; Do[If[Equal @@ fs, AppendTo[s, n - m]]; fs = Rest @ AppendTo[fs, f[n]], {n, m + 1, 10^6}]; s"
+    ],
+    "program": [
+        "(PARI) s(n) = (valuation(n, 2) + 1) * (valuation(n, 3) + 1) * (valuation(n, 5) + 1);",
+        "s1 = s(1); s2 = s(2); s3 = s(3); for(k = 4, 1.6e6, s4 = s(k); if(s1 == s2 && s2 == s3 && s3 == s4, print1(k-3,\", \")); s1 = s2; s2 = s3; s3 = s4);"
+    ],
+    "xref": [
+        "Cf. A355583.",
+        "Subsequence of A355710 and A355711.",
+        "Similar sequences: A006601, A332314, A332388."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jul 15 2022",
+    "references": 3,
+    "revision": 10,
+    "time": "2022-07-19T08:03:05-04:00",
+    "created": "2022-07-18T05:11:18-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 338485,
+    "data": "20,90,272,468,650,1332,2450,2900,3600,4160,6642,7650,10100,10388,14762,16400,20880,25578,27540,28730,38612,42048,50850,50960,54900,65792,83810,90650,98100,116948,125712,130682,141570,142400,149940,160400,194922,206100,214650",
+    "name": "Primitive numbers that are the sum of the squares of two of their distinct divisors.",
+    "comment": [
+        "If m is a term of A337988 then k^2*m is another term for any k in N*; so, there exist primitive terms m as 20, 90, 272,... in the sense that m' is not a term for any m' = m/k^2, k>1."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A338485/b338485.txt\">Table of n, a(n) for n = 1..637</a>"
+    ],
+    "example": [
+        "20 = 2^2 + 4^2 and there is no k>1 such that 20/k^2 is another term, so 20 is in the sequence.",
+        "90 = 3^2 + 9^2 and there is no k>1 such that 90/k^2 is another term, so 90 is in the sequence.",
+        "468 = 12^2 + 18^2 and there is no k>1 such that 468/k^2 is another term, so 468 is in the sequence."
+    ],
+    "mathematica": [
+        "sumdivQ[n_] := AnyTrue[Most @ Divisors[n], (s = n - #^2) > 0 && s != n/2 && IntegerQ@Sqrt[s] && Divisible[n, Sqrt[s]] &]; s = Select[Range[200000], sumdivQ]; seq = {s[[1]]}; Do[If[! AnyTrue[s[[1 ;; k - 1]], IntegerQ@Sqrt[s[[k]]/#] &], AppendTo[seq, s[[k]]]], {k, 2, Length[s]}]; seq (* _Amiram Eldar_, Oct 31 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = {my(d=divisors(m)); for (i=2, #d, for (j=1, i-1, if (d[i]^2+d[j]^2 == m, return (1)); ); ); } \\\\ A337988",
+        "isprim(x, vp) = {for (i=1, #vp, my(y = x/vp[i]); if ((denominator(y)==1) && issquare(y), return (0));); return(1);}",
+        "lista(nn) = {my(vp = []); for (n=1, nn, if (isok(n) && isprim(n, vp), vp = concat(vp, n));); vp;} \\\\ _Michel Marcus_, Oct 30 2020"
+    ],
+    "xref": [
+        "Subsequence of A337988.",
+        "A071253 is a subsequence."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Oct 30 2020",
+    "ext": [
+        "More terms from _Michel Marcus_, Oct 30 2020"
+    ],
+    "references": 1,
+    "revision": 23,
+    "time": "2020-11-04T14:37:29-05:00",
+    "created": "2020-11-03T06:32:23-05:00"
+}

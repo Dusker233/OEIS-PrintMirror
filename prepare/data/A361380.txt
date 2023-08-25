@@ -1,0 +1,43 @@
+{
+    "number": 361380,
+    "data": "1,2,3,6,17,56,215,922,4305,21894,119539,696632,4314925,28237146,194602079,1407456694,10649642837,84100177424,691474151187,5907288773554,52340230286509,480153099982726,4553711640946919,44584683333637168,450075389309517849",
+    "name": "Sum over the j-th term of the (n-j)-th inverse binomial transform of the Bell numbers (A000110) for all j in [n].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A361380/b361380.txt\">Table of n, a(n) for n = 0..576</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{i=0..n} i! * [x^i] exp(exp(x)-(n-i)*x-1).",
+        "a(n) = Sum_{0<=j<=i<=n} binomial(i,j)*(i-n)^(i-j)*Bell(j).",
+        "a(n) mod 2 = A059841(n)."
+    ],
+    "maple": [
+        "a:= n-> add(add(binomial(i, j)*(i-n)^(i-j)*combinat[bell](j), j=0..i), i=0..n):",
+        "seq(a(n), n=0..25);",
+        "# second Maple program:",
+        "a:= n-> add(i!*coeff(series(exp(exp(x)-(n-i)*x-1), x, i+1), x, i), i=0..n):",
+        "seq(a(n), n=0..25);",
+        "# third Maple program:",
+        "b:= proc(n, m) option remember;",
+        "     `if`(n=0, 1, b(n-1, m+1)+m*b(n-1, m))",
+        "    end:",
+        "a:= n-> add(b(i, i-n), i=0..n):",
+        "seq(a(n), n=0..25);"
+    ],
+    "program": [
+        "(Python)",
+        "from math import comb",
+        "from sympy import bell",
+        "def A361380(n): return sum(comb(i,j)*(i-n)**(i-j)*bell(j) for i in range(n+1) for j in range(i+1)) # _Chai Wah Wu_, Apr 05 2023"
+    ],
+    "xref": [
+        "Antidiagonal sums of A361781.",
+        "Cf. A000110, A059841, A290219, A347420."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Mar 09 2023",
+    "references": 3,
+    "revision": 30,
+    "time": "2023-04-05T13:31:32-04:00",
+    "created": "2023-04-05T10:04:02-04:00"
+}

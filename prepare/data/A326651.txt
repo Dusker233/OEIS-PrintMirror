@@ -1,0 +1,35 @@
+{
+    "number": 326651,
+    "data": "0,1,14,243,9692,865445,196868202,122831606807,219073289264824,1139077903664789577,17597009238919048388550,821444189426979675481201211,116802449602563244067365434335892,50816512870344533477388136382624158445",
+    "name": "a(n) = Sum_{k>0} k * A326616(k,n).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A326651/b326651.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=n..A024916(n)} k * A326616(k,n) = Sum_{k=n..A024916(n)} k * A326617(k,n)."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n=0, 0, numtheory[sigma](n)+g(n-1)) end:",
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1, `if`(i<1, 0, add((t->",
+        "      b(n-t, min(n-t, i-1), k)*binomial(k, t))(i*j), j=0..n/i)))",
+        "    end:",
+        "a:= k-> add(n*add(b(n$2, k-i)*(-1)^i*binomial(k, i), i=0..k), n=k..g(k)):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = If[n == 0, 0, DivisorSigma[1, n] + g[n - 1]];",
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0, 1, If[i < 1, 0, Sum[With[{t = i*j}, b[n - t, Min[n - t, i - 1], k]*Binomial[k, t]], {j, 0, n/i}]]];",
+        "a[k_] := Sum[n*Sum[b[n, n, k - i]*(-1)^i*Binomial[k, i], {i, 0, k}], {n, k, g[k]}];",
+        "Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Mar 24 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000203, A024916, A326616, A326617."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 12 2019",
+    "references": 3,
+    "revision": 28,
+    "time": "2022-03-24T07:47:28-04:00",
+    "created": "2019-09-16T09:01:49-04:00"
+}

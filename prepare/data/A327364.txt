@@ -1,0 +1,55 @@
+{
+    "number": 327364,
+    "data": "0,0,1,6,46,655,17991,927416,89009740,16020407709,5468601546685,3578414666656214,4529751815161579194,11175105490563109463875,54043272967471942825421219,514566625051705610110588073460,9677104749727084630538798805505880",
+    "name": "Number of labeled simple graphs with n vertices, a connected edge-set, and at least one endpoint (vertex of degree 1).",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A327364/b327364.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "formula": [
+        "Binomial transform of A327362."
+    ],
+    "example": [
+        "The a(4) = 46 edge-sets:",
+        "  {12}  {12,13}  {12,13,14}  {12,13,14,23}",
+        "  {13}  {12,14}  {12,13,24}  {12,13,14,24}",
+        "  {14}  {12,23}  {12,13,34}  {12,13,14,34}",
+        "  {23}  {12,24}  {12,14,23}  {12,13,23,24}",
+        "  {24}  {13,14}  {12,14,34}  {12,13,23,34}",
+        "  {34}  {13,23}  {12,23,24}  {12,14,23,24}",
+        "        {13,34}  {12,23,34}  {12,14,24,34}",
+        "        {14,24}  {12,24,34}  {12,23,24,34}",
+        "        {14,34}  {13,14,23}  {13,14,23,34}",
+        "        {23,24}  {13,14,24}  {13,14,24,34}",
+        "        {23,34}  {13,23,24}  {13,23,24,34}",
+        "        {24,34}  {13,23,34}  {14,23,24,34}",
+        "                 {13,24,34}",
+        "                 {14,23,24}",
+        "                 {14,23,34}",
+        "                 {14,24,34}"
+    ],
+    "mathematica": [
+        "csm[s_]:=With[{c=Select[Subsets[Range[Length[s]],{2}],Length[Intersection@@s[[#]]]>0&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[Subsets[Subsets[Range[n],{2}]],Length[csm[#]]==1&&Min@@Length/@Split[Sort[Join@@#]]==1&]],{n,0,5}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(x=x + O(x*x^n)); Vec(serlaplace(exp(x)*(-x^2/2 + log(sum(k=0, n, 2^binomial(k, 2)*x^k/k!)) - log(sum(k=0, n, 2^binomial(k, 2)*(x*exp(-x))^k/k!)))), -(n+1))} \\\\ _Andrew Howroyd_, Sep 11 2019"
+    ],
+    "xref": [
+        "The covering case is A327362.",
+        "Graphs with endpoints are A245797.",
+        "Graphs with connected edge-set are A287689.",
+        "Connected graphs with bridges are A327071.",
+        "Covering graphs with endpoints are A327227.",
+        "Cf. A001187, A059167, A141580, A322395, A327148, A327335, A327369."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Sep 04 2019",
+    "ext": [
+        "Terms a(7) and beyond from _Andrew Howroyd_, Sep 11 2019"
+    ],
+    "references": 5,
+    "revision": 8,
+    "time": "2019-09-11T16:46:57-04:00",
+    "created": "2019-09-09T12:04:17-04:00"
+}

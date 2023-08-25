@@ -1,0 +1,25 @@
+{
+    "number": 333927,
+    "data": "6,28,264,1104,3360,75840,151062912,606557952,2171581440",
+    "name": "Recursive perfect numbers: numbers k such that A333926(k) = 2*k.",
+    "comment": [
+        "Since a recursive divisor is also a (1+e)-divisor (see A049599), then the first 6 terms and other terms of this sequence coincide with those of A049603."
+    ],
+    "example": [
+        "264 is a term since the sum of its recursive divisors is 1 + 2 + 3 + 6 + 8 + 11 + 22 + 24 + 33 + 66 + 88 + 264 = 528 = 2 * 264."
+    ],
+    "mathematica": [
+        "recDivQ[n_, 1] = True; recDivQ[n_, d_] := recDivQ[n, d] = Divisible[n, d] && AllTrue[FactorInteger[d], recDivQ[IntegerExponent[n, First[#]], Last[#]] &]; recDivs[n_] := Select[Divisors[n], recDivQ[n, #] &]; f[p_, e_] := 1 + Total[p^recDivs[e]]; recDivSum[1] = 1; recDivSum[n_] := Times @@ (f @@@ FactorInteger[n]); Select[Range[10^5], recDivSum[#] == 2*# &]"
+    ],
+    "xref": [
+        "Cf. A049603, A282446, A333926.",
+        "Analogous sequences: A000396, A002827 (unitary), A007357 (infinitary), A054979 (exponential), A064591 (nonunitary)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Apr 10 2020",
+    "references": 3,
+    "revision": 5,
+    "time": "2020-04-10T21:33:18-04:00",
+    "created": "2020-04-10T21:33:18-04:00"
+}

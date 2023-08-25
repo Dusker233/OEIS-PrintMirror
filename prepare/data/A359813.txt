@@ -1,0 +1,53 @@
+{
+    "number": 359813,
+    "data": "3,12,45,171,619,2560,10774,46708,202635,904603,4073767,18604618,85445767,395944114,1837763447,8600149593",
+    "name": "Number of primes < 10^n with exactly one odd decimal digit.",
+    "comment": [
+        "a(n) =~ Pi(10^n)/2^(n-1). _Robert G. Wilson v_, Feb 04 2023"
+    ],
+    "example": [
+        "a(2)=12 as there are 12 primes less than 100 with exactly one odd decimal digit: 3, 5, 7, 23, 29, 41, 43, 47, 61, 67, 83, 89."
+    ],
+    "mathematica": [
+        "c=1; k=0; lst={}; f[n_] := Block[{e = 10 FromDigits[2 IntegerDigits[n, 5]]}, Length@ Select[e + {1, 3, 7, 9}, PrimeQ]];",
+        "Do[ While[k< 5^n, c+=f@k; k++]; Print[c], {n, 0, 16}] (* _Robert G. Wilson v_, Feb 04 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import  product",
+        "def a(n):",
+        "    c=3",
+        "    if n==1:return(c)",
+        "    x=[[1,7],[1,3,7,9],[3,9],'2468','02468']",
+        "    for k in range(2,n+1):",
+        "        for f in x[3]:",
+        "            for m in product(x[4], repeat=k-2):",
+        "                s = int(f+\"\".join(m))*10",
+        "                t=s%3",
+        "                for last in x[t]:",
+        "                    if isprime(s+last):",
+        "                        c+= 1",
+        "    return(c)",
+        "print([a(n) for n in range(1,7)])",
+        "(Python)",
+        "from sympy import primerange",
+        "def a(n):",
+        "    p=list(primerange(3,10**n))",
+        "    return(sum(1 for k in p if sum(str(k).count(d) for d in '13579')==1))",
+        "print([a(n) for n in range(1,7)])"
+    ],
+    "xref": [
+        "Cf. A030096, A068690, A154764, A358685, A358690."
+    ],
+    "keyword": "base,nonn,more",
+    "offset": "1,1",
+    "author": "_Zhining Yang_, Jan 14 2023",
+    "ext": [
+        "a(16) from _Robert G. Wilson v_, Feb 04 2023"
+    ],
+    "references": 0,
+    "revision": 14,
+    "time": "2023-02-04T20:43:00-05:00",
+    "created": "2023-01-28T11:49:23-05:00"
+}

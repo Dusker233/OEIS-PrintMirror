@@ -1,0 +1,64 @@
+{
+    "number": 248651,
+    "data": "1,2,3,4,5,6,7,8,9,10,20,34,56,78,79,80,91,234,256,301,456,789,790,812,3456,3457,6012,6089,7123,8459,8460,9123,9157,20345,20678,31456,31789,40256,40789,51236,51789,60234,60789,71234,71589,80234,80569,91234,91567,203456,203478,516789,516790,518234,602347,602389,714589,714590,716238,802345,802369,914567,914568,917023,2034567",
+    "name": "a(n) is the smallest number greater than a(n-1) such that in a(1) through a(n) no digit occurs more than once more than any other digit, starting with a(1) = 1.",
+    "comment": [
+        "Starting with 1, instead of 0 as in A095204, means 0 doesn't appear until a(10)=10, hence a(11)=20, not 23."
+    ],
+    "link": [
+        "Jeb Adams, <a href=\"/A248651/b248651.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "program": [
+        "(R)",
+        "# Script (R, using base only) to build values in the sequence defined",
+        "# in A248651:",
+        "# a(n) is the smallest number greater than a(n-1) such that no",
+        "# digit appears in the listing of all terms more than one time",
+        "# more than any other digit in the listing, with a(1) = 1.",
+        "digits <- c(0:9) #vector of the digits",
+        "digitCounts <- rep(0L,10) #vector for digit count tracking",
+        "A <- c() #vector of entries",
+        "A[1] <- 1L #first entry",
+        "failed <- 1L #failed entry",
+        "digitCounts[2] = 1L #impact of first entry on digitCounts",
+        "# Build a function that turns a number into a vector of its",
+        "# component digits",
+        "digits <- function(x) {",
+        "  if(length(x) > 1 ) {",
+        "    lapply(x, digits)",
+        "  } else {",
+        "    n <- floor(log10(x))+1L",
+        "    rev( x %/% 10^seq(0, length.out=n) %% 10 )",
+        "  }",
+        "}",
+        "# Engine for testing digits, runs VERY SLOW, but checks every integer.",
+        "# I welcome improvements, note that it respects incrementing",
+        "# more than one digit at a time if that makes sense.",
+        "while (length(A) < 300) {",
+        "  i <- max(failed, max(A)) + 1",
+        "  newCounts <- digitCounts",
+        "  digitList <- digits(i)",
+        "  for (j in digitList) {",
+        "    newCounts[j + 1] <- newCounts[j + 1] + 1",
+        "  }",
+        "  if (max(newCounts) - min(newCounts) > 1) {",
+        "       failed <- i } else {",
+        "        digitCounts <- newCounts",
+        "        A <- c(A,as.integer(i))",
+        "      }",
+        "} # _Jeb Adams_, Jul 17 2020"
+    ],
+    "xref": [
+        "Same definition of A095204, but starting with 1. Similar to A120125."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Jeb Adams_, Oct 10 2014",
+    "ext": [
+        "Terms a(15) and beyond corrected by _Jeb Adams_, May 01 2020"
+    ],
+    "references": 1,
+    "revision": 34,
+    "time": "2020-08-20T21:01:27-04:00",
+    "created": "2014-10-20T02:34:53-04:00"
+}

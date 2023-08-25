@@ -1,0 +1,44 @@
+{
+    "number": 363188,
+    "data": "53,67,89,199,223,277,349,439,449,461,487,491,499,523,557,569,643,683,877,883,929,941,1069,1153,1259,1361,1471,1487,1733,1787,1901,1933,1951,2111,2129,2251,2297,2311,2371,2521,2557,2689,2777,2797,2861,2917,2939,3037,3041,3253,3259,3271,3407",
+    "name": "Prime numbers that are the exact average of four consecutive odd semiprimes.",
+    "example": [
+        "53 is a term because (49 + 51 + 55 + 57)/4 = 53 is prime.",
+        "67 is a term because (57 + 65 + 69 + 77)/4 = 67 is prime."
+    ],
+    "maple": [
+        "OP:= select(isprime,[seq(i,i=3..10000,2)]):",
+        "OSP:= sort(select(`<=`,[seq(seq(OP[i]*OP[j],j=1..i),i=1..nops(OP))],3*OP[-1])):",
+        "SA:= [seq(add(OSP[i+j],j=0..3)/4,i=1..nops(OSP)-3)]:",
+        "select(t -> t::integer and isprime(t), SA); # _Robert Israel_, May 21 2023"
+    ],
+    "mathematica": [
+        "Select[Plus @@@ Partition[Select[Range[1, 3500, 2], PrimeOmega[#] == 2 &], 4, 1] / 4, PrimeQ] (* _Amiram Eldar_, May 21 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import factorint, isprime",
+        "def semiprime(n): return sum(e for e in factorint(n).values()) == 2",
+        "def nextoddsemiprime(n): return next(k for k in count(n+1+(n&1), 2) if semiprime(k))",
+        "def agen(): # generator of terms",
+        "    osp = [9, 15, 21, 25]",
+        "    while True:",
+        "        q, r = divmod(sum(osp), len(osp))",
+        "        if r == 0 and isprime(q):",
+        "            yield q",
+        "        osp = osp[1:] + [nextoddsemiprime(osp[-1])]",
+        "print(list(islice(agen(), 53))) # _Michael S. Branicky_, May 21 2023"
+    ],
+    "xref": [
+        "Cf. A000040, A046315.",
+        "Cf. A363074, A363187."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Elmo R. Oliveira_, May 20 2023",
+    "references": 5,
+    "revision": 18,
+    "time": "2023-07-05T12:18:56-04:00",
+    "created": "2023-07-05T12:18:56-04:00"
+}

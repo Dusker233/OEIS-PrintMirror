@@ -1,0 +1,54 @@
+{
+    "number": 135543,
+    "data": "1,2,9,122,1357323",
+    "name": "Record number of steps under iterations of \"map n to n - (largest prime <= n)\" (A064722) until reaching the limiting value 0 or 1. Also, places where A121561 reaches a new record.",
+    "comment": [
+        "a(5) must be very large (> 100000000). Can anyone extend the sequence?",
+        "Conjecture: there exist positive values of n for which a(n) != A175079(n) - 1. - _Jaroslav Krizek_, Feb 05 2010",
+        "From Thomas R. Nicely's data (see link) it seems that the smallest known prime with following prime gap of length a(4)+1 or more is 90823#/510510 - 1065962 (39279 digits), so a(5) = A104138(a(4)) + a(4) <= 90823#/510510 - 1065962 + 1357323 = A002110(8787)/510510 + 291361. (The bounding primes of this prime gap are only known to be probable primes, but if either of them were not prime, the gap would only be larger and the bound on a(5) would still hold.) - _Pontus von Br\u00f6mssen_, Jul 31 2022"
+    ],
+    "link": [
+        "Thomas R. Nicely, <a href=\"https://faculty.lynchburg.edu/~nicely/gaps/g1m.html\">First known occurrence prime gaps (1000000 to 999999998)</a>."
+    ],
+    "formula": [
+        "Iterate n - (largest prime <= n) until reaching 0 or 1. Count the iterations required to reach 0 or 1 and determine if it is a new record.",
+        "From _Pontus von Br\u00f6mssen_, Jul 31 2022: (Start)",
+        "a(n) = A104138(a(n-1)) + a(n-1) for n >= 2.",
+        "A121561(a(n)) = n.",
+        "a(n) = A175079(n) - 1 for n >= 1, i.e., the conjecture in the Comments is false. This follows from the result that A175078(n) = A121561(n-1) for n >= 2.",
+        "(End)"
+    ],
+    "example": [
+        "a(4) = 1357323 because after iterating n - (largest prime <= n) we get:",
+        "  1357323 - 1357201 = 122 =>",
+        "  122 - 113 = 9 =>",
+        "  9 - 7 = 2 =>",
+        "  2 - 2 = 0,",
+        "which takes 4 steps."
+    ],
+    "mathematica": [
+        "LrgstPrm[n_] := Block[{k = n}, While[ !PrimeQ@ k, k-- ]; k]; f[n_] := Block[{c = 0, d = n}, While[d > 1, d = d - LrgstPrm@d; c++ ]; c]; lst = {}; record = -1; Do[ a = f@n; If[a > record, record = a; AppendTo[lst, a]; Print@ n], {n, 100}] (* _Robert G. Wilson v_ *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import prevprime",
+        "from functools import lru_cache",
+        "from itertools import count, islice",
+        "@lru_cache(maxsize=None)",
+        "def f(n): return 0 if n == 0 or n == 1 else 1 + f(n - prevprime(n+1))",
+        "def agen(record=-1):",
+        "    for k in count(1):",
+        "        if f(k) > record: record = f(k); yield k",
+        "print(list(islice(agen(), 4))) # _Michael S. Branicky_, Jul 26 2022"
+    ],
+    "xref": [
+        "Cf. A002110, A064722, A104138, A121559, A121560, A121561, A175078, A175079."
+    ],
+    "keyword": "hard,more,nonn",
+    "offset": "0,2",
+    "author": "_Sergio Pimentel_, Feb 22 2008",
+    "references": 1,
+    "revision": 21,
+    "time": "2022-08-04T05:52:33-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

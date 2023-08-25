@@ -1,0 +1,35 @@
+{
+    "number": 353249,
+    "data": "89,149,367,383,503,601,1709,2221,2357,4001,4937,5171,6599,6883,7019,7237,7243,7583,9091,10177,11261,11807,14747,15923,16693,17431,24413,24767,25673,26539,27059,30169,32587,34739,43517,48731,51031,51347,53201,53323,53699,54133,59617",
+    "name": "Primes that are the sum of the cubes of four primes, not necessarily distinct.",
+    "link": [
+        "Zhichun Zhai, <a href=\"https://arxiv.org/abs/2201.07346\">Problems related to Waring-Goldbach problem involving cubes of primes</a>, arXiv:2201.07346 [math.GM], 2022. See Table 1 p. 3 but some terms are missing."
+    ],
+    "example": [
+        "89 is a term because 2^3 + 3^3 + 3^3 + 3^3 = 89.",
+        "15923 is a term because 2^3 + 13^3 + 19^3 + 19^3 = 15923."
+    ],
+    "maple": [
+        "q:= proc(n, t) option remember; `if`(n=0, is(t=0), t>0 and",
+        "      ormap(p-> isprime(p) and q(n-p^3, t-1), [$2..iroot(n, 3)]))",
+        "    end:",
+        "select(x-> isprime(x) and q(x, 4), [$1..60000])[];  # _Alois P. Heinz_, Apr 08 2022"
+    ],
+    "mathematica": [
+        "seq[max_] := Module[{s = Select[Range[Floor@Surd[max, 3]], PrimeQ]}, Select[Union[Plus @@@ (Tuples[s, 4]^3)], # <= max && PrimeQ[#] &]]; seq[60000] (* _Amiram Eldar_, Apr 08 2022 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = {if (isprime(p) && (p > 24), my(P=primes(primepi(sqrtn(p-24, 3)+1))); for (i=1, #P, for (j=i, #P, for (k=j, #P, for (n=k, #P, if (P[i]^3 + P[j]^3 + P[k]^3 + P[n]^3 == p, return (1)););););););}"
+    ],
+    "xref": [
+        "Primes in A346917.",
+        "Cf. A123597."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Apr 08 2022",
+    "references": 1,
+    "revision": 9,
+    "time": "2022-04-08T13:57:21-04:00",
+    "created": "2022-04-08T13:57:21-04:00"
+}

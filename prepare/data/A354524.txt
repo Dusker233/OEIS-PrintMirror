@@ -1,0 +1,45 @@
+{
+    "number": 354524,
+    "data": "11,13,17,31,37,97,131,163,271,277,331,811,1511,2437,2731,3511,7297,9127,9511,18191,21871,27127,65617,72931,196831,196837,278191,332767,729511,812047,1262143,1524287,1968331,2187511,5314411,5314417,5904931,6561127,7298191,15943237,47829697,53144131",
+    "name": "Primes p such that p+1 is the concatenation of a power of 3 and a power of 2.",
+    "link": [
+        "Robert Israel, <a href=\"/A354524/b354524.txt\">Table of n, a(n) for n = 1..5803</a>"
+    ],
+    "example": [
+        "a(5) = 97 is a term because it is prime and 97 + 1 = 98 is the concatenation of 3^2 = 9 and 2^3 = 8."
+    ],
+    "maple": [
+        "M:= 10: # for terms with <= M digits",
+        "R:= NULL:",
+        "for i from 0 while 3^i < 10^(M-1) do",
+        "  d:= 1+ilog10(3^i);",
+        "  for j from 1 while 2^j < 10^(M-d) do",
+        "    x:= dcat(3^i,2^j)-1;",
+        "    if isprime(x) then R:= R,x fi",
+        "od od:",
+        "sort([R]);"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, takewhile",
+        "def auptod(digits):",
+        "    M = 10**digits",
+        "    pows2 = list(takewhile(lambda x: x < M , (2**a for a in count(0))))",
+        "    pows3 = list(takewhile(lambda x: x < M , (3**b for b in count(0))))",
+        "    strs2, strs3 = list(map(str, pows2)), list(map(str, pows3))",
+        "    concat = (int(s3+s2) for s3 in strs3 for s2 in strs2)",
+        "    return sorted(set(t-1 for t in concat if t < M and isprime(t-1)))",
+        "print(auptod(10)) # _Michael S. Branicky_, Aug 16 2022"
+    ],
+    "xref": [
+        "Cf. A068801. Contains A068715."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Aug 16 2022",
+    "references": 1,
+    "revision": 15,
+    "time": "2022-08-18T11:45:16-04:00",
+    "created": "2022-08-17T22:25:29-04:00"
+}

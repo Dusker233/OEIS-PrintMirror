@@ -1,0 +1,43 @@
+{
+    "number": 339642,
+    "data": "0,2,10,44,196,876,4020,18766,89322,431758,2116220,10494080,52569504,265647586,1352621168,6933127446,35745747902,185256755454,964575991660,5043194697556,26467075595080,139375175511598,736228488297566,3900073083063348,20714052518640904",
+    "name": "Number of rooted trees with n nodes colored using exactly 2 colors.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A339642/b339642.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "a(n) = A038055(n) - 2*A000081(n).",
+        "a(n) = 2*(A000151(n) - A000081(n))."
+    ],
+    "example": [
+        "a(3) = 10 includes 5 trees and their color complements:",
+        "   (1(12)), (1(22)), (1(1(2))), (1(2(1))), (1(2(2)))."
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; `if`(n<2, k*n, (add(add(b(d, k)*",
+        "      d, d=numtheory[divisors](j))*b(n-j, k), j=1..n-1))/(n-1))",
+        "    end:",
+        "a:= n-> b(n, 2)-2*b(n, 1):",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Dec 11 2020"
+    ],
+    "mathematica": [
+        "b[n_, k_] := b[n, k] = If[n < 2, k*n, (Sum[Sum[b[d, k]*d, {d, Divisors[j]}]*b[n - j, k], {j, 1, n - 1}])/(n - 1)];",
+        "a[n_] := b[n, 2] - 2*b[n, 1];",
+        "Array[a, 25] (* _Jean-Fran\u00e7ois Alcover_, Jan 04 2021, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) \\\\ See A141610 for U(N,m)",
+        "seq(n)={U(n,2) - 2*U(n,1)}"
+    ],
+    "xref": [
+        "Column 2 of A141610.",
+        "Cf. A000081, A000151, A038055, A339643."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Andrew Howroyd_, Dec 11 2020",
+    "references": 3,
+    "revision": 16,
+    "time": "2021-01-04T08:43:44-05:00",
+    "created": "2020-12-11T20:46:23-05:00"
+}

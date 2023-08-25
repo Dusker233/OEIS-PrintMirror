@@ -1,0 +1,39 @@
+{
+    "number": 317328,
+    "data": "0,1,2,10,41,238,1560,11822,99884,944951,9851550,112297557,1389182296,18548151140,265854443194,4071965025912,66379311227650,1147606112273168,20974771814051529,404111977603746584,8186206878478673819,173948483818885099616,3868878742247603336434,89892706223315981903289",
+    "name": "Total number of distinct run lengths summed over all permutations of [n] with exactly k distinct lengths of increasing runs.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A317328/b317328.txt\">Table of n, a(n) for n = 0..60</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..floor((sqrt(1+8*n)-1)/2)} k * A317327(n,k)."
+    ],
+    "maple": [
+        "b:= proc(u, o, t, s) option remember;",
+        "      `if`(u+o=0, x^(nops(s union {t})-1),",
+        "       add(b(u-j, o+j-1, 1, s union {t}), j=1..u)+",
+        "       add(b(u+j-1, o-j, t+1, s), j=1..o))",
+        "    end:",
+        "a:= n-> (p-> add(coeff(p, x, i)*i, i=0..degree(p)))(b(n, 0$2, {})):",
+        "seq(a(n), n=0..16);"
+    ],
+    "mathematica": [
+        "b[u_, o_, t_, s_] := b[u, o, t, s] =",
+        "     If[u + o == 0, x^(Length[s ~Union~ {t}] - 1),",
+        "     Sum[b[u - j, o + j - 1, 1, s ~Union~ {t}], {j, 1, u}] +",
+        "     Sum[b[u + j - 1, o - j, t + 1, s], {j, 1, o}]];",
+        "a[n_] := Function[p, Sum[Coefficient[p, x, i]*i, {i, 0, Exponent[p, x]}]][",
+        "     b[n, 0, 0, {}]];",
+        "Table[a[n], {n, 0, 16}] (* _Jean-Fran\u00e7ois Alcover_, Apr 15 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A317327."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 25 2018",
+    "references": 2,
+    "revision": 13,
+    "time": "2022-04-15T11:15:41-04:00",
+    "created": "2018-07-26T17:04:22-04:00"
+}

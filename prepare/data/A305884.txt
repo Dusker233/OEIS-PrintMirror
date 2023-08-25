@@ -1,0 +1,51 @@
+{
+    "number": 305884,
+    "data": "1,1,1,4,16,25,25,324,841,1849,2601,14884,18769,103041,292681,774400,3400336,13307904,34892649,179399236,582643044,2008473856,4369606609,22833627664,67113119844,251608579236,1240247504896,3174109249609",
+    "name": "Lexicographically first sequence of positive squares, no two or more of which sum to a square.",
+    "comment": [
+        "Conjecture: the only values that appear more than once are 1 and 25.",
+        "If it were required that the terms be distinct, A306043 would result."
+    ],
+    "example": [
+        "All terms are positive, so a(1) = 1; likewise, a(2) = a(3) = 1.",
+        "a(4) cannot be 1, because the first 4 terms would then sum to 4 = 2^2; however, no two or more terms of {1, 1, 1, 4} sum to a square, so a(4) = 4.",
+        "a(5) cannot also be 4, because 4 + 4 + 1 = 9 = 3^2, nor can it be 9, since 9 + 4 + 1 + 1 + 1 = 16 = 4^2, but a(5) = 16 satisfies the definition."
+    ],
+    "mathematica": [
+        "a = {1}; Do[n = Last@a; s = Select[Union[Total /@ Subsets[a^2]], # >= n &];",
+        "While[AnyTrue[s, IntegerQ@ Sqrt[n^2 + #] &], n++]; AppendTo[a, n], {14}]; a^2 (* _Giovanni Resta_, Jun 14 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import integer_nthroot",
+        "from sympy.utilities.iterables import multiset_combinations",
+        "A305884_list, n, m = [], 1, 1",
+        "while len(A305884_list) < 30:",
+        "    for l in range(1,len(A305884_list)+1):",
+        "        for d in multiset_combinations(A305884_list,l):",
+        "            if integer_nthroot(sum(d)+m,2)[1]:",
+        "                break",
+        "        else:",
+        "            continue",
+        "        break",
+        "    else:",
+        "        A305884_list.append(m)",
+        "        continue",
+        "    n += 1",
+        "    m += 2*n-1 # _Chai Wah Wu_, Jun 19 2018"
+    ],
+    "xref": [
+        "Cf. A000290, A064776, A306043."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,4",
+    "author": "_Jon E. Schoenfield_, Jun 13 2018",
+    "ext": [
+        "a(25)-a(26) from _Giovanni Resta_, Jun 14 2018",
+        "a(27)-a(28) from _Jon E. Schoenfield_, Jul 21 2018"
+    ],
+    "references": 1,
+    "revision": 21,
+    "time": "2018-07-22T06:54:58-04:00",
+    "created": "2018-06-14T03:17:47-04:00"
+}

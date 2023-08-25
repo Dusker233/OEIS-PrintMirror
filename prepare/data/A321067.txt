@@ -1,0 +1,28 @@
+{
+    "number": 321067,
+    "data": "3,8,20,33,48,65,88,119,140,204,207,252,297,336,396,429,540,555,616,696,731,832,893,1036,1113,1140,1248,1311,1428,1525,1692,1748,1809,1960,2059,2184,2325,2508,2576,2739,2832",
+    "name": "Considering Pythagorean triple (a,b,c) with a < b < c, least a such that there exists a primitive triple where c - b is the n-th term of A096033.",
+    "link": [
+        "Jean-Fran\u00e7ois Alcover, <a href=\"/A321067/b321067.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(2) = 8 because in the primitive triple (8,15,17), c - b = A096033(2) = 2 and no smaller a yields a primitive triple where a < b < c and c - b = 2."
+    ],
+    "mathematica": [
+        "nmax = 100; kmax = 2;",
+        "A096033 = Union[2 Range[nmax]^2, (2 Range[0, Ceiling[nmax/Sqrt[2]]]+1)^2];",
+        "r[n_, k_] := Module[{a, b, c}, {a, b, c} /. {ToRules[Reduce[0 < a < b < c && c - b == A096033[[n]] && a^2 + b^2 == c^2, {a, b, c}, Integers] /. C[1] -> k]}];",
+        "a[n_] := a[n] = SelectFirst[Flatten[Table[r[n, k], {k, 1, kmax}], 1], GCD @@ # == 1 &] // First;",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 1, 100}] (* _Jean-Fran\u00e7ois Alcover_, Jan 01 2019 *)"
+    ],
+    "xref": [
+        "Cf. A096033, A094904."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jeffrey Burch_, Oct 26 2018",
+    "references": 1,
+    "revision": 19,
+    "time": "2019-01-03T09:28:07-05:00",
+    "created": "2018-12-27T02:40:42-05:00"
+}

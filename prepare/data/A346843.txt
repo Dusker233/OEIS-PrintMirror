@@ -1,0 +1,36 @@
+{
+    "number": 346843,
+    "data": "1,15,155,1400,11991,101031,853315,7300260,63641006,567304452,5181338526,48538121450,466611951261,4603782469653,46613101232933,484188586821376,5157850655391981,56321812548867229,630125374420189131,7219368394888423554,84658119388335562972",
+    "name": "E.g.f.: exp(exp(x) - 1) * (exp(x) - 1)^4 / 4!.",
+    "formula": [
+        "a(n) = Sum_{k=0..n} Stirling2(n,k) * binomial(k,4).",
+        "a(n) = Sum_{k=0..n} binomial(n,k) * Stirling2(k,4) * Bell(n-k).",
+        "a(n) = (Bell(n) - 24*Bell(n+1) + 29*Bell(n+2) - 10*Bell(n+3) + Bell(n+4))/24. - _Vaclav Kotesovec_, Aug 06 2021"
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember;",
+        "     `if`(n=0, binomial(m, 4), m*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=4..24);  # _Alois P. Heinz_, Aug 05 2021"
+    ],
+    "mathematica": [
+        "nmax = 24; CoefficientList[Series[Exp[Exp[x] - 1] (Exp[x] - 1)^4/4!, {x, 0, nmax}], x] Range[0, nmax]! // Drop[#, 4] &",
+        "Table[Sum[StirlingS2[n, k] Binomial[k, 4], {k, 0, n}], {n, 4, 24}]",
+        "Table[Sum[Binomial[n, k] StirlingS2[k, 4] BellB[n - k], {k, 0, n}], {n, 4, 24}]",
+        "Table[(BellB[n] - 24*BellB[n+1] + 29*BellB[n+2] - 10*BellB[n+3] + BellB[n+4])/24, {n, 4, 24}] (* _Vaclav Kotesovec_, Aug 06 2021 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^25)); Vec(serlaplace(exp(exp(x)-1)*(exp(x)-1)^4/4!)) \\\\ _Michel Marcus_, Aug 06 2021"
+    ],
+    "xref": [
+        "Cf. A000110, A000332, A000453, A003128, A005493, A049020, A346842, A346844."
+    ],
+    "keyword": "nonn",
+    "offset": "4,2",
+    "author": "_Ilya Gutkovskiy_, Aug 05 2021",
+    "references": 2,
+    "revision": 12,
+    "time": "2021-08-06T04:35:07-04:00",
+    "created": "2021-08-06T04:35:07-04:00"
+}

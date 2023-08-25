@@ -1,0 +1,77 @@
+{
+    "number": 194,
+    "data": "0,1,1,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,10,10,10,10,10,10,10,10",
+    "name": "n appears 2n times, for n >= 1; also nearest integer to square root of n.",
+    "comment": [
+        "Define the oblong root obrt(x) to be the (larger) solution of y * (y+1) = x; i.e., obrt(x) = sqrt(x+1/4) - 1/2. So obrt(x) is an integer iff x is an oblong number (A002378). Then a(n) = ceiling(obrt(n)). - _Franklin T. Adams-Watters_, Jun 24 2015",
+        "From _Wolfdieter Lang_, Mar 12 2019: (Start)",
+        "The general Pell equation is related to the non-reduced form F(n) = Xvec^T A(n) Xvec = x^2 - D(n)*y^2 with D(n) = A000037(n) (D not a square), Xvec = (x,y)^T (T for transposed) and A(n) = matrix[[1,0], [0,-D(n)]]. The discriminant of F(n) = [1, 0, -D(n)] is 4*D(n).",
+        "The first reduced form appears after two applications of an equivalence transformation A' = R^T A R obtained with R = R(t) = matrix([0, -1], [1, t]), namely first with t = 0, leading to the still not reduced form [-D, 0, 1], and then with t = ceiling(f(4*D(n))/2 - 1), where f(4*D(n)) = ceiling(2*sqrt(D(n))). This can be shown to be a(n), which is also D(n) - n, for n >= 1 (see a formula below).",
+        "This leads to the reduced form FR(n) = [1, 2*a(n), -(D(n) - a(n)^2)] = [1, 2*a(n), -(n - a(n)*(a(n) - 1))]. Example: n = 5, a(5) = 2: D(5) = 7 and FR(5) = [1, 4, -3].  (End)"
+    ],
+    "reference": [
+        "B. C. Berndt, Ramanujan's Notebooks Part IV, Springer-Verlag, see p. 78, Entry 24."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A000194/b000194.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Jonathan M. Borwein and others, <a href=\"https://www.jstor.org/stable/2975334\">Nearest Integer Zeta Functions, solution to Problem 10212</a>, The American Mathematical Monthly, Vol. 101, No. 6 (1994), pp. 579-580.",
+        "G. Gutin, <a href=\"http://dx.doi.org/10.1016/j.disc.2007.07.021\">Problem 913 (BCC20.5)</a>, Mediated digraphs, in Research Problems from the 20th British Combinatorial Conference, Discrete Math., 308 (2008), 621-630.",
+        "M. A. Nyblom, <a href=\"http://www.jstor.org/stable/2695446\">Some curious sequences involving floor and ceiling functions</a>, Am. Math. Monthly 109 (#6, 2002), 559-564.",
+        "Michael Somos, <a href=\"/A073189/a073189.txt\">Sequences used for indexing triangular or square arrays</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RamanujanThetaFunctions.html\">Ramanujan Theta Functions</a>."
+    ],
+    "formula": [
+        "a(n) = A000037(n) - n.",
+        "G.f.: x * f(x^2, x^6)/(1-x) where f(,) is Ramanujan's two-variable theta function. - _Michael Somos_, May 31 2000",
+        "a(n) = a(n - 2*a(n - a(n-1))) + 1. - _Benoit Cloitre_, Oct 27 2002",
+        "a(n+1) = a(n) + A005369(n).",
+        "a(n) = floor((1/2)*(1 + sqrt(4*n - 3))). - _Zak Seidov_, Jan 18 2006",
+        "a(n) = A000037(n) - n. - _Jaroslav Krizek_, Jun 14 2009",
+        "a(n) = floor(A027434(n)/2). - _Gregory R. Bryant_, Apr 17 2013",
+        "From _Mikael Aaltonen_, Jan 17 2015: (Start)",
+        "a(n) = floor(sqrt(n) + 1/2).",
+        "a(n) = sqrt(A053187(n)). (End)",
+        "a(0) = 0, and a(n) = k for k from the closed interval [k^2 - k + 1, k*(k+1)] = [A002061(k), A002378(k)], for k >= 1. See A053187. - _Wolfdieter Lang_, Mar 12 2019",
+        "a(n) = floor(2*sqrt(n)) - floor(sqrt(n)). - _Ridouane Oudra_, Jun 08 2020",
+        "Sum_{n>=1} 1/a(n)^s = 2*zeta(s-1), for s > 2 (Borwein, 1994). - _Amiram Eldar_, Oct 31 2020"
+    ],
+    "example": [
+        "G.f. = x + x^2 + 2*x^3 + 2*x^4 + 2*x^5 + 2*x^6 + 3*x^7 + 3*x^8 + 3*x^9 + 3*x^10 + ..."
+    ],
+    "maple": [
+        "Digits := 100; f := n->round(evalf(sqrt(n))); [ seq(f(n), n=0..100) ];",
+        "# More efficient:",
+        "a := n -> isqrt(n): seq(a(n), n=0..98); # _Peter Luschny_, Mar 13 2019"
+    ],
+    "mathematica": [
+        "A000194[n_] := Floor[(1 + Sqrt[4 n - 3])/2]; (* _Enrique P\u00e9rez Herrero_, Apr 14 2010 *)",
+        "Flatten[Table[PadRight[{},2n,n],{n,10}]] (* _Harvey P. Dale_, Nov 16 2011 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = ceil( sqrtint(4*n) / 2)}; /* _Michael Somos_, Feb 11 2004 */",
+        "(PARI) a(n)=(sqrtint(4*n) + 1)\\2 \\\\ _Charles R Greathouse IV_, Jun 08 2020",
+        "(Haskell)",
+        "a000194 n = a000194_list !! (n-1)",
+        "a000194_list = concat $ zipWith ($) (map replicate [2,4..]) [1..]",
+        "-- _Reinhard Zumkeller_, Mar 18 2011",
+        "(Python)",
+        "from math import isqrt",
+        "def A000194(n): return (m:=isqrt(n))+int(n-m*(m+1)>=1) # _Chai Wah Wu_, Jul 30 2022"
+    ],
+    "xref": [
+        "Cf. A000037, A002024, A002061, A002378, A053187, A105209, A259351.",
+        "Partial sums of A005369."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Additional comments from _Michael Somos_, May 31 2000",
+        "Edited by _M. F. Hasler_, Mar 01 2014",
+        "Initial 0 added by _N. J. A. Sloane_, Nov 13 2017"
+    ],
+    "references": 64,
+    "revision": 118,
+    "time": "2022-10-19T20:10:36-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

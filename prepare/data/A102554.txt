@@ -1,0 +1,45 @@
+{
+    "number": 102554,
+    "data": "4,6,8,9,10,12,14,16,18,20,21,22,24,25,26,28,30,32,33,34,35,36,38,39,40,42,44,45,46,48,49,50,52,54,55,56,57,58,60,62,64,65,66,68,69,70,72,74,75,76,77,78,80,81,82,84,86,87,88,90,91,92,93,94,96,98,99,100,102,104",
+    "name": "Numbers k such that p <> (k AND p) for at least one prime-factor p.",
+    "comment": [
+        "Numbers k such that A102550(k) < A001221(k).",
+        "Numbers k such that the bitwise OR of k and all prime factors of k is not equal to k. - _Chai Wah Wu_, Dec 18 2022"
+    ],
+    "maple": [
+        "isA102554 := proc(n)",
+        "    local p;",
+        "    for p in numtheory[factorset](n) do",
+        "        if p <> ANDnos(p,n) then",
+        "            return true",
+        "        end if;",
+        "    end do:",
+        "    false ;",
+        "end proc:",
+        "for n from 1 to 500 do",
+        "    if isA102554(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 20 2023"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from functools import reduce",
+        "from operator import ior",
+        "from sympy import primefactors",
+        "def A102554_gen(startvalue=2): # generator of terms >= startvalue",
+        "    return filter(lambda n:n|reduce(ior,primefactors(n))!=n,count(max(startvalue,2)))",
+        "A102554_list = list(islice(A102554_gen(),20)) # _Chai Wah Wu_, Dec 18 2022"
+    ],
+    "xref": [
+        "Cf. A001221, A102550, A102553, A007088, A004676."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Jan 14 2005",
+    "references": 3,
+    "revision": 11,
+    "time": "2023-01-20T08:23:31-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

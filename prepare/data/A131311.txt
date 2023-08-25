@@ -1,0 +1,35 @@
+{
+    "number": 131311,
+    "data": "0,1,1,6,100,3285,177471,14188888,1569185136,229087571625,42657089362525,9865968972312816,2775121127493066144,933088633696985015341,369664023805893580624875,170462028446539785915840000,90535875809937268263059201536,54880459059177867635557856462097",
+    "name": "Number of labeled 2-arch graphs on n nodes.",
+    "link": [
+        "Saverio Caminiti and Emanuele G. Fusco, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL10/Caminiti/caminiti.html\">On the Number of Labeled k-arch Graphs</a>, Journal of Integer Sequences, Vol 10 (2007), Article 07.7.5."
+    ],
+    "formula": [
+        "The number of labeled 2-arch graphs with n>3 nodes is given by f(n,2,n-2-1,0,2) where f is the recursive function described by the PARI/GP code attached below."
+    ],
+    "program": [
+        "(PARI) f(n,k,i,u,j)={ local(s=0); if (i==1, binomial(n-u,j)*binomial(u,k-j), for (c=0, min(k,n-(i-1)-(u+j)), s+=f(n,k,i-1,u+j,c) ); binomial(n-u,j)*binomial(u,k-j)*s ) }",
+        "(PARI) \\\\ faster version with memoization.",
+        "a(n,k=2)={ my(Cache=Map());",
+        "  my(f(n, k, i, u, j)=my(hk=Vecsmall([n, k, i, u, j]), z);",
+        "    if(!mapisdefined(Cache, hk, &z),",
+        "       z = binomial(n-u, j)*binomial(u, k-j)*if(i==1, 1, sum(c=0, min(k, n-(i-1)-(u+j)), self()(n, k, i-1, u+j, c) ));",
+        "       mapput(Cache, hk, z)); z);",
+        "  if(n>k+1, f(n,k,n-k-1,0,k), n>=k)",
+        "} \\\\ _Andrew Howroyd_, Nov 07 2019"
+    ],
+    "xref": [
+        "Cf. A098721-A098724, A131312-A131315."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "Saverio Caminiti and Emanuele G. Fusco (fusco(AT)di.uniroma1.it), Sep 18 2007",
+    "ext": [
+        "Terms a(11) and beyond from _Andrew Howroyd_, Nov 07 2019"
+    ],
+    "references": 4,
+    "revision": 13,
+    "time": "2021-08-22T13:28:34-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 327976,
+    "data": "5,23,73,359,1233,6143,19225,93495,325729,1518895,4833289,23453735,81443089,398815039,1271974489,6168932215,21231239841,99197620591,314863189193,1541326542823,5312985402193,26258203294847,82884499362201,400683454289591,1406328980294113,6532877164215983,20744329255918985,100303645024039591",
+    "name": "Bitwise XOR of trajectories (centrally aligned) of rule 30, and its mirror image, rule 86, when both are started from a lone 1-bit, with the latter delayed by one step: a(n) = A110240(n) XOR 2*A265281(n-1).",
+    "link": [
+        "Antti Karttunen, <a href=\"/A327976/b327976.txt\">Table of n, a(n) for n = 1..1024</a>",
+        "Antti Karttunen, <a href=\"/A327976/a327976.png\">Terms a(1)-a(256) drawn as binary strings, with 1 bit = 3x3 pixels resolution</a>",
+        "Antti Karttunen, <a href=\"/A327976/a327976_1.png\">Terms a(1)-a(1024) drawn as binary strings, with 1 bit = 1 pixel resolution</a>",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>"
+    ],
+    "formula": [
+        "a(n) = A110240(n) XOR 2*A265281(n-1) = A110240(n) XOR 2*A030101(A110240(n-1))."
+    ],
+    "program": [
+        "(PARI)",
+        "A269160(n) = bitxor(n, bitor(2*n, 4*n)); \\\\ From A269160.",
+        "A110240(n) = if(!n,1,A269160(A110240(n-1)));",
+        "A327973(n) = bitxor(A110240(n), 2*A110240(n-1));",
+        "A269161(n) = bitxor(4*n, bitor(2*n, n));",
+        "A265281(n) = if(!n,1,A269161(A265281(n-1)));",
+        "A327976(n) = bitxor(A110240(n), 2*A265281(n-1));",
+        "\\\\ Use this one for writing b-files:",
+        "A030101(n) = if(n<1,0,subst(Polrev(binary(n)),x,2));",
+        "A327976write(up_to) = { my(s=1, t, n=0); for(n=1,up_to, t = A269160(s); write(\"b327976.txt\", n, \" \", bitxor(2*A030101(s), t)); s = t); };",
+        "(Python)",
+        "def A269160(n): return(n^((n<<1)|(n<<2)))",
+        "def A269161(n): return((n<<2)^((n<<1)|n))",
+        "def genA327976():",
+        "    '''Yield successive terms of A327976.'''",
+        "    s1 = 1",
+        "    s2 = 1",
+        "    while True:",
+        "       s1 = A269160(s1)",
+        "       yield (s1^(s2<<1))",
+        "       s2 = A269161(s2)"
+    ],
+    "xref": [
+        "Cf. A110240, A265281, A269160, A269161, A030101, A327974 (gives the middle bit), A328108 (binary weight).",
+        "Cf. also A327971, A327972, A327973, A328103, A328104 for other such combinations."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Oct 04 2019",
+    "references": 8,
+    "revision": 17,
+    "time": "2019-10-05T18:21:01-04:00",
+    "created": "2019-10-05T18:21:01-04:00"
+}

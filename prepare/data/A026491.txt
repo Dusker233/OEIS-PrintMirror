@@ -1,0 +1,57 @@
+{
+    "number": 26491,
+    "data": "1,4,5,8,10,12,13,16,17,20,21,24,26,28,29,32,34,36,37,40,42,44,45,48,49,52,53,56,58,60,61,64,65,68,69,72,74,76,77,80,81,84,85,88,90,92,93,96,98,100,101,104,106,108,109,112,113,116,117",
+    "name": "a(n) = least k > a(n-1) such that A001285(k-1) = A001285(n-1) for n >= 1.",
+    "link": [
+        "Robert Israel, <a href=\"/A026491/b026491.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n+1)-a(n) = A171900(n+2) for n>=1. - _Michel Dekking_, Apr 11 2019"
+    ],
+    "maple": [
+        "N:= 200: # for terms <= N",
+        "S:= StringTools:-ThueMorse(N):",
+        "R:= 1: r:= 1:",
+        "for n from 1 do",
+        "  j:= SearchText(S[n],S,r+1..-1);",
+        "  if j = 0 then break fi;",
+        "  R:= R, r+j;",
+        "  r:= r+j;",
+        "  if r >= N then break fi;",
+        "od:",
+        "R; # _Robert Israel_, Apr 11 2019",
+        "# alternative",
+        "A026491 := proc(n)",
+        "    option remember ;",
+        "    local f,k ;",
+        "    if n = 0 then",
+        "        1;",
+        "    else",
+        "        f := A001285(n-1) ;",
+        "        for k from procname(n-1)+1 do",
+        "            if A001285(k-1) = f then",
+        "                return k;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "seq(A026491(n),n=0..40) ; # _R. J. Mathar_, Jun 24 2021"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n==0, 1, For[k = a[n-1]+1, True, k++, If[ThueMorse[k-1]==ThueMorse[n-1], Return[k]]]];",
+        "Table[a[n], {n, 0, 60}] (* _Jean-Fran\u00e7ois Alcover_, Sep 16 2022 *)"
+    ],
+    "xref": [
+        "Cf. A001285, A171900."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Clarified NAME with respect to A001285 offsets. - _R. J. Mathar_, Jun 24 2021"
+    ],
+    "references": 3,
+    "revision": 22,
+    "time": "2022-09-16T07:34:26-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 300491,
+    "data": "0,1,2,4,9,28,140,936,6902,54160,467784,4578000,50434032,609309504,7921524624,110242136928,1643101763760,26192405980416,444523225673472,7989603260143104,151483589818925184,3022296286833907200,63326051483436129024,1390571693776506751488",
+    "name": "Expansion of e.g.f. log(1 - log(1 - x)/(1 - x)).",
+    "comment": [
+        "Logarithmic transform of A000254."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A300491/b300491.txt\">Table of n, a(n) for n = 0..450</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "example": [
+        "log(1 - log(1 - x)/(1 - x)) = x/1! + 2*x^2/2! + 4*x^3/3! + 9*x^4/4! + 28*x^5/5! + 140*x^6/6! + 936*x^7/7! + ..."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n<2, n, n*b(n-1)+(n-1)!) end:",
+        "a:= proc(n) option remember; `if`(n=0, 0, b(n)-add(",
+        "      a(j)*j*binomial(n, j)*b(n-j), j=1..n-1)/n)",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Mar 07 2018"
+    ],
+    "mathematica": [
+        "nmax = 23; CoefficientList[Series[Log[1 - Log[1 - x]/(1 - x)], {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[n_] := a[n] = n! HarmonicNumber[n] - Sum[k Binomial[n, k] (n - k)! HarmonicNumber[n - k] a[k], {k, 1, n - 1}]/n; a[0] = 0; Table[a[n], {n, 0, 23}]"
+    ],
+    "xref": [
+        "Cf. A000254, A008405, A087761."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Mar 07 2018",
+    "references": 2,
+    "revision": 16,
+    "time": "2018-03-15T18:09:09-04:00",
+    "created": "2018-03-07T20:33:32-05:00"
+}

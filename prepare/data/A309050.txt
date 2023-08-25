@@ -1,0 +1,46 @@
+{
+    "number": 309050,
+    "data": "1,1,2,4,7,13,27,54,109,219,460,962,1986,4044,8516,18058,37801,77701,164300,350336,738945,1530521,3250659,6962248,14735660,30625898,65206770,140040538,297712980,622136512,1328716192,2861101350,6086238317,12716525621,27172910036",
+    "name": "Number of (binary) max-heaps on 2n elements from the set {0,1} containing n 0's and n 1's.",
+    "comment": [
+        "Also the number of (binary) min-heaps on 2n elements from the set {0,1} containing n 0's and n 1's."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A309050/b309050.txt\">Table of n, a(n) for n = 0..3000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Heap.html\">Heap</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Binary_heap\">Binary heap</a>"
+    ],
+    "formula": [
+        "a(n) = A309049(2n,n)."
+    ],
+    "example": [
+        "a(0) = 1: ().",
+        "a(1) = 1: 10.",
+        "a(2) = 2: 1010, 1100.",
+        "a(3) = 4: 101001, 110010, 110100, 111000.",
+        "a(4) = 7: 10100110, 11010001, 11011000, 11100010, 11100100, 11101000, 11110000.",
+        "a(5) = 13: 1101000110, 1101100001, 1101100010, 1101100100, 1110011000, 1110100001, 1110101000, 1110110000, 1111000010, 1111000100, 1111001000, 1111010000, 1111100000."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1, (g-> (f-> expand(",
+        "      x^n+b(f)*b(n-1-f)))(min(g-1, n-g/2)))(2^ilog2(n)))",
+        "    end:",
+        "a:= n-> coeff(b(2*n), x, n):",
+        "seq(a(n), n=0..40);"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n == 0, 1, Function[g, Function[f, Expand[x^n + b[f]*b[n - 1 - f]]][Min[g - 1, n - g/2]]][2^(Length@IntegerDigits[n, 2] - 1)]];",
+        "a[n_] := Coefficient[b[2n], x, n];",
+        "a /@ Range[0, 40] (* _Jean-Fran\u00e7ois Alcover_, Apr 19 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A056971, A309049."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 09 2019",
+    "references": 2,
+    "revision": 16,
+    "time": "2021-04-19T07:26:08-04:00",
+    "created": "2019-07-09T16:19:26-04:00"
+}

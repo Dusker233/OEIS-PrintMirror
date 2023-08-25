@@ -1,0 +1,37 @@
+{
+    "number": 324374,
+    "data": "1,1,2,3,9,19,49,173,542,1811,5061,23744,93973,385493,1394506,5342437,29798445,138233786,689926740,3068163126,14882203929,67731732263,412791651318,2341487404144,13639722130984",
+    "name": "Number of permutations p of [n] whose absolute displacements |p(i)-i| are triangular numbers.",
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation\">Permutation</a>"
+    ],
+    "example": [
+        "a(3) = 3: 123, 132, 213.",
+        "a(4) = 9: 1234, 1243, 1324, 2134, 2143, 2341, 4123, 4231, 4321.",
+        "a(5) = 19: 12345, 12354, 12435, 13245, 13254, 13452, 15234, 15342, 15432, 21345, 21354, 21435, 23415, 25314, 41235, 41352, 42315, 43215, 45312."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; issqr(8*n+1) end:",
+        "b:= proc(s) option remember; (n-> `if`(n=0, 1, add(`if`(",
+        "      g(abs(n-j)), b(s minus {j}), 0), j=s)))(nops(s))",
+        "    end:",
+        "a:= n-> b({$1..n}):",
+        "seq(a(n), n=0..16);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = IntegerQ@Sqrt[8n+1];",
+        "b[s_] := b[s] = With[{n = Length[s]}, If[n == 0, 1, Sum[If[g[Abs[n-j]], b[s ~Complement~ {j}], 0], {j, s}]]];",
+        "a[n_] := b[Range[n]];",
+        "a /@ Range[0, 16] (* _Jean-Fran\u00e7ois Alcover_, Mar 25 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000142, A000217, A324372, A324373, A324375, A324376."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Feb 25 2019",
+    "references": 4,
+    "revision": 10,
+    "time": "2021-03-25T09:41:00-04:00",
+    "created": "2019-02-25T17:15:08-05:00"
+}

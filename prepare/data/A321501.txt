@@ -1,0 +1,34 @@
+{
+    "number": 321501,
+    "data": "0,1,2,4,6,8,10,12,14,18,20,22,26,28,30,34,36,38,42,44,46,50,52,54,58,60,62,66,68,70,74,76,78,82,84,86,90,92,94,98,100,102,106,108,110,114,116,118,122,124,126,130,132,134,138,140,142,146,148,150,154,156,158,162,164,166,170,172,174,178",
+    "name": "Numbers not of the form (x - y)(x^2 - y^2) with x > y > 0; complement of A321499.",
+    "comment": [
+        "Equivalently, numbers not of the form (x - y)^2*(x + y) or d^2*(2m + d), for (x, y) = (m+d, m). This shows that excluded are all squares d^2 > 0 times any number of the same parity and larger than d. In particular, for d=1, all odd numbers > 1, and for d=2, 4*(even numbers > 4) = 8*(odd numbers > 2). For larger d, no further (neither odd nor even) numbers are excluded.",
+        "So apart from 0, 1 and 8, this consists of even numbers not multiple of 8. All these numbers occur, since for larger (odd or even) d, no additional term is excluded."
+    ],
+    "formula": [
+        "Asymptotic density is 3/8.",
+        "a(n) = round((n-2)*9/8)*2 for all n > 6."
+    ],
+    "example": [
+        "a(1) = 0, a(2) = 1 and a(3) = 2 obviously can't be of the form (x - y)(x^2 - y^2) with x > y > 0, which is necessarily greater than 1*3 = 3.",
+        "See A321499 for examples of the terms that are not in the sequence."
+    ],
+    "program": [
+        "(PARI) is(n)={!n||!fordiv(n,d, d^2*(d+2)>n && break; n%d^2&&next; bittest(n\\d^2-d,0)||return)} \\\\ Uses the initial definition. More efficient variant below:",
+        "(PARI) select( is_A321501(n)=!bittest(n,0)&&(n%8||n<9)||n<3, [0..99]) \\\\ Defines the function is_A321501(). The select() command is an illustration and a check.",
+        "(PARI) A321501_list(M)={setunion([1],setminus([0..M\\2]*2,[2..M\\8]*8))} \\\\ Return all terms up to M; more efficient than to use select(...,[0..M]) as above.",
+        "(PARI) A321501(n)=if(n>6,(n-2)*9\\/8*2,n>3,n*2-4,n-1)"
+    ],
+    "xref": [
+        "See A321499 for the complement: numbers of the form (x-y)(x^2-y^2).",
+        "See A321491 for numbers of the form (x+y)(x^2+y^2)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_M. F. Hasler_, Nov 22 2018",
+    "references": 2,
+    "revision": 6,
+    "time": "2018-11-23T21:12:29-05:00",
+    "created": "2018-11-23T21:12:29-05:00"
+}

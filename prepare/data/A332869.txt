@@ -1,0 +1,45 @@
+{
+    "number": 332869,
+    "data": "1,3,17,51,417,1251,7089,21267,206657,619971,3513169,10539507,86175969,258527907,1464991473,4394974419,44854599297,134563797891,762528188049,2287584564147,18704367906849,56113103720547,317974254416433,953922763249299,9269516926920129",
+    "name": "Number of fixed-point free involutions in a fixed Sylow 2-subgroup of the symmetric group of degree 4n.",
+    "comment": [
+        "Bisection of A332840."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A332869/b332869.txt\">Table of n, a(n) for n = 0..1502</a>"
+    ],
+    "formula": [
+        "a(n) = A332840(2*n).",
+        "a(n) = Product(A332758(k+2)) where k ranges over the positions of 1 bits in the binary expansion of n.",
+        "a(n) = big-Theta(C^n) for C = 4.63233857..., i.e., A*C^n < a(n) < B*C^n for constants A, B (but it's not the case that a(n) ~ C^n as lim inf a(n)/C^n and lim sup a(n)/C^n differ)."
+    ],
+    "example": [
+        "For n=1, the a(1)=3 fixed-point free involutions in a fixed Sylow 2-subgroup of S_4 (which subgroup is isomorphic to the dihedral group of degree 4) are (12)(34), (13)(24), and (14)(23)."
+    ],
+    "maple": [
+        "b:= proc(n) b(n):=`if`(n=0, 0, b(n-1)^2+2^(2^(n-1)-1)) end:",
+        "a:= n-> (l-> mul(`if`(l[i]=1, b(i+1), 1), i=1..nops(l)))(Bits[Split](n)):",
+        "seq(a(n), n=0..32);  # _Alois P. Heinz_, Feb 27 2020"
+    ],
+    "mathematica": [
+        "A332758[n_] := A332758[n] = If[n==0, 0, A332758[n-1]^2 + 2^(2^(n-1)-1)];",
+        "a[n_] := Product[A332758[k+1], {k, Flatten@ Position[ Reverse@ IntegerDigits[n, 2], 1]}];",
+        "a /@ Range[0, 24] (* _Jean-Fran\u00e7ois Alcover_, Apr 10 2020 *)"
+    ],
+    "program": [
+        "(PARI) a(n)={my(v=vector(logint(max(1,n), 2)+2)); v[1]=1; for(n=2, #v, v[n]=v[n-1]^2 + 2^(2^(n-1)-1)); prod(k=2, #v, if(bittest(n,k-2), v[k], 1))} \\\\ _Andrew Howroyd_, Feb 27 2020"
+    ],
+    "xref": [
+        "Cf. A332758, A332840."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Nick Krempel_, Feb 27 2020",
+    "ext": [
+        "Terms a(9) and beyond from _Andrew Howroyd_, Feb 27 2020"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2020-04-10T08:16:54-04:00",
+    "created": "2020-02-27T21:57:14-05:00"
+}

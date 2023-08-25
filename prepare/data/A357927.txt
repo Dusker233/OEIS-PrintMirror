@@ -1,0 +1,37 @@
+{
+    "number": 357927,
+    "data": "1,1,1,1,4,5,15,35,56,126,252,462,792,1716,3003,5005,8008,12376,18564,27132,38760,116280,170544,245157,346104,480700,657800,888030,1184040,1560780,2035800,2629575,3365856,4272048,18156204,23535820,30260340,38608020,48903492",
+    "name": "Number of subsets of [n] in which exactly half of the elements are Fibonacci numbers.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A357927/b357927.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n) = binomial(n,A072649(n)).",
+        "a(n) = Sum_{j>=0} binomial(A072649(n),j)*binomial(n-A072649(n),j)."
+    ],
+    "example": [
+        "a(6) = 15: {}, {1,4}, {1,6}, {2,4}, {2,6}, {3,4}, {3,6}, {4,5}, {5,6}, {1,2,4,6}, {1,3,4,6}, {1,4,5,6}, {2,3,4,6}, {2,4,5,6}, {3,4,5,6}."
+    ],
+    "maple": [
+        "f:= proc(n) option remember; `if`(n=0, 0, f(n-1)+",
+        "     `if`((t-> ormap(issqr, [t-4, t+4]))(5*n^2), 1, 0))",
+        "    end:",
+        "a:= n-> binomial(n, f(n)):",
+        "seq(a(n), n=0..38);"
+    ],
+    "mathematica": [
+        "f[n_] := Module[{j}, For[j = Floor@Log[GoldenRatio, n], Fibonacci[j+1] <= n, j++]; j-1];",
+        "a[n_] := If[n == 0, 1, Binomial[n, f[n]]];",
+        "Table[a[n], {n, 0, 38}] (* _Jean-Fran\u00e7ois Alcover_, Nov 17 2022 *)"
+    ],
+    "xref": [
+        "Cf. A000045, A037031, A072649, A102366, A180272, A357812."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Alois P. Heinz_, Oct 20 2022",
+    "references": 2,
+    "revision": 15,
+    "time": "2022-11-17T06:24:50-05:00",
+    "created": "2022-10-20T17:35:13-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 73596,
+    "data": "0,1,5,23,116,669,4429,33375,283072,2673321,27845293,317274407,3926774180,52469606981,752922837861,11549166072847,188596608142560,3266826328953745,59830416584102325,1155208913864163511,23453274942011893556,499481183766226468013",
+    "name": "Expansion of exp(x)*log(1-x)/(x-1).",
+    "comment": [
+        "a(n) is the total number of cycles obtained by permuting the elements in every subset of {1,2,...,n}. - _Geoffrey Critzer_, Sep 24 2013"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A073596/b073596.txt\">Table of n, a(n) for n = 0..450</a>"
+    ],
+    "formula": [
+        "Binomial transform of A000254.",
+        "a(n) ~ n! * exp(1) * (log(n) + gamma), where gamma is the Euler-Mascheroni constant A001620. - _Vaclav Kotesovec_, Jul 02 2015"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n<2, n, n*b(n-1)+(n-1)!) end:",
+        "a:= proc(n) add(b(k)*binomial(n, k), k=0..n) end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Mar 07 2018"
+    ],
+    "mathematica": [
+        "nn=19;Range[0,nn]!CoefficientList[Series[Exp[x]Log[1/(1-x)]/(1-x),{x,0,nn}],x] (* _Geoffrey Critzer_, Sep 24 2013 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^30); concat([0], Vec(serlaplace(exp(x)*log(1-x)/(x-1)))) \\\\ _G. C. Greubel_, Aug 28 2018",
+        "(Magma) m:=30; R<x>:=PowerSeriesRing(Rationals(), m); b:=Coefficients(R!(Exp(x)*Log(1-x)/(x-1))); [0] cat [Factorial(n)*b[n]: n in [1..m-1]]; // _G. C. Greubel_, Aug 28 2018"
+    ],
+    "xref": [
+        "Cf. A000254."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "_Vladeta Jovovic_, Aug 28 2002",
+    "references": 7,
+    "revision": 18,
+    "time": "2022-09-08T08:45:06-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

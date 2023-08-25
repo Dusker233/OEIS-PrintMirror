@@ -1,0 +1,55 @@
+{
+    "number": 356938,
+    "data": "1,1,3,7,18,41,101,228,538,1209",
+    "name": "Number of multisets of intervals whose multiset union is of size n and covers an initial interval of positive integers with weakly decreasing multiplicities.",
+    "comment": [
+        "An interval such as {3,4,5} is a set of positive integers with all differences of adjacent elements equal to 1."
+    ],
+    "link": [
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/e/2PACX-1vR-C_picqWlu0KOguRGWaPjhS2HY7m43aGXGDcolDh4Qtyy-pu2lkq5mbHAbiMSyQoiIESG2mCGtc2j/pub\">Counting and ranking classes of multiset partitions related to gapless multisets</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(4) = 18 multiset partitions:",
+        "  {{1}}  {{1,2}}    {{1,2,3}}      {{1,2,3,4}}",
+        "         {{1},{1}}  {{1},{1,2}}    {{1},{1,2,3}}",
+        "         {{1},{2}}  {{1},{2,3}}    {{1,2},{1,2}}",
+        "                    {{3},{1,2}}    {{1},{2,3,4}}",
+        "                    {{1},{1},{1}}  {{1,2},{3,4}}",
+        "                    {{1},{1},{2}}  {{4},{1,2,3}}",
+        "                    {{1},{2},{3}}  {{1},{1},{1,2}}",
+        "                                   {{1},{1},{2,3}}",
+        "                                   {{1},{2},{1,2}}",
+        "                                   {{1},{2},{3,4}}",
+        "                                   {{1},{3},{1,2}}",
+        "                                   {{1},{4},{2,3}}",
+        "                                   {{3},{4},{1,2}}",
+        "                                   {{1},{1},{1},{1}}",
+        "                                   {{1},{1},{1},{2}}",
+        "                                   {{1},{1},{2},{2}}",
+        "                                   {{1},{1},{2},{3}}",
+        "                                   {{1},{2},{3},{4}}"
+    ],
+    "mathematica": [
+        "strnorm[n_]:=Flatten[MapIndexed[Table[#2,{#1}]&,#]]&/@IntegerPartitions[n];",
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "chQ[y_]:=Or[Length[y]<=1,Union[Differences[y]]=={1}];",
+        "Table[Length[Select[Join@@mps/@strnorm[n],And@@chQ/@#&]],{n,0,5}]"
+    ],
+    "xref": [
+        "A000041 counts integer partitions, strict A000009.",
+        "A000670 counts patterns, ranked by A333217, necklace A019536.",
+        "A011782 counts multisets covering an initial interval.",
+        "Intervals are counted by A000012, A001227, ranked by A073485.",
+        "Other conditions: A035310, A063834, A330783, A356934.",
+        "Other types: A107742, A356936, A356937, A356939, A356943, A356954.",
+        "Cf. A055887, A072233, A270995, A304969, A349050, A349055."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Sep 09 2022",
+    "references": 7,
+    "revision": 5,
+    "time": "2022-09-10T21:05:38-04:00",
+    "created": "2022-09-10T21:05:38-04:00"
+}

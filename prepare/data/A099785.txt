@@ -1,0 +1,43 @@
+{
+    "number": 99785,
+    "data": "1,2,4,8,18,48,144,448,1380,4152,12224,35456,102024,292768,840416,2416384,6959504,20069280,57913536,167158656,482462752,1392319488,4017460224,11590946816,33439639616,96470796672,278311599616",
+    "name": "a(n) = Sum_{k=0..floor(n/4)} C(n-k,3*k) * 2^(n-3*k).",
+    "comment": [
+        "In general a(n) = Sum_{k=0..floor(n/4)} C(n-k,3*k) * u^k * v^(n-4*k) has g.f. (1-v*x)^2/((1-v*x)^3 - u*x^4) and satisfies the recurrence a(n) = 3*v*a(n-1) - 3*v^2*a(n-2) + v^3*a(n-3) + u*a(n-4)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A099785/b099785.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (6,-12,8,2)."
+    ],
+    "formula": [
+        "G.f.: (1-2*x)^2/((1-2*x)^3 - 2*x^4).",
+        "a(n) = 6*a(n-1) - 12*a(n-2) + 8*a(n-3) + 2*a(n-4)."
+    ],
+    "maple": [
+        "seq(coeff(series((1-2*x)^2/((1-2*x)^3 - 2*x^4), x, n+1), x, n), n = 0 .. 40); # _G. C. Greubel_, Sep 04 2019"
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[n-k,3k]2^(n-3k),{k,0,Floor[n/4]}],{n,0,30}] (* or *) LinearRecurrence[{6,-12,8,2},{1,2,4,8},30] (* _Harvey P. Dale_, Apr 01 2012 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^30)); Vec((1-2*x)^2/((1-2*x)^3 - 2*x^4)) \\\\ _G. C. Greubel_, Sep 04 2019",
+        "(Magma) I:=[1,2,4,8]; [n le 4 select I[n] else 6*Self(n-1) - 12*Self(n-2) + 8*Self(n-3) + 2*Self(n-4): n in [1..30]]; // _G. C. Greubel_, Sep 04 2019",
+        "(Sage)",
+        "def A099785_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P((1-2*x)^2/((1-2*x)^3 - 2*x^4)).list()",
+        "A099785_list(30) # _G. C. Greubel_, Sep 04 2019",
+        "(GAP) a:=[1,2,4,8];; for n in [5..30] do a[n]:=6*a[n-1] -12*a[n-2] + 8*a[n-3] +2*a[n-4]; od; a; # _G. C. Greubel_, Sep 04 2019"
+    ],
+    "xref": [
+        "Cf. A003522, A097119.",
+        "Cf. A099780, A099781, A099783, A099784, A099785, A099786, A099787."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Paul Barry_, Oct 26 2004",
+    "references": 6,
+    "revision": 12,
+    "time": "2022-09-08T08:45:15-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

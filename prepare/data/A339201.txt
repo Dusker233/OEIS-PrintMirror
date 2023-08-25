@@ -1,0 +1,51 @@
+{
+    "number": 339201,
+    "data": "8,120,2830,50354,1003218,19380610,378005474,7348400816,143013145124,2782280184314,54134923232608,1053263634537410,20492847566047336,398717839924458408,7757640305938339162,150936198726479633524,2936684182444832427774,57137476790772843457886",
+    "name": "Number of (undirected) Hamiltonian cycles on the n X 4 king graph.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A339201/b339201.txt\">Table of n, a(n) for n = 2..500</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HamiltonianCycle.html\">Hamiltonian Cycle</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/KingGraph.html\">King Graph</a>",
+        "<a href=\"/index/Gra#graphs\">Index entries for sequences related to graphs, Hamiltonian</a>"
+    ],
+    "formula": [
+        "Empirical g.f.: 2*x^2 * (56*x^16 + 53*x^15 + 413*x^14 - 943*x^13 - 635*x^12 - 700*x^11 + 2283*x^10 + 455*x^9 + 3044*x^8 - 4856*x^7 - 4293*x^6 + 6475*x^5 + 719*x^4 - 1386*x^3 + 143*x^2 - 8*x + 4) / (112*x^16 + 106*x^15 + 964*x^14 - 1933*x^13 + 357*x^12 - 3503*x^11 + 3756*x^10 - 828*x^9 + 12662*x^8 - 18201*x^7 - 2441*x^6 + 5486*x^5 - 704*x^4 + 318*x^3 - 63*x^2 - 17*x + 1). - _Vaclav Kotesovec_, Dec 09 2020"
+    ],
+    "program": [
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_nXk_king_graph(n, k):",
+        "    grids = []",
+        "    for i in range(1, k + 1):",
+        "        for j in range(1, n):",
+        "            grids.append((i + (j - 1) * k, i + j * k))",
+        "            if i < k:",
+        "                grids.append((i + (j - 1) * k, i + j * k + 1))",
+        "            if i > 1:",
+        "                grids.append((i + (j - 1) * k, i + j * k - 1))",
+        "    for i in range(1, k * n, k):",
+        "        for j in range(1, k):",
+        "            grids.append((i + j - 1, i + j))",
+        "    return grids",
+        "def A339190(n, k):",
+        "    universe = make_nXk_king_graph(n, k)",
+        "    GraphSet.set_universe(universe)",
+        "    cycles = GraphSet.cycles(is_hamilton=True)",
+        "    return cycles.len()",
+        "def A339201(n):",
+        "    return A339190(n, 4)",
+        "print([A339201(n) for n in range(2, 20)])"
+    ],
+    "xref": [
+        "Column 4 of A339190.",
+        "Cf. A339198."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Seiichi Manyama_, Nov 27 2020",
+    "references": 5,
+    "revision": 14,
+    "time": "2020-12-09T05:14:44-05:00",
+    "created": "2020-11-28T02:20:50-05:00"
+}

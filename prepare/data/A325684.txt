@@ -1,0 +1,66 @@
+{
+    "number": 325684,
+    "data": "1,1,1,2,3,4,5,12,12,24,40,46,92,133,192,308,546,710,1108,1754,2726,3878,5928,9260,14238,20502,30812,48378,72232,105744,160308,241592,362348,540362,797750,1183984,1786714",
+    "name": "Number of minimal complete rulers of length n.",
+    "comment": [
+        "A complete ruler of length n is a subset of {0..n} containing 0 and n and such that the differences of distinct terms (up to sign) cover an initial interval of positive integers.",
+        "Also the number of maximal (most coarse) compositions of n whose consecutive subsequence-sums cover an initial interval of positive integers."
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 12 rulers:",
+        "  {0,1}  {0,1,2}  {0,1,3}  {0,1,2,4}  {0,1,2,5}  {0,1,4,6}    {0,1,2,3,7}",
+        "                  {0,2,3}  {0,1,3,4}  {0,1,3,5}  {0,2,5,6}    {0,1,2,4,7}",
+        "                           {0,2,3,4}  {0,2,4,5}  {0,1,2,3,6}  {0,1,2,5,7}",
+        "                                      {0,3,4,5}  {0,1,3,5,6}  {0,1,3,5,7}",
+        "                                                 {0,3,4,5,6}  {0,1,3,6,7}",
+        "                                                              {0,1,4,5,7}",
+        "                                                              {0,1,4,6,7}",
+        "                                                              {0,2,3,6,7}",
+        "                                                              {0,2,4,6,7}",
+        "                                                              {0,2,5,6,7}",
+        "                                                              {0,3,5,6,7}",
+        "                                                              {0,4,5,6,7}",
+        "The a(1) = 1 through a(9) = 24 compositions:",
+        "  (1)  (11)  (12)  (112)  (113)  (132)   (1114)  (1133)   (1143)",
+        "             (21)  (121)  (122)  (231)   (1123)  (1241)   (1332)",
+        "                   (211)  (221)  (1113)  (1132)  (1322)   (2331)",
+        "                          (311)  (1221)  (1222)  (1412)   (3411)",
+        "                                 (3111)  (1231)  (1421)   (11115)",
+        "                                         (1312)  (2141)   (11124)",
+        "                                         (1321)  (2231)   (11142)",
+        "                                         (2131)  (3311)   (11241)",
+        "                                         (2221)  (11114)  (11322)",
+        "                                         (2311)  (11132)  (12141)",
+        "                                         (3211)  (23111)  (12222)",
+        "                                         (4111)  (41111)  (12231)",
+        "                                                          (12312)",
+        "                                                          (13221)",
+        "                                                          (14112)",
+        "                                                          (14121)",
+        "                                                          (14211)",
+        "                                                          (21141)",
+        "                                                          (21321)",
+        "                                                          (22221)",
+        "                                                          (22311)",
+        "                                                          (24111)",
+        "                                                          (42111)",
+        "                                                          (51111)"
+    ],
+    "mathematica": [
+        "fasmin[y_]:=Complement[y,Union@@Table[Union[s,#]&/@Rest[Subsets[Complement[Union@@y,s]]],{s,y}]];",
+        "Table[Length[fasmin[Accumulate/@Select[Join@@Permutations/@IntegerPartitions[n],SubsetQ[ReplaceList[#,{___,s__,___}:>Plus[s]],Range[n]]&]]],{n,0,15}]"
+    ],
+    "xref": [
+        "Cf. A000079, A103295, A126796, A143823, A169942, A325677, A325683, A325685."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, May 13 2019",
+    "ext": [
+        "a(16)-a(36) from _Fausto A. C. Cariboni_, Feb 27 2022"
+    ],
+    "references": 11,
+    "revision": 11,
+    "time": "2022-02-27T05:46:02-05:00",
+    "created": "2019-05-14T22:08:08-04:00"
+}

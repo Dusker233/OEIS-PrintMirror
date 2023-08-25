@@ -1,0 +1,28 @@
+{
+    "number": 322486,
+    "data": "6,60,90,264,3960,4560,8736,13770,131040,384384,605880,5765760,20049120,882161280,23253135360",
+    "name": "Semi-unitary perfect numbers: numbers k such that susigma(k) = 2k, where susigma(k) is the sum of the semi-unitary divisors of k (A322485).",
+    "comment": [
+        "a(16) <= 1846273228800. - _David A. Corneth_, Dec 11 2018"
+    ],
+    "example": [
+        "264 is in the sequence since its sum of semi-unitary divisors is susigma(264) = 528 = 2 * 264."
+    ],
+    "mathematica": [
+        "f[p_, e_] := (p^Floor[(e+1)/2] - 1)/(p-1) + p^e; susigma[n_] := If[n==1, 1, Times @@ (f @@@ FactorInteger[n])]; aQ[n_] := susigma[n]==2n; Select[Range[10000], aQ]"
+    ],
+    "program": [
+        "(PARI) ssu(n) = {my(f = factor(n)); for (k=1, #f~, my(p=f[k,1], e=f[k,2]); f[k,1] = (p^((e+1)\\2) - 1)/(p-1) + p^e; f[k,2] = 1;); factorback(f);} \\\\ A322485",
+        "isok(n) = ssu(n) == 2*n; \\\\ _Michel Marcus_, Dec 14 2018"
+    ],
+    "xref": [
+        "Cf. A000396, A002827, A322485."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Dec 11 2018",
+    "references": 5,
+    "revision": 13,
+    "time": "2021-07-17T06:59:46-04:00",
+    "created": "2018-12-18T11:29:56-05:00"
+}

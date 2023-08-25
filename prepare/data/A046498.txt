@@ -1,0 +1,42 @@
+{
+    "number": 46498,
+    "data": "6,9,66,99,333,363,393,636,666,696,939,969,999,3333,3663,3993,6336,6666,6996,9339,9669,9999,30303,30603,30903,33333,33633,33933,36363,36663,36963,39393,39693,39993,60306,60606,60906,63336,63636,63936",
+    "name": "Palindromes expressible as the sum of 3 consecutive palindromes.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A046498/b046498.txt\">Table of n, a(n) for n = 1..15358</a> (all terms with <= 13 digits)",
+        "Patrick De Geest, <a href=\"http://www.worldofnumbers.com/index.html\">World!Of Numbers</a>"
+    ],
+    "example": [
+        "6666 = 2112 + 2222 + 2332."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "def ispal(n): s = str(n); return s == s[::-1]",
+        "def pals(d, base=10): # all d-digit palindromes",
+        "  digits = \"\".join(str(i) for i in range(base))",
+        "  for p in product(digits, repeat=d//2):",
+        "    if d > 1 and p[0] == \"0\": continue",
+        "    left = \"\".join(p); right = left[::-1]",
+        "    for mid in [[\"\"], digits][d%2]: yield int(left + mid + right)",
+        "def auptod(dd):",
+        "  alst  = [6, 9]",
+        "  last3 = [7, 8, 9]",
+        "  for d in range(2, dd+1):",
+        "    for p in pals(d):",
+        "      last3 = last3[1:] + [p]",
+        "      if ispal(sum(last3)): alst.append(sum(last3))",
+        "  return alst",
+        "print(auptod(5)) # _Michael S. Branicky_, Jun 09 2021"
+    ],
+    "xref": [
+        "Cf. A002113."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Sep 15 1998",
+    "references": 2,
+    "revision": 14,
+    "time": "2021-06-09T08:17:50-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

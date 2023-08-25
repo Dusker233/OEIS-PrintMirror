@@ -1,0 +1,48 @@
+{
+    "number": 189620,
+    "data": "32,1024,10327,65160,532565,6204967,68121839,636683482,5785616468,56137313726,563010113815,5529846867761,53193183705288,513158091226513,5003028394342619,48867656731556592,475282571037202342",
+    "name": "Number of 5 X n binary arrays without the pattern 0 1 0 diagonally, antidiagonally or horizontally.",
+    "comment": [
+        "Row 5 of A189617."
+    ],
+    "link": [
+        "R. H. Hardin, <a href=\"/A189620/b189620.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Robert Israel, <a href=\"/A189620/a189620.txt\">Linear recurrence of order 147</a>",
+        "Robert Israel, <a href=\"/A189620/a189620.pdf\">Maple-assisted derivation of recurrence</a>"
+    ],
+    "formula": [
+        "Linear recurrence of order 147 (see links). - _Robert Israel_, Oct 22 2019"
+    ],
+    "example": [
+        "Some solutions for 5 X 3:",
+        "  0 0 0   0 0 0   1 0 1   0 0 0   0 1 1   0 1 1   0 0 0",
+        "  1 0 1   0 1 1   1 1 1   0 0 1   0 0 1   0 0 0   0 0 0",
+        "  0 0 1   1 1 1   1 1 1   0 0 0   1 0 0   0 0 1   0 0 1",
+        "  1 1 0   0 0 1   1 0 0   1 0 1   1 0 0   0 0 1   1 0 0",
+        "  0 0 1   0 0 1   0 0 0   1 1 1   0 0 1   1 0 0   0 1 1"
+    ],
+    "maple": [
+        "Compatible:= proc(i,j) local Xi,Xj,k;",
+        "Xi:= Configs[i]; Xj:= Configs[j];",
+        "if Xi[6..10] <> Xj[1..5] then return 0 fi;",
+        "if Xi[1]=0 and ((Xi[6]=1 and Xj[6]=0) or (Xi[7]=1 and Xj[8]=0)) then return 0 fi;",
+        "if Xi[2]=0 and ((Xi[7]=1 and Xj[7]=0) or (Xi[8]=1 and Xj[9]=0)) then return 0 fi;",
+        "if Xi[3]=0 and ((Xi[7]=1 and Xj[6]=0) or (Xi[8]=1 and Xj[8]=0) or (Xi[9]=1 and Xj[10]=0)) then return 0 fi;",
+        "if Xi[4]=0 and ((Xi[8]=1 and Xj[7]=0) or (Xi[9]=1 and Xj[9]=0)) then return 0 fi;",
+        "if Xi[5]=0 and ((Xi[9]=1 and Xj[8]=0) or (Xi[10]=1 and Xj[10]=0)) then return 0 fi;",
+        "1",
+        "end proc:",
+        "T:= Matrix(1024,1024,Compatible):",
+        "u:= Vector(1024,1):",
+        "Tu[0]:= u:",
+        "for nn from 1 to 30 do Tu[nn]:= T . Tu[nn-1] od:",
+        "32, seq(u^%T . Tu[n],n=0..30); # _Robert Israel_, Oct 22 2019"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. H. Hardin_, Apr 24 2011",
+    "references": 1,
+    "revision": 14,
+    "time": "2019-10-23T03:21:21-04:00",
+    "created": "2011-04-24T11:00:51-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 330298,
+    "data": "0,0,0,0,2,3,9,12,24,30,50,60,90,105,147,168,224,252,324,360,450,495,605,660,792,858,1014,1092,1274,1365,1575,1680,1920,2040,2312,2448,2754,2907,3249,3420,3800,3990,4410,4620,5082,5313,5819,6072,6624,6900,7500,7800,8450,8775,9477",
+    "name": "a(n) is the number of subsets of {1..n} that contain exactly 1 odd and 2 even numbers.",
+    "comment": [
+        "The general formula for the number of subsets of {1..n} that contain exactly k odd and j even numbers is binomial(ceiling(n/2), k) * binomial(floor(n/2), j)."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A330298/b330298.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (1,3,-3,-3,3,1,-1)."
+    ],
+    "formula": [
+        "a(n) = ceiling(n/2) * binomial(floor(n/2), 2).",
+        "From _Colin Barker_, Mar 01 2020: (Start)",
+        "G.f.: x^4*(2 + x) / ((1 - x)^4*(1 + x)^3).",
+        "a(n) = a(n-1) + 3*a(n-2) - 3*a(n-3) - 3*a(n-4) + 3*a(n-5) + a(n-6) - a(n-7) for n>6.",
+        "(End)",
+        "E.g.f.: (x*(-3 + x + x^2)*cosh(x) + (3 - x + x^3)*sinh(x))/16. - _Stefano Spezia_, Mar 02 2020"
+    ],
+    "example": [
+        "For example, for n=6, a(6) = 9 and the 9 subsets are: {1,2,4}, {1,2,6}, {1,4,6}, {2,3,4}, {2,3,6}, {2,4,5}, {2,5,6}, {3,4,6}, {4,5,6}."
+    ],
+    "mathematica": [
+        "a[n_] := Ceiling[n/2] * Binomial[Floor[n/2], 2]; Array[a, 55, 0] (* _Amiram Eldar_, Mar 01 2020 *)",
+        "Table[Length[Select[Subsets[Range[n],{3}],Total[Boole[OddQ[#]]]==1&]],{n,0,60}] (* _Harvey P. Dale_, Jul 26 2020 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = ceil(n/2) * binomial(floor(n/2), 2) \\\\ _Andrew Howroyd_, Mar 01 2020",
+        "(PARI) concat([0,0,0,0], Vec(x^4*(2 + x) / ((1 - x)^4*(1 + x)^3) + O(x^40))) \\\\ _Colin Barker_, Mar 02 2020"
+    ],
+    "xref": [
+        "Cf. A330299, A330300."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,5",
+    "author": "_Enrique Navarrete_, Feb 29 2020",
+    "references": 4,
+    "revision": 37,
+    "time": "2020-07-26T12:19:59-04:00",
+    "created": "2020-03-07T12:37:54-05:00"
+}

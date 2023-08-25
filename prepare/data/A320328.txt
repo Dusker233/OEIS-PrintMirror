@@ -1,0 +1,46 @@
+{
+    "number": 320328,
+    "data": "1,1,2,3,6,11,20,36,65,117,214,382,679",
+    "name": "Number of square multiset partitions of integer partitions of n.",
+    "comment": [
+        "A multiset partition is square if its length is equal to its number of distinct atoms."
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 20 square partitions:",
+        "  {{1}}  {{2}}    {{3}}      {{4}}        {{5}}          {{6}}",
+        "         {{1,1}}  {{1,1,1}}  {{2,2}}      {{1},{4}}      {{3,3}}",
+        "                  {{1},{2}}  {{1},{3}}    {{2},{3}}      {{1},{5}}",
+        "                             {{1,1,1,1}}  {{1},{1,3}}    {{2,2,2}}",
+        "                             {{1},{1,2}}  {{1},{2,2}}    {{2},{4}}",
+        "                             {{2},{1,1}}  {{2},{1,2}}    {{1},{1,4}}",
+        "                                          {{3},{1,1}}    {{4},{1,1}}",
+        "                                          {{1,1,1,1,1}}  {{1},{1,1,3}}",
+        "                                          {{1},{1,1,2}}  {{1,1},{1,3}}",
+        "                                          {{1,1},{1,2}}  {{1},{1,2,2}}",
+        "                                          {{2},{1,1,1}}  {{1,1},{2,2}}",
+        "                                                         {{1,2},{1,2}}",
+        "                                                         {{1},{2},{3}}",
+        "                                                         {{2},{1,1,2}}",
+        "                                                         {{3},{1,1,1}}",
+        "                                                         {{1,1,1,1,1,1}}",
+        "                                                         {{1},{1,1,1,2}}",
+        "                                                         {{1,1},{1,1,2}}",
+        "                                                         {{1,2},{1,1,1}}",
+        "                                                         {{2},{1,1,1,1}}"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "Table[Length[Select[Join@@mps/@IntegerPartitions[n],Length[#]==Length[Union@@#]&]],{n,8}]"
+    ],
+    "xref": [
+        "Cf. A000219, A001970, A047968, A050342, A089259, A141268, A261049, A289501, A305551, A316983, A319066, A319312, A319616, A320330, A320331."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Oct 11 2018",
+    "references": 12,
+    "revision": 6,
+    "time": "2018-10-11T10:10:10-04:00",
+    "created": "2018-10-11T10:10:10-04:00"
+}

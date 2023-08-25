@@ -1,0 +1,36 @@
+{
+    "number": 337189,
+    "data": "1,2,3,7,61,75,104,2097,3304,7320,42104,280586",
+    "name": "Numbers k such that k divides A340180(k).",
+    "example": [
+        "a(4) = 61 is a term because A340180(61) = 671 = 11*61."
+    ],
+    "maple": [
+        "f := proc(n)",
+        "local t, s, k;",
+        "    s := numtheory:-sigma(n);",
+        "    t := 0;",
+        "    for k to n - 1 do if igcd(n, k) = 1 then t := t + (s mod k) end if",
+        "    end do;",
+        "    t",
+        "end proc:",
+        "select(t -> f(t) mod t = 0, [$1..10000]);"
+    ],
+    "mathematica": [
+        "f[n_] := Mod[DivisorSigma[1, n], Select[Range[n-1], CoprimeQ[#, n]&]] // Total;",
+        "Select[Range[300000], If[Divisible[f[#], #], Print[#]; True, False]&] (* _Jean-Fran\u00e7ois Alcover_, Jan 31 2021 *)"
+    ],
+    "xref": [
+        "Cf. A340180."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 29 2021",
+    "ext": [
+        "a(12) from _Jean-Fran\u00e7ois Alcover_, Feb 01 2021"
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2021-02-06T21:59:57-05:00",
+    "created": "2021-01-29T14:22:09-05:00"
+}

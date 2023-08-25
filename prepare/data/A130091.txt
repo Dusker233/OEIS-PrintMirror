@@ -1,0 +1,73 @@
+{
+    "number": 130091,
+    "data": "1,2,3,4,5,7,8,9,11,12,13,16,17,18,19,20,23,24,25,27,28,29,31,32,37,40,41,43,44,45,47,48,49,50,52,53,54,56,59,61,63,64,67,68,71,72,73,75,76,79,80,81,83,88,89,92,96,97,98,99,101,103,104,107,108,109,112,113,116",
+    "name": "Numbers having in their canonical prime factorization mutually distinct exponents.",
+    "comment": [
+        "This sequence does not contain any number of the form 36n-6 or 36n+6, as such numbers are divisible by 6 but not by 4 or 9. Consequently, this sequence does not contain 24 consecutive integers. The quest for the greatest number of consecutive integers in this sequence has ties to the ABC conjecture (see the MathOverflow link). - _Danny Rorabaugh_, Sep 23 2015",
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k), so these are Heinz numbers of integer partitions with distinct multiplicities. The enumeration of these partitions by sum is given by A098859. - _Gus Wiseman_, May 04 2019",
+        "Akta\u015f and Ram Murty (2017) called these terms \"special numbers\" (\"for lack of a better word\"). They prove that the number of terms below x is ~ c*x/log(x), where c > 1 is a constant. - _Amiram Eldar_, Feb 25 2021",
+        "Sequence A005940(1+A328592(n)), n >= 1, sorted into ascending order. - _Antti Karttunen_, Apr 03 2022"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A130091/b130091.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Kevser Akta\u015f and M. Ram Murty, <a href=\"https://doi.org/10.1007/s12044-016-0326-z\">On the number of special numbers</a>, Proceedings - Mathematical Sciences, Vol. 127, No. 3 (2017), pp. 423-430; <a href=\"https://www.ias.ac.in/article/fulltext/pmsc/127/03/0423-0430\">alternative link</a>.",
+        "MathOverflow, <a href=\"http://mathoverflow.net/questions/201489\">Consecutive numbers with mutually distinct exponents in their canonical prime factorization</a>",
+        "Carlo Sanna, <a href=\"https://arxiv.org/abs/1902.09224\">On the number of distinct exponents in the prime factorization of an integer</a>, arXiv:1902.09224 [math.NT], 2019.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PrimeFactorization.html\">Prime Factorization</a>"
+    ],
+    "formula": [
+        "a(n) < A130092(n) for n<=150, a(n) > A130092(n) for n>150."
+    ],
+    "example": [
+        "From _Gus Wiseman_, May 04 2019: (Start)",
+        "The sequence of terms together with their prime indices begins:",
+        "   1: {}",
+        "   2: {1}",
+        "   3: {2}",
+        "   4: {1,1}",
+        "   5: {3}",
+        "   7: {4}",
+        "   8: {1,1,1}",
+        "   9: {2,2}",
+        "  11: {5}",
+        "  12: {1,1,2}",
+        "  13: {6}",
+        "  16: {1,1,1,1}",
+        "  17: {7}",
+        "  18: {1,2,2}",
+        "  19: {8}",
+        "  20: {1,1,3}",
+        "  23: {9}",
+        "  24: {1,1,1,2}",
+        "  25: {3,3}",
+        "  27: {2,2,2}",
+        "(End)"
+    ],
+    "maple": [
+        "filter:= proc(t) local f;",
+        "f:= map2(op,2,ifactors(t)[2]);",
+        "nops(f) = nops(convert(f,set));",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Mar 30 2015"
+    ],
+    "mathematica": [
+        "t[n_] := FactorInteger[n][[All, 2]]; Select[Range[400],  Union[t[#]] == Sort[t[#]] &]  (* _Clark Kimberling_, Mar 12 2015 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {nbf = omega(n); f = factor(n); for (i = 1, nbf, for (j = i+1, nbf, if (f[i, 2] == f[j, 2], return (0)););); return (1);} \\\\ _Michel Marcus_, Aug 18 2013",
+        "(PARI) isA130091(n) = issquarefree(factorback(apply(e->prime(e), (factor(n)[, 2])))); \\\\ _Antti Karttunen_, Apr 03 2022"
+    ],
+    "xref": [
+        "Complement of A130092. A351564 is the characteristic function.",
+        "Subsequence of A351294.",
+        "Cf. A000961, A006939, A181818, A304686, A319161, A342028, A342029, A342030, A342031, A342032 (subsequences).",
+        "Cf. A005940, A048767, A048768, A056239, A098859, A112798, A118914, A181796, A217605, A325326, A325337, A325368, A327498, A327523, A328592, A336423, A336424, A336569, A336570, A336571, A343012, A343013."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, May 06 2007",
+    "references": 145,
+    "revision": 48,
+    "time": "2022-04-03T09:56:11-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

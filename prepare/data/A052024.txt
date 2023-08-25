@@ -1,0 +1,48 @@
+{
+    "number": 52024,
+    "data": "2,3,5,7,313,353,373,383,797,30103,31013,70607,73037,76367,79397,3002003,7096907,7693967,700090007,799636997,70060906007,3000002000003,7030000000307,300000020000003,300001030100003,310000060000013,38000000000000000000083,30000000004000300040000000003,3000001000000000000000000000001000003",
+    "name": "Every suffix of palindromic prime a(n) is prime (left-truncatable).",
+    "link": [
+        "I. O. Angell and H. J. Godwin, <a href=\"http://dx.doi.org/10.1090/S0025-5718-1977-0427213-2\">On Truncatable Primes</a>, Math. Comput. 31, 265-267, 1977.",
+        "C. K. Caldwell, <a href=\"https://t5k.org/glossary/page.php?sort=LeftTruncatablePrime\">Left</a> and <a href=\"https://t5k.org/glossary/page.php?sort=RightTruncatablePrime\">Right</a> truncatable primes.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PrimeString.html\">Prime strings</a>",
+        "<a href=\"/index/Tri#tprime\">Index entries for sequences related to truncatable primes</a>"
+    ],
+    "mathematica": [
+        "d[n_]:=IntegerDigits[n]; ltrQ[n_]:=And@@PrimeQ[NestWhileList[FromDigits[Drop[d[#],1]]&,n,#>9&]]; palQ[n_]:=Reverse[x=d[n]]==x; Select[Prime[Range[550000]],palQ[#]&&ltrQ[#]&] (* _Jayanta Basu_, Jun 02 2013 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, islice",
+        "def agen(verbose=False):",
+        "    prime_strings, alst = {\"3\", \"7\"}, []",
+        "    yield from [2, 3, 5, 7]",
+        "    for digs in count(2):",
+        "        new_prime_strings = set()",
+        "        for p in prime_strings:",
+        "            for d in \"123456789\":",
+        "                ts = d + \"0\"*(digs-1-len(p)) + p",
+        "                if isprime(int(ts)):",
+        "                    new_prime_strings.add(ts)",
+        "        prime_strings |= new_prime_strings",
+        "        pals = [int(s) for s in new_prime_strings if s == s[::-1]]",
+        "        yield from sorted(pals)",
+        "        if verbose: print(\"...\", digs, len(prime_strings), time()-time0)",
+        "print(list(islice(agen(), 20))) # _Michael S. Branicky_, Apr 04 2022"
+    ],
+    "xref": [
+        "Cf. A002385, A033664, A024785, A032437, A020994, A024770, A052023, A052025, A050986, A050987."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_G. L. Honaker, Jr._ and _Patrick De Geest_, Nov 15 1999",
+    "ext": [
+        "Inserted missing 31013 by _Jayanta Basu_, Jun 02 2013",
+        "a(27)-a(29) from _Michael S. Branicky_, Apr 04 2022"
+    ],
+    "references": 11,
+    "revision": 39,
+    "time": "2023-04-03T10:36:09-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

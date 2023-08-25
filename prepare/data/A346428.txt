@@ -1,0 +1,49 @@
+{
+    "number": 346428,
+    "data": "1,2,6,17,53,180,683,2866,13219,66307,358532,2074229,12761831,83086064,570017222,4106269668,30965072776,243778358992,1998878586251,17034471643814,150591119435358,1378657063570498,13050460812585580,127553991370245410,1285578058726241427",
+    "name": "Total number of partitions of all n-multisets {0,...,0,1,2,...,j} for 0 <= j <= n.",
+    "comment": [
+        "Also total number of factorizations of 2^(n-j) * Product_{i=1..j} prime(i+1) for 0 <= j <= n; a(2) = 6: 2*2, 4, 2*3, 6, 3*5, 15; a(3) = 17: 2*2*2, 2*4, 8, 2*2*3, 3*4, 2*6, 12, 2*3*5, 5*6, 3*10, 2*15, 30, 3*5*7, 7*15, 5*21, 3*35, 105."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A346428/b346428.txt\">Table of n, a(n) for n = 0..576</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=0..n} A346426(n-j,j)."
+    ],
+    "example": [
+        "a(2) = 6: 00, 0|0, 01, 0|1, 12, 1|2.",
+        "a(3) = 17: 000, 0|00, 0|0|0, 001, 00|1, 0|01, 0|0|1, 012, 0|12, 02|1, 01|2, 0|1|2, 123, 1|23, 13|2, 12|3, 1|2|3."
+    ],
+    "maple": [
+        "s:= proc(n) option remember; expand(`if`(n=0, 1,",
+        "      x*add(s(n-j)*binomial(n-1, j-1), j=1..n)))",
+        "    end:",
+        "S:= proc(n, k) option remember; coeff(s(n), x, k) end:",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i=0,",
+        "      combinat[numbpart](n), add(b(n-j, i-1), j=0..n)))",
+        "    end:",
+        "a:= n-> add(add(S(n-i, j)*b(i, j), j=0..n-i), i=0..n):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = Expand[If[n == 0, 1,",
+        "     x*Sum[s[n - j]*Binomial[n - 1, j - 1], {j, 1, n}]]];",
+        "S[n_, k_] := S[n, k] = Coefficient[s[n], x, k];",
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, If[i == 0,",
+        "     PartitionsP[n], Sum[b[n - j, i - 1], {j, 0, n}]]];",
+        "a[n_] := Sum[Sum[S[n - i, j]*b[i, j], {j, 0, n - i}], {i, 0, n}];",
+        "Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Mar 12 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Antidiagonal sums of A346426.",
+        "Cf. A346490, A346521."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jul 16 2021",
+    "references": 4,
+    "revision": 22,
+    "time": "2022-03-12T11:33:21-05:00",
+    "created": "2021-07-18T21:35:32-04:00"
+}

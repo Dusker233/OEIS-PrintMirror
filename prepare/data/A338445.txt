@@ -1,0 +1,46 @@
+{
+    "number": 338445,
+    "data": "3,11,13,19,23,29,31,43,49,53,57,59,61,67,71,73,77,79,83,85,89,91,93,97,101,103,109,113,127,129,131,133,141,143,147,149,151,157,161,163,167,169,173,177,179,183,187,197,199,201,203,205,211,217,229,235,237,239",
+    "name": "Numbers m with integer solution to x^x == (x+1)^(x+1) (mod m) with 1<=x<m.",
+    "comment": [
+        "Some values of m have multiple solutions.",
+        "For example, for m = 49, 25^25 == 26^26 (mod 49) and 37^37 == 38^38 (mod 49).",
+        "All terms are odd. - _Robert Israel_, Nov 25 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A338445/b338445.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "3 is a term because 1^1 == 2^2 (mod 3).",
+        "11 is a term because 8^8 == 9^9 (mod 11).",
+        "13 is a term because 8^8 == 9^9 (mod 13)."
+    ],
+    "maple": [
+        "filter:= proc(n) local x,y,z;",
+        "  y:= 1;",
+        "  for x from 2 to n-1 do",
+        "    z:= x &^ x mod n;",
+        "    if z = y then return true fi;",
+        "    y:= z",
+        "  od;",
+        "  false",
+        "end proc:",
+        "select(filter, [$2..1000]); # _Robert Israel_, Nov 25 2020"
+    ],
+    "mathematica": [
+        "seqQ[n_] := AnyTrue[Range[n - 1], PowerMod[#, #, n] == PowerMod[# + 1, # + 1, n] &]; Select[Range[240], seqQ] (* _Amiram Eldar_, Oct 28 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(m)=sum(i=1, m-1, Mod(i,m)^i == Mod((i+1),m)^(i+1)) \\\\ _Andrew Howroyd_, Oct 28 2020"
+    ],
+    "xref": [
+        "Similar sequences: A174824, A239061, A239062, A239063."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Owen C. Keith_, Oct 28 2020",
+    "references": 2,
+    "revision": 22,
+    "time": "2020-11-25T13:12:54-05:00",
+    "created": "2020-11-22T21:49:25-05:00"
+}

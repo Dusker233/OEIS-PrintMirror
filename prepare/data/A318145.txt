@@ -1,0 +1,45 @@
+{
+    "number": 318145,
+    "data": "6,12,14,20,24,28,30,40,48,56,60,62,70,72,80,84,96,112,120,124,126,132,140,144,168,176,192,198,208,224,240,248,252,254,260,272,286,288,320,336,340,344,384,390,396,408,430,448,456,480,496,504,508,510,532",
+    "name": "Numbers m such that 2^phi(m) mod m is a perfect power other than 1.",
+    "comment": [
+        "All terms are even, as 2^phi(m) == 1 (mod m) if m is odd. - _Robert Israel_, Sep 02 2018",
+        "Perfect power terms are 144, 576, 900, 1600, 3136, 9216, 12544, 20736, 36864, 57600, 63504, ... - _Altug Alkan_, Sep 04 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A318145/b318145.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "ispow:= proc(n) local F;",
+        "  F:= map(t -> t[2], ifactors(n)[2]);",
+        "  igcd(op(F)) > 1",
+        "end proc:",
+        "select(m -> ispow(2 &^ numtheory:-phi(m) mod m), [seq(i,i=2..1000,2)]); # _Robert Israel_, Sep 02 2018"
+    ],
+    "mathematica": [
+        "okQ[n_] := GCD @@ FactorInteger[PowerMod[2, EulerPhi[n], n]][[All, 2]] > 1;",
+        "Select[Range[2, 1000, 2], okQ] (* _Jean-Fran\u00e7ois Alcover_, Aug 02 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def isA318145(n):",
+        "    m = power_mod(2, euler_phi(n), n)",
+        "    return m > 0 and m.is_perfect_power()",
+        "def A318145_list(search_bound):",
+        "    return [n for n in range(2, search_bound + 1, 2) if isA318145(n)]",
+        "print(A318145_list(532))"
+    ],
+    "xref": [
+        "Cf. A000010, A001597, A318623. Contains A139257."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Sep 01 2018",
+    "ext": [
+        "Definition corrected by _Robert Israel_, Sep 02 2018"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2020-03-13T16:59:42-04:00",
+    "created": "2018-09-01T21:55:48-04:00"
+}

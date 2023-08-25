@@ -1,0 +1,29 @@
+{
+    "number": 335219,
+    "data": "36,180,252,396,468,612,684,828,1044,1116,1260,1332,1476,1548,1692,1800,1908,1980,2124,2196,2340,2412,2556,2628,2700,2772,2844,2988,3060,3204,3276,3420,3492,3636,3708,3852,3924,4068,4140,4284,4572,4716,4788,4900,4932",
+    "name": "Exponential Zumkeller numbers (A335218) whose set of exponential divisors can be partitioned into two disjoint sets of equal sum in a single way.",
+    "comment": [
+        "Differs from A054979 first at a(44), since 4900 is in this sequence but not in A054979. - _R. J. Mathar_, Jun 02 2020"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A335219/b335219.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "36 is a term since there is a single way in which its exponential divisors, {6, 12, 18, 36} can be partitioned into 2 disjoint sets whose sum is equal:: 6 + 12 + 18 = 36."
+    ],
+    "mathematica": [
+        "dQ[n_, m_] := (n > 0 && m > 0 && Divisible[n, m]); expDivQ[n_, d_] := Module[{ft = FactorInteger[n]}, And @@ MapThread[dQ, {ft[[;; , 2]], IntegerExponent[d, ft[[;; , 1]]]}]]; eDivs[n_] := Module[{d = Rest[Divisors[n]]}, Select[d, expDivQ[n, #] &]]; ezQ[n_] := Module[{d = eDivs[n], sum, x}, sum = Plus @@ d; If[sum < 2*n || OddQ[sum], False, CoefficientList[Product[1 + x^i, {i, d}], x][[1 + sum/2]] == 2]]; Select[Range[10^4], ezQ]"
+    ],
+    "xref": [
+        "The exponential of A083209.",
+        "Subsequence of A335218.",
+        "Cf. A335143, A335199, A335202."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, May 27 2020",
+    "references": 3,
+    "revision": 15,
+    "time": "2020-06-02T08:39:25-04:00",
+    "created": "2020-05-27T14:20:40-04:00"
+}

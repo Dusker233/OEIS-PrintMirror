@@ -1,0 +1,35 @@
+{
+    "number": 299239,
+    "data": "1,2,3,6,7,10,11,13,16,20,25,27,34,35,40,45,48,53,55,66,70,75,80,89,100,109,111,119,130,142,147,155,160,168,177,185,196,204,213,221,223,247,258,266,278,286,291,315,320,344,353,377,388,412,421,445,447",
+    "name": "Ranks of palindromic {2,3}-power towers; see Comments.",
+    "comment": [
+        "Suppose that S is a set of real numbers.  An S-power-tower, t, is a number t = x(1)^x(2)^...^x(k), where k >= 1 and x(i) is in S for i = 1..k.  We represent t by (x(1),x(2),...,x(k), which for k > 1 is defined as (x(1),((x(2),...,x(k-1)); (2,3,2) means 2^9.  The number k is the *height* of t.  If every element of S exceeds 1 and all the power towers are ranked in increasing order, the position of each in the resulting sequence is its *rank*.  See A299229 for a guide to related sequences."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A299239/b299239.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "The first six palindromes are t(1) = (2), t(2) = (3), t(3) = (2,2), t(6) = (2,2,2), t(7) = (3,3), t(10) = (2,3,2)."
+    ],
+    "mathematica": [
+        "t[1] = {2}; t[2] = {3}; t[3] = {2, 2}; t[4] = {2, 3}; t[5] = {3, 2};",
+        "t[6] = {2, 2, 2}; t[7] = {3, 3}; t[8] = {3, 2, 2}; t[9] = {2, 2, 3};",
+        "t[10] = {2, 3, 2}; t[11] = {3, 2, 3}; t[12] = {3, 3, 2};",
+        "z = 190; g[k_] := If[EvenQ[k], {2}, {3}]; f = 6;",
+        "While[f < 13, n = f; While[n < z, p = 1;",
+        "  While[p < 12, m = 2 n + 1; v = t[n]; k = 0;",
+        "    While[k < 2^p, t[m + k] = Join[g[k], t[n + Floor[k/2]]]; k = k + 1];",
+        "   p = p + 1; n = m]]; f = f + 1]",
+        "Flatten[Table[Select[Range[1000], t[#] == Reverse[t[#]] &], {n, 1, 120}]]"
+    ],
+    "xref": [
+        "Cf. A299229, A299237."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Feb 07 2018",
+    "references": 2,
+    "revision": 7,
+    "time": "2018-02-09T01:04:37-05:00",
+    "created": "2018-02-08T14:17:11-05:00"
+}

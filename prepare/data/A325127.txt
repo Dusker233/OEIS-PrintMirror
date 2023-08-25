@@ -1,0 +1,54 @@
+{
+    "number": 325127,
+    "data": "1,4,8,16,27,32,64,81,108,128,216,243,256,324,432,512,625,648,729,864,972,1024,1296,1728,1944,2048,2187,2500,2592,2916,3125,3456,3888,4096,5000,5184,5832,6561,6912,7776,8192,8748,10000,10368,11664,12500,13824,15552",
+    "name": "Numbers in whose prime factorization the exponent of prime(k) is greater than k for all prime indices k.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798.",
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k), so these are Heinz numbers of integer partitions where each part k appears more than k times. Such partitions are counted by A115584."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A325127/b325127.txt\">Table of n, a(n) for n = 1..2847</a> (terms up to 10^12)"
+    ],
+    "formula": [
+        "Sum_{n>=1} 1/a(n) = Product_{k>=1} 1 + 1/(prime(k)^k * (prime(k)-1)) = 1.58661114052385082598.... - _Amiram Eldar_, Oct 24 2020"
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices begins:",
+        "    1: {}",
+        "    4: {1,1}",
+        "    8: {1,1,1}",
+        "   16: {1,1,1,1}",
+        "   27: {2,2,2}",
+        "   32: {1,1,1,1,1}",
+        "   64: {1,1,1,1,1,1}",
+        "   81: {2,2,2,2}",
+        "  108: {1,1,2,2,2}",
+        "  128: {1,1,1,1,1,1,1}",
+        "  216: {1,1,1,2,2,2}",
+        "  243: {2,2,2,2,2}",
+        "  256: {1,1,1,1,1,1,1,1}",
+        "  324: {1,1,2,2,2,2}",
+        "  432: {1,1,1,1,2,2,2}",
+        "  512: {1,1,1,1,1,1,1,1,1}",
+        "  625: {3,3,3,3}",
+        "  648: {1,1,1,2,2,2,2}",
+        "  729: {2,2,2,2,2,2}",
+        "  864: {1,1,1,1,1,2,2,2}",
+        "  972: {1,1,2,2,2,2,2}"
+    ],
+    "mathematica": [
+        "Select[Range[1000],And@@Cases[If[#==1,{},FactorInteger[#]],{p_,k_}:>k>PrimePi[p]]&]",
+        "With[{k = 4}, m = Prime[k]^(k + 1); s = {}; Do[p = Prime[i]; AppendTo[s, Join[{1}, p^Range[i + 1, Floor[Log[p, m]]]]], {i, 1, k}]; Union @ Select[Times @@@ Tuples[s], # <= m &]] (* _Amiram Eldar_, Oct 24 2020 *)"
+    ],
+    "xref": [
+        "Cf. A000720, A056239, A062457, A109298, A112798, A115584, A118914, A276078.",
+        "Cf. A324524, A324525, A324571, A325128, A325130."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Apr 01 2019",
+    "references": 7,
+    "revision": 12,
+    "time": "2020-10-24T04:12:41-04:00",
+    "created": "2019-04-01T07:24:34-04:00"
+}

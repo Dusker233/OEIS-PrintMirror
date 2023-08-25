@@ -1,0 +1,54 @@
+{
+    "number": 328727,
+    "data": "0,1,2,3,6,9,10,11,18,19,20,27,28,29,30,33,54,55,56,57,60,81,82,83,84,87,90,91,92,99,100,101,162,163,164,165,168,171,172,173,180,181,182,243,244,245,246,249,252,253,254,261,262,263,270,271,272,273,276",
+    "name": "Nonnegative numbers whose base-3 expansion has no two consecutive nonzero digits.",
+    "comment": [
+        "This sequence is a ternary variant of A003714, the fibbinary numbers.",
+        "Apparently, A122983 gives the distinct values of the first differences of this sequence."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A328727/b328727.txt\">Table of n, a(n) for n = 1..10923</a> (Terms < 3^13)"
+    ],
+    "example": [
+        "The first terms, alongside their ternary representation, are:",
+        "  n   a(n)  ter(a(n))",
+        "  --  ----  ---------",
+        "   1     0          0",
+        "   2     1          1",
+        "   3     2          2",
+        "   4     3         10",
+        "   5     6         20",
+        "   6     9        100",
+        "   7    10        101",
+        "   8    11        102",
+        "   9    18        200",
+        "  10    19        201",
+        "  11    20        202",
+        "  12    27       1000"
+    ],
+    "program": [
+        "(PARI) is(n, base=3) = my (d=digits(n, base)); for (i=1, #d-1, if (d[i] && d[i+1], return (0))); return (1)",
+        "(Python)",
+        "from itertools import count, islice",
+        "from gmpy2 import digits",
+        "def A328727_gen(startvalue=0): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,0)):",
+        "        s = digits(n,3)",
+        "        for i in range(len(s)-1):",
+        "            if '0' not in s[i:i+2]:",
+        "                break",
+        "        else:",
+        "            yield n",
+        "A328727_list = list(islice(A328727_gen(),30)) # _Chai Wah Wu_, Jan 24 2022"
+    ],
+    "xref": [
+        "Cf. A003714, A122983."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,3",
+    "author": "_R\u00e9my Sigrist_, Oct 26 2019",
+    "references": 4,
+    "revision": 15,
+    "time": "2022-01-24T17:07:49-05:00",
+    "created": "2019-10-27T17:33:29-04:00"
+}

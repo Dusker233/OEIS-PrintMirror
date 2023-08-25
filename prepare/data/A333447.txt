@@ -1,0 +1,48 @@
+{
+    "number": 333447,
+    "data": "2,12,228,62052,4180832868,18201642257939067492,338021701687178649306251838479209230948,115407456979036362321626052309736660160730393295399201179594209600531491615332",
+    "name": "a(n) is the integer corresponding to a bit-string representation of the von Neumann ordinal representation of n, with largest sets listed first, and with '{' represented by the bit 1, '}' represented by the bit zero, and ignoring commas.",
+    "comment": [
+        "Since the von Neumann ordinals begin with 0={}, it seems appropriate to have an offset of 0.",
+        "The sequence grows super-exponentially.",
+        "Similar to A092124, except that A092124 reverses the order of the elements in the ordinal.",
+        "The binary expansion of a(n-1) has length 2^n and consists of n 1's followed by the leading terms of A308187. - _Andrey Zabolotskiy_, Mar 21 2020"
+    ],
+    "link": [
+        "Kit Scriven, <a href=\"/A333447/b333447.txt\">Table of n, a(n) for n = 0..10</a>",
+        "Johann von Neumann, <a href=\"http://acta.bibl.u-szeged.hu/13294/1/math_001_199-208.pdf\">Zur Einf\u00fchrung der transfiniten Zahlen</a>, Acta Litterarum AC Scientiarum Ragiae Universitatis Hungaricae Francisco-Josephinae, 1 (1923), 199-208."
+    ],
+    "formula": [
+        "a(0) = 2, a(n) = 2^(2^(n+1)-1) - 2^(2^(n)-1) + a(n-1)*(2^(2^(n)-1) + 1)."
+    ],
+    "example": [
+        "A table demonstrating the von Neumann ordinals of the first three integers, their corresponding bit strings, and their sequence values is as follows:",
+        "  n   set notation       bit string         a(n)",
+        "  0   {}                 10                 2",
+        "  1   {{}}               1100               12",
+        "  2   {{{}}{}}           11100100           228",
+        "  3   {{{{}}{}}{{}}{}}   1111001001100100   62052"
+    ],
+    "program": [
+        "(Python)",
+        "def fBinDigit(n):",
+        "    return 2**(2**(n+1) - 1)",
+        "def a333447(n):",
+        "    if n==0:",
+        "        return 2",
+        "    else:",
+        "        prevAsEle = a333447(n-1) * fBinDigit(n-1)",
+        "        restOfEle = a333447(n-1) - fBinDigit(n-1)",
+        "        return fBinDigit(n)+prevAsEle+restOfEle"
+    ],
+    "xref": [
+        "Cf. A079559, A092124, A308187."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Kit Scriven_, Mar 21 2020",
+    "references": 1,
+    "revision": 31,
+    "time": "2020-05-08T16:53:48-04:00",
+    "created": "2020-04-28T00:49:50-04:00"
+}

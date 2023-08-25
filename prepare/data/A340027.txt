@@ -1,0 +1,28 @@
+{
+    "number": 340027,
+    "data": "1,1,2,7,50,520,10665,400220,29204589,4143245857,1146827743079,619412332805088,653237982066620540,1346571060160843394520,5432476352054378478159877,42947950068987980977264834190,666212968663987333085874313873428,20301440661023158546856805172595805762",
+    "name": "Number of inequivalent vertex colorings of connected graphs on n unlabeled vertices.",
+    "comment": [
+        "Equivalence is up to permutation of the colors. Adjacent vertices may have the same color."
+    ],
+    "example": [
+        "a(3) = 7 because there are 2 connected graphs on 3 vertices. The complete graph K_3 can be coloring in 3 ways (111, 112, 123) and the path graph P_3 can be colored in 4 ways (111, 112, 121, 123)."
+    ],
+    "program": [
+        "(PARI) \\\\ See links in A339645 for combinatorial species functions.",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, gcd(v[i], v[j]))) + sum(i=1, #v, v[i]\\2)}",
+        "graphsCycleIndex(n)={my(s=0); forpart(p=n, s+=permcount(p) * 2^edges(p) * sMonomial(p)); s/n!}",
+        "graphsSeries(n)={sum(k=0, n, graphsCycleIndex(k)*x^k) + O(x*x^n)}",
+        "InequivalentColoringsSeq(1+sLog(graphsSeries(15)))"
+    ],
+    "xref": [
+        "Cf. A340024, A340025, A340026."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Andrew Howroyd_, Jan 02 2021",
+    "references": 3,
+    "revision": 5,
+    "time": "2021-01-11T23:08:42-05:00",
+    "created": "2021-01-11T23:08:42-05:00"
+}

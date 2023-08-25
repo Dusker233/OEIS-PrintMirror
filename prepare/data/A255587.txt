@@ -1,0 +1,39 @@
+{
+    "number": 255587,
+    "data": "1,2,10,960,13950764,255690851718529024,1771080720430629161685158978892152599456,857834471403601877816627441633642526746656338035964968069692458744011458425706833248256",
+    "name": "Maximum absolute value of the coefficients of the n-th Swinnerton-Dyer polynomial.",
+    "reference": [
+        "Roman E. Maeder, Programming in Mathematica, Addison-Wesley, 1990, page 105."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A255587/b255587.txt\">Table of n, a(n) for n = 0..10</a>",
+        "MathOverflow, <a href=\"http://mathoverflow.net/questions/106907\">What bounds can we establish on coefficients of Swinnerton-Dyer polynomials?</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Swinnerton-DyerPolynomial.html\">Swinnerton-Dyer Polynomial</a>"
+    ],
+    "example": [
+        "SwinnertonDyerP(3, x) = x^8 - 40*x^6 + 352*x^4 - 960*x^2 + 576, hence a(3) = 960."
+    ],
+    "maple": [
+        "p:= proc(n) option remember; expand(`if`(n=0, x, mul(",
+        "      subs(x=x+i*sqrt(ithprime(n)), p(n-1)), i=[1, -1])))",
+        "    end:",
+        "a:= n-> max(map(abs, [coeffs(p(n))])):",
+        "seq(a(n), n=0..8);  # _Alois P. Heinz_, Jun 12 2022"
+    ],
+    "mathematica": [
+        "SwinnertonDyerP[0, x_] := x; SwinnertonDyerP[n_, x_] := Module[{sd, srp = Sqrt[Prime[n]] }, sd[y_] = SwinnertonDyerP[n - 1, y]; Expand[sd[x + srp] sd[x - srp]]]; a[n_] := CoefficientList[SwinnertonDyerP[n, x], x^2] // Abs // Max; Table[a[n], {n, 1, 10}]"
+    ],
+    "xref": [
+        "Cf. A153731, A354913."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Jean-Fran\u00e7ois Alcover_, Feb 27 2015",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Jun 12 2022"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2022-06-18T12:11:20-04:00",
+    "created": "2015-02-27T05:10:31-05:00"
+}

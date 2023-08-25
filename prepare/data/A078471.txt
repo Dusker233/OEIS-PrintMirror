@@ -1,0 +1,53 @@
+{
+    "number": 78471,
+    "data": "1,2,6,7,13,17,25,26,39,45,57,61,75,83,107,108,126,139,159,165,197,209,233,237,268,282,322,330,360,384,416,417,465,483,531,544,582,602,658,664,706,738,782,794,872,896,944,948,1005,1036,1108,1122,1176,1216",
+    "name": "Sum of all odd divisors of all positive integers <= n.",
+    "comment": [
+        "The subsequence of primes begins: 2, 7, 13, 17, 61, 83, 107, 139, 197, 233, then no more through a(54). [_Jonathan Vos Post_, Feb 14 2010]",
+        "a(n) is also the total number of parts in all partitions of all positive integers <= n into an odd number of equal parts. - _Omar E. Pol_, Jun 04 2017"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A078471/b078471.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "M. Baake and R. V. Moody, <a href=\"https://arxiv.org/abs/math/9904028\">Similarity submodules and root systems in four dimensions</a>, arXiv:math/9904028 [math.MG], 1999.",
+        "M. Baake and R. V. Moody, <a href=\"http://dx.doi.org/10.4153/CJM-1999-057-0\">Similarity submodules and root systems in four dimensions</a>, Canad. J. Math. 51 (1999), 1258-1276."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} A000593(k).",
+        "a(n) is asymptotic to c*n^2 where c = Pi^2/24.",
+        "a(n) = A024916(n) - A271342(n). - _Omar E. Pol_, Apr 08 2016",
+        "G.f.: (1/(1 - x))*Sum_{k>=1} k*x^k/(1 + x^k). - _Ilya Gutkovskiy_, Dec 23 2016",
+        "From _Ridouane Oudra_, Aug 28 2019: (Start)",
+        "a(n) = Sum_{k=1..n} (sigma(2k) - 2*sigma(k)), where sigma = A000203.",
+        "a(n) = A326124(n) - 2*A024916(n). (End)"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= n-> add(d, d=select(x-> x::odd, divisors(n))):",
+        "a:= proc(n) option remember; b(n)+`if`(n=1, 0, a(n-1)) end:",
+        "seq(a(n), n=1..60);  # _Alois P. Heinz_, Sep 25 2015"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[DivisorSum[k, (-1)^(# + 1) k/# &], {k, 1, n}]; Array[a, 60] (* _Jean-Fran\u00e7ois Alcover_, Dec 07 2015 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=sum(v=1,n,sumdiv(v,d,(-1)^(d+1)*v/d))",
+        "(PARI) a(n) = sum(k=1, n, sumdiv(k, d, (d%2)*d)); \\\\ _Michel Marcus_, Apr 09 2016",
+        "(Magma) [&+[&+[d:d in Divisors(k)|IsOdd(d)]:k in [1..n]]:n in [1..60]]; // _Marius A. Burtea_, Aug 28 2019",
+        "(Python)",
+        "def A078471(n): return sum(k*(n//k) for k in range((n>>1)+1, n+1)) + sum(k*(n//k-((n>>1)//k<<1)) for k in range(1, (n>>1)+1)) # _Chai Wah Wu_, Apr 26 2023"
+    ],
+    "xref": [
+        "Partial sums of A000593.",
+        "Cf. A024916, A271342, A000203, A326124."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Benoit Cloitre_, Dec 31 2002",
+    "ext": [
+        "Better definition from _Omar E. Pol_, Apr 09 2016"
+    ],
+    "references": 13,
+    "revision": 52,
+    "time": "2023-04-26T06:30:12-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

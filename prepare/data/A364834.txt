@@ -1,0 +1,35 @@
+{
+    "number": 364834,
+    "data": "0,2,2,6,11,17,17,25,25,35,35,47,47,61,76,92,92,110,110,130,130,152,152,176,201,227,227,255,255,285,285,317,317,351,386,422,422,460,460,500,500,542,542,586,631,677,677,725,725,775,775,827,827,881,936",
+    "name": "Sum of positive integers <= n which are multiples of 2 or 5.",
+    "comment": [
+        "a(n) is odd iff 5 <= n mod 20 <= 14. - _Saish S. Kambali_, Aug 14 2023"
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_21\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,0,0,0,0,0,0,0,2,-2,0,0,0,0,0,0,0,0,-1,1)."
+    ],
+    "formula": [
+        "a(n) = sn(n,2) + sn(n,5) - sn(n,10) where sn(n,d) = (an(n,d) * (an(n,d) + d))/(2*d) and an(n,d) = d * floor(n/d).",
+        "a(n) = Sum_{k=2..n} {k if gcd(k,10) > 1}."
+    ],
+    "mathematica": [
+        "Accumulate[Table[n * Boole[MemberQ[Mod[n, {2, 5}], 0]], {n, 0, 55}]] (* _Amiram Eldar_, Aug 09 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "sn = lambda k, n: ((n // k)*((n // k) + 1) * k) // 2",
+        "a = lambda n: sn(2, n) + sn(5, n) - sn(10, n)",
+        "print([a(n) for n in range(1, 56)])",
+        "(PARI) a(n) = vecsum(select(x->(!(x%2) || !(x%5)), [1..n])); \\\\ _Michel Marcus_, Aug 09 2023"
+    ],
+    "xref": [
+        "Cf. A065502, A126592."
+    ],
+    "keyword": "nonn,easy,new",
+    "offset": "1,2",
+    "author": "_Dar\u00edo Clavijo_, Aug 09 2023",
+    "references": 0,
+    "revision": 61,
+    "time": "2023-08-17T11:06:22-04:00",
+    "created": "2023-08-17T11:06:22-04:00"
+}

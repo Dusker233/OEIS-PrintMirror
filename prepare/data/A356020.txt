@@ -1,0 +1,44 @@
+{
+    "number": 356020,
+    "data": "1,3,6,12,18,30,60,90,120,180,360,540,720,1080,1440,2160,3780,4320,6120,7560,8640,12240,15120,24480,27720,30240,36720,48960,50400,55440,73440,83160,110880,128520,138600,166320,221760,257040,277200,332640,471240,514080,554400",
+    "name": "Positions of records in A356018, i.e., integers whose number of evil divisors sets a new record.",
+    "comment": [
+        "Corresponding records of number of evil divisors are 0, 1, 2, 3, 4, 6, 9, 10, 12, 15, ..."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A356020/b356020.txt\">Table of n, a(n) for n = 1..189</a>"
+    ],
+    "example": [
+        "60 is in the sequence because A356018(60) = 9 is larger than any earlier value in A356018."
+    ],
+    "mathematica": [
+        "f[n_] := DivisorSum[n, 1 &, EvenQ[DigitCount[#, 2, 1]] &]; fm = -1; s = {}; Do[If[(fn = f[n]) > fm, fm = fn; AppendTo[s, n]], {n, 1, 10^5}]; s (* _Amiram Eldar_, Jul 24 2022 *)"
+    ],
+    "program": [
+        "(PARI) upto(n) = my(res = List(), r=-1); forfactored(i=1, n, if(numdiv(i[2]) > r, d = divisors(i[2]); c=sum(j=1, #d, isevil(d[j])); if(c>r, r=c; listput(res,i[1])))); res",
+        "isevil(n) = bitand(hammingweight(n), 1)==0 \\\\ _David A. Corneth_, Jul 24 2022",
+        "(Python)",
+        "from sympy import divisors",
+        "from itertools import count, islice",
+        "def c(n): return bin(n).count(\"1\")&1 == 0",
+        "def f(n): return sum(1 for d in divisors(n, generator=True) if c(d))",
+        "def agen(record=-1):",
+        "    for k in count(1):",
+        "        if f(k) > record: record = f(k); yield k",
+        "print(list(islice(agen(), 40))) # _Michael S. Branicky_, Jul 24 2022"
+    ],
+    "xref": [
+        "Cf. A001969, A093688, A093696, A356018, A356019.",
+        "Similar sequences: A093036, A093037, A330815, A350756, A355969."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Bernard Schott_, Jul 24 2022",
+    "ext": [
+        "More terms from _Amiram Eldar_, Jul 24 2022"
+    ],
+    "references": 6,
+    "revision": 24,
+    "time": "2022-07-26T17:47:48-04:00",
+    "created": "2022-07-25T10:42:01-04:00"
+}

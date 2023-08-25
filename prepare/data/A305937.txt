@@ -1,0 +1,41 @@
+{
+    "number": 305937,
+    "data": "0,1,1,2,3,5,6,10,13,19,26,36,47,65,84,111,144,188,239,309,390,497,624,786,978,1224,1513,1875,2306,2839,3469,4246,5162,6279,7600,9196,11077,13344,16006,19191,22934,27387,32602,38788,46015,54547,64504,76209,89835",
+    "name": "Number of partitions such that the least positive integer which is not a part of the partition is prime.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A305937/b305937.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "example": [
+        "For n=3 there are three unrestricted partitions: 3, 2+1, and 1+1+1. The least positive integer not in the first partition is 1. One is not a prime so the first partition is not counted. For the second partition the smallest missing positive integer is 3, which is prime. For the third partition the missing number is 2, which is prime. So a(3)=2."
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0,",
+        "      `if`(t or isprime(i), 1, 0), `if`(i>n, 0,",
+        "      `if`(t or isprime(i), b(n, i+1, true), 0)+",
+        "       add(b(n-i*j, i+1, t), j=1..n/i)))",
+        "    end:",
+        "a:= n-> b(n, 1, false):",
+        "seq(a(n), n=0..70);  # _Alois P. Heinz_, Jun 16 2018"
+    ],
+    "mathematica": [
+        "nend = 30;",
+        "For[n = 1, n <= nend, n++,",
+        "  sum[n] = 0;",
+        "  partition = {n};",
+        "  For[i = 1, i <= PartitionsP[n], i++,",
+        "   partition = NextPartition[partition];",
+        "   mex = Min[Complement[Range[n + 1], partition]];",
+        "   If [PrimeQ[mex], sum[n]++;]    ] ];",
+        "Table[sum[i], {i, 1, nend}]"
+    ],
+    "xref": [
+        "Cf. A000040."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_David S. Newman_, Jun 14 2018",
+    "references": 1,
+    "revision": 13,
+    "time": "2018-06-16T16:00:03-04:00",
+    "created": "2018-06-16T16:00:03-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 60935,
+    "data": "1,2,4,12,72,1010,36302,3501500,984382830,820391106394,2231837962830894,19443994569352596154,611248544067759392038426,65374059149370152526265388842,27613396368509694864033710442373202",
+    "name": "Sum of entries in n-th antidiagonal in A060854.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A060935/b060935.txt\">Table of n, a(n) for n = 1..40</a>"
+    ],
+    "maple": [
+        "T:= (m, n)-> (m*n)! * mul(i!/(m+i)!, i=0..n-1):",
+        "a:= n-> add (T(k, 1+n-k), k=1..n):",
+        "seq (a(n), n=1..20);  # _Alois P. Heinz_, Aug 06 2012"
+    ],
+    "mathematica": [
+        "A060854[n_, k_]:= (k*(n-k+1))!*BarnesG[k+1]*BarnesG[n-k+2]/BarnesG[n+2];",
+        "Table[Sum[A060854[n, k], {k,n}], {n,20}] (* _G. C. Greubel_, Apr 07 2021 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "A060854:= func< n,k | Factorial((n-k+1)*k)*(&*[ Factorial(j)/Factorial(n-k+j+1): j in [0..k-1] ]) >;",
+        "[(&+[ A060854(n, k): k in [1..n] ]): n in [1..20]]; // _G. C. Greubel_, Apr 07 2021",
+        "(Sage)",
+        "def A060854(n, k): return factorial((n-k+1)*k)*product( factorial(j)/factorial(n-k+j+1) for j in (0..k-1) )",
+        "def A060935(n): return sum( A060854(n, k) for k in (1..n) )",
+        "[A060935(n) for n in (1..20)] # _G. C. Greubel_, Apr 07 2021"
+    ],
+    "xref": [
+        "Cf. A060854."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, May 06 2001",
+    "ext": [
+        "More terms from _Frank Ellermann_, Jun 15 2001"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2021-04-08T07:35:17-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

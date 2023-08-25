@@ -1,0 +1,37 @@
+{
+    "number": 355539,
+    "data": "1,6,19,97,103,110,2065,2515,3261,25562",
+    "name": "a(1) = 1; for n >= 2, a(n) is the earliest occurrence k of the next distinct pair {x(k), y(k)}, where x(k) and y(k) denote the count of zero digits in A355318(k) and A355317(k), respectively.",
+    "example": [
+        "6 is a term since {x(6), y(6)} is the earliest occurrence of {1, 2}, which means A355318(6) = 6106 has 1 zero digit, and A355317(6) = 60601 has 2 zero digits.",
+        "25562 is a term since {x(25562), y(25562)} is the earliest occurrence of {5, 6}, which means A355318(25562) = 1300020350 has 5 zero digits, and A355317(25562) = 30000350201 has 6 zero digits."
+    ],
+    "mathematica": [
+        "a[max_] := Block[{p, b, x, y}, p = Module[{l}, Select[{#, Prime[#]} & /@ Range[max], (l = IntegerDigits[#[[2]]]; SortBy[Tally[l], First] === SortBy[Tally[PadLeft[IntegerDigits[#[[1]]], Length[l]]], First]) &]]; Do[{x, y} = {Count[IntegerDigits[p[[i, 1]]], 0], Count[IntegerDigits[p[[i, 2]]], 0]}; If[! IntegerQ[b[x, y]], b[x, y] = i], {i, Length[p]}]; Sort[DownValues[b][[All, 2]]]]; a[100010000] (* Gives the first 9 terms *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import nextprime",
+        "def A355539_gen(): # generator of terms",
+        "    p, s, k = 2, set(), 0",
+        "    for i in count(1):",
+        "        if int(a:=''.join(sorted(str(p))))==int(b:=''.join(sorted(str(i)))):",
+        "            k += 1",
+        "            if (q:=(a.count('0'),b.count('0'))) not in s:",
+        "                yield k",
+        "                s.add(q)",
+        "        p = nextprime(p)",
+        "A355539_list = list(islice(A355539_gen(),5)) # _Chai Wah Wu_, Jul 07 2022"
+    ],
+    "xref": [
+        "Cf. A355318, A355317."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_Xiaofeng Wang_, Jul 06 2022",
+    "references": 2,
+    "revision": 12,
+    "time": "2022-08-24T10:00:31-04:00",
+    "created": "2022-08-24T10:00:31-04:00"
+}

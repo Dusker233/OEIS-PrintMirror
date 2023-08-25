@@ -1,0 +1,37 @@
+{
+    "number": 267505,
+    "data": "2,3,7,43,79,547,3319,6163,36979,42667,258847,1553119,1573207,1834639,1854763,11131927,20224159,20451679,124027567,141569107,141588763,467477683,1840398379,3278780359,5276533183,6089163523,6155955079,11168428363,11185512199,31655671459",
+    "name": "Primes p such that p-1 is squarefree and all prime divisors of p-1 other than 13 are also in the sequence.",
+    "comment": [
+        "Is this sequence infinite?"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A267505/b267505.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "mathematica": [
+        "fa = FactorInteger; is[2, p_] = True; is[2, p_];",
+        "is[n_, p_] := PrimeQ[n] &&  MoebiusMu[n - 1] \u2260 0 && Union@Table[is[fa[n - 1][[i, 1]], p] || fa[n - 1][[ i, 1]] == p , {i, Length[fa[n - 1]]}] == {True}; Select[Prime[Range[100000]], is[#, 13] &]"
+    ],
+    "program": [
+        "(PARI)",
+        "leastdiv(v, pred, inf)={ \\\\ finds least divisor d satisfying pred(d) && d>=inf",
+        "  my(recurse(k,d,lim)= if(d >= lim, lim, if(d>=inf && pred(d), d, k++; if(k<=#v, lim=self()(k, d*v[k], lim); self()(k, d, lim), lim))));",
+        "  my(stop=vecprod(v), lim=inf, m=4);",
+        "  while(lim<=stop, lim*=m; my(d=recurse(0,1,lim)); if(d<lim, return(d), m*=4*sqrtint(m))); oo;",
+        "}",
+        "lista(n, S=[13])={my(t=2); print1(t, \", \"); for(i=2, n, S=concat(S, [t]); t=leastdiv(S, d->isprime(d+1), S[#S]); if(t==oo, break); t++; print1(t, \", \"))} \\\\ _Andrew Howroyd_, Nov 13 2018"
+    ],
+    "xref": [
+        "Cf. A267503, A267504, A267506, A267507, A005117, A227455, A227007, A227006."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jos\u00e9 Mar\u00eda Grau Ribas_, Jan 16 2016",
+    "ext": [
+        "Terms a(16) and beyond from _Andrew Howroyd_, Nov 13 2018"
+    ],
+    "references": 5,
+    "revision": 22,
+    "time": "2021-02-16T02:10:05-05:00",
+    "created": "2016-01-17T20:13:23-05:00"
+}

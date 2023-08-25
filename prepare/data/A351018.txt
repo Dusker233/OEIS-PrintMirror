@@ -1,0 +1,77 @@
+{
+    "number": 351018,
+    "data": "1,1,2,3,6,9,18,27,46,77,122,191,326,497,786,1207,1942,2905,4498,6703,10574,15597,23754,35043,52422,78369,115522,169499,248150,360521,532466,768275,1116126,1606669,2314426,3301879,4777078,6772657,9677138,13688079,19406214",
+    "name": "Number of integer compositions of n with all distinct even-indexed parts and all distinct odd-indexed parts.",
+    "comment": [
+        "Also the number of binary words of length n starting with 1 and having all distinct runs (ranked by A175413, counted by A351016)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A351018/b351018.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Mathematics Stack Exchange, <a href=\"https://math.stackexchange.com/q/87559\">What is a sequence run? (answered 2011-12-01)</a>"
+    ],
+    "formula": [
+        "a(n>0) = A351016(n)/2.",
+        "G.f.: Sum_{k>=0} floor(k/2)! * ceiling(k/2)! * ([y^floor(k/2)] P(x,y)) * ([y^ceiling(k/2)] P(x,y)), where P(x,y) = Product_{k>=1} 1 + y*x^k. - _Andrew Howroyd_, Feb 11 2022"
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 18 compositions:",
+        "  (1)  (2)    (3)    (4)      (5)      (6)",
+        "       (1,1)  (1,2)  (1,3)    (1,4)    (1,5)",
+        "              (2,1)  (2,2)    (2,3)    (2,4)",
+        "                     (3,1)    (3,2)    (3,3)",
+        "                     (1,1,2)  (4,1)    (4,2)",
+        "                     (2,1,1)  (1,1,3)  (5,1)",
+        "                              (1,2,2)  (1,1,4)",
+        "                              (2,2,1)  (1,2,3)",
+        "                              (3,1,1)  (1,3,2)",
+        "                                       (2,1,3)",
+        "                                       (2,3,1)",
+        "                                       (3,1,2)",
+        "                                       (3,2,1)",
+        "                                       (4,1,1)",
+        "                                       (1,1,2,2)",
+        "                                       (1,2,2,1)",
+        "                                       (2,1,1,2)",
+        "                                       (2,2,1,1)"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Tuples[{0,1},n],#=={}||First[#]==1&&UnsameQ@@Split[#]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI) P(n)=prod(k=1, n, 1 + y*x^k + O(x*x^n));",
+        "seq(n)=my(p=P(n)); Vec(sum(k=0, n, polcoef(p,k\\2,y)*(k\\2)!*polcoef(p,(k+1)\\2,y)*((k+1)\\2)!)) \\\\ _Andrew Howroyd_, Feb 11 2022"
+    ],
+    "xref": [
+        "The case of partitions is A000726.",
+        "The version for run-lengths instead of runs is A032020.",
+        "These words are ranked by A175413.",
+        "A005811 counts runs in binary expansion.",
+        "A011782 counts integer compositions.",
+        "A044813 lists numbers whose binary expansion has distinct run-lengths.",
+        "A059966 counts Lyndon compositions, necklaces A008965, aperiodic A000740.",
+        "A116608 counts compositions by number of distinct parts.",
+        "A238130 and A238279 count compositions by number of runs.",
+        "A242882 counts compositions with distinct multiplicities.",
+        "A297770 counts distinct runs in binary expansion.",
+        "A325545 counts compositions with distinct differences.",
+        "A329738 counts compositions with equal run-lengths.",
+        "A329744 counts compositions by runs-resistance.",
+        "A351014 counts distinct runs in standard compositions.",
+        "Counting words with all distinct runs:",
+        "- A351013 = compositions, for run-lengths A329739, ranked by A351290.",
+        "- A351016 = binary words, for run-lengths A351017.",
+        "- A351200 = patterns, for run-lengths A351292.",
+        "- A351202 = permutations of prime factors.",
+        "Cf. A003242, A025047, A098504, A098859, A106356, A212322, A328592, A329740, A334028, A349054, A350952, A351205."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Feb 09 2022",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Feb 11 2022"
+    ],
+    "references": 23,
+    "revision": 16,
+    "time": "2022-02-12T20:28:47-05:00",
+    "created": "2022-02-12T13:41:37-05:00"
+}

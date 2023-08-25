@@ -1,0 +1,44 @@
+{
+    "number": 91046,
+    "data": "1,4,20,119,817,6338,54707,519184,5366097,59934937,718748131,9203953921,125268224954,1804750726306,27426230051634,438260834123607,7343677070172330,128716143768613600,2354633702684629141,44865189679858465163,888784065003104357924",
+    "name": "Stirling transform of first differences of Bell numbers (A005493), if offset zero: a(n) = Sum_{k=1..n} A008277(n,k)*A005493(k).",
+    "comment": [
+        "Equals A039810 * [1,2,3,...], i.e., the square of the Stirling2 triangle and the natural number vector. - _Gary W. Adamson_, Jan 31 2008",
+        "From _Mark Wildon_, Nov 01 2022: (Start)",
+        "a(n) is the number of pairs (P, P') where P' is a set partition of {1,...,n}, P is a set partition of {1,...,P} refining P, and one part of P' is distinguished.",
+        "For example, for n=2 the 4 set partition pairs for n=2 are ({{1,2}},{{1,2}*}), ({{1},{2}},{{1,2}}*), ({{1},{2}},{{1}*,{2}}), ({{1},{2}},{{1},{2}*}), where the distinguished part of the coarser partition is marked *",
+        "a(n) is the inner product in the character ring of the symmetric group S_{mn} of the characters pi^n and phi_n Ind_{S_m wr S_n}^{S_{mn}}, where pi(g) = |Fix g| is the permutation character of the natural representation of S_{mn} and phi_n is the character of the wreath product S_m wr S_n obtained by inflating the character chi^{(n-1,1)} of S_n to S_m wr S_n. (End)"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A091046/b091046.txt\">Table of n, a(n) for n = 1..478</a>"
+    ],
+    "formula": [
+        "E.g.f.: (exp(exp(x)-1)-1)*exp(exp(exp(x)-1)-1).",
+        "Representation as an infinite sum (Dobinski-type relation): a(n) = exp(exp(-1)-1)*Sum(p^n*((Sum((Stirling2(p+1, k) - Stirling2(p, k))*exp(-k), k=1..p) + exp(-(p+1)))/p!), p>=1), n = 1, 2, ...."
+    ],
+    "maple": [
+        "s:= proc(n) option remember; expand(`if`(n=0, 1,",
+        "      x*add(s(n-j)*binomial(n-1, j-1), j=1..n)))",
+        "    end:",
+        "S:= proc(n, k) option remember; coeff(s(n), x, k) end:",
+        "b:= proc(n, k) option remember; `if`(k=0, n,",
+        "      add(S(n, j)*b(j, k-1), j=0..n))",
+        "    end:",
+        "a:= n-> b(n, 2):",
+        "seq(a(n), n=1..23);  # _Alois P. Heinz_, Aug 24 2021"
+    ],
+    "mathematica": [
+        "len = 23;",
+        "Array[StirlingS2, {len, len}].Differences[Array[BellB, len+1]] (* _Jean-Fran\u00e7ois Alcover_, Apr 25 2022 *)"
+    ],
+    "xref": [
+        "Cf. A000258, A005493, A039810."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Karol A. Penson_, Dec 15 2003",
+    "references": 1,
+    "revision": 35,
+    "time": "2022-11-02T07:49:45-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

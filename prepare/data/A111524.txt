@@ -1,0 +1,35 @@
+{
+    "number": 111524,
+    "data": "10,13,23,49,111,113,171,211,293,309,309,469,639,759,951,1037,1057,1083,1257,1269,1287,1341,1551,1637,1677,1981,1989,2021,2059,2357,2583,2697,2967,3289,6789,7073,7323,7369,7463,7501,7709,7869,8029,8069,8077,8519",
+    "name": "a(1) = 10; a(n) is smallest number >= a(n-1) such that the juxtaposition a(1)a(2)...a(n) is a prime.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A111524/b111524.txt\">Table of n, a(n) for n = 1..449</a>"
+    ],
+    "mathematica": [
+        "a[1] = 10; a[n_] := a[n] = Block[{k = a[n - 1] + 1 + Mod[a[n - 1], 2], c = IntegerDigits @ Table[ a[i], {i, n - 1}]}, While[ !PrimeQ[ FromDigits @ Flatten @ Append[c, IntegerDigits[k]]], k += 2]; k]; Table[ a[n], {n, 46}] (* _Robert G. Wilson v_, Aug 05 2005 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def aupton(terms):",
+        "    alst, astr = [10], \"10\"",
+        "    while len(alst) < terms:",
+        "        k = alst[-1] + (1 - alst[-1]%2)",
+        "        while not isprime(int(astr+str(k))): k += 2",
+        "        alst.append(k)",
+        "        astr += str(k)",
+        "    return alst",
+        "print(aupton(46)) # _Michael S. Branicky_, Oct 13 2021"
+    ],
+    "xref": [
+        "Cf. A111525, A074346, A033680, A033679, A033681.",
+        "Cf. A046254, A046255, A046256, A046257, A046258, A046259."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, _Zak Seidov_ and _Robert G. Wilson v_, Aug 05 2005",
+    "references": 12,
+    "revision": 15,
+    "time": "2021-10-13T08:39:18-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

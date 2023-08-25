@@ -1,0 +1,48 @@
+{
+    "number": 331623,
+    "data": "1,1,6,92,11482,8956752,54331653686,2535604038015218,951645881858020642746,2911820015993491302722966990,73784388170659542104264761249115686,15642058800086197220958447712819197014917632,27980772370697320617389378491983217784996780441605354",
+    "name": "Number of sequences with n copies each of 1,2,...,n avoiding absolute differences between adjacent elements larger than one.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A331623/b331623.txt\">Table of n, a(n) for n = 0..25</a>"
+    ],
+    "formula": [
+        "a(n) = A331562(n,n)."
+    ],
+    "example": [
+        "a(0) = 1: the empty sequence.",
+        "a(1) = 1: 1.",
+        "a(2) = 6: 1122, 1212, 1221, 2112, 2121, 2211.",
+        "a(3) = 92: 111222333, 111223233, 111223323, 111223332, ..., 333221112, 333221121, 333221211, 333222111."
+    ],
+    "maple": [
+        "b:= proc(l, q) option remember; (n-> `if`(n<2, 1, add(",
+        "     `if`(l[j]=1, `if`(j in [1, n], b(subsop(j=[][], l),",
+        "     `if`(j=1, 0, n)), 0), b(subsop(j=l[j]-1, l), j)), j=",
+        "     `if`(q<0, 1..n, max(1, q-1)..min(n, q+1)))))(nops(l))",
+        "    end:",
+        "a:= n-> b([n$n], -1):",
+        "seq(a(n), n=0..6);"
+    ],
+    "mathematica": [
+        "b[l_, q_] := b[l, q] = With[{n = Length[l]}, If[n < 2, 1, Sum[",
+        "      If[l[[j]] == 1, If[j == 1 || j == n, b[ReplacePart[l, j -> Nothing],",
+        "      If[j == 1, 0, n]], 0], b[ReplacePart[l, j -> l[[j]] - 1], j]], {j,",
+        "      If[q < 0, Range[n], Range[Max[1, q - 1], Min[n, q + 1]]]}]]];",
+        "a[n_] := b[Table[n, {n}], -1];",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 0, 8}] (* _Jean-Fran\u00e7ois Alcover_, Jan 04 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Main diagonal of A331562.",
+        "Cf. A034841."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jan 22 2020",
+    "ext": [
+        "a(9)-a(12) (using new data provided by _Andrew Howroyd_ in A331562) from _Alois P. Heinz_, Sep 01 2020"
+    ],
+    "references": 2,
+    "revision": 22,
+    "time": "2021-01-04T06:19:09-05:00",
+    "created": "2020-01-22T17:23:22-05:00"
+}

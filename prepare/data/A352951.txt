@@ -1,0 +1,55 @@
+{
+    "number": 352951,
+    "data": "5,29,599,26699,59669,72869,189389,285839,389999,508619,623669,708989,862229,908879,945629,945809,953789,1002149,1134389,1138409,1431569,1461209,1712549,2110289,2127269,2158589,2704769,2727299,2837279,3004049,3068909,3091379,3280229,3336659,3402239,3546269",
+    "name": "Primes p such that p+2, (p^2-5)/2-p, (p^2-1)/2+p, and (p^2+3)/2+3*p are all prime.",
+    "comment": [
+        "Lower twin primes p such that if q = p+2, then (p*q-1)/2, (p*q-1)/2-p-q and (p*q-1)/2+p+q are also prime.",
+        "All terms but the first == 29 (mod 30)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A352951/b352951.txt\">Table of n, a(n) for n = 1..2500</a>"
+    ],
+    "example": [
+        "a(3)=599 is a term because it, 599+2 = 601, (599*601-1)/2 = 179999, 179999-599-601 = 178799, and 179999+599+601 = 181199 are prime."
+    ],
+    "maple": [
+        "R:= 5: count:= 0:",
+        "for p from 29 by 30 while count < 60 do",
+        "  if isprime(p) and isprime(p+2) then",
+        "    q:= p+2; r:= (p*q-1)/2;",
+        "    if isprime(r) and isprime(r+p+q) and isprime(r-p-q) then",
+        "      count:= count+1; R:= R,p;",
+        "    fi",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[250000]], And @@ PrimeQ[{# + 2, (#^2 - 5)/2 - #, (#^2 - 1)/2 + #, (#^2 + 3)/2 + 3*#}] &] (* _Amiram Eldar_, Apr 11 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime",
+        "def agen(): # generator of terms",
+        "    p, q = 3, 5",
+        "    while True:",
+        "        if q == p+2:",
+        "            t, s = (p*q-1)//2, p+q",
+        "            if isprime(t) and isprime(t+s) and isprime(t-s):",
+        "                yield p",
+        "        p, q = q, nextprime(q)",
+        "print(list(islice(agen(), 36))) # _Michael S. Branicky_, Apr 10 2022"
+    ],
+    "xref": [
+        "Cf. A352948.",
+        "Subsequence of A001359."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Apr 10 2022",
+    "references": 1,
+    "revision": 22,
+    "time": "2022-05-21T14:52:52-04:00",
+    "created": "2022-04-18T22:24:23-04:00"
+}

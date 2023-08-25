@@ -1,0 +1,38 @@
+{
+    "number": 319111,
+    "data": "1,1,2,4,7,13,22,38,63,105,174,278,447,707,1122,1766,2729,4213,6482,9880,15069,22799,34290,51378,76777,114365,169324,250162,368505,540575,792042,1154798,1680385,2439101,3530308,5103380,7349875,10564955,15155752,21696072,31007949,44199845",
+    "name": "Expansion of Product_{k>=1} 1/(1 - phi(k)*x^k), where phi = Euler totient function (A000010).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A319111/b319111.txt\">Table of n, a(n) for n = 0..8200</a>"
+    ],
+    "formula": [
+        "G.f.: exp(Sum_{k>=1} Sum_{j>=1} phi(j)^k*x^(j*k)/k).",
+        "From _Vaclav Kotesovec_, Feb 08 2019: (Start)",
+        "a(n) ~ c * 2^(2*n/5), where",
+        "c = 18827.6460615531202942792897255332975807324818737172163... if mod(n,5) = 0",
+        "c = 18827.5079339024144115146595255453426552477117955925738... if mod(n,5) = 1",
+        "c = 18827.4967567108036710998657106724179082561779712900405... if mod(n,5) = 2",
+        "c = 18827.4818413568083742650057347700058389606441225811016... if mod(n,5) = 3",
+        "c = 18827.4547665561882994953942505862213438332903500716893... if mod(n,5) = 4",
+        "(End)"
+    ],
+    "maple": [
+        "with(numtheory): a:=series(mul(1/(1-phi(k)*x^k),k=1..50),x=0,42): seq(coeff(a,x,n),n=0..41); # _Paolo P. Lava_, Apr 02 2019"
+    ],
+    "mathematica": [
+        "nmax = 41; CoefficientList[Series[Product[1/(1 - EulerPhi[k] x^k), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 41; CoefficientList[Series[Exp[Sum[Sum[EulerPhi[j]^k x^(j k)/k, {j, 1, nmax}], {k, 1, nmax}]], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[d EulerPhi[d]^(k/d), {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 41}]"
+    ],
+    "xref": [
+        "Cf. A000010, A061255, A159929, A318917.",
+        "Cf. A279784, A306327, A316961."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Sep 10 2018",
+    "references": 2,
+    "revision": 10,
+    "time": "2019-04-03T02:55:04-04:00",
+    "created": "2018-09-12T15:06:08-04:00"
+}

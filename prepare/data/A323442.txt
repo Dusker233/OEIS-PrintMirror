@@ -1,0 +1,40 @@
+{
+    "number": 323442,
+    "data": "2,2,2,2,6,8,16,26,44,88,160,318,620,1234,2434,4860,9664,19282,38450,76804,153362,306524,612576,1224770,2448594,4896428,9790988,19580486,39157180,78311372,156615316,313224766,626434456,1252857082,2505684038,5011344512",
+    "name": "Number of length-n binary strings that neither begin nor end with a square.",
+    "comment": [
+        "A square is a nonempty block of the form XX, where X is a block."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A323442/b323442.txt\">Table of n, a(n) for n = 1..40</a>",
+        "R\u00e9my Sigrist, <a href=\"/A323442/a323442.txt\">C program for A323442</a>"
+    ],
+    "example": [
+        "For n = 6 the 8 examples are {010001,011001,011101,011110} and their complements."
+    ],
+    "program": [
+        "(C) See Links section.",
+        "(Python)",
+        "from itertools import product as prod",
+        "def c(w): # string w begins or ends with a square",
+        "    if any(w[:i] == w[i:2*i] for i in range(1, len(w)//2+1)): return True",
+        "    if any(w[-i:] == w[-2*i:-i] for i in range(1, len(w)//2+1)): return True",
+        "    return False",
+        "def a(n):",
+        "    return sum(2 for b in prod(\"01\", repeat=n-1) if not c(\"0\"+\"\".join(b)))",
+        "print([a(n) for n in range(1, 21)]) # _Michael S. Branicky_, Jul 04 2022"
+    ],
+    "xref": [
+        "Similar to, but not the same as, A323443."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Jan 15 2019",
+    "ext": [
+        "a(21)-a(36) from _Lars Blomberg_, Jan 17 2019"
+    ],
+    "references": 2,
+    "revision": 20,
+    "time": "2022-07-04T19:49:58-04:00",
+    "created": "2019-01-15T09:24:48-05:00"
+}

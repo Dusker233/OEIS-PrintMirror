@@ -1,0 +1,66 @@
+{
+    "number": 348615,
+    "data": "0,0,0,2,14,88,598,4496,37550,347008,3527758,39209216,473596070,6182284288,86779569238,1303866853376,20884006863710,355267697410048,6397563946377118,121586922638606336,2432161265800164950,51081039175603191808,1123862030028821404198",
+    "name": "Number of non-alternating permutations of {1...n}.",
+    "comment": [
+        "A sequence is alternating if it is alternately strictly increasing and strictly decreasing, starting with either.",
+        "Also permutations of {1...n} matching the consecutive patterns (1,2,3) or (3,2,1). Matching only one of these gives A065429."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Alternating_permutation\">Alternating permutation</a>"
+    ],
+    "formula": [
+        "a(n) = n! - A001250(n)."
+    ],
+    "example": [
+        "The a(4) = 14 permutations:",
+        "  (1,2,3,4)  (3,1,2,4)",
+        "  (1,2,4,3)  (3,2,1,4)",
+        "  (1,3,4,2)  (3,4,2,1)",
+        "  (1,4,3,2)  (4,1,2,3)",
+        "  (2,1,3,4)  (4,2,1,3)",
+        "  (2,3,4,1)  (4,3,1,2)",
+        "  (2,4,3,1)  (4,3,2,1)"
+    ],
+    "maple": [
+        "b:= proc(u, o) option remember;",
+        "      `if`(u+o=0, 1, add(b(o-1+j, u-j), j=1..u))",
+        "    end:",
+        "a:= n-> n!-`if`(n<2, 1, 2)*b(n, 0):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Nov 04 2021"
+    ],
+    "mathematica": [
+        "wigQ[y_]:=Or[Length[y]==0,Length[Split[y]] ==Length[y]&&Length[Split[Sign[Differences[y]]]]==Length[y]-1];",
+        "Table[Length[Select[Permutations[Range[n]],!wigQ[#]&]],{n,0,6}]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import accumulate, count, islice",
+        "def A348615_gen(): # generator of terms",
+        "    yield from (0,0)",
+        "    blist, f = (0,2), 1",
+        "    for n in count(2):",
+        "        f *= n",
+        "        yield f - (blist := tuple(accumulate(reversed(blist),initial=0)))[-1]",
+        "A348615_list = list(islice(A348615_gen(),40)) # _Chai Wah Wu_, Jun 09-11 2022"
+    ],
+    "xref": [
+        "The complement is counted by A001250, ranked by A333218.",
+        "The complementary version for compositions is A025047, ranked by A345167.",
+        "A directed version is A065429, complement A049774.",
+        "The version for compositions is A345192, ranked by A345168.",
+        "The version for ordered factorizations is A348613, complement A348610.",
+        "A345165 counts partitions w/o an alternating permutation, ranked by A345171.",
+        "A345170 counts partitions w/ an alternating permutation, ranked by A345172.",
+        "A348379 counts factorizations with an alternating permutation.",
+        "A348380 counts factorizations without an alternating permutation.",
+        "Cf. A056986, A102726, A325534, A325535, A344614, A344653, A344654, A347050, A347706, A348377, A348609."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Nov 03 2021",
+    "references": 48,
+    "revision": 17,
+    "time": "2022-06-11T11:43:08-04:00",
+    "created": "2021-11-04T11:09:20-04:00"
+}

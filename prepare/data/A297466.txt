@@ -1,0 +1,57 @@
+{
+    "number": 297466,
+    "data": "3,7,10,13,17,20,23,26,30,33,37,40,43,47,50,53,56,60,63,67,70,73,77,80,83,86,90,93,97,100,103,107,110,113,116,120,123,127,130,133,137,140,143,146,150,153,157,160,163,167,170,173,176,180,183,187,190,193",
+    "name": "Solution (c(n)) of the system of 4 complementary equations in Comments.",
+    "comment": [
+        "Define sequences a(n), b(n), c(n), d(n) recursively, starting with a(0) = 1, b(0) = 2, c(0) = 3:",
+        "a(n) = least new;",
+        "b(n) = least new;",
+        "c(n) = least new;",
+        "d(n) = a(n) + b(n) + c(n);",
+        "where \"least new k\" means the least positive integer not yet placed.",
+        "***",
+        "Conjecture: for all n >= 0,",
+        "0 <= 10n - 6 - 3 a(n) <= 2",
+        "0 <= 10n - 2 - 3 b(n) <= 3",
+        "0 <= 10n + 1 - 3 c(n) <= 3",
+        "0 <= 10n - 3 - d(n) <= 2",
+        "***",
+        "The sequences a,b,c,d partition the positive integers.  The sequence d can be called the \"anti-tribonacci sequence\"; viz., if sequences a and b are defined as above, and c(n) is defined by c(n) = a(n) + b(n), then the resulting system of 3 complementary sequences gives c = A036554, the \"anti-Fibonacci sequence.\"",
+        "Conjectures from _Georg Fischer_, Sep 23 2020 (Start):",
+        "Linear recurrence with signature (1,0,0,0,0,0,0,0,1,-1).",
+        "G.f.: (3 + 4*x + 3*x^2 + 3*x^3 + 4*x^4 + 3*x^5 + 3*x^6 + 3*x^7 + 4*x^8)/(1 - x - x^9 + x^10). (End)"
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A297466/b297466.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "n:   0    1    2    3    4    5    6    7    8    9",
+        "a:   1    4    8   11   14   18   21   24   28   31",
+        "b:   2    5    9   12   15   19   22   25   29   32",
+        "c:   3    7   10   13   17   20   23   26   30   33",
+        "d:   6   16   27   36   46   57   66   75   87   96"
+    ],
+    "mathematica": [
+        "z = 400;",
+        "mex[list_, start_] := (NestWhile[# + 1 &, start, MemberQ[list, #] &]);",
+        "a = {1}; b = {2}; c = {3}; d = {}; AppendTo[d, Last[a] + Last[b] + Last[c]];",
+        "Do[{AppendTo[a, mex[Flatten[{a, b, c, d}], 1]],",
+        "   AppendTo[b, mex[Flatten[{a, b, c, d}], 1]],",
+        "   AppendTo[c, mex[Flatten[{a, b, c, d}], 1]],",
+        "   AppendTo[d, Last[a] + Last[b] + Last[c]]}, {z}];",
+        "Take[a, 100]  (* A297464 *)",
+        "Take[b, 100]  (* A297465 *)",
+        "Take[c, 100]  (* A297466 *)",
+        "Take[d, 100]  (* A265389 *)"
+    ],
+    "xref": [
+        "Cf. A036554, A299634, A297464, A297465, A265389."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "_Clark Kimberling_, Apr 22 2018",
+    "references": 3,
+    "revision": 12,
+    "time": "2020-09-23T06:58:44-04:00",
+    "created": "2018-04-22T17:50:30-04:00"
+}

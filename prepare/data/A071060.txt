@@ -1,0 +1,32 @@
+{
+    "number": 71060,
+    "data": "7,73,773,7757,77773,777737,7777753,77777377,777777773,7777777577,77777777573,777777777773,7777777777573,77777777777753,777777777777773,7777777777777753,77777777777775557,777777777777777737,7777777777777777577,77777777777777777257,777777777777777777773,7777777777777777773533,77777777777777777775353",
+    "name": "Largest n-digit prime with only prime digits.",
+    "comment": [
+        "Terms a(5) through a(23) have been certified prime with Primo."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A071060/b071060.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "Conjecture: a(n) ~ floor((7/9) * 10^n). - _Bill McEachen_, Apr 07 2023"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import product",
+        "def a(n): return next(t for t in (int(\"\".join(p)+e) for p in product(\"7532\", repeat=n-1) for e in \"73\") if isprime(t))",
+        "print([a(n) for n in range(1, 24)]) # _Michael S. Branicky_, Apr 29 2023",
+        "(PARI) genit(nstrt=1,cownt=23)={my(arr=List());for(n=nstrt, nstrt+cownt, my(cand=0); for(i=1,n,cand=10*cand+7); if(ispseudoprime(cand)==1, listput(arr,cand);next); for(j=1,+oo,cand=precprime(cand-1); my(v=digits(cand), pass=1); for(ptr=1, #v, my(q=v[ptr]); if(q==2||q==3||q==5||q==7,next);pass=0;break);if(pass>0,break)); listput(arr,cand)); Vec(arr)} \\\\ _Bill McEachen_, Apr 29 2023"
+    ],
+    "xref": [
+        "Cf. A069837."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Rick L. Shepherd_, May 26 2002",
+    "references": 1,
+    "revision": 23,
+    "time": "2023-06-19T09:20:01-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

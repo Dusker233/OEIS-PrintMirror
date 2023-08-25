@@ -1,0 +1,41 @@
+{
+    "number": 164331,
+    "data": "1,46,2070,93150,4191750,188628750,8488292715,381973125600,17188788557160,773495390804400,34807288344147000,1566327784594320000,70484741716592195190,3171812990689846701000,142731567185989127785560",
+    "name": "Number of reduced words of length n in Coxeter group on 46 generators S_i with relations (S_i)^2 = (S_i S_j)^6 = I.",
+    "comment": [
+        "The initial terms coincide with those of A170765, although the two sequences are eventually different.",
+        "Computed with MAGMA using commands similar to those used to compute A154638."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A164331/b164331.txt\">Table of n, a(n) for n = 0..600</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (44,44,44,44,44,-990)."
+    ],
+    "formula": [
+        "G.f.: (t^6 + 2*t^5 + 2*t^4 + 2*t^3 + 2*t^2 + 2*t + 1)/(990*t^6 - 44*t^5 - 44*t^4 - 44*t^3 - 44*t^2 - 44*t + 1).",
+        "a(n) = -990*a(n-6) + 44*Sum_{k=1..5} a(n-k). - _Wesley Ivan Hurt_, May 11 2021"
+    ],
+    "maple": [
+        "seq(coeff(series((1+t)*(1-t^6)/(1-45*t+1034*t^6-990*t^7), t, n+1), t, n), n = 0 .. 30); # _G. C. Greubel_, Aug 16 2019"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1+t)*(1-t^6)/(1-45*t+1034*t^6-990*t^7), {t,0,30}], t] (* _G. C. Greubel_, Sep 14 2017 *)",
+        "coxG[{6, 990, -44}] (* The coxG program is at A169452 *) (* _G. C. Greubel_, Aug 16 2019 *)"
+    ],
+    "program": [
+        "(PARI) my(t='t+O('t^30)); Vec((1+t)*(1-t^6)/(1-45*t+1034*t^6-990*t^7)) \\\\ _G. C. Greubel_, Sep 14 2017",
+        "(Magma) R<t>:=PowerSeriesRing(Integers(), 30); Coefficients(R!( (1+t)*(1-t^6)/(1-45*t+1034*t^6-990*t^7) )); // _G. C. Greubel_, Aug 16 2019",
+        "(Sage)",
+        "def A164331_list(prec):",
+        "    P.<t> = PowerSeriesRing(ZZ, prec)",
+        "    return P((1+t)*(1-t^6)/(1-45*t+1034*t^6-990*t^7)).list()",
+        "A164331_list(30) # _G. C. Greubel_, Aug 16 2019",
+        "(GAP) a:=[46, 2070, 93150, 4191750, 188628750, 8488292715];; for n in [7..30] do a[n]:=44*(a[n-1] +a[n-2]+a[n-3]+a[n-4]+a[n-5]) -990*a[n-6]; od; Concatenation([1], a); # _G. C. Greubel_, Aug 16 2019"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_John Cannon_ and _N. J. A. Sloane_, Dec 03 2009",
+    "references": 1,
+    "revision": 17,
+    "time": "2022-09-08T08:45:47-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

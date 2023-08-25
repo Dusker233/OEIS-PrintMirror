@@ -1,0 +1,37 @@
+{
+    "number": 337037,
+    "data": "1,2,3,5,6,7,9,10,11,13,14,15,17,18,19,21,22,23,25,26,27,29,30,31,33,34,35,37,38,39,41,42,43,45,46,47,49,50,51,53,54,55,57,58,59,61,62,63,65,66,67,69,70,71,73,74,75,77,78,79,81,82,83,85,86,87,89,91,93,94,95,97,98,99,101",
+    "name": "Numbers whose every unordered factorization has a distinct sum of factors.",
+    "comment": [
+        "The number 1 is in the sequence by convention.",
+        "All primes p are trivially in the sequence.",
+        "All semiprimes greater than 4 are in the sequence because they have only two unordered factorizations pq = p*q whose sums are distinct. They are distinct because the only solution to p*q = p+q is p=q=2.",
+        "If a number m is not in the sequence, then all multiples of m are not in the sequence. For example, multiples of 4 are not in the sequence because there always exist at least two factorizations 4*k = 2*2*k whose factors sum to the same value 4+k = 2+2+k.",
+        "The complement is in A337080.",
+        "Numbers m such that A069016(m) = A001055(m). - _Michel Marcus_, Aug 15 2020"
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/UnorderedFactorization.html\">Unordered Factorization</a>."
+    ],
+    "example": [
+        "All unordered factorization of 30 are 30 = 2*15 = 3*10 = 5*6 = 2*3*5. Corresponding sums of factors are distinct: 30, 17 = 15+2, 13 = 10+3, 11 = 6+5, 10 = 2+3+5. Therefore 30 is in the sequence.",
+        "All unordered factorization of 90 are 90 = 45*2 = 30*3 = 18*5 = 15*6 = 15*3*2 = 10*9 = 9*5*2 = 10*3*3 = 6*5*3 = 5*3*3*2. Corresponding sums of factors are not all distinct: 90, 57, 33, 23, 21, 20, 19, 16, 16, 14, 13 because the sum 16 = 10+3+3 = 9+5+2 appears twice. Therefore 90 is not in the sequence."
+    ],
+    "program": [
+        "(PARI) factz(n, minn) = {my(v=[]); fordiv(n, d, if ((d>=minn) && (d<=sqrtint(n)), w = factz(n/d, d); for (i=1, #w, w[i] = concat([d], w[i]);); v = concat(v, w););); concat(v, [[n]]);}",
+        "factorz(n) = factz(n, 2);",
+        "isok(n) = my(vs = apply(x->vecsum(x), factorz(n))); #vs == #Set(vs); \\\\ _Michel Marcus_, Aug 13 2020"
+    ],
+    "xref": [
+        "Cf. A337080 (complement), A337081 (primitive complement).",
+        "Cf. A001055 (number of unordered factorizations of n), A074206 (number of ordered factorizations of n).",
+        "Cf. A056472 (all factorizations of n), A069016 (number of distinct sums)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Matej Veselovac_, Aug 12 2020",
+    "references": 4,
+    "revision": 34,
+    "time": "2020-09-14T00:13:15-04:00",
+    "created": "2020-08-16T05:25:58-04:00"
+}

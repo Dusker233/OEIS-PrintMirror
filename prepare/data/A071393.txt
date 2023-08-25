@@ -1,0 +1,36 @@
+{
+    "number": 71393,
+    "data": "1,558,1456,2170,2976,4680,5328,6816,7098,7812,9796,10230,13192,13578,14058,14260,15066,19096,22320,26128,26350,28542,28768,30600,32338,33696,36828,38440,40612,40950,50268,53946,57510,58590,62196,64750",
+    "name": "Reverse of largest prime factor of n = smallest prime factor of n+1; a(1)=1.",
+    "link": [
+        "Robert Israel, <a href=\"/A071393/b071393.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "13578 is here since 13578 = 2.3.31.'73' and 13579 = '37'.367."
+    ],
+    "maple": [
+        "revdigs:= proc(n) option remember; local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L));",
+        "end proc:",
+        "filter:= proc(n) local p;",
+        "  p:= revdigs(max(numtheory:-factorset(n)));",
+        "  isprime(p) and p = min(numtheory:-factorset(n+1))",
+        "end proc:",
+        "filter(1):= true:",
+        "select(filter, [$1..10000]); # _Robert Israel_, Apr 02 2020"
+    ],
+    "mathematica": [
+        "Join[{1},Select[Range[65000],IntegerReverse[FactorInteger[#][[-1,1]]] == FactorInteger[ #+1][[1,1]]&]] (* _Harvey P. Dale_, Mar 29 2018 *)"
+    ],
+    "xref": [
+        "Cf. A006530, A020639."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Jason Earls_, Jun 12 2002",
+    "references": 1,
+    "revision": 15,
+    "time": "2020-04-02T11:42:42-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

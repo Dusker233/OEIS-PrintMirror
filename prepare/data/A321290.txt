@@ -1,0 +1,57 @@
+{
+    "number": 321290,
+    "data": "1,2,3,4,5,7,8,10,11,13,17,21,22,28,29,33,38,41,48,68,70,96,124,130,158,179,239,309,310,351,468,509,640,843,900,1251,1576,1640,2305,2444,2989,3410,4575,5758,5998,7490,8602,11657,13017,15553,19150,24411,25365",
+    "name": "Smallest positive number for which the 3rd power cannot be written as sum of 3rd powers of any subset of previous terms.",
+    "comment": [
+        "a(n)^3 forms a sum-free sequence."
+    ],
+    "link": [
+        "Bert Dobbelaere, <a href=\"/A321290/b321290.txt\">Table of n, a(n) for n = 1..100</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Sum-free_sequence\">Sum-free sequence</a>"
+    ],
+    "example": [
+        "a(10) = 13. 3rd powers of 14, 15 and 16 can be written as sums of 3rd powers of a subset of the terms {a(1)..a(10)}:",
+        "14^3 = 2^3 + 3^3 + 8^3 + 13^3,",
+        "15^3 = 4^3 + 5^3 + 7^3 + 8^3 + 10^3 + 11^3,",
+        "16^3 = 1^3 + 2^3 + 3^3 + 4^3 + 5^3 + 7^3 + 11^3 + 13^3,",
+        "17^3 cannot be written in this way, so a(11) = 17 is the next term."
+    ],
+    "program": [
+        "(Python)",
+        "def findSum(nopt, tgt, a, smax, pwr):",
+        "....if nopt==0:",
+        "........return [] if tgt==0 else None",
+        "....if tgt<0 or tgt>smax[nopt-1]:",
+        "........return None",
+        "....rv=findSum(nopt-1, tgt - a[nopt-1]**pwr, a, smax, pwr)",
+        "....if rv!=None:",
+        "........rv.append(a[nopt-1])",
+        "....else:",
+        "........rv=findSum(nopt-1,tgt, a, smax, pwr)",
+        "....return rv",
+        "def A321290(n):",
+        "....POWER=3 ; x=0 ; a=[] ; smax=[] ; sumpwr=0",
+        "....while len(a)<n:",
+        "........while True:",
+        "............x+=1",
+        "............lst=findSum(len(a), x**POWER, a, smax, POWER)",
+        "............if lst==None:",
+        "................break",
+        "............rhs = \" + \".join([\"%d^%d\"%(i,POWER) for i in lst])",
+        "............print(\"    %d^%d = %s\"%(x,POWER,rhs))",
+        "........a.append(x) ; sumpwr+=x**POWER",
+        "........print(\"a(%d) = %d\"%(len(a),x))",
+        "........smax.append(sumpwr)",
+        "....return a[-1]"
+    ],
+    "xref": [
+        "Other powers: A321266 (2), A321291 (4), A321292 (5), A321293 (6)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Bert Dobbelaere_, Nov 02 2018",
+    "references": 5,
+    "revision": 8,
+    "time": "2018-11-03T11:52:53-04:00",
+    "created": "2018-11-03T11:52:53-04:00"
+}

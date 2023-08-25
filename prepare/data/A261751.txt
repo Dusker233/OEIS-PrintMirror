@@ -1,0 +1,45 @@
+{
+    "number": 261751,
+    "data": "0,1,2,3,4,6,8,16,23,32,64,91,128,256,512,1024,2048,4096,5793,8192,16384,32768,46341,65536,92682,131072,185364,262144,370728,524288,1048576,2097152,2965821,4194304,5931642,8388608,16777216,33554432,47453133,67108864,94906266",
+    "name": "Numbers n with property that binary expansion of n^3 begins with the binary expansion of n.",
+    "comment": [
+        "2^k is always a term in this sequence.",
+        "It appears that all solutions are either a power of 2 or approximately sqrt(2) * a power of 2. - _Andrew Howroyd_, Dec 24 2019"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A261751/b261751.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "23 is a term of this sequence because its cube written in base 2 (10111110000111) starts with its representation in base 2 (10111)."
+    ],
+    "mathematica": [
+        "SetBeginSet[set1_, set2_] :=",
+        "  Do[For[i = 1, i <= Length[set1], i++,If[! set1[[i]] == set2[[i]], Return[False]]];Return[True], {1}];",
+        "For[k = 0; set = {}, k <= 100000, k++,If[SetBeginSet[IntegerDigits[k, 2], IntegerDigits[k^3, 2]],Print[k]]]"
+    ],
+    "program": [
+        "(PARI) ok(n)={my(t=n^3); t == 0 || t>>(logint(t,2)-logint(n,2))==n} \\\\ _Andrew Howroyd_, Dec 23 2019",
+        "(PARI) \\\\ for larger values",
+        "viable(b,k)={my(p=b^3, q=(b+2^k-1)^3, s=logint(q,2), t=s-logint(b,2)+k); (p>>s)==0 || ((p>>t)<=(b>>k) && (b>>k)<=(q>>t))}",
+        "upto(n)={",
+        "  local(L=List([0]));",
+        "  my(recurse(b,k)=; if(b <= n && viable(b,k), k--; if(k<0, listput(L, b), self()(b,k); self()(b+2^k,k))));",
+        "  for(k=0, logint(n,2), recurse(2^k, k));",
+        "  Vec(L);",
+        "} \\\\ _Andrew Howroyd_, Dec 24 2019"
+    ],
+    "xref": [
+        "Base 2 version of A052210.",
+        "Cf. A004539."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,3",
+    "author": "_Dhilan Lahoti_, Aug 30 2015",
+    "ext": [
+        "Terms a(31) and beyond from _Andrew Howroyd_, Dec 23 2019"
+    ],
+    "references": 2,
+    "revision": 11,
+    "time": "2019-12-24T17:30:39-05:00",
+    "created": "2015-09-02T12:36:58-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 361915,
+    "data": "13,113,1069,5051,18553,44417,99439,190921,356351,603149,933073,1416223,2044201,2856559,3957883,5379287,7093217,9113263,11693687,14701529,18345209,22758829,27879563,33938257,40808759,48364003,57099061,67292237,78919781,92417891",
+    "name": "a(n) is the smallest prime p such that, for m >= nextprime(p), there are more composites than primes in the range [2, m], where multiples of primes prime(1) through prime(n) are excluded.",
+    "example": [
+        "The number of primes, N_p, and the number of composite, N_c, in the range [2, m] are listed in the table below, where N_p = N_c occurs at m = 9, 11 and 13. For m >= nextprime(13) = 17, N_c > N_p. So, a(0) = 13 is the case for n = 0, in which none of the multiples of primes is excluded from the integer list.",
+        "   m:   2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, ...",
+        "   N_p: 1, 2, 2, 3, 3, 4, 4, 4,  4,  5,  5,  6,  6,  6,  6,  7, ...",
+        "   N_c: 0, 0, 1, 1, 2, 2, 3, 4,  5,  5,  6,  6,  7,  8,  9,  9, ...",
+        "If the multiples of prime(1) are excluded from the list, 113 is the smallest prime such that N_c > N_p for m >= nextprime(113) = 127 and, thus, a(1) = 113 (see below).",
+        "   m:   3, 5, 7, ..., 93, 95, 97, 99, 101, 103, 105, 107, 109, 111, 113, 115, ...",
+        "   N_p: 1, 2, 3, ..., 23, 23, 24, 24,  25,  26,  26,  27,  28,  28,  29,  29, ...",
+        "   N_c: 0, 0, 0, ..., 23, 24, 24, 25,  25,  25,  26,  26,  26,  27,  27,  28, ...",
+        "If multiples of prime(1) and prime(2) are excluded, a(2) = 1069. If multiples of prime(1), prime(2) and prime(3) are excluded, a(3) = 5051."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, prime",
+        "R = []; L = [x for x in range(2, 100000001)]",
+        "for n in range(30):",
+        "    np = 0; nc = 0; found = 0",
+        "    if n > 0: q = prime(n); L = [x for x in L if x%q != 0]",
+        "    for m in L:",
+        "        if isprime(m): np += 1; p = m",
+        "        else: nc += 1",
+        "        if np == nc: Lp = p; found = 1",
+        "    if found: R.append(Lp)",
+        "print(*R, sep = \", \")"
+    ],
+    "xref": [
+        "Cf. A000040, A002808, A072731, A097454."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Ya-Ping Lu_, Mar 29 2023",
+    "references": 0,
+    "revision": 11,
+    "time": "2023-06-16T13:43:39-04:00",
+    "created": "2023-06-16T13:43:39-04:00"
+}

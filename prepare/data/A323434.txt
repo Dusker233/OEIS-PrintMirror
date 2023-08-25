@@ -1,0 +1,54 @@
+{
+    "number": 323434,
+    "data": "1,1,1,3,3,5,7,9,11,15,20,24,31,38,48,59,72,86,106,125,150,180,213,250,296,347,407,477,555,645,751,869,1003,1161,1334,1534,1763,2018,2306,2637,3002,3418,3886,4409,4994,5659,6390,7214,8135,9160,10300,11580,12990",
+    "name": "Number of ways to split a strict integer partition of n into consecutive subsequences of equal length.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A323434/b323434.txt\">Table of n, a(n) for n = 0..7000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_y A000005(k), where the sum is over all strict integer partitions of n and k is the number of parts."
+    ],
+    "example": [
+        "The a(10) = 20 split partitions:",
+        "  [10] [9 1] [8 2] [7 3] [7 2 1] [6 4] [6 3 1] [5 4 1] [5 3 2] [4 3 2 1]",
+        ".",
+        "  [9] [8] [7] [6] [4 3]",
+        "  [1] [2] [3] [4] [2 1]",
+        ".",
+        "  [7] [6] [5] [5]",
+        "  [2] [3] [4] [3]",
+        "  [1] [1] [1] [2]",
+        ".",
+        "  [4]",
+        "  [3]",
+        "  [2]",
+        "  [1]"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n>i*(i+1)/2, 0,",
+        "      `if`(n=0, numtheory[tau](t), b(n, i-1, t)+",
+        "         b(n-i, min(n-i, i-1), t+1)))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, b(n$2, 0)):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Jan 15 2019"
+    ],
+    "mathematica": [
+        "Table[Sum[Length[Divisors[Length[ptn]]],{ptn,Select[IntegerPartitions[n],UnsameQ@@#&]}],{n,30}]",
+        "(* Second program: *)",
+        "b[n_, i_, t_] := b[n, i, t] = If[n>i(i+1)/2, 0,",
+        "     If[n == 0, DivisorSigma[0, t], b[n, i-1, t] +",
+        "     b[n-i, Min[n-i, i-1], t+1]]];",
+        "a[n_] := If[n == 0, 1, b[n, n, 0]];",
+        "a /@ Range[0, 60] (* _Jean-Fran\u00e7ois Alcover_, May 18 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000005, A000219, A101509, A117433, A316245, A319066, A319794, A323295, A323301, A323431, A323433."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Jan 15 2019",
+    "references": 6,
+    "revision": 11,
+    "time": "2021-05-18T06:31:28-04:00",
+    "created": "2019-01-15T18:45:29-05:00"
+}

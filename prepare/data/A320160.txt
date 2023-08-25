@@ -1,0 +1,58 @@
+{
+    "number": 320160,
+    "data": "1,2,3,6,9,19,31,63,110,215,391,773,1451,2879,5594,11173,22041,44136,87631,175155,348186,694013,1378911,2743955,5452833,10853541,21610732,43122952,86192274,172753293,347114772,699602332,1414033078,2866580670,5826842877,11874508385",
+    "name": "Number of series-reduced balanced rooted trees whose leaves form an integer partition of n.",
+    "comment": [
+        "A rooted tree is series-reduced if every non-leaf node has at least two branches, and balanced if all leaves are the same distance from the root.",
+        "Also the number of balanced unlabeled phylogenetic rooted trees with n leaves."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320160/b320160.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 19 rooted trees:",
+        "  1  2     3      4           5            6",
+        "     (11)  (12)   (13)        (14)         (15)",
+        "           (111)  (22)        (23)         (24)",
+        "                  (112)       (113)        (33)",
+        "                  (1111)      (122)        (114)",
+        "                  ((11)(11))  (1112)       (123)",
+        "                              (11111)      (222)",
+        "                              ((11)(12))   (1113)",
+        "                              ((11)(111))  (1122)",
+        "                                           (11112)",
+        "                                           (111111)",
+        "                                           ((11)(13))",
+        "                                           ((11)(22))",
+        "                                           ((12)(12))",
+        "                                           ((11)(112))",
+        "                                           ((12)(111))",
+        "                                           ((11)(1111))",
+        "                                           ((111)(111))",
+        "                                           ((11)(11)(11))"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "phy2[labs_]:=If[Length[labs]==1,labs,Union@@Table[Sort/@Tuples[phy2/@ptn],{ptn,Select[mps[Sort[labs]],Length[#1]>1&]}]];",
+        "Table[Sum[Length[Select[phy2[ptn],SameQ@@Length/@Position[#,_Integer]&]],{ptn,IntegerPartitions[n]}],{n,8}]"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "seq(n)={my(u=vector(n, n, 1), v=vector(n)); while(u, v+=u; u=EulerT(u)-u); v} \\\\ _Andrew Howroyd_, Oct 25 2018"
+    ],
+    "xref": [
+        "Cf. A000081, A000311, A000669, A001678, A005804, A048816, A079500, A119262, A120803, A141268, A244925, A319312.",
+        "Cf. A316624, A320154, A320155, A320169, A320173, A320179."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Oct 06 2018",
+    "ext": [
+        "Terms a(14) and beyond from _Andrew Howroyd_, Oct 25 2018"
+    ],
+    "references": 20,
+    "revision": 9,
+    "time": "2018-10-26T00:52:09-04:00",
+    "created": "2018-10-07T14:35:50-04:00"
+}

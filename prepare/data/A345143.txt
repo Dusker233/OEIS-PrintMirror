@@ -1,0 +1,39 @@
+{
+    "number": 345143,
+    "data": "0,1,9,82,207,70021,11937681,1867379174326,623471971900739499585,5859949370091168271294333980238096,6908320893334921728606040790129494417723642675198936230",
+    "name": "Reflection of the concatenation of the previous two terms minus the previous term.",
+    "formula": [
+        "a(n) = A004086(a(n-2)||a(n-1)) - a(n-1) for n >= 2, a(n) = n for n <= 1."
+    ],
+    "example": [
+        "a(4) = 207 since 28(9) - 82 = 207."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<2, n, (s-> parse(cat(seq(",
+        "      s[-i], i=1..length(s))))-a(n-1))(cat(\"\", a(n-2), a(n-1))))",
+        "    end:",
+        "seq(a(n), n=0..11);  # _Alois P. Heinz_, Jun 11 2021"
+    ],
+    "mathematica": [
+        "a[0] = 0; a[1] = 1; a[n_] := a[n] = FromDigits[Join @@ (Reverse @ IntegerDigits[#] & /@ {a[n - 1], a[n - 2]})] - a[n - 1]; Array[a, 11, 0] (* _Amiram Eldar_, Jun 09 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def f(v): return int((str(v[-2])+str(v[-1]))[::-1]) - v[-1]",
+        "def aupton(nn):",
+        "    alst = [0, 1]",
+        "    for n in range(2, nn+1): alst.append(f(alst))",
+        "    return alst[:nn+1]",
+        "print(aupton(10)) # _Michael S. Branicky_, Jun 09 2021"
+    ],
+    "xref": [
+        "Cf. A004086, A068109."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_George Bull_, Jun 09 2021",
+    "references": 0,
+    "revision": 22,
+    "time": "2021-06-11T17:29:50-04:00",
+    "created": "2021-06-11T17:29:50-04:00"
+}

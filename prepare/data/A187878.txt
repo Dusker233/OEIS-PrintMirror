@@ -1,0 +1,37 @@
+{
+    "number": 187878,
+    "data": "5,8,10,125,231,250,470,1846,2844,2856,3570,5126,5320,7473,8687,12555,12573,16740,16764,17877,18630,20601,21620,22011,24823,27468,28861,31941,33120,37053,42315,42588,43761,49404,58078,61072,67728,68320,75042,79947,84660,86427,92432,97723,98802,99580",
+    "name": "Numbers k such that sopfr(k + omega(k)) = sopfr(k), where sopfr(i) = A001414(i) and omega(i) = A001221(i).",
+    "link": [
+        "Giovanni Resta, <a href=\"/A187878/b187878.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Antonio Rold\u00e1n, <a href=\"http://hojaynumeros.blogspot.com\">hojaynumeros.blogspot.com</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PrimeFactor.html\">Prime Factor</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SumofPrimeFactors.html\">Sum of Prime Factors</a>.",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Additive_function\">Additive function</a>."
+    ],
+    "example": [
+        "omega(5126)=3, (5126=2*11*233), 5126+3=5129, sopfr(5126)=2+11+233=246,",
+        "5129=23*223, sopfr(5129)=2+223=246"
+    ],
+    "mathematica": [
+        "omega[n_] := If[n < 2, 0, Length[FactorInteger[n]]]; sopfr[n_] := Module[{p, e}, If[n < 2, 1, {p, e} = Transpose[FactorInteger[n]]; Total[p*e]]]; Select[Range[2, 100000], sopfr[#] == sopfr[# + omega[#]] &] (* _T. D. Noe_, Mar 14 2011 *)"
+    ],
+    "program": [
+        "(PARI) sopfr(n)= { local(f, s=0); f=factor(n); for(i=1, matsize(f)[1], s+=f[i, 1]*f[i, 2]); return(s) }",
+        "{ for (n=1, 10^6, if (sopfr(n)==sopfr(n+omega(n)), print1(n,\", \"))); }",
+        "/* _Antonio Rold\u00e1n_, Oct 23 2012 */"
+    ],
+    "xref": [
+        "Cf. A001221 (omega), A001414 (sopfr: integer logarithm), A187877."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antonio Rold\u00e1n_, Mar 14 2011",
+    "ext": [
+        "Extended by _T. D. Noe_, Mar 14 2011"
+    ],
+    "references": 2,
+    "revision": 33,
+    "time": "2023-03-03T11:12:29-05:00",
+    "created": "2011-03-14T13:25:48-04:00"
+}

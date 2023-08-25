@@ -1,0 +1,73 @@
+{
+    "number": 308838,
+    "data": "3,5,7,9,11,13,17,19,23,25,27,31,43,47,67,243",
+    "name": "Orders of Parker finite fields of odd characteristic.",
+    "comment": [
+        "A field or ring is called \"Parker\" if no 3 X 3 magic square of 9 distinct squared elements can be formed. Conjecture: the sequence is complete.",
+        "Example: the fact that p=31 is listed is taken to mean one cannot construct a 3 X 3 magic square of distinct squared elements of the finite field of order 31.",
+        "Cain shows that each of the entries on the list corresponds to a Parker field and claims to have checked computationally that no other primes p < 1000 are on the list.",
+        "Labruna shows at least there are infinitely many primes not on the list.",
+        "The next term, if it exists, must be > 7500. - _G. C. Greubel_, Aug 16 2019"
+    ],
+    "link": [
+        "Onno M. Cain, <a href=\"https://arxiv.org/abs/1908.03236\">Gaussian Integers, Rings, Finite Fields and the Magic Square of Squares</a>, arXiv:1908.03236 [math.RA], 2019.",
+        "Christian Woll, <a href=\"https://arxiv.org/abs/1809.03067\">A Partial Residue Categorization of the Magic Square of Squares</a>, arXiv:1809.03067 [math.NT], 2018.",
+        "Giancarlo Labruna, <a href=\"https://digitalcommons.montclair.edu/etd/138\">Magic Squares of Squares of Order Three Over Finite Fields</a>,  (2018). Theses, Dissertations and Culminating Projects. 138.",
+        "Matt Parker & Brady Haran, <a href=\"https://www.youtube.com/watch?v=aOT_bG-vWyg\">The Parker Square</a>, Numberphile video (2016)."
+    ],
+    "example": [
+        "Example: The prime p=29 does not appear in the sequence because one can in fact construct a 3 X 3 magic square of distinct squares over the finite field of order 29.",
+        "Construction:",
+        "   9^2 | 11^2 |  1^2",
+        "   6^2 |  0^2 | 14^2",
+        "  12^2 | 16^2 |  8^2",
+        "The square is valid evaluated mod 29 (example independently discovered by Woll and Cain). That is to say the entries of each row, column, and the two main diagonals sum to a multiple of 29.",
+        "Example: The fields corresponding to p^n = 3, 5, 7, 9, 11, and 13 are all Parker because each contains at most 7 distinct squared entries and cannot therefore provide the 9 distinct squares required for a magic square."
+    ],
+    "program": [
+        "(Sage)",
+        "def msos_search(F, single=False):",
+        "    squares = {x^2 for x in F}",
+        "    MSOS = []",
+        "    E = 0",
+        "    for A, I in Subsets(squares, 2):",
+        "        if A + I != 2*E: continue",
+        "        C, G = 1, -1",
+        "        B = 3*E - A - C",
+        "        D = 3*E - A - G",
+        "        F = 3*E - C - I",
+        "        H = 3*E - G - I",
+        "        if len(squares & {B,D,F,H}) < 4: continue",
+        "        if len({A,B,C,D,E,F,G,H,I}) < 9: continue",
+        "        if single: return [A,B,C,D,E,F,G,H,I]",
+        "        MSOS.append([A,B,C,D,E,F,G,H,I])",
+        "    E = 1",
+        "    sequences = []",
+        "    for A, I in Subsets(squares, 2):",
+        "        if A + I != 2*E: continue",
+        "        for C, G in sequences:",
+        "            B = 3*E - A - C",
+        "            D = 3*E - A - G",
+        "            F = 3*E - C - I",
+        "            H = 3*E - G - I",
+        "            if len(squares & {B,D,F,H}) < 4: continue",
+        "            if len({A,B,C,D,E,F,G,H,I}) < 9: continue",
+        "            if single: return [A,B,C,D,E,F,G,H,I]",
+        "            MSOS.append([A,B,C,D,E,F,G,H,I])",
+        "        sequences.append((A,I))",
+        "    return MSOS",
+        "for q in range(3, 500, 2):",
+        "    if len(factor(q)) > 1: continue",
+        "    print(q, msos_search(GF(q), single=True))"
+    ],
+    "xref": [
+        "Cf. A309810, A348263, A364264."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,1",
+    "author": "_Onno M. Cain_, Jun 27 2019",
+    "references": 3,
+    "revision": 60,
+    "time": "2023-08-07T10:09:01-04:00",
+    "created": "2019-07-28T09:55:00-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 175167,
+    "data": "0,1,1,6,7,36,45,220,286,1365,1820,8568,11628,54264,74613,346104,480700,2220075,3108105,14307150,20160075,92561040,131128140,600805296,854992152,3910797436,5586853480,25518731280,36576848168,166871334960",
+    "name": "a(n) = Sum_{j=1..floor(n/2)} binomial(n+j-1,j-1).",
+    "comment": [
+        "As n -> infinity, a(2n)/a(2n-1) -> 9/2 and a(2n+1)/a(2n) -> 3/2."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A175167/b175167.txt\">Table of n, a(n) for n = 1..2415</a>"
+    ],
+    "formula": [
+        "a(n)=Sum(Binomial(n+j-1,j-1),(j,1,Floor[n/2])).",
+        "a(n) = floor(n/2) * C(n+floor(n/2), floor(n/2)) / (n+1). - _Vaclav Kotesovec_, Mar 02 2014",
+        "From _Robert Israel_, Feb 15 2019: (Start)(2*n+4)*a(n+1) = (3*n+2)*a(n) if n is even.",
+        "2*(n+2)*(n-1)*a(n+1) = 3*(n+1)*(3*n+1)*a(n) if n is odd. (End)"
+    ],
+    "maple": [
+        "f:= proc(n) option remember;",
+        "  if n::odd then (3*n-1)/(2*n+2)*procname(n-1)",
+        "  else 3*n*(3*n-2)*procname(n-1)/(2*(n+1)*(n-2)) fi",
+        "end proc:",
+        "f(1):= 0: f(2):= 1: f(3):= 1:",
+        "map(f, [$1..40]); # _Robert Israel_, Feb 15 2019"
+    ],
+    "mathematica": [
+        "f[n_] := Sum[ Binomial[n + j - 1, j - 1], {j, n/2}]; Array[f, 30]"
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Roger L. Bagula_, Dec 03 2010",
+    "references": 1,
+    "revision": 19,
+    "time": "2019-02-15T13:54:00-05:00",
+    "created": "2010-11-12T14:24:06-05:00"
+}

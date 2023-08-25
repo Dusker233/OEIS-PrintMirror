@@ -1,0 +1,40 @@
+{
+    "number": 118470,
+    "data": "0,162,171,351,468,558,1620,1710,2106,3321,3510,4023,4680,5121,5247,5544,5580,5868,8001,10008,10071,10224,10305,10503,10818,11025,11241,11511,12321,12654,12888,13239,14004,14301,15471,15876,16011,16200,16218,17100",
+    "name": "Numbers k for which digitsum(k) + digitsum(k^2) + digitsum(k^3) = digitsum(k^4).",
+    "comment": [
+        "If x is a term, then so is 10*x. - _Michael S. Branicky_, Dec 25 2021"
+    ],
+    "link": [
+        "J.W.L. (Jan) Eerland, <a href=\"/A118470/b118470.txt\">Table of n, a(n) for n = 1..3721</a> (all terms < 10^7)"
+    ],
+    "example": [
+        "162 is a term because s(162) = 9, s(162^2) = 18, s(162^3) = 27, s(162^4) = 54 and 9 + 18 + 27 = 54."
+    ],
+    "mathematica": [
+        "Select[Range[0, 20000], Sum[i*(DigitCount[ # ][[i]] + DigitCount[ #^2][[i]] + DigitCount[ #^3][[i]]), {i, 1, 9}] == Sum[i*DigitCount[ #^4][[i]], {i, 1, 9}] &] (* _Stefan Steinerberger_, May 04 2006 *)",
+        "s[n_] := Plus @@ IntegerDigits@n; Select[ Range[0, 16217], s@# + s[ #^2] + s[ #^3] == s[ #^4] &] (* _Robert G. Wilson v_, May 04 2006 *)",
+        "Parallelize[While[True,If[Total[IntegerDigits[n]]+Total[IntegerDigits[n^2]]+Total[IntegerDigits[n^3]]==Total[IntegerDigits[n^4]],Print[n]];n++];n] (* _J.W.L. (Jan) Eerland_, Dec 25 2021 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(s=sumdigits); s(n)+s(n^2)+s(n^3) == s(n^4) \\\\ _Anders Hellstr\u00f6m_, Sep 16 2015",
+        "(PARI) select(isA118470(n)={sumdigits(n)+sumdigits(n^2)+sumdigits(n^3) == sumdigits(n^4)}, [0..1000]) \\\\ _J.W.L. (Jan) Eerland_, Dec 25 2021",
+        "(Python)",
+        "def sd(n): return sum(map(int, str(n)))",
+        "def ok(n): return sd(n) + sd(n**2) + sd(n**3) == sd(n**4)",
+        "print([k for k in range(20000) if ok(k)]) # _Michael S. Branicky_, Dec 25 2021"
+    ],
+    "xref": [
+        "Cf. A007953, A004159, A004164, A055565."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "Luc Stevens (lms022(AT)yahoo.com), May 04 2006",
+    "ext": [
+        "More terms from _Joshua Zucker_, May 11 2006"
+    ],
+    "references": 1,
+    "revision": 35,
+    "time": "2021-12-26T02:58:35-05:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

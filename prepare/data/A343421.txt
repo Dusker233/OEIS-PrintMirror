@@ -1,0 +1,64 @@
+{
+    "number": 343421,
+    "data": "4,8,16,24,40,64,104,144,216,328,496,720,1072,1584,2344,3384,4952,7264,10632,15504,22656,33136,48488,70592,103032,150352,219400,319816,466664,680872,993440,1447952,2111448,3079464,4491216,6548936,9550728,13927840,20311168",
+    "name": "Number of Dean words of length n, i.e., squarefree reduced words over {0,1,2,3}.",
+    "comment": [
+        "A Dean word is a reduced word that does not contain occurrences of ww for any nonempty w.",
+        "a(n) is a multiple of 4 by symmetry. - _Michael S. Branicky_, Jun 20 2022"
+    ],
+    "link": [
+        "Martin Ehrenstein, <a href=\"/A343421/b343421.txt\">Table of n, a(n) for n = 1..64</a>",
+        "Richard A. Dean, <a href=\"http://www.jstor.org/stable/2313498\">A sequence without repeats on x, x^{-1}, y, y^{-1}</a>, Amer. Math. Monthly 72, 1965. pp. 383-385. MR 31 #350.",
+        "Tero Harju, <a href=\"https://arxiv.org/abs/2104.06837\">Avoiding Square-Free Words on Free Groups</a>, arXiv:2104.06837 [math.CO], 2021."
+    ],
+    "program": [
+        "(C++)",
+        "#include <iostream>",
+        "#include <vector>",
+        "bool good (const std::string& s) {",
+        "    long n = s.size();",
+        "    for (long i = 1; i <= n/2; i++) {",
+        "        bool match = true;",
+        "        for (long j = 0; j < i; j++) {",
+        "            if (s[n-i+j] != s[n-2*i+j]) {",
+        "                match = false; break; } }",
+        "        if (match) return false; }",
+        "    return true; }",
+        "std::vector<std::string> s = {\"01\"}, t, d = {\"02\", \"13\"};",
+        "int main () {",
+        "    std::cout << \"1 4\\n\";",
+        "    for (long i = 2; i < 40; i++) {",
+        "        std::cout << i << \" \" << 8*s.size() << \"\\n\";",
+        "        for (char c : d[i%2]) {",
+        "            for (const std::string& x : s) {",
+        "                if (good(x+c)) t.push_back(x+c); } }",
+        "        s.swap(t); t = std::vector<std::string>(); } } // _James Rayman_, Apr 15 2021",
+        "(Python)",
+        "def isf(s): # incrementally squarefree (check factors ending in last letter)",
+        "    for l in range(1, len(s)//2 + 1):",
+        "        if s[-2*l:-l] == s[-l:]: return False",
+        "    return True",
+        "def aupton(nn, verbose=False):",
+        "    alst, sfs = [], set(\"0\")",
+        "    for n in range(1, nn+1):",
+        "        an, eo = 4*len(sfs), [\"02\", \"13\"]",
+        "        sfsnew = set(s+i for s in sfs for i in eo[n%2] if isf(s+i))",
+        "        alst, sfs = alst+[an], sfsnew",
+        "        if verbose: print(n, an)",
+        "    return alst",
+        "print(aupton(30)) # _Michael S. Branicky_, Jun 20 2022"
+    ],
+    "xref": [
+        "Cf. A003324, A112658, A051041."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Apr 15 2021",
+    "ext": [
+        "More terms from _James Rayman_, Apr 15 2021"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2022-06-21T05:06:58-04:00",
+    "created": "2021-04-15T04:36:09-04:00"
+}

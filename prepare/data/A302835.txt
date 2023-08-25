@@ -1,0 +1,40 @@
+{
+    "number": 302835,
+    "data": "1,2,3,5,7,9,13,17,21,27,34,41,51,62,73,88,105,122,144,168,193,225,260,296,340,388,438,498,564,632,713,802,894,1001,1118,1239,1380,1533,1692,1873,2070,2275,2508,2760,3022,3317,3637,3969,4341,4742,5159,5624,6125,6645,7220,7839",
+    "name": "Expansion of (1/(1 - x))*Product_{k>=1} 1/(1 - x^(k*(k+1)/2)).",
+    "comment": [
+        "Partial sums of A007294.",
+        "Number of partitions of n into triangular numbers if there are two kinds of 1's."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A302835/b302835.txt\">Table of n, a(n) for n = 0..20000</a>",
+        "<a href=\"/index/Par#part\">Index entries for sequences related to partitions</a>"
+    ],
+    "formula": [
+        "G.f.: (1/(1 - x))*Sum_{j>=0} x^(j*(j+1)/2)/Product_{k=1..j} (1 - x^(k*(k+1)/2)).",
+        "From _Vaclav Kotesovec_, Apr 13 2018: (Start)",
+        "a(n) ~ exp(3*Pi^(1/3) * Zeta(3/2)^(2/3) * n^(1/3) / 2) * Zeta(3/2)^(1/3) / (2^(5/2) * sqrt(3) * Pi^(4/3) * n^(5/6)).",
+        "a(n) ~ 2 * n^(2/3) / (Pi^(1/3) * Zeta(3/2)^(2/3)) * A007294(n). (End)"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, n+1,",
+        "      b(n, i-1)+(t->`if`(t>n, 0, b(n-t, i)))(i*(i+1)/2))",
+        "    end:",
+        "a:= n-> b(n, isqrt(2*n)):",
+        "seq(a(n), n=0..100);  # _Alois P. Heinz_, Apr 13 2018"
+    ],
+    "mathematica": [
+        "nmax = 55; CoefficientList[Series[1/(1 - x) Product[1/(1 - x^(k (k + 1)/2)), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 55; CoefficientList[Series[1/(1 - x) Sum[x^(j (j + 1)/2)/Product[(1 - x^(k (k + 1)/2)), {k, 1, j}], {j, 0, nmax}], {x, 0, nmax}], x]"
+    ],
+    "xref": [
+        "Cf. A000070, A000217, A007294, A298435, A302833."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Apr 13 2018",
+    "references": 6,
+    "revision": 10,
+    "time": "2018-04-14T14:34:39-04:00",
+    "created": "2018-04-13T21:53:25-04:00"
+}

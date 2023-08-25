@@ -1,0 +1,41 @@
+{
+    "number": 341475,
+    "data": "12,18,24,30,36,40,48,54,56,66,80,84,90,96,112,126,132,156,176,198,200,208,220,270,280,304,352,364,380,448,550,570,594,690,736,882,910,918,928,945,992,1026,1040,1120,1216,1372,1376,1488,1638,1696,1722,1782",
+    "name": "2-near-perfect numbers.",
+    "comment": [
+        "A number n is k-near-perfect if n is the sum of all but k of the proper divisors of n.  Perfect numbers are 0-near-perfect and sequence A181595 lists the 1-near-perfect numbers."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A341475/b341475.txt\">Table of n, a(n) for n = 1..2000</a>",
+        "H\u00f9ng Vi\u1ec7t Chu, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL24/Chu/chu26.html\">Divisibility of Divisor Functions of Even Perfect Numbers</a>, J. Int. Seq., Vol. 24 (2021), Article 21.3.4.",
+        "Paul Pollack and Vladimir Shevelev, <a href=\"https://doi.org/10.1016/j.jnt.2012.06.008\">On perfect and near-perfect numbers</a>, J. Number Theory 132 (2012), pp. 3037-3046; also on <a href=\"http://arxiv.org/abs/1011.6160\">arXiv</a>, arXiv:1011.6160 [math.NT], 2010-2012."
+    ],
+    "example": [
+        "48 is 2-near-perfect because its proper divisors are {1, 2, 3, 4, 6, 8, 12, 16, 24} and 48 = 1+2+3+4+6+8+24."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "def ok(n):",
+        "  proper_divs = divisors(n)[:-1]",
+        "  s = sum(proper_divs)",
+        "  if s - 3 < n: return False",
+        "  if s - sum(proper_divs[-2:]) > n: return False",
+        "  for i, c1 in enumerate(proper_divs[:-1]):",
+        "    if s - c1 - proper_divs[i+1] < n: return False",
+        "    if s - c1 - n in proper_divs[i+1:]: return True",
+        "  return False",
+        "def aupto(limit): return [m for m in range(1, limit+1) if ok(m)]",
+        "print(aupto(1782)) # _Michael S. Branicky_, Feb 21 2021"
+    ],
+    "xref": [
+        "Cf. A000396, A181595."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Feb 13 2021",
+    "references": 1,
+    "revision": 18,
+    "time": "2021-05-20T22:40:33-04:00",
+    "created": "2021-02-13T07:46:51-05:00"
+}

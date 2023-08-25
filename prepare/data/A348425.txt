@@ -1,0 +1,32 @@
+{
+    "number": 348425,
+    "data": "0,1,4,49,529,2209,6241,27889,28561,35344,49729,128881,192721,250000,431649,528529,703921,1181569,1495729,1610361,1868689,3411409,4870849,5755201,9138529,11390625,12250000,13830961,13845841,15737089,22648081,25391521,31618129",
+    "name": "Squares whose second arithmetic derivative is a square.",
+    "comment": [
+        "For prime numbers of the form p = k^2 - 2 (A028871) the number m = p^2 is a term because m'' = (p^2)'' = (2*p*p')' = (2*p)'= p + 2*p' = p + 2 = k^2.",
+        "If m is a term in A028873 then p = m^2 - 3 is prime and k = p^4 is a term. Indeed: k' = 4*p^3 and k'' = 4*p^3 + 12*p^2 = 4*p^2*(p + 3) = 4*p^2*m^2.",
+        "If m is a term in A201787  then p = 5*m^2 - 6 is prime and k = p^6 is a term. Indeed: k' = 6*p^5 and k'' = 5*p^5 + 30*p^4 = 5*p^4*(p + 6) = 25*p^4*m^2."
+    ],
+    "example": [
+        "4'' = 4' = 4 so 4 is a term.",
+        "49'' = 14' = 9 so 49 is a term."
+    ],
+    "mathematica": [
+        "d[0] = d[1] = 0; d[n_] := n * Plus @@ ((Last[#]/First[#]) & /@ FactorInteger[n]); Select[Range[0, 6000]^2, IntegerQ @ Sqrt[d[d[#]]] &] (* _Amiram Eldar_, Oct 18 2021 *)"
+    ],
+    "program": [
+        "(Magma) f:=func<n | n le 1 select 0 else  n*(&+[Factorisation(n)[i][2] / Factorisation(n)[i][1]: i in [1..#Factorisation(n)]])>; [n:n in [s*s:s in [0.. 5623]] | IsSquare(Floor(f(Floor(f(n)))))];",
+        "(PARI) ad(n) = if (n<1, 0, my(f = factor(n)); n*sum(k=1, #f~, f[k, 2]/f[k, 1])); \\\\ A003415",
+        "lista(nn) = {for (n=0, nn, if (issquare(ad(ad(n^2))), print1(n^2, \", \")); ); } \\\\ _Michel Marcus_, Oct 30 2021"
+    ],
+    "xref": [
+        "Cf. A000290, A003415, A028871, A028873, A068346, A201787, A266890, A192192, A328244."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Marius A. Burtea_, Oct 18 2021",
+    "references": 0,
+    "revision": 21,
+    "time": "2022-09-08T08:46:26-04:00",
+    "created": "2021-11-19T16:58:21-05:00"
+}

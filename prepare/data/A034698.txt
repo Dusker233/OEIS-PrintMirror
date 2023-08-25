@@ -1,0 +1,40 @@
+{
+    "number": 34698,
+    "data": "2,7,31,113,233,647,1487,4919,6329,7951,26833,47737,53623,128959,135697,142327,1312777,3178289,6061607,26564393,32426081,102958417,209074609,323901311,587709359,1006009759,1029482303,9876033449,11061524183,15821898167,27926616007",
+    "name": "a(n) is the smallest prime such that a(1), ..., a(n-1) are squares mod a(n).",
+    "link": [
+        "Giovanni Resta, <a href=\"/A034698/b034698.txt\">Table of n, a(n) for n = 1..39</a>"
+    ],
+    "mathematica": [
+        "residueQ[n_, p_] := JacobiSymbol[n, p] == 1; a[1] = 2;  a[n_] := a[n] = For[r = Range[n - 1]; p = NextPrime[a[n - 1]], True, p = NextPrime[p], If[AllTrue[r, residueQ[a[#], p] &], Return[p]]]; Table[Print[\"a(\", n, \") = \", a[n]]; a[n], {n, 1, 24}] (* _Jean-Fran\u00e7ois Alcover_, Feb 16 2018 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a034698 n = a034698_list !! (n-1)",
+        "a034698_list = f [2..] [1] where",
+        "   f (x:xs) ys | a010051' x == 1 &&",
+        "                 (and $ map (isSquMod x) ys) = x : f xs (x:ys)",
+        "               | otherwise                   = f xs ys",
+        "   isSquMod u v = v `mod` u `elem` (map ((`mod` u) . (^ 2)) [0..u-1])",
+        "-- _Reinhard Zumkeller_, Mar 28 2012",
+        "(PARI) first(n) = my(res=vector(n)); res[1]=2; for(x=2, n, forprime(p=res[x-1]+1, , for(y=1, x-1, if(!issquare(Mod(res[y], p)), next(2))); res[x]=p; break())); res \\\\ _Iain Fox_, Aug 08 2018",
+        "(PARI) nextterm(v) = forprime(p=v[#v]+1, , for(y=1, #v, if(!issquare(Mod(v[y], p)), next(2))); return(p)) \\\\ (Inserting a vector of the first n-1 terms will return the n-th term) _Iain Fox_, Aug 08 2018"
+    ],
+    "xref": [
+        "Cf. A034700.",
+        "Cf. A010051, A034791."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,1",
+    "author": "E. M. Rains (rains(AT)caltech.edu)",
+    "ext": [
+        "More terms from _David W. Wilson_",
+        "a(25)-a(28) from _Iain Fox_, Aug 08 2018",
+        "a(29)-a(30) from _Iain Fox_, Aug 09 2018",
+        "a(31) from _Iain Fox_, Aug 10 2018"
+    ],
+    "references": 3,
+    "revision": 32,
+    "time": "2018-08-10T04:19:09-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

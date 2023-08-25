@@ -1,0 +1,48 @@
+{
+    "number": 345728,
+    "data": "101,103,107,109,307,401,409,503,509,601,607,701,709,809,907,10007,10009,10037,10039,10061,10067,10069,10079,10091,10093,10099,11003,11027,11047,11057,11059,11069,11071,11083,11087,11093,12007,12011,12037,12041,12043,12049,12071,12073,12097,13001,13003,13007",
+    "name": "Primes with an odd number of digits and 0 as the middle digit.",
+    "mathematica": [
+        "Select[Prime@Range@2000,OddQ[d=Length[s=IntegerDigits[#]]]&&s[[Ceiling[d/2]]]==0&] (* _Giorgos Kalogeropoulos_, Jul 04 2021 *)"
+    ],
+    "program": [
+        "(Perl)",
+        "#!/usr/bin/perl",
+        "$str = \"\";",
+        "foreach $cand (101..20000){  # loop over candidates",
+        "    next unless &isPrime($cand);  # is $cand prime? 0/1 result",
+        "    @a = split(\"\",$cand);",
+        "    next if @a/2 == int @a/2;",
+        "    $mid = int @a/2;",
+        "    next unless $a[$mid] == 0;",
+        "    $str .= \"$cand, \";",
+        "}",
+        "chop $str; chop $str;",
+        "print \"$str\\n\";",
+        "(PARI) isok(p) = {if (isprime(p), my(d=digits(p)); (#d % 2) && (d[#d\\2+1] == 0););} \\\\ _Michel Marcus_, Jun 28 2021",
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import product",
+        "def agen(maxdigits):",
+        "    for digits in range(3, maxdigits+1, 2):",
+        "        for first in \"123456789\":",
+        "            for left in product(\"0123456789\", repeat=digits//2-1):",
+        "                left = \"\".join(left)",
+        "                for right in product(\"0123456789\", repeat=digits//2-1):",
+        "                    right = \"\".join(right)",
+        "                    for last in \"1379\":",
+        "                        t = int(\"\".join(first + left + \"0\" + right + last))",
+        "                        if isprime(t): yield t",
+        "print([an for an in agen(5)]) # _Michael S. Branicky_, Jun 28 2021"
+    ],
+    "xref": [
+        "Cf. A000040 (primes), A134809 (Cyclops primes)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_James S. DeArmon_, Jun 27 2021",
+    "references": 0,
+    "revision": 55,
+    "time": "2022-01-19T23:36:15-05:00",
+    "created": "2021-08-06T07:25:55-04:00"
+}

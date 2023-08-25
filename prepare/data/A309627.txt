@@ -1,0 +1,55 @@
+{
+    "number": 309627,
+    "data": "6,8,11,12,19,25,30,32,45,46,47,52,53,55,58,59,60,63,64,76,95,97,98,99,101,102,107,108,114,118,124,126,132,134,137,140,144,152,156,157,159,163,169,173,177,180,181,185,187,188,189,198,199,200,202,203,206,207,208,209,210",
+    "name": "Starting numbers k such that the trajectory of k under the map x -> A133058(x) joins A133058.",
+    "link": [
+        "Tomas Tkac, <a href=\"/A309627/b309627.txt\">Table of n, a(n) for n = 1..306</a> [recomputed and restored by _Georg Fischer_, Oct 14 2019]",
+        "Brady Haran and N. J. A. Sloane, <a href=\"https://www.youtube.com/watch?v=pAMgUB51XZA\">Amazing Graphs</a>, Numberphile Video."
+    ],
+    "example": [
+        "Quite a few starting numbers f(0) for the recurrence defined in A133058 will produce a sequence which eventually join A133058, the smallest such number being 6. 8 joins 6 at the 10th term, 11 joins 6 at the 17th term, 12 joins the sequence at the 97th term, etc."
+    ],
+    "program": [
+        "(VBA for Excel)",
+        "Sub sequence()",
+        "'",
+        "For x = 1 To 1002 ' can be made smaller to lessen the processing time",
+        "   Cells(x, 1) = x - 1 ' generate n for A133058",
+        "   Cells(1, x) = x - 1 ' generate starting numbers for A133058",
+        "Next x",
+        "'",
+        "For r = 2 To 1002",
+        "   For c = 2 To 1002",
+        "      grcd = WorksheetFunction.Gcd(Cells(r - 1, c), Cells(r, 1))",
+        "      If grcd = 1 Then",
+        "         Cells(r, c) = Cells(r - 1, c) + Cells(r, 1) + 1",
+        "      Else",
+        "         Cells(r, c) = Cells(r - 1, c) / grcd",
+        "         ' populate an array of the A133058 sequence with a(0)=0,1,2,3,...",
+        "      End If",
+        "   Next c",
+        "Next r",
+        "'",
+        "For y = 2 To 1002",
+        "   If Cells(638, y) = 11 Then",
+        "      Cells(1005, p + 1) = Cells(1, y)",
+        "      p = p + 1 ' filter numbers that join the longest sequence",
+        "   End If",
+        "Next y",
+        "'",
+        "End Sub"
+    ],
+    "xref": [
+        "Cf. A133058."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Tomas Tkac_, Aug 10 2019",
+    "ext": [
+        "Entry revised by Editors of the OEIS, Oct 01 2019"
+    ],
+    "references": 1,
+    "revision": 41,
+    "time": "2021-07-24T02:26:16-04:00",
+    "created": "2019-09-30T22:05:02-04:00"
+}

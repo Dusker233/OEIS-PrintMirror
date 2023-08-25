@@ -1,0 +1,54 @@
+{
+    "number": 330197,
+    "data": "0,0,0,12,14,32,54,80,110,168,208,280,360,448,544,684,798,960,1134,1320,1518,1776,2000,2288,2592,2912,3248,3660,4030,4480,4950,5440,5950,6552,7104,7752,8424,9120,9840,10668,11438,12320,13230,14168,15134,16224,17248",
+    "name": "Number of scalene triangles whose vertices are the vertices of a regular n-gon.",
+    "comment": [
+        "The number of scalene triangles equals (number of triangles, i.e., binomial(n,3)) - (number of isosceles triangles).",
+        "The general formula is readily proved true by counting arguments."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A330197/b330197.txt\">Table of n, a(n) for n = 3..1000</a>",
+        "<a href=\"/index/Rec#order_10\">Index entries for linear recurrences with constant coefficients</a>, signature (0,2,2,-1,-4,-1,2,2,0,-1)."
+    ],
+    "formula": [
+        "a(n) = binomial(n,3) - A320577(n).",
+        "a(n) = C(n,3)-n*(n-1)/2 if n mod 6 = 1 or 5; C(n,3)-n*(n-2)/2 if n mod 6 = 2 or 4; C(n,3)-n*(3*n-7)/6 if n mod 6 = 3; C(n,3)-n*(3*n-10)/6 otherwise [C(n,k) denoting binomial coefficients].",
+        "G.f.: 2*x^6*(2+x)*(3+x*(2+x))/((x-1)^4*(x+1)^2*(1+x+x^2)^2).",
+        "a(n) = 2*a(n-2) + 2*a(n-3) - a(n-4) - 4*a(n-5) - a(n-6) + 2*a(n-7) + 2*a(n-8) - a(n-10) for n>12. - _Colin Barker_, Jan 08 2020"
+    ],
+    "example": [
+        "Trivial cases:",
+        "a(3)=0 since the only triangle formed by joining vertices is equilateral.",
+        "a(4)=a(5)=0 since all such triangles are isosceles.",
+        "For higher n, since a triangle is formed by choosing 3 vertices and joining them, there are C(n,3) such triangles. To obtain the number of scalene triangles, subtract the number of isosceles triangles (A320577)."
+    ],
+    "mathematica": [
+        "a[n_] := If[Mod[n,6]==1 || Mod[n,6]==5, Binomial[n,3]-Binomial[n,2], If[Mod[n,6]==2 || Mod[n,6]==4, Binomial[n,3]-n*(n-2)/2,",
+        "If[Mod[n, 6]==3, Binomial[n,3]-n*(3*n-7)/6, Binomial[n,3]-n*(3*n - 10)/6]]]; Array[a, 20, 3]",
+        "LinearRecurrence[{0,2,2,-1,-4,-1,2,2,0,-1},{0,0,0,12,14,32,54,80,110,168},50] (* _Harvey P. Dale_, Aug 20 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import binomial",
+        "def a(n):",
+        "    assert (n>=3),\"Sequence a(n) defined for n>=3\"",
+        "    m = n % 6",
+        "    Cn3 = binomial(n, 3)",
+        "    if m in [1,5]:   return Cn3 - (n*(n-1))//2",
+        "    elif m in [2,4]: return Cn3 - (n*(n-2))//2",
+        "    elif m==3:       return Cn3 - (n*(3*n-7))//6",
+        "    else:            return Cn3 - (n*(3*n-10))//6",
+        "print([a(k) for k in range(3,51)])",
+        "(PARI) concat([0,0,0], Vec(2*x^6*(2 + x)*(3 + 2*x + x^2) / ((1 - x)^4*(1 + x)^2*(1 + x + x^2)^2) + O(x^60))) \\\\ _Colin Barker_, Jan 08 2020"
+    ],
+    "xref": [
+        "Cf. A320577 (isosceles triangles)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "3,4",
+    "author": "_Adam Vellender_, Dec 05 2019",
+    "references": 1,
+    "revision": 34,
+    "time": "2021-08-20T17:05:54-04:00",
+    "created": "2020-01-10T05:29:26-05:00"
+}

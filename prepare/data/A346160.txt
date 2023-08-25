@@ -1,0 +1,58 @@
+{
+    "number": 346160,
+    "data": "0,25,1041,15655,637854,2507860,35577568",
+    "name": "a(n) is the smallest K such that the power partition function P_n(k) is log-concave for all k > K.",
+    "comment": [
+        "The power partition function P_n(k) is a restriction on the partition function. P_n(k) equals the number of ways a positive integer k can be written as the sum of perfect n powers. DeSalvo and Pak showed that the partition function (P_1(k)) is log-concave for all k > 24."
+    ],
+    "reference": [
+        "Stephen DeSalvo and Igor Pak, Log-concavity of the partition function, The Ramanujan Journal, 38 (2015), 61-73."
+    ],
+    "link": [
+        "Stephen DeSalvo and Igor Pak, <a href=\"https://arxiv.org/abs/1310.7982\">Log-Concavity of the Partition Function</a>, arXiv:1310.7982 [math.CO], 2013-2014."
+    ],
+    "example": [
+        "For n=0, P_0(k)^2 >= P_0(k-1)*P_0(k+1) for all k > 0.",
+        "For n=1, P_1(k)^2 >= P_1(k-1)*P_1(k+1) for all k > 24.",
+        "For n=2, P_2(k)^2 >= P_2(k-1)*P_2(k+1) for all k > 1042.",
+        "For n=3, P_3(k)^2 >= P_3(k-1)*P_3(k+1) for all k > 15656.",
+        "No further terms are known."
+    ],
+    "program": [
+        "(Sage):",
+        "def power_partition_generating_series(s, n=20):",
+        "    R = ZZ['q']",
+        "    ans = R.one()",
+        "    m = 1",
+        "    while m**s < n:",
+        "        l = [0] * n",
+        "        l[0] = 1",
+        "        for i in range(1, (n + m**s - 1) // m**s):",
+        "            l[i*m**s] = 1",
+        "        ans = ans._mul_trunc_(R(l), n)",
+        "        m += 1",
+        "    return ans",
+        "%time",
+        "seq = power_partition_generating_series(2, 15000).coefficients()",
+        "last_neg = None",
+        "for n in range(2, len(seq) - 1):",
+        "    d = seq[n]**2 / seq[n-1] / seq[n+1]",
+        "    if d < 1:",
+        "        last_neg = n",
+        "print(last_neg)",
+        "# _Vincent Delecroix_, Dec 28 2022"
+    ],
+    "xref": [
+        "Cf. A000041, A001156, A003108, A046042."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Brennan G. Benfield_, Sep 28 2021",
+    "ext": [
+        "Data corrected by _Brennan G. Benfield_, Dec 28 2022"
+    ],
+    "references": 0,
+    "revision": 47,
+    "time": "2023-01-19T13:30:48-05:00",
+    "created": "2021-11-09T05:57:33-05:00"
+}

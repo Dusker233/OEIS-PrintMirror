@@ -1,0 +1,39 @@
+{
+    "number": 334527,
+    "data": "4,27,378,576,588,645,648,666,690,825,915,1872,1908,1962,2265,2286,2484,2556,2688,2934,2970,3168,3258,3294,3345,3366,3390,3564,3615,3690,3852,3864,3930,4428,4464,4557,4880,5526,6084,6315,7695,8154,8736,8883,9015,9036",
+    "name": "Numbers that are both Niven numbers and Smith numbers.",
+    "comment": [
+        "McDaniel (1990) proved that there exist infinitely many numbers which are both base-b Niven numbers and base-b Smith numbers, for all bases b >= 8."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A334527/b334527.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Wayne L. McDaniel, <a href=\"https://doi.org/10.35834/1990/0203132\">On the Intersection of the Sets of Base b Smith Numbers and Niven Numbers</a>, Missouri Journal of Mathematical Sciences, Vol. 2, No. 3 (1990), pp. 132-136."
+    ],
+    "example": [
+        "27 is a term since it is a Niven number (2 + 7 = 9 is a divisor of 27) and a Smith number (27 = 3 * 3 * 3 and 2 + 7 = 3 + 3 + 3)."
+    ],
+    "mathematica": [
+        "digSum[n_] := Plus @@ IntegerDigits[n]; nivenSmithQ[n_] := Divisible[n, (ds = digSum[n])] && CompositeQ[n] && Plus @@ (Last@# * digSum[First@#] & /@ FactorInteger[n]) == ds; Select[Range[10^4], nivenSmithQ]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def sd(n): return sum(map(int, str(n)))",
+        "def ok(n):",
+        "  sdn = sd(n)",
+        "  if sdn == 0 or n%sdn != 0: return False # not Niven",
+        "  f = factorint(n)",
+        "  return sum(f[p] for p in f) > 1 and sdn == sum(sd(p)*f[p] for p in f)",
+        "print(list(filter(ok, range(9999)))) # _Michael S. Branicky_, Apr 27 2021"
+    ],
+    "xref": [
+        "Intersection of A005349 and A006753."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, May 05 2020",
+    "references": 4,
+    "revision": 15,
+    "time": "2021-04-28T01:23:34-04:00",
+    "created": "2020-05-05T19:29:27-04:00"
+}

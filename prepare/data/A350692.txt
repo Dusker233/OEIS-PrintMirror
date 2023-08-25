@@ -1,0 +1,60 @@
+{
+    "number": 350692,
+    "data": "0,1003,130007,1003007,50200030,100007900,1000300030,102000001007,1080007000030,30090004000500,100004000300030,1020070000000500,9000050000003000,1000000800080003007,4003700000000300000,100000070002000003007,1000006000000010027000",
+    "name": "Smallest number with exactly n zeros in its digits both in decimal and binary representation.",
+    "link": [
+        "Scott R. Shannon, <a href=\"/A350692/b350692.txt\">Table of n, a(n) for n = 1..40</a> (terms 1..23 from Michael S. Branicky)"
+    ],
+    "example": [
+        "a(2) = 1003 which in binary is 1111101011. Both representations contain exactly 2 zeros. And there is no smaller number satisfying this constraint."
+    ],
+    "mathematica": [
+        "Join[{0},Table[",
+        "t=0;While[!IntegerQ[k=Min@Flatten[Select[FromDigits/@ Select[Permutations[#],First@#!=0&],Count[IntegerDigits[#,2],0]==n&]&/@(Join[Table[0,n],#]&/@Tuples[Range@9,++t])]]];k,{n,2,7}]] (* _Giorgos Kalogeropoulos_, Jan 13 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        "def A350692_helper(n,m): # generator in order of numbers with n decimal digits and m 0's. Leading zeros are allowed.",
+        "    if n >= m:",
+        "        if n == 1:",
+        "            if m == 1:",
+        "                yield 0",
+        "            else:",
+        "                yield from range(1,10)",
+        "        elif n == m:",
+        "            yield 0",
+        "        else:",
+        "            for b in A350692_helper(n-1,m-1):",
+        "                yield b",
+        "            r = 10**(n-1)",
+        "            for a in range(1,10):",
+        "                k = a*r",
+        "                for b in A350692_helper(n-1,m):",
+        "                    yield k+b",
+        "def A350692(n):",
+        "    if n == 1:",
+        "        return 0",
+        "    for l in count(n):",
+        "        r = 10**(l-1)",
+        "        for a in range(1,10):",
+        "            k = a*r",
+        "            for s in A350692_helper(l-1,n):",
+        "                m = k+s",
+        "                if bin(m)[2:].count('0') == n:",
+        "                    return m # _Chai Wah Wu_, Jan 13 2022"
+    ],
+    "xref": [
+        "Cf. A023416, A055641, A350691."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Ruediger Jehn_, Jan 12 2022",
+    "ext": [
+        "a(8)-a(17) from _Michael S. Branicky_, Jan 12 2022"
+    ],
+    "references": 2,
+    "revision": 47,
+    "time": "2022-01-27T20:44:31-05:00",
+    "created": "2022-01-13T09:46:02-05:00"
+}

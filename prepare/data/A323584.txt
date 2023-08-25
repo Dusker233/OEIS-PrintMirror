@@ -1,0 +1,51 @@
+{
+    "number": 323584,
+    "data": "1,1,1,4,8,22,34,84,137,271,450,857,1373,2483,3993,6823,10990,18332,28966,47328,74286,118614,184755,290781,448010,695986,1063773,1632100,2474970,3759610,5654233,8512307,12710995,18973247,28139285,41690830,61423271,90379782",
+    "name": "Second Moebius transform of A000219. Number of plane partitions of n whose multiset of rows is aperiodic and whose multiset of columns is also aperiodic.",
+    "comment": [
+        "A multiset is aperiodic if its multiplicities are relatively prime.",
+        "Also the number of plane partitions of n whose multiset of rows is aperiodic and whose parts are relatively prime."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A323584/b323584.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "The Moebius transform T of a sequence q is T(q)(n) = Sum_{d|n} mu(n/d) * q(d) where mu = A008683. The first Moebius transform of A000219 is A300275 and the third is A323585."
+    ],
+    "example": [
+        "The a(4) = 8 plane partitions with aperiodic multisets of rows and columns:",
+        "  4   31   211",
+        ".",
+        "  3   21   111",
+        "  1   1    1",
+        ".",
+        "  2   11",
+        "  1   1",
+        "  1   1",
+        "The a(4) = 8 plane partitions with aperiodic multiset of rows and relatively prime parts:",
+        "  31   211   1111",
+        ".",
+        "  3   21   111",
+        "  1   1    1",
+        ".",
+        "  2   11",
+        "  1   1",
+        "  1   1"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "facs[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[facs[n/d],Min@@#>=d&]],{d,Rest[Divisors[n]]}]];",
+        "ptnplane[n_]:=Union[Map[Reverse@*primeMS,Join@@Permutations/@facs[n],{2}]];",
+        "Table[Sum[Length[Select[ptnplane[Times@@Prime/@y],And[GCD@@Length/@Split[#]==1,And@@GreaterEqual@@@#,And@@(GreaterEqual@@@Transpose[PadRight[#]])]&]],{y,Select[IntegerPartitions[n],GCD@@#==1&]}],{n,10}]"
+    ],
+    "xref": [
+        "Cf. A000219, A000837, A003293, A100953, A300275, A303546, A320802, A321390, A323585, A323587."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Jan 19 2019",
+    "references": 4,
+    "revision": 9,
+    "time": "2019-01-22T16:45:09-05:00",
+    "created": "2019-01-20T23:19:31-05:00"
+}

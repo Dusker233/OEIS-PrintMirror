@@ -1,0 +1,67 @@
+{
+    "number": 309755,
+    "data": "2,3,11,29,59,97,149,151,191,193,211,223,239,263,281,307,311,331,337,593,613,631,641,653,659,853,857,877,881,907,911,967,971,991,997,1801,1811,1847,1861,1901,1907,2251,2267,2281,2287,2309,2311,2657,2671,2677,3163,3167,3187,3191,3299,3319,3343,3691,3697,3719,3727",
+    "name": "Primes with record Euclidean distance from the origin. When starting rightwards in a grid, turn left after a prime number, if not walk straight on.",
+    "comment": [
+        "Cells can contain more than one number.",
+        "This sequence differs from A309701, where the Manhattan distance is taken."
+    ],
+    "link": [
+        "Pieter Post, <a href=\"/A309755/b309755.txt\">Table of n, a(n) for n = 1..182</a>"
+    ],
+    "example": [
+        "Grid of the first 34 steps. 0 (second cell in sixth row) represents (0,0).",
+        "---",
+        "xx  xx   xx   31   30    29",
+        "xx  xx   xx   32   xx    28",
+        "xx  xx   xx   33   xx    27",
+        "xx  xx   xx   34   xx    26",
+        "xx 5/17 4/16 3/15  14   13/25",
+        "x 0/6/18  1    2   xx   12/24",
+        "xx 7/19 8/20 9/21 10/22 11/23",
+        "---",
+        "2 (2,0) is two steps away from the origin, 3 (2,1) is at a distance of sqrt(5). Next record distance is 11 (4,-1), at distance sqrt(17). Next is 29 (4,5), at distance sqrt(41)."
+    ],
+    "mathematica": [
+        "step[n_] := Switch[n, 0, {1, 0}, 1, {0, 1}, 2, {-1, 0}, 3, {0, -1}]; r = {0, 0}; q = 0; s={}; rm=0; Do[p = NextPrime[q]; r += step[Mod[n, 4]] * (p-q); r1 = Total @ (r^2); If[r1 > rm, rm = r1; AppendTo[s, p]]; q = p, {n, 0, 3000}]; s (* _Amiram Eldar_, Aug 15 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def prime(z):",
+        "    isPrime=True",
+        "    for y in range(2,int(z**0.5)+1) :",
+        "        if z%y==0:",
+        "            isPrime=False",
+        "            break",
+        "    return isPrime",
+        "m,n, g,h=[],[],[1,0,-1,0],[0,1,0,-1]",
+        "z=10000",
+        "for c in range (2,z):",
+        "    if prime(c)==True:",
+        "        m.append(c)",
+        "ca,cb,cc=2,0,0",
+        "for j in range(2,z):",
+        "    if j in m:",
+        "        cc=cc+1",
+        "        cd,ce=g[cc%4],h[cc%4]",
+        "    ca,cb=ca+cd,cb+ce",
+        "    n.append([j+1,ca,cb,((ca)**2+(cb)**2)**(0.5)])",
+        "    #print (j+1,ca,cb)",
+        "v=2",
+        "for j in n:",
+        "    if j[3]>v and j[0] in m:",
+        "        print (j)",
+        "        v=j[3]",
+        "(PARI) z=0; d=1; m=0; for (n=1, 3727, z+=d; if (isprime(n), d*=I; if (m<norm(z), m=norm(z); print1 (n \", \")))) \\\\ _R\u00e9my Sigrist_, Aug 15 2019"
+    ],
+    "xref": [
+        "Cf. A000040, A309701."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Pieter Post_, Aug 15 2019",
+    "references": 3,
+    "revision": 32,
+    "time": "2019-10-04T13:32:38-04:00",
+    "created": "2019-10-04T13:32:38-04:00"
+}

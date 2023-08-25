@@ -1,0 +1,55 @@
+{
+    "number": 52707,
+    "data": "0,2,8,64,640,7168,86016,1081344,14057472,187432960,2549088256,35223764992,493132709888,6979724509184,99710350131200,1435829041889280,20819521107394560,303720072625520640,4454561065174302720",
+    "name": "Odd powers of 2 multiplied by Catalan numbers.",
+    "comment": [
+        "And/Or trees with 1 variable [Chauvin et al.]. - _R. J. Mathar_, Apr 01 2012"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A052707/b052707.txt\">Table of n, a(n) for n = 0..820</a>",
+        "B. Chauvin, P. Flajolet, D. Gardy, and B. Gittenberger, <a href=\"http://dx.doi.org/10.1017/S0963548304006273\">And/Or Tree Revisited</a>, Combinatorics, Probability and Computing, Vol. 13, No. 4-5 (2004), pp. 475-497.",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=662\">Encyclopedia of Combinatorial Structures 662</a>."
+    ],
+    "formula": [
+        "a(n) = 2^(2*n-1)*A000108(n-1), for n > 0.",
+        "Recurrence: a(1)=2, (n+1)*a(n+1) = 8*(2*n-1)*a(n).",
+        "a(n) = 16^n*(Gamma(n-1/2)/(8*Gamma(n+1)*Pi^(1/2))), n>0.",
+        "Given g.f. A(x), then B(x)=A(x)-x series reversion is -B(-x). - _Michael Somos_, Sep 08 2005",
+        "Given g.f. A(x), then B(x)=A(x)-x satisfies B(x)=x+8*C(16*x*B(x)) where C(x) is g.f. for Catalan number A000108.",
+        "G.f. A(x) = 2*x*C(4*x) where C(x) is g.f. for Catalan number A000108.",
+        "G.f.: (1-sqrt(1-16*x))/4 = 4*x/(1+sqrt(1-16*x)).",
+        "From _Amiram Eldar_, Mar 22 2022: (Start)",
+        "Sum_{n>=1} 1/a(n) = (4/75)*(11 + 16*arcsin(1/4)/sqrt(15)).",
+        "Sum_{n>=1} (-1)^(n+1)/a(n) = (4/4913)*(527 - 48*sqrt(17)*arcsinh(1/4)). (End)"
+    ],
+    "maple": [
+        "spec := [S,{C=Union(B,Z),B=Prod(S,S),S=Union(B,C,Z)},unlabeled]: seq(combstruct[count](spec,size=n), n=0..20);",
+        "# 2nd program",
+        "A052707 := proc(n)",
+        "    if n =0 then",
+        "        0;",
+        "    else",
+        "        2^(2*n-1)*A000108(n-1) ;",
+        "    fi ;",
+        "end proc:",
+        "seq(A052707(n),n=0..10) ; # _R. J. Mathar_, Apr 26 2017"
+    ],
+    "mathematica": [
+        "InverseSeries[Series[y/2-y^2, {y, 0, 24}], x] (* then A(x)=y(x) *) (* Len Smiley, Apr 13 2000 *)",
+        "Table[2^(2*n-1)*CatalanNumber[n-1] +Boole[n==0]/2, {n, 0, 30}] (* _G. C. Greubel_, May 30 2022 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=if(n<1, 0, n--; 2*4^n*binomial(2*n,n)/(n+1))",
+        "(SageMath) [2^(2*n-1)*catalan_number(n-1) + bool(n==0)/4 for n in (0..30)] # _G. C. Greubel_, May 30 2022"
+    ],
+    "xref": [
+        "Cf. A000108."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "references": 3,
+    "revision": 44,
+    "time": "2022-05-30T03:29:53-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

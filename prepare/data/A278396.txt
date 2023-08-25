@@ -1,0 +1,30 @@
+{
+    "number": 278396,
+    "data": "1,4,22,146,1013,7269,53156,394154,2951950,22279439,169175927,1290970376,9891573310,76050920691,586426828071,4533349152056,35122039919110,272634162463779,2119948044144136,16509519223752380,128747868290672353,1005273235488567875",
+    "name": "Number of positive meanders (walks starting at the origin and ending at any altitude > 0 that never touch or go below the x-axis in between) with n steps from {-4,-3,-2,-1,1,2,3,4}.",
+    "comment": [
+        "By convention, the empty walk (corresponding to n=0) is considered to be a positive meander."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A278396/b278396.txt\">Table of n, a(n) for n = 0..200</a>",
+        "C. Banderier, C. Krattenthaler, A. Krinik, D. Kruchinin, V. Kruchinin, D. Nguyen, and M. Wallner, <a href=\"https://arxiv.org/abs/1609.06473\">Explicit formulas for enumeration of lattice paths: basketball and the kernel method</a>, arXiv:1609.06473 [math.CO], 2016."
+    ],
+    "mathematica": [
+        "frac[ex_] := Select[ex, Exponent[#, x] < 0&];",
+        "seq[n_] := Module[{v, m, p}, v = Table[0, n]; m = Sum[x^i, {i, -4, 4}] - 1; p = 1/x; v[[1]] = 1; For[i = 2, i <= n, i++, p = p*m // Expand; p = p - frac[p]; v[[i]] = p /. x -> 1]; v];",
+        "seq[22] (* _Jean-Fran\u00e7ois Alcover_, Jul 01 2018, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(v=vector(n), m=sum(i=-4, 4, x^i)-1, p=1/x); v[1]=1; for(i=2, n, p*=m; p-=frac(p); v[i]=subst(p,x,1)); v} \\\\ _Andrew Howroyd_, Jun 27 2018"
+    ],
+    "xref": [
+        "Cf. A276852, A278391, A278392, A278393, A278394, A278395, A278398."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_David Nguyen_, Nov 20 2016",
+    "references": 7,
+    "revision": 28,
+    "time": "2018-07-01T08:38:16-04:00",
+    "created": "2016-11-22T17:12:53-05:00"
+}

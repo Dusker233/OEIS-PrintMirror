@@ -1,0 +1,42 @@
+{
+    "number": 141683,
+    "data": "1,1,2,4,9,19,41,88,189,406,872,1873,4023,8641,18560,39865,85626,183916,395033,848491,1822473,3914488,8407925,18059374,38789712,83316385,178955183,384377665,825604416,1773314929,3808901426",
+    "name": "a(n) = Sum_{k=1..n} b(k)*a(n - k) for n >= 1, where b(n) = b(n-2) + b(n-3) for n >= 3 with b(0) = 0 and b(1) = b(2) = 1.",
+    "comment": [
+        "Essentially the same as A141015. - _R. J. Mathar_, Sep 14 2008"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A141683/b141683.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,1)."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} b(k)*a(n - k) for n >= 1, where b(n) = b(n-2) + b(n-3) for n >= 3 with b(0) = 0 and b(1) = b(2) = 1. [That is, b(n) = A000931(n+4) = A078027(n+6) = A134816(n) = A182097(n+1). - _Petros Hadjicostas_, Aug 09 2020]",
+        "From _Colin Barker_, Feb 01 2012: (Start)",
+        "a(n) = a(n-1) + 2*a(n-2) + a(n-3), n > 4.",
+        "G.f.: x*(1 - x^2 - x^3)/(1 - x - 2*x^2 - x^3). (End)",
+        "a(n) = A000930(2*n - 3) for n >= 3. - _Georg Fischer_, Mar 23 2019"
+    ],
+    "mathematica": [
+        "(* b = A000931 *)",
+        "b[0]=0; b[1]=1; b[2]=1; b[n_]:= b[n]= b[n-2] + b[n-3];",
+        "a[1]=1; a[n_]:= a[n]= Sum[b[k]*a[n-k], {k,n-1}];",
+        "Table[a[n], {n, 35}]",
+        "(* or *)",
+        "LinearRecurrence[{1, 2, 1}, {1, 1, 2, 4}, 31] (* _Georg Fischer_, Mar 23 2019 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^35); Vec(x*(1-x^2-x^3)/(1-x-2*x^2-x^3)) \\\\ _G. C. Greubel_, Jun 05 2018",
+        "(Magma) m:=35; R<x>:=PowerSeriesRing(Integers(), m); Coefficients(R!(x*(1-x^2-x^3)/(1-x-2*x^2-x^3))); // _G. C. Greubel_, Jun 05 2018"
+    ],
+    "xref": [
+        "Subsequence of A000930.",
+        "Cf. A000931, A001906, A078027, A134816, A141015, A182097."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Roger L. Bagula_ and _Gary W. Adamson_, Sep 07 2008",
+    "references": 2,
+    "revision": 35,
+    "time": "2022-09-08T08:45:35-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

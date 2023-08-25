@@ -1,0 +1,48 @@
+{
+    "number": 123746,
+    "data": "1,1,7,9,107,151,835,1241,26291,40427,207897,327615,3296959,5293843,26189947,42685049,1666461763,2749521971,13266871709,22115585443,211386315749,355490397193,1684973959237,2855358497999,53747636888759",
+    "name": "Numerators of partial sums of a series for 1/sqrt(2).",
+    "comment": [
+        "Denominators are given by A046161(n),n>=0.",
+        "The alternating sum over central binomial coefficients scaled by powers of 4, r(n) = Sum_{k=0..n} (-1)^k*binomial(2*k,k)/4^k, has the limit s = lim_{n->infinity} r(n) = 1/sqrt(2). From the expansion of 1/sqrt(1-x) for |x|<1 which extends to x=-1 due to Abel's limit theorem and the convergence of the series s. See the W. Lang link.",
+        "(2^n)*n!*r(n) = A003148(n). - _Wolfdieter Lang_, Oct 06 2008"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A123746/b123746.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "W. Lang, <a href=\"/A123746/a123746.txt\">Rationals and more.</a>"
+    ],
+    "formula": [
+        "a(n) = numerator(r(n)) with the rationals r(n) = Sum_{k=0..n} (-1)^k* binomial(2*k,k)/4^k, n>=0.",
+        "r(n) = Sum_{k=0..n} (-1)^k*(2*k-1)!!/(2*k)!!, n>=0, with the double factorials A001147 and A000165.",
+        "r(n) = 1/sqrt(2) - binomial(-1/2, 1 + n)*hypergeom([1, 3/2 + n], [2 + n], -1). - _Peter Luschny_, Sep 26 2019"
+    ],
+    "example": [
+        "a(3)=9 because r(n)=1-1/2+3/8-5/16 = 9/16 = a(3)/A046161(3)."
+    ],
+    "maple": [
+        "A123746:=n-> numer(add(binomial(2*k,k)/(-4)^k, k=0..n)); seq(A123746(n), n=0..30); # _G. C. Greubel_, Aug 10 2019",
+        "a := n -> numer(add(binomial(-1/2, j), j=0..n));",
+        "seq(a(n), n=0..24); # _Peter Luschny_, Sep 26 2019"
+    ],
+    "mathematica": [
+        "Table[Numerator[Sum[Binomial[2*k, k]/(-4)^k, {k,0,n}]], {n,0,30}] (* _G. C. Greubel_, Mar 28 2018 *)"
+    ],
+    "program": [
+        "(PARI) {r(n) = sum(k=0,n,(-1/4)^k*binomial(2*k,k))};",
+        "vector(30, n, n--; numerator(r(n)) ) \\\\ _G. C. Greubel_, Mar 28 2018",
+        "(Magma) [Numerator( (&+[Binomial(2*k,k)/(-4)^k: k in [0..n]])): n in [0..30]]; // _G. C. Greubel_, Aug 10 2019",
+        "(Sage) [numerator( sum(binomial(2*k,k)/(-4)^k for k in (0..n)) ) for n in (0..30)] # _G. C. Greubel_, Aug 10 2019",
+        "(GAP) List([0..30], n-> NumeratorRat(Sum([0..n], k-> Binomial(2*k,k)/(-4)^k )) ); # _G. C. Greubel_, Aug 10 2019"
+    ],
+    "xref": [
+        "Cf. A120088/(2*A120777) partial sums for a series of sqrt(2).",
+        "Equals A003148 divided by A049606. - _Johannes W. Meijer_, Nov 23 2009"
+    ],
+    "keyword": "nonn,frac,easy",
+    "offset": "0,3",
+    "author": "_Wolfdieter Lang_, Nov 10 2006",
+    "references": 3,
+    "revision": 30,
+    "time": "2022-09-08T08:45:28-04:00",
+    "created": "2006-12-06T03:00:00-05:00"
+}

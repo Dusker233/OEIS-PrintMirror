@@ -1,0 +1,40 @@
+{
+    "number": 316156,
+    "data": "1,2,3,6,7,8,9,13,15,17,18,19,20,31,32,39,40,43,55,59,63,64,65,66,67,68,69,70,71,72,73,86,105,106,107,108,109,110,111,118,135,136,137,156,157,158,159,160,161,162,163,164,165,166,167,184,185,186,187,195",
+    "name": "The lexicographically earliest increasing sequence such that a(n) divides the sum of the first a(n)+1 terms.",
+    "comment": [
+        "Sequence b(n) of the sums of the first a(n)+1 terms of a(n) = Sum_{k=1..a(n)+1} a(k): 3, 6, 12, 36, 49, 64, 81, 169, 240, 323, 378, 437, 500, 1271, 1376, 2145, 2280, 2709, 4675, 5428, ... = A318872(1+a(n)).",
+        "Sequence c(n) of quotients when a(n) is calculated = (Sum_{k=1..a(n)+1} a(k) ) / a(n): 3, 3, 4, 6, 7, 8, 9, 13, 16, 19, 21, 23, 25, 41, 43, 55, 57, 63, 85, 92, ...",
+        "Is there a lexicographically earliest bijective sequence such that a(n) divides the sum of the first a(n)+1 terms?"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A316156/b316156.txt\">Table of n, a(n) for n = 1..20000</a>"
+    ],
+    "formula": [
+        "a(1) = 1; for n > 1, if n-1 is not in the sequence, a(n) = a(n-1)+1, otherwise, a(n) is the least k > a(n-1) such that A318872(n-1)+k is a multiple of n-1. - _Antti Karttunen_, Sep 16 2018"
+    ],
+    "example": [
+        "a(1) = 1 because 1 divides the sum of the first 2 (i.e., a(1) + 1) terms (a(1) + a(2)) for whatever term a(2) > a(1).",
+        "a(2) = 2 because 2 is the smallest number > a(1) and 2 divides the sum of the first 3 (i.e., a(2) + 1) terms (a(1) + a(2) + a(3)) for whatever term a(3) > a(2) such that 2 divides the sum a(1) + a(2) + a(3); the smallest number > a(2) with this property for a(3) is 3.",
+        "a(3) = 3.",
+        "a(4) = 6 because 6 is the smallest number > a(3) such that term a(3) = 3 divides the sum of the first 4 (i.e., a(3) + 1) terms.",
+        "a(5) = 7 and a(6) = 8 because a(4) < a(5) < a(6) and 6 divides sum of the first 7 (i.e., a(4) + 1) terms (a(1) + a(2) + ... + a(7)) for whatever term a(7) > a(6) such that 6 divides the sum a(1) + a(2) + ... + a(7); the smallest number with this property for a(7) is 9.",
+        "a(7) = 9."
+    ],
+    "program": [
+        "(PARI)",
+        "povisin(v,n) = { forstep(j=n,1,-1, if(v[j] == n, return(j))); (0); }; \\\\ Here: povisin = position_of_n_in_strictly_increasing_v",
+        "A316156list(up_to) = { my(v316156 = vector(up_to), v318872 = vector(up_to), k, s); v316156[1] = v318872[1] = 1; for(n=2, up_to, k = 1+v316156[n-1]; if(povisin(v316156, n-1), s = v318872[n-1]; while((s+k)%(n-1), k++)); v316156[n] = k; v318872[n] = v318872[n-1] + v316156[n]); (v316156); }; \\\\ _Antti Karttunen_, Sep 16 2018"
+    ],
+    "xref": [
+        "Cf. A019444, A244671, A316571.",
+        "Cf. A318872 (partial sums), A318873 (first differences)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jaroslav Krizek_, Aug 20 2018",
+    "references": 4,
+    "revision": 25,
+    "time": "2021-12-20T02:37:37-05:00",
+    "created": "2018-09-26T08:56:00-04:00"
+}

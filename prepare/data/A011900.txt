@@ -1,0 +1,66 @@
+{
+    "number": 11900,
+    "data": "1,3,15,85,493,2871,16731,97513,568345,3312555,19306983,112529341,655869061,3822685023,22280241075,129858761425,756872327473,4411375203411,25711378892991,149856898154533,873430010034205,5090723162050695,29670908962269963",
+    "name": "a(n) = 6*a(n-1) - a(n-2) - 2 with a(0) = 1, a(1) = 3.",
+    "comment": [
+        "Members of Diophantine pairs.",
+        "Solution to b*(b-1) = 2*a*(a-1) in natural numbers; a = a(n), b = b(n) = A046090(n).",
+        "Also the indices of centered octagonal numbers which are also centered square numbers. - _Colin Barker_, Jan 01 2015",
+        "Also positive integers y in the solutions to 4*x^2 - 8*y^2 - 4*x + 8*y = 0. - _Colin Barker_, Jan 01 2015",
+        "Also the number of perfect matchings on a triangular lattice of width 3 and length n. - _Sergey Perepechko_, Jul 11 2019"
+    ],
+    "reference": [
+        "Mario Velucchi \"The Pell's equation ... an amusing application\" in Mathematics and Informatics Quarterly, to appear 1997."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A011900/b011900.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "H. J. Hindin, <a href=\"/A006062/a006062.pdf\">Stars, hexes, triangular numbers and Pythagorean triples</a>, J. Rec. Math., 16 (1983/1984), 191-193. (Annotated scanned copy)",
+        "Giovanni Lucca, <a href=\"http://forumgeom.fau.edu/FG2016volume16/FG2016volume16.pdf#page=423\">Circle Chains Inscribed in Symmetrical Lenses and Integer Sequences</a>, Forum Geometricorum, Volume 16 (2016) 419-427.",
+        "S. Northshield, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL18/Northshield/north4.html\">An Analogue of Stern's Sequence for Z[sqrt(2)]</a>, Journal of Integer Sequences, 18 (2015), #15.11.6.",
+        "S. N. Perepechko, <a href=\"http://dx.doi.org/10.13140/RG.2.2.20780.82568\">Number of perfect matchings on triangular lattices of fixed width</a>, DIMA'2015 slides. [see: page 12]",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (7,-7,1)."
+    ],
+    "formula": [
+        "a(n) = (A001653(n+1) + 1)/2.",
+        "a(n) = (((1+sqrt(2))^(2*n-1) - (1-sqrt(2))^(2*n-1))/sqrt(8)+1)/2.",
+        "a(n) = 7*(a(n-1) - a(n-2)) + a(n-3); a(1) = 1, a(2) = 3, a(3) = 15. Also a(n) = 1/2 + ( (1-sqrt(2))/(-4*sqrt(2)) )*(3-2*sqrt(2))^n + ( (1+sqrt(2))/(4*sqrt(2)) )*(3+2*sqrt(2))^n. - _Antonio Alberto Olivares_, Dec 23 2003",
+        "Sqrt(2) = Sum_{n>=0} 1/a(n); a(n) = a(n-1) + floor(1/(sqrt(2) - Sum_{k=0..n-1} 1/a(k))) (n>0) with a(0)=1. - _Paul D. Hanna_, Jan 25 2004",
+        "For n>k, a(n+k) = A001541(n)*A001653(k) - A053141(n-k-1); e.g., 493 = 99*5 - 2. For n<=k, a(n+k)=A001541(n)*A001653(k) - A053141(k-n); e.g., 85 = 3*29 - 2. - _Charlie Marion_, Oct 18 2004",
+        "a(n+1) = 3*a(n) - 1 + sqrt(8*a(n)^2 - 8*a(n) + 1), a(1)=1. - _Richard Choulet_, Sep 18 2007",
+        "a(n+1) = a(n) * (a(n) + 2) / a(n-1) for n>=1 with a(0)=1 and a(1)=3. - _Paul D. Hanna_, Apr 08 2012",
+        "G.f.: (1 - 4*x + x^2)/((1-x)*(1 - 6*x + x^2)). - _R. J. Mathar_, Oct 26 2009",
+        "Sum_{k=a(n)..A001109(n+1)} k = a(n)*A001109(n+1) = A011906(n+1). Example n=2, 3+4+5+6=18, 3*6=18. - _Paul Cleary_, Dec 05 2015",
+        "a(n) = (sqrt(1+8*A001109(n+1)^2)+1)/2 - A001109(n+1). - _Robert Israel_, Dec 16 2015",
+        "a(n) = a(-1-n) for all n in Z. - _Michael Somos_, Feb 23 2019"
+    ],
+    "example": [
+        "G.f. = 1 + 3*x + 15x^2 + 85*x^3 + 493*x^4 + 2871*x^5 + 16731*x^6 + ... - _Michael Somos_, Feb 23 2019"
+    ],
+    "maple": [
+        "f:= gfun:-rectoproc({a(n)=6*a(n-1)-a(n-2)-2,a(0)=1,a(1)=3},a(n),remember):",
+        "seq(f(n),n=0..40); # _Robert Israel_, Dec 16 2015"
+    ],
+    "mathematica": [
+        "a[0] = 1; a[1] = 3; a[n_] := a[n] = 6 a[n - 1] - a[n - 2] - 2; Table[a@ n, {n, 0, 22}] (* _Michael De Vlieger_, Dec 05 2015 *)",
+        "Table[(Fibonacci[2n + 1, 2] + 1)/2, {n, 0, 20}] (* _Vladimir Reshetnikov_, Sep 16 2016 *)",
+        "LinearRecurrence[{7,-7,1},{1,3,15},30] (* _Harvey P. Dale_, Feb 16 2017 *)",
+        "a[ n_] := (4 + ChebyshevT[n, 3] + ChebyshevT[n + 1, 3])/8; (* _Michael Somos_, Feb 23 2019 *)"
+    ],
+    "program": [
+        "(PARI) Vec((1-4*x+x^2)/((1-x)*(1-6*x+x^2)) + O(x^100)) \\\\ _Altug Alkan_, Dec 06 2015",
+        "(Magma) I:=[1,3]; [n le 2 select I[n] else 6*Self(n-1) - Self(n-2) - 2: n in [1..30]]; // _Vincenzo Librandi_, Dec 05 2015"
+    ],
+    "xref": [
+        "Cf. A001541, A001653, A011906, A046090, A053141, A156035."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "Mario Velucchi (mathchess(AT)velucchi.it)",
+    "ext": [
+        "More terms and comments from _Wolfdieter Lang_"
+    ],
+    "references": 20,
+    "revision": 111,
+    "time": "2022-12-22T08:40:36-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

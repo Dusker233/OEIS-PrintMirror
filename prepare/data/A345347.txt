@@ -1,0 +1,52 @@
+{
+    "number": 345347,
+    "data": "1,4,7,11,12,18,19,20,29,30,31,32,33,47,48,49,50,51,52,53,54,76,77,78,79,80,81,82,83,84,85,86,87,88,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,199,200,201,202,203,204",
+    "name": "Find the largest k with F(k) <= n, where F(k) is the k-th Fibonacci number. a(n) = F(k+2) + n.",
+    "comment": [
+        "The terms consist of 1 together with numbers that appear in row m of the Wythoff array (A035513) if m is in the sequence.",
+        "a(0) = 1, otherwise a(n) is the number whose Zeckendorf representation is \"10\" followed by the Zeckendorf representation of n.",
+        "If we define an extended Zeckendorf representation to be the Zeckendorf representation with \"01\" appended, then the numbers in the sequence are exactly those whose extended representation starts 101... . This extended representation is a valid Fibonacci base representation if we specify the rightmost digit to have weight F(0) = 0.",
+        "Equivalently, for positive integer m, find the largest k with F(k) <= m, where F(k) is the k-th Fibonacci number. m is in the sequence if and only if m >= F(k) + F(k-2).",
+        "Numbers given to rabbits on Rabbit 1's branch of the generation tree described in the A035513 examples.",
+        "Equivalently, take the positive integers in turn, placing runs of them alternatively into 2 sets, with run lengths from A053602/A051792 (self-interleaved Fibonacci sequence) as follows:",
+        "   set A: 1   0   1   1   2   3   5 ...",
+        "   set B:   1   1   2   3   5   8 ...",
+        "The sequence lists the numbers in set A."
+    ],
+    "link": [
+        "Encyclopedia of Mathematics, <a href=\"https://encyclopediaofmath.org/wiki/Zeckendorf_representation\">Zeckendorf representation</a>.",
+        "OEIS Wiki, <a href=\"/wiki/Zeckendorf_representation\">Zeckendorf representation</a>.",
+        "N. J. A. Sloane, <a href=\"/classic.html#WYTH\">Classic Sequences</a>."
+    ],
+    "formula": [
+        "a(n) = A000045(A108852(n)+1) + n.",
+        "Union_{k >= 2} {m : F(k)+F(k-2) <= m < F(k+1)}, where F(k) = A000045(k)."
+    ],
+    "example": [
+        "The initial Fibonacci numbers are F(0)..F(5) = 0, 1, 1, 2, 3, 5.",
+        "For n = 0, the largest k with F(k) <= 0 is k = 0, so F(k+2) = F(2) = 1, so a(0) = 1 + 0 = 1.",
+        "For n = 1, the largest k with F(k) <= 1 is k = 2, so F(k+2) = F(4) = 3, so a(1) = 3 + 1 = 4.",
+        "For n = 4, the largest k with F(k) <= 4 is k = 4, so F(k+2) = F(6) = 8, so a(4) = 8 + 4 = 12.",
+        "In the paragraph that follows we use the Wythoff array-based definition from the start of the comments.",
+        "Every positive integer appears once (only) in the Wythoff array. 0 is not positive, so does not appear in the array, so is not in the sequence. 1 is in the sequence by definition. 2 appears in Wythoff row 0, and 0 is not in the sequence, so 2 is not in the sequence. 4 appears in Wythoff row 1, and 1 is in the sequence, so 4 is in the sequence."
+    ],
+    "mathematica": [
+        "kmax=12;Flatten[Table[Range[Fibonacci[k]+Fibonacci[k-2],Fibonacci[k+1]-1],{k,2,kmax}]] (* _Paolo Xausa_, Jan 02 2022 *)",
+        "A108852[n_]:=1+Floor[Log[GoldenRatio,1+n*Sqrt[5]]];",
+        "nterms=100;Table[n+Fibonacci[1+A108852[n]],{n,0,nterms-1}](* _Paolo Xausa_, Jan 02 2022 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = my(k=0); while(fibonacci(k)<=n, k=k+1); n+fibonacci(k+1)"
+    ],
+    "xref": [
+        "Cf. A000045, A035513, A051792, A053602, A108852.",
+        "Appears to be column 1 of A194030."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "0,2",
+    "author": "_Peter Munn_, Jun 14 2021",
+    "references": 1,
+    "revision": 29,
+    "time": "2022-01-02T09:28:46-05:00",
+    "created": "2021-12-13T17:28:00-05:00"
+}

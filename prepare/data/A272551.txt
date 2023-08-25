@@ -1,0 +1,35 @@
+{
+    "number": 272551,
+    "data": "1,24,997,51264,2940841,180296088,11559133741,765337680384,51921457661905,3590122671128664,252070718210663749,17922684123178825536,1287832671004683373753,93368940577497932331288,6821632357294515590873917,501741975445243527381995520,37121266623211130111114816929",
+    "name": "Number of singular vector tuples for a general 4-dimensional n X n X n X n tensor.",
+    "link": [
+        "Shalosh B. Ekhad and Doron Zeilberger, <a href=\"http://www.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/svt.html\">On the Number of Singular Vector Tuples of Hyper-Cubical Tensors</a>, 2016.",
+        "Shalosh B. Ekhad and Doron Zeilberger, <a href=\"https://arxiv.org/abs/1605.00172\">On the number of Singular Vector Tuples of Hyper-Cubical Tensors</a>, arXiv preprint arXiv:1605.00172 [math.CO], 2016."
+    ],
+    "mathematica": [
+        "a[n_] := Module[{a, b, c, d, s}, s = Series[(",
+        "  ((a + b + c)^n - d^n)*",
+        "  ((b + c + d)^n - a^n)*",
+        "  ((c + d + a)^n - b^n)*",
+        "  ((d + a + b)^n - c^n))/(",
+        "  (a + b + c - d)*",
+        "  (b + c + d - a)*",
+        "  (c + d + a - b)*",
+        "  (d + a + b - c)),",
+        "  {a, 0, n}, {b, 0, n}, {c, 0, n}, {d, 0, n}] // Normal // Expand;",
+        "  Cases[List @@ s, k_Integer a^(n-1) b^(n-1) c^(n-1) d^(n-1)] /. (a|b|c|d) -> 1 // First",
+        "];",
+        "Table[an = a[n]; Print[\"a(\", n, \") = \", an]; an, {n, 1, 17}] (* _Jean-Fran\u00e7ois Alcover_, Aug 19 2018, after A271905 *)"
+    ],
+    "xref": [
+        "See A271905 for the three-dimensional analog.",
+        "Column k=4 of A284308."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Doron Zeilberger_, May 02 2016",
+    "references": 5,
+    "revision": 21,
+    "time": "2018-08-19T03:23:37-04:00",
+    "created": "2016-05-02T14:18:18-04:00"
+}

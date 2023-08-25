@@ -1,0 +1,42 @@
+{
+    "number": 349756,
+    "data": "1,2,3,6,7,14,20,21,24,27,31,42,54,57,60,62,93,114,120,127,140,160,168,186,189,216,217,220,237,254,264,301,378,381,399,408,420,434,460,474,480,513,540,552,602,620,651,660,744,762,792,798,837,840,889,903,940,1026,1080,1120,1128,1140,1302,1320,1380,1392,1512",
+    "name": "Numbers k such that the odd part of sigma(k) is equal to gcd(sigma(k), A003961(k)), where A003961 is fully multiplicative with a(p) = nextprime(p), and sigma is the sum of divisors function.",
+    "comment": [
+        "Numbers k for which A161942(k) = A342671(k).",
+        "From _Antti Karttunen_, Jul 23 2022: (Start)",
+        "Numbers k such that k is a multiple of A350073(k).",
+        "For any square s in this sequence, A349162(s) = 1, i.e. sigma(s) divides A003961(s), and also A286385(s). Question: Is 1 the only square in this sequence? (see the conjecture in A350072).",
+        "If both x and y are terms and gcd(x, y) = 1, then x*y is also present.",
+        "After 2, the only primes present are Mersenne primes, A000668.",
+        "(End)"
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A349756/b349756.txt\">Table of n, a(n) for n = 1..23008; terms < 2^31</a>",
+        "<a href=\"/index/Pri#prime_indices\">Index entries for sequences computed from indices in prime factorization</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "mathematica": [
+        "f[p_, e_] := NextPrime[p]^e; s[1] = 1; s[n_] := Times @@ f @@@ FactorInteger[n]; oddpart[n_] := n/2^IntegerExponent[n, 2]; q[n_] := oddpart[(sigma = DivisorSigma[1, n])] == GCD[sigma, s[n]]; Select[Range[1500], q] (* _Amiram Eldar_, Dec 04 2021 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A003961(n) = { my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); };",
+        "A355946(n) = { my(s=sigma(n)); !(A003961(n)%((s>>=valuation(s,2)))); };",
+        "isA349756(n) = A355946(n);"
+    ],
+    "xref": [
+        "Positions of 1's in A348992.",
+        "Positions where the powers of 2 (A000079) occur in A349162.",
+        "Cf. A000203, A003961, A161942, A286385, A342671, A350072, A350073, A355946 (characteristic function).",
+        "Cf. A000668, A046528 (subsequences).",
+        "Cf. also A348943."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Dec 03 2021",
+    "references": 5,
+    "revision": 19,
+    "time": "2022-07-28T21:15:44-04:00",
+    "created": "2021-12-04T12:32:08-05:00"
+}

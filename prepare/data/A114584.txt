@@ -1,0 +1,47 @@
+{
+    "number": 114584,
+    "data": "1,1,2,3,7,15,36,85,209,517,1303,3312,8510,22029,57447,150709,397569,1053822,2805518,7498035,20110254,54110386,146021880,395114304,1071772322,2913900196,7939004648,21672609566,59272260791,162380575451",
+    "name": "Number of Motzkin paths of length n having no UHD's (U=(1,1), H=(1,0), D=(1,-1)).",
+    "comment": [
+        "Column 0 of A114583."
+    ],
+    "link": [
+        "Jinyuan Wang, <a href=\"/A114584/b114584.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Andrei Asinowski, Axel Bacher, Cyril Banderier, Bernhard Gittenberger, <a href=\"http://doi.org/10.1007/978-3-319-77313-1_15\">Analytic Combinatorics of Lattice Paths with Forbidden Patterns: Enumerative Aspects</a>, in International Conference on Language and Automata Theory and Applications, S. Klein, C. Mart\u00edn-Vide, D. Shapira (eds), Springer, Cham, pp 195-206, 2018.",
+        "Andrei Asinowski, Axel Bacher, Cyril Banderier, Bernhard Gittenberger, <a href=\"https://lipn.univ-paris13.fr/~banderier/Papers/patterns2019.pdf\">Analytic combinatorics of lattice paths with forbidden patterns, the vectorial kernel method, and generating functions for pushdown automata</a>, Laboratoire d'Informatique de Paris Nord (LIPN 2019).",
+        "Yan Zhuang, <a href=\"https://arxiv.org/abs/1508.02793\">A generalized Goulden-Jackson cluster method and lattice path enumeration</a>, arXiv:1508.02793 [math.CO], 2015-2018; Discrete Mathematics 341.2 (2018): 358-379."
+    ],
+    "formula": [
+        "G.f.: (1-z+z^3-sqrt((1+z+z^3)(1-3z+z^3))/(2z^2).",
+        "Conjecture: +(n+2)*a(n) +(n+2)*a(n-1) +3*(-3*n+2)*a(n-2) +(-7*n+13)*a(n-3) +(4*n-13)*a(n-4) +6*(-n+5)*a(n-5) +(n-7)*a(n-6) +3*(n-8)*a(n-7)=0. - _R. J. Mathar_, Feb 16 2018",
+        "a(n) = Sum_{i=0..n/2} Sum_{j=0..n/2-i} (-1)^j*C(n-2*j,i)*C(n-2*j-2*i,j)*C(n-2*j-i,i)/(i+1). - _Vladimir Kruchinin_, May 05 2018",
+        "a(n) = a(n-1) - a(n-3) + Sum_{i=0..n-2} a(i)*a(n-2-i), a(0)=1. - _Vladimir Kruchinin_, May 05 2018",
+        "a(n) = Sum_{i=0..n/2} binomial(n,i)*binomial(n-i,i)*hypergeom([(2*i - n)/3, (2*i - n + 1)/3, (2*i - n + 2)/ 3], [(1 - n)/2, -n/2], 27/4) / (i + 1). - _Peter Luschny_, May 05 2018",
+        "G.f. A(x) satisfies: A(x) = (1 + x^2 * A(x)^2) / (1 - x + x^3). - _Ilya Gutkovskiy_, Jul 20 2021"
+    ],
+    "example": [
+        "a(4)=7 because the only counterexamples among the 9 Motzkin paths of length 4 are HUHD and UHDH."
+    ],
+    "maple": [
+        "G:=(1-z+z^3-sqrt((1+z+z^3)*(1-3*z+z^3)))/2/z^2: Gser:=series(G,z=0,35): 1,seq(coeff(Gser,z^n),n=1..32);"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[Binomial[n, i] Binomial[n - i, i] HypergeometricPFQ[{(2 i - n)/3, (2 i - n + 1)/3, (2 i - n + 2)/ 3}, {(1 - n)/2, -n/2}, 27/4] /(i + 1), {i, 0, n /2}];",
+        "Table[a[n], {n, 0, 29}] (* _Peter Luschny_, May 05 2018 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum(sum((-1)^j*binomial(n-2*j,i)*binomial(n-2*j-2*i,j)*binomial(n-2*j-i,i),j,0,(n)/2-i)/(i+1),i,0,(n)/2); /* _Vladimir Kruchinin_, May 05 2018 */",
+        "(PARI) x='x+O('x^99); Vec((1-x+x^3-((1+x+x^3)*(1-3*x+x^3))^(1/2))/(2*x^2)) \\\\ _Altug Alkan_, May 05 2018"
+    ],
+    "xref": [
+        "Cf. A114583."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Emeric Deutsch_, Dec 09 2005",
+    "references": 2,
+    "revision": 39,
+    "time": "2021-07-20T17:20:27-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

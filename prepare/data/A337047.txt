@@ -1,0 +1,34 @@
+{
+    "number": 337047,
+    "data": "405,412,850,25315,49419,50127,224315,293394,308700,697136,801350,811910,997425,1118520,1152000,1177250,1550520,1659350,1725332,1739640,1824500,1976895,2141150,2580640,2580831,3530466,3718376,4050405,4459455,4536532,4577732,4832796,5173100,5510287,5601570,5603989,5609439",
+    "name": "Numbers k such that A001414(k) and A001414(A004086(k)) are twin primes p, p+2.",
+    "link": [
+        "Robert Israel, <a href=\"/A337047/b337047.txt\">Table of n, a(n) for n = 1..150</a>"
+    ],
+    "example": [
+        "a(3)=850 is in the sequence because A001414(850)=2+5+5+17=29, A001414(58)=2+29=31, and (29,31) is a pair of twin primes."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,k;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-k]*10^(k-1),k=1..nops(L))",
+        "end proc:",
+        "filter:= proc(n) local a,b;",
+        "  a:= convert(map(convert,ifactors(n)[2],`*`),`+`);",
+        "  if not isprime(a) then return false fi;",
+        "  b:= convert(map(convert,ifactors(revdigs(n))[2],`*`),`+`);",
+        "  b = a+2 and isprime(b)",
+        "end proc:",
+        "select(filter, [$1 .. 10^7]);"
+    ],
+    "xref": [
+        "Cf. A001097, A001414, A004086. Subsequence of A100118."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Aug 12 2020",
+    "references": 1,
+    "revision": 15,
+    "time": "2021-02-06T21:59:27-05:00",
+    "created": "2020-08-13T22:08:31-04:00"
+}

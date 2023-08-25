@@ -1,0 +1,35 @@
+{
+    "number": 340023,
+    "data": "1,1,4,24,263,5566,239428,21074412,3779440490,1372163701412,1003687569555456,1474604145003923000,4343524388729516494384,25623424478746329214500144,302549202766446393276528844768,7147753721248229224770005386691680",
+    "name": "Number of graphs with n integer labeled vertices covering an initial interval of positive integers.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A340023/b340023.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "example": [
+        "a(2) = 4 because there are 2 graphs on 2 vertices and each of these can either have both vertices labeled 1 or one vertex labeled 1 and the other 2."
+    ],
+    "mathematica": [
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_] := Sum[GCD[v[[i]], v[[j]]], {i, 2, Length[v]}, {j, 1, i - 1}] + Total[Quotient[v, 2]];",
+        "G[n_, k_] := Module[{s = 0}, Do[s += permcount[p]*2^edges[p]*k^Length[p], {p, IntegerPartitions[n]}]; s/n!];",
+        "a[n_] := Module[{p = G[n, x]}, Sum[(p /. x -> k)*Sum[Binomial[r, k]*(-1)^(r - k), {r, k, n}], {k, 0, n}]];",
+        "a /@ Range[0, 15] (* _Jean-Fran\u00e7ois Alcover_, Jan 06 2021, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, gcd(v[i], v[j]))) + sum(i=1, #v, v[i]\\2)}",
+        "G(n,k)={my(s=0); forpart(p=n, s+=permcount(p)*2^edges(p)*k^#p); s/n!}",
+        "a(n)={my(p=G(n,x)); sum(k=0, n, subst(p,x,k)*sum(r=k, n, binomial(r, k)*(-1)^(r-k)))}"
+    ],
+    "xref": [
+        "Cf. A340022, A340024, A340026."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Andrew Howroyd_, Jan 01 2021",
+    "references": 4,
+    "revision": 12,
+    "time": "2021-01-06T13:04:18-05:00",
+    "created": "2021-01-02T18:03:31-05:00"
+}

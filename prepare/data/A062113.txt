@@ -1,0 +1,41 @@
+{
+    "number": 62113,
+    "data": "1,2,3,7,10,24,34,82,116,280,396,956,1352,3264,4616,11144,15760,38048,53808,129904,183712,443520,627232,1514272,2141504,5170048,7311552,17651648,24963200,60266496,85229696,205762688,290992384,702517760",
+    "name": "a(0)=1; a(1)=2; a(n) = a(n-1) + a(n-2)*(3 - (-1)^n)/2.",
+    "comment": [
+        "A bistable recurrence."
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A062113/b062113.txt\">Table of n, a(n) for n = 0..200</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (0,4,0,-2)."
+    ],
+    "formula": [
+        "a(n) = a(n-1) + a(n-2) * A000034(n). - _Reinhard Zumkeller_, Jan 21 2012",
+        "From _Colin Barker_, Apr 20 2012: (Start)",
+        "a(n) = 4*a(n-2) - 2*a(n-4).",
+        "G.f.: (1+2*x-x^2-x^3)/(1-4*x^2+2*x^4). (End)"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{0,4,0,-2}, {1,2,3,7}, 40] (* _G. C. Greubel_, Oct 16 2018 *)"
+    ],
+    "program": [
+        "(PARI) { for (n=0, 200, if (n>1, a=a1 + a2*(3 - (-1)^n)/2; a2=a1; a1=a, if (n==0, a=a2=1, a=a1=2)); write(\"b062113.txt\", n, \" \", a) ) } \\\\ _Harry J. Smith_, Aug 01 2009",
+        "(PARI) x='x+O('x^40); Vec((1+2*x-x^2-x^3)/(1-4*x^2+2*x^4)) \\\\ _G. C. Greubel_, Oct 16 2018",
+        "(Haskell)",
+        "a062113 n = a062113_list !! n",
+        "a062113_list = 1 : 2 : zipWith (+)",
+        "   (tail a062113_list) (zipWith (*) a000034_list a062113_list)",
+        "-- _Reinhard Zumkeller_, Jan 21 2012",
+        "(Magma) I:=[1,2,3,7]; [n le 4 select I[n] else 4*Self(n-2) - 2*Self(n-4): n in [1..40]]; // _G. C. Greubel_, Oct 16 2018"
+    ],
+    "xref": [
+        "Cf. A007068, A062112."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Olivier G\u00e9rard_, Jun 05 2001",
+    "references": 2,
+    "revision": 21,
+    "time": "2022-09-08T08:45:03-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

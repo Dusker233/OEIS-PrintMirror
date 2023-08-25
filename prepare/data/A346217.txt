@@ -1,0 +1,35 @@
+{
+    "number": 346217,
+    "data": "1,2,3,4,5,6,7,8,9,11,22,33,44,55,66,77,88,99,111,122,124,126,142,144,155,162,168,186,221,222,244,248,261,263,284,288,324,326,333,342,346,362,364,366,442,444,488,555,621,623,648,663,666,684,728,742,777,812",
+    "name": "Integers m, with k digits, such that Sum_{i=1..k} (m without its i-th digit)/(its i-th digit) is an integer.",
+    "link": [
+        "Michel Marcus, <a href=\"/A346217/b346217.txt\">Table of n, a(n) for n = 1..5000</a>",
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_1045.htm\">Puzzle 1045. One nice puzzle from Paolo Lava</a>, The Prime Puzzles and Problems Connection."
+    ],
+    "example": [
+        "124 gives 12/4 + 14/2 + 24/1 = 34, an integer, so 124 is a term.",
+        "221 gives 21/2 + 21/2 + 22/1 = 43, an integer, so 221 is a term."
+    ],
+    "program": [
+        "(PARI) subs(d, j) = {my(x=\"\"); for (k=1, #d, if (j != k, x = concat(x, d[k]));); eval(x);}",
+        "isok(m) = {my(d=digits(m), res); if (vecmin(d), res = sum(j=1, #d, subs(d, j)/d[j]); (denominator(res)==1););}",
+        "(Python)",
+        "from fractions import Fraction",
+        "def ok(n):",
+        "    s = str(n)",
+        "    if '0' in s: return False",
+        "    if len(s) == 1: return True",
+        "    return sum(Fraction(int(s[:i]+s[i+1:]), int(s[i])) for i in range(len(s))).denominator == 1",
+        "print(list(filter(ok, range(813)))) # _Michael S. Branicky_, Jul 11 2021"
+    ],
+    "xref": [
+        "Subsequence of A052382 (zeroless numbers). Supersequence of A346206."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Michel Marcus_, Jul 11 2021",
+    "references": 1,
+    "revision": 17,
+    "time": "2021-08-05T16:28:11-04:00",
+    "created": "2021-07-11T05:51:54-04:00"
+}

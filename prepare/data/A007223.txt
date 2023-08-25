@@ -1,0 +1,55 @@
+{
+    "number": 7223,
+    "id": "M1843",
+    "data": "1,2,8,24,85,286,1008,3536,12618,45220,163504,594320,2173197,7983990,29465440,109174560,405995326,1514797020,5669021488,21275014800,80047272578,301892460012,1141069157408,4321730134624,16399422757300",
+    "name": "Number of distinct perforation patterns for deriving (v,b) = (n+2,n) punctured convolutional codes from (2,1).",
+    "comment": [
+        "Number of ways to distribute n pairs parentheses into 2 groups where each group of parentheses represents a Catalan ordering (A000108), and each group must contain at least one pair of parentheses. If one of the groups may have no parentheses, we arrive at A007595. Analog of A274934 with Catalan numbers replacing connected graph counts. - _R. J. Mathar_, Jul 19 2016",
+        "From _Petros Hadjicostas_, Jul 27 2020: (Start)",
+        "\"A punctured convolutional code is a high-rate code obtained by the periodic elimination (i.e., puncturing) of specific code symbols from the output of a low-rate encoder. The resulting high-rate code depends on both the low-rate code, called the original code, and the number and specific positions of the punctured symbols.\" (The quote is from Haccoun and B\u00e9gin (1989).)",
+        "A high-rate code (v,b) (written as R = b/v) can be constructed from a low-rate code (v0,1) (written as R = 1/v0) by deleting from every v0*b code symbols a number of v0*b - v symbols (so that the resulting rate is R = b/v).",
+        "Even though the formulas below do not appear in the two published papers in the IEEE Transactions on Communications, from the theory in those two papers, it makes sense to replace \"k|b\" with \"k|v0*b\" (and \"k|gcd(v,b)\" with \"k|gcd(v,v0*b)\"). Pab Ter, however, uses \"k|b\" in the Maple program below. (End)"
+    ],
+    "reference": [
+        "Guy B\u00e9gin, On the enumeration of perforation patterns for punctured convolutional codes, S\u00e9ries Formelles et Combinatoire Alg\u00e9brique, 4th colloquium, 15-19 Juin 1992, Montr\u00e9al, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, pp. 1-10.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Guy B\u00e9gin and David Haccoun, <a href=\"https://doi.org/10.1109/26.44210\">High rate punctured convolutions codes: Structure properties and construction techniques</a>, IEEE Transactions on Communications 37(12) (1989), 1381-1385.",
+        "David Haccoun and Guy B\u00e9gin, <a href=\"https://doi.org/10.1109/26.46505\">High rate punctured convolutional codes for Viterbi and sequential coding</a>, IEEE Transactions on Communications, 37(11) (1989), 1113-1125; see Section II."
+    ],
+    "formula": [
+        "Conjecture: Expansion of [A(x)^2 + A(x^2)]/2, where A(x) = A000108(x) - 1. - _R. J. Mathar_, Jul 19 2016",
+        "From _Petros Hadjicostas_, Jul 27 2020: (Start)",
+        "The number of perforation patterns to derive high-rate convolutional code (v,b) (written as R = b/v) from a given low-rate convolutional code (v0, 1) (written as R = 1/v0) is (1/b)*Sum_{k|gcd(v,b)} phi(k)*binomial(v0*b/k, v/k).",
+        "According to Pab Ter's Maple code, this is the coefficient of z^v in the polynomial (1/b)*Sum_{k|b} phi(k)*(1 + z^k)^(v0*b/k).",
+        "Here (v,b) = (n+2,n) and (v0,1) = (2,1), so",
+        "a(n) = (1/n)*Sum_{k|gcd(n+2,n)} phi(k)*binomial(2*n/k, (n+2)/k).",
+        "This simplifies to",
+        "a(n) = (1/n)*(binomial(2*n, n+2) + [(n mod 2) == 0]*binomial(n, (n/2) + 1)).",
+        "It follows from my comments in A275206 that _R. J. Mathar_'s conjecture is correct and that",
+        "a(n) = (-2*c(n) + c(n+1) + [(n mod 2) == 0]*c(n/2))/2 for n >= 1, where c = A000108. (End)",
+        "D-finite with recurrence -(11*n-30)*(n+2)*(n+1) *a(n) +10*(n+1) *(7*n^2-22*n+6) *a(n-1) -60*(n-2)*(n^2-5*n+1) *a(n-2) -40*(n-2) *(7*n^2-22*n+6) *a(n-3) +16*(2*n-7) *(n-3) *(13*n-22) *a(n-4)=0. - _R. J. Mathar_, Mar 21 2021"
+    ],
+    "maple": [
+        "with(numtheory):P:=proc(b,v0) local k: RETURN(add(phi(k)*(1+z^k)^(v0*(b/k)),k=divisors(b))/b): end; seq(coeff(P(b,2),z,b+2),b=2..40); # Pab Ter"
+    ],
+    "mathematica": [
+        "A[x_] = (1 - Sqrt[1 - 4x])/(2x) - 1;",
+        "CoefficientList[(A[x]^2 + A[x^2])/(2 x^2) + O[x]^25, x] (* _Jean-Fran\u00e7ois Alcover_, Apr 30 2023, after _R. J. Mathar_'s proven conjecture *)"
+    ],
+    "xref": [
+        "Cf. A000108, A007229, A007595, A274934, A275206."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_Simon Plouffe_",
+    "ext": [
+        "More terms from Pab Ter (pabrlos2(AT)yahoo.com), Nov 13 2005",
+        "a(2) = 1 prepended by _R. J. Mathar_, Jul 19 2016"
+    ],
+    "references": 7,
+    "revision": 49,
+    "time": "2023-04-30T07:10:14-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

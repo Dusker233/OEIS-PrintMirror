@@ -1,0 +1,63 @@
+{
+    "number": 346379,
+    "data": "0,0,5,12,21,33,47,63,81,102,125,151,179,209,242,277,314,354,396,440,487,536,587,641,697,755,816,879,944,1012,1082,1155,1230,1307,1387,1468,1553,1639,1728,1819,1913,2009,2107,2208,2311,2416,2524,2634,2747,2861,2978",
+    "name": "The least k such that the number of real roots of Sum_{i=0..j} (i+1)^k*x^i is j for j = 0,1,...,n or -1 if no solution for this n exists.",
+    "comment": [
+        "Conjecture: The sequence is defined for all n.",
+        "A Maple calculation shows that for n = 125 and k = 20000 the number of real roots of Sum_{i=0..j} (i+1)^k*x^i is j for j = 0,1,...,n. This shows that a(n) is defined at least up to n = 125."
+    ],
+    "link": [
+        "W. Edwin Clark and Mark Shattuck, <a href=\"https://arxiv.org/abs/2107.05572\">The Integer Sequence Transform a --> b where b_n is the Number of Real Roots of the Polynomial a_0 + a_1 x + a_2 x^2 + ... + a_n x^n</a>, arXiv:2107.05572 [math.CO], 2021."
+    ],
+    "maple": [
+        "Section:=proc(p,j)",
+        "local  i,x;",
+        "x:=op(indets(p));",
+        "add(coeff(p,x,i)*x^i,i=0..j);",
+        "end:",
+        "IsGood:=proc(p)",
+        "local i,n,x;",
+        "n:=degree(p);",
+        "for i from 0 to n do",
+        "  if NumRealRoots(Section(p,i)) <> i then return false; fi;",
+        "od:",
+        "return true;",
+        "end:",
+        "NumRealRoots:=proc(p)",
+        "local q,k,u;",
+        "if p = 0 then error \"zero polynomial not allowed\"; fi;",
+        "q:=sqrfree(p);",
+        "  k:=0;",
+        "  for u in q[2] do",
+        "    k:=k+nops(realroot(u[1]))*u[2];",
+        "  od;",
+        "  k;",
+        "end:",
+        "K0:=0:",
+        "for n from 0 to 50 do",
+        "   if n = 0 then printf(\"%d,\",0); next;  fi;",
+        "flag:=false;",
+        "   for k from K0 to 10^10 do",
+        "  p:=add(((i+1)^k)*x^i,i=0..n);",
+        "    if IsGood(p) then  K0:=k; printf(\"%d,\",k); flag:=true;        break; fi;",
+        "   od:",
+        "if flag=false then printf(\"%d,\",-1); fi;",
+        "od:"
+    ],
+    "program": [
+        "(PARI) f(n, k) = (n+1)^k;",
+        "nb(n, k) = {my(v = vector(n+1, i, f(i-1, k))); #polrootsreal(Pol(v));}",
+        "a(n) = {my(k=0); while (vector(n+1, i, nb(i-1, k)) != [0..n], k++); k;} \\\\ _Michel Marcus_, Jul 14 2021"
+    ],
+    "keyword": "nonn,hard",
+    "offset": "0,3",
+    "author": "_W. Edwin Clark_, Jul 14 2021",
+    "ext": [
+        "a(29)-a(43) from _Hugo Pfoertner_, Jul 17 2021",
+        "a(44)-a(50) from _Hugo Pfoertner_, Jul 19 2021"
+    ],
+    "references": 0,
+    "revision": 37,
+    "time": "2021-07-27T04:02:15-04:00",
+    "created": "2021-07-16T06:16:20-04:00"
+}

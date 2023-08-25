@@ -1,0 +1,49 @@
+{
+    "number": 242680,
+    "data": "1,2,3,9,11,41,63,77,91,99,219,303,411,999,1353,5291,6363,6993,7777,8547,9009,9191,9901,9999,12561,23661,41841,47027,75609,90243,99999,110011,122859,124533,125341,152207,169983,170017,473211,487179,513513,575757,578369,626373,683527,703703,740259,904761,999001,999999,2463661,2709729,2754573",
+    "name": "Numbers k dividing every cyclic permutation of k^3.",
+    "comment": [
+        "Includes k if 10^(d-1) <= k^3 < 10^d and k | 10^d-1.  Is 2 the only member of the sequence that is not of this form? - _Robert Israel_, Jun 04 2019"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A242680/b242680.txt\">Table of n, a(n) for n = 1..130</a>"
+    ],
+    "example": [
+        "41 is a term as the cyclic permutations of 41^3 = 68921 are {68921, 89216, 92168, 21689, 16892}",
+        "and",
+        "  68921 = 41*1681;",
+        "  89216 = 41*2176;",
+        "  92168 = 41*2248;",
+        "  21689 = 41*529;",
+        "  16892 = 41*412."
+    ],
+    "maple": [
+        "filter:= proc(n) local d,t,r,i;",
+        "  d:= ilog10(n^3);",
+        "  t:= n^3;",
+        "  for i from 1 to d do",
+        "    r:= t mod 10;",
+        "    t:= 10^d*r + (t-r)/10;",
+        "    if not (t/n)::integer then return false fi;",
+        "  od;",
+        "  true",
+        "end proc:",
+        "select(filter, [$1..10^7]); # _Robert Israel_, Jun 04 2019"
+    ],
+    "mathematica": [
+        "Select[Range[300000], And@@Divisible[FromDigits/@Table[ RotateRight[ IntegerDigits[ #^3], n], {n, IntegerLength[#^3]}], #]&]"
+    ],
+    "xref": [
+        "Cf. A178028."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Michel Lagneau_, May 20 2014",
+    "ext": [
+        "More terms from _Robert Israel_, Jun 04 2019"
+    ],
+    "references": 3,
+    "revision": 13,
+    "time": "2019-06-04T21:39:07-04:00",
+    "created": "2014-05-20T19:12:31-04:00"
+}

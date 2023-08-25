@@ -1,0 +1,35 @@
+{
+    "number": 345343,
+    "data": "3,5,7,8,17,33,39,47,63,71,77,93,107,171,177,221,223,287,333,339,401,441,447,699,823,827,857,883,999,1421,1781,2087,2089,2171,2233,2539,3253,3829,3963,4007,4173,4977,5051,5059,5503,5507,6363,7217,7491,7541,8447,10247",
+    "name": "Numbers that yield a prime when any single digit is replaced by its digital complement.",
+    "comment": [
+        "Digital complement of a digit d is 10-d if d > 0, 0 otherwise."
+    ],
+    "example": [
+        "3829 is a term since 7829, 3229, 3889 and 3821 are all primes."
+    ],
+    "mathematica": [
+        "q[n_] := Module[{d = IntegerDigits[n]}, And @@ PrimeQ[Table[FromDigits[ReplacePart [d, i -> If[d[[i]] == 0, d[[i]], 10 - d[[i]]]]], {i, 1, Length[d]}]]]; Select[Range[10^4], q] (* _Amiram Eldar_, Jun 15 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def comp(d, i): return d[:i] + str((10-int(d[i]))%10) + d[i+1:]",
+        "def ok(n):",
+        "    d = str(n)",
+        "    return all(isprime(int(comp(d, i))) for i in range(len(d)))",
+        "print(list(filter(ok, range(1, 11000)))) # _Michael S. Branicky_, Jun 14 2021",
+        "(PARI) f(x) = if (x, 10-x);",
+        "isok(m) = {my(d=digits(m)); for (i=1, #d, d[i] = f(d[i]); if (!isprime(fromdigits(d)), return (0)); d[i] = f(d[i]);); return (1);} \\\\ _Michel Marcus_, Jun 15 2021"
+    ],
+    "xref": [
+        "Cf. A055120, A089740, A318785."
+    ],
+    "keyword": "nonn,base,easy,less",
+    "offset": "1,1",
+    "author": "_Lamine Ngom_, Jun 14 2021",
+    "references": 1,
+    "revision": 27,
+    "time": "2021-07-21T09:32:32-04:00",
+    "created": "2021-07-21T09:32:32-04:00"
+}

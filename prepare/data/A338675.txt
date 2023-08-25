@@ -1,0 +1,24 @@
+{
+    "number": 338675,
+    "data": "1,1,7,43,295,1807,12391,75895,512647,3179815,21196807,131258311,875934727,5416216711,35763798535,223059458311,1461247179271,9093600322567,59586011601415,370499158291975,2411884242270727,15072418547458567,97530161503173127,608700350537722375",
+    "name": "Expansion of Product_{k>=1} 1 / (1 - 6^(k-1)*x^k).",
+    "formula": [
+        "a(n) = Sum_{k=0..n} p(n,k) * 6^(n-k), where p(n,k) = number of partitions of n into k parts.",
+        "a(n) ~ sqrt(5) * polylog(2, 1/6)^(1/4) * 6^(n - 1/2) * exp(2*sqrt(polylog(2, 1/6)*n)) / (2*sqrt(Pi)*n^(3/4)). - _Vaclav Kotesovec_, May 09 2021"
+    ],
+    "mathematica": [
+        "nmax = 23; CoefficientList[Series[Product[1/(1 - 6^(k - 1) x^k), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "Table[Sum[Length[IntegerPartitions[n, {k}]] 6^(n - k), {k, 0, n}], {n, 0, 23}]",
+        "a[n_] := a[n] = If[n == 0, 1, (1/n) Sum[Sum[d 6^(k - k/d), {d, Divisors[k]}] a[n - k], {k, 1, n}]]; Table[a[n], {n, 0, 23}]"
+    ],
+    "xref": [
+        "Cf. A008284, A075900, A246938, A300579, A338673, A338674, A338676, A338677, A338678, A338679."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Apr 23 2021",
+    "references": 9,
+    "revision": 13,
+    "time": "2021-05-09T02:28:55-04:00",
+    "created": "2021-04-23T20:52:27-04:00"
+}

@@ -1,0 +1,62 @@
+{
+    "number": 45854,
+    "data": "1,24,276,2024,10650,43056,140668,388608,948267,2121176,4448292,8811024,16535160,29632464,51256788,86069680,140300001,222302544,344353516,523941288,782700672,1146771168,1653111384,2354351232,3312339849,4594531176,6293753580,8546252072",
+    "name": "Number of nonnegative solutions of x1^2 + x2^2 + ... + x24^2 = n.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A045854/b045854.txt\">Table of n, a(n) for n = 0..10000</a> (terms 0..2000 from T. D. Noe)"
+    ],
+    "formula": [
+        "Coefficient of q^n in (1 + q + q^4 + q^9 + q^16 + q^25 + q^36 + q^49 + q^64 + ...)^24.",
+        "G.f.: ((1 + theta_3(x)) / 2)^24. - _Ilya Gutkovskiy_, Feb 10 2021"
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; `if`(n=0, 1, `if`(n<0 or k<1, 0,",
+        "      b(n, k-1)+add(b(n-j^2, k-1), j=1..isqrt(n))))",
+        "    end:",
+        "a:= b(n, 24):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Feb 10 2021"
+    ],
+    "mathematica": [
+        "CoefficientList[((1 + EllipticTheta[3, 0, q])/2)^24 + O[q]^40, q] (* _Jean-Fran\u00e7ois Alcover_, Mar 01 2021 *)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def mul(f_ary, b_ary, m)",
+        "  s1, s2 = f_ary.size, b_ary.size",
+        "  ary = Array.new(s1 + s2 - 1, 0)",
+        "  (0..s1 - 1).each{|i|",
+        "    (0..s2 - 1).each{|j|",
+        "      ary[i + j] += f_ary[i] * b_ary[j]",
+        "    }",
+        "  }",
+        "  ary[0..m]",
+        "end",
+        "def power(ary, n, m)",
+        "  if n == 0",
+        "    a = Array.new(m + 1, 0)",
+        "    a[0] = 1",
+        "    return a",
+        "  end",
+        "  k = power(ary, n >> 1, m)",
+        "  k = mul(k, k, m)",
+        "  return k if n & 1 == 0",
+        "  return mul(k, ary, m)",
+        "end",
+        "def A(k, n)",
+        "  ary = Array.new(n + 1, 0)",
+        "  (0..Math.sqrt(n).to_i).each{|i| ary[i * i] = 1}",
+        "  power(ary, k, n)",
+        "end",
+        "p A(24, 100) # _Seiichi Manyama_, May 28 2017"
+    ],
+    "xref": [
+        "Cf. A010052, A045847."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 1,
+    "revision": 24,
+    "time": "2021-03-01T06:10:57-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

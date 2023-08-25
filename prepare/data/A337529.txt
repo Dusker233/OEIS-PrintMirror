@@ -1,0 +1,47 @@
+{
+    "number": 337529,
+    "data": "2,16,54,72,128,250,432,520,576,686,756,1024,1458,1944,2000,2662,3456,4160,4394,4608,5488,6048,6750,7560,8192,9000,9826,11664,13718,14040,15552,15750,16000,18522,19656,19710,20412,21296,24334,24696,27648,31250,32832,33280",
+    "name": "Numbers that are the sum of two of their cubed divisors (not necessarily distinct).",
+    "comment": [
+        "All terms are even. - _Alois P. Heinz_, Aug 30 2020",
+        "Numbers of the form a^3 + b^3 where a divides b^3 and b divides a^3. - _Robert Israel_, Nov 01 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A337529/b337529.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "16 is in the sequence since 2 is a divisor of 16 and 2^3 + 2^3 = 16."
+    ],
+    "maple": [
+        "q:= n-> (s-> ormap(x-> n-x in s, s))(map(x-> x^3, numtheory[divisors](n))):",
+        "select(q, [2*i$i=1..17000])[];  # _Alois P. Heinz_, Aug 30 2020",
+        "N:= 50000: # to get terms <= N",
+        "R:= NULL:",
+        "for a from 1 to floor(N^(1/3)) do",
+        "  Bs:= select(b -> b^3 + a^3 <= N and b^3 mod a = 0, numtheory:-divisors(a^3));",
+        "  R:= R union map(b -> a^3 + b^3, Bs);",
+        "od:",
+        "sort(convert(R,list)); # _Robert Israel_, Nov 01 2020"
+    ],
+    "mathematica": [
+        "M = 40000; (* to get terms <= M *)",
+        "R = {};",
+        "For[a = 1, a <= Floor[M^(1/3)], a++,",
+        "     Bs = Select[Divisors[a^3], #^3 + a^3 <= M && Mod[#^3, a] == 0&];",
+        "     R = Union[R, a^3 + #^3& /@ Bs]];",
+        "Sort[R] (* _Jean-Fran\u00e7ois Alcover_, Jan 01 2022, after _Robert Israel_ *)"
+    ],
+    "xref": [
+        "Cf. A094147 (sum of two squared divisors)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Wesley Ivan Hurt_, Aug 30 2020",
+    "ext": [
+        "a(12)-a(44) from _Alois P. Heinz_, Aug 30 2020"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2022-01-01T09:52:55-05:00",
+    "created": "2020-09-08T21:48:42-04:00"
+}

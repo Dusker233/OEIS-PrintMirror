@@ -1,0 +1,51 @@
+{
+    "number": 339188,
+    "data": "23,53,89,211,293,409,479,631,797,839,919,1039,1259,1409,1471,1511,1637,1709,1847,1889,2039,2099,2179,2503,2579,2633,2777,2819,2939,3011,3049,3137,3229,3271,3433,3499,3593,3659,3709,3779,3967,4111,4177,4253,4327,4409,4493,4621,4703,4831",
+    "name": "Highly insulated primes (see Comments for definition).",
+    "comment": [
+        "Let degree of insulation D(p) for a prime p be defined as the largest m such that the prime between p-m and p+m is p only. Then the n-th insulated prime is said to be highly insulated if and only if D(A339148(n)) > D(A339148(n+1)) and D(A339148(n)) > D(A339148(n-1))."
+    ],
+    "link": [
+        "Fran\u00e7ois Marques, <a href=\"/A339188/b339188.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Abhimanyu Kumar and Anuraag Saxena, <a href=\"https://arxiv.org/abs/2011.14210\">Insulated primes</a>, arXiv:2011.14210 [math.NT], 2020."
+    ],
+    "example": [
+        "For the triplet (13,23,37) of insulated primes, the values of degree of insulation are D(13)=2, D(23)=4, and D(37)=3. Hence, 23 is the highly insulated prime."
+    ],
+    "mathematica": [
+        "Block[{s = {0}~Join~Array[Min[NextPrime[# + 1] - # - 1, # - NextPrime[# - 1, -1]] &@ Prime@ # &, 660, 2], t}, t = Array[If[#1 < #2 > #3, #4, Nothing] & @@ Append[s[[# - 1 ;; # + 1]], #] &, Length@ s - 2, 2]; Array[If[s[[#1]] < s[[#2]] > s[[#3]], #4, Nothing] & @@ Append[t[[# - 1 ;; # + 1]], Prime@ t[[#]]] &, Length@ t - 2, 2] ] (* _Michael De Vlieger_, Dec 11 2020 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A339188(n) = { \\\\ Return the list of the first n highly insulated primes",
+        "  my( HighInsulated=List([]), D(p)=min(nextprime(p+1)-p-1, p-precprime(p-1)); );",
+        "  my( Dpred_ins=D(7), Pcur_ins=13, Dcur_ins=D(Pcur_ins) );",
+        "  local( Dpred=D(Pcur_ins), p=nextprime(Pcur_ins+1), Dp=D(p), Pnext=nextprime(p+1), Dnext=D(Pnext) );",
+        "  my(SearchNextInsulated() =",
+        "       until(Dp > max(Dpred,Dnext),",
+        "         Dpred = Dp; p = Pnext;  Dp = Dnext;",
+        "         Pnext = nextprime(p+1); Dnext = D(Pnext);",
+        "       );",
+        "     \\\\ At this point p is the first insulated prime > Dcur_ins",
+        "    );",
+        "  while(#HighInsulated<n,",
+        "    until(Dcur_ins > max(Dpred_ins,Dp),",
+        "      Dpred_ins = Dcur_ins; Pcur_ins  = p; Dcur_ins  = Dp;",
+        "      SearchNextInsulated();",
+        "    );",
+        "    listput(HighInsulated,Pcur_ins);",
+        "  );",
+        "  return(HighInsulated);",
+        "} \\\\ _Fran\u00e7ois Marques_, Dec 01 2020"
+    ],
+    "xref": [
+        "Cf. A000040, A339148 (insulated primes)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Abhimanyu Kumar_, Nov 27 2020",
+    "references": 2,
+    "revision": 30,
+    "time": "2021-02-20T02:08:56-05:00",
+    "created": "2020-12-23T08:43:11-05:00"
+}

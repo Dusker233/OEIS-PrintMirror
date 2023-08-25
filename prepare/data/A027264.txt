@@ -1,0 +1,42 @@
+{
+    "number": 27264,
+    "data": "5,40,150,1279,4797,41462,156900,1365014,5205950,45501743,174609162,1531614109,5906040623,51952990090,201114700568,1773182087440,6885880226784,60825762159338,236826459554380,2095280066101886,8175978023317170,72432026278468535,283166067626865540",
+    "name": "a(n) = Sum_{k=0..2n-2} T(n,k) * T(n,k+2), with T given by A026519.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A027264/b027264.txt\">Table of n, a(n) for n = 2..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..2n-2} A026519(n,k) * A026519(n,k+2)."
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[k<0 || k>2*n, 0, If[k==0 || k==2*n, 1, If[k==1 || k==2*n-1, Floor[(n+1)/2], If[EvenQ[n], T[n-1, k-2] + T[n-1, k], T[n-1, k-1] + T[n-1, k-2] + T[n-1, k] ]]]]; (* T = A026519 *)",
+        "a[n_] := a[n] = Block[{$RecursionLimit = Infinity}, Sum[T[n, k]*T[n, k+2], {k, 0, 2*n-2}] ];",
+        "Table[a[n], {n, 2, 40}] (* _G. C. Greubel_, Dec 21 2021 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n,k): # T = A026519",
+        "    if (k<0 or k>2*n): return 0",
+        "    elif (k==0 or k==2*n): return 1",
+        "    elif (k==1 or k==2*n-1): return (n+1)//2",
+        "    elif (n%2==0): return T(n-1, k) + T(n-1, k-2)",
+        "    else: return T(n-1, k) + T(n-1, k-1) + T(n-1, k-2)",
+        "@CachedFunction",
+        "def a(n): return sum( T(n,k)*T(n,k+2) for k in (0..2*n-2) )",
+        "[a(n) for n in (2..40)] # _G. C. Greubel_, Dec 21 2021"
+    ],
+    "xref": [
+        "Cf. A026519, A026520, A026521, A026522, A026523, A026524, A026525, A026526, A026527, A026528, A026529, A026530, A026531, A026532, A026533, A026534, A027262, A027263, A027265, A027266."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "More terms from _Sean A. Irvine_, Oct 26 2019"
+    ],
+    "references": 21,
+    "revision": 14,
+    "time": "2021-12-22T07:04:02-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

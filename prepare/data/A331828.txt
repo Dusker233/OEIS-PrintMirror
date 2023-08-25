@@ -1,0 +1,41 @@
+{
+    "number": 331828,
+    "data": "1,2,4,6,8,12,16,18,20,24,30,32,36,40,42,48,54,60,64,72,80,84,90,96,100,108,120,126,128,140,144,150,156,160,162,168,180,192,198,200,210,216,220,240,252,256,264,270,272,280,288,294,300,312,320,324,330,336,342,360",
+    "name": "Numbers k such that the divisors of k form an addition chain.",
+    "comment": [
+        "Every divisor of a term, except 1, can be expressed as the sum of two other divisors.",
+        "This sequence is a subsequence of A308115. Numbers that are in A308115 but not in this sequence include 462, 1300, 3234, etc."
+    ],
+    "link": [
+        "Zizheng Fang, <a href=\"/A331828/b331828.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Zizheng Fang, <a href=\"/A331828/a331828.txt\">Python program to generate A331828</a>"
+    ],
+    "example": [
+        "1: divisors -- 1;",
+        "2: divisors -- 1, 2 = 1 + 1;",
+        "4: divisors -- 1, 2 = 1 + 1, 4 = 2 + 2;",
+        "6: divisors -- 1, 2 = 1 + 1, 3 = 1 + 2, 6 = 3 + 3;",
+        "8: divisors -- 1, 2 = 1 + 1, 4 = 2 + 2, 8 = 4 + 4;",
+        "12: divisors -- 1, 2 = 1 + 1, 3 = 1 + 2, 4 = 1 + 3, 6 = 2 + 4, 12 = 6 + 6."
+    ],
+    "maple": [
+        "q:= n-> (s-> andmap(x-> x=1 or ormap(y-> y<x and",
+        "        x-y in s, s), s))(numtheory[divisors](n)):",
+        "select(q, [$1..500])[];  # _Alois P. Heinz_, Jan 30 2020"
+    ],
+    "program": [
+        "(PARI) isokd(k, d) = {for (j=1, k-1, if (vecsearch(d, d[k] - d[j]), return (1));); return (0);}",
+        "isok(k) = {my(d=divisors(k)); for (j=2, #d, if (! isokd(j, d), return(0));); return (1);} \\\\ _Michel Marcus_, Jan 30 2020"
+    ],
+    "xref": [
+        "Subsequence of A308115.",
+        "Supersequence of A060765."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Zizheng Fang_, Jan 27 2020",
+    "references": 1,
+    "revision": 45,
+    "time": "2020-01-30T07:39:26-05:00",
+    "created": "2020-01-28T03:38:10-05:00"
+}

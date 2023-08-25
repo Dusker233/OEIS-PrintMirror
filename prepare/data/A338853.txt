@@ -1,0 +1,70 @@
+{
+    "number": 338853,
+    "data": "24,48,60,72,96,120,144,160,168,180,192,216,240,288,300,320,324,336,360,384,432,480,504,540,576,600,640,648,660,672,720,768,784,800,840,864,896,900,960,972,1008,1053,1080,1092,1152,1176,1200,1280,1296,1320,1344,1440",
+    "name": "List of numbers k > 1 such that there exists a group of order k without nontrivial normal Sylow subgroups.",
+    "comment": [
+        "Equivalently, numbers k > 1 such that there exists a group of order k with Sylow number > 1 for every prime dividing k.",
+        "The corresponding numbers of groups of order k without nontrivial normal Sylow subgroups are: 1, 4, 1, 4, 17, 3, 17, 1, 1, 1, 86, 18, 8, 90, 1, 5, 1, 3, 6, 536, 80, 27, ...",
+        "Note that if G has no normal Sylow p-subgroups, p divides |G|, then G X C_p also has no normal Sylow p-subgroups. That is to say, if k is in this sequence and p divides k, then k*p is also in this sequence. In particular, every number of the form 24 * 2^a * 3^b * 5^c * 7^d with nonnegative a,b,c,d is here.",
+        "The \"primitive\" terms (the terms not of the form k*p where k is a previous term and p divides k) are 24, 60, 160, 168, 324, 660, 784, 840, 896, 1053, ...",
+        "Includes A001034 as a subsequence, by the definition of non-cyclic simple groups. If q is not a prime power (not in A246655) and A338757(q) > 0, then q is here, as guaranteed by Schur-Zassenhaus theorem.",
+        "If k = p^e * q is here, p, q distinct primes, then q == 1 (mod p) and e >= 1+ord(p,q), where ord(p,q) is the multiplicative order of p modulo q. Proof: Let G be a group of order k without nontrivial normal Sylow subgroups. Let n_p (respectively n_q) be the number of Sylow p-subgroups (respectively q-subgroups), then n_p, n_q > 1. By Sylow's 3rd theorem, we have n_p == 1 (mod p), n_p | q; n_q == 1 (mod q), n_q | p^e. It is possible only if q == 1 (mod p) and e >= ord(p,q).",
+        "If e = ord(p,q), then we must have n_q = p^e. The Sylow q-subgroups have order q, which is a prime, so the pairwise intersections must be trivial, i.e., there are p^e * (q-1) = k - p^e elements in G of order q. The remaining p^e elements are just enough to make a unique Sylow p-subgroup, so n_p = 1, which is a contradiction. Hence, e >= 1+ord(p,q).",
+        "The terms of the form p^e * q where e = 1+ord(p,q), q == 1 (mod p) are 24 = 2^3 * 3, 160 = 2^5 * 5, 1053 = 3^4 * 13 and so on. Note that q == 1 (mod p) and e >= 1+ord(p,q) are only necessary but not sufficient: 112 = 2^4 * 7 satisfies 7 == 1 (mod 2) and 4 >= 1+ord(2,7), but 112 is not here. Similarly, 19375 = 5^4 * 31 satisfies 31 == 1 (mod 5) and 4 >= 1+ord(5,31), but 19375 is not here."
+    ],
+    "link": [
+        "Jianing Song, <a href=\"/A338853/b338853.txt\">Table of n, a(n) for n = 1..66</a>",
+        "The Group Properties Wiki, <a href=\"https://groupprops.subwiki.org/wiki/Sylow_subgroup\">Sylow subgroup</a>",
+        "The Group Properties Wiki, <a href=\"https://groupprops.subwiki.org/wiki/Schur-Zassenhaus_theorem\">Schur-Zassenhaus theorem</a>",
+        "<a href=\"/index/Gre#groups\">Index entries for sequences related to groups</a>"
+    ],
+    "example": [
+        "All the normal subgroups of S_4 (symmetric group of degree 4, order 24) are the trivial group, the Klein four-group (order 4), A_4 (alternating group of degree 4, order 12) and S_4 itself. None of these is a Sylow 2-subgroup or a Sylow 3-subgroup. So 24 is a term.",
+        "All the normal subgroups of SmallGroup(1053,51) are the trivial group, C_3 X C_3 X C_3 (order 27), SmallGroup(351,12) and SmallGroup(1053,51) itself. None of these is a Sylow 3-subgroup or a Sylow 13-subgroup. So 1053 is a term. In fact, 1053 is the smallest odd term. [As a result, every number of the form 1053 * 3^a * 13^b with nonnegative a,b is a term, showing that there are infinitely many odd terms in this sequence. What is the smallest odd term not of this form? - _Jianing Song_, Sep 08 2021]"
+    ],
+    "program": [
+        "(GAP)",
+        "HasNoSylow := function(G)",
+        "  local c, l, i;",
+        "  c := FactInt(Size(G))[1];",
+        "  l := Length(c);",
+        "  if c[1] = c[l] then     # |G| is 1 or a prime power",
+        "    return false;",
+        "  else",
+        "    for i in [1..l] do",
+        "      if IsNormal(G, SylowSubgroup(G, c[i])) then",
+        "        return false;",
+        "      fi;",
+        "    od;",
+        "    return true;",
+        "  fi;",
+        "end;",
+        "IsA338853 := function(n)",
+        "  local c, l, i;",
+        "  c := FactInt(n)[1];",
+        "  l := Length(c);",
+        "  if c[1] = c[l] then     # |G| is 1 or a prime power",
+        "    return false;",
+        "  else",
+        "    i := NumberSmallGroups(n);",
+        "    while i > 0 do",
+        "      if(HasNoSylow(SmallGroup(n,i))) then",
+        "        return true;",
+        "      fi;",
+        "      i := i-1;",
+        "    od;",
+        "    return false;",
+        "  fi;",
+        "end;"
+    ],
+    "xref": [
+        "Cf. A001034, A246655, A338757."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jianing Song_, Nov 12 2020",
+    "references": 2,
+    "revision": 25,
+    "time": "2021-09-20T17:41:19-04:00",
+    "created": "2020-11-15T12:25:57-05:00"
+}

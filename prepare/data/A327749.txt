@@ -1,0 +1,38 @@
+{
+    "number": 327749,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,12,14,15,16,18,20,24,27,28,40,45,48,54,57,62,85,101,102,106,116,121,123,131,151,181,182,191,194,218,259,260,278,292,298,305,308,312,313,351,353,358,366,370,373,383,388,403,413,415,428,440,444,483,495,498",
+    "name": "Natural numbers whose sum of prime factors (with repetition) is palindromic in base 10.",
+    "comment": [
+        "Union of 1, A046352 and the palindromic primes (A002385). - Corrected by _Robert Israel_, Nov 20 2020"
+    ],
+    "reference": [
+        "Karl G. Kr\u00f6ber, \"Palindrome, Perioden und Chaoten: 66 Streifz\u00fcge durch die palindromischen Gefilde\" (1997, Deutsch-Taschenb\u00fccher; Bd. 99) ISBN 3-8171-1522-9.",
+        "Clifford A. Pickover, A Passion for Mathematics, Wiley, 2005; see p. 71."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A327749/b327749.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "ispali:= proc(n) option remember; local L; L:= convert(n,base,10); evalb(L = ListTools:-Reverse(L)) end proc:",
+        "spf:= proc(n) add(t[1]*t[2],t=ifactors(n)[2]) end proc:",
+        "select(t -> ispali(spf(t)), [$0..1000]); # _Robert Israel_, Nov 20 2020"
+    ],
+    "mathematica": [
+        "sopfr[1] = 0; sopfr[n_] := Plus @@ (Times @@@ FactorInteger[n]); aQ[n_] := PalindromeQ[sopfr[n]]; Select[Range[500], aQ] (* _Amiram Eldar_, Sep 23 2019 *)"
+    ],
+    "program": [
+        "(PARI) sopfr(n) = (n=factor(n))[, 1]~*n[, 2]; \\\\ A001414",
+        "isok(n) = my(d=digits(sopfr(n))); d == Vecrev(d); \\\\ _Michel Marcus_, Sep 27 2019",
+        "(Magma) [1] cat [k: k in [2..500]| Intseq(a) eq Reverse(Intseq(a)) where a is &+[m[1]*m[2]: m in Factorization(k)]]; // _Marius A. Burtea_, Sep 27 2019"
+    ],
+    "xref": [
+        "Cf. A001414, A002113, A002385, A046352, A046355."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Robert Bilinski_, Sep 23 2019",
+    "references": 1,
+    "revision": 31,
+    "time": "2022-09-08T08:46:24-04:00",
+    "created": "2019-10-21T11:33:08-04:00"
+}

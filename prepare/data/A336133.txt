@@ -1,0 +1,45 @@
+{
+    "number": 336133,
+    "data": "1,1,1,2,2,3,4,5,6,9,11,14,17,22,26,35,40,51,60,75,86,109,124,153,175,214,243,297,336,403,456,546,614,731,821,975,1095,1283,1437,1689,1887,2195,2448,2851,3172,3676,4083,4724,5245,6022,6677,7695,8504,9720",
+    "name": "Number of ways to split a strict integer partition of n into contiguous subsequences with strictly increasing sums.",
+    "link": [
+        "Gus Wiseman, <a href=\"/A038041/a038041.txt\">Sequences counting and ranking multiset partitions whose part lengths, sums, or averages are constant or strict.</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(9) = 9 splittings:",
+        "  (1)  (2)  (3)    (4)    (5)    (6)      (7)      (8)      (9)",
+        "            (2,1)  (3,1)  (3,2)  (4,2)    (4,3)    (5,3)    (5,4)",
+        "                          (4,1)  (5,1)    (5,2)    (6,2)    (6,3)",
+        "                                 (3,2,1)  (6,1)    (7,1)    (7,2)",
+        "                                          (4,2,1)  (4,3,1)  (8,1)",
+        "                                                   (5,2,1)  (4,3,2)",
+        "                                                            (5,3,1)",
+        "                                                            (6,2,1)",
+        "                                                            (4),(3,2)",
+        "The first splitting with more than two blocks is (8),(7,6),(5,4,3,2) under n = 35."
+    ],
+    "mathematica": [
+        "splits[dom_]:=Append[Join@@Table[Prepend[#,Take[dom,i]]&/@splits[Drop[dom,i]],{i,Length[dom]-1}],{dom}];",
+        "Table[Sum[Length[Select[splits[ctn],Less@@Total/@#&]],{ctn,Select[IntegerPartitions[n],UnsameQ@@#&]}],{n,0,30}]"
+    ],
+    "xref": [
+        "The version with equal sums is A318683.",
+        "The version with strictly decreasing sums is A318684.",
+        "The version with weakly decreasing sums is A319794.",
+        "The version with different sums is A336132.",
+        "Starting with a composition gives A304961.",
+        "Starting with a non-strict partition gives A336134.",
+        "Partitions of partitions are A001970.",
+        "Partitions of compositions are A075900.",
+        "Compositions of compositions are A133494.",
+        "Compositions of partitions are A323583.",
+        "Cf. A006951, A063834, A279786, A305551, A316245, A317715, A323433, A336127, A336128, A336130, A336135."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Jul 11 2020",
+    "references": 5,
+    "revision": 5,
+    "time": "2020-07-11T07:38:56-04:00",
+    "created": "2020-07-11T07:38:56-04:00"
+}

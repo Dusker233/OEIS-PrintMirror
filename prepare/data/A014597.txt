@@ -1,0 +1,52 @@
+{
+    "number": 14597,
+    "data": "1,3,5,11,12,27,29,71,72,213,215,603,635,1917,1183893",
+    "name": "Numbers k such that k^2 is a sum of distinct factorials.",
+    "comment": [
+        "a(16)^2 > 48! (about 1.24139*10^61), if it exists. - _Jon E. Schoenfield_, Aug 04 2006",
+        "A197183(a(n)) = 1. - _Reinhard Zumkeller_, Dec 04 2011",
+        "a(16) > 4.3*10^55 if it exists. - _Bert Dobbelaere_, Sep 16 2020"
+    ],
+    "reference": [
+        "Posting by _Dan Hoey_ to math-fun mailing list."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Factorial.html\">Factorial</a>"
+    ],
+    "example": [
+        "1183893^2 = 1! + 2! + 3! + 7! + 8! + 9! + 10! + 11! + 12! + 13! + 14! + 15!.",
+        "2 is not a member since 4 is not a sum of distinct factorials."
+    ],
+    "mathematica": [
+        "ok[n_] := (k=1; ff={}; While[k! < n^2, AppendTo[ff, k!]; k++]; xx = Array[x, Length[ff]]; Reduce[And @@ (0 <= # <= 1 & /@ xx) && n^2 == xx.ff, xx, Integers] =!= False); ok[1] = True; Reap[Do[If[ok[n], Print[n]; Sow[n]], {n, 1, 2*10^6}]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Jul 16 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndices)",
+        "a014597 n = a014597_list !! (n-1)",
+        "a014597_list = tail $ elemIndices 1 $ map a197183 [0..]",
+        "-- _Reinhard Zumkeller_, Dec 04 2011",
+        "(Python)",
+        "from math import factorial, isqrt",
+        "from itertools import chain, combinations",
+        "from sympy.ntheory.primetest import is_square",
+        "fac =[factorial(n) for n in range(1, 16)] # raise 16 to search higher",
+        "def powerset(s): # skipping empty set",
+        "  return chain.from_iterable(combinations(s, r) for r in range(1, len(s)+1))",
+        "gen = (isqrt(sum(s)) for s in powerset(fac) if is_square(sum(s)))",
+        "print(sorted(set(gen))) # _Michael S. Branicky_, Jan 03 2021"
+    ],
+    "xref": [
+        "Cf. A025494, A051761, A059589."
+    ],
+    "keyword": "nonn,more,hard,nice",
+    "offset": "1,2",
+    "author": "_Eric W. Weisstein_",
+    "ext": [
+        "15th term from _Jud McCranie_, who remarks that there no others involving terms < 21!."
+    ],
+    "references": 8,
+    "revision": 56,
+    "time": "2021-05-08T07:47:13-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

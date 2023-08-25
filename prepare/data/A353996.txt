@@ -1,0 +1,41 @@
+{
+    "number": 353996,
+    "data": "1,4,36,752,45960,9133760,6154473664,14334221970688,117222686206799936,3412369204476033220608,357745172369222114451432448,136400229481294592916607770361856,190697841181900458854914389940360337408",
+    "name": "Rooted simple digraphs on n unlabeled vertices.",
+    "comment": [
+        "Loops and parallel edges are not permitted.",
+        "There are four ways that a vertex other than the root can be joined to the root: only towards, only away, both, neither. Remove the root and color the remaining vertices by four colors corresponding to how they were joined to the root. This gives a bijection with 4-colored digraphs on n-1 vertices, which is A329874(n-1,4)."
+    ],
+    "formula": [
+        "a(n) = A329874(n-1,4)."
+    ],
+    "maple": [
+        "with(Iterator):",
+        "RootedDig := proc(n)",
+        "        local i,j,ptn,ans,a,orb2,orb4,hasptn,nextptn;",
+        "   (hasptn,nextptn) := ModuleIterator(PartitionPartCount(n-1));",
+        "   ans := 0;",
+        "   while hasptn() do",
+        "      ptn := nextptn();",
+        "      a := 1 / mul(j^ptn[j]*ptn[j]!,j=1..n-1);",
+        "      orb2 := add(ptn[j],j=2..n-1,2);",
+        "      orb4 := add(ptn[j]*j/2,j=2..n-1,2)",
+        "         + add(ptn[j]*(j+1)/2,j=1..n-1,2)",
+        "         + add(ptn[j]*(ptn[j]-1)*j/2,j=1..n-1)",
+        "         + add(add(ptn[i]*ptn[j]*igcd(i,j),i=1..j-1),j=2..n-1);",
+        "      ans := ans + a*2^orb2*4^orb4;",
+        "   end do;",
+        "   ans;",
+        "end proc;"
+    ],
+    "xref": [
+        "Cf. A329874."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Brendan McKay_, May 13 2022",
+    "references": 1,
+    "revision": 6,
+    "time": "2022-05-13T10:45:18-04:00",
+    "created": "2022-05-13T09:50:11-04:00"
+}

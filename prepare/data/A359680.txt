@@ -1,0 +1,57 @@
+{
+    "number": 359680,
+    "data": "1,4,8,9,16,18,32,36,50,54,64,72,81,100,108,128,144,216,243,256,288,300,400,432,486,512,576,600,648,729,800,864,1024,1152,1296,1350,1728,1944,2048,2187,2304,2400,2916,3375,3456,3600,4096,4374,4608,4800,5184",
+    "name": "Positions of first appearances in the sequence of zero-based weighted sums of reversed prime indices (A359677).",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798.",
+        "The zero-based weighted sum of a sequence (y_1,...,y_k) is Sum_{i=1..k} (i-1)*y_i."
+    ],
+    "example": [
+        "The terms together with their prime indices begin:",
+        "     1: {}",
+        "     4: {1,1}",
+        "     8: {1,1,1}",
+        "     9: {2,2}",
+        "    16: {1,1,1,1}",
+        "    18: {1,2,2}",
+        "    32: {1,1,1,1,1}",
+        "    36: {1,1,2,2}",
+        "    50: {1,3,3}",
+        "    54: {1,2,2,2}",
+        "    64: {1,1,1,1,1,1}",
+        "    72: {1,1,1,2,2}",
+        "    81: {2,2,2,2}",
+        "   100: {1,1,3,3}",
+        "   108: {1,1,2,2,2}",
+        "   128: {1,1,1,1,1,1,1}"
+    ],
+    "mathematica": [
+        "nn=1000;",
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "wts[y_]:=Sum[(i-1)*y[[i]],{i,Length[y]}];",
+        "seq=Table[wts[Reverse[primeMS[n]]],{n,1,nn}];",
+        "Select[Range[nn],FreeQ[seq[[Range[#-1]]],seq[[#]]]&]"
+    ],
+    "xref": [
+        "The unreversed version is A359675, unsorted A359676.",
+        "Positions of first appearances in A359677, unreversed A359674.",
+        "This is the sorted version of A359681.",
+        "The one-based version is A359754, unsorted A359679.",
+        "The unreversed one-based version is A359755, unsorted A359682.",
+        "The version for standard compositions is A359756, one-based A089633.",
+        "A053632 counts compositions by zero-based weighted sum.",
+        "A112798 lists prime indices, length A001222, sum A056239, reverse A296150.",
+        "A124757 gives zero-based weighted sums of standard compositions, rev A231204.",
+        "A304818 gives weighted sum of prime indices, reverse A318283.",
+        "A320387 counts multisets by weighted sum, zero-based A359678.",
+        "A358136 lists partial sums of prime indices, ranked by A358137, rev A359361.",
+        "Cf. A029931, A055932, A243055, A358194, A359043, A359683."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jan 15 2023",
+    "references": 11,
+    "revision": 5,
+    "time": "2023-01-16T11:14:55-05:00",
+    "created": "2023-01-16T11:14:55-05:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 357164,
+    "data": "1,1,6,54,540,5925,68753,830267,10324947,131329213,1700614790,22344117822,297132512955,3991542148276,54086668396101,738390401404546,10146440406910223,140227571720595241,1947883865390758591,27181029295364007844,380838895427784827916",
+    "name": "Coefficients in the power series A(x) such that: A(x)^4 = Sum_{n=-oo..+oo} x^(3*n+2) * (1 - x^(n-1))^(n+1) * A(x)^n.",
+    "comment": [
+        "Compare to A357154.",
+        "Related identity: 0 = Sum_{n=-oo..+oo} x^(3*n+2) * (1 - x^(n-1))^(n+1).",
+        "Related identity: 0 = Sum_{n=-oo..+oo} x^(k*n) * (y - x^(n+1-k))^n, which holds for any positive integer k and real y."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A357164/b357164.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n) * x^n satisfies the following relations.",
+        "(1) A(x)^4 = Sum_{n=-oo..+oo} x^(3*n+2) * (1 - x^(n-1))^(n+1) * A(x)^n.",
+        "(2) x*A(x)^5 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n-1)) / ( (1 - x^(n+2))^n * A(x)^n ).",
+        "(3) -x*A(x)^6 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n-1)) * A(x)^n / (1 - x^(n+2)*A(x))^n.",
+        "(4) -A(x)^7 = Sum_{n=-oo..+oo} x^(3*n+2) * (A(x) - x^(n-1))^(n+1) / A(x)^n.",
+        "(5) 0 = Sum_{n=-oo..+oo} x^(3*n+2) * (1 - x^(n-1)*A(x))^(n+1) / A(x)^n.",
+        "(6) 0 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n-1)) * A(x)^n / (A(x) - x^(n+2))^n."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 6*x^2 + 54*x^3 + 540*x^4 + 5925*x^5 + 68753*x^6 + 830267*x^7 + 10324947*x^8 + 131329213*x^9 + 1700614790*x^10 + ...",
+        "such that",
+        "A(x)^4 = ... + x^(-4)*(1 - 1/x^3)^(-1)/A(x)^2 + x^(-1)/A(x) + x^2*(1 - 1/x) + x^5*0*A(x) + x^8*(1 - x)^3*A(x)^2 + x^11*(1 - x^2)^4*A(x)^3 + ... + x^(3*n+2)*(1 - x^(n-1))^(n+1)*A(x)^n + ...",
+        "also",
+        "-A(x)^7 = ... + x^(-4)*(A(x) - 1/x^3)^(-1)*A(x)^2 + x^(-1)*A(x) + x^2*(A(x) - 1/x) + x^5*(A(x) - 1)^2/A(x) + x^8*(A(x) - x)^3/A(x)^2 + x^11*(A(x) - x^2)^4/A(x)^3 + ... + x^(3*n+2)*(A(x) - x^(n-1))^(n+1)/A(x)^n + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1]); for(i=0,n, A = concat(A,0);",
+        "A[#A] = polcoeff(Ser(A)^4 - sum(n=-#A\\3-2,#A\\3+2, x^(3*n+2) * (1 - x^(n-1) +x*O(x^#A))^(n+1) * Ser(A)^n  ),#A-2); );A[n+1]}",
+        "for(n=0,30, print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A357154, A357160, A357161, A357162, A357163, A357165."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Sep 17 2022",
+    "references": 7,
+    "revision": 9,
+    "time": "2022-09-20T21:45:31-04:00",
+    "created": "2022-09-17T06:45:54-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 321963,
+    "data": "1,4,36,444,6636,114084,2194596,46460124,1070653356,26650132164,712373143716,20355134459004,619356569885676,20002325474150244,683641504802995236,24662695086736585884,936845038595867508396,37388655553571504769924,1564425694139017014501156",
+    "name": "Stieltjes generated from the sequence m, m+1, m+2, m+3, .... where m = 4.",
+    "comment": [
+        "See A321964 for the definitions."
+    ],
+    "formula": [
+        "a(n) ~ 2^(n + 5/2) * n^(n+3) / (3*exp(n)). - _Vaclav Kotesovec_, Jan 02 2019"
+    ],
+    "maple": [
+        "A321963List := proc(len) local S, k, m, cf, ser;",
+        "    S := [seq(k+4, k = 0..len)]: m := 1;",
+        "    for k from len by -1 to 1 do",
+        "        m := 1 - S[k]*x/m od;",
+        "    cf := 1/m:",
+        "    ser := series(cf, x, len);",
+        "    seq(coeff(ser, x, n), n = 0..len-1) end:",
+        "A321963List(19);"
+    ],
+    "mathematica": [
+        "T[n_, k_] := T[n, k] = If[k == n, n + 1, Sum[T[j + k, k] T[n - j, k + 1], {j, 0, n - k - 1}]]; a[n_] := T[n + 2, 2]/3; Table[a[n], {n, 0, 18}] (* _Jean-Fran\u00e7ois Alcover_, Jul 22 2019, from A127059 *)"
+    ],
+    "xref": [
+        "A000007 (m=0), A001147 (m=1), A000698 (m=2), A167872 (m=3), this sequence (m=4).",
+        "a(n) = A127059(n)/3."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Peter Luschny_, Dec 26 2018",
+    "references": 1,
+    "revision": 13,
+    "time": "2019-07-22T02:43:43-04:00",
+    "created": "2019-01-05T08:19:46-05:00"
+}

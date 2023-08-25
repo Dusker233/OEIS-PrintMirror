@@ -1,0 +1,50 @@
+{
+    "number": 30130,
+    "data": "0,2,5,6,11,13,14,23,27,29,30,47,55,59,61,62,95,111,119,123,125,126,191,223,239,247,251,253,254,383,447,479,495,503,507,509,510,767,895,959,991,1007,1015,1019,1021,1022,1535,1791,1919,1983,2015,2031,2039",
+    "name": "Binary expansion contains a single 0.",
+    "comment": [
+        "From _Reinhard Zumkeller_, Aug 29 2009: (Start)",
+        "A023416(a(n)) = 1;",
+        "apart from the initial term the sequence can be seen as a triangle read by rows, see A164874;",
+        "A055010 and A086224 are subsequences, see also A000918 and A036563. (End)",
+        "Zero and numbers of form 2^m-2^k-1, 2 <= m, 0 <= k <= m-2. - _Zak Seidov_, Aug 06 2010"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A030130/b030130.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = 2^(g(n))-1-2^(((2*g(n)-1)^2-1-8*n)/8) with g(n)=int((sqrt(8*n-7)+3)/2) for all n>0 and g(0)=1. - Ulrich Schimke (ulrschimke(AT)aol.com)",
+        "a(n+1) = A140977(a(n)) for any n > 1. - _R\u00e9my Sigrist_, Feb 06 2020",
+        "Sum_{n>=2} 1/a(n) = A160502. - _Amiram Eldar_, Oct 06 2020"
+    ],
+    "example": [
+        "23 is OK because it is '10111' in base 2."
+    ],
+    "mathematica": [
+        "Sort[Flatten[{{0}, Table[2^n - 2^m - 1, {n, 2, 50}, {m, 0, n - 2}]}]] (* _Zak Seidov_, Aug 06 2010 *)",
+        "Select[Range[0,2100],DigitCount[#,2,0]==1&] (* _Harvey P. Dale_, Dec 19 2021 *)"
+    ],
+    "program": [
+        "(C) long int element (long int i) { return (pow(2,g(i))-1-pow(2,(pow(2*g(i)-1,2)-1-8*i)/8));} long int g(long int m) {if (m==0) return(1); return ((sqrt(8*m-7)+3)/2);}",
+        "(Haskell)",
+        "a030130 n = a030130_list !! (n-1)",
+        "a030130_list = filter ((== 1) . a023416) [0..]",
+        "-- _Reinhard Zumkeller_, Mar 31 2015, Dec 07 2012",
+        "(PARI) print1(\"0, \");for(k=1,2039,my(v=digits(k,2));if(vecsum(v)==#v-1,print1(k,\", \"))) \\\\ _Hugo Pfoertner_, Feb 06 2020",
+        "(Magma) [0] cat [k:k in [0..2050]| Multiplicity(Intseq(k,2),0) eq 1]; // _Marius A. Burtea_, Feb 06 2020"
+    ],
+    "xref": [
+        "Cf. A000918, A023416, A036563, A055010, A086224, A140977, A160502, A164874."
+    ],
+    "keyword": "nonn,base,easy,look",
+    "offset": "1,2",
+    "author": "Toby Donaldson (tjdonald(AT)uwaterloo.ca)",
+    "ext": [
+        "More terms from _Erich Friedman_",
+        "Offset fixed by _Reinhard Zumkeller_, Aug 24 2009"
+    ],
+    "references": 12,
+    "revision": 35,
+    "time": "2022-09-08T08:44:50-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

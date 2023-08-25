@@ -1,0 +1,31 @@
+{
+    "number": 339025,
+    "data": "1,3,13,147,4277,314403,58215317,27104094867,31830051961045,94398513955640643,709919097675516974293,13569078873978509433342387,661668739571948876787281152277,82526665791586458931717457637364323,26412772665617176235336349304356162390677",
+    "name": "Sum of n-th powers of entries in the n-th row of Stern's triangle (A337277).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A339025/b339025.txt\">Table of n, a(n) for n = 0..28</a>"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1, (h-> [1, h[1], seq(",
+        "      [h[i-1]+h[i], h[i]][], i=2..nops(h)), 1][])([b(n-1)]))",
+        "    end:",
+        "a:= proc(n) option remember; add(i^n, i=[b(n)]) end:",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "nmax = 15;",
+        "T = Nest[Append[#, Flatten@Join[{1}, If[Length@# > 1, Map[{#1, #1 + #2}& @@ #&, Partition[#[[-1]], 2, 1]], {}], {#[[-1, -1]]}, {1}]]&, {{1}}, nmax];",
+        "a[n_] := T[[n+1]]^n // Total;",
+        "Table[a[n], {n, 0, nmax}] (* _Jean-Fran\u00e7ois Alcover_, May 30 2022, after _Michael De Vlieger_ in A337277 *)"
+    ],
+    "xref": [
+        "Cf. A337277."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Nov 19 2020",
+    "references": 1,
+    "revision": 11,
+    "time": "2022-05-30T08:08:26-04:00",
+    "created": "2020-11-20T09:59:20-05:00"
+}

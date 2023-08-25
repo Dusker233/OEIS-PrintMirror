@@ -1,0 +1,52 @@
+{
+    "number": 318120,
+    "data": "1,1,1,4,11,51,162,876,3761,20782,109293,678569,4038388,27644436,186524145,1379760895,10323844183,82864869803,674798169662,5832742205056,51385856585637,474708148273586,4486977535287371,44152005855084345,444577220573083896",
+    "name": "Number of set partitions of {1,...,n} with relatively prime block sizes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A318120/b318120.txt\">Table of n, a(n) for n = 0..576</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{|y| = n, GCD(y) = 1} n! / (Product_i y_i! * Product_i (y)_i!) where the sum is over all relatively prime integer partitions of n and (y)_i is the multiplicity of i in y."
+    ],
+    "example": [
+        "The a(4) = 11 set partitions:",
+        "  {{1},{2},{3},{4}}",
+        "   {{1},{2},{3,4}}",
+        "   {{1},{2,3},{4}}",
+        "   {{1},{2,4},{3}}",
+        "   {{1,2},{3},{4}}",
+        "   {{1,3},{2},{4}}",
+        "   {{1,4},{2},{3}}",
+        "    {{1},{2,3,4}}",
+        "    {{1,2,3},{4}}",
+        "    {{1,2,4},{3}}",
+        "    {{1,3,4},{2}}"
+    ],
+    "maple": [
+        "b:= proc(n, t) option remember; `if`(n=0, `if`(t<2, 1, 0),",
+        "      add(b(n-j, igcd(t, j))*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Dec 30 2019"
+    ],
+    "mathematica": [
+        "numSetPtnsOfType[ptn_]:=Total[ptn]!/Times@@Factorial/@ptn/Times@@Factorial/@Length/@Split[ptn];",
+        "Table[Total[numSetPtnsOfType/@Select[IntegerPartitions[n],GCD@@#==1&]],{n,10}]",
+        "(* Second program: *)",
+        "b[n_, t_] := b[n, t] = If[n == 0, If[t < 2, 1, 0],",
+        "     Sum[b[n - j, GCD[t, j]]*Binomial[n - 1, j - 1], {j, 1, n}]];",
+        "a[n_] := b[n, 0];",
+        "a /@ Range[0, 25] (* _Jean-Fran\u00e7ois Alcover_, May 10 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "a(n) >= A271426(n).",
+        "Cf. A000110, A000258, A000311, A000670, A000740, A000837, A005651, A005804, A008277, A124794, A319182, A320289."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Dec 16 2018",
+    "references": 1,
+    "revision": 22,
+    "time": "2021-05-10T07:40:51-04:00",
+    "created": "2018-12-16T09:10:40-05:00"
+}

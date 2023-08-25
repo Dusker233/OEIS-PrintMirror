@@ -1,0 +1,35 @@
+{
+    "number": 248210,
+    "data": "293,362,436,545,554,631,653,749,763,891,958,965,1293,1362,1436,1545,1554,1631,1653,1749,1763,1891,1958,1965,2193,2331,2491,2536,2556,2565,2693,2917,2954,2963,3162,3231,3325,3382,3529,3534,3635,3651,4291,4515,4533,4551,4634,4935,4952,4971",
+    "name": "Zeroless numbers k (numbers in A052382) such that k - DigitProduct(k) contains the same distinct digits as k.",
+    "comment": [
+        "Numbers that contain zeros trivially have this property. - _Tanya Khovanova_, Jul 19 2021"
+    ],
+    "example": [
+        "631 - 6*3*1 = 613 contains the same digits as 631. So 631 is a term of this sequence."
+    ],
+    "mathematica": [
+        "Select[Range@5000,(d=IntegerDigits@#;FreeQ[d,0]&&Union@IntegerDigits[#-Times@@d]==Union@d)&] (* _Giorgos Kalogeropoulos_, Jul 20 2021 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "for(n=1, 10^4, d=digits(n); p=prod(i=1, #d, d[i]); if(p && vecsort(digits(n), , 8)==vecsort(digits(n-p), , 8), print1(n, \", \")))",
+        "(Python)",
+        "from math import prod",
+        "def ok(n):",
+        "    s = str(n)",
+        "    return '0' not in s and set(str(n-prod(int(d) for d in s))) == set(s)",
+        "print(list(filter(ok, range(5000)))) # _Michael S. Branicky_, Jul 18 2021"
+    ],
+    "xref": [
+        "Cf. A052382 (zeroless numbers), A007954 (digit product).",
+        "Cf. A247888 (similar, with n + digit product)."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "_Derek Orr_, Oct 03 2014",
+    "references": 1,
+    "revision": 39,
+    "time": "2022-05-06T13:13:51-04:00",
+    "created": "2014-10-14T04:20:34-04:00"
+}

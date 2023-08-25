@@ -1,0 +1,35 @@
+{
+    "number": 256195,
+    "data": "1,1,2,6,24,119,694,4578,33184,258757,2136978,18478134,165857600,1535336290,14584260700,141603589300,1400942032152,14087464765300,143689133196008,1484090443264936,15499968503875136,163501005435759505,1740170514634463426,18671118911254798454",
+    "name": "Number of permutations in S_n that avoid the pattern 25314.",
+    "link": [
+        "Anthony Guttmann, <a href=\"/A256195/b256195.txt\">Table of n, a(n) for n = 0..26</a>",
+        "Nathan Clisby, Andrew R. Conway, Anthony J. Guttmann, Yuma Inoue, <a href=\"https://arxiv.org/abs/2109.13485\">Classical length-5 pattern-avoiding permutations</a>, arXiv:2109.13485 [math.CO], 2021.",
+        "Zvezdelina Stankova-Frenkel and Julian West, <a href=\"http://arxiv.org/abs/math/0103152\">A new class of Wilf-equivalent permutations</a>, arXiv:math/0103152 [math.CO], 2001."
+    ],
+    "mathematica": [
+        "avoid[n_, pat_] := Module[{p1 = pat[[1]], p2 = pat[[2]], p3 = pat[[3]], p4 = pat[[4]], p5 = pat[[5]], lseq = {}, i, p,",
+        "    lpat = Subsets[(n + 1) - Range[n], {Length[pat]}],",
+        "    psn = Permutations[Range[n]]},",
+        "   For[i = 1, i <= Length[lpat], i++,",
+        "    p = lpat[[i]];",
+        "    AppendTo[lseq, Select[psn, MemberQ[#, {___, p[[p1]], ___, p[[p2]], ___, p[[p3]], ___, p[[p4]], ___, p[[p5]], ___}, {0}] &]];",
+        "    ]; n! - Length[Union[Flatten[lseq, 1]]]];",
+        "Table[avoid[n, {2, 5, 3, 1, 4}], {n, 0, 8}]  (* _Robert Price_, Mar 27 2020 *)"
+    ],
+    "xref": [
+        "Representatives for the 16 Wilf-equivalence patterns of length 5 are given in A116485, A047889, and A256195-A256208.",
+        "Cf. A099952."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Mar 19 2015",
+    "ext": [
+        "a(14)-a(16) from _Bert Dobbelaere_, Mar 18 2021",
+        "More terms from _Anthony Guttmann_, Sep 29 2021"
+    ],
+    "references": 17,
+    "revision": 31,
+    "time": "2021-09-29T02:34:39-04:00",
+    "created": "2015-03-19T14:08:07-04:00"
+}

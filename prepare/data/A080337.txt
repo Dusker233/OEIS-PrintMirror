@@ -1,0 +1,81 @@
+{
+    "number": 80337,
+    "data": "1,3,12,59,339,2210,16033,127643,1103372,10269643,102225363,1082190554,12126858113,143268057587,1778283994284,23120054355195,314017850216371,4444972514600178,65435496909148513,999907522895563403,15832873029742458796,259377550023571768075",
+    "name": "Bisection of A080107.",
+    "comment": [
+        "Number of symmetric positions of non-attacking rooks on upper-diagonal part of 2n X 2n chessboard.",
+        "Number of length-n restricted growth strings (RGS) [s(0),s(1),...,s(n-1)] where s(0)=0 and s(k)<=2+max(prefix) for k>=1, see example. - _Joerg Arndt_, Apr 25 2010",
+        "Number of achiral color patterns in a row or loop of length 2n-1. Two color patterns are equivalent if the colors are permuted. - _Robert A. Russell_, Apr 24 2018",
+        "Stirling transform of A005425(n-1) per Knuth reference. - _Robert A. Russell_, Apr 28 2018"
+    ],
+    "reference": [
+        "D. E. Knuth, The Art of Computer Programming, vol. 4A, Combinatorial Algorithms, Section 7.2.1.5 (p. 765). - _Robert A. Russell_, Apr 28 2018"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A080337/b080337.txt\">Table of n, a(n) for n = 1..514</a>",
+        "Joerg Arndt, <a href=\"http://www.jjj.de/fxt/#fxtbook\">Matters Computational (The Fxtbook)</a>, section 17.3.4, pp. 364-366.",
+        "J. Quaintance, <a href=\"https://arxiv.org/abs/math/0412244\">Letter representations of rectangular m x n x p proper arrays</a>, arXiv:math/0412244 [math.CO], 2004-2006."
+    ],
+    "formula": [
+        "Binomial transform of A002872 (sorting numbers).",
+        "E.g.f.: exp(x+exp(x)+exp(2*x)/2-3/2) = exp(x+sum(j=1,2, (exp(j*x)-1)/j ) ). - _Joerg Arndt_, Apr 29 2011",
+        "From _Robert A. Russell_, Apr 24 2018: (Start)",
+        "Aodd[n,k] = [n>1]*(k*Aodd[n-1,k]+Aodd[n-1,k-1]+Aodd[n-1,k-2])+[n==1]*[k==1]",
+        "a(n) = Sum_{k=1..2n-1} Aodd[n,k]. (End)",
+        "a(n) = Sum_{k=0..n} Stirling2(n, k)*A005425(k-1). (from Knuth reference) - _Robert A. Russell_, Apr 28 2018"
+    ],
+    "example": [
+        "From _Joerg Arndt_, Apr 25 2010: (Start)",
+        "For n=0 there is one empty string (term a(0)=0 not included here); for n=1 there is one string [0]; for n=2 there are 3 strings [00], [01], and [02];",
+        "for n=3 there are a(3)=12 strings (in lexicographic order):",
+        "01: [000],",
+        "02: [001],",
+        "03: [002],",
+        "04: [010],",
+        "05: [011],",
+        "06: [012],",
+        "07: [013],",
+        "08: [020],",
+        "09: [021],",
+        "10: [022],",
+        "11: [023],",
+        "12: [024].",
+        "(End)",
+        "For a(3) = 12, both the row and loop patterns are AAAAA, AABAA, ABABA, ABBBA, AABCC, ABACA, ABBBC, ABCAB, ABCBA, ABCBD, ABCDA, and ABCDE. - _Robert A. Russell_, Apr 24 2018"
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0, 1,",
+        "      add(b(n-1, max(m, j)), j=1..m+2))",
+        "    end:",
+        "a:= n-> b(n, -1):",
+        "seq(a(n), n=1..25);  # _Alois P. Heinz_, Jun 15 2018"
+    ],
+    "mathematica": [
+        "Table[Sum[ Binomial[n, k] A002872[[k + 1]], {k, 0, n}], {n, 0, 24}]",
+        "Aodd[m_, k_] := Aodd[m, k] = If[m > 1, k Aodd[m-1, k] + Aodd[m-1, k-1]",
+        "  + Aodd[m-1, k-2], Boole[m==1 && k==1]]",
+        "Table[Sum[Aodd[m, k], {k, 1, 2m-1}], {m, 1, 30}] (* _Robert A. Russell_, Apr 24 2018 *)",
+        "x[n_] := x[n] = If[n<2, n+1, 2x[n-1] + (n-1) x[n-2]]; (* A005425 *)",
+        "Table[Sum[StirlingS2[n, k] x[k-1], {k, 0, n}], {n, 30}] (* _Robert A. Russell_, Apr 28 2018, after Knuth reference *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^66);",
+        "egf=exp(x+exp(x)+exp(2*x)/2-3/2); /* = 1 +3*x +6*x^2 +59/6*x^3 +113/8*x^4 +... */",
+        "Vec(serlaplace(egf)) /* _Joerg Arndt_, Apr 29 2011 */"
+    ],
+    "xref": [
+        "Row sums of A140735.",
+        "Cf. A002872, A080107.",
+        "Column k=2 of A305962."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Wouter Meeussen_, Mar 18 2003",
+    "ext": [
+        "Comment corrected by _Wouter Meeussen_, Aug 14 2009"
+    ],
+    "references": 8,
+    "revision": 61,
+    "time": "2022-04-17T09:24:20-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

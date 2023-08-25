@@ -1,0 +1,33 @@
+{
+    "number": 355139,
+    "data": "3,7,11,19,46,75,113,138,169,186,227,240,287,374,382,481,528,536,672,713,722,760,836,922,972,1015,1031,1052,1077,1122,1144,1235,1244,1371,1392,1466,1549,1613,1669,1859,1938,2059,2109,2118,2127,2391,2557,2661,2730,2739,2765,2798,2949,2962",
+    "name": "The indices where A355061(n) = 6.",
+    "comment": [
+        "See A355061 for further details."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primefactors",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    an1, an, f1, f, pset = 2, 6, {2}, {2, 3}, {2, 12}",
+        "    for n in count(4):",
+        "        if an == 6: yield n-1",
+        "        an2, an1, an, f2, f1 = an1, an, 6, f1, f",
+        "        f = set(primefactors(an))",
+        "        while an*an1 in pset or f1&f == set() or f2&f != set() or f <= f1:",
+        "            an += 1; f = set(primefactors(an))",
+        "        pset.add(an*an1)",
+        "print(list(islice(agen(), 54))) # _Michael S. Branicky_, Jun 20 2022"
+    ],
+    "xref": [
+        "Cf. A355061, A355138."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Scott R. Shannon_, Jun 20 2022",
+    "references": 2,
+    "revision": 8,
+    "time": "2022-06-21T10:28:12-04:00",
+    "created": "2022-06-21T10:28:12-04:00"
+}

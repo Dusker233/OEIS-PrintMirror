@@ -1,0 +1,46 @@
+{
+    "number": 343913,
+    "data": "71,347,1193,2139,2709,17823,18337,26057,32847,34037,65793,87519,159541,245573,383037,421957,489731,520547,574841,800589,1291333,2010341,2113003,2990187,4528667,7430553,8284063,8402417,8520567,9220519,9865989,10621507,11961043,12335203,16405581,17648561,22224647,22918853,24171273",
+    "name": "Positive integers m such that 2*m^2 - 1 = x^4 + y^4 for some nonnegative integers x and y with |x-y| > 1.",
+    "comment": [
+        "Conjecture: The sequence has infinitely many terms.",
+        "Clearly all the terms must be odd and not divisible by 5. Note also that 2*(n^2+n+1)^2-1 = n^4 + (n+1)^4.",
+        "See also A343917 for a similar conjecture."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A343913/b343913.txt\">Table of n, a(n) for n = 1..112</a> (all terms < 10^10, first 53 terms from Zhi-Wei Sun)"
+    ],
+    "example": [
+        "a(1) = 71, and 2*71^2-1 = 10^4 + 3^4 with |10-3| > 1.",
+        "a(53) = 99532937, and 2*99532937^2-1 = 19813611095691937 =  11337^4 + 7576^4 with |11337-7576| > 1."
+    ],
+    "maple": [
+        "N:= 10^18: # for all terms <= sqrt(N)",
+        "R:= {}: count:= 0:",
+        "for x from 1 while 2*x^4 < 2*N-1 do",
+        "  for y from x+3 by 2 do",
+        "    v:= (x^4 + y^4 + 1)/2;",
+        "    if v > N then break fi;",
+        "    if issqr(v) then",
+        "      m:= sqrt(v);",
+        "      if not member(m,R) then",
+        "         count:= count+1; R:= R union {m};",
+        "      fi fi",
+        "od od:",
+        "sort(convert(R,list)); # _Robert Israel_, May 04 2021"
+    ],
+    "mathematica": [
+        "QQ[n_]:=IntegerQ[n^(1/4)];",
+        "n=0;Do[Do[If[QQ[2*m^2-1-(2x)^4]&&Abs[2x-(2*m^2-1-(2x)^4)^(1/4)]>1,n=n+1;Print[n,\" \",m];Goto[aa]],{x,0,((2m^2-1)^(1/4))/2}];Label[aa],{m,1,25000000}]"
+    ],
+    "xref": [
+        "Cf. A000290, A000583, A003336, A056220, A343917."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zhi-Wei Sun_, May 03 2021",
+    "references": 2,
+    "revision": 32,
+    "time": "2021-05-05T08:45:09-04:00",
+    "created": "2021-05-04T09:03:36-04:00"
+}

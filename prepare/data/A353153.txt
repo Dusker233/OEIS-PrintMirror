@@ -1,0 +1,48 @@
+{
+    "number": 353153,
+    "data": "2,3,5,17,23,31,41,47,73,101,107,167,191,199,227,269,271,311,331,373,443,541,569,571,587,593,619,647,653,661,733,751,881,941,977,1031,1063,1103,1117,1123,1187,1307,1427,1433,1451,1499,1553,1637,1709,1747,1753,1811,1889,1949,1973,1987,2069",
+    "name": "Primes p such that (q-p)*p*q+1 is prime, where q is the next prime after p.",
+    "link": [
+        "Robert Israel, <a href=\"/A353153/b353153.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 5 is a term because the next prime is 7 and (7-5)*5*7+1 = 71 is prime."
+    ],
+    "maple": [
+        "R:= NULL: count := 0:",
+        "q:= 2:",
+        "while count < 100 do",
+        "  p:= q; q:= nextprime(q);",
+        "  if isprime((q-p)*p*q+1) then",
+        "    count:= count+1;",
+        "    R:= R,p;",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Range[2000], PrimeQ[#] && PrimeQ[((q = NextPrime[#]) - #) * # * q + 1] &] (* _Amiram Eldar_, Apr 27 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime",
+        "def agen(): # generator of terms",
+        "    p, q = 2, 3",
+        "    while  True:",
+        "        if isprime((q-p)*p*q+1):",
+        "            yield p",
+        "        p, q = q, nextprime(q)",
+        "print(list(islice(agen(), 20))) # _Michael S. Branicky_, Apr 27 2022"
+    ],
+    "xref": [
+        "Cf. A001223 (prime gaps)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Apr 26 2022",
+    "references": 1,
+    "revision": 16,
+    "time": "2022-05-07T08:39:31-04:00",
+    "created": "2022-05-05T12:34:38-04:00"
+}

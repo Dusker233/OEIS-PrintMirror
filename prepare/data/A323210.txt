@@ -1,0 +1,44 @@
+{
+    "number": 323210,
+    "data": "1,9,9,81,225,1089,3969,16641,65025,263169,1046529,4198401,16769025,67125249,268402689,1073807361,4294836225,17180131329,68718952449,274878955521,1099509530625,4398050705409,17592177655809,70368760954881,281474943156225,1125899973951489",
+    "name": "a(n) = 9*J(n)^2 where J(n) are the Jacobsthal numbers A001045 with J(0) = 1.",
+    "comment": [
+        "_Colin Barker_ conjectures that A208556 is a shifted version of this sequence."
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (3,6,-8)."
+    ],
+    "formula": [
+        "a(n) = Product_{k=1..n} T(n, k) where T(n, k) = t(n,k)*conjugate(t(n,k)) and t(n,k) = 3*cos(Pi*k/n) - i*sin(Pi*k/n), i is the imaginary unit.",
+        "a(n) = [x^n] (8*x^3 - 24*x^2 + 6*x + 1)/((4*x - 1)*(2*x + 1)*(x - 1)).",
+        "a(n) = n! [x^n] (1 + exp(x) - 2*exp(-2*x) + exp(4*x)).",
+        "a(n) = 3*a(n-1) + 6*a(n-2) - 8*a(n-3) for n >= 4.",
+        "A062510(n) = sqrt(a(n)) for n > 0.",
+        "a(n) = 4^n-2*(-2)^n+1, n>0. - _R. J. Mathar_, Mar 06 2022"
+    ],
+    "maple": [
+        "gf := (8*x^3 - 24*x^2 + 6*x + 1)/((4*x - 1)*(2*x + 1)*(x - 1)):",
+        "ser := series(gf,x,32): seq(coeff(ser,x,n), n=0..25);"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{3, 6, -8}, {1, 9, 9, 81}, 25]"
+    ],
+    "program": [
+        "(Sage) # Demonstrates the product formula.",
+        "CC = ComplexField(200)",
+        "def t(n,k): return CC(3)*cos(CC(pi*k/n)) - CC(i)*sin(CC(pi*k/n))",
+        "def T(n,k): return t(n,k)*(t(n,k).conjugate())",
+        "def a(n): return prod(T(n,k) for k in (1..n))",
+        "print([a(n).real().round() for n in (0..29)])"
+    ],
+    "xref": [
+        "Cf. A001045, A062510, A139818, A208556, A322942, A323232."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Peter Luschny_, Jan 09 2019",
+    "references": 0,
+    "revision": 25,
+    "time": "2022-03-06T10:04:27-05:00",
+    "created": "2019-01-09T21:21:09-05:00"
+}

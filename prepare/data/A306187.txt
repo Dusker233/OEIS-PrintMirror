@@ -1,0 +1,53 @@
+{
+    "number": 306187,
+    "data": "1,1,3,10,65,371,3780,33552,472971,5736082,97047819,1547576394,32992294296,626527881617,15202246707840,352290010708120,9970739854456849,262225912049078193,8309425491887714632,250946978120046026219,8898019305511325083149",
+    "name": "Number of n-times partitions of n.",
+    "comment": [
+        "A k-times partition of n for k > 1 is a sequence of (k-1)-times partitions, one of each part in an integer partition of n. A 1-times partition of n is just an integer partition of n. The only 0-times partition of n is the number n itself. - _Gus Wiseman_, Jan 27 2019"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A306187/b306187.txt\">Table of n, a(n) for n = 0..410</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>"
+    ],
+    "formula": [
+        "a(n) = A323718(n,n)."
+    ],
+    "example": [
+        "From _Gus Wiseman_, Jan 27 2019: (Start)",
+        "The a(1) = 1 through a(3) = 10 partitions:",
+        "  (1)  ((2))     (((3)))",
+        "       ((11))    (((21)))",
+        "       ((1)(1))  (((111)))",
+        "                 (((2)(1)))",
+        "                 (((11)(1)))",
+        "                 (((2))((1)))",
+        "                 (((1)(1)(1)))",
+        "                 (((11))((1)))",
+        "                 (((1)(1))((1)))",
+        "                 (((1))((1))((1)))",
+        "(End)"
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0 or k=0 or i=1,",
+        "      1, b(n, i-1, k)+b(i$2, k-1)*b(n-i, min(n-i, i), k))",
+        "    end:",
+        "a:= n-> b(n$3):",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "ptnlevct[n_,k_]:=Switch[k,0,1,1,PartitionsP[n],_,SeriesCoefficient[Product[1/(1-ptnlevct[m,k-1]*x^m),{m,n}],{x,0,n}]];",
+        "Table[ptnlevct[n,n],{n,0,8}] (* _Gus Wiseman_, Jan 27 2019 *)"
+    ],
+    "xref": [
+        "Main diagonal of A323718.",
+        "Cf. A000041, A306188.",
+        "Cf. A001970, A063834, A096752, A196545, A261280, A289501, A290354, A327619."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jan 27 2019",
+    "references": 5,
+    "revision": 17,
+    "time": "2019-09-19T10:28:55-04:00",
+    "created": "2019-01-27T18:27:37-05:00"
+}

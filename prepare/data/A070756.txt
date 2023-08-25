@@ -1,0 +1,44 @@
+{
+    "number": 70756,
+    "data": "30,85,195,240,525,700,960,1020,1170,1845,2720,3045,3120,4026,4818,5005,5655,6240,7290,7680,7735,7770,9717,11349,11570,12432,13560,15015,16240,16695,16800,17476,20655,22185,22400,22605,23730,27768,30720,32120,32640,32760,34390,37440,40885,42105,43095",
+    "name": "Numbers n such that the Diophantine equation x^4+y^5=n^4 has solutions.",
+    "comment": [
+        "From _Robert Israel_, Oct 29 2019: (Start)",
+        "The first number that occurs in more than one way is 1845, as 205^4 + 410^5 =  1476^4 + 369^5 = 1845^4.",
+        "If n is a term then so is x^5*n for any x.",
+        "Includes s*(s^4-t^4)/u^5 if s>t>0 and s^4 == t^4 (mod u^5), as x=t*(s^4-t^4)/u^5, y=(s^4-t^4)/u^4, n=s*(s^4-t^4)/u^5 is a solution.",
+        "(End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A070756/b070756.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "maple": [
+        "filter:= proc(n) local n4, y,s;",
+        "  n4:= n^4;",
+        "  for y from ceil((n4-(n-1)^4)^(1/5)) do",
+        "    s:= n4-y^5;",
+        "    if s <= 0 then return false fi;",
+        "    if issqr(s) and issqr(sqrt(s)) then return true fi",
+        "  od",
+        "end proc:",
+        "select(filter, [$1..10000]); # _Robert Israel_, Oct 29 2019"
+    ],
+    "mathematica": [
+        "filterQ[n_] := Module[{n4 = n^4, y, s}, For[y = Ceiling[(n4 - (n-1)^4 )^(1/5)], True, y++, s = n4 - y^5; If[s <= 0, Return[False]]; If[ IntegerQ[Sqrt[s]] && IntegerQ[Sqrt[Sqrt[s]]], Return[True]]]];",
+        "Reap[Do[If[filterQ[n], Print[n]; Sow[n]], {n, 10000}]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Aug 16 2020, after Maple *)"
+    ],
+    "program": [
+        "(PARI) for(n=0,500,if(sum(i=1,n,sum(j=1,i,if(i^4+j^5-n^4,0,1)))>0,print1(n,\",\")))"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, May 14 2002",
+    "ext": [
+        "More terms from _John W. Layman_, Nov 25 2002",
+        "More terms from _Robert Israel_, Oct 29 2019"
+    ],
+    "references": 1,
+    "revision": 21,
+    "time": "2020-08-16T09:58:09-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

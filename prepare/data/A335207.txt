@@ -1,0 +1,42 @@
+{
+    "number": 335207,
+    "data": "43,2034,2069,9702,9712,67258,102691,102727,147253,904332",
+    "name": "Numbers L such that there is a prime p <= L for which v_p(H_L - 1) > 1, where v_p(x) is the p-adic valuation of x and H_L is the L-th harmonic number.",
+    "comment": [
+        "This is a subset of A335189. All numbers in this list were copied from one of the links below by Krattenthaler and Rivoal.",
+        "For all L in this list (up to 904332), we have v_p(H_L - 1) = 2 with corresponding primes as follows: p(1) = 7, p(2) = 13, p(3) = 7, p(4) = p(5) = 11, p(6) = 41, p(7) = p(8) = 11, p(9) = 53, and p(10) = 97.",
+        "The calculation of v_p(H_L-1) and v_p(H_L) for all primes p <= L is related to some results about the integrality of the Taylor coefficients of mirror maps. See Theorems 3 and 4 in Krattenthaler and Rivoal (2007-2009, 2009) and sequences A007757, A131657, and A131658."
+    ],
+    "link": [
+        "Christian Krattenthaler and Tanguy Rivoal, <a href=\"http://arxiv.org/abs/0709.1432\">On the integrality of the Taylor coefficients of mirror maps</a>, arXiv:0709.1432 [math.NT], 2007-2009.",
+        "Christian Krattenthaler and Tanguy Rivoal, <a href=\"https://www.mat.univie.ac.at/~kratt/artikel/H1.html\">Supplement 2 to the paper \"On the integrality of the Taylor coefficients of mirror maps\"</a>, 2007-2009. [This table contains all triplets of numbers (L, p, v_p(H_L - 1)) such that 1 <= L <= 10^6, p prime <= L, and v_p(H_L - 1) > 0.]",
+        "Christian Krattenthaler and Tanguy Rivoal, <a href=\"http://dx.doi.org/10.4310/CNTP.2009.v3.n3.a5\">On the integrality of the Taylor coefficients of mirror maps, II</a>, Communications in Number Theory and Physics, Volume 3, Number 3 (2009), 555-591."
+    ],
+    "maple": [
+        "A335207_list := proc(bound) local p, h, H, L, n;",
+        "L := NULL; h := 0;",
+        "for n from 1 to bound do",
+        "    h := h + 1/n; H := h - 1; p:= 2;",
+        "    while p <= n do",
+        "        if padic:-ordp(H, p) <= 1",
+        "           then p := nextprime(p);",
+        "           else L := L, n; break;",
+        "        fi",
+        "    od;",
+        "od; L end:",
+        "A335207_list(2222); # _Peter Luschny_, May 29 2020"
+    ],
+    "program": [
+        "(PARI) list(nn) = {my(h=-1); for (n=1, nn, h += 1/n; forprime(p=1, n-1, if(valuation(h, p) > 1, print1(n, \", \"); break)););} \\\\ _Petros Hadjicostas_, May 26 2020, courtesy of _Michel Marcus_"
+    ],
+    "xref": [
+        "Cf. A007757, A131657, A131658, A268112, A335189."
+    ],
+    "keyword": "nonn,more,hard",
+    "offset": "1,1",
+    "author": "_Petros Hadjicostas_, May 26 2020",
+    "references": 1,
+    "revision": 11,
+    "time": "2020-05-30T09:47:42-04:00",
+    "created": "2020-05-30T09:47:42-04:00"
+}

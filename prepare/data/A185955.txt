@@ -1,0 +1,60 @@
+{
+    "number": 185955,
+    "data": "7,23,47,167,251,359,389,839,941,1367,1847,1889,2207,2417,3719,3761,4889,5039,6311,7079,7919,8609,9377,10607,11411,11447,13841,15227,16127,17159,18869,19319,20411,24611,25589,26669,29501,29927,36017,36479,37907,43037,44519,44927,45569,49727,50627,52889,54287,57119,62057,65309,66047,70529,85037,85847,95369,97967,99191",
+    "name": "Fajtlowicz p-primes.",
+    "comment": [
+        "S. Fajtlowicz defined two related sequences of primes, p(n) and q(n), as follows:",
+        "1. q(1)=2 and p(1)=7.",
+        "2. q(n+1) is the smallest prime dividing p(n)+2.",
+        "3. p(n+1) is the smallest prime p larger than p(n) such that p+2 is not prime and not divisible by any of q(1),q(2),...,q(n+1).",
+        "Paul Erd\u0151s proved that the series of reciprocal of the p-primes converges.",
+        "The values of p and q were computed by Bethany Turner."
+    ],
+    "reference": [
+        "Siemion Fajtlowicz, Written on the Wall: Conjectures of Graffiti, #784 (1994)."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A185955/b185955.txt\">Table of n, a(n) for n = 1..500</a> (terms 1..201 from R. J. Mathar)",
+        "Siemion Fajtlowicz, <a href=\"https://web.archive.org/web/20090302092953/https://www.math.uh.edu/~clarson/graffiti.html\">Graffity & automated conjecture making</a> (2009), click on \"conjectures up to No. 894\", see page  136."
+    ],
+    "maple": [
+        "A185955 := proc(n)",
+        "    option remember;",
+        "    local a, admit,k ;",
+        "    if n = 1 then",
+        "        7;",
+        "    else",
+        "        a := ithprime(n) ;",
+        "        while true do",
+        "            if not isprime(a+2) then",
+        "                admit := true ;",
+        "                for k from 1 to n do",
+        "                    if modp(a+2, A185956(k)) =0 then",
+        "                        admit := false;",
+        "                        break;",
+        "                    end if;",
+        "                end do:",
+        "                if admit then",
+        "                    return a;",
+        "                end if ;",
+        "            end if;",
+        "            a := nextprime(a) ;",
+        "        end do:",
+        "    end if;",
+        "end proc ;",
+        "seq(A185955(n),n=1..20) ; # _R. J. Mathar_, Jul 28 2019"
+    ],
+    "mathematica": [
+        "lpf[n_] := FactorInteger[n][[1, 1]]; q[1] = 2; p[1] = 7; q[n_] := q[n] = lpf[p[n - 1] + 2]; p[n_] := Module[{pn = NextPrime[p[n - 1]]}, While[PrimeQ[pn + 2] || AnyTrue[Array[q, n], Divisible[pn + 2, #] &], pn = NextPrime[pn]]; pn]; Array[p, 50] (* _Amiram Eldar_, Apr 23 2021 *)"
+    ],
+    "xref": [
+        "Cf. A185956."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Craig Eric Larson_, Feb 07 2011",
+    "references": 3,
+    "revision": 25,
+    "time": "2021-04-23T07:35:57-04:00",
+    "created": "2011-02-07T11:54:45-05:00"
+}

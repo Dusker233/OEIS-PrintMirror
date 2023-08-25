@@ -1,0 +1,37 @@
+{
+    "number": 156362,
+    "data": "1,7,56,441,3528,28126,225008,1798349,14386792,115060722,920485776,7363180314,58905442512,471228010428,3769824083424,30158239367445,241265914939560,1930119075851050,15440952606808400,123527424655229966",
+    "name": "a(2*n+2) = 8*a(2*n+1), a(2*n+1) = 8*a(2*n) - 7^n*A000108(n), a(0)=1.",
+    "comment": [
+        "Hankel transform is 7^C(n+1,2)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A156362/b156362.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A120730(n,k) * 7^k.",
+        "a(n) = ( 8*(n+1)*a(n-1) + 28*(n-2)*a(n-2) - 224*(n-2)*a(n-3) )/(n+1). - _G. C. Greubel_, Nov 09 2022"
+    ],
+    "mathematica": [
+        "a[n_]:= a[n]= If[n==0, 1, If[OddQ[n], 8*a[n-1] -7^((n-1)/2)*CatalanNumber[(n-1)/2], 8*a[n-1]]]; Table[a[n], {n, 0, 30}] (* _G. C. Greubel_, Nov 09 2022 *)"
+    ],
+    "program": [
+        "(Magma) [n le 3 select Factorial(n+5)/720 else (8*n*Self(n-1) + 28*(n-3)*Self(n-2) - 224*(n-3)*Self(n-3))/n: n in [1..30]]; // _G. C. Greubel_, Nov 09 2022",
+        "(SageMath)",
+        "def a(n): # a = A156362",
+        "    if (n==0): return 1",
+        "    elif (n%2==1): return 8*a(n-1) - 7^((n-1)/2)*catalan_number((n-1)/2)",
+        "    else: return 8*a(n-1)",
+        "[a(n) for n in (0..30)] # _G. C. Greubel_, Nov 09 2022"
+    ],
+    "xref": [
+        "Cf. A000108, A001405, A151162, A156195, A151254, A151281, A156266, A156361."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Philippe Del\u00e9ham_, Feb 08 2009",
+    "references": 4,
+    "revision": 6,
+    "time": "2022-11-09T19:17:56-05:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

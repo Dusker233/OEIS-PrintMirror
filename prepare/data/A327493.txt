@@ -1,0 +1,30 @@
+{
+    "number": 327493,
+    "data": "1,4,8,32,128,512,1024,4096,32768,131072,262144,1048576,4194304,16777216,33554432,134217728,2147483648,8589934592,17179869184,68719476736,274877906944,1099511627776,2199023255552,8796093022208,70368744177664,281474976710656,562949953421312",
+    "name": "a(n) = 2^A327492(n).",
+    "formula": [
+        "a(n) = denominator(b(n)) where b(n) = n!/(2^n*floor(n/2)!)^2 is the normalized swinging factorial (A056040)."
+    ],
+    "maple": [
+        "A327493 := n -> 2^(A327492_list(n+1)[n+1]):",
+        "seq(A327493(n), n = 0..26);"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(a=vector(n+1)); a[1]=1; for(n=1, n, a[n+1] = a[n] * 2^if(n%4, n%2 + 1, valuation(n,2))); a} \\\\ _Andrew Howroyd_, Sep 28 2019",
+        "(PARI) a(n)={ denominator(sum(j=0, n, j!/(2^j*(j\\2)!)^2)) } \\\\ _Andrew Howroyd_, Sep 28 2019",
+        "(Julia)",
+        "bitcount(n) = sum(digits(n, base = 2))",
+        "A327493(n) = 2^(2n - bitcount(n) + mod(n, 2))",
+        "[A327493(n) for n in 0:26] |> println # _Peter Luschny_, Oct 03 2019"
+    ],
+    "xref": [
+        "Cf. A327492, A327491, A327494, A327495, A056040."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Peter Luschny_, Sep 27 2019",
+    "references": 6,
+    "revision": 12,
+    "time": "2019-10-03T06:16:53-04:00",
+    "created": "2019-09-28T21:59:23-04:00"
+}

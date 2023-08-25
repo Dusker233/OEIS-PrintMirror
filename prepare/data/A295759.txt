@@ -1,0 +1,34 @@
+{
+    "number": 295759,
+    "data": "1,2,8,50,432,4690,61208,933090,16268640,319249698,6963071784,167093039122,4374954323216,124108887889522,3791902447022648,124138462767883202,4335205955612166848,160865445090615444546,6320573384125953811016,262147404448177963790834,11445191965935999115186288",
+    "name": "O.g.f.: Sum_{n>=0} Product_{k=1..n} tan( (2*k)*arctan(x) ).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A295759/b295759.txt\">Table of n, a(n) for n = 0..265</a>"
+    ],
+    "formula": [
+        "a(n) ~ 2^(n - 1/2) * n! / G^(n+1), where G is the Catalan constant A006752. - _Vaclav Kotesovec_, Oct 02 2020"
+    ],
+    "example": [
+        "O.g.f: A(x) = 1 + 2*x + 8*x^2 + 50*x^3 + 432*x^4 + 4690*x^5 + 61208*x^6 + 933090*x^7 + 16268640*x^8 + 319249698*x^9 + 6963071784*x^10 + + ...",
+        "such that",
+        "A(x) = 1 + tan(2*arctan(x)) + tan(2*arctan(x))*tan(4*arctan(x)) + tan(2*arctan(x))*tan(4*arctan(x))*tan(6*arctan(x)) + tan(2*arctan(x))*tan(4*arctan(x))*tan(6*arctan(x))*tan(8*arctan(x)) + tan(2*arctan(x))*tan(4*arctan(x))*tan(6*arctan(x))*tan(8*arctan(x))*tan(10*arctan(x)) + ..."
+    ],
+    "mathematica": [
+        "nmax = 20;",
+        "Sum[Product[Tan[2 k ArcTan[x]], {k, 1, n}] , {n, 0, nmax}] + O[x]^(nmax+1) // CoefficientList[#, x]& (* _Jean-Fran\u00e7ois Alcover_, Oct 02 2020 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(X=x+x*O(x^n), Gf); Gf=sum(m=0, n, prod(k=1, m, tan((2*k)*atan(X)))); polcoeff(Gf, n)}",
+        "for(n=0,20,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A177381, A295758."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jan 28 2018",
+    "references": 2,
+    "revision": 10,
+    "time": "2020-10-02T15:51:05-04:00",
+    "created": "2018-01-28T20:37:29-05:00"
+}

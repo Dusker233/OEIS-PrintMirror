@@ -1,0 +1,53 @@
+{
+    "number": 354830,
+    "data": "1,1,1,1,2,2,8,8,30,72,408,408,4104,4104,29640,208704,1437312,1437312,22653504,22653504,318695040,2686493376,27628410816,27628410816,575372874240,1775480841216,21115550048256,132879856582656,2321256928702464,2321256928702464,83095013944442880",
+    "name": "a(n) is the number of permutations p of [n] such that gcd(i, p(i)) > 1 for 2 <= i <= n.",
+    "link": [
+        "Carl Pomerance, <a href=\"https://arxiv.org/abs/2203.03085\">Coprime permutations</a>, arXiv:2203.03085 [math.NT], 2022. See TABLE 3."
+    ],
+    "formula": [
+        "a(p) = a(p-1) for primes p."
+    ],
+    "program": [
+        "(Ruby)",
+        "def search(a, num, n)",
+        "  if num == n + 1",
+        "    @cnt += 1",
+        "  else",
+        "    (1..n).each{|i|",
+        "      if a[i] == 0",
+        "        if i == 1 || i.gcd(num) > 1",
+        "          a[i] = num",
+        "          search(a, num + 1, n)",
+        "          a[i] = 0",
+        "        end",
+        "      end",
+        "    }",
+        "  end",
+        "end",
+        "def A(n)",
+        "  a = [0] * (n + 1)",
+        "  @cnt = 0",
+        "  search(a, 1, n)",
+        "  @cnt",
+        "end",
+        "def A354830(n)",
+        "  (0..n).map{|i| A(i)}",
+        "end",
+        "p A354830(15)",
+        "(PARI) a(n) = { my (v=select(x -> (!isprime(x)) || (2*x<=n), [2..n])); matpermanent(matrix(#v, #v, i,j, gcd(v[i],v[j])>1)) } \\\\ _R\u00e9my Sigrist_, Jun 07 2022"
+    ],
+    "xref": [
+        "Cf. A320843."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Seiichi Manyama_, Jun 07 2022",
+    "ext": [
+        "More terms from _R\u00e9my Sigrist_, Jun 07 2022"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2022-06-07T13:00:11-04:00",
+    "created": "2022-06-07T11:12:48-04:00"
+}

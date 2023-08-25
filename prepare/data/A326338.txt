@@ -1,0 +1,28 @@
+{
+    "number": 326338,
+    "data": "1,1,2,7,48,781,27518",
+    "name": "Number of simple graphs with vertices {1..n} whose weakly nesting edges are connected.",
+    "comment": [
+        "Two edges {a,b}, {c,d} are weakly nesting if a <= c < d <= b or c <= a < b <= d. A graph has its weakly nesting edges connected if the graph whose vertices are the edges and whose edges are weakly nesting pairs of edges is connected."
+    ],
+    "link": [
+        "Gus Wiseman, <a href=\"/A326338/a326338.png\">The a(4) = 48 weakly nesting-connected graphs</a>."
+    ],
+    "mathematica": [
+        "wknXQ[eds_]:=MatchQ[eds,{___,{x_,y_},___,{z_,t_},___}/;(x<=z&&y>=t)||(x>=z&&y<=t)];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[Subsets[Subsets[Range[n],{2}]],Length[csm[Union[List/@#,Select[Subsets[#,{2}],wknXQ]]]]<=1&]],{n,0,5}]"
+    ],
+    "xref": [
+        "The inverse binomial transform is the covering case A326337.",
+        "The non-weak case is A326330.",
+        "Cf. A006125, A099947, A136653, A324328, A326289, A326293, A326331, A326335, A326336, A326341."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jun 29 2019",
+    "references": 5,
+    "revision": 6,
+    "time": "2019-06-30T06:50:22-04:00",
+    "created": "2019-06-30T06:50:22-04:00"
+}

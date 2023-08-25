@@ -1,0 +1,57 @@
+{
+    "number": 224704,
+    "data": "1,1,1,2,4,7,13,24,45,84,156,291,543,1013,1889,3524,6575,12266,22883,42691,79647,148593,277221,517197,964911,1800189,3358526,6265846,11689902,21809313,40688632,75910917,141623529,264220545,492944193,919663462,1715774125",
+    "name": "Number of stacks of n triangles, pointing upwards or downwards depending on row parity.",
+    "comment": [
+        "A stack is formed by starting with a row of triangles pointing upwards, and then additional triangles pointing downwards can be inserted between adjacent triangles pointing upwards, and additional triangles pointing upwards can be put on top of triangles pointing downwards.",
+        "Number of compositions of n with a(1) = 1 and a(i+1) <= a(i) + 1 + mod(a(i),2).",
+        "From _Peter Bala_, Jul 12 2019: (Start)",
+        "These triangle stacks may be defined using Schr\u00f6der paths. A Schr\u00f6der path is a lattice path in the plane starting and ending on the x-axis, never going below the x-axis, using the steps (1,1) rise, (1,-1) fall or (2,0) flat. A small Schr\u00f6der path is a Schr\u00f6der path with no flat steps on the x-axis.",
+        "The area between a small Schr\u00f6der path and the x-axis may be decomposed into a stack of unit area triangles of two types - up triangles with vertices at the lattice points (x, y), (x+1, y+1) and (x+2, y) and down triangles with vertices at the lattice points (x, y), (x-1, y+1) and (x+1, y+1). (End)"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A224704/b224704.txt\">Table of n, a(n) for n = 0..3694</a> (terms 0..500 from Paul Tek)",
+        "P. Bala, <a href=\"/A224704/a224704.pdf\">The area beneath small Schr\u00f6der paths: Notes on A224704, A326453 and A326454</a>",
+        "Paul Tek, <a href=\"/A224704/a224704.png\">Illustration of the first terms</a>"
+    ],
+    "formula": [
+        "From _Peter Bala_, Jul 03 2019: (Start)",
+        "O.g.f. as a continued fraction: A(q) = 1/(1 - q/(1 - q^2 - q^3/(1 - q^4 - q^5/(1 - q^6 - q^7/( ... ) )))). Also,",
+        "A(q) = 1/(1 - q/(1 - (q^2 + q^3)/(1 - q^5/(1 - (q^4 + q^7)/(1 - q^9/(1 - (q^6 + q^11)/(1 - q^13/( ... ) ))))))) and",
+        "A(q) = 1/(2 - (1 + q)/(2 - (1 + q^3)/(2 - (1 + q^5)/(2 - (1 + q^7)/( ... ) )))).",
+        "O.g.f. as a ratio of q-series: A(q) =  N(q)/D(q), where N(q) = Sum_{n >= 0} (-1)^n*q^(2*n^2+n)/( (1-q^2)*(1-q^4)*...*(1-q^(2*n)) )^2 and D(q) = Sum_{n >= 0} (-1)^n*q^(2*n^2-n)/( (1-q^2)*(1-q^4)*...*(1-q^(2*n)) )^2.",
+        "D(q) has its least (simple) real zero at x = 0.53600 49695 29708 61653 44946 12214 97438 08884 63471 33627....",
+        "a(n) ~ c*x^(-n) where c = 0.30516 69461 42293 61432 58334 29163 22891 57284 39056 20388 ... = - N(x)/(x*D'(x)) and the prime indicates differentiation w.r.t. q. (End)"
+    ],
+    "mathematica": [
+        "a[ n_] := SeriesCoefficient[ 1/(1 + ContinuedFractionK[ - q^(2 k - 1), 1 - q^(2 k), {k, Ceiling @ Sqrt[n]}]), {q, 0, n}]; (* _Michael Somos_, Jul 14 2019 *)"
+    ],
+    "program": [
+        "(Perl)",
+        "use bigint;",
+        "my $max = 100;",
+        "my @d = ( [1] );",
+        "foreach my $n (0..$max) {",
+        "    my $a = 0;",
+        "    foreach my $h (0..$#{$d[$n]}) {",
+        "        $a += $d[$n][$h];",
+        "        my $maxh = ($h % 2) ? ($h+2) : ($h+1);",
+        "        foreach my $newh (1..$maxh) {",
+        "            $d[$n+$newh][$newh] += $d[$n][$h];",
+        "        }",
+        "    }",
+        "    print \"$a,\";",
+        "}"
+    ],
+    "xref": [
+        "Column 1 of A316354 (except a(0)).",
+        "Cf. A005169, A001524."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul Tek_, Apr 16 2013",
+    "references": 17,
+    "revision": 36,
+    "time": "2019-07-14T16:49:05-04:00",
+    "created": "2013-04-18T16:32:25-04:00"
+}

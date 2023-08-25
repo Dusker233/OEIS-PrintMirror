@@ -1,0 +1,44 @@
+{
+    "number": 306025,
+    "data": "1,1,7,95,2096,67354,2943277,166862583,11858631472,1029154793775,106837050484924,13046411412001307,1848336205780389404,300289842081446066173,55393980428260038660617,11503469972529028999979343,2669299049110696359069533376",
+    "name": "Number of length-n restricted growth strings (RGS) with growth <= n and first element in [n].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A306025/b306025.txt\">Table of n, a(n) for n = 0..265</a>"
+    ],
+    "formula": [
+        "a(n) = n! * [x^n] exp(Sum_{j=1..n} (exp(j*x)-1)/j).",
+        "a(n) = A306024(n,n)."
+    ],
+    "example": [
+        "a(0) = 1: the empty string.",
+        "a(1) = 1: 1.",
+        "a(2) = 7: 11, 12, 13, 21, 22, 23, 24."
+    ],
+    "maple": [
+        "b:= proc(n, k, m) option remember; `if`(n=0, 1,",
+        "      add(b(n-1, k, max(m, j)), j=1..m+k))",
+        "    end:",
+        "a:= n-> b(n$2, 0):",
+        "seq(a(n), n=0..20);",
+        "# second Maple program:",
+        "a:= n-> n!*coeff(series(exp(add((exp(j*x)-1)/j, j=1..n)), x, n+1), x, n):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "b[n_, k_, m_] := b[n, k, m] = If[n == 0, 1,",
+        "   Sum[b[n - 1, k, Max[m, j]], {j, 1, m + k}]];",
+        "a[n_] := b[n, n, 0];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Sep 07 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Main diagonal of A306024.",
+        "Cf. A305963."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jun 17 2018",
+    "references": 3,
+    "revision": 13,
+    "time": "2022-09-07T04:10:36-04:00",
+    "created": "2018-06-17T12:54:31-04:00"
+}

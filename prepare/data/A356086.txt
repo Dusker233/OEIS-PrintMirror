@@ -1,0 +1,43 @@
+{
+    "number": 356086,
+    "data": "3,6,10,13,17,20,27,34,51,58,64,71,81,88,95,102,105,109,112,116,119,122,126,129,133,136,143,150,157,174,180,187,204,211,218,221,225,228,232,235,242,245,249,252,256,259,266,273,284,285,287,289,290,292,294",
+    "name": "Intersection of A001952 and A022838.",
+    "comment": [
+        "This is the third of four sequences, u^v, u^v', u'^v, u'^v', that partition the positive integers. See A346308."
+    ],
+    "example": [
+        "(1)  u ^ v   = ( 1,  5,  8, 12, 15, 19, 22, 24, 25, 29, 31, 32, ...) = A346308",
+        "(2)  u ^ v'  = ( 2,  4,  7,  9, 11, 14, 16, 18, 21, 26, 28, 33, ...) = A356085",
+        "(3)  u' ^ v  = ( 3,  6, 10, 13, 17, 20, 27, 34, 51, 58, 64, 71, ...) = A356086",
+        "(4)  u' ^ v' = (23, 30, 37, 40, 44, 47, 54, 61, 68, 75, 78, 85, ...) = A356087"
+    ],
+    "mathematica": [
+        "z = 200;",
+        "r = Sqrt[2]; u = Table[Floor[n*r], {n, 1, z}]  (* A001951 *)",
+        "u1 = Take[Complement[Range[1000], u], z]  (* A001952 *)",
+        "r1 = Sqrt[3]; v = Table[Floor[n*r1], {n, 1, z}]  (* A022838 *)",
+        "v1 = Take[Complement[Range[1000], v], z]  (* A054406 *)",
+        "Intersection[u, v]    (* A346308 *)",
+        "Intersection[u, v1]   (* A356085 *)",
+        "Intersection[u1, v]   (* A356086 *)",
+        "Intersection[u1, v1]  (* A356087 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from math import isqrt",
+        "from itertools import count, islice",
+        "def A356086_gen(): # generator of terms",
+        "    return filter(lambda n:n == isqrt(3*(isqrt(n**2//3)+1)**2),((k:=n<<1)+isqrt(k*n) for n in count(1)))",
+        "A356086_list = list(islice(A356086_gen(),30)) # _Chai Wah Wu_, Aug 06 2022"
+    ],
+    "xref": [
+        "Cf. A001951, A001952, A022838, A054406, A346308, A356085, A356087, A356088 (results of composition instead of intersections)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Aug 04 2022",
+    "references": 4,
+    "revision": 11,
+    "time": "2022-08-06T19:07:20-04:00",
+    "created": "2022-08-06T10:50:48-04:00"
+}

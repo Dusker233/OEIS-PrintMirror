@@ -1,0 +1,37 @@
+{
+    "number": 364974,
+    "data": "1,2,88,704,36234,285714",
+    "name": "a(n) is the least positive number that can be written in exactly n ways as 3*x*y^2 - x^3 where x and y are positive integers.",
+    "example": [
+        "1 can't be written as 3*x*y^2 - x^3, so a(0) = 1.",
+        "3 * 1 * 1^2 - 1^3 = 2 so a(1) = 2.",
+        "3 * 2 * 4^2 - 2^3 = 3 * 8 * 5^2 - 8^3 = 88 so a(2) = 88.",
+        "3 * 4 * 8^2 - 4^3 = 3 * 16 * 10^2 - 16^3 = 3 * 64 * 37^2 - 64^3 = 704 so a(3) = 704.",
+        "3 * 6 * 45^2 - 6^3 = 3 * 9 * 37^2 - 9^3 = 3 * 33 * 27^2 - 33^3 = 3 * 549 * 317^2 - 549^3 = 36234 so a(4) = 36234.",
+        "3 * 9 * 103^2 - 9^3 = 3 * 33 * 57^2 - 33^3 = 3 * 78 * 57^2 - 78^3 = 3 * 333 * 193^2 - 333^3 = 3 * 1221 * 705^2 - 1221^3 = 285714 so a(5) = 285714."
+    ],
+    "maple": [
+        "N:= 3*10^5: # for terms <= N",
+        "R:= Vector(N):",
+        "for x from 1 to floor(N/2) do",
+        "  V:= [seq(3*x*y^2 - x^3, y = ceil(x/sqrt(3)) .. floor(sqrt((x^2+N/x)/3)))];",
+        "  R[V]:= R[V] +~ 1;",
+        "od:",
+        "W:= Array(0..max(R)):",
+        "for i from 1 to N do",
+        "  v:= R[i];",
+        " if W[v] = 0 then W[v]:= i fi",
+        "od:",
+        "convert(W,list);"
+    ],
+    "xref": [
+        "Cf. A135782."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,2",
+    "author": "_Robert Israel_, Aug 14 2023",
+    "references": 1,
+    "revision": 5,
+    "time": "2023-08-15T02:17:33-04:00",
+    "created": "2023-08-15T02:17:33-04:00"
+}

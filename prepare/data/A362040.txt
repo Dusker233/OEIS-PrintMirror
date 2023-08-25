@@ -1,0 +1,45 @@
+{
+    "number": 362040,
+    "data": "0,1,2,4,7,10,15,21,26,34,42,52,63,75,86,96,109,125,142,160,179,197,216,238,259,281,306,332,359,387,416,442,473,505,536,567,600,636,669,707,746,784,823,865,906,948,992,1036,1083,1129,1172,1222,1269,1321,1374,1428",
+    "name": "a(n) is the number of distinct sums of one or more contiguous terms in the sequence thus far.",
+    "link": [
+        "Winston de Greef, <a href=\"/A362040/b362040.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) <= A000217(n)."
+    ],
+    "example": [
+        "At n=1, there are no contiguous subsequences, so a(1)=0.",
+        "At n=2, there is one contiguous subsequence: [0], so a(2)=1.",
+        "At n=3, there are three contiguous subsequences: [0], [1] and [0, 1], but only two distinct sums (0 and 1), so a(3)=2."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "def gen_a():",
+        "    seen = set()",
+        "    sums = []",
+        "    new = 0",
+        "    while True:",
+        "        for v in sums: seen.add(v + new)",
+        "        sums = [v + new for v in sums]",
+        "        sums.append(0)",
+        "        new = len(seen)",
+        "        yield new",
+        "print(list(islice(gen_a(), 60))) # _Winston de Greef_, Apr 15 2023"
+    ],
+    "xref": [
+        "Cf. A361798 (number of sums).",
+        "Cf. A000217, A002048, A002049."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Neal Gersh Tolunsky_, Apr 15 2023",
+    "ext": [
+        "a(13)-a(15) corrected and more terms from _Winston de Greef_, Apr 15 2023"
+    ],
+    "references": 2,
+    "revision": 46,
+    "time": "2023-04-19T09:04:41-04:00",
+    "created": "2023-04-17T23:57:11-04:00"
+}

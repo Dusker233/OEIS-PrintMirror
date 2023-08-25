@@ -1,0 +1,40 @@
+{
+    "number": 317277,
+    "data": "1,1,6,81,1828,60565,2734926,160109005,11724156648,1045312448841,111114793839610,13845807451708441,1994597720747571468,328351264019737949341,61162428777982281583302,12782305566531823350524805,2975150384583838798131401296,766253903501365584725344992529",
+    "name": "a(n) = Sum_{k=0..n} binomial(n-1,k-1)*k^n*n!/k!; a(0) = 1.",
+    "comment": [
+        "a(n) is the n-th term of the Lah transform of the n-th powers."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A317277/b317277.txt\">Table of n, a(n) for n = 0..250</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "a(n) = n! * [x^n] Sum_{k>=0} k^n*(x/(1 - x))^k/k!."
+    ],
+    "maple": [
+        "A317277:= n-> `if`(n=0,1, add(binomial(n-1,j-1)*binomial(n,j)*(n-j)!*j^n, j=0..n)); seq(A317277(n), n=0..30); # _G. C. Greubel_, Mar 09 2021"
+    ],
+    "mathematica": [
+        "Join[{1}, Table[Sum[Binomial[n - 1, k - 1] k^n n!/k!, {k, n}], {n, 17}]]",
+        "Join[{1}, Table[n! SeriesCoefficient[Sum[k^n (x/(1 - x))^k/k!, {k, n}], {x, 0, n}], {n, 17}]]"
+    ],
+    "program": [
+        "(Sage) [1]+[sum(binomial(n-1,j-1)*binomial(n,j)*factorial(n-j)*j^n for j in (0..n)) for n in (1..30)] # _G. C. Greubel_, Mar 09 2021",
+        "(Magma) [1]cat[(&+[Binomial(n-1,j-1)*Binomial(n,j)*Factorial(n-j)*j^n: j in [0..n]]): n in [1..30]]; // _G. C. Greubel_, Mar 09 2021",
+        "(PARI) a(n) = if (n==0, 1, sum(k=0, n, binomial(n-1, k-1)*k^n*n!/k!)); \\\\ _Michel Marcus_, Mar 10 2021; corrected Jun 15 2022"
+    ],
+    "xref": [
+        "Cf. A000262, A052852, A103194, A293145, A317278, A317279."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Jul 25 2018",
+    "ext": [
+        "Name edited by _Michel Marcus_, Jun 15 2022"
+    ],
+    "references": 3,
+    "revision": 20,
+    "time": "2022-06-15T07:50:14-04:00",
+    "created": "2018-07-25T17:49:39-04:00"
+}

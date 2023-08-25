@@ -1,0 +1,48 @@
+{
+    "number": 206708,
+    "data": "6,28,220,284,496,1184,1210,2620,2924,5020,5564,6232,6368,8128,10744,10856,12285,14595,17296,18416,63020,66928,66992,67095,69615,71145,76084,79750,87633,88730,100485,122265,122368,123152,124155,139815,141664,142310,153176",
+    "name": "Numbers k such that sigma(k) = sigma(sigma(k)-k).",
+    "comment": [
+        "For all k, let s(k) = sigma(k) - k, the aliquot sum function A001065; then this sequence is the set of k such that s(s(k)) = k. - _Jeppe Stig Nielsen_, Jan 12 2020"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A206708/b206708.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from Amiram Eldar)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PerfectNumber.html\">Perfect Number</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/AmicablePair.html\">Amicable Pair</a>",
+        "Wikipedia, <a href=\"http://www.wikipedia.org/wiki/Perfect_number\">Perfect number</a>",
+        "Wikipedia, <a href=\"http://www.wikipedia.org/wiki/Amicable_number\">Amicable number</a>"
+    ],
+    "formula": [
+        "Equals {A063990} union {A000396} =  (amicable numbers) union (perfect numbers)."
+    ],
+    "example": [
+        "220 is in the sequence because sigma(220) = 504, sigma(504 - 220) = sigma(284) = 504."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A206708:=proc(q)  local n;",
+        "for n from 1 to q do if sigma(n)=sigma(sigma(n)-n) then print(n); fi; od; end:",
+        "A206708(10^5); # _Paolo P. Lava_, Mar 26 2013",
+        "# second Maple program:",
+        "q:= n-> (s-> s(n)=s(s(n)-n))(numtheory[sigma]):",
+        "select(q, [$1..100000])[];  # _Alois P. Heinz_, Jan 31 2023"
+    ],
+    "mathematica": [
+        "Select[Range[10^6],DivisorSigma[1,#]==DivisorSigma[1, DivisorSigma[1,#]-#]&]"
+    ],
+    "program": [
+        "(PARI) isok(k) = if (k != 1, my(sk=sigma(k)); sk == sigma(sk-k)); \\\\ _Michel Marcus_, Jun 24 2019",
+        "(Magma) [k:k in [2..154000]|s eq DivisorSigma(1,s-k) where s is DivisorSigma(1,k)]; // _Marius A. Burtea_, Jan 13 2020"
+    ],
+    "xref": [
+        "Cf. A000396 (perfect numbers), A063990 (amicable numbers).",
+        "Cf. A000203 (sum of divisors), A001065 (sum of proper divisors)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Feb 11 2012",
+    "references": 6,
+    "revision": 50,
+    "time": "2023-01-31T16:00:31-05:00",
+    "created": "2012-02-15T21:25:31-05:00"
+}

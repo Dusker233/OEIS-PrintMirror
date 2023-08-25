@@ -1,0 +1,62 @@
+{
+    "number": 325981,
+    "data": "45,495,585,765,855,1305,18837,21525,31635,38295,45315,50445,51255,60435,63495,68085,77265,96615,1403115,2446353,3411975,3999465,4091745,4233537,4287255,4631319,10813425,10967085,11490345,15578199,16143309,16329645,16633071,17179515,17311203,17355915,21159075,21933975,22579725",
+    "name": "Odd composites for which gcd(A325977(n), A325978(n)) is equal to abs(A325977(n)).",
+    "comment": [
+        "Provided that A325977 and A325978 are never zero on same n, these are odd composite numbers n such that A325977(n) is not zero and divides A325978(n).",
+        "Based on the first 147 terms it seems that this sequence is a subsequence of A072357, that is each term has exactly one prime factor with exponent 2, with one or more other prime factors that are all unitary (i.e., each term satisfies A001222(x) - A001221(x) = 1). On the other hand, it has been proved that no odd perfect number, if such numbers exist at all, can have such a factorization (see A326137 and a link to P. P. Nielsen's paper there).",
+        "Nineteen initial terms factorize as:",
+        "  45 = 3^2 * 5^1,",
+        "  495 = 3^2 * 5^1 * 11^1,",
+        "  585 = 3^2 * 5^1 * 13^1,",
+        "  765 = 3^2 * 5^1 * 17^1,",
+        "  855 = 3^2 * 5^1 * 19^1,",
+        "  1305 = 3^2 * 5^1 * 29^1,",
+        "  18837 = 3^2 * 7^1 * 13^1 * 23^1,",
+        "  21525 = 3^1 * 5^2 * 7^1 * 41^1,",
+        "  31635 = 3^2 * 5^1 * 19^1 * 37^1,",
+        "  38295 = 3^2 * 5^1 * 23^1 * 37^1,",
+        "  45315 = 3^2 * 5^1 * 19^1 * 53^1,",
+        "  50445 = 3^2 * 5^1 * 19^1 * 59^1,",
+        "  51255 = 3^2 * 5^1 * 17^1 * 67^1,",
+        "  60435 = 3^2 * 5^1 * 17^1 * 79^1,",
+        "  63495 = 3^2 * 5^1 * 17^1 * 83^1,",
+        "  68085 = 3^2 * 5^1 * 17^1 * 89^1,",
+        "  77265 = 3^2 * 5^1 * 17^1 * 101^1,",
+        "  96615 = 3^2 * 5^1 * 19^1 * 113^1,",
+        "  1403115 = 3^1 * 5^1 * 7^2 * 23^1 * 83^1,",
+        "and the 62nd term as a(62) = 2919199437 = 3^2 * 7^1 * 11^1 * 43^1 * 163^1 * 601^1.",
+        "If we select a subsequence of terms for which the quotient A325978(n)/A325977(n) is positive, then we are left with the following numbers: 495, 585, 31635, 38295, 45315, 51255, 60435, 63495, 1403115, 3999465, etc. which is a subsequence of A326070."
+    ],
+    "link": [
+        "Antti Karttunen (terms 1-62) & Giovanni Resta, <a href=\"/A325981/b325981.txt\">Table of n, a(n) for n = 1..147</a>",
+        "<a href=\"/index/O#opnseqs\">Index entries for sequences where any odd perfect numbers must occur</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "A034448(n) = { my(f=factorint(n)); prod(k=1, #f~, 1+(f[k, 1]^f[k, 2])); }; \\\\ After code in A034448",
+        "A034460(n) = (A034448(n) - n);",
+        "A048250(n) = factorback(apply(p -> p+1,factor(n)[,1]));",
+        "A325313(n) = (A048250(n) - n);",
+        "A325977(n) = ((A034460(n)+A325313(n))/2);",
+        "A162296(n) = sumdiv(n, d, d*(1-issquarefree(d)));",
+        "A325314(n) = (n - A162296(n));",
+        "A048146(n) = (sigma(n)-A034448(n));",
+        "A325814(n) = (n-A048146(n));",
+        "A325978(n) = ((A325314(n)+A325814(n))/2);",
+        "A325975(n) = gcd(A325977(n), A325978(n));",
+        "isA325981(n) = ((n%2)&&!isprime(n)&&(A325975(n)==abs(A325977(n))));",
+        "\\\\ Or alternatively as:",
+        "isA325981(n) = if(!(n%2)||isprime(n),0,my(x = A325977(n), y = A325978(n)); (!x&&!y)||(x&&!(y%x)));"
+    ],
+    "xref": [
+        "Cf. A072357, A228058, A325973, A325974, A325975, A325977, A325978, A325979, A326064, A326070, A326071, A326137."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jun 02 2019",
+    "references": 16,
+    "revision": 26,
+    "time": "2019-06-18T18:12:23-04:00",
+    "created": "2019-06-08T17:52:35-04:00"
+}

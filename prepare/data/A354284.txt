@@ -1,0 +1,37 @@
+{
+    "number": 354284,
+    "data": "89,251,449,1061,1439,1741,1997,2237,2239,2267,2593,2657,2699,3301,3433,3449,5101,5189,5237,5381,6197,6311,6361,6599,6827,6829,6883,7433,8087,8171,8311,9067,10259,12149,12611,12641,13451,14741,15791,15901,16787,17027,17291,17387,17389,17471,18211",
+    "name": "The first of four consecutive primes p1, p2, p3, p4 such that (p4-p3)*(p2-p1) = (p3-p2)^2.",
+    "link": [
+        "Robert Israel, <a href=\"/A354284/b354284.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 449 is a term because the four consecutive primes starting with 449 are 449, 457, 461, 463, and (463-461)*(457-449) = (461-457)^2 = 16."
+    ],
+    "maple": [
+        "P:= select(isprime, [seq(i,i=3..20000,2)]):",
+        "R:= select(t -> (P[t+3]-P[t+2])*(P[t+1]-P[t]) = (P[t+2]-P[t+1])^2, [$1..nops(P)-3]):",
+        "P[R];"
+    ],
+    "mathematica": [
+        "Select[Partition[Prime[Range[2000]], 4, 1], (#[[4]] - #[[3]])*(#[[2]] - #[[1]]) == (#[[3]] - #[[2]])^2 &][[;; , 1]] (* _Amiram Eldar_, May 23 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import nextprime",
+        "from itertools import islice",
+        "def agen(): # generator of terms",
+        "    p1, p2, p3, p4 = 2, 3, 5, 7",
+        "    while True:",
+        "        if (p4-p3)*(p2-p1) == (p3-p2)**2: yield p1",
+        "        p1, p2, p3, p4 = p2, p3, p4, nextprime(p4)",
+        "print(list(islice(agen(), 47))) # _Michael S. Branicky_, May 22 2022"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, May 22 2022",
+    "references": 1,
+    "revision": 12,
+    "time": "2022-05-31T08:09:03-04:00",
+    "created": "2022-05-30T10:30:15-04:00"
+}

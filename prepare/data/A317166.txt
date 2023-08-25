@@ -1,0 +1,38 @@
+{
+    "number": 317166,
+    "data": "1,1,1,5,7,27,241,505,1975,10241,188743,460545,2323679,10836141,85023209,2734858573,8010483015,45714797671,243112435345,1632532938001,15831051353773,892173483721887,2978105991739613,19855526019022967,113487352591708591",
+    "name": "Number of permutations of [n] with distinct lengths of increasing runs.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A317166/b317166.txt\">Table of n, a(n) for n = 0..66</a>"
+    ],
+    "formula": [
+        "a(A000217(n)) = A317165(n)."
+    ],
+    "maple": [
+        "g:= (n, s)-> `if`(n in s, 0, 1):",
+        "b:= proc(u, o, t, s) option remember; `if`(u+o=0, g(t, s),",
+        "      `if`(g(t, s)=1, add(b(u-j, o+j-1, 1, s union {t})",
+        "       , j=1..u), 0)+ add(b(u+j-1, o-j, t+1, s), j=1..o))",
+        "    end:",
+        "a:= n-> b(n, 0$2, {}):",
+        "seq(a(n), n=0..24);"
+    ],
+    "mathematica": [
+        "g[n_, s_] := If[MemberQ[s, n], 0, 1];",
+        "b[u_, o_, t_, s_] := b[u, o, t, s] = If[u + o == 0, g[t, s],",
+        "     If[g[t, s] == 1, Sum[b[u - j, o + j - 1, 1, s ~Union~ {t}],",
+        "     {j, u}], 0] + Sum[b[u + j - 1, o - j, t + 1, s], {j, o}]];",
+        "a[n_] := b[n, 0, 0, {}];",
+        "Table[a[n], {n, 0, 24}] (* _Jean-Fran\u00e7ois Alcover_, Sep 01 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000217, A007838, A317165."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jul 23 2018",
+    "references": 3,
+    "revision": 15,
+    "time": "2021-09-01T16:07:56-04:00",
+    "created": "2018-07-25T15:00:07-04:00"
+}

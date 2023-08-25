@@ -1,0 +1,40 @@
+{
+    "number": 298880,
+    "data": "0,2,4,8,14,26,40,58,84,114,148,194,242,306,370,454,532,624,736,848,986,1120,1274,1438,1618,1800,1994,2220,2446,2700,2950,3222,3526,3830,4142,4516,4832,5214,5590,6020,6440,6860,7356,7830,8336,8816,9420,9934,10532,11118,11740,12396,13022,13702",
+    "name": "a(n) is the number of subsets of {1, 2, ..., n} with product of all entries <= n^2 + n.",
+    "comment": [
+        "All terms are even."
+    ],
+    "example": [
+        "The first nontrivial case is when n = 4 and a(4) = 14. There are 2^4 = 16 subsets of {1, 2, 3, 4}. The subsets {2, 3, 4} and {1, 2, 3, 4} do not meet the condition that the product of the entries are less than or equal to n^2 + n = (4^4 + 4 = 20. There are 14 subsets of {1, 2, 3, 4} whose entries have a product less than 20."
+    ],
+    "maple": [
+        "P:= proc(n,p) option remember;",
+        "  if n=1 and p>1 then return 0 fi;",
+        "  if p mod n = 0 then procname(n-1,p) + procname(n-1,p/n)",
+        "  else procname(n-1,p)",
+        "  fi",
+        "end proc:",
+        "P(1,1):= 2:",
+        "P(0,0):= 0:",
+        "[seq(add(P(n,p),p=1..n^2+n),n=1..100)]; # _Robert Israel_, Mar 06 2018"
+    ],
+    "mathematica": [
+        "P[n_, p_] := P[n, p] = If[n == 1 && p > 1, 0, If[Mod[p, n] == 0, P[n-1, p] + P[n-1, p/n], P[n-1, p]]]; P[1, 1] = 2; P[0, 0] = 0;",
+        "a[n_] := Sum[P[n, p], {p, 1, n^2 + n}];",
+        "a /@ Range[0, 100] (* _Jean-Fran\u00e7ois Alcover_, Oct 26 2020, after _Robert Israel_ *)"
+    ],
+    "program": [
+        "(SAGE) [len([S for S in Subsets( n) if mul(S)<=n^2+n]) for n in range(15)]"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Adrienne Crookshank_, Feb 27 2018",
+    "ext": [
+        "More terms from _Robert Israel_, Mar 06 2018"
+    ],
+    "references": 0,
+    "revision": 29,
+    "time": "2020-10-27T15:27:08-04:00",
+    "created": "2018-03-29T10:07:53-04:00"
+}

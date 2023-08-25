@@ -1,0 +1,41 @@
+{
+    "number": 329625,
+    "data": "0,1,5,7,23,31,63,127,383,511,1023,2047,4095,8191",
+    "name": "Smallest BII-number of a connected set-system with n edges.",
+    "comment": [
+        "A binary index of n is any position of a 1 in its reversed binary expansion. The binary indices of n are row n of A048793. We define the set-system with BII-number n to be obtained by taking the binary indices of each binary index of n. Every set-system (finite set of finite nonempty sets of positive integers) has a different BII-number. For example, 18 has reversed binary expansion (0,1,0,0,1), and since the binary indices of 2 and 5 are {2} and {1,3} respectively, the BII-number of {{2},{1,3}} is 18. Elements of a set-system are sometimes called edges."
+    ],
+    "example": [
+        "The sequence of terms together with their corresponding set-systems begins:",
+        "     0: {}",
+        "     1: {{1}}",
+        "     5: {{1},{1,2}}",
+        "     7: {{1},{2},{1,2}}",
+        "    23: {{1},{2},{1,2},{1,3}}",
+        "    31: {{1},{2},{1,2},{3},{1,3}}",
+        "    63: {{1},{2},{1,2},{3},{1,3},{2,3}}",
+        "   127: {{1},{2},{1,2},{3},{1,3},{2,3},{1,2,3}}",
+        "   383: {{1},{2},{1,2},{3},{1,3},{2,3},{1,2,3},{1,4}}",
+        "   511: {{1},{2},{1,2},{3},{1,3},{2,3},{1,2,3},{4},{1,4}}"
+    ],
+    "mathematica": [
+        "bpe[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "csm[s_]:=With[{c=Select[Subsets[Range[Length[s]],{2}],Length[Intersection@@s[[#]]]>0&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "First/@GatherBy[Select[Range[0,1000],Length[csm[bpe/@bpe[#]]]<=1&],Length[bpe[#]]&]"
+    ],
+    "xref": [
+        "The smallest BII-number of a set-system with n edges is A000225(n).",
+        "The smallest BII-number of a set-system with n vertices is A072639(n).",
+        "BII-numbers of connected set-systems are A326749.",
+        "MM-numbers of connected set-systems are A328514.",
+        "The case of clutters is A329627.",
+        "Cf. A048143, A048793, A070939, A304716, A305078, A326031, A326753, A329552, A329553, A329626."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Nov 28 2019",
+    "references": 4,
+    "revision": 5,
+    "time": "2019-11-29T01:39:38-05:00",
+    "created": "2019-11-29T01:39:38-05:00"
+}

@@ -1,0 +1,33 @@
+{
+    "number": 351499,
+    "data": "1,9,15,75,105,315,525,735,945,1155,1365,1575,1995,3465,4305,5775,6615,7035,8085,8925,9765,10395,11235,12495,12705,13545,15015,19635,26565,28875,31185,33495,38115,45045,255255,405405,525525,765765,975975,1036035,1786785,2297295",
+    "name": "Odd m in A352928.",
+    "mathematica": [
+        "nn = 2^20; c = {1}; j = 1; s = 0; u = 1; {1}~Join~Reap[Do[k = u; While[Nand[FreeQ[c, k], CoprimeQ[j, k], k != j + 1], k++]; j = k; AppendTo[c, k]; If[k == u, If[OddQ[u], Sow[u]]; While[MemberQ[c, u], u++]; c = DeleteCases[c, _?(# < u &)]], {i, 2, nn}]][[-1, -1]]"
+    ],
+    "program": [
+        "(Python)",
+        "from math import gcd",
+        "from itertools import islice",
+        "def agen(): # generator of terms",
+        "    an, aset, mink, seen = 1, {1}, 2, {1}",
+        "    yield 1",
+        "    while True:",
+        "        if mink%2 and mink not in seen: yield mink; seen.add(mink)",
+        "        k = mink",
+        "        while k in aset or gcd(an, k) != 1 or k-an == 1: k += 1",
+        "        an = k; aset.add(an)",
+        "        while mink in aset: mink += 1",
+        "print(list(islice(agen(), 42))) # _Michael S. Branicky_, May 03 2022"
+    ],
+    "xref": [
+        "Cf. A093714, A351498, A352928."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michael De Vlieger_, May 03 2022",
+    "references": 1,
+    "revision": 11,
+    "time": "2022-05-03T23:36:48-04:00",
+    "created": "2022-05-03T23:36:48-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 97177,
+    "data": "1,11,111,1221,11221,133331,1133331,14466441,114466441,1561110551,11561110551,167672165661,1167672165661,17934888731771,117934888731771,1911423761908881,11911423761908881,203053799952796991",
+    "name": "a(n) = Sum_{k=0..n} binomial(floor((n+1)/2), floor((k+1)/2)) * 10^k.",
+    "comment": [
+        "a(n) = (11/10)*{1, 101, 101, 10201, 10201, 1030301, ...} - 100*{0, 1, 0, 100, 0, 10000, ...} - (1/10)*{1, 1, 1, 1, 1, 1, ...}.",
+        "Partial sums of A097178."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A097177/b097177.txt\">Table of n, a(n) for n = 0..980</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,201,-201,-10100,10100)"
+    ],
+    "formula": [
+        "G.f.: (1+10*x-101*x^2-900*x^3)/((1-x)*(1-100*x^2)*(1-101*x^2)).",
+        "a(n) = (11/20)*( (1-sqrt(101))*(-sqrt(101))^n + (1+sqrt(101))*(sqrt(101))^n ) - 5*(10^n - (-10)^n) - 1/10.",
+        "a(n) = a(n-1) + 201*a(n-2) - 201*a(n-3) - 10100*a(n-4) + 10100*a(n-5)."
+    ],
+    "maple": [
+        "seq(coeff(series((1+10*x-101*x^2-900*x^3)/((1-x)*(1-100*x^2)*(1-101*x^2)), x, n+1), x, n), n = 0 ..20); # _G. C. Greubel_, Sep 17 2019"
+    ],
+    "mathematica": [
+        "Accumulate[LinearRecurrence[{0,201,0,-10100},{1,10,100,1110},20]] (* or *) LinearRecurrence[{1,201,-201,-10100,10100},{1,11,111,1221,11221},20] (* _Harvey P. Dale_, Dec 08 2018 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^20)); Vec((1+10*x-101*x^2-900*x^3)/((1-x)*(1-100*x^2)*(1-101*x^2))) \\\\ _G. C. Greubel_, Sep 17 2019",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 20); Coefficients(R!( (1+10*x-101*x^2-900*x^3)/((1-x)*(1-100*x^2)*(1-101*x^2)) )); // _G. C. Greubel_, Sep 17 2019",
+        "(Sage)",
+        "def A097177_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P((1+10*x-101*x^2-900*x^3)/((1-x)*(1-100*x^2)*(1-101*x^2))).list()",
+        "A097177_list(20) # _G. C. Greubel_, Sep 17 2019",
+        "(GAP) a:=[1, 11, 111, 1221, 11221];; for n in [6..20] do a[n]:=a[n-1] + 201*a[n-2] - 201*a[n-3] - 10100*a[n-4] + 10100*a[n-5]; od; a; # _G. C. Greubel_, Sep 17 2019"
+    ],
+    "xref": [
+        "Cf. A097175, A097176, A097178."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Paul Barry_, Jul 30 2004",
+    "references": 4,
+    "revision": 13,
+    "time": "2022-09-08T08:45:14-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 335065,
+    "data": "6,9,12,20,28,30,34,42,56,58,65,72,75,90,110,126,132,156,182,201,205,210,217,224,240,246,254,258,272,294,306,342,344,380,384,399,420,436,462,498,502,506,513,516,520,552,579,600,650,657,680,690,702,730,756,786",
+    "name": "Let m = d*q + r be the Euclidean division of m by d. The terms m of this sequence satisfy that d, q, r are consecutive positive integer terms in a geometric progression but not necessarily in that order.",
+    "comment": [
+        "Inspired by the problem 141 of Project Euler (see link).",
+        "There exist 3 possibilities to get such terms m that satisfy that d, q, r are consecutive positive integer terms in a geometric progression but not necessarily in that order:",
+        "-> the geometric progression is r < q < d (A127629).",
+        "-> the geometric progression is r < d < q (same terms of A127629).",
+        "-> the geometric progression is q < r < d (A002378 \\ {0,2} = oblong numbers >= 6).",
+        "Some numbers have a geometric progression solution in the 3 cases (132, 1332, 6162, ...) [see examples]."
+    ],
+    "link": [
+        "Project Euler, <a href=\"https://projecteuler.net/problem=141\">Problem 141: Investigating progressive numbers, n, which are also square</a>"
+    ],
+    "example": [
+        "Examples with r < q < d, r < d < q, q < r <d:",
+        "   34 | 8        75 |  6           42 | 12",
+        "      ----          -----             -----",
+        "    2 | 4     ,   3 | 12     ,      6 |  3",
+        "The 3 possible divisions by 132:",
+        "  132 | 16      132 |  8          132 | 121",
+        "      -----         ------            ------",
+        "    4 |  8   ,    4 | 16     ,     11 |   1."
+    ],
+    "mathematica": [
+        "mx = 800; Union@ Reap[ Do[y = x+1; While[(z = y^2/x) < mx, If[ IntegerQ@ z, If[(m = z y + x) <= mx, Sow@ m]; If[(m = z x + y) <= mx, Sow@ m]]; y++], {x, mx}]][[2, 1]] (* _Giovanni Resta_, May 24 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(r, d); for (q=2, n-1, if (r=(n % q), d = n\\q; if ((r*d == q^2) || (r*q == d^2) || (q*d == r^2), return (1));););} \\\\ _Michel Marcus_, May 25 2020"
+    ],
+    "xref": [
+        "Equals A127629 Union A002378 \\ {0,2}.",
+        "Subsequences: A334185, A334186, A335064."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, May 23 2020",
+    "references": 2,
+    "revision": 28,
+    "time": "2021-03-26T06:32:31-04:00",
+    "created": "2020-05-27T06:51:33-04:00"
+}

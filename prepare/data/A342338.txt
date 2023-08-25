@@ -1,0 +1,70 @@
+{
+    "number": 342338,
+    "data": "1,1,2,3,4,6,8,12,17,24,34,51,73,106,155,224,328,477,695,1013,1477,2154,3140,4578,6673,9728,14176,20663,30113,43882,63940,93167,135747,197776,288138,419773,611522,890829,1297685,1890305,2753505,4010804,5842113,8509462",
+    "name": "Number of compositions of n with all adjacent parts (x, y) satisfying x < 2y and y <= 2x.",
+    "comment": [
+        "Also the number of compositions of n with all adjacent parts (x, y) satisfying x <= 2y and y < 2x."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A342338/b342338.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 12 compositions:",
+        "  (1)  (2)   (3)    (4)     (5)      (6)       (7)",
+        "       (11)  (21)   (22)    (23)     (33)      (34)",
+        "             (111)  (211)   (32)     (42)      (43)",
+        "                    (1111)  (221)    (222)     (223)",
+        "                            (2111)   (321)     (232)",
+        "                            (11111)  (2211)    (322)",
+        "                                     (21111)   (421)",
+        "                                     (111111)  (2221)",
+        "                                               (3211)",
+        "                                               (22111)",
+        "                                               (211111)",
+        "                                               (1111111)"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],And@@Table[#[[i]]<2*#[[i-1]]&&#[[i-1]]<=2*#[[i]],{i,2,Length[#]}]&]],{n,0,15}]",
+        "(* Second program: *)",
+        "c[n_, pred_] := Module[{M = IdentityMatrix[n], i, k}, For[k = 1, k <= n, k++, For[i = 1, i <= k - 1, i++, M[[i, k]] = Sum[If[pred[j, i], M[[j, k - i]], 0], {j, 1, k - i}]]]; Sum[M[[q, All]], {q, 1, n}]];",
+        "pred[i_, j_] := i < 2j && j <= 2i;",
+        "Join[{1}, c[60, pred]] (* _Jean-Fran\u00e7ois Alcover_, Jun 10 2021, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "C(n, pred)={my(M=matid(n)); for(k=1, n, for(i=1, k-1, M[i, k]=sum(j=1, k-i, if(pred(j, i), M[j, k-i], 0)))); sum(q=1, n, M[q, ])}",
+        "seq(n)={concat([1], C(n, (i,j)->i<2*j && j<=2*i))} \\\\ _Andrew Howroyd_, Mar 13 2021"
+    ],
+    "xref": [
+        "The first condition alone gives A274199.",
+        "The second condition alone gives A002843.",
+        "Reversing operators and changing 'and' to 'or' gives A342334.",
+        "The version with both relations strict is A342341.",
+        "The version with neither relation strict is A342342.",
+        "A000929 counts partitions with adjacent parts x >= 2y.",
+        "A002843 counts compositions with adjacent parts x <= 2y.",
+        "A154402 counts partitions with adjacent parts x = 2y.",
+        "A224957 counts compositions with x <= 2y and y <= 2x.",
+        "A274199 counts compositions with adjacent parts x < 2y.",
+        "A342094 counts partitions with adjacent x <= 2y (strict: A342095).",
+        "A342096 counts partitions without adjacent x >= 2y (strict: A342097).",
+        "A342098 counts partitions with adjacent parts x > 2y.",
+        "A342330 counts compositions with x < 2y and y < 2x.",
+        "A342331 counts compositions with adjacent parts x = 2y or y = 2x.",
+        "A342332 counts compositions with adjacent parts x > 2y or y > 2x.",
+        "A342333 counts compositions with adjacent parts x >= 2y or y >= 2x.",
+        "A342335 counts compositions with adjacent parts x >= 2y or y = 2x.",
+        "A342337 counts partitions with adjacent parts x = y or x = 2y.",
+        "Cf. A003114, A003242, A034296, A167606, A342083, A342084, A342087, A342191, A342336, A342340."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Mar 11 2021",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Mar 13 2021"
+    ],
+    "references": 14,
+    "revision": 13,
+    "time": "2021-06-10T20:36:45-04:00",
+    "created": "2021-03-12T09:13:15-05:00"
+}

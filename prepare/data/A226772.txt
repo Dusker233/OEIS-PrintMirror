@@ -1,0 +1,49 @@
+{
+    "number": 226772,
+    "data": "36,1326,2346,3570,125250,223446,12502500,22234446,1250025000,2066441328,2222344446,2383847676,3673573470,125000250000,222223444446,5794481158896,12500002500000,12857132571426,22222234444446,49293309858660,804878916097578,933618918672378,971908519438170",
+    "name": "Triangular numbers obtained as the concatenation of n and 2n.",
+    "comment": [
+        "Includes 125*10^(2*k+1)+25*10^k and (10^k+2)*(1+(10^k-1)*2/9) for k >= 1. - _Robert Israel_, Nov 09 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A226772/b226772.txt\">Table of n, a(n) for n = 1..1509</a>"
+    ],
+    "example": [
+        "If n=23, 2n=46, n//2n = 2346 = 68*69/2, a triangular number."
+    ],
+    "maple": [
+        "F:= proc(d) local D,R,M,m,w,x,x1,x2;",
+        "   R:= NULL;",
+        "   M:= 10^d/2+1;",
+        "   D:= numtheory:-divisors(M);",
+        "   for m in D do if igcd(m,M/m)=1 then",
+        "     for w in [chrem([-1,1],[8*m,M/m]), chrem([1,-1],[8*m,M/m])] do",
+        "     x:= (w^2-1)/8;",
+        "     x1:= x mod 10^d;",
+        "     x2:= floor(x/10^d);",
+        "     if x1 = 2*x2 and x1 >= 10^(d-1) then R:= R, x fi",
+        "   od fi od;",
+        "   op(sort([R]))",
+        "end proc:",
+        "36, seq(F(d),d=2..10); # _Robert Israel_, Nov 09 2020"
+    ],
+    "mathematica": [
+        "TriangularQ[n_] := IntegerQ[Sqrt[1 + 8*n]]; t = {}; Do[s = FromDigits[Join[IntegerDigits[n], IntegerDigits[2*n]]]; If[TriangularQ[s], AppendTo[t, s]], {n, 100000}]; t (* _T. D. Noe_, Jun 18 2013 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "concatint(a,b)=eval(concat(Str(a),Str(b)))",
+        "istriang(x)=issquare(8*x+1)",
+        "{for(n=1,10^5,a=concatint(n,2*n);if(istriang(a),print(a)))}"
+    ],
+    "xref": [
+        "Cf. A003098, A068899, A226742, A226788, A226789."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Antonio Rold\u00e1n_, Jun 18 2013",
+    "references": 5,
+    "revision": 33,
+    "time": "2020-11-09T21:33:42-05:00",
+    "created": "2013-06-18T13:25:39-04:00"
+}

@@ -1,0 +1,65 @@
+{
+    "number": 343087,
+    "data": "3,7,31,211,1321,7561,120121,1580041,24864841,328648321,7558911361,162023621761,5022732274561,93163582512001,4083134943888001,151075992923856001,5236072827921936001,188391763176048432001,8854412869274276304001,469283882071536644112001,29844457947060064452144001,1917963226026370264485744001",
+    "name": "a(n) is the smallest prime p such that tau(p-1) = 2^n.",
+    "comment": [
+        "tau(m) = the number of divisors of m (A000005).",
+        "Sequences of primes p such that tau(p-1) = 2^n for 2 <= n <= 5:",
+        "n = 2: 7, 11, 23, 47, 59, 83, 107, 167, 179, ... (A005385(k) for k >= 2).",
+        "n = 3: 31, 41, 43, 67, 71, 79, 89, 103, 131, 137, 139, 191, ...",
+        "n = 4: 211, 271, 281, 313, 331, 379, 409, 457, 463, 521, 547, ...",
+        "n = 5: 1321, 2281, 2311, 2377, 2689, 2731, 2857, 2971, 3001, ...",
+        "Conjecture: a(n) is also the smallest number m such that tau(m-1) = tau(m)^n."
+    ],
+    "link": [
+        "Bert Dobbelaere, <a href=\"/A343087/b343087.txt\">Table of n, a(n) for n = 1..60</a>"
+    ],
+    "example": [
+        "For n = 4; a(4) = 211 because 211 is the smallest prime p such that tau(p - 1) = 2^4; tau(210) = 16."
+    ],
+    "program": [
+        "(Magma) Ax:=func<n|exists(r){m: m in[1..10^8] | IsPrime(m) and #Divisors(m - 1) eq 2 ^ n} select r else 0>; [Ax(n): n in [1..9]]",
+        "(Python)",
+        "from sympy import isprime,nextprime",
+        "primes=[2]",
+        "def solve(v,k,i,j):",
+        "    global record,stack,primes",
+        "    if k==0:",
+        "        if isprime(v+1):",
+        "            record=v",
+        "        return",
+        "    while True:",
+        "        if i>=len(primes):",
+        "            primes.append(nextprime(primes[-1]))",
+        "        if j<len(stack) and stack[j]<primes[i]:",
+        "            f=stack[j] ; j+=1",
+        "        else:",
+        "            f=primes[i] ; i+=1",
+        "        if record==None or v * f**k < record:",
+        "            stack.append(f**2)",
+        "            solve(v*f,k-1,i,j)",
+        "            stack.pop()",
+        "        else:",
+        "            return",
+        "def a343087(n):",
+        "    global record,stack",
+        "    record,stack = None,[]",
+        "    solve(1,n,0,0)",
+        "    return record+1",
+        "# _Bert Dobbelaere_, Apr 11 2021"
+    ],
+    "xref": [
+        "Cf. A000005, A000079, A037992, A343020."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jaroslav Krizek_, Apr 04 2021 (following a suggestion of _Vaclav Kotesovec_)",
+    "ext": [
+        "a(11) from _Vaclav Kotesovec_, Apr 05 2021",
+        "More terms from _Bert Dobbelaere_, Apr 11 2021"
+    ],
+    "references": 2,
+    "revision": 19,
+    "time": "2022-09-08T08:46:26-04:00",
+    "created": "2021-04-06T04:08:11-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 360944,
+    "data": "1,2,7,9,11,14,18,22,29,37,57,58,63,67,74,76,79,108,114,126,134,137,143,155,158,175,183,191,211,225,231,244,248,274,277,286,308,310,329,341,350,366,372,379,382,396,417,422,423,450,453,462,554,556,604,623,631,658,682",
+    "name": "Numbers m such that phi(m) is a triangular number, where phi is the Euler totient function (A000010).",
+    "comment": [
+        "Subsequence of primes is A055469 because in this case phi(k(k+1)/2+1) = k(k+1)/2.",
+        "Subsequence of triangular numbers is A287472."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A360944/b360944.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "phi(57) = 36 = 8*9/2, a triangular number; so 57 is a term of the sequence."
+    ],
+    "maple": [
+        "filter := m ->  issqr(1 + 8*numtheory:-phi(m)) : select(filter, [$(1 .. 700)]);"
+    ],
+    "mathematica": [
+        "Select[Range[700], IntegerQ[Sqrt[8 * EulerPhi[#] + 1]] &] (* _Amiram Eldar_, Feb 27 2023 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = ispolygonal(eulerphi(m), 3); \\\\ _Michel Marcus_, Feb 27 2023",
+        "(Python)",
+        "from itertools import islice, count",
+        "from sympy.ntheory.primetest import is_square",
+        "from sympy import totient",
+        "def A360944_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:is_square((totient(n)<<3)+1), count(max(1,startvalue)))",
+        "A360944_list = list(islice(A360944_gen(),20)) # _Chai Wah Wu_, Feb 28 2023"
+    ],
+    "xref": [
+        "Cf. A000010, A000217, A055469, A287472.",
+        "Similar, but with phi(m) is: A039770 (square), A078164 (biquadrate), A096503 (repdigit), A117296 (palindrome), A236386 (oblong)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Bernard Schott_, Feb 26 2023",
+    "references": 2,
+    "revision": 46,
+    "time": "2023-03-30T05:15:17-04:00",
+    "created": "2023-02-28T13:04:54-05:00"
+}

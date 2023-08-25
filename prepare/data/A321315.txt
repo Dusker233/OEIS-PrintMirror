@@ -1,0 +1,32 @@
+{
+    "number": 321315,
+    "data": "1,1,5,14,78,488,3161,25092,231428,2299664,24809824,296046900,3863542365,54081895706,806425921874,12828011279528,217574673205512,3914918953508792,74300528009315864,1482219340166034896,31035891175182089248,681299189806864371412,15649118660372502746968",
+    "name": "Number of permutations of [n] where the length of the longest increasing subsequence is larger than or equal to the length of the longest decreasing subsequence.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A321315/b321315.txt\">Table of n, a(n) for n = 1..80</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Longest_increasing_subsequence\">Longest increasing subsequence</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n-1} A321316(n,k).",
+        "a(n) = A321313(n) + A321314(n)."
+    ],
+    "maple": [
+        "h:= l-> (n-> add(i, i=l)!/mul(mul(1+l[i]-j+add(`if`(j>",
+        "    l[k], 0, 1), k=i+1..n), j=1..l[i]), i=1..n))(nops(l)):",
+        "f:= l-> `if`(l[1]>=nops(l), h(l)^2, 0):",
+        "g:= (n, i, l)-> `if`(n=0 or i=1, f([l[], 1$n]),",
+        "     g(n, i-1, l) +g(n-i, min(i, n-i), [l[], i])):",
+        "a:= n-> g(n$2, []):",
+        "seq(a(n), n=1..23);"
+    ],
+    "xref": [
+        "Cf. A003316, A321313, A321314, A321316."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Alois P. Heinz_, Nov 03 2018",
+    "references": 4,
+    "revision": 9,
+    "time": "2018-11-04T11:04:17-05:00",
+    "created": "2018-11-04T11:04:17-05:00"
+}

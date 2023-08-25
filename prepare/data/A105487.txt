@@ -1,0 +1,49 @@
+{
+    "number": 105487,
+    "data": "1,2,12,56,297,1632,9531,58634,379371,2574254,18276457,135463074,1046041114,8399533370,70013963418,604840440328,5407301690915,49958478263502,476403955991034,4683463406478004,47414166201239781,493803423334040824,5285548108715948453",
+    "name": "Number of partitions of {1...n} containing 5 strings of 3 consecutive integers, where each string is counted within a block and a string of more than 3 consecutive integers are counted three at a time.",
+    "link": [
+        "Augustine O. Munagi, <a href=\"https://doi.org/10.1155/IJMMS.2005.215\">Set Partitions with Successions and Separations</a>, Int. J. Math and Math. Sc., 2005:3 (2005), 451-463."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} c(n, k, 5), where c(n, k, 5) is the case r=5 of c(n, k, r) given by c(n, k, r)=c(n-1, k-1, r)+(k-1)c(n-1, k, r)+c(n-2, k-1, r)+(k-1)c(n-2, k, r)+c(n-1, k, r-1)-c(n-2, k-1, r-1)-(k-1)c(n-2, k, r-1), r=0, 1, .., n-k-1, k=1, 2, .., n-2r, c(n, k, 0) = Sum_{j= 0..floor(n/2)} binomial(n-j, j)*S2(n-j-1, k-1)."
+    ],
+    "example": [
+        "a(8) = 2 because the partitions of {1,...,8} with 5 strings of 3 consecutive integers are 1234567/8, 1/2345678."
+    ],
+    "maple": [
+        "c := proc(n,k,r) option remember ; local j ; if r =0 then add(binomial(n-j,j)*combinat[stirling2](n-j-1,k-1),j=0..floor(n/2)) ; else if r <0 or r > n-k-1 then RETURN(0) fi ; if n <1 then RETURN(0) fi ; if k <1 then RETURN(0) fi ; RETURN( c(n-1,k-1,r)+(k-1)*c(n-1,k,r)+c(n-2,k-1,r)+(k-1)*c(n-2,k,r) +c(n-1,k,r-1)-c(n-2,k-1,r-1)-(k-1)*c(n-2,k,r-1) ) ; fi ; end: A105487 := proc(n) local k ; add(c(n,k,5),k=1..n) ; end: for n from 7 to 30 do printf(\"%d, \",A105487(n)) ; od ; # _R. J. Mathar_, Feb 20 2007"
+    ],
+    "mathematica": [
+        "S2[_, -1] = 0;",
+        "S2[n_, k_] = StirlingS2[n, k];",
+        "c[n_, k_, r_] := c[n, k, r] = Which[",
+        "   r == 0, Sum[Binomial[n - j, j]*S2[n - j - 1, k - 1],",
+        "      {j, 0, Floor[n/2]}],",
+        "   r < 0 || r > n - k - 1, 0,",
+        "   n < 1, 0,",
+        "   k < 1, 0,",
+        "   True, c[n - 1, k - 1, r] +",
+        "      (k - 1)*c[n - 1, k, r] +",
+        "      c[n - 2, k - 1, r] +",
+        "      (k - 1)*c[n - 2, k, r] +",
+        "      c[n - 1, k, r - 1] -",
+        "      c[n - 2, k - 1, r - 1] -",
+        "      (k - 1)*c[n - 2, k, r - 1]];",
+        "A105487[n_] := Sum[c[n, k, 5], {k, 1, n}];",
+        "Table[A105487[n], {n, 7, 30}] (* _Jean-Fran\u00e7ois Alcover_, May 10 2023, after _R. J. Mathar_ *)"
+    ],
+    "xref": [
+        "Cf. A105486, A105482."
+    ],
+    "keyword": "nonn",
+    "offset": "7,2",
+    "author": "_Augustine O. Munagi_, Apr 10 2005",
+    "ext": [
+        "More terms from _R. J. Mathar_, Feb 20 2007"
+    ],
+    "references": 4,
+    "revision": 19,
+    "time": "2023-05-10T06:15:09-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

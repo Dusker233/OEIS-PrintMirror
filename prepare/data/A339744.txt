@@ -1,0 +1,64 @@
+{
+    "number": 339744,
+    "data": "4,8,9,16,18,24,25,27,32,36,48,49,54,64,72,80,81,96,100,108,112,121,125,128,135,144,160,162,169,192,196,200,216,224,225,243,250,256,288,289,320,324,343,352,360,361,375,384,392,400,405,416,432,441,448,450,480,484,486,500",
+    "name": "Numbers k such that rad(k)^2 < sigma(k), where rad(k) is the squarefree kernel of k (A007947) and sigma(k) is the sum of divisors of k (A000203).",
+    "comment": [
+        "Prime powers p^e where p is a prime and e >= 2 (A246547) form a subsequence.",
+        "For numbers whose prime factors set is {p_1, p_2, ..., p_r}, there exists a minimal element u such that k is a term iff k >= u. This smallest element u satisfies p_1*p_2*...*p_r < u <= (p_1*p_2*...*p_r)^2. These minimal elements are in A339794.",
+        "Table with percentage of terms <= 10^k for k = 1, 2, ..., 8, 9 (first rows coming from b-file):",
+        "     +-------+------------------------+----------------------------+",
+        "     |   k   |number of terms <= 10^k |percentage of terms <= 10^k |",
+        "     |       |                        |             %              |",
+        "     +-------+------------------------+----------------------------+",
+        "     |   1   |           3            |            30              |",
+        "     |   2   |          19            |            19              |",
+        "     |   3   |          95            |             9.5            |",
+        "     |   4   |         435            |             4.35           |",
+        "     |   5   |        1853            |             1.85           |",
+        "     |   6   |        7793            |             0.78           |",
+        "     |   7   |       32365            |             0.32           |",
+        "     |   8   |      131200            |             0.13           |",
+        "     |   9   |      527161            |             0.05           |",
+        "     |       |                        |                            |",
+        "     +-------+------------------------+----------------------------+",
+        "The percentage of terms decreases as 10^k increases, and a plausible conjecture is that the asymptotic density of this sequence is 0."
+    ],
+    "reference": [
+        "Richard K. Guy, Unsolved Problems in Theory of Numbers, Springer-Verlag, Third Edition, 2004, B11, p. 102."
+    ],
+    "link": [
+        "Marius A. Burtea, <a href=\"/A339744/b339744.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "rad(18)^2 - sigma(18) = (2*3)^2 - (1+2+3+6+9+18) = 36 - 39 = -3 and 18 is a term.",
+        "rad(25)^2 - sigma(25) = 5^2 - (1+5+25) = 25 - 31 = -6 and 25 is a term.",
+        "rad(40)^2 - sigma(40) = (2*5)^2 - (1+2+4+5+8+10+20+40) = 100 - 90 = 10 and 40 is not a term."
+    ],
+    "maple": [
+        "Rad := n -> convert(NumberTheory:-PrimeFactors(n), `*`):",
+        "Sigma := n -> NumberTheory:-SumOfDivisors(n):",
+        "Is_a := n -> Rad(n)^2 < Sigma(n):",
+        "select(Is_a, [`$`(1..500)]); # _Peter Luschny_, Dec 16 2020"
+    ],
+    "mathematica": [
+        "frad2[p_, e_] := p^2; fsig[p_, e_] := (p^(e + 1) - 1)/(p - 1); Select[Range[2, 500], Times @@ frad2 @@@ (f = FactorInteger[#]) < Times @@ fsig @@@ f &] (* _Amiram Eldar_, Dec 15 2020 *)"
+    ],
+    "program": [
+        "(Magma) s:=func<n|&*PrimeDivisors(n)>; [k:k in [2..500]|s(k)^2 lt DivisorSigma(1,k)]; // _Marius A. Burtea_, Dec 15 2020",
+        "(PARI) isok(k) = factorback(factorint(k)[, 1])^2  < sigma(k); \\\\ _Michel Marcus_, Dec 15 2020"
+    ],
+    "xref": [
+        "Cf. A000203, A007947, A078615, A338790, A339794.",
+        "Subsequence: A246547."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Dec 15 2020",
+    "ext": [
+        "More terms from _Marius A. Burtea_, Dec 15 2020"
+    ],
+    "references": 2,
+    "revision": 95,
+    "time": "2022-09-08T08:46:26-04:00",
+    "created": "2020-12-19T04:39:09-05:00"
+}

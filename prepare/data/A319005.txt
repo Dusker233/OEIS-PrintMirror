@@ -1,0 +1,56 @@
+{
+    "number": 319005,
+    "data": "1,1,1,1,2,2,5,7,13,18,28,40,60,80,113,152,205,266,353,454,590,751,959,1210,1529,1905,2381,2953,3658,4501,5539,6772,8278,10065,12230,14801,17893,21544,25921,31089,37240,44478,53068,63150,75063,89018,105438,124632",
+    "name": "Number of integer partitions of n whose product of parts is >= n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A319005/b319005.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Pankaj Jyoti Mahanta, <a href=\"https://arxiv.org/abs/2010.07353\">On the number of partitions of n whose product of the summands is at most n</a>, arXiv:2010.07353 [math.CO], 2020."
+    ],
+    "example": [
+        "The a(1) = 1 through a(9) = 18 partitions:",
+        "  (1)  (2)  (3)  (4)   (5)   (6)    (7)     (8)      (9)",
+        "                 (22)  (32)  (33)   (43)    (44)     (54)",
+        "                             (42)   (52)    (53)     (63)",
+        "                             (222)  (322)   (62)     (72)",
+        "                             (321)  (331)   (332)    (333)",
+        "                                    (421)   (422)    (432)",
+        "                                    (2221)  (431)    (441)",
+        "                                            (521)    (522)",
+        "                                            (2222)   (531)",
+        "                                            (3221)   (621)",
+        "                                            (3311)   (3222)",
+        "                                            (4211)   (3321)",
+        "                                            (22211)  (4221)",
+        "                                                     (4311)",
+        "                                                     (5211)",
+        "                                                     (22221)",
+        "                                                     (32211)",
+        "                                                     (33111)"
+    ],
+    "maple": [
+        "b:= proc(n, i, p) option remember; `if`(n=0 or i=1, `if`(p>1,",
+        "      0, 1), b(n, i-1, p) +b(n-i, min(i, n-i), max(p/i, 1)))",
+        "    end:",
+        "a:= n-> b(n$3):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Oct 22 2018"
+    ],
+    "mathematica": [
+        "Table[Length[Select[IntegerPartitions[n],Times@@#>=n&]],{n,50}]",
+        "(* Second program: *)",
+        "b[n_, i_, p_] := b[n, i, p] = If[n == 0 || i == 1, If[p > 1, 0, 1],",
+        "     b[n, i - 1, p] + b[n - i, Min[i, n - i], Max[p/i, 1]]];",
+        "a[n_] := b[n, n, n];",
+        "a /@ Range[0, 50] (* _Jean-Fran\u00e7ois Alcover_, May 11 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column sums of A319000.",
+        "Cf. A001055, A002865, A069016, A096276, A301987, A318950, A319057, A319916."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Gus Wiseman_, Oct 22 2018",
+    "references": 17,
+    "revision": 27,
+    "time": "2021-05-11T06:16:31-04:00",
+    "created": "2018-10-22T17:42:15-04:00"
+}

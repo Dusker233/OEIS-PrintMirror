@@ -1,0 +1,37 @@
+{
+    "number": 358342,
+    "data": "3,5,17,65537,1927561217,6015902625062501,12370388895062501,835920078368222501,6448645485213008897,50973659693056000001,54332889713542767617,64304984013657011717,112112769248058062501,147337258721536000001",
+    "name": "Lesser of twin primes p such that sigma((p-1)/2) + tau((p-1)/2) is a prime.",
+    "comment": [
+        "Lesser of twin primes p such that A000203((p-1)/2) + A000005((p-1)/2) is a prime q.",
+        "The first 4 terms are Fermat primes from A019434.",
+        "Corresponding values of primes q:  2, 5, 19, 65551, 2248681529, ...",
+        "Subsequence of A272060 and A272061.",
+        "Lesser of twin primes of the form 2*m+1 with m a term of A064205.",
+        "There are no other terms <= 10^14.",
+        "All the terms above 3 are in A145824. - _Amiram Eldar_, Jan 05 2023"
+    ],
+    "example": [
+        "17 and 19 are twin primes; sigma((17-1)/2) + tau((17-1)/2) = sigma(8) + tau(8) = 15 + 4 = 19; 19 is prime, so 17 is in the sequence."
+    ],
+    "mathematica": [
+        "Join[{3}, Select[4*Range[25000]^2 + 1, PrimeQ[#] && PrimeQ[# + 2] && PrimeQ[DivisorSigma[1, (# - 1)/2] + DivisorSigma[0, (# - 1)/2]] &]]",
+        "(* or *)",
+        "A272061 = Cases[Import[\"https://oeis.org/A272061/b272061.txt\", \"Table\"], {_, _}][[;; , 2]]; Select[A272061, PrimeQ[# + 2] &] (* _Amiram Eldar_, Jan 05 2023 *)"
+    ],
+    "program": [
+        "(Magma) [n: n in [3..10^7] | IsPrime(n) and IsPrime(n+2) and IsPrime(&+Divisors((n-1) div 2) + #Divisors((n-1) div 2))]",
+        "(PARI) isok(p) = if (isprime(p) && isprime(p+2), my(f=factor((p-1)/2)); isprime(sigma(f)+numdiv(f))); \\\\ _Michel Marcus_, Nov 23 2022"
+    ],
+    "xref": [
+        "Intersection of A001359 and A272061.",
+        "Cf. A000005 (tau), A000203 (sigma), A019434, A064205, A145824, A272060."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Jaroslav Krizek_, Nov 10 2022",
+    "references": 0,
+    "revision": 18,
+    "time": "2023-01-05T18:38:56-05:00",
+    "created": "2023-01-05T18:38:56-05:00"
+}

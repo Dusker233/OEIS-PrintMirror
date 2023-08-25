@@ -1,0 +1,45 @@
+{
+    "number": 354724,
+    "data": "1,3,5,17,25,39,57,69,145,201,257,265,289,291,323,393,579,1075,1083,2307,2645,2875,4205,4503,5555,5593,7955,8815,9399,9401,9519,11033,11155,11407,12297,12455,12711,12909,13205,13281,13611,13737,14001,14915,15879,16629",
+    "name": "Numbers k whose ordered binary weights (A000120) of their divisors are the numbers 1 to A000005(k).",
+    "comment": [
+        "The subsequence of terms whose divisors have binary weights in order is A255401.",
+        "All terms are odd. Proof: All binary weights must be distinct but the binary weights of k and 2*k are equal. A contradiction. - _David A. Corneth_, Jun 04 2022"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A354724/b354724.txt\">Table of n, a(n) for n = 1..2475</a>"
+    ],
+    "example": [
+        "3 is a term since its divisors, 1 and 3, have binary weights 1 and 2, respectively.",
+        "69 is a term since its divisors, 1, 3, 23 and 69, have binary weights 1, 2, 4 and 3, respectively."
+    ],
+    "mathematica": [
+        "bw[n_] := DigitCount[n, 2, 1]; q[n_] := Module[{d = Divisors[n]}, Union[bw /@ d] == Range[Length[d]]]; Select[Range[1, 10^4, 2], q]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "def binwt(n): return bin(n).count(\"1\")",
+        "def ok(n):",
+        "    if n%2 == 0: return False",
+        "    binwts, divs = set(), 0",
+        "    for d in divisors(n, generator=True):",
+        "        b = binwt(d)",
+        "        if b in binwts: return False",
+        "        binwts.add(b)",
+        "        divs += 1",
+        "    return binwts == set(range(1, divs+1))",
+        "print([k for k in range(20000) if ok(k)]) # _Michael S. Branicky_, Jun 04 2022"
+    ],
+    "xref": [
+        "Cf. A000005, A000120, A354722.",
+        "A255401 is a subsequence."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Jun 04 2022",
+    "references": 3,
+    "revision": 24,
+    "time": "2022-06-08T03:22:09-04:00",
+    "created": "2022-06-04T13:24:10-04:00"
+}

@@ -1,0 +1,59 @@
+{
+    "number": 308388,
+    "data": "2,3,5,7,10,14,15,21,26,34,35,38,39,46,51,57,58,62,65,69,74,82,85,86,87,91,93,94,95,102,105,116,117,130,138,154,165,170,171,174,182,186,188,190,195,212,230,231,238,242,244,246,258,273,285,286,290,292,310",
+    "name": "Let N(k, d_i) be the number of digits d_i in the decimal expansion of k, and let M(k, p_j) be the multiplicity of a prime factor p_j of k. The sequence lists the numbers k such that, for any digit d_i, there exists at least a prime factor p_j where N(k,d_i) = M(k,p_j), and for any prime factor p_j there exists at least a digit d_i where M(k,p_j) = N(k,d_i).",
+    "comment": [
+        "a(n) is composite for n > 4.",
+        "The sequence contains two subsequences:",
+        "Subsequence 1: numbers with distinct digits. This finite subsequence begins with the numbers 2, 3, 5, 7, 10, 14, 15, 21, 26, 34, ...",
+        "Subsequence 2: numbers with non-distinct digits. This subsequence begins with the numbers 116, 117, 171, 188, 212, 242, 244, ... with at least a prime factor of multiplicity greater than 1.",
+        "We can find a subsequence E where there exists a bijection between the set of the distinct digits D = {d_1, d_2, ..., d_r} and the set of the distinct prime factors P = {p_1, p_2, ..., p_r}. In other words, for each digit d_i there exists a unique prime factor p_j where N(k,d_i) = M(k,p_j), and for each prime factor p_j there exists a unique digit d_i where M(k,p_j) = N(k,d_i). This subsequence begins with the numbers 2, 3, 5, 7, 116, 117, 171, 188, ...",
+        "Remark: the numbers of the sequence of the form p_1^a * p_2^b * ... * p_i^m, where p_1, p_2, ..., p_i are prime factors, are in E if the integers a, b, ..., m are distinct. For example, the number 2001200 = 2^4 * 5^2 * 5003 is in E but 2007972 = 2^2 * 3^2 * 17^2 * 193 is not in E.",
+        "Numbers k such that the multisets of prime exponents and digit frequencies of k are identical. - _Charlie Neder_, Jul 05 2019"
+    ],
+    "example": [
+        "188 = 2^2*47 is in the sequence because this number contains one digit \"1\" and two digits \"8\". The number 188 has a prime factor of multiplicity 1 and a prime factor of multiplicity 2. So, N(188, 1) = M(188, 47) = 1 and N(188, 8) = M(188, 2) = 2.",
+        "2007972 = 2^2 * 3^2 * 17^2 * 193 is in the sequence."
+    ],
+    "maple": [
+        "with(numtheory):nn:=400:",
+        "for n from 2 to nn do:",
+        "  x:=convert(n,base,10):n0:=length(n):",
+        "  T:=Array(1..10,[0$n0]):W:=Array(1..10):",
+        "   for i from 0 to 9 do:",
+        "    for j from 1 to n0 do:",
+        "     if x[j]=i",
+        "      then",
+        "       T[i+1]:=T[i+1]+1:",
+        "       else",
+        "      fi:",
+        "     od:",
+        "    od:",
+        "     W:=sort(T):s1:=sum(\u2018W[i]*10^(10-i)\u2019, \u2018i\u2019=1..10):",
+        "     d:=factorset(n):n1:=nops(d):",
+        "     U:=Array(1..n1,[0$n1]):V:=Array(1..n1):f:=ifactors(n):",
+        "      for p from 1 to n1 do:",
+        "       U[p]:=f[2][p][2]:",
+        "      od:",
+        "        V:=sort(U):s2:=sum(\u2018V[i]*10^(10-i)\u2019, \u2018i\u2019=1..n1):",
+        "        s2:=s2/10^(10-n1):",
+        "         if s1=s2",
+        "          then",
+        "           printf(`%d, `,n):",
+        "          else",
+        "   od:"
+    ],
+    "mathematica": [
+        "Select[Range[2, 310], Sort[ Tally[IntegerDigits[#]][[;; , 2]] ] == Sort[ FactorInteger[#][[;; , 2]] ] &] (* _Amiram Eldar_, Jul 05 2019 *)"
+    ],
+    "xref": [
+        "Cf. A001222."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, May 23 2019",
+    "references": 0,
+    "revision": 20,
+    "time": "2020-01-20T21:43:49-05:00",
+    "created": "2019-08-07T07:46:19-04:00"
+}

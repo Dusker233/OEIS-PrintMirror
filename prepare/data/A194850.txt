@@ -1,0 +1,58 @@
+{
+    "number": 194850,
+    "data": "2,3,5,8,14,23,41,70,125,218,395,697,1273,2279,4185,7568,13997,25500,47414,87024,162456,299947,562345,1043212,1962589,3657530,6900717,12910042,24427486,45850670,86970163,163756708,311283363,587739559,1119581278,2119042830",
+    "name": "Number of prefix normal words of length n.",
+    "comment": [
+        "A binary word of length n is prefix normal if for all 1 <= k <= n, no factor of length k has more a's than the prefix of length k. That is, abbabab is not prefix normal because aba has more a's than abb. - _Zsuzsanna Liptak_, Oct 12 2011",
+        "a(n) <= A062692(n): every prefix normal word is a pre-necklace, but the converse is not true, see the Fici/Lipt\u00e1k reference. - _Joerg Arndt_, Jul 20 2013"
+    ],
+    "link": [
+        "Zsuzsanna Liptak, <a href=\"/A194850/b194850.txt\">Table of n, a(n) for n = 1..50</a>",
+        "Paul Balister and Stefanie Gerke, <a href=\"https://arxiv.org/abs/1903.07957\">The asymptotic number of prefix normal words</a>, arXiv:1903.07957 [math.CO], 2019.",
+        "P. Burcsi, G. Fici, Zs. Lipt\u00e1k, F. Ruskey, and J. Sawada, <a href=\"http://arxiv.org/abs/1401.6346\">On Combinatorial Generation of Prefix Normal Words</a>, arXiv:1401.6346 [cs.DS], 2014.",
+        "P. Burcsi, G. Fici, Z. Lipt\u00e1k, F. Ruskey, and J. Sawada, <a href=\"http://arxiv.org/abs/1404.2824\">Normal, Abby Normal, Prefix Normal</a>, arXiv preprint arXiv:1404.2824 [cs.FL], 2014.",
+        "P. Burcsi, G. Fici, Z. Lipt\u00e1k, F. Ruskey, and J. Sawada, <a href=\"http://www.cis.uoguelph.ca/~sawada/papers/pnf.pdf\">On prefix normal words and prefix normal forms</a>, Preprint, 2016.",
+        "P\u00e9ter Burcsi, Gabriele Fici, Zsuzsanna Lipt\u00e1k, Rajeev Raman, and Joe Sawada, <a href=\"https://arxiv.org/abs/2003.03222\">Generating a Gray code for prefix normal words in amortized polylogarithmic time per word</a>, arXiv:2003.03222 [cs.DS], 2020.",
+        "P\u00e9ter Burcsi, Gabriele Fici, Zsuzsanna Lipt\u00e1k, Frank Ruskey, and Joe Sawada, <a href=\"https://arxiv.org/abs/1611.09017\">On Prefix Normal Words and Prefix Normal Forms</a>, arXiv:1611.09017 [cs.DM], 2016.",
+        "Ferdinando Cicalese, Zsuzsanna Lipt\u00e1k, and Massimiliano Rossi, <a href=\"https://arxiv.org/abs/1712.05876\">Bubble-Flip\u2014A new generation algorithm for prefix normal words</a>, arXiv:1712.05876 [cs.DS], 2017-2018; Theoretical Computer Science, Volume 743, 26 September 2018, Pages 38-52.",
+        "Ferdinando Cicalese, Zsuzsanna Lipt\u00e1k, and Massimiliano Rossi, <a href=\"https://arxiv.org/abs/1811.06273\">On Infinite Prefix Normal Words</a>, arXiv:1811.06273 [math.CO], 2018.",
+        "G. Fici and Zs. Lipt\u00e1k, <a href=\"http://www.i3s.unice.fr/~mh/RR/2011/RR-11-03-G.FICI.pdf\">On Prefix Normal Words</a>",
+        "G. Fici and Zs. Lipt\u00e1k, <a href=\"http://dx.doi.org/10.1007/978-3-642-22321-1_20\">On Prefix Normal Words</a>, Developments in Language Theory 2011, Lecture Notes in Computer Science 6795, 228-238.",
+        "Pamela Fleischmann, <a href=\"https://macau.uni-kiel.de/servlets/MCRFileNodeServlet/macau_derivate_00002273/diss.pdf\">On Special k-Spectra, k-Locality, and Collapsing Prefix Normal Words</a>, Ph.D. Dissertation, Kiel University (Germany, 2021).",
+        "Pamela Fleischmann, Mitja Kulczynski, and Dirk Nowotka, <a href=\"https://arxiv.org/abs/1905.11847\">On Collapsing Prefix Normal Words</a>, arXiv:1905.11847 [cs.FL], 2019.",
+        "Pamela Fleischmann, Mitja Kulczynski, Dirk Nowotka, and Danny B\u00f8gsted Poulsen, <a href=\"https://doi.org/10.1007/978-3-030-40608-0_29\">On Collapsing Prefix Normal Words</a>, Language and Automata Theory and Applications (LATA 2020) LNCS Vol. 12038, Springer, Cham, 412-424.",
+        "Zsuzsanna Lipt\u00e1k, <a href=\"http://profs.scienze.univr.it/~liptak/files/OpenProblemsPNW.pdf\">Open problems on prefix normal words</a>, also in <a href=\"http://drops.dagstuhl.de/opus/volltexte/2019/10178/\">Dagstuhl Reports</a> (2018) Vol. 8, Issue 7, 59-61."
+    ],
+    "example": [
+        "For n=3: aaa, aab, abb, aba, bbb are all prefix normal words. - _Zsuzsanna Liptak_, Oct 12 2011"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "def is_prefix_normal(w):",
+        "  for k in range(1, len(w)+1):",
+        "    weight0 = w[:k].count(\"1\")",
+        "    for j in range(1, len(w)-k+1):",
+        "      weightj = w[j:j+k].count(\"1\")",
+        "      if weightj > weight0: return False",
+        "  return True",
+        "def a(n):",
+        "  return sum(is_prefix_normal(w) for w in product(\"01\", repeat=n))",
+        "print([a(n) for n in range(1, 20)]) # _Michael S. Branicky_, Dec 19 2020"
+    ],
+    "xref": [
+        "Cf. A062692 (binary pre-necklaces).",
+        "See A238109 for a list of the prefix-normal words."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gabriele Fici_, Sep 04 2011",
+    "ext": [
+        "More terms added by _Zsuzsanna Liptak_, Oct 12 2011",
+        "Further terms added by _Zsuzsanna Liptak_, Jan 29 2014"
+    ],
+    "references": 4,
+    "revision": 101,
+    "time": "2021-07-02T16:47:43-04:00",
+    "created": "2011-09-05T16:58:46-04:00"
+}

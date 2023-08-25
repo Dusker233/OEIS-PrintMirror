@@ -1,0 +1,62 @@
+{
+    "number": 350312,
+    "data": "0,1,10,11,101,110,111,1011,1101,1110,1111,10110,10111,11011,11101,11110,11111,101101,101110,101111,110110,110111,111011,111101,111110,111111,1011011,1011101,1011110,1011111,1101101,1101110,1101111,1110110,1110111,1111011",
+    "name": "Narayana weighted representation of n (the bottom version). Also binary representation of numbers not containing 00 or 010 as a substring.",
+    "comment": [
+        "a(n) equals binary representation of m, if and only if A350311(m) = n and for all k < m, A350311(k) < n."
+    ],
+    "link": [
+        "A.H.M. Smeets, <a href=\"/A350215/a350215.pdf\">The design of greedy number representations</a>"
+    ],
+    "formula": [
+        "Regular expression: 0|11*(0111*)*(0|01|011*)?."
+    ],
+    "mathematica": [
+        "q[n_] := SequenceCount[IntegerDigits[n, 2], #] & /@ {{0, 0}, {0, 1, 0}} == {0, 0}; bin[n_] := FromDigits[IntegerDigits[n, 2]]; bin /@ Select[Range[0, 120], q] (* _Amiram Eldar_, Jan 27 2022 *)"
+    ],
+    "program": [
+        "(Python) # first method (as from definition)",
+        "def A101(n):",
+        "    f0, f1, f2, r = 1, 1, 1, 0",
+        "    while n > 0:",
+        "        if n%2 == 1:",
+        "            r = r+f0",
+        "        n, f0, f1, f2 = n//2, f0+f2, f0, f1",
+        "    return r",
+        "n, a = 0, 0",
+        "while n < 36:",
+        "    if A101(a) == n:",
+        "        print(bin(a)[2:], end = \", \")",
+        "        n += 1",
+        "    a += 1",
+        "(Python) # second method (as from regular expression)",
+        "def test(n):",
+        "    s, i, n1 = bin(n)[2:], 0, 2",
+        "    while i < len(s):",
+        "        if s[i] == \"0\":",
+        "            if n1 < 2:",
+        "                return 0",
+        "            n1 = 0",
+        "        else:",
+        "            n1 += 1",
+        "        i += 1",
+        "    return 1",
+        "n, a = 0, 0",
+        "while n < 36:",
+        "    if test(a):",
+        "        print(bin(a)[2:], end = \", \")",
+        "        n += 1",
+        "    a += 1"
+    ],
+    "xref": [
+        "Cf. A000930, A048715, A350215 (top version), A350311.",
+        "Fibonacci representations: A014417 (Zeckendorf), A104326 (dual Zeckendorf)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_A.H.M. Smeets_, Dec 24 2021",
+    "references": 2,
+    "revision": 28,
+    "time": "2022-02-18T21:03:03-05:00",
+    "created": "2022-02-18T21:03:03-05:00"
+}

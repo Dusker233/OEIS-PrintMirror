@@ -1,0 +1,52 @@
+{
+    "number": 306824,
+    "data": "1,27,54,81,108,135,162,216,243,270,324,351,361,405,432,513,540,621,702,703,810,1026,1053,1080,1215,1242,1458,1620,1728,1944,2071,2079,2106,2133,2160,2187,2403,2413,2592,2700,2701,2916,3024,3051,3105,3267,3321,4023,4033,4050,4158",
+    "name": "Integer k such that digsum(k) = digsum (k/p(1)) = digsum (k/p(2)) = ... for all prime factors p(i) of k, where digsum(k) = A007953(k) is the digital sum of k.",
+    "comment": [
+        "a(n) == 0 or 1 (mod 9). If a(n) == 0 (mod 9), a(n) == 0 (mod 27)."
+    ],
+    "example": [
+        "4158 = 2*3^3*7*11 is in the sequence because 4 + 1 + 5 + 8 = 18, and:",
+        "4158/2 = 2079 and digsum(2079) = 18;",
+        "4158/3 = 1386 and digsum(1386) = 18;",
+        "4158/7 = 594 and digsum(594) = 18;",
+        "4158/11 = 378 and digsum(378) = 18."
+    ],
+    "maple": [
+        "with(numtheory):nn:=4200:",
+        "  for k from 1 to nn do:",
+        "     d:=factorset(k):n1:=nops(d):it:=0:",
+        "     b:=convert(k, base, 10):n2:=nops(b):s:=sum(\u2018b[i]\u2019, \u2018i\u2019=1..n2):",
+        "      for i from 1 to n1 do:",
+        "        x:=k/d[i]:b1:=convert(x, base, 10):n3:=nops(b1):",
+        "        s1:=sum(\u2018b1[i]\u2019, \u2018i\u2019=1..n3):",
+        "        if s1=s",
+        "         then",
+        "         it:=it+1:",
+        "         else",
+        "        fi:",
+        "      od:",
+        "       if it=n1",
+        "        then",
+        "        printf(`%d, `,k):",
+        "       else",
+        "      fi:",
+        "od:"
+    ],
+    "mathematica": [
+        "sod[n_] := Total@IntegerDigits@n; Select[Range[1, 5000], {sod[#]} == Union[sod /@ (#/First /@ FactorInteger[#])] &] (* _Giovanni Resta_, Mar 12 2019 *)"
+    ],
+    "program": [
+        "(PARI) isok(k) = {my(pf = factor(k)[,1]~, sd = sumdigits(k)); for (i=1, #pf, if (sumdigits(k/pf[i]) != sd, return (0));); return (1);} \\\\ _Michel Marcus_, Mar 12 2019"
+    ],
+    "xref": [
+        "Cf. A007953, A305548, A306761 (a subsequence)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Michel Lagneau_, Mar 12 2019",
+    "references": 0,
+    "revision": 22,
+    "time": "2019-04-09T04:02:25-04:00",
+    "created": "2019-04-09T04:02:25-04:00"
+}

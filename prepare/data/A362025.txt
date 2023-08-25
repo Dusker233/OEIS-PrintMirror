@@ -1,0 +1,32 @@
+{
+    "number": 362025,
+    "data": "2,3,4,5,9,11,16,17,28,29,46,47,99,145,167,205,314,397,437,793,851,1137,1693,2453,2771,2989,3701,5099,6801,9299,12031,15811,16816,21520,21521,29547,39685,62077,83191,103473,112117,149535,157159,196049,200267,303022",
+    "name": "a(n) is the least number that reaches 1 after n iterations of the infinitary totient function A064380.",
+    "formula": [
+        "A362024(a(n)) = n, and A362024(k) < n for all k < a(n)."
+    ],
+    "mathematica": [
+        "infCoprimeQ[n1_, n2_] := Module[{g = GCD[n1, n2]}, If[g == 1, True, AllTrue[FactorInteger[g][[;; , 1]], BitAnd @@ IntegerExponent[{n1, n2}, #] == 0 &]]];",
+        "iphi[n_] := Sum[Boole[infCoprimeQ[j, n]], {j, 1, n - 1}];",
+        "numiter[n_] := Length@ NestWhileList[iphi, n, # > 1 &] - 1;",
+        "seq[kmax_] := Module[{v = {}, n = 1}, Do[If[numiter[k] == n, AppendTo[v, k]; n++], {k, 2, kmax}]; v]; seq[1000]"
+    ],
+    "program": [
+        "(PARI) isinfcoprime(n1, n2) = {my(g = gcd(n1, n2), p, e1, e2); if(g == 1, return(1)); p = factor(g)[, 1]; for(i=1, #p, e1 = valuation(n1, p[i]); e2 = valuation(n2, p[i]); if(bitand(e1, e2) > 0, return(0))); 1; }",
+        "iphi(n) = sum(j = 1, n-1, isinfcoprime(j, n));",
+        "numiter(n) = if(n==2, 1, numiter(iphi(n)) + 1);",
+        "lista(kmax) = {my(n = 1); for(k = 2, kmax, if(numiter(k) == n, print1(k, \", \"); n++)); }"
+    ],
+    "xref": [
+        "Cf. A064380.",
+        "Indices of records of A362024.",
+        "Similar sequences: A003271, A007755, A333610."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Apr 05 2023",
+    "references": 1,
+    "revision": 6,
+    "time": "2023-04-07T17:42:13-04:00",
+    "created": "2023-04-07T17:42:13-04:00"
+}

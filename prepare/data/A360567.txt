@@ -1,0 +1,51 @@
+{
+    "number": 360567,
+    "data": "3,5,7,11,23,29,43,47,53,113,127,131,157,163,167,173,179,181,277,281,283,293,347,349,353,359,367,373,379,509,521,523,541,547,821,823,827,829,839,853,857,859,863,937,941,947,953,967,971,977,983,991,1361",
+    "name": "Primes p such that the nearest integer to sqrt(p) is also prime.",
+    "link": [
+        "Robert Israel, <a href=\"/A360567/b360567.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "sqrt(11) = 3.3166247..., which when rounded is 3, and both 3 and 11 are prime, so 11 is in the sequence."
+    ],
+    "maple": [
+        "R:= NULL: count:= 0:",
+        "q:=1:",
+        "while count < 100 do",
+        "  q:= nextprime(q);",
+        "  p:= floor((q-1/2)^2);",
+        "  u:= (q+1/2)^2;",
+        "  while count < 100 do",
+        "    p:= nextprime(p);",
+        "    if p > u then break fi;",
+        "    R:= R,p; count:= count+1;",
+        "  od",
+        "od:",
+        "R; # _Robert Israel_, Mar 29 2023"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[500]],PrimeQ[Round[Sqrt[#]]] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from math import isqrt",
+        "from sympy import isprime, nextprime",
+        "def A360567_gen(): # generator of terms",
+        "    p = 1",
+        "    while p:=nextprime(p):",
+        "        if isprime((m:=isqrt(p))+int(p-m*(m+1)>=1)):",
+        "            yield p",
+        "A360567_list = list(islice(A360567_gen(),20)) # _Chai Wah Wu_, Feb 27 2023"
+    ],
+    "xref": [
+        "Cf. A000194, A248170."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Rhys Feltman_, Feb 11 2023",
+    "references": 1,
+    "revision": 28,
+    "time": "2023-03-29T15:38:44-04:00",
+    "created": "2023-02-27T21:36:52-05:00"
+}

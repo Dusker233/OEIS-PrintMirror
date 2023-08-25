@@ -1,0 +1,33 @@
+{
+    "number": 342139,
+    "data": "1,1,3,8,28,167,810,4664,38344,207255,2059900,19385131,174417011,1922011637,21058799803,208257199434,2905150193223,38462668421772,481607876817202,7526871509864950",
+    "name": "Number of partitions of [2n] into pairs whose sums or differences are primes.",
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "example": [
+        "a(2) = 3: {{1,4}, {2,3}}, {{1,3}, {2,4}}, {{1,2}, {3,4}}."
+    ],
+    "maple": [
+        "b:= proc(s) option remember; `if`(s={}, 1, (j-> add(`if`(i<j and",
+        "      ormap(isprime, [j+i, j-i]), b(s minus {i, j}), 0), i=s))(max(s)))",
+        "    end:",
+        "a:= n-> b({$1..2*n}):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "b[s_] := b[s] = If[s == {}, 1, With[{j = Max[s]}, Sum[If[i < j && AnyTrue[{j+i, j-i}, PrimeQ], b[s ~Complement~ {i, j}], 0], {i, s}]]];",
+        "a[n_] := b[Range[2n]];",
+        "a /@ Range[0, 15] (* _Jean-Fran\u00e7ois Alcover_, Aug 25 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000341, A009692, A342136, A342155."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Mar 01 2021",
+    "references": 2,
+    "revision": 16,
+    "time": "2021-08-25T05:27:57-04:00",
+    "created": "2021-03-05T15:22:45-05:00"
+}

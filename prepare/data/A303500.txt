@@ -1,0 +1,53 @@
+{
+    "number": 303500,
+    "data": "2,21,210,2101,21011,210110,2101100,21011000,210110001,2101100011,21011000110,210110001101,2101100011010,21011000110100,210110001101001,2101100011010011,21011000110100110,210110001101001101",
+    "name": "The smallest positive even integer that can be written with n digits in base 3/2.",
+    "comment": [
+        "a(n) is a prefix of a(n+1).",
+        "The smallest, not necessarily even, integer in base 3/2 with n digits is a(n-1) with 0 added at the end."
+    ],
+    "link": [
+        "B. Chen, R. Chen, J. Guo, S. Lee et al., <a href=\"http://arxiv.org/abs/1808.04304\">On Base 3/2 and its Sequences</a>, arXiv:1808.04304 [math.NT], 2018."
+    ],
+    "formula": [
+        "a(n) = A024629(A305498(n)). - _R. J. Mathar_, Jun 25 2018"
+    ],
+    "example": [
+        "The number 5 in base 3/2 is 22, and the number 6 is 210. Therefore, 210 is the smallest even integer with 3 digits in base 3/2."
+    ],
+    "maple": [
+        "roll32 := proc(L)",
+        "    local piv,L1 ;",
+        "    piv := 1;",
+        "    L1 := subsop(piv=op(piv,L)+1,L) ;",
+        "    while op(piv,L1) >= 3 do",
+        "        L1 := [seq(0,i=1..piv), op(piv+1,L1)+1, seq(op(i,L1),i=piv+2..nops(L1))] ;",
+        "        piv := piv+1 ;",
+        "    end do:",
+        "    L1 ;",
+        "end proc:",
+        "from32 := proc(L)",
+        "    add( op(i,L)*(3/2)^(i-1),i=1..nops(L)) ;",
+        "end proc:",
+        "A303500 := proc(n)",
+        "    local dgs ;",
+        "    dgs := [seq(0,i=1..n-1),1] ;",
+        "    while not type(from32(dgs),'even') do",
+        "        dgs := roll32(dgs) ;",
+        "    end do:",
+        "    dgs := ListTools[Reverse](dgs) ;",
+        "    digcatL(%) ;",
+        "end proc: # _R. J. Mathar_, Jun 25 2018"
+    ],
+    "xref": [
+        "See A024629 for the base-3/2 expansion of n.",
+        "Cf. also A304024, A304025, A070885, A304272, A081848, A246435, A005428, A073941."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,1",
+    "author": "_Tanya Khovanova_ and PRIMES STEP Senior group, May 09 2018",
+    "references": 9,
+    "revision": 74,
+    "time": "2021-07-03T07:58:58-04:00",
+    "created": "2018-06-01T08:16:34-04:00"
+}

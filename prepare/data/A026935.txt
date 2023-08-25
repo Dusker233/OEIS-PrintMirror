@@ -1,0 +1,33 @@
+{
+    "number": 26935,
+    "data": "1,10,75,500,3149,19214,115031,680424,3992921,23305234,135514019,785892316,4549048229,26295995926,151857925039,876366840784,5055045581745,29148894792730,168045778127355,968679251764676,5583525654107645,32183666525389086,185514611981021959",
+    "name": "a(n) = Sum_{k=0..n-2} T(n,k) * T(n,k+2), with T given by A008288.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A026935/b026935.txt\">Table of n, a(n) for n = 2..500</a>"
+    ],
+    "mathematica": [
+        "A008288[n_, k_]:= Binomial[n, k]*Hypergeometric2F1[-k, k-n, -n, -1];",
+        "A026935[n_]:= Sum[A008288[n, k]*A008288[n, k+2], {k, 0, n-2}];",
+        "Table[A026935[n], {n, 2, 40}] (* _G. C. Greubel_, May 25 2021 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def A008288(n,k): return sum(binomial(n-j, j)*binomial(n-2*j, k-j) for j in (0..k))",
+        "def A026935(n): return sum(A008288(n, k)*A008288(n, k+2) for k in (0..n-2))",
+        "[A026935(n) for n in (2..40)] # _G. C. Greubel_, May 25 2021"
+    ],
+    "xref": [
+        "Cf. A008288."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "More terms from _Sean A. Irvine_, Oct 17 2019"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2021-05-25T08:05:33-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 244164,
+    "data": "1,1,3,6,15,23,53,94,203,404,855,1648,3416,6662,13400,26406,53038,105306,212051,422162,849267,1696864,3406077,6807024,13642099,27268122,54576003,109096436,218250874,436243705,872533347,1744312748,3488432736,6974783481",
+    "name": "Number of compositions of n in which the minimal multiplicity of parts equals 1.",
+    "link": [
+        "Alois P. Heinz and Vaclav Kotesovec, <a href=\"/A244164/b244164.txt\">Table of n, a(n) for n = 1..2000</a> (first 400 terms from Alois P. Heinz)",
+        "Vaclav Kotesovec, <a href=\"/A244164/a244164_1.jpg\">Graph a(n)/2^n</a>"
+    ],
+    "formula": [
+        "a(n) = 2^(n-1) - A240085(n). - _Gus Wiseman_, Nov 25 2019"
+    ],
+    "example": [
+        "From _Gus Wiseman_, Nov 25 2019: (Start)",
+        "The a(1) = 1 through a(5) = 15 compositions:",
+        "  (1)  (2)  (3)    (4)      (5)",
+        "            (1,2)  (1,3)    (1,4)",
+        "            (2,1)  (3,1)    (2,3)",
+        "                   (1,1,2)  (3,2)",
+        "                   (1,2,1)  (4,1)",
+        "                   (2,1,1)  (1,1,3)",
+        "                            (1,2,2)",
+        "                            (1,3,1)",
+        "                            (2,1,2)",
+        "                            (2,2,1)",
+        "                            (3,1,1)",
+        "                            (1,1,1,2)",
+        "                            (1,1,2,1)",
+        "                            (1,2,1,1)",
+        "                            (2,1,1,1)",
+        "(End)"
+    ],
+    "maple": [
+        "b:= proc(n, i, p, k) option remember; `if`(n=0, p!, `if`(i<1, 0,",
+        "      add(b(n-i*j, i-1, p+j, k)/j!, j=[0, $max(1, k)..n/i])))",
+        "    end:",
+        "a:= n-> b(n$2, 0, 1) -b(n$2, 0, 2):",
+        "seq(a(n), n=1..50);"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],Min@@Length/@Split[Sort[#]]==1&]],{n,0,10}] (* _Gus Wiseman_, Nov 25 2019 *)"
+    ],
+    "xref": [
+        "Column k=1 of A242451.",
+        "The complement is counted by A240085.",
+        "Cf. A003242, A098504, A114901, A261983, A329740, A329741."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Alois P. Heinz_, Jun 21 2014",
+    "references": 11,
+    "revision": 22,
+    "time": "2019-11-27T07:54:10-05:00",
+    "created": "2014-06-21T15:52:42-04:00"
+}

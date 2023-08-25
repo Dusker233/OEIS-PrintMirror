@@ -1,0 +1,58 @@
+{
+    "number": 322909,
+    "data": "1,1,7,100,2840,129428,8613997,791557152,95921167710,14818153059968,2842735387366627,663020104070865664,184757202542187563476,60623405966739216871680,23135486197103263598936745,10160292704659539620791062528,5087671168376607498331875818106",
+    "name": "The permanent of an n X n Toeplitz matrix M(n) whose first row consists of successive positive integer numbers 1, ..., n and whose first column consists of 1, n + 1, ..., 2*n - 1.",
+    "comment": [
+        "The matrix M(n) differs from that of A306457 in using successive positive integers in place of successive prime numbers. [Modified by _Stefano Spezia_, Dec 20 2019 at the suggestion of _Michel Marcus_]",
+        "The trace of M(n) is A000027(n).",
+        "The sum of the first row of M(n) is A000217(n).",
+        "The sum of the first column of M(n) is A005448(n). [Corrected by _Stefano Spezia_, Dec 19 2019]",
+        "For n > 1, the sum of the superdiagonal of M(n) is A005843(n).",
+        "For n > 0, the sum of the (k-1)-th superdiagonal of M(n) is A003991(n,k). - _Stefano Spezia_, Dec 29 2019",
+        "For n > 1 and k > 0, the sum of the k-th subdiagonal of M(n) is A120070(n,k). - _Stefano Spezia_, Dec 31 2019"
+    ],
+    "link": [
+        "Stefano Spezia, <a href=\"/A322909/b322909.txt\">Table of n, a(n) for n = 0..35</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Toeplitz_matrix\">Toeplitz Matrix</a>"
+    ],
+    "example": [
+        "For n = 1 the matrix M(1) is",
+        "   1",
+        "with permanent a(1) = 1.",
+        "For n = 2 the matrix M(2) is",
+        "   1, 2",
+        "   3, 1",
+        "with permanent a(2) = 7.",
+        "For n = 3 the matrix M(3) is",
+        "   1, 2, 3",
+        "   4, 1, 2",
+        "   5, 4, 1",
+        "with permanent a(3) = 100."
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "a:= n-> `if`(n=0, 1, Permanent(ToeplitzMatrix([",
+        "         seq(i, i=2*n-1..n+1, -1), seq(i, i=1..n)]))):",
+        "seq(a(n), n = 0 .. 15);"
+    ],
+    "mathematica": [
+        "b[n_]:=n; a[n_]:=If[n==0,1,Permanent[ToeplitzMatrix[Join[{b[1]}, Array[b, n-1, {n+1, 2*n-1}]], Array[b, n]]]]; Array[a, 15,0]"
+    ],
+    "program": [
+        "(PARI) tm(n) = {my(m = matrix(n, n, i, j, if (i==1, j, if (j==1, n+i-1)))); for (i=2, n, for (j=2, n, m[i, j] = m[i-1, j-1]; ); ); m; }",
+        "a(n) = matpermanent(tm(n)); \\\\ _Stefano Spezia_, Dec 19 2019"
+    ],
+    "xref": [
+        "Cf. A000027, A000217, A003991, A005448, A005843, A120070, A306457, A322908 (determinant of M(n))."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Stefano Spezia_, Dec 30 2018",
+    "ext": [
+        "a(0) = 1 prepended by _Stefano Spezia_, Dec 19 2019"
+    ],
+    "references": 4,
+    "revision": 48,
+    "time": "2020-01-07T16:50:47-05:00",
+    "created": "2019-01-05T06:41:16-05:00"
+}

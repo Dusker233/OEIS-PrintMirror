@@ -1,0 +1,61 @@
+{
+    "number": 361267,
+    "data": "3,4,5,6,7,12,13,19,25,26,27,28,43,44,48,49,59,63,64,69,88,89,112,116,142,143,147,148,151,152,181,182,206,211,212,224,225,229,234,235,236,253,261,264,276,285,286,287,301,302,313,314,322,332,336,352,384,389",
+    "name": "Numbers k such that prime(k+2) - prime(k) = 6.",
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PrimeTriplet.html\">Prime Triplet</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Prime_triplet\">Prime triplet</a>"
+    ],
+    "formula": [
+        "a(n) = A000720(A007529(n)). - _Alois P. Heinz_, Mar 06 2023"
+    ],
+    "maple": [
+        "q:= n-> is(ithprime(n+2)-ithprime(n)=6):",
+        "select(q, [$1..400])[];  # _Alois P. Heinz_, Mar 06 2023"
+    ],
+    "mathematica": [
+        "Select[Range[400], Prime[# + 2] - Prime[#] == 6 &] (* _Michael De Vlieger_, Mar 06 2023 *)"
+    ],
+    "program": [
+        "(Clojure)",
+        "(defn next-prime [n]",
+        "  (if (= n 2)",
+        "      3",
+        "      (let [m (+ n 2)",
+        "            t (-> n Math/sqrt int (+ 2))]",
+        "          (if (some #(zero? (mod m %)) (range 2 t))",
+        "              (next-prime m)",
+        "              m))))",
+        "(def primes (lazy-seq (iterate next-prime 2)))",
+        "(defn triplet-primes-positions [n]",
+        "  (->> primes",
+        "       (take n)",
+        "       (partition 3 1)",
+        "       (map list (range))",
+        "       (filter (fn [[i xs]] (= 6 (- (last xs) (first xs)))))",
+        "       (map #(-> % first inc))))",
+        "(println (triplet-primes-positions 2000))",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import nextprime, prime",
+        "def A361267_gen(startvalue=1): # generator of terms >= startvalue",
+        "    p = prime(m:=max(startvalue,1))",
+        "    q = nextprime(p)",
+        "    r = nextprime(q)",
+        "    for k in count(m):",
+        "        if r-p == 6:",
+        "            yield k",
+        "        p, q, r = q, r, nextprime(r)",
+        "A361267_list = list(islice(A361267_gen(),20)) # _Chai Wah Wu_, Mar 27 2023"
+    ],
+    "xref": [
+        "Cf. A000040, A000720, A007529, A022004, A022005."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Atabey Kaygun_, Mar 06 2023",
+    "references": 0,
+    "revision": 26,
+    "time": "2023-03-27T14:24:04-04:00",
+    "created": "2023-03-26T18:33:37-04:00"
+}

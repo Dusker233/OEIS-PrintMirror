@@ -1,0 +1,41 @@
+{
+    "number": 321659,
+    "data": "1,1,1,9,9,17,161,169,313,465,5313,5465,10457,15313,25009,271929,286329,537953,799121,1297369,1805161,20532897,21292017,40508297,59738825,97431073,135137569,209525865,2089381929,2200470833,4135252289,6124698121,9937836505",
+    "name": "Number of nonnegative integer matrices with sum of entries equal to n and no zero rows or columns, whose nonzero entries are all distinct.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A321659/b321659.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k>=1} A101370(k)*k!*A008289(n,k) for n > 0. - _Andrew Howroyd_, Nov 17 2018"
+    ],
+    "example": [
+        "The a(5) = 17 matrices:",
+        "  [5] [4 1] [3 2] [2 3] [1 4]",
+        ".",
+        "  [4] [4 0] [3] [3 0] [2] [2 0] [1] [1 0] [0 4] [0 3] [0 2] [0 1]",
+        "  [1] [0 1] [2] [0 2] [3] [0 3] [4] [0 4] [1 0] [2 0] [3 0] [4 0]"
+    ],
+    "mathematica": [
+        "prs2mat[prs_]:=Table[Count[prs,{i,j}],{i,Union[First/@prs]},{j,Union[Last/@prs]}];",
+        "multsubs[set_,k_]:=If[k==0,{{}},Join@@Table[Prepend[#,set[[i]]]&/@multsubs[Drop[set,i-1],k-1],{i,Length[set]}]];",
+        "Table[Length[Select[multsubs[Tuples[Range[n],2],n],And[Union[First/@#]==Range[Max@@First/@#],Union[Last/@#]==Range[Max@@Last/@#],UnsameQ@@DeleteCases[Join@@prs2mat[#],0]]&]],{n,5}]"
+    ],
+    "program": [
+        "(PARI) \\\\ here b(n) is A101370(n).",
+        "b(n)={sum(m=0, n, sum(k=0, m, stirling(m,k,2)*k!)^2*polcoef(log(1+x+O(x*x^n))^m, n)/m!)}",
+        "seq(n)={my(B=vector((sqrtint(8*(n+1))+1)\\2, n, b(n-1))); apply(p->sum(i=0, poldegree(p), B[i+1]*i!*polcoef(p, i)), Vec(prod(k=1, n, 1 + x^k*y + O(x*x^n))))} \\\\ _Andrew Howroyd_, Nov 16 2018"
+    ],
+    "xref": [
+        "Cf. A000219, A007716, A008289, A101370, A114736, A117433, A120733, A321645, A321653, A321655, A321660, A321661, A321662."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Nov 15 2018",
+    "ext": [
+        "Terms a(11) and beyond from _Andrew Howroyd_, Nov 16 2018"
+    ],
+    "references": 5,
+    "revision": 12,
+    "time": "2018-11-17T21:13:58-05:00",
+    "created": "2018-11-16T07:49:21-05:00"
+}

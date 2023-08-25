@@ -1,0 +1,51 @@
+{
+    "number": 230486,
+    "data": "5,10,13,17,20,25,26,29,30,34,37,40,41,50,52,53,58,60,61,65,68,70,73,74,78,80,82,85,89,90,97,100,101,102,104,106,109,110,113,116,120,122,125,130,136,137,140,145,146,148,149,150,156,157,160,164,169,170",
+    "name": "Numbers n such that n^n is representable as the sum of two nonzero squares.",
+    "comment": [
+        "If n is even, then n must have a prime factor of the form 4k+1. If n is odd, then all prime factors must be of the form 4k+1. - _T. D. Noe_, Oct 21 2013",
+        "The above is also a sufficient condition: the sequence consists exactly in even multiples of Pythagorean primes A002144, and products of such primes (A008846). - _M. F. Hasler_, Sep 02 2018"
+    ],
+    "reference": [
+        "G. H. Hardy and E. M. Wright, Theory of Numbers, Oxford, Sixth Edition, 2008, p. 395."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A230486/b230486.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "A230486 = { n | A000312(n) is in A000404 } = A004277*A002144 U A008846. - _M. F. Hasler_, Sep 02 2018"
+    ],
+    "example": [
+        "5^5 = 55^2 + 10^2.",
+        "10^10 = 99712^2 + 7584^2.",
+        "13^13 = 17106843^2 + 3198598^2.",
+        "17^17 = 28735037644^2 + 1240110271^2."
+    ],
+    "mathematica": [
+        "t = {}; Do[f = FactorInteger[n]; p = Transpose[f][[1]]; If[EvenQ[n], If[MemberQ[Mod[p, 4], 1], AppendTo[t, n]], If[Union[Mod[p, 4]] == {1}, AppendTo[t, n]]], {n, 2, 200}]; t (* _T. D. Noe_, Oct 21 2013 *)"
+    ],
+    "program": [
+        "(PARI) select( is_A230486(n)={(n=factor(n)[,1]%4) && if(n[1]==2, Set(n)[1]==1, Set(n)==[1])}, [1..200]) \\\\ _M. F. Hasler_, Sep 02 2018",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import primefactors",
+        "def A230486_gen(startvalue=2): # generator of terms >= startvalue",
+        "    return filter(lambda n:all(p&3==1 for p in primefactors(n)) if n&1 else any(p&3==1 for p in primefactors(n)),count(max(startvalue,2)))",
+        "A230486_list = list(islice(A230486_gen(),20)) # _Chai Wah Wu_, May 15 2023"
+    ],
+    "xref": [
+        "Cf. A000312 (n^n), A004431, A132777.",
+        "A subsequence of A000404 (numbers that are the sum of 2 nonzero squares).",
+        "Sequence A002144 (primes of the form 4k + 1) and A008846 (products of such primes) are subsequences."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, Oct 20 2013",
+    "ext": [
+        "Extended by _T. D. Noe_, Oct 21 2013"
+    ],
+    "references": 2,
+    "revision": 33,
+    "time": "2023-05-15T12:15:37-04:00",
+    "created": "2013-10-21T16:18:17-04:00"
+}

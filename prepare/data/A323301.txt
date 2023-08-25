@@ -1,0 +1,55 @@
+{
+    "number": 323301,
+    "data": "1,1,1,5,5,9,21,25,37,53,137,153,249,337,505,845,1085,1497,2061,2785,3661,7589,8849,13329,18033,26017,34225,48773,70805,91977,123765,164761,216373,283205,367913,470889,758793,913825,1264105,1651613,2251709,2894793,3927837",
+    "name": "Number of ways to fill a matrix with the parts of a strict integer partition of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A323301/b323301.txt\">Table of n, a(n) for n = 0..5000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{y1 + ... + yk = n, y1 > ... > yk} k! * A000005(k) for n > 0, a(0) = 1."
+    ],
+    "example": [
+        "The a(6) = 21 matrices:",
+        "  [6] [1 5] [5 1] [2 4] [4 2] [1 2 3] [1 3 2] [2 1 3] [2 3 1] [3 1 2] [3 2 1]",
+        ".",
+        "  [1] [5] [2] [4]",
+        "  [5] [1] [4] [2]",
+        ".",
+        "  [1] [1] [2] [2] [3] [3]",
+        "  [2] [3] [1] [3] [1] [2]",
+        "  [3] [2] [3] [1] [2] [1]"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember;",
+        "      `if`(n>i*(i+1)/2, 0, `if`(n=0, t!*numtheory[tau](t),",
+        "       b(n, i-1, t)+b(n-i, min(n-i, i-1), t+1)))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, b(n$2, 0)):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Jan 15 2019"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "facs[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[facs[n/d],Min@@#>=d&]],{d,Rest[Divisors[n]]}]];",
+        "ptnmats[n_]:=Union@@Permutations/@Select[Union@@(Tuples[Permutations/@#]&/@Map[primeMS,facs[n],{2}]),SameQ@@Length/@#&];",
+        "Table[Sum[Length[ptnmats[k]],{k,Select[Times@@Prime/@#&/@IntegerPartitions[n],SquareFreeQ]}],{n,20}]",
+        "(* Second program: *)",
+        "b[n_, i_, t_] := b[n, i, t] = If[n > i(i+1)/2, 0,",
+        "     If[n == 0, t!*DivisorSigma[0, t], b[n, i - 1, t] +",
+        "     b[n - i, Min[n - i, i - 1], t + 1]]];",
+        "a[n_] := If[n == 0, 1, b[n, n, 0]];",
+        "a /@ Range[0, 50] (* _Jean-Fran\u00e7ois Alcover_, May 13 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000005, A000009, A000142, A053529, A294617, A321654, A323295, A323300, A323307, A323351."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Jan 12 2019",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Jan 15 2019"
+    ],
+    "references": 9,
+    "revision": 17,
+    "time": "2021-05-14T08:08:12-04:00",
+    "created": "2019-01-12T20:43:20-05:00"
+}

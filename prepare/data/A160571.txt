@@ -1,0 +1,45 @@
+{
+    "number": 160571,
+    "data": "1,1,2,3,5,7,10,15,21,28,38,52,70,92,119,154,200,258,329,416,523,655,819,1022,1269,1566,1924,2357,2879,3507,4263,5170,6250,7530,9048,10849,12980,15496,18466,21967,26079,30894,36526,43109,50792,59743,70160",
+    "name": "G.f.: Product_{n>=1} (1 + x^n + x^(n+1)).",
+    "link": [
+        "Robert Israel, <a href=\"/A160571/b160571.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "MathOverflow, <a href=\"https://mathoverflow.net/questions/390446/being-even-or-odd-in-the-product-expansion-prod1xkxk1\">Being even or odd in the product expansion</a>, 2017."
+    ],
+    "formula": [
+        "G.f.: A(x) = Sum_{n>=0} x^(n*(3*n+1)/2)*(1+x)^n*(1 + x^(2*n+1)*(1+x)) * Product_{k=1..n} (1 + x^k*(1+x))/(1-x^k) due to Sylvester's identity.",
+        "G.f.: A(x) = Sum_{n>=0} x^(n*(n+1)/2)*(1+x)^n / Product_{k=1..n} (1-x^k).",
+        "G.f.: exp(Sum_{k>=1} x^k * Sum_{d|k} (-1)^(d+1)*(1 + x)^d/d). - _Ilya Gutkovskiy_, Apr 18 2019",
+        "a(n) ~ c * exp(r*sqrt(n)) / n^(3/4), where r = 2*sqrt(-polylog(2,-2)) = 2.397287105779... and c = (-polylog(2,-2))^(1/4) / (6*sqrt(Pi)) = 0.10294821957... - _Vaclav Kotesovec_, Oct 24 2020, updated Jun 25 2021"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 3*x^3 + 5*x^4 + 7*x^5 + 10*x^6 + 15*x^7 + ...",
+        "G.f.: A(x) = (1+x*(1+x))*(1+x^2*(1+x))*(1+x^3*(1+x))*(1+x^4*(1+x))*...",
+        "G.f.: A(x) = (1+x*(1+x)) + x^2*(1+x)*(1 + x^3*(1+x))*(1+x*(1+x))/(1-x) + x^7*(1+x)^2*(1 + x^5*(1+x))*(1+x*(1+x))*(1+x^2*(1+x))/((1-x)*(1-x^2)) + x^15*(1+x)^3*(1 + x^7*(1+x))*(1+x*(1+x))*(1+x^2*(1+x))*(1+x^3*(1+x))/((1-x)*(1-x^2)*(1-x^3)) + ...",
+        "G.f.: A(x) = 1 + x*(1+x)/(1-x) + x^3*(1+x)^2/((1-x)*(1-x^2)) + x^6*(1+x)^3/((1-x)*(1-x^2)*(1-x^3)) + x^10*(1+x)^4/((1-x)*(1-x^2)*(1-x^3)*(1-x^4)) + ..."
+    ],
+    "maple": [
+        "N:= 100: # for a(0)..a(N)",
+        "P:= mul(1+x^n+x^(n+1),n=1..N):",
+        "S:= series(P,x,N+1):",
+        "seq(coeff(S,x,j),j=0..N); # _Robert Israel_, Sep 04 2018"
+    ],
+    "mathematica": [
+        "With[{nn=50},CoefficientList[Series[Product[1+x^n+x^(n+1),{n,1,nn}],{x,0,nn}],x]] (* _Harvey P. Dale_, Dec 29 2015 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=polcoeff(prod(k=1,n,1+x^k*(1+x) +x*O(x^n)),n)",
+        "(PARI) {a(n)=local(A=1+x); A=sum(m=0, n, x^(m*(3*m+1)/2)*(1+x)^m*(1 + x^(2*m+1)*A)*prod(k=1, m, (1+A*x^k)/(1-x^k+x*O(x^n)))); polcoeff(A, n)}",
+        "(PARI) {a(n)=local(A=1+x); A=sum(m=0, n, x^(m*(m+1)/2)*(1+x)^m/prod(k=1, m, 1-x^k +x*O(x^n))); polcoeff(A, n)}"
+    ],
+    "xref": [
+        "Cf. A151552, A227681."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, May 20 2009, May 21 2009, Jul 17 2011",
+    "references": 10,
+    "revision": 27,
+    "time": "2021-07-31T09:25:26-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

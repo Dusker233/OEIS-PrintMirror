@@ -1,0 +1,35 @@
+{
+    "number": 108521,
+    "data": "1,2,5,16,53,194,730,2868,11526,47370,197786,837467,3585696,15501423,67563442,296579626,1309973823,5817855174,25964218471,116379947718,523699384013,2364967753113,10714396241046,48684193997623",
+    "name": "Number of rooted trees with n generators.",
+    "comment": [
+        "A generator is a leaf or a node with just one child."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A108521/b108521.txt\">Table of n, a(n) for n = 1..200</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/EulerTransform.html\">Euler Transform</a>.",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "G.f.: satisfies (2-x)*A(x) = x - 1 + EULER(A(x))."
+    ],
+    "mathematica": [
+        "a[1] = 1; a[n_] := a[n] = 1+a[n-1]+Total[Product[Binomial[a[i]-1+Count[#,i], Count[#,i]], {i, DeleteCases[DeleteDuplicates[#],1]}]&/@ IntegerPartitions[n,{2,n-1}]]; Table[a[n],{n,24}] (* _Robert A. Russell_, Jun 02 2020 *)",
+        "a[1] = 1; a[n_] := a[n] = a[n-1] + (DivisorSum[n, a[#] # &, #<n &] + Sum[c[k] b[n-k], {k,1,n-1}])/n; b[n_] := b[n] = (c[n] + Sum[c[k] b[n-k], {k,1,n-1}])/n; c[n_] := c[n] = DivisorSum[n, a[#] # &]; Table[a[k], {k, 24}] (* _Robert A. Russell_, Jun 04 2020 *)"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v, vector(#v, n, 1/n))))-1, -#v)}",
+        "seq(n)={my(v=[1]); for(n=2, n, v=concat(v, v[#v] + EulerT(concat(v,[0]))[n])); v} \\\\ _Andrew Howroyd_, Aug 31 2018"
+    ],
+    "xref": [
+        "Cf. A000081, A000669, A007151, A108522 - A108529, A335342 (free trees)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Christian G. Bower_, Jun 07 2005",
+    "references": 11,
+    "revision": 25,
+    "time": "2020-08-06T18:25:03-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

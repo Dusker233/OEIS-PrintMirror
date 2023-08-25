@@ -1,0 +1,50 @@
+{
+    "number": 179768,
+    "data": "6,21,155,253,889,979,1081,6757,8251,13861,18533,31987,32047,34453,60581,64261,73153,106483,110497,114481,126253,212111,212273,256507,258121,325967,337133,351541,371953,383183,392941,417917,457207,482653,548047,869221,933661,946051",
+    "name": "Semiprimes of form p*q with p < q, such that 2^p - 1 == 0 (mod q).",
+    "comment": [
+        "Number of terms < 10^k: 1, 2, 6, 9, 17, 38, 91, 222, ..., ."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A179768/b179768.txt\">Table of n, a(n) for n = 1..518</a>"
+    ],
+    "example": [
+        "6 is a term because 6=2*3 and 2^2-1 (mod 3)=0;",
+        "21 is a term because 21=3*7 and 2^3-1 (mod 7)=0;",
+        "155 is a term because 155=5*31 and 2^5-1 (mod 31)=0;",
+        "253 is a term because 253=11*23 and 2^11-1 (mod 23)=0;",
+        "889 is a term because 889=7*127 and 2^7-1 (mod 127)=0;",
+        "979 is a term because 979=11*89 and 2^11-1 (mod 89)=0; etc."
+    ],
+    "maple": [
+        "N:= 10^6: # to get all terms <= N",
+        "Q:= ceil(fsolve(q*log[2](q)=N));",
+        "Res:= NULL:",
+        "q:= 2:",
+        "do",
+        "  q:= nextprime(q);",
+        "  if q > Q then break fi;",
+        "  p:= numtheory:-order(2,q);",
+        "  if not isprime(p) then next fi;",
+        "  v:= p*q;",
+        "  if v <= N then Res:= Res, v  fi",
+        "od:",
+        "sort([Res]); # _Robert Israel_, Nov 23 2019"
+    ],
+    "mathematica": [
+        "fQ[n_] := Block[{fi = FactorInteger@ n}, Plus @@ Last /@ fi == 2 && PowerMod[2, fi[[1, 1]], fi[[2, 1]]] == 1]; Select[ Range@ 1000000, fQ] (* _Robert G. Wilson v_, Jan 10 2011 *)"
+    ],
+    "xref": [
+        "Cf. A000079, A001358."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Juri-Stepan Gerasimov_, Jan 10 2011",
+    "ext": [
+        "Corrected, extended & edited by _Robert G. Wilson v_, Jan 10 2011"
+    ],
+    "references": 1,
+    "revision": 13,
+    "time": "2019-11-23T23:05:05-05:00",
+    "created": "2010-11-12T14:29:08-05:00"
+}

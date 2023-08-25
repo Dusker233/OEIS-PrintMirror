@@ -1,0 +1,30 @@
+{
+    "number": 335048,
+    "data": "0,3,8,13,22,31,44,57,74,91,112,133,158,183,212,241,274,307,344,381,422,463,508,553,602,651,704,757,814,871,932,993,1058,1123,1192,1261,1334,1407,1484,1561,1642,1723,1808,1893,1982,2071,2164,2257,2354,2451,2552",
+    "name": "Minimum sum of primes (see Comments).",
+    "comment": [
+        "Out of all permutations of the numbers 1..n such that the sum of all adjacent numbers is a prime (A064821) find the one with the minimum sum of the primes. a(n) is the respective minimum sum or equals zero if a permutation does not exist.",
+        "The sum of primes arising from a permutation of 1..n is always equal to n*(n+1) minus the values of the two endpoints, so for n > 1 it is probable that a(n) = n*(n+1) - (n+n-2) if n is odd and a(n) = n*(n+1) - (n+n-1) if n is even. - _Giovanni Resta_, Jun 05 2020"
+    ],
+    "example": [
+        "For n = 4 there are 4 permutations: 1234, 1432, 3214, 3412. The one with the minimum sum of 13 (5+3+5) is 3214."
+    ],
+    "mathematica": [
+        "p[n_]:=Permutations[Range[n]];g[n_]:=Min[Total/@Select[Table[Table[",
+        "p[n][[j,i]]+p[n][[j,i+1]],{i,1,Length[p[n][[j]]]-1}],{j,1,Length[p[n]]}],AllTrue[#,PrimeQ]&]];g/@Range[7] (* slow, just for demo *)",
+        "G[n_] := G[n] = Reap[Do[If[PrimeQ[i + j], Sow[i <-> j]], {i, n}, {j, i-1}]][[2, 1]]; a[n_] := Block[{p = 1 + Boole@OddQ@n, ep, s}, ep = Reverse@ SortBy[ Select[ Tuples[ Range[1, n, p], 2], #[[1]] > #[[2]] &], Total]; s = SelectFirst[ ep, FindHamiltonianPath[G[n], #[[1]], #[[2]]] != {} &, {}]; If[s == {}, 0, n (n + 1) - Total[s]]]; Array[a, 51] (* _Giovanni Resta_, Jun 05 2020 *)"
+    ],
+    "xref": [
+        "Cf. A064821, A335047."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ivan N. Ianakiev_, Jun 05 2020",
+    "ext": [
+        "More terms from _Giovanni Resta_, Jun 05 2020"
+    ],
+    "references": 1,
+    "revision": 7,
+    "time": "2020-07-14T23:48:03-04:00",
+    "created": "2020-07-14T23:48:03-04:00"
+}

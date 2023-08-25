@@ -1,0 +1,36 @@
+{
+    "number": 123247,
+    "data": "1,3,6,13,27,54,107,213,423,845,1685,3371,6735,13468,26937,53900,107873,216035,432787,867313,1738728,3486464,6993111,14029776,28153533,56507114,113435141,227755613,457358671,918562597",
+    "name": "Let S(1)={1} and, for n>1 let S(n) be the smallest set containing x, x+1, 2x and 3x for each element x in S(n-1). a(n) is the number of elements in S(n).",
+    "comment": [
+        "If the set mapping has x -> x, 2x, 3x, 5x is used instead of x -> x, x+1, 2x, 3x, the corresponding sequence consists of the tetrahedral numbers C(n+3,3) = A000292."
+    ],
+    "example": [
+        "Under the indicated set mapping we have {1} -> {1,2,3} -> {1,2,3,4,6,9} -> {1,2,3,4,5,6,7,8,9,10,12,18,27}, ..., so a(2)=3, a(3)=6, a(4)=13, etc."
+    ],
+    "program": [
+        "(PARI) lista(nn) = {my(k, v=[1]); print1(1); for(n=2, nn, v=Set(vector(4*#v, i, if(k=i%4, k*v[(3+i)\\4], v[i/4]+1))); print1(\", \", #v)); } \\\\ _Jinyuan Wang_, Apr 14 2020",
+        "(Python)",
+        "from itertools import chain, islice",
+        "def A123247_gen(): # generator of terms",
+        "    s = {1}",
+        "    while True:",
+        "        yield len(s)",
+        "        s = set(chain.from_iterable((x,x+1,2*x,3*x) for x in s))",
+        "A123247_list = list(islice(A123247_gen(),20)) # _Chai Wah Wu_, Jan 12 2022"
+    ],
+    "xref": [
+        "Cf. A000292, A122554, A168043."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_John W. Layman_, Oct 04 2006",
+    "ext": [
+        "a(14)-a(25) from _Jinyuan Wang_, Apr 14 2020",
+        "a(26)-a(30) from _Chai Wah Wu_, Jan 12 2022"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2023-03-21T15:23:25-04:00",
+    "created": "2006-10-09T03:00:00-04:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 333034,
+    "data": "69,1410,21921,298725,3792660,46016727,541129686,6221175405,70311424443,784112741880,8651123311875,94611219470547",
+    "name": "a(n) is the sum of the digits of the squares of all n-digit numbers.",
+    "comment": [
+        "a(n) == 6 (mod 9). - _Robert Israel_, Mar 06 2020"
+    ],
+    "formula": [
+        "a(n) = A071317(10^n) - A071317(10^(n-1))."
+    ],
+    "example": [
+        "a(1) = 1+4+9+(1+6)+(2+5)+(3+6)+(4+9)+(6+4)+(8+1) = 69."
+    ],
+    "maple": [
+        "ds:= proc(x) local t,s,r;",
+        "  s:= x; t:= 0;",
+        "  while s > 0 do",
+        "    r:= s mod 10;",
+        "    t:= t + r;",
+        "    s:= (s-r)/10;",
+        "  od;",
+        "t",
+        "end proc:",
+        "seq(add(ds(x^2),x=10^(n-1)..10^n-1), n=1..5);"
+    ],
+    "program": [
+        "(PARI) for(d=0,6,print1(sum(k=10^d,10^(d+1)-1,vecsum(digits(k^2))),\", \")) \\\\ _Hugo Pfoertner_, Mar 05 2020",
+        "(Python)",
+        "def A333034(n):",
+        "    return sum(int(d) for i in range(10**(n-1),10**n) for d in str(i**2)) # _Chai Wah Wu_, Mar 05 2020"
+    ],
+    "xref": [
+        "Cf. A071317."
+    ],
+    "keyword": "nonn,more,base",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Mar 05 2020",
+    "ext": [
+        "a(8)-a(9) from _Hugo Pfoertner_, Mar 05 2020",
+        "a(10)-a(12) from _Giovanni Resta_, Mar 07 2020"
+    ],
+    "references": 2,
+    "revision": 23,
+    "time": "2020-03-07T07:58:01-05:00",
+    "created": "2020-03-05T22:52:19-05:00"
+}

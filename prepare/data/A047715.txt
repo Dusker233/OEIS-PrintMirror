@@ -1,0 +1,36 @@
+{
+    "number": 47715,
+    "data": "4,19,34,49,64,84,99,114,129,164,179,194,244,259,274,289,304,324,339,354,369,419,434,499,514,529,544,594,609,628,643,658,673,674,708,723,738,769,784,788,803,849,868,883,898,913,963,978,1024,1043,1138,1153",
+    "name": "Numbers that are the sum of 4 but no fewer nonzero fourth powers.",
+    "comment": [
+        "First differs from A003338 at term 64: A003338(64) = 1393 is also a term of A003337, so not a term here. - _Michael S. Branicky_, Apr 19 2021"
+    ],
+    "formula": [
+        "Equals A003338 - A344188 - A344187 - A000583, where \"-\" denotes \"set difference\". - _Sean A. Irvine_, May 15 2021"
+    ],
+    "program": [
+        "(Python)",
+        "limit = 1153",
+        "from functools import lru_cache",
+        "qd = [k**4 for k in range(1, int(limit**.25)+2) if k**4 + 3 <= limit]",
+        "qds = set(qd)",
+        "@lru_cache(maxsize=None)",
+        "def findsums(n, m):",
+        "  if m == 1: return {(n,)} if n in qds else set()",
+        "  return set(tuple(sorted(t+(q,))) for q in qds for t in findsums(n-q, m-1))",
+        "A003338s = set(n for n in range(4, limit+1) if len(findsums(n, 4)) >= 1)",
+        "A003337s = set(n for n in range(3, limit+1) if len(findsums(n, 3)) >= 1)",
+        "A003336s = set(n for n in range(2, limit+1) if len(findsums(n, 2)) >= 1)",
+        "print(sorted(A003338s - A003337s - A003336s - qds)) # _Michael S. Branicky_, Apr 19 2021"
+    ],
+    "xref": [
+        "Cf. A000583, A002377, A003338 (sum of 4), A003337 (sum of 3), A003336 (sum of 2), A344188, A344187."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "Arlin Anderson (starship1(AT)gmail.com)",
+    "references": 1,
+    "revision": 15,
+    "time": "2021-05-16T22:17:34-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

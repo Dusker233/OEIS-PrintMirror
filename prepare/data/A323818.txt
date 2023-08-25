@@ -1,0 +1,58 @@
+{
+    "number": 323818,
+    "data": "1,1,4,96,31840,2147156736,9223372011084915712,170141183460469231602560095199828453376,57896044618658097711785492504343953923912733397452774312021795134847892828160",
+    "name": "Number of connected set-systems covering n vertices.",
+    "comment": [
+        "Unlike the nearly identical sequence A092918, this sequence does not count under a(1) the a single-vertex hypergraph with no edges."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A323818/b323818.txt\">Table of n, a(n) for n = 0..11</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1 - x + log(Sum_{n >= 0} 2^(2^n-1) * x^n/n!).",
+        "Logarithmic transform of A003465."
+    ],
+    "example": [
+        "The a(2) = 4 set-systems:",
+        "  {{1, 2}}",
+        "  {{1}, {1,2}}",
+        "  {{2}, {1,2}}",
+        "  {{1}, {2}, {1,2}}"
+    ],
+    "maple": [
+        "b:= n-> add(binomial(n, k)*2^(2^(n-k)-1)*(-1)^k, k=0..n):",
+        "a:= proc(n) option remember; b(n)-`if`(n=0, 0, add(",
+        "       k*binomial(n, k)*b(n-k)*a(k), k=1..n-1)/n)",
+        "    end:",
+        "seq(a(n), n=0..8);  # _Alois P. Heinz_, Jan 30 2019"
+    ],
+    "mathematica": [
+        "nn=8;",
+        "ser=Sum[2^(2^n-1)*x^n/n!,{n,0,nn}];",
+        "Table[SeriesCoefficient[1-x+Log[ser],{x,0,n}]*n!,{n,0,nn}]"
+    ],
+    "program": [
+        "(Magma)",
+        "m:=12;",
+        "f:= func< x | 1-x + Log( (&+[2^(2^n-1)*x^n/Factorial(n): n in [0..m+2]]) ) >;",
+        "R<x>:=PowerSeriesRing(Rationals(), m);",
+        "Coefficients(R!(Laplace( f(x) ))); // _G. C. Greubel_, Oct 04 2022",
+        "(SageMath)",
+        "m=12;",
+        "def f(x): return 1-x + log(sum(2^(2^n-1)*x^n/factorial(n) for n in range(m+2)))",
+        "def A_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P( f(x) ).egf_to_ogf().list()",
+        "A_list(m) # _G. C. Greubel_, Oct 04 2022"
+    ],
+    "xref": [
+        "Cf. A001187, A003465 (not necessarily connected), A016031, A048143, A092918, A293510, A317672, A323816, A323817 (no singletons), A323819 (unlabeled case)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jan 30 2019",
+    "references": 35,
+    "revision": 13,
+    "time": "2022-10-05T03:24:39-04:00",
+    "created": "2019-01-30T20:46:54-05:00"
+}

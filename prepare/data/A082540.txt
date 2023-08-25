@@ -1,0 +1,37 @@
+{
+    "number": 82540,
+    "data": "1,15,79,239,607,1199,2303,3823,6223,9279,13919,19183,27007,35743,47519,60735,78719,97103,122447,148527,181839,216959,262543,306863,365343,423855,495855,569055,661679,748527,862047,972191,1104831,1237247",
+    "name": "Number of ordered quadruples (a,b,c,d) with gcd(a,b,c,d)=1 (1 <= {a,b,c,d} <= n).",
+    "link": [
+        "Karl-Heinz Hofmann, <a href=\"/A082540/b082540.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} mu(k)*floor(n/k)^4.",
+        "a(n) is asymptotic to c*n^4 with c=0.92393....",
+        "Lim_{n->infinity} a(n)/n^4 = 1/zeta(4) = A215267 = 90/Pi^4. - _Karl-Heinz Hofmann_, Apr 11 2021",
+        "Lim_{n->infinity} n^4/a(n) =   zeta(4) = A013662 = Pi^4/90. - _Karl-Heinz Hofmann_, Apr 11 2021"
+    ],
+    "program": [
+        "(PARI) a(n)=sum(k=1,n,moebius(k)*floor(n/k)^4)",
+        "(Python)",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A082540(n):",
+        "    if n == 0:",
+        "        return 0",
+        "    c, j = 1, 2",
+        "    k1 = n//j",
+        "    while k1 > 1:",
+        "        j2 = n//k1 + 1",
+        "        c += (j2-j)*A082540(k1)",
+        "        j, k1 = j2, n//j2",
+        "    return n*(n**3-1)-c+j # _Chai Wah Wu_, Mar 29 2021"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Benoit Cloitre_, May 11 2003",
+    "references": 15,
+    "revision": 24,
+    "time": "2021-04-12T00:04:23-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

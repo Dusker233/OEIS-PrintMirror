@@ -1,0 +1,44 @@
+{
+    "number": 52685,
+    "data": "1,1,4,24,168,1680,18720,252000,3830400,65681280,1251936000,26225337600,599710003200,14851444608000,396138155212800,11320537003776000,345079573622784000,11176410365632512000",
+    "name": "Expansion of e.g.f. (1-x^2)/(1-x-2*x^2+x^4).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A052685/b052685.txt\">Table of n, a(n) for n = 0..350</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=633\">Encyclopedia of Combinatorial Structures 633</a>"
+    ],
+    "formula": [
+        "E.g.f.: (1 - x^2)/(1 - x - 2*x^2 + x^4).",
+        "D-finite recurrence: a(0)=1, a(1)=1, a(2)=4, a(3)=24, a(n) = n*a(n-1) + 2*n*(n-1)*a(n-2) - n*(n-1)*(n-2)*(n-3)*a(n-4).",
+        "a(n) = (n!/283)*Sum_{alpha=RootOf(1-z-2*Z^2+Z^4)} (27 + 112*alpha + 9*alpha^2 - 48*alpha^3)*alpha^(-1-n).",
+        "a(n) = n!*A052535(n). - _R. J. Mathar_, Nov 27 2011"
+    ],
+    "maple": [
+        "spec := [S,{S=Sequence(Prod(Z,Union(Z,Sequence(Prod(Z,Z)))))},labeled]: seq(combstruct[count](spec,size=n), n=0..20);"
+    ],
+    "mathematica": [
+        "b[n_]:= b[n]= If[n<4, n!-2*Boole[n==3], b[n-1] +2*b[n-2] -b[n-4]]; (* b=A052535 *)",
+        "A052685[n_]:= n!*b[n];",
+        "Table[A052685[n], {n, 0, 40}] (* _G. C. Greubel_, Jun 03 2022 *)",
+        "With[{nn=20},CoefficientList[Series[(1-x^2)/(1-x-2 x^2+x^4),{x,0,nn}],x] Range[0,nn]!]"
+    ],
+    "program": [
+        "(Magma) R<x>:=PowerSeriesRing(Rationals(), 40); Coefficients(R!(Laplace( (1-x^2)/(1-x-2*x^2+x^4) ))); // _G. C. Greubel_, Jun 03 2022",
+        "(SageMath)",
+        "@CachedFunction",
+        "def b(n): # b = A052535",
+        "    if (n<4): return factorial(n) - 2*bool(n==3)",
+        "    else: return b(n-1) + 2*b(n-2) - b(n-4)",
+        "def A052685(n): return factorial(n)*b(n)",
+        "[A052685(n) for n in (0..40)] # _G. C. Greubel_, Jun 03 2022"
+    ],
+    "xref": [
+        "Cf. A000142, A052535."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "references": 1,
+    "revision": 21,
+    "time": "2023-05-21T15:29:30-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 333364,
+    "data": "2,3,7,11,13,17,19,23,29,37,41,43,47,53,61,67,71,73,79,83,89,97,101,103,107,109,113,127,131,137,139,149,151,157,163,167,173,181,191,193,197,199,211,223,227,229,233,239,241,251,257,263,269,271,277,281,283",
+    "name": "Indices of primes p whose order of primeness A078442(p) is prime.",
+    "comment": [
+        "All terms are prime."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A333364/b333364.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "N. Fernandez, <a href=\"http://www.borve.org/primeness/FOP.html\">An order of primeness, F(p)</a>",
+        "N. Fernandez, <a href=\"/A006450/a006450.html\">An order of primeness</a> [cached copy, included with permission of the author]"
+    ],
+    "formula": [
+        "{ p in primes : A049076(p) is prime }.",
+        "a(n) = pi(A333353(n)), with pi = A000720."
+    ],
+    "example": [
+        "11 is a term: prime(11) = 31 -> 11 -> 5 -> 3 -> 2 -> 1, five (a prime number of) steps \"->\" = pi = A000720."
+    ],
+    "maple": [
+        "b:= proc(n) option remember;",
+        "      `if`(isprime(n), 1+b(numtheory[pi](n)), 0)",
+        "    end:",
+        "a:= proc(n) option remember; local p;",
+        "      p:= `if`(n=1, 1, a(n-1));",
+        "      do p:= nextprime(p);",
+        "         if isprime(b(p)+1) then break fi",
+        "      od; p",
+        "    end:",
+        "seq(a(n), n=1..62);"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[PrimeQ[n], 1 + b[PrimePi[n]], 0];",
+        "a[n_] := a[n] = Module[{p}, p = If[n == 1, 1, a[n - 1]];",
+        "   While[True, p = NextPrime[p]; If[PrimeQ[b[p] + 1], Break[]]]; p];",
+        "Table[a[n], {n, 1, 62}] (* _Jean-Fran\u00e7ois Alcover_, Sep 14 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000040, A000720, A049076, A333353."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alois P. Heinz_, Mar 16 2020",
+    "references": 2,
+    "revision": 16,
+    "time": "2022-09-14T07:27:06-04:00",
+    "created": "2020-03-17T18:33:30-04:00"
+}

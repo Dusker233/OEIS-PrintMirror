@@ -1,0 +1,66 @@
+{
+    "number": 343663,
+    "data": "1,1,2,4,12,34,108,344,1136,3796,12920,44442,154596,542336,1917648,6825464,24439008,87962312,318087216,1155090092,4210494616,15400782912,56508464736,207935588586,767162495940,2837260332472,10516827106016,39063666532784,145378611426512",
+    "name": "Number of unlabeled binary rooted semi-identity plane trees with 2*n - 1 nodes.",
+    "comment": [
+        "In a semi-identity tree, only the non-leaf branches of any given vertex are required to be distinct. Alternatively, a rooted tree is a semi-identity tree if the non-leaf branches of the root are all distinct and are themselves semi-identity trees."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A343663/b343663.txt\">Table of n, a(n) for n = 1..500</a>",
+        "Samuele Giraudo, <a href=\"https://arxiv.org/abs/2204.03586\">The combinator M and the Mockingbird lattice</a>, arXiv:2204.03586 [math.CO], 2022.",
+        "Samuele Giraudo, <a href=\"https://igm.univ-mlv.fr/~giraudo/Data/Papers/Mockingbird%20lattices.pdf\">Mockingbird lattices</a>, S\u00e9minaire Lotharingien de Combinatoire XX, Proceedings of the 34th Conf. on Formal Power, Series and Algebraic Combinatorics (Bangalore, India, 2022)."
+    ],
+    "formula": [
+        "G.f.: x*A(x) where A(x) satisfies A(x) = 1 + x + x*(A(x)^2 - A(x^2)). - _Andrew Howroyd_, May 07 2021"
+    ],
+    "example": [
+        "The a(1) = 1 through a(5) = 12 trees:",
+        "  o  (oo)  ((oo)o)  (((oo)o)o)  ((((oo)o)o)o)",
+        "           (o(oo))  ((o(oo))o)  (((o(oo))o)o)",
+        "                    (o((oo)o))  (((oo)o)(oo))",
+        "                    (o(o(oo)))  ((o((oo)o))o)",
+        "                                ((o(o(oo)))o)",
+        "                                ((o(oo))(oo))",
+        "                                ((oo)((oo)o))",
+        "                                ((oo)(o(oo)))",
+        "                                (o(((oo)o)o))",
+        "                                (o((o(oo))o))",
+        "                                (o(o((oo)o)))",
+        "                                (o(o(o(oo))))"
+    ],
+    "mathematica": [
+        "crsiq[n_]:=Join@@Table[Select[Union[Tuples[crsiq/@ptn]],#=={}||#=={{},{}}||Length[#]==2&&(UnsameQ@@DeleteCases[#,{}])&],{ptn,Join@@Permutations/@IntegerPartitions[n-1]}];",
+        "Table[Length[crsiq[n]],{n,1,11,2}]",
+        "(* Second program: *)",
+        "m = 29; p[_] = 1;",
+        "Do[p[x_] = 1 + x + x (p[x]^2 - p[x^2]) + O[x]^m // Normal, {m}];",
+        "CoefficientList[p[x], x] (* _Jean-Fran\u00e7ois Alcover_, May 09 2021, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(p=O(1)); for(n=1, n, p=1 + x + x*(p^2-subst(p,x,x^2))); Vec(p)} \\\\ _Andrew Howroyd_, May 07 2021"
+    ],
+    "xref": [
+        "The not necessarily semi-identity version is A000108.",
+        "The non-plane version is A063895, ranked by A339193.",
+        "The Matula-Goebel numbers in the non-plane case are A339193.",
+        "The not-necessarily binary version is A343937.",
+        "A000081 counts unlabeled rooted trees with n nodes.",
+        "2*A001190 - 1 counts binary trees, ranked by A111299.",
+        "A001190 counts semi-binary trees, ranked by A292050.",
+        "A004111 counts identity trees, ranked by A276625.",
+        "A306200 counts semi-identity trees, ranked by A306202.",
+        "A306201 counts balanced semi-identity trees, ranked by A306203.",
+        "A331966 counts lone-child avoiding semi-identity trees, ranked by A331965.",
+        "Cf. A001678, A320230, A331934, A331963, A331964."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, May 05 2021",
+    "ext": [
+        "Terms a(13) and beyond from _Andrew Howroyd_, May 07 2021"
+    ],
+    "references": 3,
+    "revision": 29,
+    "time": "2022-04-23T01:34:19-04:00",
+    "created": "2021-05-06T21:24:20-04:00"
+}

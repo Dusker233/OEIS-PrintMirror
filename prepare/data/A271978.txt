@@ -1,0 +1,48 @@
+{
+    "number": 271978,
+    "data": "0,173,2454,332147,37665879,774841151,1162263921,1937434592,2749609302,3486784574,3486786855,3487116548,3524450280",
+    "name": "G_7(n), where G is the Goodstein function defined in A266201.",
+    "comment": [
+        "a(16) is too big to include - see b-file. a(17) = 9.221...*10^2347, a(18) = 2.509...*10^316952. - _Pontus von Br\u00f6mssen_, Sep 25 2020"
+    ],
+    "link": [
+        "Pontus von Br\u00f6mssen, <a href=\"/A271978/b271978.txt\">Table of n, a(n) for n = 3..16</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Goodstein&#39;s_theorem\">Goodstein's theorem</a>"
+    ],
+    "example": [
+        "Find G_7(7):",
+        "G_1(7) = B_2(7)-1= B[2](2^2+2+1)-1 = 3^3+3+1-1 = 30;",
+        "G_2(7) = B_3(G_1(7))-1 = B[3](3^3+3)-1 =  4^4+4-1 = 259;",
+        "G_3(7) = B_4(G_2(7))-1 = 5^5+3-1 = 3127;",
+        "G_4(7) = B_5(G_3(7))-1 = 6^6+2-1 = 46657;",
+        "G_5(7) = B_6(G_4(7))-1 = 7^7+1-1 = 823543;",
+        "G_6(7) = B_7(G_5(7))-1 = 8^8-1 = 16777215;",
+        "G_7(7) = B_8(G_6(7))-1 = 7*9^7+7*9^6+7*9^5+7*9^4+7*9^3+7*9^2+7*9+7-1 = 37665879."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory.factor_ import digits",
+        "def bump(n,b):",
+        "  s=digits(n,b)[1:]",
+        "  l=len(s)",
+        "  return sum(s[i]*(b+1)**bump(l-i-1,b) for i in range(l) if s[i])",
+        "def A271978(n):",
+        "  if n==3: return 0",
+        "  for i in range(2,9):",
+        "    n=bump(n,i)-1",
+        "  return n # _Pontus von Br\u00f6mssen_, Sep 25 2020"
+    ],
+    "xref": [
+        "Cf. A056004: G_1(n); A057650: G_2(n); A059934: G_3(n); A059935: G_4(n); A059936: G_5(n); A271977: G_6(n); this sequence: G_7(n); A271979: G_8(n); A271985: G_9(n); A271986: G_10(n); A266201: G_n(n)."
+    ],
+    "keyword": "nonn",
+    "offset": "3,2",
+    "author": "_Natan Arie Consigli_, Apr 30 2016",
+    "ext": [
+        "a(9) corrected by _Pontus von Br\u00f6mssen_, Sep 25 2020"
+    ],
+    "references": 6,
+    "revision": 30,
+    "time": "2020-09-25T10:18:39-04:00",
+    "created": "2016-05-01T16:17:42-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 277452,
+    "data": "1,2,13,226,7889,458026,39684637,4788052298,766526598721,157108817646514,40104442275129101,12472587843118746322,4641978487740740993233,2036813028164774540010266,1040451608604560812273060189,612098707457003526384666111226",
+    "name": "a(n) = Sum_{k=0..n} binomial(n,k) * n^k * k!.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A277452/b277452.txt\">Table of n, a(n) for n = 0..232</a>"
+    ],
+    "formula": [
+        "a(n) = exp(1/n) * n^n * Gamma(n+1, 1/n).",
+        "a(n) ~ n^n * n!.",
+        "a(n) = n! * [x^n] exp(x)/(1 - n*x). - _Ilya Gutkovskiy_, Sep 18 2018",
+        "a(n) = floor(n^n*n!*exp(1/n)), n > 0. - _Peter McNair_, Dec 20 2021"
+    ],
+    "maple": [
+        "a := n -> simplify(hypergeom([1, -n], [], -n)):",
+        "seq(a(n), n=0..15); # _Peter Luschny_, Oct 03 2018",
+        "# second Maple program:",
+        "b:= proc(n, k) option remember;",
+        "      1 + `if`(n>0, k*n*b(n-1, k), 0)",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..17);  # _Alois P. Heinz_, May 09 2020"
+    ],
+    "mathematica": [
+        "Flatten[{1, Table[Sum[Binomial[n, k]*n^k*k!, {k, 0, n}], {n, 1, 20}]}]"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=0, n, binomial(n,k) * n^k * k!); \\\\ _Michel Marcus_, Sep 18 2018"
+    ],
+    "xref": [
+        "Main diagonal of A320031.",
+        "Cf. A086331, A277373, A277423, A277453."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Vaclav Kotesovec_, Oct 16 2016",
+    "references": 7,
+    "revision": 22,
+    "time": "2022-01-24T15:54:10-05:00",
+    "created": "2016-10-16T14:50:04-04:00"
+}

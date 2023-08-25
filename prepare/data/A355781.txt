@@ -1,0 +1,41 @@
+{
+    "number": 355781,
+    "data": "1,2,14,166,2854,64854,1839622,62688406,2497159302,113932356630,5860555367814,335639363668118,21184456464757894,1461163816568091926,109351697864286862214,8825909581376322510230,764231343305480319046278,70670539764733828998689302",
+    "name": "E.g.f. satisfies log(A(x)) = 2 * (exp(x) - 1) * A(x).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A355781/b355781.txt\">Table of n, a(n) for n = 0..347</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp( -LambertW(2 * (1 - exp(x))) ).",
+        "a(n) = Sum_{k=0..n} 2^k * (k+1)^(k-1) * Stirling2(n,k).",
+        "From _Vaclav Kotesovec_, Jul 18 2022: (Start)",
+        "E.g.f.: LambertW(2 * (1 - exp(x))) / (2 * (1 - exp(x))).",
+        "a(n) ~ sqrt(2*exp(1) + 1) * sqrt(log(1 + exp(-1)/2)) * n^(n-1) / (exp(n-1)  * (log(exp(1) + 1/2) - 1)^n). (End)"
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0,",
+        "     2^m*(m+1)^(m-1), m*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..21);  # _Alois P. Heinz_, Jul 29 2022"
+    ],
+    "mathematica": [
+        " b[n_, m_] := b[n, m] = If[n == 0, 2^m*(m + 1)^(m - 1), m*b[n - 1, m] + b[n - 1, m + 1]];",
+        "a[n_] := b[n, 0];",
+        "Table[a[n], {n, 0, 21}] (* _Jean-Fran\u00e7ois Alcover_, Nov 16 2022, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(serlaplace(exp(-lambertw(2*(1-exp(x))))))",
+        "(PARI) a(n) = sum(k=0, n, 2^k*(k+1)^(k-1)*stirling(n, k, 2));"
+    ],
+    "xref": [
+        "Cf. A052880, A351276, A355788."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Seiichi Manyama_, Jul 16 2022",
+    "references": 3,
+    "revision": 22,
+    "time": "2022-11-16T08:53:16-05:00",
+    "created": "2022-07-17T10:53:23-04:00"
+}

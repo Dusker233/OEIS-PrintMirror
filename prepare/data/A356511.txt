@@ -1,0 +1,51 @@
+{
+    "number": 356511,
+    "data": "1,2,3,4,5,9,19,45,107,275,778,2581,10170,45237,222859,1191214,6887258,42894933,287397837",
+    "name": "Total number of distinct numbers that can be obtained by starting with 1 and applying the \"Choix de Bruxelles\", version 2 operation at most n times in duodecimal (base 12).",
+    "link": [
+        "Eric Angelini, Lars Blomberg, Charlie Neder, Remy Sigrist, and N. J. A. Sloane, <a href=\"http://arxiv.org/abs/1902.01444\">\"Choix de Bruxelles\": A New Operation on Positive Integers</a>, arXiv:1902.01444 [math.NT], Feb 2019; Fib. Quart. 57:3 (2019), 195-200.",
+        "J. Conrad, <a href=\"https://raw.githubusercontent.com/cxr00/cxr/master/tests/base64/choix_de_bruxelles.py\">Python program</a>."
+    ],
+    "example": [
+        "For n=4, the a(4) = 5 numbers obtained are (in base 12): 1, 2, 4, 8, 14.",
+        "For n=5, they expand to a(5) = 9 numbers (in base 12): 1, 2, 4, 8, 12, 14, 18, 24, 28."
+    ],
+    "program": [
+        "(Python) See links",
+        "(Python)",
+        "from itertools import islice",
+        "from sympy.ntheory import digits",
+        "def fd12(d): return sum(12**i*di for i, di in enumerate(d[::-1]))",
+        "def cdb2(n):",
+        "    d, out = digits(n, 12)[1:], {n}",
+        "    for l in range(1, len(d)+1):",
+        "        for i in range(len(d)+1-l):",
+        "            if d[i] == 0: continue",
+        "            t = fd12(d[i:i+l])",
+        "            out.add(fd12(d[:i] + digits(2*t, 12)[1:] + d[i+l:]))",
+        "            if t&1 == 0:",
+        "                out.add(fd12(d[:i] + digits(t//2, 12)[1:] + d[i+l:]))",
+        "    return out",
+        "def agen():",
+        "    reach, expand = {1}, [1]",
+        "    while True:",
+        "        yield len(reach)",
+        "        newreach = {r for q in expand for r in cdb2(q) if r not in reach}",
+        "        reach |= newreach",
+        "        expand = list(newreach)",
+        "print(list(islice(agen(), 14))) # _Michael S. Branicky_, Aug 17 2022"
+    ],
+    "xref": [
+        "Cf. A323289 (decimal)."
+    ],
+    "keyword": "nonn,more,base",
+    "offset": "0,2",
+    "author": "_J. Conrad_, Aug 09 2022",
+    "ext": [
+        "a(16)-a(18) from _Michael S. Branicky_, Aug 17 2022"
+    ],
+    "references": 1,
+    "revision": 26,
+    "time": "2023-05-17T10:29:18-04:00",
+    "created": "2022-08-12T11:46:06-04:00"
+}

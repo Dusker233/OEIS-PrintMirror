@@ -1,0 +1,42 @@
+{
+    "number": 34731,
+    "data": "1,2,3,7,15,46,133,436,1433,4878,16797,58837,208013,743034,2674457,9695281,35357671,129646266,477638701,1767268073,6564120555,24466283818,91482563641,343059672916,1289904147339,4861946609466",
+    "name": "Dirichlet convolution of b_n=1 with Catalan numbers.",
+    "comment": [
+        "Also number of objects fixed by permutations A057509/A057510 (induced by shallow rotation of general parenthesizations/plane trees)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A034731/b034731.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{d divides n} C(d-1) where C() are the Catalan numbers (A000108).",
+        "a(n) ~ 4^(n-1) / (sqrt(Pi) * n^(3/2)). - _Vaclav Kotesovec_, Dec 05 2015",
+        "L.g.f.: -log(Product_{k>=1} (1 - x^k)^(binomial(2*k-2,k-1)/k^2)) = Sum_{n>=1} a(n)*x^n/n. - _Ilya Gutkovskiy_, May 23 2018",
+        "G.f.: Sum_{n>=1} (1 - sqrt(1 - 4*x^n))/2. - _Paul D. Hanna_, Jan 12 2021",
+        "G.f.: Sum_{n>=1} A000108(n-1) * x^n/(1 - x^n) where A000108(n) = binomial(2*n,n)/(n+1). - _Paul D. Hanna_, Jan 12 2021"
+    ],
+    "mathematica": [
+        "a[n_] := DivisorSum[n, CatalanNumber[#-1]&]; Array[a, 26] (* _Jean-Fran\u00e7ois Alcover_, Dec 05 2015 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sumdiv(n, d, binomial(2*(d-1),d-1)/d) \\\\ _Michel Marcus_, Jun 07 2013",
+        "(PARI) {a(n) = my(A = sum(m=1, n, (1 - sqrt(1 - 4*x^m +x*O(x^n)))/2 )); polcoeff(A, n)}",
+        "for(n=1, 30, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Jan 12 2021",
+        "(PARI) {a(n) = my(A = sum(m=1, n, binomial(2*m-2,m-1)/m * x^m/(1 - x^m +x*O(x^n)) )); polcoeff(A, n)}",
+        "for(n=1, 30, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Jan 12 2021"
+    ],
+    "xref": [
+        "Occurs for first time in A073202 as row 16.",
+        "Cf. A000108, A057509, A057510, A057546."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Erich Friedman_",
+    "ext": [
+        "More comments from _Antti Karttunen_, Jan 03 2003"
+    ],
+    "references": 9,
+    "revision": 24,
+    "time": "2021-01-12T15:34:31-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

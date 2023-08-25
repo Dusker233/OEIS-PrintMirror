@@ -1,0 +1,44 @@
+{
+    "number": 111886,
+    "data": "1,1764,1942416,1744835904,1413470290176,1083688832185344,806595068762689536,590914962115587293184,429295503918929370218496,310518802877016005311463424,224098118280955193084850733056",
+    "name": "Sixth column of triangle A112492 (inverse scaled Pochhammer symbols).",
+    "comment": [
+        "Also continuation of family of differences of reciprocals of unity. See A001242 and triangle A008969."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A111886/b111886.txt\">Table of n, a(n) for n = 0..250</a>",
+        "Mircea Merca, <a href=\"https://www.researchgate.net/publication/264664262_Some_experiments_with_complete_and_elementary_symmetric_functions\">Some experiments with complete and elementary symmetric functions</a>, Periodica Mathematica Hungarica, 69 (2014), 182-189."
+    ],
+    "formula": [
+        "G.f.: 1/Product_{j=1..6} (1-6!*x/j).",
+        "a(n) = -((6!)^n)*Sum_{j=1..6} (-1)^j*binomial(6, j)/j^n, n >= 0.",
+        "a(n) = A112492(n+5, 6), n>=0."
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[k==0 || k==n, 1, (k+1)^(n-k)*T[n-1,k-1] +k!*T[n-1,k]]; (* T = A112492 *)",
+        "Table[T[n+5,5], {n,0,30}] (* _G. C. Greubel_, Jul 24 2023 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = -((6!)^n)*sum(j=1, 6, (-1)^j*binomial(6, j)/j^n); \\\\ _Michel Marcus_, Apr 28 2020",
+        "(Magma)",
+        "A111886:= func< n | (-1)*Factorial(6)^n*(&+[(-1)^j*Binomial(6,j)/j^n : j in [1..6]]) >;",
+        "[A111886(n): n in [0..30]]; // _G. C. Greubel_, Jul 24 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def T(n,k): # T = A112492",
+        "    if (k==0 or k==n): return 1",
+        "    else: return (k+1)^(n-k)*T(n-1,k-1) + factorial(k)*T(n-1,k)",
+        "def A111886(n): return T(n+5,5)",
+        "[A111886(n) for n in range(31)] # _G. C. Greubel_, Jul 24 2023"
+    ],
+    "xref": [
+        "Also right-hand column 5 in triangle A008969."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Wolfdieter Lang_, Sep 12 2005",
+    "references": 3,
+    "revision": 16,
+    "time": "2023-07-30T02:15:07-04:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

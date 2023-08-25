@@ -1,0 +1,32 @@
+{
+    "number": 324711,
+    "data": "8580,16632,24840,35910,38280,53130,161040,186732,276276,429780,598290,833112,1232616,1297890,1631448,2661330,2781000,2875740,3111108,3233790,3449640,3504816,3754920,4901160,5185488,5211570,5948250,6749028,8066640,9006984,10750080",
+    "name": "Number x such that sigma(x) = Sum_{i=1..k} {sigma(x/p_i)}, where p_i are the k prime factors of x.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A324711/b324711.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "example": [
+        "Prime factors of 8580 are 2, 3, 5, 11, 13 and sigma(8580) = 28224, sigma(8580/2) + sigma(8580/3) + sigma(8580/5) + sigma(8580/11) + sigma(8580/13) = 12096 + 7056 + 4704 + 2352 + 2016 = 28224."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local k,n; for n from 1 to q do",
+        "if sigma(n)=add(sigma(n/k),k=factorset(n)) then print(n);",
+        "fi; od; end: P(10^9);"
+    ],
+    "mathematica": [
+        "Select[Range[2, 60000], DivisorSigma[1, #] == Total@DivisorSigma[1, #/FactorInteger[#][[;; , 1]]] &] (* _Amiram Eldar_, Mar 20 2019 *)"
+    ],
+    "program": [
+        "(PARI) isok(x) = my(f=factor(x)[,1]~); sigma(x) == sum(k=1, #f, sigma(x/f[k])); \\\\ _Michel Marcus_, Mar 15 2019"
+    ],
+    "xref": [
+        "Cf. A000203, A324710."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Mar 13 2019",
+    "references": 3,
+    "revision": 17,
+    "time": "2019-03-20T17:10:13-04:00",
+    "created": "2019-03-19T07:21:53-04:00"
+}

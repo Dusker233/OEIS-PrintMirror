@@ -1,0 +1,44 @@
+{
+    "number": 130489,
+    "data": "0,1,3,6,10,15,21,28,36,45,55,55,56,58,61,65,70,76,83,91,100,110,110,111,113,116,120,125,131,138,146,155,165,165,166,168,171,175,180,186,193,201,210,220,220,221,223,226,230,235,241,248,256,265,275,275,276",
+    "name": "a(n) = Sum_{k=0..n} (k mod 11) (Partial sums of A010880).",
+    "comment": [
+        "Let A be the Hessenberg n X n matrix defined by A[1,j] = j mod 11, A[i,i]:=1, A[i,i-1]=-1. Then, for n >= 1, a(n)=det(A). - _Milan Janjic_, Jan 24 2010"
+    ],
+    "link": [
+        "Shawn A. Broyles, <a href=\"/A130489/b130489.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_12\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,0,0,0,0,0,0,0,0,1,-1)."
+    ],
+    "formula": [
+        "a(n) = 55*floor(n/11) + A010880(n)*(A010880(n) + 1)/2.",
+        "G.f.: (Sum_{k=1..10} k*x^k)/((1-x^11)*(1-x)).",
+        "G.f.: x*(1 - 11*x^10 + 10*x^11)/((1-x^11)*(1-x)^3)."
+    ],
+    "maple": [
+        "seq(coeff(series(x*(1-11*x^10+10*x^11)/((1-x^11)*(1-x)^3), x, n+1), x, n), n = 0 .. 60); # _G. C. Greubel_, Aug 31 2019"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1,0,0,0,0,0,0,0,0,0,1,-1}, {0,1,3,6,10,15,21,28,36,45, 55,55}, 60] (* _G. C. Greubel_, Aug 31 2019 *)",
+        "Accumulate[PadRight[{},80,Range[0,10]]] (* _Harvey P. Dale_, Jul 21 2021 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=0, n, k % 11); \\\\ _Michel Marcus_, Apr 28 2018",
+        "(Magma) I:=[0,1,3,6,10,15,21,28,36,45,55,55]; [n le 12 select I[n] else Self(n-1) + Self(n-11) - Self(n-12): n in [1..61]]; // _G. C. Greubel_, Aug 31 2019",
+        "(Sage)",
+        "def A130489_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P(x*(1-11*x^10+10*x^11)/((1-x^11)*(1-x)^3)).list()",
+        "A130489_list(60) # _G. C. Greubel_, Aug 31 2019",
+        "(GAP) a:=[0,1,3,6,10,15,21,28,36,45, 55,55];; for n in [13..61] do a[n]:=a[n-1]+a[n-11]-a[n-12]; od; a; # _G. C. Greubel_, Aug 31 2019"
+    ],
+    "xref": [
+        "Cf. A010872, A010873, A010874, A010875, A010876, A010877, A010878, A010879, A130481, A130482, A130483, A130484, A130485, A130486, A130487, A130488."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Hieronymus Fischer_, May 31 2007",
+    "references": 4,
+    "revision": 24,
+    "time": "2022-09-08T08:45:30-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

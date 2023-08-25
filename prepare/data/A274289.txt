@@ -1,0 +1,50 @@
+{
+    "number": 274289,
+    "data": "1,1,2,4,9,22,54,134,335,843,2132,5409,13761,35088,89638,229361,587678,1507586,3871589,9952087,25604573,65927447,169875992,438016016,1130103976,2917412699,7535482753,19473430909,50347508572,130228143004,336985674038",
+    "name": "Number of equivalence classes of Dyck paths of semilength n for the string udu.",
+    "link": [
+        "K. Manes, A. Sapounakis, I. Tasoulas, P. Tsikouras, <a href=\"http://arxiv.org/abs/1510.01952\">Equivalence classes of ballot paths modulo strings of length 2 and 3</a>, arXiv:1510.01952 [math.CO], 2015."
+    ],
+    "maple": [
+        "G := 1 ;",
+        "T := 1 ;",
+        "for t from 1 to 40 do",
+        "    G := x*(1+G)+x^2*(1+x*G)*(1+x*(1+x*G))*G ;",
+        "    G := taylor(G,x=0,t+1) ;",
+        "    G := convert(G,polynom) ;",
+        "    T := (-x^2-x^3*T^3-x^2*T^2)/(x-1) ;",
+        "    T := taylor(T,x=0,t+1) ;",
+        "    T := convert(T,polynom) ;",
+        "    F := (x*(1-x)^2*(1+G+x*G)+x^5*(1+x*G)*G^2)/(1-x)/((1-x)^2+(x-2)*x^2*G)",
+        "               -x^4*(1-x+x^3)*(1+x*G)*G*T/(1-x)^2/(1-x+x^3-x*T) ;",
+        "    F := taylor(F,x=0,t+1) ;",
+        "    F := convert(F,polynom) ;",
+        "    for i from 0 to t do",
+        "        printf(\"%d,\",coeff(F,x,i)) ;",
+        "    od;",
+        "    print();",
+        "end do: # _R. J. Mathar_, Jun 21 2016"
+    ],
+    "mathematica": [
+        "G = 1; T = 1;",
+        "For[ t = 1 , t <= 40, t++,",
+        "G = x*(1 + G) + x^2*(1 + x*G)*(1 + x*(1 + x*G))*G + O[x]^(t+1) // Normal;",
+        "T = (-x^2 - x^3*T^3 - x^2*T^2)/(x - 1) + O[x]^(t+1) // Normal;",
+        "F = 1 + (x*(1 - x)^2*(1 + G + x*G) + x^5*(1 + x*G)*G^2)/(1 - x)/((1 - x)^2 + (x - 2)*x^2*G) - x^4*(1 - x + x^3)*(1 + x*G)*G*T/(1 - x)^2/(1 - x + x^3 - x*T) + O[x]^(t+1) // Normal;",
+        "];",
+        "CoefficientList[F, x] (* _Jean-Fran\u00e7ois Alcover_, Jul 27 2018, after _R. J. Mathar_ *)"
+    ],
+    "xref": [
+        "Cf. A274114, A274115."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Jun 17 2016",
+    "ext": [
+        "a(0)=1 prepended by _Alois P. Heinz_, Jul 27 2018"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2018-07-27T12:36:07-04:00",
+    "created": "2016-06-17T16:05:04-04:00"
+}

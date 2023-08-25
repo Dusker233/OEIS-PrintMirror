@@ -1,0 +1,31 @@
+{
+    "number": 227379,
+    "data": "1,3,45,3402,1299078,2507870079,24487299427734,1209640056157393380,302358334494179897593596,382459771435292361460924379370,2448391839613471201062299337071282925",
+    "name": "Hankel determinants of order n of A225439(n): a(n) = det[A225439(i+j-1)], i,j=0..n, n>=0.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A227379/b227379.txt\">Table of n, a(n) for n = 0..53</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * 3^(n*(4*n + 3)/2) * n^(1/36) / 4^(n*(n+1)), where c = 3^(11/36) * exp(1/36) * Gamma(1/3)^(1/3) / (2^(7/12) * A^(1/3) * Pi^(1/6)) = 1.0139930857022957587164044116685749094666597031981229532... and A is the Glaisher-Kinkelin constant A074962. - _Vaclav Kotesovec_, Feb 24 2019"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "A225439 := proc(n) add(binomial(k, n-k)*3^(k)*(-1)^(n-k)*binomial(n+k-1, n-1), k=0..n) end:",
+        "hank1:= (i, j)-> A225439(i+j-1):",
+        "a:= proc(n) Determinant(Matrix(n, n, hank1)) end:",
+        "seq(a(n), n=0..10);"
+    ],
+    "mathematica": [
+        "A225439[n_] := Sum[Binomial[k, n-k]*3^k*(-1)^(n-k)*Binomial[n+k-1, n-1], {k, 0, n}]; a[n_] := Det[Table[A225439[i+j-1], {i, n}, {j, n}]]; a[0] = 1; Table[ a[n], {n, 0, 11}] (* _Vaclav Kotesovec_, Feb 24 2019, after _Jean-Fran\u00e7ois Alcover_ *)"
+    ],
+    "xref": [
+        "Cf. A227143, A225439, A101799, A101800, A165343, A165344, A059486."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Karol A. Penson_, Jul 09 2013",
+    "references": 2,
+    "revision": 13,
+    "time": "2019-02-24T14:38:32-05:00",
+    "created": "2013-07-09T15:28:45-04:00"
+}

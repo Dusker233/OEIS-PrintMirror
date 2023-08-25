@@ -1,0 +1,28 @@
+{
+    "number": 70123,
+    "data": "240,544,799,911,1262,1568,2621,2681,2856,3369,3648,4246,5194,5541,6576,6626,6725,7441,7503,7565,7902,7944,8882,8956,9332,9452,9472,9888,9988,10421,10498,10502,11075,11079,11622",
+    "name": "Numbers m such that [A070080(m), A070081(m), A070082(m)] is an acute scalene integer triangle with prime side lengths.",
+    "link": [
+        "Jean-Fran\u00e7ois Alcover, <a href=\"/A070123/b070123.txt\">Table of n, a(n) for n = 1..1778</a>",
+        "Reinhard Zumkeller, <a href=\"/A070080/a070080.txt\">Integer-sided triangles</a>"
+    ],
+    "example": [
+        "240 is a term because: [A070080(240), A070081(240), A070082(240)]=[7<11<13], A070085(240)=7^2+11^2-13^2=49+121-169=1>0."
+    ],
+    "mathematica": [
+        "m = 500 (* max perimeter *);",
+        "sides[per_] := Select[Reverse /@ IntegerPartitions[per, {3}, Range[ Ceiling[per/2]]], #[[1]] < per/2 && #[[2]] < per/2 && #[[3]] < per/2 &];",
+        "triangles = DeleteCases[Table[sides[per], {per, 3, m}], {}] // Flatten[#, 1]& // SortBy[Total[#] m^3 + #[[1]] m^2 + #[[2]] m + #[[1]] &];",
+        "Position[triangles, {a_, b_, c_} /; a < b < c && AllTrue[{a, b, c}, PrimeQ] && a^2 + b^2 - c^2 > 0] // Flatten (* _Jean-Fran\u00e7ois Alcover_, Oct 12 2021 *)"
+    ],
+    "xref": [
+        "Cf. A070097, A070118, A070111, A070112."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, May 05 2002",
+    "references": 8,
+    "revision": 12,
+    "time": "2021-10-12T21:57:18-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 130485,
+    "data": "0,1,3,6,10,15,21,21,22,24,27,31,36,42,42,43,45,48,52,57,63,63,64,66,69,73,78,84,84,85,87,90,94,99,105,105,106,108,111,115,120,126,126,127,129,132,136,141,147,147,148,150,153,157,162,168,168,169,171,174,178,183",
+    "name": "a(n) = Sum_{k=0..n} (k mod 7) (Partial sums of A010876).",
+    "comment": [
+        "Let A be the Hessenberg n X n matrix defined by A[1,j] = j mod 7, A[i,i]:=1, A[i,i-1]=-1. Then, for n >= 1, a(n)=det(A). - _Milan Janjic_, Jan 24 2010"
+    ],
+    "link": [
+        "Shawn A. Broyles, <a href=\"/A130485/b130485.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_08\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,0,0,0,0,1,-1)."
+    ],
+    "formula": [
+        "a(n) = 21*floor(n/7) + A010876(n)*(A010876(n) + 1)/2.",
+        "G.f.: (Sum_{k=1..6} k*x^k)/((1-x^7)*(1-x)).",
+        "G.f.: x*(1 - 7*x^6 + 6*x^7)/((1-x^7)*(1-x)^3)."
+    ],
+    "maple": [
+        "a:=n->add(chrem( [n,j], [1,7] ),j=1..n):seq(a(n), n=1..70); # _Zerinvary Lajos_, Apr 07 2009"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1,0,0,0,0,0,1,-1},{0,1,3,6,10,15,21,21},70] (* _Harvey P. Dale_, Jul 30 2017 *)"
+    ],
+    "program": [
+        "(PARI) concat(0,Vec((1-7*x^6+6*x^7)/(1-x^7)/(1-x)^3+O(x^70))) \\\\ _Charles R Greathouse IV_, Dec 22 2011",
+        "(Magma) I:=[0,1,3,6,10,15,21,21]; [n le 8 select I[n] else Self(n-1) + Self(n-7) - Self(n-8): n in [1..71]]; // _G. C. Greubel_, Aug 31 2019",
+        "(Sage)",
+        "def A130485_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P(x*(1-7*x^6+6*x^7)/((1-x^7)*(1-x)^3)).list()",
+        "A130485_list(70) # _G. C. Greubel_, Aug 31 2019",
+        "(GAP) a:=[0,1,3,6,10,15,21,21];; for n in [9..71] do a[n]:=a[n-1]+a[n-7]-a[n-8]; od; a; # _G. C. Greubel_, Aug 31 2019"
+    ],
+    "xref": [
+        "Cf. A010872, A010873, A010874, A010875, A010877, A130481, A130482, A130483, A130484."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Hieronymus Fischer_, May 31 2007",
+    "references": 21,
+    "revision": 27,
+    "time": "2022-09-08T08:45:30-04:00",
+    "created": "2007-11-10T03:00:00-05:00"
+}

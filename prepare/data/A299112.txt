@@ -1,0 +1,39 @@
+{
+    "number": 299112,
+    "data": "1,2,6,12,16,30,42,54,66,78,105,120,156,330,525,546,831,1071,1251,1386,1875,1890,2136,2241,2331,2541,2565,2736,2871,3165,3606,3885,4710,5106,5220,5505,6375,6390,6426,6615,6786,8310,8571,9066,10050,10176,10221,10611,11865,11955,12096",
+    "name": "Record values in A243145.",
+    "maple": [
+        "f:= proc(n) local k;",
+        "  for k from (n mod 2)+1 by 2 do",
+        "    if isprime(n+k) and isprime(n+k^2) then return k fi",
+        "  od",
+        "end proc:",
+        "f(1):= 1:",
+        "vmax:= 0: recvals:= NULL:",
+        "for n from 1 to 10^7 do",
+        "    v:= f(n);",
+        "  if v > vmax then",
+        "     vmax:= v; recvals:= recvals, v;",
+        "    fi",
+        "od:",
+        "recvals;"
+    ],
+    "mathematica": [
+        "f[n_] := Module[{k}, For[k = Mod[n, 2]+1, True, k += 2, If[PrimeQ[n + k] && PrimeQ[n + k^2], Return [k]]]]; f[1] = 1;",
+        "vmax = 0;",
+        "Reap[For[n = 1, n <= 10^6, n++, v = f[n]; If[v > vmax, vmax = v; Print[\"n = \", n, \"  v = \", v]; Sow[v]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Oct 16 2020, after Maple *)"
+    ],
+    "xref": [
+        "Cf. A243145, A299073."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Feb 02 2018",
+    "ext": [
+        "a(34)-a(51) from _Chai Wah Wu_, Sep 10 2019"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2020-10-16T08:47:08-04:00",
+    "created": "2018-02-02T17:01:47-05:00"
+}

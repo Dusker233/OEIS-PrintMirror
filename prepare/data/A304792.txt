@@ -1,0 +1,41 @@
+{
+    "number": 304792,
+    "data": "1,2,5,10,19,34,58,96,152,240,361,548,795,1164,1647,2354,3243,4534,6150,8420,11240,15156,19938,26514,34513,45260,58298,75704,96515,124064,157072,199894,251097,317278,395625,496184,615229,765836,944045,1168792,1432439",
+    "name": "Number of subset-sums of integer partitions of n.",
+    "comment": [
+        "For a multiset p of positive integers summing to n, a pair (t,p) is defined to be a subset sum if there exists a submultiset of p summing to t. This sequence is dominated by A122768 + A000041 (number of submultisets of integer partitions of n)."
+    ],
+    "formula": [
+        "a(n) = A276024(n) + A000041(n)."
+    ],
+    "example": [
+        "The a(4)=19 subset sums are (0,4), (4,4), (0,31), (1,31), (3,31), (4,31), (0,22), (2,22), (4,22), (0,211), (1,211), (2,211), (3,211), (4,211), (0,1111), (1,1111), (2,1111), (3,1111), (4,1111)."
+    ],
+    "maple": [
+        "b:= proc(n, i, s) option remember; `if`(n=0, nops(s),",
+        "     `if`(i<1, 0, b(n, i-1, s)+b(n-i, min(n-i, i),",
+        "      map(x-> [x, x+i][], s))))",
+        "    end:",
+        "a:= n-> b(n$2, {0}):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, May 18 2018"
+    ],
+    "mathematica": [
+        "Table[Total[Length[Union[Total/@Subsets[#]]]&/@IntegerPartitions[n]],{n,15}]",
+        "(* Second program: *)",
+        "b[n_, i_, s_] := b[n, i, s] = If[n == 0, Length[s],",
+        "     If[i < 1, 0, b[n, i - 1, s] + b[n - i, Min[n - i, i],",
+        "     {#, # + i}& /@ s // Flatten // Union]]];",
+        "a[n_] := b[n, n, {0}];",
+        "a /@ Range[0, 40] (* _Jean-Fran\u00e7ois Alcover_, May 20 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000041, A108917, A122768, A276024, A284640, A299701, A301856, A301934, A301979, A304793."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, May 18 2018",
+    "references": 12,
+    "revision": 14,
+    "time": "2021-05-20T08:22:22-04:00",
+    "created": "2018-05-18T19:46:25-04:00"
+}

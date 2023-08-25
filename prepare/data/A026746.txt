@@ -1,0 +1,44 @@
+{
+    "number": 26746,
+    "data": "1,1,2,3,5,9,14,23,42,65,107,194,301,495,890,1385,2275,4058,6333,10391,18404,28795,47199,83079,130278,213357,373512,586869,960381,1673271,2633652,4306923,7472326,11779249,19251575,33275451,52527026",
+    "name": "a(n) = Sum_{k=0..floor(n/2)} T(n-k,k), T given by A026736.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A026746/b026746.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) ~ n * phi^(n-2) / 15, where phi = A001622 = (1+sqrt(5))/2 is the golden ratio. - _Vaclav Kotesovec_, Jul 19 2019"
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k] = If[k==0 || k==n, 1, If[EvenQ[n] && k==(n-2)/2, T[n-1, k-1] + T[n-2, k-1] + T[n-1, k], T[n-1, k-1] + T[n-1, k]]]; Table[Sum[T[n-k, k], {k, 0, Floor[n/2]}], {n, 0, 40}] (* _G. C. Greubel_, Jul 19 2019 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "T(n,k) = if(k==n || k==0, 1, k==n-1, n, if((n%2)==0 && k==(n-2)/2, T(n-1, k-1) + T(n-2, k-1) + T(n-1, k), T(n-1, k-1) + T(n-1, k) ));",
+        "vector(30, n, n--; sum(k=0, n\\2, T(n-k,k))) \\\\ _G. C. Greubel_, Jul 19 2019",
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n, k):",
+        "    if (k==0 or k==n): return 1",
+        "    elif (mod(n,2)==0 and k==(n-2)/2): return T(n-1, k-1) + T(n-2, k-1) + T(n-1, k)",
+        "    else: return T(n-1, k-1) + T(n-1, k)",
+        "[sum(T(n-k,k) for k in (0..floor(n/2))) for n in (0..40)] # _G. C. Greubel_, Jul 19 2019",
+        "(GAP)",
+        "T:= function(n,k)",
+        "    if k=0 or k=n then return 1;",
+        "    elif (n mod 2)=0 and k=Int((n-2)/2) then return T(n-1, k-1) + T(n-2, k-1) + T(n-1, k);",
+        "    else return T(n-1, k-1) + T(n-1, k);",
+        "    fi;",
+        "  end;",
+        "List([0..20], n-> Sum([0..Int(n/2)], k-> T(n-k,k) )); # _G. C. Greubel_, Jul 19 2019"
+    ],
+    "xref": [
+        "Cf. A026736."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_",
+    "references": 1,
+    "revision": 11,
+    "time": "2019-07-20T01:16:29-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

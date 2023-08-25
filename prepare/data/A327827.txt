@@ -1,0 +1,37 @@
+{
+    "number": 327827,
+    "data": "0,1,2,9,40,235,1476,11214,91848,859527,8710300,97675138,1179954612,15490520786,217602374458,3280028076615,52571985879600,895913825750191,16140560853800556,307048409240931810,6143666813617775100,129096480664676773542,2840750997343361802150",
+    "name": "Sum of multinomials M(n; lambda), where lambda ranges over all partitions of n into parts incorporating 1.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327827/b327827.txt\">Table of n, a(n) for n = 0..450</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Multinomial_theorem#Multinomial_coefficients\">Multinomial coefficients</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * n!, where c = A247551 = 2.5294774720791526481801161542539542411787... - _Vaclav Kotesovec_, Sep 28 2019"
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1,",
+        "     `if`(i>n, 0, b(n, i+1, `if`(i=k, 0, k))+",
+        "     `if`(i=k, 0, b(n-i, i, k)*binomial(n, i))))",
+        "    end:",
+        "a:= n-> b(n, 1, 0)-b(n, 1$2):",
+        "seq(a(n), n=0..23);"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0, 1, If[i < 2, 0, b[n, i - 1, If[i == k, 0, k]]] + If[i == k, 0, b[n - i, Min[n - i, i], k]/i!]];",
+        "T[n_, k_] := n! (b[n, n, 0] - If[k == 0, 0, b[n, n, k]]);",
+        "a[n_] := T[n, 1];",
+        "a /@ Range[0, 23] (* _Jean-Fran\u00e7ois Alcover_, Dec 09 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=1 of A327801."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 26 2019",
+    "references": 3,
+    "revision": 12,
+    "time": "2020-12-09T15:06:11-05:00",
+    "created": "2019-09-26T19:08:59-04:00"
+}

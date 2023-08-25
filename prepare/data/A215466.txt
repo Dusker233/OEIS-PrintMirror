@@ -1,0 +1,57 @@
+{
+    "number": 215466,
+    "data": "0,1,6,38,252,1705,11628,79547,544824,3733234,25585230,175356611,1201893336,8237850373,56462937882,387002396990,2652553009008,18180866487757,124613506702404,854113665498719,5854182112700460",
+    "name": "Expansion of x*(1-4*x+x^2) / ( (x^2-7*x+1)*(x^2-3*x+1) ).",
+    "comment": [
+        "From _Peter Bala_, Aug 05 2019: (Start)",
+        "Let  U(n;P,Q), where P and Q are integer parameters, denote the Lucas sequence of the first kind. Then, excluding the case P = -1, the sequence ( U(n;P,1) + U(2*n;P,1) )/(P + 1) is a fourth-order linear divisibility sequence with o.g.f. x*(1 - 2*(P - 1)*x + x^2)/((1 - P*x + x^2)*(1 - (P^2 - 2)*x + x^2)). This is the case P = 3. See A000027 (P = 2), A165998 (P = -2) and A238536 (P = -3).",
+        "More generally, the sequence U(n;P,1) + U(2*n;P,1) + ... + U(k*n;P,1) is a linear divisibility sequence of order 2*k. As an example, see A273625 (P = 3, k = 3 and then sequence normalized with initial term 1). (End)"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A215466/b215466.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lucas_sequence\">Lucas sequence</a>",
+        "Peter Bala, <a href=\"/A238600/a238600_1.pdf\">Divisibility sequences from strong divisibility sequences</a>",
+        "E. L. Roettger and H. C. Williams, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL24/Roettger/roettger12.html\">Appearance of Primes in Fourth-Order Odd Divisibility Sequences</a>, J. Int. Seq., Vol. 24 (2021), Article 21.7.5.",
+        "H. C. Williams and R. K. Guy, <a href=\"http://dx.doi.org/10.1142/S1793042111004587\">Some fourth-order linear divisibility sequences</a>, Intl. J. Number Theory 7 (5) (2011) 1255-1277.",
+        "H. C. Williams and R. K. Guy, <a href=\"http://www.emis.de/journals/INTEGERS/papers/p33/p33.Abstract.html\">Odd and even linear divisibility sequences of order 4</a>, INTEGERS, 2015, #A33.",
+        "<a href=\"/index/Di#divseq\">Index to divisibility sequences</a>",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (10,-23,10,-1)."
+    ],
+    "formula": [
+        "a(n) = L(n)*F(3n)/4 if n even, = F(n)*L(3n)/4 if n odd, where L=A000032, F=A000045.",
+        "a(n) = 3*A004187(n)/4 + A001906(n)/4.",
+        "a(n) = 10*a(n-1) - 23*a(n-2) + 10*a(n-3) - a(n-4), a(0)=0, a(1)=1, a(2)=6, a(3)=38. - _Harvey P. Dale_, Nov 02 2015",
+        "a(n) = (1/4)*(Fibonacci(2*n) + Fibonacci(4*n)) = (1/4)*(A001906(n) + A033888(n)). - _Peter Bala_, Aug 05 2019",
+        "E.g.f.: exp(5*x/2)*(cosh(x)+exp(x)*cosh(sqrt(5)*x))*sinh(sqrt(5)*x/2)/sqrt(5). - _Stefano Spezia_, Aug 17 2019",
+        "a(n) = -a(-n) for all n in Z. - _Michael Somos_, Dec 29 2022"
+    ],
+    "maple": [
+        "A215466 := proc(n)",
+        "    if type(n,'even') then",
+        "        A000032(n)*combinat[fibonacci](3*n)/4 ;",
+        "    else",
+        "        combinat[fibonacci](n)*A000032(3*n)/4 ;",
+        "    end if;",
+        "end proc:"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[x*(1 - 4*x + x^2)/((x^2 - 7*x + 1)*(x^2 - 3*x + 1)), {x, 0, 40}], x] (* _Vincenzo Librandi_, Dec 23 2012 *)",
+        "LinearRecurrence[{10,-23,10,-1},{0,1,6,38},30] (* _Harvey P. Dale_, Nov 02 2015 *)"
+    ],
+    "program": [
+        "(Magma) I:=[0,1,6,38]; [n le 4 select I[n] else 10*Self(n-1)-23*Self(n-2)+10*Self(n-3)-Self(n-4): n in [1..30]]; // _Vincenzo Librandi_, Dec 23 2012",
+        "(Magma) /* By definition: \"/ m:=20; R<x>:=PowerSeriesRing(Integers(), m); [0] cat Coefficients(R!((1-4*x+x^2)/((x^2-7*x+1)*(x^2-3*x+1)))); // _Bruno Berselli_, Dec 24 2012",
+        "(PARI) a(n)=([0,1,0,0; 0,0,1,0; 0,0,0,1; -1,10,-23,10]^n*[0;1;6;38])[1,1] \\\\ _Charles R Greathouse IV_, Nov 13 2015",
+        "(PARI) {a(n) = my(w=quadgen(5)^(2*n)); imag(w^2+w)/4}; /* _Michael Somos_, Dec 29 2022 */"
+    ],
+    "xref": [
+        "Cf. A000032, A000045, A001906, A033888, A165998, A215465, A238536, A273625."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_R. J. Mathar_, Aug 11 2012",
+    "references": 12,
+    "revision": 54,
+    "time": "2022-12-31T05:23:24-05:00",
+    "created": "2012-08-11T18:27:18-04:00"
+}

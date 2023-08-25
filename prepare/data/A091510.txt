@@ -1,0 +1,53 @@
+{
+    "number": 91510,
+    "data": "1,1,136,1270933717887,14178431955039102651224805804387336192,19591572513704791799478942287037427963655716808579364910828644498251439742675781250000",
+    "name": "Number of nonisomorphic algebras with a ternary operation (3-d groupoids) with n elements.",
+    "link": [
+        "Philip Turecek, <a href=\"/A091510/b091510.txt\">Table of n, a(n) for n = 0..10</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{1*s_1+2*s_2+...=n} (fixA[s_1, s_2, ...]/(1^s_1*s_1!*2^s_2*s_2!*...)) where fixA[s_1, s_2, ...] = Product_{i, j, k>=1} ( (Sum_{d|lcm(i, j, k)} (d*s_d))^(s_i*s_j*s_k*lcm(i, j, k)/(i*j*k))).",
+        "a(n) is asymptotic to n^(n^3)/n!."
+    ],
+    "program": [
+        "(Sage)",
+        "Pol.<x> = InfinitePolynomialRing(QQ)",
+        "@cached_function",
+        "def Z(n):",
+        "    if n==0: return Pol.one()",
+        "    return sum(x[k]*Z(n-k) for k in (1..n))/n",
+        "def a(n,k=3):",
+        "    P = Z(n)",
+        "    q = 0",
+        "    coeffs = P.coefficients()",
+        "    for mon in enumerate(P.monomials()):",
+        "        m = Pol(mon[1])",
+        "        p = 1",
+        "        V = m.variables()",
+        "        T = cartesian_product(k*[V])",
+        "        Tsorted = [tuple(sorted(u)) for u in T]",
+        "        Tset = set(Tsorted)",
+        "        for t in Tset:",
+        "            r = [Pol.varname_key(str(u))[1] for u in t]",
+        "            j = [m.degree(u) for u in t]",
+        "            D = 0",
+        "            lcm_r = lcm(r)",
+        "            for d in divisors(lcm_r):",
+        "                try: D += d*m.degrees()[-d-1]",
+        "                except: break",
+        "            p *= D^(Tsorted.count(t)*prod(r)/lcm_r*prod(j))",
+        "        q += coeffs[mon[0]]*p",
+        "    return q",
+        "# _Philip Turecek_, Jun 12 2023"
+    ],
+    "xref": [
+        "Cf. A001329, A001331, A091511."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Christian G. Bower_, Jan 16 2004",
+    "references": 3,
+    "revision": 23,
+    "time": "2023-07-19T00:13:47-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

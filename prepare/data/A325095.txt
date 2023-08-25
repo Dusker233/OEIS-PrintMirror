@@ -1,0 +1,62 @@
+{
+    "number": 325095,
+    "data": "1,2,4,5,10,12,14,15,30,35,40,42,47,49,51,52,104,119,134,139,154,159,164,166,181,186,191,193,198,200,202,203,406,458,510,525,577,592,607,612,664,679,694,699,714,719,724,726,778,793,808,813,828,833,838,840",
+    "name": "Number of subsets of {1...n} with no binary carries.",
+    "comment": [
+        "A binary carry of two positive integers is an overlap of the positions of 1's in their reversed binary expansion. For example, the binary representations of {2,5,8} are:",
+        "  2 =   10,",
+        "  5 =  101,",
+        "  8 = 1000,",
+        "and since there are no columns with more than one 1, {2,5,8} is counted under a(8)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A325095/b325095.txt\">Table of n, a(n) for n = 0..16383</a>"
+    ],
+    "formula": [
+        "a(2^n - 1) = A000110(n + 1)."
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 15 subsets:",
+        "  {}   {}     {}     {}       {}       {}       {}",
+        "  {1}  {1}    {1}    {1}      {1}      {1}      {1}",
+        "       {2}    {2}    {2}      {2}      {2}      {2}",
+        "       {1,2}  {3}    {3}      {3}      {3}      {3}",
+        "              {1,2}  {4}      {4}      {4}      {4}",
+        "                     {1,2}    {5}      {5}      {5}",
+        "                     {1,4}    {1,2}    {6}      {6}",
+        "                     {2,4}    {1,4}    {1,2}    {7}",
+        "                     {3,4}    {2,4}    {1,4}    {1,2}",
+        "                     {1,2,4}  {2,5}    {1,6}    {1,4}",
+        "                              {3,4}    {2,4}    {1,6}",
+        "                              {1,2,4}  {2,5}    {2,4}",
+        "                                       {3,4}    {2,5}",
+        "                                       {1,2,4}  {3,4}",
+        "                                                {1,2,4}"
+    ],
+    "maple": [
+        "b:= proc(n, t) option remember; `if`(n=0, 1, b(n-1, t)+",
+        "     `if`(Bits[And](n, t)=0, b(n-1, Bits[Or](n, t)), 0))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..63);  # _Alois P. Heinz_, Mar 28 2019"
+    ],
+    "mathematica": [
+        "binpos[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "stableQ[u_,Q_]:=!Apply[Or,Outer[#1=!=#2&&Q[#1,#2]&,u,u,1],{0,1}];",
+        "Table[Length[Select[Subsets[Range[n]],stableQ[#,Intersection[binpos[#1],binpos[#2]]!={}&]&]],{n,0,10}]"
+    ],
+    "xref": [
+        "Cf. A000110, A019565, A050315, A080572, A247935, A267610, A267700.",
+        "Cf. A325094, A325096, A325097, A325100, A325103, A325104, A325105."
+    ],
+    "keyword": "nonn,look",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Mar 27 2019",
+    "ext": [
+        "a(16)-a(55) from _Alois P. Heinz_, Mar 28 2019"
+    ],
+    "references": 13,
+    "revision": 17,
+    "time": "2019-07-27T14:57:51-04:00",
+    "created": "2019-03-28T08:49:53-04:00"
+}

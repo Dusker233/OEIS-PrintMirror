@@ -1,0 +1,51 @@
+{
+    "number": 358507,
+    "data": "1,6,12,24,30,48,60,72,104,120,144,148,156,180,192,222,288,312,360,390,432,444,480,576,712,720,780,832,864,900,1080,1110,1248,1260,1296,1440,1560,1680,2136,2160,2262,2304,2340,2496,2520,2592,2738,2880,2886,3072",
+    "name": "Sorted list of positions of first appearances in the sequence counting permutations of Matula-Goebel trees (A206487).",
+    "comment": [
+        "To get a permutation of a tree, we choose a permutation of the multiset of branches of each node.",
+        "The Matula-Goebel number of a rooted tree is the product of primes indexed by the Matula-Goebel numbers of the branches of its root, which gives a bijective correspondence between positive integers and unlabeled rooted trees."
+    ],
+    "example": [
+        "The terms together with their corresponding trees begin:",
+        "    1: o",
+        "    6: (o(o))",
+        "   12: (oo(o))",
+        "   24: (ooo(o))",
+        "   30: (o(o)((o)))",
+        "   48: (oooo(o))",
+        "   60: (oo(o)((o)))",
+        "   72: (ooo(o)(o))",
+        "  104: (ooo(o(o)))",
+        "  120: (ooo(o)((o)))",
+        "  144: (oooo(o)(o))",
+        "  148: (oo(oo(o)))",
+        "  156: (oo(o)(o(o)))",
+        "  180: (oo(o)(o)((o)))",
+        "  192: (oooooo(o))",
+        "  222: (o(o)(oo(o)))",
+        "  288: (ooooo(o)(o))",
+        "  312: (ooo(o)(o(o)))"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n===1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]]",
+        "MGTree[n_Integer]:=If[n===1,{},MGTree/@primeMS[n]]",
+        "treeperms[t_]:=Times@@Cases[t,b:{__}:>Length[Permutations[b]],{0,Infinity}];",
+        "fir[q_]:=Select[Range[Length[q]],!MemberQ[Take[q,#-1],q[[#]]]&];",
+        "fir[Table[treeperms[MGTree[n]],{n,100}]]"
+    ],
+    "xref": [
+        "Positions of first appearances in A206487.",
+        "The unsorted version is A358508.",
+        "A000081 counts rooted trees, ordered A000108.",
+        "A214577 and A358377 rank trees with no permutations.",
+        "Cf. A001263, A032027, A061775, A127301, A196050, A358378, A358506, A358521, A358522."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Nov 20 2022",
+    "references": 4,
+    "revision": 7,
+    "time": "2022-11-21T09:47:56-05:00",
+    "created": "2022-11-21T09:47:56-05:00"
+}

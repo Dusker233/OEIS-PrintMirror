@@ -1,0 +1,56 @@
+{
+    "number": 327374,
+    "data": "52,53,54,55,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116",
+    "name": "BII-numbers of set-systems with vertex-connectivity 2.",
+    "comment": [
+        "A binary index of n is any position of a 1 in its reversed binary expansion. The binary indices of n are row n of A048793. We define the set-system with BII-number n to be obtained by taking the binary indices of each binary index of n. Every set-system (finite set of finite nonempty sets) has a different BII-number. For example, 18 has reversed binary expansion (0,1,0,0,1), and since the binary indices of 2 and 5 are {2} and {1,3} respectively, the BII-number of {{2},{1,3}} is 18. Elements of a set-system are sometimes called edges.",
+        "The vertex-connectivity of a set-system is the minimum number of vertices that must be removed (along with any resulting empty edges) to obtain a non-connected set-system or singleton. Note that this means a single node has vertex-connectivity 0."
+    ],
+    "example": [
+        "The sequence of all set-systems with vertex-connectivity 2 together with their BII-numbers begins:",
+        "  52: {{1,2},{1,3},{2,3}}",
+        "  53: {{1},{1,2},{1,3},{2,3}}",
+        "  54: {{2},{1,2},{1,3},{2,3}}",
+        "  55: {{1},{2},{1,2},{1,3},{2,3}}",
+        "  60: {{1,2},{3},{1,3},{2,3}}",
+        "  61: {{1},{1,2},{3},{1,3},{2,3}}",
+        "  62: {{2},{1,2},{3},{1,3},{2,3}}",
+        "  63: {{1},{2},{1,2},{3},{1,3},{2,3}}",
+        "  64: {{1,2,3}}",
+        "  65: {{1},{1,2,3}}",
+        "  66: {{2},{1,2,3}}",
+        "  67: {{1},{2},{1,2,3}}",
+        "  68: {{1,2},{1,2,3}}",
+        "  69: {{1},{1,2},{1,2,3}}",
+        "  70: {{2},{1,2},{1,2,3}}",
+        "  71: {{1},{2},{1,2},{1,2,3}}",
+        "  72: {{3},{1,2,3}}",
+        "  73: {{1},{3},{1,2,3}}",
+        "  74: {{2},{3},{1,2,3}}",
+        "  75: {{1},{2},{3},{1,2,3}}"
+    ],
+    "mathematica": [
+        "bpe[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "csm[s_]:=With[{c=Select[Subsets[Range[Length[s]],{2}],Length[Intersection@@s[[#]]]>0&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "vertConnSys[vts_,eds_]:=Min@@Length/@Select[Subsets[vts],Function[del,Length[del]==Length[vts]-1||csm[DeleteCases[DeleteCases[eds,Alternatives@@del,{2}],{}]]!={Complement[vts,del]}]];",
+        "Select[Range[0,200],vertConnSys[Union@@bpe/@bpe[#],bpe/@bpe[#]]==2&]"
+    ],
+    "xref": [
+        "Positions of 2's in A327051.",
+        "Cut-connectivity 2 is A327082.",
+        "Spanning edge-connectivity 2 is A327108.",
+        "Non-spanning edge-connectivity 2 is A327097.",
+        "Vertex-connectivity 3 is A327376.",
+        "Labeled graphs with vertex-connectivity 2 are A327198.",
+        "Set-systems with vertex-connectivity 2 are A327375.",
+        "The enumeration of labeled graphs by vertex-connectivity is A327334.",
+        "Cf. A000120, A013922, A048793, A070939, A259862, A326031, A326749, A327336."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Sep 04 2019",
+    "references": 2,
+    "revision": 4,
+    "time": "2019-09-09T12:05:13-04:00",
+    "created": "2019-09-09T12:05:13-04:00"
+}

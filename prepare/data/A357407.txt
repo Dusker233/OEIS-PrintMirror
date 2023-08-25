@@ -1,0 +1,35 @@
+{
+    "number": 357407,
+    "data": "1,4,32,360,4964,78064,1344020,24708928,477282794,9580852360,198322047840,4209371498256,91221481924426,2011834246746792,45039165331725264,1021419638492387856,23426910170090512779,542666070296546760492,12681393784980089971368",
+    "name": "a(n) = coefficient of x^n, n >= 0, in A(x) = exp( Sum_{n>=1} A183204(n)*x^n/n ), where A183204 equals the central terms of triangle A181544.",
+    "comment": [
+        "A183204(n) = Sum_{k=floor(n/2)..n} C(n,k)^2 * C(2*k,n) * C(n+k,k).",
+        "A183204(n) equals the coefficient of x^n in (1-x)^(3*n+1) * Sum_{k>=0} binomial(n+k-1,k)^3 * x^k, which is the central term of row n of triangle A181544."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A357407/b357407.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * 3^(3*n) / n^(5/2), where c = 0.289447274610263555814082139782101227837126089347468995035938970190651243... - _Vaclav Kotesovec_, Mar 14 2023"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 4*x + 32*x^2 + 360*x^3 + 4964*x^4 + 78064*x^5 + 1344020*x^6 + 24708928*x^7 + 477282794*x^8 + 9580852360*x^9 + 198322047840*x^10 + ...",
+        "where",
+        "log(A(x)) = 4*x + 48*x^2/2 + 760*x^3/3 + 13840*x^4/4 + 273504*x^5/5 + 5703096*x^6/6 + 123519792*x^7/7 + 2751843600*x^8/8 + 62659854400*x^9/9 + ... + A183204(n)*x^n/n + ..."
+    ],
+    "program": [
+        "(PARI) {A183204(n) = sum(k=n\\2,n, binomial(n,k)^2 * binomial(2*k,n) * binomial(n+k,k) )}",
+        "{a(n) = polcoeff( exp( sum(m=1,n, A183204(m)*x^m/m ) + x*O(x^n) ),n)}",
+        "for(n=0,20,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A183204, A181544."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Oct 19 2022",
+    "references": 1,
+    "revision": 10,
+    "time": "2023-03-14T05:22:01-04:00",
+    "created": "2022-10-21T10:06:49-04:00"
+}

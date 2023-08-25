@@ -1,0 +1,37 @@
+{
+    "number": 308405,
+    "data": "3,5,8,9,14,17,23,25,28,33,35,38,43,45,48,53,55,58,63,65,68,73,75,78,83,85,88,93,95,98,103,105,108,109,114,117,123,125,128,133,135,138,143,145,148,153,155,158,163,165,168,173,175,178,183,185,188,193,195",
+    "name": "Numbers k such that k, when written in English, has 1 letter more than k+1.",
+    "example": [
+        "a(1) = 3 = THREE has 1 letter more than a(1) + 1 = FOUR;",
+        "a(2) = 5 = FIVE has 1 letter more than a(2) + 1 = SIX;",
+        "a(3) = 8 = EIGHT has 1 letter more than a(3) + 1 = NINE;",
+        "a(4) = 9 = NINE has 1 letter more than a(4) + 1 = TEN;",
+        "a(5) = 14 = FOURTEEN has 1 letter more than a(5) + 1 = FIFTEEN; etc."
+    ],
+    "program": [
+        "(PARI) v1 = [\"one\", \"two\", \"three\", \"four\", \"five\", \"six\", \"seven\", \"eight\", \"nine\"];",
+        "v2 = [\"eleven\", \"twelve\", \"thirteen\", \"fourteen\", \"fifteen\", \"sixteen\", \"seventeen\", \"eighteen\", \"nineteen\"];",
+        "v3 = [\"ten\", \"twenty\", \"thirty\", \"forty\", \"fifty\", \"sixty\", \"seventy\", \"eighty\", \"ninety\"];",
+        "conv(n) = {if (n >= 10^12, error(\"too big for this program\"));",
+        "if (n >= 10^9, return (concat(concat(conv(n\\10^6), \"billion\"), conv(n % 10^9))));",
+        "if (n >= 10^6, return (concat(concat(conv(n\\10^6), \"million\"), conv(n % 10^6))));",
+        "if (n >= 10^3, return (concat(concat(conv(n\\10^3), \"thousand\"), conv(n % 10^3))));",
+        "if (n >= 10^2, return (concat(concat(conv(n\\100), \"hundred\"), conv(n % 100))));",
+        "if (n >= 20, return (concat(v3[n\\10], conv(n%10))); );",
+        "if (n >= 10, if (n==10, return(v3[n\\10]), return(v2[n % 10])); );",
+        "if (n, return(v1[n]), return (\"\"));",
+        "} \\\\ after _Michel Marcus_ in A303475",
+        "is(n) = #conv(n)-1==#conv(n+1) \\\\ _Felix Fr\u00f6hlich_, May 25 2019"
+    ],
+    "keyword": "nonn,word",
+    "offset": "1,1",
+    "author": "_Eric Angelini_, May 25 2019",
+    "ext": [
+        "17 and terms beyond 98 from _Felix Fr\u00f6hlich_, May 25 2019"
+    ],
+    "references": 0,
+    "revision": 16,
+    "time": "2019-05-25T11:57:45-04:00",
+    "created": "2019-05-25T11:57:45-04:00"
+}

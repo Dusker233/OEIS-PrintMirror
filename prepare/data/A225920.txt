@@ -1,0 +1,36 @@
+{
+    "number": 225920,
+    "data": "1,13,48,150,447,1312,3831,11167,32531,94748,275938,803605,2340292,6815476,19848236,57802615,168334451,490228448,1427657419,4157665074,12108072013,35261476137,102689486632,299055281267,870917405325,2536310757258,7386317253546,21510645891422",
+    "name": "a(n) is the least k such that f(a(n-1)+1) + ... + f(k) > f(a(n-2)+1) + ... + f(a(n-1)) for n > 1, where f(n) = 1/(n+5) and a(1) = 1.",
+    "comment": [
+        "Conjecture:  a(n) is linearly recurrent.  See A225918 for details.",
+        "The sequence does not satisfy any linear recurrence of order below 50, which suggests it's unlikely to exist. - _Max Alekseyev_, Jan 27 2022"
+    ],
+    "formula": [
+        "For n>=3, a(n) = ceiling( (a(n-1)+5.5)^2 / (a(n-2)+5.5) - 5.5 ) unless the fractional part of the number inside ceiling() is very small (~ 1/a(n-2)). - _Max Alekseyev_, Jan 27 2022"
+    ],
+    "example": [
+        "a(1) = 1 by decree; a(2) = 13 because 1/7 + ... + 1/17 < 1 < 1/7 + ... + 1/(13+5), so that a(3) = 48 because 1/19 + ... + 1/52 < 1/7 + ... + 1/18 < 1/19 + ... + 1/(48+5).",
+        "Successive values of a(n) yield a chain: 1 < 1/(1+6) + ... + 1/(13+5) < 1/(13+6) + ... + 1/(48+5) < 1/(48+6) + ... + 1/(150+5) < ...",
+        "Abbreviating this chain as b(1) = 1 < b(2) < b(3) < b(4) < ... < R = 2.912229..., it appears that lim_{n->infinity} b(n) = log(R) = 1.068918... ."
+    ],
+    "mathematica": [
+        "nn = 11; f[n_] := 1/(n + 5); a[1] = 1; g[n_] := g[n] = Sum[f[k], {k, 1, n}]; s = 0; a[2] = NestWhile[# + 1 &, 2, ! (s += f[#]) >= a[1] &]; s = 0; a[3] = NestWhile[# + 1 &, a[2] + 1, ! (s += f[#]) >= g[a[2]] - f[1] &]; Do[s = 0; a[z] = NestWhile[# + 1 &, a[z - 1] + 1, ! (s += f[#]) >= g[a[z - 1]] - g[a[z - 2]] &], {z, 4, nn}]; m = Map[a, Range[nn]]"
+    ],
+    "xref": [
+        "Cf. A225918."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, May 21 2013",
+    "ext": [
+        "a(12)-a(16) from _Robert G. Wilson v_, May 22 2013",
+        "a(17)-a(18) from _Robert G. Wilson v_, Jun 13 2013",
+        "a(18) corrected by and a(19) from _Jinyuan Wang_, Jun 14 2020",
+        "Terms a(20) on from _Max Alekseyev_, Jan 27 2022"
+    ],
+    "references": 1,
+    "revision": 23,
+    "time": "2022-01-27T20:38:09-05:00",
+    "created": "2013-05-23T14:15:04-04:00"
+}

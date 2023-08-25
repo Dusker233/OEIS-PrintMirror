@@ -1,0 +1,45 @@
+{
+    "number": 181957,
+    "data": "10,19,92,239,829,2831,10061,38231,189311,621791,2853533,11423579",
+    "name": "Smallest positive integer which cannot be calculated by an expression containing n binary operators (either add or multiply) whose operands are integers between 1 and 9; parenthesis allowed.",
+    "link": [
+        "Derek M. Jones, <a href=\"/A181957/a181957_1.r.txt\">R program for calculating values</a>",
+        "<a href=\"/index/Com#complexity\">Index to sequences related to the complexity of n</a>"
+    ],
+    "example": [
+        "a(4) = 239 because at least 4 operators are needed to calculate this value, e.g., (5*5+9)*7+1."
+    ],
+    "program": [
+        "(PARI) first(n)=my(op=[(x, y)->x+y, (x, y)->x*y], v=vector(n+1), t); v[1]=[1..9]; for(k=2, #v, my(u=[]); for(i=1, (k+1)\\2, my(a=v[i], b=v[k-i]); t=Set(concat(apply(f->setbinop(f, a, b), op))); u=concat(u, t)); v[k]=setminus(Set(u), [0])); t=10; for(i=1, #v, while(setsearch(v[i], t), t++); v[i]=t); v;",
+        "print(first(7)) \\\\ _Michael S. Branicky_, Oct 19 2021 after _Charles R Greathouse IV_ in A181898",
+        "(Python)",
+        "def aupton(nn):",
+        "    alst = [10]",
+        "    R = {0: set(range(1, 10))}   # R[n] is set reachable using n ops",
+        "    for n in range(1, nn):",
+        "        R[n] = set()",
+        "        for i in range((n+1)//2):",
+        "            for a in R[i]:",
+        "                for b in R[n-1-i]:",
+        "                    R[n].update([a+b, a*b])",
+        "        k = 10",
+        "        while k in R[n]: k += 1  # n.b. R[n-1] <= R[n] due to * by 1",
+        "        alst.append(k)",
+        "    return alst",
+        "print(aupton(9)) # _Michael S. Branicky_, Oct 19 2021"
+    ],
+    "xref": [
+        "Cf. A181898, A181958, A181959, A181960.",
+        "Cf. A005520 (operand literal is always 1)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,1",
+    "author": "_Derek M. Jones_, Apr 03 2012",
+    "ext": [
+        "a(5)-a(7) corrected by and a(8)-a(11) from _Michael S. Branicky_, Oct 19 2021"
+    ],
+    "references": 5,
+    "revision": 32,
+    "time": "2021-10-20T08:17:55-04:00",
+    "created": "2012-04-09T12:48:22-04:00"
+}

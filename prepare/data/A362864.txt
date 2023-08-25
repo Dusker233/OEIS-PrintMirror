@@ -1,0 +1,46 @@
+{
+    "number": 362864,
+    "data": "1,2,5,8,15,24,26,47,121,204,347,562,4204,6937,6947,31108,379097,379131,379133,2801205,12554202,20698345,56264197,13767391064,37423648626,37423648726,61701166395,276525443156,276525443176,455913379395,455913379831,751674084802",
+    "name": "Numbers k that divide Sum_{i=1..k} (i - d(i)), where d(n) is the number of divisors of n (A000005).",
+    "comment": [
+        "Numbers k such that the mean number of nondivisors in the range 1..k is an integer.",
+        "Numbers k such that A161664(k) is divisible by k.",
+        "Numbers k such that (A000217(k) - A006218(k)) is divisible by k.",
+        "The subsequence of odd terms k equals the intersection of A050226 and this sequence."
+    ],
+    "link": [
+        "Martin Ehrenstein, <a href=\"/A362864/b362864.txt\">Table of n, a(n) for n = 1..38</a>"
+    ],
+    "example": [
+        "k = 5: Sum_{i=1..5} (i - d(i))/k = 5/5 = 1, so k = 5 is a term."
+    ],
+    "mathematica": [
+        "seq[kmax_] := Module[{sum = 0, s = {}}, Do[sum += k - DivisorSigma[0, k]; If[Divisible[sum, k], AppendTo[s, k]], {k, 1, kmax}]; s]; seq[10^6] (* _Amiram Eldar_, May 06 2023 *)"
+    ],
+    "program": [
+        "(PARI) isok(k) = !(sum(i=1, k, i - numdiv(i)) % k); \\\\ _Michel Marcus_, May 06 2023",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import divisor_count",
+        "def A362864_gen(): # generator of terms",
+        "    c = 0",
+        "    for k in count(1):",
+        "        if not (c:=c+k-divisor_count(k))%k:",
+        "            yield k",
+        "A362864_list = list(islice(A362864_gen(),15)) # _Chai Wah Wu_, May 20 2023"
+    ],
+    "xref": [
+        "Cf. A000005, A000217, A006218, A049820, A050226, A161664."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ctibor O. Zizka_, May 06 2023",
+    "ext": [
+        "More terms from _Amiram Eldar_, May 06 2023",
+        "a(24)-a(32) from _Martin Ehrenstein_, May 22 2023"
+    ],
+    "references": 1,
+    "revision": 46,
+    "time": "2023-05-28T11:17:26-04:00",
+    "created": "2023-05-20T14:53:01-04:00"
+}

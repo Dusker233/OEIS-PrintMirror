@@ -1,0 +1,35 @@
+{
+    "number": 320092,
+    "data": "1,8,71,575,4670,37367,299510,2396150,19173302,153386927,1227128750,9817030070,78536506805,628292058542,5026338565487,40210708557167,321685685267822,2573485482143150,20587883991625133,164703071933262773,1317624576539847542",
+    "name": "Number of primitive (=aperiodic) 8-ary words with length less than or equal to n which are earlier in lexicographic order than any other word derived by cyclic shifts of the alphabet.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A320092/b320092.txt\">Table of n, a(n) for n = 1..1108</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j=1..n} Sum_{d|j} 8^(d-1) * mu(j/d).",
+        "a(n) = A143327(n,8).",
+        "a(n) = Sum_{j=1..n} A143325(j,8).",
+        "a(n) = A143326(n,8) / 8.",
+        "G.f.: (1/(1 - x)) * Sum_{k>=1} mu(k) * x^k / (1 - 8*x^k). - _Ilya Gutkovskiy_, Dec 11 2020"
+    ],
+    "maple": [
+        "b:= n-> add(`if`(d=n, 8^(n-1), -b(d)), d=numtheory[divisors](n)):",
+        "a:= proc(n) option remember; b(n)+`if`(n<2, 0, a(n-1)) end:",
+        "seq(a(n), n=1..30);"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(j=1, n, sumdiv(j, d, 8^(d-1)*moebius(j/d))); \\\\ _Michel Marcus_, Dec 11 2020"
+    ],
+    "xref": [
+        "Column k=8 of A143327.",
+        "Partial sums of A320073.",
+        "Cf. A008683, A143325, A143326."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Oct 05 2018",
+    "references": 3,
+    "revision": 9,
+    "time": "2020-12-11T10:56:12-05:00",
+    "created": "2018-10-05T17:43:29-04:00"
+}

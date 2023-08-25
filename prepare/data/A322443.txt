@@ -1,0 +1,45 @@
+{
+    "number": 322443,
+    "data": "2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,83,89,101,107,109,131,137,139,151,157,163,167,179,181,191,197,199,211,223,229,233,239,251,269,277,293,317,331,337,347,349,353,359,367,373,379,383,389,397,401,421,431,443,461,467,479,491",
+    "name": "Base-8 deletable primes (written in base 10).",
+    "comment": [
+        "A prime p is a base-b deletable prime if when written in base b it has the property that removing some digit leaves either the empty string or another deletable prime.",
+        "Deleting a digit cannot leave any leading zeros in the new string. For example, deleting the 2 in 2003 to obtain 003 is not allowed."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A322443/b322443.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..566 from Robert Price)"
+    ],
+    "mathematica": [
+        "b = 8; d = {};",
+        "p = Select[Range[2, 10000], PrimeQ[#] &];",
+        "For[i = 1, i <= Length[p], i++,",
+        "c = IntegerDigits[p[[i]], b];",
+        "If[Length[c] == 1, AppendTo[d, p[[i]]]; Continue[]];",
+        "For[j = 1, j <= Length[c], j++,",
+        "t = Delete[c, j];",
+        "If[t[[1]] == 0, Continue[]];",
+        "If[MemberQ[d, FromDigits[t, b]], AppendTo[d, p[[i]]]; Break[]]]];",
+        "d (* _Robert Price_, Dec 08 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def ok(n):",
+        "    if not isprime(n): return False",
+        "    if n < 8: return True",
+        "    o = oct(n)[2:]",
+        "    oi = (o[:i]+o[i+1:] for i in range(len(o)))",
+        "    return any(t[0] != '0' and ok(int(t, 8)) for t in oi)",
+        "print([k for k in range(492) if ok(k)]) # _Michael S. Branicky_, Jan 13 2022"
+    ],
+    "xref": [
+        "Cf. A080608, A080603, A096235-A096246."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Robert Price_, Dec 08 2018",
+    "references": 3,
+    "revision": 12,
+    "time": "2022-01-14T01:59:26-05:00",
+    "created": "2018-12-08T20:48:06-05:00"
+}

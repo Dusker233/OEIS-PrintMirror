@@ -1,0 +1,34 @@
+{
+    "number": 89202,
+    "data": "4457,10987,15377,20873,32587,39877,51109,53377,54623,60127,66877,74873,101873,107377,112997,115589,120877,121123,125197,126443,128873,135623,143719,148957,155377,161053,161377,162623,168127,169373,174877,176123",
+    "name": "Primes p such that p-2 and p+2 are divisible by a cube.",
+    "comment": [
+        "For any distinct odd primes p,q, includes all primes == 2 (mod p^3) and == -2 (mod q^3), and thus is infinite by Dirichlet's theorem on primes in arithmetic progressions.  _Robert Israel_, Jan 11 2019"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A089202/b089202.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "4457-2 = 3^4*5*11,4457+2 = 7^3*13"
+    ],
+    "maple": [
+        "filter:= proc(p)",
+        "isprime(p) and ormap(t -> t[2]>=3, ifactors(p+2)[2]) and ormap(t -> t[2]>=3, ifactors(p-2)[2])",
+        "end proc:",
+        "select(filter, [seq(i,i=3..2*10^5,2)]); # _Robert Israel_, Jan 11 2019"
+    ],
+    "mathematica": [
+        "filterQ[p_] := PrimeQ[p] && AnyTrue[FactorInteger[p-2], #[[2]] >= 3&] && AnyTrue[FactorInteger[p+2], #[[2]] >= 3&];",
+        "Select[Prime[Range[20000]], filterQ] (* _Jean-Fran\u00e7ois Alcover_, Aug 26 2020 *)"
+    ],
+    "program": [
+        "(PARI) powerfreep4(n,p,k) = { c=0; pc=0; forprime(x=2,n, pc++; if(!ispowerfree(x-k,p) && !ispowerfree(x+k,p), c++; print1(x\",\"); ) ); print(); print(c\",\"pc\",\"c/pc+.0) } ispowerfree(m,p1) = { flag=1; y=component(factor(m),2); for(i=1,length(y), if(y[i] >= p1,flag=0;break); ); return(flag) }"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Dec 08 2003",
+    "references": 1,
+    "revision": 11,
+    "time": "2020-08-26T07:06:02-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

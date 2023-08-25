@@ -1,0 +1,48 @@
+{
+    "number": 296012,
+    "data": "79,101,103,149,151,167,191,193,227,229,257,277,281,283,347,349,353,359,367,373,401,431,433,439,461,463,479,509,557,563,607,613,617,619,641,643,647,653,659,661,709,733,739,743,761,797,821,823,857,859,863,887,907,911,967,971,977,983,1019,1021",
+    "name": "Primes of the form k + k+1 + k+2 +-1 where k, k+1, and k+2 are all composite numbers.",
+    "comment": [
+        "Primes p such that floor((p-2)/3) and floor((p-2)/3)+2 are composite. - _Robert Israel_, Dec 03 2017"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A296012/b296012.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "25 + 26 + 27 + 1 = 79,",
+        "33 + 34 + 35 - 1 = 101,",
+        "33 + 34 + 35 + 1 = 103, etc."
+    ],
+    "maple": [
+        "filter:= proc(n) local k;",
+        "  if not isprime(n) then return false fi;",
+        "  k:= floor((n-2)/3);",
+        "  not isprime(k) and not isprime(k+1) and not isprime(k+2)",
+        "end proc:",
+        "select(filter, [seq(i,i=5..2000, 2)]); # _Robert Israel_, Dec 03 2017"
+    ],
+    "mathematica": [
+        "Select[Join @@ Map[{{Total@ # - 1, #}, {Total@ # + 1, #}} &, Partition[Range@ 350, 3, 1]], And[PrimeQ@ First@ #, AllTrue[Last@ #, CompositeQ]] &][[All, 1]] (* _Michael De Vlieger_, Dec 03 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from __future__ import division",
+        "from sympy import nextprime, isprime",
+        "A296012_list, p = [], 2",
+        "while len(A296012_list) < 10000:",
+        "    k = (p-2)//3",
+        "    if not (isprime(k) or isprime(k+2)):",
+        "        A296012_list.append(p)",
+        "    p = nextprime(p) # _Chai Wah Wu_, Jan 24 2018"
+    ],
+    "xref": [
+        "Cf. A000045, A136799."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Martin Michael Musatov_, Dec 02 2017",
+    "references": 2,
+    "revision": 26,
+    "time": "2018-01-26T08:32:21-05:00",
+    "created": "2018-01-24T14:29:30-05:00"
+}

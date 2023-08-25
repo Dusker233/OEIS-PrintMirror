@@ -1,0 +1,77 @@
+{
+    "number": 339073,
+    "data": "1,2,4,8,16,32,64,128,256,512,1023,2045,4088,8172,16336,32656,65280,130496,260864,521473,1042434,2083846,4165649,8327214,16646264,33276208,66519792,132974368,265818368,531376129,1062231296,2123421181,4244760561,8485359561,16962400080,33908170232,67783096912",
+    "name": "Number of strings of Hebrew letters with a gematria value equal to n.",
+    "comment": [
+        "A051596-restricted compositions of n."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A339073/b339073.txt\">Table of n, a(n) for n = 1..3300</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Gematria\">Gematria</a>"
+    ],
+    "formula": [
+        "From _Doron Zeilberger_, Nov 23 2020: (Start)",
+        "G.f.: Sum(a(n)*x^n, n=0..infinity) =",
+        "1/(1-add(x^i,i=1..9)-add(x^(10*i),i=1..9)-add(x^(100*i),i=1..4))",
+        "= 1/(1-x-...-x^9 - x^10- ... -x^90 - x^100-x^200-x^300-x^400).",
+        "Asymptotics:",
+        "a(n) ~ 0.50221591060212746248115807725009875743325273964521...*(1.9990196005347377028156443471636402056440270173905...)^n",
+        "If alpha is the smallest positive root of P:=1-x-...-x^9 - x^10- ... -x^90 - x^100-x^200-x^300-x^400=0",
+        "then the above asymptotic formula is exactly  -(alpha*P'(alpha))* (1/alpha)^n.",
+        "(End)"
+    ],
+    "example": [
+        "The four strings with a gematria of 3 are:",
+        "\u05d0\u05d0\u05d0 (111)",
+        "\u05d0\u05d1 (12)",
+        "\u05d1\u05d0 (21)",
+        "\u05d2 (3)",
+        "Note: Hebrew is written right-to-left, which is why the order of the digits appears to be reversed."
+    ],
+    "maple": [
+        "g:= 1/(1-add(x^i,i=1..9)-add(x^(10*i),i=1..9)-add(x^(100*i),i=1..4)):",
+        "S:= series(g,x,101):",
+        "seq(coeff(S,x,n),n=1..100); # _Robert Israel_, Nov 25 2020"
+    ],
+    "mathematica": [
+        "Table[SeriesCoefficient[1/(1 - Sum[x^j, {j, Join[Range[9], 10 Range[9], 100 Range[4]]}]), {x, 0, n}], {n, 100}] (* _Jan Mangaldan_, Nov 27 2020 *)"
+    ],
+    "program": [
+        "(C#)int[] gematrias = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400 };",
+        "char[] letters = { '\u05d0', '\u05d1', '\u05d2', '\u05d3', '\u05d4', '\u05d5', '\u05d6', '\u05d7', '\u05d8', '\u05d9', '\u05db', '\u05dc', '\u05de', '\u05e0', '\u05e1', '\u05e2', '\u05e4', '\u05e6', '\u05e7', '\u05e8', '\u05e9', '\u05ea' };",
+        "//Calculates a(n) when you call CountStrings(n), and populates ListOfStrings with the list of valid strings that have gematria equal to n.",
+        "int CountStrings (int leftover, string stringOfLetters = \"\")",
+        "{",
+        "     int count = 0;",
+        "     foreach (int value in gematrias)",
+        "   {",
+        "          string secondString = \"\";",
+        "          if (value == leftover)",
+        "          {",
+        "               count++;",
+        "               secondString += letters[Array.IndexOf(gematrias, value)];",
+        "               ListOfStrings.Items.Add(stringOfLetters + secondString);",
+        "          }",
+        "          else if (value < leftover)",
+        "          {",
+        "               secondString += letters[Array.IndexOf(gematrias, value)];",
+        "               count += CountStrings(leftover-value,stringOfLetters + secondString);",
+        "          }",
+        "     }",
+        "     return count;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A051596, A000079."
+    ],
+    "keyword": "nonn,word",
+    "offset": "1,2",
+    "author": "_Daniel Sterman_, Nov 22 2020",
+    "ext": [
+        "More terms from _Robert Israel_, Nov 25 2020"
+    ],
+    "references": 1,
+    "revision": 36,
+    "time": "2020-11-30T08:51:28-05:00",
+    "created": "2020-11-22T21:34:54-05:00"
+}

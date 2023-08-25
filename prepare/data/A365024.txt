@@ -1,0 +1,30 @@
+{
+    "number": 365024,
+    "data": "656601,5968873,9582145,45877861,67653433,84311569,171454321,171679561,193708801,193910977,230630401,357277921,367804801,393122521,393513121,393716701,395044651,557160241,703995733,710382401,775368901,832060801,833608321,834244501,939947009",
+    "name": "Starts of runs of 3 consecutive Carmichael numbers (A002997) without a non-prime-power weak Carmichael number (A087442) between any two consecutive members.",
+    "comment": [
+        "The second member in each triple is a term of both A365022 and A365023.",
+        "171454321 is the least start of 4 consecutive Carmichael numbers with this property, and 393122521 is the least start of 5, and also 6, consecutive Carmichael numbers with this property."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A365024/b365024.txt\">Table of n, a(n) for n = 1..214</a>",
+        "Amiram Eldar, <a href=\"/A365024/a365024.txt\">List of triples</a>.",
+        "Mauro Fiorentini, <a href=\"http://www.bitman.name/math/article/919\">Carmichael gemelli (numeri di)</a> (in Italian).",
+        "Romeo Me\u0161trovi\u0107, <a href=\"http://arxiv.org/abs/1305.1867\">Generalizations of Carmichael numbers I,</a> arXiv:1305.1867 [math.NT], 2013."
+    ],
+    "mathematica": [
+        "npwcQ[n_] := Length[(p = FactorInteger[n][[;; , 1]])] > 1 && AllTrue[p, Divisible[n - 1, # - 1] &]; (* A087442 *)",
+        "seq[indmax_] := Module[{carmichaels = Cases[Import[\"https://oeis.org/A002997/b002997.txt\", \"Table\"], {_, _}][[;; , 2]], s1 = s2 = {}, c1, c2, i}, Do[c1 = carmichaels[[k]] + 2; c2 = carmichaels[[k + 1]] - 2; While[c1 < c2, If[npwcQ[c1], Break[]]; c1 += 2]; If[c1 == c2, AppendTo[s1, carmichaels[[k]]]; AppendTo[s2, carmichaels[[k + 1]]]], {k, 1, Min[indmax, Length[carmichaels] - 1]}]; i = Position[Rest[s1] - Most[s2], 0] // Flatten; s1[[i]]]; seq[200]"
+    ],
+    "xref": [
+        "Subsequence of A002997 and A365023.\t",
+        "Cf. A000961, A087442, A225498, A365022."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Aug 17 2023",
+    "references": 0,
+    "revision": 9,
+    "time": "2023-08-24T03:14:35-04:00",
+    "created": "2023-08-24T03:14:35-04:00"
+}

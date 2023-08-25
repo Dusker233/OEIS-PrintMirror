@@ -1,0 +1,40 @@
+{
+    "number": 349225,
+    "data": "1,6,8,19,28,30,80,93,119,126,136,156,186,192,205,312,351,384,448,483,567,774,820,896,945,1081,1100,1187,1240,1375,1464,2268,2628,2720,2898,3197,3744,3840,4544,4992,5079,6200,6567,7296,7832,9184,12288,12636,16578",
+    "name": "Numbers k such that k | A002619(k).",
+    "comment": [
+        "Chao (1982) proved that k | Sum_{d|k} phi(d)^2*d^(k/d-1)*(k/d-1)! for all k. The quotients are A002619(k). This sequence consists of numbers k such that this sum is divisible by k^2.",
+        "There are terms k such that k^2 | A002619(k): 1, 8, 1081, ..."
+    ],
+    "reference": [
+        "J\u00f3zsef S\u00e1ndor and Borislav Crstici, Handbook of Number theory II, Kluwer Academic Publishers, 2004, Chapter 3, p. 192."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A349225/b349225.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Chong-Yun Chao, <a href=\"https://doi.org/10.1016/0022-314X(82)90085-3\">Generalizations of theorems of Wilson, Fermat and Euler</a>, Journal of Number Theory, Vol. 15, No. 1 (1982), pp. 95-114."
+    ],
+    "example": [
+        "6 is a term since A002619(6) = 24 is divisible by 6."
+    ],
+    "mathematica": [
+        "f[n_] := DivisorSum[n, EulerPhi[#]^2 * #^(n/#) * (n/#)! &]/n^2; Select[Range[1000], Divisible[f[#], #] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import divisors, totient, factorial",
+        "def A349225_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:not sum(totient(m:=n//d)**2*factorial(d)*m**d for d in divisors(n,generator=True)) % n**3, count(max(startvalue,1)))",
+        "A349225_list = list(islice(A349225_gen(),10)) # _Chai Wah Wu_, Nov 07 2022"
+    ],
+    "xref": [
+        "Cf. A000010 (phi), A002619."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Nov 11 2021",
+    "references": 1,
+    "revision": 15,
+    "time": "2022-11-08T08:06:57-05:00",
+    "created": "2021-11-11T09:16:30-05:00"
+}

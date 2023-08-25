@@ -1,0 +1,56 @@
+{
+    "number": 297670,
+    "data": "0,0,3,27,177,1137,7962,62730,555894,5487894,59740389,710770989,9174169647,127661751951,1904975487876,30341995264356,513771331466556,9215499383108604,174548332364310423,3481204991988350223,72920994844093190013,1600596371590399670013",
+    "name": "Number of chordless cycles in the n-triangular graph.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A297670/b297670.txt\">Table of n, a(n) for n = 2..200</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ChordlessCycle.html\">Chordless Cycle</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/JohnsonGraph.html\">Johnson Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TriangularGraph.html\">Triangular Graph</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=4..n} n!/(2*k*(n-k)!). - _Andrew Howroyd_, Jan 04 2018",
+        "a(n) = n*((3 - 2*n)*n + 6*Hypergeometric3F1[1, 1, 1 - n; 2; -1] - 7)/12. - _Eric W. Weisstein_, Jan 05 2018",
+        "-(-1 + n)*n*(1 + n) + (4 + 2*(-1 + n))*a(n) + (-6 - 2*(-1 + n))*a(n + 1) + 2*a(n + 2) = 0. - _Eric W. Weisstein_, Jan 07 2018",
+        "a(n) = A002807(n) - A000292(n-2). - _Pontus von Br\u00f6mssen_, Apr 29 2023"
+    ],
+    "example": [
+        "From _Andrew Howroyd_, Jan 04 2018: (Start)",
+        "Vertices can be represented by a pair of integers with 12 being the same as 21.",
+        "a(4) = 3 because the possible cycles are: -12-23-34-41-, -12-24-43-31-, -13-32-24-41-.",
+        "a(5) = 27 because there are 15 cycles of length 4 and 12 cycles of length 5.",
+        "(End)"
+    ],
+    "maple": [
+        "A297670List := proc(n) local A,R,f,i; A:=[0,0,0,6,54,354,2274]; R:=NULL;",
+        "f := i -> (24*(12*A[1]-33*A[2]+23*A[3]+3*A[4]-5*A[5])-(4*(90*A[1]-255*A[2]",
+        "+212*A[3]-26*A[4]-31*A[5]+16*A[6])+(-208*A[1]+618*A[2]-604*A[3]+197*A[4]",
+        "+15*A[5]-35*A[6]+(82*A[1]-257*A[2]+285*A[3]-137*A[4]+27*A[5]+6*A[6]+",
+        "(-20*A[1]+66*A[2]-83*A[3]+52*A[4]-18*A[5]+2*A[6]+(+2*A[1]-7*A[2]+10*A[3]",
+        "-8*A[4]+4*A[5]-A[6])*i)*i)*i)*i)*i)/((-24+(17+(i-6)*i)*i)*i);",
+        "for i from 1 to n do if i<7 then R:=R,A[i+1]/2 else A[1]:=A[2];A[2]:=A[3];",
+        "A[3]:=A[4];A[4]:=A[5];A[5]:=A[6];A[6]:=A[7];A[7]:=f(i); R:=R,A[7]/2 fi od;",
+        "R end: A297670List(22); # _Peter Luschny_, Jan 06 2018"
+    ],
+    "mathematica": [
+        "Table[Sum[n!/(2 k (n - k)!), {k, 4, n}], {n, 2, 20}]",
+        "Table[n ((3 - 2 n) n + 6 HypergeometricPFQ[{1, 1, 1 - n}, {2}, -1] - 7)/12, {n, 2, 20}]",
+        "RecurrenceTable[{-(-1 + n) n (1 + n) + (4 + 2 (-1 + n)) a[n] + (-6 - 2 (-1 + n)) a[n + 1] + 2 a[n + 2] == 0, a[1] == 0, a[2] == 0}, a[n], {n, 2, 20}]"
+    ],
+    "program": [
+        "(PARI) a(n)={sum(k=4, n, n!/(2*k*(n-k)!))} \\\\ _Andrew Howroyd_, Jan 04 2018"
+    ],
+    "xref": [
+        "Cf. A000292, A002807, A129349, A234629."
+    ],
+    "keyword": "nonn",
+    "offset": "2,3",
+    "author": "_Eric W. Weisstein_, Jan 02 2018",
+    "ext": [
+        "Terms a(8) and beyond from _Andrew Howroyd_, Jan 04 2018"
+    ],
+    "references": 3,
+    "revision": 28,
+    "time": "2023-04-30T02:13:57-04:00",
+    "created": "2018-01-03T17:52:13-05:00"
+}

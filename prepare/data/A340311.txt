@@ -1,0 +1,40 @@
+{
+    "number": 340311,
+    "data": "1,2,4,6,10,17,32,61,117,218,424,795,1533,2922,5590,10720,20592,39564,76082,146591,282059,544377,1049753,2026788,3912391,7559884",
+    "name": "Number of different possible profiles of palindromic length for prefixes of binary sequences of length n.",
+    "comment": [
+        "The palindromic length of a sequence is the minimum number of terms needed to write it as a concatenation of palindromes. For example, 011010 has palindromic length 3, as it can be written as (0110)(1)(0) or (0)(11)(010), but there is no way to write it as the concatenation of two palindromes.",
+        "The profile is the list of palindromic lengths of all prefixes. For 011010 it is (1,2,2,1,2,3). This sequence counts the distinct profiles."
+    ],
+    "link": [
+        "Anna E. Frid, <a href=\"https://arxiv.org/abs/1906.09392\">Prefix palindromic length of the Thue-Morse word</a>, arXiv:1906.09392 [cs.DM], 2019."
+    ],
+    "program": [
+        "(Python)",
+        "from functools import lru_cache",
+        "from itertools import product",
+        "def ispal(w): return w == w[::-1]",
+        "@lru_cache(maxsize=None)",
+        "def pal_len(w):",
+        "  if len(w) <= 1: return len(w)",
+        "  return min(1+pal_len(w[i:]) for i in range(len(w), 0, -1) if ispal(w[:i]))",
+        "def plp(w): # palindrome length profile",
+        "  return tuple(pal_len(w[:i]) for i in range(1, len(w) + 1))",
+        "def a(n):   # only search strings starting with 0 by symmetry",
+        "  return len(set(plp(\"0\"+\"\".join(u)) for u in product(\"01\", repeat=n-1)))",
+        "print([a(n) for n in range(1, 18)])  # _Michael S. Branicky_, Jan 04 2021"
+    ],
+    "xref": [
+        "Cf. A340314."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Jeffrey Shallit_, Jan 04 2021",
+    "ext": [
+        "a(21)-a(26) from _Michael S. Branicky_, Jan 04 2021"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2021-06-09T02:38:38-04:00",
+    "created": "2021-01-04T18:03:05-05:00"
+}

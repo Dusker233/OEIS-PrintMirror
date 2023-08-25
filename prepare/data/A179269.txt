@@ -1,0 +1,85 @@
+{
+    "number": 179269,
+    "data": "1,1,1,1,2,2,2,3,3,3,5,5,5,7,7,7,10,10,10,13,14,14,18,19,19,23,25,25,30,32,33,38,41,42,48,52,54,60,65,67,75,81,84,92,99,103,113,121,126,136,147,153,165,177,184,197,213,221,236,253,264,280,301,313,331,355,371,390,418,435,458",
+    "name": "Number of partitions of n into distinct parts such that the successive differences of consecutive parts are increasing, and first difference > first part.",
+    "comment": [
+        "Conditions as in A179254; additionally, if more than 1 part, first difference > first part.",
+        "Equivalently, number of partitions for which the sequence of part counts by decreasing part size is 1, 2, 3, ...  - _Olivier G\u00e9rard_, Jul 28 2017"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A179269/b179269.txt\">Table of n, a(n) for n = 0..10000</a> (terms 0..200 from Seiichi Manyama)",
+        "Gus Wiseman, <a href=\"/A325325/a325325.txt\">Sequences counting and ranking integer partitions by the differences of their successive parts.</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=0} x^(k*(k+1)*(k+2)/6) / Product_{j=1..k} (1 - x^(j*(j+1)/2)) (conjecture). - _Ilya Gutkovskiy_, Apr 25 2019"
+    ],
+    "example": [
+        "a(10) = 5 as there are 5 such partitions of 10: 1 + 3 + 6 = 1 + 9 = 2 + 8 = 3 + 7 = 10.",
+        "a(10) = 5 as there are 5 such partitions of 10: 10, 8 + 1 + 1, 6 + 2 + 2, 4 + 3 + 3, 3 + 2 + 2 + 1 + 1 + 1 (second definition).",
+        "From _Gus Wiseman_, May 04 2019: (Start)",
+        "The a(3) = 1 through a(13) = 7 partitions whose differences are strictly increasing (with the last part taken to be 0) are the following (A = 10, B = 11, C = 12, D = 13). The Heinz numbers of these partitions are given by A325460.",
+        "  (3)  (4)   (5)   (6)   (7)   (8)   (9)   (A)    (B)    (C)    (D)",
+        "       (31)  (41)  (51)  (52)  (62)  (72)  (73)   (83)   (93)   (94)",
+        "                         (61)  (71)  (81)  (82)   (92)   (A2)   (A3)",
+        "                                           (91)   (A1)   (B1)   (B2)",
+        "                                           (631)  (731)  (831)  (C1)",
+        "                                                                (841)",
+        "                                                                (931)",
+        "The a(3) = 1 through a(11) = 5 partitions whose multiplicities form an initial interval of positive integers are the following (A = 10, B = 11). The Heinz numbers of these partitions are given by A307895.",
+        "  (3)  (4)    (5)    (6)    (7)    (8)    (9)    (A)       (B)",
+        "       (211)  (311)  (411)  (322)  (422)  (522)  (433)     (533)",
+        "                            (511)  (611)  (711)  (622)     (722)",
+        "                                                 (811)     (911)",
+        "                                                 (322111)  (422111)",
+        "(End)"
+    ],
+    "mathematica": [
+        "Table[Length@",
+        "  Select[IntegerPartitions[n],",
+        "   And @@ Equal[Range[Length[Split[#]]], Length /@ Split[#]] &], {n,",
+        "0, 40}]   (* _Olivier G\u00e9rard_, Jul 28 2017 *)",
+        "Table[Length[Select[IntegerPartitions[n],Less@@Differences[Append[#,0]]&]],{n,0,30}] (* _Gus Wiseman_, May 04 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A179269(n):",
+        "    has_increasing_diffs = lambda x: min(differences(x,2)) >= 1",
+        "    special = lambda x: (x[1]-x[0]) > x[0]",
+        "    allowed = lambda x: (len(x) < 2 or special(x)) and (len(x) < 3 or has_increasing_diffs(x))",
+        "    return len([x for x in Partitions(n,max_slope=-1) if allowed(x[::-1])])",
+        "# _D. S. McNeil_, Jan 06 2011",
+        "(Ruby)",
+        "def partition(n, min, max)",
+        "  return [[]] if n == 0",
+        "  [max, n].min.downto(min).flat_map{|i| partition(n - i, min, i - 1).map{|rest| [i, *rest]}}",
+        "end",
+        "def f(n)",
+        "  return 1 if n == 0",
+        "  cnt = 0",
+        "  partition(n, 1, n).each{|ary|",
+        "    ary << 0",
+        "    ary0 = (1..ary.size - 1).map{|i| ary[i - 1] - ary[i]}",
+        "    cnt += 1 if ary0.sort == ary0.reverse && ary0.uniq == ary0",
+        "  }",
+        "  cnt",
+        "end",
+        "def A179269(n)",
+        "  (0..n).map{|i| f(i)}",
+        "end",
+        "p A179269(50) # _Seiichi Manyama_, Oct 12 2018",
+        "(PARI)",
+        "R(n)={my(L=List(), v=vectorv(n, i, 1), w=1, t=1); while(v, listput(L,v); w++; t+=w; v=vectorv(n, i, sum(k=1, (i-1)\\t, L[w-1][i-k*t]))); Mat(L)}",
+        "seq(n)={my(M=R(n)); concat([1], vector(n, i, vecsum(M[i,])))} \\\\ _Andrew Howroyd_, Aug 27 2019"
+    ],
+    "xref": [
+        "Cf. A179254 (condition only on differences), A007294 (nondecreasing instead of strictly increasing), A179255, A320382, A320385, A320387, A320388.",
+        "Cf. A007862, A240027, A307895, A320509, A320510, A325324, A325357, A325391, A325460."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Joerg Arndt_, Jan 05 2011",
+    "references": 13,
+    "revision": 56,
+    "time": "2020-02-27T16:44:36-05:00",
+    "created": "2010-11-12T14:28:44-05:00"
+}

@@ -1,0 +1,29 @@
+{
+    "number": 360905,
+    "data": "7939375,12799375,20410623,30466287,56661199,83365119,105146991,197479375,235838223,259360623,293380623,555499375,657880623,691579375,871374591,871720623,953280495,975079375,996393391,1032100623,1047979375,1096579375,1348000623,1355419375",
+    "name": "Starts of run of 3 consecutive integers that are all terms of A360902.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A360905/b360905.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "example": [
+        "7939375 is a term since A034444(7939375) = A005361(7939375) = 4, A034444(7939376) = A005361(7939376) = 4, and A034444(7939377) = A005361(7939377) = 4."
+    ],
+    "mathematica": [
+        "q[n_] := Module[{e = FactorInteger[n][[;; , 2]]}, Times @@ e == 2^Length[e]]; q[1] = True; seq[kmax_] := Module[{tri = q /@ Range[3], s = {}, k = 4}, While[k < kmax, If[And @@ tri, AppendTo[s, k - 3]]; tri = Join[Rest[tri], {q[k]}]; k++]; s]; seq[10^7]"
+    ],
+    "program": [
+        "(PARI) is(k) = {my(e = factor(k)[,2]); prod(i = 1, #e, e[i]) == 2^#e; }",
+        "lista(kmax) = {my(tri = vector(3, i, is(i)), k = 4); while(k < kmax, if(vecsum(tri) == 3, print1(k-3, \", \")); tri = concat(vecextract(tri, \"^1\"), is(k)); k++); }"
+    ],
+    "xref": [
+        "Subsequence of A360902 and A360903.",
+        "Cf. A005361, A034444."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Feb 25 2023",
+    "references": 3,
+    "revision": 9,
+    "time": "2023-02-26T03:26:50-05:00",
+    "created": "2023-02-26T02:26:27-05:00"
+}

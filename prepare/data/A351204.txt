@@ -1,0 +1,63 @@
+{
+    "number": 351204,
+    "data": "1,1,2,3,4,5,8,9,11,14,18,20,25,28,34,41,47,53,64,72,84,98,113,128,148,169,194,223,255,289,333,377,428,488,554,629,715,807,913,1033,1166,1313,1483,1667,1875,2111,2369,2655,2977,3332,3729,4170,4657,5195,5797,6459",
+    "name": "Number of integer partitions of n such that every permutation has all distinct runs.",
+    "comment": [
+        "Partitions enumerated by this sequence include those in which all parts are either the same or distinct as well as partitions with an even number of parts all of which except one are the same. - _Andrew Howroyd_, Feb 15 2022"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A351204/b351204.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Mathematics Stack Exchange, <a href=\"https://math.stackexchange.com/q/87559\">What is a sequence run? (answered 2011-12-01)</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(8) = 11 partitions:",
+        "  (1)  (2)   (3)    (4)     (5)      (6)       (7)        (8)",
+        "       (11)  (21)   (22)    (32)     (33)      (43)       (44)",
+        "             (111)  (31)    (41)     (42)      (52)       (53)",
+        "                    (1111)  (2111)   (51)      (61)       (62)",
+        "                            (11111)  (222)     (421)      (71)",
+        "                                     (321)     (2221)     (431)",
+        "                                     (3111)    (4111)     (521)",
+        "                                     (111111)  (211111)   (2222)",
+        "                                               (1111111)  (5111)",
+        "                                                          (311111)",
+        "                                                          (11111111)"
+    ],
+    "mathematica": [
+        "Table[Length[Select[IntegerPartitions[n],Select[Permutations[#],!UnsameQ@@Split[#]&]=={}&]],{n,0,15}]"
+    ],
+    "program": [
+        "(PARI) \\\\ here Q(n) is A000009.",
+        "Q(n)={polcoef(prod(k=1, n, 1 + x^k + O(x*x^n)), n)}",
+        "a(n)={Q(n) + if(n, numdiv(n) - 1) + sum(k=1, (n-1)\\3, sum(j=3, (n-1)\\k, j%2==1 && n-k*j<>k))} \\\\ _Andrew Howroyd_, Feb 15 2022"
+    ],
+    "xref": [
+        "The version for run-lengths instead of runs is A000005.",
+        "The version for normal multisets is 2^(n-1) - A283353(n-3).",
+        "The complement is counted by A351203, ranked by A351201.",
+        "A005811 counts runs in binary expansion.",
+        "A044813 lists numbers whose binary expansion has distinct run-lengths.",
+        "A059966 counts Lyndon compositions, necklaces A008965, aperiodic A000740.",
+        "A098859 counts partitions with distinct multiplicities, ordered A242882.",
+        "A238130 and A238279 count compositions by number of runs.",
+        "A297770 counts distinct runs in binary expansion.",
+        "A003242 counts anti-run compositions.",
+        "Counting words with all distinct runs:",
+        "- A351013 = compositions, for run-lengths A329739, ranked by A351290.",
+        "- A351016 = binary words, for run-lengths A351017.",
+        "- A351018 = binary expansions, for run-lengths A032020, ranked by A175413.",
+        "- A351200 = patterns, for run-lengths A351292.",
+        "- A351202 = permutations of prime factors.",
+        "Cf. A000041, A035363, A047993, A116608, A144300, A329746, A351291."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Feb 15 2022",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Feb 15 2022"
+    ],
+    "references": 18,
+    "revision": 11,
+    "time": "2022-02-16T01:50:08-05:00",
+    "created": "2022-02-15T22:00:40-05:00"
+}

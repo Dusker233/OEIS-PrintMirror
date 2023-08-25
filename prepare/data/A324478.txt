@@ -1,0 +1,42 @@
+{
+    "number": 324478,
+    "data": "1,6,252,18480,1801800,209513304,27485041584,3937652896320,603400560305400,97512510301206000,16452310738019476320,2876570958459008603520,518262201015698050067520,95794174581229987212924000,18101994022606737439599480000",
+    "name": "a(n) = (6/((n+1)*(n+2)*(n+3))) * multinomial(4*n;n,n,n,n).",
+    "comment": [
+        "Theorem (Luis Fredes, Mar 04 2019): (Start)",
+        "a(n) is an integer for all n >= 0.",
+        "Proof:",
+        "a(n) = (6/((n+1)*(n+2)*(n+3)))*multinomial(4*n;n,n,n,n) = multinomial(4*n;n,n,n,n) - multinomial(4*n;n+3,n-3,n,n) + 3*multinomial(4*n;n+2,n-2,n,n) + 15*multinomial(4*n;n+3,n-2,n-1,n) - 18*multinomial(4*n;n+3,n-1,n-1,n-1).",
+        "The right hand side is equal (after some manipulation) to",
+        "    (f(n)/((n+1)*(n+2)*(n+3)))*multinomial(4*n;n,n,n,n)",
+        "where f(n) = (n+1)*(n+2)*(n+3) - (n-1)*(n-2)*n + 3*(n-1)*n*(n+3) + 15*(n-1)*n^2 - 18*n^3 = 6. QED (End)",
+        "(11!/12)*a(n) is divisible by ((n + 1)*(n + 2)*(n + 3))^2 for all n. More generally, we conjecture that there is a constant C(r) such that C(r)*(4*n)!/(n!*(n+r)!^3) is an integer for all n. Calculation suggests that we may take C(r) = (1/8)*(4*r)!/r! for r >= 1. - _Peter Bala_, Feb 28 2023"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A324478/b324478.txt\">Table of n, a(n) for n = 0..400</a>",
+        "Luis Fredes and Avelio Sepulveda, <a href=\"https://arxiv.org/abs/1901.04981\">Tree-decorated planar maps</a>, arXiv:1901.04981 [math.CO], 2019. See Remark 4.6."
+    ],
+    "formula": [
+        "From _Vaclav Kotesovec_, Jul 21 2019: (Start)",
+        "For n>0, a(n) = 6*(4*n)! / ((n!)^3 * (n+3)!).",
+        "a(n) ~ 6 * 2^(8*n - 1/2) / (Pi^(3/2) * n^(9/2)). (End)"
+    ],
+    "maple": [
+        "a:= n-> 6*combinat[multinomial](4*n, n$4)/((n+1)*(n+2)*(n+3)):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Mar 11 2019"
+    ],
+    "mathematica": [
+        "c[m_,n_]:=2m Product[1/(n+i), {i, m}] (Multinomial@@ConstantArray[n, m+1]);{1}~Join~Array[c[3, #]&, 20] (* _Vincenzo Librandi_, Mar 11 2019 *)",
+        "Flatten[{1, Table[6*(4*n)! / ((n!)^3 * (n+3)!), {n, 1, 15}]}] (* _Vaclav Kotesovec_, Jul 21 2019 *)"
+    ],
+    "xref": [
+        "Cf. A324152."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Mar 10 2019, following a suggestion from Luis Fredes and Avelio Sepulveda.",
+    "references": 2,
+    "revision": 23,
+    "time": "2023-03-13T07:22:21-04:00",
+    "created": "2019-03-10T00:55:11-05:00"
+}

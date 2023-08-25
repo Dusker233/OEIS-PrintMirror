@@ -1,0 +1,40 @@
+{
+    "number": 336604,
+    "data": "1,2,3,5,8,13,26,27,29,32,37,50,50,51,53,56,61,74,125,125,126,128,131,136,149,200,200,201,203,206,211,224,275,275,276,278,281,286,299,350,350,351,353,356,361,374,425,425,426,428,431,436,449,500,936,936,937,939,942,947,960,1011",
+    "name": "a(0) = 1, a(1) = 2; thereafter let x = (a(n-1) mod a(n-2)); then a(n) = a(n-1) + a(x) if x < n, otherwise a(n) = a(n-1).",
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A336604/b336604.txt\">Table of n, a(n) for n = 0..20000</a>"
+    ],
+    "example": [
+        "a(7) = 27, a(8) = 29, so a(9) = 29 + a(29 mod 27) = 32."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<2, n+1, (x->",
+        "      a(n-1)+`if`(x<n, a(x), 0))(a(n-1) mod a(n-2)))",
+        "    end:",
+        "seq(a(n), n=0..100);  # _Alois P. Heinz_, Oct 25 2020"
+    ],
+    "mathematica": [
+        "a[0] = 1; a[1] = 2; a[n_] := a[n] = a[n - 1] + If[(r = Mod[a[n - 1], a[n - 2]]) < n, a[r], 0]; Array[a, 51, 0] (* _Amiram Eldar_, Oct 10 2020 *)"
+    ],
+    "program": [
+        "(C++)",
+        "for (int i = 2; i < 10000; i++)",
+        "    {",
+        "        j = a[i - 1];",
+        "        k = a[i - 2];",
+        "        l = j % k;",
+        "        if (int(l) <= int(i)) a[i] = j + a[l]; else a[i] = a[i - 1];",
+        "    }"
+    ],
+    "xref": [
+        "Cf. A215526."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Maxim Skorohodov_, Oct 10 2020",
+    "references": 1,
+    "revision": 57,
+    "time": "2020-10-25T08:37:06-04:00",
+    "created": "2020-10-24T20:57:42-04:00"
+}

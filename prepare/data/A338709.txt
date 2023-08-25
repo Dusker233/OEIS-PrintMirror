@@ -1,0 +1,51 @@
+{
+    "number": 338709,
+    "data": "6,129,1209,8856,57522,348945,2031525,11531712,64438638,356590161,1961459841,10749416568,58777575354,320956083777,1751147966157,9549634751424,52062358139670,283782668909793,1546691543230473,8429380058864280,45938035123043586,250345837703068209",
+    "name": "Number of (undirected) paths in C_3 X P_n.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A338709/b338709.txt\">Table of n, a(n) for n = 1..50</a>"
+    ],
+    "formula": [
+        "Empirical g.f.: 3*x*(2 + 15*x - 53*x^2 + 89*x^3 - 37*x^4) / ((1 - x)^2 * (1 - 3*x)^2 * (1 - 6*x + 3*x^2)). - _Vaclav Kotesovec_, Dec 19 2020"
+    ],
+    "program": [
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_CnXPk(n, k):",
+        "    grids = []",
+        "    for i in range(1, k + 1):",
+        "        for j in range(1, n):",
+        "            grids.append((i + (j - 1) * k, i + j * k))",
+        "        grids.append((i + (n - 1) * k, i))",
+        "    for i in range(1, k * n, k):",
+        "        for j in range(1, k):",
+        "            grids.append((i + j - 1, i + j))",
+        "    return grids",
+        "def A(start, goal, n, k):",
+        "    universe = make_CnXPk(n, k)",
+        "    GraphSet.set_universe(universe)",
+        "    paths = GraphSet.paths(start, goal)",
+        "    return paths.len()",
+        "def B(n, k):",
+        "    m = k * n",
+        "    s = 0",
+        "    for i in range(1, m):",
+        "        for j in range(i + 1, m + 1):",
+        "            s += A(i, j, n, k)",
+        "    return s",
+        "def A338709(n):",
+        "    return B(3, n)",
+        "print([A338709(n) for n in range(1, 11)])"
+    ],
+    "xref": [
+        "Cf. A003689, A338960, A338961, A338962, A338963."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Seiichi Manyama_, Dec 18 2020",
+    "references": 5,
+    "revision": 26,
+    "time": "2020-12-19T11:45:13-05:00",
+    "created": "2020-12-19T08:04:57-05:00"
+}

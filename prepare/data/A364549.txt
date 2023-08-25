@@ -1,0 +1,49 @@
+{
+    "number": 364549,
+    "data": "1,3,5,97,345,549,1093,64621,671515,3280317,8957089",
+    "name": "Odd numbers k that divide A005941(k).",
+    "comment": [
+        "Sequence A005940(A364547(.)) sorted into ascending order.",
+        "Odd numbers k such that k divides 1+A156552(k).",
+        "The first ten terms factored:",
+        "        1   (unity)",
+        "        3   (prime)",
+        "        5   (prime)",
+        "       97   (prime)",
+        "      345 = 3*5*23",
+        "      549 = 3^2 * 61",
+        "     1093   (prime)",
+        "    64621   (prime)",
+        "   671515 = 5*13*10331",
+        "  3280317 = 3*79*13841.",
+        "Primes p present are those that occur as factors of 1 + 2^(A000720(p)-1)."
+    ],
+    "program": [
+        "(PARI)",
+        "A005941(n) = { my(f=factor(n), p, p2=1, res=0); for(i=1, #f~, p = 1 << (primepi(f[i, 1])-1); res += (p * p2 * (2^(f[i, 2])-1)); p2 <<= f[i, 2]); (1+res) }; \\\\ (After _David A. Corneth_'s program for A156552)",
+        "isA364549(n) = ((n%2)&&!(A005941(n)%n));",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import primepi, factorint",
+        "def A364549_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue+(startvalue&1^1),1),2):",
+        "        if not (sum(pow(2,i+int(primepi(p))-1,n) for i, p in enumerate(factorint(n, multiple=True)))+1) % n:",
+        "            yield n",
+        "A364549_list = list(islice(A364549_gen(),8)) # _Chai Wah Wu_, Jul 28 2023"
+    ],
+    "xref": [
+        "Odd terms in A364548.",
+        "Cf. A000720, A005940, A005941, A156552.",
+        "Cf. also A364498, A364547, A364551."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Jul 28 2023",
+    "ext": [
+        "a(11) from _Chai Wah Wu_, Jul 28 2023"
+    ],
+    "references": 4,
+    "revision": 17,
+    "time": "2023-07-29T01:21:07-04:00",
+    "created": "2023-07-28T16:37:10-04:00"
+}

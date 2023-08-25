@@ -1,0 +1,45 @@
+{
+    "number": 59412,
+    "data": "2,4,12,30,78,180,432,978,2220,4926,10908,23790,51750,111564,239604,511758,1089306,2309118,4880946,10285146,21619770,45334776,94865904,198116082,413013684,859573638,1786263822,3706729488,7681910826",
+    "name": "Number of distinct minimal unary DFA's with exactly n states.",
+    "comment": [
+        "Also, number of binary strings w of length 2n such that the longest suffix of w appearing at least twice in w is of length n. - _Jeffrey Shallit_, Mar 20 2017",
+        "Also, number of ultimately periodic binary sequences uvvvv... with |u|+|v| = n, formula uses psi(|v|) and 2^(|u|-1), plus psi(n) for u empty. - _Michael Vielhaber_, Mar 19 2022"
+    ],
+    "reference": [
+        "M. Domaratzki, D. Kisman, and J. Shallit, On the number of distinct languages accepted by finite automata with n states, J. Autom. Lang. Combinat. 7 (2002) 4-18, Section 6, f_1(n).",
+        "Jeffrey Shallit, Notes on Enumeration of Finite Automata, manuscript, Jan 30, 2001"
+    ],
+    "link": [
+        "Cyril Nicaud, <a href=\"https://hal-upec-upem.archives-ouvertes.fr/hal-00620109\">Average state complexity of operations on unary automata</a>, Math. Foundations of Computer Science, 1999, Lect. Notes in Computer Sci. #1672, pp. 231-240."
+    ],
+    "formula": [
+        "a(n) = psi(n) + Sum_{j=1..n-1} psi(n-j)*2^(j-1), where psi(n) is the number of primitive words of length n over a 2-letter alphabet (expressible in terms of the Moebius function).",
+        "a(n) = A027375(n) + A059413(n-1). - _R. J. Mathar_, May 21 2018"
+    ],
+    "example": [
+        "a(1) = 2 because there are exactly two minimal unary automata with 1 state."
+    ],
+    "maple": [
+        "A059412 := proc(n)",
+        "    A027375(n)+add(A027375(n-j)*2^(j-1),j=1..n-1) ;",
+        "end proc:",
+        "seq(A059412(n),n=1..10) ; # _R. J. Mathar_, May 21 2018"
+    ],
+    "mathematica": [
+        "A027375[n_] := DivisorSum[n, MoebiusMu[n/#]*2^# &];",
+        "a[n_] := A027375[n] + Sum[A027375[n-j]*2^(j-1), {j, 1, n-1}];",
+        "Table[a[n], {n, 1, 29}] (* _Jean-Fran\u00e7ois Alcover_, May 08 2023 *)"
+    ],
+    "program": [
+        "(PARI) mypsi(n) = sumdiv(n, d, moebius(n/d)*2^d) /* from A027375 */",
+        "a(n) = mypsi(n) + sum(j=1, n-1, mypsi(n-j)*2^(j-1)) \\\\ _Michel Marcus_, May 25 2013"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Jan 30 2001",
+    "references": 5,
+    "revision": 35,
+    "time": "2023-05-08T09:33:53-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

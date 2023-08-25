@@ -1,0 +1,46 @@
+{
+    "number": 318298,
+    "data": "12,14,154,1196,14112,21888,53625,226512,279174,358435,821142,1222452,1665664,2228814,2454375,2614248,2872116,4425729,5751746,8653645,9551256,15261246,19427226,19644898,19775998,21271488,27676935,29591892,29956212,41878242,45574144",
+    "name": "Numbers whose set of decimal digits coincides with the set of the indices of their prime factors.",
+    "comment": [
+        "It is impossible to find a number with 9 distinct decimal digits because the prime factors 2 and 5 generate d_k = 0.",
+        "The finite subsequence containing the smallest numbers having at least j distinct digits for j = 2, 3, ..., 8, is 12, 154, 53625, 279174, 19427226, 82447365 and 41762985264."
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A318298/b318298.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "1196 is in the sequence because the prime factors are {2, 13, 23} = {prime(1), prime(6), prime(9)}, and 1196 contains the decimal digits 1, 6, 9."
+    ],
+    "maple": [
+        "with(numtheory):nn:=10^8:",
+        "for n from 1 to nn do:",
+        "lst:={}:d:=factorset(n):n0:=nops(d):",
+        "q:=convert(n,base,10):n1:=nops(q):",
+        "p:=product(\u2018q[i]\u2019, \u2018i\u2019=1..n1):",
+        "if p<>0",
+        "  then",
+        "  for i from 1 to n1 do :",
+        "   lst:=lst union {ithprime(q[i])}:",
+        "  od:",
+        "   if lst = d",
+        "    then",
+        "     print(n):",
+        "     else",
+        "     fi:fi:",
+        "od:"
+    ],
+    "mathematica": [
+        "ok[n_] := Block[{f = First /@ FactorInteger[n], d}, Last@f < 24 && Min[d = Union@ IntegerDigits@ n] > 0 && Prime[d] == f]; Select[Range[10^6], ok] (* _Giovanni Resta_, Aug 24 2018 *)"
+    ],
+    "xref": [
+        "Cf. A001221, A080683, A097227, A290675."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Aug 24 2018",
+    "references": 2,
+    "revision": 19,
+    "time": "2018-09-05T09:57:57-04:00",
+    "created": "2018-09-03T16:56:21-04:00"
+}

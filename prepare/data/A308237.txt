@@ -1,0 +1,40 @@
+{
+    "number": 308237,
+    "data": "11,12,13,14,15,16,17,18,19,22,24,26,28,33,36,39,44,48,55,66,77,88,99,105,108,121,132,135,143,154,165,176,187,192,195,198,225,231,242,253,264,275,286,297,315,341,352,363,374,385,396,405,451,462,473,484,495,561,572,583,594,671,682,693",
+    "name": "Numbers m not ending with 0 that contain a digit, other than the leftmost digit, that can be removed such that the resulting number d divides m.",
+    "comment": [
+        "When m is a term, then, necessarily, the digit that is removed is the second from the left.",
+        "This sequence is finite with 95 integers and the greatest term is 180625. The number of terms with respectively 2, 3, 4, 5, 6 digits is 23, 44, 10, 17, 1.",
+        "The obtained quotients m/d belong to: { 6, 7, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19 } (all proofs in Diophante link)."
+    ],
+    "link": [
+        "Marius A. Burtea, <a href=\"/A308237/b308237.txt\">Table of n, a(n) for n = 1..95</a>",
+        "Diophante, <a href=\"http://www.diophante.fr/problemes-par-themes/arithmetique-et-algebre/a3-nombres-remarquables/2110-a333-un-chiffre-a-la-trappe\">A333. Un chiffre \u00e0 la trappe</a>, Oct. 2011 (in French)."
+    ],
+    "example": [
+        "264 is a term because 264/24 = 11.",
+        "34875 is a term because 34875/3875 = 9."
+    ],
+    "mathematica": [
+        "Select[Range[700], With[{m = #}, And[Mod[#, 10] != 0, AnyTrue[FromDigits@ Delete[IntegerDigits[m], #] & /@ Range[2, IntegerLength@ m], Mod[m, #] == 0 &]]] &] (* _Michael De Vlieger_, Jun 09 2019 *)"
+    ],
+    "program": [
+        "(MATLAB) m=1;",
+        "for u=10:700 digit=dec2base(u,10)-'0';",
+        "   if digit(length(digit))~=0 aa=str2num(strrep(num2str(digit), ' ', ''));",
+        "      digit(2)=[]; a=str2num(strrep(num2str(digit), ' ', ''));",
+        "if mod(aa,a)==0 sol(m)=u;  m=m+1;  end; end; end;",
+        "sol % _Marius A. Burtea_, May 16 2019",
+        "(PARI) isok(m) = {if (m % 10, my(d=digits(m)); for (k=2, #d, mk = fromdigits(vector(#d-1, i, if (i<k, d[i], d[i+1]))); if (!(m % mk), return(1));););} \\\\ _Michel Marcus_, Jun 21 2019"
+    ],
+    "xref": [
+        "Cf. A034837, A178157."
+    ],
+    "keyword": "nonn,base,fini",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, May 16 2019",
+    "references": 1,
+    "revision": 34,
+    "time": "2019-07-01T01:22:17-04:00",
+    "created": "2019-06-30T04:46:07-04:00"
+}

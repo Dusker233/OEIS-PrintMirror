@@ -1,0 +1,37 @@
+{
+    "number": 364722,
+    "data": "1,3,7,13,19,21,37,39,49,57,61,67,73,79,91,97,103,109,111,139,147,151,163,169,181,183,193,199,201,211,219,237,241,271,273,291,307,309,313,327,331,337,343,349,361,367,373,379,409,417,421,427,433,453,463,469,487,489,507,523,541,543,547",
+    "name": "Numbers k that divide 1 + 2^m + 4^m for some m.",
+    "comment": [
+        "If k = 3*j+1 is prime and 2^j - 1 is not divisible by k, then k is a term, as 1 + 2^j + 4^j = (2^(k-1)-1)/(2^j - 1) == 0 (mod k). - _Robert Israel_, Aug 06 2023"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A364722/b364722.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(4) = 13 is a term because 1 + 2^4 + 4^4 = 273 = 21 * 13 is divisible by 13."
+    ],
+    "maple": [
+        "filter:= proc(n) local x, r;",
+        "  for r in map(t -> subs(t,x), [msolve(1+x+x^2, n)]) do",
+        "    try",
+        "      NumberTheory:-ModularLog(r,2,n);",
+        "    catch \"no solutions exist\": next",
+        "    end try;",
+        "    return true",
+        "  od;",
+        "  false",
+        "end proc:",
+        "select(filter, [seq(i,i=1..1000,2)]);"
+    ],
+    "xref": [
+        "Subset of A034017. Cf. A364724."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Aug 04 2023",
+    "references": 2,
+    "revision": 12,
+    "time": "2023-08-06T01:41:54-04:00",
+    "created": "2023-08-04T15:47:32-04:00"
+}

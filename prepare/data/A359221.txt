@@ -1,0 +1,47 @@
+{
+    "number": 359221,
+    "data": "0,1,2,3,12,28,227,821,22246,26494,204953,425720",
+    "name": "Starting numbers which reach a new record high value when iterating the map x->A359194(x) (binary complement of 3n).",
+    "comment": [
+        "It is unknown whether all starting numbers reach 0.",
+        "103721 is not a term of this sequence despite having a trajectory of record length, because its maximum of 2.42...*10^14081 is lower than the previous record holder."
+    ],
+    "link": [
+        "Joshua Searle, <a href=\"https://qedscience.wordpress.com/2021/02/19/collatz-inspired-sequences/\">Collatz-inspired sequences</a>"
+    ],
+    "example": [
+        "Let S(x) = iteration sequence of A359194 starting with x; then",
+        "S(0) = (0), maximum = 0;",
+        "S(1) = (1, 0), maximum = 1;",
+        "S(2) = (2, 1, 0), maximum = 2;",
+        "S(3) = (3, 6, 13, 24, 55, 90, 241, 300, 123, 142, 85, 0), maximum = 300;",
+        "Since S(3) contains a higher maximum than any lower positive starting integer, 3 is a term of this sequence."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def f(n): return 1 if n == 0 else (m:=3*n)^((1 << m.bit_length())-1)",
+        "def itersmax(n):",
+        "    i, fi, m = 0, n, n",
+        "    while fi != 0: i, fi, m = i+1, f(fi), max(m, fi)",
+        "    return i, m",
+        "def agen(): # generator of terms",
+        "    record = -1",
+        "    for m in count(0):",
+        "        v, mx = itersmax(m)",
+        "        if mx > record:",
+        "            yield m # use mx to obtain values",
+        "            record = mx",
+        "print(list(islice(agen(), 8))) # _Michael S. Branicky_, Dec 22 2022"
+    ],
+    "xref": [
+        "Cf. A035327, A359194, A359207, A359208, A359209, A359215, A359218, A359219, A359220, A359222, A359255."
+    ],
+    "keyword": "nonn,base,more,hard",
+    "offset": "1,3",
+    "author": "_Joshua Searle_, Dec 22 2022",
+    "references": 4,
+    "revision": 18,
+    "time": "2023-01-05T18:55:58-05:00",
+    "created": "2023-01-05T18:55:58-05:00"
+}

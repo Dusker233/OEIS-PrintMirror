@@ -1,0 +1,43 @@
+{
+    "number": 332398,
+    "data": "1,1,2,4,8,17,40,105,304,958,3255,11851,46096,191648,854551,4101826,21213282,117747119,695773801,4332490151,28149712546,189300600481,1309755334070,9286984108299,67327505784439,498502290046850,3769028024302567,29115361551715499",
+    "name": "Number of set partitions of [n] where all prime-indexed blocks are singletons.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A332398/b332398.txt\">Table of n, a(n) for n = 0..605</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "example": [
+        "a(2) = 2: 12, 1|2.",
+        "a(3) = 4: 123, 12|3, 13|2, 1|2|3.",
+        "a(4) = 8: 1234, 123|4, 124|3, 12|3|4, 134|2, 13|2|4, 14|2|3, 1|2|3|4.",
+        "a(5) = 17: 12345, 1234|5, 1235|4, 123|4|5, 1245|3, 124|3|5, 125|3|4, 12|3|4|5, 1345|2, 134|2|5, 135|2|4, 13|2|4|5, 145|2|3, 14|2|3|5, 15|2|3|4, 1|2|3|45, 1|2|3|4|5."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0, 1, add(`if`(j<=m",
+        "       and isprime(j), 0, b(n-1, max(j, m))), j=1..m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..32);",
+        "# second Maple program:",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, add(b(n-j, i+1)*",
+        "       binomial(n-1, j-1), j=1..`if`(isprime(i+1), 1, n)))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..32);"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, Sum[b[n-j, i+1] Binomial[n-1, j-1], {j, 1, If[PrimeQ[i+1], 1, n]}]];",
+        "a[n_] := b[n, 0];",
+        "a /@ Range[0, 32] (* _Jean-Fran\u00e7ois Alcover_, May 07 2020, after 2nd Maple program *)"
+    ],
+    "xref": [
+        "Cf. A000040, A000110, A007476, A332248."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Feb 10 2020",
+    "references": 2,
+    "revision": 14,
+    "time": "2020-05-07T07:11:21-04:00",
+    "created": "2020-02-14T09:28:19-05:00"
+}

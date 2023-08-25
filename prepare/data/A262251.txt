@@ -1,0 +1,36 @@
+{
+    "number": 262251,
+    "data": "3,10,28,91",
+    "name": "Triangular numbers representable as 2^x + 3^y.",
+    "comment": [
+        "No other terms such that 0 <= x,y < 2000.",
+        "No other terms such that 0 <= x,y < 5250. - _Michael S. Branicky_, Mar 10 2021"
+    ],
+    "example": [
+        "a(1) = 3 = 2^1 + 3^0.",
+        "a(4) = 91 = 2^6 + 3^3."
+    ],
+    "program": [
+        "(PARI) isok(t) = {for (k=0, logint(t, 2), my(tt = t - 2^k); if (tt, p = valuation(tt, 3); if (tt == 3^p, return(1))););}",
+        "lista(nn) = for (n=1, nn, if (isok(t=n*(n+1)/2), print1(t, \", \"))); \\\\ _Michel Marcus_, Sep 20 2015",
+        "(PARI) select(x->ispolygonal(x, 3), setbinop(f, [0..20], [0..20])) \\\\ _Michel Marcus_, Mar 10 2021",
+        "(Python)",
+        "from sympy import integer_nthroot",
+        "def auptoexponent(maxexp):",
+        "  sums = set(2**x + 3**y for x in range(maxexp) for y in range(maxexp))",
+        "  iroots = set(integer_nthroot(2*s, 2)[0] for s in sums)",
+        "  return sorted(set(r*(r+1)//2 for r in iroots if r*(r+1)//2 in sums))",
+        "print(auptoexponent(500)) # _Michael S. Branicky_, Mar 10 2021"
+    ],
+    "xref": [
+        "Cf. A225390, A226499, A227027, A259745, A259746, A262242.",
+        "Intersection of A000217 and A004050."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, Sep 16 2015",
+    "references": 1,
+    "revision": 17,
+    "time": "2021-03-11T05:13:17-05:00",
+    "created": "2015-09-20T12:19:12-04:00"
+}

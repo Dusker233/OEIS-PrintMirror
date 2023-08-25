@@ -1,0 +1,26 @@
+{
+    "number": 301592,
+    "data": "4,5,6,7,8,10,11,12,17,18,24,28,29,37,53,59,67,79,89,95,97,121,123,125,223,305,329,479,521,539,541,905,1087,1147,1277,1345,1351,1355,1357,5779,8923,10003,11773,12883,19371,19651,19657,28277,31445",
+    "name": "Numbers k at which the ratio A288814(k) / k reaches a record high.",
+    "example": [
+        "A288814(10) / 10 = 21 / 10 and for n < 10 all ratios are less than 21 / 10, so 10 is in the sequence."
+    ],
+    "mathematica": [
+        "Block[{s = Array[If[PrimeQ@ #, 0, Total@ Flatten[ConstantArray[#1, #2] & @@@ FactorInteger@ #]] &, 10^5, 2], t}, t = Table[(1 + FirstPosition[s, k][[1]])/k, {k, 4, LengthWhile[Differences@ Rest@ Union@ s, # == 1 &]}]; Map[3 + FirstPosition[t, #][[1]] &, Union@ FoldList[Max, t]]] (* _Michael De Vlieger_, Mar 26 2018 *)"
+    ],
+    "program": [
+        "(PARI) isok(k, n) = my(f=factor(k)); sum(j=1, #f~, f[j, 1]*f[j, 2]) == n;",
+        "f(n) = forcomposite(k=1, , if (isok(k, n), return(k))); /* A288814 */",
+        "lista(nn) = {maxr = 0; for (n=4, nn, if ((newr=f(n)/n) > maxr, print1(n, \", \"); maxr = newr););} \\\\ _Michel Marcus_, Mar 26 2018"
+    ],
+    "xref": [
+        "Cf. A288814."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David A. Corneth_, Mar 24 2018",
+    "references": 0,
+    "revision": 10,
+    "time": "2018-04-15T14:16:16-04:00",
+    "created": "2018-04-15T14:16:16-04:00"
+}

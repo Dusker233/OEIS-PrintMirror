@@ -1,0 +1,44 @@
+{
+    "number": 158191,
+    "data": "2,23,233,2333,23333,2333323,23333237,233332373,23333237353,2333323735319,2333323735319149,2333323735319149571,23333237353191495713,23333237353191495713131,233332373531914957131313",
+    "name": "Attach the smallest prime to the end of the string a(n-1) so a(n) is also prime.",
+    "comment": [
+        "a(279) has 1001 digits. - _Michael S. Branicky_, May 26 2023"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A158191/b158191.txt\">Table of n, a(n) for n = 1..278</a> (terms 1..200 from Harvey P. Dale)"
+    ],
+    "example": [
+        "a(6) = 2333323 since a(5) = 23333 (prime) and 233333, 233335, 233337, 2333311, 2333313, 2333317 and 2333319 are all composite."
+    ],
+    "mathematica": [
+        "nxt[n_]:=Module[{k=3},While[CompositeQ[n*10^IntegerLength[k]+k],k = NextPrime[ k]];n*10^IntegerLength[k]+k]; NestList[nxt,2,20] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Jul 13 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime",
+        "def agen(): # generator of terms",
+        "    p, s = 2, \"2\"",
+        "    while True:",
+        "        yield p",
+        "        q = 2",
+        "        while not isprime(p:=int(s+str(q))):",
+        "            q = nextprime(q)",
+        "        s += str(q)",
+        "print(list(islice(agen(), 15))) # _Michael S. Branicky_, May 26 2023"
+    ],
+    "xref": [
+        "Cf. A048549, A088603, A089703, A065712, A100893."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Sergio Pimentel_, Mar 13 2009",
+    "ext": [
+        "More terms from _Sean A. Irvine_, Nov 29 2009"
+    ],
+    "references": 1,
+    "revision": 21,
+    "time": "2023-05-26T12:14:27-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

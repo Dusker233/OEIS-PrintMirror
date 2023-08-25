@@ -1,0 +1,46 @@
+{
+    "number": 351067,
+    "data": "0,3,11,52,291,1681,11506,89347",
+    "name": "Number of integers between the n-th and the (n+1)-th primorial such that the maximal exponent in their prime factorization is larger than the maximal digit in their primorial base expansion.",
+    "comment": [
+        "a(n) is the number of terms of A350075 in range A002110(n) .. A002110(1+n)-1.",
+        "The ratio a(n) / A061720(n) develops as:",
+        "n = 1:     0 / 4           = 0",
+        "    2:     3 / 24          = 0.125",
+        "    3:    11 / 180         = 0.061111...",
+        "    4:    52 / 2100        = 0.247619...",
+        "    5:   291 / 27720       = 0.010498...",
+        "    6:  1681 / 480480      = 0.003499...",
+        "    7: 11506 / 9189180     = 0.001252...",
+        "    8: 89347 / 213393180   = 0.000419..."
+    ],
+    "link": [
+        "<a href=\"/index/Pri#primorialbase\">Index entries for sequences related to primorial base</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=A002110(n) .. A002110(1+n)-1} [A328114(k) < A051903(k)], where [ ] is the Iverson bracket.",
+        "For all n, a(n) < A351069(n)."
+    ],
+    "example": [
+        "Between A002110(2) = 6 and A002110(3) = 30, there are exactly three numbers that satisfy the condition: 8, 9, 16, therefore a(2) = 3."
+    ],
+    "program": [
+        "(PARI)",
+        "A002110(n) = prod(i=1,n,prime(i));",
+        "A051903(n) = if((1==n),0,vecmax(factor(n)[, 2]));",
+        "A276086(n) = { my(m=1, p=2); while(n, m *= (p^(n%p)); n = n\\p; p = nextprime(1+p)); (m); };",
+        "isA350075(n) = (A051903(A276086(n)) < A051903(n));",
+        "A351067(n) = sum(k=A002110(n),A002110(1+n)-1,isA350075(k));"
+    ],
+    "xref": [
+        "Cf. A002110, A051903, A276086, A328114, A350075, A351068 (partial sums), A351069.",
+        "Cf. also A327969."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Feb 02 2022",
+    "references": 7,
+    "revision": 13,
+    "time": "2022-02-02T15:09:15-05:00",
+    "created": "2022-02-02T15:09:15-05:00"
+}

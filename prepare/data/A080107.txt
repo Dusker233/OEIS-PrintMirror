@@ -1,0 +1,78 @@
+{
+    "number": 80107,
+    "data": "1,1,2,3,7,12,31,59,164,339,999,2210,6841,16033,51790,127643,428131,1103372,3827967,10269643,36738144,102225363,376118747,1082190554,4086419601,12126858113,46910207114,143268057587,566845074703,1778283994284,7186474088735",
+    "name": "Number of fixed points of permutation of SetPartitions under {1,2,...,n}->{n,n-1,...,1}. Number of symmetric arrangements of non-attacking rooks on upper half of n X n chessboard.",
+    "comment": [
+        "Even-numbered terms a(2k) are A002872: 2,7,31,164,999 (\"Sorting numbers\"); odd-numbered terms are its binomial transform, A080337. The symmetrical set partitions of {-n,...,-1,0,1,...,n} can be classified by the partition containing 0. Thus we get the sum over k of {n choose k} times the number of symmetrical set partitions of 2n-2k elements. - _Don Knuth_, Nov 23 2003",
+        "Number of partitions of n numbers that are symmetrical and cannot be nested (i.e., include a pattern of the form abab). - _Douglas Boffey_, May 21 2015",
+        "Number of achiral color patterns in a row or loop of length n. Two color patterns are equivalent if the colors are permuted. - _Robert A. Russell_, Apr 23 2018",
+        "Also the number of self-complementary set partitions of {1, ..., n}. The complement of a set partition pi of {1, ..., n} is defined as n + 1 - pi (elementwise) on page 3 of Callan. For example, the complement of {{1,5},{2},{3,6},{4}} is {{1,4},{2,6},{3},{5}}. - _Gus Wiseman_, Feb 13 2019"
+    ],
+    "reference": [
+        "D. E. Knuth, The Art of Computer Programming, vol. 4A, Combinatorial Algorithms, Section 7.2.1.5 (p. 765)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A080107/b080107.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "David Callan, <a href=\"https://arxiv.org/abs/math/0508052\">On conjugates for set partitions and integer compositions</a>, arXiv:math/0508052 [math.CO], 2005.",
+        "Juan B. Gil and Luiz E. Lopez, <a href=\"https://arxiv.org/abs/2203.10589\">Enumeration of symmetric arc diagrams</a>, arXiv:2203.10589 [math.CO], 2022.",
+        "S. V. Pemmaraju and S. S. Skiena, <a href=\"http://www.cs.uiowa.edu/~sriram/Combinatorica/newFeatures.nb.pdf\">The New Combinatorica</a>, 2001.",
+        "Frank Ruskey, <a href=\"http://combos.org/part\">Set Partitions</a>"
+    ],
+    "formula": [
+        "Knuth gives recurrences and generating functions.",
+        "a(n) = Sum_{k=0..t(n)} (-1)^k*A125810(n,k) where A125810 is a triangle of coefficients for a q-analog of the Bell numbers and t(n)=A125811(n)-1. - _Paul D. Hanna_, Jan 19 2009",
+        "From _Robert A. Russell_, Apr 23 2018: (Start)",
+        "a(n) = Sum_{k=0..n} Ach(n,k) where",
+        "  Ach(n,k) = [n>1]*(k*Ach(n-2,k)+Ach(n-2,k-1)+Ach(n-2,k-2)) + [n<2]*[n==k]*[n>=0].",
+        "a(n) = 2*A103293(n+1) - A000110(n). (End)",
+        "a(n) = [n==0 mod 2]*Sum_{k=0..n/2} Stirling2(n/2, k)*A005425(k) + [n==1 mod 2] * Sum_{k=1..(n+1)/2} Stirling2((n+1)/2, k) * A005425(k-1). (from Knuth reference)",
+        "a(n) = 2*A084708(n) - A084423(n). - _Robert A. Russell_, Apr 27 2018"
+    ],
+    "example": [
+        "Of the set partitions of 4, the following 7 are invariant under 1->4, 2->3, 3->2, 4->1: {{1,2,3,4}}, {{1,2},{3,4}}, {{1,4},{2,3}}, {{1,3},{2,4}}, {{1},{2,3},{4}}, {{1,4},{2},{3}}, {{1},{2},{3},4}}, so a[4]=7.",
+        "For a(4)=7, the row patterns are AAAA, AABB, ABAB, ABBA, ABBC, ABCA, and ABCD (same as previous example).  The loop patterns are AAAA, AAAB, AABB, AABC, ABAB, ABAC, and ABCD. - _Robert A. Russell_, Apr 23 2018",
+        "From _Gus Wiseman_, Feb 13 2019: (Start)",
+        "The a(1) = 1 through a(5) = 12 self-complementary set partitions:",
+        "  {{1}}  {{12}}    {{123}}      {{1234}}        {{12345}}",
+        "         {{1}{2}}  {{13}{2}}    {{12}{34}}      {{1245}{3}}",
+        "                   {{1}{2}{3}}  {{13}{24}}      {{135}{24}}",
+        "                                {{14}{23}}      {{15}{234}}",
+        "                                {{1}{23}{4}}    {{1}{234}{5}}",
+        "                                {{14}{2}{3}}    {{12}{3}{45}}",
+        "                                {{1}{2}{3}{4}}  {{135}{2}{4}}",
+        "                                                {{14}{25}{3}}",
+        "                                                {{15}{24}{3}}",
+        "                                                {{1}{24}{3}{5}}",
+        "                                                {{15}{2}{3}{4}}",
+        "                                                {{1}{2}{3}{4}{5}}",
+        "(End)"
+    ],
+    "mathematica": [
+        "<<DiscreteMath`NewCombinatorica`; Table[t = SetPartitions[n]; t= t /. Thread[Range[n] -> Range[n, 1, -1]]; t= 1 + RankSetPartition /@ t; t= ToCycles[t]; t= Cases[t, {_Integer}]; Length[t], {n, 7}]",
+        "(* second program: *)",
+        "QB[n_, q_] := QB[n, q] = Sum[QB[j, q] QBinomial[n-1, j, q], {j, 0, n-1}] // FunctionExpand // Simplify; QB[0, q_]=1; QB[1, q_]=1; Table[cc = CoefficientList[QB[n, q], q]; cc.Table[(-1)^(k+1), {k, 1, Length[cc]}], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Feb 29 2016, after _Paul D. Hanna_ *)",
+        "(* Ach[n, k] is the number of achiral color patterns for a row or loop of n",
+        "  colors containing exactly k different colors *)",
+        "Ach[n_, k_] := Ach[n, k] = If[n<2, Boole[n==k && n>=0],",
+        "  k Ach[n-2, k] + Ach[n-2, k-1] + Ach[n-2, k-2]]",
+        "Table[Sum[Ach[n, k], {k, 0, n}], {n, 0, 30}] (* _Robert A. Russell_, Apr 23 2018 *)",
+        "x[n_] := x[n] = If[n < 2, n+1, 2x[n-1] + (n-1)x[n-2]]; (* A005425 *)",
+        "Table[Sum[StirlingS2[Ceiling[n/2], k] x[k-Mod[n, 2]], {k, 0, Ceiling[n/2]}],",
+        "  {n, 0, 30}] (* _Robert A. Russell_, Apr 27 2018, after Knuth reference *)"
+    ],
+    "xref": [
+        "Cf. A002872, A080337.",
+        "Cf. A125810. - _Paul D. Hanna_, Jan 19 2009",
+        "Cf. A000126, A000296, A124323, A169985, A324012, A324013, A324014."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Wouter Meeussen_, Mar 15 2003",
+    "ext": [
+        "Offset set to 0 by _Alois P. Heinz_, May 23 2015"
+    ],
+    "references": 18,
+    "revision": 68,
+    "time": "2022-03-31T21:59:05-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

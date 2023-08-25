@@ -1,0 +1,45 @@
+{
+    "number": 187021,
+    "data": "1,2,13,136,1921,33876,712909,17383584,481003009,14869654300,507406003501,18928740714192,765897591633409,33392080668673832,1559976990077534253,77717020110946293376,4111810085670587224065,230190619432401207833004,13591965974806603671569101",
+    "name": "Coefficient of x^n in (1 + (n+1)*x + n*x^2)^n.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A187021/b187021.txt\">Table of n, a(n) for n = 0..381</a> (terms 0..100 from Vincenzo Librandi)",
+        "Paul Barry and Aoife Hennessy, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL15/Barry2/barry190r.html\">Generalized Narayana Polynomials, Riordan Arrays, and Lattice Paths</a>, Journal of Integer Sequences, Vol. 15, 2012, #12.4.8. - _N. J. A. Sloane_, Oct 08 2012"
+    ],
+    "formula": [
+        "a(n) = [x^n] (1 + (n+1)*x + n*x^2)^n.",
+        "a(n) = n^(n/2)*GegenbauerPoly(n,-n,-(n+1)/(2*sqrt(n)). - _Emanuele Munarini_, Oct 20 2016",
+        "a(n) = Sum_{k=0..n} binomial(n,k)^2 * n^k. - _Paul D. Hanna_, Mar 29 2011",
+        "a(n) ~ n^(n-1/4) * exp(2*sqrt(n)-1) / (2*sqrt(Pi)). - _Vaclav Kotesovec_, Apr 17 2014",
+        "a(n) = n! * [x^n] exp((n + 1)*x) * BesselI(0,2*sqrt(n)*x). - _Ilya Gutkovskiy_, May 31 2020",
+        "a(n) = hypergeom([-n, -n], [1], n). - _Peter Luschny_, Dec 22 2020"
+    ],
+    "maple": [
+        "A187021:= n -> simplify( n^(n/2)*GegenbauerC(n, -n, -(n+1)/(2*sqrt(n))) );",
+        "1, seq(A187021(n), n = 1..30); # _G. C. Greubel_, May 31 2020",
+        "a := n -> hypergeom([-n, -n], [1], n):",
+        "seq(simplify(a(n)), n=0..18); # _Peter Luschny_, Dec 22 2020"
+    ],
+    "mathematica": [
+        "Flatten[{1,Table[Sum[Binomial[n,k]^2*n^k,{k,0,n}],{n,1,20}]}] (* _Vaclav Kotesovec_, Apr 17 2014 *)",
+        "Table[If[n==0, 1, Simplify[n^(n/2)*GegenbauerC[n, -n, -(n+1)/(2 Sqrt[n])]]], {n, 0, 30}] (* _Emanuele Munarini_, Oct 20 2016 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=sum(k=0,n,binomial(n,k)^2*n^k)} \\\\ _Paul D. Hanna_, Mar 29 2011",
+        "(Maxima) a(n):=coeff(expand((1+(n+1)*x+n*x^2)^n),x,n);",
+        "makelist(a(n),n,0,20);",
+        "(Magma) P<x>:=PolynomialRing(Integers()); [ Coefficients((1+(n+1)*x+n*x^2)^n)[n+1]: n in [0..22] ]; // _Klaus Brockhaus_, Mar 03 2011",
+        "(Sage) [1]+[ n^(n/2)*gegenbauer(n, -n, -(n+1)/(2*sqrt(n))) for n in (1..30)] # _G. C. Greubel_, May 31 2020"
+    ],
+    "xref": [
+        "Main diagonal of A307883.",
+        "Cf. A092366, A186925, A187018, A187019, A241247, A234971."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Emanuele Munarini_, Mar 02 2011",
+    "references": 13,
+    "revision": 47,
+    "time": "2022-09-08T08:45:56-04:00",
+    "created": "2011-03-02T03:45:32-05:00"
+}

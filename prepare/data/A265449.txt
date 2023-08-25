@@ -1,0 +1,50 @@
+{
+    "number": 265449,
+    "data": "0,1,353,979,14641,16561,998899,2138312,104060401,1004006004001,10004000600040001,85045192129154058,100004000060000400001,1000004000006000004000001,10000004000000600000040000001",
+    "name": "Palindromes that are the sums of consecutive fourth powers.",
+    "comment": [
+        "Subsequence of A217844 and supersequence of A186080."
+    ],
+    "example": [
+        "353 = 2^4 + 3^4 + 4^4",
+        "979 = 1^4 + 2^4 + 3^4 + 4^4 + 5^4",
+        "16561 = 9^4 + 10^4",
+        "998899 = 19^4 +...+ 23^4",
+        "2138312 = 10^4 +...+ 25^4",
+        "85045192129154058 = 5582^4 +...+ 5666^4"
+    ],
+    "program": [
+        "(Python)",
+        "import heapq",
+        "def ispal(n): s = str(n); return s == s[::-1]",
+        "def afind():",
+        "  print(\"0, \") # special case",
+        "  N, T = 4, 1  # power, min number of terms",
+        "  sigma = sum(i**N for i in range(1, T+1))",
+        "  h = [(sigma, 1, T)]",
+        "  nextcount = T + 1",
+        "  while True:",
+        "    (v, s, l) = heapq.heappop(h)",
+        "    if ispal(v): print(f\"{v}, [= Sum_{{i = {s}..{l}}} i^{N}]\")",
+        "    if v >= sigma:",
+        "      sigma += nextcount**N",
+        "      heapq.heappush(h, (sigma, 1, nextcount))",
+        "      nextcount += 1",
+        "    v -= s**N; s += 1; l += 1; v += l**N",
+        "    heapq.heappush(h, (v, s, l))",
+        "afind() # _Michael S. Branicky_, May 16 2021 after _Bert Dobbelaere_ in A344338"
+    ],
+    "xref": [
+        "Cf. A186080, A217844."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,3",
+    "author": "_Chai Wah Wu_, Jan 29 2016",
+    "ext": [
+        "a(13)-a(15) from _Giovanni Resta_, Aug 27 2019"
+    ],
+    "references": 0,
+    "revision": 17,
+    "time": "2021-05-16T22:13:32-04:00",
+    "created": "2016-02-02T03:36:04-05:00"
+}

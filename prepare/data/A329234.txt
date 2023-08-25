@@ -1,0 +1,25 @@
+{
+    "number": 329234,
+    "data": "1,1,2,4,14,107,3080,328126,114236734,141361169088,565835083485352,8280254429732072354,401805920591472162735162,73001963040583041357650757758,44826822610575086782059677501403310,104876792026574880566541471182849498480154,841219618683014295050378892027503163229521608514",
+    "name": "Number  of digraphs on n unlabled vertices such that every vertex has the same outdegree.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A329234/b329234.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "E(v, x) = {my(r=1/(1-x)); for(i=1, #v, r=serconvol(r, prod(j=1, #v, my(g=gcd(v[i], v[j])); (1 + x^(v[j]/g))^g)/(1 + x))); r}",
+        "a(n)={if(n<1, n==0, my(s=0); forpart(p=n, s+=permcount(p)*E(p, x+O(x^n))); vecsum(Vec(s))/n!)}"
+    ],
+    "xref": [
+        "Row sums of A329228.",
+        "Cf. A000273."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Andrew Howroyd_, Nov 08 2019",
+    "references": 3,
+    "revision": 5,
+    "time": "2019-11-08T15:35:38-05:00",
+    "created": "2019-11-08T15:35:38-05:00"
+}

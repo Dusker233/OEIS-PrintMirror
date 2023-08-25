@@ -1,0 +1,52 @@
+{
+    "number": 339484,
+    "data": "1,1,2,3,4,7,11,17,28,47,80,139,245,436,784,1419,2585,4738,8729,16154,30015,55966,104682,196378,369384,696494,1316252,2492683,4729673,8990374,17118020,32644544,62345875,119235519,228333179,437790086,840362539,1614894770,3106516468",
+    "name": "Number of subsets of {1..n} whose cardinality is equal to the average of the elements.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A339484/b339484.txt\">Table of n, a(n) for n = 1..300</a>",
+        "Eric W. Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ArithmeticMean.html\">Arithmetic Mean</a>"
+    ],
+    "example": [
+        "a(6) = 7 subsets: {1}, {1, 3}, {1, 2, 6}, {1, 3, 5}, {2, 3, 4}, {1, 4, 5, 6} and {2, 3, 5, 6}."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import combinations",
+        "def a(n):",
+        "    ss, s = 0, range(1, n+1)",
+        "    for r in range(1, n+1):",
+        "        rr = r*r",
+        "        ss += sum(sum(subs)==rr for subs in combinations(s, r))",
+        "    return ss",
+        "print([a(n) for n in range(1, 21)]) # _Michael S. Branicky_, Dec 06 2020",
+        "(Python)",
+        "from functools import lru_cache",
+        "from itertools import combinations",
+        "@lru_cache(maxsize=None)",
+        "def A339484(n):",
+        "    return 1 if n == 1 else A339484(n-1)+sum(sum(d)+n==(i+1)**2 for i in range(1,n) for d in combinations(range(1,n),i)) # _Chai Wah Wu_, Dec 07 2020",
+        "(Python)",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def b(n, s, c):",
+        "    if n == 0: return c and int(s == c*c)",
+        "    return b(n-1, s, c) + b(n-1, s+n, c+1)",
+        "a = lambda n: b(n, 0, 0)",
+        "print([a(n) for n in range(1, 101)]) # _Michael S. Branicky_, Oct 06 2022"
+    ],
+    "xref": [
+        "Cf. A051293, A126024."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Ilya Gutkovskiy_, Dec 06 2020",
+    "ext": [
+        "a(24)-a(32) from _Michael S. Branicky_, Dec 06 2020",
+        "a(33)-a(35) from _Chai Wah Wu_, Dec 07 2020",
+        "a(36)-a(39) from _Michael S. Branicky_, Dec 08 2020"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2022-10-06T10:58:55-04:00",
+    "created": "2020-12-07T01:31:34-05:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 168598,
+    "data": "1,1,5,21,119,703,4515,30227,210274,1503930,11008198,82099262,622013122,4775754930,37089503826,290914775618,2301706690657,18351027768401,147308337621061,1189704370416949,9661185599013209,78844977025403657",
+    "name": "G.f.: exp( Sum_{n>=1} A002426(n)^2*x^n/n ), where A002426(n) is the central trinomial coefficients.",
+    "comment": [
+        "Compare to: exp( Sum_{n>=1} A002426(n)*x^n/n ) = g.f. of the Motzkin numbers (A001006)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A168598/b168598.txt\">Table of n, a(n) for n = 0..250</a>"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 5*x^2 + 21*x^3 + 119*x^4 + 703*x^5 +...",
+        "log(A(x)) = x + 9*x^2/2 + 49*x^3/3 + 361*x^4/4 + 2601*x^5/5 + 19881*x^6/6 +...+ A002426(n)^2*x^n/n +..."
+    ],
+    "mathematica": [
+        "A002426[n_]:= GegenbauerC[n, -n, -1/2];",
+        "With[{m=30}, CoefficientList[Series[Exp[Sum[A002426[j]^2*x^j/j, {j, m+2}]], {x, 0, m}], x]] (* _G. C. Greubel_, Mar 16 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1,polcoeff(exp(sum(m=1,n,polcoeff((1+x+x^2)^m,m)^2*x^m/m)+x*O(x^n)),n))}",
+        "(Magma)",
+        "m:=30;",
+        "A002426:= func< n | (&+[ Binomial(n, k)*Binomial(k, n-k): k in [0..n]]) >;",
+        "R<x>:=PowerSeriesRing(Rationals(), m);",
+        "Coefficients(R!( Exp( (&+[A002426(j)^2*x^j/j: j in [1..m+2]]) ) )); // _G. C. Greubel_, Mar 16 2021",
+        "(Sage)",
+        "m=30",
+        "def A002426(n): return sum( binomial(n, k)*binomial(k, n-k) for k in (0..n) )",
+        "def A168598_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P( exp( sum( A002426(j)^2*x^j/j for j in [1..m+2])) ).list()",
+        "A168598_list(m) # _G. C. Greubel_, Mar 16 2021"
+    ],
+    "xref": [
+        "Cf. A001006, A002426, A168597, A168599."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 01 2009",
+    "references": 3,
+    "revision": 8,
+    "time": "2021-03-16T08:28:14-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

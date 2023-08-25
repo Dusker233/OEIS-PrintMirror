@@ -1,0 +1,35 @@
+{
+    "number": 360061,
+    "data": "2,3,4,12,48,54,66,138,144,162,168,180,198,234,252,264,330,360,366,372,402,420,444,462,480,534,546,552,564,576,600,630,642,678,702,744,756,846,852,858,882,966,1008,1206,1242,1254,1266,1272,1296,1302,1338,1650",
+    "name": "Lexicographically earliest increasing sequence such that a(1) = 2 and for n >= 2, a(1)^2 + a(2)^2 + ... + a(n)^2 is a prime.",
+    "example": [
+        "For n >= 2, partial sums of squares are (showing primality): 2^2 + 3^2 = 13; 13 + 4^2 = 29; 29 + 12^2 = 173; 173 + 48^2 = 2477; ..."
+    ],
+    "maple": [
+        "s:= proc(n) option remember; `if`(n<1, 0, a(n)^2+s(n-1)) end:",
+        "a:= proc(n) option remember; local k, m;",
+        "      k:= s(n-1); for m from 1+a(n-1)",
+        "      while not isprime(k+m^2) do od; m",
+        "    end: a(1):=2:",
+        "seq(a(n), n=1..52);  # _Alois P. Heinz_, Jan 26 2023"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Math.NumberTheory.Primes.Testing (isPrime)",
+        "a360061_list = 2 : 3 : recurse 4 13 where",
+        "  recurse n p",
+        "    | isPrime(n^2 + p) = n : recurse (n+1) (n^2 + p)",
+        "    | otherwise        = recurse (n+1) p",
+        "-- _Peter Kagey_, Jan 25 2023"
+    ],
+    "xref": [
+        "Cf. A051935, A137326."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Win Wang_, Jan 23 2023",
+    "references": 1,
+    "revision": 33,
+    "time": "2023-02-01T08:19:45-05:00",
+    "created": "2023-02-01T08:19:45-05:00"
+}

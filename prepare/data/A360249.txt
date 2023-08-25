@@ -1,0 +1,70 @@
+{
+    "number": 360249,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,19,21,22,23,25,26,27,29,30,31,32,33,34,35,36,37,38,39,41,42,43,46,47,49,51,53,55,57,58,59,61,62,64,65,66,67,69,70,71,73,74,77,78,79,81,82,83,85,86,87,89,90,91,93,94,95,97,100,101,102,103,105,106,107,109,110,111,113,114,115,118,119,121,122,123,125,126,127,128,129,130",
+    "name": "Numbers for which the prime indices have the same median as the distinct prime indices.",
+    "comment": [
+        "First differs from A072774 in having 90.",
+        "First differs from A242414 in having 180.",
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798.",
+        "The median of a multiset is either the middle part (for odd length), or the average of the two middle parts (for even length)."
+    ],
+    "example": [
+        "The prime indices of 126 are {1,2,2,4} with median 2 and distinct prime indices {1,2,4} with median 2, so 126 is in the sequence.",
+        "The prime indices of 180 are {1,1,2,2,3} with median 2 and distinct prime indices {1,2,3} with median 2, so 180 is in the sequence."
+    ],
+    "maple": [
+        "isA360249 := proc(n)",
+        "    local ifs,pidx,pe,medAll,medDist ;",
+        "    if n = 1 then",
+        "        return true ;",
+        "    end if ;",
+        "    ifs := ifactors(n)[2] ;",
+        "    pidx := [] ;",
+        "    for pe in ifs do",
+        "        numtheory[pi](op(1,pe)) ;",
+        "        pidx := [op(pidx),seq(%,i=1..op(2,pe))] ;",
+        "    end do:",
+        "    medAll := stats[describe,median](sort(pidx)) ;",
+        "    pidx := convert(convert(pidx,set),list) ;",
+        "    medDist := stats[describe,median](sort(pidx)) ;",
+        "    if medAll = medDist then",
+        "        true;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 to 130 do",
+        "    if isA360249(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, May 22 2023"
+    ],
+    "mathematica": [
+        "prix[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "Select[Range[100],Median[prix[#]]==Median[Union[prix[#]]]&]"
+    ],
+    "xref": [
+        "These partitions are counted by A360245.",
+        "The complement for mean instead of median is A360246, counted by A360242.",
+        "For mean instead of median we have A360247, counted by A360243.",
+        "The complement is A360248, counted by A360244.",
+        "For multiplicities instead of parts: A360453, counted by A360455.",
+        "For multiplicities instead of distinct parts: A360454, counted by A360456.",
+        "A112798 lists prime indices, length A001222, sum A056239.",
+        "A240219 counts partitions with mean equal to median, ranks A359889.",
+        "A326567/A326568 gives mean of prime indices.",
+        "A326619/A326620 gives mean of distinct prime indices.",
+        "A325347 = partitions with integer median, strict A359907, ranks A359908.",
+        "A359893 and A359901 count partitions by median.",
+        "A359894 = partitions with mean different from median, ranks A359890.",
+        "A360005 gives median of prime indices (times two).",
+        "Cf. A000975, A078174, A316413, A324570, A359903, A360252, A360253."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Feb 07 2023",
+    "references": 10,
+    "revision": 8,
+    "time": "2023-05-22T05:58:10-04:00",
+    "created": "2023-02-09T20:49:14-05:00"
+}

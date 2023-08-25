@@ -1,0 +1,35 @@
+{
+    "number": 345346,
+    "data": "41,43,47,83,229,241,263,283,419,431,433,439,479,491,601,607,641,643,647,661,683,811,853,857,859,877,2039,2063,2069,2083,2099,2203,2207,2251,2273,2281,2287,2411,2417,2423,2437,2467,2473,2617,2621,2663,2671,2677,2683,2687,2689,2801,2819,2837",
+    "name": "Primes whose digit reversal is twice a prime.",
+    "link": [
+        "Karl-Heinz Hofmann, <a href=\"/A345346/b345346.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 47 is a term because 47 and 74/2 = 37 are primes."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "filter:= proc(n) isprime(n) and numtheory:-bigomega(revdigs(n))=2 end proc:",
+        "select(filter, [seq(seq(seq(i*10^d+j,j=1..10^d-1,2),i=2..8,2),d=1..4)]);"
+    ],
+    "program": [
+        "(PARI) isok(p) = if (isprime(p), my(r=fromdigits(Vecrev(digits(p)))); if (!(r%2), isprime(r/2))); \\\\ _Michel Marcus_, Jun 15 2021",
+        "(Python) from sympy import isprime, primerange",
+        "def ok(p): t = int(str(p)[::-1]); return t%2 == 0 and isprime(t//2)",
+        "print(list(filter(ok, primerange(1, 2838)))) # _Michael S. Branicky_, Jun 16 2021"
+    ],
+    "xref": [
+        "Intersection of A085778 and A273892."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jun 14 2021",
+    "references": 1,
+    "revision": 23,
+    "time": "2021-06-17T06:04:43-04:00",
+    "created": "2021-06-15T08:06:49-04:00"
+}

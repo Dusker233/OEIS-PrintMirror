@@ -1,0 +1,41 @@
+{
+    "number": 307315,
+    "data": "2,17,347,521,10601,32027,39569,58061,62969,100469,109541,120401,398129,426383,434261,829883,896771,935063,1190261,1216583,1261109,1559963,1697771,2105381,2128649,2505857,2778851,2886563,2920649,3051977,3157703,3636617,4068257,5139257,5480249,5650097,5938931",
+    "name": "Primes p such that p + A007953(p) is the square of a prime.",
+    "comment": [
+        "All terms == 2 (mod 3).",
+        "More than one prime p can have the same value of p + A007953(p), e.g. 528677993 + A007953(52867793) = 528678011 + A007953(528678011) = 22993^2."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A307315/b307315.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3)= 347 is in the sequence because 347+3+4+7=361=19^2 and 347 and 19 are primes."
+    ],
+    "maple": [
+        "f:= proc(q) local m,d,nmin;",
+        "  m:= q^2;",
+        "  d:= ilog10(m)+1;",
+        "  nmin:= m - 9*d;",
+        "  nmin:= nmin + ((5-nmin) mod 6);",
+        "  op(select(t ->  t + convert(convert(t,base,10),`+`)=m and isprime(t), {seq(n, n=nmin .. m-2, 6)}))",
+        "end proc:",
+        "f(2):= 2:",
+        "sort(map(f, [seq(ithprime(i),i=1..2000)]));"
+    ],
+    "program": [
+        "(PARI) is(n) = my(x=n+sumdigits(n)); isprimepower(x)==2",
+        "forprime(p=1, 6e6, if(is(p), print1(p, \", \"))) \\\\ _Felix Fr\u00f6hlich_, Apr 02 2019"
+    ],
+    "xref": [
+        "Subsequence of A242368.",
+        "Cf. A007953, A062028, A228195."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert Israel_ and _Will Gosnell_, Apr 02 2019",
+    "references": 1,
+    "revision": 14,
+    "time": "2019-04-02T19:16:10-04:00",
+    "created": "2019-04-02T12:44:58-04:00"
+}

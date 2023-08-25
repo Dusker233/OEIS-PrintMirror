@@ -1,0 +1,48 @@
+{
+    "number": 82623,
+    "data": "5,151,10501,1035301,103515301,10325152301,1013251523101,101325181523101,10132512821523101,1013251428241523101,101322514282415223101,10132245142824154223101,1013224514281824154223101,101322451402818204154223101,10132245014028182041054223101",
+    "name": "a(1) = 5, a(n) = smallest palindromic prime obtained by inserting two digits anywhere in a(n-1).",
+    "comment": [
+        "a(78) is the last term, as none of the candidates for a(79) is prime. - _Giovanni Resta_, Sep 20 2019"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A082623/b082623.txt\">Table of n, a(n) for n = 1..78</a>"
+    ],
+    "maple": [
+        "cp:= proc(x,y) if x[1] < y[1] then true",
+        "           elif x[1] > y[1] then false",
+        "           elif nops(x)=1 then true",
+        "           else procname(x[2..-1],y[2..-1])",
+        "           fi",
+        "end proc: A[1]:= 5: L:= [5]:",
+        "for n from 2 to 15 do",
+        "  nL:= nops(L);",
+        "  Lp:= sort([seq(seq([op(L[1..i]), x, op(L[i+1..-1])], x=`if`(i=0, 1..9, 0..9)), i=0..nL)], cp);",
+        "  cands:= map(t -> add(t[i]*(10^(i-1)+10^(2*nL+1-i)), i=1..nL)+t[nL+1]*10^(nL), Lp);",
+        "  found:= false;",
+        "  for i from 1 to nops(cands) do",
+        "    if isprime(cands[i]) then",
+        "      A[n]:= cands[i];",
+        "      L:= Lp[i];",
+        "      found:= true;",
+        "      break",
+        "    fi",
+        "  od;",
+        "  if not found then break fi",
+        "od:",
+        "seq(A[i],i=1..15); # _Robert Israel_, Jan 03 2017, corrected Sep 20 2019"
+    ],
+    "xref": [
+        "Cf. A002385, A082620, A082621, A082622, A082624."
+    ],
+    "keyword": "base,fini,full,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_ and Meenakshi Srikanth (menakan_s(AT)yahoo.com), Apr 29 2003",
+    "ext": [
+        "Terms after a(4) corrected by _Giovanni Resta_, Sep 20 2019"
+    ],
+    "references": 4,
+    "revision": 25,
+    "time": "2019-09-20T11:12:29-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

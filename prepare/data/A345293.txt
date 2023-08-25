@@ -1,0 +1,39 @@
+{
+    "number": 345293,
+    "data": "2,73,149,211,307,467,659,839,1061,1319,1511,1697,1949,2129,2381,2677,2819,3137,3307,3407,3559,3907,4079,4253,4591,4877,5087,5443,5531,5683,5923,6221,6659,6791,6997,7393,7603,8111,8297,8641,8887,9029,9377,9461,9749",
+    "name": "a(n) is the first number on the n-th layer in a layered square spiral of primes.",
+    "comment": [
+        "The first prime, 2, is placed at the origin with Cartesian coordinates of (0, 0, 0) and the second prime, 3, is placed at (1, 0, 0). The m-th prime (m >= 3) is placed by moving one unit forward in the direction from the (m-2)-th prime to the (m-1)-th prime, if the next prime is not a twin prime of the current one; otherwise, by turning 90 degrees counterclockwise and moving one unit forward. When it comes to a spot already occupied by another number, the prime is moved up one layer above the number."
+    ],
+    "example": [
+        "First layer starts from 2 and second layer from 73.",
+        "  59<--53<--47<--43<--41",
+        "   |                   |",
+        "  61   11<---7<---5   37     137<-131<-127<-113<-109<-107",
+        "   |    |         |    |      |                        |",
+        "  67   13    2--->3   31     139                      103",
+        "   |    |              |                               |",
+        "  71   17-->19-->23-->29      73-->79-->83-->89-->97->101"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import prime, nextprime",
+        "print(2); d1 = 0; L = [0, 0, 0]; L1 = []",
+        "for i in range(1, 1501):",
+        "    p = prime(i); np = nextprime(p); d = (d1 + 1)%4 if np - p == 2 else d1",
+        "    L[0] += 1 if d == 0 else -1 if d == 2 else 0",
+        "    L[1] += 1 if d == 1 else -1 if d == 3 else 0",
+        "    if L in L1: L[2] += 1; print(np)",
+        "    L1.append([L[0], L[1], L[2]]); d1 = d"
+    ],
+    "xref": [
+        "Cf. A063826, A136626."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ya-Ping Lu_, Jun 13 2021",
+    "references": 0,
+    "revision": 9,
+    "time": "2021-07-01T23:44:07-04:00",
+    "created": "2021-07-01T23:44:07-04:00"
+}

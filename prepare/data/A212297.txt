@@ -1,0 +1,40 @@
+{
+    "number": 212297,
+    "data": "4,16,256,9216,196608,11796480,8493465600,554906419200,426168129945600,138078474102374400,1227364214243328000,26731992586219683840000,15397627729662537891840000,3469598781750625204961280000,8160496334677470482068930560000",
+    "name": "a(n) = denominator(1 + Sum_{k=1..n} n^2 / Product_{j=1..k} 4*j^2).",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A212297/b212297.txt\">Table of n, a(n) for n = 1..225</a>"
+    ],
+    "example": [
+        "r(n) = 5/4, 33/16, 869/256, 48449/9216, 1504375/196608, 124787549/11796480, ....",
+        "From _Petros Hadjicostas_, Sep 26 2019: (Start)",
+        "a(3) = denominator(1 + 3^2/(4*1^2) + 3^2/(4*1^2 * 4*2^2) + 3^2/(4*1^2 * 4*2^2 * 4*3^2)) = denominator(1 + 9/4 + 9/64 + 9/2304) = denominator(869/256) = 256.",
+        "a(4) = denominator(1 + 4^2/(4*1^2) + 4^2/(4*1^2 * 4*2^2) + 4^2/(4*1^2 * 4*2^2 * 4*3^2) + 4^2/(4*1^2 * 4*2^2 * 4*3^2 * 4*4^2)) = denominator(1 + 16/4 + 16/64 + 16/2304 + 16/147456) = denominator(48449/9216) = 9216.",
+        "(End)"
+    ],
+    "maple": [
+        "a := n -> denom(1 + add(n^2 / mul(4*j^2, j=1..k), k=1..n)):",
+        "seq(a(n), n=1..15); # _Peter Luschny_, Sep 26 2019"
+    ],
+    "mathematica": [
+        "G[n_] := Module[{N=1, D=1}, Sum[N*=2*k-1; D*=2*k; (n/D)^2, {k, 1, n}] + 1]; a[n_] := Denominator[G[n]]; Array[a, 15] (* _Jean-Fran\u00e7ois Alcover_, Sep 05 2015, translated from PARI *)"
+    ],
+    "program": [
+        "(PARI) G(n)=my(N=1,D=1);sum(k=1,n,N*=2*k-1;D*=2*k;(n/D)^2)+1",
+        "a(n)=denominator(G(n))",
+        "vector(15, n, a(n))"
+    ],
+    "xref": [
+        "Numerators are A212296."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "1,1",
+    "author": "_Charles R Greathouse IV_, Jul 02 2012",
+    "ext": [
+        "Redefinition according to the data by _Peter Luschny_, Sep 26 2019"
+    ],
+    "references": 3,
+    "revision": 38,
+    "time": "2019-09-27T06:30:14-04:00",
+    "created": "2012-07-03T02:38:37-04:00"
+}

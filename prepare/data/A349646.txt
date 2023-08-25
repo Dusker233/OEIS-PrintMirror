@@ -1,0 +1,54 @@
+{
+    "number": 349646,
+    "data": "0,3,44,65,83,373,575,1126,12673,25670,30268,30525,40691,48240964,63327632,298506737,369490840,1113434519,1647703600,4958115803,64657664035,86155378906,184280298746,400812644253,411723964986,714853066875,1627993432495,2607864795784",
+    "name": "Nonnegative integers which produce a record maximum MD5 hash.",
+    "comment": [
+        "a(1) = 0; a(n) is the smallest k such that MD5(k) > MD5(a(n-1)), where integer parameters to MD5 are encoded as base-10 ASCII strings.",
+        "If a(1) were defined as 1 instead of 0, the sequence would begin 1, 2, 3, 44, ... and then continue in the same way.",
+        "If we assume that MD5 behaves like a random function from N to {0, ..., 2^128-1}, the expected length of this sequence is the harmonic number H(2^128) ~= 89.3.",
+        "a(31) > 10^15."
+    ],
+    "link": [
+        "Ben Whitmore, <a href=\"/A349646/b349646.txt\">Table of n, a(n) for n = 1..30</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/MD5\">MD5</a>"
+    ],
+    "example": [
+        "a(5) = 83 because MD5(\"83\") = fe9fc289c3ff0af142b6d3bead98a923_16 = 338453431832254946862081270079334951203, which is larger than all previous values MD5(\"0\"), ..., MD5(\"82\")."
+    ],
+    "mathematica": [
+        "recordsBy[l_, P_] :=",
+        "Module[{max = -Infinity, x, i, recs = {}},",
+        "For[i = 1, i <= Length[l], i++,",
+        "  x = P[l[[i]]];",
+        "  If[x > max,",
+        "   max = x;",
+        "   AppendTo[recs, l[[i]]];",
+        "  ]",
+        "];",
+        "recs",
+        "];",
+        "recordsBy[Range[1000], Hash[ToString[#], \"MD5\"] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from hashlib import md5",
+        "def afind(limit):",
+        "    record = \"\"",
+        "    for k in range(limit+1):",
+        "        hash = md5(str(k).encode('utf-8')).hexdigest()",
+        "        if hash > record:",
+        "            print(k, end=\", \")",
+        "            record = hash",
+        "afind(10**5) # _Michael S. Branicky_, Nov 24 2021"
+    ],
+    "xref": [
+        "Record minima: A349647."
+    ],
+    "keyword": "nonn,base,fini,hard",
+    "offset": "1,2",
+    "author": "_Ben Whitmore_, Nov 23 2021",
+    "references": 2,
+    "revision": 23,
+    "time": "2021-12-25T11:17:01-05:00",
+    "created": "2021-12-25T00:12:35-05:00"
+}

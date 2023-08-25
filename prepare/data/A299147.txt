@@ -1,0 +1,53 @@
+{
+    "number": 299147,
+    "data": "4,64,289,253541929,499477801,1260747049,14450203681,25391466409,256221229489,333456586849,341122579249,459926756041,911087431081,928731181849,1142288550841,2880002461249,2923070670601,3000305515321,4103999343889,4123226708329,4258977385441",
+    "name": "Numbers k such that sigma(k), sigma(k^2) and sigma(k^3) are primes.",
+    "comment": [
+        "All terms are squares (proof in A023194).",
+        "Sequence {b(n)} of the smallest numbers m such that sigma(m^k) are primes for all k = 1..n: 2, 2, 4, ... (if fourth term exists, it must be greater than 10^16)."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A299147/b299147.txt\">Table of n, a(n) for n = 1..12775</a> (n = 1..997 from Robert G. Wilson v)"
+    ],
+    "example": [
+        "4 is in the sequence because all sigma(4) = 7, sigma(4^2) = 31 and sigma(4^3) = 127 are primes."
+    ],
+    "maple": [
+        "N:= 10^14: # to get all terms <= N",
+        "Res:= NULL:",
+        "p:= 1:",
+        "do",
+        "  p:= nextprime(p);",
+        "  if p^2 > N then break fi;",
+        "  for k from 2 by 2 while p^k <= N do",
+        "    if isprime(k+1) and isprime(2*k+1) and isprime(3*k+1) then",
+        "      q1:= (p^(k+1)-1)/(p-1);",
+        "      q2:= (p^(2*k+1)-1)/(p-1);",
+        "      q3:= (p^(3*k+1)-1)/(p-1);",
+        "      if isprime(q1) and isprime(q2) and isprime(q3) then",
+        "        Res:= Res, p^k;",
+        "      fi",
+        "    fi",
+        "  od",
+        "od:",
+        "sort([Res]); # _Robert Israel_, Feb 22 2018"
+    ],
+    "mathematica": [
+        "k = 1; A299147 = {}; While[k < 4260000000000, If[Union@ PrimeQ@ DivisorSigma[1, {k, k^2, k^3}] == {True}, AppendTo[A299147, k]]; k++]; A299147 (* _Robert G. Wilson v_, Feb 10 2018 *)"
+    ],
+    "program": [
+        "(Magma) [n: n in[1..10000000] | IsPrime(SumOfDivisors(n)) and IsPrime(SumOfDivisors(n^2)) and IsPrime(SumOfDivisors(n^3))]",
+        "(PARI) isok(n) = isprime(sigma(n)) && isprime(sigma(n^2)) && isprime(sigma(n^3)); \\\\ _Michel Marcus_, Feb 05 2018"
+    ],
+    "xref": [
+        "Subsequence of A232444.",
+        "Cf. A000203, A055638, A279094, A279096, A299153."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jaroslav Krizek_, Feb 03 2018",
+    "references": 2,
+    "revision": 32,
+    "time": "2022-01-21T05:06:49-05:00",
+    "created": "2018-02-27T03:01:59-05:00"
+}

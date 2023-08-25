@@ -1,0 +1,37 @@
+{
+    "number": 325902,
+    "data": "11,17,21,23,27,31,50,55,56,65,71,89,129,131,144,155,169,204,209,216,229,239,241,244,251,265,287,288,300,305,337,344,351,371,373,379,407,415,493,494,517,526,545,577,645,647,664,681,685,737,749,755,769,776,780,783,815",
+    "name": "Numbers whose neighbor's prime factors with multiplicity can be partitioned into two multisets of equal sum.",
+    "comment": [
+        "The neighbors of n are the two numbers n-1 and n+1."
+    ],
+    "link": [
+        "Jonathan Frech, <a href=\"/A325902/b325902.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "71 is in the sequence since 70 = 2*5*7 < 71 < 2*2*2*3*3 = 72 with 2 + 5 + 3 + 3 = 7 + 2 + 2 + 2."
+    ],
+    "mathematica": [
+        "ok[n_] := Block[{t, p, m, z}, {p, m} = Transpose@ Tally@ Sort[ Join@ Flatten[ ConstantArray @@@ FactorInteger[#] & /@ {n-1, n+1}]]; t = Total[p m]; If[ OddQ@ t, False, z = Quiet@ LinearProgramming[1 + 0 p, {p}, {{t/2, 0}}, Prepend[#, 0] & /@ Transpose@{m}, Integers]; ListQ@z && Total[z p]==t/2]]; Select[ Range[3, 815], ok] (* _Giovanni Resta_, Sep 10 2019 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (subsequences, (\\\\))",
+        "factors 1 = []",
+        "factors n | p <- head $ filter ((== 0) . mod n) [2..]",
+        "          = p : factors (n `div` p)",
+        "sumPartitionable ns | p <- \\ms -> sum ms == sum (ns \\\\ ms)",
+        "                    = any p $ subsequences ns",
+        "a325902 = filter (\\n -> sumPartitionable $ factors (n-1) ++ factors (n+1)) [2..]"
+    ],
+    "xref": [
+        "Cf. A063968."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jonathan Frech_, Sep 07 2019",
+    "references": 1,
+    "revision": 25,
+    "time": "2019-09-10T23:34:01-04:00",
+    "created": "2019-09-10T23:34:01-04:00"
+}

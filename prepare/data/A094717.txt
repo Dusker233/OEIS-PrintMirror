@@ -1,0 +1,43 @@
+{
+    "number": 94717,
+    "data": "1,1,2,5,12,36,113,351,1080,3281,9882,29646,88817,266085,797526,2391485,7173360,21520080,64563521,193700403,581120892,1743392201,5230206126,15690618378,47071766561,141215033961,423644570442,1270932914165,3812797945332,11438393835996",
+    "name": "a(n) = n! * Sum_{i+2j+3k=n} 1/(i!*(2j)!*(3k)!).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A094717/b094717.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (6,-12,10,-6,12,-9)."
+    ],
+    "formula": [
+        "Limit_{n->oo} a(n)/3^n = 1/6.",
+        "E.g.f.: exp(z)*cosh(z)*(exp(z) + 2*exp(-z/2)*cos(z*sqrt(3/4)))/3. - _Peter Luschny_, Jul 11 2012",
+        "G.f.: (1-5*x+8*x^2-5*x^3+2*x^4-2*x^5)/((1-x)*(1-3*x)*(1+x+x^2)*(1-3*x+3*x^2)). - _Colin Barker_, Dec 24 2012",
+        "From _G. C. Greubel_, Jul 14 2023: (Start)",
+        "a(n) = (1/6)*(1 + 3^n + 2*A049347(n) + A049347(n-1) + 2*A057083(n) - 3*A057083(n-1)).",
+        "a(n) = (1/6)*(1 + 3^n + A099837(n+3) + A057682(n+3)). (End)"
+    ],
+    "maple": [
+        "A094717_list := proc(n) local i; exp(z)*cosh(z)*(exp(z)+2*exp(-z/2)* cos(z*sqrt(3/4)))/3; series(%,z,n+2); seq(simplify(i!*coeff(%,z,i)),i=0..n) end: A094717_list(27); # _Peter Luschny_, Jul 11 2012"
+    ],
+    "mathematica": [
+        "a[n_]:= n! Sum[Boole[i +2j +3k ==n]/(i! (2j)! (3k)!), {i,0,n}, {j,0,n}, {k,0,n}]; Table[a[n], {n,0,27}] (* _Jean-Fran\u00e7ois Alcover_, Jul 06 2019 *)",
+        "LinearRecurrence[{6,-12,10,-6,12,-9}, {1,1,2,5,12,36}, 40] (* _G. C. Greubel_, Jul 14 2023 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=sum(i=0,n,sum(j=0,n,sum(k=0,n,if(n-i-2*j-3*k,0,n!/(i)!/(2*j)!/(3*k)!))))",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 40); Coefficients(R!( (1-5*x+8*x^2-5*x^3+2*x^4-2*x^5)/((1-x)*(1-3*x)*(1+x+x^2)*(1-3*x+3*x^2)) )); // _G. C. Greubel_, Jul 14 2023",
+        "(SageMath)",
+        "def A094717_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( (1-5*x+8*x^2-5*x^3+2*x^4-2*x^5)/((1-x)*(1-3*x)*(1+x+x^2)*(1-3*x+3*x^2)) ).list()",
+        "A094717_list(40) # _G. C. Greubel_, Jul 14 2023"
+    ],
+    "xref": [
+        "Cf. A024493, A049347, A057083, A057682, A094715, A099837."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Benoit Cloitre_, May 23 2004",
+    "references": 3,
+    "revision": 27,
+    "time": "2023-07-14T18:09:51-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

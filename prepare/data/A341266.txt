@@ -1,0 +1,35 @@
+{
+    "number": 341266,
+    "data": "1,1,5,25,125,646,3395,18054,96885,523600,2845700,15537457,85160387,468279280,2582140370,14272523740,79056303957,438711518556,2438587839980,13574970187300,75668677723100,422294150816010,2359326605275755,13194525668986350,73857744668632275",
+    "name": "a(n) is the n-th term of the n-fold self-convolution of the twice left-shifted tribonacci sequence (A000073).",
+    "comment": [
+        "The twice left-shifted tribonacci sequence begins: 1, 1, 2, 4, 7, 13, 24, ... ."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A341266/b341266.txt\">Table of n, a(n) for n = 0..1323</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n] (1/(1-x-x^2-x^3))^n."
+    ],
+    "maple": [
+        "a:= n-> coeff(series((1/(1-x-x^2-x^3))^n, x, n+1), x, n):",
+        "seq(a(n), n=0..25);",
+        "# second Maple program:",
+        "g:= proc(n) g(n):= `if`(n<2, (n+1)*(2-n)/2, add(g(n-j), j=1..3)) end:",
+        "b:= proc(n, k) option remember; `if`(k<2, g(n),",
+        "      (q-> add(b(j, q)*b(n-j, k-q), j=0..n))(iquo(k, 2)))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..25);"
+    ],
+    "xref": [
+        "Cf. A000073, A002002, A213684."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Feb 07 2021",
+    "references": 1,
+    "revision": 16,
+    "time": "2021-07-21T22:50:18-04:00",
+    "created": "2021-02-09T21:07:12-05:00"
+}

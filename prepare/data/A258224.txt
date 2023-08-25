@@ -1,0 +1,42 @@
+{
+    "number": 258224,
+    "data": "1,2,13,166,3450,105053,4385297,239389538,16497800177,1396841773631,142194450687440,17100401655609460,2394468068218870494,385647096554809325098,70702689662684594772871,14623755150209185924416598,3385915623744083331349813602",
+    "name": "Row sums of A258223.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A258224/b258224.txt\">Table of n, a(n) for n = 0..250</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A258223(n,k)."
+    ],
+    "maple": [
+        "b:= proc(x, y, t, k) option remember; `if`(y>x or y<0, 0,",
+        "      `if`(x=0, 1, b(x-1, y-1, false, k)*`if`(t, (k*x+y)/y, 1)",
+        "                 + b(x-1, y+1, true, k)  ))",
+        "    end:",
+        "A:= (n, k)-> b(2*n, 0, false, k):",
+        "T:= proc(n,k) option remember;",
+        "       add(A(n, i)*(-1)^(k-i)*binomial(k, i), i=0..k)/k!",
+        "    end:",
+        "a:= proc(n) option remember; add(T(n,k), k=0..n) end:",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "b[x_, y_, t_, k_] := b[x, y, t, k] = If[y > x || y < 0, 0,",
+        "     If[x == 0, 1, b[x - 1, y - 1, False, k]*If[t, (k*x + y)/y, 1]",
+        "                 + b[x - 1, y + 1, True, k]]];",
+        "A[n_, k_] := b[2*n, 0, False, k];",
+        "T[n_, k_] := Sum[A[n, i]*(-1)^(k - i)*Binomial[k, i], {i, 0, k}]/k!;",
+        "a[n_] := Sum[T[n, k], {k, 0, n}];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Apr 28 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A258221, A258223."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, May 23 2015",
+    "references": 3,
+    "revision": 11,
+    "time": "2022-04-28T07:53:12-04:00",
+    "created": "2015-05-24T10:10:50-04:00"
+}

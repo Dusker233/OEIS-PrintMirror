@@ -1,0 +1,40 @@
+{
+    "number": 303307,
+    "data": "1,2,6,20,54,156,444,1192,3174,8620,22516,58392,151996,387352,984888,2507088,6270854,15659724,39067588,96454072,237663444,584266696,1425921992,3470869296,8431325916,20380759544,49122457608,118178637040,283150466232,676768288176",
+    "name": "Expansion of Product_{n>=1} ((1 + (2*x)^n)/(1 - (2*x)^n))^(1/2).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A303307/b303307.txt\">Table of n, a(n) for n = 0..3000</a>"
+    ],
+    "formula": [
+        "a(0) = 1 and a(n) = (1/n) * Sum_{k=1..n} 2^(k-1) * A054785(k) * a(n-k) for n > 0.",
+        "a(n) ~ 2^(n - 21/8) * exp(Pi*sqrt(n/2)) / n^(7/8). - _Vaclav Kotesovec_, Apr 21 2018"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[Sqrt[QPochhammer[-1, 2*x] / (2*QPochhammer[2*x])], {x, 0, 30}], x] (* _Vaclav Kotesovec_, Apr 21 2018 *)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def s(n)",
+        "  s = 0",
+        "  (1..n).each{|i| s += i if n % i == 0}",
+        "  s",
+        "end",
+        "def A303307(n)",
+        "  ary = [1]",
+        "  a = (0..n).map{|i| 2 ** (i - 1) * (s(2 * i) - s(i))}",
+        "  (1..n).each{|i| ary << (1..i).inject(0){|s, j| s + a[j] * ary[-j]} / i}",
+        "  ary",
+        "end",
+        "p A303307(100)"
+    ],
+    "xref": [
+        "Cf. A054785, A303306, A303342."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Seiichi Manyama_, Apr 21 2018",
+    "references": 8,
+    "revision": 21,
+    "time": "2018-10-23T10:33:39-04:00",
+    "created": "2018-04-21T13:35:12-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 305752,
+    "data": "1,1,2,3,7,12,31,58,159,312,883,1774,5103,10368,30067,61414,178815,366168,1068259,2190190,6395919,13120944,38335123,78665590,229890591,471814344,1378985155,2830350526,8272839855,16980500640,49633834099,101878204486",
+    "name": "Number of achiral color patterns (set partitions) in a row or cycle of length n with 6 or fewer colors (subsets).",
+    "comment": [
+        "An equivalent color pattern is obtained when we permute the colors. Thus all permutations of ABCDE are equivalent, as are AABCDEF and BBCDEFA. A color pattern is achiral if it is equivalent to its reversal. Rotations of the colors of a cycle are equivalent, so for cycles AABCCDEF =  BCCDEFAA = CCDEFAAB."
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (1,11,-11,-36,36,36,-36)."
+    ],
+    "formula": [
+        "a(n) = Sum_{j=0..6} Ach(n,j), where Ach(n,k) = [n>1] * (k*T(n-2,k) + T(n-2,k-1) + T(n-2,k-2)) + [0<=n<2 & n==k].",
+        "G.f.: (1-10x^2+x^3+29x^4-6x^5-25x^6+8x^7) / ((1-x)*(1-2x^2)*(1-3x^2)*(1-6x^2)).",
+        "a(2m) = S2(m+6,6) - 19*S2(m+5,6) + 140*S2(m+4,6) - 501*S2(m+3,6) + 887*S2(m+2,6) - 692*S2(m+1,6) + 160*S2(m,6);",
+        "a(2m-1) = S2(m+5,6) - 18*S2(m+4,6) + 124*S2(m+3,6) - 404*S2(m+2,6) + 613*S2(m+1,6) - 340*S2(m,6)), where S2(n,k) is the Stirling subset number A008277.",
+        "For n>0, a(2m) = (36 + 45*2^m + 40*3^m + 19*6^m) / 180.",
+        "a(2m-1) = (72 + 45*2^m + 40*3^m + 13*6^m) / 360.",
+        "a(n) = 2*A056325(n) - A056273(n) = A056273(n) - 2*A320936(n) = A056325(n) - A320936(n).",
+        "a(n) = 2*A056356(n) - A056294(n) = A056294(n) - 2*A320746(n) = A056356(n) - A320936(n).",
+        "a(n) = A057427(n) + A052551(n-2) + A304973(n) + A304974(n) + A304975(n) + A304976(n).",
+        "a(n) = a(n-1) + 11*a(n-2) - 11*a(n-3) - 36*a(n-4) + 36*a(n-5) + 36*a(n-6) - 36*a(n-7). - _Muniru A Asiru_, Oct 30 2018"
+    ],
+    "example": [
+        "For a(5) = 12, the achiral patterns for both rows and cycles are AAAAA, AABAA, ABABA, ABBBA, AABCC, ABACA, ABBBC, ABCAB, ABCBA, ABCBD, ABCDA, and ABCDE."
+    ],
+    "maple": [
+        "seq(coeff(series((1-10*x^2+x^3+29*x^4-6*x^5-25*x^6+8*x^7)/((1-x)*(1-2*x^2)*(1-3*x^2)*(1-6*x^2)),x,n+1), x, n), n = 0 .. 35); # _Muniru A Asiru_, Oct 30 2018"
+    ],
+    "mathematica": [
+        "Table[If[EvenQ[n], StirlingS2[(n+12)/2, 6] - 19 StirlingS2[(n+10)/2, 6] + 140 StirlingS2[(n+8)/2, 6] - 501 StirlingS2[(n+6)/2, 6] + 887 StirlingS2[(n+4)/2, 6] - 692 StirlingS2[(n+2)/2, 6] + 160 StirlingS2[n/2, 6], StirlingS2[(n+11)/2, 6] - 18 StirlingS2[(n+9)/2, 6] + 124 StirlingS2[(n+7)/2, 6] - 404 StirlingS2[(n+5)/2, 6] + 613 StirlingS2[(n+3)/2, 6] - 340 StirlingS2[(n+1)/2, 6]], {n, 0, 40}]",
+        "Ach[n_, k_] := Ach[n,k] = If[n<2, Boole[n==k && n>=0], k Ach[n-2,k] + Ach[n-2,k-1] + Ach[n-2,k-2]]; (* A304972 *)",
+        "k=6; Table[Sum[Ach[n, j], {j, 0, k}], {n, 0, 40}]",
+        "CoefficientList[Series[(1-10x^2+x^3+29x^4-6x^5-25x^6+8x^7) / ((1-x)(1-2x^2)(1-3x^2)(1-6 x^2)), {x, 0, 40}], x]",
+        "LinearRecurrence[{1,11,-11,-36,36,36,-36},{1,1,2,3,7,12,31,58},40]",
+        "Join[{1}, Table[If[EvenQ[n], (36 + 45 2^(n/2) + 40 3^(n/2) + 19 6^(n/2)) / 180, (72 + 45 2^((n+1)/2) + 40 3^((n+1)/2) + 13 6^((n+1)/2)) / 360], {n,40}]]"
+    ],
+    "xref": [
+        "Sixth column of A305749.",
+        "Cf. A056273 (oriented), A056325 (unoriented), A320936 (chiral), for rows.",
+        "Cf. A056294 (oriented), A056356 (unoriented), A320746 (chiral), for cycles."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Robert A. Russell_, Jun 09 2018",
+    "references": 5,
+    "revision": 25,
+    "time": "2019-02-28T19:56:34-05:00",
+    "created": "2018-07-28T11:43:39-04:00"
+}

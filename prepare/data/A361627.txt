@@ -1,0 +1,40 @@
+{
+    "number": 361627,
+    "data": "18,23,24,25,30,36,42,53,54,56,57,63,78,84,85,90,99,105,111,117,123,126,129,138,154,170,177,180,190,195,207,213,222,228,230,237,238,240,245,246,252,258,270,273,275,276,282,288,297,299,303,304,309,318,319,322,327,333,339,345",
+    "name": "Positive integers such that GCD(A007504(n),n) != 1.",
+    "comment": [
+        "A301274(k) != k implies that k is a term of this sequence.",
+        "Conjecture: a(n) ~ C*n as n -> infinity, where 5.25 < C < 5.35."
+    ],
+    "example": [
+        "18 is a term of this sequence since the sum of the first 18 primes is 501 and GCD(501,18) = 3 != 1."
+    ],
+    "mathematica": [
+        "s[n_] := Sum[Prime[k], {k, 1, n}];",
+        "Complement[Table[n, {n, 1, 1000}], Flatten[Position[Table[GCD[s[n], n], {n, 1, 1000}], 1]]]"
+    ],
+    "program": [
+        "(PARI) isok(k) = gcd(vecsum(primes(k)), k) != 1; \\\\ _Michel Marcus_, Mar 18 2023",
+        "(Python)",
+        "from math import gcd",
+        "from itertools import count, islice",
+        "from sympy import nextprime",
+        "def A361627_gen(): # generator of terms",
+        "    p, s = 2, 2",
+        "    for n in count(1):",
+        "        if gcd(n,s) > 1:",
+        "            yield n",
+        "        s += (p:=nextprime(p))",
+        "A361627_list = list(islice(A361627_gen(),20)) # _Chai Wah Wu_, Mar 22 2023"
+    ],
+    "xref": [
+        "Cf. A007504, A301274."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Luca Onnis_, Mar 18 2023",
+    "references": 0,
+    "revision": 18,
+    "time": "2023-03-22T15:18:08-04:00",
+    "created": "2023-03-22T08:15:36-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 357576,
+    "data": "0,2,8,17,28,46,63,87,112,142,173,204,244,287,333,378,428,485,540,602,661,737,802,869,947,1030,1118,1197,1278,1378,1469,1575,1670,1776,1889,1990,2108,2219,2353,2472,2587,2723,2854,3002,3135,3275,3424,3563,3721",
+    "name": "Half area of the convex hull of {(x,y)| x,y integers and x^2 + y^2 < n^2}.",
+    "comment": [
+        "a(n) is odd if there is an edge connecting two vertices (x,y) and (y,x), x > y > 0, such that x-y is odd. Otherwise, a(n) is even. a(n)/n^2 is not monotonous but tends to Pi/2. The convex hull has four symmetry axes: x=0, y=0, y=x, y=-x. Therefore it is sufficient to find the least area of a quarter polygon (multiplied by 2). The half area is an integer because the area of any convex polygon whose vertex coordinates are integers is a multiple of 1/2."
+    ],
+    "link": [
+        "Gerhard Kirchner, <a href=\"/A357576/a357576.pdf\">Examples for n <= 13</a>."
+    ],
+    "formula": [
+        "a(n) = A357575(n) - 2*floor(sqrt(2*n-1)) if n is a nonhypotenuse number (A004144)."
+    ],
+    "example": [
+        "For n=4: 5+6+6 = 17 square units -> a(4)=17.",
+        "     _______",
+        "   /|_|_|_|_|\\  5",
+        "  |_|_|_|_|_|_| 6",
+        "  |_|_|_|_|_|_| 6"
+    ],
+    "program": [
+        "(Maxima)",
+        "block(nmax: 40, a: makelist(0,i,1,nmax), a[1]:0,",
+        "for n from 2 thru nmax do",
+        "  (x0:0, y0:n, xa:0, ya:n, m1:0, m0:2, ar:0,",
+        "    while xa<ya do (y:y0,",
+        "     while m1<=m0 and xa<ya do",
+        "      (y:y-1, x1: sqrt(n^2-y^2-1), m1: (y0-y)/(x1-x0),",
+        "       if m1<=m0 then (x:floor(x1), m: (y0-y)/(x-x0),",
+        "         if m<m0 then (m0:m, xa:x, ya:y))),",
+        "      dar:xa*y0-ya*x0, if y0=n then dar:dar-xa,",
+        "      if xa<=ya then (x0:xa, y0:ya, m0:2, ar:ar+2*dar) else ar:ar+dar),",
+        "       a[n]: ar), a);",
+        "(Python)",
+        "from math import isqrt",
+        "from sympy import convex_hull",
+        "def A357576(n): return 0 if n == 1 else int(2*convex_hull(*[(0,0),(n-1,0)]+[(x,isqrt((n-x)*(n+x)-1)) for x in range(n)]).area) # _Chai Wah Wu_, Oct 23 2022"
+    ],
+    "xref": [
+        "Cf. A000328, A004144, A292276, A357575."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gerhard Kirchner_, Oct 05 2022",
+    "references": 3,
+    "revision": 16,
+    "time": "2022-10-23T11:27:26-04:00",
+    "created": "2022-10-23T01:04:32-04:00"
+}

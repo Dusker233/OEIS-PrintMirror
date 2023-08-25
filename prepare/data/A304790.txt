@@ -1,0 +1,56 @@
+{
+    "number": 304790,
+    "data": "1,1,2,3,5,8,13,21,36,55,95,149,281,430,781,1211,2245,3456,6728,10092,18061,31529,51378,85659,167089,252748,431819,817991,1292697",
+    "name": "The maximal number of different domino tilings allowed by the Ferrers-Young diagram of a single partition of 2n.",
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FerrersDiagram.html\">Ferrers Diagram</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Domino_(mathematics)\">Domino</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Domino_tiling\">Domino tiling</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Ferrers_diagram\">Ferrers diagram</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Mutilated_chessboard_problem\">Mutilated chessboard problem</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau#Diagrams\">Young tableau, Diagrams</a>",
+        "<a href=\"/index/Do#domino\">Index entries for sequences related to dominoes</a>"
+    ],
+    "formula": [
+        "a(n) = max { k : A304789(n,k) > 0 }.",
+        "a(A001105(n)) = A004003(n).",
+        "a(n) = A000045(n+1) for n < 8."
+    ],
+    "example": [
+        "a(11) = 149 different domino tilings are possible for 444442 and 6655.",
+        "a(18) = 6728 different domino tilings are possible for 666666."
+    ],
+    "maple": [
+        "h:= proc(l, f) option remember; local k; if min(l[])>0 then",
+        "     `if`(nops(f)=0, 1, h(map(u-> u-1, l[1..f[1]]), subsop(1=[][], f)))",
+        "    else for k from nops(l) while l[k]>0 by -1 do od;",
+        "        `if`(nops(f)>0 and f[1]>=k, h(subsop(k=2, l), f), 0)+",
+        "        `if`(k>1 and l[k-1]=0, h(subsop(k=1, k-1=1, l), f), 0)",
+        "      fi",
+        "    end:",
+        "g:= l-> `if`(add(`if`(l[i]::odd, (-1)^i, 0), i=1..nops(l))=0,",
+        "        `if`(l=[], 1, h([0$l[1]], subsop(1=[][], l))), 0):",
+        "b:= (n, i, l)-> `if`(n=0 or i=1, g([l[], 1$n]), max(b(n, i-1, l),",
+        "                   b(n-i, min(n-i, i), [l[], i]))):",
+        "a:= n-> b(2*n$2, []):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "h[l_, f_] := h[l, f] = Module[{k}, If[Min[l] > 0, If[Length[f] == 0, 1, h[Map[# - 1&, l[[1 ;; f[[1]]]]], ReplacePart[f, 1 -> Nothing]]], For[k = Length[l], l[[k]] > 0 , k--]; If[Length[f] > 0 && f[[1]] >= k, h[ReplacePart[l, k -> 2], f], 0] + If[k > 1 && l[[k - 1]] == 0, h[ReplacePart[l, {k -> 1, k - 1 -> 1}], f], 0]]];",
+        "g[l_] := If[Sum[If[OddQ@l[[i]], (-1)^i, 0], {i, 1, Length[l]}] == 0, If[l == {}, 1, h[Table[0, {l[[1]]}], ReplacePart[l, 1 -> Nothing]]], 0];",
+        "b[n_, i_, l_] := If[n == 0 || i == 1, g[Join[l, Table[1, {n}]]], Max[b[n, i - 1, l], b[n - i, Min[n - i, i], Append[l, i]]]];",
+        "a[n_] := b[2n, 2n, {}];",
+        "Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Aug 24 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000045, A001105, A004003, A304789."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, May 18 2018",
+    "references": 2,
+    "revision": 20,
+    "time": "2021-08-24T07:01:12-04:00",
+    "created": "2018-05-19T15:21:30-04:00"
+}

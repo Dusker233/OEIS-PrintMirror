@@ -1,0 +1,31 @@
+{
+    "number": 333981,
+    "data": "0,1,4,34,576,16296,691408,41069568,3252707328,331218217600,42159307194624,6558777387076608,1224428872399488000,270143735036619436032,69534931015726331203584,20651854796028308275851264,7009822878720340562163007488,2696576146784893519040303235072,1166999997199470676471689819258880",
+    "name": "a(0) = 0; a(n) = 2^(n-1) + (1/n) * Sum_{k=1..n-1} binomial(n,k)^2 * 2^(k-1) * (n-k) * a(n-k).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A333981/b333981.txt\">Table of n, a(n) for n = 0..245</a>"
+    ],
+    "formula": [
+        "Sum_{n>=0} a(n) * x^n / (n!)^2 = -log((3 - BesselI(0,2*sqrt(2*x))) / 2)."
+    ],
+    "mathematica": [
+        "a[0] = 0; a[n_] := a[n] = 2^(n - 1) + (1/n) Sum[Binomial[n, k]^2 2^(k - 1) (n - k) a[n - k], {k, 1, n - 1}]; Table[a[n], {n, 0, 18}]",
+        "nmax = 18; CoefficientList[Series[-Log[(3 - BesselI[0, 2 Sqrt[2 x]])/2], {x, 0, nmax}], x] Range[0, nmax]!^2"
+    ],
+    "program": [
+        "(SageMath)",
+        "@CachedFunction",
+        "def a(n): return 0 if (n==0) else 2^(n-1) + (1/n)*sum(binomial(n,k)^2 *2^(k-1)*(n-k)*a(n-k) for k in (1..n-1)) # a= A333981",
+        "[a(n) for n in (0..30)] # _G. C. Greubel_, Jun 09 2022"
+    ],
+    "xref": [
+        "Cf. A102223, A123227, A333982, A333983, A333984, A333985, A337592."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Sep 04 2020",
+    "references": 5,
+    "revision": 13,
+    "time": "2022-06-10T06:16:35-04:00",
+    "created": "2020-09-04T10:06:48-04:00"
+}

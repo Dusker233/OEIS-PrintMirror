@@ -1,0 +1,45 @@
+{
+    "number": 105098,
+    "data": "0,0,0,1,1,2,2,2,3,4,4,5,5,6,6,7,7,8,8,9,10,10,11,11,12,12,13,13,14,15,15,16,16,17,17,18,18,19,20,20",
+    "name": "Minimum number of squares (repeated adjacent nonempty subwords) in a binary string of length n.",
+    "comment": [
+        "This sequence counts \"occurrences\" of (possibly identical) squares, overlaps allowed.  See Kucherov et al. link. - _Michael S. Branicky_, Dec 20 2020"
+    ],
+    "link": [
+        "G. Kucherov, P. Ochem and M. Rao, <a href=\"https://doi.org/10.37236/1705\">How many square occurrences must a binary sequence contain?</a>, Electronic Journal of Combinatorics V. 10 (2003), paper #R12."
+    ],
+    "example": [
+        "a(4) = 1 because every string of length > 3 contains at least one square and 0100 contains only one square."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "def count_overlaps(subs, s):",
+        "  c = i = 0",
+        "  while i != -1:",
+        "    i = s.find(subs, i)",
+        "    if i != -1: c += 1; i += 1",
+        "  return c",
+        "def a(n):",
+        "  if n == 1: return 0",
+        "  squares = [\"\".join(u) + \"\".join(u)",
+        "    for r in range(1, n//2 + 1) for u in product(\"01\", repeat = r)]",
+        "  words = (\"0\"+\"\".join(w) for w in product(\"10\", repeat=n-1))",
+        "  themin = n*n",
+        "  for w in words:",
+        "    numw = 0",
+        "    for s in squares:",
+        "      numw += count_overlaps(s, w)",
+        "      if numw >= themin: break",
+        "    else: themin = min(themin, numw)",
+        "  return themin",
+        "print([a(n) for n in range(1, 21)]) # _Michael S. Branicky_, Dec 20 2020"
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,6",
+    "author": "_Jeffrey Shallit_, Apr 07 2005",
+    "references": 1,
+    "revision": 20,
+    "time": "2020-12-21T01:52:55-05:00",
+    "created": "2005-04-09T03:00:00-04:00"
+}

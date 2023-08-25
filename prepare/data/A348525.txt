@@ -1,0 +1,28 @@
+{
+    "number": 348525,
+    "data": "3344,12636,88900,95900,109900,116900,121100,181424,271472,365552,476272,504016,975568,1016048,1354288,1375504,1407824,1552304,1628528,1641904,1862608,1882672,1902736,1909424,1929488,1962928,1982992,2003056,2009744,2029808,2049872",
+    "name": "Noninfinitary weird numbers: noninfinitary abundant numbers (A348274) that are not equal to the sum of any subset of their noninfinitary divisors.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A348525/b348525.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "3344 is a term since the sum of its noninfinitary divisors, {2, 4, 8, 22, 38, 44, 76, 88, 152, 418, 836, 1672}, is 3360 > 3344, and no subset of these divisors sums to 3344."
+    ],
+    "mathematica": [
+        "q[n_] := !IntegerQ@ Log2@ DivisorSigma[0, n]; nidiv[1] = {}; nidiv[n_] := Complement[Divisors[n], Sort@ Flatten@ Outer[Times, Sequence @@ (FactorInteger[n] /. {p_, m_Integer} :> p^Select[Range[0, m], BitOr[m, #] == m &])]]; s = {}; Do[If[! q[n], Continue[]]; d = nidiv[n]; If[Total[d] <= n, Continue[]]; c = SeriesCoefficient[Series[Product[1 + x^d[[i]], {i, Length[d]}], {x, 0, n}], n]; If[c == 0, AppendTo[s, n]], {n, 1, 13000}]; s"
+    ],
+    "xref": [
+        "Cf. A348271, A348274, A348341.",
+        "Similar sequences: A006037, A064114, A292986, A306984, A321146, A327948."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Oct 21 2021",
+    "ext": [
+        "More terms from _Amiram Eldar_, Mar 25 2023"
+    ],
+    "references": 3,
+    "revision": 8,
+    "time": "2023-03-25T05:29:43-04:00",
+    "created": "2021-10-22T11:40:55-04:00"
+}

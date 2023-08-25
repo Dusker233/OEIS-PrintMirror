@@ -1,0 +1,45 @@
+{
+    "number": 119378,
+    "data": "121,232,272,292,323,343,434,494,575,616,737,767,818,838,878,949,959,979,10201,10801,10901,11011,11611,11711,11911,12121,12221,12521,13031,13231,13531,13631,14041,14141,14641,14941,15151,15251,15751,15851,16261,16861,16961",
+    "name": "Palindromic composites such that some digit permutation is prime.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A119378/b119378.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "121 is composite that have a prime digit permutation: 211.",
+        "1001 is composite, but is not a term since 0011, though prime, contains leading zeros, which is not allowed here."
+    ],
+    "mathematica": [
+        "palQ[n_Integer, base_Integer] := Module[{idn = IntegerDigits[n, base]}, idn == Reverse@idn]; fQ[n_] := Union[PrimeQ /@ FromDigits /@ Permutations@ IntegerDigits@n][[ -1]] == True; Select[Range@15850, !PrimeQ@# && palQ[ #, 10] && fQ@# &] (* _Robert G. Wilson v_,  Aug 04 2006 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, islice, product",
+        "from sympy.utilities.iterables import multiset_permutations as mp",
+        "def pals(base=10): # generator for all palindromes as strings",
+        "  digits = \"\".join(str(i) for i in range(base))",
+        "  for d in count(1):",
+        "    for p in product(digits, repeat=d//2):",
+        "        if d//2 > 0 and p[0] == \"0\": continue",
+        "        left = \"\".join(p); right = left[::-1]",
+        "        for mid in [[\"\"], digits][d%2]: yield left + mid + right",
+        "def ok(s): # where s is string of digits",
+        "    if isprime(int(s)): return False",
+        "    return any(p[0]!=\"0\" and isprime(int(\"\".join(p))) for p in mp(s))",
+        "def agen():",
+        "    yield from (int(s) for s in pals() if ok(s))",
+        "print(list(islice(agen(), 43))) # _Michael S. Branicky_, Nov 27 2022"
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Jul 24 2006",
+    "ext": [
+        "More terms from _Joshua Zucker_ and _Robert G. Wilson v_, Aug 04 2006",
+        "a(41) and beyond from _Michael S. Branicky_, Nov 27 2022"
+    ],
+    "references": 1,
+    "revision": 12,
+    "time": "2022-11-28T01:47:24-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

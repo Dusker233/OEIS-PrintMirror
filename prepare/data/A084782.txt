@@ -1,0 +1,42 @@
+{
+    "number": 84782,
+    "data": "1,1,3,11,42,168,696,2965,12915,57276,257787,1174597,5407854,25119663,117579351,554053049,2626184688,12513029640,59898952650,287931365692,1389297316104,6726449251539,32668497856323,159114598216251",
+    "name": "G.f.: A(x) = 1 + x*A(x)^2/(1-x-x^2).",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A084782/b084782.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Paul Barry, <a href=\"https://arxiv.org/abs/1910.00875\">Generalized Catalan recurrences, Riordan arrays, elliptic curves, and orthogonal polynomials</a>, arXiv:1910.00875 [math.CO], 2019.",
+        "Paul Barry, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL26/Barry/barry601.html\">On Motzkin-Schr\u00f6der Paths, Riordan Arrays, and Somos-4 Sequences</a>, J. Int. Seq. (2023) Vol. 26, Art. 23.4.7.",
+        "Vladimir Kruchinin and D. V. Kruchinin, <a href=\"http://arxiv.org/abs/1103.2582\">Composita and their properties</a>, arXiv:1103.2582 [math.CO], 2011-2013."
+    ],
+    "formula": [
+        "a(0) = a(1) = 1; for n>1, a(n) = Sum_{j=0..n-1} Fibonacci(n-j)*( Sum_{i=0..j} a(i)*a(j-i) ). - Mario Catalani (mario.catalani(AT)unito.it), Jun 18 2003",
+        "a(n) = Sum_{k=1..n} (Sum_{i=ceiling((n-k)/2)..n-k} binomial(i,n-k-i) *binomial(k+i-1,k-1) * C(k) ), C(k) - Catalan numbers A000108. - _Vladimir Kruchinin_, Sep 15 2010",
+        "G.f.: 1/(1-z/(1-z/(1-z/(...)))) where z=x/(1-x-x^2) (continued fraction); more generally g.f. C(x/(1-x-x^2)) where C(x) is the g.f. for the Catalan numbers (A000108). - _Joerg Arndt_, Mar 18 2011",
+        "G.f.: 2/(sqrt((x^2+5*x-1)/(x^2+x-1)) + 1). - _Vladimir Kruchinin_, Oct 11 2011",
+        "Recurrence: (n+1)*a(n) = 3*(2*n-1)*a(n-1) - 3*(n-2)*a(n-2) - 3*(2*n-7) * a(n-3) - (n-5)*a(n-4). - _Vaclav Kotesovec_, Oct 24 2012",
+        "a(n) ~ 29^(1/4)*((5+sqrt(29))/2)^n/(2*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Oct 24 2012"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[2/(Sqrt[(x^2+5*x-1)/(x^2+x-1)]+1), {x, 0, 20}], x] (* _Vaclav Kotesovec_, Oct 24 2012 *)"
+    ],
+    "program": [
+        "(Maxima) a(n):=sum(sum(binomial(i,n-k-i)*binomial(k+i-1,k-1),i, ceiling((n-k)/2),n-k)*1/(k+1)*binomial(2*k,k),k,1,n) /* _Vladimir Kruchinin_, Sep 15 2010 */",
+        "(Magma) R<x>:=PowerSeriesRing(Rationals(), 40); Coefficients(R!( 2/(Sqrt((x^2+5*x-1)/(x^2+x-1)) + 1) )); // _G. C. Greubel_, Jun 07 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def a(n): # a = A084782",
+        "    if n<2: return 1",
+        "    else: return sum( sum( a(k)*a(j-k) for k in range(j+1) )*fibonacci(n-j) for j in range(n) )",
+        "[a(n) for n in range(41)] # _G. C. Greubel_, Jun 07 2023"
+    ],
+    "xref": [
+        "Cf. A000045, A084781."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jun 14 2003",
+    "references": 2,
+    "revision": 42,
+    "time": "2023-06-07T04:44:23-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

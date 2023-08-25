@@ -1,0 +1,43 @@
+{
+    "number": 308736,
+    "data": "2523,3112819,5656019,10132171,12167825,16639567,25302173,31995475,35158921,37334419,43890719,44816821,47715269,53548223,55534523,90526075,90533525,127558319,142929025,143167073,144989575,147182225",
+    "name": "Numbers n such that n, n+2, n+4, n+6 are of the form p^2*q where p and q are distinct primes.",
+    "comment": [
+        "All terms are odd. Proof: if n is even then out of the 4 numbers n, n+2, n+4, n+6, 2 of them must be either both of the form 2*p^2, 2*q^2, or both of the form 4*p, 4*q. In either case, for p != q and p, q prime, the difference between these 2 numbers are more than 6, reaching a contradiction. - _Chai Wah Wu_, Jun 24 2019"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A308736/b308736.txt\">Table of n, a(n) for n = 1..10000</a> (first 123 terms from Ray Chandler)"
+    ],
+    "example": [
+        "2523 = 3*29*29, 2525 = 5*5*101, 2527 = 7*19*19, 2529 = 3*3*281."
+    ],
+    "mathematica": [
+        "psx = Table[{0}, {7}]; nmax = 150000000; n = 1; lst = {};",
+        "While[n < nmax, n++;",
+        "  psx = RotateRight[psx];",
+        "  psx[[1]] = Sort[Last /@ FactorInteger[n]];",
+        "  If[Union[{psx[[1]], psx[[3]], psx[[5]], psx[[7]]}] == {{1, 2}}, AppendTo[lst, n - 6]];];",
+        "lst"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "A308736_list, n, mlist = [], 3, [False]*4",
+        "while len(A308736_list) < 100:",
+        "    if mlist[0] and mlist[1] and mlist[2] and mlist[3]:",
+        "        A308736_list.append(n)",
+        "    n += 2",
+        "    f = factorint(n+6)",
+        "    mlist = mlist[1:] + [(len(f),sum(f.values())) == (2,3)] # _Chai Wah Wu_, Jun 24 2019, Jan 03 2022."
+    ],
+    "xref": [
+        "Cf. A074173, A308735."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ray Chandler_, Jun 24 2019",
+    "references": 3,
+    "revision": 33,
+    "time": "2022-01-03T19:25:25-05:00",
+    "created": "2019-06-24T11:19:39-04:00"
+}

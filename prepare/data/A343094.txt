@@ -1,0 +1,30 @@
+{
+    "number": 343094,
+    "data": "1,1,4,24,201,2199,29879,486231,9228867,200272157,4892538679,132901744486,3974163191604,129735825879843,4591187990365503,175081375829138149,7157470516097359747,312267811360305253384,14481803617066951613463,711413177916751077562759",
+    "name": "Number of connected loopless labeled multigraphs with n edges.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A343094/b343094.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "mathematica": [
+        "S[m_, n_] := Binomial[Binomial[m, 2] + n - 1, n];",
+        "R[nn_] := Module[{cc = Array[0&, {nn, nn}]}, cc[[1, 1]] = 1; For[m = 1, m <= nn, m++, For[n = 1, n <= nn - 1, n++, cc[[m, n + 1]] = S[m, n] - S[m - 1, n] - Sum[Sum[Binomial[m - 1, i - 1]*cc[[i, j + 1]]*S[m - i, n - j], {j, 1, n}], {i, 2, m - 1}]]]; cc // Transpose];",
+        "Total /@ R[20] (* _Jean-Fran\u00e7ois Alcover_, Apr 15 2021, after _Andrew Howroyd_'s code for A290776 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "Connected(v)={my(u=vector(#v)); for(n=1, #u, u[n]=v[n] - sum(k=1, n-1, binomial(n-1, k)*v[k]*u[n-k])); u}",
+        "seq(n)={Vec(vecsum(Connected(vector(2*n, j, 1/(1 - x + O(x*x^n))^binomial(j, 2)))))}"
+    ],
+    "xref": [
+        "Row sums of A290776.",
+        "The unlabeled version is A050535.",
+        "Cf. A322152."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Andrew Howroyd_, Apr 14 2021",
+    "references": 1,
+    "revision": 12,
+    "time": "2022-01-02T14:53:16-05:00",
+    "created": "2021-04-14T20:06:59-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 325410,
+    "data": "3,4,5,7,26,65,942,24147",
+    "name": "Smallest k such that the adjusted frequency depth of k! is n > 2.",
+    "comment": [
+        "If infinite terms were allowed, we would have a(0) = 1, a(1) = 2, a(2) = infinity. It is possible this sequence is finite, or that there are additional gaps.",
+        "The adjusted frequency depth of a positive integer n is 0 if n = 1, and otherwise it is 1 plus the number of times one must apply A181819 to reach a prime number, where A181819(k = p^i*...*q^j) = prime(i)*...*prime(j) = product of primes indexed by the prime exponents of k. For example, 180 has adjusted frequency depth 5 because we have: 180 -> 18 -> 6 -> 4 -> 3."
+    ],
+    "example": [
+        "Column n is the sequence of images under A181819 starting with a(n)!:",
+        "  6  24  120  5040  403291461126605635584000000",
+        "  4  10  20   84    11264760",
+        "  3  4   6    12    240",
+        "     3   4    6     28",
+        "         3    4     6",
+        "              3     4",
+        "                    3"
+    ],
+    "mathematica": [
+        "fdadj[n_Integer]:=If[n==1,0,Length[NestWhileList[Times@@Prime/@Last/@FactorInteger[#]&,n,!PrimeQ[#]&]]];",
+        "dat=Table[fdadj[n!],{n,1000}];",
+        "Table[Position[dat,k][[1,1]],{k,3,Max@@dat}]"
+    ],
+    "xref": [
+        "a(n) is the first position of n in A325272.",
+        "Cf. A000142, A022559, A181819, A181821, A323023, A325238, A325273, A325274, A325275, A325276, A325277.",
+        "Omega-sequence statistics: A001222 (first omega), A001221 (second omega), A071625 (third omega), A323022 (fourth omega), A304465 (second-to-last omega), A182850 or A323014 (frequency depth), A325248 (Heinz number), A325249 (sum)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "3,1",
+    "author": "_Gus Wiseman_, Apr 24 2019",
+    "references": 2,
+    "revision": 6,
+    "time": "2019-04-25T09:33:16-04:00",
+    "created": "2019-04-25T09:33:16-04:00"
+}

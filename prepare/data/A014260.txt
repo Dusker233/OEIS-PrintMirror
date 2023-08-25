@@ -1,0 +1,32 @@
+{
+    "number": 14260,
+    "data": "0,1,1,2,3,5,8,13,21,52,64,89,135,233,764,1096,1563,8464,12115,16763,67884,104645,153521,699922,825273,1055269,1427797,11053298,19030539,108265550,201768641,257331442,404198544,648332296,1094223700,1786457546,1859682447",
+    "name": "Iccanobif numbers: add a(n-1) to reversal of a(n-2).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A014260/b014260.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "maple": [
+        "R:= n-> (s-> parse(cat(s[-i]$i=1..length(s))))(\"\"||n):",
+        "a:= proc(n) option remember; `if`(n<2, n,",
+        "       a(n-1) +R(a(n-2)))",
+        "    end:",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Jun 18 2014"
+    ],
+    "mathematica": [
+        "Clear[ Bif ]; Bif[ 0 ]=0; Bif[ 1 ]=1; Bif[ n_Integer ] := Bif[ n ]=Bif[ n-1 ]+Plus@@(IntegerDigits[ Bif[ n-2 ], 10 ]//(#*Array[ 10^#&, Length[ # ], 0 ])&); Array[ Bif, 40, 0 ]",
+        "nxt[{a_,b_}]:={b,IntegerReverse[a]+b}; NestList[nxt,{0,1},40][[All,1]] (* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Jul 04 2018 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = my(v=vector(nn)); v[2]=1; for(n=3, nn, v[n] = v[n-1] + fromdigits(Vecrev(digits(v[n-2])))); v \\\\ _Jinyuan Wang_, Aug 01 2021"
+    ],
+    "xref": [
+        "Cf. A000045, A001129, A014258, A014259."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "references": 28,
+    "revision": 16,
+    "time": "2021-08-02T02:34:47-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 82180,
+    "data": "4,9,25,49,121,125,169,289,343,361,418,529,841,961,1331,1369,1681,1849,2197,2209,2809,3481,3721,4489,4913,5041,5329,6241,6859,6889,7921,9409,10201,10609,11449,11881,12167,12769,16129,17161,18769,19321",
+    "name": "Composite integers k such that binomial(2*k, k) == 2 (mod k).",
+    "comment": [
+        "Also, composite integers k such that A000108(k) == 2 (mod k).",
+        "It seems that the sequence contains all squares of primes and some cubes of odd primes. But it includes other terms as well, including 418 = 2*11*19 and 27173 = 29*937. [edited by _Jon E. Schoenfield_, Jul 31 2018]",
+        "By Wolstenholme's theorem, this sequence does contain all squares of primes and cubes of primes > 3^3, since for primes p > 3 we have binomial(2p^3, p^3) == binomial(2p^2, p^2) == binomial(2p, p) == binomial(2, 1) == 2 (mod p^3). See the link below. - _Jianing Song_, Aug 01 2018",
+        "Note that binomial(2*(n+1), n+1) = binomial(2*n, n) * (4 - 2/(n+1)), which could be used to find terms. - _David A. Corneth_, Aug 05 2018",
+        "Up to a(800) = 30946969, 2001341 = 787 * 2543 is the only further term which, like 418 and 27173, is neither a square nor a cube. - _Giovanni Resta_, Aug 08 2018"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A082180/b082180.txt\">Table of n, a(n) for n = 1..1320</a> (terms < 10^8, first 193 terms from David A. Corneth)",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Wolstenholme%27s_theorem\">Wolstenholme's theorem</a>"
+    ],
+    "maple": [
+        "select(n-> not isprime(n) and modp(binomial(2*n,n),n)=2,[$1..10000]); # _Muniru A Asiru_, Aug 01 2018"
+    ],
+    "mathematica": [
+        "nn=20000;With[{comps=Complement[Range[nn],Prime[Range[PrimePi[nn]]]]}, Select[ comps,Mod[Binomial[2#,#],#]==2&]] (* _Harvey P. Dale_, May 24 2012 *)",
+        "Select[Range@ 20000, CompositeQ@# && Mod[Binomial[2 #, #], #] == 2 &] (* _Robert G. Wilson v_, Aug 01 2018 *)"
+    ],
+    "program": [
+        "(PARI) forcomposite(c=1, 2e4, if(Mod(binomial(2*c, c), c)==2, print1(c, \", \"))) \\\\ _Felix Fr\u00f6hlich_, Jul 30 2018",
+        "(PARI) upto(n) = {my(binomp = 2, res = List()); for(t = 2, n, binomp *= (4 - 2/t);",
+        "if(!isprime(t) && binomp % t == 2, listput(res, t))); res} \\\\ _David A. Corneth_, Aug 05 2018",
+        "(GAP) Filtered([1..1000],n->not IsPrime(n) and Binomial(2*n,n) mod n =2); # _Muniru A Asiru_, Aug 01 2018"
+    ],
+    "xref": [
+        "Cf. A000108, A246131, A328497."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, May 10 2003",
+    "ext": [
+        "More terms from _John W. Layman_, Jun 09 2004"
+    ],
+    "references": 5,
+    "revision": 56,
+    "time": "2019-10-18T00:55:43-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

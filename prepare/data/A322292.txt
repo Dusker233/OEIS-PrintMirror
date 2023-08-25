@@ -1,0 +1,42 @@
+{
+    "number": 322292,
+    "data": "6,6,8,8,10,12,12,12,14,14,16,18,18,18,20,20,22,24,24,24,26,30,30,30,30,30,32,32,34,36,36,40,40,40,40,42,42,42,44,44,46,48,48,48,50,56,56,56,56,56,56,60,60,60,60,60,62,62,64,66,66,70,70,70,70,72,72,72",
+    "name": "a(n) = Max_{c composite, c < n} (c + least prime factor of c).",
+    "comment": [
+        "a(n) is only defined for n >= 5, because for n < 5, the condition {c composite, c < n} results in the empty set."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A322292/b322292.txt\">Table of n, a(n) for n = 5..10000</a>",
+        "Paul Erdos, <a href=\"https://users.renyi.hu/~p_erdos/1979-23.pdf\">Some unconventional problems in number theory</a>, Acta Mathematica Hungarica, 33(1):71-80, 1979. See p. 73."
+    ],
+    "example": [
+        "a(5) = 6 because the largest composite c < n = 5 is 4, which has the largest prime factor 2. Hence a(5) = 4 + 2 = 6. - _David A. Corneth_, Dec 03 2018"
+    ],
+    "maple": [
+        "N:= 100: # to get a(5)..a(N)",
+        "V:= Vector(N):",
+        "V[5]:= 6;",
+        "for n from 6 to N do",
+        "  if isprime(n-1) then V[n]:= V[n-1]",
+        "  else V[n]:= max(V[n-1],n-1+min(numtheory:-factorset(n-1)))",
+        "  fi",
+        "od:",
+        "convert(V[5..N],list); # _Robert Israel_, Dec 03 2018"
+    ],
+    "mathematica": [
+        "a[n_] := Module[{smax = 0}, Do[If[CompositeQ[m],  smax = Max[smax, m + FactorInteger[m][[1, 1]]]], {m, 2, n-1}]; smax]; Array[a, 100, 5] (* _Amiram Eldar_, Dec 02 2018 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = {my(smax = 0); for(m=2, n-1, if (!isprime(m), smax = max(smax, m + factor(m)[1, 1]); )); smax; }"
+    ],
+    "xref": [
+        "Cf. A061228, A159475, A322293."
+    ],
+    "keyword": "nonn",
+    "offset": "5,1",
+    "author": "_Michel Marcus_, Dec 02 2018",
+    "references": 2,
+    "revision": 23,
+    "time": "2018-12-05T04:00:53-05:00",
+    "created": "2018-12-02T18:34:58-05:00"
+}

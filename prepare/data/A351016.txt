@@ -1,0 +1,73 @@
+{
+    "number": 351016,
+    "data": "1,2,4,6,12,18,36,54,92,154,244,382,652,994,1572,2414,3884,5810,8996,13406,21148,31194,47508,70086,104844,156738,231044,338998,496300,721042,1064932,1536550,2232252,3213338,4628852,6603758,9554156,13545314,19354276",
+    "name": "Number of binary words of length n with all distinct runs.",
+    "comment": [
+        "These are binary words where the runs of zeros have all distinct lengths and the runs of ones also have all distinct lengths. For n > 0 this is twice the number of terms of A175413 that have n digits in binary."
+    ],
+    "link": [
+        "Mathematics Stack Exchange, <a href=\"https://math.stackexchange.com/q/87559\">What is a sequence run? (answered 2011-12-01)</a>"
+    ],
+    "formula": [
+        "a(n>0) = 2 * A351018(n)."
+    ],
+    "example": [
+        "The a(0) = 1 through a(4) = 12 binary words:",
+        "  ()   0    00    000    0000",
+        "       1    01    001    0001",
+        "            10    011    0010",
+        "            11    100    0011",
+        "                  110    0100",
+        "                  111    0111",
+        "                         1000",
+        "                         1011",
+        "                         1100",
+        "                         1101",
+        "                         1110",
+        "                         1111",
+        "For example, the word (1,1,0,1) has three runs (1,1), (0), (1), which are all distinct, so is counted under a(4)."
+    ],
+    "mathematica": [
+        "Table[Length[Select[Tuples[{0,1},n],UnsameQ@@Split[#]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import groupby, product",
+        "def adr(s):",
+        "    runs = [(k, len(list(g))) for k, g in groupby(s)]",
+        "    return len(runs) == len(set(runs))",
+        "def a(n):",
+        "    if n == 0: return 1",
+        "    return 2*sum(adr(\"1\"+\"\".join(w)) for w in product(\"01\", repeat=n-1))",
+        "print([a(n) for n in range(20)]) # _Michael S. Branicky_, Feb 08 2022"
+    ],
+    "xref": [
+        "The version for compositions is A351013, lengths A329739, ranked by A351290.",
+        "The version for [run-]lengths is A351017.",
+        "The version for expansions is A351018, lengths A032020, ranked by A175413.",
+        "The version for patterns is A351200, lengths A351292.",
+        "The version for permutations of prime factors is A351202.",
+        "A000120 counts binary weight.",
+        "A001037 counts binary Lyndon words, necklaces A000031, aperiodic A027375.",
+        "A005811 counts runs in binary expansion.",
+        "A011782 counts integer compositions.",
+        "A242882 counts compositions with distinct multiplicities.",
+        "A297770 counts distinct runs in binary expansion.",
+        "A325545 counts compositions with distinct differences.",
+        "A329767 counts binary words by runs-resistance.",
+        "A351014 counts distinct runs in standard compositions.",
+        "A351204 counts partitions whose permutations all have all distinct runs.",
+        "Cf. A003242, A098859, A106356, A116608, A238130 or A238279, A328592, A329738, A329745, A334028, A351201."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Feb 07 2022",
+    "ext": [
+        "a(25)-a(32) from _Michael S. Branicky_, Feb 08 2022",
+        "a(33)-a(38) from _David A. Corneth_, Feb 08 2022"
+    ],
+    "references": 26,
+    "revision": 16,
+    "time": "2022-02-12T13:29:08-05:00",
+    "created": "2022-02-12T13:29:08-05:00"
+}

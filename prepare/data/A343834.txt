@@ -1,0 +1,46 @@
+{
+    "number": 343834,
+    "data": "2,3,5,7,23,223,227,337,557,577,2333,2357,2377,2557,2777,33377,222337,222557,233357,233777,235577,2222333,2233337,2235557,3337777,3355777,5555777,22222223,22233577,23333357,23377777,25577777,222222227,222222557,222222577",
+    "name": "Primes with digits in nondecreasing order, only primes, and with sum of digits also a prime.",
+    "comment": [
+        "Intersection of A028864 and A062088."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A343834/b343834.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "a[p_] := With[{dg = IntegerDigits@p}, PrimeQ@p && OrderedQ@dg && AllTrue[dg, PrimeQ] && PrimeQ@ Total@dg]; Cases[ Range[3*10^7], _?(a@# &)] (* or *)",
+        "upToDigitLen[k_] := Cases[ FromDigits@# & /@ Select[ Flatten[ Table[ Tuples[{2, 3, 5, 7}, {i}], {i, k}], 1], OrderedQ[#] &], _?(PrimeQ@# && PrimeQ@ Total@ IntegerDigits@# &)]; upToDigitLen[10]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from sympy.utilities.iterables import multiset_combinations",
+        "def aupton(terms):",
+        "  n, digits, alst = 0, 1, []",
+        "  while len(alst) < terms:",
+        "    mcstr = \"\".join(d*digits for d in \"2357\")",
+        "    for mc in multiset_combinations(mcstr, digits):",
+        "      sd = sum(int(d) for d in mc)",
+        "      if not isprime(sd): continue",
+        "      t = int(\"\".join(mc))",
+        "      if isprime(t): alst.append(t)",
+        "      if len(alst) == terms: break",
+        "    else: digits += 1",
+        "  return alst",
+        "print(aupton(35)) # _Michael S. Branicky_, May 01 2021"
+    ],
+    "xref": [
+        "Cf. A019546, A028864, A046704, A062088."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Mikk Heidemaa_, May 01 2021",
+    "ext": [
+        "a(33) and beyond from _Michael S. Branicky_, May 01 2021"
+    ],
+    "references": 1,
+    "revision": 20,
+    "time": "2021-06-02T02:21:26-04:00",
+    "created": "2021-06-01T02:22:11-04:00"
+}

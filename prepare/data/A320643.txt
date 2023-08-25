@@ -1,0 +1,37 @@
+{
+    "number": 320643,
+    "data": "0,0,0,0,0,4,12,44,137,408,1190,3416,9730,27560,78148,221250,627960,1784038,5081154,14496956,41455409,118764600,340919744,980315700,2823696150,8145853520,23533759241,68081765650,197206716570,571906256808,1660387879116,4825525985408,14037945170525,40875277302720,119122416494961,347440682773324,1014151818975190,2962391932326680,8659301777595196,25328461701728194",
+    "name": "Number of chiral pairs of color patterns (set partitions) in a cycle of length n using exactly 3 colors (subsets).",
+    "comment": [
+        "Two color patterns are the same if the colors are permuted. A chiral cycle is different from its reverse.",
+        "Adnk[d,n,k] in Mathematica program is coefficient of x^k in A(d,n)(x) in Gilbert and Riordan reference.",
+        "There are nonrecursive formulas, generating functions, and computer programs for A056296 and A304973, which can be used in conjunction with the first formula."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320643/b320643.txt\">Table of n, a(n) for n = 1..200</a>",
+        "E. N. Gilbert and J. Riordan, <a href=\"http://projecteuclid.org/euclid.ijm/1255631587\">Symmetry types of periodic sequences</a>, Illinois J. Math., 5 (1961), 657-665."
+    ],
+    "formula": [
+        "a(n) = (A056296(n) - A304973(n)) / 2 = A056296(n) - A056358(n) = A056358(n) - A304973(n).",
+        "a(n) = -Ach(n,k)/2 + (1/2n)*Sum_{d|n} phi(d)*A(d,n/d,k), where k=3 is number of colors or sets, Ach(n,k) = [n>=0 & n<2 & n==k] + [n>1]*(k*Ach(n-2,k)+Ach(n-2,k-1)+Ach(n-2,k-2)), and A(d,n,k) = [n==0 & k==0] + [n>0 & k>0]*(k*A(d,n-1,k) + Sum_{j|d} A(d,n-1,k-j))."
+    ],
+    "example": [
+        "For a(6)=4, the chiral pairs are AAABBC-AAABCC, AABABC-AABCAC, AABACB-AABCAB, and AABACC-AABBAC."
+    ],
+    "mathematica": [
+        "Ach[n_, k_] := Ach[n, k] = If[n<2, Boole[n==k && n>=0], k Ach[n-2,k] + Ach[n-2,k-1] + Ach[n-2,k-2]] (* A304972 *)",
+        "Adnk[d_,n_,k_] := Adnk[d,n,k] = If[n>0 && k>0, Adnk[d,n-1,k]k + DivisorSum[d,Adnk[d,n-1,k-#] &], Boole[n==0 && k==0]]",
+        "k=3; Table[DivisorSum[n,EulerPhi[#]Adnk[#,n/#,k]&]/(2n) - Ach[n,k]/2,{n,40}]"
+    ],
+    "xref": [
+        "Column 3 of A320647.",
+        "Cf. A056296 (oriented), A056358 (unoriented), A304973 (achiral)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,6",
+    "author": "_Robert A. Russell_, Oct 18 2018",
+    "references": 6,
+    "revision": 18,
+    "time": "2019-11-04T02:17:51-05:00",
+    "created": "2018-10-22T13:49:57-04:00"
+}

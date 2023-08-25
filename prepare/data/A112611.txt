@@ -1,0 +1,45 @@
+{
+    "number": 112611,
+    "data": "0,4,24,60,480,2580,10200,59100,303600,1396500,7347000,37099500,180030000,916552500,4599165000,22749787500,114487050000,573173362500,2854795125000,14307190687500,71569168500000,357347616562500",
+    "name": "a(n) = 5*a(n-1) + 45*a(n-3) - 225*a(n-4), a(0)=0, a(1)=4, a(2)=24, a(3)=60, a(4)=480.",
+    "comment": [
+        "Scale and initial conditions changed compared to the reference to get integer output."
+    ],
+    "reference": [
+        "Taylor Booth, Sequential Machines and Automata Theory, John Wiley and Sons, New York, 1967, Pages 454-455."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A112611/b112611.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: 4*x*(1+x-15*x^2)/((1-5*x)*(1-45*x^3)). [Sep 28 2009]",
+        "a(n) = (1/4)*(3*5^n - 3*b(n) + b(n-1) + 21*b(n-2)), where b(n) = (45)^(n/3)*A079978(n). - _G. C. Greubel_, Jul 30 2022"
+    ],
+    "mathematica": [
+        "M = {{1,4,0,0}, {0,0,4,1}, {4,1,0,0}, {0,0,1,4}}; w[0]= {0,1,1,1};",
+        "w[n_]:= w[n]= M.w[n-1];",
+        "a[n_]:= a[n]= w[n][[1]];",
+        "Table[a[n], {n, 0, 50}]",
+        "LinearRecurrence[{5,0,45,-225}, {0,4,24,60}, 60] (* _G. C. Greubel_, Jul 30 2022 *)"
+    ],
+    "program": [
+        "(Magma) I:=[0,4,24,60]; [n le 4 select I[n] else 5*Self(n-1) +45*Self(n-3) -225*Self(n-4): n in [1..41]]; // _G. C. Greubel_, Jul 30 2022",
+        "(SageMath)",
+        "def b(n): return (45)^(n/3)*( (2^((n%3))%2) )",
+        "def a(n): return (1/4)*(3*5^n -3*b(n) +b(n-1) +21*b(n-2))",
+        "[a(n) for n in (0..50)] # _G. C. Greubel_, Jul 30 2022"
+    ],
+    "xref": [
+        "Cf. A079978, A104180, A104181."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Roger L. Bagula_, Feb 27 2006",
+    "ext": [
+        "Definition replaced by recurrence by the Associate Editors of the OEIS, Sep 28 2009"
+    ],
+    "references": 1,
+    "revision": 11,
+    "time": "2022-07-30T08:15:00-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

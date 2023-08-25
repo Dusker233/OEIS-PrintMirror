@@ -1,0 +1,62 @@
+{
+    "number": 339693,
+    "data": "225,38025,314721,622521,751689,3111696,6002500,7568001,10323369,61058596,73513476,74545956,94517284,105144516,112572100,112656996,132756484,136936804,181980100,202948516,210308004,211353444,219573124,222069604,230614596,238208356,251983876",
+    "name": "All pandigital squares which contain each digit exactly once in some base b >= 2. The numbers are written in base 10.",
+    "comment": [
+        "The sequence consists of all square numbers which when represented in some base b contain all the b digits in that base exactly once.",
+        "A225218 has all the squares in base 10 that are pandigital. This sequence is the union of all such sequences in any integer base b >= 2."
+    ],
+    "link": [
+        "David Schilling, <a href=\"/A339693/b339693.txt\">Table of n, a(n) for n = 1..5508</a>"
+    ],
+    "example": [
+        "15^2 in base 4 (225 is 3201 in base 4) contains the digits 0-3.",
+        "195^2 in base 6 (38025 is 452013 in base 6) contains the digits 0-5.",
+        "The next three terms contain all the digits in base 7.",
+        "The following four entries are pandigital in base 8, the next 26 in base 9, and so on."
+    ],
+    "program": [
+        "(JAI)",
+        "#import \"Basic\";",
+        "dstr := \"0123456789abcdef\";",
+        "main :: () {",
+        "    digits : [16] int;",
+        "    for j:2..3_000_000 {",
+        "        for b:3..16 {",
+        "            for d : 0..15",
+        "                digits[d] = 0;",
+        "            k := j*j;",
+        "            s := tprint( \"%\",  formatInt( k, b ) );",
+        "            if s.count > b",
+        "                continue;",
+        "            for d : 0..s.count-1 {",
+        "                for c : 0..dstr.count-1 {",
+        "                    if s[d] == dstr[c] {",
+        "                        digits[c] += 1;",
+        "                        continue d;",
+        "                    }",
+        "                }",
+        "            }",
+        "            for d : 0..b-1 {",
+        "                if digits[d] != 1",
+        "                    continue b;",
+        "            }",
+        "            print( \"%, \", k );",
+        "        }",
+        "    }",
+        "}",
+        "(PARI) \\\\ here ispandig(n) returns base if n is pandigital, otherwise 0.",
+        "ispandig(n)={for(b=2, oo, my(r=logint(n,b)+1); if(r<b, break); if(r==b && #Set(digits(n,b))==b, return(b))); 0}",
+        "for(n=1, 10^5, if(ispandig(n^2), print1(n^2, \", \"))) \\\\ _Andrew Howroyd_, Dec 20 2020"
+    ],
+    "xref": [
+        "Cf. A036745, A134741, A258103, A260182, A340501."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "_David Schilling_, Dec 13 2020",
+    "references": 2,
+    "revision": 35,
+    "time": "2021-01-13T16:09:55-05:00",
+    "created": "2021-01-13T15:45:17-05:00"
+}

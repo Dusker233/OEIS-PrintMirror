@@ -1,0 +1,63 @@
+{
+    "number": 116882,
+    "data": "1,2,4,8,12,16,24,32,40,48,56,64,80,96,112,128,144,160,176,192,208,224,240,256,288,320,352,384,416,448,480,512,544,576,608,640,672,704,736,768,800,832,864,896,928,960,992,1024,1088,1152,1216,1280,1344,1408",
+    "name": "A number k is included if (highest odd divisor of k)^2 <= k.",
+    "comment": [
+        "Also k is included if (and only if) the greatest power of 2 dividing k is >= the highest odd divisor of k. All terms of the sequence are even besides the 1.",
+        "Equivalently, positive integers of the form k*2^m, where odd k <= 2^m. - _Thomas Ordowski_, Oct 19 2014",
+        "If we define a divisor d|n to be superior if d >= n/d, then superior divisors are counted by A038548 and listed by A161908. This sequence consists of 1 and all numbers without a superior odd divisor. - _Gus Wiseman_, Feb 18 2021",
+        "Numbers k such that A006519(k) >= A000265(k), with equality only when k = 1. - _Amiram Eldar_, Jan 24 2023"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A116882/b116882.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Hsien-Kuei Hwang, Svante Janson, and Tsung-Hsi Tsai, <a href=\"https://arxiv.org/abs/2210.10968\">Identities and periodic oscillations of divide-and-conquer recurrences splitting at half</a>, arXiv:2210.10968 [cs.DS], 2022, p. 38.",
+        "Milan Janjic and Boris Petkovic, <a href=\"http://arxiv.org/abs/1301.4550\">A Counting Function</a>, arXiv 1301.4550 [math.CO], 2013.",
+        "Amelia Carolina Sparavigna, <a href=\"https://doi.org/10.5281/zenodo.3339313\">Discussion of the groupoid of Proth numbers (OEIS A080075)</a>, Politecnico di Torino, Italy (2019)."
+    ],
+    "formula": [
+        "a(n) = A080075(n-1)-1. - _Klaus Brockhaus_, _Georgi Guninski_ and _M. F. Hasler_, Aug 16 2010",
+        "a(n) ~ n^2/2. - _Thomas Ordowski_, Oct 19 2014",
+        "Sum_{n>=1} 1/a(n) = 1 + (3/4) * Sum_{k>=1} H(2^k-1)/2^k = 2.3388865091..., where H(k) = A001008(k)/A002805(k) is the k-th harmonic number. - _Amiram Eldar_, Jan 24 2023"
+    ],
+    "example": [
+        "40 = 8 * 5, where 8 is highest power of 2 dividing 40 and 5 is the highest odd dividing 40. 8 is >= 5 (and, uncoincidently, 5^2 <= 40), so 40 is in the sequence."
+    ],
+    "mathematica": [
+        "f[n_] := Select[Divisors[n], OddQ[ # ] &][[ -1]]; Insert[Select[Range[2, 1500], 2^FactorInteger[ # ][[1]][[2]] > f[ # ] &], 1, 1] (* _Stefan Steinerberger_, Apr 10 2006 *)",
+        "q[n_] := 2^(2*IntegerExponent[n, 2]) >= n; Select[Range[1500], q] (* _Amiram Eldar_, Jan 24 2023 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = vecmax(select(x->((x % 2)==1), divisors(n)))^2 <= n; \\\\ _Michel Marcus_, Sep 06 2016",
+        "(PARI) isok(n) = 2^(valuation(n,2)*2) >= n \\\\ _Jeppe Stig Nielsen_, Feb 19 2019",
+        "(Python)",
+        "from itertools import count, islice",
+        "def A116882_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:(n&-n)**2>=n,count(max(startvalue,1)))",
+        "A116882_list = list(islice(A116882_gen(),20)) # _Chai Wah Wu_, May 17 2023"
+    ],
+    "xref": [
+        "Cf. A000265, A006519, A080075, A112714.",
+        "The complement is A116883.",
+        "Positions of zeros (and 1) in A341675.",
+        "A051283 = numbers without a superior prime-power divisor (zeros of A341593).",
+        "A059172 = numbers without a superior squarefree divisor (zeros of A341592).",
+        "A063539 = numbers without a superior prime divisor (zeros of A341591).",
+        "A333805 counts strictly inferior odd divisors.",
+        "A341594 counts strictly superior odd divisors.",
+        "- Inferior: A033676, A038548, A063962, A066839, A069288, A161906, A217581.",
+        "- Superior: A033677, A063538, A070038, A072500, A161908, A341676.",
+        "- Strictly Inferior: A056924, A060775, A070039, A333806, A341596, A341674.",
+        "- Strictly Superior: A056924, A064052/A048098, A140271, A238535, A341642, A341643, A341673.",
+        "Cf. A000005, A000203, A001248, A006530, A020639, A026804, A027193, A340101, A340854 (zeros of A340832), A001008, A002805."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Feb 24 2006",
+    "ext": [
+        "More terms from _Stefan Steinerberger_, Apr 10 2006"
+    ],
+    "references": 36,
+    "revision": 64,
+    "time": "2023-05-18T01:52:13-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

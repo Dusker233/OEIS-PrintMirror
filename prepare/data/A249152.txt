@@ -1,0 +1,52 @@
+{
+    "number": 249152,
+    "data": "0,0,2,2,10,10,16,16,40,40,50,50,74,74,88,88,152,152,170,170,210,210,232,232,304,304,330,330,386,386,416,416,576,576,610,610,682,682,720,720,840,840,882,882,970,970,1016,1016,1208,1208,1258,1258,1362,1362,1416,1416,1584,1584,1642,1642",
+    "name": "Exponent of 2 in the hyperfactorials: a(n) = A007814(A002109(n)).",
+    "comment": [
+        "This is the function ord_2(D*_n) listed in the leftmost column of Table 7.1 in Lagarias & Mehta 2014 paper (on page 19)."
+    ],
+    "link": [
+        "Jeffrey C. Lagarias and Harsh Mehta, <a href=\"http://arxiv.org/abs/1409.4145\">Products of binomial coefficients and unreduced Farey fractions</a>, arXiv:1409.4145 [math.NT], 2014.",
+        "Luca Onnis, <a href=\"https://arxiv.org/abs/2109.05616\">On the p-adic valuation of a hyperfactorial</a>, arXiv:2109.05616 [math.NT], 2021."
+    ],
+    "formula": [
+        "a(n) = 2 * A143157(floor(n/2)).",
+        "a(n) = A174605(n) + A187059(n). [Lagarias and Mehta theorem 4.1 for p=2]",
+        "a(n) = Sum_{i=1..n} i*v_2(i), where v_2(i) = A007814(i) is the exponent of the highest power of 2 dividing i. - _Ridouane Oudra_, Oct 17 2019",
+        "a(n) ~ (n^2+2n)/2 as n -> infinity. - _Luca Onnis_, Oct 17 2021",
+        "a(n) ~ ((A011371(n))^2)/2 as n -> infinity. - _Luca Onnis_, Nov 02 2021",
+        "From _Kevin Ryde_, Nov 03 2021: (Start)",
+        "a(2n) = a(2n+1) = 2*a(n) + n*(n+1).",
+        "a(n) = ( n^2 + Sum_{j=1..k} (e[j]-2*j+1) * 2^e[j] )/2, where binary expansion n = 2^e[1] + ... + 2^e[k] with ascending exponents e[1] < e[2] < ... < e[k] (A133457).",
+        "(End)",
+        "a(n) = Sum_{j=1..floor(log_2(n))} j*2^j*round(n/2^(j+1))^2, for n>=1. - _Ridouane Oudra_, Oct 01 2022"
+    ],
+    "maple": [
+        "with(padic): seq(add(i*ordp(i, 2), i=1..n), n=0..60); # _Ridouane Oudra_, Oct 17 2019"
+    ],
+    "mathematica": [
+        "Table[i=0;Hyperfactorial@n//.x_/;EvenQ@x:>(i++;x/2);i,{n,0,60}] (* _Giorgos Kalogeropoulos_, Oct 28 2021 *)"
+    ],
+    "program": [
+        "(Scheme, two alternative implementations)",
+        "(define (A249152 n) (A007814 (A002109 n)))",
+        "(define (A249152 n) (* 2 (A143157 (floor->exact (/ n 2)))))",
+        "(Magma) [0] cat [&+[i*Valuation(i, 2):i in [1..n]]:n in [1..60]]; // _Marius A. Burtea_, Oct 18 2019",
+        "(PARI) a(n) = sum(i=1, n, i*valuation(i, 2)); \\\\ _Michel Marcus_, Sep 14 2021",
+        "(PARI) a(n) = my(v=binary(n),t=0); forstep(j=#v,1,-1, if(v[j],v[j]=t--,t++)); (n^2 + fromdigits(v,2))>>1; \\\\ _Kevin Ryde_, Nov 03 2021",
+        "(Python)",
+        "def A249152(n): return sum(i*(~i&i-1).bit_length() for i in range(2,n+1,2)) # _Chai Wah Wu_, Jul 11 2022"
+    ],
+    "xref": [
+        "Bisection: A249153.",
+        "Cf. A174605, A187059, A002109, A007814, A091512, A143157.",
+        "Cf. A133457 (binary exponents)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Antti Karttunen_, Oct 25 2014",
+    "references": 6,
+    "revision": 56,
+    "time": "2022-10-04T08:40:07-04:00",
+    "created": "2014-10-31T20:48:11-04:00"
+}

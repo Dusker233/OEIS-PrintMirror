@@ -1,0 +1,55 @@
+{
+    "number": 292670,
+    "data": "1,6,14,26,40,53,73,114,144,161,188,210,250,279,329,482,544,577,611,656,697,752,847,906,947,973,1049,1113,1210,1284,1425,1986,2112,2177,2242,2326,2408,2473,2632,2748,2818,2886,3004,3125,3334,3390,3539,3661,3806,3870",
+    "name": "Least number of symbols required to fill a grid of size n^2 X n^2 row by row in the greedy way such that in no row or column or n X n square any symbol occurs twice.",
+    "comment": [
+        "Consider the symbols as positive integers. By the greedy way we mean to fill the grid row by row from left to right always with the least possible positive integer such that the three constraints (on rows, columns and rectangular blocks) are satisfied.",
+        "In contrast to the sudoku case, the n X n rectangles have \"floating\" borders, so the constraint is actually equivalent to say that any element must be different from all neighbors in a Moore neighborhood of range n-1 (having up to (2n-1)^2 grid points)."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/MooreNeighborhood.html\">Moore Neighborhood</a>."
+    ],
+    "example": [
+        "For n = 2, the 4 X 4 grid is filled as follows:",
+        "   [1 2 3 4]",
+        "   [3 4 1 2]",
+        "   [2 5 6 3]",
+        "   [4 1 2 5], whence a(2) = 6."
+    ],
+    "program": [
+        "(PARI) a(m,n=m^2,g=matrix(n,n))={my(ok(g,k,i,j,m)=if(m,ok(g[i,],k)&&ok(g[,j],k)&&ok(concat(Vec(g[max(1,i-m+1)..i,max(1,j-m+1)..min(#g,j+m-1)])),k),!setsearch(Set(g),k))); for(i=1,n,for(j=1,n,for(k=1,n^2,ok(g,k,i,j,m)&&(g[i,j]=k)&&break)));vecmax(g)} \\\\ without \"vecmax\" the program returns the full n^2 X n^2 board.",
+        "(Python)",
+        "def a(n):",
+        "    s, b = n*n, n # side length, block size",
+        "    m, S, N = 0, {1}, range(1, s+1)",
+        "    g = [[0 for j in range(s+b)] for i in range(s+b)]",
+        "    row, col = {i:set() for i in N}, {j:set() for j in N}",
+        "    offsets = [(i, j) for i in range(-b+1, 1) for j in range(-b+1, 1)]",
+        "    offsets += [(i, j) for i in range(-b+1, 0) for j in range(1, b)]",
+        "    for i in N:",
+        "        for j in N:",
+        "            rect = set(g[i+o[0]][j+o[1]] for o in offsets)",
+        "            e = min(S - row[i] - col[j] - rect)",
+        "            g[i][j] = e",
+        "            if e > m:",
+        "                m = e",
+        "                S.add(m+1)",
+        "            row[i].add(e)",
+        "            col[j].add(e)",
+        "    return m",
+        "print([a(n) for n in range(1, 13)]) # _Michael S. Branicky_, Apr 13 2023"
+    ],
+    "xref": [
+        "Cf. A292671: grid size independent of block size; A292672, ..., A292679: A(m,n) for fixed n=2,...,9)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_M. F. Hasler_, Sep 20 2017",
+    "ext": [
+        "a(9) and beyond from _Michael S. Branicky_, Apr 13 2023"
+    ],
+    "references": 9,
+    "revision": 15,
+    "time": "2023-04-13T12:11:23-04:00",
+    "created": "2017-09-21T15:34:36-04:00"
+}

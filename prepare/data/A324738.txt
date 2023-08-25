@@ -1,0 +1,64 @@
+{
+    "number": 324738,
+    "data": "1,2,3,5,8,13,26,42,72,120,232,376,752,1128,2256,4512,8256,13632,27264,42048,82944,158976,313344,497664,995328,1700352,3350016,5815296,11630592,17491968,34983936,56954880,108933120,210788352,418258944,804667392,1609334784",
+    "name": "Number of subsets of {1...n} containing no element > 1 whose prime indices all belong to the subset.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A324738/b324738.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "example": [
+        "The a(0) = 1 through a(6) = 26 subsets:",
+        "  {}  {}   {}   {}     {}     {}       {}",
+        "      {1}  {1}  {1}    {1}    {1}      {1}",
+        "           {2}  {2}    {2}    {2}      {2}",
+        "                {3}    {3}    {3}      {3}",
+        "                {1,3}  {4}    {4}      {4}",
+        "                       {1,3}  {5}      {5}",
+        "                       {2,4}  {1,3}    {6}",
+        "                       {3,4}  {1,5}    {1,3}",
+        "                              {2,4}    {1,5}",
+        "                              {2,5}    {1,6}",
+        "                              {3,4}    {2,4}",
+        "                              {4,5}    {2,5}",
+        "                              {2,4,5}  {2,6}",
+        "                                       {3,4}",
+        "                                       {3,6}",
+        "                                       {4,5}",
+        "                                       {4,6}",
+        "                                       {5,6}",
+        "                                       {1,3,6}",
+        "                                       {1,5,6}",
+        "                                       {2,4,5}",
+        "                                       {2,4,6}",
+        "                                       {2,5,6}",
+        "                                       {3,4,6}",
+        "                                       {4,5,6}",
+        "                                       {2,4,5,6}"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Subsets[Range[n]],!MemberQ[#,k_/;SubsetQ[#,PrimePi/@First/@FactorInteger[k]]]&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "pset(n)={my(b=0,f=factor(n)[,1]); sum(i=1, #f, 1<<(primepi(f[i])))}",
+        "a(n)={my(p=vector(n,k,if(k==1, 1, pset(k))), d=0); for(i=1, #p, d=bitor(d, p[i]));",
+        "((k,b)->if(k>#p, 1, my(t=self()(k+1,b)); if(bitnegimply(p[k], b), t+=if(bittest(d,k), self()(k+1, b+(1<<k)), t)); t))(1,0)} \\\\ _Andrew Howroyd_, Aug 16 2019"
+    ],
+    "xref": [
+        "The maximal case is A324744. The case of subsets of {2...n} is A324739. The strict integer partition version is A324749. The integer partition version is A324754. The Heinz number version is A324759. An infinite version is A324694.",
+        "Cf. A000720, A001221, A001462, A007097, A076078, A084422, A085945, A112798, A276625, A279861, A290689, A290822, A304360, A306844.",
+        "Cf. A324695, A324736, A324741, A324750, A324755, A324760."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Mar 13 2019",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Aug 16 2019"
+    ],
+    "references": 13,
+    "revision": 8,
+    "time": "2019-08-16T14:47:53-04:00",
+    "created": "2019-03-16T10:11:32-04:00"
+}

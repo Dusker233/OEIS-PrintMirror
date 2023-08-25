@@ -1,0 +1,55 @@
+{
+    "number": 226789,
+    "data": "10,21,26519722651971,33388573338856,69954026995401,80863378086336",
+    "name": "Triangular numbers obtained as the concatenation of n+1 and n.",
+    "comment": [
+        "There are only six terms less than 10^20."
+    ],
+    "example": [
+        "26519722651971 is the concatenation of 2651972 and 2651971 and a triangular number, because 26519722651971 = 7282818*7282819/2."
+    ],
+    "mathematica": [
+        "TriangularQ[n_] := IntegerQ[Sqrt[1 + 8*n]]; t = {}; Do[s = FromDigits[Join[IntegerDigits[n+1], IntegerDigits[n]]]; If[TriangularQ[s], AppendTo[t, s]], {n, 100000}]; t (* _T. D. Noe_, Jun 18 2013 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "concatint(a,b)=eval(concat(Str(a),Str(b)))",
+        "istriang(x)=issquare(8*x+1)",
+        "{for(n=1,10^7,a=concatint(n+1,n);if(istriang(a),print(a)))}",
+        "(Python)",
+        "from math import isqrt",
+        "def istri(n): t = 8*n+1; return isqrt(t)**2 == t",
+        "def afind(klimit, kstart=0):",
+        "    strk = \"0\"",
+        "    for k in range(kstart, klimit+1):",
+        "        strkp1 = str(k+1)",
+        "        t = int(strkp1 + strk)",
+        "        if istri(t):",
+        "            print(t, end=\", \")",
+        "        strk = strkp1",
+        "afind(81*10**5) # _Michael S. Branicky_, Oct 21 2021",
+        "(Python) # alternate version",
+        "def isconcat(n):",
+        "    if n < 10: return False",
+        "    s = str(n)",
+        "    mid = (len(s)+1)//2",
+        "    lft, rgt = int(s[:mid]), int(s[mid:])",
+        "    return lft - 1 == rgt",
+        "def afind(tlimit, tstart=0):",
+        "    for t in range(tstart, tlimit+1):",
+        "        trit = t*(t+1)//2",
+        "        if isconcat(trit):",
+        "            print(trit, end=\", \")",
+        "afind(13*10**6) # _Michael S. Branicky_, Oct 21 2021"
+    ],
+    "xref": [
+        "Cf. A003098, A068899, A226742, A226772, A226788."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Antonio Rold\u00e1n_, Jun 18 2013",
+    "references": 3,
+    "revision": 18,
+    "time": "2021-10-22T23:57:10-04:00",
+    "created": "2013-06-18T13:31:20-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 54371,
+    "data": "1,1,1,4,33,300,3412,40770,518043,6830545,92909684,1295151600,18426823044,266696759064,3916798516462,58253090490630,875948658280305,13299481192954961,203661940884670135,3142707632566279222,48829032430870168660,763383551090733489744",
+    "name": "Number of unlabeled 7-gonal cacti having n polygons.",
+    "comment": [
+        "Also, the number of noncrossing partitions up to rotation composed of n blocks of size 7."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A054371/b054371.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Miklos Bona, Michel Bousquet, Gilbert Labelle and Pierre Leroux, Enumeration of m-ary cacti, Advances in Applied Mathematics, 24 (2000), 22-56 (<a href=\"http://www.lacim.uqam.ca/~leroux/articles/cactus.pdf\">pdf</a>, <a href=\"http://www.math.ufl.edu/~bona/cactusJCTA.dvi\">dvi</a>).",
+        "<a href=\"/index/Ca#cacti\">Index entries for sequences related to cacti</a>"
+    ],
+    "formula": [
+        "a(n) = ((Sum_{d|n} phi(n/d)*binomial(7*d, d)) + (Sum_{d|gcd(n-1, 7)} phi(d)*binomial(7*n/d, (n-1)/d)))/(7*n) - binomial(7*n, n)/(6*n+1) for n > 0. - _Andrew Howroyd_, May 04 2018"
+    ],
+    "maple": [
+        "with(combinat): with(numtheory): m := 7: for p from 2 to 27 do s1 := 0: s2 := 0: for d from 1 to p do if p mod d = 0 then s1 := s1+phi(p/d)*binomial(m*d, d) fi: od: for d from 1 to p-1 do if gcd(m, p-1) mod d = 0 then s2 := s2+phi(d)*binomial((p*m)/d, (p-1)/d) fi: od: printf(`%d, `, (s1+s2)/(m*p)-binomial(m*p, p)/(p*(m-1)+1)) od: # _Zerinvary Lajos_, Dec 01 2006"
+    ],
+    "mathematica": [
+        "a[0] = 1;",
+        "a[n_] := (DivisorSum[n, EulerPhi[n/#] Binomial[7#, #]&] + DivisorSum[GCD[n - 1, 7], EulerPhi[#] Binomial[7n/#, (n-1)/#]&])/(7n) - Binomial[7n, n]/(6 n + 1);",
+        "Table[a[n], {n, 0, 21}] (* _Jean-Fran\u00e7ois Alcover_, Jul 01 2018, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI) a(n) = {if(n==0, 1, (sumdiv(n, d, eulerphi(n/d)*binomial(7*d, d)) + sumdiv(gcd(n-1, 7), d, eulerphi(d)*binomial(7*n/d, (n-1)/d)))/(7*n) - binomial(7*n, n)/(6*n+1))} \\\\ _Andrew Howroyd_, May 04 2018"
+    ],
+    "xref": [
+        "Column k=7 of A303694.",
+        "Cf. A054369, A054370."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Simon Plouffe_",
+    "ext": [
+        "More terms from _Zerinvary Lajos_, Dec 01 2006",
+        "Terms a(20) and beyond from _Andrew Howroyd_, May 04 2018"
+    ],
+    "references": 4,
+    "revision": 20,
+    "time": "2018-07-01T11:09:37-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 105017,
+    "data": "1,2,3,5,7,11,19,23,43,47,94,139,235,283,517,659,1081,1319,2209,2879,5758,8637,13301,20147,30337,49727,61993,103823,135313,247439,366683,606743,811879,1266767,1739761,2913671,3797401,5827343,8288641,16577282,22784407,37346483,58003213,81768767",
+    "name": "Positions of records in A064097.",
+    "comment": [
+        "With a(1) = 1, a(n) is the smallest number m such that the number of iterations of k -> k - k/p, p being any prime factor of k, needed to reach 1 starting at k = m is equal to n-1. (See Example section.) - _Jaroslav Krizek_, Feb 15 2010",
+        "a(n) =~ sqrt(e^(5n/6)). - _Robert G. Wilson v_, Aug 11 2022"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A105017/b105017.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Hugo Pfoertner, <a href=\"http://www.randomwalk.de/sequences/a064097.for\">Program</a>"
+    ],
+    "example": [
+        "a(6)=11 because m=11 requires 6-1 = 5 iterations of r -> r - (largest divisor d < r) to reach 1 (the 5 iterations are 11-1=10, 10-5=5, 5-1=4, 4-2=2, and 2-1=1) and 11 is the smallest such number m. - _Jaroslav Krizek_, Feb 15 2010"
+    ],
+    "maple": [
+        "A105017 := proc()",
+        "    local maxa,a ;",
+        "    maxa := -999 ;",
+        "    for n from 1 do",
+        "        a := A064097(n) ;",
+        "        if a > maxa then",
+        "            printf(\"%d\\n\",n) ;",
+        "            maxa :=a ;",
+        "        end if;",
+        "    end do:",
+        "end proc:",
+        "A105017() ; # _R. J. Mathar_, Aug 07 2022"
+    ],
+    "mathematica": [
+        "g[n_] := Block[{p = Select[1 + Divisors@n, PrimeQ]}, n*p/(p - 1)]; f[n_] := f[n] = Block[{lst = Union@Flatten[g@# & /@ f[n - 1]]}, If[ Length@ lst > 325, lst = Take[lst, 325 (* This limit must be increased for greater n's from the start. *) ]]; lst]; f[1] = {1}; f[0] = {0}; lst = {}; Do[ AppendTo[lst, Min[ f[n]]]; f[n - 1] =., {n, 44}]; lst (* _Robert G. Wilson v_, Aug 11 2022 *)"
+    ],
+    "program": [
+        "(PARI) a=vectorsmall(10^7); a[1]=0;",
+        "for(n=2,#a,if(isprime(n),a[n]=1+a[n-1],f=factor(n);a[n]=a[f[1,1]]+a[n/f[1,1]])); \\\\ computes A064097",
+        "r=-oo; for(k=1,#a,if(a[k]>r,print1(k,\", \");r=a[k])); \\\\ _Hugo Pfoertner_, Mar 16 2020"
+    ],
+    "xref": [
+        "Cf. A000079, A064097, A067513, A175125."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Hugo Pfoertner_, Feb 17 2006",
+    "ext": [
+        "a(1)=1 inserted by _Robert G. Wilson v_, Mar 16 2020"
+    ],
+    "references": 9,
+    "revision": 81,
+    "time": "2022-08-12T11:37:02-04:00",
+    "created": "2005-04-09T03:00:00-04:00"
+}

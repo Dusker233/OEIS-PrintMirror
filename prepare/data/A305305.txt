@@ -1,0 +1,42 @@
+{
+    "number": 305305,
+    "data": "1,1,5,32,292,3174,42758,659028,11725656,233646240,5183599152,126353158656,3362529785712,96896454983184,3007687250735568,100017757744279584,3547903924884082176,133715849506895518848,5336112511923188151168,224772952826373341478912,9966476790792153522756864",
+    "name": "Expansion of e.g.f. 1/(1 - Sum_{k>=1} x^k/(k*(1 - x^k))).",
+    "comment": [
+        "a(n)/n! is the invert transform of [1, 3/2, 4/3, 7/4, 6/5, ... = sums of reciprocals of divisors of 1, 2, 3, 4, 5, ...]."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A305305/b305305.txt\">Table of n, a(n) for n = 0..397</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "E.g.f.: 1/(1 - Sum_{k>=1} (sigma(k)/k)*x^k), where sigma() = A000203.",
+        "E.g.f.: 1/(1 - Sum_{k>=1} (A017665(k)/A017666(k))*x^k).",
+        "E.g.f.: 1/(1 - log(f(x))), where f(x) = o.g.f. for A000041, Product_{k>=1} 1/(1 - x^k)."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 5*x^2/2! + 32*x^3/3! + 292*x^4/4! + 3174*x^5/5! + 42758*x^6/6! + ..."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1, add(add(",
+        "      1/d, d=numtheory[divisors](j))*b(n-j), j=1..n))",
+        "    end:",
+        "a:= n-> b(n)*n!:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, May 29 2018"
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[1/(1 - Sum[x^k/(k (1 - x^k)), {k, 1, nmax}]), {x, 0, nmax}], x] Range[0, nmax]!",
+        "nmax = 20; CoefficientList[Series[1/(1 - Sum[DivisorSigma[-1, k] x^k, {k, 1, nmax}]), {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[0] = 1; a[n_] := a[n] = Sum[DivisorSigma[-1, k] a[n - k], {k, 1, n}]; Table[n! a[n], {n, 0, 20}]"
+    ],
+    "xref": [
+        "Cf. A000041, A000203, A017665, A017666, A038048, A180305."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, May 29 2018",
+    "references": 2,
+    "revision": 8,
+    "time": "2018-06-09T01:54:33-04:00",
+    "created": "2018-05-29T20:39:24-04:00"
+}

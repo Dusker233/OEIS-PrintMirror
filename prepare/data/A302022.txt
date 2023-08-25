@@ -1,0 +1,36 @@
+{
+    "number": 302022,
+    "data": "6,15,20,28,35,63,77,88,91,99,104,110,117,130,143,153,170,187,190,209,221,238,247,266,272,299,304,322,323,325,357,368,391,399,425,437,464,475,483,493,496,506,513,527,551,575,589,609,621,638,651,667,682,703,713,725,754,759,775,777,783,806,814",
+    "name": "Primitive terms from A005279.",
+    "comment": [
+        "Also numbers k such that k is in A005279 but none of the proper divisors of k are.",
+        "All terms k are composites; if k is prime then it's not in A005279 hence not here. If k = m * t and t < m < 2*t then m and t are coprime. If g = gcd(t, m) > 1 then the integer k / g^2 is in A005279. If there is some term u*t where with u > 2*t and gcd(u, t) = 1 then there is some m * t' with gcd(m, t') = 1 such that m*t' | t * u and t * u wouldn't be in the sequence. if u = 2*t then gcd(u, t) = t which can't happen.",
+        "It could be that both m and t are composite, for example, t = 53^2 and m = 5^5 gives the term 53^2 * 5^5.",
+        "Interestingly, k = m * t where t < m < 2 * t and m * t is in A005279 and m, t coprime gives A106430; this sequence is a subsequence of A106430."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A302022/b302022.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "A301989(a(n)) = 1."
+    ],
+    "example": [
+        "77 is a term since it is in A005279 and 77 is not of the form A005279(i)*t for t > 1."
+    ],
+    "program": [
+        "(PARI) is005279(n) = my(d=divisors(n)); for(i=3, #d, if(d[i]<2*d[i-1], return(1))); 0;",
+        "is(n) = if (is005279(n), d = divisors(n); for (k=1, #d-1, if (is005279(d[k]), return (0));); return(1);); \\\\ _Altug Alkan_, Apr 14 2018",
+        "upto(n) = {my(res = List()); for(i = 2, sqrtint(n), for(j = i+1, min(2 * i - 1, n\\i), if(gcd(i, j) == 1, if(is(i*j), listput(res, i*j))))); listsort(res); return(res)} \\\\ _David A. Corneth_, Apr 15 2018"
+    ],
+    "xref": [
+        "Subsequence of A020886 and hence of A005279.",
+        "Cf. A106430, A301989, A302296."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David A. Corneth_, Mar 31 2018",
+    "references": 3,
+    "revision": 48,
+    "time": "2023-02-03T11:32:22-05:00",
+    "created": "2018-04-15T14:19:10-04:00"
+}

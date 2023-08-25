@@ -1,0 +1,56 @@
+{
+    "number": 318006,
+    "data": "1,2,6,40,360,4592,70896,1279360,26497920,619457792,16166151936,466022394880,14708199367680,504453778491392,18681868054910976,742996971891097600,31583887537425776640,1429076863804079931392,68575244394079858262016,3478457209493103235563520,185971933231431479545036800",
+    "name": "E.g.f. A(x) satisfies: cos(A(x)) + sin(A(x)) = 1/( cos(A(-x)) + sin(A(-x)) ).",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A318006/b318006.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A(-A(-x)) = x.",
+        "(2a) 1 = Sum_{n>=0} (-1)^floor(n/2) * ( A(x) - (-1)^n*A(-x) )^n/n!.",
+        "(2b) 1 = Sum_{n>=0} (-1)^floor(n/2) * ( A(A(x)) + (-1)^n*x )^n/n!.",
+        "(3a) 1 = cos( A(x) - A(-x) ) + sin( A(x) + A(-x) ).",
+        "(3b) 1 = ( cos(A(x)) + sin(A(x)) ) * ( cos(A(-x)) + sin(A(-x)) ).",
+        "(4a) 1 = cos(A(A(x)) + x) + sin(A(A(x)) - x).",
+        "(4b) 1 = ( cos(A(A(x))) + sin(A(A(x))) ) * (cos(x) - sin(x)).",
+        "(5a) A(x) = arcsin( 2*sin(2*x)/(2 - sin(2*x)) )/2.",
+        "(5b) A(A(x)) = arcsin( sin(2*x)/(1 - sin(2*x)) )/2, which is the e.g.f. of A318005.",
+        "(6) cos(A(x)) + sin(A(x)) = sqrt( (2 + sin(2*x))/(2 - sin(2*x)) ).",
+        "a(n) ~ sqrt(3) * 5^(1/4) * 2^(n-2) * n^(n-1) / (exp(n) * (arcsin(2/3))^(n - 1/2)). - _Vaclav Kotesovec_, Aug 28 2018"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 6*x^3/3! + 40*x^4/4! + 360*x^5/5! + 4592*x^6/6! + 70896*x^7/7! + 1279360*x^8/8! + 26497920*x^9/9! + 619457792*x^10/10! + ...",
+        "such that",
+        "cos(A(x)) + sin(A(x)) = 1/( cos(A(-x)) + sin(A(-x)) )",
+        "and",
+        "sin(2*A(x)) = 2*sin(2*x)/(2 - sin(2*x)) = 2*sin(A(x))*cos(A(x)).",
+        "RELATED SERIES.",
+        "(a) A(A(x)) = x + 4*x^2/2! + 24*x^3/3! + 224*x^4/4! + 2880*x^5/5! + 48064*x^6/6! + 989184*x^7/7! + 24218624*x^8/8! + ... + A318005(n)*x^n/n! + ...",
+        "where A(A(x)) = arcsin( 2*sin(2*x)/(2 - sin(2*x)) ) /2.",
+        "(b) cos(A(x)) + sin(A(x)) = 1/(cos(A(-x)) - sin(A(-x))) = 1 + x + x^2/2! - x^3/3! - 7*x^4/4! - 59*x^5/5! - 239*x^6/6! - 421*x^7/7! + 4913*x^8/8! + 108361*x^9/9! + 1000321*x^10/10! + ...",
+        "where cos(A(x)) + sin(A(x)) = sqrt( (2 + sin(2*x))/(2 - sin(2*x)) )."
+    ],
+    "mathematica": [
+        "nmax = 25; Rest[CoefficientList[Series[ArcSin[4/(2 - Sin[2*x]) - 2]/2, {x, 0, nmax}], x] * Range[0, nmax]!] (* _Vaclav Kotesovec_, Aug 28 2018 *)"
+    ],
+    "program": [
+        "(PARI) /* A(x) = arcsin( 2*sin(2*x)/(2 - sin(2*x)) )/2 */",
+        "{a(n) = my(A = asin( 2*sin(2*x +x*O(x^n))/(2 - sin(2*x +x*O(x^n))) )/2 ); n!*polcoeff(A,n)}",
+        "for(n=1,25, print1(a(n),\", \"))",
+        "(PARI) /* From 1 = cos(A(A(x)) + x) + sin(A(A(x)) - x) */",
+        "{a(n) = my(A=[1,1]); for(i=1, n, A = concat(A,0);",
+        "A[#A] = -Vec(cos(subst(x*Ser(A),x,x*Ser(A)) + x) + sin(subst(x*Ser(A),x,x*Ser(A)) - x))[#A+1]/2; ); n!*A[n]}",
+        "for(n=1, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A318005, A318001, A200560."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Aug 27 2018",
+    "references": 3,
+    "revision": 14,
+    "time": "2018-08-28T12:45:18-04:00",
+    "created": "2018-08-27T12:21:34-04:00"
+}

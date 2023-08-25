@@ -1,0 +1,69 @@
+{
+    "number": 336417,
+    "data": "1,1,2,5,15,44,169,652,3106,15286,89933,532476,3698650,25749335,204947216,1636097441,14693641859,132055603656,1319433514898,13186485900967,144978145009105,1594375302986404,19128405558986057,229508085926717076,2983342885319348522",
+    "name": "Number of perfect-power divisors of superprimorials A006939.",
+    "comment": [
+        "A number is a perfect power iff it is 1 or its prime exponents (signature) are not relatively prime.",
+        "The n-th superprimorial number is A006939(n) = Product_{i = 1..n} prime(i)^(n - i + 1)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A336417/b336417.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = A091050(A006939(n)).",
+        "a(n) = 1 + Sum_{k=2..n} mu(k)*(1 - Product_{i=1..n} 1 + floor(i/k)). - _Andrew Howroyd_, Aug 30 2020"
+    ],
+    "example": [
+        "The a(0) = 1 through a(4) = 15 divisors:",
+        "  1  2  12  360  75600",
+        "-------------------------",
+        "  1  1   1    1      1",
+        "         4    4      4",
+        "              8      8",
+        "              9      9",
+        "             36     16",
+        "                    25",
+        "                    27",
+        "                    36",
+        "                   100",
+        "                   144",
+        "                   216",
+        "                   225",
+        "                   400",
+        "                   900",
+        "                  3600"
+    ],
+    "mathematica": [
+        "chern[n_]:=Product[Prime[i]^(n-i+1),{i,n}];",
+        "perpouQ[n_]:=Or[n==1,GCD@@FactorInteger[n][[All,2]]>1];",
+        "Table[Length[Select[Divisors[chern[n]],perpouQ]],{n,0,5}]"
+    ],
+    "program": [
+        "(PARI) a(n) = {1 + sum(k=2, n, moebius(k)*(1 - prod(i=1, n, 1 + i\\k)))} \\\\ _Andrew Howroyd_, Aug 30 2020"
+    ],
+    "xref": [
+        "A000325 is the uniform version.",
+        "A076954 can be used instead of A006939.",
+        "A336416 gives the same for factorials instead of superprimorials.",
+        "A000217 counts prime power divisors of superprimorials.",
+        "A000961 gives prime powers.",
+        "A001597 gives perfect powers, with complement A007916.",
+        "A006939 gives superprimorials or Chernoff numbers.",
+        "A022915 counts permutations of prime indices of superprimorials.",
+        "A091050 counts perfect power divisors.",
+        "A181818 gives products of superprimorials.",
+        "A294068 counts factorizations using perfect powers.",
+        "A317829 counts factorizations of superprimorials.",
+        "Cf. A000005, A027423, A090630, A118914, A124010, A203025, A251753, A327527, A336419, A336420, A336421, A336426."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jul 24 2020",
+    "ext": [
+        "Terms a(10) and beyond from _Andrew Howroyd_, Aug 30 2020"
+    ],
+    "references": 13,
+    "revision": 14,
+    "time": "2020-08-30T20:20:43-04:00",
+    "created": "2020-08-11T01:47:30-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 362566,
+    "data": "0,1,2,6,15,42,77,180,345,806,1457,3276,5985,13462,24257,54060,97665,217686,391937,871596,1570305,3492182,6286337,13972140,25155585,55911766,100642817,223660716,402612225,894735702,1610530817,3578997420,6442287105,14316361046",
+    "name": "a(n) is the area of the smallest rectangle that the Harter-Heighway Dragon Curve will fit in after n doublings, starting with a segment of length 1.",
+    "comment": [
+        "When constructing this sequence, the rectangles that are considered are those whose sides are parallel to the corresponding links of the dragon curve."
+    ],
+    "link": [
+        "Nicolay Avilov, <a href=\"/A362566/a362566.jpg\">Illustration of initial terms</a>.",
+        "<a href=\"/index/Rec#order_09\">Index entries for linear recurrences with constant coefficients</a>, signature (1,3,-3,8,-8,-12,12,-16,16)"
+    ],
+    "formula": [
+        "From _Andrey Zabolotskiy_, _Joerg Arndt_ and _Kevin Ryde_, May 03 2023: (Start)",
+        "G.f.: x * (1 + x + x^2 + 6*x^3 + 7*x^4 + 2*x^6) / ((1 - x) * (1 - 2*x) * (1 + 2*x) * (1 + x^2) * (1 - 2*x^2) * (1 + 2*x^2)).",
+        "a(n) =",
+        "  (3*2^n -  5*2^(n/2)     + 2) / 2 for n == 0 (mod 2),",
+        "  (5*2^n -  9*2^((n-1)/2) + 2) / 3 for n == 1 (mod 4),",
+        "  (5*2^n - 13*2^((n-1)/2) + 4) / 3 for n == 3 (mod 4). (End)"
+    ],
+    "example": [
+        "See link:",
+        "a(3) = 2*3 = 6;",
+        "a(4) = 3*5 = 15;",
+        "a(5) = 6*7 = 42."
+    ],
+    "program": [
+        "(Python)",
+        "x1, x2, y1, y2, ex, ey, a = 0, 1, 0, 0, 1, 0, [0]",
+        "for n in range(40):",
+        "    ex, ey = ex-ey, ey+ex",
+        "    x1r, x2r, y1r, y2r = y1+ex, y2+ex, -x2+ey, -x1+ey",
+        "    x1, x2, y1, y2 = min(x1, x1r), max(x2, x2r), min(y1, y1r), max(y2, y2r)",
+        "    a.append((x2-x1)*(y2-y1))",
+        "print(a) # _Andrey Zabolotskiy_, May 03 2023"
+    ],
+    "xref": [
+        "Cf. A014577, A341029."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Nicolay Avilov_, Apr 25 2023",
+    "ext": [
+        "Terms a(16) and beyond and a(0)=0 from _Andrey Zabolotskiy_, Apr 27 2023"
+    ],
+    "references": 2,
+    "revision": 29,
+    "time": "2023-05-04T06:40:14-04:00",
+    "created": "2023-04-25T14:21:06-04:00"
+}

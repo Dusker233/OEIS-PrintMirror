@@ -1,0 +1,55 @@
+{
+    "number": 229206,
+    "data": "2,31,59,79,1117,1303,1733,1913,2347,2963,3169,3769,41017,43003,47017,53069,59053,61027,67043,71119,73079,79147,83117,89113,97151,101117,103099,107197,109159,113147,127247,131231,137251,139303,149239,151247,157219,163337",
+    "name": "n-th prime that begins with prime(n).",
+    "comment": [
+        "Diagonal of triangle A114009."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A229206/b229206.txt\">Table of n, a(n) for n = 1..4000</a>"
+    ],
+    "maple": [
+        "f:= proc(n) local p,q,d,count,i;",
+        "  p:= ithprime(n); count:= 1;",
+        "  for d from 1 do",
+        "    q:= 10^d*p;",
+        "    for i from count do",
+        "      q:= nextprime(q);",
+        "      if q > 10^d*(p+1) then break fi;",
+        "      count:= count+1;",
+        "      if count = n then return q fi;",
+        "  od od;",
+        "end proc:",
+        "f(1):= 2:",
+        "map(f, [$1..100]); # _Robert Israel_, Jan 19 2023"
+    ],
+    "program": [
+        "(PARI) ok(np, dfp) = {dnp = digits(np); xdnp = vector(#dfp, id, dnp[id]); xdnp == dfp;}",
+        "findnextp(p, dfp) = {np = nextprime(p+1); while (! ok(np, dfp), np = nextprime(np+1)); np;}",
+        "a(n) = {p = fp = prime(n); dfp = digits(fp); for (k = 2, n, p = findnextp(p, dfp);); p;} \\\\ _Michel Marcus_, Sep 16 2013",
+        "(Python)",
+        "from itertools import count",
+        "from sympy import isprime, prime",
+        "def a(n):",
+        "    if n == 1: return 2",
+        "    pn, c = prime(n), 1",
+        "    for d in count(1):",
+        "        pow10 = 10**d",
+        "        base = pn * pow10",
+        "        for i in range(1, pow10, 2):",
+        "            t = base + i",
+        "            if isprime(t): c += 1",
+        "            if c == n: return t",
+        "print([a(n) for n in range(1, 41)]) # _Michael S. Branicky_, Jan 19 2023"
+    ],
+    "xref": [
+        "Cf. A114009."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Sep 16 2013",
+    "references": 1,
+    "revision": 14,
+    "time": "2023-01-19T11:04:39-05:00",
+    "created": "2013-09-16T13:42:21-04:00"
+}

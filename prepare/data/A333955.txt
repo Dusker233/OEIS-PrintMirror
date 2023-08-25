@@ -1,0 +1,39 @@
+{
+    "number": 333955,
+    "data": "2,3,5,7,26,34,35,37,57,223,278,279,299,355,359,367,369,389,447,469,557,579,666,999,2247,2269,2337,2339,2349,2366,2699,2799,3335,3336,3338,3346,3357,3399,3499,3669,3679,3889,3999,4689,4788,5579,5777,6668,22227,22239,22336",
+    "name": "Numbers k with digits in nondecreasing order and each digit greater than 1 such that the iterated product of digits of k is a prime.",
+    "comment": [
+        "Primitive sequence of A028843. If k is in this sequence, then one can concatenate as many 1s as one likes, and/or permute the digits, to get terms of A028843 that are not in this sequence. For example, from 35 in this sequence, we can obtain 135, 1135, 11135, ... as well as 153, 315, 351, 1153, 1315, 1351, 1513, 1531, etc."
+    ],
+    "example": [
+        "For 35, we have 3 * 5 = 15 and then 1 * 5 = 5, which is a prime. Furthermore, the digits of 35 are nondecreasing and all digits of 35 are greater than 1, so 35 is in the sequence.",
+        "Likewise with 37, we see that 3 * 7 = 21 and 2 * 1 = 2, which is prime, and 3 < 7, so 37 is also in the sequence. The numbers 137, 1137, 11137, etc., are in A028843 but are not in this sequence of account of containing the digit 1.",
+        "With 43, we confirm that 4 * 3 = 12 and 1 * 2 = 2, which is prime, but 4 > 3, so 43 is not in the sequence."
+    ],
+    "mathematica": [
+        "Select[Range[25000], Min[(d = IntegerDigits[#])] > 1 && (Length[d] < 2 || Min @ Differences[d] > -1) && PrimeQ[FixedPoint[IntegerDigits @ (Times @@ #)&, d][[1]]] &] (* _Amiram Eldar_, Apr 14 2020 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = my(d=digits(n), v); if(d!=(v=vecsort(d))||v[1]<2, return(0)); while(n>=10, n=vecprod(digits(n))); isprime(n)",
+        "(Scala) def hasDigitsSorted(n: Int): Boolean = {",
+        "  val digSort = Integer.parseInt(n.toString.toCharArray.sorted.mkString)",
+        "  n == digSort",
+        "}",
+        "def iterDigitProd(n: Int): Int = n.toString.length match {",
+        "  case 1 => n",
+        "  case _ => iterDigitProd(n.toString.toCharArray.map(_ - 48).scanRight(1)(_ * _).head)",
+        "}",
+        "val prelim = (1 to 20000).filter(hasDigitsSorted(_)).filter(n => List(2, 3, 5, 7).contains(iterDigitProd(n)))",
+        "prelim.filter(!_.toString.startsWith(\"1\")) // _Alonso del Arte_, Apr 20 2020"
+    ],
+    "xref": [
+        "Cf. A002473, A003001, A009994, A028843."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_David A. Corneth_, Apr 11 2020",
+    "references": 2,
+    "revision": 21,
+    "time": "2020-04-23T23:04:40-04:00",
+    "created": "2020-04-23T23:04:40-04:00"
+}

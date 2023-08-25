@@ -1,0 +1,41 @@
+{
+    "number": 304778,
+    "data": "1,1,1,1,2,2,4,6,9,15,23,38,62,100,163,267,441,725,1198,1986,3291,5472,9116,15204,25399,42494,71183,119396,200507,337090,567318,955749,1611672,2720212,4595198,7768975,13145109,22258264,37716358,63953853,108515011",
+    "name": "Number of Carlitz compositions c of n such that the sequence of ascents and descents of c forms a Dyck path.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A304778/b304778.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * d^n / n^(3/2), where d = A241902 = 1.7502412917183090312497386246... and c = 7.0142545527132612683043468956... - _Vaclav Kotesovec_, May 22 2018"
+    ],
+    "example": [
+        "a(6) = 4: 132, 141, 231, 6.",
+        "a(7) = 6: 12121, 142, 151, 232, 241, 7.",
+        "a(8) = 9: 12131, 13121, 143, 152, 161, 242, 251, 341, 8.",
+        "a(9) = 15: 12132, 12141, 12321, 13131, 14121, 153, 162, 171, 23121, 243, 252, 261, 342, 351, 9."
+    ],
+    "maple": [
+        "b:= proc(n, l, c) option remember; `if`(c<0 and l>0, 0,",
+        "      `if`(n=0, `if`(l<0 or c=0, 1, 0), add(`if`(i=l, 0,",
+        "       b(n-i, i, c+`if`(i>l, 1, -1))), i=1..n)))",
+        "    end:",
+        "a:= n-> b(n, -1$2):",
+        "seq(a(n), n=0..50);"
+    ],
+    "mathematica": [
+        "b[n_, l_, c_] := b[n, l, c] = If[c<0 && l>0, 0, If[n==0, If[l<0 || c==0, 1, 0], Sum[If[i==l, 0, b[n-i, i, c + If[i>l, 1, -1]]], {i, 1, n}]]];",
+        "a[n_] := b[n, -1, -1];",
+        "Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, May 31 2018, from Maple *)"
+    ],
+    "xref": [
+        "Cf. A003242, A303287, A304777."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Alois P. Heinz_, May 18 2018",
+    "references": 3,
+    "revision": 15,
+    "time": "2018-05-31T13:10:46-04:00",
+    "created": "2018-05-21T21:12:20-04:00"
+}

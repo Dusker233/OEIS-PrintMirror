@@ -1,0 +1,31 @@
+{
+    "number": 322400,
+    "data": "3,5,7,9,11,17,19,21,23,25,27,31,41,49,53,57,59,63,67,81,83,97,103,109,115,121,125,127,131,133,147,157,159,171,179,189,191,211,227,241,243,277,283,289,311,331,343,353,361,367,371,377,393,399,401,419,431",
+    "name": "Heinz numbers of integer partitions with vertex-connectivity 1.",
+    "comment": [
+        "The Heinz number of an integer partition (y_1, ..., y_k) is prime(y_1) * ... * prime(y_k).",
+        "The vertex-connectivity of an integer partition is the minimum number of primes that must be divided out (and any parts then equal to 1 removed) so that the prime factorizations of the remaining parts form a disconnected (or empty) hypergraph."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/K-vertex-connected_graph\">k-vertex-connected graph</a>"
+    ],
+    "example": [
+        "The sequence of all integer partitions with vertex-connectivity 1 begins: (2), (3), (4), (2,2), (5), (7), (8), (4,2), (9), (3,3), (2,2,2), (11), (13), (4,4), (16), (8,2), (17), (4,2,2), (19), (2,2,2,2), (23), (25), (27), (29), (9,3), (5,5), (3,3,3), (31), (32), (8,4), (4,4,2), (37), (16,2), (8,2,2), (41), (4,2,2,2), (43)."
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "vertConn[y_]:=If[Length[csm[primeMS/@y]]!=1,0,Min@@Length/@Select[Subsets[Union@@primeMS/@y],Function[del,Length[csm[DeleteCases[DeleteCases[primeMS/@y,Alternatives@@del,{2}],{}]]]!=1]]];",
+        "Select[Range[100],vertConn[primeMS[#]]==1&]"
+    ],
+    "xref": [
+        "Cf. A003963, A013922, A056239, A112798, A302242, A304716, A305078, A305079, A322387, A322388, A322389, A322390, A322390, A322394."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Dec 06 2018",
+    "references": 2,
+    "revision": 5,
+    "time": "2018-12-06T16:36:36-05:00",
+    "created": "2018-12-06T16:36:36-05:00"
+}

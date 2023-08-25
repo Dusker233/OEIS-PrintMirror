@@ -1,0 +1,37 @@
+{
+    "number": 357398,
+    "data": "1,1,3,37,1083,53701,3934443,395502997,51998075643,8643190760101,1770707733052683,438247927304923957,128926370847248904603,44477192002157773868101,17787359321176954021105323,8164879801560415752441320917,4264616618784184682736855291963",
+    "name": "a(n) = coefficient of x^n/n!, n >= 0, in A(x) such that: 0 = Sum_{n>=1} exp(-n^2*x) * (exp(n*x) - A(x))^n.",
+    "comment": [
+        "All terms appear to be odd.",
+        "Conjecture: after initial term, sequence modulo 10 has period 4: [1,3,7,3] repeating."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A357398/b357398.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 3*x^2/2! + 37*x^3/3! + 1083*x^4/4! + 53701*x^5/5! + 3934443*x^6/6! + 395502997*x^7/7! + 51998075643*x^8/8! + 8643190760101*x^9/9! + 1770707733052683*x^10/10! + ...",
+        "where",
+        "0 = exp(-x)*(exp(x) - A(x)) + exp(-4*x)*(exp(2*x) - A(x))^2 + exp(-9*x)*(exp(3*x) - A(x))^3 + exp(-16*x)*(exp(4*x) - A(x))^4 + exp(-25*x)*(exp(5*x) - A(x))^5 + ... + exp(-n^2*x) * (exp(x)^n - A(x))^n + ...",
+        "equivalently,",
+        "0 = (1 - exp(-x)*A(x)) + (1 - exp(-2*x)*A(x))^2 + (1 - exp(-3*x)*A(x))^3 + (1 - exp(-4*x)*A(x))^4 + (1 - exp(-5*x)*A(x))^5 + ... + (1 - exp(-n*x)*A(x))^n + ...",
+        "RELATED SERIES.",
+        "log(A(x)) = x + 2*x^2/2! + 30*x^3/3! + 938*x^4/4! + 48030*x^5/5! + 3590522*x^6/6! + 366038190*x^7/7! + 48627434858*x^8/8! + 8147891495550*x^9/9! + 1679856055853402*x^10/10! + ...",
+        "Conjecture: after initial term, the coefficients of log(A(x)) modulo 10 has period 4: [2,0,8,0] repeating."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1]); for(i=1,n, A=concat(A,0);",
+        "A[#A] = polcoeff( sum(m=1,#A-1, (1 - Ser(A)*exp(-m*x +x*O(x^#A)))^m ),#A-1) ); n!*A[n+1]}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A357397."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Oct 20 2022",
+    "references": 2,
+    "revision": 13,
+    "time": "2022-12-03T12:05:27-05:00",
+    "created": "2022-10-21T10:06:38-04:00"
+}

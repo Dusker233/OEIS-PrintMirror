@@ -1,0 +1,39 @@
+{
+    "number": 248078,
+    "data": "1,3,9,27,50,55,90,99,198,288,434,493,617,673,815,869,1324,1358,1495,1694,1930,1943,2068,2084,2098,2117,2142,2167,2267,2452,2545,2761,2861,2974,3500,3508,3524,3658,4400,4408,4424,4566,5307,5322,5394,5955,7104,7116",
+    "name": "a(1) = 1; a(n+1) = a(n) + product of digits of a(n) + sum of digits of a(n).",
+    "comment": [
+        "Unlike A063108, this sequence includes in its formula the digit 0 in the product of digits of a(n)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A248078/b248078.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Given a(5)=50, then a(6)=50+(5+0)+(5*0)=55."
+    ],
+    "maple": [
+        "f:= proc(x) local L;",
+        "  L:= convert(x,base,10);",
+        "  x + convert(L,`+`)+convert(L,`*`)",
+        "end proc:",
+        "A[1]:= 1:",
+        "for n from 2 to 100 do A[n]:= f(A[n-1]) od:",
+        "seq(A[i],i=1..100); # _Robert Israel_, Jun 25 2019"
+    ],
+    "mathematica": [
+        "NestList[#+Total[IntegerDigits[#]]+Times@@IntegerDigits[#]&,1,50] (* _Harvey P. Dale_, Sep 11 2019 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {prev = 1; print1(prev, \", \"); for (n=1, nn, d = digits(prev); prev += sumdigits(prev) + prod(k=1, #d, d[k]); print1(prev, \", \"););} \\\\ _Michel Marcus_, Oct 01 2014"
+    ],
+    "xref": [
+        "Cf. A063108, A004207."
+    ],
+    "keyword": "nonn,base,easy,look",
+    "offset": "1,2",
+    "author": "_Gil Broussard_, Sep 30 2014",
+    "references": 1,
+    "revision": 20,
+    "time": "2019-09-11T20:26:24-04:00",
+    "created": "2014-10-04T10:16:01-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 323085,
+    "data": "4,14,8567,16499,151211,344891,418831,585197,1049882,1186582,1671029,2503966,2989387,4802311,8291795,9769711,11420129,13279957,13677063,15356513,16258813,24318863,26874293,39317497,42862751",
+    "name": "Semiprimes that are the sum of the first k terms of A092190 for some k.",
+    "comment": [
+        "If we call the semiprime numbers A001358 level 1, and A092190 level 2, then this sequence is level 3."
+    ],
+    "link": [
+        "Wilmer Emiro Castrillon Calderon, <a href=\"/A323085/b323085.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "example": [
+        "a(2) = 14 = Sum_{i=1..2} A092190(i).",
+        "a(3) = 8567 = Sum_{i=1..13} A092190(i)."
+    ],
+    "mathematica": [
+        "f[w_] := Select[Most@ NestWhile[Append[#1, {#2, #2 + #1[[-1, -1]]}] & @@ {#, w[[Length@ # + 1]]} &, {{#, #}} &@ First[w], #[[-1, -1]] <= Max@ w &][[All, -1]], PrimeOmega@ # == 2 &]; Block[{s = Select[Range[10^6], PrimeOmega@ # == 2 &], t}, f@ f@ s] (* _Michael De Vlieger_, Jan 04 2019 *)"
+    ],
+    "program": [
+        "(C++) typedef unsigned long long int ulli;",
+        "void Level3(){  vector<ulli>::iterator low;  ulli acum = 0;",
+        "    for(int i = 0; i < level2.size(); i++){",
+        "        acum += level2[i];",
+        "        low=lower_bound (semiprimes.begin(), semiprimes.end(), acum);",
+        "        if(semiprimes[low - semiprimes.begin()] == acum){",
+        "            printf(\"%llu\\n\", acum);",
+        "} } } //where level2 is a vector with A092190."
+    ],
+    "xref": [
+        "Cf. A001358, A092190."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Wilmer Emiro Castrillon Calderon_, Jan 03 2019",
+    "references": 1,
+    "revision": 17,
+    "time": "2019-01-28T13:57:43-05:00",
+    "created": "2019-01-26T09:43:17-05:00"
+}

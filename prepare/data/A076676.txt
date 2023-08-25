@@ -1,0 +1,42 @@
+{
+    "number": 76676,
+    "data": "11,60,63,84,112,180,189,252,275,660,693,924,1232,1326,1768,1974,2632,4026,5368,6405,8200,8319,11092,11715,15620,16401,19720,20706,20880,20910,24752,24960,25300,26565,29716,29835,33048,35055,41496,42997",
+    "name": "Smallest a(n)>a(n-1) such that a(n)^2+a(n-1)^2 is a perfect square, a(1)=11.",
+    "comment": [
+        "The sequence is infinite."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A076676/b076676.txt\">Table of n, a(n) for n = 1..986</a>"
+    ],
+    "maple": [
+        "A076600:= proc(n) local q;",
+        "  q:= max(select(t -> n^2/t - t > 2*n and (t - n^2/t)::even, numtheory:-divisors(n^2)));",
+        "  if q = -infinity then 0 else (n^2/q - q)/2 fi;",
+        "end proc:",
+        "A[1]:= 11;",
+        "for n from 2 to 100 do",
+        "  A[n]:= A076600(A[n-1]);",
+        "od:",
+        "seq(A[i],i=1..100); # _Robert Israel_, Mar 22 2018"
+    ],
+    "mathematica": [
+        "nmax = 100;",
+        "A076600[n_] := Module[{q},",
+        "  q = Max[Select[Divisors[n^2], n^2/# - # > 2n &&",
+        "  EvenQ[# - n^2/#]&]];",
+        "  If[q == -Infinity, 0, (n^2/q - q)/2]];",
+        "a[1] = 11;",
+        "For[n = 2, n <= nmax, n++, a[n] = A076600[a[n - 1]]];",
+        "Table[a[n], {n, 1, nmax}] (* _Jean-Fran\u00e7ois Alcover_, May 17 2023, after _Robert Israel_ *)"
+    ],
+    "xref": [
+        "Cf. A076600."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, Oct 25 2002",
+    "references": 1,
+    "revision": 10,
+    "time": "2023-05-17T10:51:35-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

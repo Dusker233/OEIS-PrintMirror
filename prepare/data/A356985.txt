@@ -1,0 +1,39 @@
+{
+    "number": 356985,
+    "data": "2,55,56,93,170,944,1904,2839,3104,4213,4793,4953,5664,35120,48456,145256,213416,224288,267084,276736,310897,366624,627850,802024,837801,1093671,1451332,2036312,2909925,3888750,4373000,4746840,6754320,6819840,13327155,18807624",
+    "name": "Numbers k that divide the concatenation of sigma(k-1) and sigma(k+1).",
+    "comment": [
+        "The only known prime terms are 2 and 4793; there are no others < 1.5*10^10."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A356985/b356985.txt\">Table of n, a(n) for n = 1..53</a>",
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_1101.htm\">Puzzle 1101. Primes p that divide the concatenation of sigma(p-1) and sigma(p+1)</a>, The Prime Puzzles & Problems Connection, September 2022."
+    ],
+    "formula": [
+        "A000203(k-1).A000203(k+1) == 0 (mod a(k)), where . is concatenation of digits."
+    ],
+    "example": [
+        "2 is a term since sigma(1) = 1, sigma(3) = 4 and 2 divides 14."
+    ],
+    "mathematica": [
+        "Select[Range[2, 10^6], Divisible[FromDigits[Join @@ IntegerDigits @ DivisorSigma[1, # + {-1, 1}]], #] &] (* _Amiram Eldar_, Sep 09 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisor_sigma",
+        "def sigma(n): return divisor_sigma(n, 1)",
+        "def ok(n): return n > 1 and int(str(sigma(n-1)) + str(sigma(n+1)))%n == 0",
+        "print([k for k in range(10**5) if ok(k)])",
+        "(PARI) isok(k) = (eval(concat(Str(sigma(k-1)), Str(sigma(k+1)))) % k) == 0; \\\\ _Michel Marcus_, Sep 09 2022"
+    ],
+    "xref": [
+        "Cf. A000203."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michael S. Branicky_ and _Giorgos Kalogeropoulos_, Sep 08 2022",
+    "references": 1,
+    "revision": 21,
+    "time": "2022-09-11T15:17:50-04:00",
+    "created": "2022-09-11T00:35:02-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 98622,
+    "data": "1,2,17,250,5465,162677,6241059,297132409,17075153860,1159545515804,91501467848088,8276847825732141,848577193578286942,97672164219292005480,12518933902769241287267,1774279753092963892540493,276351502436571180980604240,47046745370508674770872396843",
+    "name": "Consider the family of directed multigraphs enriched by the species of set partitions. Sequence gives number of those multigraphs with n labeled loops and arcs.",
+    "reference": [
+        "G. Paquin, D\u00e9nombrement de multigraphes enrichis, M\u00e9moire, Math. Dept., Univ. Qu\u00e9bec \u00e0 Montr\u00e9al, 2004."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A098622/b098622.txt\">Table of n, a(n) for n = 0..200</a>",
+        "G. Labelle, <a href=\"https://doi.org/10.1016/S0012-365X(99)00265-4\">Counting enriched multigraphs according to the number of their edges (or arcs)</a>, Discrete Math., 217 (2000), 237-248.",
+        "G. Paquin, <a href=\"/A038205/a038205.pdf\">D\u00e9nombrement de multigraphes enrichis</a>, M\u00e9moire, Math. Dept., Univ. Qu\u00e9bec \u00e0 Montr\u00e9al, 2004. [Cached copy, with permission]"
+    ],
+    "formula": [
+        "E.g.f.: exp(-1)*Sum_{n >=0} exp(n^2*(exp(x)-1))/n!. - _Vladeta Jovovic_, Aug 24 2006",
+        "a(n) = Sum_{k=0..n} Stirling2(n,k)*Bell(2*k). - _Vladeta Jovovic_, Aug 24 2006",
+        "E.g.f.: B(R(x)) where B(x) is the e.g.f. of A014507 and 1 + R(x) is the e.g.f. of A000110. - _Andrew Howroyd_, Jan 12 2021"
+    ],
+    "program": [
+        "(PARI) \\\\ here R(n) is A000110 as e.g.f.",
+        "egfA014507(n)={my(bell=serlaplace(exp(exp(x + O(x^(2*n+1)))-1))); sum(i=0, n, sum(k=0, i, stirling(i,k,1)*polcoef(bell, 2*k))*x^i/i!) + O(x*x^n)}",
+        "EnrichedGdlSeq(R)={my(n=serprec(R, x)-1); Vec(serlaplace(subst(egfA014507(n), x, R-polcoef(R,0))))}",
+        "R(n)={exp(exp(x + O(x*x^n))-1)}",
+        "EnrichedGdlSeq(R(20)) \\\\ _Andrew Howroyd_, Jan 12 2021"
+    ],
+    "xref": [
+        "Cf. A000110, A014507, A098620, A098621, A098623."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Oct 26 2004",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Aug 24 2006",
+        "Edited by _N. J. A. Sloane_ at the suggestion of _Andrew S. Plewe_, Jun 15 2007",
+        "Terms a(16) and beyond from _Andrew Howroyd_, Jan 12 2021"
+    ],
+    "references": 13,
+    "revision": 20,
+    "time": "2021-01-12T21:29:58-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

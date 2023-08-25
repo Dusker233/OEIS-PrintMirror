@@ -1,0 +1,42 @@
+{
+    "number": 195100,
+    "data": "1,11,21,25,28,33,66,122,140,142,188,307,322,349,1007,1052",
+    "name": "Numbers n such that there are no primes between (n-1)*sqrt(n-1) and n*sqrt(n).",
+    "comment": [
+        "Cram\u00e9r's conjecture implies that the sequence is finite. - _Robert Israel_, Aug 11 2014",
+        "No more terms up to 2*10^10. - _Jinyuan Wang_, Mar 22 2019"
+    ],
+    "link": [
+        "H. Cram\u00e9r, <a href=\"http://matwbn.icm.edu.pl/ksiazki/aa/aa2/aa212.pdf\">On the order of magnitude of the difference between consecutive prime numbers</a>, Acta Arith. 2 (1936), 23-46."
+    ],
+    "formula": [
+        "a(n+1) = A144140(n) + 1. - _Jinyuan Wang_, Mar 22 2019"
+    ],
+    "example": [
+        "a(1) = 1 because there are no numbers between (1-1)*sqrt(1-1) = 0 and 1*sqrt(1) = 1.",
+        "a(2) = 11 because (11-1)*sqrt(11-1) < (nonprimes 32,33,34,35,36) < 11*sqrt(11)."
+    ],
+    "maple": [
+        "Primes:= select(isprime,{2,seq(2*i+1,i=1..10^6)}):",
+        "C:= map(p -> ceil(p^(2/3)), Primes);",
+        "{$1..max(C)} minus C; # _Robert Israel_, Aug 10 2014"
+    ],
+    "mathematica": [
+        "Select[Range[5000], (PrimePi[# Sqrt[#]] - PrimePi[(# - 1)Sqrt[# - 1]]) == 0 &] (* _Alonso del Arte_, Sep 09 2011 *)",
+        "Join[{1},Flatten[Position[Partition[Table[PrimePi[n Sqrt[n]],{n,1100}], 2,1], _?(#[[2]]-#[[1]]==0&),1,Heads->False]]+1] (* _Harvey P. Dale_, May 11 2018 *)"
+    ],
+    "program": [
+        "(PARI) for(n=1,2*10^6,if(#primes([(n-1)*sqrt(n-1),n*sqrt(n)])==0,print1(n,\", \"))) \\\\ _Derek Orr_, Aug 10 2014",
+        "(PARI) isok(n) = {k=floor((n-1)*sqrt(n-1))+1;while(!isprime(k),k++);k>n*sqrt(n);} \\\\ _Jinyuan Wang_, Mar 22 2019"
+    ],
+    "xref": [
+        "Cf. A001223, A144140, A194852, A195008."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Juri-Stepan Gerasimov_, Sep 09 2011",
+    "references": 0,
+    "revision": 36,
+    "time": "2019-03-23T03:57:48-04:00",
+    "created": "2011-09-09T17:34:17-04:00"
+}

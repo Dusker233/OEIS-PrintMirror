@@ -1,0 +1,45 @@
+{
+    "number": 83833,
+    "data": "1,2,22,121,131,222,2222,12021,12121,13031,13131,22222,222222,1202021,1203021,1212121,1213121,1302031,1303031,1312131,1313131,2222222,22222222,120202021,120212021,120303021,120313021,121202121,121212121",
+    "name": "Palindromes p such that 5p + 1 is also a palindrome.",
+    "comment": [
+        "From _Michael S. Branicky_, Jun 13 2021: (Start)",
+        "All terms start and end with the digit 1, except those consisting of d 2's, which lead to palindromes of d+1 1's.",
+        "If a(n) > 1 starts with 1, then its second and second-to-last digits are either both 2 or both 3; and if it has 5 or more digits, its third and third-to-last digits are either both 0 or both 1; thus, terms in the latter case only start with 120, 121, 130, 131, and 222.",
+        "Using ^ to denote repeated concatenation, contains terms of the forms 2^d, leading to palindromes of the form 1^(d+1); (12)^d 1, leading to (60)^d 6; and (13)^d 1, leading to (65)^d 6; among other patterns.",
+        "(Conjectures)",
+        "All terms contain only the digits {0, 1, 2, 3}.",
+        "For d even, the only term with d digits is 2^d; equivalently, all terms starting with 1 have odd length. (End)"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A083833/b083833.txt\">Table of n, a(n) for n = 1..8217</a> (all terms where p has <= 26 digits)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "def ispal(n): s = str(n); return s == s[::-1]",
+        "def pals(d, base=10): # all positive d-digit palindromes",
+        "    digits = \"\".join(str(i) for i in range(base))",
+        "    for p in product(digits, repeat=d//2):",
+        "        if d > 1 and p[0] == \"0\": continue",
+        "        left = \"\".join(p); right = left[::-1]",
+        "        for mid in [[\"\"], digits][d%2]:",
+        "            t = int(left + mid + right)",
+        "            if t > 0: yield t",
+        "def ok(pal): return ispal(5*pal+1)",
+        "print([p for d in range(1, 10) for p in pals(d) if ok(p)]) # _Michael S. Branicky_, Jun 11 2021"
+    ],
+    "xref": [
+        "Cf. A083829, A083830, A083832, A083834."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_ and Meenakshi Srikanth (menakan_s(AT)yahoo.com), May 09 2003",
+    "ext": [
+        "Corrected and extended by _Ray Chandler_, May 21 2003"
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2021-06-14T04:16:01-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

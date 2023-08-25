@@ -1,0 +1,34 @@
+{
+    "number": 321585,
+    "data": "1,1,3,11,52,312,2290",
+    "name": "Number of connected nonnegative integer matrices with sum of entries equal to n and no zero rows or columns.",
+    "comment": [
+        "A matrix is connected if the positions in each row (or each column) of the nonzero entries form a connected hypergraph."
+    ],
+    "example": [
+        "The a(3) = 11 matrices:",
+        "  [3] [2 1] [1 2] [1 1 1]",
+        ".",
+        "  [2] [1 1] [1 1] [1] [1 0] [0 1]",
+        "  [1] [1 0] [0 1] [2] [1 1] [1 1]",
+        ".",
+        "  [1]",
+        "  [1]",
+        "  [1]"
+    ],
+    "mathematica": [
+        "multsubs[set_,k_]:=If[k==0,{{}},Join@@Table[Prepend[#,set[[i]]]&/@multsubs[Drop[set,i-1],k-1],{i,Length[set]}]];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Union[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[multsubs[Tuples[Range[n],2],n],And[Union[First/@#]==Range[Max@@First/@#],Union[Last/@#]==Range[Max@@Last/@#],Length[csm[Map[Last,GatherBy[#,First],{2}]]]==1]&]],{n,5}] (* Mathematica 7.0+ *)"
+    ],
+    "xref": [
+        "Cf. A007718, A056156, A120733, A319557, A319565, A319647, A319616-A319629, A321584."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Nov 13 2018",
+    "references": 5,
+    "revision": 5,
+    "time": "2018-11-14T08:09:51-05:00",
+    "created": "2018-11-14T08:09:51-05:00"
+}

@@ -1,0 +1,30 @@
+{
+    "number": 48124,
+    "data": "8,9,21,25,30,32,35,36,42,50,57,60,64,72,81,85,86,93,102,111,115,121,122,138,145,146,159,164,174,182,187,194,215,219,235,236,237,253,258,260,265,266,282,284,287,289,302,303,308,312,318,319,326,329,338,346",
+    "name": "Becomes prime or 4 after exactly 2 iterations of f(x) = sum of prime factors of x.",
+    "comment": [
+        "f(x) = sum of prime factors with multiplicity, so that f(1500) = 2+2+3+5+5+5 = 22.",
+        "Numbers k such that A002217(k) = 3. - _Andrew Howroyd_, Sep 15 2019"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A048124/b048124.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "okQ[n_]:=Module[{lst=NestList[Total[Times@@@FactorInteger[#]]&,n,2]}, !PrimeQ[First[lst]] &&!PrimeQ[lst[[2]]]&&First[lst]!=4&&lst[[2]]!=4&&(PrimeQ[Last[lst]]||Last[lst]==4)]; Select[Range[400], okQ] (* _Harvey P. Dale_, Mar 23 2011 *)"
+    ],
+    "program": [
+        "(PARI) sopfr(n)={my(f=factor(n)); sum(i=1, #f~, f[i,1]*f[i,2])}",
+        "ok(n)={forstep(k=2, 1, -1, n=sopfr(n); if(n==4||isprime(n), return(k==1))); 0}",
+        "select(ok, [1..500]) \\\\ _Andrew Howroyd_, Sep 14 2019"
+    ],
+    "xref": [
+        "Cf. A002217, A048125, A048126, A048127, A048128, A048129, A048130, A048131, A048132."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "references": 2,
+    "revision": 14,
+    "time": "2019-09-16T12:17:24-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

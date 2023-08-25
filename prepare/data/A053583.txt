@@ -1,0 +1,49 @@
+{
+    "number": 53583,
+    "data": "3,13,113,2113,12113,612113,11612113,1611612113,111611612113,1111611612113,81111611612113,2181111611612113,132181111611612113,11132181111611612113,3411132181111611612113,413411132181111611612113,12413411132181111611612113",
+    "name": "a(n+1) is the smallest prime ending with (but not equal to) a(n), where a(1)=3.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A053583/b053583.txt\">Table of n, a(n) for n = 1..370</a> (terms 1..210 from Robert Israel)"
+    ],
+    "maple": [
+        "A[1]:= 3;",
+        "for n from 2 to 100 do",
+        "d:= 10^(ilog10(A[n-1])+1);",
+        "for k from 1 do",
+        "  p:= A[n-1]+d*k;",
+        "  if isprime(p) then",
+        "    A[n]:= p;",
+        "    break",
+        "  fi",
+        "od",
+        "od:",
+        "seq(A[n],n=1..100); # _Robert Israel_, Jul 15 2014"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, islice",
+        "def agen(an=3):",
+        "    while True:",
+        "        yield an",
+        "        pow10 = 10**len(str(an))",
+        "        for t in count(pow10+an, step=pow10):",
+        "            if isprime(t):",
+        "                an = t",
+        "                break",
+        "print(list(islice(agen(), 17))) # _Michael S. Branicky_, Jun 23 2022"
+    ],
+    "xref": [
+        "Cf. A000040, A053582, A053584, A069612."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_G. L. Honaker, Jr._, Jan 18 2000",
+    "ext": [
+        "Definition corrected by _Robert Israel_, Jul 15 2014"
+    ],
+    "references": 10,
+    "revision": 21,
+    "time": "2022-06-23T13:49:49-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

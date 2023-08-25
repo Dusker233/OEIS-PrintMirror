@@ -1,0 +1,50 @@
+{
+    "number": 362174,
+    "data": "1,1,6,180,28000,23152500,103507455744,2532712433771520,342315030877028352000,257389071045194840814562500,1082814493908215083601185600000000,25605944807023092680403880661295843852288,3416912747607221845915134383073991514372073062400",
+    "name": "Number of n X n matrices with nonnegative integer entries such that the sum of the elements of each row is equal to the index of that row.",
+    "comment": [
+        "Also the number of n X n matrices with nonnegative integer entries such that the sum of the elements of each column is equal to the index of that column."
+    ],
+    "link": [
+        "Michael Richard, <a href=\"/A362174/b362174.txt\">Table of n, a(n) for n = 0..52</a>"
+    ],
+    "formula": [
+        "a(n) = Product_{k=1..n} binomial(n+k-1,n-1).",
+        "a(n) = A001700(n-1)*A306789(n-1) for n >= 1.",
+        "a(n) = a(n-1)*(2n-1)*(2n-2)!^2/(n*(n-1)!^3*(n-1)^(n-1)). - _Chai Wah Wu_, Jun 26 2023",
+        "a(x) = x^x*G(2x+1)*(G(x+1)^(x-1)/G(x+2)^(x+1)) where G(x) is the Barnes G-function is a differentiable continuation of a(n) to the nonnegative reals. - _Michael Richard_, Jun 27 2023"
+    ],
+    "example": [
+        "a(1) = 1 as the only 1 X 1 matrix that satisfies the constraints is [1].",
+        "a(2) = 6 as there are 2 2d-vectors within the constraints with components that sum to 1 and independently 3 2d-vectors within the constraints with components that sum to 2. They are as follows: [[0 1],[1 1]], [[0 1],[2 0]], [[0 1],[0 2]], [[1 0],[1 1]], [[1 0],[2 0]], [[1 0],[0 2]],",
+        "a(3) = 180 as there are 3 3d-vectors within the constraints with components that sum to 1, 6 that sum to 2, and 10 that sum to 3. 3*6*10 = 180."
+    ],
+    "maple": [
+        "a:= n-> mul(binomial(n+k-1, n-1), k=1..n):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "a[n_] := Product[Binomial[n + k - 1, n - 1], {k, 1, n}]"
+    ],
+    "program": [
+        "(Python)",
+        "from math import comb, prod",
+        "def a(n): return prod(comb(n+k, n-1) for k in range(n))",
+        "(Python)",
+        "from math import factorial",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A362174(n): return A362174(n-1)*(2*n-1)*factorial(2*n-2)**2//n//factorial(n-1)**3//(n-1)**(n-1) if n else 1 # _Chai Wah Wu_, Jun 26 2023",
+        "(PARI) a(n) = prod(k=1, n, binomial(n+k-1,n-1)); \\\\ _Michel Marcus_, Jun 25 2023"
+    ],
+    "xref": [
+        "Cf. A001700, A306789, A361749."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Michael Richard_, Jun 12 2023",
+    "references": 1,
+    "revision": 68,
+    "time": "2023-08-04T17:40:59-04:00",
+    "created": "2023-06-26T14:18:36-04:00"
+}

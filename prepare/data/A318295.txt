@@ -1,0 +1,79 @@
+{
+    "number": 318295,
+    "data": "103,107,113,131,137,149,157,163,167,173,179,197,199,307,311,317,337,359,373,379,389,397,419,491,571,593,613,617,631,701,709,719,733,739,751,761,839,907,919,937,941,953,971,983,991,1009,1013,1019,1021,1031,1033",
+    "name": "Prime numbers whose digits can be permuted in multiple ways to yield primes.",
+    "comment": [
+        "From _Robert Israel_, Sep 06 2018: (Start)",
+        "\"Multiple ways\" here means more than one nontrivial permutation other than the identity permutation, i.e., there are at least 3 different primes formed by permuting digits of this prime.",
+        "Leading 0's are allowed in the permutations. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A318295/b318295.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "131 belongs to this sequence as there are two nontrivial permutations of its digits which yield other primes, namely 113 and 311.",
+        "137 also belongs to this sequence. Even though 371, 713 and 731 are composite, 173 and 317 are prime, satisfying the requirement.",
+        "139 does not belong in this sequence. Although 193 is prime, 319, 391, 913 and 931 are all composite."
+    ],
+    "maple": [
+        "filter:= proc(n) local L,Lp,t,i,m,x;",
+        "  if not isprime(n) then return false fi;",
+        "  L:= convert(n,base,10);",
+        "  m:= nops(L);",
+        "  Lp:= combinat:-permute(L);",
+        "  t:= 1;",
+        "  for i from 1 to nops(Lp) do",
+        "    if Lp[i]=L then next fi;",
+        "    x:= add(Lp[i][j]*10^(j-1),j=1..m);",
+        "    if isprime(x) then",
+        "      t:= t+1;",
+        "      if t = 3 then return true fi;",
+        "    fi",
+        "  od;",
+        "  false",
+        "end proc:",
+        "select(filter, [seq(i,i=11..2000,2)]); # _Robert Israel_, Sep 06 2018"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[200]], Count[PrimeQ[Map[FromDigits, Permutations[IntegerDigits[#]]]], True] > 2 &] (* _Alonso del Arte_, Aug 24 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import *",
+        "nmax=1000",
+        "def is_prime(num):",
+        "    if num == 0 or num == 1: return(0)",
+        "    for k in range(2, num):",
+        "       if (num % k) == 0:",
+        "           return(0)",
+        "    return(1)",
+        "ris = \"\"",
+        "for i in range(nmax):",
+        "    f=0",
+        "    lf=[]",
+        "    if is_prime(i):",
+        "       for p in permutations(str(i), len(str(i))):",
+        "            k=int(''.join(p))",
+        "            if k!=i and is_prime(k):",
+        "                if k not in lf:",
+        "                    f+=1",
+        "                    lf.append(k)",
+        "                if f>1:",
+        "                    ris = ris+str(i)+\",\"",
+        "                    break",
+        "print(ris)"
+    ],
+    "xref": [
+        "Subsequence of A055387."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Pierandrea Formusa_, Aug 23 2018",
+    "ext": [
+        "More terms from _Giovanni Resta_, Sep 03 2018"
+    ],
+    "references": 1,
+    "revision": 29,
+    "time": "2022-02-01T13:53:11-05:00",
+    "created": "2018-09-06T14:17:27-04:00"
+}

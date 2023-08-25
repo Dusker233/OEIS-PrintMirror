@@ -1,0 +1,38 @@
+{
+    "number": 355845,
+    "data": "3,5,7,11,13,17,29,41,71,79,89,97,107,137,163,167,179,223,241,311,313,347,379,479,487,503,547,569,587,659,691,701,821,857,863,883,907,929,983,1009,1109,1117,1153,1163,1171,1217,1429,1453,1483,1493,1523,1549,1583,1637,1693,1753,1783,1823",
+    "name": "First of three consecutive primes p,q,r such that p*r - q^2 + q*r is prime.",
+    "comment": [
+        "First of three consecutive primes p,q,r such that the sum of numerator and denominator of p/q - q/r is prime."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A355845/b355845.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 7 is a term because 7, 11 and 13 are consecutive primes and 7*13 - 11^2 + 11*13 = 113 is prime."
+    ],
+    "maple": [
+        "q:= 2: r:= 3: count:= 0: R:= NULL:",
+        "while count < 100 do",
+        "  p:= q; q:= r; r:= nextprime(r);",
+        "  if isprime(p*r-q^2+q*r) then",
+        "    count:= count+1; R:= R,p;",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Partition[Prime[Range[300]], 3, 1], PrimeQ[(#[[1]] + #[[2]])*#[[3]] - #[[2]]^2] &][[;; , 1]] (* _Amiram Eldar_, Jul 18 2022 *)"
+    ],
+    "program": [
+        "(PARI) is(p)=if(!isprime(p), return(0)); my(q=nextprime(p+1),r=nextprime(q+2)); isprime(p*r-q^2+q*r) \\\\ _Charles R Greathouse IV_, Jul 18 2022",
+        "(PARI) list(lim)=my(v=List(),p=3,q=5); forprime(r=7,nextprime(nextprime(lim\\1+1)+1), if(isprime(p*r-q^2+q*r), listput(v,p)); p=q; q=r); Vec(v) \\\\ _Charles R Greathouse IV_, Jul 18 2022"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jul 18 2022",
+    "references": 1,
+    "revision": 13,
+    "time": "2022-07-21T07:45:47-04:00",
+    "created": "2022-07-18T23:39:37-04:00"
+}

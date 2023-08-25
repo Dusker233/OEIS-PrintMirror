@@ -1,0 +1,54 @@
+{
+    "number": 363061,
+    "data": "1,2,5,18,68,283,1161,4843,19985,83074,349670,1456458,6107257,25547835,106115655,440396113,1833079809,7642924612,31705433101,131711607956,546283729493,2257462298234,9339325821411,38593708318690,159600066415313,661371515924516,2736805917843710",
+    "name": "Number of k <= P(n) such that rad(k) | P(n), where rad(n) = A007947(n) and P(n) = A002110(n).",
+    "link": [
+        "Bert Dobbelaere, <a href=\"/A363061/a363061.py.txt\">Python program</a>"
+    ],
+    "formula": [
+        "a(n) = A010846(A002110(n)).",
+        "a(n) >= 2^n."
+    ],
+    "example": [
+        "a(0) = 1 since P(0) = 1 and 1 | 1.",
+        "a(1) = 2 since P(1) = 2 and both 1 | 2 and 2 | 2.",
+        "a(2) = 5 since P(2) = 6 and rad(m) | 6 for m = {1, 2, 3, 4, 6}.",
+        "a(3) = 18 since P(3) = 30 and rad(m) | 30 for m = {1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 25, 27, 30}, etc.",
+        "Regarding a(3), we see that there are 18 terms in the tensor product of prime power ranges of 2, 3, and 5 that do not exceed 30:",
+        "5^0X | 2^0 2^1 2^2 2^3 2^4    5^1X | 2^0 2^1 2^2    5^2X | 2^0",
+        "--------------------------    ------------------    ----------",
+        "3^0  |   1   2   4   8  16    3^0  |   5  10  20    3^0  |  25",
+        "3^1  |   3   6  12  24        3^1  |  15  30",
+        "3^2  |   9  18",
+        "3^3  |  27",
+        "Hence, a(3) = 18. This approach proves handy for larger n."
+    ],
+    "mathematica": [
+        "f[1] = 1; f[n_] := Function[w,",
+        "ToExpression@ StringJoin[\"Block[{n = \", ToString@ n,",
+        "    \", k = 0}, Flatten@ Table[k++, \",",
+        "    Most@ Flatten@ Map[{#, \", \"} &, #], \"]; k]\"] &@",
+        "      MapIndexed[",
+        "        Function[p, StringJoin[\"{\", ToString@ Last@ p, \", 0, Log[\",",
+        "          ToString@ First@ p, \", n/(\",",
+        "          ToString@ InputForm[Times @@ Map[Power @@ # &, Take[w, First@ #2 - 1]]],",
+        "          \")]}\"] ]@ w[[First@ #2]] &, w]]@",
+        "   Map[{#, ToExpression[\"p\" <> ToString@ PrimePi@ #]} &,",
+        "     FactorInteger[n][[All, 1]]];",
+        "   Map[f, FoldList[Times, 1, Prime@ Range@ 9] ]"
+    ],
+    "xref": [
+        "Cf. A002110, A007947, A010846."
+    ],
+    "keyword": "nonn,hard",
+    "offset": "0,2",
+    "author": "_Michael De Vlieger_, Jun 16 2023",
+    "ext": [
+        "Corrected a(15) and added a(16)-a(23) from _Bert Dobbelaere_, Jun 27 2023",
+        "a(24)-a(26) from _Martin Ehrenstein_, Jul 08 2023"
+    ],
+    "references": 3,
+    "revision": 52,
+    "time": "2023-07-09T02:43:42-04:00",
+    "created": "2023-06-22T06:03:04-04:00"
+}

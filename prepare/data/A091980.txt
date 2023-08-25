@@ -1,0 +1,48 @@
+{
+    "number": 91980,
+    "data": "1,2,3,5,7,11,16,26,36,56,81,131,183,287,417,677,937,1457,2107,3407,4759,7463,10843,17603,24373,37913,54838,88688,123892,194300,282310,458330,634350,986390,1426440,2306540,3221844,5052452,7340712,11917232,16500522",
+    "name": "Recursive sequence; one more than maximum of products of pairs of previous terms with indices summing to current index.",
+    "comment": [
+        "The maximum is always obtained by taking i as the power of 2 nearest to n/2. - _Anna de Mier_, Mar 12 2012",
+        "a(n) is the number of (binary) max-heaps on n-1 elements from the set {0,1}. a(7) = 16: 000000, 100000, 101000, 101001, 110000, 110010, 110100, 110110, 111000, 111001, 111010, 111011, 111100, 111101, 111110, 111111. - _Alois P. Heinz_, Jul 09 2019"
+    ],
+    "reference": [
+        "A. de Mier and M. Noy, On the maximum number of cycles in outerplanar and series-parallel graphs, Graphs Combin., 28 (2012), 265-275."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A091980/b091980.txt\">Table of n, a(n) for n = 1..5652</a>",
+        "F. Disanto and N. A. Rosenberg, <a href=\"https://doi.org/10.1089/cmb.2016.0159\">Enumeration of ancestral configurations for matching gene trees and species trees</a>, J. Comput. Biol. 24 (2017), 831-850. See Section 4.2.",
+        "A. de Mier and M. Noy, <a href=\"https://doi.org/10.1016/j.endm.2009.07.081\">On the maximum number of cycles in outerplanar and series-parallel graphs</a>, Elect. Notes Discr. Math 34 (2009) 489-493",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Heap.html\">Heap</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Binary_heap\">Binary heap</a>"
+    ],
+    "formula": [
+        "a(n) = 1 + max_{i=1..n-1} a(i)*a(n-i) for n > 1, a(1) = 1.",
+        "From _Alois P. Heinz_, Jul 09 2019: (Start)",
+        "a(n) = Sum_{k=0..n-1} A309049(n-1,k).",
+        "a(2^(n-1)) = A003095(n). (End)"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1, (g-> (f->",
+        "      1+b(f)*b(n-1-f))(min(g-1, n-g/2)))(2^ilog2(n)))",
+        "    end:",
+        "a:= n-> b(n-1):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Jul 09 2019"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = 1 + Max[Table[a[i] a[n-i], {i, n-1}]]; a[1] = 1;",
+        "Array[a, 50] (* _Jean-Fran\u00e7ois Alcover_, Apr 30 2020 *)"
+    ],
+    "xref": [
+        "Cf. A003095, A056971, A309049.",
+        "Partial differences give A168542.",
+        "a(n) = A355108(n)-1."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Franklin T. Adams-Watters_, Mar 15 2004",
+    "references": 9,
+    "revision": 36,
+    "time": "2022-07-13T06:14:11-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

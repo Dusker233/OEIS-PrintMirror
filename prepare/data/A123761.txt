@@ -1,0 +1,45 @@
+{
+    "number": 123761,
+    "data": "1,2,3,12,15,60,60,240,360,1440,1800,7200,7200,28800,43200,172800,216000,864000,864000,3456000,5184000,20736000,25920000,103680000,103680000,414720000,622080000,2488320000,3110400000,12441600000",
+    "name": "Let k(n) = mod(3,n)-1. Then a(n) = 4*a(n-1) if n is odd, otherwise ((5+k(n))/4)*a(n-1), with a(0) = 1, a(1) = 2.",
+    "comment": [
+        "A double modulo switch recursion with four basic ratio states: {4,1,5/4,3/2}.",
+        "Surprisingly, the function behaves very much like the factorial function.",
+        "10^floor(n/6) | a(n). - _G. C. Greubel_, Aug 10 2019"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A123761/b123761.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (0,0,0,0,0,120)."
+    ],
+    "formula": [
+        "a(n) = 120*a(n-6) for n>=7.",
+        "G.f.: (1+2*x+3*x^2+12*x^3+15*x^4+60*x^5-60*x^6)/(1-120*x^6). - _Colin Barker_, May 08 2014"
+    ],
+    "maple": [
+        "seq(coeff(series((1+2*x+3*x^2+12*x^3+15*x^4+60*x^5-60*x^6)/(1-120*x^6), x, n+1), x, n), n = 0 .. 35); # _G. C. Greubel_, Aug 10 2019"
+    ],
+    "mathematica": [
+        "k[n_]:= Mod[n, 3] -1; f[0]=1; f[1]=2; f[n_]:= f[n] = If[Mod[n, 2] == 1, 4*f[n-1], ((5 +k[n])/4)*f[n-1]]; Table[f[n], {n, 0, 35}]",
+        "LinearRecurrence[{0,0,0,0,0,120}, {1,2,3,12,15,60,60}, 35] (* _G. C. Greubel_, Aug 10 2019 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^35)); Vec((1+2*x+3*x^2+12*x^3+15*x^4+60*x^5-60*x^6 )/(1-120*x^6)) \\\\ _G. C. Greubel_, Aug 10 2019",
+        "(Magma) I:=[2,3,12,15,60,60]; [1] cat [n le 6 select I[n] else 120*Self(n-6): n in [1..35]]; // _G. C. Greubel_, Aug 10 2019",
+        "(Sage)",
+        "def A123761_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P((1+2*x+3*x^2+12*x^3+15*x^4+60*x^5-60*x^6)/(1-120*x^6)).list()",
+        "A123761_list(35) # _G. C. Greubel_, Aug 10 2019",
+        "(GAP) a:=[2,3,12,15,60,60];; for n in [7..35] do a[n]:=120*a[n-6]; od; Concatenation([1], a); # _G. C. Greubel_, Aug 10 2019"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Roger L. Bagula_, Nov 16 2006",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Nov 19 2006"
+    ],
+    "references": 1,
+    "revision": 20,
+    "time": "2022-09-08T08:45:28-04:00",
+    "created": "2006-12-06T03:00:00-05:00"
+}

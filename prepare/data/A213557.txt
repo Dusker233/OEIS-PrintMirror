@@ -1,0 +1,43 @@
+{
+    "number": 213557,
+    "data": "1,6,23,70,184,438,971,2042,4125,8076,15424,28876,53189,96670,173747,309362,546456,958690,1672015,2901170,5011321,8621976,14781888,25263000,43053769,73186038,124119311,210055582,354806200,598245006",
+    "name": "Antidiagonal sums of the convolution array A213590.",
+    "link": [
+        "Clark Kimberling, <a href=\"/A213557/b213557.txt\">Table of n, a(n) for n = 1..500</a>",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (5,-8,2,6,-4,-1,1)."
+    ],
+    "formula": [
+        "a(n) = 5*a(n-1) - 8*a(n-2) + 2*a(n-3) + 6*a(n-4) - 4*a(n-5) - a(n-6) + a(n-7).",
+        "G.f.: f(x)/g(x), where f(x) = x*(1 + x + x^2 + x^3) and g(x) = (1 - x)^3 (1 - x - x^2)^2.",
+        "a(n) = n*Fibonacci(n+7) - 2*Fibonacci(n+9) + 2*n^2 + 20*n + 68. - _G. C. Greubel_, Jul 06 2019"
+    ],
+    "mathematica": [
+        "(* First program *)",
+        "b[n_]:= n^2; c[n_]:= Fibonacci[n];",
+        "T[n_, k_]:= Sum[b[k-i] c[n+i], {i, 0, k-1}]",
+        "TableForm[Table[T[n, k], {n, 1, 10}, {k, 1, 10}]]",
+        "Flatten[Table[T[n-k+1, k], {n, 12}, {k, n, 1, -1}]] (* A213590 *)",
+        "r[n_]:= Table[T[n, k], {k, 40}]  (* columns of antidiagonal triangle *)",
+        "Table[T[n, n], {n, 1, 40}] (* A213504 *)",
+        "s[n_]:= Sum[T[i, n+1-i], {i, 1, n}]",
+        "Table[s[n], {n, 1, 50}] (* A213557 *)",
+        "(* Second program *)",
+        "With[{F = Fibonacci}, Table[n*F[n+7] -2*F[n+9] +2*(n^2+10*n+34), {n,40}]] (* _G. C. Greubel_, Jul 06 2019 *)"
+    ],
+    "program": [
+        "(PARI) vector(40, n, f=fibonacci; n*f(n+7) -2*f(n+9) +2*(n^2+10*n+34)) \\\\ _G. C. Greubel_, Jul 06 2019",
+        "(Magma) F:=Fibonacci; [n*F(n+7) -2*F(n+9) +2*(n^2+10*n+34): n in [1..40]]; // _G. C. Greubel_, Jul 06 2019",
+        "(Sage) f=fibonacci; [n*f(n+7) -2*f(n+9) +2*(n^2+10*n+34) for n in (1..40)] # _G. C. Greubel_, Jul 06 2019",
+        "(GAP) F:=Fibonacci;; List([1..40], n-> n*F(n+7) -2*F(n+9) +2*(n^2+10*n+ 34)) # _G. C. Greubel_, Jul 06 2019"
+    ],
+    "xref": [
+        "Cf. A213590, A213500."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Jun 19 2012",
+    "references": 4,
+    "revision": 13,
+    "time": "2022-09-08T08:46:02-04:00",
+    "created": "2012-07-11T18:41:42-04:00"
+}

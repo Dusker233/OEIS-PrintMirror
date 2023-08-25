@@ -1,0 +1,35 @@
+{
+    "number": 307593,
+    "data": "1,3,10,39,180,977,6156,44401,361872,3295025,33193284,366828033,4414938000,57501795977,805984165252,12098920460089,193676009792768,3293501718960033,59294599560573508,1126737323074730161,22536528123718353104,473290909667471110361",
+    "name": "Expansion of e.g.f. (sec(x) + tan(x))*exp(x)/(1 - x).",
+    "comment": [
+        "Boustrophedon transform of A000522."
+    ],
+    "link": [
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "mathematica": [
+        "nmax = 21; CoefficientList[Series[(Sec[x] + Tan[x]) Exp[x]/(1 - x), {x, 0, nmax}], x] Range[0, nmax]!",
+        "t[n_, 0] := If[n < 1, 1, Floor[Exp[1] n!]]; t[n_, k_] := t[n, k] = t[n, k - 1] + t[n - 1, n - k]; a[n_] := t[n, n]; Array[a, 22, 0]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, accumulate",
+        "def A307593_gen(): # generator of terms",
+        "    blist, m = tuple(), 1",
+        "    for i in count(1):",
+        "        yield (blist := tuple(accumulate(reversed(blist),initial=m)))[-1]",
+        "        m = m*i + 1",
+        "A307593_list = list(islice(A307593_gen(),30)) # _Chai Wah Wu_, Jun 11 2022"
+    ],
+    "xref": [
+        "Cf. A000111, A000522, A230960, A307594."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Apr 17 2019",
+    "references": 2,
+    "revision": 9,
+    "time": "2022-06-11T20:18:16-04:00",
+    "created": "2019-04-17T19:07:19-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 323047,
+    "data": "431,485,509,565,637,671,719,725,727,862,887,935,941,943,959,967,970,1130,1151,1175,1199,1205,1274,1293,1319,1342,1367,1373,1391,1415,1421,1423,1438,1439,1445,1447,1450,1453,1454,1455,1481,1527,1535,1559",
+    "name": "Numbers that are not the sum of three (or fewer) 3-smooth numbers.",
+    "comment": [
+        "Numbers below 431 may be written as a sum of three (or fewer) elements in A003586. These are the first exceptions.",
+        "Below 18431 every number can be written as a sum of 4 or fewer 3-smooth numbers, and below 3448733 every number can be written as a sum of 5 or fewer 3-smooth numbers (cf. sequence A018899)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A323047/b323047.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "N:= 1000: # for all terms <= N",
+        "S:= {seq(seq(2^i*3^j,i=0..ilog2(N/3^j)),j=0..floor(log[3](N)))}:",
+        "S2:= select(`<=`,map(t -> op(map(`+`, S,t)), S),N):",
+        "S3:= select(`<=`,map(t -> op(map(`+`, S,t)), S2), N):",
+        "A:= {$1..N} minus S minus S2 minus S3:",
+        "sort(convert(A,list)); # _Robert Israel_, May 19 2019"
+    ],
+    "mathematica": [
+        "f[n_] := Union@ Flatten@ Table[2^a * 3^b, {a, 0, Log2[n]}, {b, 0, Log[3, n/2^a]}];",
+        "b=Block[{nn = 2000, s}, s = f[nn]; {0, 1, 2}~Join~Select[Union@ Flatten@ Outer[Plus, s, s, s], # <= nn &]]; Complement[Range[2000], b]"
+    ],
+    "xref": [
+        "Cf. A003586, A018899, A237442, A323046, A323048, A323049, A323050."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Carlos Alves_, Jan 03 2019",
+    "references": 2,
+    "revision": 34,
+    "time": "2019-06-11T10:45:21-04:00",
+    "created": "2019-02-14T12:32:56-05:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 4106,
+    "id": "M0889",
+    "data": "1,2,3,8,29,148,1043,11984,229027,6997682,366204347,30394774084,4363985982959,994090870519508,393850452332173999,249278602955869472540,275042591834324901085904,488860279973733024992540668,1514493725905920009795681408275",
+    "name": "Number of line-self-dual nets (or edge-self-dual nets) with n nodes.",
+    "comment": [
+        "A net in this context is a graph with both signed vertices and signed edges. A net is line-self-dual if changing the signs on all edges leaves the graph unchanged up to isomorphism. - _Andrew Howroyd_, Sep 25 2018"
+    ],
+    "reference": [
+        "F. Harary and R. W. Robinson, Exposition of the enumeration of point-line-signed graphs, pp. 19 - 33 of Proc. Second Caribbean Conference Combinatorics and Computing (Bridgetown, 1977). Ed. R. C. Read and C. C. Cadogan. University of the West Indies, Cave Hill Campus, Barbados, 1977. vii+223 pp.",
+        "R. W. Robinson, personal communication.",
+        "R. W. Robinson, Numerical implementation of graph counting algorithms, AGRC Grant, Math. Dept., Univ. Newcastle, Australia, 1976.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A004106/b004106.txt\">Table of n, a(n) for n = 0..50</a> (terms 1..22 from R. W. Robinson)",
+        "Frank Harary, Edgar M. Palmer, Robert W. Robinson, Allen J. Schwenk, <a href=\"http://dx.doi.org/10.1002/jgt.3190010405\">Enumeration of graphs with signed points and lines</a>, J. Graph Theory 1 (1977), no. 4, 295-308.",
+        "R. W. Robinson, <a href=\"/A000666/a000666_2.pdf\">Notes - \"A Present for Neil Sloane\"</a>",
+        "R. W. Robinson, <a href=\"/A004102/a004102_1.pdf\">Notes - computer printout</a>"
+    ],
+    "mathematica": [
+        "permcount[v_] := Module[{m=1, s=0, k=0, t}, For[i=1, i <= Length[v], i++, t = v[[i]]; k = If[i>1 && t == v[[i-1]], k+1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_] := Sum[Sum[If[Mod[v[[i]] v[[j]], 2] == 0, GCD[v[[i]], v[[j]]], 0], {j, 1, i - 1}], {i, 2, Length[v]}] + Sum[If[Mod[v[[i]], 2] == 0, 2 Quotient[v[[i]], 4], 0], {i, 1, Length[v]}];",
+        "a[n_] := Module[{s = 0}, Do[s += permcount[p]*3^edges[p]*2^Length[p], {p, IntegerPartitions[n]}]; s/n!];",
+        "Array[a, 19, 0] (* _Jean-Fran\u00e7ois Alcover_, Aug 17 2019, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, if(v[i]*v[j]%2==0, gcd(v[i], v[j])))) + sum(i=1, #v, if(v[i]%2==0, v[i]\\4*2))}",
+        "a(n) = {my(s=0); forpart(p=n, s+=permcount(p)*3^edges(p)*2^#p); s/n!} \\\\ _Andrew Howroyd_, Sep 25 2018"
+    ],
+    "xref": [
+        "Cf. A004103, A004104, A004105, A004107, A320490."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "a(0)=1 prepended and a(17)-a(18) added by _Andrew Howroyd_, Sep 25 2018"
+    ],
+    "references": 4,
+    "revision": 34,
+    "time": "2019-08-17T08:01:55-04:00",
+    "created": "1991-07-11T03:00:00-04:00"
+}

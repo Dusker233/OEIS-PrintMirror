@@ -1,0 +1,40 @@
+{
+    "number": 163555,
+    "data": "130,136,175,176,301,310,316,361,370,371,395,398,517,539,671,703,713,715,716,730,731,893,935,938,1004,1025,1027,1034,1040,1043,1052,1058,1072,1085,1118,1124,1142,1147,1169,1174,1189,1196,1198,1205,1207,1214",
+    "name": "Composite numbers such that exactly three distinct permutations of digits give primes.",
+    "link": [
+        "Robert Israel, <a href=\"/A163555/b163555.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1) = 130 because 130 is composite and 13, 31, and 103 are prime permutations, and no other permutation of 130 is prime."
+    ],
+    "maple": [
+        "filter:= proc(n) local d, Permutor, P, c, i;",
+        "  if isprime(n) then return false fi;",
+        "  d:= ilog10(n)+1;",
+        "  Permutor:= Iterator:-Permute(convert(n, base, 10));",
+        "  c:= 0;",
+        "  for P in Permutor do",
+        "    if isprime(add(P[i]*10^(i-1), i=1..d)) then",
+        "      c:= c+1;",
+        "      if c >= 4 then return false fi;",
+        "    fi",
+        "  od;",
+        "  evalb(c=3)",
+        "end proc:",
+        "select(filter, [$100..2000]); # _Robert Israel_, Aug 10 2020"
+    ],
+    "mathematica": [
+        "With[{no=1400},Select[Complement[Range[no],Prime[Range[PrimePi[no]]]],Count[FromDigits/@Permutations[IntegerDigits[#]],_?PrimeQ]==3&]]  (* _Harvey P. Dale_, Feb 25 2011 *)"
+    ],
+    "xref": [
+        "Cf. A163554, A163556, A163557, A163558, A163559, A163560, A163561, A163562."
+    ],
+    "keyword": "easy,nonn,base",
+    "offset": "1,1",
+    "author": "_Gil Broussard_, Jul 30 2009",
+    "references": 3,
+    "revision": 14,
+    "time": "2020-08-10T13:18:08-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

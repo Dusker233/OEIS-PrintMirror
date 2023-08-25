@@ -1,0 +1,63 @@
+{
+    "number": 350346,
+    "data": "0,1,11,101,111,1011,1101,1111,10011,10101,10111,11011,11101,11111,100111,101011,101101,101111,110011,110101,110111,111011,111101,111111,1000111,1001011,1001101,1001111,1010011,1010101,1010111,1011011,1011101,1011111,1100111",
+    "name": "Binary numbers such that when read from right to left, the number of 0's never exceeds the number of 1's.",
+    "comment": [
+        "Binary expansion of A036991 terms.",
+        "Dyck language interpreted as binary numbers in ascending order (inverse encode of A063171).",
+        "The first term a(1)=0 corresponds to an empty string, denote it NULL.",
+        "Restoring the leading 0's (need the same number of 0's and 1's) and then replacing \"0\" by the left parenthesis \"(\" and \"1\" by the right parenthesis \")\" give well-formed parenthesis strings: 0 -> NULL, 1=01 -> (), 11=0011 -> (()), 101=0101 -> ()(), 111=000111 -> ((())), 1011=001011 -> (()()), 1101=001101 -> (())() and so on.",
+        "Chomsky-2 grammar with axiom s, terminal alphabet {0, 1} and three rules s -> ss, s -> 0s1, s -> 01 (compare A063171)."
+    ],
+    "link": [
+        "Gennady Eremin, <a href=\"/A350346/b350346.txt\">Table of n, a(n) for n = 1..5000</a>",
+        "Gennady Eremin, <a href=\"https://arxiv.org/abs/2302.02765\">Dyck Numbers, III. Enumeration and bijection with symmetric Dyck paths</a>, arXiv:2302.02765 [math.CO], 2023."
+    ],
+    "formula": [
+        "a(n) = A007088(A036991(n)). - _Michel Marcus_, Dec 26 2021"
+    ],
+    "example": [
+        "s -> ss -> 0s1s -> 00s11s -> 000111s -> 00011101 = 11101."
+    ],
+    "mathematica": [
+        "Join[{0},Select[Table[FromDigits[IntegerDigits[n,2]],{n,120}],Min[Accumulate[ Reverse[ IntegerDigits[#]]/.(0->-1)]]>=0&]] (* _Harvey P. Dale_, Apr 29 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def ok(n):",
+        "    if n == 0: return True",
+        "    count = {\"0\": 0, \"1\": 0}",
+        "    for bit in bin(n)[:1:-1]:",
+        "        count[bit] += 1",
+        "        if count[\"0\"] > count[\"1\"]: return False",
+        "    return True # A036991",
+        "nn = 1; print(1, 0)",
+        "for n in range(1, 23230):  # printing b-file",
+        "    if ok(n) == False: continue",
+        "    nn += 1; print(nn, bin(n)[2:])",
+        "(Python)",
+        "from itertools import count, islice",
+        "def A350346_gen(): # generator of terms",
+        "    yield 0",
+        "    for n in count(1):",
+        "        s = bin(n)[2:]",
+        "        c, l = 0, len(s)",
+        "        for i in range(l):",
+        "            c += int(s[l-i-1])",
+        "            if 2*c <= i:",
+        "                break",
+        "        else:",
+        "            yield int(s)",
+        "A350346_list = list(islice(A350346_gen(),20)) # _Chai Wah Wu_, Dec 30 2021"
+    ],
+    "xref": [
+        "Cf. A007088, A036991, A014486, A063171."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Gennady Eremin_, Dec 26 2021",
+    "references": 2,
+    "revision": 44,
+    "time": "2023-02-09T22:09:56-05:00",
+    "created": "2021-12-30T15:39:06-05:00"
+}

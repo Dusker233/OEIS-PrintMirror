@@ -1,0 +1,41 @@
+{
+    "number": 26755,
+    "data": "1,1,4,5,18,25,84,124,398,612,1901,3012,9126,14800,43968,72658,212417,356544,1028520,1749344,4989477,8583258,24244139,42121079,117973702,206754379,574811040,1015179978,2803969443,4986329826",
+    "name": "a(n) = Sum_{k=0..floor(n/2)} T(n,k), T given by A026747.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A026755/b026755.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "maple": [
+        "A026747 := proc(n,k) option remember;",
+        "   if k=0 or k = n then 1;",
+        "   elif type(n,'even') and k <= n/2 then",
+        "        procname(n-1,k-1)+procname(n-2,k-1)+procname(n-1,k) ;",
+        "   else",
+        "       procname(n-1,k-1)+procname(n-1,k) ;",
+        "   end if ;",
+        "end proc:",
+        "seq(add(A026747(n,k), k=0..floor(n/2)), n=0..30); # _G. C. Greubel_, Oct 29 2019"
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[k==0 || k==n, 1, If[EvenQ[n] && k<=n/2, T[n-1, k -1] + T[n-2, k-1] + T[n-1, k], T[n-1, k-1] + T[n-1, k] ]]; Table[Sum[T[n, k], Floor[n/2]], {n,0,30}] (* _G. C. Greubel_, Oct 29 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n, k):",
+        "    if (k==0 or k==n): return 1",
+        "    elif (mod(n,2)==0 and k<=n/2): return T(n-1,k-1) + T(n-2,k-1) + T(n-1,k)",
+        "    else: return T(n-1,k-1) + T(n-1,k)",
+        "[sum(T(n, k) for k in (0..floor(n/2))) for n in (0..30)] # _G. C. Greubel_, Oct 29 2019"
+    ],
+    "xref": [
+        "Cf. A026747, A026748, A026749, A026750, A026751, A026752, A026753, A026754, A026756, A026757."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_",
+    "references": 10,
+    "revision": 7,
+    "time": "2019-10-29T21:09:58-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

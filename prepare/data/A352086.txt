@@ -1,0 +1,47 @@
+{
+    "number": 352086,
+    "data": "1,21,2697,4736533,14244123157,4804953862344753",
+    "name": "a(n) is the smallest positive integer k such that wt(k^2) / wt(k) = n where wt(k) = A000120(k) is the binary weight of k.",
+    "comment": [
+        "Theorem (proofs in Diophante link):",
+        "For any n and any base b, there exists m such that sod_b(m^2) / sod_b(m) = n, where sod_b(m) = sum of digits of m in base b (A280012 for base 10).",
+        "a(n) is odd. Proof: a(n) exists. Furthermore, if a(n) is even then wt(a(n)) = wt(a(n)/2) and wt(a(n)^2) = wt((a(n)/2)^2) so then a(n)/2 so that a(n)/2 is a lesser candidate, a contradiction. - _David A. Corneth_, Mar 06 2022"
+    ],
+    "link": [
+        "Diophante, <a href=\"http://www.diophante.fr/problemes-par-themes/arithmetique-et-algebre/a1-pot-pourri/4786-a1730-des-chiffres-a-sommer-pour-un-entier\">A1730 - Des chiffres \u00e0 sommer pour un entier</a> (in French).",
+        "Wojciech Mu\u0142a, Nathan Kurz and Daniel Lemire, <a href=\"https://arxiv.org/pdf/1611.07612\">Faster Population Counts using AVX2 Instructions</a>, arXiv:1611.07612 [cs.DS] Sep 05 2018."
+    ],
+    "formula": [
+        "a(n) > 2^(n^2/2) for n > 1. - _Charles R Greathouse IV_, Mar 16 2022"
+    ],
+    "example": [
+        "We have 21_10 = 10101_2, so wt(21) = 3 ones; then 21^2 = 441_10 = 110111001_2, so wt(21^2) = 6 ones; as 6/3 = 2 and 21 is the smallest integer k such that wt(k^2) / wt(k) = 2, hence a(2) = 21."
+    ],
+    "mathematica": [
+        "r[n_] := Total[IntegerDigits[n^2, 2]]/Total[IntegerDigits[n, 2]]; seq[max_, nmax_] := Module[{s = Table[0, {max}], c = 0, n = 1, i}, While[c < max && n < nmax, i = r[n]; If[IntegerQ[i] && s[[i]] == 0, c++; s[[i]] = n]; n+=2]; TakeWhile[s, # > 0 &]]; seq[4, 5*10^6] (* _Amiram Eldar_, Mar 06 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from gmpy2 import popcount",
+        "aDict=dict()",
+        "for k in range(1, 10**11, 2):",
+        "    if popcount(k*k)%popcount(k)==0:",
+        "        n=popcount(k*k)//popcount(k)",
+        "        if not n in aDict:",
+        "            print(n, k); aDict[n]=k # _Martin Ehrenstein_, Mar 16 2022"
+    ],
+    "xref": [
+        "Cf. A000120, A077436, A083567, A159918, A280012, A352084, A352085."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_Bernard Schott_, Mar 06 2022",
+    "ext": [
+        "a(3)-a(5) from _David A. Corneth_, Mar 06 2022",
+        "a(6) -- using the Mu\u0142a et al. Faster Population Counts algorithm -- from _Martin Ehrenstein_, Mar 15 2022"
+    ],
+    "references": 2,
+    "revision": 39,
+    "time": "2022-03-16T16:15:39-04:00",
+    "created": "2022-03-11T12:40:03-05:00"
+}

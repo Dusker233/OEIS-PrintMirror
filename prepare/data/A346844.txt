@@ -1,0 +1,36 @@
+{
+    "number": 346844,
+    "data": "1,21,287,3290,34671,350889,3492511,34669734,346231886,3497726232,35872743270,374387203190,3982122624117,43207791878715,478532965417529,5411213661200830,62482405993313229,736696756305382411,8868148033487285103,108969560832001750716",
+    "name": "E.g.f.: exp(exp(x) - 1) * (exp(x) - 1)^5 / 5!.",
+    "formula": [
+        "a(n) = Sum_{k=0..n} Stirling2(n,k) * binomial(k,5).",
+        "a(n) = Sum_{k=0..n} binomial(n,k) * Stirling2(k,5) * Bell(n-k).",
+        "a(n) = (-Bell(n) + 89*Bell(n+1) - 145*Bell(n+2) + 75*Bell(n+3) - 15*Bell(n+4) + Bell(n+5))/120. - _Vaclav Kotesovec_, Aug 06 2021"
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember;",
+        "     `if`(n=0, binomial(m, 5), m*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=5..24);  # _Alois P. Heinz_, Aug 05 2021"
+    ],
+    "mathematica": [
+        "nmax = 24; CoefficientList[Series[Exp[Exp[x] - 1] (Exp[x] - 1)^5/5!, {x, 0, nmax}], x] Range[0, nmax]! // Drop[#, 5] &",
+        "Table[Sum[StirlingS2[n, k] Binomial[k, 5], {k, 0, n}], {n, 5, 24}]",
+        "Table[Sum[Binomial[n, k] StirlingS2[k, 5] BellB[n - k], {k, 0, n}], {n, 5, 24}]",
+        "Table[(-BellB[n] + 89*BellB[n+1] - 145*BellB[n+2] + 75*BellB[n+3] - 15*BellB[n+4] + BellB[n+5])/120, {n, 5, 24}] (* _Vaclav Kotesovec_, Aug 06 2021 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^25)); Vec(serlaplace(exp(exp(x)-1)*(exp(x)-1)^5/5!)) \\\\ _Michel Marcus_, Aug 06 2021"
+    ],
+    "xref": [
+        "Cf. A000110, A000389, A000481, A003128, A005493, A049020, A094816, A346842, A346843."
+    ],
+    "keyword": "nonn",
+    "offset": "5,2",
+    "author": "_Ilya Gutkovskiy_, Aug 05 2021",
+    "references": 2,
+    "revision": 13,
+    "time": "2021-08-06T04:59:04-04:00",
+    "created": "2021-08-06T04:33:59-04:00"
+}

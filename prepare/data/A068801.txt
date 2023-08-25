@@ -1,0 +1,38 @@
+{
+    "number": 68801,
+    "data": "11,13,19,23,29,41,43,83,89,127,163,181,227,281,641,643,827,881,1283,1289,1627,2243,2729,4243,4729,6427,6481,8243,10243,16561,16729,20483,26561,40961,42187,81929,86561,102481,163841,166561,219683,326561,327689,859049",
+    "name": "Primes that can be formed by concatenating 2^a and 3^b.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A068801/b068801.txt\">Table of n, a(n) for n = 1..8482</a>"
+    ],
+    "example": [
+        "8243 is a concatenation of 2^3 and 3^5. 10242187 is a term as a concatenation of 1024 (=2^10) and 2187(=3^7)."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, takewhile",
+        "def auptod(digits):",
+        "    M = 10**digits",
+        "    pows2 = list(takewhile(lambda x: x < M , (2**a for a in count(0))))",
+        "    pows3 = list(takewhile(lambda x: x < M , (3**b for b in count(0))))",
+        "    strs2, strs3 = list(map(str, pows2)), list(map(str, pows3))",
+        "    concat = (int(s2+s3) for s2 in strs2 for s3 in strs3)",
+        "    return sorted(set(t for t in concat if t < M and isprime(t)))",
+        "print(auptod(6)) # _Michael S. Branicky_, Aug 17 2022"
+    ],
+    "xref": [
+        "Cf. A068712, A068714."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Mar 05 2002",
+    "ext": [
+        "Corrected and extended by Larry Reeves (larryr(AT)acm.org), Jun 25 2002",
+        "a(43) and beyond from _Michael S. Branicky_, Aug 17 2022"
+    ],
+    "references": 2,
+    "revision": 7,
+    "time": "2022-08-17T16:11:59-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

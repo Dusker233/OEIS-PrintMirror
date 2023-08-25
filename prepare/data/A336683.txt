@@ -1,0 +1,56 @@
+{
+    "number": 336683,
+    "data": "1,3,7,15,31,63,127,175,511,1023,1327,4031,7471,16383,32767,43951,127807,238895,502063,1048575,1319215,2719023,7798639,10692015,33554431,61209903,134217727,259173375,337649967,1073741823,1571892655,2880154543,5417565487,15638470959",
+    "name": "Sum of 2^k for all residues k found in the Fibonacci sequence mod n.",
+    "comment": [
+        "Row n of A079002 compactified as a binary number."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A336683/b336683.txt\">Table of n, a(n) for n = 1..3322</a>",
+        "Michael De Vlieger, <a href=\"/A336683/a336683.png\">Plot of bits of a(n)</a> beginning with 2^0 at left for 1 <= n <= 5000."
+    ],
+    "formula": [
+        "a(n) = Sum(2^k) for all k in row n of A189768.",
+        "a(n) = 2^(n+1) - 1 for n in A079002."
+    ],
+    "example": [
+        "a(1) = 1 by convention.",
+        "a(2) = 3 = 2^0 + 2^1, since the Fibonacci sequence mod 2 is {0,1,1} repeated, and 0 and 1 appear in the sequence.",
+        "a(8) = 175 = 2^0 + 2^1 + 2^2 + 2^3 + 2^5 + 2^7, since the Fibonacci sequence mod 8 is {0,1,1,2,3,5,0,5,5,2,7,1} repeated, and we are missing 4 and 6, leaving the exponents of 2 as shown.",
+        "Binary equivalents of first terms:",
+        "   n    a(n)   a(n) in binary",
+        "   --------------------------",
+        "   1      1                 1",
+        "   2      3                11",
+        "   3      7               111",
+        "   4     15              1111",
+        "   5     31             11111",
+        "   6     63            111111",
+        "   7    127           1111111",
+        "   8    175          10101111",
+        "   9    511         111111111",
+        "  10   1023        1111111111",
+        "  11   1327       10100101111",
+        "  12   4031      111110111111",
+        "  13   7471     1110100101111",
+        "  14  16383    11111111111111",
+        "  15  32767   111111111111111",
+        "  16  43951  1010101110101111",
+        "  ..."
+    ],
+    "mathematica": [
+        "{1}~Join~Array[Block[{w = {0, 1}}, Do[If[SequenceCount[w, {0, 1}] == 1, AppendTo[w, Mod[Total@ w[[-2 ;; -1]], #]], Break[]], {i, 2, Infinity}]; Total[2^Union@ w]] &, 33, 2]",
+        "(* Second program: generate the first n terms using the plot in Links *)",
+        "With[{n = 34, img = ImageData@ ColorNegate@ Import[\"https://oeis.org/A336683/a336683.png\"]}, Map[FromDigits[#, 2] &@ Drop[#, LengthWhile[#, # == 0 &]] &@ Reverse[IntegerPart[#]] &, img[[1 ;; n]]]] (* _Michael De Vlieger_, Oct 05 2020 *)"
+    ],
+    "xref": [
+        "Cf. A000045, A001175, A066853, A079002, A128924, A189768."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Michael De Vlieger_, Oct 04 2020",
+    "references": 2,
+    "revision": 10,
+    "time": "2020-10-05T18:00:01-04:00",
+    "created": "2020-10-05T15:11:18-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 115529,
+    "data": "1632653061224489796,3673469387755102041,6530612244897959184,108166576527852893455922120064900,130881557598702001081665765278529,155759870200108166576527852893456,182801514332071389940508382909681",
+    "name": "Numbers k such that the concatenation of 2*k with k gives a square.",
+    "comment": [
+        "Numbers of the form k = a*b^2 where 10^(d-1) <= k < 10^d and (2*10^d+1)/a is a square. - _Robert Israel_, Jan 13 2021"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A115529/b115529.txt\">Table of n, a(n) for n = 1..36</a>"
+    ],
+    "example": [
+        "3265306122448979592_1632653061224489796 = 5714285714285714286^2."
+    ],
+    "maple": [
+        "f:= proc(d) local R,q,F,G,s,t,a,u,i;",
+        "   q:= 2*10^d+1;",
+        "   F:= ifactors(q)[2];",
+        "   G:= map(t -> [t[1],floor(t[2]/2)], F);",
+        "   s:= mul(t[1]^t[2],t=G);",
+        "   R:= NULL:",
+        "   for a in numtheory:-divisors(s) do",
+        "     u:= q/a^2;",
+        "     R:= R, seq(i^2*u, i=ceil(sqrt(10^(d-1)/u))..floor(sqrt((10^d-1)/u)))",
+        "   od;",
+        "   R",
+        "end proc:",
+        "seq(f(d),d=1..33); # _Robert Israel_, Jan 13 2021"
+    ],
+    "xref": [
+        "Cf. A102567, A106497, A115527 - A115556."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Giovanni Resta_, Jan 25 2006",
+    "references": 1,
+    "revision": 9,
+    "time": "2021-07-15T06:28:04-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

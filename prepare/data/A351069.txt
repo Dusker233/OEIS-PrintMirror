@@ -1,0 +1,34 @@
+{
+    "number": 351069,
+    "data": "3,6,29,122,633,3587,24091,184924",
+    "name": "Number of integers in range A002110(n) .. A002110(1+n)-1 such that the maximal digit in their primorial base expansion is not larger than the maximal exponent in their prime factorization, where A002110(n) gives the n-th primorial.",
+    "comment": [
+        "a(n) is the number of terms of A351038 (numbers k satisfying A328114(k) <= A051903(k)) in range A002110(n) .. A002110(1+n)-1."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=A002110(n) .. A002110(1+n)-1} A351039(k).",
+        "For all n, a(n) > A351067(n)."
+    ],
+    "example": [
+        "There are six numbers in range A002110(2) .. A002110(3)-1 [in 6 .. (30-1)] that satisfy the condition: 6, 7, 8, 9, 12, 16, therefore a(2) = 6."
+    ],
+    "program": [
+        "(PARI)",
+        "A002110(n) = prod(i=1,n,prime(i));",
+        "A051903(n) = if((1==n),0,vecmax(factor(n)[, 2]));",
+        "A276086(n) = { my(m=1, p=2); while(n, m *= (p^(n%p)); n = n\\p; p = nextprime(1+p)); (m); };",
+        "A351039(n) = (A051903(A276086(n)) <= A051903(n));",
+        "A351069(n) = sum(k=A002110(n),A002110(1+n)-1,A351039(k));"
+    ],
+    "xref": [
+        "Cf. A002110, A051903, A276086, A328114, A351038, A351039, A351067, A351070 (partial sums).",
+        "Cf. also A327969."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Feb 02 2022",
+    "references": 6,
+    "revision": 11,
+    "time": "2022-02-02T15:09:02-05:00",
+    "created": "2022-02-02T15:09:02-05:00"
+}

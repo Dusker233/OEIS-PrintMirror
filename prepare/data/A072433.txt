@@ -1,0 +1,45 @@
+{
+    "number": 72433,
+    "data": "99,110,121,909,929,949,969,989,1009,1010,1029,1030,1049,1050,1069,1070,1089,1090,1110,1130,1150,1170,1190,1881,2101,3223,4763,9009,10010,10989,11990,16236,17776,18081,18281,18481,18681,18881,18898",
+    "name": "Numbers n for which there are exactly nine k such that n = k + reverse(k).",
+    "comment": [
+        "Subsequence of A067030. First term is A072041(9).",
+        "Contains 9*10^k+9 for k>=1 and 10^k+10 for k>=2. - _Robert Israel_, Jul 12 2019"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A072433/b072433.txt\">Table of n, a(n) for n = 1..422</a>",
+        "<a href=\"/index/Res#RAA\">Index entries for sequences related to Reverse and Add!</a>"
+    ],
+    "example": [
+        "99 = k + reverse(k) for k = 18, 27, 36, 45, 54, 63, 72, 81, 90."
+    ],
+    "maple": [
+        "N:= 10^5:",
+        "revdigs:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "V:= Vector(N):",
+        "for x from 1 to N do",
+        "  v:= x + revdigs(x);",
+        "  if v <= N then V[v]:= V[v]+1 fi;",
+        "od:",
+        "select(t -> V[t]=10, [$1..N]); # _Robert Israel_, Jul 12 2019"
+    ],
+    "program": [
+        "(ARIBAS) var n,k,c,i,rev: integer; st,nst: string; end; m := 9; for n := 0 to 19500 do k := n div 2; c := 0; while k <= n and c < m + 1 do st := itoa(k); nst := \"\"; for i := 0 to length(st) - 1 do nst := concat(st[i],nst); end; rev := atoi(nst); if n = k + rev then inc(c); if k mod 10 <> 0 and k <> rev then inc(c); end; end; inc(k); end; if c = m then write(n,\",\"); end; end;"
+    ],
+    "xref": [
+        "Cf. A067030, A072041."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Klaus Brockhaus_, Jun 17 2002",
+    "ext": [
+        "Offset changed by _Robert Israel_, Jul 12 2019"
+    ],
+    "references": 1,
+    "revision": 12,
+    "time": "2019-07-12T17:46:23-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

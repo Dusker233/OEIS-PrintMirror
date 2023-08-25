@@ -1,0 +1,46 @@
+{
+    "number": 183821,
+    "data": "15,813,43947,2377341,128578815,6954559893,376152548283,20345104031589,1100412240703119,59518368554767389,3219189893127084843,174117402720326269485,9417546276713264441151,509369980225226329837125",
+    "name": "1/256 the number of (n+1) X 3 0..3 arrays with no 2 X 2 subblock being a reflection across the shared element pair of any horizontal or vertical neighbor.",
+    "comment": [
+        "Column 2 of A183827."
+    ],
+    "link": [
+        "R. H. Hardin, <a href=\"/A183821/b183821.txt\">Table of n, a(n) for n = 1..147</a>",
+        "Robert Israel, <a href=\"/A183821/a183821.pdf\">Maple-assisted proof of formula</a>"
+    ],
+    "formula": [
+        "Empirical: a(n) = 43*a(n-1) + 645*a(n-2) - 2451*a(n-3).",
+        "Empirical g.f.: 3*x*(5 + 56*x - 229*x^2) / (1 - 43*x - 645*x^2 + 2451*x^3). - _Colin Barker_, Apr 05 2018",
+        "Empirical formulas verified (see link). - _Robert Israel_, Aug 10 2018"
+    ],
+    "example": [
+        "Some solutions with upper left block zero for 5 X 3:",
+        "   0 0 2   0 0 0   0 0 3   0 0 3   0 0 0   0 0 2   0 0 0",
+        "   0 0 0   0 0 1   0 0 3   0 0 2   0 0 1   0 0 1   0 0 2",
+        "   2 0 0   2 0 1   3 0 2   1 0 2   1 0 3   1 0 0   3 0 1",
+        "   2 2 1   3 2 3   1 3 1   1 3 1   0 3 3   2 1 2   0 3 3",
+        "   3 2 3   0 0 3   0 0 3   2 0 3   3 2 2   0 0 3   2 2 0"
+    ],
+    "maple": [
+        "Configs:= remove(t -> [t[1],t[4]]=[t[3],t[6]], [seq(convert(4^6+i,base,4)[1..6],i=0..4^6-1)]): nConfigs:= nops(Configs):",
+        "Compatible:= proc(i,j) local k;",
+        "if Configs[i][4..6] <> Configs[j][1..3] or Configs[i][1..2] =Configs[j][4..5] or Configs[i][2..3] = Configs[j][5..6] then 0 else 1 fi;",
+        "end proc:",
+        "T:= Matrix(nConfigs,nConfigs,Compatible):",
+        "u:= Vector(nConfigs,1):",
+        "Tu[0]:= u:",
+        "for n from 1 to 30 do Tu[n]:= T . Tu[n-1] od:",
+        "seq(u^%T . Tu[n]/256, n=0..30); # _Robert Israel_, Aug 10 2018"
+    ],
+    "xref": [
+        "Cf. A183827."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. H. Hardin_, Jan 07 2011",
+    "references": 1,
+    "revision": 16,
+    "time": "2018-08-12T02:43:48-04:00",
+    "created": "2011-01-07T10:35:01-05:00"
+}

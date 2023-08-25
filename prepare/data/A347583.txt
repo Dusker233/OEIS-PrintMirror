@@ -1,0 +1,50 @@
+{
+    "number": 347583,
+    "data": "0,4,14,42,116,292,722,1682,3920,8820,19770,43578,95540,207244,447812,960676,2053292,4368094,9262226,19571396,41243844,86678272,181752522,380276248,794120918",
+    "name": "Number of length-2n binary strings of the form xxyy, with x and y both nonempty.",
+    "formula": [
+        "A347582(n) - 2^n <= a(n). - _Michael S. Branicky_, Jan 23 2022"
+    ],
+    "example": [
+        "For n=3 the sequence counts the strings 000000, 000011, 000101, 001010, 001111, 010100, 010111 and their binary complements."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "from functools import cache",
+        "@cache",
+        "def b(n): # length-2n binary strings of the form ww",
+        "    return set(w+w for w in product(b\"01\", repeat=n))",
+        "def a(n):",
+        "    return len(set(s+t for i in range(1, n) for s in b(i) for t in b(n-i)))",
+        "print([a(n) for n in range(1, 18)]) # _Michael S. Branicky_, Jan 23 2022",
+        "(Python) # bit-based version",
+        "from itertools import product",
+        "def b(n): # length-2n binary strings of the form ww",
+        "    for i in range(2**n):",
+        "        yield (i << n) + i",
+        "def a(n):",
+        "    st = set()",
+        "    for i in range(1, n):",
+        "        for w in b(i):",
+        "            s = w << (2*(n-i))",
+        "            for t in b(n-i):",
+        "                st.add(s+t)",
+        "    return len(st)",
+        "print([a(n) for n in range(1, 20)]) # _Michael S. Branicky_, Jan 25 2022"
+    ],
+    "xref": [
+        "Cf. A347582 (where x, y are allowed to be empty)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Jeffrey Shallit_, Jan 23 2022",
+    "ext": [
+        "a(18)-a(21) from _Michael S. Branicky_, Jan 23 2022",
+        "a(22)-a(25) from _Michael S. Branicky_, Jan 25 2022"
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2022-01-25T10:27:57-05:00",
+    "created": "2022-01-23T11:16:59-05:00"
+}

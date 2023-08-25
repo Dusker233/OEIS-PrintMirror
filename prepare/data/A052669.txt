@@ -1,0 +1,43 @@
+{
+    "number": 52669,
+    "data": "1,1,8,66,840,12960,242640,5286960,131765760,3693755520,115058361600,3942342835200,147360531225600,5967185903078400,260221271108198400,12158477739023616000,605960547270414336000,32087688283562655744000",
+    "name": "Expansion of e.g.f. (1-2*x)/(1-3*x-x^2+2*x^3).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A052669/b052669.txt\">Table of n, a(n) for n = 0..350</a>",
+        "INRIA Algorithms Project, <a href=\"http://ecs.inria.fr/services/structure?nbr=617\">Encyclopedia of Combinatorial Structures 617</a>"
+    ],
+    "formula": [
+        "E.g.f.: (1 - 2*x)/(1 - 3*x - x^2 + 2*x^3).",
+        "Recurrence: a(0)=1, a(1)=1, a(2)=8, a(n) = 3*n*a(n-1) + n*(n-1)*a(n-2) - 2*n*(n-1)*(n-2)*a(n-3).",
+        "a(n) = (n!/229)*Sum_{alpha=RootOf(1 - 3*Z - Z^2 + 2*Z^3)} (5 + 74*alpha - 16*alpha^2)*alpha^(-1-n).",
+        "a(n) = n!*A052550(n). - _R. J. Mathar_, Nov 27 2011"
+    ],
+    "maple": [
+        "spec := [S,{S=Sequence(Prod(Z,Union(Z,Sequence(Union(Z,Z)))))},labeled]: seq(combstruct[count](spec,size=n), n=0..20);"
+    ],
+    "mathematica": [
+        "b[n_]:= b[n]= If[n<3, 1+3*Floor[n/2], 3*b[n-1] +b[n-2] -2*b[n-3]];",
+        "A052669[n_] := n!*b[n]; (* b = A052550 *)",
+        "Table[A052669[n], {n, 0, 40}] (* _G. C. Greubel_, Jun 14 2022 *)"
+    ],
+    "program": [
+        "(Magma) R<x>:=PowerSeriesRing(Rationals(), 40); Coefficients(R!(Laplace( (1-2*x)/(1-3*x-x^2+2*x^3) ))); // _G. C. Greubel_, Jun 14 2022",
+        "(SageMath)",
+        "@CachedFunction",
+        "def b(n): # b = A052550",
+        "    if (n<3): return 1 + 3*(n//2)",
+        "    else: return 3*b(n-1) +b(n-2) -2*b(n-3)",
+        "def A052669(n): return factorial(n)*b(n)",
+        "[A052669(n) for n in (0..40)] # _G. C. Greubel_, Jun 14 2022"
+    ],
+    "xref": [
+        "Cf. A000142, A052550."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,3",
+    "author": "encyclopedia(AT)pommard.inria.fr, Jan 25 2000",
+    "references": 1,
+    "revision": 17,
+    "time": "2022-06-15T01:51:06-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 329559,
+    "data": "1,2,3,5,7,9,11,13,17,19,23,25,27,29,31,37,41,43,47,49,53,59,61,67,71,73,79,81,83,89,91,97,101,103,107,109,113,121,125,127,131,137,139,149,151,157,163,167,169,173,179,181,191,193,197,199,203,211,223,227",
+    "name": "MM-numbers of multiset clutters (connected weak antichains of multisets).",
+    "comment": [
+        "A weak antichain of multisets is a multiset of multisets, none of which is a proper subset of any other."
+    ],
+    "formula": [
+        "Equals {1} followed by the intersection of A305078 and A316476."
+    ],
+    "example": [
+        "The sequence of terms tother with their corresponding clutters begins:",
+        "   1: {}              37: {{1,1,2}}            91: {{1,1},{1,2}}",
+        "   2: {{}}            41: {{6}}                97: {{3,3}}",
+        "   3: {{1}}           43: {{1,4}}             101: {{1,6}}",
+        "   5: {{2}}           47: {{2,3}}             103: {{2,2,2}}",
+        "   7: {{1,1}}         49: {{1,1},{1,1}}       107: {{1,1,4}}",
+        "   9: {{1},{1}}       53: {{1,1,1,1}}         109: {{10}}",
+        "  11: {{3}}           59: {{7}}               113: {{1,2,3}}",
+        "  13: {{1,2}}         61: {{1,2,2}}           121: {{3},{3}}",
+        "  17: {{4}}           67: {{8}}               125: {{2},{2},{2}}",
+        "  19: {{1,1,1}}       71: {{1,1,3}}           127: {{11}}",
+        "  23: {{2,2}}         73: {{2,4}}             131: {{1,1,1,1,1}}",
+        "  25: {{2},{2}}       79: {{1,5}}             137: {{2,5}}",
+        "  27: {{1},{1},{1}}   81: {{1},{1},{1},{1}}   139: {{1,7}}",
+        "  29: {{1,3}}         83: {{9}}               149: {{3,4}}",
+        "  31: {{5}}           89: {{1,1,1,2}}         151: {{1,1,2,2}}"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "zsm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[Less@@#,GCD@@s[[#]]]>1&]},If[c=={},s,zsm[Sort[Append[Delete[s,List/@c[[1]]],LCM@@s[[c[[1]]]]]]]]];",
+        "stableQ[u_,Q_]:=!Apply[Or,Outer[#1=!=#2&&Q[#1,#2]&,u,u,1],{0,1}];",
+        "Select[Range[100],And[stableQ[primeMS[#],Divisible],Length[zsm[primeMS[#]]]<=1]&]"
+    ],
+    "xref": [
+        "Connected numbers are A305078.",
+        "Stable numbers are A316476.",
+        "Clutters (of sets) are A048143.",
+        "Cf. A056239, A112798, A289509, A302242, A302494, A304716, A318991, A319837, A320275, A320456, A328514, A329553, A329555."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Nov 18 2019",
+    "references": 16,
+    "revision": 6,
+    "time": "2019-11-18T22:11:00-05:00",
+    "created": "2019-11-18T22:11:00-05:00"
+}

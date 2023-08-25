@@ -1,0 +1,40 @@
+{
+    "number": 349731,
+    "data": "-1,1,1,10,231,9576,623645,58715280,7547514975,1270453824640,271252029133449,71635824470246400,22929813173612997575,8747686347650933760000,3921812703436118765113125,2041590849971133677650610176,1221367737152989777782325269375,832163138229382457228044554240000",
+    "name": "a(n) = -(-n)^n * FallingFactorial(1/n, n) for n >= 1 and a(0) = -1.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A349731/b349731.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = -(-1)^n*Sum_{k=0..n}[n, n-k]*(-n)^k, where [n, k] denotes the Stirling cycle numbers A132393(n, k)."
+    ],
+    "maple": [
+        "A349731 := n -> -add((-1)^(n-k)*Stirling1(n, n-k)*(-n)^k, k = 0..n):",
+        "seq(A349731(n), n = 0..17);"
+    ],
+    "mathematica": [
+        "a[0] = -1; a[n_] := -(-n)^n * FactorialPower[1/n, n]; Array[a, 18, 0] (* _Amiram Eldar_, Dec 21 2021 *)"
+    ],
+    "program": [
+        "(SageMath)",
+        "def a(n): return -(-n)^n*falling_factorial(1/n, n) if n > 0 else -1",
+        "print([a(n) for n in (1..17)])",
+        "(Python)",
+        "from sympy import ff",
+        "from fractions import Fraction",
+        "def A349731(n): return -1 if n == 0 else -(-n)**n*ff(Fraction(1,n),n) # _Chai Wah Wu_, Dec 21 2021",
+        "(Magma) [-1,1] cat [Round(n^(n-1)*Gamma((n^2-1)/n)/Gamma((n-1)/n)): n in [2..30]]; // _G. C. Greubel_, Feb 22 2022"
+    ],
+    "xref": [
+        "The main diagonal of A349971 for n >= 1.",
+        "The Stirling set counterpart is A318183.",
+        "Cf. A008279, A092985, A132393."
+    ],
+    "keyword": "sign",
+    "offset": "0,4",
+    "author": "_Peter Luschny_, Dec 21 2021",
+    "references": 3,
+    "revision": 29,
+    "time": "2022-03-01T01:26:03-05:00",
+    "created": "2021-12-21T16:50:00-05:00"
+}

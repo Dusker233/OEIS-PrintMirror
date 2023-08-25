@@ -1,0 +1,52 @@
+{
+    "number": 361297,
+    "data": "1,2,20,996,108136,19784060,5389230384,2031493901304,1009373201680848,638377781979995244,500510427096797296240,476433596774288713285352,541348750963243079098368768,723928411313545718524263072248,1125748074023593276830674831519936",
+    "name": "Number of n-dimensional cubic lattice walks with 2n steps from origin to origin and avoiding early returns to the origin.",
+    "comment": [
+        "a(n) is a multiple of 2n for n>=1."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A361297/b361297.txt\">Table of n, a(n) for n = 0..212</a>"
+    ],
+    "formula": [
+        "a(n) = A361397(n,n).",
+        "From _Vaclav Kotesovec_, Apr 23 2023: (Start)",
+        "a(n) ~ c * d^n * n^(2*n), where d = 1.138128465642... and c = 1.72802011936...",
+        "a(n) ~ A303503(n). (End)"
+    ],
+    "maple": [
+        "b:= proc(n, l) option remember; add(add((h-> `if`(n<=",
+        "      add(v, v=h), 0, `if`(n=1, 1, `if`(h[-1]=0, 0,",
+        "        b(n-1, h)))))(sort(subsop(i=abs(l[i]+j), l))),",
+        "          j=[-1, 1]), i=1..nops(l))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, b(2*n, [0$n])):",
+        "seq(a(n), n=0..15);",
+        "# second Maple program:",
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, 1,",
+        "      add(b(n-j, i-1)*binomial(n, j)^2, j=0..n))",
+        "    end:",
+        "g:= proc(n, k) option remember; `if` (n<1, -1,",
+        "      -add(g(n-i, k)*(2*i)!*b(i, k)/i!^2, i=1..n))",
+        "    end:",
+        "a:= n-> abs(g(n$2)):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n == 0 || i == 1, 1, Sum[b[n - j, i - 1]*Binomial[n, j]^2, {j, 0, n}]];",
+        "g[n_, k_] := g[n, k] = If [n < 1, -1, -Sum[g[n - i, k]*(2i)!* b[i, k]/i!^2, {i, 1, n}]];",
+        "a[n_] := Abs[g[n, n]];",
+        "Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, May 27 2023, from 2nd Maple program *)"
+    ],
+    "xref": [
+        "Main diagonal of A361397.",
+        "Cf. A005843, A303503."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Mar 08 2023",
+    "references": 3,
+    "revision": 20,
+    "time": "2023-05-27T06:54:44-04:00",
+    "created": "2023-03-10T09:37:18-05:00"
+}

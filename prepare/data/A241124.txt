@@ -1,0 +1,29 @@
+{
+    "number": 241124,
+    "data": "4,6,8,12,14,15,16,24,25,26,30,32,46,46,48,48,62,63,63,64,64,87,91,95,96,96,96,114,114,122,124,125,128,129,160,161,176,177,178,178,188,189,190,192,192,192,194,225,226,226,240,252,254,255,256,288,288,289,290,320",
+    "name": "Smallest k such that the factorization of k! over distinct terms of A050376 contains at least n nonprime terms of A050376.",
+    "example": [
+        "For k=2,3,4,5,6, we have the following factorizations of k! over distinct terms of A050376: 2!=2, 3!=2*3, 4!=2*3*4, 5!=2*3*4*5, 6!=5*9*16.",
+        "Therefore, a(1)=4, a(2)=6."
+    ],
+    "mathematica": [
+        "f[n_] := DigitCount[n, 2, 1] - Mod[n, 2]; nb[n_] := Total@(f/@ FactorInteger[n][[;;,2]]); a[n_] := (k=1; While[nb[k!] < n, k++]; k); Array[a, 60] (* _Amiram Eldar_, Dec 16 2018 from the PARI code *)"
+    ],
+    "program": [
+        "(PARI) nb(n) = {my(f = factor(n)); sum(k=1, #f~, hammingweight(f[k,2]) - (f[k,2] % 2));}",
+        "a(n) = {my(k=1); while (nb(k!) < n, k++); k;} \\\\ _Michel Marcus_, Dec 16 2018"
+    ],
+    "xref": [
+        "Cf. A240537, A240606, A240619, A240620, A240668, A240669, A240670, A240672, A240695, A240751, A240755, A240764, A240905, A240906, A241123."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Shevelev_, Apr 16 2014",
+    "ext": [
+        "More terms from _Michel Marcus_, Dec 16 2018"
+    ],
+    "references": 4,
+    "revision": 19,
+    "time": "2018-12-16T13:00:24-05:00",
+    "created": "2014-04-16T09:03:30-04:00"
+}

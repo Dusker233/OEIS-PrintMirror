@@ -1,0 +1,50 @@
+{
+    "number": 347600,
+    "data": "2,11,17,187,211,307,331,451,452,571,572,6937,7057,7657,7777,8497,8498,9217,9218,11977,12097,12697,12817,13537,13538,14257,14258,17737,17739,17857,17859,18577,18578,18579,18580,19297,19298,19299,19300,22777,22779,22897",
+    "name": "Irregular table read by rows, T(n, k) is the rank of the k-th Seidel permutation of {1,...,n}, permutations sorted in lexicographical order.",
+    "comment": [
+        "Let M be the 2n X 2n matrix with M(j, k) = floor((2*j - k - 1) / 2*n). A Seidel permutation of order n is a permutation sigma of {1,...,2n} if Product_{k=1..2n} M(k, sigma(k)) does not vanish.",
+        "Let P(n) denote the number of Seidel permutations of order n. We conjecture that P(n) = A005439(n). This conjecture was inspired by the conjecture of _Zhi-Wei Sun_ in A036968. The name 'Seidel permutations' follows a comment of _Don Knuth_: \"The earliest known reference for these numbers (A005439) is Seidel ....\"",
+        "The related sequence A347599 lists Genocchi permutations."
+    ],
+    "example": [
+        "Table starts:",
+        "[1] 2;",
+        "[2] 11, 17;",
+        "[3] 187, 211, 307, 331, 451, 452, 571, 572.",
+        ".",
+        "The 8 permutations corresponding to the ranks are for n = 3:",
+        "187 -> [246135]; 211 -> [256134]; 307 -> [346125]; 331 -> [356124];",
+        "451 -> [456123]; 452 -> [456132]; 571 -> [546123]; 572 -> [546132]."
+    ],
+    "program": [
+        "(Julia)",
+        "function SeidelPermutations(n)",
+        "    f(m) = m >= 2n ? 1 : m < 0 ? -1 : 0",
+        "    Mat(n) = [[f(2*j - k - 1) for k in 1:2n] for j in 1:2n]",
+        "    M = Mat(n); P = permutations(1:2n); R = Int64[]",
+        "    S, rank = 0, 1",
+        "    for p in P",
+        "        m = prod(M[k][p[k]] for k in 1:2n)",
+        "        if m != 0",
+        "            S += m",
+        "            push!(R, rank)",
+        "        end",
+        "        rank += 1",
+        "    end",
+        "    # println(n, \" -> \", (-1)^n*S)",
+        "    return R",
+        "end",
+        "for n in 1:5 println(SeidelPermutations(n)) end"
+    ],
+    "xref": [
+        "Cf. A005439, A036968, A347599."
+    ],
+    "keyword": "nonn,tabf",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Sep 08 2021",
+    "references": 5,
+    "revision": 7,
+    "time": "2021-09-09T09:38:24-04:00",
+    "created": "2021-09-09T09:38:24-04:00"
+}

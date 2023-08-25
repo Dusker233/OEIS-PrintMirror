@@ -1,0 +1,59 @@
+{
+    "number": 306217,
+    "data": "30,42,66,70,78,102,110,114,130,138,174,182,190,222,230,238,258,282,310,318,354,366,374,402,410,418,430,434,438,442,498,598,602,606,618,642,646,654,658,678,682,710,742,762,786,822,826,830,854,906,938,942,946,970,978",
+    "name": "Sphenic numbers with a prime nearest neighbor.",
+    "comment": [
+        "Terms are of the form 4k + 2."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A306217/b306217.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "30 is a term because (2*3*5) - 1 = 29 and (2*3*5) + 1 = 31.",
+        "42 is a term because (2*3*7) - 1 = 41 and (2*3*7) + 1 = 43.",
+        "66 is a term because (2*3*11) + 1 = 67.",
+        "70 is a term because (2*5*7) + 1 = 71."
+    ],
+    "maple": [
+        "Res:= NULL: count:= 0: last:= 0: p:= 3;",
+        "while count < 100 do",
+        "  p:= nextprime(p);",
+        "  if p mod 4 = 3 then",
+        "    if p-1 <> last then",
+        "      F:= ifactors(p-1)[2];",
+        "      if nops(F) = 3 and {F[1,2],F[2,2],F[3,2]}={1} then",
+        "        Res:= Res, p-1;",
+        "        count:= count+1;",
+        "    fi fi",
+        "  else",
+        "    F:= ifactors(p+1)[2];",
+        "    last:= p+1;",
+        "    if nops(F) = 3 and {F[1,2],F[2,2],F[3,2]}={1} then",
+        "       Res:= Res, p+1;",
+        "       count:= count+1;",
+        "    fi",
+        "  fi",
+        "od:",
+        "Res; # _Robert Israel_, Feb 17 2019"
+    ],
+    "mathematica": [
+        "Select[Range[2, 10^3, 4], And[AnyTrue[# + {-1, 1}, PrimeQ], SquareFreeQ@ #, PrimeNu@ # == 3] &] (* _Michael De Vlieger_, Jan 29 2019 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = for(n=1, nn, if(bigomega(n)==3 && omega(n)==3 && (isprime(n-1) || isprime(n+1)), print1(n\", \"))); \\\\ _Michel Marcus_, Jan 30 2019"
+    ],
+    "xref": [
+        "Cf. A007304, A000040.",
+        "Subsequence of A016825."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Torlach Rush_, Jan 29 2019",
+    "ext": [
+        "Corrected and extended by _Michel Marcus_, Jan 30 2019"
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2019-02-18T02:14:48-05:00",
+    "created": "2019-02-17T10:48:12-05:00"
+}

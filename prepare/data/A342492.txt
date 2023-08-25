@@ -1,0 +1,77 @@
+{
+    "number": 342492,
+    "data": "1,1,2,4,7,11,17,26,37,52,73,95,125,163,208,261,330,407,498,607,734,881,1056,1250,1480,1738,2029,2359,2742,3160,3635,4169,4760,5414,6151,6957,7861,8858,9952,11148,12483,13934,15526,17267,19173,21252,23535,25991",
+    "name": "Number of compositions of n with weakly increasing first quotients.",
+    "comment": [
+        "Also called log-concave-up compositions.",
+        "The first quotients of a sequence are defined as if the sequence were an increasing divisor chain, so for example the first quotients of (6,3,1) are (1/2,1/3)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A342492/b342492.txt\">Table of n, a(n) for n = 0..500</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/LogarithmicallyConcaveSequence.html\">Logarithmically Concave Sequence</a>.",
+        "Gus Wiseman, <a href=\"https://oeis.org/A069916/a069916.txt\">Sequences counting and ranking partitions and compositions by their differences and quotients.</a>"
+    ],
+    "example": [
+        "The composition (4,2,1,2,3) has first quotients (1/2,1/2,2,3/2) so is not counted under a(12), even though the first differences (-2,-1,1,1) are weakly increasing.",
+        "The a(1) = 1 through a(6) = 17 compositions:",
+        "  (1)  (2)    (3)      (4)        (5)          (6)",
+        "       (1,1)  (1,2)    (1,3)      (1,4)        (1,5)",
+        "              (2,1)    (2,2)      (2,3)        (2,4)",
+        "              (1,1,1)  (3,1)      (3,2)        (3,3)",
+        "                       (1,1,2)    (4,1)        (4,2)",
+        "                       (2,1,1)    (1,1,3)      (5,1)",
+        "                       (1,1,1,1)  (2,1,2)      (1,1,4)",
+        "                                  (3,1,1)      (2,1,3)",
+        "                                  (1,1,1,2)    (2,2,2)",
+        "                                  (2,1,1,1)    (3,1,2)",
+        "                                  (1,1,1,1,1)  (4,1,1)",
+        "                                               (1,1,1,3)",
+        "                                               (2,1,1,2)",
+        "                                               (3,1,1,1)",
+        "                                               (1,1,1,1,2)",
+        "                                               (2,1,1,1,1)",
+        "                                               (1,1,1,1,1,1)"
+    ],
+    "maple": [
+        "b:= proc(n, q, l) option remember; `if`(n=0, 1, add(",
+        "     `if`(q=0 or q>=l/j, b(n-j, l/j, j), 0), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Mar 25 2021"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],LessEqual@@Divide@@@Reverse/@Partition[#,2,1]&]],{n,0,15}]",
+        "(* Second program: *)",
+        "b[n_, q_, l_] := b[n, q, l] = If[n == 0, 1, Sum[",
+        "     If[q == 0 || q >= l/j, b[n - j, l/j, j], 0], {j, 1, n}]];",
+        "a[n_] := b[n, 0, 0];",
+        "a /@ Range[0, 50] (* _Jean-Fran\u00e7ois Alcover_, May 19 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "The weakly decreasing version is A069916.",
+        "The version for differences instead of quotients is A325546.",
+        "The strictly increasing version is A342493.",
+        "The unordered version is A342497, ranked by A342523.",
+        "The strict unordered version is A342516.",
+        "A000005 counts constant compositions.",
+        "A000009 counts strictly increasing (or strictly decreasing) compositions.",
+        "A000041 counts weakly increasing (or weakly decreasing) compositions.",
+        "A000929 counts partitions with all adjacent parts x >= 2y.",
+        "A001055 counts factorizations.",
+        "A002843 counts compositions with all adjacent parts x <= 2y.",
+        "A003238 counts chains of divisors summing to n - 1 (strict: A122651).",
+        "A074206 counts ordered factorizations.",
+        "A167865 counts strict chains of divisors > 1 summing to n.",
+        "Cf. A003242, A008965, A048004, A059966, A067824, A167606, A253249, A274199, A318991, A318992, A342527, A342528."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Mar 16 2021",
+    "ext": [
+        "a(21)-a(47) from _Alois P. Heinz_, Mar 25 2021"
+    ],
+    "references": 6,
+    "revision": 30,
+    "time": "2023-02-22T04:47:13-05:00",
+    "created": "2021-03-17T22:50:37-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 316766,
+    "data": "1,1,2,3,6,13,30,72,180,458,1194,3160,8459,22881,62417,171526,474405,1319395,3687711,10352696,29178988",
+    "name": "Number of series-reduced locally stable rooted identity trees whose leaves form an integer partition of n.",
+    "comment": [
+        "A rooted tree is series-reduced if every non-leaf node has at least two branches. It is locally stable if no branch is a submultiset of any other branch of the same root. It is an identity tree if no branch appears multiple times under the same root."
+    ],
+    "example": [
+        "The a(6) = 13 trees:",
+        "6,",
+        "(15),",
+        "(1(14)),",
+        "(1(1(13))),",
+        "(1(1(1(12)))),",
+        "(1(23)), (2(13)), (3(12)), (123),",
+        "(1(2(12))), (2(1(12))), (12(12)),",
+        "(24).",
+        "Example of non-stable trees are ((12)(123)) and ((12)(12(12)))."
+    ],
+    "mathematica": [
+        "submultisetQ[M_,N_]:=Or[Length[M]==0,MatchQ[{Sort[List@@M],Sort[List@@N]},{{x_,Z___},{___,x_,W___}}/;submultisetQ[{Z},{W}]]];",
+        "stableQ[u_]:=Apply[And,Outer[#1==#2||!submultisetQ[#1,#2]&&!submultisetQ[#2,#1]&,u,u,1],{0,1}];",
+        "nms[n_]:=nms[n]=Prepend[Join@@Table[Select[Union[Sort/@Tuples[nms/@ptn]],And[UnsameQ@@#,stableQ[#]]&],{ptn,Rest[IntegerPartitions[n]]}],{n}];",
+        "Table[Length[nms[n]],{n,10}]"
+    ],
+    "xref": [
+        "Cf. A000081, A000669, A001678, A004111, A141268, A292504, A300660, A316467, A316474, A316653, A316654, A316656."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Jul 12 2018",
+    "ext": [
+        "a(18)-a(21) from _Robert Price_, Sep 14 2018"
+    ],
+    "references": 0,
+    "revision": 8,
+    "time": "2018-09-15T01:56:36-04:00",
+    "created": "2018-07-12T20:24:29-04:00"
+}

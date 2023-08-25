@@ -1,0 +1,50 @@
+{
+    "number": 168599,
+    "data": "1,1,5,119,32707,69038213,1309743837515,206848589180297555,281897548265847120670891,3287603007740009094151486257065,330891681467139744269091005122077348971",
+    "name": "G.f.: exp( Sum_{n>=1} A002426(n)^n * x^n/n ), where A002426(n) is the central trinomial coefficients.",
+    "comment": [
+        "Compare to: exp( Sum_{n>=1} A002426(n)*x^n/n ) = g.f. of the Motzkin numbers (A001006)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A168599/b168599.txt\">Table of n, a(n) for n = 0..45</a>"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 5*x^2 + 119*x^3 + 32707*x^4 +...",
+        "log(A(x)) = x + 9*x^2/2 + 343*x^3/3 + 130321*x^4/4 +...+ A002426(n)^n*x^n/n +..."
+    ],
+    "maple": [
+        "m:=30;",
+        "A002426:= n-> add( binomial(n, k)*binomial(k, n-k), k=0..n );",
+        "S := series( exp(add(A002426(j)^j*x^j/j, j = 1..m+2)), x, m+1);",
+        "seq(coeff(S, x, j), j = 0..m); # _G. C. Greubel_, Mar 16 2021"
+    ],
+    "mathematica": [
+        "A002426[n_] := GegenbauerC[n, -n, -1/2];",
+        "With[{m=30}, CoefficientList[Series[Exp[Sum[A002426[j]^j*x^j/j, {j, m+2}]], {x, 0, m}], x]] (* _G. C. Greubel_, Mar 16 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1,polcoeff(exp(sum(m=1,n,polcoeff((1+x+x^2)^m,m)^m*x^m/m)+x*O(x^n)),n))}",
+        "(Magma)",
+        "m:=30;",
+        "A002426:= func< n | (&+[ Binomial(n, k)*Binomial(k, n-k): k in [0..n]]) >;",
+        "R<x>:=PowerSeriesRing(Rationals(), m);",
+        "Coefficients(R!( Exp( (&+[A002426(j)^j*x^j/j: j in [1..m+2]]) ) )); // _G. C. Greubel_, Mar 16 2021",
+        "(Sage)",
+        "m=30",
+        "def A002426(n): return sum( binomial(n, k)*binomial(k, n-k) for k in (0..n) )",
+        "def A168598_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P( exp( sum( A002426(j)^j*x^j/j for j in [1..m+2])) ).list()",
+        "A168598_list(m) # _G. C. Greubel_, Mar 16 2021"
+    ],
+    "xref": [
+        "Cf. A001006, A002426, A168598, A225328."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Dec 01 2009",
+    "references": 4,
+    "revision": 8,
+    "time": "2021-03-16T08:28:21-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,70 @@
+{
+    "number": 360247,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,13,14,15,16,17,19,21,22,23,25,26,27,29,30,31,32,33,34,35,36,37,38,39,41,42,43,46,47,49,51,53,55,57,58,59,61,62,64,65,66,67,69,70,71,73,74,77,78,79,81,82,83,85,86,87,89,90,91,93,94,95,97,100,101,102,103,105,106,107,109,110,111,113,114,115,118,119,121,122,123,125,127,128,129,130",
+    "name": "Numbers for which the prime indices have the same mean as the distinct prime indices.",
+    "comment": [
+        "First differs from A072774 in having 90.",
+        "First differs from A242414 in lacking 126.",
+        "Includes all squarefree numbers and perfect powers.",
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798."
+    ],
+    "example": [
+        "The prime indices of 900 are {3,3,2,2,1,1} with mean 2, and the distinct prime indices are {1,2,3} also with mean 2, so 900 is in the sequence."
+    ],
+    "maple": [
+        "isA360247 := proc(n)",
+        "    local ifs,pidx,pe,meanAll,meanDist ;",
+        "    if n = 1 then",
+        "        return true ;",
+        "    end if ;",
+        "    ifs := ifactors(n)[2] ;",
+        "    # list of prime indices with multiplicity",
+        "    pidx := [] ;",
+        "    for pe in ifs do",
+        "        [numtheory[pi](op(1,pe)),op(2,pe)] ;",
+        "        pidx := [op(pidx),%] ;",
+        "    end do:",
+        "    meanAll := add(op(1,pe)*op(2,pe),pe=pidx) / add(op(2,pe),pe=pidx) ;",
+        "    meanDist := add(op(1,pe),pe=pidx) / nops(pidx) ;",
+        "    if meanAll = meanDist then",
+        "        true;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 to 130 do",
+        "    if isA360247(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, May 22 2023"
+    ],
+    "mathematica": [
+        "prix[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "Select[Range[100],Mean[prix[#]]==Mean[Union[prix[#]]]&]"
+    ],
+    "xref": [
+        "Signature instead of parts: A324570, counted by A114638.",
+        "Signature instead of distinct parts: A359903, counted by A360068.",
+        "These partitions are counted by A360243.",
+        "The complement is A360246, counted by A360242.",
+        "For median instead of mean the complement is A360248, counted by A360244.",
+        "For median instead of mean we have A360249, counted by A360245.",
+        "For greater instead of equal mean we have A360252, counted by A360250.",
+        "For lesser instead of equal mean we have A360253, counted by A360251.",
+        "A008284 counts partitions by number of parts, distinct A116608.",
+        "A058398 counts partitions by mean, also A327482.",
+        "A088529/A088530 gives mean of prime signature (A124010).",
+        "A112798 lists prime indices, length A001222, sum A056239.",
+        "A316413 = numbers whose prime indices have integer mean, distinct A326621.",
+        "A326567/A326568 gives mean of prime indices.",
+        "A326619/A326620 gives mean of distinct prime indices.",
+        "Cf. A000975, A051293, A067340, A067538, A360005, A360241."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Feb 07 2023",
+    "references": 12,
+    "revision": 7,
+    "time": "2023-05-22T05:43:18-04:00",
+    "created": "2023-02-08T13:16:03-05:00"
+}

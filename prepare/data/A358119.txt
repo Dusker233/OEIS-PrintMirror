@@ -1,0 +1,29 @@
+{
+    "number": 358119,
+    "data": "2,3,15,98,750,6359,57939,556896,5578764,57759397,614328561,6682078770,74071710414,834535805445,9535609593441,110306008352832,1289937458160684,15231176767392691,181406519662622559,2177471166182909994,26321521760571055830,320222147815305416123",
+    "name": "a(n) = Sum_{j=0..n} (-1)^j*binomial(2*n - j, j)*c(n - j)*c(n - j + 2), where c(n) is the n-th Catalan number.",
+    "formula": [
+        "a(n) = 2*(-1)^n*hypergeom([5/2, -n, n + 1], [2, 4], 4).",
+        "G.f.: (x+1-(1-14*x+x^2)^(1/2)*hypergeom([-1/2,3/2],[3],-16*x/(1-14*x+x^2)))/(2*x). - _Mark van Hoeij_, Nov 11 2022"
+    ],
+    "maple": [
+        "c := n -> binomial(2*n, n)/(n + 1):",
+        "A358119 := n -> add((-1)^j*binomial(2*n-j, j)*c(n-j)*c(n-j+2), j = 0..n):",
+        "seq(A358119(n), n = 0 .. 21);"
+    ],
+    "program": [
+        "(Python)",
+        "from math import comb",
+        "def A358119(n): return sum((-1 if j&1 else 1)*comb((n<<1)-j,j)*comb(n-j<<1,n-j)*comb(n-j+2<<1,n-j+2)//(n-j+1)//(n-j+3) for j in range(n+1)) # _Chai Wah Wu_, Nov 11 2022"
+    ],
+    "xref": [
+        "Cf. A000108, A358118."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Peter Luschny_, Nov 11 2022",
+    "references": 3,
+    "revision": 14,
+    "time": "2022-11-12T03:02:13-05:00",
+    "created": "2022-11-11T07:15:34-05:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 362001,
+    "data": "2,4,26,52,58,64,73,76,86,87,89,95,96,98,100,101,104,106,110,111,112,113,121,122,126,129,133,134,135,136,138,139,140,141,144,146,148,152,156,157,161,162,163,164,165,167,169,170,171,172,173,175,176,177,178,180,182,183,184,186,187,189,190",
+    "name": "Numbers k such that the digits of k^2 are a subsequence of the digits of 2^k.",
+    "comment": [
+        "Does the sequence contain all numbers > 327?",
+        "Conjecture is true up to 10^6. - _Michael S. Branicky_, Apr 03 2023"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A362001/b362001.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(3) = 26 is a term because the digits of 26^2 = 676 form a subsequence of those of 2^26 = 67108864."
+    ],
+    "maple": [
+        "filter:= proc(n) local L,nL,M,nM,i,j,k;",
+        "  L:= convert(n^2,base,10); nL:= nops(L);",
+        "  M:= convert(2^n,base,10); nM:= nops(M);",
+        "  j:= 1:",
+        "  for i from 1 to nL do",
+        "    if not member(L[i],M[j..nM],'k') then return false fi;",
+        "    j:= j+k;",
+        "  od;",
+        "  true",
+        "end proc:",
+        "select(filter, [$0..200]);"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, product",
+        "def ok(n):",
+        "    s, p = n**2, 2**n",
+        "    while s and p:",
+        "        if p%10 == s%10:",
+        "            s //= 10",
+        "        p //= 10",
+        "    return s == 0 and n > 0",
+        "print([k for k in range(200) if ok(k)]) # _Michael S. Branicky_, Apr 03 2023",
+        "(Python)",
+        "from itertools import count, islice",
+        "def A362001_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for k in count(max(startvalue,1)):",
+        "        c = iter(str(1<<k))",
+        "        if all(map(lambda b:any(map(lambda a:a==b,c)),str(k**2))):",
+        "            yield k",
+        "A362001_list = list(islice(A362001_gen(),20)) # _Chai Wah Wu_, Apr 03 2023"
+    ],
+    "xref": [
+        "Cf. A046829."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Apr 02 2023",
+    "references": 3,
+    "revision": 15,
+    "time": "2023-04-04T07:42:57-04:00",
+    "created": "2023-04-03T05:16:13-04:00"
+}

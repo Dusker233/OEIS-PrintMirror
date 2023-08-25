@@ -1,0 +1,36 @@
+{
+    "number": 309535,
+    "data": "0,1,2,5,13,30,69,156,348,769,1682,3653,7884,16924,36160,76944,163137,344770,726533,1527052,3202076,6700096,13992080,29167936,60703424,126141953,261754114,542448645,1122778124,2321317916,4794159168,9891365008,20388823360",
+    "name": "Total number of square parts in all compositions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A309535/b309535.txt\">Table of n, a(n) for n = 0..3313</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=1} x^(k^2)*(1-x)^2/(1-2*x)^2.",
+        "a(n) ~ c * 2^n * n, where c = 0.1411171034014846448336823185681189155765645674... - _Vaclav Kotesovec_, Aug 18 2019",
+        "a(n) = Sum_{k=1..A000196(n)} A045623(n-k^2). - _Gregory L. Simay_, Jun 07 2021"
+    ],
+    "example": [
+        "a(4) = 13: (1)(1)(1)(1), (1)(1)2, (1)2(1), 2(1)(1), 22, (1)3, 3(1), (4)."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; add(a(n-j)+",
+        "      `if`(issqr(j), ceil(2^(n-j-1)), 0), j=1..n)",
+        "    end:",
+        "seq(a(n), n=0..33);"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(EllipticTheta[3, 0, x]-1)*(1-x)^2/(2*(1-2*x)^2), {x, 0, 30}], x] (* _Vaclav Kotesovec_, Aug 18 2019 *)",
+        "Table[Sum[If[k == n, 1, (2^(n - k - 2)*(3 + n - k))] * If[IntegerQ[Sqrt[k]], 1, 0], {k, 1, n}], {n, 0, 30}] (* _Vaclav Kotesovec_, Aug 18 2019 *)"
+    ],
+    "xref": [
+        "Cf. A000196, A000290, A045623, A073336, A102291."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 06 2019",
+    "references": 2,
+    "revision": 26,
+    "time": "2021-06-24T16:06:15-04:00",
+    "created": "2019-08-07T13:03:32-04:00"
+}

@@ -1,0 +1,52 @@
+{
+    "number": 323255,
+    "data": "1,1,11,248,9968,638772,60061657,7798036000,1336715859150,292406145227392,79483340339739367,26280500564448081664,10386012861097225139356,4834639222955142417477888,2618110215141486526589786501,1631888040186649673361825042432,1159983453675106278249250918734938",
+    "name": "The permanent of an n X n Toeplitz matrix M(n) whose first row consists of successive positive integer numbers 2*n - 1, n - 1, ..., 1 and whose first column consists of 2*n - 1, 2*n - 2, ..., n.",
+    "comment": [
+        "The trace of the matrix M(n) is A000384(n).",
+        "The sum of the first row of the matrix M(n) is A034856(n).",
+        "The sum of the first column of the matrix M(n) is A000326(n).",
+        "For n > 1, the sum of the superdiagonal of the matrix M(n) is A000290(n-1).",
+        "For n > 1, the sum of the subdiagonal of the matrix M(n) is A001105(n-1)."
+    ],
+    "link": [
+        "Stefano Spezia, <a href=\"/A323255/b323255.txt\">Table of n, a(n) for n = 0..35</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Toeplitz_matrix\">Toeplitz matrix</a>"
+    ],
+    "example": [
+        "For n = 1 the matrix M(1) is",
+        "   1",
+        "with permanent a(1) = 1.",
+        "For n = 2 the matrix M(2) is",
+        "   3, 1",
+        "   2, 3",
+        "with permanent a(2) = 11.",
+        "For n = 3 the matrix M(3) is",
+        "   5, 2, 1",
+        "   4, 5, 2",
+        "   3, 4, 5",
+        "with permanent a(3) = 248."
+    ],
+    "mathematica": [
+        "b[i_]:=i; a[n_]:=If[n==0, 1, Permanent[ToeplitzMatrix[Join[{b[2*n-1]}, Array[b, n-1, {2*n-2,n }]], Join[{b[2*n-1]},Array[b, n-1, {n-1,1}]]]]]; Array[a, 16, 0]"
+    ],
+    "program": [
+        "(PARI) tm(n) = {my(m = matrix(n, n, i, j, if (j==1, 2*n-i, n-j+1))); for (i=2, n, for (j=2, n, m[i, j] = m[i-1, j-1]; ); ); m;}",
+        "a(n) = matpermanent(tm(n)); \\\\ _Stefano Spezia_, Dec 11 2019"
+    ],
+    "xref": [
+        "Cf. A000290, A000326, A000384, A001105, A001792.",
+        "Cf. A034856, A204235, A318173, A322908, A322909.",
+        "Cf. A323254 (determinant of matrix M(n))."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Stefano Spezia_, Jan 09 2019",
+    "ext": [
+        "a(0) = 1 prepended by _Stefano Spezia_, Dec 08 2019"
+    ],
+    "references": 2,
+    "revision": 20,
+    "time": "2019-12-11T05:04:45-05:00",
+    "created": "2019-01-21T06:59:04-05:00"
+}

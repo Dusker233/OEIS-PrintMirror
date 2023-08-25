@@ -1,0 +1,33 @@
+{
+    "number": 332620,
+    "data": "1,6,57,532,12505,93786,4941265,67117128,2324524401,40000400110,2853116706121,35664407810076,3634501279107049,66672041585829330,3503151123049919265,147573952606856413456,13235844190181388226849,236078448452969449231206,35611553801885644604231641",
+    "name": "a(n) = Sum_{k=1..n} n^(n/gcd(n, k)).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A332620/b332620.txt\">Table of n, a(n) for n = 1..385</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n] Sum_{k>=1} Sum_{j>=1} phi(j) * n^j * x^(k*j).",
+        "a(n) = Sum_{k=1..n} n^(lcm(n, k)/k).",
+        "a(n) = Sum_{d|n} phi(d) * n^d.",
+        "a(n) = n * A332621(n)."
+    ],
+    "mathematica": [
+        "Table[Sum[n^(n/GCD[n, k]), {k, 1, n}], {n, 1, 19}]",
+        "Table[Sum[EulerPhi[d] n^d, {d, Divisors[n]}], {n, 1, 19}]",
+        "Table[SeriesCoefficient[Sum[Sum[EulerPhi[j] n^j x^(k j), {j, 1, n}], {k, 1, n}], {x, 0, n}], {n, 1, 19}]"
+    ],
+    "program": [
+        "(Magma) [&+[n^(n div Gcd(n,k)):k in [1..n]]:n in [1..20]]; // _Marius A. Burtea_, Feb 17 2020",
+        "(PARI) a(n) = sum(k=1, n, n^(n/gcd(n, k))); \\\\ _Michel Marcus_, Mar 10 2021"
+    ],
+    "xref": [
+        "Cf. A000010, A056665, A066108, A226561, A228640, A321349, A332621."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Feb 17 2020",
+    "references": 5,
+    "revision": 13,
+    "time": "2022-09-08T08:46:25-04:00",
+    "created": "2020-02-17T18:13:29-05:00"
+}

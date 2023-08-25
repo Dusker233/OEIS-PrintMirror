@@ -1,0 +1,45 @@
+{
+    "number": 36538,
+    "data": "2,3,7,12,23,45,89,178,356,707,1409,2822,5639,11273,22546,45088,90165,180315,360637,721258,1442491,2884973,5769941,11539858,23079721,46159395,92318705,184637321,369274467,738548867,1477097749,2954195452,5908390605,11816780739",
+    "name": "Number of integers m <= 2^n such that d(m) = 2^k for some k = 0, 1, 2, 3, ...",
+    "comment": [
+        "a(n+1)/a(n) is very close to 2; a(n)/2^n is near 0.7.",
+        "As n goes to infinity, lim a(n)/2^n = 0.687827... (see comments in A036537). - _Vladimir Shevelev_, Feb 28 2017"
+    ],
+    "formula": [
+        "a(n) = number of 1s in f(tau(k)) mapped across k = 1..2^n, with f(x):= 1-sign(log_2 x - floor( log_2 x )). - _Michael De Vlieger_, Mar 01 2017"
+    ],
+    "example": [
+        "Of the numbers 1 .. 2^4 = 16, only 4, 9, 12 and 16 are not in A036537, so a(4) = 16 - 4 = 12."
+    ],
+    "maple": [
+        "IversonBrackets := expr -> subs(true=1, false=0, expr):",
+        "A := proc(n) option remember; {seq(2^k, k=0..n)} end:",
+        "h := proc(n) option remember; add(evalb(numtheory:-tau(j) in A(n)), j=2^(n-1) + 1..2^n); IversonBrackets(%) end:",
+        "a := n -> 1 + add(h(k), k=1..n); seq(a(n), n=1..17); # _Peter Luschny_, May 14 2018"
+    ],
+    "mathematica": [
+        "Table[Count[#, 1] &@ Table[1 - Sign[# - Floor@ #] &@Log[2, #] &@ DivisorSigma[0, x], {x, 1, 2^m}], {m, 1, 20}] (* original program edited by _Michael De Vlieger_, Mar 01 2017, or *)",
+        "1 + Accumulate@ Table[Count[Range[2^(n - 1) + 1, 2^n], k_ /; IntegerQ@ Log2@ DivisorSigma[0, k]], {n, 20}] (* _Michael De Vlieger_, Feb 28 2017 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, 2^n, d = numdiv(k); (d<=2) || (ispower(d,,&p) && (p==2))); \\\\ _Michel Marcus_, May 14 2018",
+        "(Python)",
+        "from sympy import factorint",
+        "def A036538(n): return sum(1 for m in range(1,(1<<n)+1) if all(map(lambda w:not((k:=w+1)&-k)^k, factorint(m).values()))) # _Chai Wah Wu_, Jun 22 2023"
+    ],
+    "xref": [
+        "Cf. A000005, A036537, A036539, A037992."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Labos Elemer_",
+    "ext": [
+        "a(20)-a(26) from _Michael De Vlieger_, Feb 28 2017",
+        "a(27)-a(34) from _Giovanni Resta_, May 14 2018"
+    ],
+    "references": 3,
+    "revision": 41,
+    "time": "2023-06-22T14:34:08-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

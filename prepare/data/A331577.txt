@@ -1,0 +1,40 @@
+{
+    "number": 331577,
+    "data": "0,0,0,4,65,1026,17857,349224,7657281,186895270,5037424601,148805552556,4784793219505,166458635341194,6231891513395745,249886992888096976,10686839817678846209,485632267141865950926,23370062118676064101801,1187393725239246382405140",
+    "name": "Number of labeled rooted trees with n vertices and more than two branches of the root.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A331577/b331577.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "For n > 1, a(n) = Sum_{k > 2} A206429(n, k).",
+        "E.g.f.: f(x) - x*(1 + f(x) + f(x)^2/2), where f(x) is the e.g.f. of A000169. - _Andrew Howroyd_, Jan 23 2020"
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(6) = 1026 trees (in the format root[branches]) are:",
+        "  1[2,3,4[5[6]]]",
+        "  1[2,3[4],5[6]]",
+        "  1[2,3,4[5,6]]",
+        "  1[2,3,4,5[6]]",
+        "  1[2,3,4,5,6]"
+    ],
+    "mathematica": [
+        "lrt[set_]:=If[Length[set]==0,{},Join@@Table[Apply[root,#]&/@Join@@Table[Tuples[lrt/@stn],{stn,sps[DeleteCases[set,root]]}],{root,set}]];",
+        "Table[Length[Select[lrt[Range[n]],Length[#]>2&]],{n,6}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(f=serreverse(x*exp(O(x^n) -x ))); Vec(serlaplace(f - x*(1 + f + f^2/2)), -n)} \\\\ _Andrew Howroyd_, Jan 23 2020"
+    ],
+    "xref": [
+        "The series-reduced version is A331578.",
+        "The unlabeled version is A331233.",
+        "Labeled rooted trees are counted by A000169.",
+        "Cf. A000081, A033185, A060313, A060356, A206429, A331488, A331490."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Gus Wiseman_, Jan 21 2020",
+    "references": 3,
+    "revision": 16,
+    "time": "2020-01-24T11:45:11-05:00",
+    "created": "2020-01-21T18:24:51-05:00"
+}

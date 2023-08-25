@@ -1,0 +1,31 @@
+{
+    "number": 168259,
+    "data": "1,2,6,14,38,96,254,656,1724,4492,11776,30774,80608,210892,552226,1445374,3784308,9906482,25936206,67899344,177764618,465387226,1218404344,3189806746,8351034954,21863248282,57238759726,149852900454,392320072078,1027106974446,2689001192594,7039895709776",
+    "name": "Eigensequence of triangle A168258.",
+    "comment": [
+        "Eigensequence of triangle A168258, derived from the following operation: Shift down triangle A168258, so that rows begin [1; 1; 1,1; 2,2,1; ...] = triangle M. Then take lim_{n->oo} M^n, resulting in a left-shifted vector. Delete the first 1, getting (1, 2, 6, 14, 38, 96, ...) = this sequence.",
+        "a(n)/a(n-1) apparently tends to phi^2=A104457. a(19)/a(18) = 2.618104..."
+    ],
+    "link": [
+        "Paul Barry, <a href=\"http://arxiv.org/abs/1107.5490\">Invariant number triangles, eigentriangles and Somos-4 sequences</a>, arXiv preprint arXiv:1107.5490 [math.CO], 2011."
+    ],
+    "program": [
+        "(PARI) T(n, k) = if(binomial(k, n-k)>0, 1, 0); \\\\ A101688",
+        "mat(nn) = my(ma=matrix(nn+1, nn, n, k, T(n-1, k-1)), mb=matrix(nn, nn, n, k, n>=k)); ma*mb; \\\\ A168258",
+        "shiftm(m, nn) = my(shm=matrix(nn+1, nn+1)); shm[1,1]=1; for (n=1, nn, for(k=1, nn, shm[n+1,k] = m[n,k];);); shm;",
+        "lista(nn) = my(m=mat(nn), shm=shiftm(m, nn), shmnn=shm^nn); vector(nn, k, shmnn[k+1, 1]); \\\\ _Michel Marcus_, Nov 19 2022"
+    ],
+    "xref": [
+        "Cf. A104457, A168258, A168260."
+    ],
+    "keyword": "eigen,nonn",
+    "offset": "1,2",
+    "author": "_Gary W. Adamson_, Nov 21 2009",
+    "ext": [
+        "Edited and more terms from _Michel Marcus_, Nov 19 2022"
+    ],
+    "references": 2,
+    "revision": 19,
+    "time": "2022-11-19T14:51:34-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

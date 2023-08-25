@@ -1,0 +1,57 @@
+{
+    "number": 332293,
+    "data": "1,2,4,6,8,12,16,30,32,64,128,180,210,256,360,512,1024,2048,2310,4096,8192,16384,30030,32768,65536,75600,131072,262144,510510,524288",
+    "name": "Heinz numbers of widely totally co-strongly normal integer partitions.",
+    "comment": [
+        "An integer partition is widely totally co-strongly normal if either it is constant 1's (wide) or it covers an initial interval of positive integers (normal) and has weakly increasing run-lengths (co-strong) which are themselves a widely totally co-strongly normal partition.",
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k)."
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices begins:",
+        "     1: {}",
+        "     2: {1}",
+        "     4: {1,1}",
+        "     6: {1,2}",
+        "     8: {1,1,1}",
+        "    12: {1,1,2}",
+        "    16: {1,1,1,1}",
+        "    30: {1,2,3}",
+        "    32: {1,1,1,1,1}",
+        "    64: {1,1,1,1,1,1}",
+        "   128: {1,1,1,1,1,1,1}",
+        "   180: {1,1,2,2,3}",
+        "   210: {1,2,3,4}",
+        "   256: {1,1,1,1,1,1,1,1}",
+        "   360: {1,1,1,2,2,3}",
+        "   512: {1,1,1,1,1,1,1,1,1}",
+        "  1024: {1,1,1,1,1,1,1,1,1,1}",
+        "  2048: {1,1,1,1,1,1,1,1,1,1,1}",
+        "  2310: {1,2,3,4,5}",
+        "  4096: {1,1,1,1,1,1,1,1,1,1,1,1}",
+        "  8192: {1,1,1,1,1,1,1,1,1,1,1,1,1}",
+        "For example, 180 is the Heinz number of (3,2,2,1,1), with run-lengths (3,2,2,1,1) -> (1,2,2) -> (1,2) -> (1,1). These are all normal with weakly increasing multiplicities and the last is all 1's, so 180 belongs to the sequence."
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "normQ[m_]:=m=={}||Union[m]==Range[Max[m]];",
+        "gnaQ[y_]:=Or[y=={},Union[y]=={1},And[normQ[y],LessEqual@@Length/@Split[y],gnaQ[Length/@Split[y]]]];",
+        "Select[Range[1000],gnaQ[Reverse[primeMS[#]]]&]"
+    ],
+    "xref": [
+        "A subset of A055932.",
+        "Closed under A181819.",
+        "The non-co-strong version is A332276.",
+        "The enumeration of these partitions by sum is A332278.",
+        "The alternating version is A332290.",
+        "The strong version is A332291.",
+        "The case of reversed partitions is (also) A332291.",
+        "Cf. A000009, A056239, A133808, A182850, A304660, A317089, A317246, A317257, A317492, A329747, A332277, A332289."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Feb 16 2020",
+    "references": 7,
+    "revision": 5,
+    "time": "2020-02-18T04:47:44-05:00",
+    "created": "2020-02-18T04:47:44-05:00"
+}

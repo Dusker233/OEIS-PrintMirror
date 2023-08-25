@@ -1,0 +1,58 @@
+{
+    "number": 358583,
+    "data": "1,1,1,3,4,13,20,67,110,383,663,2346,4217,15118,27979,101092,191440,695474,1341974,4893067,9589567,35055011,69612556,254923825,511987473,1877232869,3807503552,13972144807,28585315026,104955228432,216381073935,794739865822",
+    "name": "Number of rooted trees with n nodes, at least half of which are leaves.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A358583/b358583.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "A358581(n) + A358584(n) = A000081(n).",
+        "A358582(n) + A358583(n) = A000081(n).",
+        "a(n) = Sum_{k=floor((n-1)/2)+1..n} A055277(n, k). - _Andrew Howroyd_, Dec 31 2022"
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 13 trees:",
+        "  o  (o)  (oo)  (ooo)   (oooo)   (ooooo)",
+        "                ((oo))  ((ooo))  ((oooo))",
+        "                (o(o))  (o(oo))  (o(ooo))",
+        "                        (oo(o))  (oo(oo))",
+        "                                 (ooo(o))",
+        "                                 (((ooo)))",
+        "                                 ((o)(oo))",
+        "                                 ((o(oo)))",
+        "                                 ((oo(o)))",
+        "                                 (o((oo)))",
+        "                                 (o(o)(o))",
+        "                                 (o(o(o)))",
+        "                                 (oo((o)))"
+    ],
+    "mathematica": [
+        "art[n_]:=If[n==1,{{}},Join@@Table[Select[Tuples[art/@c],OrderedQ],{c,Join@@Permutations/@IntegerPartitions[n-1]}]];",
+        "Table[Length[Select[art[n],Count[#,{},{0,Infinity}]>=Count[#,_[__],{0,Infinity}]&]],{n,1,10}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See A358584 for R(n).",
+        "seq(n) = {my(A=R(n)); vector(n, n, my(u=Vecrev(A[n]/y)); vecsum(u[(n-1)\\2+1..#u]))} \\\\ _Andrew Howroyd_, Dec 31 2022"
+    ],
+    "xref": [
+        "For equality we have A185650 aerated, ranked by A358578.",
+        "The strict case is A358581.",
+        "The opposite version is A358584, strict A358582.",
+        "The ordered version is A358586, strict A358585.",
+        "A000081 counts rooted trees, ordered A000108.",
+        "A055277 counts rooted trees by nodes and leaves, ordered A001263.",
+        "A358575 counts rooted trees by nodes and internal nodes, ordered A090181.",
+        "A358589 counts square rooted trees, ranked by A358577, ordered A358590.",
+        "Cf. A000891, A034781, A065097, A109129, A342507, A358579, A358580, A358586."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Gus Wiseman_, Nov 23 2022",
+    "ext": [
+        "Terms a(19) and beyond from _Andrew Howroyd_, Dec 31 2022"
+    ],
+    "references": 8,
+    "revision": 9,
+    "time": "2022-12-31T15:05:20-05:00",
+    "created": "2022-11-25T07:22:09-05:00"
+}

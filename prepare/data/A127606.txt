@@ -1,0 +1,38 @@
+{
+    "number": 127606,
+    "data": "1,4,176,79808,372713728,17931360207872,8887976555024756736,45390122553039546330628096,2388340820825093234015277927170048,1294826675280341699389150405743029631844352",
+    "name": "a(n) = 2^(2*n*n) * Product_{1<=i,j<=n} (cos(i*Pi/(2*n+1))^2 + sin(j*Pi/(2*n+1))^2).",
+    "comment": [
+        "a(n)/4^n is an integer. - _Seiichi Manyama_, Dec 31 2020"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A127606/b127606.txt\">Table of n, a(n) for n = 0..40</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Chebyshev_polynomials\">Chebyshev polynomials</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Resultant\">Resultant</a>"
+    ],
+    "formula": [
+        "a(n) = 2^n * sqrt(Resultant(T_{2*n+1}(i*x/2), U_{2*n}(x/2))), where T_n(x) is a Chebyshev polynomial of the first kind, U_n(x) is a Chebyshev polynomial of the second kind and i = sqrt(-1). - _Seiichi Manyama_, Jan 09 2021",
+        "a(n) ~ 2^(1/8) * exp(G*(2*n + 1)^2/Pi) / (1 + sqrt(2))^(n + 1/2), where G is Catalan's constant A006752. - _Vaclav Kotesovec_, Mar 18 2023"
+    ],
+    "maple": [
+        "for n from 0 to 12 do a[n]:=2^(2*n*n)*product(product(cos(i*Pi/(2*n+1))^2+ sin(j*Pi/(2*n+1))^2,j=1..n),i=1..n) od: seq(round(evalf(a[n],300)),n=0..12);"
+    ],
+    "mathematica": [
+        "Table[2^(2*n^2) * Product[Product[Cos[i*Pi/(2*n + 1)]^2 + Sin[j*Pi/(2*n + 1)]^2, {i, 1, n}], {j, 1, n}], {n, 0, 15}] // Round (* _Vaclav Kotesovec_, Mar 18 2023 *)"
+    ],
+    "program": [
+        "(PARI) default(realprecision, 120);",
+        "{a(n) = round(prod(i=1, n, prod(j=1, n, 4*cos(i*Pi/(2*n+1))^2+4*sin(j*Pi/(2*n+1))^2)))} \\\\ _Seiichi Manyama_, Dec 31 2020",
+        "(PARI) {a(n) = sqrtint(4^n*polresultant(polchebyshev(2*n+1, 1, I*x/2), polchebyshev(2*n, 2, x/2)))} \\\\ _Seiichi Manyama_, Jan 09 2021"
+    ],
+    "xref": [
+        "Cf. A004003, A127605."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Miklos Kristof_, Apr 03 2007",
+    "references": 3,
+    "revision": 24,
+    "time": "2023-03-18T04:46:32-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

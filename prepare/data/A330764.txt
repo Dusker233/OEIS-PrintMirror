@@ -1,0 +1,36 @@
+{
+    "number": 330764,
+    "data": "1,3,18,194,2944,57959,1398858,39981994,1320143478,49439258516,2070409961552,95867076538834,4863079990663528,268198764863998103,15977057268090388836,1022415045656417706598,69946606996018140613292,5094427098628436561252367,393558075509405403487404506",
+    "name": "Number of series-reduced rooted trees whose leaves are sets with a total of n elements covering an initial interval of positive integers.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A330764/b330764.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "The a(3) = 18 trees:",
+        "  (123)          ((1)(12))       ((1)(1)(1))",
+        "  ((1)(23))      ((2)(12))       ((1)((1)(1)))",
+        "  ((2)(13))      ((1)(2)(2))",
+        "  ((3)(12))      ((1)(1)(2))",
+        "  ((1)(2)(3))    ((1)((2)(2)))",
+        "  ((1)((2)(3)))  ((1)((1)(2)))",
+        "  ((2)((1)(3)))  ((2)((1)(2)))",
+        "  ((3)((1)(2)))  ((2)((1)(1)))"
+    ],
+    "program": [
+        "(PARI)",
+        "EulerT(v)={Vec(exp(x*Ser(dirmul(v, vector(#v, n, 1/n))))-1, -#v)}",
+        "R(n, k)={my(v=[]); for(n=1, n, v=concat(v, EulerT(concat(v, [binomial(k, n)]))[n])); v}",
+        "seq(n)={sum(k=1, n, R(n, k)*sum(r=k, n, binomial(r, k)*(-1)^(r-k)))}"
+    ],
+    "xref": [
+        "Row sums of A330763.",
+        "Cf. A330469 (leaves are multisets)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Andrew Howroyd_, Dec 29 2019",
+    "references": 3,
+    "revision": 9,
+    "time": "2020-01-09T19:22:52-05:00",
+    "created": "2019-12-30T04:28:03-05:00"
+}

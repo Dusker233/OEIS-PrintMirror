@@ -1,0 +1,32 @@
+{
+    "number": 326293,
+    "data": "1,1,2,4,8,27,192,1750",
+    "name": "Number of non-nesting, topologically connected simple graphs with vertices {1..n}.",
+    "comment": [
+        "Two edges {a,b}, {c,d} are crossing if a < c < b < d or c < a < d < b, and nesting if a < c < d < b or c < a < b < d. A graph with positive integer vertices is topologically connected if the graph whose vertices are the edges and whose edges are crossing pairs of edges is connected."
+    ],
+    "link": [
+        "Gus Wiseman, <a href=\"/A326293/a326293.png\">The a(5) = 27 non-nesting, topologically connected simple graphs</a>."
+    ],
+    "mathematica": [
+        "croXQ[eds_]:=MatchQ[eds,{___,{x_,y_},___,{z_,t_},___}/;x<z<y<t||z<x<t<y];",
+        "nesXQ[eds_]:=MatchQ[eds,{___,{x_,y_},___,{z_,t_},___}/;x<z<t<y||z<x<y<t];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[Subsets[Subsets[Range[n],{2}]],!nesXQ[#]&&Length[csm[Union[Subsets[#,{1}],Select[Subsets[#,{2}],croXQ]]]]<=1&]],{n,0,5}]"
+    ],
+    "xref": [
+        "The inverse binomial transform is the covering case A326349.",
+        "Topologically connected simple graphs are A324328.",
+        "Non-crossing simple graphs are A054726.",
+        "Topologically connected set partitions are A099947.",
+        "Cf. A000108, A000699, A006125, A007297, A117662, A136653.",
+        "Cf. A324173, A324323, A324327, A326244, A326330, A326341."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jun 29 2019",
+    "references": 16,
+    "revision": 6,
+    "time": "2019-06-30T06:50:14-04:00",
+    "created": "2019-06-30T06:50:14-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 88132,
+    "data": "1,3,12,47,185,728,2865,11275,44372,174623,687217,2704496,10643361,41886227,164840412,648718287,2552986921,10047107272,39539710801,155605856283,612376317860,2409965560639,9484256386273,37324649227232",
+    "name": "a(n) equals the square of the n-th partial sum added to twice the n-th partial sum of the squares, divided by a(n-1), for all n>1, with a(0)=1, a(1)=3.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A088132/b088132.txt\">Table of n, a(n) for n = 0..200</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (4,0,-1)."
+    ],
+    "formula": [
+        "a(n) = 4*a(n-1) - a(n-3) for n>3.",
+        "G.f.: (1-x)/(1-4*x+x^3).",
+        "G.f.: 1/(x - x^2*Sum_{n>=0} A030186(n)*x^n) - 1/x."
+    ],
+    "maple": [
+        "seq(coeff(series((1-x)/(1-4*x+x^3), x, n+1), x, n), n = 0..30); # _G. C. Greubel_, Oct 26 2019"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{4,0,-1}, {1,3,12}, 30] (* or *) CoefficientList[Series[ (1-x)/(1-4x+x^3), {x,0,30}], x] (* _Harvey P. Dale_, Jun 24 2011 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=if(n==0,1, if(n==1,3, (sum(k=0, n-1, a(k))^2 + 2*sum(k=0, n-1, a(k)^2))/a(n-1)))}",
+        "for(n=0,20,print1(a(n),\", \")) \\\\ _Paul D. Hanna_, Feb 20 2014",
+        "(PARI) Vec( (1-x)/(1-4*x+x^3) + O(x^66) ) \\\\ _Joerg Arndt_, Feb 16 2014",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 30); Coefficients(R!( (1-x)/(1-4*x+x^3) )); // _G. C. Greubel_, Oct 26 2019",
+        "(Sage)",
+        "def A088132_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P((1-x)/(1-4*x+x^3)).list()",
+        "A088132_list(30) # _G. C. Greubel_, Oct 26 2019",
+        "(GAP) a:=[1,3,12];; for n in [4..30] do a[n]:=34a[n-1]-a[n-3]; od; a; # _G. C. Greubel_, Oct 26 2019"
+    ],
+    "xref": [
+        "Cf. A030186, A088131."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Sep 19 2003",
+    "references": 3,
+    "revision": 32,
+    "time": "2022-09-08T08:45:11-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 346207,
+    "data": "1215,3968,5103,5264,6560,7424,7695,8991,9375,9800,11024,11583,11744,12375,12879,13040,14175,14336,14624,15624,16064,16280,16767,16928,17199,17576,18224,21375,21735,22112,22599,22815,23408,24255,24543,24704,24975,25839,26000,26487,27135",
+    "name": "Numbers k such that k and k+1 are products of at least 6 primes.",
+    "comment": [
+        "Integers k such that k and k+1 are in A046305."
+    ],
+    "example": [
+        "1215 = 3^5*5 is a product of 6 primes. The next integer, 1216 = 2^6*19, is a product of 7 primes. Thus, 1215 is in this sequence."
+    ],
+    "maple": [
+        "q:= n-> andmap(x-> numtheory[bigomega](x)>5, [n, n+1]):",
+        "select(q, [$1..30000])[];  # _Alois P. Heinz_, Jul 10 2021"
+    ],
+    "mathematica": [
+        "Select[Range[100000], Total[Transpose[FactorInteger[#]][[2]]] >= 6 && Total[Transpose[FactorInteger[# + 1]][[2]]] >= 6 &]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def prod6(n): return sum(factorint(n).values()) >= 6",
+        "def aupto(lim): return [k for k in range(lim+1) if prod6(k) and prod6(k+1)]",
+        "print(aupto(27135)) # _Michael S. Branicky_, Jul 10 2021",
+        "(PARI) isA346207(k) = (bigomega(k) >= 6) && (bigomega(k+1) >= 6) \\\\ _Jianing Song_, Jul 10 2021"
+    ],
+    "xref": [
+        "Cf. A046305, A345744."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Jul 10 2021",
+    "references": 0,
+    "revision": 12,
+    "time": "2021-07-11T03:25:24-04:00",
+    "created": "2021-07-10T19:44:46-04:00"
+}

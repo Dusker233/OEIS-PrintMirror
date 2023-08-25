@@ -1,0 +1,39 @@
+{
+    "number": 327608,
+    "data": "0,1,3,8,17,34,74,134,254,470,842,1463,2620,4416,7545,12749,21244,34913,57868,93583,151963,244602,391206,620888,987344,1550754,2435087,3804354,5920225,9162852,14179754,21785387,33436490,51121430,77935525,118384318,179617794",
+    "name": "Number of parts in all twice partitions of n where the second partition is strict.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327608/b327608.txt\">Table of n, a(n) for n = 0..4000</a>"
+    ],
+    "example": [
+        "a(3) = 8 = 1+2+2+3 counting the parts in 3, 21, 2|1, 1|1|1."
+    ],
+    "maple": [
+        "g:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0,",
+        "      `if`(n=0, [1, 0], g(n, i-1)+ (f-> f+",
+        "       [0, f[1]])(g(n-i, min(n-i, i-1)))))",
+        "    end:",
+        "b:= proc(n, i) option remember; `if`(n=0, [1, 0],",
+        "      `if`(i<2, 0, b(n, i-1)) +(h-> (f-> f +[0, f[1]*",
+        "       h[2]/h[1]])(b(n-i, min(n-i, i))*h[1]))(g(i$2)))",
+        "    end:",
+        "a:= n-> b(n$2)[2]:",
+        "seq(a(n), n=0..37);"
+    ],
+    "mathematica": [
+        "g[n_, i_] := g[n, i] = If[i(i+1)/2 < n, 0, If[n == 0, {1, 0}, g[n, i - 1] + Function[f, f + {0, f[[1]]}][g[n - i, Min[n - i, i - 1]]]]];",
+        "b[n_, i_] := b[n, i] = If[n == 0, {1, 0}, If[i < 2, 0, b[n, i - 1]] + Module[{h, f}, h = g[i, i]; f = b[n - i, Min[n - i, i]] h[[1]]; f + {0, f[[1]] h[[2]]/h[[1]]}]];",
+        "a[n_] := b[n, n][[2]];",
+        "a /@ Range[0, 37] (* _Jean-Fran\u00e7ois Alcover_, Dec 05 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000009, A000041, A270995, A327554, A327594, A327605, A327607."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 18 2019",
+    "references": 6,
+    "revision": 19,
+    "time": "2020-12-05T09:47:20-05:00",
+    "created": "2019-09-18T22:03:43-04:00"
+}

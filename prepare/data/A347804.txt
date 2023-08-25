@@ -1,0 +1,47 @@
+{
+    "number": 347804,
+    "data": "59,79,107,131,139,151,173,193,223,229,257,263,269,277,283,307,313,331,353,379,419,463,479,491,499,577,599,601,647,653,701,719,761,769,811,839,853,883,907,1049,1051,1061,1063,1069,1087,1117,1123,1129,1181,1187,1229,1231",
+    "name": "Primes for which there exists a level 1 modular form of weight less than or equal to (p+3)/2 which is not ordinary (meaning the p-adic valuation of its a_p eigenvalue is not zero).",
+    "comment": [
+        "These primes are sometimes called SL_2(Z)-Buzzard-irregular."
+    ],
+    "link": [
+        "Kevin Buzzard, <a href=\"http://www.numdam.org/item/AST_2005__298__1_0/\">Questions about slopes of modular forms</a>, Formes automorphes (I) - Actes du semestre du centre \u00c9mile Borel, printemps 2000, Ast\u00e9risque, no. 298 (2005), 15 pp. See <a href=\"https://www.ma.imperial.ac.uk/~buzzard/maths/research/papers/conjs.pdf\">also</a>."
+    ],
+    "program": [
+        "(Magma)",
+        "irregularprimesuptoN:=function(N);",
+        "    testlist:=function(L);",
+        "    if #L ge 2 then",
+        "        return true;",
+        "    elif (L[1] ne [])  and L[1][1][1] gt 0 then",
+        "        return true;",
+        "    else",
+        "        return false;",
+        "    end if;",
+        "    end function;",
+        "    irregularlist:=function(p);",
+        "    L:=[];",
+        "    kp:=Integers()! ((p+3)/2);",
+        "    exists(L[1]){[p] : k in [k : k in [2..kp]| IsEven(k)]  |  testlist([*ValuationsOfRoots(HeckePolynomial(CuspForms(Gamma0(1),k),p),p)*]) };",
+        "    return L;",
+        "    end function;",
+        "    P:=[p : p in [4..N] | IsPrime(p)];",
+        "    L:=[];",
+        "    for p in P do",
+        "        L:=L cat irregularlist(p);",
+        "    end for;",
+        "    return L;",
+        "    end function;"
+    ],
+    "xref": [
+        "Cf. A000040."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Chris Birkbeck_, Sep 13 2021",
+    "references": 0,
+    "revision": 39,
+    "time": "2022-09-08T08:46:26-04:00",
+    "created": "2021-11-09T06:10:07-05:00"
+}

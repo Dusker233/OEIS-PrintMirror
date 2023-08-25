@@ -1,0 +1,31 @@
+{
+    "number": 364860,
+    "data": "198,1210,2220,6368,10856,66992,525915,652664,5495264,7684672,13727466,16150628,25640096,26138475,28128368,33642028,34380688,40803868,133471275",
+    "name": "Greater of a pair of S-amicable numbers k < m such that s(k) = m and s(m) = k, where s(k) = A364858(k).",
+    "comment": [
+        "S-amicable numbers are analogous to amicable numbers (A002025/A002046) as S-perfect numbers (A118372) are analogous to perfect numbers (A000396).",
+        "The terms are ordered according to their lesser counterparts (A364859)."
+    ],
+    "formula": [
+        "a(n) = A364858(A364859(n))."
+    ],
+    "example": [
+        "198 is a term since A364858(198) = 186 < 198, and A364858(186) = 198."
+    ],
+    "mathematica": [
+        "seq[nmax_] := Module[{s = {1}, sum, sum2, am = {}, ak}, Do[sum = Total[Select[Divisors[n], MemberQ[s, #] &]]; If[sum <= n, AppendTo[s, n]; If[sum < n, sum2 = Total[Select[Most[Divisors[sum]], MemberQ[s, #] &]]; If[sum2 == n, AppendTo[am, n]]]], {n, 2, nmax}]; am]; seq[10^4]"
+    ],
+    "program": [
+        "(PARI) lista(nmax) = {my(c = 0, s, s2); for(n=2, nmax, s = sumdiv(n, d, !bittest(c, d)*d) - n; if(s > n, c+=1<<n); if(s < n, s2 = sumdiv(s, d, ((d<s)&&!bittest(c, d))*d); if(s2 == n, print1(n,\", \"))));} \\\\ after _M. F. Hasler_ at A181487"
+    ],
+    "xref": [
+        "Cf. A000396, A002025, A002046, A118372, A364858, A364859."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Aug 11 2023",
+    "references": 1,
+    "revision": 7,
+    "time": "2023-08-12T02:29:08-04:00",
+    "created": "2023-08-12T00:49:45-04:00"
+}

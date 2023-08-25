@@ -1,0 +1,60 @@
+{
+    "number": 362081,
+    "data": "1,2,4,6,12,24,30,36,72,120,360,420,840,1680,2520,4032,5040,10080,25200,32760,65520,98280,194040,196560,388080,942480,1801800,3160080,3603600,6320160,12640320,24504480,53721360,61981920,73513440,115315200,122522400,189909720,192099600,214885440",
+    "name": "Numbers k achieving record abundance (sigma(k) > 2*k) via a residue-based measure M(k) (see Comments), analogous to superabundant numbers A004394.",
+    "comment": [
+        "The residue-based quantifier function, M(k) = (k+1)*(1 - zeta(2)/2) - 1 - ( Sum_{j=1..k} k mod j )/k, measures either abundance (sigma(k) > 2*k), or deficiency (sigma(k) < 2*k), of a positive integer k. It follows from the known facts that Sum_{j=1..k} (sigma(j) + k mod j) = k^2 and that the average order of sigma(k)/k is Pi^2/6 = zeta(2) (see derivation below).",
+        "M(k) ~ 0 when sigma(k) ~ 2*k and for sufficiently large k, M(k) is positive when k is an abundant number (A005101) and negative when k is a deficient number (A005100). The terms of this sequence are the abundant k for which M(k) > M(m) for all m < k, analogous to the superabundant numbers A004394, which utilize sigma(k)/k as the measure. However, sigma(k)/k does not give a meaningful measure of deficiency, whereas M(k) does, thus a sensible notion of superdeficient (see A362082)."
+    ],
+    "link": [
+        "Jeffrey C. Lagarias, <a href=\"https://arxiv.org/abs/math/0008177\">An Elementary Problem Equivalent to the Riemmann Hypothesis</a>, arXiv:math/0008177 [math.NT], 2000-2001; Amer. Math. Monthly, 109 (2002), 534-543."
+    ],
+    "formula": [
+        "Derived starting with lemmas 1-3:",
+        "1) Sum_{j=1..k} (sigma(j) + k mod j) = k^2.",
+        "2) The average order of sigma(k)/k is Pi^2/6 = zeta(2).",
+        "3) R(k) = Sum_{j=1..k} k mod j, so R(k)/k is the average order of (k mod j).",
+        "Then:",
+        "Sum_{j=1..k} sigma(j) ~ zeta(2)*Sum_{j=1..k} j = zeta(2)*(k^2+k)/2.",
+        "R(k)/k ~ k - k*zeta(2)/2 - zeta(2)/2.",
+        "0 ~ (k+1)*(1 - zeta(2)/2) - 1 - R(k)/k.",
+        "Thus M(k) = (k+1)*(1 - zeta(2)/2) - 1 - R(k)/k is a measure of variance about sigma(k) ~ 2*k corresponding to M(k) ~ 0."
+    ],
+    "example": [
+        "The abundance measure is initially negative, becoming positive for k > 30. Initial measures with factorizations from the Mathematica program:",
+        "   1  -0.64493406684822643647   {{1,1}}",
+        "   2  -0.46740110027233965471   {{2,1}}",
+        "   4  -0.36233516712056609118   {{2,2}}",
+        "   6  -0.25726923396879252765   {{2,1},{3,1}}",
+        "  12  -0.10873810118013850374   {{2,2},{3,1}}",
+        "  24  -0.10334250226949712257   {{2,3},{3,1}}",
+        "  30  -0.096478036147509765322  {{2,1},{3,1},{5,1}}",
+        "  36   0.068719763307810925260  {{2,2},{3,2}}",
+        "  72   0.12657322670640173542   {{2,3},{3,2}}"
+    ],
+    "mathematica": [
+        "Clear[max, Rp, R, seqtable, M];",
+        "max = -1; Rp = 0; seqtable = {};",
+        "Do[R = Rp + 2 k - 1 - DivisorSigma[1, k];",
+        "  M = N[(k + 1)*(1 - Zeta[2]/2) - 1 - R/k, 20];",
+        "  If[M > max, max = M; Print[k, \"   \", max, \"   \", FactorInteger[k]];",
+        "   AppendTo[seqtable, k]];",
+        "  Rp = R, {k, 1, 1000000000}];",
+        "Print[seqtable]"
+    ],
+    "program": [
+        "(PARI) M(n) = (n+1)*(1 - zeta(2)/2) - 1 - sum(k=2, n, n%k)/n;",
+        "lista(nn) = my(m=-oo, list=List()); for (n=1, nn, my(mm = M(n)); if (mm > m, listput(list, n); m = mm);); Vec(list); \\\\ _Michel Marcus_, Apr 21 2023"
+    ],
+    "xref": [
+        "Cf. A362082 (superdeficient), A362083 (analogous to A335067, A326393).",
+        "Cf. A004394, A004490, A002201, A005100, A005101, A004125, A024916, A000290, A120444, A235796, A000396, A000079."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Richard Joseph Boland_, Apr 08 2023",
+    "references": 2,
+    "revision": 68,
+    "time": "2023-06-16T13:47:44-04:00",
+    "created": "2023-06-16T13:47:44-04:00"
+}

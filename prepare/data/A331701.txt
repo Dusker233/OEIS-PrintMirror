@@ -1,0 +1,52 @@
+{
+    "number": 331701,
+    "data": "8,9,16,25,32,64,81,125,128,256,512,1024,2048,4096,5041,8192,16384,32768,65536,131072,262144,524288,1048576,2097152,4194304,8388608,16777216,33554432,67108864,134217728,268435456,536870912,1073741824,2147483648,4294967296,8589934592",
+    "name": "Prime powers (A025475) that can be represented as a sum of two prime powers.",
+    "comment": [
+        "A000079 is a subsequence, starting from the 4th term, 2^3.",
+        "The subsequence of odd terms begins: 9, 25, 81, 125, 5041."
+    ],
+    "example": [
+        "9 = 8 + 1.",
+        "25 = 16 + 9.",
+        "81 = 49 + 32.",
+        "125 = 121 + 4.",
+        "5041 = 71^2 = 4913 + 128 = 17^3 + 2^7."
+    ],
+    "mathematica": [
+        "Select[#, Last@ # == 1 &][[All, 1]] &@ Fold[Function[{s, k}, Append[s, If[And[! PrimeQ@ k, DivisorSigma[1, k]*EulerPhi[k] > (k - 1)^2], {k, If[AnyTrue[IntegerPartitions[k, {2}], SubsetQ[s[[All, 1]], #] &], 1, 0]}, Nothing]]], {}, Range[10^4]] (* _Michael De Vlieger_, Jan 31 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "TOP = 10**5",
+        "primePowers={}",
+        "primePowers[1]=1",
+        "for x in range(2,TOP):",
+        "    if isprime(x):",
+        "        p = pp = x",
+        "        while pp < TOP**2:",
+        "            pp *= p",
+        "            primePowers[pp] = 1",
+        "a=[]",
+        "pps = sorted(primePowers.keys())[:]",
+        "for pp in pps:",
+        "    for p in pps:",
+        "        if p*2 > pp: break",
+        "        if (pp-p) in primePowers:",
+        "            print(pp)",
+        "            a.append(pp)",
+        "            break",
+        "print(sorted(a))"
+    ],
+    "xref": [
+        "Cf. A025475, A000079."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alex Ratushnyak_, Jan 25 2020",
+    "references": 1,
+    "revision": 13,
+    "time": "2020-02-03T16:45:41-05:00",
+    "created": "2020-02-03T16:45:41-05:00"
+}

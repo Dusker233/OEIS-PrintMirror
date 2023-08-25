@@ -1,0 +1,38 @@
+{
+    "number": 332854,
+    "data": "1,16,197,2311,27568,343909,4541329,63719723,949770615,15010838233,250997692441,4430433962701,82376202579421,1610014961936672,33010385435710028,708642421376230354,15899009565671538930,372166745683645768206,9074749796104015627262",
+    "name": "Number of entries in the fifth cycles of all permutations of [n] when cycles are ordered by decreasing lengths.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A332854/b332854.txt\">Table of n, a(n) for n = 5..450</a>",
+        "Andrew V. Sills, <a href=\"https://arxiv.org/abs/1912.05306\">Integer Partitions Probability Distributions</a>, arXiv:1912.05306 [math.CO], 2019.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation\">Permutation</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, [1, 0], `if`(i<1, 0,",
+        "      add((p-> p+`if`(t>0 and t-j<1, [0, p[1]*i], 0))((i-1)!^j*",
+        "        b(n-i*j, min(n-i*j, i-1), max(0, t-j))/j!*",
+        "        combinat[multinomial](n, i$j, n-i*j)), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2, 5)[2]:",
+        "seq(a(n), n=5..23);"
+    ],
+    "mathematica": [
+        "multinomial[n_, k_List] := n!/Times @@ (k!);",
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0, {1, 0}, If[i<1, {0, 0},",
+        "     Sum[Function[p, p + If[t > 0 && t - j < 1, {0, p[[1]]*i},",
+        "     {0, 0}]][(i-1)!^j*b[n - i*j, Min[n - i*j, i-1], Max[0, t-j]]/j!*",
+        "     multinomial[n, Append[Table[i, {j}], n - i*j]]], {j, 0, n/i}]]];",
+        "a[n_] := b[n, n, 5][[2]];",
+        "Table[a[n], {n, 5, 23}] (* _Jean-Fran\u00e7ois Alcover_, Mar 13 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=5 of A322384."
+    ],
+    "keyword": "nonn",
+    "offset": "5,2",
+    "author": "_Alois P. Heinz_, Feb 26 2020",
+    "references": 2,
+    "revision": 8,
+    "time": "2021-03-13T10:04:34-05:00",
+    "created": "2020-03-02T09:11:47-05:00"
+}

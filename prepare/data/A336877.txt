@@ -1,0 +1,42 @@
+{
+    "number": 336877,
+    "data": "0,1,5,12,25,41,60,85,125,168,205,245,300,361,425,504,625,749,840,925,1025,1128,1225,1337,1500,1669,1805,1944,2125,2321,2520,2761,3125,3492,3745,3965,4200,4429,4625,4836,5125,5417,5640,5857,6125,6408,6685,7013",
+    "name": "The harmonic function on the Sierpinski gasket with vertices 0, 1, w = (-1)^(1/3) defined by the values a(0) = 0, a(1) = 1, a(w) = -1.",
+    "comment": [
+        "The harmonic functions on the Sierpi\u0144ski gasket are fully defined by their values at the corners of the triangle: 0, 1, w. A harmonic function can be restricted to the interval at the real axis [0; 1] and then extended to all nonnegative real arguments. The function with a(0) = 0, a(1) = 1, a(w) = -1 yields integer values at integer arguments.",
+        "If we replace 3 by d+1 on the right side of the first line in the Formula section, we'll obtain the analog for the d-dimensional Sierpi\u0144ski gasket for d>1. The case d=1 gives the squares A000290, the case d=0 gives A282720."
+    ],
+    "link": [
+        "Andrey Zabolotskiy, <a href=\"/A336877/b336877.txt\">Table of n, a(n) for n = 0..8192</a>",
+        "A. A. Kirillov, <a href=\"https://www.math.upenn.edu/~kirillov/MATH480-F07/tf.pdf\">A Tale of Two Fractals</a>, Birkh\u00e4user, 2013, <a href=\"https://doi.org/10.1007/978-0-8176-8382-5\">doi:10.1007/978-0-8176-8382-5</a>. See chapter 3, in particular Table 3.1."
+    ],
+    "formula": [
+        "a(2^p+n) - 2*a(2^p) + a(2^p-n) = 3 * a(n).",
+        "a(2*n) = 5 * a(n).",
+        "a(n+1) - a(n) = A178590(2n+1) [discovered by Sequence Machine]; more generally, the 1st differences of the analogous sequence with given d (see comment above) is the bisection of the (d+1)-th row of A178568. - _Andrey Zabolotskiy_, Oct 07 2021"
+    ],
+    "program": [
+        "(Python)",
+        "def a(d, m=6):",
+        "    chi = [0, 1]",
+        "    for p in range(m):",
+        "        chi += [(d+1)*chi[k]+2*chi[2**p]-chi[2**p-k] for k in range(1, 2**p+1)]",
+        "    return chi",
+        "chi = a(2)",
+        "print(chi)",
+        "d2chi3 = [(chi[k+1]-2*chi[k]+chi[k-1])//3 for k in range(1, len(chi)-1)]",
+        "print(d2chi3) # A336878"
+    ],
+    "xref": [
+        "Cf. A336878 (second differences divided by 3), A178590, A178568.",
+        "Cf. A000290, A282720.",
+        "Cf. A047999."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Andrey Zabolotskiy_, Aug 06 2020",
+    "references": 2,
+    "revision": 27,
+    "time": "2021-11-19T10:55:52-05:00",
+    "created": "2020-08-08T02:17:41-04:00"
+}

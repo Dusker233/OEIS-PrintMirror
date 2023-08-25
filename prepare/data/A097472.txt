@@ -1,0 +1,40 @@
+{
+    "number": 97472,
+    "data": "1,3,10,31,96,296,912,2809,8651,26642,82047,252672,778128,2396320,7379697,22726483,69988378,215535903,663763424,2044122936,6295072048,19386276329,59701891739,183857684514,566207320575,1743689586432",
+    "name": "Number of different candle trees having a total of m edges.",
+    "comment": [
+        "A candle tree is a graph on the plane square lattice Z X Z whose edges have length one with the following properties: (a) It contains a line segment (\"trunk\") of length from 0 to m on the vertical axis, its lowest node is at the origin. (b) It contains horizontal line segments (\"branches\"); each of them intersects the trunk. (c) Each branch is allowed to have \"candles\", which are vertical edges of length 1, whose lower node is on a branch.",
+        "Row sums of triangle in A238241. - _Philippe Del\u00e9ham_, Feb 21 2014"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A097472/b097472.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Alexander Malkis, <a href=\"https://wwwbroy.in.tum.de/~malkis/Malkis-dipl.pdf\">Polyedges, polyominoes and the 'Digit' game</a>, diploma thesis in computer science, Universit\u00e4t des Saarlandes, 2003, Saarbr\u00fccken.",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (3,1,-2,-1)."
+    ],
+    "formula": [
+        "a(n) = Sum_{s, d, k>=0 with s+d+k=m} binomial(s+2d+1, s)*binomial(s, k);",
+        "generating function = 1/((1-x)*(1-2*x-3*x^2-x^3)).",
+        "a(n) = 3*a(n-1) + a(n-2) - 2*a(n-3) - a(n-4);",
+        "a(n) = 1 + Sum_{m=1..n} Sum_{k=1..n-m+1} binomial(k, n-m-k+1)*binomial(k+2*m-1,2*m-1). - _Vladimir Kruchinin_, May 12 2011",
+        "a(n) = Sum_{k=0..n} A238241(n,k). - _Philippe Del\u00e9ham_, Feb 21 2014",
+        "a(n) - a(n-1) = A218836(n). - _R. J. Mathar_, Jun 17 2020"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/(x^4+2x^3-x^2-3x+1),{x,0,30}],x] (* or *) LinearRecurrence[{3,1,-2,-1},{1,3,10,31},30] (* _Harvey P. Dale_, Jun 14 2011 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum(sum(binomial(k,n-m-k+1)*binomial(k+2*m-1,2*m-1),k,1,n-m+1),m,1,n)+1; /* _Vladimir Kruchinin_, May 12 2011 */",
+        "(PARI) a(n)=sum(m=1,n,sum(k=1,n-m+1,binomial(k,n-m-k+1)*binomial(k+2*m-1,2*m-1))) \\\\ _Charles R Greathouse IV_, Jun 17 2013"
+    ],
+    "xref": [
+        "Bisection of A060945 and |A077930|."
+    ],
+    "keyword": "easy,nice,nonn",
+    "offset": "0,2",
+    "author": "_Alexander Malkis_, Sep 18 2004",
+    "references": 4,
+    "revision": 54,
+    "time": "2022-02-02T16:11:23-05:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

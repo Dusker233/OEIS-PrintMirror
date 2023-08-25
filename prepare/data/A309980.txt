@@ -1,0 +1,40 @@
+{
+    "number": 309980,
+    "data": "0,4,72,2608,272752,93847104,110518842048,454710381676032,6640565658505128832,348708024629593894001152,66538376166308068986316241408,46534722991725338264882258863095808,120139253095727581744381043433138973706240,1151909524447243687554850690730124812494959992832",
+    "name": "Number of binary relations on n unlabeled nodes that are neither reflexive nor antireflexive.",
+    "comment": [
+        "Also the number of colored digraphs on n unlabeled nodes with nodes of exactly two colors. (Understand \"(x,x) in the relation\" for several nodes x as a special color!)"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A309980/b309980.txt\">Table of n, a(n) for n = 1..50</a>"
+    ],
+    "formula": [
+        "a(n) = A000595(n) - 2 * A000273(n) for n >= 1."
+    ],
+    "example": [
+        "n=2: We label node 1 with (1,1) in the relation and node 2 with (2,2) not in the relation, and we have two differently labeled nodes and so a(2) = A053763(2) = 4.",
+        "n=3: We have exactly either one or two nodes x with (x,x) in the relation. In A328773 this labelings correspond to the color schemes [2,1] and [1,2], both represented by the column index 2. So we have a(3) = 2 * A328773(3,2) = 72."
+    ],
+    "mathematica": [
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_] := Sum[2*GCD[v[[i]], v[[j]]], {i, 2, Length[v]}, {j, 1, i - 1}] + Total[v];",
+        "a[n_] := Module[{s = 0}, Do[t = 2^edges[p]; s += t*(1 - 2^(1 - Length[p]))* permcount[p], {p, IntegerPartitions[n]}]; s/n!];",
+        "Array[a, 14] (* _Jean-Fran\u00e7ois Alcover_, Jan 08 2021, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "edges(v) = {sum(i=2, #v, sum(j=1, i-1, 2*gcd(v[i], v[j]))) + sum(i=1, #v, v[i])}",
+        "a(n) = {my(s=0); forpart(p=n, my(t=2^edges(p)); s+=t*(1 - 2^(1-#p))*permcount(p)); s/n!} \\\\ _Andrew Howroyd_, Nov 02 2019"
+    ],
+    "xref": [
+        "Cf. A000595 (arbitrary binary relations), A000273 (digraphs, i.e. reflexive resp. antireflexive binary relations), A053763 (digraphs with distinguishing labeled nodes), A328773 (digraphs with given color scheme)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Peter Dolland_, Nov 02 2019",
+    "references": 2,
+    "revision": 33,
+    "time": "2021-01-08T08:46:45-05:00",
+    "created": "2019-11-04T09:23:13-05:00"
+}

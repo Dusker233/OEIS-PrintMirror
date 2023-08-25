@@ -1,0 +1,49 @@
+{
+    "number": 54888,
+    "data": "1,5,15,40,105,275,720,1885,4935,12920,33825,88555,231840,606965,1589055,4160200,10891545,28514435,74651760,195440845,511670775,1339571480,3507043665,9181559515,24037634880,62931345125",
+    "name": "Layer counting sequence for hyperbolic tessellation by regular pentagons of angle Pi/2.",
+    "comment": [
+        "The layer sequence is the sequence of the cardinalities of the layers accumulating around a (finite-sided) polygon of the tessellation under successive side-reflections."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A054888/b054888.txt\">Table of n, a(n) for n = 0..999</a> (indices corrected to start at zero by _Sidney Cadot_, Jan 07 2022)",
+        "Paolo Dominici, <a href=\"/layers.html\">Illustration</a>",
+        "<a href=\"/index/Con#coordseqs\">Index entries for Coordination Sequences</a> [A layer sequence is a kind of coordination sequence. - _N. J. A. Sloane_, Nov 20 2022]",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-1)."
+    ],
+    "formula": [
+        "a(n) = 5*A001906(n) + [n=0].",
+        "G.f.: (1+x)^2/(1-3*x+x^2).",
+        "G.f.: exp( Sum_{n>=1} 5*Fibonacci(n)^2 * x^n/n ). - _Paul D. Hanna_, Feb 21 2012",
+        "a(n) = A001906(n-1) + 2*A001906(n) + A001906(n+1). - _R. J. Mathar_, Nov 28 2011",
+        "a(n) = A203976(A004277(n-1)). - _Reinhard Zumkeller_, Jan 11 2012",
+        "a(n) = 5*A000045(2*n) for n >= 1. - _Robert Israel_, Jun 01 2015"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{3,-1},{1,5,15},30] (* _Harvey P. Dale_, Jan 15 2023 *)",
+        "Join[{1}, 5*Fibonacci[2*Range[40]]] (* _G. C. Greubel_, Feb 08 2023 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a054888 n = a054888_list !! (n-1)",
+        "a054888_list = 1 : zipWith (+) (tail a002878_list) a002878_list",
+        "-- _Reinhard Zumkeller_, Jan 11 2012",
+        "(PARI) {a(n)=polcoeff(exp(sum(k=1,n,5*fibonacci(k)^2*x^k/k)+x*O(x^n)), n)} /* _Paul D. Hanna_, Feb 21 2012 */",
+        "(Magma) [n eq 0 select 1 else 5*Fibonacci(2*n): n in [0..40]]; // _G. C. Greubel_, Feb 08 2023",
+        "(SageMath) [5*fibonacci(2*n) + int(n==0) for n in range (41)] # _G. C. Greubel_, Feb 08 2023"
+    ],
+    "xref": [
+        "Cf. A000045, A001906, A002878, A004277, A203976.",
+        "Cf. A054886, A054887, A054889, A054890."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "Paolo Dominici (pl.dm(AT)libero.it), May 23 2000",
+    "ext": [
+        "Offset changed to 0 by _N. J. A. Sloane_, Jan 03 2022 at the suggestion of _Michel Marcus_"
+    ],
+    "references": 16,
+    "revision": 54,
+    "time": "2023-02-09T02:09:33-05:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

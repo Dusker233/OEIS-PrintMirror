@@ -1,0 +1,36 @@
+{
+    "number": 361796,
+    "data": "8647,15107,20407,20771,21491,23003,23531,24767,24971,27967,29147,33287,34847,36779,42187,42407,42667,43331,43991,46807,46867,51431,52691,52747,53891,54167,58567,63247,63367,69379,71711,73607,73867,74167,76507,76631,76847,80447,83591,84247,86243",
+    "name": "Prime numbers preceded by two consecutive numbers which are products of four distinct primes (or tetraprimes).",
+    "example": [
+        "8647 (prime), 8646 = 2*3*11*131 and 8645 = 5*7*13*19.",
+        "15107 (prime), 15106 = 2*7*13*83 and 15105 = 3*5*19*53.",
+        "20407 (prime), 20406 = 2*3*19*179 and 20405 = 5*7*11*53."
+    ],
+    "maple": [
+        "N:= 10^5: # for terms <= N",
+        "TP:= NULL:",
+        "P:= select(isprime, [2,seq(i,i=3..N/30,2)]):",
+        "for i from 1 to nops(P) do",
+        "  for j from 1 to i-1 while P[i]*P[j] <= N/6 do",
+        "    for k from 1 to j-1 while P[i]*P[j]*P[k] <= N/2 do",
+        "      TP:= TP, op(select(`<=`,map(`*`,P[1..k-1],P[i]*P[j]*P[k]),N));",
+        "od od od:",
+        "TP:= {TP}:",
+        "TTP:= TP intersect map(`-`,TP,1):",
+        "sort(convert(select(isprime, map(`+`,TTP,2)),list)); # _Robert Israel_, Apr 28 2023"
+    ],
+    "mathematica": [
+        "q[n_] := FactorInteger[n][[;; , 2]] == {1, 1, 1, 1}; Select[Prime[Range[10^4]], AllTrue[# - {1, 2}, q] &] (* _Amiram Eldar_, Apr 26 2023 *)"
+    ],
+    "xref": [
+        "Cf. A000040, A046386, A140078 and A362578."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Massimo Kofler_, Apr 26 2023",
+    "references": 1,
+    "revision": 46,
+    "time": "2023-06-19T10:45:46-04:00",
+    "created": "2023-06-19T10:45:46-04:00"
+}

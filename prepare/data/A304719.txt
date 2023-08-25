@@ -1,0 +1,61 @@
+{
+    "number": 304719,
+    "data": "1,1,2,5,14,28,62,150,380,787,1760,3951,9338,19536,43224,94326,213278,448193,979712,2094981,4622262,9670378,20886560,44067191,95469402,198712506",
+    "name": "Number of domino tilings of Ferrers-Young diagrams of partitions of 2n using exactly floor(n/2) horizontally oriented dominoes.",
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FerrersDiagram.html\">Ferrers Diagram</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Domino_(mathematics)\">Domino</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Domino_tiling\">Domino tiling</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Ferrers_diagram\">Ferrers diagram</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Mutilated_chessboard_problem\">Mutilated chessboard problem</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Polyomino\">Polyomino</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Young_tableau#Diagrams\">Young tableau, Diagrams</a>",
+        "<a href=\"/index/Do#domino\">Index entries for sequences related to dominoes</a>"
+    ],
+    "formula": [
+        "a(n) = A304718(n,floor(n/2))."
+    ],
+    "example": [
+        "a(3) = 5:",
+        ":  .___.  ._.___.  .___.  ._._.  ._._.___.",
+        ":  |___|  | |___|  |___|  | | |  | | |___|",
+        ":  | |    |_|      | | |  |_|_|  |_|_|",
+        ":  |_|    | |      |_|_|  |___|",
+        ":  | |    |_|",
+        ":  |_|"
+    ],
+    "maple": [
+        "h:= proc(l, f) option remember; local k; if min(l[])>0 then",
+        "     `if`(nops(f)=0, 1, h(map(u-> u-1, l[1..f[1]]), subsop(1=[][], f)))",
+        "    else for k from nops(l) while l[k]>0 by -1 do od; expand(",
+        "        `if`(nops(f)>0 and f[1]>=k, x*h(subsop(k=2, l), f), 0)+",
+        "        `if`(k>1 and l[k-1]=0, h(subsop(k=1, k-1=1, l), f), 0))",
+        "      fi",
+        "    end:",
+        "g:= l-> `if`(add(`if`(l[i]::odd, (-1)^i, 0), i=1..nops(l))=0,",
+        "        `if`(l=[], 1, h([0$l[1]], subsop(1=[][], l))), 0):",
+        "b:= (n, i, l)-> `if`(n=0 or i=1, g([l[], 1$n]), b(n, i-1, l)",
+        "                  +b(n-i, min(n-i, i), [l[], i])):",
+        "a:= n-> coeff(b(2*n$2, []), x, iquo(n, 2)):",
+        "seq(a(n), n=0..14);"
+    ],
+    "mathematica": [
+        "h[l_, f_] := h[l, f] = Module[{k}, If[Min[l] > 0, If[Length[f] == 0, 1, h[l[[1 ;; f[[1]]]] - 1, ReplacePart[f, 1 -> Nothing]]], For[k = Length[l], l[[k]]>0, k--]; If[Length[f] > 0 && f[[1]] >= k, x*h[ReplacePart[l, k -> 2], f], 0] + If[k > 1 && l[[k - 1]] == 0, h[ReplacePart[l, {k -> 1, k - 1 -> 1}], f], 0]]];",
+        "g[l_] := If[Sum[If[OddQ[l[[i]]], (-1)^i, 0], {i, 1, Length[l]}] == 0, If[l == {}, 1, h[Table[0, {l[[1]]}], ReplacePart[l, 1 -> Nothing]]], 0];",
+        "b[n_, i_, l_] := If[n == 0 || i == 1, g[Join[l, Table[1, {n}]]], b[n, i-1, l] + b[n-i, Min[n-i, i], Append[l, i]]];",
+        "T[n_] := CoefficientList[b[2 n, 2 n, {}], x];",
+        "a[n_] := T[n][[Floor[n/2] + 1]];",
+        "Table[a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, Dec 28 2022, after _Alois P. Heinz_ in A304718 *)"
+    ],
+    "xref": [
+        "Cf. A304718."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, May 17 2018",
+    "references": 1,
+    "revision": 18,
+    "time": "2022-12-28T09:48:52-05:00",
+    "created": "2018-05-19T15:42:47-04:00"
+}

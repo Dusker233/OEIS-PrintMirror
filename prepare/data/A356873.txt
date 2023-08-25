@@ -1,0 +1,42 @@
+{
+    "number": 356873,
+    "data": "0,5,14,18,30,42,78,78,78,90,150,150,210,210,234,234,270,390,390,390,390,450,510,630,630,630,810,810,810,966,966,1170,1170,1170,1170,1170,1170,1170",
+    "name": "a(n) is the smallest number k such that 2^k+1 has at least n distinct prime factors.",
+    "comment": [
+        "From _Jon E. Schoenfield_, Sep 04 2022: (Start)",
+        "a(39) <= a(40) <= a(41) <= 1530.",
+        "a(42) <= a(43) <= a(44) <= 1890.",
+        "a(45) <= a(46) <= 2070.",
+        "a(47) <= a(48) <= ... <= a(54) = 2730. (End)"
+    ],
+    "mathematica": [
+        "a[n_] := Block[{k=0}, While[ Length@ FactorInteger[2^k + 1] < n, k++]; k]; Array[a, 12] (* _Giovanni Resta_, Oct 13 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint, isprime",
+        "from itertools import count, islice",
+        "def f(n): return 1 if isprime(n) else len(factorint(n))",
+        "def agen():",
+        "    n = 1",
+        "    for k in count(0):",
+        "        v = f(2**k+1)",
+        "        while v >= n: yield k; n += 1",
+        "print(list(islice(agen(), 10))) # _Michael S. Branicky_, Sep 02 2022",
+        "(PARI) a(n) = my(k=1); while (omega(2^k+1) < n, k++); k; \\\\ _Michel Marcus_, Sep 05 2022"
+    ],
+    "xref": [
+        "Cf. A046799, A071852.",
+        "Cf. A180278, A219108, A356872."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,2",
+    "author": "_Alex Ratushnyak_, Sep 02 2022",
+    "ext": [
+        "a(11)-a(38) from _Michael S. Branicky_, Sep 02 2022 using A071852"
+    ],
+    "references": 0,
+    "revision": 27,
+    "time": "2022-10-13T09:50:58-04:00",
+    "created": "2022-10-13T09:50:58-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 87540,
+    "data": "1,2,8,96,1536,86016,5505024,1321205760,338228674560,335522845163520,343575393447444480,1385295986380096143360,5674172360212873803202560,92239345887620476544860815360,1511249443022773887710999598858240,98654363640526679389774053813465907200",
+    "name": "Let A(n) be the matrix in the group GL(n,2) such that for 1 <= i, j <= n: A[i,j] = 1 if i+j = n+1 A[i,j] = 0 if i+j != n+1. a(n) is the size of the centralizer of A(n) in GL(n,2).",
+    "comment": [
+        "The formula was given by Derek Holt (mareg(AT)mimosa.csv.warwick.ac.uk) in this thread from sci.math: http://mathforum.org/discuss/sci.math/t/538859."
+    ],
+    "formula": [
+        "For even n = 2m, a(n) = 2^(m^2) * |GL(m, 2)| = 2^(m^2) * A002884(m).",
+        "For odd n = 2m+1, a(n) = 2^(m^2+2m) * |GL(m, 2)| = 2^(m^2+2m) * A002884(m)."
+    ],
+    "mathematica": [
+        "a[n_] := With[{m = Quotient[n, 2]}, 2^(2 m^2 + 2 m Boole[OddQ[n]]) * QPochhammer[2^-m, 2, m]];",
+        "a /@ Range[1, 16] (* _Jean-Fran\u00e7ois Alcover_, Sep 17 2019 *)"
+    ],
+    "program": [
+        "(GAP)",
+        "a:=function(n) local M;",
+        "M:=NullMat(n,n); for i in [1..n] do M[i][n+1-i]:=1; od;",
+        "return Size(Centralizer(GL(n, Integers mod 2), M * One(Integers mod 2)));",
+        "end; # _Andrew Howroyd_, Jul 13 2018",
+        "(PARI) a(n)={my(m=n\\2); 2^(m*if(n%2, n+3, n)/2)*prod(i=2, m, 2^i-1)*2^binomial(m, 2)} \\\\ _Andrew Howroyd_, Jul 13 2018"
+    ],
+    "xref": [
+        "Cf. A002884, A087918."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "Yuval Dekel (dekelyuval(AT)hotmail.com), Oct 24 2003",
+    "ext": [
+        "a(8)-a(16) from _Andrew Howroyd_, Jul 13 2018"
+    ],
+    "references": 1,
+    "revision": 14,
+    "time": "2019-09-17T12:56:01-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

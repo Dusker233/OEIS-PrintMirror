@@ -1,0 +1,49 @@
+{
+    "number": 72520,
+    "data": "7,7,8,9,10,11,31,32,76,77,78,79,525,1416,1417,1863,1864,6004,6005,6006,6007,6008,6009,70009,70010,70011,3853341,8668488,11420001,13139697,14515454,15203333,15547273,15891213,15891214,15891215,15891216,63908693,63908694,239743481",
+    "name": "Index of smallest Fibonacci number beginning with the n-th Fibonacci number other than itself.",
+    "example": [
+        "a(6) = 11 as the 11th Fibonacci number 89 begins with 8, the 6th Fibonacci number."
+    ],
+    "maple": [
+        "N:= 30: # attempt to get a(1)..a(N)",
+        "V:= Vector(N):",
+        "V[1]:= 7:",
+        "count:= 1;",
+        "F:= Vector(N,combinat:-fibonacci):",
+        "L:= ilog10(F[N]):",
+        "tmin:= F[1]:",
+        "a:= 1: b:= 1:",
+        "for n from 3 to 10^5 while count < N do",
+        "  c:= a+b;",
+        "  a:= b; b:= c;",
+        "  v:= floor(c/10^(max(1,ilog10(c)-L)));",
+        "  while v >= tmin do",
+        "    j:= ListTools:-BinarySearch(F, v);",
+        "    if j > 0 and j <= N and V[j] = 0 then",
+        "      count:= count+1;",
+        "      V[j]:= n;",
+        "      jm:= min(select(t -> V[t]=0, [$1..N]));",
+        "      tmin:= F[jm];",
+        "    fi;",
+        "    v:= floor(v/10);",
+        "  od:",
+        "od:",
+        "seq(V[i],i=1..jm-1); # _Robert Israel_, Mar 20 2018"
+    ],
+    "xref": [
+        "Cf. A072519."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Jul 31 2002",
+    "ext": [
+        "Corrected and extended by _Sascha Kurz_, Jan 03 2003",
+        "a(24)-a(26) from _Robert Israel_, Mar 20 2018",
+        "a(27)-a(40) from _Giovanni Resta_, Aug 26 2018"
+    ],
+    "references": 1,
+    "revision": 13,
+    "time": "2018-08-27T16:50:00-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

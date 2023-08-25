@@ -1,0 +1,37 @@
+{
+    "number": 322876,
+    "data": "0,1,7,39,209,1123,6153,34723,202852,1229672,7742792,50653678,344195782,2427812876,17761759538,134650690097,1056676856777,8574943334545,71881479393513,621792661601615,5544644720281979,50918125911279963,481093310682127190",
+    "name": "Number of set partitions of [n] such that the maximal absolute difference between the least elements of consecutive blocks equals three.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A322876/b322876.txt\">Table of n, a(n) for n = 3..586</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "formula": [
+        "a(n) = A287253(n) - A287252(n)."
+    ],
+    "maple": [
+        "b:= proc(n, k, m, l) option remember; `if`(n<1, 1,",
+        "     `if`(l-n>k, 0, b(n-1, k, m+1, n))+m*b(n-1, k, m, l))",
+        "    end:",
+        "A:= (n, k)-> b(n-1, min(k, n-1), 1, n):",
+        "a:= n-> (k-> A(n, k)-A(n, k-1))(3):",
+        "seq(a(n), n=3..30);"
+    ],
+    "mathematica": [
+        "b[n_, k_, m_, l_] := b[n, k, m, l] = If[n < 1, 1, If[l - n > k, 0, b[n - 1, k, m + 1, n]] + m b[n - 1, k, m, l]];",
+        "A[n_, k_] := b[n - 1, Min[k, n - 1], 1, n];",
+        "a[n_] := With[{k = 3}, A[n, k] - A[n, k - 1]];",
+        "a /@ Range[3, 30] (* _Jean-Fran\u00e7ois Alcover_, May 05 2020, after Maple *)"
+    ],
+    "xref": [
+        "Column k=3 of A287215.",
+        "Cf. A287252, A287253."
+    ],
+    "keyword": "nonn",
+    "offset": "3,3",
+    "author": "_Alois P. Heinz_, Dec 29 2018",
+    "references": 2,
+    "revision": 10,
+    "time": "2020-05-05T04:28:28-04:00",
+    "created": "2018-12-29T10:02:23-05:00"
+}

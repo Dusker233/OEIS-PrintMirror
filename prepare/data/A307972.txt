@@ -1,0 +1,46 @@
+{
+    "number": 307972,
+    "data": "1,1,1,1,1,1,2,3,4,5,6,9,14,21,30,41,58,86,130,195,286,416,612,915,1380,2076,3102,4627,6932,10452,15818,23931,36148,54600,82642,125435,190724,290116,441282,671512,1023052,1560780,2383578,3642117,5567202,8514254,13031192,19960712",
+    "name": "G.f. A(x) satisfies: A(x) = 1 + x + x^2 + x^3 + x^4 + x^5*A(x)^2.",
+    "comment": [
+        "Shifts 5 places left when convolved with itself."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A307972/b307972.txt\">Table of n, a(n) for n = 0..5000</a>"
+    ],
+    "formula": [
+        "G.f.: 1/(1 - x/(1 - x^5/(1 - x^5/(1 - x/(1 - x^5/(1 - x^5/(1 - x/(1 - x^5/(1 - x^5/(1 - ...)))))))))), a continued fraction.",
+        "Recurrence: a(n+5) = Sum_{k=0..n} a(k)*a(n-k)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + x^2 + x^3 + x^4 + x^5 + 2*x^6 + 3*x^7 + 4*x^8 + 5*x^9 + 6*x^10 + ..."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<5, 1,",
+        "      add(a(j)*a(n-5-j), j=0..n-5))",
+        "    end:",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, May 08 2019"
+    ],
+    "mathematica": [
+        "terms = 47; A[_] = 0; Do[A[x_] = 1 + x + x^2 + x^3 + x^4 + x^5 A[x]^2 + O[x]^(terms + 1) // Normal, terms + 1]; CoefficientList[A[x], x]",
+        "a[n_] := a[n] = Sum[a[k] a[n - k - 5], {k, 0, n - 5}]; a[0] = a[1] = a[2] = a[3] = a[4] = 1; Table[a[n], {n, 0, 47}]"
+    ],
+    "program": [
+        "(SageMath)",
+        "@CachedFunction",
+        "def a(n): # a = A307972",
+        "    if (n<5): return 1",
+        "    else: return sum(a(k)*a(n-k-5) for k in range(n-4))",
+        "[a(n) for n in range(51)] # _G. C. Greubel_, Nov 26 2022"
+    ],
+    "xref": [
+        "Cf. A000108, A007477, A307970, A307971."
+    ],
+    "keyword": "nonn",
+    "offset": "0,7",
+    "author": "_Ilya Gutkovskiy_, May 08 2019",
+    "references": 9,
+    "revision": 19,
+    "time": "2022-11-27T15:29:09-05:00",
+    "created": "2019-05-08T14:43:00-04:00"
+}

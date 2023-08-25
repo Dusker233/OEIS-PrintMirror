@@ -1,0 +1,25 @@
+{
+    "number": 331798,
+    "data": "0,1,5,29,204,1714,16862,190826,2447512,35136696,558727872,9754239648,185546362416,3820734689472,84687887312688,2010622152615504,50908186083448320,1369376758488222336,38998680958184088960,1172297572938013827456,37092793335394301708544",
+    "name": "E.g.f.: -log(1 - x) / ((1 - x) * (1 + log(1 - x))).",
+    "formula": [
+        "a(n) = Sum_{k=0..n} = |Stirling1(n,k)| * A007526(k).",
+        "a(n) = Sum_{k=1..n} binomial(n,k) * k! * H(k) * A007840(n-k), where H(k) is the k-th harmonic number.",
+        "a(n) ~ n! / (1 - exp(-1))^(n+1). - _Vaclav Kotesovec_, Jan 26 2020"
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[-Log[1 - x]/((1 - x) (1 + Log[1 - x])), {x, 0, nmax}], x] Range[0, nmax]!",
+        "A007526[n_] := n! Sum[1/k!, {k, 0, n - 1}]; a[n_] := Sum[Abs[StirlingS1[n, k]] A007526[k], {k, 0, n}]; Table[a[n], {n, 0, 20}]",
+        "A007840[n_] := Sum[Abs[StirlingS1[n, k]] k!, {k, 0, n}]; a[n_] := Sum[Binomial[n, k] k! HarmonicNumber[k] A007840[n - k], {k, 1, n}]; Table[a[n], {n, 0, 20}]"
+    ],
+    "xref": [
+        "Cf. A000254, A001008, A002805, A003713, A007526, A007840, A215916, A331797."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Jan 26 2020",
+    "references": 1,
+    "revision": 8,
+    "time": "2020-01-26T17:48:31-05:00",
+    "created": "2020-01-26T17:48:31-05:00"
+}

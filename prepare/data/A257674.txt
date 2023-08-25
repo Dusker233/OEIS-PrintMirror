@@ -1,0 +1,38 @@
+{
+    "number": 257674,
+    "data": "1,1,4,13,44,144,478,1573,5193,17118,56457,186153,613865,2024192,6674843,22010313,72579382,239331323,789198395,2602391853,8581422014,28297352194,93310894654,307693910316,1014624748161,3345738548716,11032617200372,36380201398917",
+    "name": "INVERT transform of planar partitions.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A257674/b257674.txt\">Table of n, a(n) for n = 0..1930</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A257673(n,k).",
+        "a(n) ~ c * d^n, where d = 3.2975132503126723336836261261699651439543806296893328114462016186843..., c = 0.3713883419445088444000361183895708557141471246022776707501762842135... . - _Vaclav Kotesovec_, May 19 2015",
+        "G.f.: 1/(2 - Product_{k>=1} 1/(1 - x^k)^k). - _Ilya Gutkovskiy_, Oct 18 2018"
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      g(n-j)*numtheory[sigma][2](j), j=1..n)/n)",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n=0, 1,",
+        "      add(a(n-i)*g(i), i=1..n))",
+        "    end:",
+        "seq(a(n), n=0..36);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = If[n==0, 1, Sum[g[n-j] DivisorSigma[2, j], {j, 1, n}]/n];",
+        "a[n_] := a[n] = If[n==0, 1, Sum[a[n-i] g[i], {i, 1, n}]];",
+        "Table[a[n], {n, 0, 36}] (* _Jean-Fran\u00e7ois Alcover_, Aug 22 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Row sums of A257673.",
+        "Cf. A000219."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, May 03 2015",
+    "references": 4,
+    "revision": 23,
+    "time": "2021-08-22T14:10:20-04:00",
+    "created": "2015-05-05T19:03:59-04:00"
+}

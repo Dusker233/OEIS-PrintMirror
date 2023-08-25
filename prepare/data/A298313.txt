@@ -1,0 +1,41 @@
+{
+    "number": 298313,
+    "data": "12541,75521,159617,182519,271181,373091,603901,609289,851197,983819,1246757,2079997,3299081,3687421,4484737,4692497,5636171,7514477,8273437,9299831,10408577,10430921,10746557,10769281,12739037,13012487,14213621,15440531,15713959",
+    "name": "The first of three consecutive primes the sum of which is equal to the sum of three consecutive octagonal numbers.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A298313/b298313.txt\">Table of n, a(n) for n = 1..10000</a> (n = 1..70 from Colin Barker)"
+    ],
+    "example": [
+        "12541 is in the sequence because 12541+12547+12553 (consecutive primes) = 37641 = 12160+12545+12936 (consecutive octagonal numbers)."
+    ],
+    "mathematica": [
+        "Module[{nn=5000,oct3},oct3=Total/@Partition[PolygonalNumber[8,Range[nn]],3,1];Select[ Partition[Prime[Range[PrimePi[Ceiling[Max[oct3]/3]]]],3,1],MemberQ[ oct3,Total[ #]]&]][[All,1]] (* _Harvey P. Dale_, Dec 03 2022 *)"
+    ],
+    "program": [
+        "(PARI) L=List(); forprime(p=2, 20000000, q=nextprime(p+1); r=nextprime(q+1); t=p+q+r; if(issquare(36*t-180, &sq) && (sq-12)%18==0, u=(sq-12)\\18; listput(L, p))); Vec(L)",
+        "(Python)",
+        "from __future__ import division",
+        "from sympy import prevprime, nextprime",
+        "A298313_list, n, m = [], 1, 30",
+        "while len(A298313_list) < 10000:",
+        "    k = prevprime(m//3)",
+        "    k2 = prevprime(k)",
+        "    k3 = nextprime(k)",
+        "    if k2 + k + k3 == m:",
+        "        A298313_list.append(k2)",
+        "    elif k + k3 + nextprime(k3) == m:",
+        "        A298313_list.append(k)",
+        "    n += 1",
+        "    m += 18*n + 3 # _Chai Wah Wu_, Jan 22 2018"
+    ],
+    "xref": [
+        "Cf. A000040, A000567, A054643, A298073, A298168, A298169, A298222, A298223, A298250, A298251, A298272, A298273, A298301, A298302, A298312."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Colin Barker_, Jan 17 2018",
+    "references": 2,
+    "revision": 14,
+    "time": "2022-12-03T13:34:18-05:00",
+    "created": "2018-01-17T09:44:34-05:00"
+}

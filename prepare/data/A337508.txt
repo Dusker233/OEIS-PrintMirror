@@ -1,0 +1,46 @@
+{
+    "number": 337508,
+    "data": "11,19,41,61,89,101,109,131,139,149,151,179,181,191,199,401,409,419,421,431,439,449,461,479,491,499,601,619,631,641,659,661,691,809,811,821,829,839,859,881,911,919,929,941,971,991,1009,1021,1033,1039,1049,1051",
+    "name": "Primes such that neither the left half nor the right half of the prime is prime.",
+    "comment": [
+        "For n > 9, the center digit is not considered when making the calculation. For a prime number to be in this sequence, both the substring to the left of the center and the substring to the right of the center must be nonprime.",
+        "If a number appears in this sequence, it will not appear in A125523, A125524, or A125525.",
+        "A000040 is the union of this sequence, A125523, A125524, and A125525."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A337508/b337508.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "479 is prime. The left part of (4)79 is not prime. The right part of 47(9) is not prime."
+    ],
+    "maple": [
+        "q:= n-> isprime(n) and (s-> (h-> not ormap(x-> isprime(parse(x)),",
+        "        [s[1..h], s[-h..-1]]))(iquo(length(s), 2)))(\"\"||n):",
+        "select(q, [$11..2000])[];  # _Alois P. Heinz_, Sep 14 2020"
+    ],
+    "mathematica": [
+        "lhrhQ[p_]:=Module[{idp=IntegerDigits[p],c},c=Floor[Length[idp]/2];AllTrue[ {FromDigits[ Take[idp,c]],FromDigits[Take[idp,-c]]},!PrimeQ[#]&]]; Select[Prime[Range[5,200]],lhrhQ] (* _Harvey P. Dale_, Aug 09 2023 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = forprime(p=11, nn, my(l=#Str(p), e=floor(l/2), left=floor(p/10^(e+l%2)), right=p-floor(p/10^e)*10^e); if(!isprime(left) && !isprime(right), print1(p, \", \")))",
+        "(Python)",
+        "from sympy import nextprime, isprime",
+        "A337508_list, p = [], 11",
+        "while p < 10**6:",
+        "    s = str(p)",
+        "    l = len(s)//2",
+        "    if not (isprime(int(s[:l])) or isprime(int(s[-l:]))):",
+        "        A337508_list.append(p)",
+        "    p = nextprime(p) # _Chai Wah Wu_, Sep 14 2020"
+    ],
+    "xref": [
+        "Cf. A000040, A125523, A125524, A125525."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "_Iain Fox_, Aug 30 2020",
+    "references": 1,
+    "revision": 19,
+    "time": "2023-08-09T16:18:42-04:00",
+    "created": "2020-09-14T22:01:59-04:00"
+}

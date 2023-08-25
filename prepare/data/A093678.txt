@@ -1,0 +1,44 @@
+{
+    "number": 93678,
+    "data": "1,7,8,10,11,16,17,20,28,34,35,37,38,43,44,47,82,88,89,91,92,97,98,101,109,115,116,118,119,124,125,128,244,250,251,253,254,259,260,263,271,277,278,280,281,286,287,290,325,331,332,334,335,340,341,344,352",
+    "name": "Sequence contains no 3-term arithmetic progression, starting with 1, 7.",
+    "comment": [
+        "a(1)=1, a(2)=7; a(n) is least k such that no three terms of a(1), a(2), ..., a(n-1), k form an arithmetic progression."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A093678/b093678.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/No#non_averaging\">Index entries related to non-averaging sequences</a>"
+    ],
+    "formula": [
+        "a(n) = (Sum_{k=1..n-1} (3^A007814(k) + 1)/2) + f(n), with f(n) an 8-periodic function with values {1, 6, 5, 6, 2, 6, 5, 7, ...}, as proved by Lawrence Sze."
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "V:= Vector(N,1):",
+        "A[1]:= 1: A[2]:= 7: k:= 8;",
+        "for n from 3 while k < N do",
+        "  for k from 1 to n-2 do",
+        "    p:= 2*A[n-1]-A[k];",
+        "    if p <= N then V[p]:= 0 fi",
+        "  od:",
+        "  for k from A[n-1]+1 to N do",
+        "    if V[k] = 1 then A[n]:= k; nmax:= n; break fi;",
+        "  od;",
+        "od:",
+        "seq(A[i],i=1..nmax); # _Robert Israel_, May 07 2018"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[(1/2)(3^IntegerExponent[k, 2]+1), {k, 1, n-1}] + (1/8)( 12(-1)^n - 7Sin[n Pi/2] + 7Sin[3n Pi/2] - Sin[(n+1)Pi/4] + Sin[(5n+1) Pi/4] + Cos[n Pi/2] + Cos[3n Pi/2] + Cos[n Pi/4] + Cos[3n Pi/4] + Cos[5n Pi/4] + Cos[7n Pi/4] + Cos[(3n+1)Pi/4] - Cos[(7n+1)Pi/4] + 38); Array[a, 60] (* _Jean-Fran\u00e7ois Alcover_, Mar 22 2019 *)"
+    ],
+    "xref": [
+        "Cf. A004793, A033157, A093679, A093680, A093681, A092482.",
+        "Row 3 of array in A093682."
+    ],
+    "keyword": "nonn,look",
+    "offset": "1,2",
+    "author": "_Ralf Stephan_, Apr 09 2004",
+    "references": 11,
+    "revision": 22,
+    "time": "2022-05-24T02:47:14-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

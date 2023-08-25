@@ -1,0 +1,59 @@
+{
+    "number": 49691,
+    "data": "0,3,5,9,13,21,25,37,45,57,65,85,93,117,129,145,161,193,205,241,257,281,301,345,361,401,425,461,485,541,557,617,649,689,721,769,793,865,901,949,981,1061,1085,1169,1209,1257,1301,1393,1425,1509,1549",
+    "name": "a(n)=T(n,n), array T as in A049687. Also a(n)=T(2n,2n), array T given by A049639.",
+    "comment": [
+        "a(n) is related to the sequence b(n) = |{(x, y): gcd(x, y) = 1, 1<=x, y<=n}| (A018805) as follows: a(n) = b(n - 1) + 2 (for n > 1). - Shawn Westmoreland (westmore(AT)math.utexas.edu), Jun 11 2003",
+        "Comment from _N. J. A. Sloane_, Sep 08 2019 (Start)",
+        "The above comment can be rephrased as saying that a(n) is the cardinality of the subsequence F(B(2n),n) of the Farey series F_{2n} that is extensively studied in Matveev (2017). See the definition on page 1.",
+        "For example, F(B(2),1), F(B(4),2), F(B(6),3), and F(B(8),4) are:",
+        "  [0, 1/2, 1],",
+        "  [0, 1/3, 1/2, 2/3, 1],",
+        "  [0, 1/4, 1/3, 2/5, 1/2, 3/5, 2/3, 3/4, 1],",
+        "  [0, 1/5, 1/4, 1/3, 2/5, 3/7, 1/2, 4/7, 3/5, 2/3, 3/4, 4/5, 1],",
+        "of cardinalities 3,5,9,13 respectively. See also A324796/A324797. (End)",
+        "a(n) is the number of visible points on an n X n square lattice when viewed from (0, 0), (0, n), (n, 0), or (n, n). - _Torlach Rush_, Nov 16 2020",
+        "Also number of elements in { c/d ; -d <= c <= d <= n }, i.e., distinct fractions with denominator not exceeding n and absolute value of numerator not exceeding the denominator. - _M. F. Hasler_, Mar 26 2023"
+    ],
+    "reference": [
+        "A. O. Matveev, Farey Sequences, De Gruyter, 2017."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A049691/b049691.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "A. O. Matveev, <a href=\"https://github.com/andreyomatveev/farey-sequences\">Farey Sequences: Errata + Haskell code</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/VisiblePoint.html\">Visible Point</a>"
+    ],
+    "formula": [
+        "a(n) = A206297(n+1) = 2 + A018805(n) for n > 0. - _Andrew Howroyd_, Sep 17 2017",
+        "a(n) = 1 + 2 * Sum{k=1..n} A000010(k), n > 0. - _Torlach Rush_, Nov 24 2020"
+    ],
+    "maple": [
+        "Farey := proc(n) sort(convert(`union`({0}, {seq(seq(m/k, m=1..k), k=1..n)}), list)) end: # A006842/A006843",
+        "BF := proc(m) local a,i,h,k; global Farey; a:=[];",
+        "for i in Farey(2*m) do h:=numer(i); k:=denom(i);",
+        "if (h <= m) and (k-m <= h) then a:=[op(a),i]; fi; od: a; end;",
+        "[seq(nops(BF(m),m=1..20)]; # this sequence - _N. J. A. Sloane_, Sep 08 2019"
+    ],
+    "mathematica": [
+        "a[0] = 0; a[n_] := 2 + Sum[Quotient[n, g]^2*MoebiusMu[g], {g, 1, n}]; Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Oct 07 2017, translated from PARI *)"
+    ],
+    "program": [
+        "(PARI) a(n) = if(n>0, 2, 0) + sum(g=1, n, (n\\g)^2 * moebius(g)); \\\\ _Andrew Howroyd_, Sep 17 2017",
+        "(PARI) a(n) = if(n>0, 1, 0) + 2 * sum(k=1, n, eulerphi(k)); \\\\ _Torlach Rush_, Nov 24 2020",
+        "(PARI) a(n)=#Set(concat([[c/d|c<-[-d..d],d]|d<-[0..n]])) \\\\ For illustrative purpose only! - _M. F. Hasler_, Mar 26 2023"
+    ],
+    "xref": [
+        "Cf. A000010, A018805, A049687, A324796, A324797.",
+        "A206297 is an essentially identical sequence."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Terms a(41) and beyond from _Andrew Howroyd_, Sep 17 2017"
+    ],
+    "references": 26,
+    "revision": 66,
+    "time": "2023-03-28T08:25:03-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

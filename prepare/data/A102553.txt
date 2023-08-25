@@ -1,0 +1,38 @@
+{
+    "number": 102553,
+    "data": "1,2,3,5,7,11,13,15,17,19,23,27,29,31,37,41,43,47,51,53,59,61,63,67,71,73,79,83,85,89,95,97,101,103,107,109,111,113,119,123,125,127,131,135,137,139,143,149,151,157,163,167,173,175,179,181,187,191,193,197,199",
+    "name": "Numbers k such that for all prime-factors p: p = (k AND p), bitwise.",
+    "comment": [
+        "Numbers k such that A102550(k) = A001221(k).",
+        "Apart from first term, subsequence of A102552;",
+        "A000040 is a subsequence.",
+        "Numbers k such that the bitwise OR of k with all prime divisors of k is equal to k. - _Chai Wah Wu_, Dec 18 2022"
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A102553/b102553.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "okQ[n_] := AllTrue[FactorInteger[n][[All, 1]], # == BitAnd[n, #]&];",
+        "Select[Range[200], okQ] (* _Jean-Fran\u00e7ois Alcover_, Nov 16 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from operator import ior",
+        "from functools import reduce",
+        "from sympy import primefactors",
+        "def A102553_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:n == 1 or n|reduce(ior,primefactors(n))==n,count(max(startvalue,1)))",
+        "A102553_list = list(islice(A102553_gen(),20)) # _Chai Wah Wu_, Dec 18 2022"
+    ],
+    "xref": [
+        "Cf. A000040, A001221, A102550, A102552, A102554, A007088, A004676."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Jan 14 2005",
+    "references": 6,
+    "revision": 21,
+    "time": "2022-12-19T03:32:47-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

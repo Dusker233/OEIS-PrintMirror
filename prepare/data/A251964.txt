@@ -1,0 +1,34 @@
+{
+    "number": 251964,
+    "data": "2,5,7,11,19,23,37,41,61,71,73,101,109,113,127,131,163,179,181,211,229,241,251,271,307,311,313,383,389,401,421,433,449,479,521,523,541,557,569,571,587,601,613,631,659,677,751,811,827,839,857,929,947,971,977",
+    "name": "For a prime p, denote by s(p,k) the odd part of the digital sum of p^k. Let k_1 be the smallest k such that s(p,k) is divisible by 5. Sequence lists primes p for which s(p,k_1)=5.",
+    "comment": [
+        "Let p be a prime other than 3. If p is not in the sequence, then either s(p,k_1) >= 25 or k_1 does not exist. We conjecture that k_1=k_1(p) exists for every prime p."
+    ],
+    "example": [
+        "For p=7, s(p,1) = 7, s(p,2) = 4+9 = 13, s(p,3) = (3+4+3)/2 = 5. So 7 is a term.",
+        "For p=13, s(p,1) = 1, s(p,2) = 1, s(p,3) = 19, s(p,4) = 11, s(p,5) = 25. So 13 is not in the sequence."
+    ],
+    "mathematica": [
+        "s[p_, k_] := Module[{s = Total[IntegerDigits[p^k]]}, s/2^IntegerExponent[s, 2]]; f5[p_] := Module[{k = 1}, While[! Divisible[s[p, k], 5], k++]; k]; ok5Q[p_] := s[p, f5[p]] == 5; Select[Range[1000], PrimeQ[#] && ok5Q[#] &] (* _Amiram Eldar_, Dec 07 2018 *)"
+    ],
+    "program": [
+        "(PARI) s(p,k) = my(s=sumdigits(p^k)); s >> valuation(s, 2);",
+        "f5(p) = my(k=1); while(s(p,k) % 5, k++); k;",
+        "isok5(p) = s(p, f5(p)) == 5;",
+        "lista5(nn) = forprime(p=2, nn, if (isok5(p), print1(p, \", \"))); \\\\ _Michel Marcus_, Dec 07 2018"
+    ],
+    "xref": [
+        "Cf. A221858, A225039, A225093."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Vladimir Shevelev_, Dec 11 2014",
+    "ext": [
+        "More terms from _Peter J. C. Moses_, Dec 11 2014"
+    ],
+    "references": 11,
+    "revision": 22,
+    "time": "2018-12-07T12:25:22-05:00",
+    "created": "2014-12-16T13:30:15-05:00"
+}

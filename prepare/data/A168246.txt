@@ -1,0 +1,37 @@
+{
+    "number": 168246,
+    "data": "1,2,4,19,92,576,4156,34178,314368,3199936,35703996,433422071,5687955724,80256879068,1211781887796,19496946568898,333041104402860,6019770247224496,114794574818830716,2303332661419442569,48509766592884311132,1069983257387168051076",
+    "name": "Inverse Weigh transform of n!.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A168246/b168246.txt\">Table of n, a(n) for n = 1..449</a>"
+    ],
+    "formula": [
+        "Product_{k>=1} (1+x^k)^a(k) = Sum_{n>=0} n! x^n.",
+        "a(n) ~ n! * (1 - 1/n - 1/n^2 - 4/n^3 - 23/n^4 - 171/n^5 - 1542/n^6 - 16241/n^7 - 194973/n^8 - 2622610/n^9 - 39027573/n^10 - ...), for coefficients see A113869. - _Vaclav Kotesovec_, Nov 27 2020"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(binomial(a(i), j)*b(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "a:= proc(n) option remember; n! -b(n, n-1) end:",
+        "seq(a(n), n=1..30);  # _Alois P. Heinz_, Jun 11 2018"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, If[i < 1, 0, Sum[Binomial[a[i], j]*b[n - i*j, i - 1], {j, 0, n/i}]]];",
+        "a[n_] := a[n] = n! - b[n, n - 1];",
+        "Array[a, 30] (* _Jean-Fran\u00e7ois Alcover_, Sep 16 2019, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={dirdiv(Vec(log(1+x*Ser(vector(n, n, n!)))), -vector(n, n, (-1)^n/n))} \\\\ _Andrew Howroyd_, Jun 22 2018"
+    ],
+    "xref": [
+        "Cf. A000142, A112354, A261052 (Weigh transform of n!)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Vladeta Jovovic_, Nov 21 2009",
+    "references": 6,
+    "revision": 23,
+    "time": "2020-11-27T03:50:41-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 350472,
+    "data": "5,9,15,21,26,34,39,45,50,56,64,69,76,81,86,92,94,99,105,111,116,120,124,129,134,142,144,146,154,160,165,170,176,184,186,188,195,204,206,216,218,225,231,236,244,246,248,254,260,266,274,279,286,288,290,296",
+    "name": "Positive integers k such that if p is the next prime > k, and q is the previous prime < k, then p - k is prime and k - q is prime.",
+    "comment": [
+        "a(n) can only be composite (excluding a(1) = 5)."
+    ],
+    "example": [
+        "9 is a term because the next prime > 9 is 11 and the previous prime < 9 is 7, and 11 - 9 = 2 (which is prime) and 9 - 7 = 2 (which is also prime)."
+    ],
+    "maple": [
+        "q:= n-> andmap(isprime, [nextprime(n)-n, n-prevprime(n)]):",
+        "select(q, [$3..400])[];  # _Alois P. Heinz_, Jan 01 2022"
+    ],
+    "mathematica": [
+        "Select[Range[350], And @@ PrimeQ[{# - NextPrime[#, -1], NextPrime[#] - #}] &] (* _Amiram Eldar_, Jan 01 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, nextprime, prevprime",
+        "def ok(n):",
+        "    return n > 2 and isprime(nextprime(n) - n) and isprime(n - prevprime(n))",
+        "print([k for k in range(341) if ok(k)]) # _Michael S. Branicky_, Jan 01 2022",
+        "(PARI) isok(k) = my(p=nextprime(k+1), q=precprime(k-1)); isprime(p-k) && isprime(k-q); \\\\ _Michel Marcus_, Jan 01 2022"
+    ],
+    "xref": [
+        "Intersection of A350496 and A350460.",
+        "Cf. A175090, A225461."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ryan Bresler_, Jan 01 2022",
+    "references": 0,
+    "revision": 29,
+    "time": "2022-01-12T21:42:03-05:00",
+    "created": "2022-01-12T21:42:03-05:00"
+}

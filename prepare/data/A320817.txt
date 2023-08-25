@@ -1,0 +1,34 @@
+{
+    "number": 320817,
+    "data": "1,10,66,361,1778,8207,36310,156095,657785,2733065,11241497,45900679,186420826,754165809,3042167236,12245294090,49211278321,197535872510,792216674789,3175088068035,12719020008668,50932090504830,203896407951944,816089798651203",
+    "name": "Number of partitions of n with exactly four sorts of part 1 which are introduced in ascending order.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A320817/b320817.txt\">Table of n, a(n) for n = 4..1663</a>"
+    ],
+    "formula": [
+        "a(n) = A320735(n) - A320734(n)."
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0 or i<2, add(",
+        "      Stirling2(n, j), j=0..k), add(b(n-i*j, i-1, k), j=0..n/i))",
+        "    end:",
+        "a:= n-> (k-> b(n$2, k)-b(n$2, k-1))(4):",
+        "seq(a(n), n=4..35);"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0 || i < 2, Sum[StirlingS2[n, j], {j, 0, k}], Sum[b[n - i*j, i - 1, k], {j, 0, n/i}]];",
+        "a[n_] := With[{k = 4}, b[n, n, k] - b[n, n, k-1]];",
+        "a /@ Range[4, 35] (* _Jean-Fran\u00e7ois Alcover_, Dec 17 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=4 of A292746.",
+        "Cf. A320734, A320735."
+    ],
+    "keyword": "nonn",
+    "offset": "4,2",
+    "author": "_Alois P. Heinz_, Oct 21 2018",
+    "references": 2,
+    "revision": 7,
+    "time": "2020-12-17T12:12:15-05:00",
+    "created": "2018-10-21T12:19:38-04:00"
+}

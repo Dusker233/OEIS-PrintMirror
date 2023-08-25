@@ -1,0 +1,90 @@
+{
+    "number": 318158,
+    "data": "79,97,103,109,127,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,211,223,227,229,233,239,241,251,257,263,269,271,277,281,283,293,307,311,313,317,331,337,347,349,353,359,367,373,379,383,389,397",
+    "name": "Prime numbers of the form p1^4 + p2^3 + p3^2 + p4, where p1, p2, p3 and p4 are distinct primes.",
+    "comment": [
+        "Does this sequence contain every prime > 113? - _Robert Israel_, Aug 26 2018",
+        "From _David A. Corneth_, Aug 26 2018: (Start)",
+        "As the primes in the sum are distinct and has four terms, exactly one of (p1, p2, p3, p4) is 2.",
+        "Contains all the primes in [120, 5 * 10^7]. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A318158/b318158.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "David A. Corneth, <a href=\"/A318158/a318158.gp.txt\">Statistic for computations using the PARI program below</a>",
+        "David A. Corneth, <a href=\"/A318158/a318158_1.gp.txt\">PARI program</a>"
+    ],
+    "example": [
+        "227 belongs to this sequence as 227 = 3^4 + 5^3 + 2^2 + 17, with 2, 3, 5 and 17 all primes."
+    ],
+    "maple": [
+        "N:= 1000: # to get all terms <= N",
+        "V:= Vector(N):",
+        "p1:= 1:",
+        "do",
+        "  p1:= nextprime(p1);",
+        "  if p1^4 > N then break fi;",
+        "  p2:= 1:",
+        "  do",
+        "    p2:= nextprime(p2);",
+        "    if p1^4 + p2^3 > N then break fi;",
+        "    if p2 = p1 then next fi;",
+        "    p3:= 1;",
+        "    do",
+        "      p3:= nextprime(p3);",
+        "      if p1^4 + p2^3 + p3^2 > N then break fi;",
+        "      if p3 = p1 or p3 = p2 then next fi;",
+        "      if min(p1,p2,p3)>2 then",
+        "         p4:= 2;",
+        "         x:= p1^4+p2^3+p3^2+p4;",
+        "         if isprime(x) then V[x]:= 1 fi;",
+        "      else",
+        "         p4:= 2;",
+        "         do",
+        "            p4:= nextprime(p4);",
+        "            if p1^4 + p2^3 + p3^2 + p4 > N then break fi;",
+        "            if p4 = p1 or p4 = p2 or p4 = p3 then next fi;",
+        "            x:= p1^4+p2^3+p3^2+p4;",
+        "            if isprime(x) then V[x]:= 1 fi;",
+        "          od",
+        "       fi",
+        "od od od:",
+        "select(t -> V[t]=1, [$1..N]); # _Robert Israel_, Aug 26 2018"
+    ],
+    "mathematica": [
+        "v[t_] := Prime@Range@PrimePi@t; up = 400; Union@Reap[ Do[ If[PrimeQ[p = p1^4 + p2^3 + p3^2 + p4] && (s = {p1, p2, p3, p4}; Sort@s == Union@s), Sow@p], {p1, v[ up^(1/4)]}, {p2, v@Sqrt[up - p1^4]}, {p3, v[up - p1^4 - p2^3]}, {p4, v[up - p1^4 - p2^3 - p3^2]}]][[2, 1]] (* _Giovanni Resta_, Aug 19 2018 *)"
+    ],
+    "program": [
+        "(Minizinc)",
+        "include \"globals.mzn\";",
+        "int: n = 4;",
+        "%to get all primes less than 250 of this sequence",
+        "int: max_val = 250;",
+        "array[1..n+1] of var 2..max_val: x;",
+        "% primes between 2..max_valset of int:",
+        "prime = 2..max_val diff { i | i in 2..max_val, j in 2..ceil(sqrt(i)) where i mod j = 0} ;",
+        "set of int: primes;",
+        "primes = prime union {2};",
+        "solve satisfy;",
+        "constraint all_different(x) /\\",
+        "x[1] in primes /\\",
+        "x[2] in primes /\\",
+        "x[3] in primes /\\",
+        "x[4] in primes /\\",
+        "x[5] in primes /\\",
+        "pow(x[4],4)+pow(x[3],3)+pow(x[2],2)+pow(x[1],1)= x[5] ;",
+        "output [ show(x[5])]"
+    ],
+    "xref": [
+        "Cf. A316971."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Pierandrea Formusa_, Aug 19 2018",
+    "ext": [
+        "More terms from _Giovanni Resta_, Aug 19 2018"
+    ],
+    "references": 1,
+    "revision": 20,
+    "time": "2018-08-26T11:32:05-04:00",
+    "created": "2018-08-25T02:25:47-04:00"
+}

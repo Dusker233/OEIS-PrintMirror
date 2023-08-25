@@ -1,0 +1,40 @@
+{
+    "number": 364023,
+    "data": "111,414,777,35853,1226221,7673767,7744477,9396939,859767958,11211911211,12467976421,72709290727,93969696939,1030507050301,1120237320211,1225559555221,1234469644321,1334459544331,3254595954523,10048622684001,100330272033001,100827848728001",
+    "name": "Palindromes that have at least two distinct prime factors and whose prime factors, listed (with multiplicity) in descending order and concatenated, form a palindrome in base 10.",
+    "example": [
+        "111 = 37*3",
+        "414 = 23*3*3*2",
+        "777 = 37*7*3",
+        "35853 = 37*19*17*3",
+        "1226221 = 1201*1021",
+        "7673767 = 79111*97",
+        "7744477 = 3119*191*13",
+        "9396939 = 31013*101*3",
+        "859767958 = 2731*199*113*7*2"
+    ],
+    "mathematica": [
+        "(* generate palindromes with even n *)",
+        "poli[n_Integer?EvenQ]:=FromDigits[Join[#,Reverse[#]]]&/@",
+        "DeleteCases[Tuples[Range[0,9],n/2],{0..,___}]",
+        "(* generate palindromes with odd n *)",
+        "poli[n_Integer?OddQ]:=Flatten[Table[FromDigits[Join[#,{k},Reverse[#]]]&/@",
+        "DeleteCases[Tuples[Range[0,9],(n-1)/2],{0..,___}],{k,0,9}]]",
+        "(* find descending factor sequence *)",
+        "descendFACTOR[n_Integer]:=",
+        "PalindromeQ[StringJoin[Reverse[ToString/@Flatten[Table[#1,#2]&@@@#]]]]&&",
+        "Length[#]>1&@FactorInteger[n]",
+        "(* example for palindromes of size 7 *)",
+        "Parallelize@Select[poli[7],descendFACTOR]//Sort//AbsoluteTiming"
+    ],
+    "xref": [
+        "Similar to A364050. Subsequence of A002113 and A024619."
+    ],
+    "keyword": "nonn,base,hard",
+    "offset": "1,1",
+    "author": "_Vitaliy Kaurov_, Jul 04 2023",
+    "references": 2,
+    "revision": 36,
+    "time": "2023-08-05T21:42:52-04:00",
+    "created": "2023-08-05T21:42:52-04:00"
+}

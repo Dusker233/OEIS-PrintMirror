@@ -1,0 +1,38 @@
+{
+    "number": 343139,
+    "data": "15,27,51,63,120,130,131,142,153,164,208,218,230,242,252,262,263,274,305,318,327,338,348,360,370,381,392,413,424,435,446,456,457,702,712,722,732,805,860,901,912,922,932,1016,1027,1038,1039,1048,1049,1059,1071,1080",
+    "name": "Numbers k that satisfy the condition digitsum(k) = digitsum(pi(k)) where pi is the prime counting function.",
+    "comment": [
+        "a(7) = 131 is the first prime in this sequence.",
+        "A033548 (Honaker primes) is a subsequence of this sequence."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A343139/b343139.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "153 is a term because the number of primes up to 153 is 36 and 1 + 5 + 3 = 9 = 3 + 6.",
+        "435 is a term because number of primes up to 435 is 84 and 4 + 3 + 5 = 12 = 8 + 4."
+    ],
+    "mathematica": [
+        "fHQ[n_] := Plus @@ IntegerDigits@n == Plus @@ IntegerDigits@PrimePi@n; Select[Range[3000], fHQ[#] &]"
+    ],
+    "program": [
+        "(PARI) for(n=1, 5000, if(sumdigits(n)==vecsum(digits(primepi(n))), print1(n, \", \" )));",
+        "(PARI)  upto(n) = { my(q = 2, ulim = nextprime(n), pi = 0, res = List()); forprime(p = 3, ulim, pi++; for(i = q, p-1, if(sumdigits(i) == sumdigits(pi), listput(res, i) ) ); q = p ); res } \\\\ _David A. Corneth_, May 26 2021",
+        "(Python)",
+        "from sympy import primepi",
+        "def sd(n): return sum(map(int, str(n)))",
+        "def ok(n): return sd(n) == sd(primepi(n))",
+        "print(list(filter(ok, range(1, 1081)))) # _Michael S. Branicky_, May 28 2021"
+    ],
+    "xref": [
+        "Cf. A000720, A007953, A010846, A033548, A033549."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "_K. D. Bajpai_, Apr 06 2021",
+    "references": 1,
+    "revision": 22,
+    "time": "2021-05-28T17:14:53-04:00",
+    "created": "2021-05-01T08:01:27-04:00"
+}

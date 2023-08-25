@@ -1,0 +1,42 @@
+{
+    "number": 296859,
+    "data": "5,11,13,21,22,23,27,29,43,44,45,46,47,53,54,55,59,61,77,85,86,87,88,89,90,91,92,93,94,95,107,108,109,110,111,117,118,119,123,125,141,155,157,171,172,173,174,175,176,177,179,180,181,182,183,184,185,186",
+    "name": "Numbers whose base-2 digits have #(pits) > #(peaks); see Comments.",
+    "comment": [
+        "A pit is an index i such that d(i-1) > d(i) < d(i+1); a peak is an index i such that d(i-1) < d(i) > d(i+1). The sequences A296858-A296860 partition the natural numbers. See the guides at A296882 and A296712."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A296859/b296859.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The base-2 digits of 186 are 1,0,1,1,1,0,1,0; here #(pits) = 2 and #(peaks) = 1, so 186 is in the sequence."
+    ],
+    "mathematica": [
+        "z = 200; b = 2;",
+        "d[n_] := Differences[Sign[Differences[IntegerDigits[n, b]]]];",
+        "Select[Range [z], Count[d[#], -2] == Count[d[#], 2] &]  (* A296858 *)",
+        "Select[Range [z], Count[d[#], -2] < Count[d[#], 2] &]   (* A296859 *)",
+        "Select[Range [z], Count[d[#], -2] > Count[d[#], 2] &]   (* A296860 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def cwo(subs, s): # count with overlaps allowed",
+        "  c = i = 0",
+        "  while i != -1:",
+        "    i = s.find(subs, i)",
+        "    if i != -1: c += 1; i += 1",
+        "  return c",
+        "def ok(n): b = bin(n)[2:]; return cwo('101', b) > cwo('010', b)",
+        "print(list(filter(ok, range(1, 187)))) # _Michael S. Branicky_, May 11 2021"
+    ],
+    "xref": [
+        "Cf. A296882, A296712, A296858, A296860."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jan 09 2018",
+    "references": 4,
+    "revision": 17,
+    "time": "2021-05-11T08:44:59-04:00",
+    "created": "2018-01-09T17:48:58-05:00"
+}

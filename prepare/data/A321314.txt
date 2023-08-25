@@ -1,0 +1,40 @@
+{
+    "number": 321314,
+    "data": "0,1,1,10,42,232,1879,15228,131452,1329136,15106976,182954700,2363478435,33096395494,501248446126,8094778608472,138112754890488,2487454752219208,47344572399516136,950682668010605104,20055050996527350752,442701537970743308588,10202898078512473893032",
+    "name": "Number of permutations of [n] where the length of the longest increasing subsequence is larger than the length of the longest decreasing subsequence.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A321314/b321314.txt\">Table of n, a(n) for n = 1..80</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Longest_increasing_subsequence\">Longest increasing subsequence</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n-1} A321316(n,k).",
+        "a(n) = (n! - A321313(n))/2.",
+        "a(n) = A321315(n) - A321313(n)."
+    ],
+    "maple": [
+        "h:= l-> (n-> add(i, i=l)!/mul(mul(1+l[i]-j+add(`if`(j>",
+        "    l[k], 0, 1), k=i+1..n), j=1..l[i]), i=1..n))(nops(l)):",
+        "f:= l-> `if`(l[1]<nops(l), h(l)^2, 0):",
+        "g:= (n, i, l)-> `if`(n=0 or i=1, f([l[], 1$n]),",
+        "     g(n, i-1, l) +g(n-i, min(i, n-i), [l[], i])):",
+        "a:= n-> g(n$2, []):",
+        "seq(a(n), n=1..23);"
+    ],
+    "mathematica": [
+        "h[l_] := With[{n = Length[l]}, Total[l]!/Product[Product[1 + l[[i]] - j + Sum[If[j > l[[k]], 0, 1], {k, i + 1, n}], {j, 1, l[[i]]}], {i, 1, n}]];",
+        "f[l_] := If[l[[1]] < Length[l], h[l]^2, 0];",
+        "g[n_, i_, l_] := If[n == 0 || i == 1, f[Join[l, Table[1, {n}]]], g[n, i - 1, l] + g[n - i, Min[i, n - i], Append[l, i]]];",
+        "a[n_] := g[n, n, {}];",
+        "Array[a, 25] (* _Jean-Fran\u00e7ois Alcover_, Aug 31 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000142, A003316, A321313, A321315, A321316."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Alois P. Heinz_, Nov 03 2018",
+    "references": 4,
+    "revision": 21,
+    "time": "2021-08-31T14:35:39-04:00",
+    "created": "2018-11-04T11:02:10-05:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 14236,
+    "data": "0,2,2,8,12,32,56,128,240,512,992,2048,4032,8192,16256,32768,65280,131072,261632,524288,1047552,2097152,4192256,8388608,16773120,33554432,67100672,134217728,268419072,536870912,1073709056,2147483648,4294901760,8589934592",
+    "name": "Expansion of g.f.: 2*x*(1-x)/((1-2*x)*(1-2*x^2)).",
+    "comment": [
+        "Number of symmetric chiral (optically active) isomers possible for organic compounds with n distinct carbon atoms.",
+        "A020522 interleaved with A004171 and apparently the number of asymmetric Dyck (n+2)-paths with exactly half of the steps lying between the first and last peaks; e.g. all asymmetric 3-paths (UU*DDU*D and U*DUU*DD) comply so a(1)=2. - _David Scambler_, Sep 14 2012"
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A014236/b014236.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (2,2,-4)."
+    ],
+    "formula": [
+        "a(n) = 2*A007179(n). - _R. J. Mathar_, Nov 14 2011",
+        "From _G. C. Greubel_, Jun 22 2019:",
+        "a(n) = 2^((n - 2)/2)*(2^((n + 2)/2) - 1 - (-1)^n).",
+        "E.g.f.: exp(2*x) - cosh(sqrt(2)*x). (End)"
+    ],
+    "maple": [
+        "f := n -> if n mod 2 = 0 then 2^n-2^(n/2) else 2^n; fi;"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[2x (1-x)/((1-2x)(1-2x^2)),{x,0,30}],x] (* or *) LinearRecurrence[{2,2,-4},{0,2,2},30] (* _Harvey P. Dale_, Dec 04 2018 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^30)); concat([0], Vec(2*x*(1-x)/((1-2*x)*(1-2*x^2)))) \\\\ _G. C. Greubel_, Jun 22 2019",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 30); [0] cat Coefficients(R!( 2*x*(1-x)/((1-2*x)*(1-2*x^2)) )); // _G. C. Greubel_, Jun 22 2019",
+        "(Sage) (2*x*(1-x)/((1-2*x)*(1-2*x^2))).series(x, 30).coefficients(x, sparse=False) # _G. C. Greubel_, Jun 22 2019",
+        "(GAP) a:=[0,2,2];; for n in [4..30] do a[n]:=2*a[n-1]+2*a[n-2]-4*a[n-3]; od; a; # _G. C. Greubel_, Jun 22 2019"
+    ],
+    "xref": [
+        "Second differences of A027556."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "Paul F. Hudrlik (hudrlik(AT)scs.howard.edu)",
+    "ext": [
+        "G.f. corrected by _Olivier G\u00e9rard_, Nov 13 2011"
+    ],
+    "references": 3,
+    "revision": 34,
+    "time": "2023-06-25T21:06:07-04:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

@@ -1,0 +1,63 @@
+{
+    "number": 300275,
+    "data": "1,2,5,10,23,40,85,147,276,474,858,1421,2484,4079,6850,11137,18333,29277,47329,74768,118703,185614,290782,449568,696009,1066258,1632376,2479057,3759611,5661568,8512308,12722132,18974109,28157619,41690937,61453929,90379783",
+    "name": "G.f.: 1 + Sum_{n>=1} a(n)*x^n/(1 - x^n) = Product_{n>=1} 1/(1 - x^n)^n.",
+    "comment": [
+        "Moebius transform of A000219.",
+        "From _Gus Wiseman_, Jan 21 2019: (Start)",
+        "Also the number of plane partitions of n with relatively prime entries. For example, the a(4) = 10 plane partitions are:",
+        "  31   211   1111",
+        ".",
+        "  3   21   11   111",
+        "  1   1    11   1",
+        ".",
+        "  2   11",
+        "  1   1",
+        "  1   1",
+        ".",
+        "  1",
+        "  1",
+        "  1",
+        "  1",
+        "Also the number of plane partitions of n whose multiset of rows is aperiodic, meaning its multiplicities are relatively prime. For example, the a(4) = 10 plane partitions are:",
+        "  4   31   22   211   1111",
+        ".",
+        "  3   21   111",
+        "  1   1    1",
+        ".",
+        "  2   11",
+        "  1   1",
+        "  1   1",
+        "(End)"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A300275/b300275.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{d|n} mu(n/d)*A000219(d)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      b(n-j)*sigma[2](j), j=1..n)/n)",
+        "    end:",
+        "a:= n-> add(b(d)*mobius(n/d), d=divisors(n)):",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, Jun 21 2018"
+    ],
+    "mathematica": [
+        "nn = 37; f[x_] := 1 + Sum[a[n] x^n/(1 - x^n), {n, 1, nn}]; sol = SolveAlways[0 == Series[f[x] - Product[1/(1 - x^n)^n, {n, 1, nn}], {x, 0, nn}], x]; Table[a[n], {n, 1, nn}] /. sol // Flatten",
+        "s[n_] := SeriesCoefficient[Product[1/(1 - x^k)^k, {k, 1, n}], {x, 0, n}]; a[n_] := Sum[MoebiusMu[n/d] s[d], {d, Divisors[n]}]; Table[a[n], {n, 1, 37}]"
+    ],
+    "xref": [
+        "Cf. A000219, A000837, A078374, A300274, A300276, A300277, A300278.",
+        "Cf. A100953, A303546, A320802, A323584, A323585, A323587."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Mar 01 2018",
+    "references": 9,
+    "revision": 13,
+    "time": "2019-01-22T07:45:32-05:00",
+    "created": "2018-03-01T14:53:54-05:00"
+}

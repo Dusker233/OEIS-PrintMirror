@@ -1,0 +1,47 @@
+{
+    "number": 338093,
+    "data": "16,27,256,540,756,1200,1890,2940,3060,3125,4050,4200,4320,5460,6000,6048,7920,8232,10080,10164,10368,10530,11232,11286,12960,13104,13524,13800,14000,14157,14175,15708,15960,17280,18200,18480,19278,19683,19992,20295,23814",
+    "name": "Composite numbers which are multiples of the sum of the squares of their prime factors (taken with multiplicity).",
+    "comment": [
+        "If a(n)=p1*p2*..*pk where p1,p2,..pk primes, then a(n)=m(p1^2+p2^2+..+pk^2) with m a positive integer.",
+        "For the special case of m=1, a(n) is equal to the sum of the squares of its prime factors.",
+        "There are only 5 known numbers to have this property:",
+        "16, 27 and three more numbers with 123, 163 and 179 digits found by _Giorgos Kalogeropoulos_ (see Rivera links).",
+        "It is not known if any smaller numbers than those three exist for the case of m=1.",
+        "From _Robert Israel_, Oct 16 2020: (Start)",
+        "Suppose n is in the sequence with n = k*A067666(n).  Then n^m is in the sequence if m divides k^m (in particular for m=k).",
+        "For any prime p, p^(p^j) is in the sequence if j >= 1 (except j>=2 if p=2). (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A338093/b338093.txt\">Table of n, a(n) for n = 1..2000</a>",
+        "Carlos Rivera, <a href=\"https://www.primepuzzles.net/puzzles/puzz_625.htm\">Puzzle 625. Sum of squares of prime divisors</a>, The Prime Puzzles and Problems Connection.",
+        "Carlos Rivera, <a href=\"https://www.primepuzzles.net/puzzles/puzz_1019.htm\">Puzzle 1019. Follow-up to Puzzle 625</a>, The Prime Puzzles and Problems Connection."
+    ],
+    "example": [
+        "16 = 2*2*2*2 = 1*(2^2 + 2^2 + 2^2 + 2^2).",
+        "7920 = 2*2*2*2*3*3*5*11 = 44*(2^2 + 2^2 + 2^2 + 2^2 + 3^2 + 3^2 + 5^2 + 11^2)."
+    ],
+    "maple": [
+        "filter:= proc(n) local t;",
+        "  if isprime(n) then return false fi;",
+        "  n mod add(t[1]^2*t[2],t=ifactors(n)[2]) = 0",
+        "end proc:",
+        "select(filter, [$4..30000]); # _Robert Israel_, Oct 16 2020"
+    ],
+    "mathematica": [
+        "Select[Range@20000,Mod[#,Total[Flatten[Table@@@FactorInteger@#]^2]]==0&]"
+    ],
+    "program": [
+        "(PARI) isok(m) = if (!isprime(m) && (m>1), my(f=factor(m)); (m % sum(k=1, #f~, f[k,1]^2*f[k,2])) == 0); \\\\ _Michel Marcus_, Oct 11 2020"
+    ],
+    "xref": [
+        "Cf. A067666."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Giorgos Kalogeropoulos_, Oct 09 2020",
+    "references": 1,
+    "revision": 39,
+    "time": "2021-09-12T11:19:37-04:00",
+    "created": "2020-10-14T10:55:32-04:00"
+}

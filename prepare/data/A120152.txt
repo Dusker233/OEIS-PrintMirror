@@ -1,0 +1,39 @@
+{
+    "number": 120152,
+    "data": "6,8,11,14,19,25,34,45,60,80,107,142,190,253,337,450,600,800,1066,1422,1896,2528,3370,4494,5992,7989,10652,14203,18937,25249,33666,44888,59850,79800,106400,141867,189156,252208,336277,448370",
+    "name": "a(n) = 6 + floor((1 + Sum_{j=1..n-1} a(j))/3).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A120152/b120152.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "mathematica": [
+        "Module[{lista={6}},Do[AppendTo[lista,Floor[(19+Total[lista])/3]],{40}];lista] (* _Harvey P. Dale_, Jun 11 2013 *)",
+        "nxt[{s_,a_}]:=Module[{x=Floor[(19+s)/3]},{s+x,x}]; NestList[nxt,{6,6},40][[;;,2]] (* _Harvey P. Dale_, Mar 26 2023 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "function f(n,a,b)",
+        "  t:=0;",
+        "    for k in [1..n-1] do",
+        "      t+:= a+Floor((b+t)/3);",
+        "    end for;",
+        "  return t;",
+        "end function;",
+        "g:= func< n,a,b | f(n+1,a,b)-f(n,a,b) >;",
+        "A120152:= func< n | g(n,6,1) >;",
+        "[A120152(n): n in [1..60]]; // _G. C. Greubel_, Jun 15 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def A120152(n): return 6 + (1 + sum(A120152(k) for k in range(1,n)))//3",
+        "[A120152(n) for n in range(1, 61)] # _G. C. Greubel_, Jun 15 2023"
+    ],
+    "xref": [
+        "Cf. A072493, A073941, A112088."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Graeme McRae_, Jun 10 2006",
+    "references": 1,
+    "revision": 12,
+    "time": "2023-07-07T05:45:12-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

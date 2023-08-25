@@ -1,0 +1,46 @@
+{
+    "number": 321580,
+    "data": "1,2,4,8,10,12,16,18,24,26,28,32,36,40,42,52,56,58,60,64,66,80,82,96,98,100,106,108,112,120,124,128,130,136,138,144,148,156,162,168,170,172,176,178,180,184,192,196,200,204,208,210,226,228,240,242,248,250",
+    "name": "Numbers k such that it is possible to reverse a deck of k cards by a sequence of perfect Faro shuffles with cut.",
+    "comment": [
+        "Except for 1, it isn't possible to shuffle backwards an odd number of cards."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A321580/b321580.txt\">Table of n, a(n) for n = 1..2000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Faro_shuffle\">Faro shuffle</a>"
+    ],
+    "example": [
+        "For a deck of 4 cards we'll have the following sequence of shuffles: 1234, 2413, 4321, 3142, 1234. Observe that the reverse order (4321) of 1234 appears in the sequence of shuffles.",
+        "For a deck of 5 cards: 12345, 24135, 43215, 31425, 12345. Observe that the reverse order (54321) of 12345 does not appear in the sequence of shuffles."
+    ],
+    "program": [
+        "(Python)",
+        "for n in range(1, 501):",
+        "    cards = [i for i in range(1, n + 1)]",
+        "    reverse = cards[::-1]",
+        "    shuffled = cards.copy()",
+        "    reversein = False",
+        "    for i in range(n):",
+        "        evens = shuffled[1::2]",
+        "        odds = shuffled[0::2]",
+        "        shuffled = evens + odds",
+        "        if shuffled == reverse:",
+        "            reversein = True",
+        "            print(n, end=\", \")",
+        "            break",
+        "(PARI)",
+        "shuffle(v)={my(h=#v\\2); vector(#v, i, if(i<=h, 2*i, 2*(i-h)-1))}",
+        "permcycs(v)={my(f=vector(#v), L=List()); for(i=1, #v, if(!f[i], my(T=List(), j=i); while(!f[j], f[j]=1; listput(T,j); j=v[j]); listput(L, Vec(T)))); Vec(L)}",
+        "ok(n)={my(v=permcycs(shuffle([1..n])), e=-1); for(k=1, #v, my(p=v[k]); if(#p>1||n%2==0||2*p[1]<>n+1, my(h=#p\\2); if(e<0, e=valuation(#p,2)); if(valuation(#p,2)<>e || e==0 || p[1..h]+p[h+1..2*h]<>vector(h,i,n+1), return(0)))); 1} \\\\ _Andrew Howroyd_, Nov 13 2018"
+    ],
+    "xref": [
+        "Cf. A024222, A071642, A321512."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Pedro Menezes_, Nov 13 2018",
+    "references": 2,
+    "revision": 26,
+    "time": "2023-03-21T18:09:02-04:00",
+    "created": "2018-11-14T01:47:43-05:00"
+}

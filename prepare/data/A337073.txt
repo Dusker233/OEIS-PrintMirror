@@ -1,0 +1,81 @@
+{
+    "number": 337073,
+    "data": "1,1,1,2,14,422,59433,43181280,178025660042,4550598470020490,782250333882971717562,974196106965358319940100513,9412280190038329162111356578977100,751537739224674099813783040471383322758327",
+    "name": "Number of strict factorizations of the superprimorial A006939(n) into squarefree numbers > 1.",
+    "comment": [
+        "The n-th superprimorial is A006939(n) = Product_{i = 1..n} prime(i)^(n - i + 1). It has n! divisors.",
+        "Also the number of strict set multipartitions (sets of sets) of the multiset of prime factors of the superprimorial A006939(n)."
+    ],
+    "formula": [
+        "a(n) = A050326(A006939(n)).",
+        "a(n) = A318361(A002110(n)). - _Andrew Howroyd_, Sep 01 2020"
+    ],
+    "example": [
+        "The a(1) = 1 through a(3) = 10 factorizations:",
+        "    2  2*6  2*6*30    2*6*30*210",
+        "            2*3*6*10  6*10*30*42",
+        "                      2*3*6*30*70",
+        "                      2*5*6*30*42",
+        "                      2*3*10*30*42",
+        "                      2*3*6*10*210",
+        "                      2*6*10*15*42",
+        "                      2*6*10*21*30",
+        "                      2*6*14*15*30",
+        "                      3*6*10*14*30",
+        "                      2*3*5*6*10*42",
+        "                      2*3*5*6*14*30",
+        "                      2*3*6*7*10*30",
+        "                      2*3*6*10*14*15",
+        "The a(1) = 1 through a(3) = 14 set multipartitions:",
+        "    {1}  {1}{12}  {1}{12}{123}    {1}{12}{123}{1234}",
+        "                  {1}{2}{12}{13}  {12}{13}{123}{124}",
+        "                                  {1}{12}{13}{23}{124}",
+        "                                  {1}{12}{13}{24}{123}",
+        "                                  {1}{12}{14}{23}{123}",
+        "                                  {1}{2}{12}{123}{134}",
+        "                                  {1}{2}{12}{13}{1234}",
+        "                                  {1}{2}{13}{123}{124}",
+        "                                  {1}{3}{12}{123}{124}",
+        "                                  {2}{12}{13}{14}{123}",
+        "                                  {1}{2}{12}{13}{14}{23}",
+        "                                  {1}{2}{12}{4}{13}{123}",
+        "                                  {1}{2}{3}{12}{13}{124}",
+        "                                  {1}{2}{3}{12}{14}{123}"
+    ],
+    "mathematica": [
+        "chern[n_]:=Product[Prime[i]^(n-i+1),{i,n}];",
+        "ystfac[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[ystfac[n/d],Min@@#>d&]],{d,Select[Rest[Divisors[n]],SquareFreeQ]}]];",
+        "Table[Length[ystfac[chern[n]]],{n,0,4}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See A318361 for count.",
+        "a(n) = {if(n==0, 1, count(vector(n, i, i)))} \\\\ _Andrew Howroyd_, Sep 01 2020"
+    ],
+    "xref": [
+        "A000142 counts divisors of superprimorials.",
+        "A022915 counts permutations of the same multiset.",
+        "A103775 is the version for factorials instead of superprimorials.",
+        "A337072 is the non-strict version.",
+        "A001055 counts factorizations.",
+        "A006939 lists superprimorials or Chernoff numbers.",
+        "A045778 counts strict factorizations.",
+        "A050320 counts factorizations into squarefree numbers.",
+        "A050326 counts strict factorizations into squarefree numbers.",
+        "A050342 counts strict set multipartitions of integer partitions.",
+        "A076954 can be used instead of A006939 (cf. A307895, A325337).",
+        "A283877 counts non-isomorphic strict set multipartitions.",
+        "A317829 counts factorizations of superprimorials.",
+        "A337069 counts strict factorizations of superprimorials.",
+        "Cf. A000178, A002110, A022559, A103774, A124010, A181818, A318361, A336417, A337070."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Aug 15 2020",
+    "ext": [
+        "a(7)-a(13) from _Andrew Howroyd_, Sep 01 2020"
+    ],
+    "references": 3,
+    "revision": 10,
+    "time": "2020-09-05T03:42:54-04:00",
+    "created": "2020-08-17T20:49:31-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 195616,
+    "data": "12,444,16872,640680,24328980,923860548,35082371856,1332206269968,50588755886940,1921040517433740,72948950906595192,2770139093933183544,105192336618554379492,3994538652411133237140,151687276455004508631840",
+    "name": "Denominators of Pythagorean approximations to 3.",
+    "comment": [
+        "See A195500 for a discussion and references."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A195616/b195616.txt\">Table of n, a(n) for n = 1..633</a>",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (37,37,-1)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Jun 04 2015: (Start)",
+        "a(n) = 37*a(n-1) + 37*a(n-2) - a(n-3).",
+        "G.f.: 12*x / ((1+x)*(1-38*x+x^2)). (End)",
+        "From _G. C. Greubel_, Feb 13 2023: (Start)",
+        "a(n) = (3/10)*(A097314(n) + (-1)^n).",
+        "a(n) = (1/20)*(A085447(2*n+1) - 6*(-1)^n). (End)"
+    ],
+    "mathematica": [
+        "r = 3; z = 20;",
+        "p[{f_, n_}] := (#1[[2]]/#1[[",
+        "      1]] &)[({2 #1[[1]] #1[[2]], #1[[1]]^2 - #1[[",
+        "         2]]^2} &)[({Numerator[#1], Denominator[#1]} &)[",
+        "     Array[FromContinuedFraction[",
+        "        ContinuedFraction[(#1 + Sqrt[1 + #1^2] &)[f], #1]] &, {n}]]]];",
+        "{a, b} = ({Denominator[#1], Numerator[#1]} &)[",
+        "  p[{r, z}]]  (* A195616, A195617 *)",
+        "Sqrt[a^2 + b^2] (* A097315 *)",
+        "(* _Peter J. C. Moses_, Sep 02 2011 *)",
+        "Table[(1/20)*(LucasL[2*n+1,6] -6*(-1)^n), {n,40}] (* _G. C. Greubel_, Feb 13 2023 *)"
+    ],
+    "program": [
+        "(PARI) Vec(12*x/((1+x)*(1-38*x+x^2)) + O(x^20)) \\\\ _Colin Barker_, Jun 04 2015",
+        "(Magma) I:=[12, 444, 16872]; [n le 3 select I[n] else 37*Self(n-1) +37*Self(n-2) -Self(n-3): n in [1..40]]; // _G. C. Greubel_, Feb 13 2023",
+        "(SageMath)",
+        "A085447=BinaryRecurrenceSequence(6,1,2,6)",
+        "[(A085447(2*n+1) - 6*(-1)^n)/20 for n in range(1,41)] # _G. C. Greubel_, Feb 13 2023"
+    ],
+    "xref": [
+        "Cf. A085447, A097314, A097315, A195500, A195617."
+    ],
+    "keyword": "nonn,easy,frac",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Sep 22 2011",
+    "references": 5,
+    "revision": 23,
+    "time": "2023-02-16T14:52:29-05:00",
+    "created": "2011-09-22T15:44:53-04:00"
+}

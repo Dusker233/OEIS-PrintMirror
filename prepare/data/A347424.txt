@@ -1,0 +1,50 @@
+{
+    "number": 347424,
+    "data": "7810223,19579907,909001523,984960937,78406036607,90124536947,99020400307,190002706337,393086079907,500708906197,509000702017,600180367883,780430098443,3534900290107,5046024021013,6006006800743,6009000432797,9001924501223,12090900340283",
+    "name": "Digitally delicate truncatable primes: every suffix is prime, changing any one decimal digit always produces a composite number, except the first to zero.",
+    "comment": [
+        "These prime numbers are both:",
+        "- digitally delicate primes (also called weakly prime numbers) A158124: changing any one decimal digit always produces a composite number, with restriction that first digit may not be changed to a 0 (that means no change of the number of significant digits from its original value).",
+        "- left-truncatable primes A033664:  every suffix is prime, means repeatedly deleting the most significant digit gives a prime at every step until a single-digit prime remains."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A347424/b347424.txt\">Table of n, a(n) for n = 1..9175</a> (all terms with <= 29 digits)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, primerange",
+        "def is_digitally_delicate(p):",
+        "    s = str(p)",
+        "    for i in range(len(s)):",
+        "        for d in \"0123456789\":",
+        "            if d != s[i] and not (i == int(d) == 0):",
+        "                if isprime(int(s[:i] + d + s[i+1:])): return False",
+        "    return True",
+        "def A033664gen(maxdigits):",
+        "    yield from [2, 3, 5, 7]",
+        "    primestrs, digits, d = [\"2\", \"3\", \"5\", \"7\"], \"0123456789\", 1",
+        "    while len(primestrs) > 0 and d < maxdigits:",
+        "        cands = (d+p for p in primestrs for d in \"0123456789\")",
+        "        primestrs = [c for c in cands if c[0] == \"0\" or isprime(int(c))]",
+        "        yield from sorted(map(int, (p for p in primestrs if p[0] != \"0\")))",
+        "        d += 1",
+        "def afind(maxdigits):",
+        "    for p in A033664gen(maxdigits):",
+        "        if is_digitally_delicate(p): print(p, end=\", \")",
+        "afind(12) # _Michael S. Branicky_, Sep 01 2021"
+    ],
+    "xref": [
+        "Cf. A158124, A033664."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Marc Morgenegg_, Sep 01 2021",
+    "ext": [
+        "a(3)-a(4) from _Amiram Eldar_, Sep 01 2021",
+        "a(5)-a(19) from _Michael S. Branicky_, Sep 01 2021"
+    ],
+    "references": 1,
+    "revision": 27,
+    "time": "2021-09-05T08:13:03-04:00",
+    "created": "2021-09-05T05:37:53-04:00"
+}

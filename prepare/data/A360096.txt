@@ -1,0 +1,38 @@
+{
+    "number": 360096,
+    "data": "0,1,1,4,11,21,41,57,439,640,909,1222,1859,2354,2953,3616,61167,78303,98837,123121,152379,185641,224113,268227,344999,405601,473901,550423,637363,732483,837929,954305,32472031,37912414,44058661,50977186,58741163,67420476",
+    "name": "To get a(n), replace 0's in the binary expansion of n with (-1) and interpret the result in base n.",
+    "comment": [
+        "The empty bit string is used as binary expansion of 0, so a(0) = 0."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A360096/b360096.txt\">Table of n, a(n) for n = 0..16383</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n] g_n(x) where g_k(x) satisfies g_k(x) = k*(x+1)*g_k(x^2) + x/(1+x).",
+        "a(n) = A(n,n) where A(n,k) = k*A(floor(n/2),k)+2*(n mod 2)-1 for n>0, A(0,k)=0.",
+        "a(n) = A360099(n,n).",
+        "a(n) mod 2 = A057427(n) if n is even; a(n) mod 2 = A030300(n) if n is odd."
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; local m;",
+        "      `if`(n=0, 0, k*b(iquo(n, 2, 'm'), k)+2*m-1)",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..44);",
+        "# second Maple program:",
+        "a:= n-> (l-> add((2*l[i]-1)*n^(i-1), i=1..nops(l)))(Bits[Split](n)):",
+        "seq(a(n), n=0..44);"
+    ],
+    "xref": [
+        "Main diagonal of A360099.",
+        "Cf. A030300, A057427."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jan 25 2023",
+    "references": 2,
+    "revision": 12,
+    "time": "2023-01-30T18:38:41-05:00",
+    "created": "2023-01-30T18:38:41-05:00"
+}

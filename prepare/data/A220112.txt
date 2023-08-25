@@ -1,0 +1,44 @@
+{
+    "number": 220112,
+    "data": "1,2,10,80,872,11928,195072,3702080,80065792,1950808000,53016791360,1587229842688,51619520360960,1808576831681536,68562454975587328,2830905156661645312,124395772159835529216,5504660984739184156672,250011277837808237105152,14799530615476409472303104",
+    "name": "E.g.f. A(x) satisfies A(A(x)) = (1/4)*log(1/(1-4*x)).",
+    "comment": [
+        "a(23) = -4050933314339181211663673622528 is the first negative term. - _Vladimir Reshetnikov_, Aug 15 2021"
+    ],
+    "reference": [
+        "Comtet, L; Advanced Combinatorics (1974 edition), D. Reidel Publishing Company, Dordrecht - Holland, pp. 147-148."
+    ],
+    "link": [
+        "Vladimir Reshetnikov, <a href=\"/A220112/b220112.txt\">Table of n, a(n) for n = 1..281</a>",
+        "Gottfried Helms, <a href=\"http://go.helms-net.de/math/tetdocs/CoefficientsForUTetration.htm\">Coefficients for fractional iterates exp(x)-1</a>",
+        "Dmitry Kruchinin and Vladimir Kruchinin, <a href=\"http://arxiv.org/abs/1302.1986\">Method for solving an iterative functional equation $A^{2^n}(x)=F(x)$</a>, arXiv:1302.1986 [math.CO], 2013"
+    ],
+    "formula": [
+        "a(n) = T(n,1), T(n,m) = (1/2)*(4^(n-m)*(-1)^(n-m)*Stirling1(n,m) - Sum_{i=m+1..n-1} T(n,i)*T(i,m)), T(n,n)=1."
+    ],
+    "maple": [
+        "A := proc(n, m) option remember; if n = m then 1 else",
+        "1/2*(4^(n-m)*(-1)^(n-m)*Stirling1(n,m) - add(A(n,k)*A(k,m), k =m+1..n-1)) fi end: a := n -> A(n,1): seq(a(n), n = 1..23); # _Peter Luschny_, Aug 15 2021"
+    ],
+    "mathematica": [
+        "t[n_, m_] := t[n, m] = 1/2*(4^(n - m)*(-1)^(n - m)*StirlingS1[n, m] - Sum[t[n, i]*t[i, m], {i, m+1, n-1}]); t[n_, n_] = 1; Table[t[n, 1], {n, 1, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 22 2013 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "T(n,m):=if n=m then 1 else 1/2*(4^(n-m)*(-1)^(n-m)*stirling1(n,m)-sum(T(n,i)*T(i,m),i,m+1,n-1));",
+        "makelist((T(n,1)),n,1,10);"
+    ],
+    "xref": [
+        "Cf. A052122, A052123, A184011."
+    ],
+    "keyword": "sign",
+    "offset": "1,2",
+    "author": "_Dmitry Kruchinin_, Dec 05 2012",
+    "ext": [
+        "More terms from _Vladimir Reshetnikov_, Aug 15 2021"
+    ],
+    "references": 1,
+    "revision": 29,
+    "time": "2021-08-15T15:08:59-04:00",
+    "created": "2012-12-22T05:34:06-05:00"
+}

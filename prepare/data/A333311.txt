@@ -1,0 +1,61 @@
+{
+    "number": 333311,
+    "data": "2,4,7,12,19,29,41,56,71,90,109,133,155,183,209,242,271,309,340,384,418,466,505,555,600,651,703,758,813,874,931,999,1058,1133,1195,1277,1343,1432,1502,1597,1671,1771,1849,1954,2036,2142",
+    "name": "a(n) is the total number of leaves of a binary tree of depth n on a square grid where each parent-node branches out in the two directions closest to the direction of the edge from which it sprang, either along the grid for even generations or across for odd generations ('L-toothpick'), yet only if the child-nodes' coordinates are not occupied already.",
+    "comment": [
+        "The branching order is pre-order depth-first search."
+    ],
+    "link": [
+        "Jan Koornstra, <a href=\"/A333311/a333311.pdf\">The first 100 generations in rainbow colour-coding</a>"
+    ],
+    "example": [
+        "a(1) = 2, since two branches can be formed from the root-node at (0, 0) across the diagonals of the grid to (-1, 1) and (1, 1) respectively, hence:",
+        "Generation 1:      \\/",
+        "a(2) = 4, yielding new leaves at respectively (-2, 1), (-1, 2), (1, 2) and (2, 1):",
+        "Generation 2:    _|  |_",
+        "                   \\/",
+        "a(3) = 7, since the node at (1, 2) cannot branch out, as one of its child-nodes would get coordinates (0, 3), which is already in use by a node branched from (-1, 2).",
+        "Generation 3:     \\/",
+        "                \\_|  |_/",
+        "                /  \\/  \\"
+    ],
+    "program": [
+        "(Python 3)",
+        "used = [[0, 0]] # nodes used in the tree",
+        "nodes = [[0, 0, 0]] # x, y, direction",
+        "gen = 0",
+        "terminations = [0]",
+        "leaves = [1]",
+        "directions = [[[-1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 0, -1], [0, -1, -1, 0]], [[-1, 1, 1, 1], [1, 1, 1, -1], [1, -1, -1, -1], [-1, -1, -1, 1]]] # LU/RU/RD/DL, U/R/D/L",
+        "while gen < 100:",
+        "  terminations.append(0)",
+        "  length = len(nodes)",
+        "  for n in range(length):",
+        "    x1 = nodes[n][0] + directions[(gen+1)%2][nodes[n][2]][0]",
+        "    y1 = nodes[n][1] + directions[(gen+1)%2][nodes[n][2]][1]",
+        "    x2 = nodes[n][0] + directions[(gen+1)%2][nodes[n][2]][2]",
+        "    y2 = nodes[n][1] + directions[(gen+1)%2][nodes[n][2]][3]",
+        "    if [x1, y1] not in used and [x2, y2] not in used:",
+        "      nodes += [[x1, y1, (nodes[n][2] - gen%2)%4]]",
+        "      nodes += [[x2, y2, (nodes[n][2] + (gen+1)%2)%4]]",
+        "      used += [[x1, y1], [x2, y2]]",
+        "      leaves[gen] += 1",
+        "    else:",
+        "      terminations[gen] += 1",
+        "  nodes = nodes[length:]",
+        "  gen += 1",
+        "  leaves.append(leaves[-1])",
+        "print(leaves[:-1]) # This sequence.",
+        "print(terminations[:-1])"
+    ],
+    "xref": [
+        "Cf. A172310."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jan Koornstra_, Mar 14 2020.",
+    "references": 1,
+    "revision": 8,
+    "time": "2020-11-26T23:17:07-05:00",
+    "created": "2020-11-26T23:17:07-05:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 58901,
+    "data": "16,22,28,46,56,58,68,74,76,80,106,108,110,118,128,136,138,140,146,152,168,198,202,206,208,230,249,256,258,262,263,268,274,276,278,280,284,286,288,290,292,294,296,298,302,318,323,324,326,336,338",
+    "name": "Inconsummate numbers in base 5: no number is this multiple of the sum of its digits (in base 5).",
+    "link": [
+        "Daniel Mondot, <a href=\"/A058901/b058901.txt\">Table of n, a(n) for n = 1..33069</a>"
+    ],
+    "maple": [
+        "For Maple code see A058906."
+    ],
+    "mathematica": [
+        "base=5; Do[k=n; While[Apply[Plus, IntegerDigits[k, base]] n!=k&&k<250n, k+=n]; If[k==250 n, Print[n]], {n, 1, 10^4}] (* _Vincenzo Librandi_, Nov 03 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, combinations_with_replacement",
+        "from sympy.ntheory import digits",
+        "def A058901_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        for l in count(1):",
+        "            if 4*l*n < 5**(l-1):",
+        "                yield n",
+        "                break",
+        "            for d in combinations_with_replacement(range(5),l):",
+        "                if (s:=sum(d)) > 0 and sorted(digits(s*n,5)[1:]) == list(d):",
+        "                    break",
+        "            else:",
+        "                continue",
+        "            break",
+        "A058901_list = list(islice(A058901_gen(),20)) # _Chai Wah Wu_, May 10 2023"
+    ],
+    "xref": [
+        "Cf. A003635, A052491, A058898-A058907."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Jan 09 2001",
+    "references": 3,
+    "revision": 23,
+    "time": "2023-05-10T10:44:29-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

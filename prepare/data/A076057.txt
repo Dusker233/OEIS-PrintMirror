@@ -1,0 +1,32 @@
+{
+    "number": 76057,
+    "data": "2,4,8,16,18,32,38,46,48,62,66,80,90,102,120,138,158,160,180,212,242,278,324,364,436,482,574,576,658,736,738,882,892,900,972,974,976,1162,1164,1318,1320,1524,1526,1528,1762,1788,1796,1982,2342,2344,2346,2386,2392,2634,3110",
+    "name": "Numbers k such that Sum_{j=1..k} A006513(j) = 3*k/2.",
+    "link": [
+        "Michel Marcus, <a href=\"/A076057/b076057.txt\">Table of n, a(n) for n = 1..858</a>"
+    ],
+    "formula": [
+        "a(n) seems to be asymptotic to c*n^2 with 1/2 < c < 1."
+    ],
+    "program": [
+        "(PARI) f(n) = if (n%2, (3*n+1)/2, n/2); \\\\ A014682",
+        "g(n) = my(last = n); while (1, my(new = f(f(last))); if (new == last, return(new)); last = new;); \\\\ A006513",
+        "isok(m) = !(m%2) && (sum(k=1, m, g(k)) == 3*m/2); \\\\ _Michel Marcus_, Feb 03 2022",
+        "(PARI) f(n) = if (n%2, (3*n+1)/2, n/2); \\\\ A014682",
+        "g(n) = my(last = n); while (1, my(new = f(f(last))); if (new == last, return(new)); last = new;); \\\\ A006513",
+        "lista(nn) = {my(v = vector(nn, k, g(k)), w = vector(nn)); w[1] = v[1]; for (i=2, nn, w[i] = w[i-1] + v[i];); forstep (i=2, nn, 2, if (w[i] == 3*i/2, print1(i, \", \")););} \\\\ _Michel Marcus_, Feb 03 2022"
+    ],
+    "xref": [
+        "Cf. A006513, A014682."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, Oct 30 2002",
+    "ext": [
+        "More terms from _Michel Marcus_, Feb 03 2022"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2022-02-03T21:34:03-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

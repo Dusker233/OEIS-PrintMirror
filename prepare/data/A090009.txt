@@ -1,0 +1,48 @@
+{
+    "number": 90009,
+    "data": "2,11,11,277,37783,516493,286330897,286330897,56676324799",
+    "name": "Begins the earliest length-n chain of primes such that any term in the chain equals the previous term increased by the sum of its digits.",
+    "comment": [
+        "From the second term on, subsequence of A[2] := A048519. Due to the \"exclusive\" definition of this sequence, A048523(1) > a(2), but for k >= 3, a(k) = A[k](1) for A[3..9] = A048524 .. A048527, A320878 .. A320880. - _M. F. Hasler_, Nov 09 2018"
+    ],
+    "link": [
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_163.htm\">Puzzle 163. P+SOD(P)</a>"
+    ],
+    "example": [
+        "11 begins the earliest chain 11, 13, 17 of three primes such that any term in the chain equals the previous term increased by the sum of its digits, viz., 13 = 11 + 2, 17 = 13 + 4. Hence a(3) = 11."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A090009:=proc(q)",
+        "local a,b,c,d,j,n;",
+        "d:=0;",
+        "for n from 1 to q do",
+        "  a:=0; c:=ithprime(n); j:=c;",
+        "  while isprime(c) do",
+        "   a:=a+1; b:=0; while c>0 do b:=b+(c mod 10); c:=trunc(c/10); od;",
+        "   c:=j+b; j:=c; od;",
+        "   if a=d+1 then d:=a; lprint(d,ithprime(n)); j:=1;",
+        "   else if a>d+1 then for j from 1 to a-d do lprint(d+j,ithprime(n)); od; d:=a;",
+        "fi; fi; od; end:",
+        "A090009(10000000000); # _Paolo P. Lava_, Jun 07 2012"
+    ],
+    "program": [
+        "(PARI) A090009(n,P=2)=forprime(p=P,,P=p;for(i=2,n,isprime(P=A062028(P))||next(2));return(p))",
+        "P=0; A090009_vec=vector(6,n,P=A090009(n,P)) \\\\ Takes long for n > 6. - _M. F. Hasler_, Nov 09 2018"
+    ],
+    "xref": [
+        "Cf. A047791, A048519, A062028 (n + digit sum of n).",
+        "Cf. A048523 .. A048527, A320878 .. A320880."
+    ],
+    "keyword": "base,more,nonn",
+    "offset": "1,1",
+    "author": "_Joseph L. Pe_, Jan 27 2004",
+    "ext": [
+        "a(7)-a(8) from _Donovan Johnson_, Jan 08 2013",
+        "a(9) from _Giovanni Resta_, Jan 14 2013"
+    ],
+    "references": 8,
+    "revision": 21,
+    "time": "2018-11-09T21:18:40-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

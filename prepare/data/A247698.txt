@@ -1,0 +1,62 @@
+{
+    "number": 247698,
+    "data": "2308,4261,6569,10830,17399,28229,45628,73857,119485,193342,312827,506169,818996,1325165,2144161,3469326,5613487,9082813,14696300,23779113,38475413,62254526,100729939,162984465,263714404,426698869,690413273,1117112142,1807525415,2924637557,4732162972,7656800529",
+    "name": "Brady numbers: B(n) = B(n - 1) + B(n - 2) with B(1) = 2308 and  B(2) = 4261.",
+    "comment": [
+        "B(n) / B(n - 1) approaches the golden ratio as n approaches infinity."
+    ],
+    "link": [
+        "Logan Cooper, <a href=\"/A247698/b247698.txt\">Table of n, a(n) for n = 1..1000</a> (truncated from 9966 to 1000 terms by _M. F. Hasler_, May 10 2017)",
+        "Brady Haran and Matt Parker, <a href=\"https://www.youtube.com/watch?v=D8ntDpBm6Ok\">Brady Numbers</a>, Numberphile video (2014).",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (1,1)."
+    ],
+    "formula": [
+        "a(n) = a(n-1) + a(n-2).",
+        "G.f.: x*(2308 + 1953*x) / (1-x-x^2). - _Colin Barker_, Sep 23 2014",
+        "a(n) = k*phi^n + o(1), where k = 976.5 + sqrt(354578.45) = 1571.96.... - _Charles R Greathouse IV_, Sep 28 2014",
+        "a(n) = 2308*A000045(n-2) + 4261*A000045(n-1) = 1953*A000045(n+1) + 355*A000045(n). - _M. F. Hasler_, May 10 2017",
+        "a(n) = F(n+17) - F(n+8) - 9*F(n) - F(n-14) for F(n) = A000045(n). - _Greg Dresden_, Jul 07 2022"
+    ],
+    "maple": [
+        "Brady1 := proc(n::posint)",
+        "option remember, system;",
+        "if n = 1 then",
+        "  2308",
+        "elif n = 2 then",
+        "  4261",
+        "else",
+        "  thisproc( n - 1 ) + thisproc( n - 2 )",
+        "end if",
+        "end proc:",
+        "seq( Brady1( n ), n = 1 .. 100 );",
+        "# _James McCarron_, Oct 05 2019",
+        "# alternate program",
+        "Brady2 := ( n :: posint ) -> coeff( series(x*(2308+1953*x)/(1-x-x^2),x,n+1), x^n ):",
+        "seq( Brady2( n ), n = 1 .. 100 );",
+        "# _James McCarron_, Oct 05 2019"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{1, 1}, {2308, 4261}, n]",
+        "Rest[CoefficientList[Series[x*(2308+1953*x)/(1-x-x^2), {x,0,50}], x]] (* _G. C. Greubel_, Sep 07 2018 *)"
+    ],
+    "program": [
+        "(Haskell) brady = let makeSeq a b = a : makeSeq b (a + b) in makeSeq 2308 4261",
+        "(PARI) Vec(-x*(1953*x+2308)/(x^2+x-1) + O(x^50)) \\\\ _Colin Barker_, Sep 23 2014",
+        "(PARI) a(n)=([1,1;1,0]^n*[1953;355])[1,1] \\\\ _Charles R Greathouse IV_, Jan 20 2016",
+        "(Magma) m:=50; R<x>:=PowerSeriesRing(Integers(), m); Coefficients(R!(x*(2308+1953*x)/(1-x-x^2))); // _G. C. Greubel_, Sep 07 2018",
+        "(Python)",
+        "def A247698_list(n):",
+        "    list = [2308, 4261] + [0] * (n - 2)",
+        "    for i in range(2, n):",
+        "        list[i] = list[i - 1] + list[i - 2]",
+        "    return list",
+        "print(A247698_list(32)) # _M. Eren Kesim_, Jun 28 2021"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Sebastian Zimmer_, Sep 22 2014",
+    "references": 3,
+    "revision": 67,
+    "time": "2022-07-08T08:21:18-04:00",
+    "created": "2014-09-23T11:04:21-04:00"
+}

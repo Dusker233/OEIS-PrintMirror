@@ -1,0 +1,43 @@
+{
+    "number": 360320,
+    "data": "1,2,3,5,11,20,21,22,42,43,82,85,162,171,322,340,341,342,642,682,683,1282,1362,1365,2562,2722,2731,5122,5442,5460,5461,5462,10242,10882,10922,10923,20482,21762,21842,21845,40962,43522,43682,43691,81922,87042,87362",
+    "name": "Numbers k such that the total number of consecutive runs of zeros of length m in every binary expansion from 1 to k, is even, for all m != floor(log_2(k)).",
+    "comment": [
+        "The longest run of zeros in all binary expansions from 1 to k will belong to the largest power of 2 less than or equal to k, if it exists. The run will be of length m_max = floor(log_2(k)), and exactly one run of length m_max will exist for any k > 1.",
+        "Inclusion in this sequence is a prerequisite for forming a palindrome from the binary expansions of 1 to k, described in A291633."
+    ],
+    "example": [
+        "k=1 is a term since 1..k in binary is 1 alone which has no zero runs, therefore all numbers of runs are even.",
+        "k=2 is a term since 1..k in binary is 1.10 which is 1 run of 1 zero which is length m_max = floor(log_2(k)) = 1.",
+        "k=3:  1.10.11          # 1 run of 1, m_max = 1",
+        "k=5:  1.10.11.100.101  # 2 runs of 1, 1 run of 2, m_max = 2",
+        "k=11: 1.10.11.100.101.110.111.1000.1001.1010.1011",
+        "which is 6 of 1, 2 of 2, 1 of 3, m_max = 3",
+        "k=20: 1.10.11.100.101.110.111.1000.1001.1010.1011.1100.",
+        "      1101.1110.1111.10000.10001.10010.10011.10100",
+        "which is 10 of 1, 6 of 2, 2 of 3, 1 of 4, m_max = 4"
+    ],
+    "program": [
+        "(Python)",
+        "from collections import Counter",
+        "from itertools import count, groupby, islice",
+        "def rlz(n): return [len(list(g)) for k, g in groupby(bin(n)[2:]) if k==\"0\"]",
+        "def agen(): # generator of terms",
+        "    c = Counter()",
+        "    for n in count(1):",
+        "        c.update(r for r in rlz(n))",
+        "        if all(c[m]&1 == 0 for m in c if m != max(c)):",
+        "            yield n",
+        "print(list(islice(agen(), 50))) # _Michael S. Branicky_, Feb 04 2023"
+    ],
+    "xref": [
+        "Cf. A291633 (a subsequence)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Tyler Busby_, Feb 03 2023",
+    "references": 1,
+    "revision": 17,
+    "time": "2023-02-07T20:05:03-05:00",
+    "created": "2023-02-07T20:05:03-05:00"
+}

@@ -1,0 +1,62 @@
+{
+    "number": 3147,
+    "id": "M3811",
+    "data": "5,11,19,31,41,59,61,71,79,109,131,149,179,191,239,241,251,269,271,311,359,379,389,409,419,431,439,449,479,491,499,569,571,599,601,631,641,659,701,719,739,751,821,839,929,971,1019,1039,1051,1091,1129,1171,1181,1201,1259,1301",
+    "name": "Primes p with a Fibonacci primitive root g, i.e., such that g^2 = g + 1 (mod p).",
+    "comment": [
+        "Primes p with a primitive root g such that g^2 = g + 1 (mod p).",
+        "Not the same as primes with a Fibonacci number as primitive root; cf. A083701. - _Jonathan Sondow_, Feb 17 2013",
+        "For all except the initial term 5, these are numbers such that the Pisano period equals 1 less than the Pisano number, i.e., where A001175(n) = n-1. - _Matthew Goers_, Sep 20 2013",
+        "As shown in the paper by Brison, these are also the primes p such that there is a Fibonacci-type sequence (mod p) that begins with (1,b) and encounters all numbers less than p in the first p-1 iterations (for some b). - _T. D. Noe_, Feb 26 2014",
+        "Shanks (1972) conjectured that the relative asymptotic density of this sequence in the sequence of primes is 27*c/38 = 0.2657054465..., where c is Artin's constant (A005596). The conjecture was proved on the assumption of a generalized Riemann hypothesis by Lenstra (1977) and Sander (1990). - _Amiram Eldar_, Jan 22 2022"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe and Charles R Greathouse IV, <a href=\"/A003147/b003147.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from Noe)",
+        "Bob Bastasz, <a href=\"https://www.fq.math.ca/Papers1/58-5/bastasz.pdf\">Lyndon words of a second-order recurrence</a>, Fibonacci Quarterly, Vol. 58, No. 5 (2020), pp. 25-29.",
+        "Owen J. Brison, <a href=\"http://www.fq.math.ca/Scanned/30-4/brison.pdf\">Complete Fibonacci sequences in finite fields</a>, Fibonacci Quarterly, Vol. 30, No. 4 (1992), pp. 295-304.",
+        "Alexandru Gica, <a href=\"http://www.fq.math.ca/Papers1/46_47-1/Gica_11-08.pdf\">Quadratic Residues in Fibonacci Sequences</a>, Fibonacci Quart., Vol. 46/47, No. 1 (2008/2009), pp. 68-72. See Theorem 5.1.",
+        "Liang-Chung Hsia, Hua-Chieh Li, and Wei-Liang Sun, <a href=\"https://arxiv.org/abs/2302.00920\">Certain Diagonal Equations and Conflict-Avoiding Codes of Prime Lengths</a>, arXiv:2302.00920 [math.NT], 2023.",
+        "H. W. Lenstra, Jr., <a href=\"https://doi.org/10.1007/BF01389788\">On Artin's conjecture and Euclid's algorithm in global fields</a>, Invent. Math., Vol. 42 (1977), pp. 202-224; <a href=\"https://www.math.leidenuniv.nl/~hwl/PUBLICATIONS/1977d/art.pdf\">alternative link</a>.",
+        "J. W. Sander, <a href=\"https://www.fq.math.ca/Scanned/28-1/sander.pdf\">On Fibonacci primitive roots</a>, Fibonacci Quarterly, Vol. 28, No. 1 (1990), pp. 79-80.",
+        "Daniel Shanks, <a href=\"http://www.fq.math.ca/Scanned/10-2/shanks-a.pdf\">Fibonacci primitive roots</a>, <a href=\"http://www.fq.math.ca/Scanned/10-2/shanks-b.pdf\">end of article</a>, Fibonacci Quarterly, Vol. 10, No. 2 (1972), pp. 163-168, 181.",
+        "Daniel Shanks and Larry Taylor, <a href=\"https://www.fq.math.ca/Scanned/11-2/shanks.pdf\">An Observation of Fibonacci Primitive Roots</a>, Fibonacci Quarterly, Vol. 11, No. 2 (1973), pp. 159-160.",
+        "<a href=\"/index/Pri#primes_root\">Index entries for primes by primitive root</a>."
+    ],
+    "example": [
+        "3 is a primitive root mod 5, and 3^2 = 3 + 1 mod 5, so 5 is a member. - _Jonathan Sondow_, Feb 17 2013"
+    ],
+    "maple": [
+        "filter:=proc(n) local g,r;",
+        "if not isprime(n) then return false fi;",
+        "r:= [msolve(g^2 -g - 1, n)][1];",
+        "numtheory:-order(rhs(op(r)),n) = n-1",
+        "end proc:",
+        "select(filter, [5,seq(seq(10*i+j,j=[1,9]),i=1..1000)]); # _Robert Israel_, May 22 2015"
+    ],
+    "mathematica": [
+        "okQ[p_] := AnyTrue[PrimitiveRootList[p], Mod[#^2, p] == Mod[#+1, p]&]; Select[Prime[Range[300]], okQ] (* _Jean-Fran\u00e7ois Alcover_, Jan 04 2016 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=if(kronecker(5,n)<1||!isprime(n), return(n==5)); my(s=sqrt(Mod(5,n))); znorder((1+s)/2)==n-1 || znorder((1-s)/2)==n-1 \\\\ _Charles R Greathouse IV_, May 22 2015"
+    ],
+    "xref": [
+        "Subsequence of A038872.",
+        "Cf. A001175, A005596, A083701.",
+        "See also A106535."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _David W. Wilson_",
+        "Cross-reference from _Charles R Greathouse IV_, Nov 05 2009",
+        "Definition clarified by _M. F. Hasler_, Jun 05 2018"
+    ],
+    "references": 16,
+    "revision": 91,
+    "time": "2023-02-07T02:36:08-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

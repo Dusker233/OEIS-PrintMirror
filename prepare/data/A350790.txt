@@ -1,0 +1,36 @@
+{
+    "number": 350790,
+    "data": "1,2,12,432,64240,33904800,61721081184,394586260943616,9146766152111641344,792073976107698469670400,261895415169919230764987845120,335402460348866803020064114666616832,1678893205649791601327398844631544110815232",
+    "name": "Number of digraphs on n labeled nodes with a global source and sink.",
+    "comment": [
+        "This sequence differs from A049524 in that the source and sink are restricted to being single nodes."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A350790/b350790.txt\">Table of n, a(n) for n = 1..50</a>",
+        "R. W. Robinson, <a href=\"http://cobweb.cs.uga.edu/~rwr/publications/components.pdf\">Counting digraphs with restrictions on the strong components</a>, Combinatorics and Graph Theory '95 (T.-H. Ku, ed.), World Scientific, Singapore (1995), 343-354."
+    ],
+    "formula": [
+        "For n >= 3, a(n) = 2*n*(n-1)*A003030(n-1) (Robinson equation 22). - _Geoffrey Critzer_, Apr 17 2023"
+    ],
+    "mathematica": [
+        "nn = 15; strong = Select[Import[\"https://oeis.org/A003030/b003030.txt\", \"Table\"],",
+        "   Length@# == 2 &][[All, 2]]; s[z_] := Total[strong Table[z^i/i!, {i, 1, 58}]];",
+        "ggf[egf_] := Normal[Series[egf, {z, 0, nn}]] /. Table[z^i -> z^i/2^Binomial[i, 2], {i, 1, nn + 1}];egf[ggf_] := Normal[Series[ggf, {z, 0, nn}]] /.Table[z^i -> z^i*2^Binomial[i, 2], {i, 1, nn + 1}];Table[n!, {n, 0, nn}] CoefficientList[",
+        "Series[z - z^2 + Exp[(u - 1) (v - 1) s[ z]] egf[ggf[z Exp[(u - 1) s[z]]]*1/ggf[Exp[-s[z]]]*ggf[z Exp[(v - 1) s[ z]]]] /. {u -> 0, v -> 0}, {z, 0, nn}], z] (* _Geoffrey Critzer_, Apr 17 2023 *)"
+    ],
+    "program": [
+        "(PARI) InitFinallyV(12) \\\\ See A350791 for program code."
+    ],
+    "xref": [
+        "The unlabeled version is A350794.",
+        "Row sums of A350791.",
+        "Cf. A049524, A165950, A350792, A003030."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Andrew Howroyd_, Jan 16 2022",
+    "references": 5,
+    "revision": 28,
+    "time": "2023-04-18T07:37:36-04:00",
+    "created": "2022-01-17T12:33:50-05:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 246806,
+    "data": "1,4,33,285,2643,24920,239543,2327458,22801065,224608236,2222034266,22053438268",
+    "name": "Number of n-digit numbers whose base-10 representations can be written as the concatenations of 0 or more prime numbers (also expressed in base 10).",
+    "comment": [
+        "Here we assume all representations involved are \"canonical\", that is, have no leading zeros.  1 is not a prime, and neither is 0."
+    ],
+    "example": [
+        "For n = 2 the 33 numbers counted include the 21 primes between 10 and 99, and also the 12 numbers {22,25,27,32,33,35,52,55,57,72,75,77}."
+    ],
+    "maple": [
+        "P[1]:= {2,3,5,7}: C[1]:= P[1]:",
+        "for n from 2 to 7 do",
+        "  P[n]:= select(isprime, {seq(2*i+1, i=10^(n-1)/2 .. 5*10^(n-1)-1)});",
+        "  C[n]:= `union`(P[n],seq({seq(seq(c*10^j+p,p=P[j]),c=C[n-j])},j=1..n-1));",
+        "od:",
+        "1, seq(nops(C[n]),n=1..7); # _Robert Israel_, Dec 07 2014"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, primerange",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def ok(n):",
+        "  if n%10 not in {1, 2, 3, 5, 7, 9}: return False",
+        "  if isprime(n): return True",
+        "  d = str(n)",
+        "  for i in range(1, len(d)):",
+        "    if d[i] != '0' and isprime(int(d[:i])) and ok(int(d[i:])): return True",
+        "  return False",
+        "def a(n): return 1 if n == 0 else sum(ok(m) for m in range(10**(n-1), 10**n))",
+        "print([a(n) for n in range(7)]) # _Michael S. Branicky_, Mar 26 2021"
+    ],
+    "xref": [
+        "Cf. A006879, A246807."
+    ],
+    "keyword": "nonn,base,hard,more",
+    "offset": "0,2",
+    "author": "_Jeffrey Shallit_, Nov 16 2014",
+    "ext": [
+        "a(9) from _Jeffrey Shallit_, Dec 07 2014",
+        "a(10)-a(11) from _Lars Blomberg_, Feb 09 2019"
+    ],
+    "references": 2,
+    "revision": 36,
+    "time": "2021-03-27T03:54:24-04:00",
+    "created": "2014-11-16T18:46:36-05:00"
+}

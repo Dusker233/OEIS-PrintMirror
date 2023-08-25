@@ -1,0 +1,55 @@
+{
+    "number": 355697,
+    "data": "0,1,3,4,6,9,13,16,20,25,31,36,42,49,57,66,76,87,99,112,126,141,157,172,188,205,223,240,258,277,295,314,334,355,377,400,424,449,473,498,524,551,579,608,638,669,701,732,764,797,829,860,892,925,959,994,1030,1067,1105,1144,1184",
+    "name": "a(0) = 0, a(1) = 1; for n > 1, a(n) = a(n-1) + g - 1 if a(n-1) is prime, otherwise a(n) = a(n-1) + g + 1, where g = a(n-1) - a(n-2).",
+    "link": [
+        "John Tyler Rascoe, <a href=\"/A355697/a355697.jpg\">Illustration of first 15 terms</a>"
+    ],
+    "example": [
+        "0                              =  0",
+        "0 + 1                          =  1",
+        "0 + 1 + 2                      =  3 (prime)",
+        "0 + 1 + 2 + 1                  =  4",
+        "0 + 1 + 2 + 1 + 2              =  6",
+        "0 + 1 + 2 + 1 + 2 + 3          =  9",
+        "0 + 1 + 2 + 1 + 2 + 3 + 4      = 13 (prime)",
+        "0 + 1 + 2 + 1 + 2 + 3 + 4 + 3  = 16"
+    ],
+    "mathematica": [
+        "a[0] = 0; a[1] = 1; a[n_] := a[n] = 2*a[n - 1] - a[n - 2] - If[PrimeQ[a[n - 1]], 1, -1]; Array[a, 50, 0] (* _Amiram Eldar_, Jul 23 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import sympy",
+        "A355697 = A = [0,1]",
+        "for n in range(1,100):",
+        "      if sympy.isprime(A355697[-1]):",
+        "            y = A[-1] - A[-2] - 1",
+        "      else:",
+        "            y = A[-1] - A[-2] + 1",
+        "      A.append(A[-1] + y)",
+        "(MATLAB)",
+        "function a = A355697(max_n)",
+        "    a = 0; m = 0;",
+        "    for n = 1:max_n",
+        "        if isprime(a(n))",
+        "            m = m - 1;",
+        "        else",
+        "            m = m + 1;",
+        "        end",
+        "        a(n+1) = a(n) + m;",
+        "    end",
+        "end % _Thomas Scheuerle_, Jul 22 2022",
+        "(PARI) lista(nn) = my(va = vector(nn)); va[1] = 0; va[2] = 1; for (n=3, nn, if (isprime(va[n-1]), va[n] = 2*va[n-1]-va[n-2]-1, va[n] = 2*va[n-1]-va[n-2]+1);); va; \\\\ _Michel Marcus_, Aug 23 2022"
+    ],
+    "xref": [
+        "Cf. A000217, A104589, A116533, A332410, A356445."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_John Tyler Rascoe_, Jul 19 2022",
+    "references": 1,
+    "revision": 80,
+    "time": "2022-09-21T12:00:17-04:00",
+    "created": "2022-09-21T12:00:17-04:00"
+}

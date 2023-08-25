@@ -1,0 +1,39 @@
+{
+    "number": 99576,
+    "data": "1,2,6,12,35,72,210,440,1287,2730,8008,17136,50388,108528,319770,692208,2042975,4440150,13123110,28614300,84672315,185122080,548354040,1201610592,3562467300,7821594872,23206929840,51037462560,151532656696",
+    "name": "Row sums of triangle A099575.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A099576/b099576.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} Sum_{j=0..floor(k/2)} binomial(n+j, j).",
+        "Conjecture: 4*n*(n-1)*(3*n+2)*(n+2)*a(n) - 36*(n-1)*(n+1)*a(n-1) - 3*n*(3*n+5)*(3*n-1)*(3*n-2)*a(n-2) = 0. - _R. J. Mathar_, Nov 28 2014",
+        "From _Robert Israel_, May 08 2018: (Start)",
+        "a(2*n) = (1+n/(n+1))*binomial(3*n+1,n).",
+        "a(2*n+1) = 2*binomial(3*n+3,n).",
+        "The conjecture follows from this. (End)",
+        "a(n) = (1/(n+1))*Sum_{k=0..n} binomial(n + floor(k/2) + 1, floor(k/2) + 1)*(1 + floor(k/2)). - _G. C. Greubel_, Jul 24 2022"
+    ],
+    "maple": [
+        "seq(op([(1+n/(n+1))*binomial(3*n+1,n),2*binomial(3*n+3,n)]),n=0..20);"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[Binomial[n + j, j], {k, 0, n}, {j, 0, k/2}];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Jul 06 2018 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=0, n, sum(j=0, floor(k/2), binomial(n+j, j))); \\\\ _Andrew Howroyd_, Feb 13 2018",
+        "(Magma) [(&+[Binomial(n+Floor(k/2)+1, Floor(k/2)+1)*(1+Floor(k/2))/(n+1): k in [0..n]]): n in [0..40]]; // _G. C. Greubel_, Jul 24 2022",
+        "(SageMath) [sum( binomial(n+(k//2)+1, (k//2)+1)*(1+(k//2))/(n+1) for k in (0..n) ) for n in (0..40)] # _G. C. Greubel_, Jul 24 2022"
+    ],
+    "xref": [
+        "Cf. A029907, A099575, A099577."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Paul Barry_, Oct 23 2004",
+    "references": 3,
+    "revision": 19,
+    "time": "2022-07-25T01:13:07-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

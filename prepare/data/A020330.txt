@@ -1,0 +1,52 @@
+{
+    "number": 20330,
+    "data": "3,10,15,36,45,54,63,136,153,170,187,204,221,238,255,528,561,594,627,660,693,726,759,792,825,858,891,924,957,990,1023,2080,2145,2210,2275,2340,2405,2470,2535,2600,2665,2730,2795,2860,2925,2990,3055,3120,3185,3250",
+    "name": "Numbers whose base-2 representation is the juxtaposition of two identical strings.",
+    "comment": [
+        "All differences are in union of A000051 and A001576. - _Vladimir Shevelev_, Dec 07 2013"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A020330/b020330.txt\">Table of n, a(n) for n = 1..8191</a>",
+        "Daniel M. Kane, Carlo Sanna and Jeffrey Shallit, <a href=\"https://doi.org/10.1007/s00493-019-3933-3\">Waring's Theorem for Binary Powers</a>, Combinatorica, Vol. 39, No. 6 (2019), pp. 1335-1350, <a href=\"https://arxiv.org/abs/1801.04483\">arXiv preprint</a>, arXiv:1801.04483 [math.NT], 2018.",
+        "Parthasarathy Madhusudan, Dirk Nowotka, Aayush Rajasekaran and Jeffrey Shallit, <a href=\"https://arxiv.org/abs/1710.04247\">Lagrange's Theorem for Binary Squares</a>, arXiv:1710.04247 [math.NT], 2017-2018.",
+        "Manfred Madritsch and Stephan Wagner, <a href=\"https://doi.org/10.1007/s00605-009-0126-y\">A central limit theorem for integer partitions</a>, Monatshefte f\u00fcr Mathematik, Vol. 161, No. 1 (2010), pp. 85-114, <a href=\"https://www.researchgate.net/publication/225845584_A_central_limit_theorem_for_integer_partitions\">alternative link</a>.",
+        "Aayush Rajasekaran, <a href=\"https://uwspace.uwaterloo.ca/handle/10012/13202\">Using Automata Theory to Solve Problems in Additive Number Theory</a>, MS thesis, University of Waterloo, 2018."
+    ],
+    "formula": [
+        "a(n) = n + 2*n*2^floor(log_2(n)). - _Ralf Stephan_, Dec 07 2004",
+        "Sum_{n>=1} 1/a(n) = A330157. - _Amiram Eldar_, Oct 22 2020",
+        "a(n) = n * (2^A070939(n) + 1). - _Jianing Song_, Apr 10 2021"
+    ],
+    "example": [
+        "36 is a term because 36 = 100100_2, which is 100 followed by 100."
+    ],
+    "mathematica": [
+        "Table[n + 2 n 2^Floor[Log[2, n]], {n, 50}] (* _T. D. Noe_, Dec 10 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a020330 n = foldr (\\d v -> 2 * v + d) 0 (bs ++ bs) where",
+        "   bs = a030308_row n",
+        "-- _Reinhard Zumkeller_, Feb 19 2013",
+        "(PARI) a(n)=n+n<<#binary(n) \\\\ _Charles R Greathouse IV_, Mar 29 2013",
+        "(PARI) is(n)=my(L=#binary(n)\\2); n>>L==bitand(n,2^L-1) \\\\ _Charles R Greathouse IV_, Mar 29 2013",
+        "(Magma) [n+2*n*2^Floor(Log(2, n)): n in [1..50]]; // _Vincenzo Librandi_, Apr 05 2018",
+        "(Python)",
+        "def a(n): return int(bin(n)[2:]*2, 2)",
+        "print([a(n) for n in range(1, 51)]) # _Michael S. Branicky_, Mar 10 2021",
+        "(Python)",
+        "def A020330(n): return (n<<n.bit_length())|n # _Chai Wah Wu_, Feb 28 2023"
+    ],
+    "xref": [
+        "Subsequence of A121016.",
+        "Cf. A062383, A030308, A007088, A330157, A070939.",
+        "Column k=0 of A246830, column k=1 of A246834."
+    ],
+    "keyword": "nonn,base,easy,look",
+    "offset": "1,1",
+    "author": "_David W. Wilson_, Melia Aldridge (ma38(AT)spruce.evansville.edu)",
+    "references": 38,
+    "revision": 82,
+    "time": "2023-03-01T02:08:18-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

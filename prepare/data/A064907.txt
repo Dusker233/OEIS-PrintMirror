@@ -1,0 +1,42 @@
+{
+    "number": 64907,
+    "data": "341,583,731,793,893,1067,1469,1793,1807,1943,2201,2323,2483,2519,2761,3043,3071,3487,3497,3781,4213,4439,4511,4777,4841,4849,4939,5497,5809,5933,5947,6511,6539,6989,7093,7117,7391,7493,7601,7613,7783,7891,7967",
+    "name": "Semiprimes p1*p2 such that p2 mod p1 = 9, with p2 > p1.",
+    "link": [
+        "John Cerkan, <a href=\"/A064907/b064907.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "spQ[n_]:=Module[{fi=FactorInteger[n][[All,1]]},PrimeOmega[n]==2&&Mod[ fi[[2]],fi[[1]]]==9]; Select[Range[8000],spQ]//Quiet (* _Harvey P. Dale_, Aug 02 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def is_A064907(n):",
+        "    f = factorint(n)",
+        "    return (sum([f[i] for i in f]) == 2) and (max(f) % min(f) == 9)",
+        "def list_A064907(cnt):",
+        "    inx = 0",
+        "    n = 1",
+        "    an = []",
+        "    while inx < cnt:",
+        "        if is_A064907(n):",
+        "            an.append(n)",
+        "            inx += 1",
+        "        n += 2",
+        "    return an #_John Cerkan_, Apr 14 2018",
+        "(PARI) isok(n) = my(f = factor(n)); (#f~ == 2) && (vecmax(f[,2]) < 2) && ((f[2,1] % f[1,1]) == 9); \\\\ _Michel Marcus_, Apr 16 2018"
+    ],
+    "xref": [
+        "Cf. A001358 (p2 mod p1 = 0), A064899-A064911."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Oct 13 2001",
+    "ext": [
+        "Offset changed by _John Cerkan_, Apr 12 2018"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2023-07-31T20:38:34-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

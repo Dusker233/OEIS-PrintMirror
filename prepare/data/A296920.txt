@@ -1,0 +1,66 @@
+{
+    "number": 296920,
+    "data": "3,5,23,31,37,47,53,59,67,71,89,97,103,113,137,157,163,179,181,191,199,223,229,251,257,269,311,313,317,331,353,367,379,383,389,397,401,419,421,433,443,449,463,467,487,499,509,521,577,587,599,617,619,631,641,643,647,653,661,683,691,709,719",
+    "name": "Rational primes that decompose in the quadratic field Q(sqrt(-11)).",
+    "comment": [
+        "Primes that are 1, 3, 5, 9, or 15 mod 22. - _Charles R Greathouse IV_, Mar 18 2018"
+    ],
+    "reference": [
+        "Helmut Hasse, Number Theory, Grundlehren 229, Springer, 1980, page 498."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A296920/b296920.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_OEIS:_Section_Pri#primes_decomp_of\">Index to sequences related to decomposition of primes in quadratic fields</a>"
+    ],
+    "formula": [
+        "a(n) ~ 2n log n. - _Charles R Greathouse IV_, Mar 18 2018"
+    ],
+    "maple": [
+        "# In the quadratic field Q(sqrt(D)), for squarefree D<0, compute lists of:",
+        "# rational primes that decompose (SD),",
+        "# rational primes that are inert (SI),",
+        "# primes p such that D is a square mod p (QR), and",
+        "# primes p such that D is a nonsquare mod p (NR),",
+        "# omitting the latter if it is the same as the inert primes.",
+        "# Consider first M primes p.",
+        "# Reference: Helmut Hasse, Number Theory, Grundlehren 229, Springer, 1980, page 498.",
+        "with(numtheory):",
+        "HH := proc(D,M) local SD,SI,QR,NR,p,q,i,t1;",
+        "# if D >= 0 then error(\"D must be negative\"); fi;",
+        "if not issqrfree(D) then error(\"D must be squarefree\"); fi;",
+        "q:=-D;",
+        "SD:=[]; SI:=[]; QR:=[]; NR:=[];",
+        "if (D mod 8) = 1 then SD:=[op(SD),2]; fi;",
+        "if (D mod 8) = 5 then SI:=[op(SI),2]; fi;",
+        "for i from 2 to M do p:=ithprime(i);",
+        "if (D mod p) <> 0 and legendre(D,p)=1 then SD:=[op(SD),p]; fi;",
+        "if (D mod p) <> 0 and legendre(D,p)=-1 then SI:=[op(SI),p]; fi;",
+        "od;",
+        "for i from 1 to M do p:=ithprime(i);",
+        "if legendre(D,p) >= 0 then QR:=[op(QR),p]; else NR:=[op(NR),p]; fi; od:",
+        "lprint(\"Primes that decompose:\", SD);",
+        "lprint(\"Inert primes:\", SI);",
+        "lprint(\"Primes p such that Legendre(D,p) = 0 or 1: \", QR);",
+        "if SI <> NR then lprint(\"Note: SI <> NR here!\");",
+        "lprint(\"Primes p such that Legendre(D,p) = -1: \", NR);",
+        "fi;",
+        "end;",
+        "HH(-11,200); produces the present sequence (A296920), A191060, and A056874."
+    ],
+    "mathematica": [
+        "Reap[For[p = 2, p < 1000, p = NextPrime[p], If[KroneckerSymbol[-11, p] == 1, Print[p]; Sow[p]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Apr 29 2019 *)"
+    ],
+    "program": [
+        "(PARI) list(lim)=my(v=List()); forprime(p=2,lim, if(kronecker(-11,p)==1, listput(v,p))); Vec(v) \\\\ _Charles R Greathouse IV_, Mar 18 2018"
+    ],
+    "xref": [
+        "Cf. A191060, A056874."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Dec 25 2017",
+    "references": 29,
+    "revision": 25,
+    "time": "2019-06-03T15:43:04-04:00",
+    "created": "2017-12-25T14:51:19-05:00"
+}

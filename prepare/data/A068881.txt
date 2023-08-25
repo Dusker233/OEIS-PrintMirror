@@ -1,0 +1,41 @@
+{
+    "number": 68881,
+    "data": "9,81,961,9216,96721,929296,9690769,98525476,987656329,9618509476,98987632129,987650365636,9890943230169,98987854141696,987896383010761,9896907878105616,98989096389856929,989894587654967296,9898969096969272961,98985494707696721476",
+    "name": "Largest n-digit square with property that digits alternate in parity, or 0 if no such number exists.",
+    "link": [
+        "Giovanni Resta, <a href=\"/A068881/b068881.txt\">Table of n, a(n) for n = 1..33</a>"
+    ],
+    "example": [
+        "a(4) = 9216 as 9, 2, 1, 6 have alternating parity."
+    ],
+    "maple": [
+        "alp:= proc(n) local L,d;",
+        "L:= convert(n,base,10);",
+        "d:= nops(L);",
+        "if d::even then L:= L + map(op, [[0,1]$(d/2)]) else L:= L + map(op, [[0,1]$((d-1)/2),[0]]) fi;",
+        "nops(convert(L mod 2, set))=1",
+        "end proc:f:= proc(d) local s;",
+        "  for s from floor(sqrt(10^d)) by -1 to ceil(sqrt(10^(d-1))) do",
+        "    if alp(s^2) then return s^2 fi",
+        "  od;",
+        "  0",
+        "end proc:map(f, [$1..10]); # _Robert Israel_, Aug 14 2018"
+    ],
+    "mathematica": [
+        "altQ[n_] := n < 10 || Union[Total /@ Partition[ Mod[ IntegerDigits@ n, 2], 2, 1]] == {1}; a[n_] := Block[{r = Floor@ Sqrt@ FromDigits[8 + Mod[ Range@ n, 2]]}, While[! altQ[r^2], r--]; r^2]; Array[a, 16] (* _Giovanni Resta_, Aug 17 2018 *)"
+    ],
+    "xref": [
+        "Cf. A068876, A030152, A068880."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Mar 19 2002",
+    "ext": [
+        "a(5) corrected and more terms from _Robert Israel_, Aug 14 2018",
+        "a(18)-a(20) from _Giovanni Resta_, Aug 16 2018"
+    ],
+    "references": 2,
+    "revision": 10,
+    "time": "2018-08-17T10:49:39-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

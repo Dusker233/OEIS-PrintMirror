@@ -1,0 +1,77 @@
+{
+    "number": 217571,
+    "data": "1,4,5,10,11,18,19,28,29,40,41,54,55,70,71,88,89,108,109,130,131,154,155,180,181,208,209,238,239,270,271,304,305,340,341,378,379,418,419,460,461,504,505,550,551,598,599,648,649,700,701,754,755,810,811,868",
+    "name": "a(n) = (2*n*(n+5) + (2*n+1)*(-1)^n - 1)/8.",
+    "comment": [
+        "One of four sequences given by classifying natural numbers according to the value of floor(sqrt(n)). See Sato link and sequences A005563, A217570, A217575.",
+        "Numbers n such that floor(sqrt(n)) = floor(n/floor(sqrt(n))) = floor(n/(floor(sqrt(n)) + 2)) + 1."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A217571/b217571.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Takumi Sato, <a href=\"https://web.archive.org/web/20140103114324/http://vixra.org/abs/1210.0025\">Classification of Natural Numbers</a> [Wayback Machine link]",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,2,-2,-1,1)."
+    ],
+    "formula": [
+        "G.f.: x*(1+3*x-x^2-x^3)/((1+x)^2*(1-x)^3). - _Bruno Berselli_, Oct 11 2012",
+        "From _Stefano Spezia_, Dec 14 2019: (Start)",
+        "E.g.f.: (x*(5+x)*cosh(x) - (1-7*x-x^2)*sinh(x))/4.",
+        "a(n) = a(n-1) + 1 for n odd.",
+        "a(n) = a(n-1) + n + 1 for n even.",
+        "a(2*n) = A028552(n).",
+        "a(2*n+1) = A028387(n).",
+        "(End)"
+    ],
+    "example": [
+        "From _Stefano Spezia_, Dec 14 2019: (Start)",
+        "Illustration of the initial terms:",
+        "o      o        o        o           o",
+        "     o o o    o o o    o o o       o o o",
+        "                o        o           o",
+        "                     o o o o o   o o o o o",
+        "                                     o",
+        "(1)   (4)      (5)     (10)        (11)",
+        "(End)"
+    ],
+    "maple": [
+        "seq( (2*n^2 +10*n -1 +(-1)^n*(2*n+1))/8, n=1..60); # _G. C. Greubel_, Dec 19 2019"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1 + 3*x - x^2 - x^3)/((1 + x)^2*(1 - x)^3), {x, 0, 40}], x] (* _Vincenzo Librandi_, Dec 15 2012 *)",
+        "a[1]=1;a[n_]:=If[EvenQ[n],a[n-1]+1+n,a[n-1]+1]; Array[a,56] (* _Stefano Spezia_, Dec 18 2019 *)"
+    ],
+    "program": [
+        "(Visual Basic in Excel)",
+        "Sub A217571()",
+        "Dim x As Long, n As Long, y As Long, i As Long",
+        "x = InputBox(\"Count to\")",
+        "For n = 1 To x",
+        "y = Int(Sqr(n))",
+        "If y = Int(n / y) Then GoTo L1",
+        "GoTo L2",
+        "L1: If y = Int(n / (y + 2)) + 1 Then",
+        "i = i + 1",
+        "Cells(i, 1) = n",
+        "End If",
+        "L2: Next n",
+        "End Sub",
+        "(Magma) [n: n in [1..900] | Floor(n/Isqrt(n)) eq Floor(n/(Isqrt(n)+2))+1]; // _Bruno Berselli_, Oct 10 2012",
+        "(Maxima) makelist((2*n*(n+5)+(2*n+1)*(-1)^n-1)/8, n, 1, 56); /* _Martin Ettl_, Oct 15 2012 */",
+        "(Magma) I:=[1, 4, 5, 10, 11]; [n le 5 select I[n] else Self(n-1) + 2*Self(n-2) - 2*Self(n-3) - Self(n-4) + Self(n-5): n in [1..60]]; // _Vincenzo Librandi_, Dec 15 2012",
+        "(PARI) vector(60, n, (2*n^2 +10*n -1 +(-1)^n*(2*n+1))/8 ) \\\\ _G. C. Greubel_, Dec 19 2019",
+        "(Sage) [(2*n^2 +10*n -1 +(-1)^n*(2*n+1))/8 for n in (1..60)] # _G. C. Greubel_, Dec 19 2019",
+        "(GAP) List([1..60], n-> (2*n^2 +10*n -1 +(-1)^n*(2*n+1))/8 ); # _G. C. Greubel_, Dec 19 2019"
+    ],
+    "xref": [
+        "Cf. A005563, A028387, A028552, A217570, A217575."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Takumi Sato_, Oct 07 2012",
+    "ext": [
+        "Definition by _Bruno Berselli_, Oct 11 2012"
+    ],
+    "references": 3,
+    "revision": 77,
+    "time": "2022-09-08T08:46:04-04:00",
+    "created": "2012-10-12T02:57:50-04:00"
+}

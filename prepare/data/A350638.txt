@@ -1,0 +1,48 @@
+{
+    "number": 350638,
+    "data": "147,507,605,1083,2883,4107,4805,5547,5819,5887,8405,11163,12943,13467,15987,18605,18723,25205,28227,31827,35287,35643,36517,48387,49379,50807,51005,57963,68403,73947,79707,81133,85805,87131,89383,98283,100949,111747,112903",
+    "name": "Numbers of the form p^2*q, with odd primes p > q, such that q divides p-1.",
+    "comment": [
+        "For these terms m there are precisely (q+9)/2 groups of order m.",
+        "Only two of these groups are abelian: C_{p^2*q} and (C_p X C_p) X C_q. The (q+5)/2 groups that are nonabelian are C_{p^2} : C_q and the (q+3)/2 semidirect products of the form (C_p X C_p) : C_q that are not isomorphic, where C means cyclic groups of the stated order, the symbols X and : mean direct and semidirect products respectively."
+    ],
+    "reference": [
+        "Pascal Ortiz, Exercices d'Alg\u00e8bre, Collection CAPES / Agr\u00e9gation, Ellipses, probl\u00e8me 1.35, pp. 70-74, 2004."
+    ],
+    "link": [
+        "N. S. Wedd, <a href=\"http://www.weddslist.com/groups/misc/147.html\">Groups of orders 147</a>."
+    ],
+    "example": [
+        "147 = 7^2 * 3, 3 and 7 are odd primes, 3 divides 7-1 = 6, hence 147 is a term."
+    ],
+    "mathematica": [
+        "q[n_] := Module[{f = FactorInteger[n], p, e}, p = f[[;; , 1]]; e = f[[;; , 2]]; e == {1, 2} && Divisible[p[[2]] - 1, p[[1]]]]; Select[Range[1, 120000, 2], q] (* _Amiram Eldar_, Jan 11 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import integer_nthroot, primerange",
+        "def aupto(limit):",
+        "    aset, maxp = set(), integer_nthroot(limit**2, 3)[0]",
+        "    for p in primerange(5, maxp+1):",
+        "        pp = p*p",
+        "        for q in primerange(3, min(p, limit//pp+1)):",
+        "            if (p-1)%q == 0:",
+        "                aset.add(pp*q)",
+        "    return sorted(aset)",
+        "print(aupto(113000)) # _Michael S. Branicky_, Jan 10 2022",
+        "(PARI) isok(m) = if (m%2, my(f=factor(m)); if (f[, 2] == [1, 2]~, my(p=f[1, 1], q=f[2, 1]); ((q-1) % p) == 0)); \\\\ _Michel Marcus_, Jan 11 2022"
+    ],
+    "xref": [
+        "Other subsequences of A054753 linked with order of groups: A079704, A143928, A349495, A350115, A350245, A350332, A350421, A350422."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Jan 10 2022",
+    "ext": [
+        "More terms from _Michael S. Branicky_, Jan 10 2022"
+    ],
+    "references": 3,
+    "revision": 49,
+    "time": "2022-01-11T22:13:28-05:00",
+    "created": "2022-01-11T22:13:28-05:00"
+}

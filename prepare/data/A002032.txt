@@ -1,0 +1,44 @@
+{
+    "number": 2032,
+    "id": "M2141 N0852",
+    "data": "1,2,24,912,87360,19226880,9405930240,10142439229440,24057598104207360,125180857812868300800,1422700916050060841779200,35136968950395142864227532800,1876028272361273394915958613606400,215474119792145796020405035320528076800",
+    "name": "Number of n-colored connected graphs on n labeled nodes.",
+    "comment": [
+        "Every connected graph on n nodes can be colored with n colors in exactly n! ways, so this sequence is just n! * A001187(n). - _Andrew Howroyd_, Dec 03 2018"
+    ],
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "R. C. Read, E. M. Wright, <a href=\"http://dx.doi.org/10.4153/CJM-1970-066-1\">Colored graphs: A correction and extension</a>, Canad. J. Math. 22 1970 594-596."
+    ],
+    "formula": [
+        "a(n) = n!*A001187(n). - _Andrew Howroyd_, Dec 03 2018",
+        "Define M_0(k)=1, M_n(0)=0, M_n(k) = Sum_{r=0..n} C(n,r)*2^(r*(n-r))*M_r(k-1) [M_n(k) = A322280(n,k)], m_n(k) = M_n(k) -Sum_{r=1..n-1} C(n-1,r-1)*m_r(k)*M_{n-r}(k) [m_n(k) = A322279(n,k)], f_n(k) = Sum_{r=1..k} (-1)^(k-r)*C(k,r)*m_n(r). This sequence gives a(n) = f_n(n). - _Sean A. Irvine_, May 29 2013, edited _Andrew Howroyd_, Dec 03 2018",
+        "The above formula is referenced by sequences A002027-A002030, A002031. - _Andrew Howroyd_, Dec 03 2018"
+    ],
+    "mathematica": [
+        "(* b = A001187 *) b[n_] := b[n] = If[n == 0, 1, 2^(n(n-1)/2) - Sum[k* Binomial[n, k]*2^((n-k)(n-k-1)/2)*b[k], {k, 1, n-1}]/n];",
+        "a[n_] := n! b[n];",
+        "Array[a, 14] (* _Jean-Fran\u00e7ois Alcover_, Aug 16 2019, using _Alois P. Heinz_'s code for A001187 *)"
+    ],
+    "program": [
+        "(PARI) seq(n) = {Vec(serlaplace(serlaplace(1 + log(sum(k=0, n, 2^binomial(k, 2)*x^k/k!, O(x*x^n))))))} \\\\ _Andrew Howroyd_, Dec 03 2018"
+    ],
+    "xref": [
+        "Cf. A002027. A002028, A002029, A002030, A002031.",
+        "Cf. A001187, A322278, A322279, A322280."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Sean A. Irvine_, May 29 2013",
+        "Name clarified by _Andrew Howroyd_, Dec 03 2018"
+    ],
+    "references": 5,
+    "revision": 38,
+    "time": "2019-08-16T15:00:03-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

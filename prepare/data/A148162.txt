@@ -1,0 +1,30 @@
+{
+    "number": 148162,
+    "data": "1,1,2,4,11,31,91,267,813,2557,8236,26786,87847,291227,977068,3308866,11278661,38653717,133227658,461825572,1608935543,5628584683,19762998641,69637415101,246214217449,873256171561,3105884952236,11074941003322,39586724293339,141826521919151,509214076570561,1831934157570821",
+    "name": "Number of walks within N^3 (the first octant of Z^3) starting at (0,0,0) and consisting of n steps taken from {(-1, -1, 1), (-1, 1, 1), (0, 0, -1), (1, 0, 0)}.",
+    "link": [
+        "Robert Israel, <a href=\"/A148162/b148162.txt\">Table of n, a(n) for n = 0..220</a>",
+        "Alin Bostan and Manuel Kauers, <a href=\"https://arxiv.org/abs/0811.2899\">Automatic Classification of Restricted Lattice Walks</a>, arXiv:0811.2899 [math.CO], 2008-2009."
+    ],
+    "formula": [
+        "Empirical: -63*(k+3)*(k+2)*(k+1)*a(k)-2*(2*k-1)*(k+3)*(k+2)*a(k+1)+(k+3)*(6*k^2+32*k+31)*a(k+2)-(2*k+9)*(2*k^2+18*k+39)*a(k+3)+(k+4)*(k+6)^2*a(k+4) = 0. - _Robert Israel_, Apr 11 2019"
+    ],
+    "maple": [
+        "Steps:= [[-1,-1,1],[-1,1,1],[0,0,-1],[1,0,0]]:",
+        "f:= proc(n, p) option remember;",
+        "  if n <= min(p) then return 4^n fi;",
+        "  add(procname(n-1, t), t=remove(has, map(`+`, Steps, p), -1));",
+        "end proc:",
+        "A:= map(f, [$0..100], [0, 0, 0]); # _Robert Israel_, Apr 11 2019"
+    ],
+    "mathematica": [
+        "aux[i_Integer, j_Integer, k_Integer, n_Integer] := Which[Min[i, j, k, n] < 0 || Max[i, j, k] > n, 0, n == 0, KroneckerDelta[i, j, k, n], True, aux[i, j, k, n] = aux[-1 + i, j, k, -1 + n] + aux[i, j, 1 + k, -1 + n] + aux[1 + i, -1 + j, -1 + k, -1 + n] + aux[1 + i, 1 + j, -1 + k, -1 + n]]; Table[Sum[aux[i, j, k, n], {i, 0, n}, {j, 0, n}, {k, 0, n}], {n, 0, 10}]"
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Manuel Kauers_, Nov 18 2008",
+    "references": 1,
+    "revision": 8,
+    "time": "2019-04-12T09:34:38-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

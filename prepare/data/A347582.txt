@@ -1,0 +1,51 @@
+{
+    "number": 347582,
+    "data": "2,6,20,54,146,346,848,1922,4424,9810,21816,47598,103730,223498,480542,1025956,2184362,4629670,9786512,20618936,43340862,90870526,190141128,397049128,827675318",
+    "name": "Number of length-2n binary strings of the form xxyy.",
+    "formula": [
+        "A347583(n) <= a(n) <= A347583(n) + 2^n. - _Michael S. Branicky_, Jan 23 2022"
+    ],
+    "example": [
+        "a(2) = 6: {0000, 0011, 0101, 1010, 1100, 1111}."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "from functools import cache",
+        "@cache",
+        "def b(n): # length-2n binary strings of the form ww",
+        "    return set(w+w for w in product(b\"01\", repeat=n))",
+        "def a(n):",
+        "    return len(set(s+t for i in range(n) for s in b(i) for t in b(n-i)))",
+        "print([a(n) for n in range(1, 18)]) # _Michael S. Branicky_, Jan 23 2022",
+        "(Python) # bit-based version",
+        "from itertools import product",
+        "def b(n): # length-2n binary strings of the form ww",
+        "    if n == 0: yield 0",
+        "    for i in range(2**n):",
+        "        yield (i << n) + i",
+        "def a(n):",
+        "    st = set()",
+        "    for i in range(n):",
+        "        for w in b(i):",
+        "            s = w << (2*(n-i))",
+        "            for t in b(n-i):",
+        "                st.add(s+t)",
+        "    return len(st)",
+        "print([a(n) for n in range(1, 20)]) # _Michael S. Branicky_, Jan 25 2022"
+    ],
+    "xref": [
+        "Cf. A347583, which requires x and y to be nonempty."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Jan 23 2022",
+    "ext": [
+        "a(18)-a(21) from _Michael S. Branicky_, Jan 23 2022",
+        "a(22)-a(25) from _Michael S. Branicky_, Jan 25 2022"
+    ],
+    "references": 1,
+    "revision": 27,
+    "time": "2022-01-25T10:26:01-05:00",
+    "created": "2022-01-23T11:15:46-05:00"
+}

@@ -1,0 +1,27 @@
+{
+    "number": 336507,
+    "data": "45,135,225,405,675,765,855,1035,1125,1215,1275,1305,1395,1665,1845,1935,2025,2115,2295,2565,3105,3375,3645,3825,3915,4185,4275,4995,5175,5535,5625,5805,6075,6345,6375,6525,6885,6975,7155,7695,7965,8235,8325,9045,9225",
+    "name": "Lambda-practical numbers (A336506) that are not phi-practical (A260653).",
+    "comment": [
+        "Thompson (2012) proved that all phi-practical numbers are lambda-practical, that all the terms of this sequence are not squarefree numbers, and that this sequence is infinite: for example, 45 * Product_{i=10..k} prime(i) is a term for all k >= 10."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A336507/b336507.txt\">Table of n, a(n) for n = 1..300</a>",
+        "Lola Thompson, <a href=\"http://www.lolathompson.com/uploads/1/1/0/6/110629329/thesis.pdf\">Products of distinct cyclotomic polynomials</a>, Ph.D. thesis, Dartmouth College, 2012.",
+        "Lola Thompson, <a href=\"https://doi.org/10.5802/jtnb.866\">Variations on a question concerning the degrees of divisors of x^n - 1</a>, Journal de Th\u00e9orie des Nombres de Bordeaux, Vol. 26, No. 1 (2014), pp. 253-267."
+    ],
+    "mathematica": [
+        "phiPracticalQ[n_] := If[n<1, False, If[n==1, True, (lst = Sort @ EulerPhi @ Divisors[n]; ok=True; Do[If[lst[[m]]>Sum[lst[[l]], {l, 1, m-1}]+1, (ok=False; Break[])], {m, 1, Length[lst]}]; ok)]]; rep[v_, c_] := Flatten @ Table[ConstantArray[v[[i]], {c[[i]]}], {i, Length[c]}]; lambdaPracticalQ[n_] := Module[{d = Divisors[n], lam, ns, r, x}, lam = CarmichaelLambda[d]; ns = EulerPhi[d]/lam; r = rep[lam, ns]; Min @ Rest @ CoefficientList[Series[Product[1 + x^r[[i]], {i, Length[r]}], {x, 0, n}], x] > 0]; Select[Range[1000], !phiPracticalQ[#] && lambdaPracticalQ[#] &] (* after Frank M Jackson at A260653 *)"
+    ],
+    "xref": [
+        "Subsequence of A013929.",
+        "Complement of A260653 with respect to A336506."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jul 23 2020",
+    "references": 2,
+    "revision": 10,
+    "time": "2020-08-04T03:56:19-04:00",
+    "created": "2020-07-25T10:40:24-04:00"
+}

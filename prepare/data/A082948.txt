@@ -1,0 +1,47 @@
+{
+    "number": 82948,
+    "data": "323,343,353,373,383,434,454,474,494,646,656,676,686,727,737,747,757,767,787,797,838,858,868,878,898,929,949,959,969,979,989,3223,3443,3553,3883,4334,4994,6446,6886,7227,7337,7447,7557,7667,7887,7997,8558,8668",
+    "name": "Palindromes neither divisible by any of their digits nor by the sum of their digits.",
+    "example": [
+        "868 is a member of the sequence since it is not divisible by 8, 6 or 22. But 4554 is not a member of this sequence. it is not divisible by 4 and 5 but it is divisible by 18."
+    ],
+    "maple": [
+        "digrev:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "filter:= proc(n) local L,s;",
+        "  L:= convert(n,base,10);",
+        "  s:= convert(L,`+`);",
+        "  andmap(t -> n mod t <> 0, {s} union convert(L,set) minus {0})",
+        "end proc:",
+        "N:=5; # to get all terms of <= N digits",
+        "Res:= NULL:",
+        "for d from 3 to N do",
+        "  if d::even then",
+        "    m:= d/2;",
+        "    Res:= Res, op(select(filter, [seq(n*10^m + digrev(n), n=3*10^(m-1)..10^m-1)]));",
+        "  else",
+        "    m:= (d-1)/2;",
+        "    Res:= Res, op(select(filter, [seq(seq(n*10^(m+1)+y*10^m+digrev(n), y=[0,$2..9]), n=3*10^(m-1)..10^m-1)]));",
+        "  fi",
+        "od:",
+        "Res; # _Robert Israel_, Jun 12 2019"
+    ],
+    "mathematica": [
+        "ok[n_] := Block[{d = IntegerDigits@ n}, d == Reverse[d] && (d = Select[d, # > 0 &]; Mod[n, Total@ d] > 0 && Min@ Mod[n, d] > 0)]; Select[ Range[ 10^4], ok] (* _Giovanni Resta_, Jun 12 2019 *)"
+    ],
+    "xref": [
+        "Cf. A082947."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "Meenakshi Srikanth (menakan_s(AT)yahoo.com), May 08 2003",
+    "ext": [
+        "Definition edited by _Harvey P. Dale_, Dec 04 2014"
+    ],
+    "references": 0,
+    "revision": 9,
+    "time": "2019-06-12T11:06:19-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

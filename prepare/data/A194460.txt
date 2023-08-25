@@ -1,0 +1,51 @@
+{
+    "number": 194460,
+    "data": "1,4,18,82,370,1648,7252,31582,136338,584248,2488156,10540484,44450068,186715072,781628008,3262239862,13579324498,56391614632,233686316428,966556003132,3990942300508,16453094542432,67733512006168",
+    "name": "a(n) is the number of basic ideals in the standard Borel subalgebra of the untwisted affine Lie algebra sl_n.",
+    "comment": [
+        "a(n) also equals the number of pairs (p,q) of Dyck paths of semilength n, such that the first peak of q has height at least n-l(p), where l(p) is the height of the last peak of p, and the last peak of q has height at least n-f(p), where f(p) is the height of the first peak of p.",
+        "From _Per Alexandersson_, May 26 2018: (Start)",
+        "a(n) is also equal to the number of circular arc digraphs on n vertices.",
+        "a(n) is equal to the number of lists b(1),b(2),...,b(n) such that 0 <= b(i) < n and b(i)-1 <= b(i+1) for i=1..n-1 and b(n)-1 <= b(1).",
+        "The subset of such sequences such that b(n)=0 is given by the Catalan numbers, A000108. (End)",
+        "Christian Krattenthaler has shown that a(n) = (n+2)*binomial(2*n-1,n-1) - 2^(2*n-1), which also implies the above recursion observed by _D. S. McNeil_. - _Volodymyr Mazorchuk_, Aug 26 2011"
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A194460/b194460.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Per Alexandersson, Svante Linusson, Samu Potka, <a href=\"https://arxiv.org/abs/1903.01327\">The cyclic sieving phenomenon on circular Dyck paths</a>, arXiv:1903.01327 [math.CO], 2019.",
+        "Per Alexandersson and Greta Panova, <a href=\"https://arxiv.org/abs/1705.10353\">LLT polynomials, chromatic quasisymmetric functions and graphs with cycles</a>, arXiv:1705.10353 [math.CO], 2017. See Lemma 5.",
+        "K. Baur and V. Mazorchuk; <a href=\"http://arxiv.org/abs/1108.3659\">Combinatorial analogues of ad-nilpotent ideals for untwisted affine Lie algebras</a>, arXiv:1108.3659 [math.RA], 2011."
+    ],
+    "formula": [
+        "It appears that the sequence is given by a(1)=1, a(n) = 4*a(n-1) + 2*binomial(2*n-3, n-3). - _D. S. McNeil_, Aug 25 2011",
+        "0 =  a(n)*(+2304*a(n+1) -3744*a(n+2) +1464*a(n+3) -168*a(n+4)) +a(n+1)*(-96*a(n+1) +1192*a(n+2) -730*a(n+3) +102*a(n+4)) +a(n+2)*(-78*a(n+2) +99*a(n+3) -19*a(n+4)) +a(n+3)*(-3*a(n+3) +a(n+4)) for all n>0. - _Michael Somos_, Jun 28 2018"
+    ],
+    "example": [
+        "G.f. = x + 4*x^2 + 18*x^3 + 82*x^4 + 370*x^5 + 1648*x^6 + 7252*x^7 + 31582*x^8 + ... - _Michael Somos_, Jun 28 2018"
+    ],
+    "mathematica": [
+        "a[n_] := (n+2) Binomial[2n-1, n-1] - 2^(2n-1);",
+        "Array[a, 23] (* _Jean-Fran\u00e7ois Alcover_, Jul 27 2018, after _Michael Somos_ *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A194460(n):",
+        "    if n == 1: return 1",
+        "    cf = CachedFunction(lambda i,j,n: binomial(n-1-i+n-1-j,n-i-1)-binomial(n-1-i+n-1-j, n-i-j-1))",
+        "    CP = cartesian_product",
+        "    return sum(sum(cf(i,j,n)*cf(k,m,n) for k,m in CP([[n-i..n],[n-j..n]])) for i,j in CP([[1..n],[1..n]]))",
+        "# _D. S. McNeil_, Aug 25 2011",
+        "(PARI) {a(n) = if( n<1, 0, (n+2) * binomial(2*n-1, n-1) - 2^(2*n-1))}; /* _Michael Somos_, Jun 28 2018 */",
+        "(Magma) [(n+2)*Binomial(2*n-1, n-1) - 2^(2*n-1): n in [1..30]]; // _G. C. Greubel_, Aug 13 2018"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Volodymyr Mazorchuk_, Aug 24 2011",
+    "ext": [
+        "More terms from _D. S. McNeil_, Aug 25 2011"
+    ],
+    "references": 4,
+    "revision": 61,
+    "time": "2022-09-08T08:45:58-04:00",
+    "created": "2011-08-25T18:09:34-04:00"
+}

@@ -1,0 +1,57 @@
+{
+    "number": 322246,
+    "data": "1,5,43,395,3811,37775,381205,3895925,40193395,417697775,4366043473,45852847265,483447391309,5114115365585,54252753665083,576948203182475,6148667240501395,65651351673108575,702154850931542305,7520927108084780225,80666557496061224281,866249916689104887005,9312623039533986068863,100216202771039576006495,1079454220008183284872861",
+    "name": "Expansion of g.f.: 1/sqrt(1 - 10*x - 11*x^2).",
+    "link": [
+        "Robert Israel, <a href=\"/A322246/b322246.txt\">Table of n, a(n) for n = 0..960</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} 11^(n-k) * (-3)^k * binomial(n,k)*binomial(2*k,k).",
+        "a(n) = Sum_{k=0..n} (-1)^(n-k) * 3^k * binomial(n,k)*binomial(2*k,k).",
+        "a(n) equals the (central) coefficient of x^n in (1 + 5*x + 9*x^2)^n.",
+        "D-finite with recurrence: (11*n+11)*a(n)+(15+10*n)*a(n+1)+(-n-2)*a(n+2)=0. - _Robert Israel_, Dec 09 2018",
+        "a(n) ~ 11^(n + 1/2) / (2*sqrt(3*Pi*n)). - _Vaclav Kotesovec_, Dec 13 2018",
+        "E.g.f.: exp(5*x) * BesselI(0,6*x). - _Ilya Gutkovskiy_, Feb 02 2021",
+        "a(n) = 11^n*2F1([1/2, -n], [1], 12/11), where 2F1 is the hypergeometric function. - _Stefano Spezia_, Feb 02 2021"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 5*x + 43*x^2 + 395*x^3 + 3811*x^4 + 37775*x^5 + 381205*x^6 + 3895925*x^7 + 40193395*x^8 + 417697775*x^9 + 4366043473*x^10 + ...",
+        "such that A(x)^2 = 1/(1 - 10*x - 11*x^2).",
+        "RELATED SERIES.",
+        "exp( Sum_{n>=1} a(n)*x^n/n ) = 1 + 5*x + 34*x^2 + 260*x^3 + 2137*x^4 + 18425*x^5 + 164395*x^6 + 1505075*x^7 + 14058979*x^8 + 133459055*x^9 + 1283753308*x^10 + ..."
+    ],
+    "maple": [
+        "f:= gfun:-rectoproc({{(11*n+11)*a(n)+(15+10*n)*a(n+1)+(-n-2)*a(n+2), a(0) = 1, a(1) = 5},a(n),remember):",
+        "map(f, [$0..40]); # _Robert Israel_, Dec 09 2018"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/Sqrt[1 - 10*x - 11*x^2], {x,0,30}], x] (* _G. C. Greubel_, Dec 09 2018 *)"
+    ],
+    "program": [
+        "(PARI) /* Using generating function: */",
+        "{a(n) = polcoeff( 1/sqrt(1 - 10*x - 11*x^2 +x*O(x^n)),n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) /* Using binomial formula: */",
+        "{a(n) = sum(k=0,n, (-1)^(n-k)*3^k*binomial(n,k)*binomial(2*k,k))}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) /* Using binomial formula: */",
+        "{a(n) = sum(k=0,n, 11^(n-k)*(-3)^k*binomial(n,k)*binomial(2*k,k))}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) /* a(n) is central coefficient in (1 + 5*x + 9*x^2)^n */",
+        "{a(n) = polcoeff( (1 + 5*x + 9*x^2 +x*O(x^n))^n, n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(Magma) m:=30; R<x>:=PowerSeriesRing(Rationals(), m); Coefficients(R!( 1/Sqrt(1 - 10*x - 11*x^2) )); // _G. C. Greubel_, Dec 09 2018",
+        "(Sage) s=(1/sqrt(1 - 10*x - 11*x^2)).series(x, 30); s.coefficients(x, sparse=False) # _G. C. Greubel_, Dec 09 2018",
+        "(GAP) List([0..30], n -> Sum([0..n], k-> (-1)^(n-k)*3^k*Binomial(n,k) *Binomial(2*k,k))); # _G. C. Greubel_, Dec 09 2018"
+    ],
+    "xref": [
+        "Cf. A322247."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Dec 09 2018",
+    "references": 5,
+    "revision": 23,
+    "time": "2022-09-08T08:46:23-04:00",
+    "created": "2018-12-09T05:48:27-05:00"
+}

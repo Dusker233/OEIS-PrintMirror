@@ -1,0 +1,56 @@
+{
+    "number": 329170,
+    "data": "2,18,146,578,1602,2306,3602,4626,5186,7058,10818,12546,17426,19602,20738,21906,30978,32402,36866,41618,46658,48402,63506,69698,76178,80658,97346,102402,104978,132498,138386,147458,153666,156818,166466,176402,183186,197138",
+    "name": "Numbers of the form k^2 + 2 that are the sums of two squares.",
+    "reference": [
+        "Gelca, R. and Andreescu, T. (2007). Putnam and beyond. New York: Springer. Page 278, Question 807."
+    ],
+    "formula": [
+        "The formula ((n^2 - 3)^2)/4 + n^2, where n is odd, generates the subsequence 2, 18, 146, 578, 1602, 3602, 7058, 12546, 20738, 32402, 48402 ... ."
+    ],
+    "example": [
+        "1) k^2 + 2 = 0^2 + 2 = 2 = 1^2 + 1^2 = a^2 + b^2",
+        "2) k^2 + 2 = 4^2 + 2 = 18 = 3^2 + 3^2 = a^2 + b^2",
+        "3) k^2 + 2 = 12^2 + 2 = 146 = 5^2 + 11^2 = a^2 + b^2",
+        "4) k^2 + 2 = 24^2 + 2 = 578 = 7^2 + 23^2 = a^2 + b^2 (also, 578 = 17^2 + 17^2)",
+        "5) k^2 + 2 = 40^2 + 2 = 1602 = 9^2 + 39^2 = a^2 + b^2"
+    ],
+    "program": [
+        "(Python)",
+        "# A list of squares of integers. Currently contains 0 and 1; will be added elements below when calling 'procedure':",
+        "squaresList = [0,1]",
+        "# We define a function that, given k**2+2, finds if it is a sum of two of the squares stored in the list:",
+        "def find_if_sum (a_var):",
+        "  for a_squared in range (0, len(squaresList)):",
+        "    for b_squared in range (a_squared, len(squaresList)):",
+        "      if (a_var == squaresList[a_squared] + squaresList[b_squared]):",
+        "        print (str(a_var) + \", \" + \"a_squared: \" + str(squaresList[a_squared]) + \" and b_squared: \" + str(squaresList[b_squared]), sep = '',)",
+        "# We call this function on the base cases.",
+        "my_var = 0**2 + 2               # Here we directly compute k**2 + 2 for k = 0",
+        "find_if_sum (my_var)            # This is the call to the function",
+        "my_var = 1**2 + 2               # Here we directly compute k**2 + 2 for k = 1",
+        "find_if_sum (my_var)            # This is the call to the function",
+        "def procedure ():",
+        "  for k in range (2,1501):      # Check all integers up to 1500, including",
+        "    my_var = k**2",
+        "    squaresList.append(my_var)",
+        "    my_var += 2                 # Add 2 to the square of k",
+        "    find_if_sum (my_var)        # This is the call to the function",
+        "procedure()                     # Call the procedure",
+        "(Magma) a:=[]; for m in [0..500] do for k in [0..m+1] do if IsSquare(m^2+2-k^2) then  Append(~a,m^2+2); break; end if; end for; end for; a; // _Marius A. Burtea_, Nov 07 2019"
+    ],
+    "xref": [
+        "Cf. A274595.",
+        "Intersection of A000404 and A059100."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Miriam Briskman_, Nov 06 2019",
+    "ext": [
+        "-"
+    ],
+    "references": 0,
+    "revision": 21,
+    "time": "2022-09-08T08:46:24-04:00",
+    "created": "2019-11-07T13:38:04-05:00"
+}

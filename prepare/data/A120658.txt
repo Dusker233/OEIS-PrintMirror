@@ -1,0 +1,65 @@
+{
+    "number": 120658,
+    "data": "0,12,96,370,1654,6660,28020,115190,478786,1979288,8203968,33961066,140672814,582515628,2412508492,9990776222,41375626970,171349445760,709617513368,2938760897682,12170404119878,50401719145492",
+    "name": "Expansion of 2*x*(6 + 30*x - 13*x^2 - 70*x^3)/((1-x)*(1+2*x)*(1 - 4*x - 3*x^2 + 10*x^3)).",
+    "comment": [
+        "From _Petros Hadjicostas_, Nov 21 2019: (Start)",
+        "We may factor the characteristic polynomial of the 9 X 9 matrix M shown below as follows: 80 - 144*x - 56*x^2 + 184*x^3 + 9*x^4 - 89*x^5 - 2*x^6 + 18*x^7 + x^8 - x^9 = (x^3 - 4*x^2 - 3*x + 10)*(x+2)^3*(1-x)^3. The minimal polynomial of matrix M, however, is (up to a sign) equal to f(x) = x^5 - 3*x^4 - 9*x^3 + 15*x^2 + 16*x - 20 = (x-1)*(x+2)*(x^3 - 4*x^2 - 3*x + 10). This means M^5 - 3*M^4 - 9*M^3 + 15*M^2 + 16*M - 20*I_9 = 0 (where I_9 is the 9 X 9 identity matrix).",
+        "Post-multiplying the last equation by the 9 X 1 matrix v(n-5) (see below) and using the fact that M^k * v(n-k) = v(n) for k >= 0, we get v(n) - 3*v(n-1) - 9*v(n-2) + 15*v(n-3) + 16*v(n-4) - 20*v(n-5) = 0. Since a(n) is the (1,1)th element of v(n), we immediately get the recurrence in the formula section.",
+        "The generating function of the sequence (a(n): n >= 0) is a rational function with denominator x^5 * f(1/x) = x^5 * (1/x - 1) * (1/x + 2) * (1/x^3 - 4/x^2 - 3/x + 10) = (1-x)*(1+2*x) * (1 - 4*x - 3*x^2 + 10*x^3), which is the one reported by Maksym Voznyy below. The numerator of the g.f. can be determined using the initial conditions from a(0) to a(5). (End)"
+    ],
+    "reference": [
+        "F. R. K. Chung and R. L. Graham, Erdos on Graphs, AK Peters Ltd., MA, 1998."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A120658/b120658.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (3,9,-15,-16,20)."
+    ],
+    "formula": [
+        "Define the 9 X 9 matrix M = {[0,1,1,1,0,0,1,0,0], [1,0,1,0,1,0,0,1,0], [1,1,0, 0,0,1,0,0,1], [1,0,0,0,1,1,1,0,0], [0,1,0,1,0,1,0,1,0], [0,0,1,1,1,1,0,0,1], [1,0,0,1,0,0,0,1,1], [0,1,0,0,1,0,1,0,1], [0,0,1,0,0,1,1,1,0]}, and the sequence (v(n): n >= 1) of 9 X 1 matrices (column vectors) by  v(1) = (Fibonacci(n), n = 0..8) and v(n) = M*v(n-1). Then a(n) is the (1,1)th element of the column vector v(n).",
+        "G.f.: 2*x*(6 + 30*x - 13*x^2 - 70*x^3)/((1-x)*(1+2*x)*(1 - 4*x - 3*x^2 + 10*x^3)). - Maksym Voznyy (voznyy(AT)mail.ru), Jul 28 2009",
+        "From _Petros Hadjicostas_, Nov 21 2019: (Start)",
+        "a(n) = 3*a(n-1) + 9*a(n-2) - 15*a(n-3) - 16*a(n-4) + 20*a(n-5) for n >= 5.",
+        "a(n) = 2*a(n-1) + 11*a(n-2) - 4*a(n-3) - 20*a(n-4) - 94 for n >= 4.",
+        "a(n) = 4*a(n-1) + 3*a(n-2) - 10*a(n-3) - (2/3)*(47 + 28*(-2)^(n-3)) for n >= 3. (End)"
+    ],
+    "maple": [
+        "with(LinearAlgebra); with(combinat);",
+        "M:= Matrix([[0,1,1,1,0,0,1,0,0], [1,0,1,0,1,0,0,1,0], [1,1,0,0,0,1,0,0,1], [1, 0,0,0,1,1,1,0,0], [0,1,0,1,0,1,0,1,0], [0,0,1,1,1,1,0,0,1], [1,0,0,1,0,0,0,1, 1], [0,1,0,0,1,0,1,0,1], [0,0,1,0,0,1,1,1,0]]);",
+        "f:=fibonacci;",
+        "v:= proc(n) option remember;",
+        "     if n = 0 then Matrix([[f(0)],[f(1)],[f(2)],[f(3)],[f(4)],[f(5)],[f(6)],[f(7)],[f(8)]]); elif n >= 1 then",
+        "     MatrixMatrixMultiply(M, v(n-1)); end if;",
+        "  end proc;",
+        "seq(v(n)[1, 1], n = 0..40); # _Petros Hadjicostas_, Nov 21 2019"
+    ],
+    "mathematica": [
+        "(* First program *)",
+        "M = {{0,1,1,1,0,0,1,0,0}, {1,0,1,0,1,0,0,1,0}, {1,1,0,0,0,1,0,0,1}, {1,0,0,0,1, 1,1,0,0}, {0,1,0,1,0,1,0,1,0}, {0,0,1,1,1,1,0,0,1}, {1,0,0,1,0,0,0,1,1}, {0,1, 0,0,1,0,1,0,1}, {0,0,1,0,0,1,1,1,0}};",
+        "v[1] = Table[Fibonacci[n], {n, 0, 8}];",
+        "v[n_]:= v[n]= M.v[n-1];",
+        "Table[Floor[v[n][[1]]], {n,40}]",
+        "(* Second program *)",
+        "CoefficientList[Series[2*x*(6+30*x-13*x^2-70*x^3)/((1-x)*(1+2*x)*(1-4*x-3*x^2 + 10*x^3)), {x,0,30}], x] (* _G. C. Greubel_, Dec 08 2019 *)",
+        "LinearRecurrence[{3,9,-15,-16,20},{0,12,96,370,1654},30] (* _Harvey P. Dale_, Jul 12 2022 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^30)); concat([0], Vec(2*x*(6+30*x-13*x^2-70*x^3)/((1-x)*(1+2*x)*(1-4*x-3*x^2 + 10*x^3)))) \\\\ _G. C. Greubel_, Dec 08 2019",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 30); [0] cat Coefficients(R!( 2*x*(6+30*x-13*x^2-70*x^3)/((1-x)*(1+2*x)*(1-4*x-3*x^2 + 10*x^3)) )); // _G. C. Greubel_, Dec 08 2019",
+        "(Sage)",
+        "def A120658_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( 2*x*(6+30*x-13*x^2-70*x^3)/((1-x)*(1+2*x)*(1-4*x-3*x^2 + 10*x^3)) ).list()",
+        "A120658_list(30) # _G. C. Greubel_, Dec 08 2019"
+    ],
+    "keyword": "nonn,easy,less",
+    "offset": "0,2",
+    "author": "_Roger L. Bagula_, Aug 10 2006",
+    "ext": [
+        "New name using g.f. by Maksym Voznyy, _Joerg Arndt_, Nov 22 2019"
+    ],
+    "references": 3,
+    "revision": 53,
+    "time": "2022-09-08T08:45:26-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

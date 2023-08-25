@@ -1,0 +1,41 @@
+{
+    "number": 270787,
+    "data": "1,4,21,113,614,3351,18329,100372,550009,3015021,16531326,90653323,497159809,2726660260,14954795741,82023673921,449887538266,2467587944471,13534552583013,74236396347076,407184278878261,2233396783681309,12250146572763594,67191916861119507,368547111683611193",
+    "name": "Number of Schur rings over Z_{7^n}.",
+    "link": [
+        "Gheorghe Coserea, <a href=\"/A270787/b270787.txt\">Table of n, a(n) for n = 0..1001</a>",
+        "Andrew Misseldine, <a href=\"http://arxiv.org/abs/1508.03757\">Counting Schur Rings over Cyclic Groups</a>, arXiv preprint arXiv:1508.03757 [math.RA], 2015."
+    ],
+    "formula": [
+        "G.f.: (1-x)/(-x^2 + x-1 + 2*(1-x)*sqrt(1-4*x)); equivalently, the g.f. can be rewritten as -y^2*(y^2 - y + 1)/(3*y^4 - 7*y^3 + 8*y^2 - 6*y + 1), where y=A000108(x). - _Gheorghe Coserea_, Sep 10 2018"
+    ],
+    "mathematica": [
+        "c[k_] := Binomial[2k, k]/(k+1);",
+        "om[0, _] = 1; om[1, x_] := x; om[n_, x_] := om[n, x] = x om[n-1, x] + Sum[ (c[k-1] x + 1) om[n-k, x], {k, 2, n}];",
+        "Table[om[n, 4], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Oct 05 2018, after _Gheorghe Coserea_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A269750_seq(N, t='t) = {",
+        "  my(a=vector(N), c(k)=binomial(2*k, k)/(k+1)); a[1]=1; a[2]=t;",
+        "  for (n = 2, N-1,",
+        "    a[n+1] = t*a[n] + sum(k = 2, n, (c(k-1)*t+1)*a[n+1-k]));",
+        "  return(a);",
+        "};",
+        "A269750_seq(25, numdiv(6)) \\\\ _Gheorghe Coserea_, Sep 10 2018"
+    ],
+    "xref": [
+        "Cf. A000108, A269750."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Mar 23 2016",
+    "ext": [
+        "More terms from _Gheorghe Coserea_, Mar 24 2016",
+        "a(0)=1 prepended by _Gheorghe Coserea_, Sep 10 2018"
+    ],
+    "references": 4,
+    "revision": 32,
+    "time": "2018-10-25T02:44:10-04:00",
+    "created": "2016-03-23T04:21:39-04:00"
+}

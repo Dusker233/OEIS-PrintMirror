@@ -1,0 +1,31 @@
+{
+    "number": 319287,
+    "data": "5,13,17,29,37,41,53,61,73,89,97,101,109,137,149,157,173,181,193,197,229,233,241,257,269,277,281,293,313,317,337,349,389,397,401,409,421,433,449,457,461,509,521,541,557",
+    "name": "Primes of the form x^2 + y^2 where x contains only the decimal digits 0 through 6 (not 7, 8, or 9).",
+    "comment": [
+        "Pratt shows that this sequence is infinite, and gives an asymptotic formula for a weighting function of a particular subset (see Theorem 1.2). This holds for any choice of at most 3 digits; Pratt comments that by imposing extra conditions on the digits chosen, a more complicated sieve argument can be used to derive a similar result."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A319287/b319287.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Kyle Pratt, <a href=\"https://arxiv.org/abs/1806.02699\">Primes from sums of two squares and missing digits</a>, Proceedings of the London Mathematical Society 3:120 (2020), pp. 770-830. arXiv:1806.02699 [math.NT]"
+    ],
+    "example": [
+        "113 = 7^2 + 8^2 is prime but not in this sequence because both 7 and 8 contain a digit from {7, 8, 9}.",
+        "557 = 14^2 + 19^2 is in this sequence because 557 is prime and 14 contains no digit from {7, 8, 9}."
+    ],
+    "program": [
+        "(PARI) rd(n)=my(v=digits(n)); for(i=1,#v,if(v[i]>6, for(j=i,#v,v[j]=6); return(fromdigits(v,7)))); fromdigits(v,7)",
+        "list(lim)=my(v=List(), s=sqrtint(lim\\=1), s7=rd(s),x2,p); for(w=1,s7, x2=fromdigits(digits(w,7))^2; forstep(y=(x2%2)+1, sqrtint(lim-L2), 2, if(isprime(p=x2+y^2), listput(v,p)))); Set(v)"
+    ],
+    "xref": [
+        "Subsequence of A002313 and hence of A002144 and hence of A000040.",
+        "Cf. A007093."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Charles R Greathouse IV_, Oct 10 2018",
+    "references": 1,
+    "revision": 20,
+    "time": "2020-01-24T22:24:27-05:00",
+    "created": "2018-10-15T07:55:23-04:00"
+}

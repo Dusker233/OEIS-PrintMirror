@@ -1,0 +1,43 @@
+{
+    "number": 328442,
+    "data": "1,1,2,6,24,118,684,4554,34192,285558,2624496,26315990,285828324,3342566724,41869664320,559265742918,7934746600620,119162454310392,1888417811354292,31492626988890798,551302582228438512,10107905106374914860,193700015975819881008,3872391687779493752340,80623321999146782133372",
+    "name": "Number of inversion sequences of length n avoiding the consecutive pattern 210.",
+    "comment": [
+        "A length n inversion sequence e_1e_2...e_n is a sequence of integers such that 0 <= e_i < i. The term a(n) counts the inversion sequences of length n with no entries e_i, e_{i+1}, e_{i+2} such that e_i > e_{i+1} > e_{i+2}. That is, a(n) counts the inversion sequences of length n avoiding the consecutive pattern 210."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A328442/b328442.txt\">Table of n, a(n) for n = 0..460</a>",
+        "Juan S. Auli, <a href=\"https://search.proquest.com/openview/3f0cef1fbdb016d61e16412e4b855969/1\">Pattern Avoidance in Inversion Sequences</a>, Ph. D. thesis, Dartmouth College, ProQuest Dissertations Publishing (2020), 27964164.",
+        "Juan S. Auli and Sergi Elizalde, <a href=\"https://arxiv.org/abs/1904.02694\">Consecutive Patterns in Inversion Sequences</a>, arXiv:1904.02694 [math.CO], 2019.",
+        "Juan S. Auli and Sergi Elizalde, <a href=\"https://arxiv.org/abs/1906.07365\">Consecutive patterns in inversion sequences II: avoiding patterns of relations</a>, arXiv:1906.07365 [math.CO], 2019."
+    ],
+    "formula": [
+        "a(n) ~ n! * c * (3^(3/2)/(2*Pi))^n * n^(2*Pi/3^(3/2)), where c = 0.24427562500895080639039917229089... - _Vaclav Kotesovec_, Oct 19 2019"
+    ],
+    "example": [
+        "Note that a(5)=118. Indeed, of the 120 inversion sequences of length 5, the only ones that do not avoid the consecutive patterns 210 are 00210 and 01210."
+    ],
+    "maple": [
+        "# after _Alois P. Heinz_ in A328357",
+        "b := proc(n, x, t) option remember; `if`(n = 0, 1, add(",
+        "       `if`(t and x < i, 0, b(n - 1, i, x < i)), i = 0 .. n - 1))",
+        "     end proc:",
+        "a := n -> b(n, n, false):",
+        "seq(a(n), n = 0 .. 24);"
+    ],
+    "mathematica": [
+        "b[n_, x_, t_] := b[n, x, t] = If[n == 0, 1, Sum[If[t && x < i, 0, b[n - 1, i, x < i]], {i, 0, n - 1}]];",
+        "a[n_] := b[n, n, False];",
+        "a /@ Range[0, 24] (* _Jean-Fran\u00e7ois Alcover_, Mar 02 2020, after _Alois P. Heinz_ in A328357 *)"
+    ],
+    "xref": [
+        "Cf. A328357, A328358, A328429, A328430, A328431, A328432, A328433, A328434, A328435, A328436, A328437, A328438, A328439, A328440, A328441."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Juan S. Auli_, Oct 17 2019",
+    "references": 16,
+    "revision": 16,
+    "time": "2020-08-21T17:32:55-04:00",
+    "created": "2019-10-18T03:40:38-04:00"
+}

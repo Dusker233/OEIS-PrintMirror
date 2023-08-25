@@ -1,0 +1,49 @@
+{
+    "number": 297148,
+    "data": "1,2,3,4,5,6,7,8,9,11,22,33,44,55,66,77,88,99,100,110,111,112,113,114,115,116,117,118,119,122,133,144,155,166,177,188,199,200,211,220,221,222,223,224,225,226,227,228,229,233,244,255,266,277,288,299,300",
+    "name": "Numbers whose base-10 digits d(m), d(m-1),..., d(0) have m=0 or else d(i) = d(i+1) for some i in {0,1,...,m-1}.",
+    "comment": [
+        "These numbers comprise the complement of the set of numbers in the union of A297146 and A297147.",
+        "Differs from A044821 first for 1001, which is in this sequence but not in A044821. - _R. J. Mathar_, Jan 17 2018"
+    ],
+    "example": [
+        "Base-10 digits of 65536: 6,5,5,3,6, so that 65536 is in the sequence."
+    ],
+    "maple": [
+        "read(\"transforms\") :",
+        "isA297148 := proc(n)",
+        "    local dgs,ud;",
+        "    dgs := convert(n,base,10) ;",
+        "    if nops(dgs) < 2 then",
+        "        return true;",
+        "    end if;",
+        "    if 0 in DIFF(dgs) then",
+        "        true;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "for n from 1 to 300 do",
+        "    if isA297148(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 18 2018"
+    ],
+    "mathematica": [
+        "a[n_, b_] := Sign[Differences[IntegerDigits[n, b]]]; z = 300;",
+        "b = 10; t = Table[a[n, b], {n, 1, 10*z}];",
+        "u = Select[Range[z], ! MemberQ[t[[#]], 0] && First[t[[#]]] == 1 &]   (* A297146 *)",
+        "v = Select[Range[z], ! MemberQ[t[[#]], 0] && First[t[[#]]] == -1 &]  (* A297147 *)",
+        "Complement[Range[z], Union[u, v]]  (* A297148 *)"
+    ],
+    "xref": [
+        "Cf. A297146, A297147."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Jan 15 2018",
+    "references": 3,
+    "revision": 8,
+    "time": "2018-01-18T07:51:35-05:00",
+    "created": "2018-01-15T15:31:20-05:00"
+}

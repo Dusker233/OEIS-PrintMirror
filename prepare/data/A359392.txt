@@ -1,0 +1,41 @@
+{
+    "number": 359392,
+    "data": "1,1,1,1,2,3,6,11,23,46,104,230,539,1270,3081,7536,18785,47207,120074,307739,795426,2069248,5418014,14263084,37742929,100331646,267854040,717863832,1930888297,5210968114,14106844554",
+    "name": "Number of trees on n unlabeled nodes with all nodes of degree <= 7.",
+    "link": [
+        "R. Otter, <a href=\"http://www.jstor.org/stable/1969046\">The number of trees</a>, Ann. of Math. (2) 49 (1948), 583-599 discusses asymptotics.",
+        "E. M. Rains and N. J. A. Sloane, <a href=\"https://cs.uwaterloo.ca/journals/JIS/cayley.html\">On Cayley's Enumeration of Alkanes (or 4-Valent Trees)</a>, J. Integer Sequences, Vol. 2 (1999), Article 99.1.1.",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "G.f.: B(x) - cycle_index(S2,-B(x)) + x * cycle_index(S7,B(x)) = B(x) - (B(x)^2 - B(x^2)) / 2 + x * (B(x)^7 + 21 B(x)^5 B(x^2) + 105 B(x)^3 B(x^2)^2 + 105 B(x) B(x^2)^3 + 70 B(x)^4 B(x^3) + 420 B(x)^2 B(x^2) B(x^3) + 210 B(x^2)^2 B(x^3) + 280 B(x) B(x^3)^2 + 210 B(x)^3 B(x^4) + 630 B(x) B(x^2) B(x^4) + 420 B(x^3) B(x^4) + 504 B(x)^2 B(x^5) + 504 B(x^2) B(x^5) + 840 B(x) B(x^6) + 720 B(x^7)) / 5040, where B(x) = 1 + x * cycle_index(S6,B(x)) = 1 + x * (B(x)^6 + 15*B(x)^4*B(x^2) + 45*B(x)^2*B(x^2)^2 + 15*B(x^2)^3 + 40*B(x)^3*B(x^3) + 120*B(x)*B(x^2)*B(x^3) + 40*B(x^3)^2 + 90*B(x)^2*B(x^4) + 90*B(x^2)*B(x^4) + 144*B(x)*B(x^5) + 120*B(x^6)) / 720 is the generating function for A036722. - _Robert A. Russell_, Jan 19 2023"
+    ],
+    "mathematica": [
+        "n = 30; (* algorithm from Rains and Sloane *)",
+        "m = 7; (* maximum degree of node *)",
+        "CIm[f_, h_, x_] =  SymmetricGroupIndex[m-1, x] /. x[i_] -> f[h, x^i];",
+        "CI[f_, h_, x_] = SymmetricGroupIndex[m, x] /. x[i_] -> f[h, x^i];",
+        "T[-1, z_] := 1; T[h_, z_] :=  T[h, z] = Table[z^k, {k, 0, n}] .",
+        "  Take[CoefficientList[z^(n+1) + 1 + CIm[T, h-1, z] z, z], n+1];",
+        "ReplacePart[Sum[Take[CoefficientList[z^(n+1) + CI[T, h-1, z] z - CI[T, h-2, z] z - (T[h-1, z] - T[h-2, z]) (T[h-1, z] - 1), z], n+1], {h, 1, n/2}] + PadRight[{0, 1}, n+1] + Sum[Take[CoefficientList[z^(n+1) + (T[h, z]",
+        "  - T[h-1, z])^2/2 + (T[h, z^2] - T[h-1, z^2])/2, z], n+1], {h, 0, n/2}],",
+        "  1->1] (* end of original program *)",
+        "b[n_, i_, t_, k_] := b[n,i,t,k] = If[i<1, 0, Sum[Binomial[b[i-1,i-1,",
+        "  k,k] + j-1, j]* b[n-i*j, i-1, t-j, k], {j, 0, Min[t, n/i]}]];",
+        "b[0, i_, t_, k_] = 1; m = 6; (* m = maximum children *) n = 40;",
+        "gf[x_] = 1 + Sum[b[j-1,j-1,m,m]x^j,{j,1,n}]; (* G.f. for A036722 *)",
+        "ci[x_] = SymmetricGroupIndex[m+1, x] /. x[i_] -> gf[x^i];",
+        "CoefficientList[Normal[Series[gf[x] - (gf[x]^2 - gf[x^2])/2 + x ci[x],",
+        "{x, 0, n}]],x] (* _Robert A. Russell_, Jan 19 2023 *)"
+    ],
+    "xref": [
+        "Column k=7 of A144528; A036722 (rooted trees)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Robert A. Russell_, Dec 29 2022",
+    "references": 1,
+    "revision": 18,
+    "time": "2023-02-12T10:23:31-05:00",
+    "created": "2023-01-17T07:15:40-05:00"
+}

@@ -1,0 +1,64 @@
+{
+    "number": 352875,
+    "data": "0,1,1,2,5,10,21,42,86,174,351,708,1424,2861,5743,11520,23092,46269,92673,185562,371469,743491,1487870,2977164,5956616,11916910,23839736,47688994,95393322,190811346,381662507,763389209,1526881959,3053930971,6108131542,12216698288",
+    "name": "Number of integer compositions y of n with a fixed point y(i) = i.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A352875/b352875.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = 2^(n-1) - A238351(n) for n >= 1. - _Andrew Howroyd_, Jan 02 2023"
+    ],
+    "example": [
+        "The a(0) = 0 through a(5) = 10 compositions (empty column indicated by dot):",
+        "  .  (1)  (11)  (12)   (13)    (14)",
+        "                (111)  (22)    (32)",
+        "                       (112)   (113)",
+        "                       (121)   (122)",
+        "                       (1111)  (131)",
+        "                               (221)",
+        "                               (1112)",
+        "                               (1121)",
+        "                               (1211)",
+        "                               (11111)"
+    ],
+    "mathematica": [
+        "pq[y_]:=Length[Select[Range[Length[y]],#==y[[#]]&]];",
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],pq[#]>0&]],{n,0,15}]"
+    ],
+    "program": [
+        "(PARI)",
+        "S(v,u,c)={vector(#v, k, c + sum(i=1, k-1, v[k-i]*u[i]))}",
+        "seq(n)={my(v=vector(1+n), s=vector(#v, i, 2^(i-2))); v[1]=1; s[1]=0; for(i=1, n, v=S(v, vector(n, j, if(j==i,'x,1)), O(x)); s-=apply(p->polcoef(p,0), v)); s} \\\\ _Andrew Howroyd_, Jan 02 2023"
+    ],
+    "xref": [
+        "The version for partitions is A001522, ranked by A352827 (unproved).",
+        "The version for permutations is A002467, complement A000166.",
+        "The complement for partitions is A064428, ranked by A352826 (unproved).",
+        "This is the sum of latter columns of A238349, nonfixed A352523.",
+        "The complement is counted by A238351.",
+        "The complement for reversed partitions is A238394, ranked by A352830.",
+        "The version for reversed partitions is A238395, ranked by A352872.",
+        "The case of just one fixed point is A240736.",
+        "A008290 counts permutations by fixed points, nonfixed A098825.",
+        "A011782 counts compositions.",
+        "A115720 and A115994 count partitions by Durfee square.",
+        "A238352 counts reversed partitions by fixed points, rank statistic A352822.",
+        "A352512 counts fixed points in standard compositions, nonfixed A352513.",
+        "A352521 = comps by subdiags, first col A219282, rank stat A352514.",
+        "A352522 = comps by weak subdiags, first col A238874, rank stat A352515.",
+        "A352524 = comps by superdiags, first col A008930, rank stat A352516.",
+        "A352525 = comps by weak superdiags, col k=1 A177510, rank stat A352517.",
+        "A352833 counts partitions by fixed points.",
+        "Cf. A006918, A008292, A088218, A114088, A123125, A188674, A257990."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, May 15 2022",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Jan 02 2023"
+    ],
+    "references": 3,
+    "revision": 10,
+    "time": "2023-01-02T21:55:08-05:00",
+    "created": "2022-05-15T23:50:02-04:00"
+}

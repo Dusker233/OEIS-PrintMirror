@@ -1,0 +1,35 @@
+{
+    "number": 324621,
+    "data": "0,1,1,7,31,185,1275,10095,90109,895169,9793829,116998199,1515196619,21143666585,316260079951,5047672782687,85623656678457,1538245254809537,29176112648650441,582614412521648359,12217688610474042487,268445509189890555577",
+    "name": "Number of permutations p of [1+n] such that n is the maximum of the number of elements in any integer interval [p(i)..i+(1+n)*[i<p(i)]].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A324621/b324621.txt\">Table of n, a(n) for n = 0..449</a>"
+    ],
+    "formula": [
+        "a(n) = A000166(n+1) - A000179(n+1) for n < 0, a(0) = 0."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<5, [0, 1$2, 7, 31][n+1],",
+        "      ((2*n^4-3*n^3-2*n^2+n+4)*a(n-1) -(n^5-4*n^4+7*n^2+6*n-14)*",
+        "       a(n-2) -(n^5-2*n^4-4*n^3+2*n^2+13*n-12)*a(n-3)-(n-2)*",
+        "       (n^3+2*n^2+n-2)*a(n-4))/(n^3-n^2-2))",
+        "    end:",
+        "seq(a(n), n=0..23);"
+    ],
+    "mathematica": [
+        "menage[n_] := If[n == 0, 1, 2n Sum[(-1)^k Binomial[2n-k, k] (n-k)!/(2n-k), {k, 0, n}]];",
+        "a[n_] := If[n == 0, 0, Subfactorial[n+1] - menage[n+1]];",
+        "a /@ Range[0, 21] (* _Jean-Fran\u00e7ois Alcover_, Oct 28 2021 *)"
+    ],
+    "xref": [
+        "Row n=1 of A324563 and column of A324564 (as array).",
+        "Cf. A000166, A000179."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Mar 09 2019",
+    "references": 3,
+    "revision": 13,
+    "time": "2021-10-28T09:27:19-04:00",
+    "created": "2019-03-10T13:08:38-04:00"
+}

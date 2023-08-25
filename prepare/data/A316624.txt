@@ -1,0 +1,40 @@
+{
+    "number": 316624,
+    "data": "1,1,1,2,2,4,4,8,9,16,20,40,47,83,111,201,259,454,603,1049,1432,2407,3390,6006,8222,13904,20304,34828,50291,85817,126013,217653,317894,535103,798184,1367585,2008125,3360067,5048274,8499942,12623978,21023718,31552560,52575257",
+    "name": "Number of balanced p-trees with n leaves.",
+    "comment": [
+        "A p-tree of weight n is either a single node (if n = 1) or a finite sequence of p-trees whose weights are weakly decreasing and sum to n.",
+        "A tree is balanced if all leaves have the same height."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A316624/b316624.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 4 balanced p-trees:",
+        "  o  (oo)  (ooo)  (oooo)      (ooooo)      (oooooo)        (ooooooo)",
+        "                  ((oo)(oo))  ((ooo)(oo))  ((ooo)(ooo))    ((oooo)(ooo))",
+        "                                           ((oooo)(oo))    ((ooooo)(oo))",
+        "                                           ((oo)(oo)(oo))  ((ooo)(oo)(oo))"
+    ],
+    "mathematica": [
+        "ptrs[n_]:=If[n==1,{\"o\"},Join@@Table[Tuples[ptrs/@p],{p,Rest[IntegerPartitions[n]]}]];",
+        "Table[Length[ptrs[n]],{n,12}]",
+        "Table[Length[Select[ptrs[n],SameQ@@Length/@Position[#,\"o\"]&]],{n,12}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(p=x + O(x*x^n), q=0); while(p, q+=p; p = 1/prod(k=1, n, 1 - polcoef(p,k)*x^k + O(x*x^n)) - 1 - p); Vec(q)} \\\\ _Andrew Howroyd_, Oct 26 2018"
+    ],
+    "xref": [
+        "Cf. A000311, A000669, A001678, A005804, A048816, A079500, A119262, A120803, A141268, A196545, A289501, A319312."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Gus Wiseman_, Oct 07 2018",
+    "ext": [
+        "Terms a(17) and beyond from _Andrew Howroyd_, Oct 26 2018"
+    ],
+    "references": 12,
+    "revision": 33,
+    "time": "2018-10-26T00:51:47-04:00",
+    "created": "2018-10-08T08:12:22-04:00"
+}

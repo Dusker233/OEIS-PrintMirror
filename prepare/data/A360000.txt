@@ -1,0 +1,42 @@
+{
+    "number": 360000,
+    "data": "2,3,4,8,16,61,437,17766,5885824,111327315589",
+    "name": "Number of directed cycles in the 2-Fibonacci digraph of order n.",
+    "comment": [
+        "The 2-Fibonacci digraph of order n, F(n), is defined by Dalf\u00f3 and Fiol (2019). It can be defined as an iterated line digraph, where F(1) has two nodes, one directed edge in each direction between them, and a loop at one of the nodes, and for n >= 2 F(n) is the line digraph of F(n-1). (Compare the related de Bruijn graph, where the graph of order one has loops at both nodes.) Its nodes can be identified with binary sequences of length n with no adjacent 1's (or fibbinary numbers below 2^n if the nodes are labeled by integers instead of binary sequences), with a directed edge from (x_0, ..., x_{n-1}) to (x_1, ..., x_n) if there are no consecutive 1's in (x_0, ..., x_n). For n >= 2, it is also the subgraph of the de Bruijn graph (of the same order) induced by the nodes with no adjacent 1's. It has A000045(n+2) nodes and A000045(n+3) edges.",
+        "Equivalently, a(n) is the number of cycles with no adjacent 1's that can be produced by a general n-stage feedback shift register."
+    ],
+    "link": [
+        "C. Dalf\u00f3 and M. A. Fiol, <a href=\"https://arxiv.org/abs/1909.06766\">On d-Fibonacci digraphs</a>, arXiv:1909.06766 [math.CO], 2019."
+    ],
+    "example": [
+        "For n = 4 there are a(4) = 8 cycles:",
+        "  0000 -> 0000;",
+        "  0101 -> 1010 -> 0101;",
+        "  0010 -> 0100 -> 1001 -> 0010;",
+        "  0001 -> 0010 -> 0100 -> 1000 -> 0001;",
+        "  0000 -> 0001 -> 0010 -> 0100 -> 1000 -> 0000;",
+        "  0010 -> 0101 -> 1010 -> 0100 -> 1001 -> 0010;",
+        "  0001 -> 0010 -> 0101 -> 1010 -> 0100 -> 1000 -> 0001;",
+        "  0000 -> 0001 -> 0010 -> 0101 -> 1010 -> 0100 -> 1000 -> 0000."
+    ],
+    "program": [
+        "(Python)",
+        "import networkx as nx",
+        "def F(n): return nx.DiGraph(((0,0),(0,1),(1,0))) if n == 1 else nx.line_graph(F(n-1))",
+        "def A360000(n): return sum(1 for c in nx.simple_cycles(F(n)))"
+    ],
+    "xref": [
+        "Cf. A000045, A306522, A359997, A359998, A359999."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Pontus von Br\u00f6mssen_, Jan 21 2023",
+    "ext": [
+        "a(10) from _Bert Dobbelaere_, Jan 24 2023"
+    ],
+    "references": 7,
+    "revision": 12,
+    "time": "2023-01-25T02:12:47-05:00",
+    "created": "2023-01-22T08:41:17-05:00"
+}

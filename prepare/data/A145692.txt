@@ -1,0 +1,58 @@
+{
+    "number": 145692,
+    "data": "4,6,6,20,118,282,1540,7092,36128,206848,1439500,10066876,74931690,613296028,5263250382,47965088850",
+    "name": "Number of distinct vertex-magic total labelings on cycle C_n.",
+    "link": [
+        "Andrew Baker and Joe Sawada, <a href=\"http://dx.doi.org/10.1007/978-3-540-85097-7_34\">Magic Labelings on Cycles and Wheels</a>, Lecture Notes in Computer Science 5165 (Combinatorial Optimization and Applications. Second International Conference, COCOA 2008). pp. 361-373.",
+        "Mukkai S. Krishnamoorthy, Allen Lavoie, Ali Dasdan, Bharath Santosh, <a href=\"http://arxiv.org/abs/1402.2878\">Number of unique Edge-magic total labelings on Path P_n</a>, arXiv:1402.2878 [math.CO], 2014."
+    ],
+    "example": [
+        "From _Gheorghe Coserea_, May 23 2018: (Start)",
+        "For n=4 the a(4)=6 solutions are:",
+        "[1, 4, 8, 3, 2, 6, 5, 7]",
+        "[1, 5, 6, 4, 2, 7, 3, 8]",
+        "[1, 5, 8, 2, 4, 3, 7, 6]",
+        "[1, 7, 5, 2, 6, 3, 4, 8]",
+        "[3, 4, 8, 1, 6, 2, 7, 5]",
+        "[3, 6, 5, 1, 8, 2, 4, 7]",
+        "The solution [1, 4, 8, 3, 2, 6, 5, 7] is an encoding of the following vertex-magic labeling on C_4:",
+        "     7  1  4  8  3  2  6",
+        "     o-----o-----o-----o",
+        "     |                 |",
+        "     +-----------------+",
+        "              5",
+        "In this labeling vertices are labeled 7, 4, 3, 6 while edges are labeled 1, 8, 2, 5 respectively. The vertex-magic constant of labeling k is 13 since k = 5+7+1 = 1+4+8 = 8+3+2 = 2+6+5.",
+        "In general, for C_n the magic constant of labeling k satisfies 3*n+1 - floor((n-1)/2) <= k <= 3*n+2 + floor((n-1)/2) and this bounds are tight for n>=6.",
+        "The solutions for n=4 have been generated using the MiniZinc model (e.g. $ minizinc -a -D\"n=4;\" magiccn.mzn | sort).",
+        "(End)"
+    ],
+    "program": [
+        "(MiniZinc)",
+        "% filename: magiccn.mzn : generate solution of size n",
+        "% usage: minizinc -a --soln-sep \"\" --search-complete-msg \"\" -D\"n=5;\" magiccn.mzn",
+        "include \"globals.mzn\";",
+        "int: n;",
+        "int: lo = 3*n+1 - (n-1) div 2;",
+        "int: hi = 3*n+2 + (n-1) div 2;",
+        "array[1..2*n] of var 1..2*n: x;",
+        "var lo..hi: h;",
+        "constraint alldifferent(x);",
+        "constraint forall([h = x[2*i-1] + x[2*i] + x[2*i+1] | i in 1..n-1]);",
+        "constraint h = x[2*n-1] + x[2*n] + x[1];",
+        "constraint forall([x[1] < x[2*i+1] | i in 1..n-1]); % break rotations",
+        "constraint x[2] < x[2*n]; % break reflection symmetry",
+        "solve satisfy;",
+        "output [show(x)];",
+        "% _Gheorghe Coserea_, May 22 2018"
+    ],
+    "xref": [
+        "Cf. A237426."
+    ],
+    "keyword": "nonn,more",
+    "offset": "3,1",
+    "author": "Andrew Baker (abaker04(AT)uoguelph.ca), Oct 16 2008",
+    "references": 1,
+    "revision": 21,
+    "time": "2022-01-14T10:15:52-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

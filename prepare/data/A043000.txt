@@ -1,0 +1,63 @@
+{
+    "number": 43000,
+    "data": "2,4,7,9,11,13,16,19,21,23,25,27,29,31,35,37,39,41,43,45,47,49,51,54,56,59,61,63,65,67,70,72,74,76,79,81,83,85,87,89,91,93,95,97,99,101,103,106,108,110,112,114,116,118,120,122,124,126",
+    "name": "Number of digits in all base-b representations of n, for 2 <= b <= n.",
+    "comment": [
+        "From _A.H.M. Smeets_, Dec 14 2019: (Start)",
+        "a(n)-a(n-1) >= 2 due to the fact that n = 10_n, so there is an increment of at least 2. If n can be written as a perfect power m^s, an additional +1 comes to it for the representation of n in each base m.",
+        "For instance, for n = 729 we have 729 = 3^6 = 9^3 = 27^2, so there is an additional increment of 3. For n = 1296 we have 1296 = 6^4 = 36^2, so there is an additional increment of 2. For n = 4096 we have 4096 = 2^12 = 4^6 = 8^4 = 16^3= 64^2, so there is an additional increment of 5. (End)"
+    ],
+    "link": [
+        "A.H.M. Smeets, <a href=\"/A043000/b043000.txt\">Table of n, a(n) for n = 2..20000</a>",
+        "Vaclav Kotesovec, <a href=\"/A043000/a043000.jpg\">Plot of a(n)/(2*n) for n = 2..1000000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{i=2..n} floor(log_i(i*n)); a(n) ~ 2*n. - _Vladimir Shevelev_, Jun 03 2011 [corrected by _Vaclav Kotesovec_, Apr 05 2021]",
+        "a(n) = A070939(n) + A081604(n) + A110591(n) + ... + 1. - _R. J. Mathar_, Jun 04 2011",
+        "From _Ridouane Oudra_, Nov 13 2019: (Start)",
+        "a(n) = Sum_{i=1..n-1} floor(n^(1/i));",
+        "a(n) = n - 1 + Sum_{i=1..floor(log_2(n))} floor(n^(1/i) - 1);",
+        "a(n) = n - 1 + A255165(n). (End)",
+        "If n is in A001597 then a(A001597(m)) - a(A001597(m)-1) = 2 + A253642(m), otherwise a(n) - a(n-1) = 2. - _A.H.M. Smeets_, Dec 14 2019"
+    ],
+    "example": [
+        "5 = 101_2 = 12_3 = 11_4 = 10_5. Thus a(5) = 3+2+2+2 = 9."
+    ],
+    "maple": [
+        "A043000 := proc(n) add( nops(convert(n,base,b)),b=2..n) ; end proc: # _R. J. Mathar_, Jun 04 2011"
+    ],
+    "mathematica": [
+        "Table[Total[IntegerLength[n,Range[2,n]]],{n,2,60}] (* _Harvey P. Dale_, Apr 23 2019 *)"
+    ],
+    "program": [
+        "(Magma) [&+[Floor(Log(i,i*n)):k in [2..n]]:n in [1..70]]; // _Marius A. Burtea_, Nov 13 2019",
+        "(Python)",
+        "def count(n,b):",
+        "    c = 0",
+        "    while n > 0:",
+        "        n, c = n//b, c+1",
+        "    return c",
+        "n = 0",
+        "while n < 50:",
+        "    n = n+1",
+        "    a, b = 0, 1",
+        "    while b < n:",
+        "        b = b+1",
+        "        a = a + count(n,b)",
+        "    print(n,a) # _A.H.M. Smeets_, Dec 14 2019",
+        "(PARI) a(n)=sum(b=2,n,#digits(n,b)) \\\\ _Jeppe Stig Nielsen_, Dec 14 2019",
+        "(PARI) a(n)= n-1 +sum(b=2,n,logint(n,b)) \\\\ _Jeppe Stig Nielsen_, Dec 14 2019",
+        "(PARI) a(n) = {2*n-2+sum(i=2, logint(n, 2), sqrtnint(n, i)-1)} \\\\ _David A. Corneth_, Dec 31 2019",
+        "(PARI) first(n) = my(res = vector(n)); res[1] = 2; for(i = 2, n, inc = numdiv(gcd(factor(i+1)[,2]))+1; res[i] = res[i-1]+inc); res \\\\ _David A. Corneth_, Dec 31 2019"
+    ],
+    "xref": [
+        "Cf. A001597, A043306, A068953, A191322, A253642, A255165."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "2,1",
+    "author": "_Clark Kimberling_",
+    "references": 5,
+    "revision": 57,
+    "time": "2022-09-08T08:44:55-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

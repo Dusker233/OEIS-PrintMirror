@@ -1,0 +1,45 @@
+{
+    "number": 354722,
+    "data": "25,39,55,57,69,87,95,111,115,119,121,123,125,141,145,159,169,177,183,185,187,201,203,205,213,215,219,221,235,237,249,253,265,289,291,299,301,303,305,319,321,323,329,335,339,355,361,365,371,377,391,393,411,413",
+    "name": "Composite numbers whose divisors have distinct binary weights (A000120).",
+    "comment": [
+        "Without the restriction of composite numbers, 1 and all the odd primes would have been terms of this sequence.",
+        "Since 1 and 2 have the same binary weight, all the terms are odd."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A354722/b354722.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "25 is a term since its divisors, 1, 5 and 25, have binary weights 1, 2 and 3, respectively.",
+        "55 is a term since its divisors, 1, 5, 11 and 55, have binary weights 1, 2, 3 and 5, respectively."
+    ],
+    "mathematica": [
+        "bw[n_] := DigitCount[n, 2, 1]; q[n_] := CompositeQ[n] && UnsameQ @@ (bw /@ Divisors[n]); Select[Range[1, 400, 2], q]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "def binwt(n): return bin(n).count(\"1\")",
+        "def ok(n):",
+        "    binwts, divs = set(), 0",
+        "    for d in divisors(n, generator=True):",
+        "        b = binwt(d)",
+        "        if b in binwts: return False",
+        "        binwts.add(b)",
+        "        divs += 1",
+        "    return divs > 2",
+        "print([k for k in range(415) if ok(k)]) # _Michael S. Branicky_, Jun 04 2022",
+        "(PARI) isok(c) = {if ((c>1) && !isprime(c), my(d=divisors(c)); #Set(apply(hammingweight, d)) == #d;);} \\\\ _Michel Marcus_, Jun 04 2022"
+    ],
+    "xref": [
+        "Cf. A000120, A027750.",
+        "Subsequences: A255401 and A354724."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jun 04 2022",
+    "references": 3,
+    "revision": 15,
+    "time": "2022-06-08T03:22:05-04:00",
+    "created": "2022-06-04T13:23:13-04:00"
+}

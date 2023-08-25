@@ -1,0 +1,42 @@
+{
+    "number": 318007,
+    "data": "1,2,11,100,1321,22622,474851,11786920,337650001,10962556442,397804232891,15954966065740,700861670953081,33464274335643062,1725656338796874131,95578727117480612560,5658893822397686566561,356659432612090891074482,23841281202421071709150571,1684762749472172141605523380",
+    "name": "E.g.f. A(x) satisfies: A(x) = sin(x) + cos(x)*A(x)^2 with A(0)=0.",
+    "link": [
+        "Robert Israel, <a href=\"/A318007/b318007.txt\">Table of n, a(n) for n = 1..368</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies:",
+        "(1) A(x) = sin(x) + cos(x)*A(x)^2.",
+        "(2) A(x) = sin(x) * Sum_{n>=0} binomial(2*n,n)/(n+1) * sin(2*x)^n/2^n.",
+        "(3) A(x) = (1 - sqrt(1 - 2*sin(2*x))) / (2*cos(x)).",
+        "(4) A(x) = 2*sin(x) / (1 + sqrt(1 - 2*sin(2*x))).",
+        "a(n) ~ (sqrt(3) - 1) * 2^(2*n - 3/2) * 3^(n - 1/4) * n^(n-1) / (Pi^(n - 1/2) * exp(n)). - _Vaclav Kotesovec_, Oct 13 2020"
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 11*x^3/3! + 100*x^4/4! + 1321*x^5/5! + 22622*x^6/6! + 474851*x^7/7! + 11786920*x^8/8! + 337650001*x^9/9! + 10962556442*x^10/10! + ...",
+        "such that A(x) = sin(x) + cos(x)*A(x)^2."
+    ],
+    "maple": [
+        "E:= (1 - sqrt(1 - 2*sin(2*x))) / (2*cos(x)):",
+        "S:= series(E,x,31):",
+        "seq(coeff(S,x,j)*j!,j=1..30); # _Robert Israel_, Aug 29 2018"
+    ],
+    "mathematica": [
+        "m = 21; A[x_] = (1 - Sqrt[1 - 2 Sin[2 x]] )/(2 Cos[x]); Rest[Range[0, m - 1]! * CoefficientList[A[x] + O[x]^m, x]] (* _Jean-Fran\u00e7ois Alcover_, Apr 29 2019 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A = 2*sin(x +x^2*O(x^n)) / (1 + sqrt(1 - 2*sin(2*x +x^2*O(x^n)))) ); n!*polcoeff(A, n)}",
+        "for(n=1, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A318003, A318004, A318599."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Aug 28 2018",
+    "references": 4,
+    "revision": 13,
+    "time": "2020-10-13T05:18:21-04:00",
+    "created": "2018-08-28T18:25:58-04:00"
+}

@@ -1,0 +1,25 @@
+{
+    "number": 348631,
+    "data": "70,4030,5830,10430,10570,10990,11410,11690,12110,12530,12670,13370,13510,13790,13930,14770,15610,15890,16030,16310,16730,16870,17570,17990,18410,18830,18970,19390,19670,19810,20510,21490,21770,21910,22190,23170,23590,24290",
+    "name": "Nonexponential weird numbers: nonexponential abundant numbers (A348604) that are not equal to the sum of any subset of their nonexponential divisors.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A348631/b348631.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "70 is a term since the sum of its nonexponential divisors, {1, 2, 5, 7, 10, 14, 35}, is 74 > 70, and no subset of these divisors sums to 70."
+    ],
+    "mathematica": [
+        "dQ[n_, m_] := (n > 0 && m > 0 && Divisible[n, m]); expDivQ[n_, d_] := Module[{ft = FactorInteger[n]}, And @@ MapThread[dQ, {ft[[;; , 2]], IntegerExponent[d, ft[[;; , 1]]]}]]; neDivs[1] = {}; neDivs[n_] := Module[{d = Divisors[n]}, Select[d, ! expDivQ[n, #] &]]; nesigma[n_] := Total@neDivs[n]; neAbundantQ[n_] := nesigma[n] > n; neWeirdQ[n_] := neAbundantQ[n] && Module[{d = neDivs[n]}, SeriesCoefficient[Series[Product[1 + x^d[[i]], {i, Length[d]}], {x, 0, n}], n] == 0]; Select[Range[6000], neWeirdQ]"
+    ],
+    "xref": [
+        "Cf. A160135, A348604.",
+        "Similar sequences: A006037, A064114, A292986, A306984, A321146, A327948, A348525."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Oct 26 2021",
+    "references": 2,
+    "revision": 15,
+    "time": "2023-03-27T03:38:13-04:00",
+    "created": "2021-10-26T07:47:05-04:00"
+}

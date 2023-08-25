@@ -1,0 +1,54 @@
+{
+    "number": 327909,
+    "data": "2,5,13,19,55,65,113,151,151,226,364,406,736,736,1057,1057,1409,1409,2059,2059,2313,2313,2313,2313,2313,2313,2313,6007,6961,6961,10305,12013,12013,12013,12013,12013,12026,12026,17501,17501,17501,17501,20833,20833",
+    "name": "a(n) is the smallest start of a run of n or more integers having a prime factor greater than n.",
+    "comment": [
+        "Is a(n) an upper bound on A327265(n)? A327265(n) = a(n) at n = 1, 2, 4, and 9."
+    ],
+    "link": [
+        "Thomas Garrison, <a href=\"/A327909/b327909.txt\">Table of n, a(n) for n = 1..369</a>"
+    ],
+    "example": [
+        "      |     prime     |",
+        "   k  | factorization | gpf(k) | tau(k)",
+        "  ----+---------------+--------+-------",
+        "  151 |      151      |   151  |   2",
+        "  152 |   2^3 * 19    |    19  |   8",
+        "  153 |   3^2 * 17    |    17  |   6",
+        "  154 |  2 * 7 * 11   |    11  |   8",
+        "  155 |    5 * 31     |    31  |   4",
+        "  156 | 2^2 * 3 * 13  |    13  |  12",
+        "  157 |      157      |   157  |   2",
+        "  158 |    2 * 79     |    79  |   4",
+        "  159 |    3 * 53     |    53  |   4"
+    ],
+    "maple": [
+        "A:= Vector(100): A[1]:= 2: count:= 1:",
+        "B:= Vector(100):",
+        "for i from 2 while count < 100 do",
+        "  p:= max(numtheory:-factorset(i));",
+        "  for j from 1 to min(p-1,100) do",
+        "    if B[j] = 0 then B[j]:= i fi",
+        "  od;",
+        "  for j from p to 100 do",
+        "    if B[j] > 0 and B[j] <= i-j and A[j] = 0 then A[j]:= B[j]; count:= count+1; fi",
+        "  od;",
+        "  if p <= 99 then B[p..100]:= 0 fi;",
+        "od:",
+        "convert(A,list); # _Robert Israel_, Jan 23 2023"
+    ],
+    "program": [
+        "(PARI) a(n) = {my(k=1); x=0; while(x<n, if(vecmax(factor(k++)[, 1])>n, x++, x=0)); k-n+1;} \\\\ _Jinyuan Wang_, Oct 26 2019"
+    ],
+    "xref": [
+        "Cf. A006530 (greatest prime factor of n).",
+        "Cf. A309981, A327265."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jon E. Schoenfield_, Oct 06 2019",
+    "references": 2,
+    "revision": 30,
+    "time": "2023-01-24T12:34:12-05:00",
+    "created": "2019-12-01T23:15:59-05:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 325021,
+    "data": "1,6,28,496,672,8128,30240,32760,332640,695520,2178540,17428320,23569920,33550336,45532800,52141320,142990848,164989440,318729600,447828480,481572000,500860800,540277920,623397600,644271264,714954240,995248800,1047254400,1307124000",
+    "name": "Harmonic numbers m from A001599 such that m*(m-tau(m))/sigma(m) is an integer h, where k-tau(k) is the number of nondivisors of k (A049820), tau(k) is the number of divisors of k (A000005), and sigma(k) is the sum of the divisors of k (A000203).",
+    "comment": [
+        "Numbers m such that m*tau(m)/sigma(m) is an integer g and simultaneously m*(m-tau(m))/sigma(m) is an integer h. Corresponding values of integers g: 1, 2, 3, 5, 8, 7, 24, 24, 44, 46, 54, 96, 80, 13, 96, ...",
+        "Corresponding values of integers h: 0, 1, 11, 243, 216, 4057, 7536, 8166, 76186, 166589, ...",
+        "Even perfect numbers from A000396 are terms.",
+        "Complement of A325022 with respect to A001599.",
+        "Intersection of A325020 and A001599."
+    ],
+    "example": [
+        "Harmonic number 28 is a term because 28*tau(28)/sigma(28) = 28*6/56 = 3 (integer) and simultaneously 28*(28-tau(28))/sigma(28) = 28*(28-6)/56 = 11 (integer)."
+    ],
+    "mathematica": [
+        "Select[Range[10^6], And[IntegerQ@ HarmonicMean@ #2, IntegerQ[#1 (#1 - #3)/#4]] & @@ Join[{#}, {Divisors@ #}, DivisorSigma[{0, 1}, #]] &] (* _Michael De Vlieger_, Mar 27 2019 *)"
+    ],
+    "program": [
+        "(Magma) [n: n in [1..1000000] | IsIntegral((NumberOfDivisors(n) * n) / SumOfDivisors(n)) and IsIntegral(((n-NumberOfDivisors(n)) * n) / SumOfDivisors(n))]",
+        "(PARI) isok(m) = my(d=numdiv(m), s=sigma(m)); !frac(m*d/s) && !frac(m*(m-d)/s); \\\\ _Michel Marcus_, Mar 27 2019",
+        "(Python)",
+        "from itertools import count, islice",
+        "from math import prod",
+        "from functools import reduce",
+        "from sympy import factorint",
+        "def A325021_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        f = factorint(n)",
+        "        s = prod((p**(e+1)-1)//(p-1) for p, e in f.items())",
+        "        if not (n*n%s or reduce(lambda x,y:x*y%s,(e+1 for e in f.values()),1)*n%s):",
+        "            yield n",
+        "A325021_list = list(islice(A325021_gen(),10)) # _Chai Wah Wu_, Feb 14 2023"
+    ],
+    "xref": [
+        "Cf. A000005, A000203, A001599, A007691, A049820, A325020, A325022, A325023, A325024."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jaroslav Krizek_, Mar 27 2019",
+    "references": 6,
+    "revision": 19,
+    "time": "2023-02-16T05:13:19-05:00",
+    "created": "2019-05-03T12:12:45-04:00"
+}

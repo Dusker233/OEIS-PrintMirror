@@ -1,0 +1,26 @@
+{
+    "number": 301646,
+    "data": "1,2,4,6,10,12,14,18,24,30,42,54,60,66,70,78,84,90,114,120,126,150,168,180,210,270,294,300,330,390,420,462,510,546,570,630,660,714,770,780,840,924,990,1050,1170,1260,1320,1386,1470,1560,1638",
+    "name": "Numbers k at which A062776(k) reaches a record high.",
+    "example": [
+        "A062776(6) = 576, larger than any A062776(k) for 1 <= k < 6 so 6 is in the sequence."
+    ],
+    "mathematica": [
+        "With[{s = Table[GCD[(n + 2)!, n^n], {n, 1700}]}, Map[FirstPosition[s, #][[1]] &, Union@ FoldList[Max, s]]] (* _Michael De Vlieger_, Mar 26 2018 *)"
+    ],
+    "program": [
+        "(PARI) val(n, p) = my(r=0); while(n, r+=n\\=p); r",
+        "A062776(n) = my(f = factor(n)[, 1]~); prod(i=1, #f, f[i] ^ min(n, val(n + 2, f[i])))",
+        "upto(n) = my(r = 0, res = List(), c); for(i = 1, n, c = A062776(i); if(c > r, r = c; listput(res, i))); res"
+    ],
+    "xref": [
+        "Cf. A062776."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_David A. Corneth_, Mar 25 2018",
+    "references": 0,
+    "revision": 8,
+    "time": "2018-04-15T14:16:36-04:00",
+    "created": "2018-04-15T14:16:36-04:00"
+}

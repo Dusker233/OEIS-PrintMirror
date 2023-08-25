@@ -1,0 +1,36 @@
+{
+    "number": 305323,
+    "data": "1,1,4,25,211,2238,28560,425808,7261200,139367278,2973006344,69775267186,1786673529746,49565881948204,1480900541242572,47407364553205448,1618838460981098680,58734896900587841824,2256402484187691207152,91499934912942249975504,3905739517580787866827872",
+    "name": "Expansion of e.g.f. 1/(1 + log(1 + log(1 - x))).",
+    "link": [
+        "Robert Israel, <a href=\"/A305323/b305323.txt\">Table of n, a(n) for n = 0..399</a>"
+    ],
+    "formula": [
+        "a(n) ~ n! / (exp(2 - exp(-1)) * (1 - exp(exp(-1) - 1))^(n+1)). - _Vaclav Kotesovec_, May 31 2018",
+        "a(n) = Sum_{k=0..n} |Stirling1(n,k)| * A007840(k). - _Seiichi Manyama_, May 11 2023"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 4*x^2/2! + 25*x^3/3! + 211*x^4/4! + 2238*x^5/5! + 28560*x^6/6! + ..."
+    ],
+    "maple": [
+        "S:= series(1/(1+log(1+log(1-x))),x,31):",
+        "seq(coeff(S,x,n)*n!,n=0..30); # _Robert Israel_, May 31 2018"
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[1/(1 + Log[1 + Log[1 - x]]), {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[0] = 1; a[n_] := a[n] = Sum[Sum[(j - 1)! Abs[StirlingS1[k, j]], {j, 1, k}] a[n - k]/k!, {k, 1, n}]; Table[n! a[n], {n, 0, 20}]"
+    ],
+    "program": [
+        "(PARI) x = 'x + O('x^30); Vec(serlaplace(1/(1 + log(1 + log(1 - x))))) \\\\ _Michel Marcus_, May 31 2018"
+    ],
+    "xref": [
+        "Cf. A003713, A007840, A217033, A305988."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, May 30 2018",
+    "references": 4,
+    "revision": 17,
+    "time": "2023-05-11T09:37:48-04:00",
+    "created": "2018-05-30T13:57:46-04:00"
+}

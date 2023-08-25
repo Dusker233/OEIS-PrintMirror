@@ -1,0 +1,55 @@
+{
+    "number": 294084,
+    "data": "0,1,2,8,41,240,1528,10312,72647,528992,3954488,30201504,234798627,1853076528,14814453896,119763949936,977709717091,8050816106176,66803956281592,558146870481760,4692269111973668,39669049950811328,337082395954643168,2877697636252004168,24672447821197834553",
+    "name": "Number of indecomposable intervals in the Tamari lattices.",
+    "comment": [
+        "This is also the number of interval-posets with connected Hasse diagram."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A294084/b294084.txt\">Table of n, a(n) for n = 0..1031</a>",
+        "F. Chapoton, <a href=\"https://arxiv.org/abs/math/0602368\">Sur le nombre d'intervalles dans les treillis de Tamari</a>, arXiv:math/0602368 [math.CO], 2006.",
+        "F. Chapoton, <a href=\"http://www.kurims.kyoto-u.ac.jp/EMIS/journals/SLC/wpapers/s55chapoton.html\">Sur le nombre d'intervalles dans les treillis de Tamari</a>, S\u00e9minaire Lotharingien de combinatoire, vol. 55 (2006).",
+        "Alois Panholzer, <a href=\"https://arxiv.org/abs/2007.14676\">Parking function varieties for combinatorial tree models</a>, arXiv:2007.14676 [math.CO], 2020."
+    ],
+    "formula": [
+        "The generating series can be obtained by inverting the generating series of A000260."
+    ],
+    "example": [
+        "Among the 3 interval-posets of size 2 :",
+        "1 --> 2 ; 1 <-- 2 ; 1  2,",
+        "only the third (which is an antichain) is not a connected poset."
+    ],
+    "maple": [
+        "h:= proc(n) h(n):= 2*(4*n+1)!/((n+1)!*(3*n+2)!) end:",
+        "a:= proc(n) a(n):= `if`(n=0, 0, h(n)-add(a(n-i)*h(i), i=1..n-1)) end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Feb 28 2019"
+    ],
+    "mathematica": [
+        "terms = 25;",
+        "G[_] = 0; Do[G[x_] = 1 + x G[x]^4 + O[x]^terms, terms];",
+        "F[x_] = 1 - 1/((2 - G[x]) G[x]^2);",
+        "CoefficientList[F[x], x] (* _Jean-Fran\u00e7ois Alcover_, Feb 14 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "F = PowerSeriesRing(ZZ,'t')([1] + [(2 * binomial(4 * n + 1, n - 1)) // (n * (n + 1)) for n in range(1, 20)])",
+        "1 - F.inverse()",
+        "(Julia)",
+        "using Nemo",
+        "s(n) = div(Nemo.binom(4*n + 2, n + 1), (2*n + 1) * (3*n + 2))",
+        "R, z = PowerSeriesRing(ZZ, 25, \"z\")",
+        "F = sum(s(n)z^n for n in 0:25)",
+        "G = 1 - inv(F)",
+        "println([coeff(G,n) for n in 0:24]) # _Peter Luschny_, Feb 26 2018"
+    ],
+    "xref": [
+        "Cf. A000260."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_F. Chapoton_, Feb 26 2018",
+    "references": 1,
+    "revision": 76,
+    "time": "2020-10-05T23:34:18-04:00",
+    "created": "2018-02-26T15:03:17-05:00"
+}

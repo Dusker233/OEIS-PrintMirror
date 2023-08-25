@@ -1,0 +1,57 @@
+{
+    "number": 195335,
+    "data": "2,211,211151,2111511013,211151101310867,211151101310867100673,2111511013108671006731000357,211151101310867100673100035710000931,211151101310867100673100035710000931100000213,2111511013108671006731000357100009311000002131000000901,211151101310867100673100035710000931100000213100000090110000001797",
+    "name": "a(n) is the smallest Xmas tree prime with a(n-1) as a prefix (starting with 2).",
+    "comment": [
+        "A Xmas tree prime is a prime which is a concatenation of a prime with a single digit, a prime with two digits, a prime with three digits, a prime with four digits etc. By definition, the number of digits is a triangular number (A000217). Leading zeros are not allowed for any of the primes."
+    ],
+    "link": [
+        "Terry Trotter, <a href=\"https://web.archive.org/web/20160629211025/http://trottermath.net/numtrivia/potpourri.html\">Xmas tree primes</a> [Warning: As of March 2018 this site appears to have been hacked. Proceed with great caution. The original content should be retrieved from the Wayback machine and added here. - _N. J. A. Sloane_, Mar 29 2018]"
+    ],
+    "maple": [
+        "read(\"transforms\") ;",
+        "A195335 := proc(n)",
+        "        option remember;",
+        "        local prev,nxt,a ;",
+        "        if n =1 then",
+        "                2;",
+        "        else",
+        "                prev := procname(n-1) ;",
+        "                for nxt from 10^(n-1) to 10^n-1 do",
+        "                        if isprime(nxt) then",
+        "                                a := digcat2(prev,nxt) ;",
+        "                                if isprime(a) then",
+        "                                        return a ;",
+        "                                end if;",
+        "                        end if;",
+        "                end do:",
+        "                return -1 ;",
+        "        end if;",
+        "end proc: # _R. J. Mathar_, Sep 20 2011"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, nextprime",
+        "def alst(nn):",
+        "  alst, astr = [2], \"2\"",
+        "  for n in range(2, nn+1):",
+        "    p = nextprime(10**(n-1))",
+        "    while not isprime(int(astr + str(p))): p = nextprime(p)",
+        "    alst.append(int(astr + str(p))); astr += str(p)",
+        "  return alst",
+        "print(alst(11)) # _Michael S. Branicky_, Dec 26 2020"
+    ],
+    "xref": [
+        "Cf. A000217."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Kausthub Gudipati_, Sep 16 2011",
+    "ext": [
+        "Name corrected by _Michael S. Branicky_, Dec 26 2020"
+    ],
+    "references": 2,
+    "revision": 32,
+    "time": "2020-12-27T01:57:59-05:00",
+    "created": "2011-09-20T13:02:30-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 132745,
+    "data": "1,2,3,5,11,32,114,467,2130,10642,57629,335381,2082582,13716502,95352529,696790819,5334094259,42649956716,355261078352,3075741331481,27620835538407,256810928552476,2468108094076860,24481671811988907,250296546308500181,2634309876797453868,28509045368598994348",
+    "name": "Row sums of (A008550 formatted as a triangular array).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A132745/b132745.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "From _G. C. Greubel_, Feb 16 2021: (Start)",
+        "a(n) = Sum_{k=0..n} Hypergeometric2F1([1-n+k, k-n], [2], k).",
+        "a(n) = Sum_{k=0..n} Hypergeometric2F1([1-k, -k], [2], n-k).",
+        "a(n) = 1 + Sum_{k=1..n} Sum_{j=0..k-1} binomial(k,j)^2 * ((k-j)*(n-k)^j/(k*(j+1))).",
+        "a(n) = 1 + Sum_{k=1..n} Sum_{j=0..k-1} A001263(k, k-j) * (n-k)^j. (End)"
+    ],
+    "mathematica": [
+        "Table[Sum[Hypergeometric2F1[1-k, -k, 2, n-k], {k,0,n}], {n,0,30}] (* _G. C. Greubel_, Feb 16 2021 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A243631(n,k): return 1 if n==0 else sum( binomial(n,j)^2*k^j*(n-j)/(n*(j+1)) for j in [0..n-1])",
+        "def A132745(n): return sum( A243631(k, n-k) for k in [0..n] )",
+        "[A132745(n) for n in [0..30]] # _G. C. Greubel_, Feb 16 2021",
+        "(Magma)",
+        "A243631:= func< n,k | n eq 0 select 1 else (&+[ Binomial(n,j)^2*k^j*(n-j)/(n*(j+1)): j in [0..n-1]]) >;",
+        "A132745:= func< n | (&+[A243631(k,n-k): k in [0..n]]) >;",
+        "[A132745(n): n in [0..30]]; // _G. C. Greubel_, Feb 16 2021"
+    ],
+    "xref": [
+        "Cf. A001263, A008550, A243631."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Philippe Del\u00e9ham_, Nov 21 2007",
+    "ext": [
+        "Terms a(11) onward added by _G. C. Greubel_, Feb 16 2021"
+    ],
+    "references": 4,
+    "revision": 8,
+    "time": "2021-02-16T17:48:33-05:00",
+    "created": "2007-12-09T03:00:00-05:00"
+}

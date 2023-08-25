@@ -1,0 +1,70 @@
+{
+    "number": 123178,
+    "data": "14,968,75920,6288296,537005664,46764723632,4128230266160,368090979124960,33073373083339904,2989771785328137728,271603565356722214784,24774311300942501337728,2267541753957311770329600",
+    "name": "Define K(n) = Integral_{t=-1..1} (t^(2n)*(1-t^2)^(2n)/(1+it)^(3n+1))dt, and write K(n) = a(n)*Pi - b(n)/c(n) where a(n), b(n), c(n) are positive integers; the sequence gives a(n).",
+    "comment": [
+        "The integrals K(n) give us a sequence of approximation to Pi whose qualities exceed 1.0449 in the long run. a(n) is divisible by 2^floor(n/2).",
+        "The integral K(n) can be evaluated for large n using Hermite reduction. In the range n = 1...200, a quality less than 1.0449 occurs irregularly, for n = 11, 16, 19, 23, 24, 32, 38, 42, 46, 50, 51, 55, 63, 85, 91, 94, 95, 100, 101, 103. - _Bradley Klee_, Jun 16 2018",
+        "Comment from _Michael Somos_, Jun 23 2018: The \"quality\" of approximations is as given by Frits Beukers \"A rational approach to pi\" where he writes \"... |22/7 - pi| = 1/7^3.439, |355/113-pi| = 1/113^3.201. The exponents 3.429 and 3.201 will be called the _quality_ of the respective approximations.\"",
+        "(Pseudocode, from _Bradley Klee_, Jun 18 2018)",
+        "Function HermiteReduce(f(t),g(t),m)",
+        "1: If m>1:",
+        "2: {u(t),v(t)} <- Solve f(t)=u(t)*g(t)+v(t)*g'(t);",
+        "3: Return HermiteReduce(u(t)+1/(m-1)*v'(t),g(t),m-1)",
+        "4: ElseIf m=1:",
+        "5: Return f(t)/g(t)",
+        "Function a(n)",
+        "1: f(t) <- ((1-i*t)^(3*n+1)+(1+i*t)^(3*n+1))*t^(2*n)*(1-t^2)^(2*n);",
+        "2: g(t) <- (1+t^2);",
+        "3: [dx] <- HermiteReduce(f(t),g(t),3*n+1)*dt;  ( drop exact differentials )",
+        "4: Return (1/Pi)*Integral_{t=0..1} [dx]"
+    ],
+    "reference": [
+        "Manuel Bronstein, Symbolic Integration I: Transcendental Functions, Springer, 2000, pages 39-46."
+    ],
+    "link": [
+        "Bradley Klee, <a href=\"/A123178/b123178.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Frits Beukers, <a href=\"https://dspace.library.uu.nl/handle/1874/26398\">A rational approach to Pi</a>, Nieuw archief voor wiskunde 5/1 No. 4, December 2000, p. 378.",
+        "Sam Blake, <a href=\"http://demonstrations.wolfram.com/IntegrationUsingHermiteReduction/\">Integration Using Hermite Reduction</a>, Wolfram Demonstrations Project."
+    ],
+    "formula": [
+        "64*(1+n)*(2+n)*(1+2*n)*(3+2*n)*(5+2*n)*(816 + 755*n + 165*n^2)*a(n) - 48*(2+n)*(3+2*n)*(5+2*n)*(4+3*n)*(2039 + 4103*n + 2595*n^2 + 495*n^3)*a(n+1) + 6*(5+2*n)*(4+3*n)*(5+3*n)*(893628 + 2406908*n + 2163923*n^2 + 803750*n^3 + 106095*n^4)*a(n+2) - 9*(3+n)*(4+3*n)*(5+3*n)*(7+3*n)*(8+3*n)*(226 + 425*n + 165*n^2)*a(n+3) = 0. - _Bradley Klee_, Jun 20 2018",
+        "Define F(x) the g.f. of these a(n), G(x)=1/2+F(x), and G^(n)(x)=d^n/dx^n G(x). Period G(x) satisfies a Picard-Fuchs type differential equation, 0=Sum_{m=0..9,n=0..5}M_{m,n} x^m G^(n)(x), with integer matrix:",
+        "M={{698544,-24948,0,0,0,0},",
+        "{-2344608,33884712,-224532,0,0,0},",
+        "{2305584,-34982100,787834836,-3255714,0,0},",
+        "{-3490848,65404872,-690185556,1319686128,-3031182,0},",
+        "{4487040,-85092672,973263876,-1454575542,508724631,-505197},",
+        "{0,89740800,-280713984,2717626800,-642933018,48807765},",
+        "{0,0,190699200,-235103952,1409057154,-67970205},",
+        "{0,0,0,109184640,-61373632,164264580},",
+        "{0,0,0,0,20939520,-4518080},",
+        "{0,0,0,0,0,1196544}} - _Bradley Klee_, Jun 24 2018"
+    ],
+    "example": [
+        "K(5) = -3618728790016/2145 + 537005664*Pi so a(5) = 537005664."
+    ],
+    "maple": [
+        "Kn := proc(n) local a,l ; a := 0 : for l from 0 to (3*n+1)/2 do a := a+2*binomial(3*n+1,2*l)*(-1)^l* int(t^(2*n+2*l)*(1-t^2)^(2*n)/(1+t^2)^(3*n+1),t=0..1) ; od ; a := subs(Pi=x,a) ; RETURN(a) ; end: A123178 := proc(n) RETURN( coeftayl(Kn(n),x=0,1)) ; end: for n from 1 to 20 do printf(\"%d,\",A123178(n)) ; od ; # _R. J. Mathar_, Oct 07 2006"
+    ],
+    "mathematica": [
+        "f[n_] := CoefficientList[ Integrate[t^(2n)*(1 - t^2)^(2n)/(1 + I*t)^(3n + 1), {t, -1, 1}], Pi][[ -1]]; Array[f, 13] (* _Robert G. Wilson v_ *)",
+        "HermiteReduce[num_, den_, m_] := If[m > 1, Module[{cl = CoefficientList[num, t], deg, u, v, sol}, If[Length[cl] == 1, cl = PadRight[cl, 3]];deg=Length[cl]-1; u = Total[c[#] t^(2*#) & /@ Range[0, deg/2 - 1]]; v = Plus[ Total[-c[#] (m - 1)/(2 # + 1) t^(2*# + 1) & /@ Range[0, deg/2 - 1]], c[-1] t]; sol = Solve@MapThread[Equal, {cl,CoefficientList[Expand[Dot[{1 + t^2, 2 t}, {u, v}]], t]}]; HermiteReduce[Expand@ReplaceAll[u + 1/(m - 1) D[v, t], sol[[1]]],den,m-1]],num/4]",
+        "HermiteReduce[t^(2*#)*(1-t^2)^(2*#)*((1 + I*t)^(3*#+1)+(1-I*t)^(3*#+1)),(1+t^2),3*#+1]&/@Range[20](* _Bradley Klee_, Jun 18 2018 *)",
+        "RecurrenceTable[{64*(1+n)*(2+n)*(1+2*n)*(3+2*n)*(5+2*n)*(816+755*n+165*n^2)*a[n]-48*(2+n)*(3+2*n)*(5+2*n)*(4+3*n)*(2039+4103*n+2595*n^2+495*n^3)*a[n+1]+6*(5+2*n)*(4+3*n)*(5+3*n)*(893628+2406908*n+2163923*n^2+803750*n^3+106095*n^4)*a[n+2]-9*(3+n)*(4+3*n)*(5+3*n)*(7+3*n)*(8+3*n)*(226+425*n+165*n^2)*a[n+3]==0,",
+        "a[0]==1/2,a[1]==14,a[2]==968},a,{n,1,5000}] (* _Bradley Klee_, Jun 24 2018 *)"
+    ],
+    "xref": [
+        "Cf. A305997, A305998."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, Oct 03 2006",
+    "ext": [
+        "More terms from _R. J. Mathar_, Oct 07 2006"
+    ],
+    "references": 7,
+    "revision": 53,
+    "time": "2018-06-25T12:34:49-04:00",
+    "created": "2006-10-09T03:00:00-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 346549,
+    "data": "14,15,21,22,33,34,35,38,39,57,58,85,86,87,93,94,95,118,119,122,123,133,134,141,142,143,145,146,158,159,177,178,201,202,203,205,206,213,214,215,217,218,219,253,254,298,299,301,302,303,326,327,334,335,381,382,393,394,395,445,446,447,453,454,481,482",
+    "name": "Runs (of length > 1) of consecutive squarefree semiprimes.",
+    "comment": [
+        "Runs of length bigger than 3 are impossible as one of four consecutive numbers is divisible by 4.",
+        "The existence of consecutive pairs of such numbers is connected with primes of the form (p*q +- 1)/2 where p and q are odd primes.",
+        "From _Michael S. Branicky_, Sep 21 2021: (Start)",
+        "This only differs from the supersequence A038456 in the terms 26, 27 (present there but not here).",
+        "Proof. Numbers with 4 divisors are of the form p*q for p, q prime, p != q or of the form r^3 for r prime.  For two such numbers to be consecutive terms of A038456 (but not terms here) requires p*q + 1 = r^3 or p*q = r^3 + 1 for primes p, q, r, p != q.  There is no solution to either form with p, q distinct primes for r = 2. Thus, r^3 is odd and p*q must be even, so wlog p = 2. Thus, we need to solve for case 1: 2*q + 1 = r^3 for q, r prime. But r^3 - 1 = (r - 1)*(r^2 + r + 1), so r = 3 is the only prime solution producing the factor 2, leading to the pair 26, 27. Likewise, case 2: r^3 + 1 = (r + 1)*(r^2 - r + 1) has no solution with prime r producing the required factor 2. (End)"
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Prime_signature\">Prime signature</a>"
+    ],
+    "example": [
+        "14 and 15 are consecutive and both have prime signature {1, 1}"
+    ],
+    "mathematica": [
+        "s = Union@ Flatten@ Table[Prime[m] Prime[n], {n, Log2[#/3]}, {m, n + 1, PrimePi[#/Prime[n]]}] &[482]; s[[Flatten@ Map[Append[#, Last[#] + 1] &, Position[Differences[s], 1]]]] (* _Michael De Vlieger_, Oct 28 2021 *)",
+        "With[{sp=If[SquareFreeQ[#]&&PrimeOmega[#]==2,1,0]&/@Range[ 500]},DeleteDuplicates[ Flatten[SequencePosition[sp,{1,1}]]]] (* _Harvey P. Dale_, Jul 29 2022 *)"
+    ],
+    "program": [
+        "(PARI) consecutive(n)=my(f=vecsort(factor(n)[, 2])); f==vecsort(factor(n-1)[, 2]) || f==vecsort(factor(n+1)[, 2]) \\\\  based on A260143",
+        "squarefree_semiprime(n)=(bigomega(n)==2&&omega(n)==2) \\\\ based on A006881",
+        "for(n=1, 500, if(squarefree_semiprime(n) && consecutive(n), print1(n, \", \")))",
+        "(Python)",
+        "from sympy import factorint",
+        "def aupto(limit):",
+        "    aset, prevsig = set(), [1]",
+        "    for k in range(3, limit+2):",
+        "        sig = sorted(factorint(k).values())",
+        "        if sig == prevsig == [1, 1]: aset.update([k - 1, k])",
+        "        prevsig = sig",
+        "    return sorted(aset)",
+        "print(aupto(482)) # _Michael S. Branicky_, Sep 20 2021"
+    ],
+    "xref": [
+        "Intersection of A006881 and A260143.",
+        "Subsequence of A038456."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ositadima Chukwu_, Sep 16 2021",
+    "references": 0,
+    "revision": 38,
+    "time": "2022-07-29T17:11:47-04:00",
+    "created": "2021-11-28T13:15:07-05:00"
+}

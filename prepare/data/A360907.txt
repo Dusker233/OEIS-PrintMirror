@@ -1,0 +1,32 @@
+{
+    "number": 360907,
+    "data": "916352,3002751,13080447,22598271,26110592,28909952,45706112,49472127,52890624,53391231,56190591,58471552,63468927,65148543,67947903,69780608,84744063,89376128,93142143,94974848,143530623,143683712,145770111,155847807,165925503,177109375",
+    "name": "Numbers k such that k and k+1 both have the same number of cubefree divisors and 3-full divisors.",
+    "comment": [
+        "Numbers k such that k and k+1 are both terms of A360906."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A360907/b360907.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "48 is a term since A073184(916352) = A190867(916352) = 6 and A073184(916353) = A190867(916353) = 6."
+    ],
+    "mathematica": [
+        "q[n_] := Module[{e = FactorInteger[n][[;; , 2]]}, Times @@ (Min[#, 3] & /@ (e + 1)) == Times @@ (Max[#, 1] & /@ (e - 1))]; q[1] = True; seq[kmax_] := Module[{s = {}, k = 1, q1 = q[1], q2}, Do[q2 = q[k]; If[q1 && q2, AppendTo[s, k-1]]; q1 = q2, {k, 2, kmax}]; s]; seq[2*10^5]"
+    ],
+    "program": [
+        "(PARI) is(k) = {my(e = factor(k)[,2]); prod(i = 1, #e, min(e[i] + 1, 3)) == prod(i = 1, #e, max(e[i] - 1, 1)); }",
+        "lista(kmax) = {my(is1 = is(1), i2); for(k=2, kmax, is2 = is(k); if(is1 && is2, print1(k-1, \", \")); is1 = is2); }"
+    ],
+    "xref": [
+        "Subsequence of A360906.",
+        "Cf. A073184, A190867."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Feb 25 2023",
+    "references": 2,
+    "revision": 9,
+    "time": "2023-02-26T03:26:43-05:00",
+    "created": "2023-02-26T02:24:23-05:00"
+}

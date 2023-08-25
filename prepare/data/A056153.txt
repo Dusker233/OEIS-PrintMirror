@@ -1,0 +1,47 @@
+{
+    "number": 56153,
+    "data": "1,6,30,36,180,210,216,900,1080,1260,1296,2310,5400,6300,6480,7560,7776,13860,27000,30030,32400,37800,38880,44100,45360,46656,69300,83160,162000,180180,189000,194400,226800,233280,264600,272160,279936",
+    "name": "Leading least prime signatures: a(n) is in A025487 but a(n)/2 is not.",
+    "comment": [
+        "Values of A025487 can be mapped to the numeric partitions. In a similar way, values of a(n) can be mapped to the cyclic partitions by noting that the factorization vector begins (k, k, ...). E.g. 1260 = 2*2*3*3*5*7 yielding the vector (2,2,1,1).",
+        "All numbers of the form 2^k1*3^k2*...*p_n^k_n, where k1 = k2 >= ... >= k_n, sorted. - _Robert Israel_, Feb 20 2019"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A056153/b056153.txt\">Table of n, a(n) for n = 1..10000</a> (first 108 terms from Michel Marcus)"
+    ],
+    "example": [
+        "36 is a term because 36 is a member of A025487 but 36/2 = 18 is not.",
+        "2520 is a member of A025487 as is 2520/2 = 1260, so 2520 is not a term."
+    ],
+    "maple": [
+        "N:= 10^8: # to get all terms <= N",
+        "S:= [seq([i,i,6^i],i=0..floor(log[6](N)))]:",
+        "Res:= {seq(s[-1],s=S)}:",
+        "r:= 6:",
+        "for n from 3 do",
+        "  p:= ithprime(n);",
+        "  r:= r*p;",
+        "  if r > N then break fi;",
+        "  S:= map(t ->seq([op(t[1..-2]),i,t[-1]*p^i],i=1..min(t[-2], floor(log[p](N/t[-1])))), S);",
+        "  Res:= Res union {seq(s[-1],s=S)};",
+        "od:",
+        "sort(convert(Res, list)); # _Robert Israel_, Feb 20 2019"
+    ],
+    "mathematica": [
+        "max = 300000; ss = {}; A025487 = Join[{1}, Reap[ Do[s = Sort[FactorInteger[n][[All, 2]]]; If[FreeQ[ss, s], AppendTo[ss, s]; Sow[n]], {n, 2, max}]][[2, 1]]]; Select[A025487, FreeQ[A025487, #/2] &] (* _Jean-Fran\u00e7ois Alcover_, Jul 11 2012 *)"
+    ],
+    "program": [
+        "(PARI) isli(n) = if(n==1, return(1)); if (frac(n), return (0)); my(f = factor(n)); f[#f~, 1] == prime(#f~) && vecsort(f[, 2], , 4) == f[, 2]; \\\\ A025487",
+        "isok(n) = isli(n) && !isli(n/2); \\\\ _Michel Marcus_, Feb 20 2019"
+    ],
+    "xref": [
+        "Cf. A025487, A062515."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alford Arnold_, Jul 30 2000",
+    "references": 4,
+    "revision": 13,
+    "time": "2019-02-20T14:45:02-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

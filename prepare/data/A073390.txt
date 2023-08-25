@@ -1,0 +1,38 @@
+{
+    "number": 73390,
+    "data": "1,8,48,240,1080,4512,17856,67776,248880,889600,3109376,10664448,35989248,119761920,393676800,1280157696,4122985728,13165099008,41713192960,131243970560,410315433984,1275348344832",
+    "name": "Third convolution of A002605(n) (generalized (2,2)-Fibonacci), n >= 0, with itself.",
+    "link": [
+        "Muniru A Asiru, <a href=\"/A073390/b073390.txt\">Table of n, a(n) for n = 0..500</a>",
+        "<a href=\"/index/Rec#order_08\">Index entries for linear recurrences with constant coefficients</a>, signature (8,-16,-16,56,32,-64,-64,-16)."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} b(k)*c(n-k) with b(k) = A002605(k) and c(k) = A073389(k).",
+        "a(n) = Sum_{k=0..floor(n/2)} binomial(n-k+3, 3)*binomial(n-k, k)*2^(n-k).",
+        "a(n) = ((64 + 37*n + 5*n^2)*(n+1)*U(n+1) + 4*(11 + 7*n + n^2)*(n+2)*U(n))/(6^3), with U(n) = A002605(n), n >= 0.",
+        "G.f.: 1/(1-2*x*(1+x))^4."
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/(1-2*x-2*x^2)^4, {x,0,40}], x] (* _G. C. Greubel_, Oct 03 2022 *)"
+    ],
+    "program": [
+        "(GAP) List([0..25], n->2^n*Sum([0..Int(n/2)],k->Binomial(n-k+3,3)*Binomial(n-k,k)*(1/2)^k)); # _Muniru A Asiru_, Jun 12 2018",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 40); Coefficients(R!( 1/(1-2*x-2*x^2)^4 )); // _G. C. Greubel_, Oct 03 2022",
+        "(SageMath)",
+        "def A073390_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( 1/(1-2*x-2*x^2)^4 ).list()",
+        "A073390_list(40) # _G. C. Greubel_, Oct 03 2022"
+    ],
+    "xref": [
+        "Fourth (m=3) column of triangle A073387.",
+        "Cf. A002605, A073389."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Wolfdieter Lang_, Aug 02 2002",
+    "references": 3,
+    "revision": 27,
+    "time": "2022-10-04T08:38:08-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

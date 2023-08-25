@@ -1,0 +1,33 @@
+{
+    "number": 193003,
+    "data": "225,576,900,3600,8649,11025,14400,19881,20449,21025,27225,28224,34596,38025,44100,47961,53824,57600,58564,62001,65025,69696,79524,81225,81796,84100,93025,97344,106929,108900,119025,131769,138384,140625,152100,164025,166464",
+    "name": "Squares k such that gcd(sigma(k),usigma(k)) > 1, where usigma is A034448.",
+    "comment": [
+        "For n less than 4*10^6, the only values of G=gcd(sigma(n),usigma(n)) are 5, 13, 37, 61, 65, 73 y 793. In the remaining square numbers G=1.",
+        "All divisors of G are the form 4n+1."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A193003/b193003.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "A. Roldan Martinez, <a href=\"http://hojaynumeros.blogspot.com/2011/07/divisores-unitarios-3-relaciones-entre.html\">Numeros y hoja de calculo</a> (Spanish)"
+    ],
+    "example": [
+        "38025=3^2*5^2*13^2; sigma(38025)=73749=3*13*31*61; usigma(38025)=44200=2^3*5^2*13*17; GCD=13."
+    ],
+    "mathematica": [
+        "usigma[1] = 1; usigma[n_] := Times @@ (1 + Power @@@ FactorInteger[n]); Select[Range[408]^2, GCD[DivisorSigma[1, #], usigma[#]] > 1 &] (* _Amiram Eldar_, Jun 23 2019 *)"
+    ],
+    "program": [
+        "(PARI) usigma(n)= {local(f, u=1); f=factor(n); for(i=1, matsize(f)[1], u*=(1+ f[i, 1]^f[i, 2])); return(u)}",
+        "{  for (n=1, 10^6, if (gcd(sigma(n),usigma(n))>1 && issquare(n), print1(n,\", \"))); } // _Antonio Rold\u00e1n_, Oct 05 2012"
+    ],
+    "xref": [
+        "Cf. A000203, A034448."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antonio Rold\u00e1n_, Jul 14 2011",
+    "references": 1,
+    "revision": 25,
+    "time": "2019-06-23T11:52:20-04:00",
+    "created": "2011-07-23T18:48:55-04:00"
+}

@@ -1,0 +1,26 @@
+{
+    "number": 356337,
+    "data": "1,1,8,63,644,7610,107994,1713726,30671024,603160344,12974475240,301879678320,7561610279112,202437968475288,5769455216675136,174234738889383480,5556311629901103360,186482786151757707840,6568881383985687359424,242221409390815100812224",
+    "name": "Expansion of e.g.f. ( Product_{k>0} 1/(1-x^k)^k )^(1/(1-x)).",
+    "formula": [
+        "a(0) = 1; a(n) = Sum_{k=1..n} A356298(k) * binomial(n-1,k-1) * a(n-k)."
+    ],
+    "mathematica": [
+        "With[{nn=20},CoefficientList[Series[Product[1/((1-x^k)^k)^(1/(1-x)),{k,nn}],{x,0,nn}],x] Range[0,nn]!] (* _Harvey P. Dale_, Feb 06 2023 *)"
+    ],
+    "program": [
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(serlaplace((1/prod(k=1, N, (1-x^k)^k))^(1/(1-x))))",
+        "(PARI) a356298(n) = n!*sum(k=1, n, sigma(k, 2)/k);",
+        "a_vector(n) = my(v=vector(n+1)); v[1]=1; for(i=1, n, v[i+1]=sum(j=1, i, a356298(j)*binomial(i-1, j-1)*v[i-j+1])); v;"
+    ],
+    "xref": [
+        "Cf. A000219, A001157, A356298, A356335, A356336."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Aug 04 2022",
+    "references": 6,
+    "revision": 18,
+    "time": "2023-02-06T13:25:41-05:00",
+    "created": "2022-08-04T10:19:29-04:00"
+}

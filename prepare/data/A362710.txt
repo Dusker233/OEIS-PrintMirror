@@ -1,0 +1,47 @@
+{
+    "number": 362710,
+    "data": "1,2,3,4,5,6,7,8,9,10,12,14,15,16,18,20,22,24,25,26,28,30,32,35,36,40,44,45,50,54,55,56,60,64,65,66,70,72,74,75,80,82,88,90,100,104,108,112,120,125,128,132,140,144,148,150,160,175,176,180,200,216,220,224,225,240,250,252,260,264",
+    "name": "Numbers m such that the decimal expansion of 1/m contains no digit 0, ignoring leading and trailing 0's.",
+    "comment": [
+        "If k is a term, then so is 10*k."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A362710/b362710.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(12) = 14 is a term because 1/14 = 0.0714285714... contains no digit 0 except for leading 0's."
+    ],
+    "maple": [
+        "removeInitial0:= proc(L) local i;",
+        "  for i from 1 to nops(L) do if L[i] <> 0 then return L[i..-1] fi od;",
+        "  []",
+        "end proc:",
+        "filter:= proc(n) local q;",
+        "  q:= NumberTheory:-RepeatingDecimal(1/n);",
+        "  not(member(0, removeInitial0(NonRepeatingPart(q))) or member(0, RepeatingPart(q)))",
+        "end proc:",
+        "select(filter, [$1..300]);"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import multiplicity, n_order",
+        "def A362710_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for a in count(max(startvalue,1)):",
+        "        m2, m5 = (~a&a-1).bit_length(), multiplicity(5,a)",
+        "        k, m = 10**max(m2,m5), 10**(t:=n_order(10,a//(1<<m2)//5**m5))-1",
+        "        if not('0' in str(c:=k//a).lstrip('0') or ((w:=str(m*k//a-c*m).zfill(t)) != '0' and '0' in w)):",
+        "            yield a",
+        "A362710_list = list(islice(A362710_gen(),30)) # _Chai Wah Wu_, May 04 2023"
+    ],
+    "xref": [
+        "Complement of A352154. Cf. A362579."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Apr 30 2023",
+    "references": 1,
+    "revision": 21,
+    "time": "2023-05-04T13:10:38-04:00",
+    "created": "2023-05-03T10:11:32-04:00"
+}

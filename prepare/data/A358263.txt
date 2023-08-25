@@ -1,0 +1,32 @@
+{
+    "number": 358263,
+    "data": "1,16,144,256,1296,2304,20736,57600,331776,518400,2822400,8294400,12960000,25401600,132710400,207360000,228614400,406425600,635040000,2057529600,3073593600,6502809600,10160640000,27662342400,31116960000,51438240000,76839840000,248961081600",
+    "name": "Numbers with a record number of noninfinitary square divisors.",
+    "comment": [
+        "Numbers m such that A358261(m) > A358261(k) for all k < m.",
+        "The corresponding record values are 0, 1, 2, 3, 5, 6, 11, 12, 13, 22, 24, 26, 37, 44, 46, 47, 48, ... (see the link for more values)."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A358263/b358263.txt\">Table of n, a(n) for n = 1..187</a>",
+        "Amiram Eldar, <a href=\"/A358263/a358263.txt\">Table of n, a(n), A358261(a(n)) for n = 1..187</a>"
+    ],
+    "mathematica": [
+        "f1[p_, e_] := 1 + Floor[e/2]; f2[p_, e_] := 2^DigitCount[If[OddQ[e], e - 1, e], 2, 1]; f[1] = 0; f[n_] := Times @@ f1 @@@ (fct = FactorInteger[n]) - Times @@ f2 @@@ fct; s = {}; fmax = -1; Do[If[(fn = f[n]) > fmax, fmax = fn; AppendTo[s, n]], {n, 1, 6*10^5}]; s"
+    ],
+    "program": [
+        "(PARI) s(n) = {my(f = factor(n));  prod(i=1, #f~, 1+f[i,2]\\2) - prod(i=1, #f~, 2^hammingweight(if(f[i,2]%2, f[i,2]-1, f[i,2])))};",
+        "lista(nmax) = {my(smax = -1, sn); for(n = 1, nmax, sn = s(n); if(sn > smax, smax = sn; print1(n, \", \"))); }"
+    ],
+    "xref": [
+        "Cf. A358261, A358262.",
+        "Subsequence of A025487.",
+        "Similar sequences: A002182, A002110 (unitary), A037992 (infinitary), A293185, A306736, A307845, A309141, A318278, A322484, A335386, A348632, A358253."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Nov 06 2022",
+    "references": 2,
+    "revision": 10,
+    "time": "2022-11-07T02:10:32-05:00",
+    "created": "2022-11-06T07:51:34-05:00"
+}

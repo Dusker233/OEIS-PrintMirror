@@ -1,0 +1,33 @@
+{
+    "number": 361303,
+    "data": "1,2,15,92,615,4200,29190,205416,1458909,10436030,75079719,542669244,3937604853,28664996080,209261546580,1531373181120,11230365782130,82512324300222,607246350958449,4475646134515360,33031356134381220,244073892799489500,1805479496422561740",
+    "name": "Expansion of g.f. A(x) = Sum_{n>=0} d^n/dx^n x^(2*n) * (1 + x)^(3*n) / n!.",
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n may be defined by the following.",
+        "(1) A(x) = Sum_{n>=0} d^n/dx^n x^(2*n) * (1 + x)^(3*n) / n!.",
+        "(2) A(x) = d/dx Series_Reversion(x - x^2*(1 + x)^3).",
+        "(3) B(x - x^2*A(x)^3) = x where B(x) = x * exp( Sum_{n>=1} d^(n-1)/dx^(n-1) x^(2*n-1) * (1+x)^(3*n) / n! ) is the g.f. of A361305.",
+        "(4) a(n) = (n+1) * A361305(n+1) for n >= 0."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 15*x^2 + 92*x^3 + 615*x^4 + 4200*x^5 + 29190*x^6 + 205416*x^7 + 1458909*x^8 + 10436030*x^9 + ..."
+    ],
+    "program": [
+        "(PARI) {Dx(n, F) = my(D=F); for(i=1, n, D=deriv(D)); D}",
+        "{a(n) = my(A=1); A = sum(m=0, n, Dx(m, x^(2*m)*(1+x +O(x^(n+1)))^(3*m)/m!)); polcoeff(A, n)}",
+        "for(n=0, 25, print1(a(n), \", \"))",
+        "(PARI) /* Using series reversion (faster) */",
+        "{a(n) = my(A=1); A = deriv( serreverse(x - x^2*(1+x +O(x^(n+3)))^3 )); polcoeff(A, n)}",
+        "for(n=0, 25, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A361305, A215128, A361046."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 08 2023",
+    "references": 0,
+    "revision": 7,
+    "time": "2023-03-09T09:00:50-05:00",
+    "created": "2023-03-09T09:00:50-05:00"
+}

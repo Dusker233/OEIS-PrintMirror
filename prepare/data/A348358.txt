@@ -1,0 +1,42 @@
+{
+    "number": 348358,
+    "data": "2,3,5,7,11,13,17,19,29,31,41,43,47,59,61,67,71,79,83,89,97,101,103,107,109,127,131,139,149,151,157,163,167,179,181,191,199,239,251,263,269,281,349,401,409,419,421,431,439,443,449,457,461,463,467,479,487,491,499",
+    "name": "Primes which are not the concatenation of smaller primes (in base 10 and allowing leading 0's).",
+    "comment": [
+        "This is the sequence of numbers that are neither a product of smaller primes nor a concatenation of smaller primes (in base 10).",
+        "This sequence differs from A238647. The prime 227 is in A238647 but not in this sequence for it is the concatenation of primes 2, 2, 7 (in base 10).",
+        "Conjecture. If p > 7 is a prime, then there exists a base b such that p in base b is the concatenation of smaller primes in base b."
+    ],
+    "example": [
+        "The prime 127 is in the sequence because the only expressions of 127 as concatenation of smaller numbers are 1 U 2 U 7, 1 U 27, and 12 U 7 (in base 10) but 1 and 12 are not primes.",
+        "The prime 271 is not in the sequence because it is the concatenation of primes 2 and 71 (in base 10).",
+        "The prime 307 is not in the sequence because it is the concatenation of primes 3 and 07 (in base 10)."
+    ],
+    "mathematica": [
+        "Select[Prime@Range@100,Union[And@@@PrimeQ[FromDigits/@#&/@Union@Select[Flatten[Permutations/@Subsets[Most@Rest@Subsequences[d=IntegerDigits@#]],1],Flatten@#==d&]]]=={False}||Length@d==1&] (* _Giorgos Kalogeropoulos_, Oct 15 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, primerange",
+        "def cond(n): # n is not a concatenation of smaller primes",
+        "    if n%10 in {4, 6, 8}: return True",
+        "    d = str(n)",
+        "    for i in range(1, len(d)):",
+        "        if isprime(int(d[:i])):",
+        "             if isprime(int(d[i:])) or not cond(int(d[i:])):",
+        "                 return False",
+        "    return True",
+        "def aupto(lim): return [p for p in primerange(2, lim+1) if cond(p)]",
+        "print(aupto(490)) # _Michael S. Branicky_, Oct 15 2021"
+    ],
+    "xref": [
+        "Cf. A141033, A141409, A238647, A342244, A348358."
+    ],
+    "keyword": "easy,nonn,base",
+    "offset": "1,1",
+    "author": "_M. Farrokhi D. G._, Oct 14 2021",
+    "references": 1,
+    "revision": 23,
+    "time": "2021-10-16T03:32:16-04:00",
+    "created": "2021-10-16T03:32:16-04:00"
+}

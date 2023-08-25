@@ -1,0 +1,43 @@
+{
+    "number": 361339,
+    "data": "1,112,139,219,373,719,1133,1919,3377,17117",
+    "name": "a(n) is the smallest k such that A361338(k) = n.",
+    "example": [
+        "     a(n) n  {the digits reached}",
+        "       1  1  {1}",
+        "     112  2  {2, 4}",
+        "     139  3  {8, 4, 7}",
+        "     219  4  {8, 2, 4, 6}",
+        "     373  5  {1, 2, 4, 6, 8}",
+        "     719  6  {0, 2, 4, 6, 8, 9}",
+        "    1133  7  {0, 2, 4, 6, 7, 8, 9}",
+        "    1919  8  {0, 2, 4, 5, 6, 7, 8, 9}",
+        "    3377  9  {0, 2, 3, 4, 5, 6, 7, 8, 9}",
+        "   17117 10  {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}"
+    ],
+    "mathematica": [
+        "With[{s = Import[\"https://oeis.org/A361338/b361338.txt\", \"Data\"][[All, -1]]}, {1}~Join~Table[-1 + FirstPosition[s, k][[1]], {k, 2, 10}]] (* _Michael De Vlieger_, Apr 04 2023, using bfile at A361338 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        "def agen():",
+        "    n, adict = 1, dict()",
+        "    for k in count(1):",
+        "        v = A361338(k) # uses A361338() and reach1() in A361338",
+        "        if v not in adict: adict[v] = k",
+        "        while n in adict: yield adict[n]; n += 1",
+        "        if n == 11: return",
+        "print(list(agen())) # _Michael S. Branicky_, Apr 04 2023"
+    ],
+    "xref": [
+        "Cf. A361337-A361349."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Apr 04 2023, based on an email from _Michael S. Branicky_",
+    "references": 1,
+    "revision": 24,
+    "time": "2023-04-05T22:23:01-04:00",
+    "created": "2023-04-04T17:28:52-04:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 304295,
+    "data": "15,56,165,195,207,224,255,270,280,285,286,345,368,435,465,555,615,616,645,672,705,708,728,795,836,850,858,885,915,920,952,958,1005,1035,1064,1065,1095,1185,1242,1245,1288,1335,1365,1400,1430,1449,1455,1506,1515,1545",
+    "name": "Numbers k having at least one divisor d such that sigma(k) = sigma(k-d).",
+    "comment": [
+        "The first number that admits two different divisors is 1335: two of its divisors are 1 and 89, and sigma(1335) = sigma(1335 - 1) = sigma(1335 - 89) = 2160.",
+        "The first number that admits three different divisors is 145515: three of its divisors are 89, 109, and 9701, and sigma(145515) = sigma(145515 - 89) = sigma(145515 - 109) = sigma(145515 - 9701) = 237600.",
+        "If k is in the sequence, and d a divisor such that sigma(k)=sigma(k-d), then k*m is in the sequence for any m coprime to k and k-d. - _Robert Israel_, May 16 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A304295/b304295.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "One divisor of 15 is 1 and sigma(15) = sigma(15 - 1) = 24.",
+        "One divisor of 56 is 2 and sigma(56) = sigma(56 - 2) = 120."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(n) local a,k; a:=divisors(n);",
+        "for k from 1 to nops(a) do if sigma(n)=sigma(n-a[k]) then RETURN(n);",
+        "fi; od; end: seq(P(i),i=1..1545);",
+        "# Alternative:",
+        "filter:= proc(n) local s,d;",
+        "  s:= numtheory:-sigma(n);",
+        "  for d in numtheory:-divisors(n) do",
+        "      if numtheory:-sigma(n-d)=s then return true fi",
+        "    od;",
+        "  false",
+        "end proc:",
+        "select(filter, [$1..10000]); # _Robert Israel_, Jun 01 2018"
+    ],
+    "mathematica": [
+        "Select[Range[1600], Function[k, AnyTrue[Divisors@ k, DivisorSigma[1, k] == DivisorSigma[1, k - #] &]]] (* _Michael De Vlieger_, May 14 2018 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = sumdiv(n, d, if (n>d, sigma(n-d) == sigma(n))) > 0; \\\\ _Michel Marcus_, May 14 2018"
+    ],
+    "xref": [
+        "Cf. A000203, A304294."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, May 14 2018",
+    "references": 2,
+    "revision": 23,
+    "time": "2019-05-16T05:55:39-04:00",
+    "created": "2018-06-01T08:19:57-04:00"
+}

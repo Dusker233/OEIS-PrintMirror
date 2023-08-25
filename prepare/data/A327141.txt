@@ -1,0 +1,56 @@
+{
+    "number": 327141,
+    "data": "1,3,6,10,16,22,29,39,48,61,72,84,101,115,135,151,174,192,211,238,259,289,312,336,370,396,433,461,501,531,562,606,639,686,721,757,808,846,900,940,981,1039,1082,1143,1188,1252,1299,1347,1415,1465,1536,1588,1641",
+    "name": "a(n) is the number of different sizes of integer-sided rectangles which can be placed inside an n X n square.",
+    "comment": [
+        "Rectangles can be placed in any orientation and in particular their sides are not required to be parallel to the sides of the square.",
+        "A000217(n) enumerates the subset with sides not larger than n. For n < 5, a(n) = A000217(n).",
+        "Condition for rectangles L X W which have length L > n: n - L/sqrt(2) > W/sqrt(2) where L/sqrt(2) and W/sqrt(2) are projections on the n X n square's sides."
+    ],
+    "formula": [
+        "a(n) = A000217(n) + A327142(n)."
+    ],
+    "example": [
+        "For n = 3 there are 6 distinct sizes of rectangle that can be placed into a 3 X 3 square:",
+        "...  ...  ...  ...  ...  ###",
+        "...  ...  ...  ##.  ###  ###",
+        "#.., ##., ###, ##., ###, ###",
+        "For n = 8 there are 36 distinct sizes of rectangle that can be placed with their sides parallel to the sides of the square; in addition, 9 X 1, 9 X 2 and 10 X 1 rectangles can also be placed. Hence a(8) = 39."
+    ],
+    "program": [
+        "(C++)",
+        "#include <iostream>",
+        "#include <cmath>",
+        "#include <vector>",
+        "using namespace std;",
+        "int main() {",
+        "int n;",
+        "cin>>n;",
+        "vector <int> v;",
+        "for (int i=1; i<=n; i++)",
+        "{int count=0;",
+        "for (int j=1; j<=i; j++)",
+        "for (int k=j; k<=i; k++)",
+        "{count++;}",
+        "//Diagonally placed ii-length, jj-width of diagonal rectangle",
+        "for (int ii=i+1; ii<=int(sqrt(2)*i); ii++)",
+        "     for (int jj=1; jj<=i; jj++)",
+        "          if ((double(i)-double(ii)/sqrt(2))-double(jj)/sqrt(2)>0)",
+        "                    { count++;}",
+        "v.push_back(count);",
+        "}",
+        "for (int i=0; i<v.size(); i++) cout << v[i] << \", \";",
+        "return 0;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A000217, A327142."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Kirill Ustyantsev_, Aug 23 2019",
+    "references": 1,
+    "revision": 20,
+    "time": "2019-08-26T08:23:17-04:00",
+    "created": "2019-08-26T08:23:17-04:00"
+}

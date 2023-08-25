@@ -1,0 +1,36 @@
+{
+    "number": 316475,
+    "data": "1,1,2,3,5,7,14,25,50,101,207,426,902,1917,4108,8887,19335,42330,93130,205894,456960,1018098,2275613,5102248,11471107,25856413",
+    "name": "Number of locally stable rooted trees with n nodes, meaning no branch is a submultiset of any other (unequal) branch of the same root.",
+    "link": [
+        "Gus Wiseman, <a href=\"/A316475/a316475.png\">The a(8) = 25 locally stable rooted trees with 8 nodes.</a>"
+    ],
+    "example": [
+        "The a(6) = 7 locally stable rooted trees:",
+        "(((((o)))))",
+        "((((oo))))",
+        "(((ooo)))",
+        "(((o)(o)))",
+        "((oooo))",
+        "((o)((o)))",
+        "(ooooo)"
+    ],
+    "mathematica": [
+        "submultisetQ[M_,N_]:=Or[Length[M]==0,MatchQ[{Sort[List@@M],Sort[List@@N]},{{x_,Z___},{___,x_,W___}}/;submultisetQ[{Z},{W}]]]",
+        "strut[n_]:=strut[n]=If[n===1,{{}},Select[Join@@Function[c,Union[Sort/@Tuples[strut/@c]]]/@IntegerPartitions[n-1],Select[Tuples[#,2],UnsameQ@@#&&submultisetQ@@#&]=={}&]];",
+        "Table[Length[strut[n]],{n,15}]"
+    ],
+    "xref": [
+        "Cf. A000081, A285572, A285573, A303362, A304713, A316468, A316470, A316473, A316474."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Jul 04 2018",
+    "ext": [
+        "a(21)-a(26) from _Robert Price_, Sep 13 2018"
+    ],
+    "references": 25,
+    "revision": 10,
+    "time": "2018-09-14T02:48:58-04:00",
+    "created": "2018-07-05T02:30:37-04:00"
+}

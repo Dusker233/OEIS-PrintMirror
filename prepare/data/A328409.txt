@@ -1,0 +1,42 @@
+{
+    "number": 328409,
+    "data": "1,1,2,3,6,16,57,245,1248,7151,46104,325560,2523437,21106494,190806861,1842347541,19018910502,208088481921,2414462433024,29512737830802,380156646308541,5133381861786182,72678441538790901,1074324277172134786,16581261996774703606",
+    "name": "Number of inversion sequences of length n where all consecutive subsequences i,j,k satisfy i > j < k or i <= j >= k.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A328409/b328409.txt\">Table of n, a(n) for n = 0..485</a>",
+        "Juan S. Auli and Sergi Elizalde, <a href=\"https://arxiv.org/abs/1906.07365\">Consecutive patterns in inversion sequences II: avoiding patterns of relations</a>, arXiv:1906.07365 [math.CO], 2019."
+    ],
+    "formula": [
+        "a(n) ~ n! * c * 2^n * n^(Pi/4 - 1/2) / Pi^n, where c = 0.52096414784... - _Vaclav Kotesovec_, Oct 31 2019"
+    ],
+    "example": [
+        "a(0) = 1: the empty sequence.",
+        "a(1) = 1: 0.",
+        "a(2) = 2: 00, 01.",
+        "a(3) = 3: 000, 010, 011.",
+        "a(4) = 6: 0000, 0101, 0102, 0103, 0110, 0111.",
+        "a(5) = 16: 00000, 01010, 01011, 01020, 01021, 01022, 01030, 01031, 01032, 01033, 01101, 01102, 01103, 01104, 01110, 01111."
+    ],
+    "maple": [
+        "b:= proc(n, j, t, c) option remember; `if`(n=0, 1, add(`if`((i>j",
+        "     xor t) and c=0, 0, b(n-1, i, is(i<j), max(0, c-1))), i=1..n))",
+        "    end:",
+        "a:= n-> b(n, 0, true, 2):",
+        "seq(a(n), n=0..24);"
+    ],
+    "mathematica": [
+        "b[n_, j_, t_, c_] := b[n, j, t, c] = If[n == 0, 1, Sum[If[Xor[i>j, t] && c == 0, 0, b[n - 1, i, i<j, Max[0, c - 1]]], {i, 1, n}]];",
+        "a[n_] := b[n, 0, True, 2];",
+        "a /@ Range[0, 24] (* _Jean-Fran\u00e7ois Alcover_, Feb 26 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000108, A328357, A328358, A328425, A328491."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Oct 14 2019",
+    "references": 5,
+    "revision": 20,
+    "time": "2020-02-26T09:56:07-05:00",
+    "created": "2019-10-16T14:43:46-04:00"
+}

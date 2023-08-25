@@ -1,0 +1,32 @@
+{
+    "number": 337945,
+    "data": "2,4,6,8,9,10,12,14,16,18,20,22,24,25,26,27,28,30,32,34,36,38,40,42,44,45,46,48,49,50,52,54,56,58,60,62,63,64,66,68,70,72,74,75,76,78,80,81,82,84,86,88,90,92,94,96,98,99,100,102,104,106,108,110,112,114,116,117,118,120",
+    "name": "Numbers m with a solution (s,t,k) such that s^2 + t^2 = k*m, s + t = m, 1 <= s <= t and 1 <= k <= m - 1.",
+    "formula": [
+        "k is a term <=> Sum_{i=1..floor(k/2)} Sum_{j=1..k-1} KroneckerDelta((i^2 + (k - i)^2)/j, k) > 0.",
+        "Conjecture: k is a term <=> k * Clausen(k, 1) <> 2 * Clausen(k, 0), (Clausen = A160014). In other words: k is in this sequence iff it is not an odd squarefree number. - _Peter Luschny_, Jun 08 2023"
+    ],
+    "example": [
+        "8 is in the sequence since it has the solutions (s,t,k) = (4,4,4) and (2,6,5) such that s^2 + t^2 = k*m, s + t = m, 1 <= s <= t and 1 <= k <= m - 1.",
+        "9 is in the sequence since it has the solution (s,t,k) = (3,6,5) such that s^2 + t^2 = k*m, s + t = m, 1 <= s <= t and 1 <= k <= m - 1."
+    ],
+    "maple": [
+        "# Quite inefficient compared to the conjectured formula.",
+        "KD := (n, k) -> Physics:-KroneckerDelta[n, k]:",
+        "S := k -> local i, j; add(add(KD((i^2 + (k - i)^2)/j , k), j = 1..k-1),",
+        "i = 1..floor(k/2)): select(k -> S(k) > 0, [seq(k, k = 1..40)]); # _Peter Luschny_, Jun 08 2023"
+    ],
+    "mathematica": [
+        "Table[If[Sum[Sum[KroneckerDelta[(i^2 + (n - i)^2)/k, n], {k, n - 1}], {i, Floor[n/2]}] > 0, n, {}], {n, 120}] // Flatten"
+    ],
+    "xref": [
+        "Cf. A337101, A160014, A039956."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Wesley Ivan Hurt_, Oct 01 2020",
+    "references": 4,
+    "revision": 20,
+    "time": "2023-06-08T18:04:45-04:00",
+    "created": "2020-10-04T23:32:06-04:00"
+}

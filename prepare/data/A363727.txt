@@ -1,0 +1,63 @@
+{
+    "number": 363727,
+    "data": "2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,29,31,32,37,41,43,47,49,53,59,61,64,67,71,73,79,81,83,89,90,97,101,103,107,109,113,121,125,127,128,131,137,139,149,151,157,163,167,169,173,179,181,191,193,197,199",
+    "name": "Numbers whose prime indices satisfy (mean) = (median) = (mode), assuming there is a unique mode.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798.",
+        "A mode in a multiset is an element that appears at least as many times as each of the others. For example, the modes in {a,a,b,b,b,c,d,d,d} are {b,d}.",
+        "The median of a multiset is either the middle part (for odd length), or the average of the two middle parts (for even length)."
+    ],
+    "formula": [
+        "Assuming there is a unique mode, we have A326567(a(n))/A326568(a(n)) = A360005(a(n))/2 = A363486(a(n)) = A363487(a(n))."
+    ],
+    "example": [
+        "The terms together with their prime indices begin:",
+        "     2: {1}          29: {10}              79: {22}",
+        "     3: {2}          31: {11}              81: {2,2,2,2}",
+        "     4: {1,1}        32: {1,1,1,1,1}       83: {23}",
+        "     5: {3}          37: {12}              89: {24}",
+        "     7: {4}          41: {13}              90: {1,2,2,3}",
+        "     8: {1,1,1}      43: {14}              97: {25}",
+        "     9: {2,2}        47: {15}             101: {26}",
+        "    11: {5}          49: {4,4}            103: {27}",
+        "    13: {6}          53: {16}             107: {28}",
+        "    16: {1,1,1,1}    59: {17}             109: {29}",
+        "    17: {7}          61: {18}             113: {30}",
+        "    19: {8}          64: {1,1,1,1,1,1}    121: {5,5}",
+        "    23: {9}          67: {19}             125: {3,3,3}",
+        "    25: {3,3}        71: {20}             127: {31}",
+        "    27: {2,2,2}      73: {21}             128: {1,1,1,1,1,1,1}"
+    ],
+    "mathematica": [
+        "prix[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "modes[ms_]:=Select[Union[ms],Count[ms,#]>=Max@@Length/@Split[ms]&];",
+        "Select[Range[100],{Mean[prix[#]]}=={Median[prix[#]]}==modes[prix[#]]&]"
+    ],
+    "xref": [
+        "These partitions are counted by A363719, factorizations A363741.",
+        "For unequal instead of equal we have A363730, counted by A363720.",
+        "Excluding primes gives A363722.",
+        "Excluding prime-powers gives A363729, counted by A363728.",
+        "A112798 lists prime indices, length A001222, sum A056239.",
+        "A326567/A326568 gives mean of prime indices.",
+        "A356862 ranks partitions with a unique mode, counted by A362608.",
+        "A359178 ranks partitions with multiple modes, counted by A362610.",
+        "A360005 gives twice the median of prime indices.",
+        "A362611 counts modes in prime indices, triangle A362614.",
+        "A362613 counts co-modes in prime indices, triangle A362615.",
+        "A363486 gives least mode in prime indices, A363487 greatest.",
+        "Just two statistics:",
+        "- (mean) = (median): A359889, counted by A240219.",
+        "- (mean) != (median): A359890, counted by A359894.",
+        "- (mean) = (mode): counted by A363723, see A363724, A363731.",
+        "- (median) = (mode): counted by A363740.",
+        "Cf. A215366, A327473, A327476, A359893, A359908, A360009, A360248, A360550, A363721, A363725."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Jun 23 2023",
+    "references": 26,
+    "revision": 5,
+    "time": "2023-06-24T07:56:17-04:00",
+    "created": "2023-06-24T07:56:17-04:00"
+}

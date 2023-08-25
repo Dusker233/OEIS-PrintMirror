@@ -1,0 +1,91 @@
+{
+    "number": 1013,
+    "id": "M0993 N0372",
+    "data": "1,2,4,6,8,12,16,24,32,36,48,64,72,96,120,128,144,192,216,240,256,288,384,432,480,512,576,720,768,864,960,1024,1152,1296,1440,1536,1728,1920,2048,2304,2592,2880,3072,3456,3840,4096,4320,4608,5040,5184,5760",
+    "name": "Jordan-Polya numbers: products of factorial numbers A000142.",
+    "comment": [
+        "Also, numbers of the form 1^d_1*2^d_2*3^d_3*...*k^d_k where k, d_1, ..., d_k are natural numbers satisfying d_1 >= d_2 >= d_3 >= ... >= d_k >= 1. - _N. J. A. Sloane_, Jun 14 2015",
+        "Possible orders of automorphism groups of trees.",
+        "Except for the numbers 2, 9 and 10 this sequence is conjectured to be the same as A034878.",
+        "Equivalently, (a(n)/6)*(6*x^2 - 6*x + (6*x-3)*a(n) + 2*a(n)^2 + 1) = N^2 has an integer solution. - _Ralf Stephan_, Dec 04 2004",
+        "Named after the French mathematician Camille Jordan (1838-1922) and the Hungarian mathematician George P\u00f3lya (1887-1985). - _Amiram Eldar_, May 22 2021",
+        "Possible numbers of transitive orientations of comparability graphs (Golumbic, 1977). - _David Eppstein_, Dec 29 2021"
+    ],
+    "reference": [
+        "Richard K. Guy, Unsolved Problems in Number Theory, 3rd Edition, Springer, 2004, Section B23, p. 123.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe and Reinhard Zumkeller, <a href=\"/A001013/b001013.txt\">Table of n, a(n) for n = 1..10000</a>, first 987 terms from T. D. Noe.",
+        "Jean-Marie De Koninck, Nicolas Doyon, A. Arthur Bonkli Razafindrasoanaivolala and William Verreault, <a href=\"https://doi.org/10.5817/AM2020-3-141\">Bounds for the counting function of the Jordan-P\u00f3lya numbers</a>, Archivum Mathematicum, Vol. 56, No. 3 (2020), pp. 141-152; also <a href=\"https://arxiv.org/abs/2107.09114\">on arXiv</a>, arXiv:2107.09114 [math.NT], 2021.",
+        "Martin Charles Golumbic, <a href=\"https://doi.org/10.1016/0095-8956(77)90049-1\">Comparability graphs and a new matroid</a>, Journal of Combinatorial Theory, Series B, Vol. 22, No. 1 (1977), pp. 68-90.",
+        "Camille Jordan, <a href=\"https://doi.org/10.1515/crll.1869.70.185\">Sur les assemblages de lignes</a>, Journal f\u00fcr die reine und angewandte Mathematik, Vol. 70 (1869), pp. 185-190; <a href=\"https://eudml.org/doc/148084\">alternative link</a>.",
+        "Robert A. Melter, <a href=\"http://dx.doi.org/10.1016/S0021-9800(68)80025-0\">Autometrized unary algebras</a>, J. Combinatorial Theory, Vol. 5, No. 1 (1968), pp. 21-29.",
+        "George P\u00f3lya, <a href=\"https://doi.org/10.1007/BF02546665\">Kombinatorische Anzahlbestimmungen f\u00fcr Gruppen, Graphen und chemische Verbindungen</a>, Acta Mathematica, Vol. 68 (1937), pp. 145-254; <a href=\"http://archive.ymsc.tsinghua.edu.cn/pacm_download/117/5571-11511_2006_Article_BF02546665.pdf\">alternative link</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/FactorialProducts.html\">Factorial Products</a>.",
+        "<a href=\"/index/Fa#factorial\">Index entries for sequences related to factorial numbers</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "example": [
+        "864 = (3!)^2*4!."
+    ],
+    "maple": [
+        "N:= 10000: # get all terms <= N",
+        "S:= {1}:",
+        "for k from 2 do",
+        "  kf:= k!;",
+        "  if kf > N then break fi;",
+        "  S := S union {seq(seq(kf^j * s, j = 1 .. floor(log[kf](N/s))),s=S)};",
+        "od:",
+        "S;   # if using Maple 11 or earlier, uncomment the next line:",
+        "# sort(convert(S,list));",
+        "# _Robert Israel_, Sep 09 2014"
+    ],
+    "mathematica": [
+        "For[p=0; a=f=Table[n!, {n, 1, 8}], p=!=a, p=a; a=Select[Union@@Outer[Times, f, a], #<=8!&]]; a"
+    ],
+    "program": [
+        "(Sage) # uses[prod_hull from A246663]",
+        "prod_hull(factorial, 5760) # _Peter Luschny_, Sep 09 2014",
+        "(Haskell)",
+        "import Data.Set (empty, fromList, deleteFindMin, union)",
+        "import qualified Data.Set as Set (null)",
+        "a001013 n = a001013_list !! (n-1)",
+        "a001013_list = 1 : h 0 empty [1] (drop 2 a000142_list) where",
+        "   h z s mcs xs'@(x:xs)",
+        "    | Set.null s || x < m = h z (union s (fromList $ map (* x) mcs)) mcs xs",
+        "    | m == z = h m s' mcs xs'",
+        "    | otherwise = m : h m (union s' (fromList (map (* m) $ init (m:mcs)))) (m:mcs) xs'",
+        "    where (m, s') = deleteFindMin s",
+        "-- _Reinhard Zumkeller_, Nov 13 2014",
+        "(PARI) list(lim,mx=lim)=if(lim<2, return([1])); my(v=[1],t=1); for(n=2,mx, t*=n; if(t>lim, break); v=concat(v,t*list(lim\\t, t))); Set(v) \\\\ _Charles R Greathouse IV_, May 18 2015",
+        "(Python)",
+        "def aupto(lim, mx=None):",
+        "    if lim < 2: return [1]",
+        "    v, t = [1], 1",
+        "    if mx == None: mx = lim",
+        "    for k in range(2, mx+1):",
+        "        t *= k",
+        "        if t > lim: break",
+        "        v += [t*rest for rest in aupto(lim//t, t)]",
+        "    return sorted(set(v))",
+        "print(aupto(5760)) # _Michael S. Branicky_, Jul 21 2021 after _Charles R Greathouse IV_"
+    ],
+    "xref": [
+        "Cf. A000142, A034878, A093373 (complement), A344438 (characteristic function).",
+        "Union of A344181 and A344179. Subsequence of A025487 (see also A064783).",
+        "See also A359636 and A359751."
+    ],
+    "keyword": "nonn,nice,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms, formula from _Christian G. Bower_, Dec 15 1999",
+        "Edited by _Dean Hickerson_, Sep 17 2002"
+    ],
+    "references": 55,
+    "revision": 107,
+    "time": "2023-04-18T18:52:53-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

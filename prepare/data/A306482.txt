@@ -1,0 +1,42 @@
+{
+    "number": 306482,
+    "data": "0,4,5,6,9,11,17,21,22,34,52,68,83,84,91,92,98",
+    "name": "Records for the number of 'Reverse and Add' steps in base 2 needed for a Lychrel number to join the trajectory of a smaller Lychrel number (i.e., its seed). Record setting numbers in A306481.",
+    "comment": [
+        "Record setting numbers in A306481.",
+        "Similar to the number of steps needed to reach a palindrome in the Reverse and Add! trajectories (see A066144 and A066145), the number of steps needed for a Lychrel number to reach the trajectory of its seed is relatively small.",
+        "Lychrel numbers in A066059; seeds in A075252 (for base 2).",
+        "As a clarification, this sequence can also be described as: \"Records for the number of 'Reverse and Add' steps in base 2 needed for a base 2 Lychrel number (A066059) to join the trajectory of a smaller base 2 Lychrel number seed (A075252).\" - _Robert Price_, Nov 20 2019"
+    ],
+    "mathematica": [
+        "limit = 200; (* Assumes that there is no palindrome if none is found before \"limit\" iterations *)",
+        "A066059 = Select[Range[50000],",
+        "   Length@NestWhileList[# + IntegerReverse[#, 2] &, #, # !=",
+        "         IntegerReverse[#, 2] &, 1, limit] == limit + 1 &];utraj = {};",
+        "A075252 = Select[Range[50000],    (x = NestWhileList[# + IntegerReverse[#, 2] &, #, # !=",
+        "         IntegerReverse[#, 2] & , 1, limit];",
+        "     If[Length@x >= limit  && Intersection[x, utraj] == {},",
+        "      utraj = Union[utraj, x]; True,",
+        "      utraj = Union[utraj, x]]) &];A306482 = {}; best = -1; lastj = 0;",
+        "utraj = {};",
+        "For[i = 1, i <= Length@A066059, i++,",
+        " For[j = lastj + 1, j <= Length@A075252, j++,",
+        "  If[A066059[[i]] < A075252[[j]], Break[]];",
+        "  utraj = Union[utraj, NestList[# + IntegerReverse[#, 2] &, A075252[[j]], limit]];",
+        "  lastj = j; ];",
+        " l = NestWhileList[# + IntegerReverse[#, 2] &,",
+        "   A066059[[i]], ! MemberQ[utraj, #] &, 1, limit];",
+        " If[Length@l == limit + 1, Continue[]];",
+        "If[Length@l > best, best = Length@l; AppendTo[A306482, Length@l - 1]]; ]; A306482  (* _Robert Price_, Nov 20 2019 *)"
+    ],
+    "xref": [
+        "Cf. A066059, A066144, A066145, A075252, A306481."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_A.H.M. Smeets_, Feb 18 2019",
+    "references": 2,
+    "revision": 17,
+    "time": "2019-11-21T00:13:08-05:00",
+    "created": "2019-04-28T23:06:42-04:00"
+}

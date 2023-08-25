@@ -1,0 +1,42 @@
+{
+    "number": 300355,
+    "data": "1,1,1,3,6,16,47,132,410,1254,4052,12818,42783,139082,469924,1563606,5353966,18065348,62491018,213391790,743836996,2565135934,8994087070,31251762932,110245063771,385443583008,1365151504722,4800376128986,17070221456536,60289267885410",
+    "name": "Number of enriched p-trees of weight n with odd leaves.",
+    "comment": [
+        "An enriched p-tree of weight n > 0 is either a single node of weight n, or a sequence of two or more enriched p-trees with weakly decreasing weights summing to n."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A300355/b300355.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "O.g.f: (1 + x/(1-x^2) + Prod_{i>0} 1/(1 - a(i)x^i))/2.",
+        "a(n) = Sum_{i=1..A000009(n)} A299203(A300351(n,i))."
+    ],
+    "example": [
+        "The a(5) = 16 enriched p-trees of weight with odd leaves:",
+        "5,",
+        "((31)1), ((((11)1)1)1), (((111)1)1), (((11)(11))1), (((11)11)1), ((1111)1),",
+        "(3(11)), (((11)1)(11)), ((111)(11)),",
+        "(311), (((11)1)11), ((111)11),",
+        "((11)(11)1),",
+        "((11)111),",
+        "(11111)."
+    ],
+    "mathematica": [
+        "c[n_]:=c[n]=If[EvenQ[n],0,1]+Sum[Times@@c/@y,{y,Select[IntegerPartitions[n],Length[#]>1&]}];",
+        "Table[c[n],{n,30}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(v=vector(n)); for(n=1, n, v[n] = n%2 + polcoef(1/prod(k=1, n-1, 1 - v[k]*x^k + O(x*x^n)), n)); concat([1], v)} \\\\ _Andrew Howroyd_, Aug 26 2018"
+    ],
+    "xref": [
+        "Cf. A000009, A063834, A078408, A089259, A196545, A279374, A279785, A289501, A294079, A299202, A299203, A300300, A300301, A300352, A300353, A300354."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Mar 03 2018",
+    "references": 7,
+    "revision": 9,
+    "time": "2018-08-26T16:32:49-04:00",
+    "created": "2018-03-03T22:52:07-05:00"
+}

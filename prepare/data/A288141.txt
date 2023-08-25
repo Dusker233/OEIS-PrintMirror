@@ -1,0 +1,37 @@
+{
+    "number": 288141,
+    "data": "1,1,1,1,4,5,10,22,46,148,324,722,1843,4634,12537,34248,95711,266761,724689,1983267,5553902,15900083,46201546,135511171,400668869,1189723253,3535186203,10516298421,31405658622,94378367065,285623516777,870481565252,2671088133010",
+    "name": "Number of Dyck paths of semilength n such that the number of peaks is strongly decreasing from lower to higher levels.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A288141/b288141.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>"
+    ],
+    "example": [
+        "a(5) = 5:",
+        "                     /\\        /\\        /\\        /\\",
+        "  /\\/\\/\\/\\/\\  /\\/\\/\\/  \\  /\\/\\/  \\/\\  /\\/  \\/\\/\\  /  \\/\\/\\/\\"
+    ],
+    "maple": [
+        "b:= proc(n, k, j) option remember; `if`(n=j, 1, add(add(",
+        "       b(n-j, t, i)*binomial(i, t)*binomial(j-1, i-1-t),",
+        "       t=max(k+1, i-j)..min(n-j, i-1)), i=1..n-j))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, add(b(n, k$2), k=1..n)):",
+        "seq(a(n), n=0..34);"
+    ],
+    "mathematica": [
+        "b[n_, k_, j_] := b[n, k, j] = If[n == j, 1, Sum[Sum[b[n - j, t, i]* Binomial[i, t]*Binomial[j - 1, i - 1 - t], {t, Max[k + 1, i - j], Min[n - j, i - 1]}], {i, 1, n - j}]];",
+        "a[n_] := If[n == 0, 1, Sum[b[n, k, k], {k, 1, n}]];",
+        "Table[a[n], {n, 0, 34}] (* _Jean-Fran\u00e7ois Alcover_, May 29 2018, from Maple *)"
+    ],
+    "xref": [
+        "Cf. A000108, A008930, A048285, A288140, A288146, A288147."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Alois P. Heinz_, Jun 05 2017",
+    "references": 4,
+    "revision": 19,
+    "time": "2018-05-29T03:49:50-04:00",
+    "created": "2017-06-06T17:18:38-04:00"
+}

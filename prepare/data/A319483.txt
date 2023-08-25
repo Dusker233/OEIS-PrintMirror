@@ -1,0 +1,37 @@
+{
+    "number": 319483,
+    "data": "0,1,4,9,121,484,1089,9801,10201,12321,14641,40804,44944,1002001,1234321,4008004,100020001,102030201,104060401,121242121,123454321,125686521,400080004,404090404,10000200001,10221412201,12102420121,12345654321,40000800004,1000002000001",
+    "name": "a(n) = A128921(n)^2.",
+    "example": [
+        "b(n) = reverse of a(n).",
+        "n | A128921(n) |   a(n) |   b(n) | Root of b(n) |",
+        "--+------------+--------+--------+--------------+",
+        "1 |         0  |     0  |     0  |           0  |",
+        "2 |         1  |     1  |     1  |           1  |",
+        "3 |         2  |     4  |     4  |           2  |",
+        "4 |         3  |     9  |     9  |           3  |",
+        "5 |        11  |   121  |   121  |          11  |",
+        "6 |        22  |   484  |   484  |          22  |",
+        "7 |        33  |  1089  |  9801  |          99  |",
+        "8 |        99  |  9801  |  1089  |          33  |",
+        "9 |       101  | 10201  | 10201  |         101  |"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, chain, islice",
+        "from sympy.ntheory.primetest import is_square",
+        "def A319483_gen(): # generator of terms",
+        "    return filter(lambda n:is_square(int(str(n)[::-1])),map(lambda n: n**2, chain((0,),chain.from_iterable(chain((int((s:=str(d))+s[-2::-1]) for d in range(10**l,10**(l+1))), (int((s:=str(d))+s[::-1]) for d in range(10**l,10**(l+1)))) for l in count(0)))))",
+        "A319483_list = list(islice(A319483_gen(),20)) # _Chai Wah Wu_, Jun 23 2022"
+    ],
+    "xref": [
+        "Cf. A002113, A128921, A319482."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Seiichi Manyama_, Sep 20 2018",
+    "references": 1,
+    "revision": 25,
+    "time": "2022-06-23T19:32:49-04:00",
+    "created": "2018-09-20T09:20:13-04:00"
+}

@@ -1,0 +1,65 @@
+{
+    "number": 3241,
+    "id": "M1101",
+    "data": "1,1,2,4,8,15,26,45,71,110,168,247,351,503,700,944,1294,1719,2267,2961,3839,4891,6297,7891,9912,12347,15381,18784,23203,28138,34233,41275,49824,59306,71309,84268,100127,118045,139472,162659",
+    "name": "Number of achiral rooted trees.",
+    "comment": [
+        "There may be an error in eq (37) in the Harary-Robinson paper. - _R. J. Mathar_, Sep 28 2011"
+    ],
+    "reference": [
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Jean-Fran\u00e7ois Alcover, <a href=\"/A003241/b003241.txt\">Table of n, a(n) for n = 1..80</a>",
+        "F. Harary and R. W. Robinson, <a href=\"http://dx.doi.org/10.1515/crll.1975.278-279.322\">The number of achiral trees</a>, J. Reine Angew. Math., 278 (1975), 322-335.",
+        "F. Harary and R. W. Robinson, <a href=\"/A002995/a002995_1.pdf\">The number of achiral trees</a>, J. Reine Angew. Math., 278 (1975), 322-335. (Annotated scanned copy)",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "maple": [
+        "L := BFILETOLIST(\"b003238.txt\") ;",
+        "Pofxn := proc(n)",
+        "        global L;",
+        "        add( op(i,L)*x^(i+1),i=1..120) ;",
+        "        subs(x=x^n,%) ;",
+        "end proc:",
+        "P := Pofxn(1) ;",
+        "Rn := proc(n)",
+        "        global L;",
+        "        (Pofxn(n-2)*Pofxn(2)+Pofxn(n-1)*Pofxn(1)-Pofxn(n))/x^(n-1) ;",
+        "end proc:",
+        "Px2 := Pofxn(2) ;",
+        "Px3 := Pofxn(3) ;",
+        "Px4 := Pofxn(4) ;",
+        "# eq (37) seems not to work",
+        "# R := 2*x+P^2/x^2+(1-x)*P/x*(Px2/x^2-1)-(P^2-Px2)/2/x -Px3/x^2-(Px2^2-Px4)/2/x^3 ;",
+        "#use eqs (39)-(44) instead",
+        "R := x+P+(P^2+Px2)/2/x+P*Px2/x^2+P*Px3/x^3+(Px2^2-Px4)/2/x^3 :",
+        "# heuristics, adding up to R^(40) suffices for first 80 terms",
+        "for n from 5 to 40 do",
+        "        R := R+Rn(n) :",
+        "end do:",
+        "taylor(R,x=0,80) ;",
+        "gfun[seriestolist](%) ; # _R. J. Mathar_, Sep 28 2011"
+    ],
+    "mathematica": [
+        "L = Cases[Import[\"https://oeis.org/A003238/b003238.txt\", \"Table\"], {_, _}][[All, 2]];",
+        "Pofxn[n_] := Sum[x^(i+1) L[[i]], {i, 1, 120}] /. x -> x^n;",
+        "P = Pofxn[1];",
+        "Rn[n_] := (1/x^(n-1))(Pofxn[2] Pofxn[n-2] + Pofxn[1] Pofxn[n-1] - Pofxn[n]);",
+        "Px2 = Pofxn[2]; Px3 = Pofxn[3]; Px4 = Pofxn[4];",
+        "R = (P^2 + Px2)/(2x) + (P Px2)/x^2 + (P Px3)/x^3 + P + (Px2^2 - Px4)/(2x^3) + x;",
+        "For[n = 5, n <= 40, n++, R += Rn[n]];",
+        "CoefficientList[R + O[x]^41, x] // Rest (* _Jean-Fran\u00e7ois Alcover_, Apr 06 2020, from Maple *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Extended by _R. J. Mathar_, Sep 28 2011"
+    ],
+    "references": 2,
+    "revision": 32,
+    "time": "2020-04-07T11:07:27-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

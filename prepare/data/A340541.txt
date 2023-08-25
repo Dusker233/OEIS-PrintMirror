@@ -1,0 +1,36 @@
+{
+    "number": 340541,
+    "data": "3,11,17,31,59,67,73,101,103,173,179,193,199,211,223,349,401,463,491,499,557,563,569,571,577,587,607,613,619,631,673,709,751,757,769,797,809,857,859,877,911,919,929,967,1009,1033,1039,1049,1151,1153,1193,1201,1237,1249,1259,1289,1297,1303",
+    "name": "Primes p such that the product of (p mod q) for primes q < p is a multiple of the sum of (p mod q) for primes q < p.",
+    "comment": [
+        "Primes prime(n) such that A102647(n) is divisible by A033955(n)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A340541/b340541.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(3) = 17 is a term since (17 mod q) for primes q=2,3,5,7,11,13 are 1,2,2,3,6,4, and 1*2*2*3*6*4 = 288 is divisible by 1+2+2+3+6+4 = 18."
+    ],
+    "maple": [
+        "P:= [seq(ithprime(i),i=1..1000)]:",
+        "filter:= proc(n) local L,k;",
+        "  L:= [seq(P[n] mod P[k],k=1..n-1)];",
+        "  convert(L,`*`) mod convert(L,`+`) = 0",
+        "end proc:",
+        "S:=select(filter, [$2..1000]):",
+        "map(t -> P[t], S);"
+    ],
+    "program": [
+        "(PARI) isok(p) = {if (isprime(p) && (p>2), my(s=0, t=1); forprime(q=2, p-1, my(x= p%q); s += x; t *= x;); !(t % s););} \\\\ _Michel Marcus_, Jan 11 2021"
+    ],
+    "xref": [
+        "Cf. A033955, A102647."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 11 2021",
+    "references": 1,
+    "revision": 13,
+    "time": "2021-01-12T15:36:05-05:00",
+    "created": "2021-01-11T23:07:50-05:00"
+}

@@ -1,0 +1,26 @@
+{
+    "number": 280487,
+    "data": "1,1,5,9,29,49,135,235,565,995,2177,3821,7900,13728,26974,46606,88128,150644,276283,467647,835708,1400874,2448818,4065230,6975307,11470265,19359345,31552473,52488142,84808548,139274675,223191639,362297234,576064732,925295844",
+    "name": "G.f.: Product_{i>=1, j>=1, k>=1, l>=1} 1/(1 - x^(i*j*k*l)).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A280487/b280487.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Lida Ahmadi, Ricardo G\u00f3mez A\u00edza, and Mark Daniel Ward, <a href=\"https://arxiv.org/abs/2303.02240\">A unified treatment of families of partition functions</a>, arXiv:2303.02240 [math.CO], 2023."
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} 1/(1 - x^k)^tau_4(k), where tau_4() = A007426. - _Ilya Gutkovskiy_, May 22 2018"
+    ],
+    "mathematica": [
+        "nmax=50; CoefficientList[Series[Product[1/(1-x^(i*j*k*l)), {i, 1, nmax}, {j, 1, nmax/i}, {k, 1, nmax/i/j}, {l, 1, nmax/i/j/k}], {x, 0, nmax}], x]",
+        "nmax = 50; tau4 = Table[DivisorSum[n, DivisorSigma[0, n/#] * DivisorSigma[0, #] &], {n, 1, nmax}]; s = 1 - x; Do[s *= Sum[Binomial[tau4[[k]], j]*(-1)^j*x^(j*k), {j, 0, nmax/k}]; s = Expand[s]; s = Take[s, Min[nmax + 1, Exponent[s, x] + 1, Length[s]]];, {k, 2, nmax}]; CoefficientList[Series[1/s, {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Sep 08 2018 *)"
+    ],
+    "xref": [
+        "Cf. A000041, A006171, A007426, A174465, A280486."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Vaclav Kotesovec_, Jan 04 2017",
+    "references": 7,
+    "revision": 14,
+    "time": "2023-03-10T10:13:46-05:00",
+    "created": "2017-01-05T05:02:40-05:00"
+}

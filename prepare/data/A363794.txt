@@ -1,0 +1,47 @@
+{
+    "number": 363794,
+    "data": "16,72,540,6300,92400,1681680,36756720,921470550,27886608750,970453984500,37905932634570",
+    "name": "a(n) = smallest prime(n)-smooth number k such that r(k) >= r(P(n+1)), where r(n) = A010846(n) and P(n) = A002110(n).",
+    "comment": [
+        "Let R = r(P(n)) = A010846(A002110(n)) = A363061(n).",
+        "Let S(n) be the sorted tensor product of prime power ranges {p(i)^e : i<=n, e>=0}, e.g., S(1) = A000079, S(2) = A003586, S(3) = A051037, etc.",
+        "Let T(n) = A002110(n)*S(n). Note that S(1) = T(1) since omega(A002110(1)) = 1.",
+        "Let S(n,i) be the i-th term in S(n).",
+        "Then a(n) is the smallest S(n,i), i >= R, such that S(n,i) is also in T. Equivalently, a(n) is the smallest S(n,i), i >= R, such that rad(S(n,i)) = A002110(n), where rad(n) = A007947(n)."
+    ],
+    "formula": [
+        "a(n) >= A363061(n)."
+    ],
+    "example": [
+        "a(1) = 16 since r(2^4) = 5 and r(6) = 5; numbers in row 16 of A162306 are its divisors {1, 2, 4, 8, 16}, while row 6 of A162306 is {1, 2, 3, 4, 6}.",
+        "a(2) = 72 = A003586(18) since r(72) = r(30) = 18. 72 is the 8th term in A003586 that is not in A000961.",
+        "a(3) = 540 since r(540) = 69 which exceeds r(210) = 68.",
+        "a(4) = 6300 since r(6300) = 290 which exceeds r(2310) = 283, etc.",
+        "Table showing the relationship of a(n) to r(P(n)) = A0363061(n), with p(n) = prime(n), P(n+1) = A002110(n+1), r(a(n)) = A010846(a(n)), and j the index such that S(r(a(n))) = T(j) = a(n). a(n) = m*P(n).",
+        "   n p(n)        P(n+1)          a(n)  r(P(n))  r(a(n))   j    m",
+        "  --------------------------------------------------------------",
+        "   1   2             6            16        5        5    4    8",
+        "   2   3            30            72       18       18    8   12",
+        "   3   5           210           540       68       69   13   18",
+        "   4   7          2310          6300      283      290   22   30",
+        "   5  11         30030         92400     1161     1165   29   40",
+        "   6  13        510510       1681680     4843     4848   42   56",
+        "   7  17       9699690      36756720    19985    19994   53   72",
+        "   8  19     223092870     921470550    83074    83435   68   95",
+        "   9  23    6469693230   27886608750   349670   351047   89  125",
+        "  10  29  200560490130  970453984500  1456458  1457926  107  150"
+    ],
+    "mathematica": [
+        "nn = 6; rad[x_] := rad[x] = Times @@ FactorInteger[x][[All, 1]]; f[x_] := FactorInteger[x][[-1, 1]]; S = Array[Product[Prime[i], {i, #}] &, nn + 1]; Table[Set[{p, q}, Prime[n + {0, 1}]]; r = Count[Range[S[[n + 1]]], _?(f[#] <= q &)]; c = k = 1; While[Or[c < r, rad[k] != S[[n]]], If[f[k] <= p, c++]; k++]; k, {n, nn}]"
+    ],
+    "xref": [
+        "Cf. A000079, A000961, A002110, A002473, A003586, A007947, A010846, A051037, A051038, A080197, A080681, A080682, A080683, A162306, A363061."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,1",
+    "author": "_Michael De Vlieger_, Jun 22 2023",
+    "references": 0,
+    "revision": 9,
+    "time": "2023-08-02T13:55:57-04:00",
+    "created": "2023-08-02T13:55:57-04:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 351753,
+    "data": "2,4,5,12,12,12,213,517,517,517,517,517,517,517,517,517,14457,189569,258049,258049,14144865,14144865,14144865,131391133,131391133,199844657,199844657,199844657,1196986333,1196986333,5176897753,5176897753,5176897753,5176897753",
+    "name": "Take the first n digits on the binary Champernowne string (cf. A030302); a(n) gives the starting index of the second occurrence of this n-digit string within the binary Champernowne string.",
+    "comment": [
+        "The twenty-first n-digit string is '110111001011101111000' (1808238 decimal) which cannot be readily split into consecutive smaller values implying it is likely its next occurrence is in its natural position, i.e., a(21) = 35876058."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A351753/b351753.txt\">Table of n, a(n) for n = 1..43</a>",
+        "R\u00e9my Sigrist, <a href=\"/A351753/a351753.txt\">C++ program</a>"
+    ],
+    "example": [
+        "The binary Champernowne string starts 110111001011101111000100110101011....",
+        "a(1) = 2 as the second occurrence of '1' within the string starts at index 2.",
+        "a(2) = 4 as the second occurrence of '11' within the string starts at index 4.",
+        "a(3) = 5 as the second occurrence of '110' within the string starts at index 5.",
+        "a(4) = 12 as the second occurrence of '1101' within the string starts at index 12."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        "def A351753(n):",
+        "    s1, s2 = tuple(), tuple()",
+        "    for i, s in enumerate(int(d) for n in count(1) for d in bin(n)[2:]):",
+        "        if i < n:",
+        "            s1 += (s,)",
+        "            s2 += (s,)",
+        "        else:",
+        "            s2 = s2[1:]+(s,)",
+        "            if s1 == s2:",
+        "                return i-n+2 # _Chai Wah Wu_, Feb 18 2022",
+        "(C++) See Links section."
+    ],
+    "xref": [
+        "Cf. A030302, A030303, A033307, A337227."
+    ],
+    "keyword": "nonn,more,base",
+    "offset": "1,1",
+    "author": "_Scott R. Shannon_, Feb 18 2022",
+    "ext": [
+        "a(18)-a(20) corrected and a(21)-a(34) added by _Chai Wah Wu_, Feb 18 2022"
+    ],
+    "references": 8,
+    "revision": 21,
+    "time": "2022-02-19T04:54:12-05:00",
+    "created": "2022-02-18T08:07:00-05:00"
+}

@@ -1,0 +1,69 @@
+{
+    "number": 160118,
+    "data": "0,1,9,13,41,45,73,85,169,173,201,213,297,309,393,429,681,685,713,725,809,821,905,941,1193,1205,1289,1325,1577,1613,1865,1973,2729,2733,2761,2773,2857,2869,2953,2989,3241,3253,3337,3373,3625,3661,3913,4021,4777,4789",
+    "name": "Number of \"ON\" cells at n-th stage in simple 2-dimensional cellular automaton (see Comments for precise definition).",
+    "comment": [
+        "On the infinite square grid, we start at stage 0 with all square cells in the OFF state.",
+        "Define a \"peninsula cell\" to a cell that is connected to the structure by exactly one of its vertices.",
+        "At stage 1 we turn ON a single cell in the central position.",
+        "For n>1, if n is even, at stage n we turn ON all the OFF neighboring cells from cells that were turned in ON at stage n-1.",
+        "For n>1, if n is odd, at stage n we turn ON all the peninsular OFF cells.",
+        "For the corresponding corner sequence, see A160796.",
+        "An animation will show the fractal-like behavior (cf. A139250).",
+        "For the first differences see A160415. - _Omar E. Pol_, Mar 21 2011",
+        "First differs from A188343 at a(13). - _Omar E. Pol_, Mar 28 2011"
+    ],
+    "link": [
+        "David Applegate, Omar E. Pol and N. J. A. Sloane, <a href=\"/A000695/a000695_1.pdf\">The Toothpick Sequence and Other Sequences from Cellular Automata</a>, Congressus Numerantium, Vol. 206 (2010), 157-191. [There is a typo in Theorem 6: (13) should read u(n) = 4.3^(wt(n-1)-1) for n >= 2.],",
+        "N. J. A. Sloane, <a href=\"/wiki/Catalog_of_Toothpick_and_CA_Sequences_in_OEIS\">Catalog of Toothpick and Cellular Automata Sequences in the OEIS</a>.",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>."
+    ],
+    "formula": [
+        "From _Nathaniel Johnston_, Mar 24 2011: (Start)",
+        "a(2n-1) = 9 + 4*Sum_{k=2..n} A147610(k) + 28*Sum_{k=2..n-1} A147610(k), n >= 2.",
+        "a(2n) = 9 + 4*Sum_{k=2..n} A147610(k) + 28*Sum_{k=2..n} A147610(k), n >= 1.",
+        "(End)"
+    ],
+    "example": [
+        "If we label the generations of cells turned ON by consecutive numbers we get the cell pattern shown below:",
+        "9...............9",
+        ".888.888.888.888.",
+        ".878.878.878.878.",
+        ".8866688.8866688.",
+        "...656.....656...",
+        ".8866444.4446688.",
+        ".878.434.434.878.",
+        ".888.4422244.888.",
+        ".......212.......",
+        ".888.4422244.888.",
+        ".878.434.434.878.",
+        ".8866444.4446688.",
+        "...656.....656...",
+        ".8866688.8866688.",
+        ".878.878.878.878.",
+        ".888.888.888.888.",
+        "9...............9",
+        "In the first generation, only the central \"1\" is ON, a(1)=1. In the next generation, we turn ON eight \"2\" around the central cell, leading to a(2)=a(1)+8=9. In the third generation, four \"3\" are turned ON at the vertices of the square, a(3)=a(2)+4=13. And so on..."
+    ],
+    "mathematica": [
+        "With[{d = 2}, wt[n_] := DigitCount[n, 2, 1]; a[n_] := If[OddQ[n], 3^d + (2^d)*Sum[(2^d - 1)^(wt[k] - 1), {k, 1, (n - 1)/2}] + (2^d)*(3^d - 2)*Sum[(2^d - 1)^(wt[k] - 1), {k, 1, (n - 3)/2}], 3^d + (2^d)*Sum[(2^d - 1)^(wt[k] - 1), {k, 1, n/2 - 1}] + (2^d)*(3^d - 2)*Sum[(2^d - 1)^(wt[k] - 1), {k, 1, n/2 - 1}]]; a[0] = 0; a[1] = 1; Array[a, 50, 0]] (* _Amiram Eldar_, Aug 01 2023 *)"
+    ],
+    "xref": [
+        "Cf. A139250, A139251, A147562, A147610, A160117, A160119, A160379, A160415, A160796, A188343."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Omar E. Pol_, May 05 2009",
+    "ext": [
+        "Entry revised by _Omar E. Pol_ and _N. J. A. Sloane_, Feb 16 2010, Feb 21 2010",
+        "a(8) - a(38) from _Nathaniel Johnston_, Nov 06 2010",
+        "a(13) corrected at suggestion of _Sean A. Irvine_. Then I corrected 19 terms between a(14) and a(38). Finally I added a(39)-a(42). - _Omar E. Pol_, Mar 21 2011",
+        "Rule, for n even, edited by _Omar E. Pol_, Mar 22 2011",
+        "Incorrect comment (in \"formula\" section) removed by _Omar E. Pol_, Mar 23 2011, with agreement of author.",
+        "More terms from _Amiram Eldar_, Aug 01 2023"
+    ],
+    "references": 17,
+    "revision": 39,
+    "time": "2023-08-01T06:55:57-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

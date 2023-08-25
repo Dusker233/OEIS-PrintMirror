@@ -1,0 +1,62 @@
+{
+    "number": 361990,
+    "data": "10,11,134,1144,1440,1441,1961,8121,14489,54761,116641,144144,148841,168121,313689,1964181,3249001,14932841,21436921,21622521,23164841,84272489,89870489,176475025,312033961,591948921,1326416489,1392872041,1493772841,1877996161,2120602521,2129822521,2165971689",
+    "name": "Numbers that are both the concatenation of a Fibonacci number and a square and the concatenation of a square and a Fibonacci number.",
+    "comment": [
+        "Leading 0's are not allowed, so the first number concatenated cannot be 0.",
+        "Sequence based on a suggestion by ChatGPT."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A361990/b361990.txt\">Table of n, a(n) for n = 1..93</a>"
+    ],
+    "example": [
+        "a(3) = 134 is a term because it is the concatenation of A000045(7) = 13 and 2^2 = 4, and also the concatenation of 1^2 = 1 and A000045(9) = 34."
+    ],
+    "maple": [
+        "icat:= proc(n,m) if m = 0 then n*10 else n*10^(1+ilog10(m))+m fi end proc:",
+        "for i from 1 while length(combinat:-fibonacci(i))<9 do od:",
+        "f8:= [seq(combinat:-fibonacci(n),n=2..i-1)]:",
+        "s8:= [seq(i^2, i=1..9999)]:",
+        "f0:= [0,op(f8)]: s0:= {0,op(s8)}:",
+        "S1:= select(t -> t < 10^9,{seq(seq(icat(a,b),a=f8),b=s0)}):",
+        "S2:= select(t -> t < 10^9,{seq(seq(icat(a,b),a=s8),b=f0)}):",
+        "sort(convert(S1 intersect S2,list));"
+    ],
+    "program": [
+        "(Python)",
+        "from math import isqrt",
+        "from itertools import count, islice",
+        "from sympy.ntheory.primetest import is_square",
+        "from sympy import fibonacci",
+        "def A361990_gen(): # generator of terms",
+        "    for l in count(2):",
+        "        c = set()",
+        "        for i in range(1,isqrt(10**(l-1)-1)+1):",
+        "            i2 = i**2",
+        "            k = 10**(l-len(str(i2))-1)",
+        "            for j in count(0):",
+        "                f = int(fibonacci(j))",
+        "                if f>=10*k:",
+        "                    break",
+        "                if (f==0 and k==1) or f>=k:",
+        "                    n = i2*10*k+f",
+        "                    for w in range(1,len(str(n))):",
+        "                        w2 = 10**(w-1)",
+        "                        a, b = divmod(n,w2*10)",
+        "                        if w==1 or b>=w2:",
+        "                            if (is_square(b) and (is_square(r:=5*a**2-4) or is_square(r+8))):",
+        "                                c.add(n)",
+        "        yield from sorted(c)",
+        "A361990_list = list(islice(A361990_gen(),30)) # _Chai Wah Wu_, Apr 05 2023"
+    ],
+    "xref": [
+        "Cf. A000045, A000290."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Apr 02 2023",
+    "references": 1,
+    "revision": 25,
+    "time": "2023-04-07T02:13:14-04:00",
+    "created": "2023-04-05T16:40:27-04:00"
+}

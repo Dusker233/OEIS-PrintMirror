@@ -1,0 +1,56 @@
+{
+    "number": 324743,
+    "data": "1,1,2,2,3,4,5,8,8,8,8,12,12,18,18,19,19,30,30,54,54,54,54,96,96,96,96,96,96,156,156,244,244,248,248,248,248,440,440,440,440,688,688,1120,1120,1120,1120,1864,1864,1864,1864,1864,1864,3664,3664,3664,3664,3664",
+    "name": "Number of maximal subsets of {1...n} containing no prime indices of the elements.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A324743/b324743.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "example": [
+        "The a(0) = 1 through a(8) = 8 maximal subsets:",
+        "  {}  {1}  {1}  {2}    {1,3}  {1,3}    {1,3}    {1,3,7}  {1,3,7}",
+        "           {2}  {1,3}  {2,4}  {1,5}    {1,5}    {1,5,7}  {1,5,7}",
+        "                       {3,4}  {3,4}    {2,4,5}  {2,4,5}  {2,4,5,8}",
+        "                              {2,4,5}  {3,4,6}  {2,5,7}  {2,5,7,8}",
+        "                                       {4,5,6}  {3,4,6}  {3,4,6,8}",
+        "                                                {3,6,7}  {3,6,7,8}",
+        "                                                {4,5,6}  {4,5,6,8}",
+        "                                                {5,6,7}  {5,6,7,8}",
+        "An example for n = 15 is {1,5,7,9,13,15}, with prime indices:",
+        "  1: {}",
+        "  5: {3}",
+        "  7: {4}",
+        "  9: {2,2}",
+        "  13: {6}",
+        "  15: {2,3}",
+        "None of these prime indices {2,3,4,6} belong to the subset, as required."
+    ],
+    "mathematica": [
+        "maxim[s_]:=Complement[s,Last/@Select[Tuples[s,2],UnsameQ@@#&&SubsetQ@@#&]];",
+        "Table[Length[maxim[Select[Subsets[Range[n]],Intersection[#,PrimePi/@First/@Join@@FactorInteger/@#]=={}&]]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "pset(n)={my(b=0, f=factor(n)[, 1]); sum(i=1, #f, 1<<(primepi(f[i])))}",
+        "a(n)={my(p=vector(n, k, pset(k)), d=0); for(i=1, #p, d=bitor(d, p[i]));",
+        "my(ismax(b)=my(e=0); forstep(k=#p, 1, -1, if(bittest(b,k), e=bitor(e,p[k]), if(!bittest(e,k) && !bitand(p[k], b), return(0)) )); 1);",
+        "((k, b)->if(k>#p, ismax(b), my(f=!bitand(p[k], b)); if(!f || bittest(d, k), self()(k+1, b)) + if(f, self()(k+1, b+(1<<k)))))(1, 0)} \\\\ _Andrew Howroyd_, Aug 26 2019"
+    ],
+    "xref": [
+        "The non-maximal case is A324741. The case for subsets of {2...n} is A324763.",
+        "Cf. A000720, A001462, A007097, A084422, A085945, A112798, A276625, A290689, A290822, A304360, A306844, A320426, A324764.",
+        "Cf. A324695, A324736, A324742, A324744, A324751, A324756, A324758."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Mar 15 2019",
+    "ext": [
+        "Terms a(16) and beyond from _Andrew Howroyd_, Aug 26 2019"
+    ],
+    "references": 17,
+    "revision": 10,
+    "time": "2019-08-26T21:05:06-04:00",
+    "created": "2019-03-16T10:12:04-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 317903,
+    "data": "4,76,176,4176,314176,91314176,891314176,80891314176,88080891314176,5288080891314176,705288080891314176,10705288080891314176,2410705288080891314176,912410705288080891314176,42912410705288080891314176,9242912410705288080891314176,989242912410705288080891314176",
+    "name": "a(n) = A038394(n)^^A038394(n) (mod 10^len(A038394(n))), where ^^ indicates tetration or hyper-4 (e.g., 3^^4=3^(3^(3^3))).",
+    "comment": [
+        "For any n >= 2, a(n) (mod 10^len(A038394(n))) == a(n + 1) (mod 10^len(A038394(n))), where len(k) := number of digits in k. Assuming len(a(n))>1, this is a general property of every concatenated sequence with fixed rightmost digits (such as A014925 or A092447), as shown in Rip\u00e0's book \"La strana coda della serie n^n^...^n\"."
+    ],
+    "reference": [
+        "Marco Rip\u00e0, La strana coda della serie n^n^...^n, Trento, UNI Service, Nov 2011, page 60. ISBN 978-88-6178-789-6"
+    ],
+    "link": [
+        "Marco Rip\u00e0, <a href=\"https://www.researchgate.net/publication/328493277_On_the_Convergence_Speed_of_Tetration\">On the Convergence Speed of Tetration</a>, ResearchGate (2018)."
+    ],
+    "formula": [
+        "a(n) = (p(n)_p(n-1)_p(n-2)_..._3_2)^^(p(n)_p(n-1)_p(n-2)_..._3_2) (mod 10^len(p(n)_p(n-1)_p(n-2)_..._3_2)), where len(k) := number of digits in k."
+    ],
+    "example": [
+        "For n = 6, a(6) = 13117532^^13117532 (mod 10^8) == 91314176."
+    ],
+    "program": [
+        "(PARI) tmod(b, n) = {if (b % n == 0, return (0)); if (b % n == 1, return (1)); if (gcd(b, n)==1, return (lift(Mod(b, n)^tmod(b, lift(znorder(Mod(b, n))))))); lift(Mod(b, n)^(eulerphi(n) + tmod(b, eulerphi(n))));}",
+        "f(n) = fromdigits(concat([digits(p) | p<-Vecrev(primes(n))])); \\\\ A038394",
+        "a(n) = if (n==1, 4, my(x=f(n)); tmod(x, 10^#Str(x))); \\\\ _Michel Marcus_, Sep 12 2021"
+    ],
+    "xref": [
+        "Cf. A038394, A068670, A171882 (tetration), A317824."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Marco Rip\u00e0_, Aug 10 2018",
+    "ext": [
+        "More terms from _Jinyuan Wang_, Aug 30 2020"
+    ],
+    "references": 8,
+    "revision": 32,
+    "time": "2021-09-12T12:17:24-04:00",
+    "created": "2018-09-15T15:58:17-04:00"
+}

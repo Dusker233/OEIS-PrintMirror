@@ -1,0 +1,33 @@
+{
+    "number": 309682,
+    "data": "1,1,4,10,33,81,282,762,2599,7979,27343,89371,315256,1078498,3857048,13651786,49475282,178736186,655247192,2401663838,8883371016,32906649488,122619768860,457836275272,1716620421629,6449729802639,24308647131627,91800114425437",
+    "name": "G.f.: C(x)*C(2*x^2)*C(3*x^3)*..., where C(x) is the g.f. for A000108.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A309682/b309682.txt\">Table of n, a(n) for n = 0..1669</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * 4^n / n^(3/2), where c = 1/(2*sqrt(Pi)) * Product_{k>=1} (2^k*(2^(k-1) - sqrt(4^(k-1) - k))/k) = 0.711438694828613555153724789..."
+    ],
+    "maple": [
+        "C:= proc(n) option remember; binomial(2*n, n)/(n+1) end:",
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1,",
+        "      C(n), add(C(j)*i^j*b(n-i*j, i-1), j=0..n/i))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Aug 23 2019"
+    ],
+    "mathematica": [
+        "nmax = 30; CoefficientList[Series[Product[Sum[CatalanNumber[k]*j^k*x^(j*k), {k, 0, nmax/j}], {j, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 30; CoefficientList[Series[Product[(1 - Sqrt[1 - 4*k*x^k])/(2*k*x^k), {k, 1, nmax}], {x, 0, nmax}], x]"
+    ],
+    "xref": [
+        "Cf. A025174, A110143, A322204, A326985."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Vaclav Kotesovec_, Aug 12 2019",
+    "references": 2,
+    "revision": 14,
+    "time": "2019-08-24T16:01:10-04:00",
+    "created": "2019-08-12T16:21:41-04:00"
+}

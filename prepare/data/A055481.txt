@@ -1,0 +1,34 @@
+{
+    "number": 55481,
+    "data": "1,10,18,21,72,100,101,111,134,231,246,505,682,1000,1010,1100,1122,2210,3103,4006,6008,10000,10001,10012,11101,15453,20101,29358,34698,56576,84304,100000,100010,100011,100100,100101,100110,100303,101000,101001,101010",
+    "name": "Numbers k for which there exists some m such that k = Sum_{i=1..1+floor(log_10(k))} binomial(m, d_i), where d_i is the i-th digit of k.",
+    "comment": [
+        "Contains numbers of the form 10^k, k >= 0 so the sequence is infinite. - _David A. Corneth_, Oct 30 2018"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A055481/b055481.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "3103 = C(22, 3) + C(22, 1) + C(22, 0) + C(22, 3).",
+        "C(k, 1) + C(k, 1) + C(k, 1) + C(k, 0) + C(k, 0) + C(k, 0) = 3k + 3 so all 6-digit numbers with 3 ones and 3 zeros are in the sequence. - _David A. Corneth_, Oct 30 2018"
+    ],
+    "mathematica": [
+        "ok[n_] := Block[{d = IntegerDigits@n, k=1, v, x}, If[ Max@d <= 3, False =!= Reduce[ Total@ Binomial[x, d] == n && x>0, x, Integers], While[(v = Total@ Binomial[k, d]) < n, k++]; v == n]]; Select[ Range[10^5], ok] (* _Giovanni Resta_, Oct 30 2018 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = my(d = digits(n)); for(i = 1, n, s = sum(j = 1, #d, binomial(i, d[j])); if(s >= n, return(s == n))) \\\\ _David A. Corneth_, Oct 30 2018"
+    ],
+    "xref": [
+        "Cf. A007088, A009994, A055482."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Erich Friedman_, Jun 27 2000",
+    "ext": [
+        "a(31)-a(41) from _Giovanni Resta_, Oct 30 2018"
+    ],
+    "references": 2,
+    "revision": 27,
+    "time": "2018-10-31T03:04:42-04:00",
+    "created": "2000-07-22T03:00:00-04:00"
+}

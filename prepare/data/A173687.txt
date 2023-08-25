@@ -1,0 +1,45 @@
+{
+    "number": 173687,
+    "data": "0,1,14,15,17,22,40,41,45,50,51,54,70,71,102,112,120,121,123,132,144,156,165,200,201,203,210,211,213,230,231,302,312,320,321,334,343,404,414,433,440,441,457,475,506,516,547,560,561,574,605,615,650,651,745,754,1000",
+    "name": "Numbers m such that the sum of factorial of the decimal digits of m is square.",
+    "comment": [
+        "Let the decimal expansion of n = d(0)d(1)...d(p). Numbers such that Sum_{k=0..p} d(k)! is square.",
+        "Same as A130687 except for the additional 0. - _Georg Fischer_, Oct 12 2018"
+    ],
+    "link": [
+        "Jinyuan Wang, <a href=\"/A173687/b173687.txt\">Table of n, a(n) for n = 1..9700</a>"
+    ],
+    "example": [
+        "17 is in the sequence because 1! + 7! = 1 + 5040 = 71^2."
+    ],
+    "maple": [
+        "with(numtheory):for n from 0 to 1000 do:l:=length(n):n0:=n:s:=0:for m from",
+        "  1 to l do:q:=n0:u:=irem(q,10):v:=iquo(q,10):n0:=v :s:=s+u!:od: q:=sqrt(s):if",
+        "  floor(q)= q then printf(`%d, `,n):else fi:od:~"
+    ],
+    "mathematica": [
+        "Select[Range[0, 1000], IntegerQ[Sqrt[Total[IntegerDigits[#]!]]]&] (* _Jinyuan Wang_, Feb 26 2020 *)"
+    ],
+    "program": [
+        "(Magma) [ n: n in [0..1000] | n eq 0 or IsSquare(&+[ Factorial(d): d in Intseq(n) ]) ];",
+        "(Python)",
+        "from itertools import count, islice, combinations_with_replacement",
+        "from math import factorial",
+        "from sympy.ntheory.primetest import is_square",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def A173687_gen(): # generator of terms",
+        "    yield 0",
+        "    for l in count(0):",
+        "        for i in range(1,10):",
+        "            fi = factorial(i)",
+        "            yield from sorted(int(str(i)+''.join(map(str,k))) for j in combinations_with_replacement(range(10), l) for k in multiset_permutations(j) if is_square(fi+sum(map(factorial,j))))",
+        "A173687_list = list(islice(A173687_gen(),50)) # _Chai Wah Wu_, Feb 23 2023"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Michel Lagneau_, Nov 25 2010",
+    "references": 3,
+    "revision": 24,
+    "time": "2023-02-23T12:04:35-05:00",
+    "created": "2010-11-12T14:22:51-05:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 6897,
+    "id": "M1153",
+    "data": "1,2,4,8,19,53,209,1253,13599,288267,12293435,1031291299,166122463891,50668153831843,29104823811067331,31455590793615376099,64032471295321173271027,245999896624828253856990803,1787823725042236528801735181651,24639597076850046760911809226614419",
+    "name": "a(n) is the number of hierarchical linear models on n unlabeled factors allowing 2-way interactions (but no higher order interactions); or the number of unlabeled simple graphs with <= n nodes.",
+    "comment": [
+        "a(n) is the number of isolated points over all simple unlabelled graphs with (n+1) nodes. - _Geoffrey Critzer_, Apr 14 2012"
+    ],
+    "reference": [
+        "R. C. Read and R. J. Wilson, An Atlas of Graphs, Oxford, 1998.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A006897/b006897.txt\">Table of n, a(n) for n = 0..87</a>"
+    ],
+    "formula": [
+        "O.g.f.: A(x)/(1-x), where A(x) is o.g.f. for A000088. - _Geoffrey Critzer_, Apr 12 2012",
+        "a(n) = Sum_{k=0..n} A000088(k). - _Petros Hadjicostas_, Apr 19 2020"
+    ],
+    "example": [
+        "a(2) = 4 includes the null graph G1 = [], G2 = [o], G3 = [o o], and G4 = [o-o].",
+        "a(3) = 8 includes the null graph G1 = [], G2 = [o], G3 = [o o], G4 = [o-o], G5 = [o o o], G6 = [o-o o], G7 = [o-o-o], and G8 = [triangle with three unlabeled nodes]. - _Petros Hadjicostas_, Apr 10 2020"
+    ],
+    "maple": [
+        "b:= proc(n, i, l) `if`(n=0 or i=1, 1/n!*2^((p-> add(ceil((p[j]-1)/2)",
+        "      +add(igcd(p[k], p[j]), k=1..j-1), j=1..nops(p)))([l[], 1$n])),",
+        "       add(b(n-i*j, i-1, [l[], i$j])/j!/i^j, j=0..n/i))",
+        "    end:",
+        "a:= proc(n) option remember; b(n$2, [])+`if`(n>0, a(n-1), 0) end:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Aug 14 2019"
+    ],
+    "mathematica": [
+        "nn = 15; g = Sum[NumberOfGraphs[n] x^n, {n, 0, nn}]; CoefficientList[Series[g/(1 - x), {x, 0, nn}], x]  (* _Geoffrey Critzer_, Apr 12 2012 *)"
+    ],
+    "xref": [
+        "Partial sums of A000088.",
+        "Cf. A006896 (labeled case)."
+    ],
+    "keyword": "easy,nonn,nice",
+    "offset": "0,2",
+    "author": "_Colin Mallows_",
+    "ext": [
+        "Name edited by _Petros Hadjicostas_, Apr 08 2020"
+    ],
+    "references": 7,
+    "revision": 46,
+    "time": "2020-04-20T03:51:10-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

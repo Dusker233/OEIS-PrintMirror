@@ -1,0 +1,80 @@
+{
+    "number": 336142,
+    "data": "1,1,1,4,6,11,22,41,72,142,260,454,769,1416,2472,4465,7708,13314,23630,40406,68196,119646,203237,343242,586508,993764,1677187,2824072,4753066,7934268,13355658,22229194,36945828,61555136,102019156,168474033,279181966",
+    "name": "Number of ways to choose a strict composition of each part of a strict integer partition of n.",
+    "comment": [
+        "A strict composition of n is a finite sequence of distinct positive integers summing to n."
+    ],
+    "formula": [
+        "G.f.: Product_{k >= 1} (1 + A032020(k)*x^k)."
+    ],
+    "example": [
+        "The a(1) = 1 through a(5) = 11 ways:",
+        "  (1)  (2)  (3)      (4)        (5)",
+        "            (1,2)    (1,3)      (1,4)",
+        "            (2,1)    (3,1)      (2,3)",
+        "            (2),(1)  (3),(1)    (3,2)",
+        "                     (1,2),(1)  (4,1)",
+        "                     (2,1),(1)  (3),(2)",
+        "                                (4),(1)",
+        "                                (1,2),(2)",
+        "                                (1,3),(1)",
+        "                                (2,1),(2)",
+        "                                (3,1),(1)"
+    ],
+    "maple": [
+        "b:= proc(n, i, p) option remember; `if`(i*(i+1)/2<n, 0,",
+        "     `if`(n=0, p!, b(n, i-1, p)+b(n-i, min(n-i, i-1), p+1)))",
+        "    end:",
+        "g:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0,",
+        "     `if`(n=0, 1, g(n, i-1)+b(i$2, 0)*g(n-i, min(n-i, i-1))))",
+        "    end:",
+        "a:= n-> g(n$2):",
+        "seq(a(n), n=0..38);  # _Alois P. Heinz_, Jul 31 2020"
+    ],
+    "mathematica": [
+        "strptn[n_]:=Select[IntegerPartitions[n],UnsameQ@@#&];",
+        "Table[Length[Join@@Table[Tuples[Join@@Permutations/@strptn[#]&/@ctn],{ctn,strptn[n]}]],{n,0,20}]",
+        "(* Second program: *)",
+        "b[n_, i_, p_] := b[n, i, p] = If[i(i+1)/2 < n, 0,",
+        "     If[n == 0, p!, b[n, i-1, p] + b[n-i, Min[n-i, i-1], p+1]]];",
+        "g[n_, i_] := g[n, i] = If[i(i+1)/2 < n, 0,",
+        "     If[n == 0, 1, g[n, i-1] + b[i, i, 0]*g[n-i, Min[n-i, i-1]]]];",
+        "a[n_] := g[n, n];",
+        "a /@ Range[0, 38] (* _Jean-Fran\u00e7ois Alcover_, May 20 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Multiset partitions of partitions are A001970.",
+        "Strict compositions are counted by A032020, A072574, and A072575.",
+        "Splittings of partitions are A323583.",
+        "Splittings of partitions with distinct sums are A336131.",
+        "Cf. A008289, A316245, A318684, A319794, A336128, A336130, A336132, A336135.",
+        "Partitions:",
+        "- Partitions of each part of a partition are A063834.",
+        "- Compositions of each part of a partition are A075900.",
+        "- Strict partitions of each part of a partition are A270995.",
+        "- Strict compositions of each part of a partition are A336141.",
+        "Strict partitions:",
+        "- Partitions of each part of a strict partition are A271619.",
+        "- Compositions of each part of a strict partition are A304961.",
+        "- Strict partitions of each part of a strict partition are A279785.",
+        "- Strict compositions of each part of a strict partition are A336142.",
+        "Compositions:",
+        "- Partitions of each part of a composition are A055887.",
+        "- Compositions of each part of a composition are A133494.",
+        "- Strict partitions of each part of a composition are A304969.",
+        "- Strict compositions of each part of a composition are A307068.",
+        "Strict compositions:",
+        "- Partitions of each part of a strict composition are A336342.",
+        "- Compositions of each part of a strict composition are A336127.",
+        "- Strict partitions of each part of a strict composition are A336343.",
+        "- Strict compositions of each part of a strict composition are A336139."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Jul 18 2020",
+    "references": 5,
+    "revision": 16,
+    "time": "2021-05-20T08:22:28-04:00",
+    "created": "2020-07-31T16:36:47-04:00"
+}

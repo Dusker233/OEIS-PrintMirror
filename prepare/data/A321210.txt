@@ -1,0 +1,52 @@
+{
+    "number": 321210,
+    "data": "787,72781818727,787812181218787,72781878787818727,78121818781812187,78181272727218187,7278781818181878727,7872787812187872787,727872187212781278727,781272121818121272187,781272727818727272187,781872727212727278187,72121872127872127812127,72727272187278127272727",
+    "name": "Palindromic primes in base 10 of the form 6*p+1, where p is a palindromic prime in base 10.",
+    "comment": [
+        "Conjecture 1: There are infinitely many primes of this form.",
+        "Conjecture 2: 6 is the only integer k for which palindrome primes of the form k*p+1 exist, where p is a palindromic prime.",
+        "Conjecture 2 is false. A counterexample: 180 * 101 + 1 = 18181 where 101 and 18181 are palindromic primes and k = 180. - _David A. Corneth_, Nov 01 2018",
+        "p must have an odd number of digits (since 11 is the only palindrome prime with an even number of digits) and the leading digit of p must be 1, otherwise 6p+1 has an even number of digits. So p must have the form 1...1 and 6p+1 the form 7...7.",
+        "Some other terms of this sequence: 727872187212781278727, 781272121818121272187, 781272727818727272187, 781872727212727278187, 72121872127872127812127, 72727272187278127272727, 72781872727872727818727, 78127212127872121272187, 78181218181218181218187, 78727272121212127272787, 78787272787278727278787. - _Giovanni Resta_, Oct 31 2018",
+        "From _Chai Wah Wu_, Dec 06 2019 : (Start)",
+        "Suppose q = 6p+1 is a term written as q = a0a1a2...a2a1a0 and p = b0b1b2...b2b1b0.",
+        "The discussion above shows that a0 = 7 and b0 = 1.",
+        "b_i is either 2 or 3 for i odd and b_i is either 0 or 1 for i even (see MathExchange link).",
+        "(End)"
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A321210/b321210.txt\">Table of n, a(n) for n = 1..10008</a>",
+        "MathExchange, <a href=\"https://math.stackexchange.com/questions/2977633/p-and-6p1-both-palindrome-primes-is-131-787-the-only-example\">p and 6p+1 both palindrome primes. Is (131/787) the only example?</a>."
+    ],
+    "example": [
+        "787 is in the sequence because 787 = 6*131 + 1, where 131 is a palindromic prime."
+    ],
+    "program": [
+        "(PARI) print1(787\", \" ); for(u=0, 20, z=[[1, 1], [2, 3]]; for(j=1, u-1, z=concat(z, [[0, 9]])); forvec(j=z, for(k=0, 9, n=0; for(m=1, length(j), n=n*10+j[m]); n=n*10+k; forstep(m=length(j), 1, -1, n=n*10+j[m]); if(digits(6*n+1)==Vecrev(digits(6*n+1)), if(ispseudoprime(n)==1, if(ispseudoprime(6*n+1)==1, print1(6*n+1\", \" )))))))",
+        "(Python)",
+        "from sympy import isprime",
+        "A321210_list = []",
+        "for i in range(2**20):",
+        "    s = bin(i)[2:]",
+        "    s += s[-2::-1]",
+        "    p = int(s) + int('02'*(len(s)//2)+'0')",
+        "    q = 6*p+1",
+        "    t = str(q)",
+        "    if t == t[::-1] and isprime(p) and isprime(q):",
+        "        A321210_list.append(q) # _Chai Wah Wu_, Dec 06 2019"
+    ],
+    "xref": [
+        "Cf. A002113, A002385."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo Galliani_, Oct 30 2018",
+    "ext": [
+        "a(5)-a(8) from _Giovanni Resta_, Oct 31 2018",
+        "a(9)-a(14) from _Chai Wah Wu_, Dec 05 2019"
+    ],
+    "references": 2,
+    "revision": 71,
+    "time": "2019-12-06T15:51:56-05:00",
+    "created": "2018-11-06T04:32:49-05:00"
+}

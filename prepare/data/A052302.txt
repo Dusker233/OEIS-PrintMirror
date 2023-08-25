@@ -1,0 +1,40 @@
+{
+    "number": 52302,
+    "data": "1,1,1,2,5,12,37,116,412,1526,5995,24284,101619,434402,1893983,8385952,37637803,170871486,783611214,3625508762,16906577279,79395295122,375217952457,1783447124452,8521191260092,40907997006020,197248252895597,954915026282162",
+    "name": "Number of Greg trees with n black nodes.",
+    "comment": [
+        "A Greg tree can be described as a tree with 2-colored nodes where only the black nodes are counted and the white nodes are of degree at least 3."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A052302/b052302.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "G.f.: 1 + B(x) - B(x)^2 where B(x) is g.f. of A052300."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(binomial(g(i)+j-1, j)*b(n-i*j, i-1), j=0..n/i)))",
+        "    end:",
+        "g:= n-> `if`(n<1, 0, b(n-1$2)+b(n, n-1)):",
+        "a:= n-> `if`(n=0, 1, g(n)-add(g(j)*g(n-j), j=0..n)):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Jun 22 2018"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, If[i < 1, 0,",
+        "    Sum[Binomial[g[i] + j - 1, j]*b[n - i*j, i - 1], {j, 0, n/i}]]];",
+        "g[n_] := If[n < 1, 0, b[n - 1, n - 1] + b[n, n - 1]];",
+        "a[n_] := If[n == 0, 1, g[n] - Sum[g[j]*g[n - j], {j, 0, n}]];",
+        "a /@ Range[0, 40] (* _Jean-Fran\u00e7ois Alcover_, Jun 11 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A005263, A005264, A048159, A048160, A052300, A052301, A052303."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Christian G. Bower_, Nov 15 1999",
+    "references": 4,
+    "revision": 21,
+    "time": "2021-06-11T13:37:20-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

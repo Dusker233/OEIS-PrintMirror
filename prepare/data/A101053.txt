@@ -1,0 +1,44 @@
+{
+    "number": 101053,
+    "data": "1,2,6,23,107,587,3725,26952,219756,1998951,20105485,221838905,2666280457,34689290378,485840964614,7288997427755,116634438986227,1982868327635663,35692311974248093,678159760252918824,13563246929216611852,284828660383365005643",
+    "name": "a(n) = n! * Sum_{k=0..n} Bell(k)/k! (cf. A000110).",
+    "comment": [
+        "Sequence was originally defined as an infinite sum involving generalized Laguerre polynomials: a(n) = ((-1)^n*n!/exp(1))*Sum_{k>=0} LaguerreL(n,-n-1,k)/k!, n=0,1... . It appears in the problem of normal ordering of functions of boson operators.",
+        "a(n) is the number of ways to linearly order the elements in a (possibly empty) subset S of {1,2,...,n} and then partition the complement of S. - _Geoffrey Critzer_, Aug 07 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A101053/b101053.txt\">Table of n, a(n) for n = 0..450</a>"
+    ],
+    "formula": [
+        "E.g.f: exp(exp(x)-1)/(1-x).",
+        "a(n) ~ exp(exp(1)-1) * n!. - _Vaclav Kotesovec_, Jun 26 2022",
+        "a(0) = 1; a(n) = Sum_{k=1..n} ((k-1)! + 1) * binomial(n-1,k-1) * a(n-k). - _Seiichi Manyama_, Jul 14 2022"
+    ],
+    "maple": [
+        "with(combinat): a:=n->add(bell(j)*n!/j!,j=0..n): seq(a(n),n=0..20); # _Zerinvary Lajos_, Mar 19 2007"
+    ],
+    "mathematica": [
+        "nn = 21; Range[0, nn]! CoefficientList[Series[Exp[(Exp[x]-1)]/(1-x), {x, 0, nn}], x] (* _Geoffrey Critzer_, Aug 07 2015 *)"
+    ],
+    "program": [
+        "(PARI) egf(s)=my(v=Vec(s),i); while(polcoeff(s,i)==0,i++); i--; vector(i+#v,j,polcoeff(s,j+i)*(j+i)!)",
+        "egf(exp(exp(x)-1)/(1-x)) \\\\ _Charles R Greathouse IV_, Aug 07 2015",
+        "(PARI) my(x='x+O('x^30)); Vec(serlaplace( exp(exp(x)-1)/(1-x) )) \\\\ _G. C. Greubel_, Mar 31 2019",
+        "(PARI) a_vector(n) = my(v=vector(n+1)); v[1]=1; for(i=1, n, v[i+1]=sum(j=1, i, ((j-1)!+1)*binomial(i-1, j-1)*v[i-j+1])); v; \\\\ _Seiichi Manyama_, Jul 14 2022",
+        "(Magma) m:=30; R<x>:=PowerSeriesRing(Rationals(), m); b:=Coefficients(R!( Exp(Exp(x)-1)/(1-x) )); [Factorial(n-1)*b[n]: n in [1..m]]; // _G. C. Greubel_, Mar 31 2019",
+        "(Sage) m = 30; T = taylor(exp(exp(x)-1)/(1-x), x, 0, m); [factorial(n)*T.coefficient(x, n) for n in (0..m)] # _G. C. Greubel_, Mar 31 2019"
+    ],
+    "xref": [
+        "Cf. A000110, A186755, A278677, A352270."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Karol A. Penson_, Nov 29 2004",
+    "ext": [
+        "New definition from _Vladeta Jovovic_, Dec 01 2004"
+    ],
+    "references": 8,
+    "revision": 33,
+    "time": "2022-07-14T05:17:42-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

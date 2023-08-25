@@ -1,0 +1,38 @@
+{
+    "number": 63668,
+    "data": "2,110,506,2162,3422,4970,6806,11342,13310,17030,27722,31862,36290,51302,56882,62750,68906,96410,120062,128522,146306,175142,185330,195806,217622,228962,240590,252506,267674,316406,343982,358202,417962,433622,465806,516242",
+    "name": "Numbers of the form 12*k + 2 with nonempty inverse totient set.",
+    "comment": [
+        "Except for the first term, each of these sets contains 2 terms. Other numbers of the form 12*k + 2 have empty inverse totient sets.",
+        "From _Jianing Song_, Dec 30 2018: (Start)",
+        "Except for the first term, these are numbers of the form (p - 1)*p^(2*e-1) = phi(p^(2*e)) where p is a prime congruent to 11 modulo 12. The inverse totient set for a(n) (n > 1) is {p^(2*e), 2*p^(2*e)}.",
+        "Numbers k such that A063667((k-2)/12) != 0.",
+        "The number of terms <= N is roughly (1/8)*sqrt(N)/log(N). (End)"
+    ],
+    "link": [
+        "Jianing Song, <a href=\"/A063668/b063668.txt\">Table of n, a(n) for n = 1..315</a> (All terms below 10^8.)"
+    ],
+    "example": [
+        "1407782 = 1186*1187 where 1187 is a prime congruent to 11 modulo 12, so 1407782 is a term, with invphi(1407782) = {1408969, 2817938} = {1187^2, 2*1187^2}.",
+        "267674 = 22*23^3 where 23 is a prime congruent to 11 modulo 12, so 267674 is a term, with invphi(267674) = {279841, 559682} = {23^4, 2*23^4}. - _Jianing Song_, Dec 30 2018"
+    ],
+    "program": [
+        "(PARI) A006530(n) = if(n>1, vecmax(factor(n)[, 1]), 1)",
+        "isok(n) = my(p=A006530(n), e=if(n>1, valuation(n,p), 1)); (n==2) || (p%12==11&&e%2&&n==(p-1)*p^e) \\\\ _Jianing Song_, Dec 30 2018",
+        "(PARI) isok(n) = #invphi(n) && !((n-2) % 12); \\\\ _Michel Marcus_, Dec 30 2018; using the invphi script by Max Alekseyev",
+        "(PARI) isok(m) = !((m-2) % 12) && istotient(m); \\\\ _Michel Marcus_, Apr 20 2023"
+    ],
+    "xref": [
+        "Cf. A000010, A063667."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Labos Elemer_, Aug 22 2001",
+    "ext": [
+        "Three missing terms added by _Jianing Song_, Dec 30 2018"
+    ],
+    "references": 3,
+    "revision": 21,
+    "time": "2023-04-20T04:23:32-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

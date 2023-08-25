@@ -1,0 +1,55 @@
+{
+    "number": 327897,
+    "data": "9,9009,906609,99000099,9966006699,999000000999,99956644665999,9999000000009999,999900665566009999,99999834000043899999,9999994020000204999999,999999000000000000999999,99999963342000024336999999,9999999000000000000009999999,999999974180040040081479999999",
+    "name": "a(n) is the largest palindromic number formed from two numbers with n digits multiplied together.",
+    "comment": [
+        "No formula is known to the author."
+    ],
+    "formula": [
+        "a(n) = A308803(2*n) for n > 1. - _Andrew Howroyd_, Sep 30 2019",
+        "a(2n) >= (10^(2n)-1)*(10^(2n)-10^n+1). - _Chai Wah Wu_, Sep 30 2019"
+    ],
+    "example": [
+        "a(2) = 99 * 91 = 9009, a(3) = 993 * 913 = 906609."
+    ],
+    "program": [
+        "(Python)",
+        "def is_palindrome(n):",
+        "    if n<10: return True",
+        "    n = str(n)",
+        "    midpoint = int(len(n)/2)",
+        "    return n[:midpoint] == n[-midpoint:][::-1]",
+        "def A327897(n):",
+        "    lower_bound = 10**(n-1) - 1",
+        "    upper_bound = 10**n - 1",
+        "    max_palindromes = (0,0,0)",
+        "    for n1 in range(upper_bound, lower_bound, -1):",
+        "        for n2 in range(n1, lower_bound, -1):",
+        "            n = n1* n2",
+        "            if is_palindrome(n) and n>max_palindromes[2]:",
+        "                max_palindromes = (n1, n2, n)",
+        "            if n < max_palindromes[2]:",
+        "                break",
+        "        if n1*n1 < max_palindromes[2]:",
+        "            break",
+        "    return max_palindromes",
+        "if __name__ == '__main__':",
+        "    for n in range(1,7):",
+        "        print(A327897(n))"
+    ],
+    "xref": [
+        "Cf. A308803."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Christopher Shaw_, Sep 29 2019",
+    "ext": [
+        "a(11) from _Chai Wah Wu_, Sep 30 2019",
+        "a(12) from _David A. Corneth_, Sep 30 2019",
+        "a(13)-a(15) from _Giovanni Resta_, Oct 04 2019"
+    ],
+    "references": 3,
+    "revision": 38,
+    "time": "2019-10-04T13:17:50-04:00",
+    "created": "2019-09-30T11:23:37-04:00"
+}

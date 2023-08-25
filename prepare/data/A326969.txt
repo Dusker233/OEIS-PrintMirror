@@ -1,0 +1,46 @@
+{
+    "number": 326969,
+    "data": "2,4,12,112,38892",
+    "name": "Number of sets of subsets of {1..n} whose dual is a weak antichain.",
+    "comment": [
+        "The dual of a set of subsets has, for each vertex, one edge consisting of the indices (or positions) of the edges containing that vertex. For example, the dual of {{1,2},{2,3}} is {{1},{1,2},{2}}. A weak antichain is a multiset of sets, none of which is a proper subset of any other."
+    ],
+    "formula": [
+        "a(n) = 2 * A326968(n).",
+        "a(n) = 2 * Sum_{k = 0..n} binomial(n, k) * A326970(k)."
+    ],
+    "example": [
+        "The a(0) = 2 through a(2) = 12 sets of subsets:",
+        "  {}    {}        {}",
+        "  {{}}  {{}}      {{}}",
+        "        {{1}}     {{1}}",
+        "        {{},{1}}  {{2}}",
+        "                  {{1,2}}",
+        "                  {{},{1}}",
+        "                  {{},{2}}",
+        "                  {{1},{2}}",
+        "                  {{},{1,2}}",
+        "                  {{},{1},{2}}",
+        "                  {{1},{2},{1,2}}",
+        "                  {{},{1},{2},{1,2}}"
+    ],
+    "mathematica": [
+        "dual[eds_]:=Table[First/@Position[eds,x],{x,Union@@eds}];",
+        "stableQ[u_,Q_]:=!Apply[Or,Outer[#1=!=#2&&Q[#1,#2]&,u,u,1],{0,1}];",
+        "Table[Length[Select[Subsets[Subsets[Range[n]]],stableQ[dual[#],SubsetQ]&]],{n,0,3}]"
+    ],
+    "xref": [
+        "Sets of subsets whose dual is strict are A326941.",
+        "The BII-numbers of set-systems whose dual is a weak antichain are A326966.",
+        "Sets of subsets whose dual is a (strict) antichain are A326967.",
+        "The case without empty edges is A326968.",
+        "Cf. A001146, A059052, A326951, A326970, A326971, A326975, A326978."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,1",
+    "author": "_Gus Wiseman_, Aug 10 2019",
+    "references": 8,
+    "revision": 8,
+    "time": "2019-08-12T22:32:09-04:00",
+    "created": "2019-08-12T22:32:09-04:00"
+}

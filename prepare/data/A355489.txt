@@ -1,0 +1,33 @@
+{
+    "number": 355489,
+    "data": "3,5,9,14,17,22,26,33,38,42,50,60,65,70,74,82,92,98,108,116,129,134,138,146,156,162,172,180,194,204,212,228,248,257,262,266,274,284,290,300,308,322,332,340,356,376,386,396,404,420,440,452,472,488,513,518",
+    "name": "Numbers k such that A000120(k) = A007814(k) + 2.",
+    "formula": [
+        "a(n) = a(n-1) + b(n) for n > 1 with a(1) = 3 where b(n) = {2^(n-1) if n < 4; 5 if c(n-1) = 1; otherwise 2*b(n - A000045(A072649(n-1) + 1)) - [c(n) = 1]} and where c(n) = A010056(n).",
+        "A025480(a(n)-1) = A048679(n) for n > 0.",
+        "a(A000045(n)) = 2^(n-1) + 1 for n > 1."
+    ],
+    "mathematica": [
+        "Select[Range[500], DigitCount[#, 2, 1] == IntegerExponent[#, 2] + 2 &] (* _Amiram Eldar_, Jul 04 2022 *)"
+    ],
+    "program": [
+        "(PARI) r=quadgen(5);",
+        "A355489_upto(nMax)={my(v1,v2,v3,v4); v1=vector(nMax,i,0); v1[1]=1; for(i=1,nMax-1,v1[i+1]=v1[i\\r+1]+1); v2=vector(nMax,i,0); v2[1]=1; for(i=2,nMax,v2[i]=v1[i]-v1[i-1]); v3=vector(nMax,i,0); for(i=1,3,v3[i]=2^(i-1)); for(i=4,nMax,v3[i]=if(v2[i-1]==1,5,2*v3[i-fibonacci(v1[i-1]+1)]-if(v2[i]==1,1,0))); v4=vector(nMax,i,0); v4[1]=3; for(i=2,nMax,v4[i]=v4[i-1]+v3[i]); v4}",
+        "(PARI) isok(k) = hammingweight(k) == valuation(k, 2) + 2; \\\\ _Michel Marcus_, Jul 06 2022",
+        "(Python 3.10+)",
+        "from itertools import count, islice",
+        "def A355489_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:n.bit_count()==(n&-n).bit_length()+1,count(max(startvalue,1)))",
+        "A355480_list = list(islice(A355489_gen(),30)) # _Chai Wah Wu_, Jul 15 2022"
+    ],
+    "xref": [
+        "Cf. A000045, A000120, A007814, A010056, A025480, A048679, A072649."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Mikhail Kurkov_, Jul 04 2022",
+    "references": 1,
+    "revision": 19,
+    "time": "2022-07-16T01:05:01-04:00",
+    "created": "2022-07-15T09:55:34-04:00"
+}

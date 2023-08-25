@@ -1,0 +1,38 @@
+{
+    "number": 326324,
+    "data": "1,1,6,46,456,5656,84336,1467376,29175936,652606336,16219458816,443419545856,13224580002816,427278468668416,14867050125981696,554245056343668736,22039796215883268096,931198483176870608896,41658202699736550014976,1967160945260218035798016",
+    "name": "a(n) = A_{5}(n) where A_{m}(x) are the Eulerian polynomials as defined in A326323.",
+    "comment": [
+        "See A326323 for the more general formulas."
+    ],
+    "formula": [
+        "a(n) ~ n!/5 * (4/log(5))^(n+1). - _Vaclav Kotesovec_, Aug 09 2021",
+        "a(0) = 1; a(n) = Sum_{k=1..n} binomial(n,k) * 4^(k-1) * a(n-k). - _Ilya Gutkovskiy_, Feb 04 2022"
+    ],
+    "maple": [
+        "seq(add(combinat:-eulerian1(n,k)*5^k, k=0..n), n=0..20);",
+        "# Alternative:",
+        "egf := 4/(5 - exp(4*x)): ser := series(egf, x, 21):",
+        "seq(k!*coeff(ser, x, k), k=0..20);"
+    ],
+    "mathematica": [
+        "a[1] := 1; a[n_] := 4^(n + 1)/5 HurwitzLerchPhi[1/5, -n, 0];",
+        "Table[a[n], {n, 0, 20}]",
+        "(* Alternative: *)",
+        "s[n_] := Sum[StirlingS2[n, j] 4^(n - j) j!, {j, 0, n}];",
+        "Table[s[n], {n, 0, 20}]"
+    ],
+    "xref": [
+        "Cf. A173018, A000012, A000142, A000670, A122704, A255927, A326323."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, Jun 27 2019",
+    "ext": [
+        "Corrected after notice from _Jean-Fran\u00e7ois Alcover_ by _Peter Luschny_, Jul 13 2019"
+    ],
+    "references": 9,
+    "revision": 14,
+    "time": "2022-02-04T10:36:37-05:00",
+    "created": "2019-06-27T18:28:03-04:00"
+}

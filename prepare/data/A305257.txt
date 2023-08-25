@@ -1,0 +1,43 @@
+{
+    "number": 305257,
+    "data": "1,2,3,4,5,6,7,8,9,22,123,132,213,231,312,321,1124,1142,1214,1241,1412,1421,2114,2141,2411,4112,4121,4211,11133,11222,11313,11331,12122,12212,12221,13113,13131,13311,21122,21212,21221,22112,22121,22211,31113,31131,31311,33111",
+    "name": "If pd(x) is the product of the digits of the number x and sd(x) the sum of the digits of the number x then the sequence lists all the positive numbers n for which pd(n) = sd(n) and sd(pd(n)) = pd(sd(n)).",
+    "comment": [
+        "Sequence is finite with 48 terms.",
+        "Also numbers n such that pd(n) = sd(n) and simultaneously both the additive and multiplicative persistences of n are 0 or 1.",
+        "Subsequence of A128290. Intersection of A128290 and A034710.",
+        "Numbers k such that A007953(k) = A010888(k) = A007954(k) = A031347(k). - _Mohammed Yaseen_, Nov 12 2022"
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/AdditivePersistence.html\">Additive Persistence.</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/MultiplicativePersistence.html\">Multiplicative Persistence.</a>"
+    ],
+    "example": [
+        "321 -> sd(321) = 3+2+1 = 6; pd(321) = 3*2*1 = 6; pd(sd(321)) = pd(6) = 6; sd(pd(321)) = sd(6) = 6."
+    ],
+    "mathematica": [
+        "sod[n_] := Plus@@ IntegerDigits@ n; pod[n_] := Times@@ IntegerDigits@ n; Select[ Range[10^5], pod@ # == sod@ # && pod@ sod@ # == sod@ pod@ # &] (* _Giovanni Resta_, May 30 2018 *)"
+    ],
+    "program": [
+        "MAGMA [n: n in [1..1000000] | &+Intseq(n) eq &*Intseq(n) and &*Intseq(&+Intseq(n)) eq &+Intseq(&*Intseq(n))]",
+        "(PARI) pd(n) = my(d=digits(n)); factorback(d);",
+        "alias(sd, sumdigits);",
+        "isok(n) = my(p=pd(n), s=sd(n)); (p==s) && (sd(p) == pd(s)); \\\\ _Michel Marcus_, May 30 2018",
+        "(Python)",
+        "from math import prod",
+        "def pd(x): return prod(map(int, str(x)))",
+        "def sd(x): return sum(map(int, str(x)))",
+        "def ok(n): return pd(n) == sd(n) and sd(pd(n)) == pd(sd(n))",
+        "print([k for k in range(1, 10**5) if ok(k)]) # _Michael S. Branicky_, Nov 12 2022"
+    ],
+    "xref": [
+        "Cf. A007953, A007954, A010888, A031347, A034710, A128290."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,2",
+    "author": "_Jaroslav Krizek_, May 28 2018",
+    "references": 0,
+    "revision": 20,
+    "time": "2022-12-21T22:13:15-05:00",
+    "created": "2018-06-24T11:58:50-04:00"
+}

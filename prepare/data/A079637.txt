@@ -1,0 +1,44 @@
+{
+    "number": 79637,
+    "data": "2,3,7,233,233,233,19972667609,75022592087629",
+    "name": "Smallest prime p with audioactive \"echo\" of at least n, that is, the finite sequence p_0 = p, p_1 = LookAndSay(p_0), ..., p_n = LookAndSay(p_(n-1)) consists entirely of primes.",
+    "comment": [
+        "LookAndSay(n) denotes the description of the digits of n. For example, LookAndSay(111223) = 312213. 2. There is no prime < 10^5 with echo = 6."
+    ],
+    "link": [
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_036.htm\">Puzzle 36. Sequences of \"descriptive primes\"</a>, The Prime Puzzles and Problems Connection.",
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_999.htm\">Puzzle 999. In Memoriam to John Horton Conway</a>, The Prime Puzzles and Problems Connection."
+    ],
+    "example": [
+        "233 is the smallest prime p such that p_0 = 233, p_1 = LookAndSay(233) = 1223, p_2 = LookAndSay(1223) = 112213."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, nextprime",
+        "from itertools import groupby, islice",
+        "def LS(n):",
+        "    return int(''.join(str(len(list(g)))+k for k, g in groupby(str(n))))",
+        "def f(n): return -1 if not isprime(n) else 1 + f(LS(n))",
+        "def agen(startn=0, startp=2):",
+        "    n, p = startn, startp",
+        "    while True:",
+        "        fp = f(p)",
+        "        while (fp >= n): n += 1; yield p",
+        "        p = nextprime(p)",
+        "print(list(islice(agen(), 6))) # _Michael S. Branicky_, Jul 27 2022"
+    ],
+    "xref": [
+        "Cf. A045918, A005150."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "0,1",
+    "author": "_Joseph L. Pe_, Jan 30 2003",
+    "ext": [
+        "Corrected by Mark Hudson (mrmarkhudson(AT)hotmail.com), Feb 02 2003, who reports there are no more terms < 10^6.",
+        "a(6) (found by Walter Schneider) and a(7) from _Giovanni Resta_, May 09 2020"
+    ],
+    "references": 1,
+    "revision": 22,
+    "time": "2022-07-27T02:44:27-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

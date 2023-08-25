@@ -1,0 +1,47 @@
+{
+    "number": 346541,
+    "data": "1,5,173,6273,327304,19662204,1331125733,97103842536,7486548949630,600824064355643,49716537270181030,4212436222856773156,363673201239600512658,31874623637580787947172,2828388650238276648013964,253555200931317108300020394,22925898959060646660438636660",
+    "name": "Number of walks on square lattice from (n,2n) to (0,0) using steps that decrease the Euclidean distance to the origin and increase the Euclidean distance to (n,2n) and that change each coordinate by at most 1.",
+    "comment": [
+        "Lattice points may have negative coordinates, and different walks may differ in length.  All walks are self-avoiding."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A346541/b346541.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Alois P. Heinz, <a href=\"/A346541/a346541.gif\">Animation of a(2) = 173 walks</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Self-avoiding_walk\">Self-avoiding walk</a>"
+    ],
+    "formula": [
+        "a(n) = A346540(2n,n) = A346540(n,2n)."
+    ],
+    "maple": [
+        "s:= proc(n) option remember;",
+        "     `if`(n=0, [[]], map(x-> seq([x[], i], i=-1..1), s(n-1)))",
+        "    end:",
+        "b:= proc(l, v) option remember; (n-> `if`(l=[0$n], 1, add((h-> `if`(",
+        "      add(i^2, i=h)<add(i^2, i=l) and add(i^2, i=v-h)>add(i^2, i=v-l)",
+        "      , b(h, v), 0))(l+x), x=s(n))))(nops(l))",
+        "    end:",
+        "a:= n-> b([n, 2*n]$2):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = If[n == 0, {{}}, Sequence @@",
+        "     Table[Append[#, i], {i, -1, 1}]& /@ s[n-1]];",
+        "b[l_, v_] := b[l, v] = With[{n = Length[l]},",
+        "     If[l == Table[0, {n}], 1, Sum[With[{h = l + x},",
+        "     If[h.h<l.l && (v-h).(v-h)>(v-l).(v-l), b[h, v], 0]], {x, s[n]}]]];",
+        "a[n_] := b[{n, 2n}, {n, 2n}];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Nov 04 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A346540."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Sep 16 2021",
+    "references": 2,
+    "revision": 22,
+    "time": "2021-11-04T11:08:41-04:00",
+    "created": "2021-09-17T17:05:52-04:00"
+}

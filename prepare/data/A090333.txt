@@ -1,0 +1,41 @@
+{
+    "number": 90333,
+    "data": "1,9,25,33,35,49,65,69,77,91,121,125,129,133,141,143,145,155,161,169,209,247,259,265,267,287,289,295,299,301,305,319,323,329,341,343,361,371,377,391,395,403,407,437,451,473,481,485,493,505,515,519,527,529,533",
+    "name": "Nonprimes with no divisors >1 that are prefixes of other divisors in binary representation.",
+    "comment": [
+        "A090332 without primes.",
+        "Includes all members of A001248 except 4. - _Robert Israel_, Jul 08 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A090333/b090333.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "filter:= proc(n) local d,  i,j;",
+        "  if isprime(n) then return false fi;",
+        "  d:= numtheory:-divisors(n);",
+        "  for i in d do",
+        "    for j from 1 to ilog2(i)-1 do",
+        "      if member(floor(i/2^j), d) then return false fi",
+        "  od od;",
+        "  true",
+        "end proc:",
+        "select(filter, [seq(i,i=1..1000,2)]); # _Robert Israel_, Jul 08 2020"
+    ],
+    "mathematica": [
+        "filterQ[n_] := If[PrimeQ[n], False, Catch@Module[{d = Divisors[n], j}, Do[For[j = 1, j <= Floor@Log[2, i]-1, j++, If[MemberQ[d, Floor[i/2^j]], Throw[False]]], {i, d}]; True]];",
+        "Select[Range[1000], filterQ] (* _Jean-Fran\u00e7ois Alcover_, Dec 16 2021, after _Robert Israel_ *)"
+    ],
+    "xref": [
+        "Cf. A001248, A090332."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Reinhard Zumkeller_, Nov 26 2003",
+    "ext": [
+        "Missing term 121 inserted by _Robert Israel_, Jul 08 2020"
+    ],
+    "references": 2,
+    "revision": 12,
+    "time": "2021-12-16T07:35:14-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

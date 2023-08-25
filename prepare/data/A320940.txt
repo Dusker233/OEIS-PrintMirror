@@ -1,0 +1,42 @@
+{
+    "number": 320940,
+    "data": "1,11,85,1127,15631,287021,5764809,135007759,3487020610,100146496681,3138428376733,107032667155169,3937376385699303,155582338242604221,6568408966322733475,295154660699054931999,14063084452067724991027,708239400347943609329270",
+    "name": "a(n) = Sum_{d|n} d*sigma_n(d).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A320940/b320940.txt\">Table of n, a(n) for n = 1..385</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "a(n) = n * [x^n] -log(Product_{k>=1} (1 - x^k)^sigma_n(k)).",
+        "a(n) = Sum_{d|n} d^(n+1)*sigma_1(n/d).",
+        "a(n) ~ n^(n+1). - _Vaclav Kotesovec_, Feb 16 2020"
+    ],
+    "example": [
+        "a(6) = 1*sigma_6(1)+2*sigma_6(2)+3*sigma_6(3)+6*sigma_6(6) = 1+2*65+3*730+6*47450 = 287021."
+    ],
+    "maple": [
+        "with(numtheory): seq(coeff(series(n*(-log(mul((1-x^k)^sigma[n](k),k=1..n))),x,n+1), x, n), n = 1 .. 20); # _Muniru A Asiru_, Oct 28 2018"
+    ],
+    "mathematica": [
+        "Table[Sum[d DivisorSigma[n, d], {d, Divisors[n]}] , {n, 18}]",
+        "Table[n SeriesCoefficient[-Log[Product[(1 - x^k)^DivisorSigma[n, k], {k, 1, n}]], {x, 0, n}], {n, 18}]"
+    ],
+    "program": [
+        "(PARI) a(n) = sumdiv(n, d, d*sigma(d, n)); \\\\ _Michel Marcus_, Oct 28 2018",
+        "(Python)",
+        "from sympy import divisor_sigma, divisors",
+        "def A320940(n):",
+        "    return sum(divisor_sigma(d)*(n//d)**(n+1) for d in divisors(n,generator=True)) # _Chai Wah Wu_, Feb 15 2020",
+        "(Magma) [&+[d*DivisorSigma(n,d):d in Divisors(n)]:n in [1..18]]; // _Marius A. Burtea_, Feb 15 2020"
+    ],
+    "xref": [
+        "Cf. A000203, A001001, A027847, A027848, A319647, A321141."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Oct 28 2018",
+    "references": 4,
+    "revision": 26,
+    "time": "2022-09-08T08:46:23-04:00",
+    "created": "2018-10-28T09:13:56-04:00"
+}

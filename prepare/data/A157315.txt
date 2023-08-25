@@ -1,0 +1,49 @@
+{
+    "number": 157315,
+    "data": "2,84,2516412,25131689308776,73459034127708442263660,59475400379433834763260101514326040,12984879931670595437855043594849682375333268239320",
+    "name": "G.f.: A(x) = sin( Sum_{n>=0} 2^((2n+1)^2) * C(2n,n)/4^n * x^(2n+1)/(2n+1) ); alternating zeros omitted.",
+    "comment": [
+        "Compare g.f. to the expansion of the inverse sine of x:",
+        "arcsin(x) = Sum_{n>=0} C(2n,n)/4^n * x^(2n+1)/(2n+1)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A157315/b157315.txt\">Table of n, a(n) for n = 1..29</a>"
+    ],
+    "example": [
+        "G.f.: A(x) = 2*x + 84*x^3 + 2516412*x^5 + 25131689308776*x^7 + ...",
+        "The inverse sine of A(x) begins:",
+        "arcsin(A(x)) = 2*x + 2^9*(2/4)*x^3/3 + 2^25*(6/4^2)*x^5/5 + 2^49*(20/4^3)*x^7/7 + 2^81*(70/4^4)*x^9/9 + ..."
+    ],
+    "maple": [
+        "m := 30;",
+        "S := series( sin(add(2^(4*j^2+2*j+1)*binomial(2*j,j)*x^(2*j+1)/(2*j+1), j = 0..m+2)), x, m+1);",
+        "seq(coeff(S, x, 2*j+1), j = 0..m/2); # _G. C. Greubel_, Mar 16 2021"
+    ],
+    "mathematica": [
+        "With[{m = 30}, CoefficientList[Series[Sin[Sum[2^(4*n^2+2*n+1)*((n+1)/(2*n+1)) *CatalanNumber[n]*x^(2*n+1), {n,0,m+2}]], {x,0,m}], x]][[2 ;; ;; 2 ]] (* _G. C. Greubel_, Mar 16 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(sin(sum(m=0,n\\2,2^((2*m+1)^2)*binomial(2*m,m)/4^m*x^(2*m+1)/(2*m+1))+x*O(x^n)),n)}",
+        "(Magma)",
+        "m:=30;",
+        "R<x>:=PowerSeriesRing(Rationals(), m);",
+        "b:=Coefficients(R!( Sin( (&+[2^(4*j^2+2*j+1)*Binomial(2*j,j)*x^(2*j+1)/(2*j+1): j in [0..m+2]]) ) ));",
+        "[b[2*n-1]: n in [1..Floor((m-2)/2)]]; // _G. C. Greubel_, Mar 16 2021",
+        "(Sage)",
+        "m=30",
+        "def A157315_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P( sin( sum(2^(4*j^2+2*j+1)*binomial(2*j,j)*x^(2*j+1)/(2*j+1) for j in [0..m+2])) ).list()",
+        "a=A157315_list(m); [a[2*n+1] for n in (0..(m-2)/2)] # _G. C. Greubel_, Mar 16 2021"
+    ],
+    "xref": [
+        "Cf. A000984 (C(2n, n)), A136558, A155200."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paul D. Hanna_, Mar 17 2009",
+    "references": 2,
+    "revision": 9,
+    "time": "2021-03-16T01:26:22-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

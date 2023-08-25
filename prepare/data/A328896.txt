@@ -1,0 +1,47 @@
+{
+    "number": 328896,
+    "data": "11,19,29,31,41,47,59,61,71,79,89,101,107,109,113,131,139,149,151,179,181,191,199,211,229,233,239,241,251,263,269,271,281,307,311,331,347,349,353,359,379,389,401,409,419,421,431,439,449,461,479,491,499,509",
+    "name": "Primes p such that p divides at least one of the integers Fibonacci(2k) for 2k <= p-1.",
+    "comment": [
+        "Is the sequence infinite?",
+        "Yes, it contains all primes p == 1 or 4 (mod 5), because such p divide Fibonacci(p-1). - _Robert Israel_, Nov 05 2019"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A328896/b328896.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "There are two integers k with 2*k <= 29-1 such that 29 divides Fibonacci(2*k), namely k = 7 and 14, so 29 is a term of the sequence."
+    ],
+    "maple": [
+        "filter:= proc(p) local f,k,a,b,t;",
+        "a:= -1; b:= 0;",
+        "for k from 1 to (p-1)/2 do",
+        "   t:= a+2*b mod p;",
+        "   a:= a+b mod p; b:= t;",
+        "   if t = 0 then return true fi;",
+        "od;",
+        "false",
+        "end proc:",
+        "select(filter, [seq(ithprime(i),i=2..100)]); # _Robert Israel_, Nov 05 2019"
+    ],
+    "program": [
+        "(PARI) forprime(p=1, 100, for(k=1, (p-1)/2, if(Mod(fibonacci(2*k), p)==0, print1(p, \", \"); break)))",
+        "(Sage)",
+        "def isA328896(p):",
+        "    return any(p.divides(fibonacci(2*k)) for k in (1..(p-1)//2))",
+        "print([p for p in primes(1,510) if isA328896(p)]) # _Peter Luschny_, Nov 01 2019"
+    ],
+    "xref": [
+        "Cf. A000045, A000928, A120337, A321217."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Oct 30 2019",
+    "ext": [
+        "Definition corrected by _Robert Israel_, Nov 05 2019"
+    ],
+    "references": 1,
+    "revision": 33,
+    "time": "2020-04-12T14:29:45-04:00",
+    "created": "2019-11-04T00:48:31-05:00"
+}

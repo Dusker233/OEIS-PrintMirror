@@ -1,0 +1,45 @@
+{
+    "number": 277203,
+    "data": "1,2,4,11,33,146,939,10932",
+    "name": "Number of distinct chromatic symmetric functions realizable by a graph on n vertices.",
+    "comment": [
+        "A stable partition of a graph is a set partition of the vertices where no edge has both ends in the same block. The chromatic symmetric function is given by X_G = Sum_p m(t(p)) where the sum is over all stable partitions of G, t(p) is the integer partition whose parts are the block-sizes of p, and m is augmented monomial symmetric functions (see A321895). - _Gus Wiseman_, Nov 21 2018"
+    ],
+    "link": [
+        "Richard P. Stanley, <a href=\"http://www-math.mit.edu/~rstan/pubs/pubfiles/100.pdf\">A symmetric function generalization of the chromatic polynomial of a graph</a>, Advances in Math. 111 (1995), 166-194.",
+        "Richard P. Stanley, <a href=\"http://www-math.mit.edu/~rstan/papers/taor.pdf\">Graph colorings and related symmetric functions: ideas and applications</a>, Discrete Mathematics 193 (1998), 267-286."
+    ],
+    "example": [
+        "For n = 3, under the p basis, the CSF's are: p_{1, 1, 1}, p_{1, 1, 1} - p_{2, 1}, p_{1, 1, 1} - 2p_{2, 1} + p_{3}, p_{1, 1, 1} - 3p_{2, 1} + 2p_{3}.",
+        "From _Gus Wiseman_, Nov 21 2018: (Start)",
+        "The a(4) = 11 chromatic symmetric functions (m is the augmented monomial symmetric function basis):",
+        "                                     m(1111)",
+        "                            m(211) + m(1111)",
+        "                           2m(211) + m(1111)",
+        "          m(22) +          2m(211) + m(1111)",
+        "                           3m(211) + m(1111)",
+        "          m(22) +          3m(211) + m(1111)",
+        "                   m(31) + 3m(211) + m(1111)",
+        "         2m(22) +          4m(211) + m(1111)",
+        "          m(22) +  m(31) + 4m(211) + m(1111)",
+        "         2m(22) + 2m(31) + 5m(211) + m(1111)",
+        "  m(4) + 3m(22) + 4m(31) + 6m(211) + m(1111)",
+        "(End)"
+    ],
+    "mathematica": [
+        "spsu[_,{}]:={{}};spsu[foo_,set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@spsu[Select[foo,Complement[#,Complement[set,s]]=={}&],Complement[set,s]]]/@Cases[foo,{i,___}];",
+        "chromSF[g_]:=Sum[m[Sort[Length/@stn,Greater]],{stn,spsu[Select[Subsets[Union@@g],Select[DeleteCases[g,{_}],Function[ed,Complement[ed,#]=={}]]=={}&],Union@@g]}];",
+        "simpleSpans[n_]:=simpleSpans[n]=If[n==0,{{}},Union@@Table[If[#=={},Union[ine,{{n}}],Union[Complement[ine,List/@#],{#,n}&/@#]]&/@Subsets[Range[n-1]],{ine,simpleSpans[n-1]}]];",
+        "Table[Length[Union[chromSF/@simpleSpans[n]]],{n,6}] (* _Gus Wiseman_, Nov 21 2018 *)"
+    ],
+    "xref": [
+        "Cf. A000088, A000110, A000569, A006125, A229048, A240936, A245883, A277204, A277205, A321750, A321751, A321895, A321911."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Sam Heil_ and _Caleb Ji_, Oct 04 2016",
+    "references": 17,
+    "revision": 26,
+    "time": "2018-11-23T07:58:35-05:00",
+    "created": "2016-11-05T12:55:21-04:00"
+}

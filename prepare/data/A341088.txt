@@ -1,0 +1,39 @@
+{
+    "number": 341088,
+    "data": "2,7,67,673,8389",
+    "name": "a(n) is the least prime p such that there is a set of n primes <= p such that every concatenation of two distinct members of the set is prime.",
+    "comment": [
+        "a(6) > 400000 if it exists.",
+        "Consider the graph whose vertices are primes, with an edge {p,q} if both concatenations pq and qp are prime. a(n) is the least p such that there is an n-clique in this graph with largest vertex p."
+    ],
+    "example": [
+        "For n=1 there are no concatenations to consider, so a(1) is the first prime 2.",
+        "a(2) = 7 with the set {3,7}, where both concatenations 37 and 73 are both prime.",
+        "a(3) = 67 with the set {3, 37, 67}, where all concatenations 337, 373, 367, 673, 3767 and 6737 are prime.",
+        "a(4) = 673 with the set {3, 7, 109, 673} and 12 prime concatenations.",
+        "a(5) = 8389 with the set {13, 5197, 5701, 6733, 8389} and 20 prime concatenations."
+    ],
+    "maple": [
+        "dcat:= proc(x,y) 10^(1+ilog10(y))*x+y end proc:",
+        "Primes:= select(isprime, [seq(i,i=3..10^5,2)]):",
+        "nP:= nops(Primes):",
+        "V:= Vector(5):",
+        "V[1]:= 2: count:= 1:",
+        "for i from 1 while count < 5 do",
+        "  p:= Primes[i];",
+        "  S[p]:= select(t -> isprime(dcat(p,t)) and isprime(dcat(t,p)), Primes[1..i-1]);",
+        "  E:= map(convert,select(t -> member(t[1],S[t[2]]), {seq(seq([S[p][i],S[p][j]],i=1..j-1),j=1..nops(S[p]))}),set);",
+        "  G:= GraphTheory:-Graph(S[p],E);",
+        "  c:= GraphTheory:-CliqueNumber(G)+1;",
+        "  if V[c] = 0 then V[c]:= p; count:= count+1 fi",
+        "od:",
+        "convert(V,list);"
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "5,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Feb 13 2022",
+    "references": 1,
+    "revision": 15,
+    "time": "2022-02-18T20:45:55-05:00",
+    "created": "2022-02-18T20:45:55-05:00"
+}

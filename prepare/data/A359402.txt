@@ -1,0 +1,44 @@
+{
+    "number": 359402,
+    "data": "0,1,3,5,7,9,15,17,21,27,31,33,45,51,63,65,70,73,78,85,93,99,107,119,127,129,150,153,165,189,195,219,231,255,257,266,273,282,294,297,310,313,325,334,341,350,355,365,371,381,387,397,403,413,427,443,455,471",
+    "name": "Numbers whose binary expansion and reversed binary expansion have the same sum of positions of 1's, where positions in a sequence are read starting with 1 from the left.",
+    "comment": [
+        "Also numbers whose binary expansion and reversed binary expansion have the same sum of partial sums.",
+        "Also numbers whose average position of a 1 in their binary expansion is (c+1)/2, where c is the number of digits.",
+        "Conjecture: Also numbers whose binary expansion has as least squares fit a line of zero slope, counted by A222955."
+    ],
+    "formula": [
+        "A230877(a(n)) = A029931(a(n))."
+    ],
+    "example": [
+        "The binary expansion of 70 is (1,0,0,0,1,1,0), with positions of 1's {1,5,6}, while the reverse positions are {2,3,7}. Both sum to 12, so 70 is in the sequence."
+    ],
+    "mathematica": [
+        "Select[Range[0,100],#==0||Mean[Join@@Position[IntegerDigits[#,2],1]]==(IntegerLength[#,2]+1)/2&]"
+    ],
+    "program": [
+        "(Python)",
+        "from functools import reduce",
+        "from itertools import count, islice",
+        "def A359402_gen(startvalue=0): # generator of terms",
+        "    return filter(lambda n:(r:=reduce(lambda c, d:(c[0]+d[0]*(e:=int(d[1])),c[1]+e),enumerate(bin(n)[2:],start=1),(0,0)))[0]<<1==(n.bit_length()+1)*r[1],count(max(startvalue,0)))",
+        "A359402_list = list(islice(A359402_gen(),30)) # _Chai Wah Wu_, Jan 08 2023"
+    ],
+    "xref": [
+        "Binary words of this type appear to be counted by A222955.",
+        "For greater instead of equal sums we have A359401.",
+        "These are the indices of 0's in A359495.",
+        "A030190 gives binary expansion, reverse A030308.",
+        "A048793 lists partial sums of reversed standard compositions, sums A029931.",
+        "A070939 counts binary digits, 1's A000120.",
+        "A326669 lists numbers with integer mean position of a 1 in binary expansion.",
+        "Cf. A051293, A053632, A231204, A291166, A304818, A318283, A326672, A326673, A358134, A359042."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Jan 05 2023",
+    "references": 8,
+    "revision": 12,
+    "time": "2023-01-08T01:16:26-05:00",
+    "created": "2023-01-07T09:29:53-05:00"
+}

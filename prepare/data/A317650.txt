@@ -1,0 +1,24 @@
+{
+    "number": 317650,
+    "data": "3,5,5,11,11,29,41,71,71,881,1079,10009,10009,32759,82081,636481,636481,2162161,2162161,2162161,2162161,39412801,39412801,39412801,39412801,1074427199,1074427199,15362146799,15362146799,109271408401,482955026399,482955026399",
+    "name": "The n-th term is the smallest integer > 1 that is congruent to +1 or -1 modulo k for all 2 <= k <= n.",
+    "mathematica": [
+        "Rest@ Nest[Function[a, Append[a, Block[{k = a[[-1]]}, While[! AllTrue[Table[Or[# == 1, # == m - 1] &@ Mod[k, m], {m, Length@ a + 1}], # &], k++]; k]]], {2}, 16] (* _Michael De Vlieger_, Aug 02 2018 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "ok(n,m)={for(i=2, n, my(r=m%i); if(r<>1&&r<>i-1, return(0))); 1}",
+        "a(n)={my(m=oo, p=primes(primepi(n))); p=vector(#p, i, p[i]^logint(n, p[i]));",
+        "for(k=0, 2^#p-1, my(t=2+lift(-2+chinese(vector(#p, i, Mod(if(bittest(k, i-1), -1, 1), p[i]))))); if(t<m && ok(n,t), m=t)); m} \\\\ _Andrew Howroyd_, Aug 02 2018"
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Kevin D. Woerner_, Aug 02 2018",
+    "ext": [
+        "a(21)-a(32) from _Andrew Howroyd_, Aug 02 2018"
+    ],
+    "references": 0,
+    "revision": 11,
+    "time": "2018-08-04T06:31:59-04:00",
+    "created": "2018-08-04T06:31:59-04:00"
+}

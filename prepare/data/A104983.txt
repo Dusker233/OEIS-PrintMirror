@@ -1,0 +1,36 @@
+{
+    "number": 104983,
+    "data": "1,2,6,24,122,750,5376,43856,400518,4046334,44808104,539850984,7032370302,98516491214,1477264979352,23612920280976,400847064718166,7202901369491694,136596819590256984,2726503675380494408",
+    "name": "Row sums of triangular matrix T = A104980 which satisfies: SHIFT_LEFT(column 0 of T^p) = p*(column p+1 of T).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A104983/b104983.txt\">Table of n, a(n) for n = 0..440</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A104980(n, k)."
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[k<0 || k>n, 0, If[k==n, 1, If[k==n-1, n, k*T[n, k+1] + Sum[T[j, 0]*T[n, j+k+1], {j, 0, n-k-1}]]]]; (* T=A104890 *)",
+        "Table[Sum[T[n, k], {k,0,n}], {n,0,30}] (* _G. C. Greubel_, Jun 07 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if(n<0, 0, sum(k=0, n, (matrix(n+1, n+1, m, j, if(m==j, 1, if(m==j+1, -m+1, -polcoeff((1-1/sum(i=0, m, i!*x^i))/x +O(x^m), m-j-1))))^-1)[n+1,k+1]))};",
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n,k):",
+        "    if (k<0 or k>n): return 0",
+        "    elif (k==n): return 1",
+        "    elif (k==n-1): return n",
+        "    else: return k*T(n, k+1) + sum( T(j, 0)*T(n, j+k+1) for j in (0..n-k-1) )",
+        "[sum(T(n,k) for k in (0..n)) for n in (0..30)] # _G. C. Greubel_, Jun 07 2021"
+    ],
+    "xref": [
+        "Cf. A104980."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Apr 10 2005",
+    "references": 2,
+    "revision": 6,
+    "time": "2021-06-07T18:49:40-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 350508,
+    "data": "0,1,2,10,20,21,100,102,110,111,210,211,212,220,221,222,1000,1010,1011,1020,1021,1022,1110,1111,1112,1121,1122,2000,2001,2010,2011,2012,2021,2022,12101,12102,12111,12112,12120,12121,12122,12201,12202,12221,12222,20220",
+    "name": "Numbers whose base-10 representation is a (scattered) subsequence of their base-3 representation.",
+    "comment": [
+        "Not known to be infinite.",
+        "Stan Wagon observed in an e-mail message to me (January 1 2022) that 2022 has this property, and remarked that this \"will not happen again for a very long time\". - _Jeffrey Shallit_, Jan 02 2022"
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A350508/b350508.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The base-3 representation of 2022 is 2202220, and 2022 is a subsequence of that."
+    ],
+    "program": [
+        "(PARI) is(n) = { if (n && vecmax(digits(n))>=3, return (0)); my (t=n); while (n && t, if (n%10==t%3, n\\=10); t\\=3); n==0 } \\\\ _R\u00e9my Sigrist_, Jan 02 2022",
+        "(Python)",
+        "from itertools import count, islice, product",
+        "def ok(n): # after _Remy Sigrist_",
+        "    if n and int(max(str(n))) >= 3: return False",
+        "    t = n",
+        "    while n and t:",
+        "        if n%10 == t%3:",
+        "            n //= 10",
+        "        t //= 3",
+        "    return n == 0",
+        "def agen(): # generator of terms",
+        "    yield 0",
+        "    for d in count(1):",
+        "        for first in \"12\":",
+        "            for rest in product(\"012\", repeat=d-1):",
+        "                k = int(first + \"\".join(rest))",
+        "                if ok(k):",
+        "                    yield k",
+        "print(list(islice(agen(), 46))) # _Michael S. Branicky_, Jan 02 2022"
+    ],
+    "xref": [
+        "Cf. A038103, which deals with contiguous substrings instead of subsequences."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Jeffrey Shallit_, Jan 02 2022",
+    "ext": [
+        "a(1) = 0 prepended by _R\u00e9my Sigrist_, Jan 02 2022"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2022-01-02T14:13:05-05:00",
+    "created": "2022-01-02T09:23:48-05:00"
+}

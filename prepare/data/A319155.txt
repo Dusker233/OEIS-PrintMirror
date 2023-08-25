@@ -1,0 +1,28 @@
+{
+    "number": 319155,
+    "data": "1,1,3,11,51,337,3500,60936,1866002,102768062,10296340496,1890236147880,639528747831552,400813006079742544,467517947968588109568,1019290779610824185400096,4170141472168738281510957264,32130367702064742239376997422512",
+    "name": "Number of bicolored graphs on 2n unlabled nodes without isolated nodes and which are invariant when the two color classes are interchanged.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A319155/b319155.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "formula": [
+        "a(n) = A122082(n) - A122082(n-1)."
+    ],
+    "mathematica": [
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_] := Sum[GCD[v[[i]], v[[j]]], {i, 2, Length[v]}, {j, 1, i - 1}] + Total @ Quotient[v + 1, 2];",
+        "A122082[n_] := Module[{s = 0}, Do[s += permcount[p]*2^edges[p], {p, IntegerPartitions[n]}]; s/n!];",
+        "a[n_] := A122082[n] - A122082[n-1];",
+        "a /@ Range[0, 17] (* _Jean-Fran\u00e7ois Alcover_, Sep 05 2019, after _Andrew Howroyd_ in A122082 *)"
+    ],
+    "xref": [
+        "Cf. A007140, A122082."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Andrew Howroyd_, Sep 25 2018",
+    "references": 2,
+    "revision": 21,
+    "time": "2019-10-06T17:47:00-04:00",
+    "created": "2018-09-25T18:44:50-04:00"
+}

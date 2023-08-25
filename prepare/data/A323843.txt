@@ -1,0 +1,43 @@
+{
+    "number": 323843,
+    "data": "0,1,1,2,8,52,502,6824,127166,3205924,108975934,5006366048,312601245662,26708244267148,3142852107059758,512229404374936616,116165284523764481294,36791597841822774872116,16320947226945992981680606,10163558457757761048966068912",
+    "name": "Number of n-node connected Stanley graphs.",
+    "comment": [
+        "For precise definition see Knuth (1997)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A323843/b323843.txt\">Table of n, a(n) for n = 0..155</a>",
+        "D. E. Knuth, <a href=\"/A323841/a323841.pdf\">Letter to Daniel Ullman and others</a>, Apr 29 1997. [Annotated scanned copy, with permission]"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; add(mul(",
+        "      (2^(i+k)-1)/(2^i-1), i=1..n-k), k=0..n)",
+        "    end:",
+        "p:= proc(n) option remember;",
+        "      add(b(n-j)*binomial(n, j)*(-1)^j, j=0..n)",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n=0, 0, p(n)-add(",
+        "      binomial(n, j)*p(n-j)*a(j)*j, j=1..n-1)/n)",
+        "    end:",
+        "seq(a(n), n=0..21);  # _Alois P. Heinz_, Sep 24 2019"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = Sum[Product[(2^(i+k) - 1)/(2^i - 1), {i, n-k}], {k, 0, n}];",
+        "p[n_] := p[n] = Sum[b[n-j] Binomial[n, j] (-1)^j, {j, 0, n}];",
+        "a[n_] := a[n] = If[n == 0, 0, p[n] - Sum[Binomial[n, j] p[n-j] a[j] j, {j, n-1}]/n];",
+        "a /@ Range[0, 21] (* _Jean-Fran\u00e7ois Alcover_, May 24 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A135922, A323841, A323842."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_, Feb 04 2019",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Sep 24 2019"
+    ],
+    "references": 5,
+    "revision": 18,
+    "time": "2020-05-24T06:32:36-04:00",
+    "created": "2019-02-04T19:40:53-05:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 300331,
+    "data": "5,8,9,10,11,16,17,18,20,25,26,29,32,34,36,40,41,45,50,53,55,58,64,65,68,72,74,81,82,85,89,90,98,100,101,104,106,113,116,122,125,128,130,136,137,144,145,146,149,153,160,162,164,170,173,176,178,180,185",
+    "name": "Integers represented by a cyclotomic binary form Phi{k}(x,y) with positive integers x and y where max(x, y) >= 2 and the index k is not prime.",
+    "comment": [
+        "A cyclotomic binary form is a homogeneous polynomial in two variables of the form p(x, y) = y^phi(k)*Phi(k, x/y) where Phi(k, z) is a cyclotomic polynomial of index k and phi is Euler's totient function. An integer m is represented by p if p(x,y) = m has an integer solution.",
+        "m is in this sequence if and only if m is in A296095 but not in A300332. This means m can be represented by a cyclotomic binary form but not as m = Sum_{j in 0:p-1} x^j*y^(p-j-1) with p prime."
+    ],
+    "link": [
+        "\u00c9tienne Fouvry, Claude Levesque, Michel Waldschmidt, <a href=\"https://arxiv.org/abs/1712.09019\">Representation of integers by cyclotomic binary forms</a>, arXiv:1712.09019 [math.NT], 2017."
+    ],
+    "example": [
+        "1037 is in this sequence because 1037 = f(26,19) = f(29,14) with f(x,y) = y^2 + x^2 are the only representations of 1037 by a cyclotomic binary form (which has index 4).",
+        "1031 is not in this sequence because 1031 = f(5,2) where f(x,y) = x^4 + y*x^3 + y^2*x^2 + y^3*x + y^4 (which has index 5)."
+    ],
+    "program": [
+        "(Julia)",
+        "using Nemo",
+        "function isA300331(n)",
+        "    R, z = PolynomialRing(ZZ, \"z\")",
+        "    N = QQ(n)",
+        "    # Bounds from Fouvry & Levesque & Waldschmidt",
+        "    logn = log(n)^1.161",
+        "    K = Int(floor(5.383*logn))",
+        "    M = Int(floor(2*(n/3)^(1/2)))",
+        "    r = false",
+        "    k = 2",
+        "    while k <= K",
+        "        if k == 7",
+        "            K = Int(ceil(4.864*logn))",
+        "            M = Int(ceil(2*(n/11)^(1/4)))",
+        "        end",
+        "            e = Int(eulerphi(ZZ(k)))",
+        "            c = cyclotomic(k, z)",
+        "            for y in 2:M, x in 1:y",
+        "                if N == y^e*subst(c, QQ(x, y))",
+        "                    isprime(ZZ(k)) && return false",
+        "                    r = true",
+        "                end",
+        "            end",
+        "        k += 1",
+        "    end",
+        "    return r",
+        "end",
+        "A300331list(upto) = [n for n in 1:upto if isA300331(n)]",
+        "println(A300331list(185))"
+    ],
+    "xref": [
+        "Cf. A296095, A293654, A299930, A300332."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Mar 06 2018",
+    "references": 0,
+    "revision": 16,
+    "time": "2018-03-09T04:44:13-05:00",
+    "created": "2018-03-07T08:19:46-05:00"
+}

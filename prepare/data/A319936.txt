@@ -1,0 +1,52 @@
+{
+    "number": 319936,
+    "data": "113,227,453,906,909,1812,1813,1818,2417,3624,3626,3636,3637,7248,7252,7253,7272,7281,9669,14496,14504,14544,14549,14562,14563,19338,28992,29008,29013,29088,29124,29125,30559,38676,38677,38833,38835,45839,54327,57984",
+    "name": "Numbers with more than one Collatz tripling step whose odd Collatz trajectory does not contain primes.",
+    "comment": [
+        "The starting number itself is not counted in the trajectory, otherwise prime numbers like 113 or 227 wouldn't appear in this sequence.",
+        "The \"odd Collatz trajectory\" of a number k is the subset of odd numbers of the full Collatz trajectory of k."
+    ],
+    "example": [
+        "113 is in this sequence because 113*3+1 = 340; 340/2 = 170; 170/2 = 85; 85*3+1 = 256, which goes to 1. The trajectory has 2 (> 1) tripling steps and 85 isn't a prime.",
+        "114 is not in this sequence because 114/2 = 57; 57*3+1 = 172; 172/2 = 86; 86/2 = 43, which is a prime, and this trajectory has more than 1 tripling step."
+    ],
+    "mathematica": [
+        "Select[Range[3, 60000], And[Count[#, _?OddQ] > 1, NoneTrue[Rest@ #, PrimeQ]] &@ NestWhileList[If[EvenQ@ #, #/2, 3 # + 1] &, #, # > 2 &, 1, Infinity, -1] &] (* _Michael De Vlieger_, Nov 07 2018 *)"
+    ],
+    "program": [
+        "(Java)",
+        "for(int i = 0; i < DIM; i++) {",
+        "    if(!collatzAtLeastOnePrime(c) && collatzTriplingSteps(c) > 1)",
+        "        System.out.print(c + \", \");",
+        "}",
+        "boolean collatzAtLeastOnePrime(int i) {",
+        "    //first step outside the while loop...",
+        "  if(i % 2 == 0)",
+        "        i /= 2;",
+        "    else",
+        "        i = 3 * i + 1;",
+        "  //...otherwise prime numbers like 113 or 227 would be excluded",
+        "    while(i > 1) {",
+        "        if(i % 2 == 0) {",
+        "            i /= 2;",
+        "        }",
+        "        else {",
+        "            if(BigInteger.valueOf(i).isProbablePrime(10))",
+        "                return true;",
+        "            i = 3 * i + 1;",
+        "        }",
+        "    }",
+        "    return false;",
+        "}"
+    ],
+    "xref": [
+        "Cf. A002450, A006577."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alessandro Polcini_, Oct 10 2018",
+    "references": 0,
+    "revision": 30,
+    "time": "2022-05-30T16:33:48-04:00",
+    "created": "2018-12-08T21:52:32-05:00"
+}

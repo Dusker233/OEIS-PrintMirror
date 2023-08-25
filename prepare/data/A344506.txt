@@ -1,0 +1,42 @@
+{
+    "number": 344506,
+    "data": "1,4,17,73,315,1362,5895,25528,110579,479068,2075683,8993897,38971621,168871854,731764089,3170939841,13740635787,59542470588,258016586955,1118069698011,4844962624953,20994821090790,90977510544237,394235745437286,1708354520308101",
+    "name": "a(n) = [x^n] 2 / (1 - 7*x + sqrt(1 - 2*x - 3*x^2)).",
+    "comment": [
+        "The Motzkin polynomials (coefficients in A064189) evaluated at x = 3."
+    ],
+    "formula": [
+        "a(n) = [x^n] reverse((3*x^2 + x) / (13*x^2 + 7*x + 1)) / x.",
+        "a(n) = Sum_{k=0..n} 3^k*binomial(n, k)*hypergeom([(k-n)/2, (k-n+1)/2], [k+2], 4).",
+        "a(n) = (39*(2 - n)*a(n - 3) - (17*n + 5)*a(n - 2) + (19*n + 10)*a(n - 1))/(3*n + 3) for n >= 3.",
+        "a(n) ~ 8 * 13^n / 3^(n+2). - _Vaclav Kotesovec_, May 24 2021",
+        "G.f.: 1/(1 - 4*x - x^2/(1 - x - x^2/(1 - x - x^2/(1 - x - x^2/(1 - ...))))), a continued fraction. - _Ilya Gutkovskiy_, Nov 19 2021"
+    ],
+    "maple": [
+        "gf := 2 / (1 - 7*x + sqrt(1 - 2*x - 3*x^2)):",
+        "ser := series(gf, x, 27): seq(coeff(ser, x, n), n=0..25);",
+        "# Or:",
+        "rgf := (3*x^2 + x)/(13*x^2 + 7*x + 1):",
+        "subsop(1 = NULL, gfun:-seriestolist(series(rgf, x, 28), 'revogf'));"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[n] == (39 (2 - n) a[n - 3] - (17 n + 5) a[n - 2] + (19 n + 10) a[n - 1])/(3 n + 3), a[0] == 1, a[1] == 4, a[2] == 17}, a, {n, 0, 26}]"
+    ],
+    "program": [
+        "(SageMath)",
+        "R.<x> = PowerSeriesRing(QQ, default_prec=25)",
+        "f = (3*x^2 + x) / (13*x^2 + 7*x + 1)",
+        "f.reverse().shift(-1).list()"
+    ],
+    "xref": [
+        "The Motzkin polynomials evaluated at: x = 0 (A001006), x = 1 (A005773), x = 2 (A059738), x = 3 (this sequence).",
+        "Cf. A064189, A344507."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Peter Luschny_, May 23 2021",
+    "references": 2,
+    "revision": 21,
+    "time": "2021-11-19T11:10:47-05:00",
+    "created": "2021-05-24T23:33:48-04:00"
+}

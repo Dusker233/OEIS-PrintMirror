@@ -1,0 +1,47 @@
+{
+    "number": 48519,
+    "data": "11,13,19,37,53,59,71,73,97,101,103,127,149,163,167,181,233,257,271,277,293,307,367,383,389,419,431,433,479,499,509,547,563,587,617,631,701,727,743,787,811,839,857,859,947,1009,1049,1061,1087,1153,1171",
+    "name": "Prime plus its digit sum equals a prime.",
+    "comment": [
+        "For any prime p, p +- digitsum(p, base b) can't be prime unless the base b is even, since in an odd base, an odd number always has an odd digit sum (powers of b are congruent to b (mod 2)), so p +- digitsum(p, base b) is even for odd b. This sequence is for b = 10 (where \"-\" is also excluded, see comment in A243442), see A243441 for b = 2. - _M. F. Hasler_, Nov 06 2018",
+        "See subsequence A048523 for primes which only once give another prime under iteration of A062028, and A048524 .. A048527, A320878 .. A320880 for primes starting longer chains. See A090009 for their initial terms, starting the earliest chain of given length. - _M. F. Hasler_, Nov 09 2018"
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A048519/b048519.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "Primes in A047791, i.e., intersection of A047791 and A000040. - _M. F. Hasler_, Nov 08 2018"
+    ],
+    "example": [
+        "a(9) = prime 97 because 97 + sum-of-digits(97) = 97 + 16 = 113 also a prime."
+    ],
+    "maple": [
+        "P:=proc(n) local i,j,k,w; for i from 1 by 1 to n do w:=0; k:=ithprime(i); j:=k; while k>0 do w:=w+k-(trunc(k/10)*10); k:=trunc(k/10); od; if isprime(j+w) then print(j); fi; od; end: P(1000); # _Paolo P. Lava_, Mar 02 2009",
+        "# Alternate:",
+        "select(n -> isprime(n) and isprime(n + convert(convert(n,base,10),`+`)), [$1..10^4]); # _Robert Israel_, Aug 10 2014"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[500]],PrimeQ[#+Total[IntegerDigits[#]]]&] (* _Harvey P. Dale_, Oct 03 2011 *)"
+    ],
+    "program": [
+        "(PARI) select( is(p)=isprime(p+sumdigits(p))&&isprime(p), primes([0,2000])) \\\\ _M. F. Hasler_, Aug 08 2014, edited Nov 09 2018",
+        "(Haskell)",
+        "a048519 n = a048519_list !! (n-1)",
+        "a048519_list = map a000040 $ filter ((== 1) . a010051' . a065073) [1..]",
+        "-- _Reinhard Zumkeller_, Sep 27 2014",
+        "(Magma) [p: p in PrimesUpTo(1200) | IsPrime(q) where q is p+&+Intseq(p)]; // _Vincenzo Librandi_, Jan 30 2018"
+    ],
+    "xref": [
+        "Cf. A007953 (digit sum), A062028 (n + digit sum of n), A047791 (A062028(n) is prime), A048520.",
+        "Cf. A006378, A107740.",
+        "Cf. A000040, A010051, A065073.",
+        "Cf. A048523 .. A048527, A320878, A320879, A320880, A090009."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, May 15 1999",
+    "references": 29,
+    "revision": 47,
+    "time": "2022-09-11T10:31:27-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,60 @@
+{
+    "number": 7106,
+    "id": "M3704",
+    "data": "1,4,96,5888,686080,130179072,36590059520,14290429935616,7405376630685696,4917457306800619520,4071967909087792857088,4113850542422629363482624,4980673081258443273955966976,7119048451600750435732824260608,11861520124846917915630931846103040",
+    "name": "Number of labeled odd degree trees with 2n nodes.",
+    "reference": [
+        "R. W. Robinson, personal communication.",
+        "R. W. Robinson, Numerical implementation of graph counting algorithms, AGRC Grant, Math. Dept., Univ. Newcastle, Australia, 1976.",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A007106/b007106.txt\">Table of n, a(n) for n = 1..211</a> (terms 1..39 from R. W. Robinson)",
+        "Alexander Burstein and Louis W. Shapiro, <a href=\"https://arxiv.org/abs/2112.11595\">Pseudo-involutions in the Riordan group</a>, arXiv:2112.11595 [math.CO], 2021.",
+        "B. R. Jones, <a href=\"http://summit.sfu.ca/item/14554\">On tree hook length formulas, Feynman rules and B-series</a>, Master's thesis, Simon Fraser University, 2014.",
+        "Mathematics Stack Exchange, Marko R. Riedel, <a href=\"http://math.stackexchange.com/questions/1827737/\">Odd degree trees</a>",
+        "Mathematics Stack Exchange, Marko R. Riedel, <a href=\"http://math.stackexchange.com/questions/1104289/\">Odd degree trees II</a>",
+        "Marko Riedel, <a href=\"/A007106/a007106_3.maple.txt\">Count by Pr\u00fcfer codes and Stirling numbers</a>",
+        "<a href=\"/index/Tra#trees\">Index entries for sequences related to trees</a>"
+    ],
+    "formula": [
+        "a(n) = A060279(n)/(2*n). - _Vladeta Jovovic_, Feb 08 2005",
+        "Bisection of A058014. The expansion 1/sqrt(1+x^2)*arcsinh(x) = x - 4*x^3/3! + 64*x^5/5! - ... (see A002454) has series reversion x + 4*x^3/3! + 96*x^5/5! + 5888*x^7/7! + .... The coefficients appear to be the terms of this sequence. As an x-adic limit this e.g.f. equals lim_{n -> infinity} sinh(f(n,x)), where f(0,x) = x and f(n,x) = x*cosh(f(n-1,x)) for n >= 1. See the example section below. - _Peter Bala_, Apr 24 2012",
+        "a(n) = Sum_{k=1..n} binomial(n,k) * k! * (n-2)! [z^{n-2}] [u^k] exp(u(exp(z)+exp(-z)-2)/2)). - _Marko Riedel_, Jun 16 2016",
+        "From _Alexander Burstein_, Oct 13 2021: (Start)",
+        "a(n) = (1/2) * Sum_{k=0..n-1} binomial(2*n,k) * (n-k)^(2*n-2) for n >= 2.",
+        "a(n) = (2*n-1)!*[x^(2*n-1)] sinh(REVERT(x/cosh(x))), see A036778. (End)",
+        "a(n) = Sum_{k=0..n-1} A156289(n-1, k)*(2*n)!/(2*n-k)!. - _Peter Luschny_, May 07 2022"
+    ],
+    "example": [
+        "From _Peter Bala_, Apr 24 2012: (Start)",
+        "Let G(x) = 1 + x^2/2! + 13*x^4/4! + 541*x^6/6! + ... be the e.g.f. for A143601. Then sinh(x*G(x)) = x + 4*x^3/3! + 96*x^5/5! + 5888*x^7/7! + ....",
+        "Conjectural e.g.f. as an x-adic limit:",
+        "sinh(x) = x + ...; sinh(x*cosh(x)) = x + 4*x^3/3! + ...;",
+        "sinh(x*cosh(x*cosh(x))) = x + 4*x^3/3! + 96*x^5/5! + ...;",
+        "sinh(x*cosh(x*cosh(x*cosh(x)))) = x + 4*x^3/3! + 96*x^5/5! + 5888*x^7/7! + ....",
+        "(End)"
+    ],
+    "maple": [
+        "A007106(n) = A(2n) where n>=2, A(n) = (add(binomial(n,q)*(n-2*q)^(n-2)/(n-2)!, q=0..n) - add(binomial(n-1,q)*(n-2*q)^(n-3)/(n-3)!, q=0..n-1) + add(binomial(n-1,q)*(n-2-2*q)^(n-3)/(n-3)!, q=0..n-1))*n!/2^(n+1)/(n-1)"
+    ],
+    "mathematica": [
+        "{1}~Join~Array[(1/2)*Sum[Binomial[2 #, k]*(# - k)^(2 # - 2), {k, 0, # - 1}] &, 12, 2] (* _Michael De Vlieger_, Oct 13 2021 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = if(n<=1, n==1, sum(k=0, n-1, binomial(2*n,k) * (n-k)^(2*n-2))/2) \\\\ _Andrew Howroyd_, Nov 22 2021"
+    ],
+    "xref": [
+        "Cf. A036778, A058014, A060279, A143601, A156289."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Corrected and extended by _Vladeta Jovovic_, Feb 08 2005"
+    ],
+    "references": 9,
+    "revision": 93,
+    "time": "2022-08-22T04:49:41-04:00",
+    "created": "1994-04-28T03:00:00-04:00"
+}

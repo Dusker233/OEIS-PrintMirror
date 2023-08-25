@@ -1,0 +1,45 @@
+{
+    "number": 322657,
+    "data": "36,72,144,200,288,324,392,400,450,576,648,784,800,882,900,1152,1296,1568,1600,1764,1800,1936,2178,2304,2450,2592,2704,2916,3042,3136,3200,3528,3600,3872,4050,4356,4608,4900,5000,5184,5202,5408,5832,6050,6084,6272,6400,6498",
+    "name": "Integers whose set of divisors, excluding 1, can be partitioned into two nonempty subsets having equal sum.",
+    "comment": [
+        "Called two-layered numbers in Behzadipour link."
+    ],
+    "link": [
+        "Hussein Behzadipour, <a href=\"https://arxiv.org/abs/1812.07233\">Two-layered numbers</a>, arXiv:1812.07233 [math.NT], 2018."
+    ],
+    "example": [
+        "36 is a term with {2, 3, 4, 36} and {6, 9, 12, 18} having equal sums 45."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; local k, l, t, b; b:=",
+        "      proc(m, i) option remember; m=0 or i>0 and",
+        "        (b(m, i-1) or l[i]<=m and b(m-l[i], i-1)) end;",
+        "      for k from 1+`if`(n=1, 1, a(n-1)) do",
+        "        l:= sort([(numtheory[divisors](k) minus {1})[]]);",
+        "        t:= add(i, i=l);",
+        "        if t::even then forget(b);",
+        "          if b(t/2, nops(l)) then return k fi",
+        "        fi",
+        "      od",
+        "    end:",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Dec 22 2018"
+    ],
+    "mathematica": [
+        "aQ[n_] := Module[{d = Rest[Divisors[n]], t, ds, x}, ds = Plus @@ d; If[Mod[ds, 2] > 0, False, t = CoefficientList[Product[1 + x^i, {i, d}], x]; t[[1 + ds/2]] > 0]]; Select[Range[2, 6500], aQ] (* _Amiram Eldar_, Dec 22 2018 after _T. D. Noe_ at A083207 *)"
+    ],
+    "program": [
+        "(PARI) part(n, v)=if(n<1, return(n==0)); forstep(i=#v, 2, -1, if(part(n-v[i], v[1..i-1]), return(1))); n==v[1];",
+        "is(n)=my(d=divisors(n), dd = select(x->(x>1), d), s=sum(i=1, #dd, dd[i])); s%2==0 && part(s/2-n, dd[1..#dd-1]); \\\\ both after pari in A083207"
+    ],
+    "xref": [
+        "Cf. A083207, A322658."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Dec 22 2018",
+    "references": 1,
+    "revision": 10,
+    "time": "2018-12-22T15:58:28-05:00",
+    "created": "2018-12-22T15:58:28-05:00"
+}

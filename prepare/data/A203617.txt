@@ -1,0 +1,45 @@
+{
+    "number": 203617,
+    "data": "30,210,246,858,1722,66198,235290,282342,1929378,1976394,2214408306",
+    "name": "Numbers m such that (m'-1)' = m+1, where m' denotes the arithmetic derivative of m.",
+    "comment": [
+        "The differential equation whose solutions are the Giuga numbers is m' = k*m+1, with k a positive integer. Let us rewrite the equation as m'-1 = k*m and then take the derivative: (m'-1)' = (k*m)' = k'*m + k*m' = k'*m + k*(k*m+1) = (k'+k^2)*m+k.",
+        "Let k=1: (m'-1)' = m+1. The solutions of this equation are the Giuga numbers plus couples of numbers (x,y) for which x' = y+1 and y' = x+1.",
+        "A007850 is a subsequence of this sequence.",
+        "a(11) > 10^9. - _Michel Marcus_, Nov 05 2014",
+        "a(12) > 10^10. - _Giovanni Resta_, Jun 04 2016"
+    ],
+    "example": [
+        "235290' = 282343; (282343 - 1)' = 282342' = 235291 = 235290 + 1, so 235290 is a term.",
+        "282342' = 235291; (235291 - 1)' = 235290' = 282343 = 282342 + 1, so 282342 is a term."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "P:=proc(i)",
+        "local a,n,p,pfs;",
+        "for n from 1 to i do",
+        "  pfs:=ifactors(n)[2]; a:=n*add(op(2,p)/op(1,p),p=pfs) ;",
+        "  pfs:=ifactors(a-1)[2]; a:=(a-1)*add(op(2,p)/op(1,p),p=pfs) ;",
+        "  if a=n+1 then print(n); fi;",
+        "od;",
+        "end:",
+        "P(10000000);"
+    ],
+    "program": [
+        "(PARI) ad(n) = sum(i=1, #f=factor(n)~, n/f[1, i]*f[2, i]);",
+        "isok(n) = my(m = ad(n)-1); (m) && ad(m) == n+1; \\\\ _Michel Marcus_, Nov 05 2014"
+    ],
+    "xref": [
+        "Cf. A007850, A185222, A203618."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jan 20 2012",
+    "ext": [
+        "a(11) from _Giovanni Resta_, Jun 04 2016"
+    ],
+    "references": 2,
+    "revision": 25,
+    "time": "2021-05-09T22:12:53-04:00",
+    "created": "2012-01-24T14:40:44-05:00"
+}

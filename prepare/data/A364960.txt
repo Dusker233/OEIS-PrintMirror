@@ -1,0 +1,34 @@
+{
+    "number": 364960,
+    "data": "1,2,3,4,5,6,8,10,12,16,20,24,25,32,40,45,48,49,64,80,96,128,160,192,256,320,384,512,640,768,1024,1280,1536,2048,2560,3072,4096,5120,6144,8192,10240,12288,16384,20480,24576,32768,40131,40960,49152,50575,65536,79625,81920,98304,131072,163840,196608,262144,327680",
+    "name": "Numbers k such that A005940(k) is either k itself or its descendant in Doudna-tree, A005940.",
+    "comment": [
+        "Numbers k such that A252464(k) is equal to A364569(k)."
+    ],
+    "program": [
+        "(PARI)",
+        "A005940(n) = { my(p=2, t=1); n--; until(!n\\=2, if((n%2), (t*=p), p=nextprime(p+1))); (t); };",
+        "A064989(n) = {my(f); f = factor(n); if((n>1 && f[1,1]==2), f[1,2] = 0); for (i=1, #f~, f[i,1] = precprime(f[i,1]-1)); factorback(f)};",
+        "A252463(n) = if(!(n%2),n/2,A064989(n));",
+        "isA364960(n) = { my(k=A005940(n)); while(k>n, k = A252463(k)); (k==n); };",
+        "(PARI)",
+        "Abincompreflen(n, m) = { my(x=binary(n), y=binary(m), u=min(#x, #y)); for(i=1, u, if(x[i]!=y[i], return(i-1))); (u); };",
+        "A156552(n) = {my(f = factor(n), p, p2 = 1, res = 0); for(i = 1, #f~, p = 1 << (primepi(f[i, 1]) - 1); res += (p * p2 * (2^(f[i, 2]) - 1)); p2 <<= f[i, 2]); res}; \\\\ From A156552",
+        "A364569(n) = Abincompreflen(A156552(n), (n-1));",
+        "A061395(n) = if(n>1, primepi(vecmax(factor(n)[, 1])), 0);",
+        "A252464(n) = if(1==n,0,(bigomega(n) + A061395(n) - 1));",
+        "isA364960(n) = (A252464(n)==A364569(n));"
+    ],
+    "xref": [
+        "Positions of 0's in A364570.",
+        "Cf. A252464, A364569.",
+        "Subsequences: A029747, A364961 (odd terms)."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Aug 14 2023",
+    "references": 2,
+    "revision": 5,
+    "time": "2023-08-14T17:01:12-04:00",
+    "created": "2023-08-14T17:01:12-04:00"
+}

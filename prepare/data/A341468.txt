@@ -1,0 +1,30 @@
+{
+    "number": 341468,
+    "data": "1,1,1,1,2,2,4,5,6,7,11,12,18,20,25,30,38,45,57,67,81,95,114,133,162,187,219,255,297,343,401,462,529,607,696,793,910,1032,1168,1324,1497,1689,1905,2142,2400,2692,3009,3362,3754,4182,4643,5165",
+    "name": "Number of partitions of n into 9 distinct nonprime parts.",
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0,",
+        "      `if`(t=0, 1, 0), `if`(i<t or t<1, 0, b(n, i-1, t)+",
+        "      `if`(isprime(i), 0, b(n-i, min(n-i, i-1), t-1))))",
+        "    end:",
+        "a:= n-> b(n$2, 9):",
+        "seq(a(n), n=79..130);  # _Alois P. Heinz_, Feb 12 2021"
+    ],
+    "mathematica": [
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0,",
+        "     If[t == 0, 1, 0], If[i < 1 || t < 1, 0, b[n, i - 1, t] +",
+        "     If[PrimeQ[i], 0, b[n - i, Min[n - i, i - 1], t - 1], 0]]];",
+        "a[n_] := b[n, n, 9];",
+        "Table[a[n], {n, 79, 130}] (* _Jean-Fran\u00e7ois Alcover_, Feb 28 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A005171, A018252, A096258, A219203, A302479, A341457, A341461, A341462, A341464, A341465, A341466, A341467, A341469."
+    ],
+    "keyword": "nonn",
+    "offset": "79,5",
+    "author": "_Ilya Gutkovskiy_, Feb 12 2021",
+    "references": 2,
+    "revision": 10,
+    "time": "2022-02-28T10:20:09-05:00",
+    "created": "2021-02-12T21:02:09-05:00"
+}

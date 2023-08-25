@@ -1,0 +1,42 @@
+{
+    "number": 348489,
+    "data": "75,225,715,725,735,755,765,2245,2255,2265,2275,2285,2295,2305,2315,2325,2335,2345,2375,2385,2395,2405,2415,2425,2435,2445,7075,7085,7095,7105,7115,7125,7135,7145,7155,7165,7175,7185,7195,7205,7215,7225,7235,7245",
+    "name": "Positive numbers whose square starts and ends with exactly one 5.",
+    "comment": [
+        "When a square ends with 5, it ends with 25.",
+        "From  _Marius A. Burtea_, Oct 25 2021: (Start)",
+        "Numbers 75, 765, 7665, 76665, ..., (23*10^k -5) / 3, k >= 1, are terms and have no digits 0, because their squares are 5625, 585225, 58752225, 5877522225, 587775222225, 58777752222225, ...",
+        "Also 75, 735, 7335, 73335, ..., (22*10^n+5) / 3, k >= 1, are terms and have no digits 0, because their squares are 5625, 540225, 53802225, 5378022225, 537780222225, 53777802222225, ... (End)"
+    ],
+    "example": [
+        "75^2 = 5625, hence 75 is a term.",
+        "235^2 = 55225, hence 235 is not a term."
+    ],
+    "mathematica": [
+        "Select[5 * Range[2, 1500], (d = IntegerDigits[#^2])[[1]] == d[[-1]] == 5 && d[[2]] != 5 &] (* _Amiram Eldar_, Oct 25 2021 *)"
+    ],
+    "program": [
+        "(PARI) isok(k) = my(d=digits(sqr(k))); (d[1]==5) && (d[#d]==5) && if (#d>2, (d[2]!=5) && (d[#d-1]!=5), 1); \\\\ _Michel Marcus_, Oct 25 2021",
+        "(Magma) [n:n in [4..7500]|Intseq(n*n)[1] eq 5 and Intseq(n*n)[#Intseq(n*n)] eq 5 and Intseq(n*n)[-1+#Intseq(n*n)] ne 5 ]; // _Marius A. Burtea_, Oct 25 2021",
+        "(Python)",
+        "from itertools import count, takewhile",
+        "def ok(n):",
+        "  s = str(n*n); return len(s.rstrip(\"5\")) == len(s.lstrip(\"5\")) == len(s)-1",
+        "def aupto(N):",
+        "  r = takewhile(lambda x: x<=N, (10*i+5 for i in count(0)))",
+        "  return [k for k in r if ok(k)]",
+        "print(aupto(7245)) # _Michael S. Branicky_, Oct 26 2021"
+    ],
+    "xref": [
+        "Cf. A045859, A017330 (squares ending with 5).",
+        "Similar to: A348487 (k=1), A348488 (k=4), this sequence (k=5), A348490 (k=6), A348491 (k=9).",
+        "Subsequence of A305719."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Oct 25 2021",
+    "references": 3,
+    "revision": 36,
+    "time": "2022-09-08T08:46:26-04:00",
+    "created": "2021-10-29T09:23:25-04:00"
+}

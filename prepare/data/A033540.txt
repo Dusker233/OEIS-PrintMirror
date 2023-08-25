@@ -1,0 +1,47 @@
+{
+    "number": 33540,
+    "data": "1,2,6,21,88,445,2676,18739,149920,1349289,13492900,148421911,1781062944,23153818285,324153456004,4862301840075,77796829441216,1322546100500689,23805829809012420,452310766371235999,9046215327424720000,189970521875919120021",
+    "name": "a(n+1) = n*(a(n) + 1) for n >= 1, a(1) = 1.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A033540/b033540.txt\">Table of n, a(n) for n = 1..200</a>",
+        "David Carlson, <a href=\"https://dl.acm.org/doi/10.5555/3144687.3144716\">Sophomores meet the traveling salesperson problem</a>, Journal of Computing Sciences in Colleges, 33(3), 126-133, 2018. See proof of the formula by Benoit Cloitre.",
+        "Neil Sloane and Brady Haran, <a href=\"https://www.youtube.com/watch?v=0zT16q3p24M\">A Sequence with a Mistake</a>, Numberphile video (2021)."
+    ],
+    "formula": [
+        "a(n) = n!*(1 +1/0! +1/1! +...+ 1/(n-1)!). - Jon Bentley (jlb(AT)research.bell-labs.com)",
+        "For n>=1, a(n+1) = floor((1+e)*n!) - 1. - _Benoit Cloitre_, Sep 07 2002",
+        "From _Vladeta Jovovic_, Feb 02 2003: (Start)",
+        "a(n) = n! + A007526(n).",
+        "E.g.f.: (1+x*exp(x))/(1-x). (End)",
+        "a(n) = (n+1)*a(n-1) - (2*n-3)*a(n-2) + (n-3)*a(n-3) for n>=4. - _Jaume Oliver Lafont_, Sep 11 2009",
+        "a(n) = n! + floor(e*n!) - 1, n>0. - _Gary Detlefs_, Jun 06 2010"
+    ],
+    "maple": [
+        "seq(coeff(series( (1+x*exp(x))/(1-x), x, n+1)*n!, x, n), n = 0..30); # _G. C. Greubel_, Oct 13 2019",
+        "# second Maple program:",
+        "a:= proc(n) option remember;",
+        "      `if`(n=1, 1, (n-1)*(a(n-1)+1))",
+        "    end:",
+        "seq(a(n), n=1..23);  # _Alois P. Heinz_, May 12 2021"
+    ],
+    "mathematica": [
+        "FoldList[#1*#2 + #2 &, 1, Range[19]] (* _Robert G. Wilson v_, Jul 07 2012 *)",
+        "nxt[{a_,n_}]:={n(a+1),n+1}; Transpose[NestList[nxt,{1,1},20]][[1]] (* _Harvey P. Dale_, Jun 20 2014 *)"
+    ],
+    "program": [
+        "(Magma) I:=[1,2,6]; [n le 3 select I[n] else (n+1)*Self(n-1)-(2*n-3)*Self(n-2)+(n-3)*Self(n-3): n in [1..30]]; // _Vincenzo Librandi_, Jun 21 2014",
+        "(PARI) my(x='x+O('x^30)); Vec(serlaplace( (1+x*exp(x))/(1-x) )) \\\\ _G. C. Greubel_, Oct 13 2019",
+        "(Sage) [factorial(n)*( (1+x*exp(x))/(1-x) ).series(x,n+1).list()[n] for n in (0..30)] # _G. C. Greubel_, Oct 13 2019",
+        "(GAP) a:=[1,2,6];; for n in [4..30] do a[n]:=(n+1)*a[n-1]-(2*n-3)*a[n-2] +(n-3)*a[n-3]; od; a; # _G. C. Greubel_, Oct 13 2019"
+    ],
+    "xref": [
+        "Cf. A007526, A090805."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_",
+    "references": 10,
+    "revision": 54,
+    "time": "2023-03-25T16:18:00-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

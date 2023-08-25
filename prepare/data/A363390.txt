@@ -1,0 +1,22 @@
+{
+    "number": 363390,
+    "data": "1,2,9,60,436,3462,28810,248606,2202772,19929336,183331451,1709642222,16125333248,153564283602,1474528190435,14260019116712,138772479615509,1357948477513772,13353454737592303,131889469476063586,1307802326452419584,13014461023695752740",
+    "name": "G.f. A(x) satisfies: A(x) = x * exp(2 * Sum_{k>=1} (-1)^(k+1) * A(x^k)^2 / (k*x^k) ).",
+    "mathematica": [
+        "nmax = 22; A[_] = 0; Do[A[x_] = x Exp[2 Sum[(-1)^(k + 1) A[x^k]^2/(k x^k), {k, 1, nmax}]] + O[x]^(nmax + 1)//Normal, nmax + 1]; CoefficientList[A[x], x] // Rest",
+        "a[1] = 1; g[n_] := g[n] = Sum[a[k] a[n - k], {k, 1, n - 1}]; a[n_] := a[n] = (2/(n - 1)) Sum[Sum[(-1)^(k/d + 1) d g[d + 1], {d, Divisors[k]}] a[n - k], {k, 1, n - 1}]; Table[a[n], {n, 1, 22}]"
+    ],
+    "program": [
+        "(PARI) seq(n)=my(p=x+O(x^2)); for(n=2, n, my(m=serprec(p,x)-1); p = x*exp(-2*sum(k=1, m, (-1)^k*subst(p + O(x^(m\\k+1)), x, x^k)^2/(x^k*k)))); Vec(p) \\\\ _Andrew Howroyd_, May 30 2023"
+    ],
+    "xref": [
+        "Cf. A005753, A005754, A363389."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, May 30 2023",
+    "references": 1,
+    "revision": 6,
+    "time": "2023-05-30T19:39:45-04:00",
+    "created": "2023-05-30T19:39:45-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 64459,
+    "data": "0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,8,8,8,8,8",
+    "name": "a(n) = Sum_{k>=1} floor(n/12^k).",
+    "comment": [
+        "Original incorrect name was: \"Highest power of 12 dividing n!\": that sequence is A090619.  If p is prime, Legendre's formula says the highest power of p dividing n! is Sum_{k>=1} floor(n/p^k), but of course 12 is not prime. - _Robert Israel_, Mar 23 2018"
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A064459/b064459.txt\">Table of n, a(n) for n=0..1000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Legendre%27s_formula\">Legendre's formula</a>."
+    ],
+    "formula": [
+        "a(n) = floor[n/12] + floor[n/144] + floor[n/1728] + floor[n/20736] + ...."
+    ],
+    "maple": [
+        "f:= proc(n) add(floor(n/12^k), k=1..floor(log[12](n))) end proc:",
+        "f(0):= 0:",
+        "map(f, [$0..100]); # _Robert Israel_, Mar 23 2018"
+    ],
+    "mathematica": [
+        "Table[t = 0; p = 12; While[s = Floor[n/p]; t = t + s; s > 0, p *= 12]; t, {n, 0, 100} ]",
+        "Join[{0},Accumulate[Table[If[Divisible[n,12],1,0],{n,110}]]] (* _Harvey P. Dale_, Feb 14 2016 *)"
+    ],
+    "program": [
+        "(PARI) { for (n=0, 1000, a=0; p=12; while (s = n\\p, a+=s; p*=12); write(\"b064459.txt\", n, \" \", a) ) } \\\\ _Harry J. Smith_, Sep 15 2009",
+        "(GAP) List([0..110],n->Sum([1..n],k-?Int(n/(12^k)))); # _Muniru A Asiru_, Mar 24 2018"
+    ],
+    "xref": [
+        "Cf. A011371, A054861, A090619."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,25",
+    "author": "_Robert G. Wilson v_, Oct 03 2001",
+    "ext": [
+        "Corrected by _Robert Israel_, Mar 23 2018"
+    ],
+    "references": 4,
+    "revision": 19,
+    "time": "2018-03-24T06:07:49-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

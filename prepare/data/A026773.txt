@@ -1,0 +1,43 @@
+{
+    "number": 26773,
+    "data": "1,4,17,76,352,1674,8129,40156,201236,1020922,5234660,27089726,141335846,742712598,3927908193,20891799036,111688381228,599841215226,3234957053984,17512055200470,95125188934942,518340392855286,2832580291316092,15520177744727766",
+    "name": "a(n) = T(2n-1,n-1), T given by A026769. Also T(2n+1,n+1), T given by A026780.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A026773/b026773.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "From _Vladeta Jovovic_, Nov 23 2003: (Start)",
+        "a(n) = A006318(n) - A000108(n).",
+        "G.f.: (sqrt(1-4*x) - sqrt(1-6*x+x^2))/(2*x) -1/2. (End)",
+        "From _Paul Barry_, May 19 2005: (Start)",
+        "a(n) = Sum_{k=0..n} C(n+k+1, n+1)*C(n+1, k)/(k+1).",
+        "a(n) = Sum_{k=0..n+1} C(n+2, k)*C(n+k, n+1)}/(n+2). (End)",
+        "D-finite with recurrence n*(n+1)*a(n) -n*(11*n-7)*a(n-1) +(37*n^2-95*n+54)*a(n-2) +(-49*n^2+269*n-354)*a(n-3) +6*(9*n^2-71*n+138)*a(n-4) -4*(2*n-9)*(n-5)*a(n-5)=0. - _R. J. Mathar_, Aug 05 2021"
+    ],
+    "maple": [
+        "seq(coeff(series((sqrt(1-4*x) - sqrt(1-6*x+x^2))/(2*x) -1/2, x, n+1), x, n), n = 0..30); # _G. C. Greubel_, Nov 01 2019"
+    ],
+    "mathematica": [
+        "Rest@CoefficientList[Series[(Sqrt[1-4*x] - Sqrt[1-6*x+x^2])/(2*x) -1/2, {x,0,30}], x] (* _G. C. Greubel_, Nov 01 2019 *)"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^30)); Vec((sqrt(1-4*x) - sqrt(1-6*x+x^2))/(2*x) -1/2) \\\\ _G. C. Greubel_, Nov 01 2019",
+        "(Magma) R<x>:=PowerSeriesRing(Rationals(), 30); Coefficients(R!( (Sqrt(1-4*x) - Sqrt(1-6*x+x^2))/(2*x) -1/2 )); // _G. C. Greubel_, Nov 01 2019",
+        "(Sage)",
+        "def A026773_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P((sqrt(1-4*x) - sqrt(1-6*x+x^2))/(2*x) -1/2).list()",
+        "a=A026773_list(30); a[1:] # _G. C. Greubel_, Nov 01 2019",
+        "(GAP) List([0..30], n-> Sum([0..n], k-> Binomial(n+1,k)*Binomial(n+k+1, n+1)/(k+1) )); # _G. C. Greubel_, Nov 01 2019"
+    ],
+    "xref": [
+        "Cf. A026769, A026770, A026771, A026772, A026774, A026775, A026776, A026777, A026778, A026779."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_",
+    "references": 11,
+    "revision": 23,
+    "time": "2022-09-08T08:44:49-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

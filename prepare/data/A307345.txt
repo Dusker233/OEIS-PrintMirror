@@ -1,0 +1,46 @@
+{
+    "number": 307345,
+    "data": "1,2,3,4,5,6,7,8,9,10,12,13,15,16,18,19,21,22,24,25,30,31,36,40,45,46,70,85,91,105,106,120",
+    "name": "Numbers k such that every prime p <= sqrt(k) divides k*(k-1).",
+    "comment": [
+        "If k is in the sequence, the first Chebyshev function theta(sqrt(k)) = Sum_{p <= sqrt(k)} log(p) <= 2 log(k). Now it is known that theta(x) = x + O(x/log(x)), so this can't happen if k is sufficiently large.  Thus the sequence is finite.",
+        "For x >= 2, theta(x) >= x - 1.2323*x/log(x) (see Dusart, Theorem 5.2).  Thus theta(sqrt(k)) > 2*log(k) for k >= 417.  Since there are no other terms < 417, the largest term is 120."
+    ],
+    "link": [
+        "P. Dusart, <a href=\"https://arxiv.org/abs/1002.0442\">Estimates of Some Functions Over Primes without R.H.</a>, arXiv:1002.0442 [math.NT], 2010."
+    ],
+    "example": [
+        "120 is in the sequence because all primes <= sqrt(120) (namely 2,3,5,7) divide 120*119."
+    ],
+    "maple": [
+        "Res:= NULL:",
+        "P:= 1:",
+        "q:= 2: t:= 4:",
+        "for n from 1 to 10^6 do",
+        "  if n = t then P:= P*q;  q:= nextprime(q); t:= q^2 fi;",
+        "  if n*(n-1) mod P = 0 then Res:= Res, n fi",
+        "od:",
+        "Res;"
+    ],
+    "mathematica": [
+        "seqQ[k_] := AllTrue[Select[Range@Floor@Sqrt@k, PrimeQ], Divisible[k (k - 1), #] &]; Select[Range[120], seqQ] (* _Amiram Eldar_, Apr 03 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def isA307345(k):",
+        "    r = prime_range(isqrt(k)+1)",
+        "    return all([p.divides(k*(k-1)) for p in r])",
+        "print([n for n in (1..120) if isA307345(n)]) # _Peter Luschny_, Apr 03 2019",
+        "(PARI) isok(k) = forprime(p=1, sqrtint(k), if (k*(k-1) % p, return(0))); return(1); \\\\ _Michel Marcus_, Apr 05 2019"
+    ],
+    "xref": [
+        "Contains A323215."
+    ],
+    "keyword": "nonn,fini,full",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Apr 03 2019",
+    "references": 1,
+    "revision": 25,
+    "time": "2019-12-06T21:44:52-05:00",
+    "created": "2019-04-03T09:21:34-04:00"
+}

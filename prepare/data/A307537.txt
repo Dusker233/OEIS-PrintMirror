@@ -1,0 +1,58 @@
+{
+    "number": 307537,
+    "data": "273,63973,72719023,13006678091,7817013532691",
+    "name": "a(n) is the smallest maximally idempotent integer with n factors, n >= 3.",
+    "comment": [
+        "Maximally idempotent integers are those squarefree integers such that all their bipartite factorizations are idempotent (see A306812). All squarefree integers with n <= 2 factors have this property, and are therefore excluded from the definition.",
+        "Entries verified computationally.",
+        "The lambda values and factorizations of the integers in this sequence are:",
+        "  M(3) = 3*7*13, lambda = 12;",
+        "  M(4) = 7*13*19*37, lambda = 36;",
+        "  M(5) = 13*19*37*73*109, lambda = 216;",
+        "  M(6) = 11*31*41*61*101*151, lambda = 600;",
+        "  M(7) = 11*31*41*61*101*151*601, lambda = 600."
+    ],
+    "link": [
+        "B. Fagin, <a href=\"https://doi.org/10.3390/info10070232\"> Idempotent Factorizations of Square-Free Integers</a>, Information 2019, 10(7), 232."
+    ],
+    "example": [
+        "273 is the smallest maximally idempotent integer. Factorization is (3,7,13). Bipartite factorizations are (3,91), (7,39), (13,21). Lambda(273) = 12, (2*90),(6*38) and (12*20) are all divisible by 12, thus 273 is maximally idempotent."
+    ],
+    "mathematica": [
+        "(* This program is not suitable to compute large terms. *)",
+        "okQ[n_] := Module[{partitions, p, q, lambda}, partitions = {p, q} /. {ToRules[Reduce[1<p<q && n == p q, {p, q}, Integers]]}; lambda = CarmichaelLambda[n]; AllTrue[partitions-1, Divisible[Times @@ #, lambda]&]];",
+        "For[Clear[a]; n = 1, n < 70000, n++, If[SquareFreeQ[n], nu = PrimeNu[n]; If[nu >= 3 && !IntegerQ[a[nu]], If[okQ[n], Print[\"a(\", nu, \") = \", n]; a[nu] = n]]]]; (* _Jean-Fran\u00e7ois Alcover_, Jun 20 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "# Partial Python code is shown below.  It uses other routines:",
+        "# numbthy.factor(n) -- from the Python number theory library, returns a list of",
+        "# (p,e) pairs corresponding to the prime factors and their exponents in the factorizations of n",
+        "# partitions(n,factor_list) -- takes an integer n and the factor list from above,",
+        "# returns a list of all bipartite factorizations of n",
+        "# lambda_n -- calculates the carmichael lambda function",
+        "# returns True if all partitions of n are idempotent",
+        "def isMaximallyIdempotent(n):",
+        "    factor_list = numbthy.factor(n)",
+        "    partitions_of_n = partitions(n,factor_list)",
+        "    lambda_n = carmichael_lambda_with_list(n,factor_list)",
+        "    for (p,q) in partitions_of_n:",
+        "        pseudo = (p-1)*(q-1)",
+        "        if pseudo % lambda_n != 0:",
+        "            return False",
+        "    return True"
+    ],
+    "xref": [
+        "Cf. A005117, A120944, A306330, A306508, A306812."
+    ],
+    "keyword": "nonn,more",
+    "offset": "3,1",
+    "author": "_Barry Fagin_, Apr 13 2019",
+    "ext": [
+        "M(7), now confirmed as being a(7), added by _Barry Fagin_, Dec 04 2019"
+    ],
+    "references": 0,
+    "revision": 38,
+    "time": "2019-12-30T12:35:16-05:00",
+    "created": "2019-06-25T22:49:27-04:00"
+}

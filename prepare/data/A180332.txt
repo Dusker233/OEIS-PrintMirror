@@ -1,0 +1,46 @@
+{
+    "number": 180332,
+    "data": "6,20,28,70,88,104,272,304,368,464,496,550,572,650,836,945,1184,1312,1376,1430,1504,1575,1696,1870,1888,1952,2002,2090,2205,2210,2470,2530,2584,2990,3128,3190,3230,3410,3465,3496,3770,3944,4030,4070,4095,4216",
+    "name": "Primitive Zumkeller numbers.",
+    "comment": [
+        "A number is called a primitive Zumkeller number if it is a Zumkeller number (A083207) but none of its proper divisors are Zumkeller numbers. These numbers are very similar to primitive non-deficient numbers (A006039), but neither is a subsequence of the other.",
+        "Because every Zumkeller number has a divisor that is a primitive Zumkeller number, every Zumkeller number z can be factored as z = d*r, where d is the smallest divisor of z that is a primitive Zumkeller number.",
+        "Every number of the form p*2^k is a primitive Zumkeller number, where p is an odd prime and k = floor(log_2(p))."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A180332/b180332.txt\">Table of n, a(n) for n = 1..9179</a>"
+    ],
+    "mathematica": [
+        "ZumkellerQ[n_] := ZumkellerQ[n] = Module[{d = Divisors[n], ds, x}, ds = Total[d]; If[OddQ[ds], False, SeriesCoefficient[Product[1 + x^i, {i, d}], {x, 0, ds/2}] > 0]];",
+        "Reap[For[n = 1, n <= 5000, n++, If[ZumkellerQ[n] && NoneTrue[Most[Divisors[ n]], ZumkellerQ], Print[n]; Sow[n]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Mar 01 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import divisors",
+        "from sympy.utilities.iterables import subsets",
+        "def isz(n): # after Peter Luschny in A083207",
+        "    divs = divisors(n)",
+        "    s = sum(divs)",
+        "    if not (s%2 == 0 and 2*n <= s): return False",
+        "    S = s//2 - n",
+        "    R = [m for m in divs if m <= S]",
+        "    return any(sum(c) == S for c in subsets(R))",
+        "def ok(n): return isz(n) and not any(isz(d) for d in divisors(n)[:-1])",
+        "print(list(filter(ok, range(1, 5000)))) # _Michael S. Branicky_, Jun 20 2021",
+        "(SageMath) # uses[is_Zumkeller from A083207]",
+        "def is_primitiveZumkeller(n):",
+        "    return (is_Zumkeller(n) and",
+        "        not any(is_Zumkeller(d) for d in divisors(n)[:-1]))",
+        "print([n for n in (1..4216) if is_primitiveZumkeller(n)]) # _Peter Luschny_, Jun 21 2021"
+    ],
+    "xref": [
+        "Cf. A083207, A006039."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_T. D. Noe_, Sep 07 2010",
+    "references": 9,
+    "revision": 21,
+    "time": "2021-06-27T03:39:48-04:00",
+    "created": "2010-09-12T03:00:00-04:00"
+}

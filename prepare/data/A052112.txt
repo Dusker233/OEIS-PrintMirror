@@ -1,0 +1,36 @@
+{
+    "number": 52112,
+    "data": "1,2,14,159,7629,599456,226066304,139178815861,410179495378288,2055126126323159298,48234291396964332998082,2016523952125103590736221923,382812826011951187177138562992638,135681830960694827549160289095792266106",
+    "name": "Number of self-complementary directed 2-multigraphs on n nodes.",
+    "comment": [
+        "A 2-multigraph is similar to an ordinary graph except there are 0, 1 or 2 edges between any two nodes (self-loops are not allowed)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A052112/b052112.txt\">Table of n, a(n) for n = 1..50</a>"
+    ],
+    "mathematica": [
+        "permcount[v_List] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_List] := 2 Sum[Sum[If[EvenQ[v[[i]] v[[j]]], GCD[v[[i]], v[[j]]], 0], {j, 1, i - 1}], {i, 2, Length[v]}] + Sum[If[EvenQ[v[[i]]], v[[i]] - 1, 0], {i, 1, Length[v]}];",
+        "a[n_] := Module[{s = 0}, Do[s += permcount[p]*3^edges[p], {p, IntegerPartitions[n]}]; s/n!];",
+        "Array[a, 25] (* _Jean-Fran\u00e7ois Alcover_, Sep 12 2019, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1,s=0,k=0,t); for(i=1,#v,t=v[i]; k=if(i>1&&t==v[i-1],k+1,1); m*=t*k;s+=t); s!/m}",
+        "edges(v) = {2*sum(i=2, #v, sum(j=1, i-1, if(v[i]*v[j]%2==0, gcd(v[i],v[j])))) + sum(i=1, #v, if(v[i]%2==0, v[i]-1))}",
+        "a(n) = {my(s=0); forpart(p=n, s+=permcount(p)*3^edges(p)); s/n!} \\\\ _Andrew Howroyd_, Sep 16 2018"
+    ],
+    "xref": [
+        "Cf. A053467, A003086, A053588."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladeta Jovovic_, Jan 21 2000",
+    "ext": [
+        "Terms a(14) and beyond from _Andrew Howroyd_, Sep 16 2018"
+    ],
+    "references": 3,
+    "revision": 15,
+    "time": "2019-09-12T09:10:48-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

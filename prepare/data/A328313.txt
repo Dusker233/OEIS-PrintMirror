@@ -1,0 +1,32 @@
+{
+    "number": 328313,
+    "data": "2,4,2312,3217644767340672907899084554132",
+    "name": "For all such terms k in A143293 (partial sums of primorials) for which A129251(k) = 0, the term A276085(k) is included here.",
+    "comment": [
+        "Construction: apply A276085 to the terms in the intersection of A143293 and A048103.",
+        "The next terms are quite big and can be found in the b-file. Note the nonmonotonic order, a(8) < a(5), a(6) and a(7).",
+        "A276086(a(n)) is in A143293, A276086(A276086(a(n))) is one of the primorials, A002110, and A276086(A276086(A276086(a(n)))) is a prime.",
+        "A327969(a(n)) <= 5 for all n."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A328313/b328313.txt\">Table of n, a(n) for n = 1..8</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "A002110(n) = prod(i=1,n,prime(i));",
+        "A143293(n) = if(n==0, 1, my(P=1, s=1); forprime(p=2, prime(n), s+=P*=p); (s)); \\\\ From A143293.",
+        "A276085(n) = { my(f = factor(n)); sum(k=1, #f~, f[k, 2]*A002110(primepi(f[k, 1])-1)); };",
+        "A276086(n) = { my(i=0,m=1,pr=1,nextpr); while((n>0),i=i+1; nextpr = prime(i)*pr; if((n%nextpr),m*=(prime(i)^((n%nextpr)/pr));n-=(n%nextpr));pr=nextpr); m; };",
+        "k=0; for(n=1,12,t = A143293(n); u = A276085(t); if(A276086(u) == t, k++; print1(u,\", \")));"
+    ],
+    "xref": [
+        "Cf. A002110, A048103, A129251, A143293, A276085, A276086, A327969, A328243."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Oct 12 2019",
+    "references": 7,
+    "revision": 15,
+    "time": "2019-10-12T19:06:52-04:00",
+    "created": "2019-10-12T19:06:52-04:00"
+}

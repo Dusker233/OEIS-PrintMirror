@@ -1,0 +1,57 @@
+{
+    "number": 87166,
+    "data": "17,31,67,73,107,109,127,151,157,173,181,191,197,211,227,241,257,271,277,307,313,337,353,373,379,401,409,419,421,433,443,457,461,463,487,521,523,541,577,587,601,617,619,631,647,661,673,683,701,719,727,743,757,761,773,787,797,809,857,859",
+    "name": "Primes which are palindromes in 3 or more bases.",
+    "comment": [
+        "For the purposes of this sequence, single digits are not counted as palindromes (otherwise every number n is a palindrome in all bases > n). - _Robert Israel_, May 01 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A087166/b087166.txt\">Table of n, a(n) for n = 1..5867</a>"
+    ],
+    "example": [
+        "31 is in the list, as 31 base 2 = 11111, 31 base 5 = 111 and 31 base 30 = 11, i.e. three different ways."
+    ],
+    "maple": [
+        "N:= 1000: # for all terms <= N",
+        "digrev:= proc(n,b)",
+        "  local L,i;",
+        "  L:= convert(n,base,b);",
+        "  add(L[-i]*b^(i-1),i=1..nops(L))",
+        "end proc:",
+        "bpalis:= proc(b, N)",
+        "  local Res,dmax,d,m;",
+        "  dmax:= floor(log[b](N))+1;",
+        "  if dmax < 2 then return [] fi;",
+        "  Res:= seq(i*(b+1),i=1..b-1);",
+        "  for d from 3 to dmax do",
+        "    if d::even then",
+        "      m:= d/2;",
+        "      Res:= Res, seq(n*b^m + digrev(n,b),n=b^(m-1)..b^m-1);",
+        "    else",
+        "      m:= (d-1)/2;",
+        "      Res:= Res, seq(seq(n*b^(m+1)+y*b^m+digrev(n,b), y=0..b-1), n=b^(m-1)..b^m-1);",
+        "    fi",
+        "  od;",
+        "  select(`<=`,[Res], N)",
+        "end proc:",
+        "V:= Vector(N):",
+        "for b from 2 to N-1 do",
+        "  bp:= bpalis(b,N);",
+        "  V[bp]:= V[bp] +~ 1",
+        "od:",
+        "select(p -> isprime(p) and V[p] >= 3, [seq(i,i=3..N,2)]); # _Robert Israel_, May 01 2020"
+    ],
+    "xref": [
+        "Primes in A253594."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Randy L. Ekl_, Oct 18 2003",
+    "ext": [
+        "Corrected by _Robert Israel_, May 01 2020"
+    ],
+    "references": 1,
+    "revision": 9,
+    "time": "2020-05-01T21:25:06-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

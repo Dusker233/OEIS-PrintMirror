@@ -1,0 +1,44 @@
+{
+    "number": 276176,
+    "data": "2,26,31,34,15526,151165506068,151165506073,151165506089,151165506093,151165506295,151165506410,151165506518,151165506526,151165506658,151165506665,151165506711,151165506819,151165506970,151165506994,151165507256,151165507259,151165507265",
+    "name": "Consider the race between primes, semiprimes, 3-almost primes, ... k-almost primes; sequence indicates when one overtakes another to give a new race leader.",
+    "comment": [
+        "A \"k-almost prime\" is a number which is the product of exactly k primes.",
+        "Let pi_k(n) be the number of k-almost primes less than or equal to n. In 1909, on page 211 of the Handbuch, Edmund G. H. Landau stated that pi_k(n) ~ (n/log n)*(log log n^(k-1))/(k-1)! for all k >= 0.",
+        "Because of this fact, eventually the semiprimes will outnumber the primes; they do starting at 34. Likewise the 3-almost primes will outnumber the semiprimes and they do starting at 15526.",
+        "The terms from a(6) = 151165506068 to a(170) = 151165607026 correspond to counts of 4-almost and 3-almost primes overtaking each other multiple times. - _Giovanni Resta_, Aug 17 2018"
+    ],
+    "reference": [
+        "Edmund Georg Hermann Landau, Handbuch der Lehre von der Verteilung der Primzahlen, Band I, B. G. Teubner, Leipzig u. Berlin, or Chelsea Publishing, NY 1953, or Vol. 1, Teubner, Leipzig; third edition: Chelsea, New York 1974."
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A276176/b276176.txt\">Table of n, a(n) for n = 1..170</a>",
+        "Edmund Georg Hermann Landau, <a href=\"http://quod.lib.umich.edu/cgi/t/text/text-idx?c=umhistmath;idno=ABV2766.0001.001\">Handbuch der Lehre von der Verteilung der Primzahlen</a>, page 211, (4); University of Michigan Historical Math Collection."
+    ],
+    "formula": [
+        "It seems plausible that 0.8 * log(A284411(m) - 1) <= log(a(n)) <= log(A284411(m)) in the instances where the overtaking concerns m-almost-primes and (m-1)-almost-primes. - _Peter Munn_, Aug 03 2023"
+    ],
+    "example": [
+        "a(1) = 2 since beginning with the natural numbers (A000027) the race is even with no group in the lead. But at 2, we encounter our first member (1 is unity and is not a member of any group here) which is a prime and therefore the primes take the lead with 2.",
+        "a(2) = 34 which is a semiprime. pi_1(34) = 11 and pi_2(34) = 12. This is the first time that the semiprimes overtake the primes."
+    ],
+    "mathematica": [
+        "k = 1; lst = {}; tf = 0; p1 = 0; p2 = 0; While[k < 100001, If[PrimeOmega@k == 1, p1++]; If[PrimeOmega@k == 2, p2++]; If[p1 > p2 && tf == 0, tf++; AppendTo[lst, k]]; If[p2 > p1 && tf == 1, tf--; AppendTo[lst, k]]; k++]; lst",
+        "(* cross check using *) AlmostPrimePi[k_Integer, n_] := Module[{a, i}, a[0] = 1; If[k == 1, PrimePi[n], Sum[PrimePi[n/Times @@ Prime[ Array[a, k - 1]]] - a[k - 1] + 1, Evaluate[ Sequence @@ Table[{a[i], a[i - 1], PrimePi[(n/Times @@ Prime[Array[a, i - 1]])^(1/(k - i + 1))]}, {i, k - 1}]] ]]]; (* _Eric W. Weisstein_, Feb 07 2006 *)",
+        "(* as an example *) AlmostPrimePi[2, 15526] => 3986 whereas AlmostPrimePi[3, 15526] => 3987."
+    ],
+    "xref": [
+        "Cf. A243906, A273381, A274123, A358677, A359242 (restricted to squarefree numbers)."
+    ],
+    "keyword": "hard,nonn",
+    "offset": "1,1",
+    "author": "_Jonathan Vos Post_ and _Robert G. Wilson v_, Oct 09 2016",
+    "ext": [
+        "a(6)-a(22) from _Giovanni Resta_, Aug 17 2018",
+        "Name clarified by _Peter Munn_, Dec 31 2022"
+    ],
+    "references": 4,
+    "revision": 45,
+    "time": "2023-08-03T09:03:46-04:00",
+    "created": "2016-11-08T22:34:46-05:00"
+}

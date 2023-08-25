@@ -1,0 +1,40 @@
+{
+    "number": 319743,
+    "data": "1,2,11,74,602,5452,53559,558602,6106034,69298580,811086718,9740402476,119550632788,1495039156600,19002275811887,244983878813514,3198363309664658,42225545561470084,563083734161627910,7576864105285884420,102790882283750139060,1404908982711268821720",
+    "name": "Row sums of A174158.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A319743/b319743.txt\">Table of n, a(n) for n = 1..830</a>",
+        "Abderrahim Arabi, Hac\u00e8ne Belbachir, and Jean-Philippe Dubernard, <a href=\"https://arxiv.org/abs/2105.00971\">Enumeration of parallelogram polycubes</a>, arXiv:2105.00971 [cs.DM], 2021."
+    ],
+    "formula": [
+        "a(n) = Sum_{m=1..n} (binomial(n - 1, m - 1)*binomial(n, m - 1)/m)^2.",
+        "a(n) = Sum_{m=1..n} A000290(A007318(n - 1, m - 1)*A007318(n, m - 1)/m).",
+        "a(n) = 4F3([1 - n, 1 - n, - n, - n], [1, 2, 2], 1), where F is the generalized hypergeometric function.",
+        "From _Vaclav Kotesovec_, Dec 24 2018: (Start)",
+        "Recurrence: n*(n+1)^3*(5*n^2 - 10*n + 4)*a(n) = 2*n*(2*n - 1)*(15*n^4 - 30*n^3 + 7*n^2 + 8*n - 8)*a(n-1) + 4*(n-2)^2*(4*n - 5)*(4*n - 3)*(5*n^2 - 1)*a(n-2).",
+        "a(n) ~ 2^(4*n + 1/2) / (Pi^(3/2) * n^(7/2)).",
+        "(End)"
+    ],
+    "maple": [
+        "a := n -> add(binomial(n-1, m-1)^2*binomial(n, m-1)^2/m^2, m = 1 .. n): seq(a(n), n = 1 .. 20)"
+    ],
+    "mathematica": [
+        "Table[HypergeometricPFQ[{1-n,1-n,-n,-n},{1,2,2},1],{n,1,20}]"
+    ],
+    "program": [
+        "(GAP) List([1..20], n->Sum([1..n], m->(Binomial(n-1, m-1)*Binomial(n, m-1)/m)^2));",
+        "(PARI) a(n) = sum(m=1, n, (binomial(n-1, m-1)*binomial(n, m-1)/m)^2);",
+        "(Sage) [hypergeometric([-n, -n, -n+1, -n+1], [1, 2, 2], 1).simplify_hypergeometric() for n in (1..25)] # _G. C. Greubel_, Feb 15 2021",
+        "(Magma) [(&+[(Binomial(n-1,j-1)*Binomial(n,j-1)/j)^2 : j in [1..n]]): n in [1..25]]; // _G. C. Greubel_, Feb 15 2021"
+    ],
+    "xref": [
+        "Cf. A000290, A007318, A174158, A174696."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Stefano Spezia_, Dec 23 2018",
+    "references": 3,
+    "revision": 48,
+    "time": "2021-05-04T09:01:57-04:00",
+    "created": "2018-12-24T11:08:14-05:00"
+}

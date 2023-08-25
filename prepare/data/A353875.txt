@@ -1,0 +1,43 @@
+{
+    "number": 353875,
+    "data": "5,60,840,9240,65520,720720,8168160,98017920,931170240,9311702400,80313433200,931635825120,9626903526240,95492672074800,890488576177200,9973472053184640,87624075895836480,876240758958364800,9419588158802421600,99847634483305668960",
+    "name": "a(n) is the minimal n-digit number which can be the length of a side of a Pythagorean triangle in the largest number of ways.",
+    "example": [
+        "a(2)=60 because 60 is the minimal 2-digit number which can be the length of a side of an integer-sided right triangle in 14 distinct ways, (11, 60, 61), (25, 60, 65), (32, 60, 68), (36, 48, 60), (45, 60, 75), (60, 63, 87), (60, 80, 100), (60, 91, 109), (60, 144, 156), (60, 175, 185), (60, 221, 229), (60, 297, 303), (60, 448, 452), (60, 899, 901), and 14 is the maximum number of such ways for a 2-digit number."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def s(n):",
+        "    f=factorint(n)",
+        "    d, q=(list(f.keys()), list(f.values()))",
+        "    (a, b, c, x)=(0, 1, 1, 0)",
+        "    if(d[0]==2):",
+        "        a, x=(0, 1)",
+        "        if q[0]>1:",
+        "             a=q[0]-1",
+        "    for p in range(x, len(d)):",
+        "        b*=(1+2*q[p])",
+        "        if d[p]%4==1:",
+        "            c*=(1+2*q[p])",
+        "    return((b-1)//2+a*b+(c-1)//2)",
+        "def a(n):",
+        "    max=0",
+        "    for i in range(1+10**(n-1), 10**n):",
+        "        if s(i)>max:",
+        "            k,max=(i,s(i))",
+        "    return(n,[k,max])",
+        "for i in range(1,6):",
+        "    print (a(i))"
+    ],
+    "xref": [
+        "Cf. A046079, A046080."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Zhining Yang_, Jun 26 2022",
+    "references": 1,
+    "revision": 28,
+    "time": "2022-09-08T05:11:42-04:00",
+    "created": "2022-09-06T15:33:46-04:00"
+}

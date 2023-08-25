@@ -1,0 +1,40 @@
+{
+    "number": 15462,
+    "data": "0,1,1,6,31,781,20156,2460781,317398281,192565913906,124176269429531,376229476867085781,1213035110624630757656,18371792960261297531148281,296169521847801754865890523281,22426801247965814514582357345601406",
+    "name": "q-Fibonacci numbers for q=5.",
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A015462/b015462.txt\">Table of n, a(n) for n = 0..70</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1) + 5^(n-2)*a(n-2).",
+        "Associated constant: C_5 = lim_{n->oo} a(n)*a(n-2)/a(n-1)^2 = 1.064478080430862119874641125... . - _Benoit Cloitre_, Aug 30 2003",
+        "a(n)*a(n+3) - a(n)*a(n+2) - 5*a(n+1)*a(n+2) + 5*a(n+1)^2 = 0. - _Emanuele Munarini_, Dec 05 2017"
+    ],
+    "maple": [
+        "q:=5; seq(add((product((1-q^(n-j-1-k))/(1-q^(k+1)), k=0..j-1))*q^(j^2), j = 0..floor((n-1)/2)), n = 0..20); # _G. C. Greubel_, Dec 16 2019"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[0]==0, a[1]==1, a[n]==a[n-1]+a[n-2]*5^(n-2)},  a, {n, 20}] (* _Vincenzo Librandi_, Nov 09 2012 *)",
+        "nxt[{n_,a_,b_}]:={n+1,b,b+a*5^(n-1)}; NestList[nxt,{1,0,1},20][[All,2]] (* _Harvey P. Dale_, Aug 19 2019 *)",
+        "F[n_, q_]:= Sum[QBinomial[n-j-1, j, q]*q^(j^2), {j, 0, Floor[(n-1)/2]}];",
+        "Table[F[n, 5], {n, 0, 20}] (* _G. C. Greubel_, Dec 16 2019 *)"
+    ],
+    "program": [
+        "(Magma) [0] cat[n le 2 select 1 else Self(n-1) + Self(n-2)*(5^(n-2)): n in [1..20]]; // _Vincenzo Librandi_, Nov 09 2012",
+        "(PARI) q=5; m=20; v=concat([0,1], vector(m-2)); for(n=3, m, v[n]=v[n-1]+q^(n-3)*v[n-2]); v \\\\ _G. C. Greubel_, Dec 16 2019",
+        "(Sage)",
+        "def F(n,q): return sum( q_binomial(n-j-1, j, q)*q^(j^2) for j in (0..floor((n-1)/2)))",
+        "[F(n,5) for n in (0..20)] # _G. C. Greubel_, Dec 16 2019",
+        "(GAP) q:=5;; a:=[0,1];; for n in [3..20] do a[n]:=a[n-1]+q^(n-3)*a[n-2]; od; a; # _G. C. Greubel_, Dec 16 2019"
+    ],
+    "xref": [
+        "q-Fibonacci numbers: A000045 (q=1), A015459 (q=2), A015460 (q=3), A015461 (q=4), this sequence (q=5), A015463 (q=6), A015464 (q=7), A015465 (q=8), A015467 (q=9), A015468 (q=10), A015469 (q=11), A015470 (q=12)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 13,
+    "revision": 32,
+    "time": "2023-04-26T06:28:11-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

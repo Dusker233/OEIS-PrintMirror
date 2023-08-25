@@ -1,0 +1,48 @@
+{
+    "number": 183520,
+    "data": "5,31,101,543,2233,10003,47685,215451,994397,4603823,21240401,98257363,454235165,2100740935,9717553917,44943606231,207898873245,961691911899,4448501263357,20578124472715,95191234404373,440340646073843",
+    "name": "Number of n X 3 0..2 arrays with each element equal to either the sum mod 3 of its horizontal and vertical neighbors or the sum mod 3 of its diagonal and antidiagonal neighbors.",
+    "link": [
+        "R. H. Hardin, <a href=\"/A183520/b183520.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Robert Israel, <a href=\"/A183520/a183520.txt\">Linear recurrence of order 156</a>",
+        "Robert Israel, <a href=\"/A183520/a183520.pdf\">Maple-assisted derivation of recurrence</a>"
+    ],
+    "formula": [
+        "Linear recurrence of order 156: see links. - _Robert Israel_, Nov 17 2019"
+    ],
+    "example": [
+        "Some solutions for 5X3",
+        "..2..0..2....2..0..2....2..1..0....0..1..1....2..2..1....1..0..1....2..0..2",
+        "..0..2..0....1..2..2....2..2..2....2..1..2....2..2..2....2..1..2....0..2..1",
+        "..2..1..2....0..2..0....1..1..2....0..1..0....1..0..1....0..0..0....2..1..0",
+        "..2..0..2....0..2..2....2..2..2....2..2..1....2..2..2....2..2..1....2..0..1",
+        "..0..1..0....2..1..0....0..1..2....0..1..2....1..2..2....1..2..2....0..0..1"
+    ],
+    "maple": [
+        "Configs:= map(t -> convert(t+3^6, base, 3)[1..6],[$0..3^6-1]):",
+        "q:= proc(a,b) local A,B;",
+        "   A:= Configs[a]; B:= Configs[b];",
+        "   if A[4..6]<> B[1..3] then return 0 fi;",
+        "   if A[4] <> A[1]+A[5]+B[4] mod 3  and A[4] <> A[2]+B[5] mod 3 then return 0 fi;",
+        "   if A[5] <> A[2]+A[4]+A[6]+B[5] mod 3 and A[5] <> A[1]+A[3]+B[4]+B[6] mod 3 then return 0 fi;",
+        "   if A[6] <> A[3]+A[5]+B[6] mod 3 and A[6] <> A[2]+B[5] mod 3 then return 0 fi;",
+        "   1",
+        "end proc:",
+        "T:= Matrix(3^6,3^6, q):",
+        "u:= Vector[row](3^6,proc(a) if Configs[a][1..3]=[0,0,0] then 1 else 0 fi end proc):",
+        "v:= Vector(3^6,proc(a) if Configs[a][4..6]=[0,0,0] then 1 else 0 fi end proc):",
+        "V[0]:= v:",
+        "for nn from 1 to 30 do V[nn]:= T . V[nn-1] od:",
+        "seq(u . V[n],n=1..30); # _Robert Israel_, Nov 17 2019"
+    ],
+    "xref": [
+        "Column 3 of A183526."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. H. Hardin_, Jan 05 2011",
+    "references": 1,
+    "revision": 10,
+    "time": "2019-11-17T19:19:51-05:00",
+    "created": "2011-01-05T10:14:36-05:00"
+}

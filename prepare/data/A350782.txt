@@ -1,0 +1,43 @@
+{
+    "number": 350782,
+    "data": "1,5,18,60,315,1615,9928,70437,637504,5829386,64647125,722750400",
+    "name": "a(n) is the number of pairs of primes (p,q), p < q, such that (p + q)/2 = n!.",
+    "comment": [
+        "a(n) is the number of pairs of primes that are equidistant from n!.",
+        "Equivalently, a(n) is the number of positive integers d such that n! - d and n! + d are primes. For the smallest such d, iff there are no primes in the open interval (n! - d, n! + d), then n is a term in A053709, n! is a term in A053710, and d is a term in A053711."
+    ],
+    "formula": [
+        "a(n) = A002375(n!)."
+    ],
+    "example": [
+        "For n = 4, n! = 24, from which 5 pairs of primes are equidistant; in order of increasing distance, these are (19, 29), (17, 31), (11, 37), (7, 41), and (5, 43), so a(4) = 5. (A prime (23) lies between 19 and 29, so n=4 is not a term of A053709.)",
+        "For n = 5, n! = 120, from which 18 pairs of primes are equidistant: (113, 127), (109, 131), (103, 137), (101, 139), (89, 151), (83, 157), (73, 167), (67, 173), (61, 179), (59, 181), (47, 193), (43, 197), (41, 199), (29, 211), (17, 223), (13, 227), (11, 229), and (7, 233), so a(5) = 18. (The pair least distant from 120 is (113, 127), and there are no primes between 113 and 127, so n = 5 is a term of A053709, n! = 120 is a term of A053710, and d = 120 - 113 = 127 - 120 = 7 is a term of A053711.)"
+    ],
+    "mathematica": [
+        "Table[Length@IntegerPartitions[2n!,2,Prime@Range@PrimePi[2n!]],{n,3,9}] (* _Giorgos Kalogeropoulos_, Jan 16 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, nextprime, factorial",
+        "def A350782(n):",
+        "    m, p, c = factorial(n), 3, 0",
+        "    while p <= m:",
+        "        if isprime(2*m-p):",
+        "            c += 1",
+        "        p = nextprime(p)",
+        "    return c # _Chai Wah Wu_, Jan 16 2022"
+    ],
+    "xref": [
+        "Cf. A002375, A053709, A053710, A053711."
+    ],
+    "keyword": "nonn,more",
+    "offset": "3,2",
+    "author": "_Jon E. Schoenfield_, Jan 15 2022",
+    "ext": [
+        "a(14) from _Martin Ehrenstein_, Jan 25 2022"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2022-01-25T06:18:39-05:00",
+    "created": "2022-01-16T09:12:47-05:00"
+}

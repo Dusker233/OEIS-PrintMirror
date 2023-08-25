@@ -1,0 +1,34 @@
+{
+    "number": 144527,
+    "data": "0,1,4,9,21,45,104,233,549,1299,3157,7739,19318,48627,123865,317953,823063,2144503,5623754,14828072,39299895,104636888,279793448,751065458,2023443030,5469566583,14830871800,40330829028,109972410219,300628862478,823779631719",
+    "name": "a(n) = A000055(n) - 2.",
+    "comment": [
+        "Number of free trees with n nodes, each node with degree <= n-3. - _Robert A. Russell_, Jan 25 2023"
+    ],
+    "link": [
+        "Rebecca Neville, <a href=\"https://web.archive.org/web/20191029092609/http://gtn.kazlow.info:80/GTN54.pdf\">Graphs whose vertices are forests with bounded degree</a>, Graph Theory Notes of New York, LIV (2008), 12-21. [Wayback Machine link]"
+    ],
+    "formula": [
+        "a(n) = A144528(n,n-3). - _Robert A. Russell_, Jan 25 2023"
+    ],
+    "mathematica": [
+        "b[n_,i_,t_,k_] := b[n,i,t,k] = If[i<1, 0, Sum[Binomial[b[i-1,i-1,k,k]",
+        "  + j-1, j]* b[n-i*j, i-1, t-j, k], {j, 0, Min[t, n/i]}]];",
+        "  b[0,i_,t_,k_] = 1;",
+        "Join[{0, 1}, Table[m = n - 4;",
+        "  gf[x_] := 1 + Sum[b[j - 1, j - 1, m, m] x^j, {j, 1, n}];",
+        "  ci[x_] := SymmetricGroupIndex[m + 1, x] /. x[i_] -> gf[x^i];",
+        "  SeriesCoefficient[Series[gf[x] - (gf[x]^2 - gf[x^2])/2 + x ci[x],",
+        "{x, 0, n}], n], {n,6,35}]] (* _Robert A. Russell_, Jan 25 2023 *)"
+    ],
+    "xref": [
+        "Cf. A000055, A144528."
+    ],
+    "keyword": "nonn",
+    "offset": "4,3",
+    "author": "_N. J. A. Sloane_, Dec 20 2008",
+    "references": 1,
+    "revision": 16,
+    "time": "2023-01-26T21:41:34-05:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

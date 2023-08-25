@@ -1,0 +1,37 @@
+{
+    "number": 242372,
+    "data": "121,144,169,268,274,280,319,400,441,484,519,574,900,961,1000,1191,1331,8000,10000,14641,100000,1000000",
+    "name": "n^2 in base b is n in base 10 for some base b < n.",
+    "comment": [
+        "The corresponding bases b are 120, 142, 166, 188, 192, 196, 184, 200, 220, 241, 232, 256, 300, 320, 100, 112, 120, ...",
+        "The squares of the sequence are 121, 144, 169, 400, 441, 484, 900, ...",
+        "Includes 10^k for all k > 2, as 10^(2k) in base 100 is 10^k in base 10. - _Robert Israel_, Feb 26 2021"
+    ],
+    "example": [
+        "319 is in the sequence because 319^2 in base 184 is 319 in base 10."
+    ],
+    "maple": [
+        "for n from 1 to 2000 do: x:=convert(n,base,10): for b from 2 to n-1 do: y:=convert(n^2,base,b): if x=y then printf ( \"%d %d \\n\",n,b) fi:od:od:",
+        "# Alternative:",
+        "f:= proc(n) local L,k,x,P,S;",
+        "  L:= convert(n,base,10);",
+        "  P:= add(L[k]*x^(k-1),k=1..nops(L)) - n^2;",
+        "  S:= map(t -> rhs(op(t)),[isolve(P)]);",
+        "  ormap(t -> t > max(L) and t < n ,S);",
+        "end proc:",
+        "select(f, [$2..100000]); # _Robert Israel_, Feb 26 2021"
+    ],
+    "program": [
+        "(PARI) isok(m) = {for (b=2, m-1, my(d=digits(m^2, b)); if ((vecmax(d) < 10) && (fromdigits(d) == m), return (1)););} \\\\ _Michel Marcus_, Feb 27 2021"
+    ],
+    "keyword": "nonn,base,hard",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, May 12 2014",
+    "ext": [
+        "Definition corrected and more terms by _Robert Israel_, Feb 26 2021"
+    ],
+    "references": 0,
+    "revision": 18,
+    "time": "2021-02-27T04:19:34-05:00",
+    "created": "2014-05-12T08:58:18-04:00"
+}

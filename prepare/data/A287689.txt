@@ -1,0 +1,65 @@
+{
+    "number": 287689,
+    "data": "1,7,60,968,31737,2069963,267270032,68629753640,35171000942697,36024807353574279,73784587576805254652,302228602363365451957792,2475873310144021668263093201,40564787336902311168400640561083,1329227697997490307154018925966130304",
+    "name": "Number of (non-null) connected induced subgraphs in the n-triangular graph.",
+    "comment": [
+        "Also the number of labeled simple graphs with n vertices whose edge-set is connected. - _Gus Wiseman_, Sep 11 2019"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A287689/b287689.txt\">Table of n, a(n) for n = 2..50</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TriangularGraph.html\">Triangular Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Vertex-InducedSubgraph.html\">Vertex-Induced Subgraph</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{i=2..n} binomial(n,i) * A001187(i). - _Andrew Howroyd_, Jun 07 2017",
+        "E.g.f.: exp(x)*(-x + log(Sum_{k>=0} 2^binomial(k, 2)*x^k/k!)). - _Andrew Howroyd_, Sep 11 2019",
+        "a(n) = A006125(n) - A327199(n). - _Gus Wiseman_, Sep 11 2019"
+    ],
+    "example": [
+        "From _Gus Wiseman_, Sep 11 2019: (Start)",
+        "The a(4) = 60 edge-sets:",
+        "  {12}  {12,13}  {12,13,14}  {12,13,14,23}  {12,13,14,23,24}",
+        "  {13}  {12,14}  {12,13,23}  {12,13,14,24}  {12,13,14,23,34}",
+        "  {14}  {12,23}  {12,13,24}  {12,13,14,34}  {12,13,14,24,34}",
+        "  {23}  {12,24}  {12,13,34}  {12,13,23,24}  {12,13,23,24,34}",
+        "  {24}  {13,14}  {12,14,23}  {12,13,23,34}  {12,14,23,24,34}",
+        "  {34}  {13,23}  {12,14,24}  {12,13,24,34}  {13,14,23,24,34}",
+        "        {13,34}  {12,14,34}  {12,14,23,24}",
+        "        {14,24}  {12,23,24}  {12,14,23,34}",
+        "        {14,34}  {12,23,34}  {12,14,24,34}",
+        "        {23,24}  {12,24,34}  {12,23,24,34}",
+        "        {23,34}  {13,14,23}  {13,14,23,24}",
+        "        {24,34}  {13,14,24}  {13,14,23,34}",
+        "                 {13,14,34}  {13,14,24,34}",
+        "                 {13,23,24}  {13,23,24,34}",
+        "                 {13,23,34}  {14,23,24,34}",
+        "                 {13,24,34}",
+        "                 {14,23,24}",
+        "                 {14,23,34}",
+        "                 {14,24,34}             {12,13,14,23,24,34}",
+        "                 {23,24,34}",
+        "(End)"
+    ],
+    "mathematica": [
+        "Table[With[{g = GraphData[{\"Triangular\", n}]}, Total[Boole[ConnectedGraphQ[Subgraph[g, #]] & /@ Subsets[VertexList[g]]]]], {n, 2, 5}] - 1",
+        "(* Second program: *)",
+        "g[n_] := g[n] = If[n==0, 1, 2^(n*(n-1)/2) - Sum[k*Binomial[n, k]*2^((n-k) * (n-k-1)/2)*g[k], {k, 1, n-1}]/n]; a[n_] := Sum[Binomial[n, i]*g[i], {i, 2, n}]; Table[a[n], {n, 2, 16}] (* _Jean-Fran\u00e7ois Alcover_, Oct 02 2017, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={Vec(serlaplace(exp(x + O(x*x^n))*(-x+log(sum(k=0, n, 2^binomial(k, 2)*x^k/k!, O(x*x^n))))))} \\\\ _Andrew Howroyd_, Sep 11 2019"
+    ],
+    "xref": [
+        "The unlabeled version is A292300.",
+        "Cf. A001187, A006125, A327070, A327148, A327199, A327235."
+    ],
+    "keyword": "nonn",
+    "offset": "2,2",
+    "author": "_Eric W. Weisstein_, May 29 2017",
+    "ext": [
+        "Terms a(9) and beyond from _Andrew Howroyd_, Jun 07 2017"
+    ],
+    "references": 8,
+    "revision": 27,
+    "time": "2019-09-12T05:30:06-04:00",
+    "created": "2017-05-30T00:07:53-04:00"
+}

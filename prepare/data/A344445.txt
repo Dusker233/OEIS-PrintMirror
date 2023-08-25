@@ -1,0 +1,43 @@
+{
+    "number": 344445,
+    "data": "1,1,7,105,2345,69405,2559667,113073961,5820788545,342176336073,22616620648895,1660292619682697,134029227728536985,11800452870718122325,1125324001129006580475,115551341953019187183225,12711056625162235880359425,1491325482312555276046069905",
+    "name": "Number of cycle-up-down permutations of [2n] having n cycles.",
+    "comment": [
+        "For the definition of cycle-up-down permutations see A186366."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A344445/b344445.txt\">Table of n, a(n) for n = 0..338</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation\">Permutation</a>"
+    ],
+    "formula": [
+        "a(n) = (2n)! * [x^(2n) y^n] 1/(1-sin(x))^y.",
+        "a(n) = A186366(2n,n).",
+        "a(n) ~ c * d^n * (n-1)!, where d = 7.3270710411718682766548233722838416956334898839746535623751... and c = 0.14278148012337362269164226210064788025688590260058738... - _Vaclav Kotesovec_, May 22 2021"
+    ],
+    "example": [
+        "a(2) = 7: (1)(243), (143)(2), (142)(3), (132)(4), (12)(34), (13)(24), (14)(23)."
+    ],
+    "maple": [
+        "b:= proc(u, o) option remember; `if`(u+o=0, 1,",
+        "      add(b(o-1+j, u-j), j=1..u))",
+        "    end:",
+        "g:= proc(n) option remember; expand(`if`(n=0, 1,",
+        "      add(g(n-j)*binomial(n-1, j-1)*x*b(j-1, 0), j=1..n)))",
+        "    end:",
+        "a:= n-> coeff(g(2*n), x, n):",
+        "seq(a(n), n=0..18);"
+    ],
+    "mathematica": [
+        "Join[{1}, Table[Sum[2^(2*n - 2*j + 1) * StirlingS1[2*j,n] * Sum[(-1)^k * k^(2*n) / ((j+k)!*(j-k)!), {k, 0, j}], {j, Floor[n/2], n}], {n, 1, 20}]] (* _Vaclav Kotesovec_, May 22 2021 *)"
+    ],
+    "xref": [
+        "Cf. A007820, A186366, A344532."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, May 19 2021",
+    "references": 3,
+    "revision": 24,
+    "time": "2021-05-24T06:32:38-04:00",
+    "created": "2021-05-21T18:00:53-04:00"
+}

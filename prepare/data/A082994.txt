@@ -1,0 +1,49 @@
+{
+    "number": 82994,
+    "data": "288,528,768,825,867,882,1584,2178,4851,8712,10989,13104,14544,15984,20808,21978,26208,27648,27848,36828,40131,44541,48139,48951,49686,57399,68694,80262,80802,82863,84672,84872,87912,93184,98901,99375",
+    "name": "Numbers n such that all the following properties hold: (i) n*reverse(n) is a square; (ii) n != reverse(n); (iii) n and reverse(n) are not both squares; and (iv) n and reverse(n) have the same number of digits.",
+    "comment": [
+        "These numbers are counterexamples to the following conjecture given in the Ogilvy-Anderson reference: \"When an integer and its reversal are unequal, their product is never a square except when both are squares.\" This sequence excludes terms like 2200, i.e. 2200*22 = 48400.",
+        "Contains x*(10^k+1) for k >= 3 with x in {144, 169, 288, 441, 528, 768, 825, 867, 882, 961}. - _Robert Israel_, Jun 11 2018",
+        "A035090 U {this sequence} = A062917, with empty intersection. - _Bernard Schott_, Jan 04 2019"
+    ],
+    "reference": [
+        "C. Stanley Ogilvy and John T. Anderson, Excursions in Number Theory, Oxford University Press, NY. (1966), pp. 88-89.",
+        "J. Earls, Mathematical Bliss, Pleroma Publications, 2009, pages 82-83. ASIN: B002ACVZ6O [From _Jason Earls_, Nov 22 2009]"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A082994/b082994.txt\">Table of n, a(n) for n = 1..168</a>",
+        "M. A. Rashid, M. A. Uppal, D. C. B. Marsh and A. Wayne, <a href=\"http://www.jstor.org/stable/2310179\">Product of a Number and Its Reverse</a>, American Mathematical Monthly, vol. 64 (1957), p. 434, E-1243. - _Felix Fr\u00f6hlich_, Jul 11 2014"
+    ],
+    "example": [
+        "a(5) = 867 because 867 * 768 = 665856 = 816^2."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "filter:= proc(n) local r;",
+        "  if issqr(n) then return false fi;",
+        "  r:= revdigs(n);",
+        "  r <> n and issqr(r*n) and not issqr(r);",
+        "end proc:",
+        "select(filter, [seq(seq(10*i+j,j=1..9),i=1..10^4)]); # _Robert Israel_, Jun 11 2018"
+    ],
+    "mathematica": [
+        "Select[Range[10^5], And[UnsameQ @@ {#1, #2}, IntegerQ@ Sqrt[#1 #2], AllTrue[{#1, #2}, ! IntegerQ@ Sqrt@ # &], SameQ @@ (IntegerLength@ {#1, #2})] & @@ {#, IntegerReverse@ #} &] (* _Michael De Vlieger_, Jan 04 2019 *)"
+    ],
+    "xref": [
+        "Cf. A002113, A004086, A035090, A062917, A070760, A322835."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Jason Earls_, May 29 2003",
+    "ext": [
+        "Name clarified by _Bernard Schott_, Jan 04 2019"
+    ],
+    "references": 4,
+    "revision": 37,
+    "time": "2019-01-06T13:25:58-05:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

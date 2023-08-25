@@ -1,0 +1,50 @@
+{
+    "number": 352788,
+    "data": "1,9,25,10510564",
+    "name": "Squares in A213544.",
+    "comment": [
+        "Squares that are partial sums of A023896."
+    ],
+    "example": [
+        "a(3) = 25 is a term because A213544(6) = 25 = 5^2."
+    ],
+    "maple": [
+        "s:= 1: R:= 1: count:= 1:",
+        "for n from 2 to 10^6 do",
+        "s:= s + n/2*numtheory:-phi(n);",
+        "  if issqr(s) then",
+        "     count:= count+1; R:= R, s;",
+        "  fi;",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "f[1] = 1; f[n_] := n*EulerPhi[n]/2; seq[len_, max_] := Module[{s = {}, sum = 0, c = 0, n = 1}, While[c < len && n < max, sum += f[n]; n++; If[IntegerQ@Sqrt[sum], c++; AppendTo[s, sum]]]; s]; seq[4, 1000] (* _Amiram Eldar_, Apr 07 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import totient",
+        "def A352788_gen(): # generator of terms",
+        "    c, m, ms = 0, 1, 1",
+        "    for n in count(1):",
+        "        c += 1 if n <= 2 else n*totient(n)//2",
+        "        if c == ms:",
+        "            yield c",
+        "        else:",
+        "            while c > ms:",
+        "                ms += 2*m+1",
+        "                m += 1",
+        "A352788_list = list(islice(A352788_gen(),4)) # _Chai Wah Wu_, Apr 08 2022"
+    ],
+    "xref": [
+        "Cf. A000290, A023896, A213544."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Apr 02 2022",
+    "references": 0,
+    "revision": 10,
+    "time": "2022-04-08T10:47:28-04:00",
+    "created": "2022-04-08T05:56:40-04:00"
+}

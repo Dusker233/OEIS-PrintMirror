@@ -1,0 +1,43 @@
+{
+    "number": 351054,
+    "data": "228647,642457,3678317,4424699,5507669,8439073,8527301,8545387,9207197,9490571,9843049,10023817,10148123,10670909,11621243,11697979,12208459,12409849,12687119,12845879,12947071,13590457,13940057,14377747,14511053,15309937,16628009,16713731,16982153,17073041,17302639",
+    "name": "First of three consecutive primes p,q,r such that p+q-r, p-q+r, -p+q+r are all prime.",
+    "comment": [
+        "Each term is the second in an arithmetic progression of five primes, of which at least the second, third and fourth are consecutive primes."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A351054/b351054.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(3) = 3678317 is a term because it is prime, the next two primes are 3678347 and 3678377, and 3678317+3678347-3678377 = 3678287, 3678317-3678347+3678377 = 3678347, and -3678317+3678347+3678377 = 3678407 are all primes."
+    ],
+    "maple": [
+        "f:= proc(p,q,r)",
+        "     isprime(p+q-r) and isprime(p-q+r) and isprime(-p+q+r)",
+        "end proc:",
+        "p:= 2: q:= 3: r:= 5: R:= NULL: count:= 0:",
+        "while r < 10^8 do",
+        "  p:= q; q:= r; r:= nextprime(r);",
+        "  if f(p,q,r) then count:= count+1; R:= R,p fi",
+        "od:",
+        "R;"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, nextprime",
+        "def c(p, q, r): return isprime(p+q-r) and isprime(p-q+r) and isprime(-p+q+r)",
+        "def afind():",
+        "    p, q, r = 2, 3, 5",
+        "    while True:",
+        "        if c(p, q, r): print(p, end=\", \")",
+        "        p, q, r = q, r, nextprime(r)",
+        "afind() # _Michael S. Branicky_, Jan 30 2022"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 30 2022",
+    "references": 1,
+    "revision": 13,
+    "time": "2022-02-02T07:19:25-05:00",
+    "created": "2022-02-01T20:00:02-05:00"
+}

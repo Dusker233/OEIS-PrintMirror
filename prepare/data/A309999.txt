@@ -1,0 +1,35 @@
+{
+    "number": 309999,
+    "data": "1,1,1,2,2,3,4,5,6,8,10,12,15,18,22,25,32,35,44,53,61,72,81,98,114,130,147,176,200,229,257,291,342,387,442,501,573,642,714,807,907,1037,1159,1293,1458,1624,1811,2024,2246,2505,2785,3114,3449,3795,4213,4660",
+    "name": "Number of distinct values of multinomial coefficients M(n;lambda) where lambda ranges over all partitions of n into distinct parts.",
+    "comment": [
+        "Differs from A000009 first at n = 15: a(15) = 25 < 27 = A000009(15). There are two repeated multinomial coefficients for n = 15: 1365 = M(15;11,4) = M(15;12,2,1) and 30030 = M(15;9,5,1) = M(15;10,3,2)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A309999/b309999.txt\">Table of n, a(n) for n = 0..125</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Multinomial_theorem#Multinomial_coefficients\">Multinomial coefficients</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>"
+    ],
+    "maple": [
+        "g:= proc(n, i) option remember; `if`(i*(i+1)/2<n, {}, `if`(n=0, {1},",
+        "     {map(x->binomial(n, i)*x, g(n-i, min(n-i, i-1)))[], g(n, i-1)[]}))",
+        "    end:",
+        "a:= n-> nops(g(n$2)):",
+        "seq(a(n), n=0..55);"
+    ],
+    "mathematica": [
+        "g[n_, i_] := g[n, i] = If[i(i+1)/2 < n, {}, If[n == 0, {1}, Union[ Binomial[n, i] #& /@ g[n - i, Min[n - i, i - 1]], g[n, i - 1]]]];",
+        "a[n_] := Length[g[n, n]];",
+        "a /@ Range[0, 55] (* _Jean-Fran\u00e7ois Alcover_, Dec 07 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000009, A070289."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Aug 26 2019",
+    "references": 3,
+    "revision": 17,
+    "time": "2020-12-07T13:59:32-05:00",
+    "created": "2019-08-26T17:47:56-04:00"
+}

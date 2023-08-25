@@ -1,0 +1,28 @@
+{
+    "number": 35679,
+    "data": "0,0,1,1,2,2,3,3,4,4,7,7,10,10,13,13,16,16,22,23,30,31,38,39,46,47,58,61,75,78,93,96,111,114,134,141,167,176,204,213,242,251,286,301,346,365,416,436,489,509,570,599,676,714,802,844,937,980,1083,1138,1265",
+    "name": "Number of partitions of n into parts 8k+1 and 8k+2 with at least one part of each type.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A035679/b035679.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i, t, s) option remember; `if`(n=0, t*s, `if`(i<1, 0,",
+        "       b(n, i-1, t, s)+(h-> `if`(h in {1, 2}, add(b(n-i*j, i-1,",
+        "      `if`(h=1, 1, t), `if`(h=2, 1, s)), j=1..n/i), 0))(irem(i, 8))))",
+        "    end:",
+        "a:= n-> b(n$2, 0$2):",
+        "seq(a(n), n=1..75);  # _Alois P. Heinz_, Sep 04 2020"
+    ],
+    "mathematica": [
+        "b[n_, i_, t_, s_] := b[n, i, t, s] = If[n == 0, t s, If[i < 1, 0, b[n, i - 1, t, s] + Function[h, If[h == 1 || h == 2, Sum[b[n - i j, i - 1, If[h == 1, 1, t], If[h == 2, 1, s]], {j, 1, n/i}], 0]][Mod[i, 8]]]];",
+        "a[n_] := b[n, n, 0, 0];",
+        "Array[a, 75] (* _Jean-Fran\u00e7ois Alcover_, Oct 31 2020, after _Alois P. Heinz_ *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 7,
+    "revision": 13,
+    "time": "2020-10-31T12:40:21-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 161601,
+    "data": "11,19,23,35,37,39,43,47,55,67,69,71,75,77,79,83,87,91,95,103,111,131,133,135,137,139,141,143,147,149,151,155,157,159,163,167,171,173,175,179,183,187,191,199,203,207,215,223,239,259,261,263,265,267,269,271",
+    "name": "Positive integers k that are less than the value of the reversal of k's representation in binary.",
+    "comment": [
+        "By \"reversal\" of k's representation in binary, it is meant: write k in binary, reverse the order of its digits, and read the result as a binary value.",
+        "This sequence contains only odd integers."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A161601/b161601.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "37 = 100101_2; its digital reversal is 101001_2 = 41. Since 37 < 41, 37 is in this sequence."
+    ],
+    "maple": [
+        "a := proc (n) local n2, sz, rv: n2 := convert(n, base, 2): sz := nops(n2): rv := add(n2[j]*2^(sz-j), j = 1 .. sz): if n < rv then n else end if end proc; seq(a(n), n = 1 .. 280); # _Emeric Deutsch_, Jun 28 2009"
+    ],
+    "mathematica": [
+        "Select[Range[300],FromDigits[Reverse[IntegerDigits[#,2]],2]>#&] (* _Harvey P. Dale_, Mar 19 2016 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def A161601_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:n<int(bin(n)[-1:1:-1],2),count(max(startvalue|1,1),2))",
+        "A161601_list = list(islice(A161601_gen(),20)) # _Chai Wah Wu_, Jan 19 2023"
+    ],
+    "xref": [
+        "Cf. A030101, A006995, A161602, A161603."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Leroy Quet_, Jun 14 2009",
+    "ext": [
+        "Extended by _Emeric Deutsch_, Jun 28 2009",
+        "Edited by _Jon E. Schoenfield_, Feb 24 2019"
+    ],
+    "references": 6,
+    "revision": 17,
+    "time": "2023-01-20T01:35:10-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

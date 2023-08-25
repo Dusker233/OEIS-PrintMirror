@@ -1,0 +1,48 @@
+{
+    "number": 352447,
+    "data": "1,2,7,9,10,11,13,15,16,17,19,21,22,23,25,26,27,28,29,31,33,34,35,36,37,39,40,41,43,45,46,47,49,50,51,52,53,55,56,57,58,59,61,63,64,65,66,67,69,70,71,73,75,76,77,78,79,81,82,83,85,86,87,88,89,91,92,93,94,95",
+    "name": "Numbers k such that BarnesG(k) is divisible by Gamma(k).",
+    "comment": [
+        "These are k such that G(k)/Gamma(k) = 1!*2!*3!*...*(k-2)!/(k-1)! = 1!*2!*3!*...*(k-3)!/(k-1) are integer. Let k=1+c, so require 1!*2!*3!*...*(c-2)!/c to be integer. If c is composite, take any factorization of c=c_1*c_2 with 2<=c_1<=c_2<=c/2; then matching factors exist in the product 1!*2!*3!*...*(c-2)! that cancel this factor [either c_1! and c_2! if c_1 <> c_2, or c_1! and (c_1+1)! if c_1=c_2 and c-2 >= c_1+1]. If c is prime, none of the 1!*2!*..(c-2)! contains a factor matching that prime. So this shows that the sequence is (apart from offset and at c=4) the same as A079696. - _R. J. Mathar_, Mar 25 2022"
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/BarnesG-Function.html\">Barnes G-Function</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/Divisible.html\">Divisible</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/GammaFunction.html\">Gamma Function</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/Superfactorial.html\">Superfactorial</a>."
+    ],
+    "formula": [
+        "Conjecture: a(n) = A079696(n-1), n>1. - _R. J. Mathar_, Mar 20 2022"
+    ],
+    "example": [
+        "BarnesG(7) = 34560, Gamma(7) = 720, 34560 is divisible by 720, so 7 is in this sequence."
+    ],
+    "mathematica": [
+        "Table[If[Divisible[BarnesG[k], Gamma[k]], k, Nothing], {k, 115}]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from collections import Counter",
+        "from sympy import factorint",
+        "def A352447_gen(): # generator of terms",
+        "    yield 1",
+        "    a = Counter()",
+        "    for k in count(2):",
+        "        b = Counter(factorint(k-1))",
+        "        if all(b[p] <= a[p] for p in b):",
+        "            yield k",
+        "        a += b",
+        "A352447_list = list(islice(A352447_gen(),100)) # _Chai Wah Wu_, Mar 17 2022"
+    ],
+    "xref": [
+        "Cf. A000142, A000178, A079696."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vladimir Reshetnikov_, Mar 16 2022",
+    "references": 0,
+    "revision": 22,
+    "time": "2022-03-25T09:26:21-04:00",
+    "created": "2022-03-17T07:17:43-04:00"
+}

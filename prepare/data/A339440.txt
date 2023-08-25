@@ -1,0 +1,38 @@
+{
+    "number": 339440,
+    "data": "0,1,2,9,44,230,1236,6790,37832,213057,1209660,6912367,39705516,229055918,1326168018,7701734250,44846271632,261735599172,1530650010312,8967361033572,52619233554120,309203221308702,1819290987055630,10716835948503349,63196331969007264",
+    "name": "Number of linear forests with n rooted trees and 2*n-1 nodes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A339440/b339440.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A339067(2n-1,n).",
+        "a(n) ~ c * d^n / sqrt(n), where d = 6.031382795097860532993547039674008662345079835351392549515262162478014679... and c = 0.05599525103242350197279211300654208236718263537075... - _Vaclav Kotesovec_, Dec 18 2020"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n<2, n, (add(add(d*b(d),",
+        "      d=numtheory[divisors](j))*b(n-j), j=1..n-1))/(n-1))",
+        "    end:",
+        "T:= proc(n, k) option remember; `if`(k=1, b(n), (t->",
+        "      add(T(j, t)*T(n-j, k-t), j=1..n-1))(iquo(k, 2)))",
+        "    end:",
+        "a:= n-> T(2*n-1, n):",
+        "seq(a(n), n=0..24);"
+    ],
+    "mathematica": [
+        "b[n_] := b[n] = If[n<2, n, (Sum[Sum[d*b[d], {d, Divisors[j]}]*b[n - j], {j, 1, n - 1}])/(n - 1)];",
+        "T[n_, k_] := T[n, k] = If[k == 1, b[n], With[{t = Quotient[k, 2]}, Sum[T[j, t]*T[n - j, k - t], {j, 1, n - 1}]]];",
+        "a[n_] := T[2n-1, n];",
+        "a /@ Range[0, 24] (* _Jean-Fran\u00e7ois Alcover_, Jan 03 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A339067, A245102, A245103."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Dec 04 2020",
+    "references": 3,
+    "revision": 15,
+    "time": "2021-01-03T06:40:13-05:00",
+    "created": "2020-12-04T20:37:07-05:00"
+}

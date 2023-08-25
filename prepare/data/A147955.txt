@@ -1,0 +1,59 @@
+{
+    "number": 147955,
+    "data": "1,1,1,3,4,7,10,15,22,34,46,65,93,123,175,245,324,425,592,764,1015,1352,1750,2266,2931,3793,4897,6259,7930,10080,12788,16047,20176,25482,31641,39630,49306,60932,75552,93432,114597,141013,173259,211595,258933,316375,384359,466927,566443",
+    "name": "Expansion of Product_{k >= 0} (1 + A147954(k)*x^k).",
+    "formula": [
+        "a(n) = [x^n] Product_{k >= 0} (1 + A147954(k)*x^k).",
+        "a(n) = Sum_{(b_1,...,b_n)} f(1)^b_1 * f(2)^b_2 * ... * f(n)^b_n, where f(m) = A147954(m), and the sum is taken over all lists (b_1,...,b_n) with b_j in {0,1} and Sum_{j=1..n} j*b_j = n. - _Petros Hadjicostas_, Apr 21 2020"
+    ],
+    "example": [
+        "From _Petros Hadjicostas_, Apr 21 2020: (Start)",
+        "Let f(m) = A147954(m). Using the strict partitions of n (see A000009), we get:",
+        "a(1) = f(1) = 1,",
+        "a(2) = f(2) = 1,",
+        "a(3) = f(3) + f(1)*f(2) = 2 + 1*1 = 3,",
+        "a(4) = f(4) + f(1)*f(3) = 2 + 1*2 = 4,",
+        "a(5) = f(5) + f(1)*f(4) + f(2)*f(3) = 3 + 1*2 + 1*2 = 7,",
+        "a(6) = f(6) + f(1)*f(5) + f(2)*f(4) + f(1)*f(2)*f(3) = 3 + 1*3 + 1*2 + 1*1*2 = 10,",
+        "a(7) = f(7) + f(1)*f(6) + f(2)*f(5) + f(3)*f(4) + f(1)*f(2)*f(4) = 3 + 1*3 + 1*3 + 2*2 + 1*1*2 = 15. (End)"
+    ],
+    "maple": [
+        "f := proc(n) local v; option remember;",
+        "if n = 0 then v := 0; end if;",
+        "if n = 1 or n = 2 then v := 1; end if;",
+        "if 3 <= n and n <= 5 then v := f(f(n - 1)) + f(n - f(n - 1)); end if;",
+        "if 6 <= n and 5 <> n mod 6 then v := f(f(n - 1)) + f(f(floor(n/6))); end if;",
+        "if 6 <= n and 5 = n mod 6 then v := f(f(n - 1)) + f(n - f(floor(n/6))); end if; v; end proc; # this gives sequence A147954",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      b(n, i-1) +`if`(i>n, 0, b(n-i, i-1)*f(i))))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..50); # _Petros Hadjicostas_, Apr 21 2020 (using _Alois P. Heinz_'s program from A147655)"
+    ],
+    "mathematica": [
+        "f[0] = 0; f[1] = 1; f[2] = 1;",
+        "f[n_] := f[n] =",
+        "   f[f[n - 1]] +",
+        "    If[n < 6, f[n - f[n - 1]],",
+        "     If[Mod[n, 6] == 0, f[f[n/6]],",
+        "      If[Mod[n, 6] == 1, f[f[(n - 1)/6]],",
+        "       If[Mod[n, 6] == 2, f[f[(n - 2)/6]],",
+        "        If[Mod[n, 6] == 3, f[f[(n - 3)/6]],",
+        "         If[Mod[n, 6] == 4, f[f[(n - 4)/6]], f[n - f[(n - 5)/6]]]]]]]];",
+        "P[x_, n_] := P[x, n] = Product[1 + f[m]*x^m, {m, 0, n}];",
+        "Take[CoefficientList[P[x, 45], x], 45]"
+    ],
+    "xref": [
+        "Cf. A000009, A004001, A147655, A147665, A147871, A147954."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Roger L. Bagula_, Nov 17 2008",
+    "ext": [
+        "Name, data, and Mathematica program edited and corrected by _Petros Hadjicostas_, Apr 21 2020"
+    ],
+    "references": 1,
+    "revision": 30,
+    "time": "2020-04-22T07:01:11-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

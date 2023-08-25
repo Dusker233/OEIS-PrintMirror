@@ -1,0 +1,48 @@
+{
+    "number": 319006,
+    "data": "1,3,8,18,34,57,89,132,187,255,338,438,556,693,851,1032,1237,1467,1724,2010,2326,2673,3053,3468,3919,4407,4934,5502,6112,6765,7463,8208,9001,9843,10736,11682,12682,13737,14849,16020,17251,18543,19898,21318,22804,24357,25979",
+    "name": "Sum of the next n positive integers repeated (A008619).",
+    "link": [
+        "Colin Barker, <a href=\"/A319006/b319006.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-7,8,-7,4,-1)."
+    ],
+    "formula": [
+        "G.f.: x*(1 - x + 3*x^2 - x^3 + x^4)/((1 + x^2)*(1 - x)^4).",
+        "a(n) = -a(-n) = 4*a(n-1) - 7*a(n-2) + 8*a(n-3) - 7*a(n-4) + 4*a(n-5) - a(n-6).",
+        "a(n) = (2*n*(n^2 + 2) + (1 - (-1)^n)*(-1)^((n-1)/2))/8.",
+        "a(n) = A319007(n) + n.",
+        "a(n) = (n^3 + 2*n + Chi(n))/4 where Chi(n) = A101455(n). - _Peter Luschny_, Sep 09 2018"
+    ],
+    "example": [
+        "Next n positive integers repeated:       Sums:",
+        "1,  ......................................   1",
+        "1, 2,  ...................................   3",
+        "2, 3, 3,  ................................   8",
+        "4, 4, 5,  5,  ............................  18",
+        "6, 6, 7,  7,  8,  ........................  34",
+        "8, 9, 9, 10, 10, 11,  ....................  57, etc."
+    ],
+    "maple": [
+        "a := n -> (n^3 + 2*n + (-(n mod 2))^binomial(n, 2))/4:",
+        "seq(a(n), n=1..47); # _Peter Luschny_, Sep 09 2018"
+    ],
+    "mathematica": [
+        "Table[(2 n (n^2 + 2) + (1 - (-1)^n) (-1)^((n-1)/2))/8, {n, 1, 50}]",
+        "Module[{nn=50,lst},lst=Flatten[Table[{n,n},{n,(nn(nn+1))/2}]];Total/@ TakeList[lst,Range[nn]]] (* Requires Mathematica version 11 or later *) (* or *) LinearRecurrence[{4,-7,8,-7,4,-1},{1,3,8,18,34,57},50] (* _Harvey P. Dale_, Jul 10 2021 *)"
+    ],
+    "program": [
+        "(Magma) [Integers()! (n*(n^2+2)+(-(n mod 2))^(n*(n-1)/2))/4: n in [1..50]];",
+        "(PARI) Vec(x*(1 - x + 3*x^2 - x^3 + x^4)/((1 + x^2)*(1 - x)^4) + O(x^50)) \\\\ _Colin Barker_, Sep 10 2018"
+    ],
+    "xref": [
+        "Cf. A008619, A101455, A319007.",
+        "Sum of the next n positive integers: A006003 (after 0)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Bruno Berselli_, Sep 07 2018",
+    "references": 2,
+    "revision": 35,
+    "time": "2022-09-08T08:46:23-04:00",
+    "created": "2018-09-09T08:11:39-04:00"
+}

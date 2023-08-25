@@ -1,0 +1,53 @@
+{
+    "number": 358152,
+    "data": "1,1,2,8,121",
+    "name": "Number of strict closure operators on a set of n elements such that every point and every set disjoint from that point can be separated by clopen sets.",
+    "comment": [
+        "A closure operator is strict if the empty set is closed.",
+        "Two nonempty disjoint subsets A and B of X are separated by a set H if A is a subset of H and B is not a subset of H.",
+        "Also the number of S_3 convexities on a set of n elements in the sense of Chepoi."
+    ],
+    "reference": [
+        "G. M. Bergman, \"Lattices, Closure Operators, and Galois Connections\", pp. 173-212  in \"An Invitation to General Algebra and Universal Constructions\", Springer, (2015)."
+    ],
+    "link": [
+        "Victor Chepoi, <a href=\"https://www.researchgate.net/publication/2407147_Separation_Of_Two_Convex_Sets_In_Convexity_Structures\">Separation of Two Convex Sets in Convexity Structures</a>"
+    ],
+    "example": [
+        "The a(3) = 8 set-systems of closed sets:",
+        "  {{}, {1, 2, 3}}",
+        "  {{}, {1}, {2, 3}, {1, 2, 3}}",
+        "  {{}, {2}, {1, 3},{1, 2, 3}}",
+        "  {{}, {3}, {1, 2}, {1, 2, 3}}",
+        "  {{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {1, 2, 3}}",
+        "  {{}, {1}, {2}, {3}, {1, 2}, {2, 3}, {1, 2, 3}}",
+        "  {{}, {1}, {2}, {3}, {1, 3}, {2, 3}, {1, 2, 3}}",
+        "  {{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}}"
+    ],
+    "mathematica": [
+        "SeparatedPairQ[F_, n_] := AllTrue[",
+        "  Flatten[(x |-> ({x, #} & /@ Select[F, FreeQ[#, x] &])) /@ Range[n],",
+        "  1], MemberQ[F,",
+        "  _?(H |-> With[{H1 = Complement[Range[n], H]},",
+        "      MemberQ[F, H1] && MemberQ[H, #[[1]]",
+        "] && SubsetQ[H1, #[[2]]",
+        "]])]&];",
+        "Table[Length@Select[Select[",
+        "   Subsets[Subsets[Range[n]]],",
+        "   And[",
+        "     MemberQ[#, {}],",
+        "     MemberQ[#, Range[n]],",
+        "     SubsetQ[#, Intersection @@@ Tuples[#, 2]]] &",
+        "   ], SeparatedPairQ[#, n] &], {n, 0, 4}]"
+    ],
+    "xref": [
+        "Cf. A334255, A358144, A356544."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "0,3",
+    "author": "_Tian Vlasic_, Nov 01 2022",
+    "references": 2,
+    "revision": 21,
+    "time": "2022-11-01T11:53:27-04:00",
+    "created": "2022-11-01T11:53:27-04:00"
+}

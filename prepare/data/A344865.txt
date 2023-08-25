@@ -1,0 +1,37 @@
+{
+    "number": 344865,
+    "data": "2,5,6,7,19,59,88,89,1213,1214,3876,3877,3878,10252040",
+    "name": "a(n) is the largest k such that no subsequence of n numbers appears more than once in the sequence of the first k prime gaps while overlapping subsequences are allowed.",
+    "example": [
+        "a(5) is 19 because when we look at the first 19 prime gaps, there is no sequence of 5 numbers that occurs twice. If we look at the first 20 prime gaps, there is a repetition."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primerange",
+        "list_of_prime_gaps = [x - y for x, y in zip(primerange(3, 40000),",
+        "primerange(1, 40000))]",
+        "def a(n):",
+        "    saved = set()",
+        "    for i in range(1, len(list_of_prime_gaps)-n):",
+        "        sequence = list_of_prime_gaps[i:i+n]",
+        "        if tuple(sequence) in saved:",
+        "            return i + n - 1",
+        "        saved.add(tuple(sequence))",
+        "    return None",
+        "for n in range(1, 14):",
+        "    print(a(n), end=\", \")"
+    ],
+    "xref": [
+        "Cf. A001223 (prime gaps)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Armin Sch\u00e4fer_, May 31 2021",
+    "ext": [
+        "a(14) from _Armin Sch\u00e4fer_, Aug 08 2021"
+    ],
+    "references": 0,
+    "revision": 29,
+    "time": "2021-08-11T02:31:13-04:00",
+    "created": "2021-06-16T15:37:59-04:00"
+}

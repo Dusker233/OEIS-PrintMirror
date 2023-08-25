@@ -1,0 +1,37 @@
+{
+    "number": 237826,
+    "data": "0,0,0,0,1,1,2,3,5,7,9,12,16,20,26,31,38,47,55,67,78,92,106,126,145,167,190,219,247,288,320,366,410,466,520,591,654,739,820,924,1018,1148,1263,1415,1562,1740,1911,2136,2342,2607,2859,3169,3469,3849,4208",
+    "name": "Number of partitions of n such that 4*(least part) = greatest part.",
+    "link": [
+        "David A. Corneth, <a href=\"/A237826/b237826.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=1} x^(5*k)/Product_{j=k..4*k} (1-x^j). - _Seiichi Manyama_, May 14 2023"
+    ],
+    "example": [
+        "a(8) = 3 counts these partitions:  431, 4211, 41111."
+    ],
+    "mathematica": [
+        "z = 64; q[n_] := q[n] = IntegerPartitions[n];",
+        "Table[Count[q[n], p_ /; 3 Min[p] == Max[p]], {n, z}]     (* A237825*)",
+        "Table[Count[q[n], p_ /; 4 Min[p] == Max[p]], {n, z}]     (* A237826 *)",
+        "Table[Count[q[n], p_ /; 5 Min[p] == Max[p]], {n, z}]     (* A237827 *)",
+        "Table[Count[q[n], p_ /; 2 Min[p] + 1 == Max[p]], {n, z}] (* A237828 *)",
+        "Table[Count[q[n], p_ /; 2 Min[p] - 1 == Max[p]], {n, z}] (* A237829 *)",
+        "Table[Count[IntegerPartitions[n],_?(#[[1]]==4#[[-1]]&)],{n,60}] (* _Harvey P. Dale_, Jun 15 2023 *)"
+    ],
+    "program": [
+        "(PARI) my(N=60, x='x+O('x^N)); concat([0, 0, 0, 0], Vec(sum(k=1, N, x^(5*k)/prod(j=k, 4*k, 1-x^j)))) \\\\ _Seiichi Manyama_, May 14 2023"
+    ],
+    "xref": [
+        "Cf. A000041, A117086, A237757, A237828, A237829.",
+        "Cf. A118096, A237825, A237827."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,7",
+    "author": "_Clark Kimberling_, Feb 16 2014",
+    "references": 10,
+    "revision": 17,
+    "time": "2023-06-15T19:10:54-04:00",
+    "created": "2014-02-20T11:12:50-05:00"
+}

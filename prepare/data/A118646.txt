@@ -1,0 +1,42 @@
+{
+    "number": 118646,
+    "data": "0,0,1,5,13,31,71,159,346,739,1559,3258,6756,13922,28547,58300,118668,240880,487835,986085,1990025,4010658,8073786,16237521,32629241,65522823,131498801,263774439,528880599,1060044148,2124001923",
+    "name": "a(n) is the number of binary strings of length n such that there exists a subsequence of length 4 containing 3 or more ones.",
+    "comment": [
+        "Or there are 3 ones in a row - this is relevant only for a(3).",
+        "Complementary to A118647, namely a(n) = 2^(n+3) - A118647(n)."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A118646/b118646.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-1,-2,1,-2,-1,2)."
+    ],
+    "formula": [
+        "a(n) = a(n-1) + a(n-2) + a(n-4) - a(n-6) + 13*2^(n-6).",
+        "a(n) = +3*a(n-1) -a(n-2) -2*a(n-3) +a(n-4) -2*a(n-5) -a(n-6) +2*a(n-7).",
+        "G.f.: x^3*(1+2*x-x^2-x^3)/( (1-2*x)*(1-x-x^2-x^4+x^6) ). - _R. J. Mathar_, Nov 28 2011"
+    ],
+    "example": [
+        "a(4) is 5 because only the following binary strings of length 4 satisfy the conditions: 0111, 1011, 1101, 1011, 1111."
+    ],
+    "mathematica": [
+        "LinearRecurrence[{3,-1,-2,1,-2,-1,2}, {0,0,1,5,13,31,71}, 41] (* _G. C. Greubel_, May 05 2023 *)"
+    ],
+    "program": [
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 40); [0,0] cat Coefficients( R!( x^3*(1+2*x-x^2-x^3)/((1-2*x)*(1-x-x^2-x^4+x^6)) )); // _G. C. Greubel_, May 05 2023",
+        "(SageMath)",
+        "def A118646_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( x^3*(1+2*x-x^2-x^3)/((1-2*x)*(1-x-x^2-x^4+x^6)) ).list()",
+        "a=A118646_list(41); a[1:] # _G. C. Greubel_, May 05 2023"
+    ],
+    "xref": [
+        "Cf. A118647."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Tanya Khovanova_, May 10 2006, Aug 17 2006",
+    "references": 4,
+    "revision": 19,
+    "time": "2023-05-06T09:02:05-04:00",
+    "created": "2006-05-19T03:00:00-04:00"
+}

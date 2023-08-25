@@ -1,0 +1,73 @@
+{
+    "number": 334266,
+    "data": "0,1,2,4,5,8,9,11,16,17,18,19,21,23,32,33,34,35,37,39,43,47,64,65,66,67,68,69,71,73,74,75,77,79,85,87,91,95,128,129,130,131,132,133,135,137,138,139,141,143,146,147,149,151,155,159,171,173,175,183,191",
+    "name": "Numbers k such that the k-th composition in standard order is both a reversed Lyndon word and a co-Lyndon word.",
+    "comment": [
+        "A Lyndon word is a finite sequence of positive integers that is lexicographically strictly less than all of its cyclic rotations. Co-Lyndon is defined similarly, except with strictly greater instead of strictly less.",
+        "The k-th composition in standard order (graded reverse-lexicographic, A066099) is obtained by taking the set of positions of 1's in the reversed binary expansion of k, prepending 0, taking first differences, and reversing again. This gives a bijective correspondence between nonnegative integers and integer compositions."
+    ],
+    "formula": [
+        "Intersection of A334265 and A326774."
+    ],
+    "example": [
+        "The sequence of all reversed Lyndon co-Lyndon words begins:",
+        "    0: ()            37: (3,2,1)         91: (2,1,2,1,1)",
+        "    1: (1)           39: (3,1,1,1)       95: (2,1,1,1,1,1)",
+        "    2: (2)           43: (2,2,1,1)      128: (8)",
+        "    4: (3)           47: (2,1,1,1,1)    129: (7,1)",
+        "    5: (2,1)         64: (7)            130: (6,2)",
+        "    8: (4)           65: (6,1)          131: (6,1,1)",
+        "    9: (3,1)         66: (5,2)          132: (5,3)",
+        "   11: (2,1,1)       67: (5,1,1)        133: (5,2,1)",
+        "   16: (5)           68: (4,3)          135: (5,1,1,1)",
+        "   17: (4,1)         69: (4,2,1)        137: (4,3,1)",
+        "   18: (3,2)         71: (4,1,1,1)      138: (4,2,2)",
+        "   19: (3,1,1)       73: (3,3,1)        139: (4,2,1,1)",
+        "   21: (2,2,1)       74: (3,2,2)        141: (4,1,2,1)",
+        "   23: (2,1,1,1)     75: (3,2,1,1)      143: (4,1,1,1,1)",
+        "   32: (6)           77: (3,1,2,1)      146: (3,3,2)",
+        "   33: (5,1)         79: (3,1,1,1,1)    147: (3,3,1,1)",
+        "   34: (4,2)         85: (2,2,2,1)      149: (3,2,2,1)",
+        "   35: (4,1,1)       87: (2,2,1,1,1)    151: (3,2,1,1,1)"
+    ],
+    "mathematica": [
+        "stc[n_]:=Differences[Prepend[Join@@Position[Reverse[IntegerDigits[n,2]],1],0]]//Reverse;",
+        "lynQ[q_]:=Length[q]==0||Array[Union[{q,RotateRight[q,#1]}]=={q,RotateRight[q,#1]}&,Length[q]-1,1,And];",
+        "colynQ[q_]:=Length[q]==0||Array[Union[{RotateRight[q,#],q}]=={RotateRight[q,#],q}&,Length[q]-1,1,And];",
+        "Select[Range[0,100],lynQ[Reverse[stc[#]]]&&colynQ[stc[#]]&]"
+    ],
+    "xref": [
+        "The version for binary expansion is A334267.",
+        "Compositions of this type are counted by A334269.",
+        "Normal sequences of this type are counted by A334270.",
+        "Necklace compositions of this type are counted by A334271.",
+        "Binary Lyndon words are counted by A001037.",
+        "Lyndon compositions are counted by A059966.",
+        "All of the following pertain to compositions in standard order (A066099):",
+        "- Length is A000120.",
+        "- Necklaces are A065609.",
+        "- Sum is A070939.",
+        "- Reverse is A228351 (triangle).",
+        "- Strict compositions are A233564.",
+        "- Constant compositions are A272919.",
+        "- Lyndon words are A275692.",
+        "- Reversed Lyndon words are A334265.",
+        "- Co-Lyndon words are A326774.",
+        "- Reversed co-Lyndon words are A328596.",
+        "- Length of Lyndon factorization is A329312.",
+        "- Length of Lyndon factorization of reverse is A334297.",
+        "- Length of co-Lyndon factorization is A334029.",
+        "- Length of co-Lyndon factorization of reverse is A329313.",
+        "- Distinct rotations are counted by A333632.",
+        "- Co-Lyndon factorizations are counted by A333765.",
+        "- Lyndon factorizations are counted by A333940.",
+        "Cf. A000740, A008965, A065609, A329324, A333764, A333943, A334272, A334297."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Apr 22 2020",
+    "references": 8,
+    "revision": 9,
+    "time": "2020-04-25T08:40:34-04:00",
+    "created": "2020-04-25T08:40:34-04:00"
+}

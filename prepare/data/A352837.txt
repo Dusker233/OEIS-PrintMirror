@@ -1,0 +1,38 @@
+{
+    "number": 352837,
+    "data": "2,409,709,1249,3229,4621,6709,7069,7129,7489,8209,9241,9661,10789,11149,13381,13789,15349,17509,20641,21169,21961,23509,25819,26449,28309,28729,32029,32089,34849,35089,35809,37321,37369,39769,40129,42169,42349,42709,42901,42979,44179,46489,47269,47809",
+    "name": "Primes p such that, if q is the next prime, p + q^2 is a prime times a power of 10.",
+    "comment": [
+        "Primes prime(k) such that when any trailing zeros are removed from A349660(k), the result is prime."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A352837/b352837.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 709 is a term because 709 and 719 are consecutive primes, 709 + 719^2 = 517670, and 51767 is prime."
+    ],
+    "maple": [
+        "R:= NULL: count:= 0:",
+        "q:= 2:",
+        "while count < 100 do",
+        "  p:= q; q:= nextprime(p);",
+        "  v:= p+q^2;",
+        "  if v mod 10 = 0 then v:= v/10^min(padic:-ordp(v,2),padic:-ordp(v,5)) fi;",
+        "  if isprime(v) then count:= count+1; R:= R,p; fi;",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "f[n_] := n/10^IntegerExponent[n, 10]; Select[Range[50000], PrimeQ[#] && PrimeQ[f[# + NextPrime[#]^2]] &] (* _Amiram Eldar_, Apr 07 2022 *)"
+    ],
+    "xref": [
+        "Cf. A349660, A352848."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Apr 05 2022",
+    "references": 4,
+    "revision": 15,
+    "time": "2022-04-09T02:24:26-04:00",
+    "created": "2022-04-08T05:57:12-04:00"
+}

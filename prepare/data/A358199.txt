@@ -1,0 +1,33 @@
+{
+    "number": 358199,
+    "data": "4,4,981,8829,8829,122029105,2282761881",
+    "name": "a(n) is the least integer whose sum of the i-th powers of the proper divisors is a prime for 1 <= i <= n, or -1 if no such number exists.",
+    "example": [
+        "4 is a term since the strict divisors of 4 are {1, 2}, 1^1 + 2^1 = 3 and 1^2 + 2^2 = 5 are prime and no number < 4 has this property."
+    ],
+    "program": [
+        "(PARI)",
+        "card(n)=my(c=1,s=0);s=sigma(n)-n;while(isprime(s),c++;s=sigma(n,c)-n^c);c--",
+        "a(n)=my(x=0);for(k=1,+oo,x=card(k);if(x>=n,return(k)))",
+        "(Python)",
+        "from itertools import count",
+        "from math import prod",
+        "from sympy import isprime, factorint",
+        "def A358199(n):",
+        "    for m in count(2):",
+        "        f = factorint(m).items()",
+        "        if all(map(isprime,(prod((p**((e+1)*i)-1)//(p**i-1) for p,e in f) - m**i for i in range(1,n+1)))):",
+        "            return m # _Chai Wah Wu_, Nov 15 2022"
+    ],
+    "xref": [
+        "Cf. A001065 (s1), A180852, A357324, A057709, A000203, A001157, A001158.",
+        "Subsequence of A037020."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Jean-Marc Rebert_, Nov 02 2022",
+    "references": 1,
+    "revision": 30,
+    "time": "2022-11-16T06:58:01-05:00",
+    "created": "2022-11-15T13:55:25-05:00"
+}

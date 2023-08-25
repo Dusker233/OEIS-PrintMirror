@@ -1,0 +1,51 @@
+{
+    "number": 171154,
+    "data": "2,3203,5323,75323,11753221,131175329,171311753203,19171311753229,231917131175321,292319171311753231,3129231917131175327,3731292319171311753239,41373129231917131175321,43413731292319171311753233,4743413731292319171311753269,534743413731292319171311753223",
+    "name": "Smallest prime whose decimal expansion begins with concatenation of first n primes in descending order.",
+    "comment": [
+        "Sequence is conjectured to be infinite.",
+        "a(n) = \"prime(n)...prime(1) R(n)\".",
+        "R(n) for n>1: 03, 3, 3, 21, 9, 03, 29, 1, 31, 7, 39, 1, 33, 69, 23, 3, 59, 27, ...",
+        "It is conjectured that R(n)=1 for infinite many n."
+    ],
+    "reference": [
+        "Leonard E. Dickson, History of the Theory of numbers, vol. I, Dover Publications 2005."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A171154/b171154.txt\">Table of n, a(n) for n = 1..298</a>"
+    ],
+    "example": [
+        "a(1) = 2 = prime(1) is the exceptional case, because no R(1).",
+        "a(2) = 3203 = prime(453) = \"32 03\", R(2)=\"03\".",
+        "a(5) = 11753221 = prime(772902) = \"prime(5)...prime(1) 21\", R(5)=21."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, primerange, prime",
+        "def a(n):",
+        "    if n == 1: return 2",
+        "    c = int(\"\".join(map(str, [p for p in primerange(2, prime(n)+1)][::-1])))",
+        "    pow10 = 10",
+        "    while True:",
+        "        c *= 10",
+        "        for b in range(1, pow10, 2):",
+        "            if b%5 == 0: continue",
+        "            if isprime(c+b):",
+        "                return c+b",
+        "        pow10 *= 10",
+        "print([a(n) for n in range(1, 17)]) # _Michael S. Branicky_, Mar 12 2022"
+    ],
+    "xref": [
+        "Cf. A000040, A066065, A019518, A089710, A053546."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "Ulrich Krug (leuchtfeuer37(AT)gmx.de), Dec 04 2009",
+    "ext": [
+        "a(14) and beyond from _Michael S. Branicky_, Mar 12 2022"
+    ],
+    "references": 6,
+    "revision": 18,
+    "time": "2022-03-13T06:03:56-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

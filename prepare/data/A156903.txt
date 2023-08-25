@@ -1,0 +1,52 @@
+{
+    "number": 156903,
+    "data": "18,36,72,100,144,162,196,200,288,324,392,400,450,576,648,784,800,882,900,968,1152,1296,1352,1458,1568,1600,1764,1800,1936,2178,2304,2450,2500,2592,2704,2916,3042,3136,3200,3528,3600,3872,4050,4356,4608,4624",
+    "name": "Abundant numbers (A005101) whose abundance is odd.",
+    "comment": [
+        "Equivalently, abundant numbers with odd sum of divisors.",
+        "Complement of A204825 with respect to A005101 (abundant numbers).",
+        "Seems to be a proper subset of A083211. - _Robert G. Wilson v_, Mar 30 2010. This sequence is indeed a proper subset of A083211, since the abundance of a number k, A033880(k) = sigma(k) - 2*k, has the same parity as sigma(k). If sigma(k) is odd then the sums of any two complementary subsets of the divisors of k have different parities and thus they cannot be equal. - _Amiram Eldar_, Jun 20 2020",
+        "If n is present, so is 2*n. - _Robert G. Wilson v_, Jun 21 2015",
+        "If n is in the sequence, so is 100*n (conjectured). - _Sergey Pavlov_, Mar 22 2017. Pavlov's observation trivially follows from the fact that to have odd abundance a number k must be either a square or twice a square. If such a number k is abundant then 100*k = (10^2) * k is abundant as well and has odd abundance. In general, we can say that if k is present, so are t^2*k and 2*t^2*k, for every t>0. - _Giovanni Resta_, Oct 16 2018",
+        "Terms are congruent to {0, 2, 4, 8, 9, 14, 16, 18, 20, 26, 28, 32} (mod 36). - _Robert G. Wilson v_, Dec 09 2018"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A156903/b156903.txt\">Table of n, a(n) for n = 1..22927</a> (corrected by Michel Marcus)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/AbundantNumber.html\">Abundant Number</a>"
+    ],
+    "example": [
+        "k = 18 is in the sequence because its divisors are {1,2,3,6,9,18} which sum to sigma(k) = 39; so its abundance is sigma(k) - 2k = 39 - 36 = 3."
+    ],
+    "maple": [
+        "with(numtheory): select(k->sigma(k)>2*k and modp(sigma(k)-2*k,2)=1,[$1..5000]); # _Muniru A Asiru_, Dec 11 2018"
+    ],
+    "mathematica": [
+        "abundance[n_] := DivisorSigma[1, n] - 2 n; Select[Range[1000], abundance[#] > 0 && Mod[abundance[#], 2] == 1 &]",
+        "abundOddAbundQ[n_] := If[MemberQ[{0, 2, 4, 8, 9, 14, 16, 18, 20, 26, 28, 32}, Mod[n, 36]], a = DivisorSigma[1, n]; OddQ@a && a > 2 n]; Select[ Range@ 5000, abundOddAbundQ@# &] (* _Robert G. Wilson v_, Dec 23 2018 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(k=sigma(n)-2*n); k>0 && k%2 \\\\ _Charles R Greathouse IV_, Feb 21 2017",
+        "(Python)",
+        "from sympy.ntheory import divisor_sigma",
+        "def a(n):",
+        "    return divisor_sigma(n) - 2*n",
+        "[n for n in range(18, 5001) if a(n) > 0 and a(n) % 2] # _Indranil Ghosh_, Mar 22 2017",
+        "(GAP) Filtered([1..5000],k->Sigma(k)-2*k>0 and (Sigma(k)-2*k) mod 2=1); # _Muniru A Asiru_, Dec 11 2018"
+    ],
+    "xref": [
+        "Intersection of A005101 and A028982. - _Amiram Eldar_, Jun 20 2020",
+        "Cf. A000203, A033880, A259231. A proper subset of A083211.",
+        "Cf. A204825 (abundant numbers with even sum of divisors), A204826 (deficient numbers with odd sum of divisors), A204827 (deficient numbers with even sum of divisors)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Feb 17 2009",
+    "ext": [
+        "Name edited by _Michel Marcus_ and _Charles R Greathouse IV_, Mar 26 2017",
+        "Edited by _N. J. A. Sloane_, Jun 21 2020 at the suggestion of _Amiram Eldar_"
+    ],
+    "references": 10,
+    "revision": 86,
+    "time": "2021-07-31T23:00:03-04:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

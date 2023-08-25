@@ -1,0 +1,66 @@
+{
+    "number": 266613,
+    "data": "1,2,5,10,20,41,82,165,330,661,1322,2645,5290,10581,21162,42325,84650,169301,338602,677205,1354410,2708821,5417642,10835285,21670570,43341141,86682282,173364565,346729130,693458261,1386916522,2773833045,5547666090,11095332181",
+    "name": "Decimal representation of the middle column of the \"Rule 41\" elementary cellular automaton starting with a single ON (black) cell.",
+    "link": [
+        "Robert Price, <a href=\"/A266613/b266613.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/ElementaryCellularAutomaton.html\">Elementary Cellular Automaton</a>",
+        "Stephen Wolfram, <a href=\"http://wolframscience.com/\">A New Kind of Science</a>, Wolfram Media, 2002; p. 55.",
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>",
+        "<a href=\"https://oeis.org/wiki/Index_to_Elementary_Cellular_Automata\">Index to Elementary Cellular Automata</a>"
+    ],
+    "formula": [
+        "A266612(n) = A007088(a(n)).",
+        "Conjectures from _Colin Barker_, Jan 02 2016 and Apr 16 2019: (Start)",
+        "a(n) = (31*2^n-4*((-1)^n+3))/24 for n>2.",
+        "a(n) = 2*a(n-1)+a(n-2)-2*a(n-3) for n>5. - [corrected by _Karl V. Keller, Jr._, Oct 07 2021]",
+        "G.f.: (1-x^4+x^5) / ((1-x)*(1+x)*(1-2*x)). (End)",
+        "Conjecture: a(n) = A000975(n) + 20*2^(n-5), for n>2. - _Andres Cicuttin_, Mar 31 2016"
+    ],
+    "maple": [
+        "# Rule 41: value in generation r and column c, where c=0 is the central one",
+        "r41 := proc(r::integer,c::integer)",
+        "    option remember;",
+        "    local up ;",
+        "    if r = 0 then",
+        "        if c = 0 then",
+        "            1;",
+        "        else",
+        "            0;",
+        "        end if;",
+        "    else",
+        "        # previous 3 bits",
+        "        [procname(r-1,c+1),procname(r-1,c),procname(r-1,c-1)] ;",
+        "        up := op(3,%)+2*op(2,%)+4*op(1,%) ;",
+        "        # rule 41 = 00101001_2: {5,3,0}->1, all others ->0",
+        "        if up in {5,3,0} then",
+        "            1;",
+        "        else",
+        "            0 ;",
+        "        end if;",
+        "    end if;",
+        "end proc:",
+        "A266613 := proc(n)",
+        "    b := [seq(r41(r,0),r=0..n)] ;",
+        "    add(op(-i,b)*2^(i-1),i=1..nops(b)) ;",
+        "end proc:",
+        "smax := 20 ;",
+        "L := [seq(A266613(n),n=0..smax)] ; # _R. J. Mathar_, Apr 12 2019"
+    ],
+    "mathematica": [
+        "rule=41; rows=20; ca=CellularAutomaton[rule,{{1},0},rows-1,{All,All}]; (* Start with single black cell *) catri=Table[Take[ca[[k]],{rows-k+1,rows+k-1}],{k,1,rows}]; (* Truncated list of each row *) mc=Table[catri[[k]][[k]],{k,1,rows}]; (* Keep only middle cell from each row *) Table[FromDigits[Take[mc,k],2],{k,1,rows}] (* Binary Representation of Middle Column *)"
+    ],
+    "xref": [
+        "Cf. A000975, A266608, A266611, A266612, A081253."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Robert Price_, Jan 01 2016",
+    "ext": [
+        "Removed an unjustified claim that _Colin Barker_'s conjectures are correct. Removed a program based on a conjecture. - _N. J. A. Sloane_, Jun 13 2022"
+    ],
+    "references": 5,
+    "revision": 62,
+    "time": "2023-07-06T14:06:34-04:00",
+    "created": "2016-01-01T20:07:52-05:00"
+}

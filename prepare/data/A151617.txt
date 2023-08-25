@@ -1,0 +1,48 @@
+{
+    "number": 151617,
+    "data": "2,22,242,2662,7986,45254,178354,854502,3670898,16741318,73862514,331879526,1476246706,6603168198,29445050162,131524950502,586945452786,2620665361094,11697730702834,52222780377702,233120598486578,1040691781127878,4645710145608114,20739029883622886,92580871368935026,413291071457721798",
+    "name": "Row sums of A153521.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A151617/b151617.txt\">Table of n, a(n) for n = 1..500</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (2,11)."
+    ],
+    "formula": [
+        "From _G. C. Greubel_, Mar 04 2021: (Start)",
+        "a(n) = 2*a(n-1) + 11*a(n-2), for n>4, with a(1)=2, a(2)=22, a(3)=242, a(4)=2662.",
+        "G.f.: 2*x*(1 + 11*x + (11*x)^2*(1+9*x)/(1-2*x-11*x^2)).",
+        "G.f.: 2*x*(1 +9*x +88*x^2 +968*x^3)/(1-2*x-11*x^2).",
+        "a(n) = 2*a(n-1) + prime(j)*a(n-2), for n > 4, with a(1) = 2, a(2) = 2*prime(j), a(3) = 2*prime(j)^2, a(4) = 2*prime(j)^3 for j = 5.",
+        "a(n) = 2*(prime(j)-3)*[n=1] -2*prime(j)*(prime(j)-3)*[n=2] +2*prime(j)^2*(i*sqrt(prime(j)))^(n-3)*(ChebyshevU(n-3, -i/Sqrt(prime(j))) -((prime(j) -2)*i/sqrt(prime(j)))*ChebyshevU(n-4, -i/sqrt(prime(j)))) for j = 5. (End)"
+    ],
+    "maple": [
+        "m:= 40;",
+        "S:= series( x*(2 +18*x +176*x^2 +1936*x^3)/(1-2*x-11*x^2), x, m+1);",
+        "seq(coeff(S, x, j), j = 1..m); # _G. C. Greubel_, Mar 04 2021"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{2, 11}, {2, 22, 242, 2662}, 40] (* _G. C. Greubel_, Mar 04 2021 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A151617_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( 2*x*(1 +9*x +88*x^2 +968*x^3)/(1-2*x-11*x^2) ).list()",
+        "a=A151617_list(41); a[1:] # _G. C. Greubel_, Mar 04 2021",
+        "(Magma)",
+        "R<x>:=PowerSeriesRing(Integers(), 41);",
+        "Coefficients(R!( 2*x*(1 +9*x +88*x^2 +968*x^3)/(1-2*x-11*x^2) )); // _G. C. Greubel_, Mar 04 2021"
+    ],
+    "xref": [
+        "Cf. A153521."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, May 29 2009",
+    "ext": [
+        "Terms a(11) onward added by _G. C. Greubel_, Mar 04 2021"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2021-03-07T03:08:18-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

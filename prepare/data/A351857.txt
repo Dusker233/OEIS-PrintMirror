@@ -1,0 +1,56 @@
+{
+    "number": 351857,
+    "data": "2,14,92,654,4752,35204,264112,2000526,15264866,117161264,903533380,6995547780,54343476072,423360920528,3306313730592,25876855432846,202909132368942,1593755466338030,12537009118650016,98753463725849904,778825917274945408,6149069826564738780",
+    "name": "Number of nonnegative integer solutions to n = x_1 + x_2 + ... + x_(2*n) + 2*y_1 + 2*y_2 + ... + 2*y_(2*n).",
+    "comment": [
+        "This is a companion sequence to A348410.",
+        "Suppose n identical objects are distributed in 4*n labeled baskets, 2*n colored white and 2*n colored black. White baskets can contain any number of objects (or be empty), while black baskets must contain an even number of objects (or be empty). a(n) is the number of distinct possible distributions."
+    ],
+    "reference": [
+        "R. P. Stanley, Enumerative Combinatorics Volume 2, Cambridge Univ. Press, 1999, Theorem 6.33, p. 197."
+    ],
+    "formula": [
+        "a(n) = [x^n] ( 1/((1 - x)*(1 - x^2)) )^(2*n).",
+        "a(n) = Sum_{k = 0..floor(n/2)} C(3*n-2*k-1,n-2*k)*C(2*n+k-1,k).",
+        "a(n) = Sum_{k = 0..n} (-1)^k*C(5*n-k-1,n-k)*C(2*n+k-1,k).",
+        "1024*n*(n-1)*(2*n-1)*(2*n-3)*(4*n-1)*(4*n-3)*P(n-1)*a(n) = 8*(n-1)*(2*n-3)*Q(n)*a(n-1) + 7*(7*n-8)*(7*n-9)*(7*n-10)*(7*n-11)*(7*n-12)*(7*n-13)*P(n)*a(n-2), with a(1) = 2, a(2) = 14, P(n) = 1744*n^4-3815*n^3+ 2920*n^2-912*n+96 and Q(n) = 46599680*n^8-381534880*n^7+1306363456*n^6- 2428492279*n^5+2661904813*n^4 -1747232452*n^3+664205312*n^2- 132046848*n+10321920.",
+        "The Gauss congruences a(n*p^k) == a(n*p^(k-1)) (mod p^k) hold for all primes p and positive integers n and k.",
+        "Conjecture: the supercongruences a(n*p^k) == a(n*p^(k-1)) (mod p^(3*k)) hold for all primes p >= 5 and positive integers n and k.",
+        "The o.g.f. A(x) = 2*x + 14*x^2 + 92*x^3 + ... is the diagonal of the bivariate rational function x*t/(1 - t/((1 - x)*(1 - x^2))^2 ) and hence is an algebraic function over Q(x) by Stanley 1999, Theorem 6.33, p. 197.",
+        "Let F(x) = (1/x)*Series_Reversion( x*sqrt((1 - x)^2*(1 - x^2)^2) ). Then A(x) = x*d/dx(Log(F(x))."
+    ],
+    "example": [
+        "n = 2: 14 distributions of 2 identical objects in 4 white and 4 black baskets",
+        "             White             Black",
+        "   1)   (0) (0) (0) (0)   [2] [0] [0] [0]",
+        "   2)   (0) (0) (0) (0)   [0] [2] [0] [0]",
+        "   3)   (0) (0) (0) (0)   [0] [0] [2] [0]",
+        "   4)   (0) (0) (0) (0)   [0] [0] [0] [2]",
+        "   5)   (2) (0) (0) (0)   [0] [0] [0] [0]",
+        "   6)   (0) (2) (0) (0)   [0] [0] [0] [0]",
+        "   7)   (0) (0) (2) (0)   [0] [0] [0] [0]",
+        "   8)   (0) (0) (0) (2)   [0] [0] [0] [0]",
+        "   9)   (1) (1) (0) (0)   [0] [0] [0] [0]",
+        "  10)   (1) (0) (1) (0)   [0] [0] [0] [0]",
+        "  11)   (1) (0) (0) (1)   [0] [0] [0] [0]",
+        "  12)   (0) (1) (1) (0)   [0] [0] [0] [0]",
+        "  13)   (0) (1) (0) (1)   [0] [0] [0] [0]",
+        "  14)   (0) (0) (1) (1)   [0] [0] [0] [0]"
+    ],
+    "maple": [
+        "seq(add( binomial(3*n-2*k-1,n-2*k)*binomial(2*n+k-1,k), k = 0..floor(n/2) ), n = 0..20);"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k = 0, n\\2, binomial(3*n-2*k-1, n-2*k)*binomial(2*n+k-1, k)); \\\\ _Michel Marcus_, Feb 27 2022"
+    ],
+    "xref": [
+        "Cf. A234839, A348410, A351856."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Peter Bala_, Feb 22 2022",
+    "references": 5,
+    "revision": 15,
+    "time": "2022-02-28T12:14:55-05:00",
+    "created": "2022-02-28T12:14:55-05:00"
+}

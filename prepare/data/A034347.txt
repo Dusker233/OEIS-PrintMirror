@@ -1,0 +1,46 @@
+{
+    "number": 34347,
+    "data": "0,0,0,0,0,1,6,25,99,385,1472,5676,22101,87404,350097,1413251,5708158,22903161,90699398,352749035,1342638839,4990325414,18090636016,63933709870,220277491298,740170023052,2426954735273,7770739437179,24314436451415,74406425640743,222867051758565,653898059035166",
+    "name": "Number of binary [ n,6 ] codes without 0 columns.",
+    "link": [
+        "Discrete algorithms at the University of Bayreuth, <a href=\"http://www.algorithm.uni-bayreuth.de/en/research/SYMMETRICA/\">Symmetrica</a>.",
+        "Harald Fripertinger, <a href=\"http://www.mathe2.uni-bayreuth.de/frib/codes/tables.html\">Isometry Classes of Codes</a>.",
+        "Harald Fripertinger, <a href=\"http://www.mathe2.uni-bayreuth.de/frib/codes/tables_4.html\">Snk2: Number of the isometry classes of all binary (n,k)-codes without zero-columns</a>. [See column k=6.]",
+        "H. Fripertinger and A. Kerber, <a href=\"https://doi.org/10.1007/3-540-60114-7_15\">Isometry classes of indecomposable linear codes</a>. In: G. Cohen, M. Giusti, T. Mora (eds), Applied Algebra, Algebraic Algorithms and Error-Correcting Codes, 11th International Symposium, AAECC 1995, Lect. Notes Comp. Sci. 948 (1995), pp. 194-204. [Here a(n) = S_{n,6,2}.]",
+        "Petros Hadjicostas, <a href=\"/A034253/a034253_2.txt\">Generating function for a(n)</a>.",
+        "Petr Lisonek, <a href=\"https://doi.org/10.1016/j.jcta.2006.06.013\">Combinatorial families enumerated by quasi-polynomials</a>, J. Combin. Theory Ser. A 114(4) (2007), 619-630. [See Section 5.]",
+        "David Slepian, <a href=\"https://archive.org/details/bstj39-5-1219\">Some further theory of group codes</a>, Bell System Tech. J. 39(5) (1960), 1219-1252.",
+        "David Slepian, <a href=\"https://doi.org/10.1002/j.1538-7305.1960.tb03958.x\">Some further theory of group codes</a>, Bell System Tech. J. 39(5) (1960), 1219-1252.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Cycle_index\">Cycle index</a>.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Projective_linear_group\">Projective linear group</a>."
+    ],
+    "program": [
+        "(Sage) # Fripertinger's method to find the g.f. of column k >= 2 of A034253 (for small k):",
+        "def A034253col(k, length):",
+        "    G1 = PSL(k, GF(2))",
+        "    G2 = PSL(k-1, GF(2))",
+        "    D1 = G1.cycle_index()",
+        "    D2 = G2.cycle_index()",
+        "    f1 = sum(i[1]*prod(1/(1-x^j) for j in i[0]) for i in D1)",
+        "    f2 = sum(i[1]*prod(1/(1-x^j) for j in i[0]) for i in D2)",
+        "    f = f1 - f2",
+        "    return f.taylor(x, 0, length).list()",
+        "# For instance the Taylor expansion for column k = 6 (this sequence gives",
+        "print(A034253col(6, 30)) # _Petros Hadjicostas_, Oct 05 2019"
+    ],
+    "xref": [
+        "Cf. A034254, A034344, A034345, A034346, A034348, A034349, A253186.",
+        "First differences of A034360.",
+        "Column k = 6 of A034253."
+    ],
+    "keyword": "nonn",
+    "offset": "1,7",
+    "author": "_N. J. A. Sloane_.",
+    "ext": [
+        "More terms from _Petros Hadjicostas_, Oct 05 2019"
+    ],
+    "references": 7,
+    "revision": 20,
+    "time": "2019-10-06T01:54:36-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

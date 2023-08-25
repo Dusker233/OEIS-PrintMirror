@@ -1,0 +1,66 @@
+{
+    "number": 329719,
+    "data": "112,123,134,145,156,167,178,189,213,224,235,246,257,268,279,314,325,336,347,358,369,415,426,437,448,459,516,527,538,549,617,628,639,718,729,819,1123,1235,1347,1459,1910,2134,2246,2358,2810,2911,3145,3257,3369",
+    "name": "Numbers whose digits can be partitioned into at least 3 segments (not beginning with 0) where each segment is the sum of the previous two segments.",
+    "link": [
+        "Bi Cheng Wu, <a href=\"/A329719/b329719.txt\">Table of n, a(n) for n = 1..4958 (a(n) < 1000000)</a>"
+    ],
+    "example": [
+        "112 -> 1+1=2;",
+        "1235 -> 1+2=3 and 2+3=5;",
+        "224610 -> 2+2=4 and 2+4=6 and 4+6=10."
+    ],
+    "mathematica": [
+        "part[n_] := part[n] = Select[Flatten[ Permutations /@ Reverse /@ IntegerPartitions[n, {3,n}], 1], 0 <= #[[3]] - Max[#[[1]], #[[2]]] <= 1 && AllTrue[Rest@ Rest@ Differences@ #, 0 <= # <= 1 &] &]; spl[x_, L_] := Map[ FromDigits@ Take[x, #] &, Transpose[{Most@ #, Rest[#]-1}& [ FoldList[ Plus, 1, L]]]]; sumQ[w_] := AllTrue[Range[3, Length@w], w[[#]] == w[[#-1]] + w[[#-2]] &]; ok[n_] := Block[{m = IntegerLength@ n}, AnyTrue[ spl[ IntegerDigits[n], #] & /@ part[m], sumQ[#] && Total[ IntegerLength /@ #] == m &]]; Select[ Range[100, 6000], ok] (* _Giovanni Resta_, Dec 03 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def isSegmentSum(digits,segment1=None,segment2=None):",
+        "    digits = str(digits)",
+        "    N = len(digits)",
+        "    if N == 0:",
+        "        return True",
+        "    else:",
+        "        if (segment1 is None) and (segment2 is None):",
+        "            for i in range(N):",
+        "                try:",
+        "                    slice1 = digits[:i+1]",
+        "                    for j in range(N-(i+1)):",
+        "                        slice2 = digits[i+1:i+1+j+1]",
+        "                        slice3 = digits[i+1+j+1:]",
+        "                        if (isSegmentSum(slice3,slice1,slice2) and",
+        "                         len(slice3)>0 and not (slice1.startswith(\"0\") or",
+        "                         slice2.startswith(\"0\") or",
+        "                         (slice3.startswith(\"0\")))):",
+        "                            return True",
+        "                except:",
+        "                    return False",
+        "        else:",
+        "            sumOfDigits = str(int(segment1)+int(segment2))",
+        "            nS = len(sumOfDigits)",
+        "            try:",
+        "                if digits[:nS] == sumOfDigits:",
+        "                    return isSegmentSum(digits[nS:],segment2,digits[:nS])",
+        "                else:",
+        "                    return False",
+        "            except:",
+        "                return False",
+        "    return False",
+        "def findSegmentSum(lower,upper):",
+        "    for i in range(lower,upper+1):",
+        "        if isSegmentSum(i):",
+        "            print(str(i))",
+        "findSegmentSum(1, 5200)"
+    ],
+    "xref": [
+        "Shares subsequences with A108203, A308104, A214527.",
+        "Cf. A019523."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bi Cheng Wu_, Nov 19 2019",
+    "references": 1,
+    "revision": 41,
+    "time": "2019-12-14T08:08:04-05:00",
+    "created": "2019-12-03T08:34:29-05:00"
+}

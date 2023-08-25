@@ -1,0 +1,40 @@
+{
+    "number": 318563,
+    "data": "1,4,10,33,85,272,730,2197,6133",
+    "name": "Number of combinatory separations of strongly normal multisets of weight n.",
+    "comment": [
+        "A multiset is normal if it spans an initial interval of positive integers, and strongly normal if in addition it has weakly decreasing multiplicities. The type of a multiset of integers is the unique normal multiset that has the same sequence of multiplicities when its entries are taken in increasing order. For example the type of 335556 is 112223.",
+        "A pair h<={g_1,...,g_k} is a combinatory separation iff there exists a multiset partition of h whose multiset of block-types is {g_1,...,g_k}. For example, the (headless) combinatory separations of the multiset 1122 are {1122}, {1,112}, {1,122}, {11,11}, {12,12}, {1,1,11}, {1,1,12}, {1,1,1,1}. This list excludes {12,11} because one cannot partition 1122 into two blocks where one block has two distinct elements and the other block has two equal elements."
+    ],
+    "example": [
+        "The a(3) = 10 combinatory separations:",
+        "  111<={111}",
+        "  111<={1,11}",
+        "  111<={1,1,1}",
+        "  112<={112}",
+        "  112<={1,11}",
+        "  112<={1,12}",
+        "  112<={1,1,1}",
+        "  123<={123}",
+        "  123<={1,12}",
+        "  123<={1,1,1}"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "strnorm[n_]:=Flatten[MapIndexed[Table[#2,{#1}]&,#]]&/@IntegerPartitions[n];",
+        "normize[m_]:=m/.Rule@@@Table[{Union[m][[i]],i},{i,Length[Union[m]]}];",
+        "Table[Length[Union@@Table[{m,Sort[normize/@#]}&/@mps[m],{m,strnorm[n]}]],{n,7}]"
+    ],
+    "xref": [
+        "Cf. A000041, A007716, A255906, A265947, A269134.",
+        "Cf. A317533, A317791, A318396, A318559, A318562, A318564, A318565, A318566."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Aug 29 2018",
+    "references": 4,
+    "revision": 5,
+    "time": "2018-08-29T16:50:32-04:00",
+    "created": "2018-08-29T16:50:32-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 50531,
+    "data": "1,2,6,14,28,52,93,152,242,370,546,784,1103,1512,2040,2706,3534,4554,5803,7304,9108,11252,13780,16744,20205,24206,28826,34126,40176,47056,54857,63648,73542,84630,97014,110808,126139,143108,161868,182546,205282",
+    "name": "Number of multigraphs with loops on 3 nodes with n edges.",
+    "comment": [
+        "a(n) is also the number of multigraphs (no loops allowed) on 3 nodes with n edges of two colors. - _Geoffrey Critzer_, Aug 10 2015"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A050531/b050531.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "<a href=\"/index/Rec#order_12\">Index entries for linear recurrences with constant coefficients</a>, signature (2,1,-2,-3,0,6,0,-3,-2,1,2,-1)."
+    ],
+    "formula": [
+        "G.f.: (x^6+x^4+2*x^3+x^2+1)/((x^3-1)^2*(x^2-1)^2*(x-1)^2).",
+        "a(n) = ceiling((-1)^n*A076118(n+1)/9+(-1)^n*n/32+(4009/4320)*n+(1/2)*n^2+(5/36)*n^3+(1/48)*n^4+(1/720)*n^5). - _Robert Israel_, Aug 07 2015",
+        "a(n) = (A+B+C)/6 where A = binomial(n+5,5); B = (n+2)*(n+3)*(n+4)/8 if n even, B = (n+1)*(n+3)*(n+5)/8 if n odd; C = 2*((n/3) + 1) if n divisible by 3, C = 0 if n not divisible by 3. - _David Pasino_, Jul 06 2019",
+        "a(n) = 2*a(n-1) + a(n-2) - 2*a(n-3) - 3*a(n-4) + 6*a(n-6) - 3*a(n-8) - 2*a(n-9) + a(n-10) + 2*a(n-11) - a(n-12) for n>11. - _Colin Barker_, Jul 07 2019"
+    ],
+    "maple": [
+        "a076118:= gfun:-rectoproc({a(n+4) = 2*a(n+3)-3*a(n+2)+2*a(n+1)-a(n), a(0)=0,a(1)=1,a(2)=1,a(3)=-1}, a(n), remember):",
+        "f:= n -> ceil((-1)^n*a076118(n+1)/9+(-1)^n*n/32+(4009/4320)*n+(1/2)*n^2+(5/36)*n^3+(1/48)*n^4+(1/720)*n^5):",
+        "map(f, [$0..100]); # _Robert Israel_, Aug 07 2015"
+    ],
+    "mathematica": [
+        "<<Combinatorica`",
+        "nn=30; n=3; CoefficientList[Series[CycleIndex[Join[PairGroup[SymmetricGroup[n]], Permutations[Range[n*(n - 1)/2 + 1, n*(n + 1)/2]], 2], s] /.Table[s[i] -> 1/(1 - x^i), {i, 1, n^2 - n}], {x, 0, nn}], x] (* _Geoffrey Critzer_, Aug 07 2015 *)",
+        "CoefficientList[Series[(x^6 + x^4 + 2 x^3 + x^2 + 1)/((x^3 - 1)^2 (x^2 - 1)^2 (x - 1)^2), {x, 0, 45}], x] (* _Vincenzo Librandi_, Aug 08 2015 *)"
+    ],
+    "program": [
+        "(PARI) Vec((x^6+x^4+2*x^3+x^2+1)/((x^3-1)^2*(x^2-1)^2*(x-1)^2) + O(x^40)) \\\\ _Colin Barker_, Jul 07 2019"
+    ],
+    "xref": [
+        "Column k=3 of A290428.",
+        "Cf. A076118, A002620, A290428."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Vladeta Jovovic_, Dec 29 1999",
+    "references": 10,
+    "revision": 41,
+    "time": "2020-03-16T12:08:57-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 62703,
+    "data": "36,100,144,576,1764,2304,3844,5184,7056,8100,12100,14400,14884,30276,41616,43264,48400,53824,57600,69696,93636,106276,112896,138384,148996,166464,168100,197136,206116,207936,219024,220900,224676,272484,298116,302500,352836",
+    "name": "Squares that are the sum of two consecutive primes.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A062703/b062703.txt\">Table of n, a(n) for n = 1..22054</a> (terms 1..100 from Harry J. Smith)"
+    ],
+    "formula": [
+        "a(n) = A074924(n)^2.",
+        "a(n) = A000040(i) + A000040(i+1) with i = A064397(n) = A000720(A061275(n)). - _M. F. Hasler_, Jan 03 2020"
+    ],
+    "example": [
+        "prime(7) + prime(8) = 17 + 19 = 36 = 6^2."
+    ],
+    "mathematica": [
+        "PrevPrim[n_] := Block[{k = n - 1}, While[ !PrimeQ[k], k-- ]; k]; NextPrim[n_] := Block[{k = n + 1}, While[ !PrimeQ[k], k++ ]; k]; f[n_] := Block[{m = Floor[n/2]}, s = PrevPrim[m] + NextPrim[m]; If[s == n, True, False]]; Select[ Range[550], f[ #^2] &]^2",
+        "t := Table[Prime[n] + Prime[n + 1], {n, 15000}]; Select[t, IntegerQ[Sqrt[#]] &] (* _Carlos Eduardo Olivieri_, Feb 25 2015 *)"
+    ],
+    "program": [
+        "(PARI) {for(n=1,100,(p=precprime(n^2/2))+nextprime(p+2) == n^2 && print1(n^2\", \"))} \\\\ _Zak Seidov_, Feb 17 2011",
+        "(PARI) A062703(n)=A074924(n)^2 \\\\ _M. F. Hasler_, Jan 03 2020",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import nextprime, prevprime",
+        "def agen(): # generator of terms",
+        "    for k in count(4, step=2):",
+        "        kk = k*k",
+        "        if prevprime(kk//2+1) + nextprime(kk//2-1) == kk:",
+        "            yield kk",
+        "print(list(islice(agen(), 37))) # _Michael S. Branicky_, May 24 2022"
+    ],
+    "xref": [
+        "Squares in A001043. See A226524 for cubes.",
+        "Cf. A074924 (square roots), A061275 (lesser of the primes), A064397 (index of that prime).",
+        "Cf. A080665 (same with sum of three consecutive primes)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Jason Earls_, Jul 11 2001",
+    "ext": [
+        "Edited by _Robert G. Wilson v_, Mar 02 2003",
+        "Edited (crossrefs completed, obsolete PARI code deleted) by _M. F. Hasler_, Jan 03 2020"
+    ],
+    "references": 15,
+    "revision": 35,
+    "time": "2022-05-25T02:00:35-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

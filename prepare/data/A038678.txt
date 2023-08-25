@@ -1,0 +1,36 @@
+{
+    "number": 38678,
+    "data": "49,64,81,121,144,169,225,289,324,361,441,484,529,625,729,784,841,961,1024,1089,1225,1369,1444,1521,1681,1764,1849,1936,2025,2116,2209,2304,2401,2601,2704,2809,2916,3025,3136,3249,3364,3481,3721,3844,3969,4225",
+    "name": "Squares ending in a different nonzero square.",
+    "comment": [
+        "Subsequence of A065807. - _Zak Seidov_, Mar 23 2012"
+    ],
+    "link": [
+        "Jinyuan Wang, <a href=\"/A038678/b038678.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "15^2 = 225 ends with 25 = 5^2."
+    ],
+    "maple": [
+        "q:= n-> (s-> ormap(x-> (t-> t>0 and issqr(t))(parse(x))",
+        "             , [s[i..-1]$i=2..length(s)]))(\"\"||n):",
+        "select(q, [i^2$i=1..100])[];  # _Alois P. Heinz_, Mar 16 2020"
+    ],
+    "mathematica": [
+        "ds[n_] := DeleteCases[NestWhileList[FromDigits[Rest[IntegerDigits[#]]] &, n, # > 9 &], 0]; Select[Range[4, 65]^2, Or @@ IntegerQ /@ Sqrt[Rest[ds[#]]] &] (* _Jayanta Basu_, Jul 10 2013 *)"
+    ],
+    "program": [
+        "(PARI) issqend(n) = my(p=10, q); for(k=1, #Str(n)-1, if ((q=(n % p)) && issquare(q), return (1)); p*=10);",
+        "isok(n) = issquare(n) && issqend(n); \\\\ _Michel Marcus_, Mar 17 2020"
+    ],
+    "xref": [
+        "Cf. A000290, A065807."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "references": 5,
+    "revision": 22,
+    "time": "2020-03-17T14:45:07-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

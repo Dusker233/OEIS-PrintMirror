@@ -1,0 +1,34 @@
+{
+    "number": 306930,
+    "data": "3,5,13,19,29,37,43,67,109,139,163,173,197,229,269,277,283,317,373,379,397,419,499,509,557,619,643,653,659,683,709,757,787,797,827,829,853,883,907,947,997,1013,1117,1163,1229,1237,1373,1427,1453,1459,1499",
+    "name": "Primes p of the form 8*k +- 3 such that p-1 has no prime divisor 4*t + 1.",
+    "reference": [
+        "L. E. Dickson, History of the Theory of Numbers. Carnegie Institute Public. 256, Washington, DC, Vol. 1, 1919; Vol. 2, 1920; Vol. 3, 1923, see vol. 2, p. 476."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A306930/b306930.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "with(numtheory); s:=[];",
+        "for n from 1 to 1000 do p:=ithprime(n); p2:=((p+16) mod 8);",
+        "if (p2=3) or (p2=5) then sw:=1;",
+        "   for q in factorset(p-1) do if (q mod 4) = 1 then sw:=-1; break; fi; od:",
+        "   if sw=1 then s:=[op(s),p]; fi;",
+        "fi;",
+        "od:",
+        "s;"
+    ],
+    "mathematica": [
+        "Select[Range[1500], MemberQ[{3, 5}, Mod[#, 8]] && PrimeQ[#] && AllTrue[FactorInteger[# - 1][[;; , 1]], Mod[#1, 4] != 1 &] &] (* _Amiram Eldar_, Dec 05 2020 *)"
+    ],
+    "xref": [
+        "Cf. A306931, A306932."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Mar 16 2019",
+    "references": 3,
+    "revision": 15,
+    "time": "2020-12-05T03:30:59-05:00",
+    "created": "2019-03-16T22:11:20-04:00"
+}

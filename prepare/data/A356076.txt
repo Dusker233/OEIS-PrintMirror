@@ -1,0 +1,32 @@
+{
+    "number": 356076,
+    "data": "1,7,36,315,3442,50926,874471,17717759,405157961,10414927743,295726598356,9214021189459,312089127781714,11424774177252514,449318695090042077,18896344248088180470,846136606134424944649,40192694877626991357901",
+    "name": "a(n) = Sum_{k=1..n} sigma_k(k) * floor(n/k).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A356076/b356076.txt\">Table of n, a(n) for n = 1..386</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} Sum_{d|k} sigma_d(d).",
+        "G.f.: (1/(1-x)) * Sum_{k>=1} sigma_k(k) * x^k/(1 - x^k).",
+        "a(n) ~ n^n. - _Vaclav Kotesovec_, Aug 07 2022"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, sigma(k, k)*(n\\k));",
+        "(PARI) a(n) = sum(k=1, n, sumdiv(k, d, sigma(d, d)));",
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(sum(k=1, N, sigma(k, k)*x^k/(1-x^k))/(1-x))",
+        "(Python)",
+        "from sympy import divisor_sigma",
+        "def A356079(n): return n+sum(divisor_sigma(k,k)*(n//k) for k in range(2,n+1)) # _Chai Wah Wu_, Jul 25 2022"
+    ],
+    "xref": [
+        "Partial sums of A344434.",
+        "Cf. A023887, A356046."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, Jul 25 2022",
+    "references": 1,
+    "revision": 20,
+    "time": "2022-08-07T04:21:00-04:00",
+    "created": "2022-07-25T10:42:20-04:00"
+}

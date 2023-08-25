@@ -1,0 +1,38 @@
+{
+    "number": 72956,
+    "data": "1,5,6,7,9,11,1000000,1000001,1000005,1000006,1000007,1000009,1000011,5000000,5000001,5000005,5000006,5000007,5000009,5000011,6000000,6000001,6000005,6000006,6000007,6000009,6000011,7000000,7000001,7000005,7000006,7000007,7000009",
+    "name": "Turban numbers: without letters r, t, or u.",
+    "reference": [
+        "M. J. Halm, Sequences (Re)discovered, Mpossibilities 81 (Aug. 2002)."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A072956/b072956.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "program": [
+        "(PARI) is(n)=!setintersect(Set(Vec(English(n))),[\"r\",\"t\",\"u\"]) \\\\ See A052360 for English(). - _M. F. Hasler_, Apr 01 2019",
+        "(Python)",
+        "from num2words import num2words",
+        "from itertools import islice, product",
+        "def ok(n): return set(num2words(n)) & {\"r\", \"t\", \"u\"} == set()",
+        "def agen(): # generator of terms < 10**304",
+        "    base, pows = [k for k in range(1, 1000) if ok(k)], [1]",
+        "    yield from ([0] if ok(0) else []) + base",
+        "    for e in range(3, 304, 3):",
+        "        if set(num2words(10**e)[4:]) & {\"r\", \"t\", \"u\"} == set():",
+        "            pows = [10**e] + pows",
+        "            for t in product([0] + base, repeat=len(pows)):",
+        "                if t[0] == 0: continue",
+        "                yield sum(t[i]*pows[i] for i in range(len(t)))",
+        "print(list(islice(agen(), 66))) # _Michael S. Branicky_, Aug 19 2022"
+    ],
+    "xref": [
+        "Cf. A006933 (eban numbers: without 'e'), A008521 (without 'o'), A008523 (without 't'), A008537 (without 'n'), A089590 (without 'u'), A072957 (urban numbers: without r or u), A089589 (without 'i')."
+    ],
+    "keyword": "easy,nonn,word",
+    "offset": "1,2",
+    "author": "_Michael Joseph Halm_, Aug 13 2002",
+    "references": 6,
+    "revision": 13,
+    "time": "2022-08-19T13:51:47-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

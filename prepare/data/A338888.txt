@@ -1,0 +1,38 @@
+{
+    "number": 338888,
+    "data": "0,0,1,2,4,7,8,16,25,26,28,31,32,64,97,98,100,103,104,112,121,122,124,127,128,256,385,386,388,391,392,400,409,410,412,415,416,448,481,482,484,487,488,496,505,506,508,511,512,1024,1537,1538,1540,1543,1544",
+    "name": "a(n) = (a(n-2) bitwise-OR a(n-1)) + 1; a(1)=0, a(2)=0.",
+    "link": [
+        "Harvey P. Dale, <a href=\"/A338888/b338888.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Bitwise operation\">Bitwise operation</a>"
+    ],
+    "formula": [
+        "a(6*2^n+k) = 8 * min(3,k) * 4^n + a(k), where k is positive and as small as possible. - _Charlie Neder_, Jul 31 2023"
+    ],
+    "example": [
+        "a(3) = (0 | 0) + 1 =  0 + 1 =  1,",
+        "a(4) = (0 | 1) + 1 =  1 + 1 =  2,",
+        "a(5) = (1 | 2) + 1 =  3 + 1 =  4,",
+        "a(6) = (2 | 4) + 1 =  6 + 1 =  7,",
+        "a(7) = (4 | 7) + 1 =  7 + 1 =  8,",
+        "a(8) = (7 | 8) + 1 = 15 + 1 = 16."
+    ],
+    "mathematica": [
+        "a[1] = a[2] = 0; a[n_] := a[n] = BitOr[a[n - 1], a[n - 2]] + 1; Array[a, 55] (* _Amiram Eldar_, Nov 14 2020 *)",
+        "nxt[{a_,b_}]:={b,BitOr[a,b]+1}; NestList[nxt,{0,0},60][[All,1]] (* _Harvey P. Dale_, May 08 2021 *)"
+    ],
+    "program": [
+        "(Ruby) values = [0, 0]",
+        "30.times { values << (values[-2] | values[-1]) + 1 }",
+        "p values",
+        "(PARI) lista(nn) = {my(va = vector(nn)); for (n=3, nn, va[n] = bitor(va[n-2], va[n-1]) + 1;); va;} \\\\ _Michel Marcus_, Nov 14 2020",
+        "(Python 3.8+) a338888 = lambda n: (0,0,1,2,4,7)[n-1] if n<7 else (8*4**(k:=((n-1)//6).bit_length()-1)*min(3,d:=n-6*2**k)+a338888(d)) # _Charlie Neder_, Jul 31 2023"
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Simon Strandgaard_, Nov 14 2020",
+    "references": 1,
+    "revision": 25,
+    "time": "2023-08-02T14:08:20-04:00",
+    "created": "2020-12-12T16:31:48-05:00"
+}

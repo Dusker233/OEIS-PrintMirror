@@ -1,0 +1,48 @@
+{
+    "number": 303551,
+    "data": "1,2,6,15,41,95,243,567,1366,3189,7532,17428,40590,93465,215331,493150,1127978,2569049,5841442,13240351,29953601,67596500,152258270,342235866,767895382,1719813753,3845442485,8584197657,19133459138,42583565928,94641591888",
+    "name": "Number of aperiodic multisets of compositions of total weight n.",
+    "comment": [
+        "A multiset is aperiodic if its multiplicities are relatively prime."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A303551/b303551.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{d|n} mu(d) * A034691(n/d)."
+    ],
+    "example": [
+        "The a(4) = 15 aperiodic multisets of compositions are:",
+        "{4}, {31}, {22}, {211}, {13}, {121}, {112}, {1111},",
+        "{1,3}, {1,21}, {1,12}, {1,111}, {2,11},",
+        "{1,1,2}, {1,1,11}.",
+        "Missing from this list are {1,1,1,1}, {2,2}, and {11,11}."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember; `if`(n=0, 1, add(add(",
+        "      d*2^(d-1), d=divisors(j))*b(n-j), j=1..n)/n)",
+        "    end:",
+        "a:= n-> add(mobius(d)*b(n/d), d=divisors(n)):",
+        "seq(a(n), n=1..35);  # _Alois P. Heinz_, Apr 26 2018"
+    ],
+    "mathematica": [
+        "nn=20;",
+        "ser=Product[1/(1-x^n)^2^(n-1),{n,nn}]",
+        "Table[Sum[MoebiusMu[d]*SeriesCoefficient[ser,{x,0,n/d}],{d,Divisors[n]}],{n,1,nn}]"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "seq(n)={my(u=EulerT(vector(n, n, 2^(n-1)))); vector(n, n, sumdiv(n, d, moebius(d)*u[n/d]))} \\\\ _Andrew Howroyd_, Sep 15 2018"
+    ],
+    "xref": [
+        "Cf. A000740, A000837, A007716, A007916, A034691, A100953, A255906, A269134, A301700, A303386, A303431, A303546, A303552."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Apr 26 2018",
+    "references": 6,
+    "revision": 11,
+    "time": "2018-09-17T03:17:13-04:00",
+    "created": "2018-04-26T16:10:41-04:00"
+}

@@ -1,0 +1,32 @@
+{
+    "number": 343770,
+    "data": "11,20,22,31,32,49,64,103,110,173,293,454,496,505,589,673,701,772,784,821,884,979,1039,1292,1711,1988,2236,2266,2662,2701,4804,6772,8641,8948,13504,23867,40241",
+    "name": "Numbers k such that 2*k+(A187129(k) mod A185297(k)) is prime.",
+    "example": [
+        "a(5) = 32 is a term because A187129(32) = 261,",
+        "A185297(32) = 59, and 2*32+(261 mod 59) = 89 is prime."
+    ],
+    "maple": [
+        "g:= proc(n) local i,L,x,y;",
+        "  L:= select(t -> isprime(t) and isprime(2*n-t), [2,seq(i,i=3..n,2)]);",
+        "  x:= convert(L,`+`);",
+        "  y:= nops(L)*2*n - x;",
+        "  y mod x",
+        "end proc:",
+        "select(n -> isprime(2*n+g(n)), [$2..10000]); # _Robert Israel_, Apr 29 2021"
+    ],
+    "program": [
+        "(PARI) apq(n) = my(s=0, t=0); forprime(p=1, n, if (isprime(2*n-p), s += p; t+= 2*n-p)); t % s;",
+        "isok(k) = isprime(2*k + apq(k)); \\\\ _Michel Marcus_, Apr 29 2021"
+    ],
+    "xref": [
+        "Cf. A185297, A187129."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Apr 28 2021",
+    "references": 0,
+    "revision": 7,
+    "time": "2021-04-30T07:01:31-04:00",
+    "created": "2021-04-30T07:01:31-04:00"
+}

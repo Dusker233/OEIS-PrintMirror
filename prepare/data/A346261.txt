@@ -1,0 +1,41 @@
+{
+    "number": 346261,
+    "data": "10,21,32,43,54,65,76,87,98,100,111,122,133,144,155,166,177,188,199,201,212,220,234,245,253,267,278,286,302,313,324,330,341,356,368,375,389,397,403,414,425,431,440,452,469,496,504,515,523,536,542,550,561,579,605,616,627,638,649,651",
+    "name": "Lexicographically earliest sequence of decimal words starting with 10 such that each term has Hamming distance at least 2 from all earlier terms.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A346261/b346261.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "J. H. Conway and N. J. A. Sloane, <a href=\"https://doi.org/10.1109/TIT.1986.1057187\">Lexicographic codes: error-correcting codes from game theory</a>, IEEE Transactions on Information Theory, 32:337-348, 1986."
+    ],
+    "example": [
+        "a(1) = 10 by definition.",
+        "a(2) = 21 because '2' has not yet appeared in the tens place and '1' has not yet appeared in the ones place."
+    ],
+    "program": [
+        "(Python)",
+        "def ham(m, n):",
+        "    s, t = str(min(m, n))[::-1], str(max(m, n))[::-1]",
+        "    return len(t) - len(s) + sum(s[i] != t[i] for i in range(len(s)))",
+        "def aupton(terms):",
+        "    alst = [10]",
+        "    for n in range(2, terms+1):",
+        "        an = alst[-1] + 1",
+        "        while any(ham(an, aprev) < 2 for aprev in alst[::-1]):  an += 1",
+        "        alst.append(an)",
+        "    return alst",
+        "print(aupton(60)) # _Michael S. Branicky_, Jul 22 2021"
+    ],
+    "xref": [
+        "Lexicodes of minimal distance 1,2,3,... over alphabets of size 2: A001477, A001969, A075926, A075928, A075931, A075934, ...; size 3: A001477, A346002, A346003; size 10: A001477, A343444, A333568, A346000, A346001.",
+        "Cf. A207063."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Peter Woodward_, Jul 11 2021",
+    "ext": [
+        "Edited and corrected by _N. J. A. Sloane_, Jul 20 2021"
+    ],
+    "references": 3,
+    "revision": 28,
+    "time": "2021-07-22T08:03:34-04:00",
+    "created": "2021-07-20T10:58:14-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 205800,
+    "data": "1,1,1,1,25,121,361,841,21841,547345,4541041,23292721,169658281,7550279881,95230199065,692107448761,25431412450081,563675083228321,9791797014753121,112525775579561185,3370231071632996281,65798618669268652441,1345746844683430533961",
+    "name": "Expansion of e.g.f. exp( Sum_{n>=1} x^(n^2) ).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A205800/b205800.txt\">Table of n, a(n) for n = 0..448</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp((theta_3(x) - 1)/2), where theta_3() is the Jacobi theta function. - _Ilya Gutkovskiy_, Oct 23 2018",
+        "a(0) = 1; a(n) = (n-1)! * Sum_{k=1..floor(sqrt(n))} k^2 * a(n-k^2)/(n-k^2)!. - _Seiichi Manyama_, Apr 29 2022"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + x^2/2! + x^3/3! + 25*x^4/4! + 121*x^5/5! +...",
+        "where",
+        "log(A(x)) = x + x^4 + x^9 + x^16 + x^25 + x^36 + x^49 + x^64 +..."
+    ],
+    "maple": [
+        "seq(coeff(series(factorial(n)*(exp(add(x^(k^2),k=1..n))),x,n+1), x, n), n = 0 .. 25); # _Muniru A Asiru_, Oct 23 2018"
+    ],
+    "mathematica": [
+        "With[{nn=30},CoefficientList[Series[Exp[Sum[x^n^2,{n,nn}]],{x,0,nn}],x] Range[0,nn]!] (* _Harvey P. Dale_, Apr 01 2020 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(exp(sum(m=1, sqrtint(n+1), x^(m^2)+x*O(x^n))), n)}",
+        "(PARI) a(n) = if(n==0, 1, (n-1)!*sum(k=1, sqrtint(n), k^2*a(n-k^2)/(n-k^2)!)); \\\\ _Seiichi Manyama_, Apr 29 2022"
+    ],
+    "xref": [
+        "Cf. A193375, A205801, A205802, A329256."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Paul D. Hanna_, Jan 31 2012",
+    "references": 6,
+    "revision": 22,
+    "time": "2022-04-30T08:21:06-04:00",
+    "created": "2012-02-02T02:50:26-05:00"
+}

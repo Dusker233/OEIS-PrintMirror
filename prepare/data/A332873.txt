@@ -1,0 +1,51 @@
+{
+    "number": 332873,
+    "data": "0,0,0,0,22,340,3954,44716,536858",
+    "name": "Number of non-unimodal, non-co-unimodal sequences of length n covering an initial interval of positive integers.",
+    "comment": [
+        "A sequence of integers is unimodal if it is the concatenation of a weakly increasing and a weakly decreasing sequence. It is co-unimodal if its negative is unimodal."
+    ],
+    "example": [
+        "The a(4) = 22 sequences:",
+        "  (1,2,1,2)  (2,3,1,3)",
+        "  (1,2,1,3)  (2,3,1,4)",
+        "  (1,3,1,2)  (2,4,1,3)",
+        "  (1,3,2,3)  (3,1,2,1)",
+        "  (1,3,2,4)  (3,1,3,2)",
+        "  (1,4,2,3)  (3,1,4,2)",
+        "  (2,1,2,1)  (3,2,3,1)",
+        "  (2,1,3,1)  (3,2,4,1)",
+        "  (2,1,3,2)  (3,4,1,2)",
+        "  (2,1,4,3)  (4,1,3,2)",
+        "  (2,3,1,2)  (4,2,3,1)"
+    ],
+    "mathematica": [
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "unimodQ[q_]:=Or[Length[q]<=1,If[q[[1]]<=q[[2]],unimodQ[Rest[q]],OrderedQ[Reverse[q]]]];",
+        "Table[Length[Select[Union@@Permutations/@allnorm[n],!unimodQ[#]&&!unimodQ[-#]&]],{n,0,5}]"
+    ],
+    "xref": [
+        "Not requiring non-co-unimodality gives A328509.",
+        "Not requiring non-unimodality also gives A328509.",
+        "The version for run-lengths of partitions is A332640.",
+        "The version for unsorted prime signature is A332643.",
+        "The version for compositions is A332870.",
+        "Unimodal compositions are A001523.",
+        "Unimodal sequences covering an initial interval appear to be A007052.",
+        "Non-unimodal permutations are A059204.",
+        "Non-unimodal compositions are A115981.",
+        "Unimodal compositions covering an initial interval are A227038.",
+        "Numbers whose unsorted prime signature is not unimodal are A332282.",
+        "Numbers whose negated prime signature is not unimodal are A332642.",
+        "Compositions whose run-lengths are not unimodal are A332727.",
+        "Non-unimodal compositions covering an initial interval are A332743.",
+        "Cf. A060223, A072704, A329398, A332281, A332284, A332577, A332578, A332639, A332672, A332834."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,5",
+    "author": "_Gus Wiseman_, Mar 03 2020",
+    "references": 4,
+    "revision": 5,
+    "time": "2020-03-04T18:12:03-05:00",
+    "created": "2020-03-04T18:12:03-05:00"
+}

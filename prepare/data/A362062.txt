@@ -1,0 +1,42 @@
+{
+    "number": 362062,
+    "data": "1,3,10,52,398,4734,78428,1326821,26386288,645482585",
+    "name": "First index in A362061 where A001221(A362061(a(n))) = n.",
+    "program": [
+        "(Python)",
+        "from sympy import primefactors",
+        "from collections import Counter",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    an, c, d, d2, k = 1, Counter(), dict(), dict(), 0",
+        "    for n in count(1):",
+        "        if an in d: dpf = d[an]",
+        "        else: dpf, d2[dpf] = len(primefactors(an)), n",
+        "        c[dpf] += 1",
+        "        an = c[dpf]",
+        "        if k in d2: yield d2[k]; k += 1",
+        "print(list(islice(agen(), 7))) # _Michael S. Branicky_, Apr 06 2023",
+        "(Python)",
+        "from itertools import count",
+        "from sympy import primenu",
+        "def A362062(n):",
+        "    a, b, c = {}, {}, 1",
+        "    for m in count(1):",
+        "        d = b[c] = b.get(c,primenu(c))",
+        "        if d == n: return m",
+        "        c = a[d] = a.get(d,0)+1 # _Chai Wah Wu_, Apr 07 2023"
+    ],
+    "xref": [
+        "Cf. A362061, A001221."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Scott R. Shannon_, Apr 06 2023",
+    "ext": [
+        "a(9) from _Chai Wah Wu_, Apr 07 2023"
+    ],
+    "references": 2,
+    "revision": 17,
+    "time": "2023-04-07T10:51:45-04:00",
+    "created": "2023-04-06T23:01:00-04:00"
+}

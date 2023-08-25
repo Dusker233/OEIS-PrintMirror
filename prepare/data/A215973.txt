@@ -1,0 +1,42 @@
+{
+    "number": 215973,
+    "data": "1,2,7,28,122,565,2735,13682,70188,367248,1952394,10516141,57265929,314751625,1743829163,9728561418,54604800126,308137127382,1747158309208,9949001656704,56872435967840,326243091718978,1877419829207578,10835354636496321",
+    "name": "a(0) = 1, for n > 0: a(n) = Sum_{k=0..n-1} a(k) * (1 + a(n-1-k)).",
+    "comment": [
+        "Inverse binomial transform of A188312."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A215973/b215973.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "J. P. S. Kung and A. de Mier, <a href=\"http://dx.doi.org/10.1016/j.jcta.2012.08.010\">Catalan lattice paths with rook, bishop and spider steps</a>, Journal of Combinatorial Theory, Series A 120 (2013) 379-389. See P_{1,P}(t), p. 386. - From _N. J. A. Sloane_, Dec 27 2012"
+    ],
+    "formula": [
+        "G.f.: (2*x-1+sqrt( 1-8*x+12*x^2-4*x^3))/(2*x*(x-1)). - _N. J. A. Sloane_, Dec 27 2012",
+        "Conjecture: (n+1)*a(n) +3*(-3*n+1)*a(n-1) +4*(5*n-7)*a(n-2) +2*(-8*n+19)*a(n-3) +2*(2*n-7)*a(n-4)=0. - _R. J. Mathar_, Jun 14 2016",
+        "a(n) = Sum_{j=0..n} Sum_{i=0..j} C(j+1,i)*C(2*j-i,j-i)*C(n-j+i-1,n-j)/(j+1). - _Vladimir Kruchinin_, May 04 2018",
+        "G.f. A(x) satisfies: A(x) = 1 + x * A(x) / (1 - x) + x * A(x)^2. - _Ilya Gutkovskiy_, Nov 05 2021"
+    ],
+    "mathematica": [
+        "nmax = 30; CoefficientList[Series[(2*x - 1 + Sqrt[1-8*x+12*x^2-4*x^3]) / (2*x*(x-1)), {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Oct 31 2017 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a215973 n = a215973_list !! n",
+        "a215973_list = 1 : f [1] where",
+        "   f xs = y : f (y:xs) where",
+        "     y = sum $ zipWith (*) xs $ map (+ 1) $ reverse xs",
+        "(Maxima)",
+        "a(n):=sum(sum(binomial(j+1,i)*binomial(2*j-i,j-i)*binomial(n-j+i-1,n-j),i,0,j)/(j+1),j,0,n); /* _Vladimir Kruchinin_, May 04 2018 */",
+        "(PARI) a(n) = sum(j=0, n, sum(i=0,j, binomial(j+1,i)*binomial(2*j-i,j-i)*binomial(n-j+i-1,n-j)/(j+1))); \\\\ _Altug Alkan_, May 04 2018",
+        "(PARI) x='x+O('x^99); Vec((2*x-1+(1-8*x+12*x^2-4*x^3)^(1/2))/(2*x*(x-1))) \\\\ _Altug Alkan_, May 04 2018"
+    ],
+    "xref": [
+        "Cf. A000108, A188312."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Reinhard Zumkeller_, Aug 29 2012",
+    "references": 4,
+    "revision": 37,
+    "time": "2021-11-05T20:26:46-04:00",
+    "created": "2012-08-30T00:13:45-04:00"
+}

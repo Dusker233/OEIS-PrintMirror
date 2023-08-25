@@ -1,0 +1,45 @@
+{
+    "number": 298273,
+    "data": "13,6427,7873,9439,17203,20287,22783,30133,77417,90523,93949,115903,117841,119797,324403,367649,399163,424573,439441,473839,501493,576193,597859,628861,693223,746023,987697,1044733,1151399,1212889,1263247,1360417,1454351",
+    "name": "The first of three consecutive primes the sum of which is equal to the sum of three consecutive hexagonal numbers.",
+    "link": [
+        "Robert Israel, <a href=\"/A298273/b298273.txt\">Table of n, a(n) for n = 1..10000</a> (first 100 terms from Colin Barker)"
+    ],
+    "example": [
+        "13 is in the sequence because 13+17+19 (consecutive primes) = 49 = 6+15+28 (consecutive hexagonal numbers)."
+    ],
+    "maple": [
+        "N:= 100: # to get a(1)..a(100)",
+        "count:= 0:",
+        "mmax:= floor((sqrt(24*N-87)-9)/12):",
+        "for i from 1 while count < N do",
+        "  mi:= 2*i;",
+        "  m:= 6*mi^2+9*mi+7;",
+        "  r:= ceil((m-8)/3);",
+        "  p1:= prevprime(r+1);",
+        "  p2:= nextprime(p1);",
+        "  p3:= nextprime(p2);",
+        "  while p1+p2+p3 > m do",
+        "    p3:= p2; p2:= p1; p1:= prevprime(p1);",
+        "  od:",
+        "  if p1+p2+p3 = m then",
+        "    count:= count+1;",
+        "  A[count]:= p1;",
+        "  fi",
+        "od:",
+        "seq(A[i],i=1..count); # _Robert Israel_, Jan 16 2018"
+    ],
+    "program": [
+        "(PARI) L=List(); forprime(p=2, 2000000, q=nextprime(p+1); r=nextprime(q+1); t=p+q+r; if(issquare(24*t-87, &sq) && (sq-9)%12==0, u=(sq-9)\\12; listput(L, p))); Vec(L)"
+    ],
+    "xref": [
+        "Cf. A000040, A000384, A054643, A298073, A298168, A298169, A298222, A298223, A298250, A298251, A298272."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Colin Barker_, Jan 16 2018",
+    "references": 6,
+    "revision": 11,
+    "time": "2018-01-17T11:45:54-05:00",
+    "created": "2018-01-16T11:32:43-05:00"
+}

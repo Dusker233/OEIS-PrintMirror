@@ -1,0 +1,52 @@
+{
+    "number": 325283,
+    "data": "2,4,6,12,18,20,24,28,40,48,60,84,90,120,126,132,140,150,156,168,180,198,204,220,228,234,240,252,260,264,270,276,280",
+    "name": "Heinz numbers of integer partitions with maximum adjusted frequency depth for partitions of that sum.",
+    "comment": [
+        "The enumeration of these partitions by sum is given by A325254.",
+        "The adjusted frequency depth of an integer partition is 0 if the partition is empty, and otherwise it is 1 plus the number of times one must take the multiset of multiplicities to reach a singleton. For example, the partition (32211) has adjusted frequency depth 5 because we have: (32211) -> (221) -> (21) -> (11) -> (2).",
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k)."
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices and their omega-sequences (see A323023) begins:",
+        "  2:   {1}         (1)",
+        "  4:   {1,1}       (2,1)",
+        "  6:   {1,2}       (2,2,1)",
+        "  12:  {1,1,2}     (3,2,2,1)",
+        "  18:  {1,2,2}     (3,2,2,1)",
+        "  20:  {1,1,3}     (3,2,2,1)",
+        "  24:  {1,1,1,2}   (4,2,2,1)",
+        "  28:  {1,1,4}     (3,2,2,1)",
+        "  40:  {1,1,1,3}   (4,2,2,1)",
+        "  48:  {1,1,1,1,2} (5,2,2,1)",
+        "  60:  {1,1,2,3}   (4,3,2,2,1)",
+        "  84:  {1,1,2,4}   (4,3,2,2,1)",
+        "  90:  {1,2,2,3}   (4,3,2,2,1)",
+        "  120: {1,1,1,2,3} (5,3,2,2,1)",
+        "  126: {1,2,2,4}   (4,3,2,2,1)",
+        "  132: {1,1,2,5}   (4,3,2,2,1)",
+        "  140: {1,1,3,4}   (4,3,2,2,1)",
+        "  150: {1,2,3,3}   (4,3,2,2,1)",
+        "  156: {1,1,2,6}   (4,3,2,2,1)",
+        "  168: {1,1,1,2,4} (5,3,2,2,1)",
+        "  180: {1,1,2,2,3} (5,3,2,2,1)"
+    ],
+    "mathematica": [
+        "nn=30;",
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "fdadj[ptn_List]:=If[ptn=={},0,Length[NestWhileList[Sort[Length/@Split[#]]&,ptn,Length[#]>1&]]];",
+        "mfds=Table[Max@@fdadj/@IntegerPartitions[n],{n,nn}];",
+        "Select[Range[Prime[nn]],fdadj[primeMS[#]]==mfds[[Total[primeMS[#]]]]&]"
+    ],
+    "xref": [
+        "Cf. A011784, A056239, A112798, A118914, A181819, A182857, A225486, A323014, A323023, A325254, A325258, A325277, A325278, A325282.",
+        "Integer partition triangles: A008284 (first omega), A116608 (second omega), A325242 (third omega), A325268 (second-to-last omega), A225485 or A325280 (length/frequency depth)."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Apr 17 2019",
+    "references": 6,
+    "revision": 6,
+    "time": "2019-04-17T19:09:13-04:00",
+    "created": "2019-04-17T19:09:13-04:00"
+}

@@ -1,0 +1,65 @@
+{
+    "number": 326359,
+    "data": "1,1,2,6,28,375,31745,123805913",
+    "name": "Number of maximal antichains of nonempty subsets of {1..n}.",
+    "comment": [
+        "A set system (set of sets) is an antichain if no element is a subset of any other."
+    ],
+    "formula": [
+        "For n > 0, a(n) = A326358(n) - 1."
+    ],
+    "example": [
+        "The a(0) = 1 through a(4) = 28 antichains:",
+        "  {}   {1}    {12}      {123}           {1234}",
+        "              {1}{2}    {1}{23}         {1}{234}",
+        "                        {2}{13}         {2}{134}",
+        "                        {3}{12}         {3}{124}",
+        "                        {1}{2}{3}       {4}{123}",
+        "                        {12}{13}{23}    {1}{2}{34}",
+        "                                        {1}{3}{24}",
+        "                                        {1}{4}{23}",
+        "                                        {2}{3}{14}",
+        "                                        {2}{4}{13}",
+        "                                        {3}{4}{12}",
+        "                                        {1}{2}{3}{4}",
+        "                                        {12}{134}{234}",
+        "                                        {13}{124}{234}",
+        "                                        {14}{123}{234}",
+        "                                        {23}{124}{134}",
+        "                                        {24}{123}{134}",
+        "                                        {34}{123}{124}",
+        "                                        {1}{23}{24}{34}",
+        "                                        {2}{13}{14}{34}",
+        "                                        {3}{12}{14}{24}",
+        "                                        {4}{12}{13}{23}",
+        "                                        {12}{13}{14}{234}",
+        "                                        {12}{23}{24}{134}",
+        "                                        {13}{23}{34}{124}",
+        "                                        {14}{24}{34}{123}",
+        "                                        {123}{124}{134}{234}",
+        "                                        {12}{13}{14}{23}{24}{34}"
+    ],
+    "mathematica": [
+        "stableSets[u_,Q_]:=If[Length[u]==0,{{}},With[{w=First[u]},Join[stableSets[DeleteCases[u,w],Q],Prepend[#,w]&/@stableSets[DeleteCases[u,r_/;r==w||Q[r,w]||Q[w,r]],Q]]]];",
+        "fasmax[y_]:=Complement[y,Union@@(Most[Subsets[#]]&/@y)];",
+        "Table[Length[fasmax[stableSets[Subsets[Range[n],{1,n}],SubsetQ]]],{n,0,5}]"
+    ],
+    "xref": [
+        "Antichains of nonempty sets are A014466.",
+        "Minimal covering antichains are A046165.",
+        "Maximal intersecting antichains are A007363.",
+        "Maximal antichains of sets are A326358.",
+        "Cf. A000372, A003182, A006126, A006602, A014466, A058891, A261005, A305000, A305844, A307249, A326360, A326362, A326363."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jul 01 2019",
+    "ext": [
+        "a(6) from _Andrew Howroyd_, Aug 14 2019",
+        "a(7) from _Dmitry I. Ignatov_, Oct 12 2021"
+    ],
+    "references": 13,
+    "revision": 14,
+    "time": "2021-11-19T11:45:41-05:00",
+    "created": "2019-07-02T11:17:18-04:00"
+}

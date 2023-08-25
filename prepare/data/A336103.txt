@@ -1,0 +1,79 @@
+{
+    "number": 336103,
+    "data": "1,1,1,3,5,13,24,56,108,236,464,976,1936,3984,7936,16128,32192,64960,129792,260864,521472,1045760,2091008,4188160,8375296,16763904,33525760,67080192,134156288,268374016,536739840,1073610752,2147205120,4294688768,8589344768,17179279360,34358493184",
+    "name": "Number of separable multisets of size n covering an initial interval of positive integers.",
+    "comment": [
+        "A multiset is separable if it has a permutation that is an anti-run, meaning there are no adjacent equal parts.",
+        "Alternatively, a multiset is separable if its greatest multiplicity is greater than the sum of its remaining multiplicities plus one. Hence a(n) is the number of compositions of n whose greatest part is at most one more than the sum of its other parts. For example, the a(1) = 1 through a(5) = 13 compositions are:",
+        "  (1)  (11)  (12)   (22)    (23)",
+        "             (21)   (112)   (32)",
+        "             (111)  (121)   (113)",
+        "                    (211)   (122)",
+        "                    (1111)  (131)",
+        "                            (212)",
+        "                            (221)",
+        "                            (311)",
+        "                            (1112)",
+        "                            (1121)",
+        "                            (1211)",
+        "                            (2111)",
+        "                            (11111)"
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A336103/b336103.txt\">Table of n, a(n) for n = 0..3322</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (2,4,-8,-4,8)."
+    ],
+    "formula": [
+        "a(n) = 2^(n-1) - (floor(n/2)+1) * 2^(floor(n/2)-2) for n >= 2. - _David A. Corneth_, Jul 09 2020",
+        "From _Chai Wah Wu_, Apr 07 2021: (Start)",
+        "a(n) = 2*a(n-1) + 4*a(n-2) - 8*a(n-3) - 4*a(n-4) + 8*a(n-5) for n > 6.",
+        "G.f.: (x - 1)*(2*x^5 + 7*x^4 - 5*x^2 + 1)/((2*x - 1)*(2*x^2 - 1)^2). (End)"
+    ],
+    "example": [
+        "The a(1) = 1 through a(5) = 13 separable multisets:",
+        "  {1}  {1,2}  {1,1,2}  {1,1,2,2}  {1,1,1,2,2}",
+        "              {1,2,2}  {1,1,2,3}  {1,1,1,2,3}",
+        "              {1,2,3}  {1,2,2,3}  {1,1,2,2,2}",
+        "                       {1,2,3,3}  {1,1,2,2,3}",
+        "                       {1,2,3,4}  {1,1,2,3,3}",
+        "                                  {1,1,2,3,4}",
+        "                                  {1,2,2,2,3}",
+        "                                  {1,2,2,3,3}",
+        "                                  {1,2,2,3,4}",
+        "                                  {1,2,3,3,3}",
+        "                                  {1,2,3,3,4}",
+        "                                  {1,2,3,4,4}",
+        "                                  {1,2,3,4,5}"
+    ],
+    "mathematica": [
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "sepQ[m_]:=Select[Permutations[m],!MatchQ[#,{___,x_,x_,___}]&]!={};",
+        "Table[Length[Select[allnorm[n],sepQ]],{n,0,5}]",
+        "(* or *)",
+        "Table[Length[Join@@Permutations/@Select[IntegerPartitions[n],With[{mx=Max@@#},mx<=1+Total[DeleteCases[#,mx,{1},1]]]&]],{n,0,15}] (* or *)",
+        "CoefficientList[Series[(x - 1) (2 x^5 + 7 x^4 - 5 x^2 + 1)/((2 x - 1) (2 x^2 - 1)^2), {x, 0, 36}], x] (* _Michael De Vlieger_, Apr 07 2021 *)"
+    ],
+    "xref": [
+        "The inseparable version is A336102.",
+        "The strong (weakly decreasing multiplicities) case is A336106.",
+        "Sequences covering an initial interval are A000670.",
+        "Anti-run compositions are A003242.",
+        "Anti-run patterns are A005649.",
+        "Separable partitions are A325534.",
+        "Inseparable partitions are A325535.",
+        "Inseparable factorizations are A333487.",
+        "Anti-run compositions are ranked by A333489.",
+        "Heinz numbers of inseparable partitions are A335448.",
+        "Cf. A001792, A019472, A025065, A049610, A052841, A106351, A269134, A292884, A335126, A335433, A335452."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Jul 09 2020",
+    "ext": [
+        "a(26)-a(36) from _David A. Corneth_, Jul 09 2020"
+    ],
+    "references": 13,
+    "revision": 24,
+    "time": "2021-04-08T07:25:45-04:00",
+    "created": "2020-07-09T22:43:10-04:00"
+}

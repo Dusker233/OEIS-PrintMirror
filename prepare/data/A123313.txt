@@ -1,0 +1,37 @@
+{
+    "number": 123313,
+    "data": "1,1,1,1,3,3,5,5,5,7,7,7,7,7,11,11,13,13,15,15,15,17,17,17,19,19,19,21,21,23,23,23,23,23,23,29,29,29,31,31,33,33,33,35,35,35,37,37,39,39,41,41,41,43,43,43,43,43,47,47,47,47,51,51,51,53,53,53,55,55,55,57,57,59",
+    "name": "Maximum of greatest common divisors of pairs of distinct squarefree numbers not greater than the n-th squarefree number; a(1)=1.",
+    "comment": [
+        "A123314(n) = #{k: a(k) = A005117(n)}."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A123313/b123313.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Squarefree.html\">Squarefree</a>.",
+        "<a href=\"/index/Ga#gcd\">Index entries for sequences related to GCD's</a>."
+    ],
+    "formula": [
+        "a(n) = Max(a(n-1), Max(GCD(A005117(n), A005117(k)): 1<=k<n)."
+    ],
+    "mathematica": [
+        "seq[max_] := Module[{sqf = Select[Range[max], SquareFreeQ], s, m}, m = Length[sqf]; s = Table[0, {m}]; s[[1]] = 1; Do[s[[k]] = Max[s[[k - 1]], Max[GCD[sqf[[k]], Take[sqf, k - 1]]]], {k, 2, m}]; s]; seq[120] (* _Amiram Eldar_, Feb 13 2021 *)"
+    ],
+    "program": [
+        "(PARI) mygcd(x, y) = if (x==y, 1, gcd(x,y));",
+        "sqf(n) = {my(v = List(), k=1); until (#v == n, if (issquarefree(k), listput(v, k)); k++); v;}",
+        "a(n) = vecmax(setbinop(mygcd, Vec(sqf(n)))); \\\\ _Michel Marcus_, Feb 13 2021"
+    ],
+    "xref": [
+        "Cf. A005117, A123314."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_Reinhard Zumkeller_, Sep 25 2006",
+    "ext": [
+        "Name corrected by _Amiram Eldar_, Feb 13 2021"
+    ],
+    "references": 2,
+    "revision": 18,
+    "time": "2021-02-13T14:38:02-05:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

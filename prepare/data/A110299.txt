@@ -1,0 +1,51 @@
+{
+    "number": 110299,
+    "data": "2,7,19,45,101,215,447,913,1849,3727,7485,15007,30055,60153,120353,240759,481577,963215,1926497,3853065,7706203,15412485,30825053,61650195,123300487,246601075,493202253,986404613,1972809335,3945618783,7891237693,15782475517",
+    "name": "a(n) = Sum_{i=0..n-1} 2^i*prime(n-i).",
+    "reference": [
+        "Eric Angelini, \"Array with primes.\" Pers. comm. on the SeqFan mailing list, Sep. 7 2005."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A110299/b110299.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "G.f: b(x)/(1-2*x), where b(x) is the g.f. of A000040. - _Mario C. Enriquez_, Dec 10 2016",
+        "a(n) = 2*a(n-1) + A000040(n) for n>0 with a(0)=0. - _Alois P. Heinz_, Dec 10 2016"
+    ],
+    "maple": [
+        "a:= proc(n) option remember;",
+        "      `if`(n=0, 0, ithprime(n)+2*a(n-1))",
+        "    end:",
+        "seq(a(n), n=1..30);  # _Alois P. Heinz_, Dec 10 2016"
+    ],
+    "mathematica": [
+        "Table[Sum[2^i * Prime[n-i], {i, 0, n-1}], {n, 1, 30}]"
+    ],
+    "program": [
+        "(PARI) a(n) = fromdigits(primes(n),2); \\\\ _Kevin Ryde_, Jun 22 2022",
+        "(Magma)",
+        "A110299:= func< n | (&+[2^(n-j)*NthPrime(j): j in [1..n]]) >;",
+        "[A110299(n): n in [1..40]]; // _G. C. Greubel_, Jan 03 2023",
+        "(SageMath)",
+        "@CachedFunction # a = A110299",
+        "def a(n): return 2 if (n==1) else 2*a(n-1) + nth_prime(n)",
+        "[a(n) for n in range(1,41)] # _G. C. Greubel_, Jan 03 2023",
+        "(Python)",
+        "from sympy import prime",
+        "def A110299(n):",
+        "    c = 0",
+        "    for i in range(n):",
+        "        c = (c<<1)+prime(i+1)",
+        "    return c # _Chai Wah Wu_, Jan 04 2023"
+    ],
+    "xref": [
+        "Cf. A000040, A135483, A287353."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Ryan Propper_, Sep 07 2005",
+    "references": 5,
+    "revision": 30,
+    "time": "2023-01-04T11:55:42-05:00",
+    "created": "2005-09-21T03:00:00-04:00"
+}

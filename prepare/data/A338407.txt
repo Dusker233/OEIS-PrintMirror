@@ -1,0 +1,61 @@
+{
+    "number": 338407,
+    "data": "1081,3841,7849,8257,16537,16873,33097,46897,59953,66217,93817,94921,95833,113137,120073,129697,133561,136321,139081,166681,173857,174961,177721,226297,231193,240313,248377,258121,259417,265033,278569,317377,321241,325657",
+    "name": "Values m that allow maximum period in the Blum-Blum-Shub x^2 mod m pseudorandom number generator.",
+    "comment": [
+        "Each term must be a semiprime. The prime factors must be distinct, congruent to 3 mod 4, and must satisfy two additional conditions. First, for each factor, F, there must exist primes p and q such that F = 2p+1 and p = 2q+1. Second, 2 can be a quadratic residue modulo p for at most one factor.",
+        "The length of the associated PRNG is up to psi(psi(n)), where psi is the reduced totient function."
+    ],
+    "link": [
+        "L. Blum, M. Blum, and M. Shub, <a href=\"https://doi.org/10.1007/978-1-4757-0602-4_6\">Comparison of Two Pseudo-Random Number Generators</a>, In: D. Chaum, R. L. Rivest, A. T. Sherman (eds) Advances in Cryptology. Springer, Boston, MA (1983).",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Blum_Blum_Shub\">Blum Blum Shub</a>"
+    ],
+    "example": [
+        "1081 is the product of the primes 23 and 47. Both of these numbers are congruent to 3 modulo 4. 23 = 2*11+1, 11 = 2*5+1, note that 2 is a quadratic nonresidue modulo 11. 47 = 2*23+1, 23 = 2*11+1, note that 2 is a quadratic residue modulo 23. Since only one relevant value has 2 as a quadratic residue, 1081 is a term.",
+        "The associated PRNG has length up to psi(psi(1081)) = 110."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory import legendre_symbol, isprime, sieve",
+        "def A338407(N):",
+        "    def BBS_primes():",
+        "        p = 1",
+        "        S = sieve",
+        "        while True:",
+        "            p += 1",
+        "            if p in S:",
+        "                if p%4 == 3:",
+        "                    a = (p-1)//2",
+        "                    b = (a-1)//2",
+        "                    if a%2 == 1 and b % 2 == 1:",
+        "                        if isprime(a) and isprime(b):",
+        "                            yield p",
+        "    S = []",
+        "    K = {}",
+        "    T = []",
+        "    ctr = 0",
+        "    for s in BBS_primes():",
+        "        S.append(s)",
+        "        K[s] = legendre_symbol(2,(s-1)//2)",
+        "        while len(T) > 0 and T[0] < s*S[0]:",
+        "            print(T.pop(0))",
+        "            ctr += 1",
+        "            if ctr >= N:",
+        "                return None",
+        "        for t in S[:-1]:",
+        "            if K[t] + K[s] != 2:",
+        "                T.append(t*s)",
+        "        T.sort()",
+        "(PARI)",
+        "tf(r)={if(r%8==7 && isprime((r-1)/2) && isprime((r-3)/4), kronecker(2,r\\2), 0)}",
+        "isok(n)={if(n%8==1 && bigomega(n)==2 && !issquare(n), my(f=factor(n)[,1], t1=tf(f[1]), t2=tf(f[2])); t1 && t2 && t1+t2!=2, 0)}",
+        "forstep(n=1, 10^6, 8, if(isok(n), print1(n, \", \"))) \\\\ _Andrew Howroyd_, Oct 26 2020"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alexander Fraebel_, Oct 24 2020",
+    "references": 1,
+    "revision": 32,
+    "time": "2022-06-10T07:36:01-04:00",
+    "created": "2020-12-06T01:15:03-05:00"
+}

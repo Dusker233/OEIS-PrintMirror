@@ -1,0 +1,46 @@
+{
+    "number": 141769,
+    "data": "1,2,3,4,5,6,7,510,1014,2022,3030,10307,12102,12255,13110,60398,61215,93040,100302,101310,110175,122415,127533,131052,131053,196447,201102,202110,220335,223167,245725,255045,280824,306015,311232,318800,325600,372112,455422",
+    "name": "Beginning of a run of 4 consecutive Niven (or Harshad) numbers.",
+    "comment": [
+        "Cooper and Kennedy proved that there are infinitely many runs of 20 consecutive Niven numbers. Therefore this sequence is infinite. - _Amiram Eldar_, Jan 03 2020"
+    ],
+    "reference": [
+        "Jean-Marie De Koninck, Those Fascinating Numbers, American Mathematical Society, 2009, p. 36, entry 110."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A141769/b141769.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Curtis Cooper and Robert E. Kennedy, <a href=\"http://www.fq.math.ca/Scanned/31-2/cooper.pdf\">On consecutive Niven numbers</a>, Fibonacci Quarterly, Vol. 21, No. 2 (1993), pp. 146-151.",
+        "Helen G. Grundman, <a href=\"https://www.fq.math.ca/Scanned/32-2/grundman.pdf\">Sequences of consecutive Niven numbers</a>, Fibonacci Quarterly, Vol. 32, No. 2 (1994), pp. 174-175.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HarshadNumber.html\">Harshad Number</a>.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Harshad_number\">Harshad number</a>.",
+        "Brad Wilson <a href=\"http://www.fq.math.ca/Scanned/35-2/wilson.pdf\">Construction of 2n consecutive n-Niven numbers</a>, Fibonacci Quarterly, Vol. 35, No. 2 (1997), pp. 122-128."
+    ],
+    "formula": [
+        "This A141769 = { A005349(k) | A005349(k+3) = A005349(k)+3 }. - _M. F. Hasler_, Jan 03 2022"
+    ],
+    "example": [
+        "510 is in the sequence because 510, 511, 512 and 513 are all Niven numbers."
+    ],
+    "mathematica": [
+        "nivenQ[n_] := Divisible[n, Total @ IntegerDigits[n]]; niv = nivenQ /@ Range[4]; seq = {}; Do[niv = Join[Rest[niv], {nivenQ[k]}]; If[And @@ niv, AppendTo[seq, k - 3]], {k, 4, 5*10^5}]; seq (* _Amiram Eldar_, Jan 03 2020 *)"
+    ],
+    "program": [
+        "(Magma) f:=func<n|n mod &+Intseq(n) eq 0>; a:=[]; for k in [1..500000] do  if forall{m:m in [0..3]|f(k+m)} then Append(~a,k); end if; end for; a; // _Marius A. Burtea_, Jan 03 2020",
+        "(PARI) {A141769_first( N=50, L=4, a=List())= for(n=1,oo, n+=L; for(m=1,L, n--%sumdigits(n) && next(2)); listput(a,n); N--|| break);a} \\\\ _M. F. Hasler_, Jan 03 2022"
+    ],
+    "xref": [
+        "Cf. A005349, A330927, A154701, A330928, A330929, A330930, A060159 (start of run of 1, 2, ..., 7, exactly n consecutive Harshad numbers).",
+        "Cf. A330933, A328211, A328215 (analog for base 2, Zeckendorf- resp. Fibonacci-Niven variants)."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Sergio Pimentel_, Sep 15 2008",
+    "ext": [
+        "More terms from _Amiram Eldar_, Jan 03 2020"
+    ],
+    "references": 26,
+    "revision": 28,
+    "time": "2022-09-08T08:45:35-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

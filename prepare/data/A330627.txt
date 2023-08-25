@@ -1,0 +1,45 @@
+{
+    "number": 330627,
+    "data": "0,1,1,1,2,2,4,5,9,14,24,39,69,116,205,357,632,1118,2001,3576,6445,11627,21080,38293,69819,127539,233644,428825,788832,1453589,2683602,4962167,9190155,17044522,31655676,58866237,109600849,204293047,381212823,712073862",
+    "name": "Number of non-isomorphic phylogenetic trees with n nodes.",
+    "comment": [
+        "A phylogenetic tree is a series-reduced rooted tree whose leaves are (usually disjoint) sets. Each branching as well as each element of each leaf contributes to the number of nodes."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A330627/b330627.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "G.f.: A(x) satisfies A(x) = x*(1/(1-x) - A(x) - 2 + exp(Sum_{k>0} A(x^k)/k)). - _Andrew Howroyd_, Jan 02 2021"
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(2) = 1 through a(9) = 9 trees (commas and outer brackets elided):",
+        "  1  12  123  1234    12345    123456     1234567      12345678",
+        "              (1)(2)  (1)(23)  (1)(234)   (1)(2345)    (1)(23456)",
+        "                               (12)(34)   (12)(345)    (12)(3456)",
+        "                               (1)(2)(3)  (1)(2)(34)   (123)(456)",
+        "                                          (1)((2)(3))  (1)(2)(345)",
+        "                                                       (1)(23)(45)",
+        "                                                       (1)((2)(34))",
+        "                                                       (1)(2)(3)(4)",
+        "                                                       (12)((3)(4))"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "seq(n)={my(v=[0]); for(n=1, n-1, v=concat(v, EulerT(v)[n] - v[n] + 1)); v} \\\\ _Andrew Howroyd_, Jan 02 2021"
+    ],
+    "xref": [
+        "Phylogenetic trees by number of labels are A005804, with unlabeled version A141268.",
+        "Balanced phylogenetic trees are A320154.",
+        "Cf. A000311, A000669, A001678, A004114, A005121, A007716, A048816, A060356, A330465, A330467, A330469."
+    ],
+    "keyword": "nonn",
+    "offset": "1,5",
+    "author": "_Gus Wiseman_, Dec 28 2019",
+    "ext": [
+        "Terms a(11) and beyond from _Andrew Howroyd_, Jan 02 2021"
+    ],
+    "references": 4,
+    "revision": 8,
+    "time": "2021-01-02T21:21:34-05:00",
+    "created": "2019-12-29T08:43:52-05:00"
+}

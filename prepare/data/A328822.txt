@@ -1,0 +1,53 @@
+{
+    "number": 328822,
+    "data": "103,151,439,503,727,751,887,1063,1091,1223,1447,1951,2791,2903,3079,3191,3371,3491,3851,4567,5051,5431,5591,5647,6151,6491,7591,9463,9623,11171,12911,14891,15511,16183,17203,18787,19031,19403,19991,20231,21863,22111,22391,22567,24251,24407,26951",
+    "name": "Primes of the form p=3*q+3*r+q*r where q and r are distinct primes and 2*p-3*q, 2*p-3*r and 2*p-q*r are also prime.",
+    "comment": [
+        "The first term that occurs for more than one pair (q,r) is a(11)=1447, which corresponds to (q,r) = (5, 179) and (11, 101).",
+        "The first term that occurs for more than two pairs (q,r) is a(2579)=15108791, which corresponds to (q,r) = (17, 755437), (37, 377717), and (2797, 5393)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A328822/b328822.txt\">Table of n, a(n) for n = 1..6030</a>"
+    ],
+    "example": [
+        "a(3)=439 is in the sequence because q=5 and r=53 are distinct primes with 439=3*q+3*r+q*r and 439, 2*439-3*q=863, 2*439-3*r=719 and 2*439-q*r=613 are all primes."
+    ],
+    "maple": [
+        "N:= 10^5: # to get all terms <= N",
+        "Primes:= select(isprime, [seq(i, i=3..nextprime(N/8), 2)]):",
+        "filter:= proc(p, q, r)",
+        "isprime(p*q+2*p*r+2*q*r) and isprime(2*p*q+p*r+2*q*r) and isprime(2*p*q+2*p*r+q*r)",
+        "end proc:",
+        "p:= 3: R:= {}:",
+        "for iq from 2 do",
+        "   q:= Primes[iq];",
+        "   if 2*p*q + q^2 >= N then break fi;",
+        "   for ir from iq+1 do",
+        "       r:= Primes[ir];",
+        "       s:= p*q + q*r + p*r;",
+        "       if s > N then break fi;",
+        "       if isprime(s) and filter(p, q, r) then",
+        "         R:= R union {s};",
+        "       fi;",
+        "od od:",
+        "sort(convert(R,list));"
+    ],
+    "mathematica": [
+        "M = 10^5; (* to get all terms <= M *)",
+        "filterQ[p_, q_, r_] := PrimeQ[p q + 2 p r + 2 q r] && PrimeQ[2 p q + p r + 2 q r] && PrimeQ[2 p q + 2 p r + q r];",
+        "primes = Select[Table[i, {i, 3, NextPrime[M/8], 2}], PrimeQ];",
+        "p = 3; R = {};",
+        "For[iq = 2, True, iq++, q = primes[[iq]]; If[2 p q + q^2 >= M, Break[]]; For[ir = iq + 1, True, ir++, r = primes[[ir]]; s = p q + q r + p r; If[s > M, Break[]]; If[PrimeQ[s] && filterQ[p, q, r], R = Union[R, {s}]]]];",
+        "R (* _Jean-Fran\u00e7ois Alcover_, Aug 12 2020, after _Robert Israel_ *)"
+    ],
+    "xref": [
+        "Primes in A328805."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Oct 28 2019",
+    "references": 2,
+    "revision": 14,
+    "time": "2020-08-12T11:27:32-04:00",
+    "created": "2019-10-28T14:29:49-04:00"
+}

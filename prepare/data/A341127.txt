@@ -1,0 +1,32 @@
+{
+    "number": 341127,
+    "data": "1,1,2,3,5,6,10,13,19,24,33,40,54,64,83,99,125,144,180,206,250,284,341,383,455,506,593,656,762,835,965,1054,1206,1309,1491,1610,1825,1964,2213,2374,2664,2843,3179,3387,3769,3998,4440,4695,5194,5480,6043,6357",
+    "name": "Number of partitions of n into 9 prime powers (including 1).",
+    "maple": [
+        "q:= proc(n) option remember; nops(ifactors(n)[2])<2 end:",
+        "b:= proc(n, i, t) option remember; `if`(n=0,",
+        "      `if`(t=0, 1, 0), `if`(i<1 or t<1, 0, b(n, i-1, t)+",
+        "      `if`(q(i), b(n-i, min(n-i, i), t-1), 0)))",
+        "    end:",
+        "a:= n-> b(n$2, 9):",
+        "seq(a(n), n=9..60);  # _Alois P. Heinz_, Feb 05 2021"
+    ],
+    "mathematica": [
+        "q[n_] := q[n] = Length[FactorInteger[n]] < 2;",
+        "b[n_, i_, t_] := b[n, i, t] = If[n == 0,",
+        "     If[t == 0, 1, 0], If[i < 1 || t < 1, 0, b[n, i - 1, t] +",
+        "     If[q[i], b[n - i, Min[n - i, i], t - 1], 0]]];",
+        "a[n_] := b[n, n, 9];",
+        "Table[a[n], {n, 9, 60}] (* _Jean-Fran\u00e7ois Alcover_, Feb 22 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000961, A010055, A071330, A341112, A341122, A341123, A341124, A341125, A341126."
+    ],
+    "keyword": "nonn",
+    "offset": "9,3",
+    "author": "_Ilya Gutkovskiy_, Feb 05 2021",
+    "references": 9,
+    "revision": 9,
+    "time": "2022-02-22T03:35:58-05:00",
+    "created": "2021-02-05T16:47:53-05:00"
+}

@@ -1,0 +1,29 @@
+{
+    "number": 344595,
+    "data": "900,1260,1302,1560,2100,3906,4440,6300,6552,6669,9680,11544,12987,15368,18981,19240,19880,24120,26208,35784,36080,42680,46104,57720,59040,59640,62238,62244,71136,74592,76840,79376,81872,84700,101680,103730,108500,124488,128040,145188,160160,168020,171740,178920,185724,201608",
+    "name": "Numbers k such that A011772(k) > A344878(k) and A011772(k) is a divisor of A344875(k).",
+    "comment": [
+        "Numbers k for which A344973(k) = 0 and A344976(k) < 0.",
+        "It seems that in these cases, by necessity A011772(k) < A344875(k), i.e., A011772(k) is a proper divisor of A344875(k).",
+        "Has many terms common with A344694."
+    ],
+    "program": [
+        "(PARI)",
+        "A011772(n) = { if(n==1, return(1)); my(f=factor(if(n%2, n, 2*n)), step=vecmax(vector(#f~, i, f[i, 1]^f[i, 2]))); forstep(m=step, 2*n, step, if(m*(m-1)/2%n==0, return(m-1)); if(m*(m+1)/2%n==0, return(m))); }; \\\\ From A011772",
+        "A344875(n) = { my(f=factor(n)~); prod(i=1, #f, (f[1, i]^(f[2, i]+(2==f[1, i]))-1)); };",
+        "A344878(n) = if(1==n,n, my(f=factor(n)~); lcm(vector(#f, i, (f[1, i]^(f[2, i]+(2==f[1, i]))-1))));",
+        "isA344595(n) = { my(u=A011772(n)); (u>A344878(n)&&0==(A344875(n)%u)); };"
+    ],
+    "xref": [
+        "Cf. A011772, A344694, A344875, A344878, A344973, A344976.",
+        "Intersection of A024619, A344974 and A344977.",
+        "Intersection of A344975 and A344977."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jun 05 2021",
+    "references": 4,
+    "revision": 9,
+    "time": "2021-06-05T16:42:55-04:00",
+    "created": "2021-06-05T16:42:55-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 349647,
+    "data": "0,1,4,6,27,134,138,168,363,1970,5329,738639,752491,848775,1803305,2420500,20412333,207691249,220455692,517921150,521602912,1149023650,1289986143,5963709738,6262635619,23831964366,79255202271,1970864394858,2255739204027",
+    "name": "Nonnegative integers which produce a record minimum MD5 hash.",
+    "comment": [
+        "a(1) = 0; a(n) is the smallest k such that MD5(k) < MD5(a(n-1)), where integer parameters to MD5 are encoded as base-10 ASCII strings.",
+        "If we assume that MD5 behaves like a random function from N to {0, ..., 2^128-1}, the expected length of this sequence is the harmonic number H(2^128) ~= 89.3.",
+        "a(33) > 10^15."
+    ],
+    "link": [
+        "Ben Whitmore, <a href=\"/A349647/b349647.txt\">Table of n, a(n) for n = 1..32</a>",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/MD5\">MD5</a>"
+    ],
+    "example": [
+        "a(5) = 27 because MD5(\"27\") = 02e74f10e0327ad868d138f2b4fdd6f0_16 = 3859480213286334249913589638377625328, which is smaller than all previous values MD5(\"0\"), ..., MD5(\"26\")."
+    ],
+    "mathematica": [
+        "recordsBy[l_, P_] :=",
+        "Module[{max = -Infinity, x, i, recs = {}},",
+        "For[i = 1, i <= Length[l], i++,",
+        "  x = P[l[[i]]];",
+        "  If[x > max,",
+        "   max = x;",
+        "   AppendTo[recs, l[[i]]];",
+        "  ]",
+        "];",
+        "recs",
+        "];",
+        "recordsBy[Range[1000], -Hash[ToString[#], \"MD5\"] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from hashlib import md5",
+        "def afind(limit):",
+        "    record = \"~\"",
+        "    for k in range(limit+1):",
+        "        hash = md5(str(k).encode('utf-8')).hexdigest()",
+        "        if hash < record:",
+        "            print(k, end=\", \")",
+        "            record = hash",
+        "afind(10**7) # _Michael S. Branicky_, Nov 24 2021"
+    ],
+    "xref": [
+        "Record maxima: A349646."
+    ],
+    "keyword": "nonn,base,fini,hard",
+    "offset": "1,3",
+    "author": "_Ben Whitmore_, Nov 23 2021",
+    "references": 2,
+    "revision": 24,
+    "time": "2021-12-25T11:16:54-05:00",
+    "created": "2021-12-25T00:13:49-05:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 352155,
+    "data": "1,6,7,8,9,10,14,24,26,28,32,35,54,55,56,60,64,65,66,70,72,74,75,80,82,88,90,100,104,112,128,140,175,176,224,240,260,280,320,350,432,448,468,504,512,528,540,548,550,560,572,576,584,592,600,616,625,640,650,660",
+    "name": "Numbers m such that the smallest digit in the decimal expansion of 1/m is 1, ignoring leading and trailing 0's.",
+    "comment": [
+        "Leading 0's are not considered, otherwise every integer >= 11 would be a term (see examples).",
+        "Trailing 0's are also not considered, otherwise numbers of the form 2^i*5^j with i, j >= 0, apart from 1 (A003592) would be terms.",
+        "If k is a term, 10*k is also a term; so, terms with no trailing zeros are all primitive terms.",
+        "{8, 88, 888, ...} = A002282 \\ {0} is a subsequence."
+    ],
+    "formula": [
+        "A352153(a(n)) = 1."
+    ],
+    "example": [
+        "m = 14 is a term since 1/14 = 0.0714285714285714285... and the smallest term after the leading 0 is 1.",
+        "m = 240 is a term since 1/240 = 0.00416666666... and the smallest term after the leading 0's is 1.",
+        "m = 888 is a term since 1/888 = 0.001126126126... and the smallest term after the leading 0's is 1."
+    ],
+    "mathematica": [
+        "f[n_] := Union[ Flatten[ RealDigits[ 1/n][[1]] ]]; Select[ Range@ 1100, Min@ f@# == 1 &]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import multiplicity, n_order",
+        "def A352155_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        m2, m5 = multiplicity(2,n), multiplicity(5,n)",
+        "        k, m = 10**max(m2,m5), 10**(t := n_order(10,n//2**m2//5**m5))-1",
+        "        c = k//n",
+        "        s = str(m*k//n-c*m).zfill(t)",
+        "        if s == '0' and min(str(c)) == '1':",
+        "            yield n",
+        "        elif '0' not in s and min(str(c).lstrip('0')+s) == '1':",
+        "                yield n",
+        "A352155_list = list(islice(A352155_gen(),20)) # _Chai Wah Wu_, Mar 28 2022"
+    ],
+    "xref": [
+        "Cf. A002282, A333402.",
+        "Similar with smallest digit k: A352154 (k=0), this sequence (k=1), A352156 (k=2), A352157 (k=3), A352158 (k=4), A352159 (k=5), A352160 (k=6), A352153 (no known term for k=7), A352161 (k=8), no term (k=9)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Bernard Schott_ and _Robert G. Wilson v_, Mar 17 2022",
+    "references": 8,
+    "revision": 16,
+    "time": "2022-04-05T09:40:08-04:00",
+    "created": "2022-03-18T13:11:59-04:00"
+}

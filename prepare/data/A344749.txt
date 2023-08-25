@@ -1,0 +1,49 @@
+{
+    "number": 344749,
+    "data": "0,1,2,3,4,5,6,7,8,9,11,19,42,48,55,64,66,93,97,111,248,397,464,555,666,793,842,919,1111,1397,1793,1919,5555,6248,6464,6666,6842,11111,26842,31793,46464,55555,66666,71397,86248,91919,111111,191919,426842,486248",
+    "name": "Numbers m with decimal expansion (d_k, ..., d_1) such that d_i = m ^ i mod 10 for i = 1..k.",
+    "comment": [
+        "Positive terms are zeroless (A052382) and uniquely determined by their final digit (A010879) and the number of digits in their decimal expansion (A055642).",
+        "If m belongs to the sequence, then A217657(m) also belongs to the sequence."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A344749/b344749.txt\">Table of n, a(n) for n = 1..2251</a>"
+    ],
+    "example": [
+        "- 7^1 = 7 mod 10,",
+        "- 7^2 = 9 mod 10,",
+        "- 7^3 = 3 mod 10,",
+        "- 7^4 = 1 mod 10,",
+        "- so 1397 belongs to the sequence."
+    ],
+    "program": [
+        "(PARI) is(n) = { my (r=n); for (k=1, oo, if (r==0, return (1), (n^k)%10!=r%10, return (0), r\\=10)) }",
+        "(PARI) print (setbinop((d,k) -> sum(i=1, k, 10^(i-1) * ((d^i)%10)), [1..9], [0..7])[1..50])",
+        "(Python)",
+        "def ok(m):",
+        "  d = str(m)",
+        "  return all(d[-i] == str((m**i)%10) for i in range(1, len(d)+1))",
+        "print(list(filter(ok, range(10**6)))) # _Michael S. Branicky_, May 29 2021",
+        "(Python)",
+        "def auptod(maxdigits):",
+        "  alst = [0]",
+        "  for k in range(1, maxdigits+1):",
+        "    aklst = []",
+        "    for d1 in range(1, 10):",
+        "      d = [(d1**i)%10 for i in range(k, 0, -1)]",
+        "      aklst.append(int(\"\".join(map(str, d))))",
+        "    alst.extend(sorted(aklst))",
+        "  return alst",
+        "print(auptod(6)) # _Michael S. Branicky_, May 29 2021"
+    ],
+    "xref": [
+        "Cf. A010879, A052382, A055642, A217657, A344555, A344748, A344822."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,3",
+    "author": "_R\u00e9my Sigrist_, May 28 2021",
+    "references": 3,
+    "revision": 21,
+    "time": "2021-05-31T02:11:14-04:00",
+    "created": "2021-05-29T12:20:44-04:00"
+}

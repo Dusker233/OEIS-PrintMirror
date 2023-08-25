@@ -1,0 +1,59 @@
+{
+    "number": 135603,
+    "data": "100,110,112,113,114,115,116,117,118,119,122,124,125,126,127,128,129,133,134,136,137,138,139,144,145,146,148,149,155,156,157,158,166,167,168,169,177,178,179,188,189,199,200,211,220,221,223,224,225,226,227,228,229,233",
+    "name": "Obtuse-angled numbers with an internal digit as the vertex.",
+    "comment": [
+        "The structure of digits represents an obtuse angle. The vertex is an internal digit. In the graphic representation the points are connected by imaginary line segments from left to right.",
+        "For each k >= 11, there are 354 k-digit terms. - _Michael S. Branicky_, Aug 03 2022"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A135603/b135603.txt\">Table of n, a(n) for n = 1..10232</a>"
+    ],
+    "example": [
+        "Illustration of the number 9753111:",
+        "  9 . . . . . .",
+        "  . . . . . . .",
+        "  . 7 . . . . .",
+        "  . . . . . . .",
+        "  . . 5 . . . .",
+        "  . . . . . . .",
+        "  . . . 3 . . .",
+        "  . . . . . . .",
+        "  . . . . 1 1 1",
+        "  . . . . . . ."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def ok3(n):",
+        "    if n < 100: return False",
+        "    d = list(map(int, str(n)))",
+        "    m1, m2 = (d[1]-d[0], d[-1]-d[-2])",
+        "    return len({m1, m2}) == 2 and m1*m2 >= 0",
+        "def agen():",
+        "    seeds = [k for k in range(100, 1000) if ok3(k)]",
+        "    for digits in count(4):",
+        "        yield from sorted(seeds)",
+        "        new, pow10 = set(), 10**(digits-1)",
+        "        for q in seeds:",
+        "            d = list(map(int, str(q)))",
+        "            e1, e2 = d[0] - (d[1]-d[0]), d[-1] + (d[-1]-d[-2])",
+        "            if 9 >= e1 > 0: new.add(e1*pow10 + q)",
+        "            if 9 >= e2 >= 0: new.add(10*q + e2)",
+        "        seeds = new",
+        "print(list(islice(agen(), 54))) # _Michael S. Branicky_, Aug 03 2022"
+    ],
+    "xref": [
+        "Cf. A134810, A134853, A134941, A134970, A135641, A135642, A135643, A135600, A135601, A135602."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Omar E. Pol_, Dec 02 2007",
+    "ext": [
+        "a(49) and beyond from _Michael S. Branicky_, Aug 03 2022"
+    ],
+    "references": 10,
+    "revision": 12,
+    "time": "2022-08-03T18:29:33-04:00",
+    "created": "2007-12-09T03:00:00-05:00"
+}

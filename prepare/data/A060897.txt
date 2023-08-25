@@ -1,0 +1,31 @@
+{
+    "number": 60897,
+    "data": "1,4,12,44,144,528,1808,6676,23536,87568,315136,1180680,4314560,16263896,60138816,227899484,850600944,3238194560,12177384544,46542879384,176110444736,675431779856,2568878867200,9882068082112,37747540858240,145593279888736,558190182662144",
+    "name": "Number of walks of length n on square lattice, starting at origin, staying in first and third quadrants.",
+    "comment": [
+        "Is there a formula analogous to the (conjectured) formula for A060900?",
+        "Could be broken into the number of walks that are constrained to a quadrant and the number that cross the origin. (I.e., 2*A005566(n) + 2*A005566(n-2)*A005568(1) + 2*A005566(n-4)*A005568(2) + ... + All terms that cross the origin twice + three times + ... + Cross floor(n/2) times.) - _Benjamin Phillabaum_, Mar 13 2011"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A060897/b060897.txt\">Table of n, a(n) for n = 0..750</a> (first 251 terms from Sean A. Irvine)"
+    ],
+    "formula": [
+        "G.f.: 1 + 2*(B(x)-1)/(2 - C(x^2)) where B(x) is the g.f. of A005566 and C(x) is the g.f. of A005568. - _Andrew Howroyd_, Jan 05 2023"
+    ],
+    "program": [
+        "(PARI) \\\\ here B is A005566 and C is aerated A005568 as g.f.'s.",
+        "B(n)={sum(n=0, n, x^n*binomial(n, n\\2)*binomial(n+1, (n+1)\\2), O(x*x^n))}",
+        "C(n)={sum(n=0, (n+1)\\2, x^(2*n)*binomial(2*n,n)*binomial(2*n+2,n+1)/((n+1)*(n+2)), O(x*x^n))}",
+        "seq(n) = {Vec( 1 + 2*(B(n)-1)/(2-C(n)) )} \\\\ _Andrew Howroyd_, Jan 05 2023"
+    ],
+    "xref": [
+        "Cf. A005566, A005568, A001700, A060898, A060899, A060900."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_David W. Wilson_, May 05 2001",
+    "references": 6,
+    "revision": 30,
+    "time": "2023-01-06T03:22:13-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

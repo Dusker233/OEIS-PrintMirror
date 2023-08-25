@@ -1,0 +1,43 @@
+{
+    "number": 354081,
+    "data": "1,2,3,4,5,6,7,8,9,11,21,22,31,33,41,42,44,51,55,61,62,63,66,71,77,81,82,84,88,91,93,99,111,211,212,221,311,313,331,411,412,414,421,422,441,511,515,551,611,612,613,616,621,623,631,632,661,711,717,771",
+    "name": "Positive integers k such that the first digit of k is divisible by the product of all the remaining digits of k.",
+    "example": [
+        "9331 is a term: the first digit is 9, which is divisible by the product of the remaining digits, i.e., 3*3*1 = 9.",
+        "8448 is not a term: the first digit is 8, which is not divisible by the product of the remaining digits, i.e., 4*4*8 = 128."
+    ],
+    "mathematica": [
+        "Select[Range[1000], !MemberQ[d = IntegerDigits[#], 0] && Divisible[First[d], Times @@ Rest[d]] &] (* _Amiram Eldar_, Jun 09 2022 *)"
+    ],
+    "program": [
+        "(C#)",
+        "public static bool a(int n)",
+        "{",
+        "   int product = 1;",
+        "   while (n > 9)",
+        "   {",
+        "      product *= n % 10;",
+        "      n /= 10;",
+        "      if (product == 0 || product > 9) { return false; }",
+        "   }",
+        "   if (n % product == 0) { return true; } else { return false; }",
+        "}",
+        "(PARI) isok(k) = my(d=digits(k), p=vecprod(d)); p && ((d[1] % (p/d[1])) == 0); \\\\ _Michel Marcus_, Jun 06 2022",
+        "(Python)",
+        "from math import prod",
+        "def ok(n):",
+        "    d = list(map(int, str(n)))",
+        "    return 0 not in d and int(d[0])%prod(d[1:]) == 0",
+        "print([k for k in range(800) if ok(k)]) # _Michael S. Branicky_, Jun 09 2022"
+    ],
+    "xref": [
+        "Subsequence of A052382."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Moosa Nasir_, Jun 05 2022",
+    "references": 0,
+    "revision": 45,
+    "time": "2022-06-16T03:18:43-04:00",
+    "created": "2022-06-16T03:18:43-04:00"
+}

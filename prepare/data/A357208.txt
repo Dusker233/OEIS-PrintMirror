@@ -1,0 +1,32 @@
+{
+    "number": 357208,
+    "data": "1,1,8,74,758,8412,98605,1201739,15075377,193374064,2524704727,33440460233,448246477551,6069174992443,82884604316537,1140361539606239,15791577929661603,219930850717175458,3078540089119391233,43287917046150591163,611156850554916771425",
+    "name": "Coefficients in the power series A(x) such that: x*A(x)^4 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n+1)/2) * A(x)^n.",
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n satisfies the following relations.",
+        "(1) x*A(x)^4 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n+1)/2) * A(x)^n.",
+        "(2) -x*A(x)^5 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n+1)/2) / A(x)^n.",
+        "(3) x*A(x)^4 = Product_{n>=1} (1 - x^n*A(x)) * (1 - x^(n-1)/A(x)) * (1 - x^n), due to the Jacobi triple product identity.",
+        "(4) -x*A(x)^5 = Product_{n>=1} (1 - x^n/A(x)) * (1 - x^(n-1)*A(x)) * (1 - x^n), due to the Jacobi triple product identity."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 8*x^2 + 74*x^3 + 758*x^4 + 8412*x^5 + 98605*x^6 + 1201739*x^7 + 15075377*x^8 + 193374064*x^9 + 2524704727*x^10 + ...",
+        "where",
+        "x*A(x)^4 = ... - x^10/A(x)^5 + x^6/A(x)^4 - x^3/A(x)^3 + x/A(x)^2 - 1/A(x) + 1 - x*A(x) + x^3*A(x)^2 - x^6*A(x)^3 + x^10*A(x)^4 -+ ... + (-1)^n * x^(n*(n+1)/2) * A(x)^n + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1, 1], t); for(i=1, n, A=concat(A, 0); t = ceil(sqrt(2*n+9));",
+        "A[#A] = polcoeff( x*Ser(A)^4 - sum(m=-t, t, (-1)^m*x^(m*(m+1)/2)*Ser(A)^m ), #A-1)); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A355361, A357206, A357207, A357209."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Sep 18 2022",
+    "references": 3,
+    "revision": 7,
+    "time": "2022-09-19T11:08:34-04:00",
+    "created": "2022-09-19T11:08:34-04:00"
+}

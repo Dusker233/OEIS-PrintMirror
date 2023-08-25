@@ -1,0 +1,53 @@
+{
+    "number": 307360,
+    "data": "1,2,3,4,5,6,7,9,11,13,17,19,23,25,29,31,35,37,41,43,47,49,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,121,127,131,137,139,143,149,151,157,163,167,169,173,179,181,191,193,197,199,211,223,227,229",
+    "name": "A sequence in which every divisor other than 1 is used at most three times.",
+    "comment": [
+        "In other words, for every k > 1, there are at most 3 multiples of k in the sequence. - _R\u00e9my Sigrist_,  Apr 08 2019",
+        "The sequence begins at 1. The smallest integer greater than the last term which is not divisible by a divisor already used three times (excluding one) is added to the sequence.",
+        "Contains all prime numbers (A000040), given that the prime numbers only have the divisors of themselves and one, by definition, therefore the only divisor which could exist in the sequence already to disqualify the number from inclusion in the sequence would be the prime number itself, but a number cannot have a divisor higher than itself (the prime numbers), so given that the sequence increases, the divisor could not exist in the sequence, and any prime number would be included.",
+        "Terms are {1} or primes or squares of primes (A000430) or numbers of the form prime(2k + 1) * prime(2k + 2) (A089581) where k >= 0. - _David A. Corneth_, Apr 09 2019"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A307360/b307360.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Aaron Greicius, <a href=\"http://gauss.math.luc.edu/greicius/Math201/Fall2012/Lectures/primes.article.pdf\">The Prime Numbers</a>, Lecture Fall 2012."
+    ],
+    "example": [
+        "For instance, 8 is not in the sequence because 2, 4, and 6 are all divisible by 2 and appear previously in the sequence. The sequence, then, skips to nine. After 9, no more numbers divisible by three appear in the sequence, given that after 3 and 6, it is the third number divisible by three to appear in the sequence."
+    ],
+    "maple": [
+        "N:= 1000: # for terms <= N",
+        "M:= Vector(N):",
+        "Candidates:= {$2..N}:",
+        "A[1]:= 1:",
+        "for n from 2 while Candidates <> {} do",
+        "  A[n]:= min(Candidates):",
+        "  Candidates:= Candidates minus {A[n]};",
+        "  for d in numtheory:-divisors(A[n]) minus {1} do",
+        "     M[d]:= M[d]+1;",
+        "     if M[d] = 3 then Candidates:= Candidates minus {seq(i,i=2*d..N, d)} fi;",
+        "  od;",
+        "od:",
+        "seq(A[i],i=1..n-1); # _Robert Israel_, Apr 09 2019"
+    ],
+    "mathematica": [
+        "Select[Range@ 229, Or[# == 1, PrimeQ@ #, PrimeQ@ Sqrt@ #, And[SquareFreeQ@ #, If[PrimeNu@ # == 2, And[OddQ@ First@ #, Apply[SameQ, (# - {1, 2})/2]] &@ PrimePi[FactorInteger[#][[All, 1]]], False]]] &] (* _Michael De Vlieger_, Apr 11 2019 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = if(n==1, return(1)); my(f=factor(n)); if(f[, 2] == [1]~ || f[, 2] ==[2]~, return(1)); if(f[,2] == [1,1]~ && nextprime(f[1,1]+1) == f[2,1] && primepi(f[1,1]) % 2 == 1, return(1)); 0 \\\\ _David A. Corneth_, Apr 09 2019"
+    ],
+    "xref": [
+        "See A166684 for the variant in which every divisor other than one is used at most twice.",
+        "Union of {1}, A000430 and A089581."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Joshua R. Tint_, Apr 04 2019",
+    "ext": [
+        "More terms from _Jinyuan Wang_, Apr 07 2019"
+    ],
+    "references": 1,
+    "revision": 53,
+    "time": "2021-04-29T01:43:12-04:00",
+    "created": "2019-04-08T21:39:07-04:00"
+}

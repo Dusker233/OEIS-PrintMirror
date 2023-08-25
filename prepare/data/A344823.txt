@@ -1,0 +1,47 @@
+{
+    "number": 344823,
+    "data": "0,1,2,3,4,5,6,7,8,9,11,55,66,111,464,555,666,919,1111,5555,6666,11111,24862,39713,46464,55555,66666,79317,84268,91919,111111,555555,666666,1111111,4646464,5555555,6666666,9191919,11111111,55555555,66666666,111111111",
+    "name": "Numbers m with decimal expansion (d_1, ..., d_k) such that d_i = m ^ i mod 10 for i = 1..k.",
+    "comment": [
+        "This sequence is infinite as it contains d * A002275(k) for any d in {1, 5, 6} and k > 0.",
+        "Also contains terms with patterns 4(64)^k, 9(19)^k, 2(4862)^k, 3(9713)^k, 7(9317)^k, 8(4268)^k for k >= 0, where ^ denotes repeated concatenation; all terms have first and last digits the same. - _Michael S. Branicky_, May 29 2021"
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A344823/b344823.txt\">Table of n, a(n) for n = 1..1253</a>",
+        "R\u00e9my Sigrist, <a href=\"/A344823/a344823.gp.txt\">PARI program for A344823</a>"
+    ],
+    "example": [
+        "- 4^1 = 4 mod 10,",
+        "- 4^2 = 6 mod 10,",
+        "- 4^3 = 4 mod 10,",
+        "- so 464 belongs to the sequence."
+    ],
+    "program": [
+        "(PARI) is(n) = { my (d=digits(n), m=Mod(n,10)); for (k=1, #d, if (d[k] != m^k, return (0))); return (1) }",
+        "(PARI) See Links section.",
+        "(Python)",
+        "def ok(m):",
+        "  d = str(m)",
+        "  return all(d[i-1] == str((m**i)%10) for i in range(1, len(d)+1))",
+        "print(list(filter(ok, range(10**6)))) # _Michael S. Branicky_, May 29 2021",
+        "(Python)",
+        "def auptod(maxdigits):",
+        "  alst = [0]",
+        "  for k in range(1, maxdigits+1):",
+        "    for d1 in range(1, 10):",
+        "      d = [(d1**i)%10 for i in range(1, k+1)]",
+        "      if d1 == d[-1]: alst.append(int(\"\".join(map(str, d))))",
+        "  return alst",
+        "print(auptod(9)) # _Michael S. Branicky_, May 29 2021"
+    ],
+    "xref": [
+        "Cf. A002275, A344555, A344749, A344822."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_R\u00e9my Sigrist_, May 29 2021",
+    "references": 2,
+    "revision": 10,
+    "time": "2021-05-31T02:11:21-04:00",
+    "created": "2021-05-29T20:18:54-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 363691,
+    "data": "3,5,7,9,11,13,17,19,21,23,25,29,31,33,35,37,41,43,47,49,53,57,59,61,65,67,69,71,73,77,79,81,83,89,91,93,97,101,103,105,107,109,113,115,117,121,127,129,131,133,137,139,141,145,149,151,155,157,161,163,167",
+    "name": "Odd numbers k such that A246600(k) = 2.",
+    "comment": [
+        "Odd numbers k that have exactly 2 divisors d such that the bitwise AND of k and d is equal to d, or equivalently, the bitwise OR of k and d is equal to k. These two divisors are 1 and k.",
+        "The terms of this sequence are the primitive terms of A363690: If m is a term, then 2^k*m is a term of A363690 for all k >= 0.",
+        "Includes all the odd primes (A065091), and all the squares of odd primes (A001248 \\ {4})."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A363691/b363691.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "q[n_] := DivisorSum[n, Boole[BitOr[#, n] == n] &] == 2; Select[Range[1, 200, 2], q]"
+    ],
+    "program": [
+        "(PARI) is(n) = n % 2 && sumdiv(n, d, bitor(d, n) == n) == 2;",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import divisors",
+        "def A363691_gen(startvalue=3): # generator of terms >= startvalue",
+        "    return filter(lambda n:all(d==1 or d==n or n|d!=n for d in divisors(n,generator=True)),count(max(startvalue,3)|1,2))",
+        "A363691_list = list(islice(A363691_gen(),20)) # _Chai Wah Wu_, Jun 20 2023"
+    ],
+    "xref": [
+        "Cf. A001248, A065091, A246600, A363690."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jun 16 2023",
+    "references": 3,
+    "revision": 13,
+    "time": "2023-06-21T06:47:18-04:00",
+    "created": "2023-06-18T02:02:16-04:00"
+}

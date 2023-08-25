@@ -1,0 +1,43 @@
+{
+    "number": 122993,
+    "data": "1,1,2,5,14,43,145,538,2194,9796,47635,250811,1421509,8623112,55693506,381175374,2753122695,20909082797,166448275680,1385010594903,12016912542681,108481226052096,1016937780320981,9882191461530141",
+    "name": "Expansion of g.f.: A(x) = Product_{n>=0} 1/( 1 - x/(1-x)^n )^( 1/2^(n+1) ).",
+    "link": [
+        "David Callan, <a href=\"http://arxiv.org/abs/1111.6297\">A permutation pattern that illustrates the strong law of small numbers</a>, arXiv:1111.6297 [math.CO], 2011.",
+        "Lara Pudwell, <a href=\"https://doi.org/10.37236/301\">Enumeration schemes for permutations avoiding barred patterns</a>, El. J. Combinat. 17 (1) (2010) R29."
+    ],
+    "formula": [
+        "From _Paul D. Hanna_, Sep 16 2018: (Start)",
+        "G.f.: exp( Sum_{n>=0} -log(1 - x/(1-x)^n) / 2^(n+1) ).",
+        "G.f.: exp( Sum_{n>=1} x^n / (n*(2 - 1/(1-x)^n)) ). (End)"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 5*x^3 + 14*x^4 + 43*x^5 + 145*x^6 + 538*x^7 + 2194*x^8 + 9796*x^9 + 47635*x^10 + ...",
+        "such that",
+        "A(x) = (1-x)^(-1/2) * (1 - x/(1-x))^(-1/4) * (1 - x/(1-x)^2)^(-1/8) * (1 - x/(1-x)^3)^(-1/16) * ...",
+        "RELATED SERIES.",
+        "The logarithm of the g.f. can be expressed as",
+        "log(A(x)) = x/(2 - 1/(1-x)) + x^2/(2*(2 - 1/(1-x)^2)) + x^3/(3*(2 - 1/(1-x)^3)) + x^4/(4*(2 - 1/(1-x)^4)) + x^5/(5*(2 - 1/(1-x)^5)) + x^6/(6*(2 - 1/(1-x)^6)) + ...",
+        "explicitly,",
+        "log(A(x)) = x + 3*x^2/2 + 10*x^3/3 + 35*x^4/4 + 131*x^5/5 + 534*x^6/6 + 2381*x^7/7 + 11555*x^8/8 + 60580*x^9/9 + 340813*x^10/10 + ..."
+    ],
+    "mathematica": [
+        "terms = 24;",
+        "gf = Exp[Sum[-2^(-n-1) Log[1-x/(1-x)^n] + O[x]^terms, {n, 0, 5 terms}]];",
+        "CoefficientList[gf, x][[1 ;; terms]] // Round (* _Jean-Fran\u00e7ois Alcover_, Sep 10 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=round(polcoeff(prod(i=0,6*n+10,1/(1-x/(1-x)^i +x*O(x^n))^(1/2^(i+1))),n))}",
+        "(PARI) {a(n)=local(A); if(n<0, 0, A=1+O(x); for(k=1, n, A=truncate(A)+x*O(x^k); A+=substvec(A, [x, y], [x/(1-x*y+O(x^k)), y*(1-x*y)]) -A^2*(1-x)); subst(polcoeff(A, n), y, 1))} /* _Michael Somos_, Oct 21 2006 */"
+    ],
+    "xref": [
+        "Cf. A122992."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Sep 23 2006",
+    "references": 2,
+    "revision": 29,
+    "time": "2023-07-10T10:28:52-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

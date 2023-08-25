@@ -1,0 +1,43 @@
+{
+    "number": 151745,
+    "data": "405,1395,3435,3525,4245,4365,6675,6885,7155,7515,7995,8325,8445,9075,10365,10845,11205,11543,13005,14235,14325,18075,19725,19875,22605,23257,23475,23617,26805,27315,29835,29955,31035,32355,32925,33165,34395",
+    "name": "Composites that are the sum of two, three, four and five consecutive composite numbers.",
+    "link": [
+        "Robert Israel, <a href=\"/A151745/b151745.txt\">Table of n, a(n) for n = 1..6214</a>"
+    ],
+    "formula": [
+        "Intersection of A151740, A151741, A151742 and A151743. - _R. J. Mathar_, Jun 17 2009"
+    ],
+    "example": [
+        "405 is in the list because it is composite and",
+        "405 = 202 + 203 (Sum of two consecutive composite numbers)",
+        "405 = 134 + 135 + 136 (Sum of three consecutive composite numbers)",
+        "405 = 99 + 100 + 102 + 104 (Sum of four consecutive composite numbers)",
+        "405 = 78 + 80 + 81 + 82 + 84 (Sum of five consecutive composite numbers)."
+    ],
+    "maple": [
+        "N:= 10^5: # for terms <= N",
+        "Comps:= remove(isprime, [$2..N]):",
+        "PSComps:= [0,op(ListTools:-PartialSums(Comps))]:",
+        "C2:= convert(PSComps[3..-1]-PSComps[1..-3],set):",
+        "C3:= convert(PSComps[4..-1]-PSComps[1..-4],set):",
+        "C4:= convert(PSComps[5..-1]-PSComps[1..-5],set):",
+        "C5:= convert(PSComps[6..-1]-PSComps[1..-6],set):",
+        "R:= convert(Comps,set) intersect C2 intersect C3 intersect C4 intersect C5:",
+        "sort(convert(R,list)); # _Robert Israel_, Aug 17 2020"
+    ],
+    "mathematica": [
+        "CompositeNext[n_]:=Module[{k=n+1},While[PrimeQ[k],k++ ];k]; q=8!; lst2={};Do[If[ !PrimeQ[n],c=CompositeNext[n];a2=n+c;If[ !PrimeQ[a2],AppendTo[lst2,a2]]],{n,q}];lst2; lst3={};Do[If[ !PrimeQ[n],c1=CompositeNext[n];c2=CompositeNext[c1];a3=n+c1+c2;If[ !PrimeQ[a3],AppendTo[lst3,a3]]],{n,q}];lst3; lst4={};Do[If[ !PrimeQ[n],c1=CompositeNext[n];c2=CompositeNext[c1];c3=CompositeNext[c2];a4=n+c1+c2+c3;If[ !PrimeQ[a4],AppendTo[lst4,a4]]],{n,q}];lst4; lst5={};Do[If[ !PrimeQ[n],c1=CompositeNext[n];c2=CompositeNext[c1];c3=CompositeNext[c2];c4=CompositeNext[c3];a5=n+c1+c2+c3+c4;If[ !PrimeQ[a5],AppendTo[lst5,a5]]],{n,q}];lst5; Intersection[lst2,lst3,lst4,lst5] (* _Vladimir Joseph Stephan Orlovsky_, Jun 17 2009 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Claudio Meller_, Jun 15 2009",
+    "ext": [
+        "Corrected and extended by _Harvey P. Dale_, Nov 25 2014",
+        "Corrected by _Robert Israel_, Aug 17 2020"
+    ],
+    "references": 4,
+    "revision": 15,
+    "time": "2020-08-17T22:13:32-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

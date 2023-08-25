@@ -1,0 +1,50 @@
+{
+    "number": 355329,
+    "data": "7,13,19,73,151,181,211,241,271,421,463,577,859,1009,1171,1249,1327,1621,2053,2161,2269,2377,3037,3169,3301,3433,3727,4201,5569,5581,5953,6337,6733,7549,7561,7993,9103,9349,9829,10321,10333,10837,11353,11617,12421,12697,12973,13249,14407,15601",
+    "name": "Least increasing sequence of primes such that a(n) - 1 is a multiple of 6*n.",
+    "comment": [
+        "a(n) is the least prime == 1 mod (6*n) and (for n >= 2) greater than a(n-1)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A355329/b355329.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(5) = 151 because 151 is prime, 151-1 = 150 is divisible by 6*5, and 151 > a(4) = 73."
+    ],
+    "maple": [
+        "A:= Vector(100):",
+        "A[1]:= 7:",
+        "for n from 2 to 100 do",
+        "  for k from floor((A[n-1]-1)/(6*n))+1  do",
+        "    p:= 6*n*k+1;",
+        "    if isprime(p) then A[n]:= p; break fi",
+        "od od:",
+        "convert(A,list);"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = Module[{p = If[n == 1, 2, NextPrime[a[n - 1]]]}, While[!Divisible[p - 1, 6*n], p = NextPrime[p]]; p]; Array[a, 50] (* _Amiram Eldar_, Jun 29 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import nextprime",
+        "def A355329_gen(): # generator of terms",
+        "    p = 2",
+        "    for m in count(6,6):",
+        "        while q:=(p-1)%m:",
+        "            p = nextprime(p+m-q-1)",
+        "        yield p",
+        "        p = nextprime(p)",
+        "A355329_list = list(islice(A355329_gen(),30)) # _Chai Wah Wu_, Jun 30 2022"
+    ],
+    "xref": [
+        "Cf. A070850."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jun 29 2022",
+    "references": 1,
+    "revision": 13,
+    "time": "2022-07-05T06:17:03-04:00",
+    "created": "2022-06-30T10:40:57-04:00"
+}

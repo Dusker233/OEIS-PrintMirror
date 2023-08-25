@@ -1,0 +1,23 @@
+{
+    "number": 346114,
+    "data": "1,2,4,7,12,17,28,35,51,66,91,102,150,163,210,259,325,342,454,473,608,701,823,846,1099,1168,1355,1500,1786,1815,2290,2321,2711,2954,3328,3537,4302,4339,4848,5221,6075,6116,7269,7312,8306,9059,9949,9996,11795,12006",
+    "name": "a(n+1) = 1 + Sum_{k=1..n} a(gcd(n,k)).",
+    "formula": [
+        "G.f. A(x) satisfies: A(x) = x * (1 / (1 - x) + Sum_{k>=1} phi(k) * A(x^k)).",
+        "a(1) = 1; a(n+1) = 1 + Sum_{d|n} phi(n/d) * a(d)."
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = 1 + Sum[a[GCD[n - 1, k]], {k, 1, n - 1}]; Table[a[n], {n, 1, 50}]",
+        "nmax = 50; A[_] = 0; Do[A[x_] = x (1/(1 - x) + Sum[EulerPhi[k] A[x^k], {k, 1, nmax}]) + O[x]^(nmax + 1) // Normal, nmax + 1]; CoefficientList[A[x], x] // Rest"
+    ],
+    "xref": [
+        "Cf. A000010, A006874, A038045, A338750."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Jul 05 2021",
+    "references": 0,
+    "revision": 4,
+    "time": "2021-07-05T15:39:59-04:00",
+    "created": "2021-07-05T15:39:59-04:00"
+}

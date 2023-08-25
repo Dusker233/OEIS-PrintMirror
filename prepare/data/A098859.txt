@@ -1,0 +1,71 @@
+{
+    "number": 98859,
+    "data": "1,1,2,2,4,5,7,10,13,15,21,28,31,45,55,62,82,105,116,153,172,208,251,312,341,431,492,588,676,826,905,1120,1249,1475,1676,2003,2187,2625,2922,3409,3810,4481,4910,5792,6382,7407,8186,9527,10434",
+    "name": "Number of partitions of n into parts each of which is used a different number of times.",
+    "comment": [
+        "Fill, Janson and Ward refer to these partitions as Wilf partitions. - _Peter Luschny_, Jun 04 2012"
+    ],
+    "link": [
+        "Simon Langowski and Mark Daniel Ward, <a href=\"/A098859/b098859.txt\">Table of n, a(n) for n = 0..2000</a> (terms 0..300 from M. D. Ward, 301..700 from Maciej Ireneusz Wilczynski)",
+        "James Allen Fill, Svante Janson and Mark Daniel Ward, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v19i2p18\">Partitions with Distinct Multiplicities of Parts: On An \"Unsolved Problem\" Posed By Herbert S. Wilf</a>, The Electronic Journal of Combinatorics, Volume 19, Issue 2 (2012)",
+        "Daniel Kane and Robert C. Rhoades, <a href=\"https://web.archive.org/web/20160809023551/http://math.stanford.edu/~rhoades/FILES/wilf.pdf\">Asymptotics for Wilf's partitions with distinct multiplicities</a>",
+        "Martin Klazar, <a href=\"http://arxiv.org/abs/1808.08449\">What is an answer? \u2014 remarks, results and problems on PIO formulas in combinatorial enumeration, part I</a>, arXiv:1808.08449 [math.CO], 2018.",
+        "Simon Langowski, <a href=\"https://github.com/SimonLangowski/WilfPartition\">Program to compute Wilf Partitions</a>, 2018",
+        "Stephan Wagner, <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v20i4p13\">The Number of Fixed Points of Wilf's Partition Involution</a>, The Electronic Journal of Combinatorics, 20(4) (2013), #P13.",
+        "Doron Zeilberger, <a href=\"http://www.math.rutgers.edu/~zeilberg/mamarim/mamarimhtml/dmp.html\">Using generatingfunctionology to enumerate distinct-multiplicity partitions</a>; <a href=\"/A098859/a098859.pdf\">Local copy/a> [Pdf file only, no active links]"
+    ],
+    "formula": [
+        "log(a(n)) ~ N*log(N) where N = (6*n)^(1/3)  (see Fill, Janson and Ward). - _Peter Luschny_, Jun 04 2012"
+    ],
+    "example": [
+        "a(6)=7 because 6= 4+1+1= 3+3= 3+1+1+1= 2+2+2= 2+1+1+1+1= 1+1+1+1+1+1. Four unrestricted partitions of 6 are not counted by a(6): 5+1, 4+2, 3+2+1 because at least two different summands are each used once; 2+2+1+1 because each summand is used twice.",
+        "From _Gus Wiseman_, Apr 19 2019: (Start)",
+        "The a(1) = 1 through a(9) = 15 partitions are the following. The Heinz numbers of these partitions are given by A130091.",
+        "  1   2    3     4      5       6        7         8          9",
+        "      11   111   22     221     33       322       44         333",
+        "                 211    311     222      331       332        441",
+        "                 1111   2111    411      511       422        522",
+        "                        11111   3111     2221      611        711",
+        "                                21111    4111      2222       3222",
+        "                                111111   22111     5111       6111",
+        "                                         31111     22211      22221",
+        "                                         211111    41111      33111",
+        "                                         1111111   221111     51111",
+        "                                                   311111     411111",
+        "                                                   2111111    2211111",
+        "                                                   11111111   3111111",
+        "                                                              21111111",
+        "                                                              111111111",
+        "(End)"
+    ],
+    "mathematica": [
+        "a[n_] := Length[sp = Split /@ IntegerPartitions[n]] - Count[sp, {___List, b_List, ___List, c_List, ___List} /; Length[b] == Length[c]]; Table[a[n], {n, 0, 48}] (* _Jean-Fran\u00e7ois Alcover_, Jan 17 2013 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a098859 = p 0 [] 1 where",
+        "   p m ms _      0 = if m `elem` ms then 0 else 1",
+        "   p m ms k x",
+        "     | x < k       = 0",
+        "     | m == 0      = p 1 ms k (x - k) + p 0 ms (k + 1) x",
+        "     | m `elem` ms = p (m + 1) ms k (x - k)",
+        "     | otherwise   = p (m + 1) ms k (x - k) + p 0 (m : ms) (k + 1) x",
+        "-- _Reinhard Zumkeller_, Dec 27 2012",
+        "(PARI) a(n)={((r,k,b,w)->if(!k||!r, if(r,0,1), sum(m=0, r\\k, if(!m || !bittest(b,m), self()(r-k*m, k-1, bitor(b, 1<<m), w+m)))))(n,n,1,0)} \\\\ _Andrew Howroyd_, Aug 31 2019"
+    ],
+    "xref": [
+        "Row sums of A182485.",
+        "Cf. A100471, A100881, A105637, A211858, A211859, A211860, A211861, A211862, A211863, A242882.",
+        "Cf. A047966 (each part appears the same number of times), A090858, A116608, A130091, A325242."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,3",
+    "author": "_David S. Newman_, Oct 11 2004",
+    "ext": [
+        "Corrected and extended by _Vladeta Jovovic_, Oct 22 2004"
+    ],
+    "references": 164,
+    "revision": 88,
+    "time": "2021-03-28T23:42:35-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

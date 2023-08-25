@@ -1,0 +1,39 @@
+{
+    "number": 159476,
+    "data": "1,1,2,8,62,862,19492,656224,30739676,1906807004,151002453464,14846381034784,1772922018732328,252631570039665832,42329528274029082608,8237406877267427867648,1842215469973381977889808,469160036709398319115207696,134976328490030629922214893344",
+    "name": "Expansion of e.g.f.: A(x) = exp( Sum_{n>=1} (n-1)!*x^n/n ).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A159476/b159476.txt\">Table of n, a(n) for n = 0..250</a>"
+    ],
+    "formula": [
+        "a(n) = (n-1)!*Sum_{k=1..n} (k-1)!*a(n-k)/(n-k)! for n > 0 with a(0)=1.",
+        "a(n) ~ (n-1)!^2. - _Vaclav Kotesovec_, Jul 10 2018"
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 2*x^2/2! + 8*x^3/3! + 62*x^4/4! + 862*x^5/5! + ...",
+        "log(A(x)) = x + x^2/2 + 2!*x^3/3 + 3!*x^4/4 + 4!*x^5/5 + 5!*x^6/6 + ..."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      a(n-i)*binomial(n-1, i-1)*(i-1)!^2, i=1..n))",
+        "    end:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Aug 13 2019"
+    ],
+    "mathematica": [
+        "a:= CoefficientList[Series[Exp[Sum[(n - 1)!*x^n/n, {n, 1, 500}]], {x, 0, 35}], x]; Table[a[[n]]*(n - 1)!, {n, 1, 30}] (* _G. C. Greubel_, Jul 09 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=n!*polcoeff(exp(sum(k=1,n,(k-1)!*x^k/k)+x*O(x^n)),n)}",
+        "(PARI) {a(n)=if(n==0,1,(n-1)!*sum(k=1,n,(k-1)!*a(n-k)/(n-k)!))}"
+    ],
+    "xref": [
+        "Cf. A158876, A293847."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 15 2009",
+    "references": 2,
+    "revision": 16,
+    "time": "2021-12-02T19:48:29-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

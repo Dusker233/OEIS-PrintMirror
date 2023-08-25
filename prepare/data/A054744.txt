@@ -1,0 +1,64 @@
+{
+    "number": 54744,
+    "data": "1,4,8,16,27,32,64,81,108,128,216,243,256,324,432,512,648,729,864,972,1024,1296,1728,1944,2048,2187,2592,2916,3125,3456,3888,4096,5184,5832,6561,6912,7776,8192,8748,10368,11664,12500,13824,15552,15625,16384",
+    "name": "p-full numbers: numbers such that if any prime p divides it, then so does p^p.",
+    "comment": [
+        "A027748(a(n),k) <= A124010(a(n),k), 1<=k<=A001221(a(n)). [_Reinhard Zumkeller_, Apr 28 2012]",
+        "Heinz numbers of integer partitions where the multiplicity of each part k is at least prime(k). These partitions are counted by A325132. The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k). - _Gus Wiseman_, Apr 02 2019"
+    ],
+    "link": [
+        "Donovan Johnson, <a href=\"/A054744/b054744.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "If n = Product p_i^e_i then p_i<=e_i for all i.",
+        "Sum_{n>=1} 1/a(n) = Product_{p prime} 1 + 1/(p^(p-1)*(p-1)) = 1.58396891058853238595.... - _Amiram Eldar_, Oct 24 2020"
+    ],
+    "example": [
+        "8 is an element because 8 = 2^3 and 2<=3, while 25 is not an element because 25 = 5^2 and 5>2.",
+        "From _Gus Wiseman_, Apr 02 2019: (Start)",
+        "The sequence of terms together with their prime indices begins:",
+        "    1: {}",
+        "    4: {1,1}",
+        "    8: {1,1,1}",
+        "   16: {1,1,1,1}",
+        "   27: {2,2,2}",
+        "   32: {1,1,1,1,1}",
+        "   64: {1,1,1,1,1,1}",
+        "   81: {2,2,2,2}",
+        "  108: {1,1,2,2,2}",
+        "  128: {1,1,1,1,1,1,1}",
+        "  216: {1,1,1,2,2,2}",
+        "  243: {2,2,2,2,2}",
+        "  256: {1,1,1,1,1,1,1,1}",
+        "  324: {1,1,2,2,2,2}",
+        "  432: {1,1,1,1,2,2,2}",
+        "  512: {1,1,1,1,1,1,1,1,1}",
+        "  648: {1,1,1,2,2,2,2}",
+        "  729: {2,2,2,2,2,2}",
+        "  864: {1,1,1,1,1,2,2,2}",
+        "  972: {1,1,2,2,2,2,2}",
+        "(End)"
+    ],
+    "mathematica": [
+        "Select[Range[1000],And@@Cases[If[#==1,{},FactorInteger[#]],{p_,k_}:>k>=p]&] (* _Gus Wiseman_, Apr 02 2019 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a054744 n = a054744_list !! (n-1)",
+        "a054744_list = filter (\\x -> and $",
+        "   zipWith (<=) (a027748_row x) (map toInteger $ a124010_row x)) [1..]",
+        "-- _Reinhard Zumkeller_, Apr 28 2012"
+    ],
+    "xref": [
+        "Cf. A048103, A001694, A036966.",
+        "Cf. A100716.",
+        "Cf. A056239, A109298, A112798, A115584, A117144, A124010, A276078, A324525, A324571, A325127, A325128, A325130, A325131, A325132."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_James A. Sellers_, Apr 22 2000",
+    "references": 7,
+    "revision": 16,
+    "time": "2020-10-24T04:11:24-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

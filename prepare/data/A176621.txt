@@ -1,0 +1,44 @@
+{
+    "number": 176621,
+    "data": "2,3,4,11,40,157,656,2721,11346,47337,197398,823451,3434718,14326815,59760224,249271079,1039759044,4337038713,18090636780,75459593981,314756746798,1312912064069,5476413466674,22843193551799,95283436047290",
+    "name": "a(n) = 2 + Sum_{k=0..n-1} A176513(4*k+1).",
+    "comment": [
+        "Old name was \"a(n) is the minimum number that can be expressed as the sum of n terms of sequence A176513\".",
+        "Lim_{n -> infinity} a(n+1)/a(n) = s^4 = 4.17119593178..., where s is the root of the characteristic equation s^5 = s^3 + s^2 + 1."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A176621/b176621.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (3,5,2,-11,3,-1)."
+    ],
+    "formula": [
+        "From _Jianing Song_, Feb 04 2019: (Start)",
+        "a(n+5) = 2*a(n+4) + 7*a(n+3) + 9*a(n+2) - 2*a(n+1) + a(n) - 32.",
+        "a(n+6) = 3*a(n+5) + 5*a(n+4) + 2*a(n+3) - 11*a(n+2) + 3*a(n+1) - a(n). (End)"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{3, 5, 2, -11, 3, -1}, {2, 3, 4, 11, 40, 157}, 50]"
+    ],
+    "program": [
+        "(PARI) a(n) = my(v=vector(n+1), u=[2, 3, 4, 11, 40]); for(k=1, n+1, v[k]=if(k<=5, u[k], 2*v[k-1] + 7*v[k-2] + 9*v[k-3] - 2*v[k-4] + v[k-5] - 32)); v[n+1] \\\\ _Jianing Song_, Feb 04 2019",
+        "(Magma) I:=[2,3,4,11,40,157]; [n le 6 select I[n] else 3*Self(n-1) +5*Self(n-2) +2*Self(n-3) -11*Self(n-4) +3*Self(n-5) -Self(n-6): n in [1..51]]; // _G. C. Greubel_, Jul 01 2021",
+        "(Sage)",
+        "@CachedFunction",
+        "def b(n): return 1 if (n<6) else b(n-2) + b(n-3) + b(n-5) # b=A176513",
+        "def a(n): return 2 + sum(b(4*j+1) for j in (0..n-1))",
+        "[a(n) for n in (0..50)] # _G. C. Greubel_, Jul 01 2021"
+    ],
+    "xref": [
+        "Cf. A176513."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "_Carmine Suriano_, Apr 22 2010",
+    "ext": [
+        "New name, a(0) = 2 prepended and a(1), a(2) corrected by _Jianing Song_, Feb 04 2019",
+        "Term a(11) corrected by _G. C. Greubel_, Jul 01 2021"
+    ],
+    "references": 2,
+    "revision": 35,
+    "time": "2022-09-08T08:45:52-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

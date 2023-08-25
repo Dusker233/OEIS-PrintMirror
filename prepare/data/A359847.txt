@@ -1,0 +1,44 @@
+{
+    "number": 359847,
+    "data": "6,42,182,650,930,4830,7482,9506,12882,13572,16770,79242,167690,181902,228006,289982,380072,3480090,5209806,6872262,10102862,16068072,56002772,56648202,59174556,70299840,74831150,123287712,261517412,342601590,356322252,455459622,536223492,1057452842",
+    "name": "Oblong numbers k for which phi(k) is also an oblong number.",
+    "comment": [
+        "Since k and k+1 are relatively prime, the calculation of phi(k)*phi(k+1) is faster than that of phi(k*(k+1)). - _Robert G. Wilson v_, Feb 14 2023"
+    ],
+    "link": [
+        "Robert G. Wilson v, <a href=\"/A359847/b359847.txt\">Table of n, a(n) for n = 1..269</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/TotientFunction.html\">Totient Function</a>."
+    ],
+    "example": [
+        "9506 is a term because 9506 = 97*98 and phi(9506) = 4032 = 63*64."
+    ],
+    "maple": [
+        "lastv:= 1: R:= NULL: count:= 0:",
+        "for n from 3 while count < 50 do",
+        "  v:= numtheory:-phi(n);",
+        "  if issqr(4*v*lastv+1) then",
+        "    R:= R, n*(n-1); count:= count+1;",
+        "    fi;",
+        "  lastv:= v;",
+        "od:",
+        "R; # _Robert Israel_, Feb 15 2023"
+    ],
+    "mathematica": [
+        "Select[Table[n*(n + 1), {n, 1, 100000}], IntegerQ @ Sqrt[4*EulerPhi[#] + 1] &] (* _Amiram Eldar_, Jan 15 2023 *)",
+        "k = pk0 = pk1 = 1; lst = {}; While[k < 10000, If[ IntegerQ@ Sqrt[4*pk0*pk1 + 1], AppendTo[lst, k (k + 1)]]; k++; pk0 = pk1; pk1 = EulerPhi[k + 1]]; lst (* _Robert G. Wilson v_, Feb 14 2023 *)"
+    ],
+    "program": [
+        "(PARI) for(k=1, 10^5, my(n=k*(k+1), p=eulerphi(n)); if(issquare(4*p+1), print1(n,\", \")))"
+    ],
+    "xref": [
+        "Cf. A000010, A002378, A287472.",
+        "Intersection of A002378 and A236386."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Alexandru Petrescu_, Jan 15 2023",
+    "references": 2,
+    "revision": 33,
+    "time": "2023-02-17T02:06:08-05:00",
+    "created": "2023-02-13T08:46:44-05:00"
+}

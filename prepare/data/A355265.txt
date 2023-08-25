@@ -1,0 +1,46 @@
+{
+    "number": 355265,
+    "data": "64,128,192,256,320,384,448,512,576,640,704,729,768,832,896,960,1024,1088,1152,1216,1280,1344,1408,1458,1472,1536,1600,1664,1728,1792,1856,1920,1984,2048,2112,2176,2187,2240,2304,2368,2432,2496,2560,2624,2688,2752",
+    "name": "Bicubeful numbers.",
+    "comment": [
+        "Let lp(n, e) denote the largest positive integer b such that b^e divides n. For example for e = 1, 2, 3, 4 the sequences (lp(n, e), n >= 1) are A000027, A000188, A053150, and A053164. Let rad(n) = A007947(n) be the squarefree kernel of n. k is in this sequence if lp(n, 3) does not divide rad(n). The case e = 1 gives A013929, and the case e = 2 is A046101.",
+        "The asymptotic density of this sequence is 1 - 1/zeta(6) = 1 - 945/Pi^6 = 0.017047... . - _Amiram Eldar_, Jul 13 2022"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A355265/b355265.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "A number k is bicubeful iff it is divisible by the 6th power of an integer > 1."
+    ],
+    "example": [
+        "n = 512 = 2^9, rad(n) = 2, lp(n, 3) = 8 since n/8^3 = 1. But 8 does not divide 2.",
+        "n = 704 = 2^6*11, rad(n) = 22, lp(n, 3) = 4 since n/4^3 = 11. But 4 does not divide 22."
+    ],
+    "maple": [
+        "with(NumberTheory):",
+        "isBicubeful := n -> irem(Radical(n), LargestNthPower(n, 3)) <> 0:",
+        "select(isBicubeful, [`$`(1..2752)]);"
+    ],
+    "mathematica": [
+        "bicubQ[n_] := AnyTrue[FactorInteger[n][[;; , 2]], # > 5 &]; Select[Range[3000], bicubQ] (* _Amiram Eldar_, Jul 13 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import factorint",
+        "def A355265_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:any(map(lambda m:m>5,factorint(n).values())),count(max(startvalue,1)))",
+        "A355265_list = list(islice(A355265_gen(),30)) # _Chai Wah Wu_, Jul 12 2022"
+    ],
+    "xref": [
+        "Cf. A007947, A000188, A053150, A053164, A013929, A046101 (biquadrateful).",
+        "Cf. A013664, A343359."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Jul 12 2022",
+    "references": 1,
+    "revision": 20,
+    "time": "2022-07-13T09:10:27-04:00",
+    "created": "2022-07-12T20:58:50-04:00"
+}

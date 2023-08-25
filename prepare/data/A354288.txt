@@ -1,0 +1,28 @@
+{
+    "number": 354288,
+    "data": "1,2,10,72,664,7440,97712,1468768,24825184,465516672,9582002688,214642099584,5195322070656,135064965744384,3752151488840448,110892824334154752,3473236656134243328,114893633354895538176,4002000861023966189568,146388324613230926979072",
+    "name": "Expansion of e.g.f. (1 + x)^(2/(1 - 2 * log(1+x))).",
+    "formula": [
+        "a(0) = 1; a(n) = Sum_{k=1..n} A088501(k) * binomial(n-1,k-1) * a(n-k).",
+        "a(n) = Sum_{k=0..n} 2^k * A000262(k) * Stirling1(n,k).",
+        "a(n) ~ exp(-7/8 + 1/(4*(exp(1/2) - 1)) + sqrt((2*n)/(exp(1/2) - 1))*exp(1/4) - n) * n^(n - 1/4) / (2^(3/4) * (exp(1/2) - 1)^(n + 1/4)). - _Vaclav Kotesovec_, May 23 2022"
+    ],
+    "mathematica": [
+        "With[{nn=20},CoefficientList[Series[(1+x)^(2/(1-2Log[1+x])),{x,0,nn}],x] Range[ 0,nn]!] (* _Harvey P. Dale_, Oct 13 2022 *)"
+    ],
+    "program": [
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(serlaplace((1+x)^(2/(1-2*log(1+x)))))",
+        "(PARI) a_vector(n) = my(v=vector(n+1)); v[1]=1; for(i=1, n, v[i+1]=sum(j=1, i, sum(k=0, j, 2^k*k!*stirling(j, k, 1))*binomial(i-1, j-1)*v[i-j+1])); v;"
+    ],
+    "xref": [
+        "Cf. A088819, A354289.",
+        "Cf. A000262, A088501, A354286, A354290."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Seiichi Manyama_, May 23 2022",
+    "references": 3,
+    "revision": 15,
+    "time": "2022-10-13T14:29:33-04:00",
+    "created": "2022-05-23T09:11:25-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 342576,
+    "data": "1,4,4,4,5,8,13,14,14,16,22,24,29,33,36,40,47,52",
+    "name": "Independent domination number for knight's graph on an n X n board.",
+    "reference": [
+        "Sandra M. Hedetniemi, Stephen T. Hedetniemi, Robert Reynolds, Combinatorial Problems on Chessboards: II, in: Domination in Graphs - Advanced Topics, Marcel Dekker, 1998. See p. 141."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A342576/a342576.pdf\">Optimal configurations for n = 3 to 14</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/KnightGraph.html\">Knight Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/LowerIndependenceNumber.html\">Lower Independence Number</a>"
+    ],
+    "maple": [
+        "f:= proc(N)",
+        "  local verts,Rverts,edg,cons,i,j,e;",
+        "  verts:= [seq(seq([i,j],i=1..N),j=1..N)]:",
+        "  for i from 1 to N^2 do Rverts[op(verts[i])]:= i od:",
+        "  edg:= {seq(seq({Rverts[i,j],Rverts[i+1,j+2]},i=1..N-1),j=1..N-2),",
+        "       seq(seq({Rverts[i,j],Rverts[i+2,j+1]},i=1..N-2),j=1..N-1),",
+        "       seq(seq({Rverts[i,j],Rverts[i+1,j-2]},i=1..N-1),j=3..N),",
+        "       seq(seq({Rverts[i,j],Rverts[i+2,j-1]},i=1..N-2),j=2..N)}:",
+        "  cons:= {seq(x[e[1]]+x[e[2]]<=1, e=edg),",
+        "    seq(x[i]+add(`if`(member({i,j},edg),x[j],0),j=1..N^2)>=1, i=1..N^2)}:",
+        "  Optimization:-Minimize(add(x[i],i=1..N^2),cons,assume=binary)[1]",
+        "end proc:",
+        "map(f, [$1..13]); # _Robert Israel_, Mar 17 2021"
+    ],
+    "xref": [
+        "Cf. A006075, A075324, A299029, A279404, A030978."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Andrey Zabolotskiy_, Mar 15 2021",
+    "ext": [
+        "a(11) to a(14) from _Robert Israel_, Mar 17 2021",
+        "a(15)-a(18) from _Eric W. Weisstein_, Aug 01 2023"
+    ],
+    "references": 2,
+    "revision": 20,
+    "time": "2023-08-01T21:02:44-04:00",
+    "created": "2021-03-15T14:01:47-04:00"
+}

@@ -1,0 +1,53 @@
+{
+    "number": 261138,
+    "data": "11,1221,123321,12344321,1234554321,123456654321,12345677654321,1234567887654321,123456789987654321,1234567891001987654321,12345678910111101987654321,123456789101112211101987654321,1234567891011121331211101987654321,12345678910111213144131211101987654321",
+    "name": "The concatenation of 123456...n and the reverse of this number.",
+    "comment": [
+        "Let R(n) denote the number obtained by formally reversing the digits of n, including any leading zeros that may appear; a(n) is the decimal concatenation of 1,2,...,n,R(n),R(n-1),...,R(3),R(2),R(1). - _N. J. A. Sloane_, Dec 01 2021",
+        "A palindromic version of A173426.",
+        "Has same start as A259937, but A259937 generates non-palindromic terms for n>9.",
+        "All terms are multiples of 11 (cf. A349805)."
+    ],
+    "formula": [
+        "a(n) = concatenate( A007908(n), A138793(n) retaining leading zeros)."
+    ],
+    "example": [
+        "For n=10 we concatenate 1,2,3,...,10,01,9,8,...3,2,1 getting 1234567891001987654321."
+    ],
+    "maple": [
+        "with(StringTools);",
+        "myReverse := n -> Reverse(convert(n,string));",
+        "A349804:=proc(n) local i,L,R;",
+        "L:=\"\"; R:=\"\";",
+        "for i from n to 1 by -1 do",
+        "L:=Join( [convert(i,string), L],\"\");",
+        "R:=Join( [R, myReverse(convert(i,string))],\"\");",
+        "od:",
+        "parse(Join([L,R],\"\"));",
+        "end proc; # _N. J. A. Sloane_, Dec 01 2021",
+        "# second Maple program:",
+        "a:= n-> (s-> parse(cat(s, seq(s[-i], i=1..length(s)))))(cat(\"\", $1..n)):",
+        "seq(a(n), n=1..14); # _Alois P. Heinz_, Dec 01 2021"
+    ],
+    "mathematica": [
+        "Table[d = Flatten[IntegerDigits /@ Range@ n]; FromDigits@ Flatten[{d, Reverse@ d}], {n, 13}] (* _Michael De Vlieger_, Aug 20 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def A349804(n): return int((lambda x: x+x[::-1])(''.join(str(d) for d in range(1,n+1)))) # _Chai Wah Wu_, Dec 01 2021"
+    ],
+    "xref": [
+        "Cf. A002477, A173426, A259937, A261570, A349805."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Umut Uludag_, Aug 10 2015",
+    "ext": [
+        "More than the usual number of terms are shown in order to distinguish this from several similar sequences.",
+        "Edited by _N. J. A. Sloane_, Dec 11 2021"
+    ],
+    "references": 1,
+    "revision": 30,
+    "time": "2021-12-12T10:19:54-05:00",
+    "created": "2015-08-20T15:52:06-04:00"
+}

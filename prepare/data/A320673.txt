@@ -1,0 +1,42 @@
+{
+    "number": 320673,
+    "data": "1,50,52,104,114,3460,12298,29442,31368,856592,1713184,54822416,109578256,109644832,219156512,219289664,438313024,438579328,876626048,877158656,1034367516,1753252096,1754317312,112208117792,113290248736,224416235584,226580497472",
+    "name": "Positive integers m with binary expansion (b_1, ..., b_k) (where k = A070939(m)) such that b_i = [m == 0 (mod i)] for i = 1..k (where [] is an Iverson bracket).",
+    "comment": [
+        "In other words, the binary representation of a term of this sequence encodes the first divisors and nondivisors of this term respectively as ones and zeros.",
+        "Is this sequence infinite?",
+        "See A320674 and A320675 for similar sequences."
+    ],
+    "example": [
+        "The first terms, alongside their binary representation and the divisors encoded therein, are:",
+        "  n  a(n)   bin(a(n))        First divisors",
+        "  -  -----  ---------------  --------------------",
+        "  1      1  1                1",
+        "  2     50  110010           1, 2, 5",
+        "  3     52  110100           1, 2, 4",
+        "  4    104  1101000          1, 2, 4",
+        "  5    114  1110010          1, 2, 3, 6",
+        "  6   3460  110110000100     1, 2, 4, 5, 10",
+        "  7  12298  11000000001010   1, 2, 11, 13",
+        "  8  29442  111001100000010  1, 2, 3, 6, 7, 14",
+        "  9  31368  111101010001000  1, 2, 3, 4, 6, 8, 12"
+    ],
+    "program": [
+        "(PARI) is(n) = my (b=binary(n)); b==vector(#b, k, n%k==0)",
+        "(Python)",
+        "from itertools import count, islice",
+        "def A320673_gen(startvalue=0): # generator of terms >= startvalue",
+        "    return filter(lambda n:not any(int(b)==bool(n%i) for i,b in enumerate(bin(n)[2:],1)),count(max(startvalue,0)))",
+        "A320673_list = list(islice(A320673_gen(),10)) # _Chai Wah Wu_, Dec 12 2022"
+    ],
+    "xref": [
+        "Cf. A070939, A320674, A320675."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_R\u00e9my Sigrist_, Oct 19 2018",
+    "references": 3,
+    "revision": 14,
+    "time": "2022-12-12T15:00:22-05:00",
+    "created": "2018-10-22T14:25:25-04:00"
+}

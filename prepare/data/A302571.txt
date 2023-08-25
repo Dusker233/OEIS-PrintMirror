@@ -1,0 +1,30 @@
+{
+    "number": 302571,
+    "data": "24,30,40,54,56,70,80,104,642,654,678,726,762,786,822,832,1888,1952,4030,5830,7424,32128,62464,374802,374838,374862,374898,374982,375006,375042,375198,375234,375294,375378,375486,375546,375582,375618,375702,375762,375798",
+    "name": "Bi-unitary barely abundant numbers: bi-unitary abundant numbers k such that bsigma(k)/k < bsigma(m)/m for all bi-unitary abundant numbers m < k, where bsigma(k) is the sum of the bi-unitary divisors of k (A188999).",
+    "link": [
+        "Amiram Eldar, <a href=\"/A302571/b302571.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "The values of bsigma(k)/k are: 3, 2.5, 2.4, 2.25, 2.222..., 2.142..."
+    ],
+    "mathematica": [
+        "f[n_] := Select[Divisors[n], Function[d, CoprimeQ[d, n/d]]]; bsigma[m_] :=  DivisorSum[m, # &, Last@Intersection[f@#, f[m/#]] == 1 &]; r = 3; seq={}; Do[",
+        "s = bsigma[n]/n; If[s > 2 && s < r, AppendTo[seq,n]; r = s], {n, 1, 10000}]; seq"
+    ],
+    "program": [
+        "(PARI) babindex(n) = {my(f = factor(n), p, e); prod(k = 1, #f~, p = f[k, 1]; e = f[k, 2]; (p^(e+1)-1)/(p^(e+1)-p^e) - if(e%2, 0, 1/p^(e/2)));}",
+        "lista(kmax) = {my(bab, babm = 3); for(k = 1, kmax, bab = babindex(k); if(bab > 2 && bab < babm, babm = bab; print1(k, \", \"))); }"
+    ],
+    "xref": [
+        "The bi-unitary version of A071927.",
+        "Cf. A188999, A292982, A302570."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Apr 10 2018",
+    "references": 4,
+    "revision": 19,
+    "time": "2023-03-26T02:21:30-04:00",
+    "created": "2018-04-15T13:47:23-04:00"
+}

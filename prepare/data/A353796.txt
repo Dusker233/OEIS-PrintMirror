@@ -1,0 +1,31 @@
+{
+    "number": 353796,
+    "data": "1,2,4,8,12,24,36,44,72,96,112,128,132,160,180,220,288,336,352,360,384,396,480,528,560,640,660,880,1044,1056,1152,1232,1344,1404,1440,1680,1760,1920,1980,2088,2352,2376,2464,2496,2640,3168,3600,3696,3920,4032,4400,4736,5220,5280,5376,5760,5824,6075,6144,6160",
+    "name": "Numbers k such that k divides A353790(k), where A353790(n) = phi(A003973(n)) * A064989(A003973(n)).",
+    "comment": [
+        "Of 5263 initial terms (terms < 2^32), only 67 are odd, and of these, only two, 1 and 1525391261 (= 503^2 * 6029) are in A007310. Of 5263 initial terms, 4653 are multiples of 3, 2331 are multiples of 81, and 3780 are multiples of 5."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A353796/b353796.txt\">Table of n, a(n) for n = 1..5263; all terms <= 2^32</a>",
+        "<a href=\"/index/Pri#prime_indices\">Index entries for sequences computed from indices in prime factorization</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "A003961(n) = { my(f = factor(n)); for(i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); };",
+        "A064989(n) = { my(f=factor(n>>valuation(n, 2))); for(i=1, #f~, f[i, 1] = precprime(f[i, 1]-1)); factorback(f); };",
+        "A353790(n) = { my(s=sigma(A003961(n))); (eulerphi(s)*A064989(s)); };",
+        "isA353796(n) = !(A353790(n)%n);"
+    ],
+    "xref": [
+        "Cf. A000010, A000203, A003961, A003973, A353790, A353797 (subsequence).",
+        "Cf. also A353795."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, May 12 2022",
+    "references": 4,
+    "revision": 12,
+    "time": "2022-05-12T17:36:54-04:00",
+    "created": "2022-05-12T16:13:43-04:00"
+}

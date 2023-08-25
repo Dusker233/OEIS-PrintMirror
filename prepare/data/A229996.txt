@@ -1,0 +1,31 @@
+{
+    "number": 229996,
+    "data": "1,10,65,130,260,340,1105,1972,2210,4420,8840,9860,15650,20737,32045,41474,44200,51272,55250,64090,75140,82948,103685,128180,207370,207553,221000,256360,352529,414740,415106,512720,532100,705058,759025,813800,829480,830212",
+    "name": "For every positive integer m, let u(m) = (d(1),d(2),...,d(k)) be the unitary divisors of m. The sequence (a(n)) consists of successive numbers m which d(k)/d(1) + d(k-1)/d(2) + ... + d(k)/d(1) is an integer.",
+    "comment": [
+        "The integer sums d(k)/d(1) + d(k-1)/d(2) + ... + d(k)/d(1) are given by A229999. - _Clark Kimberling_, Jun 16 2018",
+        "Also numbers m such that the sum of the squares of the unitary divisors of m is divisible by m (the unitary version of A046762) - _Amiram Eldar_, Jun 16 2018"
+    ],
+    "example": [
+        "The first 10 sums: 1, 5/2, 10/3, 17/4, 26/5, 25/3, 50/7, 65/8, 82/9, 13, so that a(1) = 1 and a(10) = 13."
+    ],
+    "mathematica": [
+        "z = 1000; r[n_] := Select[Divisors[n], GCD[#, n/#] == 1 &]; k[n_] := Length[r[n]];",
+        "t[n_] := Table[r[n][[k[n] + 1 - i]]/r[n][[k[1] + i - 1]], {i, 1, k[n]}];",
+        "s = Table[Plus @@ t[n], {n, 1, z}]; a[n_] := If[IntegerQ[s[[n]]], 1, 0]; u = Table[a[n], {n, 1, z}]; Flatten[Position[u, 1]]  (* A229996 *)",
+        "usigma2[n_] :=  If[n == 1, 1, Times @@ (1 + Power @@@ FactorInteger[n]^2)]; seqQ[n_] := Divisible[usigma2[n], n]; Select[Range[10^6], seqQ] (* _Amiram Eldar_, Jun 16 2018 *"
+    ],
+    "xref": [
+        "Cf. A034676, A046762, A229994, A077610, A229999."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Oct 31 2013",
+    "ext": [
+        "Definition corrected by _Clark Kimberling_, Jun 16 2018"
+    ],
+    "references": 9,
+    "revision": 15,
+    "time": "2018-06-16T18:34:25-04:00",
+    "created": "2013-11-04T04:08:30-05:00"
+}

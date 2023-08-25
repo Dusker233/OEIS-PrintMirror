@@ -1,0 +1,47 @@
+{
+    "number": 88148,
+    "data": "2,5,11,43,158,2143,2302,2558,36542,548543,711679,786431,9010423,10452461,10065788911,34481371903",
+    "name": "Least number which when rotated through all its binary places produces n primes, not counting any repeats.",
+    "comment": [
+        "It is probably not the case that this always produces the same bit cycle as A088149. - _Franklin T. Adams-Watters_, Mar 29 2014"
+    ],
+    "example": [
+        "a(5) = 158 because 158 in base two is 10011110. This will produce eight possible new numbers; 00111101 = 61, 01111010 = 122, 11110100 = 244, 11101001 = 233, 11010011 = 211, 10100111 = 167, 01001111 = 79 and back to the beginning 10011110 = 158. Of those eight numbers (61, 122, 244, 233, 211, 167, 79 & 158) only five of them are primes. Notice that this is the same bit cycle as in A088149 but rotated differently."
+    ],
+    "mathematica": [
+        "f[n_] := Count[ PrimeQ[ Union[ Table[ FromDigits[ RotateLeft[ IntegerDigits[n, 2], i], 2], {i, 1, Floor[ Log[2, n] + 1]}]]], True]; a = Table[0, {15}]; k = 1; Do[c = f[k]; If[c < 100 && a[[c+1]] == 0, a[[c+1]] = n]; k++, {n, 1, 10^7}]; a"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        "from sympy import isprime",
+        "def A088148(n):",
+        "    if n == 1: return 2",
+        "    for p in count((1<<n)-1):",
+        "        if p.bit_count() >= n:",
+        "            m = p.bit_length()",
+        "            l = 1<<m-1",
+        "            k, cset, q = l-1, set(), p",
+        "            for _ in range(m):",
+        "                if p not in cset and isprime(p):",
+        "                    cset.add(p)",
+        "                p = bool(p&l)+((p&k)<<1)",
+        "            if len(cset) == n:",
+        "                return q # _Chai Wah Wu_, Jan 23 2023"
+    ],
+    "xref": [
+        "Cf. A088149."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Sep 19 2003",
+    "ext": [
+        "Edited by _Franklin T. Adams-Watters_, Mar 29 2014",
+        "a(15) from _Chai Wah Wu_, Jan 24 2023",
+        "a(16) from _Chai Wah Wu_, Jan 27 2023"
+    ],
+    "references": 2,
+    "revision": 29,
+    "time": "2023-01-27T09:55:07-05:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

@@ -1,0 +1,62 @@
+{
+    "number": 84891,
+    "data": "22,26,33,34,38,39,44,46,51,52,55,57,58,62,65,66,68,69,74,76,77,78,82,85,86,87,88,91,92,93,94,95,99,102,104,106,110,111,114,115,116,117,118,119,122,123,124,129,130,132,133,134,136,138,141,142,145,146",
+    "name": "Multiples of 2, 3, 5, or 7, but not 7-smooth.",
+    "comment": [
+        "Intersection of A068191 with (A005843, A008585, A008587 and A008589); union of (A005843, A008585, A008587 and A008589) without A002473.",
+        "A020639(a(n)) <= 7, A006530(a(n)) > 7."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A084891/b084891.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Michael De Vlieger, <a href=\"/A084891/a084891.png\">Diagram showing numbers k in this sequence</a> instead as k mod 210, in black, else white if k is coprime to 210, purple if k = 1, red if k | 210, and gold if rad(k) | 210, magnification 5X.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SmoothNumber.html\">Smooth Number</a>."
+    ],
+    "mathematica": [
+        "okQ[n_] := AnyTrue[{2, 3, 5, 7}, Divisible[n, #]&] && FactorInteger[n][[-1, 1]] > 7;",
+        "Select[Range[1000], okQ] (* _Jean-Fran\u00e7ois Alcover_, Oct 15 2021 *)"
+    ],
+    "program": [
+        "(PARI) mult2357(m,n) = \\\\ mult 2,3,5,7 not 7 smooth",
+        "{",
+        "local(x,a,j,f,ln);",
+        "for(x=m,n,",
+        "f=0;",
+        "if(gcd(x,210)>1,",
+        "a = ifactor(x);",
+        "for(j=1,length(a),",
+        "if(a[j]>7,f=1;break);",
+        ");",
+        "if(f,print1(x\",\"));",
+        ");",
+        ");",
+        "}",
+        "ifactor(n) = \\\\ The vector of the prime factors of n with multiplicity.",
+        "{",
+        "local(f,j,k,flist);",
+        "flist=[];",
+        "f=Vec(factor(n));",
+        "for(j=1,length(f[1]),",
+        "for(k = 1,f[2][j],flist = concat(flist,f[1][j])",
+        ");",
+        ");",
+        "return(flist)",
+        "}",
+        "\\\\ _Cino Hilliard_, Jul 03 2009",
+        "(Python)",
+        "from sympy import primefactors",
+        "def ok(n):",
+        "    pf = set(primefactors(n))",
+        "    return pf & {2, 3, 5, 7} and pf - {2, 3, 5, 7}",
+        "print(list(filter(ok, range(147)))) # _Michael S. Branicky_, Oct 15 2021"
+    ],
+    "xref": [
+        "Cf. A002473, A005843, A006530, A008585, A008587, A008589, A020639, A068191, A080672."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Reinhard Zumkeller_, Jul 13 2003",
+    "references": 2,
+    "revision": 22,
+    "time": "2023-04-04T10:33:46-04:00",
+    "created": "2003-09-13T03:00:00-04:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 324739,
+    "data": "1,2,3,6,10,20,30,60,96,192,312,624,936,1872,3744,7488,12480,24960,37440,74880,142848,285696,456192,912384,1548288,3096576,5308416,10616832,15925248,31850496,51978240,103956480,200835072,401670144,771489792,1542979584,2314469376",
+    "name": "Number of subsets of {2...n} containing no element whose prime indices all belong to the subset.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A324739/b324739.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 20 subsets:",
+        "  {}  {}   {}   {}     {}       {}",
+        "      {2}  {2}  {2}    {2}      {2}",
+        "           {3}  {3}    {3}      {3}",
+        "                {4}    {4}      {4}",
+        "                {2,4}  {5}      {5}",
+        "                {3,4}  {2,4}    {6}",
+        "                       {2,5}    {2,4}",
+        "                       {3,4}    {2,5}",
+        "                       {4,5}    {2,6}",
+        "                       {2,4,5}  {3,4}",
+        "                                {3,6}",
+        "                                {4,5}",
+        "                                {4,6}",
+        "                                {5,6}",
+        "                                {2,4,5}",
+        "                                {2,4,6}",
+        "                                {2,5,6}",
+        "                                {3,4,6}",
+        "                                {4,5,6}",
+        "                                {2,4,5,6}"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Subsets[Range[2,n]],!MemberQ[#,k_/;SubsetQ[#,PrimePi/@First/@FactorInteger[k]]]&]],{n,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "pset(n)={my(b=0,f=factor(n)[,1]); sum(i=1, #f, 1<<(primepi(f[i])))}",
+        "a(n)={my(p=vector(n,k,pset(k)), d=0); for(i=1, #p, d=bitor(d, p[i]));",
+        "((k,b)->if(k>#p, 1, my(t=self()(k+1,b)); if(bitnegimply(p[k], b), t+=if(bittest(d,k), self()(k+1, b+(1<<k)), t)); t))(1,0)} \\\\ _Andrew Howroyd_, Aug 16 2019"
+    ],
+    "xref": [
+        "The maximal case is A324762. The case of subsets of {1...n} is A324738. The strict integer partition version is A324750. The integer partition version is A324755. The Heinz number version is A324760. An infinite version is A324694.",
+        "Cf. A000720, A001221, A001462, A007097, A084422, A085945, A112798, A276625, A279861, A290689, A290822, A304360, A306844.",
+        "Cf. A324695, A324696, A324736, A324737, A324741, A324742, A324744, A324764."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Mar 14 2019",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Aug 16 2019"
+    ],
+    "references": 6,
+    "revision": 8,
+    "time": "2019-08-16T14:48:26-04:00",
+    "created": "2019-03-16T10:11:41-04:00"
+}

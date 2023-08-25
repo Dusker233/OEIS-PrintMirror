@@ -1,0 +1,48 @@
+{
+    "number": 356740,
+    "data": "13,389,15013,7149589,1471573153",
+    "name": "a(n) is the least emirp that begins a sequence of exactly n emirps under the map p -> (p*R(p)) mod (p+R(p)), where R(p) is the digit reversal of p.",
+    "example": [
+        "a(3) = 15013 because it is an emirp, so is (15013 * 31051) mod (15013+31051) = 983, and so is (983 * 389) mod (983 + 389) = 971, but not (971 * 179) mod (971 + 179), and this is the first emirp that works."
+    ],
+    "maple": [
+        "rev:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "F:= proc(p) option remember; local k,q,r,s;",
+        "      if not isprime(p) then return 0 fi;",
+        "q:= rev(p);",
+        "if q=p or not isprime(q) then return 0 fi;",
+        "r:= (p*q) mod (p+q);",
+        "1+procname(r);",
+        "end proc:",
+        "V:= Vector(4): count:= 0:",
+        "for p from 13 by 2 while count < 4 do",
+        "  v:= F(p);",
+        "  if v > 0 and V[v] = 0 then V[v]:= p; count:= count+1; fi;",
+        "od:",
+        "convert(V,list);"
+    ],
+    "program": [
+        "(PARI)",
+        "R(p)=fromdigits(Vecrev(digits(p)))",
+        "f(p)=my(r=R(p));(p*r)%(p+r)",
+        "is(p)=my(r=R(p));isprime(p)&&p!=r&&isprime(r)",
+        "card(x)=my(c=is(x),u=[]);while(is(x)&&is(f(x)),c++;u=concat(u,x);if(vecsearch(vecsort(u),f(x))==0,u=concat(u,f(x));x=f(x),c--;break));c",
+        "a(n)=forprime(k=2,+oo,if(card(k)==n,return(k))) \\\\ _Jean-Marc Rebert_, Sep 09 2022"
+    ],
+    "xref": [
+        "Cf. A004086, A006567, A355651."
+    ],
+    "keyword": "nonn,base,more,less",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Sep 04 2022",
+    "ext": [
+        "a(5) from _Jean-Marc Rebert_, Sep 08 2022"
+    ],
+    "references": 1,
+    "revision": 53,
+    "time": "2022-09-09T10:03:31-04:00",
+    "created": "2022-09-07T10:50:12-04:00"
+}

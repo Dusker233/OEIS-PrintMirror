@@ -1,0 +1,45 @@
+{
+    "number": 323203,
+    "data": "1,3,21,147,171,657,903,1029,1197,2667,3249,4599,6321,7077,7203,8379,12483,13203,18669,22743,32193,38829,44247,47961,49539,50421,51471,58653,61731,71631,87381,92421,97641,113799,114681,118341,130683,152019,159201,197757",
+    "name": "\"Primitive\" numbers k such that k divides 4^k - 1.",
+    "comment": [
+        "In the comments of A014945, Charles R. Greathouse writes \"this sequence is closed under multiplication\". So, here, the terms are only the \"primitive\" integers which satisfy the definition and are not the product of two or more previous numbers of the sequence. This sequence is a subsequence of A014945.",
+        "Also numbers k in A014945 such that no divisors d > 1 of k exist where d and k/d are in A014945. - _David A. Corneth_, Jan 11 2019",
+        "Following an observation of David A. Corneth, yes, a(n) is divisible by 3 for n > 1, there is a proof by _Robert Israel_ in A014945. - _Bernard Schott_, Jan 25 2019"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A323203/b323203.txt\">Table of n, a(n) for n = 1..3200</a>"
+    ],
+    "example": [
+        "3 is a term because 3 * 21 = 4^3 - 1.",
+        "63 divides 4^63 - 1, but 63 is not a term because 63 = 3 * 21 with 3 which divides 4^3 - 1, and 21 which divides 4^21 - 1."
+    ],
+    "maple": [
+        "filter:= proc(n) local d;",
+        "  if 4 &^ n - 1 mod n <> 0 then return false fi;",
+        "  for d in select(t -> t > 1 and t^2 <= n, numtheory:-divisors(n)) do",
+        "    if 4 &^ d - 1 mod d = 0 and 4 &^ (n/d) - 1 mod (n/d) = 0 then return false fi;",
+        "  od;",
+        "true",
+        "end proc:",
+        "select(filter, [$1..200000]); # _Robert Israel_, Jan 24 2019"
+    ],
+    "program": [
+        "(PARI) is(n) = my(d=divisors(n)); if(Mod(4,n)^n != 1, return(0)); for(i = 2, (#d - 1) >> 1 + 1, if(Mod(4,d[i]) ^ d[i] == 1 && Mod(4, n/d[i]) ^ (n/d[i])==1, return(0))); 1",
+        "first(n) = n = max(n, 2); my(res = vector(n), t=1); res[1] = 1;forstep(i = 3, oo, 3, if(is(i), t++; res[t] = i; if(t==n, return(res)))) \\\\ _David A. Corneth_, Jan 11 2019"
+    ],
+    "xref": [
+        "Cf. A014945, A024036."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Bernard Schott_, Jan 07 2019",
+    "ext": [
+        "More terms (using b-file for A014945) from _Jon E. Schoenfield_, Jan 11 2019",
+        "Terms verified by _Jon E. Schoenfield_ and _David A. Corneth_, Jan 12 2019"
+    ],
+    "references": 2,
+    "revision": 51,
+    "time": "2019-09-11T08:45:17-04:00",
+    "created": "2019-01-31T05:16:21-05:00"
+}

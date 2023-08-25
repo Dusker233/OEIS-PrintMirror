@@ -1,0 +1,44 @@
+{
+    "number": 114856,
+    "data": "126,134,195,211,232,254,288,367,377,379,397,400,461,507,518,529,567,578,595,618,626,637,654,668,692,694,703,715,728,766,777,793,795,807,819,848,857,869,887,964,992,995,1016,1028,1034,1043,1046,1071,1086",
+    "name": "Indices n of (\"bad\") Gram points g(n) for which (-1)^n Z(g(n)) < 0, where Z(t) is the Riemann-Siegel Z-function.",
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A114856/b114856.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "E. C. Titchmarsh, <a href=\"https://doi.org/10.1093/qmath/os-5.1.98\">On van der Corput's Method and the zeta-function of Riemann IV</a>, Quarterly Journal of Mathematics os-5 (1934), pp. 98-105.",
+        "Mathematics Stack Exchange, crow, <a href=\"https://math.stackexchange.com/questions/2885232/can-we-prove-b-n-frac14-g-n-1-g-n-is-an-indicator-function-that\">Can we prove B(n)=(1/4)G(n-1)G(n) is an indicator function ...</a>",
+        "Timothy Trudgian, <a href=\"http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.173.402\">On the success and failure of Gram's Law and the Rosser Rule</a>, Acta Arithmetica, 2011 | 148 | 3 | 225-256.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/GramPoint.html\">Gram Point</a>"
+    ],
+    "formula": [
+        "Trudgian shows that a(n) = O(n), that is, there exists some k such that a(n) <= k*n. - _Charles R Greathouse IV_, Aug 29 2012",
+        "In fact Trudgian shows that a(n) \u224d n, and further, there exist constants 1 < b < c such that b*n < a(n) < c*n. (See the paper's discussion of the Weak Gram Law.) - _Charles R Greathouse IV_, Mar 28 2023"
+    ],
+    "example": [
+        "E.g., (-1)^126 Z(g(126)) = -0.0276294988571999.... - _David Baugh_, Apr 02 2008"
+    ],
+    "mathematica": [
+        "g[n_] := (g0 /. FindRoot[ RiemannSiegelTheta[g0] == Pi*n, {g0, 2*Pi*Exp[1 + ProductLog[(8*n + 1)/(8*E)]]}, WorkingPrecision -> 16]); Reap[For[n = 1, n < 1100, n++, If[(-1)^n*RiemannSiegelZ[g[n]] < 0, Print[n]; Sow[n]]]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Oct 17 2012, after _Eric W. Weisstein_ *)"
+    ],
+    "program": [
+        "(PARI) g0(n)=2*Pi*exp(1+lambertw((8*n+1)/exp(1)/8)) \\\\ approximate location of gram(n)",
+        "th(t)=arg(gamma(1/4+I*t/2))-log(Pi)*t/2 \\\\ theta, but off by some integer multiple of 2*Pi",
+        "thapprox(t)=log(t/2/Pi)*t/2-t/2-Pi/8+1/48/t-1/5760/t^3",
+        "RStheta(t)=my(T=th(t)); (thapprox(t)-T)\\/(2*Pi)*2*Pi+T",
+        "gram(n)=my(G=g0(n), k=n*Pi); solve(x=G-.003, G+1e-8, RStheta(x)-k)",
+        "Z(t)=exp(th(t)*I)*zeta(1/2+I*t)",
+        "is(n)=my(G=gram(n));real((-1)^n*Z(G))<0 \\\\ _Charles R Greathouse IV_, Jan 22 2022"
+    ],
+    "xref": [
+        "Cf. A114857, A114858, A216700."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Eric W. Weisstein_, Jan 02 2006",
+    "ext": [
+        "Definition corrected by _David Baugh_, Apr 02 2008"
+    ],
+    "references": 24,
+    "revision": 47,
+    "time": "2023-03-28T14:02:31-04:00",
+    "created": "2006-01-24T03:00:00-05:00"
+}

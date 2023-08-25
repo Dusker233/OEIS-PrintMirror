@@ -1,0 +1,39 @@
+{
+    "number": 64909,
+    "data": "481,1157,1343,1921,2171,2263,2369,2509,3077,3097,3427,3523,3683,4171,4537,4541,4811,5213,5263,5389,5543,6107,6227,6707,7123,7241,8279,8593,8621,8717,8857,8873,9353,9607,10411,10537,11359,11461,11567,11747,11761,11819",
+    "name": "Semiprimes p1*p2 such that p2 > p1 and p2 mod p1 = 11.",
+    "link": [
+        "John Cerkan, <a href=\"/A064909/b064909.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "pmp11Q[n_]:=Module[{fi=FactorInteger[n][[All,1]]},Mod[fi[[2]],fi[[1]]] == 11]; Select[ Range[12000],PrimeNu[#]==PrimeOmega[#]==2&&pmp11Q[#]&] (* _Harvey P. Dale_, Jun 25 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def is_A064909(n):",
+        "    f = factorint(n)",
+        "    return (sum([f[i] for i in f]) == 2) and (max(f) % min(f) == 11)",
+        "def first_A064909(n):",
+        "    x = 1",
+        "    an = []",
+        "    while len(an) < n:",
+        "        if is_A064909(x): an.append(x)",
+        "        x += 2",
+        "    return an # _John Cerkan_, Apr 14 2018",
+        "(PARI) isok(n) = my(f = factor(n)); (#f~ == 2) && (vecmax(f[,2]) < 2) && ((f[2,1] % f[1,1]) == 11);"
+    ],
+    "xref": [
+        "Cf. A001358 (p2 mod p1 = 0), A064899-A064911."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Oct 13 2001",
+    "ext": [
+        "Offset and name fixed by _John Cerkan_, Apr 12 2018"
+    ],
+    "references": 3,
+    "revision": 26,
+    "time": "2021-05-15T11:47:07-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 342099,
+    "data": "1,1,2,32,8704,69074944,24438162587648,546639076930132901888,1040668139730671025101058605056,218400176068773166949459169210753567686656,6353017630286823410670432558608528274164598967780769792",
+    "name": "Product of first n tangent numbers.",
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TangentNumber.html\">Tangent Number</a>."
+    ],
+    "formula": [
+        "a(n) = Product_{k=1..n} A000182(k).",
+        "a(n) ~ c * 2^(n*(2*n+3)) * n^(n^2 + n/2 - 1/24) / (Pi^(n*(2*n+1)/2) * exp(n*(3*n+1)/2)), where c = 1.3336306469174300191610203408604845574627820502002809243182947395752927990..."
+    ],
+    "maple": [
+        "b:= proc(u, o) option remember;",
+        "      `if`(u+o=0, 1, add(b(o-1+j, u-j), j=1..u))",
+        "    end:",
+        "a:= proc(n) a(n):=`if`(n=0, 1, a(n-1)*b(2*n-1, 0)) end:",
+        "seq(a(n), n=0..12);  # _Alois P. Heinz_, Mar 05 2021"
+    ],
+    "mathematica": [
+        "Table[Product[(-1)^k * (16^k - 4^k)*Zeta[1 - 2*k], {k,1,n}], {n, 0, 12}]",
+        "Table[Product[2*PolyGamma[2*k-1, 1/2]/Pi^(2*k), {k,1,n}], {n, 0, 12}]",
+        "FoldList[Times, 1, Table[(-1)^n * (16^n - 4^n)*Zeta[1 - 2*n], {n, 1, 12}]]"
+    ],
+    "program": [
+        "(Python)",
+        "from math import prod",
+        "from sympy import bernoulli",
+        "def A342099(n): return abs(prod(((2-(2<<(m:=i<<1)))*bernoulli(m)<<m-2)//i for i in range(1,n+1))) # _Chai Wah Wu_, Apr 16 2023"
+    ],
+    "xref": [
+        "Cf. A000182."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Vaclav Kotesovec_, Mar 05 2021",
+    "references": 1,
+    "revision": 21,
+    "time": "2023-04-16T20:28:01-04:00",
+    "created": "2021-03-05T09:19:17-05:00"
+}

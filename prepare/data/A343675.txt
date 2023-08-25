@@ -1,0 +1,53 @@
+{
+    "number": 343675,
+    "data": "2,3,5,7,101,181,383,727,787,929,10301,10501,14341,16361,16561,18181,30103,30703,32323,36563,38183,38783,70507,72727,74747,78787,90709,94949,96769,1074701,1092901,1212121,1218121,1412141,1616161,1658561,1856581,1878781,3072703",
+    "name": "Undulating alternating palindromic primes.",
+    "comment": [
+        "All terms have an odd number of decimal digits.",
+        "For n > 3, a(n) is odd and not divisible by 5.",
+        "Intersection of A002385, A030144 and A059168.",
+        "Subsequence of A343590."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A343675/b343675.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "16361 is a term as it is a palindromic prime, the digits 1, 6, 3, 6 and 1 have odd and even parity alternately, and also alternately rise and fall."
+    ],
+    "mathematica": [
+        "Union@Flatten[{{2,3,5,7},Array[Select[FromDigits/@Riffle@@@Tuples[{Tuples[{1,3,5,7,9},#],Tuples[{0,2,4,6,8},#-1]}],(s=Union@Partition[Sign@Differences@IntegerDigits@#,2];(s=={{1,-1}}||s=={{-1,1}})&&PrimeQ@#&&PalindromeQ@#)&]&,4]}] (* _Giorgos Kalogeropoulos_, Apr 26 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def f(w):",
+        "    for s in w:",
+        "        for t in range(int(s[-1])+1,10,2):",
+        "            yield s+str(t)",
+        "def g(w):",
+        "    for s in w:",
+        "        for t in range(1-int(s[-1])%2,int(s[-1]),2):",
+        "            yield s+str(t)",
+        "A343675_list = [2,3,5,7]",
+        "for l in range(1,9):",
+        "    for d in '1379':",
+        "        x = d",
+        "        for i in range(1,l+1):",
+        "            x = g(x) if i % 2 else f(x)",
+        "        A343675_list.extend([int(p+p[-2::-1]) for p in x if isprime(int(p+p[-2::-1]))])",
+        "        y = d",
+        "        for i in range(1,l+1):",
+        "            y = f(y) if i % 2 else g(y)",
+        "        A343675_list.extend([int(p+p[-2::-1]) for p in y if isprime(int(p+p[-2::-1]))])"
+    ],
+    "xref": [
+        "Cf. A002385, A030144, A059168, A343590."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Chai Wah Wu_, Apr 25 2021",
+    "references": 3,
+    "revision": 18,
+    "time": "2021-04-26T21:26:10-04:00",
+    "created": "2021-04-26T20:54:36-04:00"
+}

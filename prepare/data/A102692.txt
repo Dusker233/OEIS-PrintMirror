@@ -1,0 +1,43 @@
+{
+    "number": 102692,
+    "data": "1,2,4,28,336,5808,132000,3731040,126362880,4993309440,225677975040,11487263961600,650467886745600,40565803419187200,2763133948128153600,204127536266119065600,16257504491853520896000,1388699783389209747456000,126649067639795642253312000",
+    "name": "a(n) = number of digraphs (allowing loops) with vertices 1,2,...,n that have a unique Eulerian tour (up to cyclic shift).",
+    "reference": [
+        "R. P. Stanley, unpublished work."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A102692/b102692.txt\">Table of n, a(n) for n = 0..349</a>"
+    ],
+    "formula": [
+        "a(n) = (n-1)! * (b(n-1) + b(n)), where b(n) is a little Schroeder number (A001003).",
+        "a(n) ~ 2^(1/4) * (1 + sqrt(2))^(2*n) * n^(n-2) / exp(n). - _Vaclav Kotesovec_, May 22 2018"
+    ],
+    "example": [
+        "a(3) = 2!*(3+11) = 28. There are 16 such digraphs which are triangles with a possible loop at each vertex and 12 which consist of two 2-cycles with a common vertex and a possible loop at the other two vertices."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<2, n+1,",
+        "      (n-1)*(6*(2*n^2-4*n+1)*a(n-1)-(n-2)*",
+        "      (n-3)*(2*n-1)*a(n-2))/((n+1)*(2*n-3)))",
+        "    end:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, May 21 2018"
+    ],
+    "mathematica": [
+        "b[n_] := Hypergeometric2F1[-n, n+1, 2, -1]/2;",
+        "a[n_] := Switch[n, 0, 1, 1, 2, _, (n-1)! (b[n-1] + b[n])];",
+        "a /@ Range[0, 20] (* _Jean-Fran\u00e7ois Alcover_, Nov 18 2020 *)"
+    ],
+    "xref": [
+        "Cf. A001003."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Richard Stanley_, Feb 04 2005",
+    "ext": [
+        "a(0)=1 prepended and one typo corrected by _Alois P. Heinz_, May 21 2018"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2020-11-18T06:50:29-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

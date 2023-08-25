@@ -1,0 +1,60 @@
+{
+    "number": 331505,
+    "data": "1,1,3,15,45,455,1330,20475,58905,1221759,3478761,90858768,256851595,8093990190,22760723700,840261910995,2353351951665,99615373765775,278110855548955,13278694407181203,36976937738226486",
+    "name": "Number of labeled graphs with n nodes and floor(n/2) edges.",
+    "comment": [
+        "Considering the permutation model of graph evolution (see the Flajolet reference) with 2n vertices initially isolated, the probability of the occurrence of an acyclic graph at the critical point n is Pp(n) = A302112(n)/a(2n). Note that a(2n) is the number of labeled graphs with 2n nodes and n edges.",
+        "Since a(2n) = C(C(2n, 2), n) we have Pp(n)= A302112(n)/C(C(2n, 2), n).",
+        "Therefore, by _Vaclav Kotesovec_'s approximation in A302112, Pp(n) ~ e^(3/4) * P(n), where P(n) = c1 / n^(1/6) is the corresponding probability in the uniform model. Cf. A331500.",
+        "If t < n, P(n) is a lower bound of P(t). If t > n, P(n) is an upper bound of P(t). Here P(t) is the probability of an acyclic graph in time t.",
+        "Concerning the permutation model, the presence of cycles in graphs evolving near the critical time should be estimated by the above approximation."
+    ],
+    "reference": [
+        "J. Riordan, An Introduction to Combinatorial Analysis, Wiley, 1958, p. 109."
+    ],
+    "link": [
+        "Washington Bomfim, <a href=\"/A331505/a331505.png\">Approximation of Pp(n)</a>",
+        "P. Flajolet, D. E. Knuth, and B. Pittel, <a href=\"https://doi.org/10.1016/0012-365X(89)90087-3\">The first cycles in an evolving graph</a>, Discrete Mathematics, 75(1-3):167-215, 1989.",
+        "Carlos R. Lucatero, <a href=\"https://www.intechopen.com/online-first/combinatorial-enumeration-of-graphs\">Combinatorial Enumeration of Graphs</a>."
+    ],
+    "formula": [
+        "a(n) = C( C(n,2), floor(n/2) )."
+    ],
+    "example": [
+        "a(4) is 15 because for n = 4, floor(n/2) = 2, and there are two graphs with four points and two edges. See the figure below or the J. Riordan reference.",
+        "The non-isomorphic graphs with four nodes and two edges along with the corresponding number of labeled graphs are as follows:",
+        ".",
+        "  *--*     *  *",
+        "  |        |  |",
+        "  |        |  |",
+        "  *  *     *  *",
+        "   12        3",
+        "Pp(2) = A302112(2)/a(4) = 15/15 = 1. All the graphs with four nodes and two edges are acyclic."
+    ],
+    "program": [
+        "(PARI)",
+        "C(x, y) = binomial(x, y);",
+        "a(n) = C(C(n,2), n\\2);",
+        "A302112(n)={my(S=0, j); /* From _Jon E. Schoenfield_'s formula in A302112. */",
+        "for(j = 0, n,",
+        "   S+=(-1/2)^j* C(n, j) * C(2*n-1, n+j-1) * (2*n)^(n-j) * (n+j)!",
+        "   );",
+        "(1/n!)*S",
+        "}; /* end A302112(n) */",
+        "c1 = (2/3)^(1/3) * sqrt(Pi) / gamma(1/3);",
+        "UpBoundP(n) = c1 / n^(1/6);            /* Approximation for P(n) */",
+        "UpBoundPp(n) = exp(3/4) * UpBoundP(n); /* Approximation for Pp(n) */",
+        "Pp(n) = A302112(n)/a(2*n);",
+        "Ratio(n) = UpBoundPp(n) / Pp(n);"
+    ],
+    "xref": [
+        "Cf. A000717, A084546, A331504, A302112 (numerators of Pp(n)), A331500, A331501."
+    ],
+    "keyword": "nonn,look",
+    "offset": "1,3",
+    "author": "_Washington Bomfim_, Jan 18 2020",
+    "references": 6,
+    "revision": 82,
+    "time": "2020-03-18T09:47:13-04:00",
+    "created": "2020-02-02T13:30:58-05:00"
+}

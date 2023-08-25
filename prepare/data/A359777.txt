@@ -1,0 +1,29 @@
+{
+    "number": 359777,
+    "data": "4,8,16,32,36,60,64,72,81,84,100,120,128,132,140,144,156,162,168,196,200,204,220,225,228,240,256,260,264,276,280,288,308,312,324,336,340,348,364,372,380,392,400,408,440,441,444,450,456,460,476,480,484,492,512,516,520,528,532,540,552,560,564",
+    "name": "Numbers k such that A356163(k) = 1 but A359774(k) = 0, where A359774 is the parity of Dirichlet inverse of the former (which is the characteristic function of the numbers with an even sum of prime factors, with repetition).",
+    "formula": [
+        "{k | A356163(k)-A359774(k) == 1}."
+    ],
+    "program": [
+        "(PARI)",
+        "A356163(n) = (1-(((n=factor(n))[, 1]~*n[, 2])%2)); \\\\ After code in A001414.",
+        "memoA359773 = Map();",
+        "A359773(n) = if(1==n,1,my(v); if(mapisdefined(memoA359773,n,&v), v, v = -sumdiv(n,d,if(d<n,A356163(n/d)*A359773(d),0)); mapput(memoA359773,n,v); (v)));",
+        "A359774(n) = (A359773(n)%2);",
+        "isA359767(n) = (A356163(n)&&!(A359774(n)));"
+    ],
+    "xref": [
+        "Cf. A001414, A356163, A359773, A359774.",
+        "Setwise difference A036349 \\ A359775.",
+        "Setwise difference A359776 \\ A335657.",
+        "Cf. also A359767, A359784."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jan 15 2023",
+    "references": 4,
+    "revision": 5,
+    "time": "2023-01-15T15:10:30-05:00",
+    "created": "2023-01-15T15:10:30-05:00"
+}

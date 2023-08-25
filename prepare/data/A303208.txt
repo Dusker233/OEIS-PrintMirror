@@ -1,0 +1,36 @@
+{
+    "number": 303208,
+    "data": "0,9,334,53731,30844786,66544564805,556588617042914,18376877842518517955,2414913046805958120844234,1267171440764716263069641387581,2658150749788131925244338204731596650,22299981643440069703358952237798936248817875",
+    "name": "Number of total dominating sets in the n X n rook graph.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A303208/b303208.txt\">Table of n, a(n) for n = 1..50</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RookGraph.html\">Rook Graph</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TotalDominatingSet.html\">Total Dominating Set</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} (-1)^k*binomial(n,k)^2*k!*A287065(n-k). - _Andrew Howroyd_, Apr 20 2018",
+        "a(n) ~ 2^(n^2). - _Vaclav Kotesovec_, Apr 20 2018"
+    ],
+    "mathematica": [
+        "b[0] = 1; b[n_] := (2^n - 1)^n + Sum[Binomial[n, i] Sum[(-1)^j (-1 + 2^(n - j))^i Binomial[n, j], {j, 0, n}], {i, n - 1}]; Table[Sum[(-1)^k Binomial[n, k]^2 k! b[n - k], {k, 0, n}], {n, 10}]"
+    ],
+    "program": [
+        "(PARI) \\\\ here c(n) is A287065.",
+        "b(m, n)=sum(j=0, m, (-1)^j*binomial(m, j)*(2^(m - j) - 1)^n);",
+        "c(n)=(2^n-1)^n + sum(i=1, n-1, b(n, i)*binomial(n, i));",
+        "a(n) = {sum(k=0, n, (-1)^k*binomial(n,k)^2*k!*c(n-k))} \\\\ _Andrew Howroyd_, Apr 20 2018"
+    ],
+    "xref": [
+        "Cf. A287065, A289196, A303211."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Eric W. Weisstein_, Apr 19 2018",
+    "ext": [
+        "Terms a(6) and beyond from _Andrew Howroyd_, Apr 20 2018"
+    ],
+    "references": 2,
+    "revision": 14,
+    "time": "2018-04-20T17:46:36-04:00",
+    "created": "2018-04-20T11:34:16-04:00"
+}

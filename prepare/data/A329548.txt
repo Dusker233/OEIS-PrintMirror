@@ -1,0 +1,47 @@
+{
+    "number": 329548,
+    "data": "1,2,2,3,4,5,6,6,7,8,9,10,11,11,12,13,14,15,16,17,17,19,20,20,21,22,23,24,25,26,27,27,28,29,30,31,32,32,33,35,36,36,37,38,39,41,42,42,43,44,45,47,48,48,48,49,50,52,53,53,54,54,55,56,57,59,60",
+    "name": "a(n) is the number of types of regions in the n-th antidiagonal stripe of the arrangement made of 3 families of lines: x=log(integer); y=log(integer); x+y=log(integer).",
+    "comment": [
+        "Consider the arrangement made of all lines with equations x=log(integer), y=log(integer), and x+y=log(integer). Let's call the \"n-th stripe\" that portion of the first quadrant between the lines x+y=log(n) and x+y=log(n+1). The n-th stripe contains 2*n-1 regions (triangles, trapezoids and parallelograms), many of which may be isometric. We can consider that isometric regions are of the same type. By definition, a(n) is the number of distinct types of regions in the n-th stripe."
+    ],
+    "example": [
+        "The first three stripes of the arrangement look like:",
+        "  L",
+        "  |\\",
+        "  | \\",
+        "  G--K",
+        "  |\\  \\              with:",
+        "  | \\  \\              (AH): y=log(1)=0",
+        "  |  \\  \\             (AL): x=log(1)=0",
+        "  C---F--J            (CJ): y=log(2)",
+        "  |\\   \\ |\\           (BJ): x=log(2)",
+        "  | \\   \\| \\          (GK): y=log(3)",
+        "  |  \\   E  \\         (DI): x=log(3)",
+        "  |   \\  |\\  I        (BC): x+y=log(2)",
+        "  |    \\ | \\ |\\       (DG): x+y=log(3)",
+        "  |     \\|  \\| \\      (HL): x+y=log(4)",
+        "  A------B---D--H",
+        "The first stripe contains just one region -- the ABC triangle --, and hence just one type of regions: a(1) = 1.",
+        "The second stripe contains 3 regions -- the BDE and CFG triangles, and the BEFC trapezoid. Yet, BDE and CFG are isometric, so this stripe contains just two types of regions and a(2) = 2.",
+        "The third stripe contains 5 regions but since DHI \"=\" EJF \"=\" GKL and EDIJ \"=\" FJKG, it contains just a(3) = 2 types."
+    ],
+    "mathematica": [
+        "l[k_] := Sort[(Join[#, 1/#] &)@Table[m^2/k, {m, 1, k}]]",
+        "s[c_, d_] := {Min[c, d], Max[c, d]}",
+        "f[k_] := Module[{L, LL}, L = l[k]; LL = Take[l[k + 1], {2, 2*k + 1}];",
+        "  MapThread[s, {Ratios[L], Ratios[LL]}]]",
+        "a[n_] := Length[DeleteDuplicates[f[n]]]",
+        "Table[a[n], {n, 1, 50}]"
+    ],
+    "xref": [
+        "Cf. A000005 (number of divisors of n; number of triangles in the n-th stripe with their right angle oriented SW)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Luc Rousseau_, Nov 16 2019",
+    "references": 0,
+    "revision": 9,
+    "time": "2019-12-21T15:10:55-05:00",
+    "created": "2019-12-21T15:10:55-05:00"
+}

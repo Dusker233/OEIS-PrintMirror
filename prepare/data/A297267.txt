@@ -1,0 +1,33 @@
+{
+    "number": 297267,
+    "data": "9,18,19,27,28,29,36,37,38,39,45,46,47,48,49,54,55,56,57,58,59,63,64,65,66,67,68,69,72,73,74,75,76,77,78,79,81,90,99,108,117,126,135,144,153,162,163,171,172,180,181,189,190,198,199,207,208,216,217,225",
+    "name": "Numbers whose base-9 digits have greater down-variation than up-variation; see Comments.",
+    "comment": [
+        "Suppose that n has base-b digits b(m), b(m-1), ..., b(0).  The base-b down-variation of n is the sum DV(n,b) of all d(i)-d(i-1) for which d(i) > d(i-1); the base-b up-variation of n is the sum UV(n,b) of all d(k-1)-d(k) for which d(k) < d(k-1).  The total base-b variation of n is the sum TV(n,b) = DV(n,b) + UV(n,b).  See the guide at A297330."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A297267/b297267.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "225 in base-9:  2,7,0, having DV = 7, UV = 5, so that 225 is in the sequence."
+    ],
+    "mathematica": [
+        "g[n_, b_] := Map[Total, GatherBy[Differences[IntegerDigits[n, b]], Sign]];",
+        "x[n_, b_] := Select[g[n, b], # < 0 &]; y[n_, b_] := Select[g[n, b], # > 0 &];",
+        "b = 9; z = 2000; p = Table[x[n, b], {n, 1, z}]; q = Table[y[n, b], {n, 1, z}];",
+        "w = Sign[Flatten[p /. {} -> {0}] + Flatten[q /. {} -> {0}]];",
+        "Take[Flatten[Position[w, -1]], 120]   (* A297267 *)",
+        "Take[Flatten[Position[w, 0]], 120]    (* A297268 *)",
+        "Take[Flatten[Position[w, 1]], 120]    (* A297269 *)"
+    ],
+    "xref": [
+        "Cf. A297330, A297268, A297269."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jan 15 2018",
+    "references": 4,
+    "revision": 4,
+    "time": "2018-01-16T11:32:03-05:00",
+    "created": "2018-01-16T11:32:03-05:00"
+}

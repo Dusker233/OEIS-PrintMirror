@@ -1,0 +1,53 @@
+{
+    "number": 360956,
+    "data": "1,1,3,5,10,13,26,31,55,73,112,140,233,276,405,539,750,931,1327,1627,2259,2839,3708,4624,6237,7636,9823,12275,15715,19227,24735,30000,37930,46339,57574,70374,87704,105606,129998,157417,193240,231769,283585,339052,411682,493260",
+    "name": "Number of finite even-length multisets of positive integers whose right half sums to n.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A360956/b360956.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: 1 + Sum_{k>=1} x^k/((1 - x^k)^(k+1) * Product_{j=1..k-1} (1-x^j)). - _Andrew Howroyd_, Mar 11 2023"
+    ],
+    "example": [
+        "The a(1) = 1 through a(5) = 13 multisets:",
+        "  {1,1}  {1,2}      {1,3}          {1,4}              {1,5}",
+        "         {2,2}      {2,3}          {2,4}              {2,5}",
+        "         {1,1,1,1}  {3,3}          {3,4}              {3,5}",
+        "                    {1,1,1,2}      {4,4}              {4,5}",
+        "                    {1,1,1,1,1,1}  {1,1,1,3}          {5,5}",
+        "                                   {1,1,2,2}          {1,1,1,4}",
+        "                                   {1,2,2,2}          {1,1,2,3}",
+        "                                   {2,2,2,2}          {1,2,2,3}",
+        "                                   {1,1,1,1,1,2}      {2,2,2,3}",
+        "                                   {1,1,1,1,1,1,1,1}  {1,1,1,1,1,3}",
+        "                                                      {1,1,1,1,2,2}",
+        "                                                      {1,1,1,1,1,1,1,2}",
+        "                                                      {1,1,1,1,1,1,1,1,1,1}",
+        "For example, the multiset y = {1,2,2,3} has right half {2,3}, with sum 5, so y is counted under a(5)."
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@IntegerPartitions/@Range[0,3*k], EvenQ[Length[#]]&&Total[Take[#,Length[#]/2]]==k&]],{k,0,15}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(s=1 + O(x*x^n), p=s); for(k=1, n, s += p*x^k/(1-x^k + O(x*x^(n-k)))^(k+1); p /= 1 - x^k); Vec(s)} \\\\ _Andrew Howroyd_, Mar 11 2023"
+    ],
+    "xref": [
+        "This is the even-length case of A360671 and A360673.",
+        "First for prime indices, second for partitions, third for prime factors:",
+        "- A360676 gives left sum (exclusive), counted by A360672, product A361200.",
+        "- A360677 gives right sum (exclusive), counted by A360675, product A361201.",
+        "- A360678 gives left sum (inclusive), counted by A360675, product A347043.",
+        "- A360679 gives right sum (inclusive), counted by A360672, product A347044.",
+        "Cf. A000041, A360674, A360954, A360955."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Mar 09 2023",
+    "ext": [
+        "Terms a(16) and beyond from _Andrew Howroyd_, Mar 11 2023"
+    ],
+    "references": 5,
+    "revision": 9,
+    "time": "2023-03-11T14:21:26-05:00",
+    "created": "2023-03-09T23:08:42-05:00"
+}

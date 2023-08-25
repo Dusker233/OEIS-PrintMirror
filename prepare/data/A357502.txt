@@ -1,0 +1,37 @@
+{
+    "number": 357502,
+    "data": "1,2,6,20,80,342,1624,8136,43776,246410,1463264,9033180,58200064,387905182,2679200640,19068105488,139929124864,1054773505170,8167509816832,64795371984420,526534098026496,4374163243287398,37135913476691968,321727849480560600",
+    "name": "a(n) = ((1 + sqrt(n))^n - (1 - sqrt(n))^n)/(2*sqrt(n)).",
+    "formula": [
+        "From _Alois P. Heinz_, Oct 01 2022: (Start)",
+        "a(n) = [x^n] x/(1-2*x-(n-1)*x^2).",
+        "a(n) = Sum_{j=0..floor(n/2)} n^j * binomial(n,2*j+1).",
+        "a(n) = A099173(n,n). (End)"
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember;",
+        "     `if`(n<2, n, 2*b(n-1, k)+(k-1)*b(n-2, k))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=1..26);  # _Alois P. Heinz_, Oct 01 2022"
+    ],
+    "mathematica": [
+        "Simplify[Table[((1 + Sqrt[n])^n - (1 - Sqrt[n])^n)/(2*Sqrt[n]),{n,26}]] (* _Stefano Spezia_, Oct 03 2022 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = polcoeff(lift( Mod('x,'x^2-2*'x+1-n)^n ),1); \\\\ _Kevin Ryde_, Oct 01 2022",
+        "(Python)",
+        "from sympy import simplify, sqrt",
+        "def A357502(n): return simplify(((1+sqrt(n))**n-(1-sqrt(n))**n)/sqrt(n))>>1 # _Chai Wah Wu_, Oct 14 2022"
+    ],
+    "xref": [
+        "Main diagonal of A099173."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Alexander R. Povolotsky_, Oct 01 2022",
+    "references": 3,
+    "revision": 26,
+    "time": "2022-10-14T16:29:47-04:00",
+    "created": "2022-10-03T12:10:52-04:00"
+}

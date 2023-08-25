@@ -1,0 +1,52 @@
+{
+    "number": 346424,
+    "data": "1,2,11,74,592,5317,52902,572402,6670707,83025806,1096662664,15292076689,224145880470,3440981816071,55153081768896,920494136057715,15959177281931953,286834809549486462,5334308665713522860,102476857445135062727,2030589375575413246579",
+    "name": "Number of partitions of the 2n-multiset {0,...,0,1,2,...,n}.",
+    "comment": [
+        "Also number of factorizations of 2^n * Product_{i=1..n} prime(i+1); a(2) = 11: 2*2*3*5, 3*4*5, 2*5*6, 6*10, 2*3*10, 5*12, 4*15, 2*2*15, 3*20, 2*30, 60."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A346424/b346424.txt\">Table of n, a(n) for n = 0..509</a>"
+    ],
+    "formula": [
+        "a(n) = A001055(A000079(n)*A070826(n+1)).",
+        "a(n) = Sum_{j=0..n} A048993(n,j)*A292508(n,j+1).",
+        "a(n) = A346426(n,n)."
+    ],
+    "example": [
+        "a(0) = 1: {}.",
+        "a(1) = 2: 01, 0|1.",
+        "a(2) = 11: 00|1|2, 001|2, 1|002, 0|0|1|2, 0|01|2, 0|1|02, 01|02, 00|12, 0|0|12, 0|012, 0012."
+    ],
+    "maple": [
+        "s:= proc(n) option remember; expand(`if`(n=0, 1,",
+        "      x*add(s(n-j)*binomial(n-1, j-1), j=1..n)))",
+        "    end:",
+        "S:= proc(n, k) option remember; coeff(s(n), x, k) end:",
+        "b:= proc(n, i) option remember; `if`(n=0, 1, `if`(i=0,",
+        "      combinat[numbpart](n), add(b(n-j, i-1), j=0..n)))",
+        "    end:",
+        "a:= n-> add(S(n, j)*b(n, j), j=0..n):",
+        "seq(a(n), n=0..21);"
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = Expand[If[n == 0, 1,",
+        "     x*Sum[s[n - j]*Binomial[n - 1, j - 1], {j, 1, n}]]];",
+        "S[n_, k_] := S[n, k] = Coefficient[s[n], x, k];",
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, If[i == 0,",
+        "     PartitionsP[n], Sum[b[n - j, i - 1], {j, 0, n}]]];",
+        "a[n_] := Sum[S[n, j]*b[n, j], {j, 0, n}];",
+        "Table[a[n], {n, 0, 21}] (* _Jean-Fran\u00e7ois Alcover_, Apr 06 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Main diagonal of A346426.",
+        "Cf. A000040, A000041, A000079, A000110, A001055, A048993, A070826, A292508, A346519."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Jul 16 2021",
+    "references": 3,
+    "revision": 26,
+    "time": "2022-04-07T10:51:55-04:00",
+    "created": "2021-07-16T17:57:57-04:00"
+}

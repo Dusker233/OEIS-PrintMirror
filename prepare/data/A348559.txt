@@ -1,0 +1,46 @@
+{
+    "number": 348559,
+    "data": "3,13,23,43,53,73,83,313,353,373,383,1303,1373,2383,2393,4363,4373,5303,5323,5393,6323,6343,6353,6373,7393,8353,8363,9323,9343,30313,30323,31393,32303,32323,32353,32363,34303,34313,35323,35353,35363,35393,36313,36343",
+    "name": "Primes where every other digit is 3 starting with the rightmost digit, and no other digit is 3.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A348559/b348559.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "Select[Prime@Range@10000,(n=#;s={EvenQ,OddQ};t=Take[IntegerDigits@n,{#}]&/@Select[Range@i,#]&/@If[EvenQ[i=IntegerLength@n],s,Reverse@s];Union@Flatten@First@t=={3}&&FreeQ[Flatten@Last@t,3])&] (* _Giorgos Kalogeropoulos_, Oct 22 2021 *)"
+    ],
+    "program": [
+        "(Magma) f3:=func<n|forall{i:i in [1..#Intseq(n) by 2]| Intseq(n)[i] eq 3}>;  fc:=func<n|  forall{i:i in [2..#Intseq(n) by 2]| Intseq(n)[i] ne 3}>; [p:p in PrimesUpTo(40000)|f3(p) and fc(p)]; // _Marius A. Burtea_, Oct 22 2021",
+        "(Python)",
+        "from sympy import primerange as primes",
+        "def ok(p):",
+        "    s = str(p)",
+        "    if not all(s[i] == '3' for i in range(-1, -len(s)-1, -2)): return False",
+        "    return all(s[i] != '3' for i in range(-2, -len(s)-1, -2))",
+        "print(list(filter(ok, primes(1, 36344)))) # _Michael S. Branicky_, Oct 22 2021",
+        "(Python) # faster version for generating large initial segments of sequence",
+        "from sympy import isprime",
+        "from itertools import product",
+        "def eo3(maxdigits): # generator for every other digit is 3, no other 3's",
+        "    yield 3",
+        "    for d in range(2, maxdigits+1):",
+        "        if d%2 == 0:",
+        "            for f in \"12456789\":",
+        "                f3 = f + \"3\"",
+        "                for p in product(\"012456789\", repeat=(d-1)//2):",
+        "                    yield int(f3 + \"\".join(p[i]+\"3\" for i in range(len(p))))",
+        "        else:",
+        "            for p in product(\"012456789\", repeat=(d-1)//2):",
+        "                yield int(\"3\" + \"\".join(p[i]+\"3\" for i in range(len(p))))",
+        "print(list(filter(isprime, eo3(5)))) # _Michael S. Branicky_, Oct 22 2021"
+    ],
+    "xref": [
+        "Cf. A000040, A348558, A348560, A348561."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Lars Blomberg_, Oct 22 2021",
+    "references": 4,
+    "revision": 15,
+    "time": "2022-09-08T08:46:26-04:00",
+    "created": "2021-10-23T00:11:22-04:00"
+}

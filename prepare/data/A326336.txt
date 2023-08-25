@@ -1,0 +1,55 @@
+{
+    "number": 326336,
+    "data": "1,1,1,1,2,7,24,100,458,2279,12270",
+    "name": "Number of set partitions of {1..n} whose capturing blocks are connected.",
+    "comment": [
+        "Two blocks are capturing if they are of the form {...x...y...}, {...z...t...} where x < z < t < y or z < x < y < t. A set partition has its capturing blocks connected if the graph whose vertices are the blocks and whose edges are capturing pairs of blocks is connected."
+    ],
+    "example": [
+        "The a(0) = 1 through a(6) = 24 set partitions:",
+        "  {}  {1}  {12}  {123}  {1234}    {12345}    {123456}",
+        "                        {14}{23}  {125}{34}  {1236}{45}",
+        "                                  {134}{25}  {1245}{36}",
+        "                                  {135}{24}  {1246}{35}",
+        "                                  {14}{235}  {125}{346}",
+        "                                  {145}{23}  {1256}{34}",
+        "                                  {15}{234}  {126}{345}",
+        "                                             {134}{256}",
+        "                                             {1345}{26}",
+        "                                             {1346}{25}",
+        "                                             {135}{246}",
+        "                                             {1356}{24}",
+        "                                             {136}{245}",
+        "                                             {14}{2356}",
+        "                                             {145}{236}",
+        "                                             {1456}{23}",
+        "                                             {146}{235}",
+        "                                             {15}{2346}",
+        "                                             {156}{234}",
+        "                                             {16}{2345}",
+        "                                             {15}{26}{34}",
+        "                                             {16}{23}{45}",
+        "                                             {16}{24}{35}",
+        "                                             {16}{25}{34}"
+    ],
+    "mathematica": [
+        "capXQ[stn_]:=MatchQ[stn,{___,{___,x_,___,y_,___},___,{___,z_,___,t_,___},___}/;x<z<t<y||z<x<y<t];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "captcmpts[stn_]:=csm[Union[List/@stn,Select[Subsets[stn,{2}],capXQ]]];",
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "Table[Length[Select[sps[Range[n]],Length[captcmpts[#]]<=1&]],{n,0,6}]"
+    ],
+    "xref": [
+        "Simple graphs whose capturing blocks are connected are A326330.",
+        "Set partitions whose crossing blocks are connected are A099947.",
+        "Set partitions whose nesting blocks are connected are A326335.",
+        "Cf. A000110, A001519, A016098, A122880, A324173, A326243, A326248, A326293, A326331, A326337."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,5",
+    "author": "_Gus Wiseman_, Jun 28 2019",
+    "references": 5,
+    "revision": 6,
+    "time": "2019-06-28T21:14:48-04:00",
+    "created": "2019-06-28T21:14:48-04:00"
+}

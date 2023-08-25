@@ -1,0 +1,46 @@
+{
+    "number": 340595,
+    "data": "2,4,8,21,42,65,80,217,488,721,2120,2349,2796,9214,16043,23287,28626,43588,58176,116982,213435,444329,640673,967248,1399895,1449156,1528785,2768054,2915135,3631071,3673118,5032731,12977420",
+    "name": "a(n) is the least k for which A340594(k) = n.",
+    "comment": [
+        "a(n) is the least k >= 2 from which it takes exactly n iterations of A340592 to reach 0, 1 or a prime."
+    ],
+    "example": [
+        "Starting from 21, it takes 3 iterations of A340592 to reach 0,1 or a prime: 21 -> 16 -> 14 -> 13.  Since this is the first case where 3 iterations are required, a(3) = 21."
+    ],
+    "maple": [
+        "dcat:= proc(L) local i, x;",
+        "  x:= L[-1];",
+        "  for i from nops(L)-1 to 1 by -1 do",
+        "    x:= 10^(1+ilog10(x))*L[i]+x",
+        "  od;",
+        "  x",
+        "end proc:",
+        "f:= proc(n) local F;",
+        "  F:= sort(ifactors(n)[2], (a, b) -> a[1] < b[1]);",
+        "  dcat(map(t -> t[1]$t[2], F)) mod n;",
+        "end proc:",
+        "g:= proc(n) option remember;",
+        "     if isprime(n) then 0 else 1 + procname(f(n)) fi",
+        "end proc:",
+        "g(0):= 0: g(1):= 0:",
+        "V:= Array(0..30): count:= 0:",
+        "for n from 2 while count < 31 do",
+        "  v:= f(n);",
+        "  if v::integer and v <= 100 and V[v] = 0 then",
+        "      count:= count+1; V[v]:= n;",
+        "    fi",
+        "od:",
+        "convert(V,list);"
+    ],
+    "xref": [
+        "Cf. A340592, A340594."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 13 2021",
+    "references": 2,
+    "revision": 5,
+    "time": "2021-01-14T02:48:03-05:00",
+    "created": "2021-01-14T02:48:03-05:00"
+}

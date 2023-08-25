@@ -1,0 +1,32 @@
+{
+    "number": 341367,
+    "data": "1,12,84,442,1932,7392,25551,81468,243126,686400,1848156,4775874,11904215,28737732,67416756,154122912,344177823,752310720,1612395007,3393652848,7023685794,14311193104,28737793986,56924936052,111323290934,215095157964,410895944148,776529566516",
+    "name": "Expansion of (1 / theta_4(x) - 1)^6 / 64.",
+    "formula": [
+        "G.f.: (1/64) * (-1 + Product_{k>=1} (1 + x^k) / (1 - x^k))^6."
+    ],
+    "maple": [
+        "g:= proc(n, i) option remember; `if`(n=0, 1/2, `if`(i=1, 0,",
+        "      g(n, i-1))+add(2*g(n-i*j, i-1), j=`if`(i=1, n, 1)..n/i))",
+        "    end:",
+        "b:= proc(n, k) option remember; `if`(k=0, 1, `if`(k=1, `if`(n=0, 0,",
+        "      g(n$2)), (q-> add(b(j, q)*b(n-j, k-q), j=0..n))(iquo(k, 2))))",
+        "    end:",
+        "a:= n-> b(n, 6):",
+        "seq(a(n), n=6..33);  # _Alois P. Heinz_, Feb 10 2021"
+    ],
+    "mathematica": [
+        "nmax = 33; CoefficientList[Series[(1/EllipticTheta[4, 0, x] - 1)^6/64, {x, 0, nmax}], x] // Drop[#, 6] &",
+        "nmax = 33; CoefficientList[Series[(1/64) (-1 + Product[(1 + x^k)/(1 - x^k), {k, 1, nmax}])^6, {x, 0, nmax}], x] // Drop[#, 6] &"
+    ],
+    "xref": [
+        "Cf. A002448, A004407, A014968, A015128, A327384, A338223, A340905, A341225, A341364, A341365, A341366, A341368, A341369, A341370."
+    ],
+    "keyword": "nonn",
+    "offset": "6,2",
+    "author": "_Ilya Gutkovskiy_, Feb 10 2021",
+    "references": 7,
+    "revision": 7,
+    "time": "2021-02-10T10:04:07-05:00",
+    "created": "2021-02-10T10:04:07-05:00"
+}

@@ -1,0 +1,55 @@
+{
+    "number": 339507,
+    "data": "1,2,4,8,15,24,32,41,55,79,126,220,406,778,1524,3057,6310,13211,27500,56246,113003,224220,442106,870323,1715503,3391092,6726084,13382357,26686192,53286329,106469764,212803832,425434124,850676115,1701169724,3402169203,6804150711,13608072837,27215890383,54431527170",
+    "name": "Number of subsets of {1..n} whose sum is a decimal palindrome.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A339507/b339507.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PalindromicNumber.html\">Palindromic Number</a>",
+        "<a href=\"/index/Pac#palindromes\">Index entries for sequences related to palindromes</a>"
+    ],
+    "example": [
+        "a(5) = 24 subsets: {}, {1}, {2}, {3}, {4}, {5}, {1, 2}, {1, 3}, {1, 4}, {1, 5}, {2, 3}, {2, 4}, {2, 5}, {3, 4}, {3, 5}, {4, 5}, {1, 2, 3}, {1, 2, 4}, {1, 2, 5}, {1, 3, 4}, {1, 3, 5}, {2, 3, 4}, {2, 4, 5} and {1, 2, 3, 5}."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import combinations",
+        "def a(n):",
+        "    ans = 0",
+        "    for r in range(n+1):",
+        "        for s in combinations(range(1,n+1),r):",
+        "            strss = str(sum(s))",
+        "            ans += strss==strss[::-1]",
+        "    return ans",
+        "print([a(n) for n in range(21)]) # _Michael S. Branicky_, Dec 07 2020",
+        "(Python)",
+        "from functools import lru_cache",
+        "from itertools import combinations",
+        "@lru_cache(maxsize=None)",
+        "def A339507(n):",
+        "    pallist = set(i for i in range(1,n*(n+1)//2+1) if str(i) == str(i)[::-1])",
+        "    return 1 if n == 0 else A339507(n-1) + sum(sum(d)+n in pallist for i in range(n) for d in combinations(range(1,n),i)) # _Chai Wah Wu_, Dec 08 2020",
+        "(Python)",
+        "from functools import lru_cache",
+        "def cond(s): ss = str(s); return ss == ss[::-1]",
+        "@lru_cache(maxsize=None)",
+        "def b(n, s):",
+        "    if n == 0: return int(cond(s))",
+        "    return b(n-1, s) + b(n-1, s+n)",
+        "a = lambda n: b(n, 0)",
+        "print([a(n) for n in range(100)]) # _Michael S. Branicky_, Oct 05 2022"
+    ],
+    "xref": [
+        "Cf. A002113, A126024, A126111, A127542, A284250, A339508."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Dec 07 2020",
+    "ext": [
+        "a(23)-a(36) from _Michael S. Branicky_, Dec 08 2020",
+        "a(37)-a(39) from _Chai Wah Wu_, Dec 11 2020"
+    ],
+    "references": 2,
+    "revision": 33,
+    "time": "2022-10-06T04:30:45-04:00",
+    "created": "2020-12-08T08:37:50-05:00"
+}

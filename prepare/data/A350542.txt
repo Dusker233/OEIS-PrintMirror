@@ -1,0 +1,54 @@
+{
+    "number": 350542,
+    "data": "12,626598,663570,1322148,2144478,2668218,6510192,6937938,10187910,11495580,11721768,18873498,18873510,25658430,39659532,39851292,46533468,80572158,84099318,86944602,91814712,93956100,123911532,128469150,129902022,148979838",
+    "name": "Twin primes x, represented by their average, such that x is the first and x+30 the last of four successive twins.",
+    "comment": [
+        "Subsequence of A014574. For x>6, d=30 is the least possible difference between the least and the greatest of four twins. With d=24, six primes would have the form 6*k+-1, 6*k+6+-1,6*k+12+-1 which is impossible because one of the six numbers would be divisible by 5. Therefore, d>24, except for x=6. The distribution of 1134 terms < 10^11 is in accordance with the k-tuple conjecture, see links \"k-tuple conjecture\" and A350541, \"Test of the k-tuple conjecture\".",
+        "Generalization:",
+        "Twin primes x such that x is the first and x+d the last of m successive twins.",
+        "m   d",
+        "1   0  A014574(n) twin primes",
+        "2   6  A173037(n)-3",
+        "3  12  Only one quadruple: (6,12,18,30)",
+        "3  18  A350541",
+        "4  24  Only one quintuple: (6,12,18,30,42)",
+        "4  30  Current sequence",
+        "5  36  See A350543",
+        "5  42  See A350543",
+        "5  48  A350543"
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/k-TupleConjecture.html\">k-Tuple Conjecture</a>."
+    ],
+    "example": [
+        "Quadruples of twins  Example       8-tuple of primes",
+        "(x,x+ 6,x+18,x+30)   x=12      (11,13,17,19,29,31,41,43)",
+        "(x,x+12,x+24,x+30)   x=626598  (x-1,x+1,x+11,x+13,x+23,x+25,x+29,x+31)",
+        "(x,x+12,x+18,x+30)   x=663570  (x-1,x+1,x+11,x+13,x+17,x+19,x+29,x+31)",
+        "(x,x+ 6,x+24,x+30), (x,x+6,x+12,x+30) and (x,x+18,x+24,x+30) do not occur for divisibility reasons."
+    ],
+    "mathematica": [
+        "Select[Prime@Range[4,200000], Count[Range[#,#+30],_?(PrimeQ@#&&PrimeQ[#+2]&)]==4&]+1 (* _Giorgos Kalogeropoulos_, Jan 07 2022 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "block(twin:[], n:0, p1:11, j2:1, nmax: 3,",
+        "/*returns nmax terms*/",
+        "m:4, d:30, w: makelist(-d,i,1,m),",
+        "while n<nmax  do(",
+        "p2: next_prime(p1), if p2-p1=2 then(",
+        "  k:p1+1, j1:j2, j2:1+ mod(j2,m), w[j1]:k,",
+        "  if w[j1]-w[j2]=d then(n:n+1, twin: append(twin,[k-d]))),",
+        "p1:p2), twin);"
+    ],
+    "xref": [
+        "Cf. A014574, A173037, A350541, A350543."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gerhard Kirchner_, Jan 07 2022",
+    "references": 2,
+    "revision": 17,
+    "time": "2023-03-04T11:32:29-05:00",
+    "created": "2022-02-15T16:38:15-05:00"
+}

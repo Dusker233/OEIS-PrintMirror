@@ -1,0 +1,52 @@
+{
+    "number": 306262,
+    "data": "0,0,0,4,11,24,42,68,101,144,196,260,335,424,526,644,777,928,1096,1284,1491,1720,1970,2244,2541,2864,3212,3588,3991,4424,4886,5380,5905,6464,7056,7684,8347,9048,9786,10564,11381,12240,13140,14084,15071,16104,17182",
+    "name": "Difference between maximum and minimum sum of products of successive pairs in permutations of [n].",
+    "link": [
+        "Colin Barker, <a href=\"/A306262/b306262.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-2,-2,3,-1)."
+    ],
+    "formula": [
+        "a(n+1) = a(n) + 1/4*((-1+(-1)^(n-1))^2+2*(n-1)*(n+4)) with a(n) = 0 for n <= 2.",
+        "From _Alois P. Heinz_, Feb 01 2019: (Start)",
+        "G.f.: -(x^2+x-4)*x^3/((x+1)*(x-1)^4).",
+        "a(n) = (2*n^3+6*n^2-26*n+15-3*(-1)^n)/12 for n > 0.",
+        "a(n) = A101986(n-1) - A026035(n) for n > 0. (End)",
+        "a(n) = 3*a(n-1)-2*a(n-2)-2*a(n-3)+3*a(n-4)-a(n-5). - _Wesley Ivan Hurt_, May 28 2021"
+    ],
+    "example": [
+        "a(4) = 11 = 23 - 12. 1342 and 2431 have sums 23, 3214 and 4123 have sums 12."
+    ],
+    "maple": [
+        "a:= n-> `if`(n=0, 0, (<<0|1|0|0|0>, <0|0|1|0|0>, <0|0|0|1|0>,",
+        "    <0|0|0|0|1>, <-1|3|-2|-2|3>>^n. <<1, 0, 0, 4, 11>>)[1, 1]):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Feb 02 2019"
+    ],
+    "mathematica": [
+        "a[n_] := Module[",
+        "  {min, max, perm, g, mperm},",
+        "  perm = Permutations[Range[n]];",
+        "  g[x_] := Sum[x[[i]] x[[i + 1]], {i, 1, Length[x] - 1}];",
+        "  mperm = Map[g, perm];",
+        "  min = Min[mperm];",
+        "  max = Max[mperm];",
+        "  Return[max - min]]",
+        "LinearRecurrence[{3,-2,-2,3,-1},{0,0,0,4,11,24},60] (* _Harvey P. Dale_, Aug 05 2020 *)"
+    ],
+    "program": [
+        "(PARI) concat([0,0,0], Vec(x^3*(4 - x - x^2) / ((1 - x)^4*(1 + x)) + O(x^40))) \\\\ _Colin Barker_, Feb 05 2019"
+    ],
+    "xref": [
+        "Cf. A026035, A101986."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Louis Rogliano_, Feb 01 2019",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Feb 01 2019"
+    ],
+    "references": 1,
+    "revision": 51,
+    "time": "2021-05-28T13:12:34-04:00",
+    "created": "2019-02-03T09:46:29-05:00"
+}

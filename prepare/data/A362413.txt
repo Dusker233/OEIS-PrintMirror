@@ -1,0 +1,56 @@
+{
+    "number": 362413,
+    "data": "1,1,2,8,44,244,1744,13768,127952,1270736,14384096,172799296,2306400832,32442943168,498547591424,8031916728704,139611091407104,2533449773986048,49133884886866432,991341134236389376,21218511171980205056,471083434031674336256",
+    "name": "The second moment of an n X n symmetric random +-1 matrix.",
+    "comment": [
+        "This sequence gives the expectation of the second moment of a random symmetric sign matrix of size n X n."
+    ],
+    "reference": [
+        "Zelin Lv, On The Moments of Random Determinants, Master Thesis, the University of Chicago.",
+        "I. G. Zhurbenko, Moments of random determinants, Theory of Probability & Its Application, 13(4):682-686, 1968."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A362413/b362413.txt\">Table of n, a(n) for n = 0..448</a>"
+    ],
+    "formula": [
+        "f^(sym)_2(n) = q(n) * (n-1)!, where",
+        "p(n) =",
+        "1, if n <= 2",
+        "2, if n >= 3 and n is odd",
+        "3, if n >= 4 and n is even",
+        "q(n) = p(n) + Sum_{i=1..n-1}(p(i) * q(n-i)) / (n-i).",
+        "E.g.f.: exp(-x*(x+1))/sqrt((x+1)*(1-x)^5). - _Alois P. Heinz_, Apr 19 2023",
+        "a(n) ~ 4*n^(n+2)/ (3*exp(n+2)). - _Vaclav Kotesovec_, Apr 20 2023",
+        "a(n) = (p(n) + Sum_{i=1..n-1} p(n-i) * a(i)/i! ) * (n-1)!. - _Chai Wah Wu_, Apr 20 2023"
+    ],
+    "maple": [
+        "a:= n-> `if`(n=0, 1, q(n)*(n-1)!):",
+        "p:= n-> `if`(n<3, 1, 3-irem(n, 2)):",
+        "q:= proc(n) option remember;",
+        "      p(n)+add(p(n-i)*q(i)/i, i=1..n-1)",
+        "    end:",
+        "seq(a(n), n=0..21);  # _Alois P. Heinz_, Apr 19 2023"
+    ],
+    "program": [
+        "(SageMath)",
+        "x = LazyPowerSeriesRing(QQ, \"x\").gen()",
+        "egf = exp(-x * (x + 1)) / sqrt((x + 1) * (1 - x)^5)",
+        "[egf[n] * factorial(n) for n in range(22)]  # _Peter Luschny_, Apr 20 2023",
+        "(Python)",
+        "from math import factorial",
+        "from fractions import Fraction",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A362413(n): return int(((1 if n<=2 else (2 if n&1 else 3))+sum(Fraction((1 if n-i<=2 else (2 if n-i&1 else 3))*A362413(i),factorial(i)) for i in range(1,n)))*factorial(n-1)) if n else 1 # _Chai Wah Wu_, Apr 20 2023"
+    ],
+    "xref": [
+        "Cf. A052127, A357571."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Zelin Lv_, Apr 18 2023",
+    "references": 1,
+    "revision": 42,
+    "time": "2023-04-20T14:56:57-04:00",
+    "created": "2023-04-20T09:22:57-04:00"
+}

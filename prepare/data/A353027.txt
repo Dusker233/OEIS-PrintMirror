@@ -1,0 +1,48 @@
+{
+    "number": 353027,
+    "data": "1330,6545,16215,23426,35990,39711,47905,52394,57155,79079,105995,138415,198485,221815,246905,366145,477191,762355,1004731,1216865,1293699,1373701,1587986,1633355,1726669,1823471,1975354,2246839,2862209,2997411,3208094,3580779,4149466,4590551",
+    "name": "Tetrahedral (or triangular pyramidal) numbers which are products of four distinct primes.",
+    "comment": [
+        "A squarefree subsequence of tetrahedral numbers."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A353027/b353027.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "   1330 = 19*20*21/6 = 2 *  5 *  7 * 19;",
+        "   6545 = 33*34*35/6 = 5 *  7 * 11 * 17;",
+        "  16215 = 45*46*47/6 = 3 *  5 * 23 * 47;",
+        "  23426 = 51*52*53/6 = 2 * 13 * 17 * 53."
+    ],
+    "maple": [
+        "filter:= proc(n) local F;",
+        "  F:= ifactors(n,easy)[2];",
+        "  F[..,2] = [1,1,1,1]",
+        "end proc:",
+        "select(filter, [seq(n*(n+1)*(n+2)/6,n=1..1000)]); # _Robert Israel_, Apr 18 2023"
+    ],
+    "mathematica": [
+        "Select[Table[n*(n + 1)*(n + 2)/6, {n, 1, 300}], FactorInteger[#][[;; , 2]] == {1, 1, 1, 1} &] (* _Amiram Eldar_, Apr 18 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "from itertools import count, islice",
+        "def agen():",
+        "    for t in (n*(n+1)*(n+2)//6 for n in count(1)):",
+        "        f = factorint(t, multiple=True)",
+        "        if len(f) == len(set(f)) == 4: yield t",
+        "print(list(islice(agen(), 34))) # _Michael S. Branicky_, May 28 2022"
+    ],
+    "xref": [
+        "Intersection of A000292 and A046386.",
+        "Subsequence of A070755."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Massimo Kofler_, Apr 18 2022",
+    "references": 2,
+    "revision": 26,
+    "time": "2023-04-20T02:29:27-04:00",
+    "created": "2022-05-28T18:23:42-04:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 167007,
+    "data": "1,2,5,26,501,42262,14564184,18926665052,96371663657380,1825266130738144920,136764680697906838980633,38133043109557952095731186822,42464330390232136488003531922964743",
+    "name": "G.f.: A(x) = exp( Sum_{n>=1} A167010(n)*x^n/n ) where A167010(n) = Sum_{k=0..n} binomial(n,k)^n.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A167007/b167007.txt\">Table of n, a(n) for n = 0..59</a>"
+    ],
+    "formula": [
+        "a(n) = (1/n)*Sum_{k=1..n} A167010(k)*a(n-k) for n>0 with a(0)=1. - _Paul D. Hanna_, Nov 25 2009"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 5*x^2 + 26*x^3 + 501*x^4 + 42262*x^5 + ...",
+        "log(A(x)) = 2*x + 6*x^2/2 + 56*x^3/3 + 1810*x^4/4 + 206252*x^5/5 + 86874564*x^6/6 + ... + A167010(n)*x^n/n + ..."
+    ],
+    "mathematica": [
+        "A167010[n_]:= A167010[n]= Sum[Binomial[n,j]^n, {j,0,n}];",
+        "A167007[n_]:= A167007[n]= If[n==0, 1, (1/n)*Sum[A167010[j]*A167007[n-j], {j,n}]];",
+        "Table[A167007[n], {n,0,30}] (* _G. C. Greubel_, Aug 26 2022 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff(exp(sum(m=1, n, sum(k=0, m, binomial(m,k)^m)*x^m/m) +x*O(x^n)), n)};",
+        "(PARI) {a(n)=if(n==0,1,(1/n)*sum(k=1,n,sum(j=0, k, binomial(k, j)^k)*a(n-k)))} \\\\ _Paul D. Hanna_, Nov 25 2009",
+        "(Magma)",
+        "A167010:= func< n | (&+[Binomial(n,j)^n: j in [0..n]]) >;",
+        "function A167007(n)",
+        "  if n lt 2 then return n+1;",
+        "  else return (&+[A167010(j)*A167007(n-j): j in [1..n]])/n;",
+        "  end if; return A167007;",
+        "end function;",
+        "[A167007(n): n in [0..20]]; // _G. C. Greubel_, Aug 26 2022",
+        "(SageMath)",
+        "def A167010(n): return sum(binomial(n,j)^n for j in (0..n))",
+        "def A167007(n): return 1 if (n==0) else (1/n)*sum( A167010(j)*A167007(n-j) for j in (1..n))",
+        "[A167007(n) for n in (0..30)] # _G. C. Greubel_, Aug 26 2022"
+    ],
+    "xref": [
+        "Cf. A155200, A167006, A167010."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 17 2009",
+    "references": 3,
+    "revision": 12,
+    "time": "2022-08-30T14:14:56-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

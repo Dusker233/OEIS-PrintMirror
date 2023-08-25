@@ -1,0 +1,45 @@
+{
+    "number": 345217,
+    "data": "13,149,70949,12314597",
+    "name": "a(n) is the first emirp that starts a chain of exactly n emirps under the mapping f(x) = x + reverse(x) + 1.",
+    "comment": [
+        "a(n) == 5 (mod 6) for n >= 2.",
+        "No more terms < 16*10^11. - _Lars Blomberg_, Jun 25 2021"
+    ],
+    "example": [
+        "a(1) = 13 is the first emirp, but 13+31+1 = 45 is not an emirp.",
+        "a(2) = 149 because 149 and 149+941+1 = 1091 are emirps, but 1091+1901+1 = 2993 is not an emirp.",
+        "a(3) = 70949 because 70949, 70949+94907+1 = 165857, and 165857+758561 = 924419 are emirps, but 924419+914429+1 = 1838849 is not an emirp."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "f:= proc(n) local r,t,x;",
+        "  x:= n;",
+        "  for t from 0 do",
+        "    if not isprime(x) then return t fi;",
+        "    r:= revdigs(x);",
+        "    if not (r <> n and isprime(x) and isprime(r)) then return t fi;",
+        "    x:= x+r+1;",
+        "  od;",
+        "end proc:",
+        "V:= Vector(4): V[1]:= 13: count:= 1:",
+        "for n from 17 by 6 while count < 4 do",
+        "  v:= f(n);",
+        "  if v > 0 and V[v] = 0 then V[v]:= n; count:= count+1 fi;",
+        "od:",
+        "convert(V,list);"
+    ],
+    "xref": [
+        "Cf. A006567."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jun 10 2021",
+    "references": 0,
+    "revision": 9,
+    "time": "2021-06-25T04:07:54-04:00",
+    "created": "2021-06-10T22:33:59-04:00"
+}

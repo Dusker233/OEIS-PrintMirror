@@ -1,0 +1,40 @@
+{
+    "number": 332071,
+    "data": "1,2,3,5,8,11,14,17,21,25,29,33,37,41,45,49,53,57,61,65,70,75,81,87,93,99,105,111,117,123,129,135,141,147,153,159,165,171,177,183,189,195,201,207,213,219,225,231,237,243,249,255,261,267,273,279,285,291,297,303,309,315,321,327",
+    "name": "Lexicographically earliest sequence with a(n) odd terms among the first a(n+1) terms, for any n; a(1) = 1, a(2) = 2.",
+    "comment": [
+        "Without the requirement a(2) = 2 (or: increasing, or: without repeated terms), the trivial sequence (1, 1, 1, ...) = A000012 would also satisfy the definition, repeatedly stating that the first term is odd, ignoring all other terms. But a(2) - a(1) > 0 implies that the sequence will be strictly increasing throughout, and therefore make infinitely many nontrivial statements concerning all of its terms.",
+        "The formula comes from the fact that if we have a(n-1) odd terms among the first a(n) terms, and we need a(n) odd terms among the first a(n+1) terms, then we must use exactly a(n) - a(n-1) odd terms after the a(n)-th terms up to and including the a(n+1)-th terms, whence a(n+1) >= a(n) + a(n) - a(n-1).",
+        "Inspired by _Eric Angelini_'s variant based on digits, cf. LINKS.",
+        "First differences are: 1*2, 2*1, 3*4, 4*12, 5*2, 6*47, 7*2, 8*9, 9*2, 10*281, 11*2, 12*13, 13*2, 14*71, 15*2, 16*17, 17*2, 18*..., where a*b means that a is repeated b times (i.e., the gap of 10 appears 281 times in a row)."
+    ],
+    "link": [
+        "Eric Angelini, <a href=\"https://cinquantesignes.blogspot.com/2020/05/a-proportion-odd-digits-vs-all-digits.html\">A proportion (odd digits vs all digits)</a>, personal blog \"Cinquante signes\" on blogspot.com, May 14 2020."
+    ],
+    "formula": [
+        "a(n+1) >= 2*a(n) - a(n-1) for all n > 1, with equality for n not in {3, 4, 8, 20, 22, 69, 71, 80, 82, ...}."
+    ],
+    "example": [
+        "There is a(1) = 1 odd term, namely: 1, among the first a(2) = 2 terms which are 1 and 2.",
+        "There are 2 odd terms, 1 and 3, among the first a(3) = 3 terms, 1, 2 and 3.",
+        "Then there must be a(3) = 3 odd terms among the first a(4) terms. Since there are only 2 odd terms coming earlier, there must come at least 1 more odd terms. This excludes a(4) = 4, but makes the next smaller choice a(4) = 5 possible, provided it will be followed by an even term in order to satisfy the requirement that there be exactly 3 odd terms among the first 5 terms.",
+        "Knowing that a(5) must be even (see just above), and that a(5) >= 2 a(4) - a(3) = 7 (see formula, explained in comments), we have as smallest possibility a(5) = 8, which does not raise a contradiction.",
+        "Then again we can use a(6) = 2*8 - 5 = 11, least possibility according to the formula, and indeed not yet leading to a contradiction.",
+        "Then again a(7) = 2*11 - 8 = 14 does not raise a contradiction, nor does a(8) = 2*14 - 11 = 17, since we can see that it will be possible to have 11 odd terms among the first 14, and 14 odd terms among the first 17.",
+        "However, for a(9) >=  2*17 - 14 = 20 we see that 20 would not make it possible to satisfy the requirement of 8 odd terms among the first 11. Indeed, we have only 5 odd terms so far, so all of a(9), a(10) and a(11) must be odd. So the smallest possibility is a(9) = 20.",
+        "And so on."
+    ],
+    "program": [
+        "(PARI) upto(N)={my(a=Vec([1,2],N), s=1, o=Vec([1,1],N), m=1); for(n=3,N, a[n]=a[n-1]*2-a[n-2]; while( m<n && a[m] <n, m++); until( !a[n]++, my(ns=s+a[n]%2); o[n]=ns; for(i=m,n, a[i] <= n && next(( a[i-1] != o[a[i]] )+1); o[n]+a[i]-n >= a[i-1] || next(2)); s=ns; break));a}"
+    ],
+    "xref": [
+        "Cf. A332070 (variant based on digits)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_M. F. Hasler_, May 18 2020",
+    "references": 1,
+    "revision": 16,
+    "time": "2021-03-14T15:37:47-04:00",
+    "created": "2020-06-11T23:59:08-04:00"
+}

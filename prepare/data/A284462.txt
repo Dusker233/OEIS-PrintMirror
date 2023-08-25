@@ -1,0 +1,55 @@
+{
+    "number": 284462,
+    "data": "2,2,6,10,22,44,92,178,362,724,1444,2888,5792,11616,23300,46670,93434,186988,374012,747976,1495656,2990440,5979368,11956444,23910164,47819272,95645168,191318496,382719072,765644448,1531761528,3064550802,6131253398,12266876820",
+    "name": "Number of length-n binary strings s whose longest repeated suffix appears exactly twice in s.",
+    "comment": [
+        "By \"longest repeated suffix\" we mean the longest suffix that occurs in at least one other position in the string; occurrences may overlap. Thus the longest repeated suffix of \"alfalfa\" is \"alfa\"."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A284462/b284462.txt\">Table of n, a(n) for n = 1..37</a>",
+        "Michael S. Branicky, <a href=\"/A284462/a284462.txt\">Python program</a>"
+    ],
+    "example": [
+        "For n = 4 the exceptions are 0001 and 1110 (longest repeated suffix is empty); 0010 and 0100 (longest repeated suffix is 0, which appears three times); and 1011 and 1101 (longest repeated suffix is 1, which appears three times)."
+    ],
+    "maple": [
+        "g:= proc(S) local m,n,t;",
+        "  n:= nops(S);",
+        "for m from n-1 to 1 by -1 do",
+        "  t:= nops(select(j -> S[1..m] = S[j..m+j-1], [$2..n-m+1]));",
+        "  if t >= 1 then return evalb(t=1) fi;",
+        "od;",
+        "false",
+        "end proc:",
+        "f:= proc(n) add(`if`(g(convert(x,base,2)),2,0), x=2^(n-1)..2^n-1) end proc:",
+        "f(1):= 2:",
+        "map(f, [$1..20]); # _Robert Israel_, Mar 27 2017"
+    ],
+    "program": [
+        "(Python) # see link for faster version",
+        "from itertools import product",
+        "def ok(s):",
+        "    for i in range(len(s)-1, 0, -1):",
+        "        count = 1 + sum(s[j:].startswith(s[-i:]) for j in range(len(s)-i))",
+        "        if count > 1: return count == 2",
+        "    return False",
+        "def a(n):",
+        "    if n == 1: return 2",
+        "    return 2*sum(ok(\"1\"+\"\".join(p)) for p in product(\"01\", repeat=n-1))",
+        "print([a(n) for n in range(1, 17)]) # _Michael S. Branicky_, Aug 19 2021"
+    ],
+    "xref": [
+        "Cf. A059412, A284125."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Mar 27 2017",
+    "ext": [
+        "a(21)-a(32) from _Lars Blomberg_, Jun 06 2017",
+        "a(33) and beyond from _Michael S. Branicky_, Aug 19 2021"
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2021-08-19T15:01:57-04:00",
+    "created": "2017-03-29T12:56:33-04:00"
+}

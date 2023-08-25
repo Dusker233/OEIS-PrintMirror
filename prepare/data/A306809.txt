@@ -1,0 +1,51 @@
+{
+    "number": 306809,
+    "data": "2,3,6,12,23,46,98,213,458,972,2051,4322,9098,19113,40054,83748,174767,364086,757298,1572861,3262242,6757500,13981019,28894090,59652314,123032913,253522382,521957844,1073741831,2207135966,4533576578,9305762469,19088743546,39131924268",
+    "name": "Binomial transform of the continued fraction expansion of e.",
+    "comment": [
+        "Taking this sequence as a continued fraction it seems to converge to 2.31601650488979..."
+    ],
+    "link": [
+        "Jackson Earles, Aaron Li, Adam Nelson, Marlo Terr, Sarah Arpin, and Ilia Mishev <a href=\"https://www.colorado.edu/math/binomial-transforms-sequences-spring-2019\">Binomial Transforms of Sequences</a>, CU Boulder Experimental Math Lab, Spring 2019."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} binomial(n,k)*b(k), where b(k) is the k-th term of the continued fraction expansion of e.",
+        "Conjectures from _Colin Barker_, Mar 12 2019: (Start)",
+        "G.f.: (2 - 11*x + 27*x^2 - 41*x^3 + 40*x^4 - 22*x^5 + 6*x^6) / ((1 - x)*(1 - 2*x)^2*(1 - x + x^2)^2).",
+        "a(n) = 7*a(n-1) - 21*a(n-2) + 37*a(n-3) - 43*a(n-4) + 33*a(n-5) - 16*a(n-6) + 4*a(n-7) for n>6.",
+        "(End)"
+    ],
+    "example": [
+        "For n = 3, the a(3) = binomial(3,0)*2 + binomial(3,1)*1 + binomial(3,2)*2 + binomial(3,3)*1 = 12."
+    ],
+    "mathematica": [
+        "nmax = 50; A003417 = ContinuedFraction[E, nmax+1]; Table[Sum[Binomial[n, k]*A003417[[k + 1]], {k, 0, n}], {n, 0, nmax}] (* _Vaclav Kotesovec_, Apr 23 2020 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def OEISbinomial_transform(N, seq):",
+        "    BT = [seq[0]]",
+        "    k = 1",
+        "    while k< N:",
+        "        next = 0",
+        "        j = 0",
+        "        while j <=k:",
+        "            next = next + ((binomial(k,j))*seq[j])",
+        "            j = j+1",
+        "        BT.append(next)",
+        "        k = k+1",
+        "    return BT",
+        "econt = oeis('A003417')",
+        "OEISbinomial_transform(50,econt)"
+    ],
+    "xref": [
+        "Cf. A003417 (continued fraction for e)."
+    ],
+    "keyword": "cofr,nonn,easy",
+    "offset": "0,1",
+    "author": "_Sarah Arpin_, Mar 11 2019",
+    "references": 1,
+    "revision": 23,
+    "time": "2020-04-23T04:20:21-04:00",
+    "created": "2019-03-16T13:50:51-04:00"
+}

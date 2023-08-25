@@ -1,0 +1,41 @@
+{
+    "number": 337167,
+    "data": "1,4,25,199,1795,17422,177463,1870960,20241403,223438852,2506596547,28494103183,327507800725,3799735202218,44440058006593,523388751658831,6201937444137619,73888034816382820,884517283667145259,10634234680321209373,128347834921058404249",
+    "name": "a(n) = 1 + 3 * Sum_{k=0..n-1} a(k) * a(n-k-1).",
+    "comment": [
+        "Binomial transform of A005159."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A337167/b337167.txt\">Table of n, a(n) for n = 0..901</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies: A(x) = 1 / (1 - x) + 3*x*A(x)^2.",
+        "G.f.: (1 - sqrt(1 - 12*x / (1 - x))) / (6*x).",
+        "E.g.f.: exp(7*x) * (BesselI(0,6*x) - BesselI(1,6*x)).",
+        "a(n) = Sum_{k=0..n} binomial(n,k) * 3^k * Catalan(k).",
+        "a(n) = 2F1([1/2, -n], [2], -12), where 2F1 is the hypergeometric function.",
+        "D-finite with recurrence (n+1) * a(n) = 2 * (7*n-3) * a(n-1) - 13 * (n-1) * a(n-2) for n > 1. - _Seiichi Manyama_, Jan 31 2021",
+        "a(n) ~ 13^(n + 3/2) / (8 * 3^(3/2) * sqrt(Pi) * n^(3/2)). - _Vaclav Kotesovec_, Feb 14 2021"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = 1 + 3 Sum[a[k] a[n - k - 1], {k, 0, n - 1}]; Table[a[n], {n, 0, 20}]",
+        "Table[Sum[Binomial[n, k] 3^k CatalanNumber[k], {k, 0, n}], {n, 0, 20}]",
+        "Table[Hypergeometric2F1[1/2, -n, 2, -12], {n, 0, 20}]"
+    ],
+    "program": [
+        "(PARI) {a(n) = sum(k=0, n, 3^k*binomial(n, k)*(2*k)!/(k!*(k+1)!))} \\\\ _Seiichi Manyama_, Jan 31 2021",
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(2/(1-x+sqrt((1-x)*(1-13*x)))) \\\\ _Seiichi Manyama_, Feb 01 2021"
+    ],
+    "xref": [
+        "Column k=3 of A340968.",
+        "Cf. A000108, A005159, A007317, A162326, A337169, A338979."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Jan 28 2021",
+    "references": 7,
+    "revision": 36,
+    "time": "2021-02-14T08:18:41-05:00",
+    "created": "2021-01-28T17:00:41-05:00"
+}

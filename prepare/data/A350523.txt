@@ -1,0 +1,49 @@
+{
+    "number": 350523,
+    "data": "2,3,23,67,227,10331",
+    "name": "Prime numbers p such that K(p) = 0! + 1! + ... + (p-1)! == -2 (mod p).",
+    "comment": [
+        "The Kurepa Conjecture says that K(p) is nonzero in F_p, the finite field with p elements. Primes for which K(p) takes some fixed nonzero value in F_p might have some interest.",
+        "No further terms < 6*10^6. - _Michael S. Branicky_, Jan 03 2022"
+    ],
+    "link": [
+        "Vladica Andreji\u0107, Alin Bostan and Milos Tatarevic, <a href=\"https://doi.org/10.1016/j.ipl.2020.106078\">Improved algorithms for left factorial residues</a>, Information Processing Letters, Vol. 167 (2021), Article ID 106078, 4 p.; <a href=\"https://arxiv.org/abs/1904.09196\">arXiv preprint</a>, arXiv:1904.09196 [math.NT], 2019-2020."
+    ],
+    "mathematica": [
+        "q[p_] := PrimeQ[p] && Divisible[Sum[k!, {k, 0, p - 1}] + 2, p]; Select[Range[230], q] (* _Amiram Eldar_, Jan 03 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def K(n):",
+        "    ans, f = 0, 1",
+        "    for i in range(1, n+1):",
+        "        ans += f%n",
+        "        f = (f*i)%n",
+        "    return ans%n",
+        "def ok(n): return isprime(n) and (K(n) + 2)%n == 0",
+        "print([k for k in range(11000) if ok(k)]) # _Michael S. Branicky_, Jan 03 2022",
+        "(Python) # faster version for initial segment of sequence",
+        "from sympy import isprime",
+        "def afind(limit):",
+        "    f = 1 # (p-1)!",
+        "    s = 2 # sum(0! + 1! + ... + (p-1)!)",
+        "    for p in range(2, limit+1):",
+        "        if isprime(p) and s%p == p-2:",
+        "            print(p, end=\", \")",
+        "        s += f*p",
+        "        f *= p",
+        "afind(11000) # _Michael S. Branicky_, Jan 03 2022"
+    ],
+    "xref": [
+        "Cf. A003422, A100612.",
+        "Subsequence of A236400."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Luis H. Gallardo_, Jan 03 2022",
+    "references": 0,
+    "revision": 21,
+    "time": "2022-01-29T10:29:00-05:00",
+    "created": "2022-01-29T10:29:00-05:00"
+}

@@ -1,0 +1,31 @@
+{
+    "number": 300440,
+    "data": "1,1,1,1,1,2,2,3,5,7,11,18,27,45,75,125,207,353,591,1013,1731,2984,5122,8905,15369,26839,46732,81850,142932,251693,441062,778730,1370591,2425823,4281620,7601359,13447298,23919512,42444497,75632126,134454505,240100289",
+    "name": "Number of odd strict trees of weight n (all outdegrees are odd).",
+    "comment": [
+        "An odd strict tree of weight n is either a single node of weight n, or a finite odd-length sequence of at least 3 odd strict trees with strictly decreasing weights summing to n."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A300440/b300440.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "example": [
+        "The a(10) = 7 odd strict trees: 10, (721), (631), (541), (532), ((421)21), ((321)31)."
+    ],
+    "mathematica": [
+        "g[n_]:=g[n]=1+Sum[Times@@g/@y,{y,Select[IntegerPartitions[n],Length[#]>1&&OddQ[Length[#]]&&UnsameQ@@#&]}];",
+        "Array[g,20]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(v=vector(n)); for(n=1, n, v[n] = 1 + polcoef(prod(k=1, n-1, 1 + v[k]*x^k + O(x*x^n)) - prod(k=1, n-1, 1 - v[k]*x^k + O(x*x^n)), n)/2); v} \\\\ _Andrew Howroyd_, Aug 25 2018"
+    ],
+    "xref": [
+        "Cf. A000009, A000992, A032305, A063834, A078408, A089259, A196545, A273873, A279785, A289501, A298118, A300301, A300352, A300353, A300436, A300439."
+    ],
+    "keyword": "nonn",
+    "offset": "1,6",
+    "author": "_Gus Wiseman_, Mar 05 2018",
+    "references": 5,
+    "revision": 9,
+    "time": "2018-08-26T02:35:03-04:00",
+    "created": "2018-03-09T17:53:27-05:00"
+}

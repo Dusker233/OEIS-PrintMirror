@@ -1,0 +1,35 @@
+{
+    "number": 352334,
+    "data": "126,7902,58167,63198,119565,505566,507771,2043825,8249085,12568150,132992559,183431550,196196825,258858950,533713761",
+    "name": "Composite numbers that when written in base 2 are a concatenation of their distinct prime factors without multiplicity in some order.",
+    "example": [
+        "126_10 = 1111110_2 = 2*3^2*7, and 1111110 = 11.111.10, where \".\" represents concatenation."
+    ],
+    "mathematica": [
+        "q[n_] := CompositeQ[n] && MemberQ[Join @@@ Permutations @ IntegerDigits[ FactorInteger[n][[;; , 1]], 2], IntegerDigits[n, 2]]; Select[Range[600000], q] (* _Amiram Eldar_, Mar 21 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primefactors",
+        "from itertools import permutations",
+        "for i in range(1, 10**12):",
+        "    p = primefactors(i)",
+        "    if len(p) != 1:",
+        "        p = list(map(lambda x: format(x, 'b'),p))",
+        "        if all(j in format(i,'b') for j in p) and any(format(i,'b')==''.join(t) for t in permutations(p)):",
+        "            print(i, end = ', ')"
+    ],
+    "xref": [
+        "Cf. A324260, A324257."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Gleb Ivanov_, Mar 21 2022",
+    "ext": [
+        "a(10)-a(15) from _Amiram Eldar_, Mar 21 2022"
+    ],
+    "references": 0,
+    "revision": 32,
+    "time": "2022-04-25T01:44:17-04:00",
+    "created": "2022-04-24T10:21:47-04:00"
+}

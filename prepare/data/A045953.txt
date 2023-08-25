@@ -1,0 +1,39 @@
+{
+    "number": 45953,
+    "data": "0,1,10,11,95,96,100,101,125,976,995,996,1000,1001,1025,1376,9625,9976,9995,9996,10000,10001,10025,10376,10625,99376,99625,99976,99995,99996,100000,100001,100025,100376,100625,109376,990625,999376,999625,999976",
+    "name": "Numbers m such that m^2 can be obtained from m by inserting an internal block of (contiguous) digits.",
+    "comment": [
+        "All terms of this sequence appear in A086457. - _Jeremy Gardiner_, Jul 20 2003",
+        "It seems that for any nonnegative integer k the number of k-digit terms is 2k. - _Ivan N. Ianakiev_, Aug 17 2021"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A045953/b045953.txt\">Table of n, a(n) for n = 1..100</a>",
+        "J. Knoderer, <a href=\"https://web.archive.org/web/20090910061731/http://www.mazes.com/sequence.html\">What number comes next? (an interesting sequence)</a>"
+    ],
+    "example": [
+        "95^2 = 9025 (insert '02' inside '95')."
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (isPrefixOf, inits, isSuffixOf, tails)",
+        "a045953 n = a045953_list !! (n-1)",
+        "a045953_list = filter chi a008851_list where",
+        "   chi n = (x == y && xs `isSub'` ys) where",
+        "      x:xs = show $ div n 10",
+        "      y:ys = show $ div (n^2) 10",
+        "      isSub' us vs = any id $ zipWith (&&)",
+        "                              (map (`isPrefixOf` vs) $ inits us)",
+        "                              (map (`isSuffixOf` vs) $ tails us)",
+        "-- _Reinhard Zumkeller_, Jul 27 2011"
+    ],
+    "xref": [
+        "Cf. A046851, A008851, A018834."
+    ],
+    "keyword": "base,nonn,nice,easy",
+    "offset": "1,3",
+    "author": "John \"MazeMan\" Knoderer (Webmaster(AT)Mazes.com)",
+    "references": 5,
+    "revision": 21,
+    "time": "2021-08-27T16:59:56-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

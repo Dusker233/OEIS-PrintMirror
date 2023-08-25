@@ -1,0 +1,45 @@
+{
+    "number": 50420,
+    "data": "2,4,6,8,10,11,13,14,16,18,19,22,23,25,29,30,32,34,35,36,37,41,42,43,46,47,49,53,54,55,59,61,62,64,66,67,69,76,77,81,82,83,89,90,91,94,95,97,101,102,103,109,111,115,123,125,126,128,130,131,133,136",
+    "name": "Numbers for which in base 2 the least number of digits that can be removed to leave a palindrome (possibly beginning with 0) is 1.",
+    "link": [
+        "Robert Israel, <a href=\"/A050420/b050420.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "(18 base 2) = 10010 -> 1001."
+    ],
+    "maple": [
+        "filter:= proc(n) local L,R,k,m;",
+        "  L:= convert(n,base,2);",
+        "  R:= ListTools:-Reverse(L);",
+        "  m:= nops(L);",
+        "  if L = R then return false fi;",
+        "  ormap(i -> subsop(i=NULL,L)=subsop(m+1-i=NULL,R), [$1..m]);",
+        "end proc:",
+        "select(filter, [$1..200]); # _Robert Israel_, Oct 28 2020"
+    ],
+    "program": [
+        "(Python)",
+        "def ok(n):",
+        "    b = bin(n)[2:]",
+        "    if b == b[::-1]: return False",
+        "    for skip in range(len(b)):",
+        "        newb = b[:skip] + b[skip+1:]",
+        "        if len(newb) > 0 and newb == newb[::-1]:",
+        "            return True",
+        "    return False",
+        "print(list(filter(ok, range(137)))) # _Michael S. Branicky_, Aug 24 2021"
+    ],
+    "xref": [
+        "Includes A164302.",
+        "Supersequence of A050425 (beginning with 1).",
+        "Cf. A050421, A050422, A050423, A050424."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "references": 4,
+    "revision": 14,
+    "time": "2021-08-24T13:07:20-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

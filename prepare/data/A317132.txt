@@ -1,0 +1,44 @@
+{
+    "number": 317132,
+    "data": "1,1,2,5,17,70,350,2029,13495,100813,837647,7652306,76282541,823684964,9578815164,119346454671,1586149739684,22397700381817,334879465463998,5285103821004717,87800206978975107,1531533620821692217,27987305231654121046,534688325008397289484",
+    "name": "Number of permutations of [n] whose lengths of increasing runs are factorials.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A317132/b317132.txt\">Table of n, a(n) for n = 0..400</a>"
+    ],
+    "formula": [
+        "a(3) = 5: 132, 213, 231, 312, 321.",
+        "a(4) = 17: 1324, 1423, 1432, 2143, 2314, 2413, 2431, 3142, 3214, 3241, 3412, 3421, 4132, 4213, 4231, 4312, 4321."
+    ],
+    "maple": [
+        "g:= proc(n) local i; 1; for i from 2 do",
+        "      if n=% then 1; break elif n<% then 0; break fi;",
+        "      %*i od; g(n):=%",
+        "    end:",
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, g(t),",
+        "      `if`(g(t)=1, add(b(u-j, o+j-1, 1), j=1..u), 0)+",
+        "       add(b(u+j-1, o-j, t+1), j=1..o))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, add(b(j-1, n-j, 1), j=1..n)):",
+        "seq(a(n), n=0..27);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = Module[{i, k = 1}, For[i = 2, True, i++,",
+        "     If[n == k, k = 1; Break[]]; If[n < k, k = 0; Break[]];",
+        "     k = k*i]; k];",
+        "b[u_, o_, t_] := b[u, o, t] = If[u + o == 0, g[t],",
+        "     If[g[t] == 1, Sum[b[u - j, o + j - 1, 1], {j, 1, u}], 0] +",
+        "     Sum[b[u + j - 1, o - j, t + 1], {j, 1, o}]];",
+        "a[n_] := If[n == 0, 1, Sum[b[j - 1, n - j, 1], {j, 1, n}]];",
+        "a /@ Range[0, 27] (* _Jean-Fran\u00e7ois Alcover_, Mar 29 2021~, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000142, A097597, A272603, A317111, A317128, A317129, A317130, A317131, A317448."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 21 2018",
+    "references": 7,
+    "revision": 15,
+    "time": "2021-03-29T08:00:48-04:00",
+    "created": "2018-07-22T11:35:16-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 89199,
+    "data": "7,23,31,47,53,71,79,103,107,127,151,167,191,199,223,239,263,269,271,311,359,367,383,431,439,463,479,487,499,503,593,599,607,631,647,701,719,727,743,751,809,823,839,863,887,911,919,967,971,983,991",
+    "name": "Primes p such that p+1 is divisible by a cube.",
+    "comment": [
+        "This sequence is infinite and its relative density in the sequence of primes is equal to 1 - Product_{p prime} (1-1/(p^2*(p-1)) = 1 - A065414 = 0.302498... (Mirsky, 1949). - _Amiram Eldar_, Apr 07 2021"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A089199/b089199.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Leon Mirsky, <a href=\"https://www.jstor.org/stable/2305811\">The number of representations of an integer as the sum of a prime and a k-free integer</a>, The American Mathematical Monthly, Vol. 56, No. 1 (1949), pp. 17-19."
+    ],
+    "maple": [
+        "filter:= proc(p)",
+        "  isprime(p) and ormap(t -> t[2]>=3, ifactors(p+1)[2])",
+        "end proc:",
+        "select(filter, [seq(i,i=3..2000,2)]); # _Robert Israel_, Jan 11 2019"
+    ],
+    "mathematica": [
+        "f[n_]:=Max[Last/@FactorInteger[n]]; lst={};Do[p=Prime[n];If[f[p+1]>=3,AppendTo[lst,p]],{n,6!}];lst (* _Vladimir Joseph Stephan Orlovsky_, Oct 03 2009 *)"
+    ],
+    "program": [
+        "(PARI) powerfreep3(n,p,k) = { c=0; pc=0; forprime(x=2,n, pc++; if(ispowerfree(x+k,p)==0, c++; print1(x\",\"); ) ); print(); print(c\",\"pc\",\"c/pc+.0) } ispowerfree(m,p1) = { flag=1; y=component(factor(m),2); for(i=1,length(y), if(y[i] >= p1,flag=0;break); ); return(flag) }"
+    ],
+    "xref": [
+        "Includes A007522 and A141965.",
+        "Cf. A049098, A065414."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Cino Hilliard_, Dec 08 2003",
+    "references": 5,
+    "revision": 18,
+    "time": "2021-04-07T04:44:19-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

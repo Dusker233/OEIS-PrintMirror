@@ -1,0 +1,45 @@
+{
+    "number": 323782,
+    "data": "2,5,7,11,13,17,29,31,37,43,53,59,61,71,73,83,89,101,103,137,139,149,163,173,179,181,193,199,223,233,241,263,269,277,311,313,331,347,353,367,373,379,383,389,401,421,443,449,457,467,479,487,499,509,541",
+    "name": "Prime numbers such that the reverse of the balanced ternary representation is a prime or a negated prime.",
+    "comment": [
+        "The \"warp\" operation is an inverse map connecting this sequence and A323783."
+    ],
+    "link": [
+        "Github, <a href=\"https://github.com/sneakyweasel/WarpPrimes\">Python code repository</a>",
+        "Rosetta Code, <a href=\"http://www.rosettacode.org/wiki/Balanced_ternary\">Balanced Ternary Code</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Balanced_ternary\">Balanced Ternary</a>"
+    ],
+    "example": [
+        "29 is a term:",
+        "29 is +0+- in balanced ternary notation",
+        "+0+- reversed is -+0+",
+        "-+0+ is -17 in balanced ternary notation",
+        "the absolute value of -17 is 17.",
+        "17 is prime",
+        "Therefore 29 is \"warped\" to -17.",
+        "This operation is reversible: -17 \"warps\" to 29."
+    ],
+    "program": [
+        "(Python) See links.",
+        "(PARI) d3(n) = if ((n%3)==2, n\\3+1, n\\3);",
+        "m3(n) = if ((n%3)==2, -1, n % 3);",
+        "t(n) = if (n==0, [0], if (abs(n) == 1, [n], concat(m3(n), t(d3(n)))));",
+        "f(n) = subst(Pol(Vec(t(n))), x, 3);",
+        "isok(n) = isprime(n) && isprime(abs(f(n))); \\\\ _Michel Marcus_, Jan 29 2019",
+        "(PARI) is(n) = {if(!isprime(n), return(0)); my(d = digits(n, 3)); forstep(i = #d, 2, -1, if(d[i] >= 2, d[i] -= 3; d[i-1]++)); if(d[1] >= 2, d[1]-=3; d = concat(1, d)); isprime(abs(fromdigits(Vecrev(d), 3)))} \\\\ _David A. Corneth_, Feb 14 2019"
+    ],
+    "xref": [
+        "Cf. A000040, A134028.",
+        "Supersequence of A224502.",
+        "Corresponding primes and -primes are in sequence A323783.",
+        "Primes that don't \"warp\" to a prime numbers are in sequence A323784."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Philippe Cochin_, Jan 27 2019",
+    "references": 2,
+    "revision": 35,
+    "time": "2019-03-26T16:31:46-04:00",
+    "created": "2019-03-26T16:31:46-04:00"
+}

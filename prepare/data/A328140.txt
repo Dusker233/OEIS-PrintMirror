@@ -1,0 +1,34 @@
+{
+    "number": 328140,
+    "data": "1,2,8,22,81,260,854,2738,8710,27550,86696,271726,848681,2642662,8207726,25434686,78663773,242865100,748650655,2304552576,7085109570,21757557324,66745430284,204559349854,626379255199,1916485240548,5859359429380,17901726707224",
+    "name": "Total number of nodes in all self-avoiding planar walks starting at (0,0), ending at (n,0), not extending above the line (x,2x) or below the line (x,-2x), and using steps (0,1), (-1,1), and (1,-1) with the restriction that (-1,1) and (1,-1) are always immediately followed by (0,1).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A328140/b328140.txt\">Table of n, a(n) for n = 0..2093</a>",
+        "Alois P. Heinz, <a href=\"/A328139/a328139.gif\">Animation of A328139(7) = 222 walks with a(7) = 2738 nodes</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path\">Lattice path</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Self-avoiding_walk\">Self-avoiding walk</a>"
+    ],
+    "maple": [
+        "b:= proc(x, y, t) option remember; (p-> p+[0, p[1]])(`if`(x<0",
+        "       or abs(y)>2*x, 0, `if`(x=0, [1, 0], b(x-1, y, 1)+",
+        "      `if`(t=1, b(x-1, y+1, 0)+b(x+1, y-1, 0), 0))))",
+        "    end:",
+        "a:= n-> b(n, 0$2)[2]:",
+        "seq(a(n), n=0..32);"
+    ],
+    "mathematica": [
+        "b[x_, y_, t_] := b[x, y, t] = Function[p, p + {0, p[[1]]}][If[x < 0 || Abs[y] > 2x, {0, 0}, If[x == 0, {1, 0}, b[x - 1, y, 1] + If[t == 1, b[x - 1, y + 1, 0] + b[x + 1, y - 1, 0], 0]]]];",
+        "a[n_] := b[n, 0, 0][[2]];",
+        "a /@ Range[0, 32] (* _Jean-Fran\u00e7ois Alcover_, May 13 2020, after Maple *)"
+    ],
+    "xref": [
+        "Cf. A328139."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Oct 04 2019",
+    "references": 2,
+    "revision": 11,
+    "time": "2020-05-13T07:02:25-04:00",
+    "created": "2019-10-09T16:21:10-04:00"
+}

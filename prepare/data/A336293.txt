@@ -1,0 +1,28 @@
+{
+    "number": 336293,
+    "data": "1,3,16,116,1038,10922,131256,1766592,26253702,426173906,7492270416,141661870088,2864168171596,61621248390756,1404853103594128,33815954626749600,856680253728250950,22777071459869216850,633968368216974945600,18430976777427663053400",
+    "name": "a(n) = Sum_{k=0..n} binomial(n,k)^2 * binomial(2*k,k) * (n-k)!.",
+    "formula": [
+        "Sum_{n>=0} a(n) * x^n / (n!)^2 = exp(x) * BesselI(0,2*sqrt(x))^2.",
+        "a(n) ~ n^n * exp(4*sqrt(n) - n - 2) / sqrt(8*Pi) * (1 + 55/(24*sqrt(n))). - _Vaclav Kotesovec_, Aug 04 2022",
+        "Recurrence: n*a(n) = (3*n^2 + n - 1)*a(n-1) - (n-1)^2*(3*n + 1)*a(n-2) + (n-2)^2*(n-1)^2*a(n-3). - _Vaclav Kotesovec_, Aug 04 2022"
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[n, k]^2 Binomial[2 k, k] (n - k)!, {k, 0, n}], {n, 0, 19}]",
+        "Table[n! HypergeometricPFQ[{1/2, -n}, {1, 1}, -4], {n, 0, 19}]",
+        "nmax = 19; CoefficientList[Series[Exp[x] BesselI[0, 2 Sqrt[x]]^2, {x, 0, nmax}], x] Range[0, nmax]!^2"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=0, n, binomial(n,k)^2 * binomial(2*k,k) * (n-k)!); \\\\ _Michel Marcus_, Jul 17 2020"
+    ],
+    "xref": [
+        "Cf. A000984, A002720, A002893."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Jul 16 2020",
+    "references": 2,
+    "revision": 12,
+    "time": "2022-08-04T05:10:56-04:00",
+    "created": "2020-07-17T00:36:17-04:00"
+}

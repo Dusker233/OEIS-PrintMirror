@@ -1,0 +1,36 @@
+{
+    "number": 306836,
+    "data": "1,2,5,15,50,187,779,3626,18830,108737,694156,4865168,37175028,307674135,2742199399,26185972811,266727515558,2886665421697,33078737906112,400112950565602,5094396150412628,68107059089489867,953882607872927724,13966992152276252633,213399920723596392052",
+    "name": "Expansion of e.g.f. (sec(x) + tan(x))*exp(x)*BesselI(1,2*x)/x.",
+    "comment": [
+        "Boustrophedon transform of Motzkin numbers (A001006)."
+    ],
+    "link": [
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "mathematica": [
+        "nmax = 24; CoefficientList[Series[(Sec[x] + Tan[x]) Exp[x] BesselI[1, 2 x]/x, {x, 0, nmax}], x] Range[0, nmax]!",
+        "t[n_, 0] := Hypergeometric2F1[(1 - n)/2, -n/2, 2, 4]; t[n_, k_] := t[n, k] = t[n, k - 1] + t[n - 1, n - k]; a[n_] := t[n, n]; Array[a, 25, 0]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import accumulate, count, islice",
+        "def A306836_gen(): # generator of terms",
+        "    blist, a, b = (1,), 1, 1",
+        "    yield from blist",
+        "    for i in count(2):",
+        "        yield (blist := tuple(accumulate(reversed(blist),initial=b)))[-1]",
+        "        a, b = b, (b*(2*i+1)+(3*i-3)*a)//(i+2)",
+        "A306836_list = list(islice(A306836_gen(),40)) # _Chai Wah Wu_, Jun 12 2022"
+    ],
+    "xref": [
+        "Cf. A000111, A000753, A001006."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Apr 16 2019",
+    "references": 0,
+    "revision": 28,
+    "time": "2022-06-12T09:38:48-04:00",
+    "created": "2019-04-16T21:41:11-04:00"
+}

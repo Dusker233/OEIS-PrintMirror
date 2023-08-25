@@ -1,0 +1,46 @@
+{
+    "number": 286762,
+    "data": "0,21,22,45,46,57,70,94,105,118,142,147,165,171,177,187,190,214,221,222,225,237,238,261,267,281,286,291,313,315,318,334,345,350,357,358,381,382,387,403,430,437,441,448,465,477,478,501,507,538,555,558,561,565",
+    "name": "Indices k such that A195441(k) = A195441(k+1).",
+    "comment": [
+        "k is in this sequence if and only if the primes p less than or equal to (k+2)/(2+(k mod 2)) such that the sum of digits of k+1 in base p is at least p are also the primes less than or equal to (k+3)/(2+((k+1) mod 2)) such that the sum of digits of k+2 in base p is at least p.",
+        "For the comment above and the fact that the sequence is infinite, see Thm. 2 in \"Power-Sum Denominators\" and Cor. 3 in \"The denominators of power sums of arithmetic progressions\". - Bernd C. Kellner and _Jonathan Sondow_, May 24 2017"
+    ],
+    "link": [
+        "Bernd C. Kellner, On a product of certain primes, J. Number Theory, 179 (2017), 126-141. DOI:<a href=\"https://doi.org/10.1016/j.jnt.2017.03.020\">10.1016/j.jnt.2017.03.020</a>, arXiv:<a href=\"https://arxiv.org/abs/1705.04303\">1705.04303</a>.",
+        "Bernd C. Kellner and Jonathan Sondow, Power-Sum Denominators, Amer. Math. Monthly, 124 (2017), 695-709. DOI:<a href=\"https://doi.org/10.4169/amer.math.monthly.124.8.695\">10.4169/amer.math.monthly.124.8.695</a>, arXiv:<a href=\"https://arxiv.org/abs/1705.03857\">1705.03857</a>.",
+        "Bernd C. Kellner and Jonathan Sondow, The denominators of power sums of arithmetic progressions, Integers 18 (2018), Article A95, 1-17. Journal:<a href=\"https://www.integers-ejcnt.org/vol18.html\">Integers 18</a>, arXiv:<a href=\"https://arxiv.org/abs/1705.05331\">1705.05331</a>."
+    ],
+    "example": [
+        "21 and 22 are in this sequence because {2, 3, 5} is the set of primes which meet the given constraints. Let sd(n, p) denote the sum of digits of n in base p, then we have:",
+        "2 <= sd(22, 2) = 3; 3 <= sd(22, 3) = 4; 5 <= sd(22, 5) = 6;",
+        "2 <= sd(23, 2) = 4; 3 <= sd(23, 3) = 5; 5 <= sd(23, 5) = 7;",
+        "2 <= sd(24, 2) = 2; 3 <= sd(24, 3) = 4; 5 <= sd(24, 5) = 8.",
+        "All other candidates do not satisfy the requirements: sd(22,7) = 4; sd(22,11) = 2; sd(23,7) = 5; sd(24,7) = 6; sd(24,11) = 4; sd(24,13) = 12."
+    ],
+    "mathematica": [
+        "-1 + SequencePosition[Table[Denominator[Together[(BernoulliB[n + 1, x] - BernoulliB[n + 1])]], {n, 0, 600}], w_ /; And[SameQ @@ w, Length@ w == 2]][[All, 1]] (* _Michael De Vlieger_, Sep 22 2017, after _Jonathan Sondow_ at A195441 *)"
+    ],
+    "program": [
+        "(Julia)",
+        "function A286762_list(bound::Int)",
+        "    L = fmpz[]; a = fmpz(0)",
+        "    for n in 0:bound",
+        "        u = A195441(n)",
+        "        a == u && push!(L, n-1)",
+        "        a = u",
+        "    end",
+        "L end",
+        "println(A286762_list(566))"
+    ],
+    "xref": [
+        "Cf. A195441, A286516, A286763."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Peter Luschny_, May 14 2017",
+    "references": 5,
+    "revision": 38,
+    "time": "2021-03-14T18:45:51-04:00",
+    "created": "2017-05-14T17:16:07-04:00"
+}

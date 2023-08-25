@@ -1,0 +1,25 @@
+{
+    "number": 330504,
+    "data": "1,2,4,24,136,480,4768,40320,249856,4112640,39563008,319334400,6249389056,82473431040,1044235737088,20922789888000,355897293438976,4408265775513600,121616011523719168,2757288942600192000,31308290669925892096",
+    "name": "Expansion of e.g.f. Sum_{k>=1} tanh(x^k).",
+    "formula": [
+        "E.g.f.: Sum_{k>=1} (exp(2*x^k) - 1) / (exp(2*x^k) + 1).",
+        "a(n) = n! * Sum_{d|n} A155585(d) / d!.",
+        "a(n) = n! * Sum_{d|n, d odd} 2^(d + 1) * (2^(d + 1) - 1) * Bernoulli(d + 1) / (d + 1)!."
+    ],
+    "mathematica": [
+        "nmax = 21; CoefficientList[Series[Sum[Tanh[x^k], {k, 1, nmax}], {x, 0, nmax}], x] Range[0, nmax]! // Rest",
+        "A155585[n_] := Sum[StirlingS2[n, k] (-2)^(n - k) k!, {k, 0, n}]; a[n_] := n! DivisorSum[n, A155585[#]/#! &]; Table[a[n], {n, 1, 21}]",
+        "Table[n! DivisorSum[n, 2^(# + 1) (2^(# + 1) - 1) BernoulliB[# + 1]/(# + 1)! &, OddQ[#] &], {n, 1, 21}]"
+    ],
+    "xref": [
+        "Cf. A000182, A009006, A155585, A176475, A330254, A330255, A330505."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Dec 16 2019",
+    "references": 3,
+    "revision": 5,
+    "time": "2019-12-16T14:25:31-05:00",
+    "created": "2019-12-16T14:25:31-05:00"
+}

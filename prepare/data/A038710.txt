@@ -1,0 +1,43 @@
+{
+    "number": 38710,
+    "data": "2,3,7,31,211,2311,30047,510529,9699713,223092907,6469693291,200560490131,7420738134871,304250263527281,13082761331670077,614889782588491517,32589158477190044789,1922760350154212639131,117288381359406970983379,7858321551080267055879179",
+    "name": "a(n) is the smallest prime > product of the first n primes (A002110(n)).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A038710/b038710.txt\">Table of n, a(n) for n = 0..350</a>"
+    ],
+    "formula": [
+        "a(n) = A002110(n) + A038711(n). - _Alois P. Heinz_, Mar 16 2020"
+    ],
+    "example": [
+        "for n=1,2,3,4,5,11,75, A002110(n)+1 gives smaller primes than A002110(n)+p, where p is a fortunate number (prime). At n=5, both 2311 and 2333 are primes but the first is smaller."
+    ],
+    "maple": [
+        "p:= proc(n) option remember; `if`(n<1, 1, p(n-1)*ithprime(n)) end:",
+        "a:= n-> nextprime(p(n)):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Mar 16 2020"
+    ],
+    "mathematica": [
+        "nmax = 2^16384; npd = 1; n = 1; npd = npd*Prime[n]; While[npd < nmax, cp = npd + 1; While[ ! (PrimeQ[cp]), cp = cp + 2]; Print[cp]; n = n + 1; npd = npd*Prime[n]] (* _Lei Zhou_, Feb 15 2005 *)",
+        "NextPrime/@FoldList[Times,1,Prime[Range[25]]] (* _Harvey P. Dale_, Dec 17 2010 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = nextprime(1+factorback(primes(n))); \\\\ _Michel Marcus_, Sep 25 2016; Dec 24 2022",
+        "(Python)",
+        "from sympy import nextprime, primorial",
+        "def a(n): return nextprime(primorial(n) if n else 1)",
+        "print([a(n) for n in range(20)]) # _Michael S. Branicky_, Dec 24 2022"
+    ],
+    "xref": [
+        "Cf. A002110, A005235, A007014, A018239, A035345, A038711."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_Labos Elemer_, May 02 2000",
+    "ext": [
+        "Offset corrected, incorrect comment and formula removed, and more terms added by _Jinyuan Wang_, Mar 16 2020"
+    ],
+    "references": 9,
+    "revision": 45,
+    "time": "2023-07-18T06:49:14-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

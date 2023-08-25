@@ -1,0 +1,43 @@
+{
+    "number": 26766,
+    "data": "1,1,3,5,13,24,59,115,273,552,1278,2655,6031,12795,28632,61775,136572,298764,653948,1447225,3141427,7020833,15132512,34106865,73069892,165903082,353576829,807957495,1714132308,3939206346",
+    "name": "a(n) = Sum_{k=0..floor(n/2)} T(n,k), T given by A026758.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A026766/b026766.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "maple": [
+        "T:= proc(n,k) option remember;",
+        "   if n<0 then 0;",
+        "   elif k=0 or k = n then 1;",
+        "   elif type(n,'odd') and k <= (n-1)/2 then",
+        "        procname(n-1,k-1)+procname(n-2,k-1)+procname(n-1,k) ;",
+        "   else",
+        "       procname(n-1,k-1)+procname(n-1,k) ;",
+        "   end if ;",
+        "end proc;",
+        "seq( add(T(n,k), k=0..floor(n/2)), n=0..30); # _G. C. Greubel_, Oct 31 2019"
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[n<0, 0, If[k==0 || k==n, 1, If[OddQ[n] && k<=(n - 1)/2, T[n-1, k-1] + T[n-2, k-1] + T[n-1, k], T[n-1, k-1] + T[n-1, k] ]]]; Table[Sum[T[n,k], {k,0,Floor[n/2]}], {n, 0, 30}] (* _G. C. Greubel_, Oct 31 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n, k):",
+        "    if (n<0): return 0",
+        "    elif (k==0 or k==n): return 1",
+        "    elif (mod(n,2)==1 and k<=(n-1)/2): return T(n-1,k-1) + T(n-2,k-1) + T(n-1,k)",
+        "    else: return T(n-1,k-1) + T(n-1,k)",
+        "[sum(T(n, k) for k in (0..floor(n/2))) for n in (0..30)] # _G. C. Greubel_, Oct 31 2019"
+    ],
+    "xref": [
+        "Cf. A026758, A026759, A026760, A026761, A026762, A026763, A026764, A026765, A026767, A026768."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_",
+    "references": 10,
+    "revision": 8,
+    "time": "2019-11-01T03:54:53-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

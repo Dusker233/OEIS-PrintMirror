@@ -1,0 +1,63 @@
+{
+    "number": 330250,
+    "data": "1,3,10,45,246,1596,11472,96768,905760,9282240,104328000,1285502400,17030200320,242650598400,3685666037760,60059908823040,1032474885120000,18781151090688000,360710540426880000,7302919022138880000,154603891182698496000,3423234952360194048000",
+    "name": "Unreduced numerator of expected rank of applicant in average rank secretary problem.",
+    "comment": [
+        "a(n) is the numerator of the expected rank of applicant in the secretary problem when minimizing average rank, the denominator is n!.",
+        "Lim_{n -> infinity} a(n)/n! = A242672 = 3.8695...",
+        "a(n) can be calculated in linear time by recursively backtracking, the expected value of not selecting the j-th best candidate, seen so far, at step i."
+    ],
+    "reference": [
+        "Steven R. Finch, Mathematical Constants, Cambridge University Press, 2003, Section 5.15, p. 362."
+    ],
+    "link": [
+        "Y. S. Chow, S. Moriguti, H. Robbins and S. M. Samuels, <a href=\"http://www.ma.huji.ac.il/~kifer/finmath.html/secprob1.pdf\">Optimal Selection Based on Relative Rank</a>, 1964.",
+        "Thomas S. Ferguson, <a href=\"https://www.math.ucla.edu/~tom/Stopping/Contents.html\">Optimal Stopping and Applications</a>",
+        "Eric Weisstein's MathWorld, <a href=\"http://mathworld.wolfram.com/SultansDowryProblem.html\">Sultan's Dowry Problem</a>.",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Secretary_problem\">Secretary problem</a>."
+    ],
+    "example": [
+        "For a(3) = 10 the optimal strategy is to never accept the 1st applicant, accept the 2nd applicant if there are better (lower ranked) than the 1st applicant otherwise accept the 3rd applicant. This strategy selects the rank 1 applicant when the applicants are ordered 213, 231, 312 the rank 2 applicant from orderings 132, 321 and the rank 3 applicant from ordering 123. The numerator of the average rank is thus 1+1+1+2+2+3 = 10.",
+        "a(10)/10! = 3223/1260 = 2.558."
+    ],
+    "mathematica": [
+        "Table[ci = (n + 1)/2; Do[ratio = (i + 1)/(n + 1); si = Floor[ratio*ci]; ci = 1/i*(1/ratio*(si*(si + 1)/2) + (i - si)*ci);, {i, n-1, 1, -1}];  Numerator[ci*n!], {n, 1, 25}] (* _Vaclav Kotesovec_, Jan 04 2020 *)"
+    ],
+    "program": [
+        "(Python) from fractions import Fraction",
+        "from math import factorial",
+        "def a(n):",
+        "  c_i = Fraction(n + 1, 2)",
+        "  for i in reversed(range(1, n)):",
+        "    ratio = Fraction(i+1, n+1)",
+        "    s_i = int( ratio * c_i )",
+        "    c_i = Fraction( (s_i * (s_i + 1) // 2) / ratio + (i - s_i) * c_i, i)",
+        "  return (c_i*factorial(n)).numerator",
+        "for n in range(1, 20):",
+        "    print(a(n))",
+        "(PARI) a(n) = {my(ci = (n+1)/2, r, si); forstep(i=n-1, 1, -1, r = (i+1)/(n+1); si = floor(r*ci); ci = ((si * (si + 1)/(2*r) + (i - si) * ci )/i);); numerator(ci*n!);}",
+        "for(n=1, 20, print1(a(n), \", \")) \\\\ _Michel Marcus_ and _Vaclav Kotesovec_, Jan 04 2020",
+        "(Julia)",
+        "function a(n)",
+        "    r, c = BigInt(n), BigInt(n + 1) // 2",
+        "    for i = n-1:-1:1",
+        "        q = (i + 1) // (n + 1)",
+        "        s = floor(q * c)",
+        "        k = (i - s) * c + (s * (s + 1)) // (2 * q)",
+        "        c = k // i",
+        "        r *= i",
+        "    end",
+        "numerator(r * c) end",
+        "[a(n) for n in 1:22] |> println # _Peter Luschny_, Jan 05 2020"
+    ],
+    "xref": [
+        "Cf. A054404, A242672."
+    ],
+    "keyword": "nonn,frac,easy",
+    "offset": "1,2",
+    "author": "_Seth A. Troisi_, Dec 06 2019",
+    "references": 0,
+    "revision": 30,
+    "time": "2020-01-05T04:21:35-05:00",
+    "created": "2020-01-05T04:21:35-05:00"
+}

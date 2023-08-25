@@ -1,0 +1,40 @@
+{
+    "number": 303478,
+    "data": "1,2,8,26,114,439,1932,8100,35943,157300,705592,3160856,14328020,65101759,297739250,1365807037,6291534200,29062368336,134648511026,625312014415,2910626302818,13574639952187,63425918284235,296834615623188,1391290575835806",
+    "name": "Total number of nodes summed over all self-avoiding planar walks starting at (0,0), ending at (n,0), remaining in the first quadrant and using steps (0,1), (1,0), (1,1), (-1,1), and (1,-1) with the restrictions that (0,1) and (1,-1) are never used above the diagonal and (1,0) and (-1,1) are never used below the diagonal and (1,1) can only be used below the diagonal.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A303478/b303478.txt\">Table of n, a(n) for n = 0..1465</a>",
+        "Alois P. Heinz, <a href=\"/A303477/a303477.gif\">Animation of A303477(6)=186 walks with a(6)=1932 nodes</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path\">Lattice path</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Self-avoiding_walk\">Self-avoiding walk</a>"
+    ],
+    "maple": [
+        "b:= proc(x, y) option remember; (p-> p+[0, p[1]])(",
+        "      `if`(x<0 or y<0, 0, `if`(x=0 and y=0, [1, 0],",
+        "      `if`(x>y-2, b(x, y-1), 0)+`if`(x<y+2, b(x-1, y), 0)+",
+        "      `if`(x>y, b(x-1, y-1), 0)+`if`(x<y-1, b(x+1, y-1), 0)+",
+        "      `if`(x>y+1, b(x-1, y+1), 0))))",
+        "    end:",
+        "a:= n-> b(n, 0)[2]:",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "b[x_, y_] := b[x, y] = Function[p, p + {0, p[[1]]}][",
+        "  If[x < 0 || y < 0, {0, 0}, If[x == 0 && y == 0, {1, 0},",
+        "  If[x > y - 2, b[x, y - 1], {0, 0}] + If[x < y + 2, b[x - 1, y], 0] +",
+        "  If[x > y, b[x - 1, y - 1], 0] + If[x < y - 1, b[x + 1, y - 1], 0] +",
+        "  If[x > y + 1, b[x - 1, y + 1], 0]]]];",
+        "a[n_] := b[n, 0][[2]];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Jun 02 2018, from Maple *)"
+    ],
+    "xref": [
+        "Cf. A303477."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Apr 24 2018",
+    "references": 2,
+    "revision": 18,
+    "time": "2019-10-09T13:35:36-04:00",
+    "created": "2018-04-27T18:03:34-04:00"
+}

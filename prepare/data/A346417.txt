@@ -1,0 +1,37 @@
+{
+    "number": 346417,
+    "data": "1,2,10,66,538,5186,57402,714594,9853978,148774914,2436823034,42979319202,811254807770,16302732719682,347248840767162,7809649226242530,184831773033020826,4589793199157616770,119272846472231229818,3235960069037751550498,91466308730323104617050",
+    "name": "E.g.f.: exp(exp(2*(exp(x) - 1)) - 1).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A346417/b346417.txt\">Table of n, a(n) for n = 0..449</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} Stirling2(n,k) * 2^k * Bell(k).",
+        "a(0) = 1; a(n) = Sum_{k=1..n} binomial(n-1,k-1) * A001861(k) * a(n-k)."
+    ],
+    "maple": [
+        "b:= proc(n, t, m) option remember; `if`(n=0, `if`(t=1, 1,",
+        "      b(m, 1, 0)*2^m) , m*b(n-1, t, m)+b(n-1, t, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Aug 06 2021"
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[Exp[Exp[2 (Exp[x] - 1)] - 1], {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[Sum[StirlingS2[n, k] 2^k BellB[k], {k, 0, n}], {n, 0, 20}]",
+        "a[0] = 1; a[n_] := a[n] = Sum[Binomial[n - 1, k - 1] BellB[k, 2] a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 20}]"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^25)); Vec(serlaplace(exp(exp(2*(exp(x) - 1)) - 1))) \\\\ _Michel Marcus_, Jul 19 2021"
+    ],
+    "xref": [
+        "Cf. A000258, A000898, A001861, A055882, A126390, A136658."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Jul 16 2021",
+    "references": 2,
+    "revision": 12,
+    "time": "2021-08-06T13:58:12-04:00",
+    "created": "2021-07-23T09:01:07-04:00"
+}

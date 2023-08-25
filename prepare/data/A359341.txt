@@ -1,0 +1,37 @@
+{
+    "number": 359341,
+    "data": "0,0,0,0,0,0,0,0,0,87,504,4275,29433,179235,955818,4653802,21034628,89834238,366490378,1440743933,5493453262",
+    "name": "Number of pandigital squares with n digits.",
+    "comment": [
+        "Pandigital squares are perfect squares containing each digit from 0 to 9 at least once."
+    ],
+    "example": [
+        "a(n) = 0 for n < 10, since a number must have at least ten digits to contain all digits from 0 to 9 at least once.",
+        "a(10) = 87 since there are 87 ten-digit pandigital squares from 1026753849 to 9814072356 (cf. A036745) containing each digit from 0 to 9, here exactly once."
+    ],
+    "maple": [
+        "a:=proc(n::posint) local p,k,K: if n<10 then p:=0; else p:=0: for k from ceil(sqrt(10^(n-1))) to floor(sqrt(10^n)) do K:=convert(k^2,base,10); if nops({op(K)})=10 then p:=p+1: fi: od: fi: return p; end:"
+    ],
+    "program": [
+        "(Python)",
+        "from math import isqrt",
+        "def c(n): return len(set(str(n))) == 10",
+        "def a(n):",
+        "    lb = isqrt(10**(n-1)) if n&1 else isqrt(10**(n-1)) + 1",
+        "    return sum(1 for k in range(lb, isqrt(10**n-1)+1) if c(k*k))",
+        "print([a(n) for n in range(1, 14)]) # _Michael S. Branicky_, Dec 27 2022"
+    ],
+    "xref": [
+        "Cf. A036745, A225218."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,10",
+    "author": "_Martin Renner_, Dec 27 2022",
+    "ext": [
+        "a(19)-a(21) from _Michael S. Branicky_, Dec 27 2022"
+    ],
+    "references": 0,
+    "revision": 10,
+    "time": "2022-12-31T02:12:22-05:00",
+    "created": "2022-12-31T02:12:22-05:00"
+}

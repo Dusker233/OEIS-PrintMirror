@@ -1,0 +1,55 @@
+{
+    "number": 249896,
+    "data": "6,64,64009,6400960036,640096003602877347904,640096003602877347904912233550482787380625,6400960036028773479049122335504827873806251020537411455326101704116338781035920283225",
+    "name": "a(n+1) is next smallest square not divisible by 10 beginning with a(n), initial term is 6.",
+    "comment": [
+        "a(11) has 1374 digits, a(12) has 2749, a(13) has 5499, a(14) has 10998. - _Robert Israel_, Nov 25 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A249896/b249896.txt\">Table of n, a(n) for n = 1..10</a>",
+        "Robert Israel, <a href=\"/A249896/a249896.txt\">Table of n, a(n) for n = 1..14</a>"
+    ],
+    "maple": [
+        "R:= 6: x:= 6: s:= 2:",
+        "for iter from 1 while length(x) < 1000 do",
+        "  for d from 1 do",
+        "   if d::even then sp:= 1+ 10^(d/2)*s",
+        "   else",
+        "     sp:= ceil(sqrt(10^d*x));",
+        "     if sp mod 10 = 0 then sp:=sp+1; fi",
+        "   fi;",
+        "   if sp^2 < (x+1)*10^d then",
+        "     x:= sp^2; s:= sp; R:= R, x; break",
+        "   fi",
+        "  od;",
+        "od:",
+        "R; # _Robert Israel_, Nov 25 2020"
+    ],
+    "program": [
+        "(PARI) a(n)=k=n; s=1; while(s<5*10^7, if(s%10, if(s^2\\(10^(#Str(s^2)-#Str(k)))==k, print1(s^2, \", \"); k=s^2)); s++)",
+        "a(7)",
+        "(Python)",
+        "def f(x):",
+        "..print(x, end=', ')",
+        "..n = x",
+        "..s = 1",
+        "..while s < 10**7:",
+        "....if s % 10:",
+        "......S = str(s**2)",
+        "......if S.startswith(str(n)):",
+        "........print(s**2, end=', ')",
+        "........n = s**2",
+        "....s += 1",
+        "f(7)"
+    ],
+    "xref": [
+        "Cf. A048559, A048561."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Derek Orr_, Nov 08 2014",
+    "references": 5,
+    "revision": 18,
+    "time": "2020-11-25T14:45:44-05:00",
+    "created": "2014-11-15T17:43:26-05:00"
+}

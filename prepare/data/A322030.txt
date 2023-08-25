@@ -1,0 +1,40 @@
+{
+    "number": 322030,
+    "data": "1,2,3,4,5,7,8,9,11,13,14,16,17,19,23,25,26,27,28,29,31,32,37,38,41,43,46,47,49,51,52,53,56,58,59,61,64,67,71,73,74,76,79,81,83,86,89,91,92,94,97,98,101,103,104,106,107,109,112,113,116,121,122,123",
+    "name": "Numbers whose prime factors all have the same order of primeness.",
+    "comment": [
+        "The order of primeness (A078442) of a prime number p is the number of times one must apply A000720 to obtain a nonprime number."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A322030/b322030.txt\">Table of n, a(n) for n = 1..20000</a>",
+        "N. Fernandez, <a href=\"http://www.borve.org/primeness/FOP.html\">An order of primeness, F(p)</a>",
+        "N. Fernandez, <a href=\"/A006450/a006450.html\">An order of primeness</a> [cached copy, included at A006450 with permission of the author]"
+    ],
+    "example": [
+        "182 is in the sequence because its prime factors 2, 7, 13 all have order of primeness 1."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "p:= proc(n) option remember;",
+        "      `if`(isprime(n), 1+p(pi(n)), 0)",
+        "    end:",
+        "a:= proc(n) option remember; local k; for k from 1+`if`(n=1,",
+        "      0, a(n-1)) while nops(map(p, factorset(k)))>1 do od; k",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Nov 24 2018"
+    ],
+    "mathematica": [
+        "ordpri[n_]:=If[!PrimeQ[n],0,Length[NestWhileList[PrimePi,PrimePi[n],PrimeQ]]];",
+        "Select[Range[200],SameQ@@ordpri/@FactorInteger[#][[All,1]]&]"
+    ],
+    "xref": [
+        "Cf. A000720, A006450, A007097, A007821, A049076, A076610, A078442, A109082, A114537, A184155, A276625, A322027, A322028."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Nov 24 2018",
+    "references": 3,
+    "revision": 9,
+    "time": "2018-11-28T18:55:22-05:00",
+    "created": "2018-11-25T07:48:26-05:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 353182,
+    "data": "9,9,252,333,7704,11430,245520,388485,8018280,13221234,266135472,451623042,8935693776,15488764524,302623991712,533189070405,10317992397480,18416195186490,353689409441520,637974569854998,12177584747670384,22158431087271444,420819143651579232,771390571080374658",
+    "name": "Number of n-digit numbers in which more than half of the digits are the same.",
+    "comment": [
+        "a(n) is the number of terms between 10^(n-1) and 10^n in A353181."
+    ],
+    "link": [
+        "Zhining Yang, <a href=\"/A353182/b353182.txt\">Table of n, a(n) for n = 1..300</a>",
+        "Project Euler, <a href=\"https://projecteuler.net/problem=788\">Problem 788, Dominating Numbers</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=floor(n/2)+1..n} C(n,k)*9^(n-k+1) (thanks to _Zhao Hui Du_ for help in the derivation of this formula).",
+        "a(n+3) = (-(5400+8280*n+2880*n^2)*a(n)+(360+828*n+288*n^2)*a(n+1)+(228+310*n+80*n^2)*a(n+2))/(21+31*n+8*n^2)) (thanks to _Xianwen Wang_ for help in the derivation of this formula)."
+    ],
+    "example": [
+        "a(2)=9 because there are 9 numbers whose digits are the same, more than half of the length 2."
+    ],
+    "mathematica": [
+        "a[n_]:=Sum[Binomial[n,k]9^(n-k+1),{k,Floor[n/2]+1,n}]; Array[a,24] (* _Stefano Spezia_, Apr 29 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "def a(n):",
+        "  return (sum(math.comb(n,i)*9**(n-i+1) for i in range(n//2+1,n+1)))",
+        "print([a(n) for n in range(1, 31)])",
+        "(Python)",
+        "def a(n):",
+        "    r=[0, 9, 9]",
+        "    for i in range(n):",
+        "        r.append(-((5400+8280*i+2880*i*i)*r[i]+(-360-828*i-288*i*i)*r[i+1]+(-228-310*i-80*i*i)*r[i+2])//(21+31*i+8*i*i))",
+        "    return r[n]",
+        "print([a(i) for i in range(1, 21)]) # _Xianwen Wang_, May 02 2022"
+    ],
+    "xref": [
+        "Cf. A353181, A353183 (partial sums)."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Zhining Yang_, Apr 29 2022",
+    "references": 2,
+    "revision": 48,
+    "time": "2022-06-25T22:11:46-04:00",
+    "created": "2022-06-25T22:11:46-04:00"
+}

@@ -1,0 +1,73 @@
+{
+    "number": 7837,
+    "data": "1,1,1,4,5,16,82,169,541,2272,17966,44419,201830,802751,4897453,52275409,166257661,840363296,4321172134,24358246735,183351656650,2762567051857,10112898715063,62269802986835,343651382271526,2352104168848091,15649414071734847",
+    "name": "Number of partitions of n-set with distinct block sizes.",
+    "comment": [
+        " Conjecture: the Gauss congruences a(n*p^k) == a(n*p^(k-1)) (mod p^k) hold for all primes p and positive integers n and k. Cf. A185895. - _Peter Bala_, Mar 17 2022"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A007837/b007837.txt\">Table of n, a(n) for n = 0..700</a>",
+        "Philippe Flajolet, \u00c9ric Fusy, Xavier Gourdon, Daniel Panario and Nicolas Pouyanne, <a href=\"http://arxiv.org/abs/math/0606370\">A Hybrid of Darboux's Method and Singularity Analysis in Combinatorial Asymptotics</a>, Fig. 3, arXiv:math/0606370 [math.CO], 2006.",
+        "Knopfmacher, A., Odlyzko, A. M., Pittel, B., Richmond, L. B., Stark, D., Szekeres, G. and Wormald, N. C., <a href=\"http://www.combinatorics.org/ojs/index.php/eljc/article/view/v6i1r2\">The asymptotic number of set partitions with unequal block sizes</a>, Electron. J. Combin., 6 (1999), no. 1, Research Paper 2, 36 pp.",
+        "Gus Wiseman, <a href=\"/A038041/a038041.txt\">Sequences counting and ranking multiset partitions whose part lengths, sums, or averages are constant or strict.</a>"
+    ],
+    "formula": [
+        "E.g.f.: Product_{m >= 1} (1+x^m/m!).",
+        "a(n) = Sum_{k=1..n} (n-1)!/(n-k)!*b(k)*a(n-k), where b(k) = Sum_{d divides k} (-d)*(-d!)^(-k/d) and a(0) = 1. - _Vladeta Jovovic_, Oct 13 2002",
+        "E.g.f.: exp(Sum_{k>=1} Sum_{j>=1} (-1)^(k+1)*x^(j*k)/(k*(j!)^k)). - _Ilya Gutkovskiy_, Jun 18 2018"
+    ],
+    "example": [
+        "From _Gus Wiseman_, Jul 13 2019: (Start)",
+        "The a(1) = 1 through a(5) = 16 set partitions with distinct block sizes:",
+        "  {{1}}  {{1,2}}  {{1,2,3}}    {{1,2,3,4}}    {{1,2,3,4,5}}",
+        "                  {{1},{2,3}}  {{1},{2,3,4}}  {{1},{2,3,4,5}}",
+        "                  {{1,2},{3}}  {{1,2,3},{4}}  {{1,2},{3,4,5}}",
+        "                  {{1,3},{2}}  {{1,2,4},{3}}  {{1,2,3},{4,5}}",
+        "                               {{1,3,4},{2}}  {{1,2,3,4},{5}}",
+        "                                              {{1,2,3,5},{4}}",
+        "                                              {{1,2,4},{3,5}}",
+        "                                              {{1,2,4,5},{3}}",
+        "                                              {{1,2,5},{3,4}}",
+        "                                              {{1,3},{2,4,5}}",
+        "                                              {{1,3,4},{2,5}}",
+        "                                              {{1,3,4,5},{2}}",
+        "                                              {{1,3,5},{2,4}}",
+        "                                              {{1,4},{2,3,5}}",
+        "                                              {{1,4,5},{2,3}}",
+        "                                              {{1,5},{2,3,4}}",
+        "(End)"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(add((-d)*(-d!)^(-k/d),",
+        "       d=numtheory[divisors](k))*(n-1)!/(n-k)!*a(n-k), k=1..n))",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Sep 06 2008",
+        "# second Maple program:",
+        "A007837 := proc(n) option remember; local k; `if`(n = 0, 1,",
+        "add(binomial(n-1, k-1) * A182927(k) * A007837(n-k), k = 1..n)) end:",
+        "seq(A007837(i),i=0..24); # _Peter Luschny_, Apr 25 2011"
+    ],
+    "mathematica": [
+        "nn=20;p=Product[1+x^i/i!,{i,1,nn}];Drop[Range[0,nn]!CoefficientList[ Series[p,{x,0,nn}],x],1]  (* _Geoffrey Critzer_, Sep 22 2012 *)",
+        "a[0]=1; a[n_] := a[n] = Sum[(n-1)!/(n-k)!*DivisorSum[k, -#*(-#!)^(-k/#)&]* a[n-k], {k, 1, n}]; Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, Nov 23 2015, after _Vladeta Jovovic_ *)"
+    ],
+    "program": [
+        "(PARI) {my(n=20); Vec(serlaplace(prod(k=1, n, (1+x^k/k!) + O(x*x^n))))} \\\\ _Andrew Howroyd_, Dec 21 2017"
+    ],
+    "xref": [
+        "Row sums of A131632 or A262072 or A262078 or A309992.",
+        "Cf. A000110, A005651, A007838, A032011, A035470, A038041, A178682, A265950, A271423, A275780, A326026, A326514, A326517, A326533.",
+        "Column k=0 of A327869."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Arnold Knopfmacher_",
+    "ext": [
+        "More terms from _Christian G. Bower_",
+        "a(0)=1 prepended by _Alois P. Heinz_, Aug 29 2015"
+    ],
+    "references": 90,
+    "revision": 80,
+    "time": "2022-03-18T13:05:52-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

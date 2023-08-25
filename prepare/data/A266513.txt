@@ -1,0 +1,50 @@
+{
+    "number": 266513,
+    "data": "0,1,11,110,2402,128967,16767653,5436906668,4406952731948,8819634719356421,43329348004927734247,522235268182347360718818,15436131339319739257518081878,1117847654274955574635482276231683,198163274851163063009517020867737770265",
+    "name": "Number of undirected cycles in a triangular grid graph, n vertices on each side.",
+    "link": [
+        "Ed Wynn, <a href=\"/A266513/b266513.txt\">Table of n, a(n) for n = 1..17</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/GraphCycle.html\">Graph Cycle</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TriangularGridGraph.html\">Triangular Grid Graph</a>"
+    ],
+    "example": [
+        "Of the 11 cycles in the triangular grid with 3 vertices per side, 4 have length 3, 3 have length 4, 3 have length 5 and 1 has length 6.",
+        "4 basic cycle shapes on a(3):",
+        "                                      o",
+        "                                     / \\",
+        "        o       o---o    o---o      o   o",
+        "       / \\     /   /    /     \\    /     \\",
+        "      o---o   o---o    o---o---o  o---o---o"
+    ],
+    "program": [
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_n_triangular_grid_graph(n):",
+        "    s = 1",
+        "    grids = []",
+        "    for i in range(n + 1, 1, -1):",
+        "        for j in range(i - 1):",
+        "            a, b, c = s + j, s + j + 1, s + i + j",
+        "            grids.extend([(a, b), (a, c), (b, c)])",
+        "        s += i",
+        "    return grids",
+        "def A266513(n):",
+        "    if n == 1: return 0",
+        "    universe = make_n_triangular_grid_graph(n - 1)",
+        "    GraphSet.set_universe(universe)",
+        "    cycles = GraphSet.cycles()",
+        "    return cycles.len()",
+        "print([A266513(n) for n in range(1, 12)])  # _Seiichi Manyama_, Nov 30 2020"
+    ],
+    "xref": [
+        "Cf. A112676, A112675, A140517, A269869."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Andrew Howroyd_, Apr 06 2016",
+    "references": 6,
+    "revision": 27,
+    "time": "2023-07-08T20:56:58-04:00",
+    "created": "2016-04-07T02:19:46-04:00"
+}

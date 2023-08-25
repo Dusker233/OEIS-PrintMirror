@@ -1,0 +1,33 @@
+{
+    "number": 344398,
+    "data": "1,1,10,111,8676,243005,49729758,2634606331,1026912225160,88276603008249,55954905981282210,7103694104486331671,6655958151527584785900,1171100778886715057133493,1521436331153097968932487206,354408430829377435361459172915,609729139653483641913607434550800",
+    "name": "a(n) = (-1)^n * F_{n}((-1)^n * n), where F_{n}(x) is the Fubini polynomial.",
+    "maple": [
+        "F := proc(n) option remember; if n = 0 then return 1 fi;",
+        "expand(add(binomial(n, k)*F(n-k)*x, k = 1..n)) end:",
+        "a := n -> (-1)^n*subs(x = (-1)^n*n, F(n)):",
+        "seq(a(n), n = 0..17);"
+    ],
+    "program": [
+        "(SageMath)",
+        "@cached_function",
+        "def F(n):",
+        "    R.<x> = PolynomialRing(ZZ)",
+        "    if n == 0: return R(1)",
+        "    return R(sum(binomial(n, k)*F(n - k)*x for k in (1..n)))",
+        "def a(n):",
+        "    return (-1)^n*F(n).substitute(x = (-1)^n*n)",
+        "print([a(n) for n in range(17)])"
+    ],
+    "xref": [
+        "The coefficients of the Fubini polynomials are A131689.",
+        "Cf. A094420."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, May 21 2021",
+    "references": 0,
+    "revision": 8,
+    "time": "2021-05-22T08:31:52-04:00",
+    "created": "2021-05-22T08:31:52-04:00"
+}

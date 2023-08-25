@@ -1,0 +1,47 @@
+{
+    "number": 332295,
+    "data": "1,1,2,3,4,6,6,10,12,17,21,30,34,48,54,74,86,113,132,169,200,246,293,360,422,512,599,726,840,1009,1181,1401,1631,1940,2240,2636,3069,3567,4141,4846,5556,6470,7505,8627,9936,11523,13176,15151,17430,19935,22846",
+    "name": "Number of widely recursively normal integer partitions of n.",
+    "comment": [
+        "A sequence is widely recursively normal if either it is all 1's (wide) or its run-lengths cover an initial interval of positive integers (normal) and are themselves a widely recursively normal sequence."
+    ],
+    "example": [
+        "The a(1) = 1 through a(8) = 12 partitions:",
+        "  (1)  (2)   (3)    (4)     (5)      (6)       (7)        (8)",
+        "       (11)  (21)   (31)    (32)     (42)      (43)       (53)",
+        "             (111)  (211)   (41)     (51)      (52)       (62)",
+        "                    (1111)  (221)    (321)     (61)       (71)",
+        "                            (311)    (411)     (322)      (332)",
+        "                            (11111)  (111111)  (331)      (422)",
+        "                                               (421)      (431)",
+        "                                               (511)      (521)",
+        "                                               (3211)     (611)",
+        "                                               (1111111)  (3221)",
+        "                                                          (4211)",
+        "                                                          (11111111)",
+        "For example, starting with y = (4,3,2,2,1) and repeatedly taking run-lengths gives (4,3,2,2,1) -> (1,1,2,1) -> (2,1,1) -> (1,2) -> (1,1), all of which have normal run-lengths, so y is widely recursively normal. On the other hand, starting with y and repeatedly taking multiplicities gives (4,3,2,2,1) -> (2,1,1,1) -> (3,1), so y is not fully normal (A317491).",
+        "Starting with y = (5,4,3,3,2,2,2,1,1) and repeatedly taking run-lengths gives (5,4,3,3,2,2,2,1,1) -> (1,1,2,3,2) -> (2,1,1,1) -> (1,3), so y is not widely recursively normal. On the other hand, starting with y and repeatedly taking multiplicities gives (5,4,3,3,2,2,2,1,1) -> (3,2,2,1,1) -> (2,2,1) -> (2,1) -> (1,1), so y is fully normal (A317491)."
+    ],
+    "mathematica": [
+        "recnQ[ptn_]:=Or[ptn=={},Union[ptn]=={1},And[Union[Length/@Split[ptn]]==Range[Max[Length/@Split[ptn]]],recnQ[Length/@Split[ptn]]]];",
+        "Table[Length[Select[IntegerPartitions[n],recnQ]],{n,0,30}]"
+    ],
+    "xref": [
+        "The narrow version is A000012.",
+        "Partitions with normal multiplicities are A317081.",
+        "The Heinz numbers of these partitions are a proper superset of A317492.",
+        "Accepting any constant sequence instead of just 1's gives A332272.",
+        "The total (instead of recursive) version is A332277.",
+        "The case of reversed partitions is this same sequence.",
+        "The alternating (instead of recursive) version is this same sequence.",
+        "Dominated by A332576.",
+        "Cf. A000009, A001462, A181819, A182850, A317245, A317491, A329746, A329747, A332276."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Feb 16 2020",
+    "references": 8,
+    "revision": 6,
+    "time": "2020-02-18T04:47:52-05:00",
+    "created": "2020-02-18T04:47:52-05:00"
+}

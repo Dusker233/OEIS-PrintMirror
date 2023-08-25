@@ -1,0 +1,47 @@
+{
+    "number": 348664,
+    "data": "203,211,300,308,333,357,395,406,407,419,422,423,459,467,556,564,600,601,604,616,617,628,653,666,667,669,690,709,714,715,723,741,779,787,790,791,803,811,812,813,814,815,820,835,838,839,844,845,846,847,851,869",
+    "name": "Numbers whose binary expansion is not rich.",
+    "comment": [
+        "A word of length k is \"rich\" if it contains, as contiguous subsequences, exactly k + 1 distinct palindromes (including the empty word).",
+        "There are A225681(k)/2 terms with k binary digits."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A348664/b348664.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "{k: A137397(k) <= A070939(k)}. - _Michael S. Branicky_, Oct 29 2021"
+    ],
+    "example": [
+        "For n = 203:",
+        "- the binary expansion of 203 is \"11001011\" and has 8 binary digits,",
+        "- we have the following 8 palindromes: \"\", \"0\", \"1\", \"00\", \"11\", \"010\", \"101\", \"1001\"",
+        "- so 203 is not rich, and belongs to this sequence.",
+        "For n = 204:",
+        "- the binary expansion of 204 is \"11001100\" and has 8 binary digits,",
+        "- we have the following 9 palindromes: \"\", \"0\", \"1\", \"00\", \"11\", \"0110\", \"1001\", \"001100\", \"110011\"",
+        "- so 204 is rich, and does not belong to this sequence."
+    ],
+    "mathematica": [
+        "Select[Range@1000,Length@Select[Union[Subsequences[s=IntegerDigits[#,2]]],PalindromeQ]<=Length@s&] (* _Giorgos Kalogeropoulos_, Oct 29 2021 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = { my (b=binary(n), p=select(w->w==Vecrev(w), setbinop((i,j)->b[i..j],[1..#b]))); #b!=#p }",
+        "(Python)",
+        "def ispal(s): return s == s[::-1]",
+        "def ok(n):",
+        "  s = bin(n)[2:]",
+        "  return len(s) >= 1 + len(set(s[i:j] for i in range(len(s)) for j in range(i+1, len(s)+1) if ispal(s[i:j])))",
+        "print([k for k in range(870) if ok(k)]) # _Michael S. Branicky_, Oct 29 2021"
+    ],
+    "xref": [
+        "Cf. A206926, A216264, A225681, A070939, A137397."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_R\u00e9my Sigrist_, Oct 28 2021",
+    "references": 1,
+    "revision": 15,
+    "time": "2021-10-29T13:32:15-04:00",
+    "created": "2021-10-29T12:23:56-04:00"
+}

@@ -1,0 +1,55 @@
+{
+    "number": 13916,
+    "data": "1,2,4,6,12,14,60,64,96,100,102,108,114,122,124,130,132,146,152,158,162,178,192,198,204,206,208,214,216,296,308,326,328,330,332,334,342,350,356,358,426,446,458,460,464,480,484,488,512,530,536,548,568,620,630,676,680",
+    "name": "Numbers k such that the sum of the first k primes is prime.",
+    "link": [
+        "David W. Wilson, <a href=\"/A013916/b013916.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Romeo Me\u0161trovi\u0107, <a href=\"https://arxiv.org/abs/1804.04198\">Curious conjectures on the distribution of primes among the sums of the first 2n primes</a>, arXiv:1804.04198 [math.NT], 2018."
+    ],
+    "formula": [
+        "a(n) = A000720(A013917(n))."
+    ],
+    "example": [
+        "6 is a term because the sum of the first six primes 2 + 3 + 5 + 7 + 11 + 13 = 41 is prime."
+    ],
+    "maple": [
+        "p:=proc(n) if isprime(sum(ithprime(k),k=1..n))=true then n else fi end: seq(p(n),n=1..690); # _Emeric Deutsch_"
+    ],
+    "mathematica": [
+        "s = 0; Do[s = s + Prime[n]; If[PrimeQ[s], Print[n]], {n, 1, 1000}]",
+        "Flatten[Position[Accumulate[Prime[Range[2000]]], _?(PrimeQ[#] &)]] (* _Harvey P. Dale_, Dec 16 2010 *)",
+        "Flatten[Position[PrimeQ[Accumulate[Prime[Range[2000]]]],True]] (* _Fred Patrick Doty_, Aug 15 2017 *)"
+    ],
+    "program": [
+        "(PARI) isA013916(n) = isprime(sum(i=1,n,prime(i))) \\\\ _Michael B. Porter_, Jan 29 2010",
+        "(Magma) [n:n in [1..700] | IsPrime(&+PrimesUpTo(NthPrime(n))) ]; // _Marius A. Burtea_, Jan 04 2019",
+        "(MATLAB) p=primes(10000); m=1;",
+        "for u=1:700 ; suma=sum(p(1:u));",
+        "     if isprime(suma)==1 ; sol(m)=u; m=m+1; end",
+        "end",
+        "sol; % _Marius A. Burtea_, Jan 04 2019",
+        "(GAP) P:=Filtered([1..5300],IsPrime);;",
+        "a:=Filtered([1..Length(P)],n->IsPrime(Sum([1..n],k->P[k])));; Print(a); # _Muniru A Asiru_, Jan 04 2019",
+        "(Python)",
+        "from sympy import isprime, prime",
+        "def aupto(lim):",
+        "  s = 0",
+        "  for k in range(1, lim+1):",
+        "    s += prime(k)",
+        "    if isprime(s): print(k, end=\", \")",
+        "aupto(680) # _Michael S. Branicky_, Feb 28 2021"
+    ],
+    "xref": [
+        "Cf. A007504, A013917, A013918."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Renaud Lifchitz (100637.64(AT)CompuServe.COM)",
+    "ext": [
+        "More terms from _David W. Wilson_"
+    ],
+    "references": 37,
+    "revision": 57,
+    "time": "2022-09-08T08:44:38-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

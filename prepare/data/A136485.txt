@@ -1,0 +1,43 @@
+{
+    "number": 136485,
+    "data": "0,0,4,4,12,16,24,32,52,60,76,88,112,120,148,164,192,216,256,276,308,332,376,392,440,476,524,556,608,648,688,732,796,832,904,936,1012,1052,1124,1176,1232,1288,1372,1428,1508,1560,1648,1696,1788,1860,1952,2016",
+    "name": "Number of unit square lattice cells enclosed by origin centered circle of diameter n.",
+    "comment": [
+        "a(n) is the number of complete squares that fit inside the circle with diameter n, drawn on squared paper."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A136485/b136485.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = 4 * Sum_{k=1..floor(n/2)} floor(sqrt((n/2)^2 - k^2)).",
+        "a(n) = 4 * A136483(n).",
+        "a(n) = 2 * A136513(n).",
+        "Lim_{n -> oo} a(n)/(n^2) -> Pi/4 (A003881).",
+        "a(n) = [x^(n^2)] (theta_3(x^4) - 1)^2 / (1 - x). - _Ilya Gutkovskiy_, Nov 24 2021"
+    ],
+    "example": [
+        "a(3) = 4 because a circle centered at the origin and of radius 3/2 encloses (-1,-1), (-1,1), (1,-1), (1,1)."
+    ],
+    "mathematica": [
+        "Table[4*Sum[Floor[Sqrt[(n/2)^2 - k^2]], {k,Floor[n/2]}], {n,100}]"
+    ],
+    "program": [
+        "(Magma)",
+        "A136485:= func< n | n le 1 select 0 else 4*(&+[Floor(Sqrt((n/2)^2-j^2)): j in [1..Floor(n/2)]]) >;",
+        "[A136485(n): n in [1..100]]; // _G. C. Greubel_, Jul 29 2023",
+        "(SageMath)",
+        "def A136485(n): return 4*sum(floor(sqrt((n/2)^2-k^2)) for k in range(1,(n//2)+1))",
+        "[A136485(n) for n in range(1,101)] # _G. C. Greubel_, Jul 29 2023"
+    ],
+    "xref": [
+        "Cf. A003881, A136483, A136513.",
+        "Alternating merge of A119677 of A136485."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,3",
+    "author": "Glenn C. Foster (gfoster(AT)uiuc.edu), Jan 02 2008",
+    "references": 4,
+    "revision": 15,
+    "time": "2023-07-30T02:14:21-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

@@ -1,0 +1,73 @@
+{
+    "number": 337072,
+    "data": "1,1,2,10,141,6769,1298995,1148840085,5307091649182,143026276277298216,24801104674619158730662,30190572492693121799801655311,278937095127086600900558327826721594",
+    "name": "Number of factorizations of the superprimorial A006939(n) into squarefree numbers > 1.",
+    "comment": [
+        "The n-th superprimorial is A006939(n) = Product_{i = 1..n} prime(i)^(n - i + 1), which has n! divisors.",
+        "Also the number of set multipartitions (multisets of sets) of the multiset of prime factors of the superprimorial A006939(n)."
+    ],
+    "formula": [
+        "a(n) = A050320(A006939(n)).",
+        "a(n) = A318360(A002110(n)). - _Andrew Howroyd_, Aug 31 2020"
+    ],
+    "example": [
+        "The a(1) = 1 through a(3) = 10 factorizations:",
+        "    2  2*6    2*6*30",
+        "       2*2*3  6*6*10",
+        "              2*5*6*6",
+        "              2*2*3*30",
+        "              2*2*6*15",
+        "              2*3*6*10",
+        "              2*2*3*5*6",
+        "              2*2*2*3*15",
+        "              2*2*3*3*10",
+        "              2*2*2*3*3*5",
+        "The a(1) = 1 through a(3) = 10 set multipartitions:",
+        "     {1}  {1}{12}    {1}{12}{123}",
+        "          {1}{1}{2}  {12}{12}{13}",
+        "                     {1}{1}{12}{23}",
+        "                     {1}{1}{2}{123}",
+        "                     {1}{2}{12}{13}",
+        "                     {1}{3}{12}{12}",
+        "                     {1}{1}{1}{2}{23}",
+        "                     {1}{1}{2}{2}{13}",
+        "                     {1}{1}{2}{3}{12}",
+        "                     {1}{1}{1}{2}{2}{3}"
+    ],
+    "mathematica": [
+        "chern[n_]:=Product[Prime[i]^(n-i+1),{i,n}];",
+        "facsqf[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[facsqf[n/d],Min@@#>=d&]],{d,Select[Rest[Divisors[n]],SquareFreeQ]}]];",
+        "Table[Length[facsqf[chern[n]]],{n,0,3}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See A318360 for count.",
+        "a(n) = {if(n==0, 1, count(vector(n,i,i)))} \\\\ _Andrew Howroyd_, Aug 31 2020"
+    ],
+    "xref": [
+        "A000142 counts divisors of superprimorials.",
+        "A022915 counts permutations of the same multiset.",
+        "A103774 is the version for factorials instead of superprimorials.",
+        "A337073 is the strict case (strict factorizations into squarefree numbers).",
+        "A001055 counts factorizations.",
+        "A006939 lists superprimorials or Chernoff numbers.",
+        "A045778 counts strict factorizations.",
+        "A050320 counts factorizations into squarefree numbers.",
+        "A050326 counts strict factorizations into squarefree numbers.",
+        "A076954 can be used instead of A006939 (cf. A307895, A325337).",
+        "A089259 counts set multipartitions of integer partitions.",
+        "A116540 counts normal set multipartitions.",
+        "A317829 counts factorizations of superprimorials.",
+        "A337069 counts strict factorizations of superprimorials.",
+        "Cf. A000178, A002110, A027423, A124010, A181818, A303279, A318360, A336417, A337070."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Aug 15 2020",
+    "ext": [
+        "a(7)-a(12) from _Andrew Howroyd_, Aug 31 2020"
+    ],
+    "references": 4,
+    "revision": 14,
+    "time": "2020-08-31T19:49:57-04:00",
+    "created": "2020-08-17T20:49:19-04:00"
+}

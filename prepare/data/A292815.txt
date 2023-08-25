@@ -1,0 +1,47 @@
+{
+    "number": 292815,
+    "data": "12025,13833,35425,54145,89425,187461,203841,321201,499681,501025,566401,595441,717025,784225,856801,877825,965497,1080801,1165537,1299961,1335961,1439425,1566891,1658385,1935025,2058049,2514337,2668225,2817001,3078361",
+    "name": "Nonsquarefree numbers n = p_1^s_1...p_m^s_m (m > 1) such that (p_i^s_i - 1) | n-1 for all 0 < i <= m.",
+    "comment": [
+        "If squarefree numbers were accepted, then Carmichael numbers would be included. - _Michel Marcus_, Mar 13 2018"
+    ],
+    "maple": [
+        "isA292815 := proc(n)",
+        "    local pf,pfs;",
+        "    pfs := ifactors(n)[2] ;",
+        "    if nops(pfs) = 1 or issqrfree(n) then",
+        "        return false;",
+        "    end if;",
+        "    for pf in pfs do",
+        "        if modp(n-1,op(1,pf)^op(2,pf)-1) > 0 then",
+        "            return false;",
+        "        end if;",
+        "    end do:",
+        "    true ;",
+        "end proc:",
+        "for n from 1 do",
+        "    if isA292815(n) then",
+        "        print(n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, May 02 2018"
+    ],
+    "mathematica": [
+        "fa[n_] := fa[n] = FactorInteger[n];",
+        "free[n_] := Union[Table[fa[n]\u301ai, 2\u301b, {i, Length[fa[n]]}]] == {1}",
+        "tes1[n_] := Union@Table[IntegerQ[(n - 1)/(fa[n][[i, 1]]^fa[n][[i, 2]] - 1)], {i, Length[fa[n]]}] == {True};",
+        "Select[1 + Range[3300200], ! free[#] && Length@fa[#] > 1 && tes1[#] &]"
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(f = factor(n)); if ((#f~ > 1) && ! issquarefree(n), for (k=1, #f~, if ((n-1) % (f[k,1]^f[k,2] -1), return (0));); return (1);); return (0);} \\\\ _Michel Marcus_, Mar 05 2018"
+    ],
+    "xref": [
+        "Cf. A013929, A087442, A002997 (Carmichael numbers)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jos\u00e9 Mar\u00eda Grau Ribas_, Sep 24 2017",
+    "references": 0,
+    "revision": 24,
+    "time": "2018-07-28T10:40:31-04:00",
+    "created": "2018-05-02T13:14:18-04:00"
+}

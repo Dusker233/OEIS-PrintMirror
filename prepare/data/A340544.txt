@@ -1,0 +1,41 @@
+{
+    "number": 340544,
+    "data": "5,11,29,44,50,83,98,104,116,128,140,146,245,260,266,278,290,302,308,332,344,377,380,395,401,410,416,434,449,455,731,746,752,764,776,788,794,818,830,863,866,881,887,896,902,920,935,941,980,992,1025,1028,1043",
+    "name": "Numbers from A340131 that are not multiples of 3.",
+    "comment": [
+        "Terms are reduced, i.e., ternary codes do not have trailing zeros.",
+        "The term is a digitized Motzkin path that starts with an up step and ends with a down step. Such a path has neither leading nor final flat steps, i.e., the ternary code of the corresponding term has no finite 0's. Recall that in ternary code, 1's are up steps, and 2's are down steps.",
+        "The number of terms with a ternary code of length k is A026107(k-1). For instance, 7 (seven) reduced terms 83, 98, 104, 116, 128, 140, and 146 have a ternary length of 5, namely 10002, 10122, 10212, 11022, 11202, 12012, and 12102. Respectively A026107(4) = 7."
+    ],
+    "link": [
+        "Gennady Eremin, <a href=\"/A340544/b340544.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Kurt Mahler, <a href=\"http://matwbn.icm.edu.pl/ksiazki/aa/aa53/aa5316.pdf\">The representation of squares to the base 3</a>, Acta Arith. Vol. 53, Issue 1 (1989), p. 105."
+    ],
+    "program": [
+        "(Python)",
+        "def digits(n, b):",
+        "  out = []",
+        "  while n >= b:",
+        "    out.append(n % b)",
+        "    n //= b",
+        "  return [n] + out[::-1]",
+        "def ok(n):",
+        "  if n%3 == 0: return False",
+        "  t = digits(n, 3)",
+        "  if t.count(1) != t.count(2): return False",
+        "  return all(t[:i].count(1) >= t[:i].count(2) for i in range(1, len(t)))",
+        "print([n for n in range(750) if ok(n)]) # after _Michael S. Branicky_ (A340131)"
+    ],
+    "xref": [
+        "Intersection of A001651 and A340131.",
+        "Subsequences: A134752, A168607.",
+        "Cf. A026107."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "_Gennady Eremin_, Jan 11 2021",
+    "references": 1,
+    "revision": 34,
+    "time": "2021-02-15T07:15:31-05:00",
+    "created": "2021-02-15T05:10:33-05:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 319590,
+    "data": "1,2,8,58,576,7440,117628,2201014,47552012,1164812674,31898271660,965666303078,32022547868872,1154362247246714,44945574393963472,1879720975031634318,84039891496643620196,3999886612000379135606,201919706444252727224852,10775953237291840618917900",
+    "name": "Number of binary rooted trees with n leaves spanning an initial interval of positive integers and all non-leaf nodes having out-degree 2.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A319590/b319590.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; `if`(n<2, k*n, `if`(n::odd, 0,",
+        "      (t-> t*(1-t)/2)(b(n/2, k)))+add(b(i, k)*b(n-i, k), i=1..n/2))",
+        "    end:",
+        "a:= n-> add(add((-1)^i*binomial(k, i)*b(n, k-i), i=0..k), k=0..n):",
+        "seq(a(n), n=1..23);  # _Alois P. Heinz_, Sep 07 2019"
+    ],
+    "mathematica": [
+        "b[n_, k_] := b[n, k] = If[n < 2, k n, If[OddQ[n], 0, Function[t, t(1 - t)/2][b[n/2, k]]] + Sum[b[i, k] b[n - i, k], {i, 1, n/2}]];",
+        "a[n_] := Sum[Sum[(-1)^i Binomial[k, i] b[n, k - i], {i, 0, k}], {k, 0, n}];",
+        "Array[a, 23] (* _Jean-Fran\u00e7ois Alcover_, Apr 10 2020, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) \\\\ here R(n, k) is k-th column of A319539 as a vector.",
+        "R(n, k)={my(v=vector(n)); v[1]=k; for(n=2, n, v[n]=sum(j=1, (n-1)\\2, v[j]*v[n-j]) + if(n%2, 0, binomial(v[n/2]+1, 2))); v}",
+        "seq(n)={sum(k=1, n, R(n, k)*sum(r=k, n, binomial(r, k)*(-1)^(r-k)) )}"
+    ],
+    "xref": [
+        "Row sums of A319541.",
+        "Cf. A316651, A319539."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Andrew Howroyd_, Sep 23 2018",
+    "references": 4,
+    "revision": 11,
+    "time": "2020-04-10T06:16:14-04:00",
+    "created": "2018-09-23T22:33:01-04:00"
+}

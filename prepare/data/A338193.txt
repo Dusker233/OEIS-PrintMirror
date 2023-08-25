@@ -1,0 +1,30 @@
+{
+    "number": 338193,
+    "data": "1,1,2,10,100,1556,33016,888952,29035280,1115554960,49300214176,2463859486496,137403573562432,8459184183342400,569861708317147520,41697486853043633536,3293243089832744386816,279234174032057551630592,25299360271944290704683520",
+    "name": "E.g.f. A(x) satisfies:  A(x) = 1 + Integral (x/A(x))' / (x/A(x)^2)' dx.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A338193/b338193.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) ~ (1 + sqrt(2))^(2*n - 3/2) * n^(n-2) / (2^(3/4) * exp(n - 1 + 1/sqrt(2))).",
+        "E.g.f.: (8*x^2 * (x - 3 + sqrt(1 - 6*x + x^2))^3 / (3*x - 1 + sqrt(1 - 6*x + x^2)))^(1/4) * exp((1 + x - sqrt(1 - 6*x + x^2))/4)/2."
+    ],
+    "mathematica": [
+        "nmax = 20; A = 1; Do[A = 1 + Integrate[D[x/A, x]/D[x/A^2, x], x] + O[x]^nmax, nmax]; CoefficientList[A, x] * Range[0, nmax - 1]!",
+        "nmax = 20; FullSimplify[CoefficientList[Series[(8*x^2 * (x - 3 + Sqrt[1 - 6*x + x^2])^3 / (3*x - 1 + Sqrt[1 - 6*x + x^2]))^(1/4) * E^((1 + x - Sqrt[1 - 6*x + x^2])/4)/2, {x, 0, nmax}], x] * Range[0, nmax]!]"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=1); for(i=1, n, A = 1 + intformal( (x/A)'/(x/A^2 +x*O(x^n))' ); ); n!*polcoeff(A, n)}",
+        "for(n=0, 20, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A302701, A303064, A338163, A338187, A338188, A338194."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Vaclav Kotesovec_, Oct 15 2020",
+    "references": 7,
+    "revision": 10,
+    "time": "2020-10-15T14:44:42-04:00",
+    "created": "2020-10-15T13:28:10-04:00"
+}

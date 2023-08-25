@@ -1,0 +1,54 @@
+{
+    "number": 350541,
+    "data": "12,180,810,5640,9420,18042,62970,88800,97842,109830,165702,284730,392262,452520,626610,663570,663582,855720,983430,1002342,1003350,1068702,1146780,1155612,1322160,1329702,1592862,1678752,1718862,1748472,2116560,2144490",
+    "name": "Twin primes x, represented by their average, such that x is the first and x+18 the last of three successive twins.",
+    "comment": [
+        "Subsequence of A014574. For x>6, d=18 is the least possible difference between the least and the greatest of three twins. For d=12, one of the six terms 6*k+-1, 6*k+6+-1,6*k+12+-1 would be divisible by 5. Therefore, d>12, except for x=6.",
+        "The distribution of 35314 terms < 10^11 is in accordance with the k-tuple conjecture, see links \"k-tuple conjecture\" and \"Test of the k-tuple conjecture\".",
+        "Generalizations:",
+        "Twin primes x such that x is the first and x+d the last of m successive twins.",
+        "m   d",
+        "1   0  A014574(n) twin primes",
+        "2   6  A173037(n)-3",
+        "3  12  Only one quadruple: (6,12,18,30)",
+        "3  18  Current sequence",
+        "4  24  Only one quintuple: (6,12,18,30,42)",
+        "4  30  A350542",
+        "5  36  See  A350543",
+        "5  42  See  A350543",
+        "5  48  A350543"
+    ],
+    "link": [
+        "Gerhard Kirchner, <a href=\"/A350541/a350541.pdf\">Test of the k-tuple conjecture</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/k-TupleConjecture.html\">k-tuple conjecture</a>."
+    ],
+    "example": [
+        "Triples of twins Example   6-tuple of primes",
+        "(x,x+ 6,x+18)     x= 12   (11,13,17,19,29,31)",
+        "(x,x+12,x+18)     x=180   (179,181,191,193,197,199)"
+    ],
+    "mathematica": [
+        "Select[Prime@Range[4,160000],Count[Range[#,#+18],_?(PrimeQ@#&&PrimeQ[#+2]&)]==3&]+1 (* _Giorgos Kalogeropoulos_, Jan 07 2022 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "block(twin:[], n:0, p1:11, j2:1, nmax: 3,",
+        "/*returns nmax terms*/",
+        "m:3, d:18, w: makelist(-d,i,1,m),",
+        "while n<nmax  do(",
+        "p2: next_prime(p1), if p2-p1=2 then(",
+        "  k:p1+1, j1:j2, j2:1+ mod(j2,m), w[j1]:k,",
+        "  if w[j1]-w[j2]=d then(n:n+1, twin: append(twin,[k-d]))),",
+        "p1:p2), twin);"
+    ],
+    "xref": [
+        "Cf. A014574, A173037, A350542, A350543."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gerhard Kirchner_, Jan 06 2022",
+    "references": 3,
+    "revision": 20,
+    "time": "2023-02-28T13:07:28-05:00",
+    "created": "2022-02-15T16:37:47-05:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 290000,
+    "data": "1,1,4,40,1120,91840,22408960,16358540800,35792487270400,234870301468364800,4623187014103292723200,272999193182799435304960000,48361261073946554365403054080000,25701205307660304745058529866383360000,40976048450930207702360695570691784048640000",
+    "name": "a(n) = Product_{k=1..n-1} (3^k + 1).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A290000/b290000.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies: A(x) = 1 + x * A(3*x) / (1 - x).",
+        "G.f.: Sum_{k>=0} 3^(k*(k - 1)/2) * x^k / Product_{j=0..k-1} (1 - 3^j*x).",
+        "a(0) = 1; a(n) = Sum_{k=0..n-1} 3^k * a(k).",
+        "a(n) ~ c * 3^(n*(n - 1)/2), where c = Product_{k>=1} (1 + 1/3^k) = 1.564934018567011537938849... = A132324.",
+        "a(n) = 3^(binomial(n+1,2))*(-1/3;1/3)_{n}, where (a;q)_{n} is the q-Pochhammer symbol. - _G. C. Greubel_, Feb 21 2021"
+    ],
+    "mathematica": [
+        "Table[Product[3^k + 1, {k, 1, n - 1}], {n, 0, 14}]"
+    ],
+    "program": [
+        "(PARI) a(n) = prod(k=1, n-1, 3^k + 1); \\\\ _Michel Marcus_, Jun 06 2020",
+        "(Sage)",
+        "from sage.combinat.q_analogues import q_pochhammer",
+        "[1]+[3^(binomial(n,2))*q_pochhammer(n-1, -1/3, 1/3) for n in (1..20)] # _G. C. Greubel_, Feb 21 2021",
+        "(Magma)",
+        "[n lt 3 select 1 else (&*[3^j +1: j in [1..n-1]]): n in [1..20]]; // _G. C. Greubel_, Feb 21 2021"
+    ],
+    "xref": [
+        "Cf. A027871, A034472, A047656, A132324, A323716.",
+        "Sequences of the form Product_{j=1..n-1} (m^j + 1): A000012 (m=0), A011782 (m=1), A028362 (m=2), this sequence (m=3), A309327 (m=4)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Jun 06 2020",
+    "references": 3,
+    "revision": 55,
+    "time": "2021-02-21T04:09:35-05:00",
+    "created": "2020-06-06T21:31:09-04:00"
+}

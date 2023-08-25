@@ -1,0 +1,45 @@
+{
+    "number": 316834,
+    "data": "84,116,140,164,180,196,212,236,244,332,460,628",
+    "name": "Numbers with a unique representation as a sum of four distinct odd squares.",
+    "comment": [
+        "Numbers n that have a unique representation as n = h^2 + i^2 + j^2 + k^2 with h,i,j,k odd and 0 < h < i < j < k.",
+        "No more terms up to 5*10^5. - _Robert Israel_, Jul 20 2018",
+        "a(13) > 5*10^6, if it exists. - _Robert Price_, Jul 25 2018",
+        "a(13) > 10^11, if it exists (which seems very unlikely). - _Jon E. Schoenfield_, Jul 28 2018"
+    ],
+    "link": [
+        "Michael D. Hirschhorn, <a href=\"https://ajc.maths.uq.edu.au/pdf/24/ocr-ajc-v24-p285.pdf\">Partitions into Four Distinct Squares of Equal Parity</a>, Australasian Journal of Combinatorics, Volume 24(2001), pp. 285-291.",
+        "Michael D. Hirschhorn, <a href=\"https://doi.org/10.1007/978-3-319-57762-3\">The Power of q: A Personal Journey</a>, Springer 2017. See Chapter 31: Partitions into Four Distinct Squares of Equal Parity."
+    ],
+    "example": [
+        "156 (a member of A316833) is not a member here since it has two representations: 156 = 1+25+49+81 = 1+9+25+121."
+    ],
+    "maple": [
+        "N:= 10000: # to get all terms <= N",
+        "V:= Vector(N):",
+        "for a from 1 to floor(sqrt(N/4)) by 2 do",
+        "  for b from a+2 to floor(sqrt((N-a^2)/3)) by 2 do",
+        "    for c from b+2 to floor(sqrt((N-a^2-b^2)/2)) by 2 do",
+        "      for d from c + 2  by 2 do",
+        "        r:= a^2+b^2+c^2+d^2;",
+        "        if r > N then break fi;",
+        "        V[r]:= V[r]+1",
+        "od od od od:",
+        "select(r -> V[r]=1, [$1..N]); # _Robert Israel_, Jul 20 2018"
+    ],
+    "mathematica": [
+        "okQ[n_] := Count[PowersRepresentations[n, 4, 2], pr_List /; Union[pr] == pr && AllTrue[pr, OddQ]] == 1;",
+        "Select[Range[1000], okQ] (* _Jean-Fran\u00e7ois Alcover_, Apr 02 2019 *)"
+    ],
+    "xref": [
+        "Cf. A316833."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Jul 19 2018",
+    "references": 5,
+    "revision": 29,
+    "time": "2020-11-04T05:23:48-05:00",
+    "created": "2018-07-19T14:15:42-04:00"
+}

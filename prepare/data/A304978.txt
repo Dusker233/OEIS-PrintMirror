@@ -1,0 +1,64 @@
+{
+    "number": 304978,
+    "data": "106,155,197,204,253,288,302,351,379,400,421,449,470,498,504,535,547,554,561,596,645,652,687,694,704,729,743,779,782,792,820,834,841,873,890,904,925,939,953,988,1016,1029,1037,1042,1054,1079,1086,1107,1121,1135,1184,1198,1204,1211,1219,1233,1254,1276,1282,1289,1329",
+    "name": "Numbers that can be expressed in more than one way as 6xy + x + y with x >= y > 0.",
+    "comment": [
+        "Is it possible to find a closed form formula for this sequence?",
+        "Numbers k such that 6*k+1 has at least 5 divisors == 1 (mod 6). - _Robert Israel_, Jan 20 2019"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A304978/b304978.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "106 is in this sequence because 106 can be expressed in two different ways as 6xy + x + y: 6*8*2 + 8 + 2 and 6*15*1 + 15 + 1."
+    ],
+    "maple": [
+        "filter:= proc(n) nops(select(t -> t mod 6 =1, numtheory:-divisors(6*n+1)))>= 5 end proc:",
+        "select(filter, [$1..2000]); # _Robert Israel_, Jan 20 2019"
+    ],
+    "mathematica": [
+        "Select[Range[1329], 2 == Length@ FindInstance[ 6*x*y+x+y == # && x >= y > 0, {x, y}, Integers, 2] &] (* _Giovanni Resta_, May 29 2018 *)"
+    ],
+    "program": [
+        "(PYTHON)",
+        "# Finding duplicates in matrix A where {a_ij}=6*i*j+i+j",
+        "def cuenta(a):",
+        "    repa=[]",
+        "    dupo=[]",
+        "    k=0",
+        "    sumo=0",
+        "    while k<len(a)-1:",
+        "        j=k+1",
+        "        dupa = 1",
+        "        while j<len(a) and a[j]==a[k]:",
+        "            dupa +=1",
+        "            j+=1",
+        "        if dupa>1:",
+        "            repa.append(a[k])",
+        "            dupo.append(dupa)",
+        "            sumo +=(dupa-1)",
+        "        k +=dupa",
+        "    return repa, dupo,sumo",
+        "kuno = []",
+        "for k in range(1, a + 1):",
+        "    for j in range(1, k + 1):",
+        "        m=6 * k * j + k + j",
+        "        if m <= NN // 6: kuno.append(m)",
+        "kuno=sorted(kuno)",
+        "repkuno, dupkuno, suno= cuenta(kuno)",
+        "print(repkuno)",
+        "#",
+        "#END",
+        "(PARI) is(n) = my(i=0); for(x=1, n, for(y=1, x, if(n==6*x*y+x+y, i++; if(i==2, return(1))))); 0 \\\\ _Felix Fr\u00f6hlich_, May 29 2018"
+    ],
+    "xref": [
+        "Subsequence of A067611."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Pedro Caceres_, May 22 2018",
+    "references": 1,
+    "revision": 44,
+    "time": "2019-01-20T23:17:01-05:00",
+    "created": "2018-08-23T16:07:21-04:00"
+}

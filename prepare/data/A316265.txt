@@ -1,0 +1,48 @@
+{
+    "number": 316265,
+    "data": "1,3,4,7,11,12,19,21,25,28,33,41,44,47,57,61,75,76,77,83,84,97,100,121,123,132,133,139,141,151,164,169,175,183,188,197,209,228,231,233,241,244,249,271,275,287,289,291,300,307,308,329,332,347,361,363,388",
+    "name": "FDH numbers of strict integer partitions with prime parts.",
+    "comment": [
+        "Let f(n) = A050376(n) be the n-th Fermi-Dirac prime. The FDH number of a strict integer partition (y_1,...,y_k) is f(y_1)*...*f(y_k)."
+    ],
+    "example": [
+        "Sequence of strict integer partitions with prime parts, preceded by their FDH numbers, begins:",
+        "   1: ()",
+        "   3: (2)",
+        "   4: (3)",
+        "   7: (5)",
+        "  11: (7)",
+        "  12: (3,2)",
+        "  19: (11)",
+        "  21: (5,2)",
+        "  25: (13)",
+        "  28: (5,3)",
+        "  33: (7,2)",
+        "  41: (17)",
+        "  44: (7,3)",
+        "  47: (19)",
+        "  57: (11,2)",
+        "  61: (23)",
+        "  75: (13,2)",
+        "  76: (11,3)",
+        "  77: (7,5)",
+        "  83: (29)",
+        "  84: (5,3,2)"
+    ],
+    "mathematica": [
+        "nn=100;",
+        "FDfactor[n_]:=If[n==1,{},Sort[Join@@Cases[FactorInteger[n],{p_,k_}:>Power[p,Cases[Position[IntegerDigits[k,2]//Reverse,1],{m_}->2^(m-1)]]]]];",
+        "FDprimeList=Array[FDfactor,nn,1,Union];FDrules=MapIndexed[(#1->#2[[1]])&,FDprimeList];",
+        "Select[Range[nn],And@@PrimeQ/@(FDfactor[#]/.FDrules)&]"
+    ],
+    "xref": [
+        "Cf. A000586, A045450, A050376, A064547, A213925, A299755, A299757, A316185, A316266, A316267."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jun 28 2018",
+    "references": 2,
+    "revision": 6,
+    "time": "2018-06-29T11:35:18-04:00",
+    "created": "2018-06-29T11:35:18-04:00"
+}

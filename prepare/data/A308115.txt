@@ -1,0 +1,51 @@
+{
+    "number": 308115,
+    "data": "1,2,4,6,8,12,16,18,20,24,30,32,36,40,42,48,54,60,64,72,80,84,90,96,100,108,120,126,128,140,144,150,156,160,162,168,180,192,198,200,210,216,220,240,252,256,264,270,272,280,288,294,300,312,320,324,330,336",
+    "name": "Rhythmic numbers: each number in this list is the least common multiple of some set of numbers S such that 1 is in S and every element of S except for 1 is a sum of two other elements of S.",
+    "comment": [
+        "---------------------------Rhythmic structure example:---------------------------Enunciation: aababbccdbfe. Legend: a-a; b-aa; c-ba; d-bb; e-cc; f-db; g-fe. Unfolding: g (fe) (db)e db(cc) (bb)bcc bbb(ba)(ba) (aa)(aa)(aa)(aa)a(aa)a. \"a\" is a time unity. Each letter lasts the time of the sum of two others. The least common multiple of all letters is 12 (= a(6) in the sequence). This structure may represent alternated musical measures of 3/4 6/8.",
+        "Equivalently, this sequence corresponds to numbers that are the least common multiple of the terms of some addition chain. - _R\u00e9my Sigrist_, May 23 2019"
+    ],
+    "link": [
+        "Zizheng Fang, <a href=\"/A308115/b308115.txt\">Table of n, a(n) for n = 1..1999</a>",
+        "Zizheng Fang, <a href=\"/A308115/a308115.txt\">Python program for generating A308115</a>"
+    ],
+    "example": [
+        "1: divisors -- 1; binary sums -- 2; least common multiples -- 2.",
+        "2: divisors -- 1, 2; binary sums -- 2, 3, 4; least common multiples -- 4, 6.",
+        "4: divisors -- 1, 2, 4; binary sums -- 2, 3, 4, 5, 6, 8; least common multiples -- 6, 8, 12, 20, 24.",
+        "6: divisors -- 1, 2, 3, 6; binary sums -- 2, 3, 4, 5, 6, 7, 8, 9, 12; least common multiples -- 8, 12, 18, 20, 24, 30, 42.",
+        "8: divisors -- 1, 2, 4, 8; binary sums -- 2, 3, 4, 5, 6, 8, 9, 10, 12, 16; least common multiples -- 12, 16, 18, 20, 24, 30, 40, 42, 72."
+    ],
+    "program": [
+        "Computing rhythmic numbers (generic draft program):",
+        "% let N be the variable set of proposed numbers",
+        "N = {1};",
+        "for n = 1 to (number of wanted terms)",
+        "% extract the least number",
+        "a(n) = (least number of N); N = N - {a(n)};",
+        "% make new proposed numbers",
+        "D = {divisors of a(n)};",
+        "D = D - {divisors that are not binary sum of others except 1}",
+        "for p = 1 to (cardinal of D); for q = 1 to p;",
+        "  R = (least common multiple of {a(n), D(p) + D(q)});",
+        "  if R > a(n) % a(n) must not be reinserted in N",
+        "   % the element will be added to the set only if there isn't",
+        "   N = N + {R};",
+        "next q; next p;",
+        "next n."
+    ],
+    "xref": [
+        "The present sequence is a subset of A174973 and the first 22 terms are equal. With divisors of 88 (= A174973(23)) we can't make any of 11, 22, 44, 88 adding two of 1, 2, 4, 8."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Carlos Palma Ramos_, May 13 2019",
+    "ext": [
+        "More terms from _R\u00e9my Sigrist_, May 23 2019"
+    ],
+    "references": 2,
+    "revision": 29,
+    "time": "2020-01-30T04:22:10-05:00",
+    "created": "2019-08-11T00:02:31-04:00"
+}

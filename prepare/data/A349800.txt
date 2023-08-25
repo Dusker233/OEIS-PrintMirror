@@ -1,0 +1,67 @@
+{
+    "number": 349800,
+    "data": "0,0,1,1,4,9,16,33,62,113,205,373,664,1190,2113,3744,6618,11683,20564,36164,63489",
+    "name": "Number of integer compositions of n that are weakly alternating and have at least two adjacent equal parts.",
+    "comment": [
+        "We define a sequence to be weakly alternating if it is alternately weakly increasing and weakly decreasing, starting with either.",
+        "This sequence counts compositions that are weakly but not strongly alternating; also weakly alternating non-anti-run compositions."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Alternating_permutation\">Alternating permutation</a>"
+    ],
+    "example": [
+        "The a(2) = 1 through a(6) = 16 compositions:",
+        "  (1,1)  (1,1,1)  (2,2)      (1,1,3)      (3,3)",
+        "                  (1,1,2)    (1,2,2)      (1,1,4)",
+        "                  (2,1,1)    (2,2,1)      (2,2,2)",
+        "                  (1,1,1,1)  (3,1,1)      (4,1,1)",
+        "                             (1,1,1,2)    (1,1,1,3)",
+        "                             (1,1,2,1)    (1,1,2,2)",
+        "                             (1,2,1,1)    (1,1,3,1)",
+        "                             (2,1,1,1)    (1,3,1,1)",
+        "                             (1,1,1,1,1)  (2,2,1,1)",
+        "                                          (3,1,1,1)",
+        "                                          (1,1,1,1,2)",
+        "                                          (1,1,1,2,1)",
+        "                                          (1,1,2,1,1)",
+        "                                          (1,2,1,1,1)",
+        "                                          (2,1,1,1,1)",
+        "                                          (1,1,1,1,1,1)"
+    ],
+    "mathematica": [
+        "wigQ[y_]:=Or[Length[y]==0,Length[Split[y]]==Length[y] &&Length[Split[Sign[Differences[y]]]]==Length[y]-1];",
+        "whkQ[y_]:=And@@Table[If[EvenQ[m],y[[m]]<=y[[m+1]],y[[m]]>=y[[m+1]]],{m,1,Length[y]-1}];",
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],(whkQ[#]||whkQ[-#])&&!wigQ[#]&]],{n,0,10}]"
+    ],
+    "xref": [
+        "This is the weakly alternating case of A345192, ranked by A345168.",
+        "The case of partitions is A349795, ranked by A350137.",
+        "The version counting permutations of prime indices is A349798.",
+        "These compositions are ranked by A349799.",
+        "A001250 = alternating permutations, ranked by A349051, complement A348615.",
+        "A003242 = Carlitz (anti-run) compositions, ranked by A333489.",
+        "A025047/A025048/A025049 = alternating compositions, ranked by A345167.",
+        "A261983 = non-anti-run compositions, ranked by A348612.",
+        "A345165 = partitions without an alternating permutation, ranked by A345171.",
+        "A345170 = partitions with an alternating permutation, ranked by A345172.",
+        "A345173 = non-alternating anti-run partitions, ranked by A345166.",
+        "A345195 = non-alternating anti-run compositions, ranked by A345169.",
+        "A348377 = non-alternating non-twin compositions.",
+        "A349801 = non-alternating partitions, ranked by A289553.",
+        "Weakly alternating:",
+        "- A349052 = compositions, directed A129852/A129853, complement A349053.",
+        "- A349056 = permutations of prime indices, complement A349797.",
+        "- A349057 = complement of standard composition numbers (too dense).",
+        "- A349058 = patterns, complement A350138.",
+        "- A349059 = ordered factorizations, complement A350139.",
+        "- A349060 = partitions, complement A349061.",
+        "Cf. A008965, A011782, A027383, A096441, A274230, A333213, A344614, A344615, A348382, A348613, A349796, A350140."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,5",
+    "author": "_Gus Wiseman_, Dec 16 2021",
+    "references": 15,
+    "revision": 10,
+    "time": "2021-12-18T14:56:44-05:00",
+    "created": "2021-12-18T14:56:44-05:00"
+}

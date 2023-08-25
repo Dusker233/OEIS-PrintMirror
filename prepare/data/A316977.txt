@@ -1,0 +1,38 @@
+{
+    "number": 316977,
+    "data": "1,12,575,66080,13830706,4566898564,2181901435364,1422774451251512,1213875872220833664,1312273759143855989808,1752860078230602866012288,2834766624822130489716563008,5458358420687156358967526721408,12339106957086349462329140342122112",
+    "name": "Number of series-reduced rooted trees whose leaves are {1, 1, 2, 2, 3, 3, ..., n, n}.",
+    "comment": [
+        "A rooted tree is series-reduced if every non-leaf node has at least two branches."
+    ],
+    "formula": [
+        "a(n) = A292505(A061742(n)). - _Andrew Howroyd_, Nov 19 2018"
+    ],
+    "example": [
+        "The a(2) = 12 trees are (1(1(22))), (1(2(12))), (1(122)), (2(1(12))), (2(2(11))), (2(112)), ((11)(22)), ((12)(12)), (11(22)), (12(12)), (22(11)), (1122)."
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "gro[m_]:=If[Length[m]==1,m,Union[Sort/@Join@@(Tuples[gro/@#]&/@Select[mps[m],Length[#]>1&])]];",
+        "Table[Length[gro[Ceiling[Range[1/2,n,1/2]]]],{n,4}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See links in A339645 for combinatorial species functions.",
+        "cycleIndexSeries(n)={my(v=vector(2*n), vars=vector(2*n-2,i,sv(2+i))); v[1]=sv(1); for(n=2, #v, v[n] = substvec(polcoef( sExp(x*Ser(v[1..n])), n ), vars[1..n-2], vector(n-2))); sCartProd(x*Ser(v), 1/(1-x^2*symGroupCycleIndex(2)) + O(x*x^(2*n)))}",
+        "seq(n)={my(p=substvec(cycleIndexSeries(n), [sv(1), sv(2)], [1,1])); vector(n, n, polcoef(p,2*n))} \\\\ _Andrew Howroyd_, Jan 02 2021"
+    ],
+    "xref": [
+        "Cf. A000081, A000669, A007717, A020555, A050535, A094574, A292504, A316655, A316972, A316974."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jul 17 2018",
+    "ext": [
+        "Terms a(6) and beyond from _Andrew Howroyd_, Jan 02 2021"
+    ],
+    "references": 0,
+    "revision": 11,
+    "time": "2021-01-02T22:44:39-05:00",
+    "created": "2018-07-18T17:51:05-04:00"
+}

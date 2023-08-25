@@ -1,0 +1,48 @@
+{
+    "number": 62021,
+    "data": "0,5,42,151,548,1185,2542,4403,7608,13621,20834,32535,47980,65609,88278,119947,162368,208869,269194,340007,416580,512305,622286,756003,925432,1114661,1314498,1537015,1771628,2031993,2393158,2786315",
+    "name": "a(n) = Sum_{i=1..n} Sum_{j=1..i} (prime(i)^2 - prime(j)^2).",
+    "link": [
+        "Robert Israel, <a href=\"/A062021/b062021.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1) - a(n-2) + (n-1)*(prime(n)^2 - prime(n-1)^2) with a(1) = 0, a(2) = 5."
+    ],
+    "example": [
+        "a(3) = (5^2 - 2^2) + (5^2 - 3^2) + (3^2 - 2^2) = 42."
+    ],
+    "maple": [
+        "N:= 100: # for a(1)..a(N)",
+        "P2:= [seq(ithprime(i)^2,i=1..N)]:",
+        "DP2:= P2[2..-1]-P2[1..-2]:",
+        "A[1]:= 0: A[2]:= 5:",
+        "for n from 3 to N do A[n]:= 2*A[n-1]+(n-1)*DP2[n-1]-A[n-2] od:",
+        "seq(A[i],i=1..N); # _Robert Israel_, Feb 02 2020"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[1]==0,a[2]==5,a[n]==2a[n-1]-a[n-2]+(n-1)(Prime[n]^2 - Prime[n-1]^2)}, a, {n,40}] (* _Harvey P. Dale_, May 16 2019 *)"
+    ],
+    "program": [
+        "(Magma) [(&+[(&+[NthPrime(i)^2 - NthPrime(j)^2: j in [1..i]]): i in [1..n]]): n in [1..40]]; // _G. C. Greubel_, May 04 2022",
+        "(SageMath)",
+        "@CachedFunction",
+        "def a(n):",
+        "    if (n<3): return 5*(n-1)",
+        "    else: return 2*a(n-1) - a(n-2) + (n-1)*(nth_prime(n)^2 - nth_prime(n-1)^2)",
+        "[a(n) for n in (1..40)] # _G. C. Greubel_, May 04 2022"
+    ],
+    "xref": [
+        "Cf. A000040, A062020, A062022."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Jun 02 2001",
+    "ext": [
+        "More terms and formula from Larry Reeves (larryr(AT)acm.org), Jun 06 2001",
+        "Name edited by _G. C. Greubel_, May 04 2022"
+    ],
+    "references": 3,
+    "revision": 13,
+    "time": "2022-05-04T08:28:07-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

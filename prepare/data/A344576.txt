@@ -1,0 +1,33 @@
+{
+    "number": 344576,
+    "data": "0,2,10,52,278,1510,8288,45834,254922,1424252,7986550,44921582,253320352,1431678194,8106897418,45982821860,261206625526,1485765938390,8461264982176,48237937154554,275275548126890,1572297656021292,8987888015996790,51417128080562142",
+    "name": "a(n) = f(n,n) where f(0,n) = f(n,0) = Fibonacci(n) and f(m,n) = f(m-1,n) + f(m,n-1) + f(m-1,n-1).",
+    "comment": [
+        "a(n+1)/a(n) tends to A156035."
+    ],
+    "formula": [
+        "a(n) = 2*Sum_{k=1..n} Fibonacci(k)*(A008288(n-1,n-k) + A008288(n-1,n-k-1)). - _Andrew Howroyd_, May 29 2021",
+        "G.f.: x*(3*x^2-18*x+3-(x+1)*sqrt(x^2-6*x+1))/((x^2-7*x+1)*(x^2-6*x+1)). - _Alois P. Heinz_, May 29 2021",
+        "a(n) = ((79-97*n+26*n^2)*a(n-1) + (-9+9*n-2*n^2)*a(n-4) + (107-111*n+26*n^2)*a(n-3) + (-322+352*n-88*n^2)*a(n-2)) / (5-7*n+2*n^2) for n >= 4. - _Jos\u00e9 Mar\u00eda Grau Ribas_, Jun 19 2021"
+    ],
+    "mathematica": [
+        "F[0, 0] = 0; F[m_, 0] := Fibonacci[m]; F[0, n_] := Fibonacci[n];",
+        "F[m_, n_] := F[m, n] =   F[m - 1 , n ] + F[m , n - 1] +  F[m - 1, n - 1];",
+        "Table[F[n, n], {n, 0, 100}]"
+    ],
+    "program": [
+        "(PARI) \\\\ here D(n,k) is A008288(n,k).",
+        "D(n, k) = {sum(d = 0, min(n,k), binomial(k, d)*binomial(n+k-d, k))}",
+        "a(n) = {2*sum(k=1, n, fibonacci(k)*(D(n-1,n-k) + D(n-1,n-k-1)))} \\\\ _Andrew Howroyd_, May 29 2021"
+    ],
+    "xref": [
+        "Cf. A000045, A001850, A008288, A156035."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Jos\u00e9 Mar\u00eda Grau Ribas_, May 24 2021",
+    "references": 3,
+    "revision": 34,
+    "time": "2021-06-30T09:01:30-04:00",
+    "created": "2021-05-31T15:29:22-04:00"
+}

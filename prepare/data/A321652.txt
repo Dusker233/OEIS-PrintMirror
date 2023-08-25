@@ -1,0 +1,34 @@
+{
+    "number": 321652,
+    "data": "1,1,5,19,107,573,4050,29093,249301,2271020",
+    "name": "Number of nonnegative integer matrices with sum of entries equal to n and no zero rows or columns, with weakly decreasing row sums and column sums.",
+    "formula": [
+        "Sum of coefficients in the expansions of all homogeneous symmetric functions in terms of monomial symmetric functions. In other words, if Sum_{|y| = n} h(y) = Sum_{|y| = n} c_y * m(y), then a(n) = Sum_{|y| = n} c_y."
+    ],
+    "example": [
+        "The a(3) = 19 matrices:",
+        "  [3] [2 1] [1 1 1]",
+        ".",
+        "  [2] [2 0] [1 1] [1 1 0] [1 0 1] [0 1 1]",
+        "  [1] [0 1] [1 0] [0 0 1] [0 1 0] [1 0 0]",
+        ".",
+        "  [1] [1 0] [1 0] [1 0 0] [1 0 0] [0 1] [0 1 0] [0 1 0] [0 0 1] [0 0 1]",
+        "  [1] [1 0] [0 1] [0 1 0] [0 0 1] [1 0] [1 0 0] [0 0 1] [1 0 0] [0 1 0]",
+        "  [1] [0 1] [1 0] [0 0 1] [0 1 0] [1 0] [0 0 1] [1 0 0] [0 1 0] [1 0 0]"
+    ],
+    "mathematica": [
+        "prs2mat[prs_]:=Table[Count[prs,{i,j}],{i,Union[First/@prs]},{j,Union[Last/@prs]}];",
+        "multsubs[set_,k_]:=If[k==0,{{}},Join@@Table[Prepend[#,set[[i]]]&/@multsubs[Drop[set,i-1],k-1],{i,Length[set]}]];",
+        "Table[Length[Select[multsubs[Tuples[Range[n],2],n],And[Union[First/@#]==Range[Max@@First/@#],Union[Last/@#]==Range[Max@@Last/@#],OrderedQ[Total/@prs2mat[#]],OrderedQ[Total/@Transpose[prs2mat[#]]]]&]],{n,6}]"
+    ],
+    "xref": [
+        "Cf. A000219, A001970, A007716, A068313, A114736, A120733, A319646, A321645, A321653, A321654, A321655."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Nov 15 2018",
+    "references": 6,
+    "revision": 7,
+    "time": "2018-11-15T21:12:16-05:00",
+    "created": "2018-11-15T21:12:16-05:00"
+}

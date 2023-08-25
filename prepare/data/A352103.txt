@@ -1,0 +1,33 @@
+{
+    "number": 352103,
+    "data": "0,1,10,11,100,101,110,111,1001,1010,1011,1100,1101,1110,1111,10010,10011,10100,10101,10110,10111,11001,11010,11011,11100,11101,11110,11111,100100,100101,100110,100111,101001,101010,101011,101100,101101,101110,101111,110010",
+    "name": "a(n) is the maximal (or lazy) tribonacci representation of n using a binary system of vectors not containing three consecutive 0's.",
+    "comment": [
+        "Each nonnegative integer has 2 unique representations as sums of distinct positive tribonacci numbers (A000073): 1, 2, 4, 7, 13, 24, ...: the minimal (or greedy, A278038) representation in which there are no 3 consecutive 1's (i.e., no 3 consecutive tribonacci numbers appear in the sum), and the maximal (or lazy) representation of n in which no 3 consecutive 0's appear."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A352103/b352103.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "a(n) = A007088(A003796(n+1))."
+    ],
+    "example": [
+        "a(5) = 101 = 4 + 1.",
+        "a(6) = 110 = 4 + 2.",
+        "a(7) = 111 = 4 + 2 + 1."
+    ],
+    "mathematica": [
+        "t[1] = 1; t[2] = 2; t[3] = 4; t[n_] := t[n] = t[n - 1] + t[n - 2] + t[n - 3]; trib[n_] := Module[{s = {}, m = n, k}, While[m > 0, k = 1; While[t[k] <= m, k++]; k--; AppendTo[s, k]; m -= t[k]; k = 1]; IntegerDigits[Total[2^(s - 1)], 2]]; a[n_] := Module[{v = trib[n]}, nv = Length[v]; i = 1; While[i <= nv - 3, If[v[[i ;; i + 3]] == {1, 0, 0, 0}, v[[i ;; i + 3]] = {0, 1, 1, 1}; If[i > 3, i -= 4]]; i++]; i = Position[v, _?(# > 0 &)]; If[i == {}, 0, FromDigits[v[[i[[1, 1]] ;; -1]]]]]; Array[a, 100, 0]"
+    ],
+    "xref": [
+        "Cf. A000073, A007088, A003796, A278038.",
+        "Similar sequences: A104326 (Fibonacci), A130311 (Lucas)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Amiram Eldar_, Mar 05 2022",
+    "references": 16,
+    "revision": 13,
+    "time": "2022-03-07T18:59:57-05:00",
+    "created": "2022-03-07T13:04:23-05:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 358690,
+    "data": "3,12,42,125,608,2427,10081,43568,197823,873432,3978580,18159630,83753054,387670103,1811802273,8451565541,39790817677",
+    "name": "Number of n-digit primes whose digits are all odd.",
+    "formula": [
+        "a(n) = A358685(n) - A358685(n-1)."
+    ],
+    "example": [
+        "a(2) = 12 as there are 12 2-digit primes whose digits are all odd: 11, 13, 17, 19, 31, 37, 53, 59, 71, 73, 79, 97."
+    ],
+    "mathematica": [
+        "Length[Select[Prime[Range[PrimePi[10^(n - 1)], PrimePi[10^n]]], And @@ OddQ[IntegerDigits[#]] &]]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primerange",
+        "def a(n):",
+        "    num=0",
+        "    for f in range(1,10,2):",
+        "        p=list(primerange(f*10**(n-1),(f+1)*10**(n-1)))",
+        "        num+=sum(1 for k in p if all(int(d) %2 for d in str(k)))",
+        "    return(num)",
+        "print ([a(n) for n in range(1,8)])",
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, islice, product",
+        "def a(n):",
+        "    c = 0 if n > 1 else 1",
+        "    for p in product(\"13579\", repeat=n-1):",
+        "        s = \"\".join(p)",
+        "        for last in \"1379\":",
+        "            if isprime(int(s+last)): c += 1",
+        "    return c",
+        "print([a(n) for n in range(1, 10)]) # _Michael S. Branicky_, Nov 27 2022"
+    ],
+    "xref": [
+        "Cf. A030096, A358685."
+    ],
+    "keyword": "base,nonn,more",
+    "offset": "1,1",
+    "author": "_Zhining Yang_, Nov 26 2022",
+    "ext": [
+        "a(10)-a(14) from _Michael S. Branicky_, Nov 26 2022",
+        "a(15) from _Zhining Yang_, Dec 21 2022",
+        "a(16)-a(17) from _Martin Ehrenstein_, Dec 24 2022"
+    ],
+    "references": 2,
+    "revision": 34,
+    "time": "2023-01-14T08:44:48-05:00",
+    "created": "2023-01-14T08:44:48-05:00"
+}

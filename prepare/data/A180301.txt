@@ -1,0 +1,56 @@
+{
+    "number": 180301,
+    "data": "1,2,200,201,202,2000,2001,2002,2200,2201,2202,2000000000000,2000000000001,2000000000002,2000000000200,2000000000201,2000000000202,2000000002000,2000000002001,2000000002002,2000000002200,2000000002201,2000000002202",
+    "name": "Starting with 1, the next entry is the next higher integer whose spelling in US English comes lexicographically later.",
+    "comment": [
+        "For example, \"two\" is after \"one\", but \"three\" is not alphabetically after \"two\" (and is thus not in the sequence); \"two hundred\" is after \"two\"; note that 2201 is spelled \"two thousand two hundred one\" and not \"twenty two hundred and one\".",
+        "The reverse alphabetical sequence starting at 1 consists only of the four terms 1, 4, 5, 8; no integer higher than 8 is alphabetically before \"eight\".",
+        "From _Michael S. Branicky_, Sep 16 2021: (Start)",
+        "The comments regarding \"and\" above denote that US English is used.",
+        "Alphabetical order is with commas removed, but with spaces included, e.g., 8800 (\"eight thousand eight hundred\") would precede 8018 (\"eight thousand eighteen\").",
+        "In extending the sequence to large numbers, the \"American system\" (Weisstein link), also known as the \"short scale\" (Wikipedia link), was used.",
+        "a(12) = 2*10^12 (\"two trillion\"). The next term not displayed is a(24) = 2*10^36 (\"two undecillion\"). The highest known term is a(95) = 2*10^63 + 2*10^36 + 2*10^12 + 2202 (\"two vigintillion two undecillion two trillion two thousand two hundred two\"). See b-file and link to US English names of terms. (End)",
+        "If \"and\"'s were used, then a(8) = 2002 (\"two thousand and two\") and a(9..14) would be 2100 (\"two thousand one hundred\"), 2101, 2102, 2200, 2201, 2202. - _Michael S. Branicky_, Jul 14 2022"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A180301/b180301.txt\">Table of n, a(n) for n = 1..95</a>",
+        "Michael S. Branicky, <a href=\"/A180301/a180301_1.txt\">US English names of terms</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/LargeNumber.html\">Large Number</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Names_of_large_numbers\">Names of Large Numbers</a>",
+        "Wiktionary, <a href=\"https://en.wiktionary.org/wiki/one_hundred_one\">one hundred one</a> (US)",
+        "Wiktionary, <a href=\"https://en.wiktionary.org/wiki/one_hundred_and_one\">one hundred and one</a> (UK)"
+    ],
+    "formula": [
+        "From _Michael S. Branicky_, Sep 16 2021: (Start)",
+        "a(12+i) = 2*10^12 + a(i), for i in 1..11.",
+        "a(24+i) = 2*10^36 + a(i), for i in 1..23.",
+        "a(48+i) = 2*10^63 + a(i), for i in 1..47. (End)"
+    ],
+    "example": [
+        "1 (\"one\") is followed in lexicographic order first by 2 (\"two\"), and successively by 200 (\"two hundred\"), 201 (\"two hundred one\"), and so on."
+    ],
+    "program": [
+        "(Python)",
+        "from num2words import num2words",
+        "def n2w(n):",
+        "    return num2words(n).replace(\" and\", \"\").replace(chr(44), \"\")",
+        "def afind(limit, start=1):",
+        "    last, t = start, start+1",
+        "    print(start, end=\", \")",
+        "    while t <= limit:",
+        "        target = n2w(last)",
+        "        while n2w(t) <= target:",
+        "            t += 1",
+        "            if t > limit: return",
+        "        last = t",
+        "        print(t, end=\", \")",
+        "afind(3000) # _Michael S. Branicky_, Sep 16 2021"
+    ],
+    "keyword": "easy,fini,nonn,word",
+    "offset": "1,2",
+    "author": "Dan Heisman (danheisman(AT)comcast.net), Aug 24 2010",
+    "references": 5,
+    "revision": 46,
+    "time": "2022-07-24T02:30:45-04:00",
+    "created": "2010-08-27T03:00:00-04:00"
+}

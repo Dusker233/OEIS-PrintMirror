@@ -1,0 +1,31 @@
+{
+    "number": 48125,
+    "data": "14,15,16,18,20,24,27,38,46,68,87,124,141,152,155,158,161,166,171,183,185,186,195,203,208,209,212,218,221,222,226,230,231,232,234,247,249,255,261,272,275,276,290,295,299,301,306,314,322,323,330,335,341,343",
+    "name": "Becomes prime or 4 after exactly 3 iterations of f(x) = sum of prime factors of x.",
+    "comment": [
+        "f(x) = sum of prime factors with multiplicity, so that f(1500) = 2+2+3+5+5+5 = 22."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A048125/b048125.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "f[n_] := Total[Times @@@ FactorInteger[n]];",
+        "okQ[n_] := For[k = 3; r = n, k >= 1, k--, r = f[r]; If[r == 4 || PrimeQ[r], Return[k == 1]]];",
+        "Select[Range[500], okQ] (* _Jean-Fran\u00e7ois Alcover_, Sep 20 2019, from PARI *)"
+    ],
+    "program": [
+        "(PARI) sopfr(n)={my(f=factor(n)); sum(i=1, #f~, f[i,1]*f[i,2])}",
+        "ok(n)={forstep(k=3, 1, -1, n=sopfr(n); if(n==4||isprime(n), return(k==1))); 0}",
+        "select(ok, [1..500]) \\\\ _Andrew Howroyd_, Sep 14 2019"
+    ],
+    "xref": [
+        "Cf. A002217, A048124."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "references": 2,
+    "revision": 13,
+    "time": "2019-09-20T07:31:30-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

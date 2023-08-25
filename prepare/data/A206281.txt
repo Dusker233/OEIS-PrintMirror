@@ -1,0 +1,44 @@
+{
+    "number": 206281,
+    "data": "181,199,317,3529,3733,4177,4663,9049,15329,15991,19577,24907,43607,47017,58073,84223,86843,146191,152417,156623,175543,217559,227671,288461,308999,323077,331249,333323,354301,390289,397037,407249,474923,476137,491059,520339",
+    "name": "Smallest of five consecutive primes whose sum is a square.",
+    "link": [
+        "Robert Israel, <a href=\"/A206281/b206281.txt\">Table of n, a(n) for n = 1..5000</a>"
+    ],
+    "example": [
+        "a(4) = 3529. The next four primes are 3533, 3539, 3541, and 3547, and the sum of all five primes = 17689 = 133^2."
+    ],
+    "maple": [
+        "count:= 0: Res:= NULL:",
+        "for y from 10 while count < 100 do",
+        "  target:= y^2;",
+        "  t:= prevprime(ceil(target/5));",
+        "  s:= prevprime(t);",
+        "  r:= prevprime(s);",
+        "  q:= prevprime(r);",
+        "  p:= prevprime(q);",
+        "  u:= p+q+r+s+t;",
+        "  while u < target do",
+        "    p:= q; q:= r; r:= s; s:= t; t:= nextprime(t);",
+        "    u:= p+q+r+s+t;",
+        "  od;",
+        "  if u = target then",
+        "     count:= count+1; Res:= Res, p;",
+        "  fi",
+        "od:",
+        "Res; # _Robert Israel_, Oct 20 2020"
+    ],
+    "mathematica": [
+        "Transpose[Select[Partition[Prime[Range[80000]],5,1],IntegerQ[Sqrt[ Total[#]]]&]][[1]]"
+    ],
+    "xref": [
+        "Cf. A061275, A206279, A206280."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Harvey P. Dale_, Feb 05 2012",
+    "references": 4,
+    "revision": 11,
+    "time": "2020-10-21T01:19:05-04:00",
+    "created": "2012-02-05T14:46:34-05:00"
+}

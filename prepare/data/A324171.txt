@@ -1,0 +1,43 @@
+{
+    "number": 324171,
+    "data": "1,1,4,16,75,378,2042,11489,66697",
+    "name": "Number of non-crossing multiset partitions of normal multisets of size n.",
+    "comment": [
+        "A multiset is normal if its union is an initial interval of positive integers.",
+        "A multiset partition is crossing if it has a 2-element submultiset of the form {{...x...y...}, {...z...t...}} where x < z < y < t or z < x < t < y."
+    ],
+    "example": [
+        "The A255906(5) - a(5) = 22 crossing multiset partitions:",
+        "  {{13}{124}}  {{1}{13}{24}}",
+        "  {{13}{224}}  {{1}{24}{35}}",
+        "  {{13}{234}}  {{2}{13}{24}}",
+        "  {{13}{244}}  {{2}{14}{35}}",
+        "  {{13}{245}}  {{3}{13}{24}}",
+        "  {{14}{235}}  {{3}{14}{25}}",
+        "  {{24}{113}}  {{4}{13}{24}}",
+        "  {{24}{123}}  {{4}{13}{25}}",
+        "  {{24}{133}}  {{5}{13}{24}}",
+        "  {{24}{134}}",
+        "  {{24}{135}}",
+        "  {{25}{134}}",
+        "  {{35}{124}}"
+    ],
+    "mathematica": [
+        "nonXQ[stn_]:=!MatchQ[stn,{___,{___,x_,___,y_,___},___,{___,z_,___,t_,___},___}/;x<z<y<t||z<x<t<y];",
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "Table[Sum[Length[Select[mps[m],nonXQ]],{m,allnorm[n]}],{n,0,8}]"
+    ],
+    "xref": [
+        "Cf. A000108 (non-crossing set partitions), A000124, A001006, A001055, A001263, A007297, A054726 (non-crossing graphs), A099947, A194560, A255906 (multiset partitions of normal multisets), A306438.",
+        "Cf. A324166, A324167, A324168, A324169, A324170, A324173."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Feb 17 2019",
+    "references": 14,
+    "revision": 7,
+    "time": "2019-02-19T00:08:17-05:00",
+    "created": "2019-02-19T00:08:17-05:00"
+}

@@ -1,0 +1,25 @@
+{
+    "number": 344626,
+    "data": "13,17,31,37,71,73,79,97,101,103,107,127,149,157,163,173,181,191,271,277,307,313,317,331,359,367,379,397,419,479,491,571,577,593,617,631,673,701,709,727,739,757,761,787,797,811,839,877,907,911,937,941,947,977",
+    "name": "Primes p such that exactly two numbers among all circular permutations of the digits of p are prime.",
+    "link": [
+        "Felix Fr\u00f6hlich, <a href=\"/A344626/b344626.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "program": [
+        "(PARI) rot(n) = if(#Str(n)==1, v=vector(1), v=vector(#n-1)); for(i=2, #n, v[i-1]=n[i]); u=vector(#n); for(i=1, #n, u[i]=n[i]); v=concat(v, u[1]); v",
+        "eva(n) = subst(Pol(n), x, 10)",
+        "is(n) = my(r=rot(digits(n)), i=0); while(r!=digits(n), if(ispseudoprime(eva(r)), i++); r=rot(r)); if(ispseudoprime(eva(r)), i++); if(n==1 || n==11, return(0)); if(i==2, 1, 0)",
+        "forprime(p=1, 1e3, if(is(p), print1(p, \", \")))"
+    ],
+    "xref": [
+        "Cf. A270083. Row 2 of A317716.",
+        "Cf. primes where exactly k numbers among all circular permutations of digits are prime: A068654 (k=1), A344627 (k=3), A344628 (k=4), A344629 (k=5), A344630 (k=6), A344631 (k=7), A344632 (k=8)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, May 25 2021",
+    "references": 7,
+    "revision": 12,
+    "time": "2021-06-30T09:04:40-04:00",
+    "created": "2021-05-26T02:30:49-04:00"
+}

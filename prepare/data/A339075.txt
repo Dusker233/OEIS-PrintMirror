@@ -1,0 +1,42 @@
+{
+    "number": 339075,
+    "data": "1531,14704,132089,1165194,10254423,90693764,808627861,7276584222,66085185907,605303076120,5585690299505,51868931553714,484136128508431,4537416076416428,42662439747995981,402124615161547590,3797500862839734443,35913373920441057600,340000796575687888937",
+    "name": "Number of (undirected) cycles in the graph C_4 X C_n.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A339075/b339075.txt\">Table of n, a(n) for n = 3..100</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/GraphCycle.html\">Graph Cycle</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TorusGridGraph.html\">Torus Grid Graph</a>"
+    ],
+    "program": [
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_CnXCk(n, k):",
+        "    grids = []",
+        "    for i in range(1, k + 1):",
+        "        for j in range(1, n):",
+        "            grids.append((i + (j - 1) * k, i + j * k))",
+        "        grids.append((i + (n - 1) * k, i))",
+        "    for i in range(1, k * n, k):",
+        "        for j in range(1, k):",
+        "            grids.append((i + j - 1, i + j))",
+        "        grids.append((i + k - 1, i))",
+        "    return grids",
+        "def A339075(n):",
+        "    universe = make_CnXCk(4, n)",
+        "    GraphSet.set_universe(universe)",
+        "    cycles = GraphSet.cycles()",
+        "    return cycles.len()",
+        "print([A339075(n) for n in range(3, 30)])"
+    ],
+    "xref": [
+        "Cf. A216588, A296527, A339074."
+    ],
+    "keyword": "nonn",
+    "offset": "3,1",
+    "author": "_Seiichi Manyama_, Nov 22 2020",
+    "references": 6,
+    "revision": 13,
+    "time": "2020-11-23T03:49:40-05:00",
+    "created": "2020-11-22T18:28:48-05:00"
+}

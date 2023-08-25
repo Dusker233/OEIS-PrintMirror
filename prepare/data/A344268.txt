@@ -1,0 +1,20 @@
+{
+    "number": 344268,
+    "data": "1,5,25,135,625,3250,15625,78760,390925,1956250,9765625,48847125,244140625,1220781250,6103531250,30517977755,152587890625,762941485875,3814697265625,19073496178125,95367432031250,476837207031250,2384185791015625,11920929201609625,59604644775585625,298023225097656250",
+    "name": "Dirichlet g.f.: Product_{k>=2} (1 + k^(-s))^(5^(k-1)).",
+    "mathematica": [
+        "dircon[v_, w_] := Module[{lv = Length[v], lw = Length[w], fv, fw}, fv[n_] := If[n <= lv, v[[n]], 0]; fw[n_] := If[n <= lw, w[[n]], 0]; Table[ DirichletConvolve[fv[n], fw[n], n, m], {m, Min[lv, lw]}]];",
+        "a[n_] := Module[{A, v, w, m}, If[n<1, 0, v = Table[Boole[k == 1], {k, n}]; For[k = 2, k <= n, k++, m = Length[IntegerDigits[n, k]] - 1; A = (1 + x)^(5^(k - 1)) + x*O[x]^m // Normal; w = Table[0, {n}]; For[i = 0, i <= m, i++, w[[k^i]] = Coefficient[A, x, i]]; v = dircon[v, w]]; v[[n]]]];",
+        "Array[a, 26] (* after _Jean-Fran\u00e7ois Alcover_ in A007896 *)"
+    ],
+    "xref": [
+        "Cf. A045778, A050368, A344249, A344265, A344266, A344267, A344269, A344270, A344271."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, May 13 2021",
+    "references": 7,
+    "revision": 10,
+    "time": "2021-05-14T12:37:31-04:00",
+    "created": "2021-05-14T12:37:31-04:00"
+}

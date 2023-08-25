@@ -1,0 +1,52 @@
+{
+    "number": 272773,
+    "data": "1,8,56,360,2240,13696,82808,496656,2961136,17573608,103911424,612577272,3602222736,21137815952,123811421128,724064474968,4228582808424",
+    "name": "Number of n-step self-avoiding nonintersecting walks on the square lattice with diagonals allowed (corresponds to using the Moore neighborhood).",
+    "comment": [
+        "The path cannot return to a lattice point nor intersect with itself (which IS allowed in A272763).",
+        "The Moore neighborhood characterizes king tours. - _Rainer Rosenthal_, Jan 06 2019"
+    ],
+    "maple": [
+        "# For starting point stp and list Ldir of n directions (1..8)",
+        "# construct the points of the whole path and count them.",
+        "# In order to avoid crossings consider the n midpoints, too.",
+        "# If there are 2*n+1 then the path is self-avoiding and uncrossed.",
+        "isNice := proc(Ldir) local Delta, dir, ep, mp, path;",
+        "   Delta := [[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]];",
+        "   ep := [0,0]; path := {ep};",
+        "   for dir in Ldir do",
+        "      mp := ep + Delta[dir];",
+        "      ep := mp + Delta[dir];",
+        "      path := {op(path), mp, ep};",
+        "   od;",
+        "   return evalb(nops(path)=2*nops(Ldir)+1);",
+        "end:",
+        "# Count only king tours which are nice, i.e. self-avoiding and uncrossed.",
+        "A272773 := proc(n) local count, T, p;",
+        "   count := 0:",
+        "   T := combinat[cartprod]([seq([$1..8], j=1..n)]):",
+        "   while not T[finished] do",
+        "      p := T[nextvalue]();",
+        "      if isNice(p) then count := count+1; fi;",
+        "   od:",
+        "   return count;",
+        "end: # _Rainer Rosenthal_, Jan 06 2019"
+    ],
+    "mathematica": [
+        "mo = Most@Tuples[{-1, 1, 0}, 2]; a[0] = 1; a[tg_, p_: {{0, 0}}] := Block[{e, z = Last@p, w, mv = {}}, Do[w = {z+e, z+2*e}; If[Intersection[w, p] == {}, AppendTo[mv, w]], {e, mo}]; If[tg == 1, Length[mv], Sum[a[tg-1, Join[p, e]], {e, mv}]]]; a /@ Range[0, 7] (* Corrected following a suggestion by _Rainer Rosenthal_, _Giovanni Resta_, Jan 06 2019 *)"
+    ],
+    "xref": [
+        "Cf. A272763, A001411, A323140, A323141."
+    ],
+    "keyword": "nonn,walk,more",
+    "offset": "0,2",
+    "author": "_Giovanni Resta_, May 06 2016",
+    "ext": [
+        "a(5)-a(7) corrected by _Rainer Rosenthal_, Jan 06 2019",
+        "a(8)-a(16) from _Hugo Pfoertner_, Jan 06 2019"
+    ],
+    "references": 10,
+    "revision": 23,
+    "time": "2019-01-07T03:23:46-05:00",
+    "created": "2016-05-06T12:04:08-04:00"
+}

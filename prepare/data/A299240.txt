@@ -1,0 +1,38 @@
+{
+    "number": 299240,
+    "data": "1,3,6,8,9,10,13,14,17,19,21,27,28,29,30,35,36,37,39,40,41,43,44,45,47,51,55,56,57,58,59,60,61,63,71,72,73,75,79,80,81,83,87,88,89,91,95,103,111,112,113,114,115,116,117,118,119,120,121,122,123,124",
+    "name": "Ranks of {2,3}-power towers in which #2's > #3's; see Comments.",
+    "comment": [
+        "Suppose that S is a set of real numbers.  An S-power-tower, t, is a number t = x(1)^x(2)^...^x(k), where k >= 1 and x(i) is in S for i = 1..k.  We represent t by (x(1),x(2),...,x(k), which for k > 1 is defined as (x(1),((x(2),...,x(k-1)); (2,3,2) means 2^9.  The number k is the *height* of t.  If every element of S exceeds 1 and all the power towers are ranked in increasing order, the position of each in the resulting sequence is its *rank*.  See A299229 for a guide to related sequences.",
+        "This sequence together with A299241 and A299242 partition the positive integers."
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A299240/b299240.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "The first six terms are the ranks of these towers: t(1) = (2), t(3) = (2,2), t(6) = (2,2,2), t(8) = (3,2,2), t(9) = (2,2,3), t(10) = (2,3,2)."
+    ],
+    "mathematica": [
+        "t[1] = {2}; t[2] = {3}; t[3] = {2, 2}; t[4] = {2, 3}; t[5] = {3, 2};",
+        "t[6] = {2, 2, 2}; t[7] = {3, 3}; t[8] = {3, 2, 2}; t[9] = {2, 2, 3};",
+        "t[10] = {2, 3, 2}; t[11] = {3, 2, 3}; t[12] = {3, 3, 2};",
+        "z = 190; g[k_] := If[EvenQ[k], {2}, {3}]; f = 6;",
+        "While[f < 13, n = f; While[n < z, p = 1;",
+        "  While[p < 12, m = 2 n + 1; v = t[n]; k = 0;",
+        "    While[k < 2^p, t[m + k] = Join[g[k], t[n + Floor[k/2]]]; k = k + 1];",
+        "   p = p + 1; n = m]]; f = f + 1]",
+        "Select[Range[1000], Count[t[#], 2] > Count[t[#], 3] &];   (* A299240 *)",
+        "Select[Range[1000], Count[t[#], 2] == Count[t[#], 3] &];  (* A299241 *)",
+        "Select[Range[1000], Count[t[#], 2] < Count[t[#], 3] &];   (* A299242 *)"
+    ],
+    "xref": [
+        "Cf. A299229, A299241, A299242."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Feb 07 2018",
+    "references": 3,
+    "revision": 7,
+    "time": "2018-02-09T01:04:28-05:00",
+    "created": "2018-02-08T14:17:04-05:00"
+}

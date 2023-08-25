@@ -1,0 +1,53 @@
+{
+    "number": 362973,
+    "data": "1,2,7,20,51,129,307,713,1645,3721,8348,18589,41136,90619,198767,434572,947753,2062437,4480253,9718457,21055958,45575049,98566055,213028539,460160083,993533517,2144335391,4626664451,9980028172,21523027285,46408635232,100053270534",
+    "name": "The number of cubefull numbers (A036966) not exceeding 10^n.",
+    "comment": [
+        "The number of cubefull numbers not exceeding x is N(x) = c_0 * x^(1/3) + c_1 * x^(1/4) + c_2 * x^(1/5) + o(x^(1/8)), where c_0 (A362974), c_1 (A362975) and c_2 (A362976) are constants (Bateman and Grosswald, 1958; Finch, 2003).",
+        "The digits of a(3k) converge to A362974 as k -> oo. - _Chai Wah Wu_, May 13 2023"
+    ],
+    "reference": [
+        "Steven R. Finch, Mathematical Constants, Cambridge University Press, 2003, section 2.6.1, pp. 113-115."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A362973/b362973.txt\">Table of n, a(n) for n = 0..36</a>",
+        "Paul T. Bateman and Emil Grosswald, <a href=\"https://doi.org/10.1215/ijm/1255380836\">On a theorem of Erd\u0151s and Szekeres</a>, Illinois Journal of Mathematics, Vol. 2, No. 1 (1958), pp. 88-98.",
+        "A. Ivi\u0107 and P. Shiu, <a href=\"https://doi.org/10.1215/ijm/1256046597\">The distribution of powerful integers</a>, Illinois Journal of Mathematics, Vol. 26, No. 4 (1982), pp. 576-590.",
+        "Ekkehard Kr\u00e4tzel, <a href=\"https://doi.org/10.1007/BF01585911\">On the distribution of square-full and cube-full numbers</a>, Monatshefte f\u00fcr Mathematik, Vol. 120, No. 2 (1995), pp. 105-119.",
+        "P. Shiu, <a href=\"https://doi.org/10.1017/S0017089500008351\">The distribution of cube-full numbers</a>, Glasgow Mathematical Journal, Vol. 33, No. 3 (1991), pp. 287-295.",
+        "P. Shiu, <a href=\"https://doi.org/10.1017/S0305004100070705\">Cube-full numbers in short intervals</a>, Mathematical Proceedings of the Cambridge Philosophical Society, Vol. 112, No. 1 (1992), pp. 1-5."
+    ],
+    "example": [
+        "There are 2 cubefull numbers not exceeding 10, 1 and 8, therefore a(1) = 2."
+    ],
+    "mathematica": [
+        "a[n_] := Module[{max = 10^n}, CountDistinct@ Flatten@ Table[i^5 * j^4 * k^3, {i, Surd[max, 5]}, {j, Surd[max/i^5, 4]}, {k, CubeRoot[max/(i^5*j^4)]}]]; Array[a, 15, 0]"
+    ],
+    "program": [
+        "(Python)",
+        "from math import gcd",
+        "from sympy import factorint, integer_nthroot",
+        "def A362973(n):",
+        "    m, c = 10**n, 0",
+        "    for x in range(1,integer_nthroot(m,5)[0]+1):",
+        "        if all(d<=1 for d in factorint(x).values()):",
+        "            for y in range(1,integer_nthroot(z:=m//x**5,4)[0]+1):",
+        "                if gcd(x,y)==1 and all(d<=1 for d in factorint(y).values()):",
+        "                    c += integer_nthroot(z//y**4,3)[0]",
+        "    return c # _Chai Wah Wu_, May 11-13 2023"
+    ],
+    "xref": [
+        "Cf. A036966, A362974, A362975, A362976.",
+        "Similar sequences: A070428, A118896."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_Amiram Eldar_, May 11 2023",
+    "ext": [
+        "a(23)-a(31) from _Chai Wah Wu_, May 11 2023"
+    ],
+    "references": 4,
+    "revision": 32,
+    "time": "2023-06-10T07:33:13-04:00",
+    "created": "2023-05-11T01:44:42-04:00"
+}

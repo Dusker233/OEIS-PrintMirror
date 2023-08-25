@@ -1,0 +1,49 @@
+{
+    "number": 45920,
+    "data": "2,9,14,21,25,27,33,34,38,44,57,75,85,86,93,94,98,116,118,121,122,124,133,135,141,142,145,147,153,158,164,170,171,174,177,201,202,205,213,214,217,218,230,244,245,253,284,285,296,298,301,302,326,332,334,350,356,361",
+    "name": "Numbers m such that the factorizations of m..m+1 have the same number of primes (including multiplicities).",
+    "comment": [
+        "A115186 is a subsequence: A001222(A115186(n)) = A001222(A115186(n)+1) = n. - _Reinhard Zumkeller_, Jan 16 2006",
+        "Indices k such that A076191(k) = 0. - _Ray Chandler_, Dec 10 2008",
+        "A045939 is a subsequence. - _Zak Seidov_, Jul 02 2020",
+        "This sequence is infinite (Heath-Brown, 1984). - _Amiram Eldar_, Jul 11 2020"
+    ],
+    "reference": [
+        "C. Clawson, Mathematical mysteries, Plenum Press 1996, p. 250."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A045920/b045920.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "D. R. Heath-Brown, <a href=\"https://doi.org/10.1112/S0025579300012109\">A parity problem from sieve theory</a>, Mathematika, Vol. 29, No. 1 (1982), pp. 1-6.",
+        "D. R. Heath-Brown, <a href=\"https://doi.org/10.1112/S0025579300010743\">The divisor function at consecutive integers</a>, Mathematika, Vol. 31, No. 1 (1984), pp. 141-149.",
+        "Adolf Hildebrand, <a href=\"https://projecteuclid.org/euclid.pjm/1102690578\">The divisor function at consecutive integers</a>, Pacific journal of mathematics, Vol. 129, No. 2 (1987), pp. 307-319."
+    ],
+    "formula": [
+        "a(n) = A278291(n) - 1. - _Zak Seidov_, Nov 17 2018"
+    ],
+    "mathematica": [
+        "f[n_]:=Plus@@Last/@FactorInteger[n];lst={};Do[If[f[n]==f[n+1],AppendTo[lst,n]],{n,0,6!}];lst (* _Vladimir Joseph Stephan Orlovsky_, May 12 2010 *)",
+        "Transpose[Transpose[Select[Partition[Table[{n,PrimeOmega[n]},{n,400}], 2,1], #[[1,2]]==#[[2,2]]&]][[1]]][[1]] (* _Harvey P. Dale_, Feb 21 2012 *)",
+        "Position[Differences[PrimeOmega[Range[400]]], 0] // Flatten (* _Zak Seidov_, Oct 30 2012 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "import Data.List (elemIndices)",
+        "a045920 n = a045920_list !! (n-1)",
+        "a045920_list = map (+ 1) $ elemIndices 0 a076191_list",
+        "-- _Reinhard Zumkeller_, Mar 23 2012, Oct 11 2011",
+        "(PARI) is(n)=bigomega(n)==bigomega(n+1) \\\\ _Charles R Greathouse IV_, Sep 14 2015"
+    ],
+    "xref": [
+        "Numbers m through m+k have the same number of prime divisors (with multiplicity): this sequence (k=1), A045939 (k=2), A045940 (k=3), A045941 (k=4), A045942 (k=5), A123103 (k=6), A123201 (k=7), A358017 (k=8), A358018 (k=9), A358019 (k=10)."
+    ],
+    "keyword": "nice,nonn",
+    "offset": "1,1",
+    "author": "_Felice Russo_",
+    "ext": [
+        "More terms from _David W. Wilson_"
+    ],
+    "references": 36,
+    "revision": 49,
+    "time": "2023-02-11T22:51:48-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

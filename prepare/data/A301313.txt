@@ -1,0 +1,60 @@
+{
+    "number": 301313,
+    "data": "0,0,0,0,1,1,6,7,18,24,49,66,116,158,255,346,525,707,1030,1374,1936,2560,3519,4608,6207,8056,10673,13735,17942,22906,29569,37469,47864,60235,76249,95335,119705,148770,185447,229182,283810,348903,429498,525411,643244",
+    "name": "a(n) = Sum_{p in P} binomial(H(2,p),2), where P is the set of partitions of n, and H(2,p) = number of hooks of size 2 in p.",
+    "comment": [
+        "This sequence is part of the contribution to the quadratic b^2 term of a 2-truncation of the Han/Nekrasov-Okounkov hooklength formula (2-truncation here being the limiting of hook sizes counted by the formula to only those of size 1 or 2). Exploring this sequence may lead to more general formulas regarding the hooklength formula for larger hooks, or the entire contribution to the quadratic term of the formula."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A301313/b301313.txt\">Table of n, a(n) for n = 0..10000</a> (terms 0..1900 from Alois P. Heinz)",
+        "Guo-Niu Han, <a href=\"https://arxiv.org/abs/0805.1398\">The Nekrasov-Okounkov hook length formula: refinement, elementary proof, extension and applications</a>, arXiv:0805.1398 [math.CO], 2008.",
+        "Guo-Niu Han, <a href=\"https://doi.org/10.5802/aif.2515\">The Nekrasov-Okounkov hook length formula: refinement, elementary proof, extension and applications</a>, Annales de l'institut Fourier, Tome 60 (2010) no. 1, pp. 1-29."
+    ],
+    "formula": [
+        "G.f.: (q^4+3*q^6)/((1-q^2)*(1-q^4))*Product_{j>=1} 1/(1-q^j). - _Emily Anible_, May 18 2018",
+        "a(n) ~ sqrt(3) * exp(Pi*sqrt((2*n)/3)) / (4*Pi^2). - _Vaclav Kotesovec_, Oct 06 2018"
+    ],
+    "example": [
+        "For n=6, we sum over the partitions of 6. For each partition, we calculate binomial(number of hooks of size 2 in partition, 2):",
+        "6............binomial(1,2) = 0",
+        "5,1..........binomial(1,2) = 0",
+        "4,2..........binomial(2,2) = 1",
+        "4,1,1........binomial(2,2) = 1",
+        "3,3..........binomial(2,2) = 1",
+        "3,2,1........binomial(0,2) = 0",
+        "3,1,1,1......binomial(2,2) = 1",
+        "2,2,2........binomial(2,2) = 1",
+        "2,2,1,1......binomial(2,2) = 1",
+        "2,1,1,1,1....binomial(1,2) = 0",
+        "1,1,1,1,1,1..binomial(1,2) = 0",
+        "------------------------------",
+        "Total........................6"
+    ],
+    "maple": [
+        "b:= proc(n, i, p, l) option remember; `if`(n=0, p*(p-1)/2,",
+        "      `if`(i>n, 0, b(n, i+1, p, 1)+add(b(n-i*j, i+1, p+",
+        "      `if`(j>1, 1, 0)+l, 0), j=1..n/i)))",
+        "    end:",
+        "a:= n-> b(n, 1, 0$2):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Apr 05 2018"
+    ],
+    "mathematica": [
+        "b[n_, i_, p_, l_] := b[n, i, p, l] = If[n == 0, p*(p-1)/2, If[i > n, 0, b[n, i+1, p, 1] + Sum[b[n-i*j, i+1, p+If[j>1, 1, 0]+l, 0], {j, 1, n/i}]] ];",
+        "a[n_] := b[n, 1, 0, 0];",
+        "Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Apr 28 2018, after _Alois P. Heinz_ *)",
+        "Table[Sum[(2*k - 5 - (-1)^(k/2))*(1 + (-1)^k)/4 * PartitionsP[n-k], {k, 1, n}], {n, 0, 60}] (* _Vaclav Kotesovec_, Oct 06 2018 *)"
+    ],
+    "xref": [
+        "Cf. A024786, A138785."
+    ],
+    "keyword": "nonn",
+    "offset": "0,7",
+    "author": "_Emily Anible_, Apr 03 2018",
+    "ext": [
+        "a(10)-a(44) from _Alois P. Heinz_, Apr 03 2018"
+    ],
+    "references": 2,
+    "revision": 97,
+    "time": "2018-10-06T05:39:34-04:00",
+    "created": "2018-04-05T06:44:26-04:00"
+}

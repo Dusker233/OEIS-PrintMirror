@@ -1,0 +1,42 @@
+{
+    "number": 357571,
+    "data": "1,1,32,1536,282624,66846720,27053752320,16104538275840,13681567224299520,15874223643851489280,24412997036693834956800,48514602066025722465484800,121994703799547846503012761600,381343447691461317926230740172800,1459468400650603118890910517244723200",
+    "name": "The sixth moment of an n X n random +-1 matrix.",
+    "comment": [
+        "This sequence gives the expectation of the sixth moment of a random sign matrix (a matrix whose entries are independently set equal to -1 or 1 with equal probability) of size n X n."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A357571/b357571.txt\">Table of n, a(n) for n = 0..180</a>",
+        "Dominik Beck, Zelin Lv and Aaron Potechin, <a href=\"https://arxiv.org/abs/2206.11356\">The Sixth Moment of Random Determinants</a>, arXiv:2206.11356 [math.CO], 2022-2023. See Table 1 p. 4."
+    ],
+    "formula": [
+        "a(n) = (n!)^2 * Sum_{j=0..n} Sum_{i=0..j} ((1+i)*(2+i)*(4+i)! / (48*(n-j)!)) * binomial(14+j+2*i,j-i) * (m_6-15*m_4+30)^(n-j) * (m_4-3)^(j-i) where m_6 = m_4 = 1.",
+        "G.f.: A(t) = (e^(t*(m_6 - 15*m_4 + 30)) / (48*(1 + 3*t - m_4*t)^15)) * Sum_{i>=0} ((1+i)*(2+i)*(4+i)! * t^i / (1 + 3*t - m_4*t)^(3*i)) where  m_6 = m_4 = 1."
+    ],
+    "program": [
+        "(PARI) f6(n,m4,m6)=sum(j=0,n, binomial(n,j)*sum(a=0,j, binomial(j,a)*(m6-15)^a*(m4-3)^(j-a)*D(n,a,j-a)))",
+        "D(n,a,b)=prod(j=0,a+b-1,n-j)*sum(i=0,b, binomial(b,i)*C(i)*H(n,b-i,a,b))*P(n-a-b)",
+        "P(n)=n!*(n+2)!*(n+4)!/48",
+        "C(n)=if(n<2, n==0, (n-1)*(C(n-1)+15*C(n-2)))",
+        "H(n,j,a,b)=sum(x=1,j,binomial(j-1,x-1)*j!/x!*prod(y=0,x-1, 3*(n-a-b)-y))",
+        "\\\\ _Charles R Greathouse IV_, Oct 03 2022",
+        "(PARI) a(n)={(n!)^2 * sum(j=0, n, sum(i=0, j, ((1+i)*(2+i)*(4+i)! / (48*(n-j)!)) * binomial(14+j+2*i,j-i) * (16)^(n-j) * (-2)^(j-i) ))} \\\\ _Andrew Howroyd_, Mar 16 2023",
+        "(Python)",
+        "from fractions import Fraction",
+        "from math import factorial, comb",
+        "def A357571(n): return int(factorial(n)**2*sum(Fraction(1<<(n-j<<2),3*factorial(n-j))*sum((1+i)*(2+i)*factorial(4+i)*comb(14+j+(i<<1),j-i)*(-1 if (j-i)&1 else 1)<<(j-i) for i in range(j+1)) for j in range(n+1)))>>4 # _Chai Wah Wu_, Apr 20 2023"
+    ],
+    "xref": [
+        "Cf. A052127."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Zelin Lv_, Oct 03 2022",
+    "ext": [
+        "a(0)=1 prepended and some terms corrected by _Alois P. Heinz_, Apr 19 2023"
+    ],
+    "references": 2,
+    "revision": 36,
+    "time": "2023-04-21T11:08:00-04:00",
+    "created": "2023-04-10T12:29:22-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 58935,
+    "data": "0,1,110,11011,11011100,11011100101,11011100101110,11011100101110111,110111001011101111000,1101110010111011110001001,11011100101110111100010011010,110111001011101111000100110101011,1101110010111011110001001101010111100",
+    "name": "Concatenation of first n binary numbers.",
+    "comment": [
+        "If the terms are read as decimal numbers, which of them are primes? For example, a(5) =  11011100101 = 1193*9229757 is not a prime. - _N. J. A. Sloane_, Feb 17 2023",
+        "Answer: a(231) is the first prime term when read as a decimal number; a(15) is the first when read as a binary number. - _Michael S. Branicky_, Feb 17 2023"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A058935/b058935.txt\">Table of n, a(n) for n = 0..155</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/BinaryChampernowneConstant.html\">Binary Champernowne Constant</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SmarandacheNumber.html\">Smarandache Number</a>",
+        "<a href=\"/index/Mo#MWP\">Index entries for sequences related to Most Wanted Primes video</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1)*10^A029837(n) + A007088(n)."
+    ],
+    "mathematica": [
+        "FromDigits /@ Flatten /@ Rest[FoldList[Append, {}, IntegerDigits[Range[10], 2]]] (* _Eric W. Weisstein_, Nov 04 2015 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def agen(s=\"\"): yield from (int(s:=s+bin(n)[2:]) for n in count(0))",
+        "print(list(islice(agen(), 13))) # _Michael S. Branicky_, Feb 17 2023",
+        "(Python)",
+        "from functools import reduce",
+        "def A058935(n): return int(bin(reduce(lambda i,j:(i<<j.bit_length())+j,range(n+1)))[2:]) # _Chai Wah Wu_, Feb 26 2023"
+    ],
+    "xref": [
+        "Cf. A047778 for this converted to decimal, A001855 (offset) for number of digits.",
+        "Cf. A066716: binary Champernowne constant, A030302: binary digits, A030190: same with initial 0, A030303: indices of 1's, A007088.",
+        "Other bases: A117640 (4), A007908 (10)."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "0,3",
+    "author": "_Henry Bottomley_, Jan 12 2001",
+    "references": 12,
+    "revision": 39,
+    "time": "2023-04-19T12:59:33-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

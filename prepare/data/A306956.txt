@@ -1,0 +1,36 @@
+{
+    "number": 306956,
+    "data": "1,1,2,5,7,15,21,39,58,90,142,218,325,465,695,948,1411,1977,2883,3940,5415,7422,10126,14091,18947,25666,34282,45890,60710,82211,108510,142960,185271,240595,315158,409231,531967,688689,880997,1126451,1447754,1849743",
+    "name": "Sum over all partitions of n into distinct parts of the LCM of the parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A306956/b306956.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>"
+    ],
+    "formula": [
+        "a(n) mod 2 = A040051(n).",
+        "a(n) is even <=> n in { A001560 }.",
+        "a(n) is odd  <=> n in { A052002 }."
+    ],
+    "maple": [
+        "b:= proc(n, i, r) option remember; `if`(i*(i+1)/2<n, 0, `if`(n=0,",
+        "       r, b(n, i-1, r) +b(n-i, min(i-1, n-i), ilcm(i, r))))",
+        "    end:",
+        "a:= n-> b(n$2, 1):",
+        "seq(a(n), n=0..44);"
+    ],
+    "mathematica": [
+        "b[n_, i_, r_] := b[n, i, r] = If[i(i+1)/2 < n, 0, If[n == 0, r, b[n, i-1, r] + b[n-i, Min[i-1, n-i], LCM[i, r]]]];",
+        "a[n_] := b[n, n, 1];",
+        "Table[a[n], {n, 0, 44}] (* _Jean-Fran\u00e7ois Alcover_, Mar 20 2019, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A000009, A000041, A001560, A040051, A052002, A181844, A319301."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Mar 17 2019",
+    "references": 3,
+    "revision": 17,
+    "time": "2019-03-20T11:53:08-04:00",
+    "created": "2019-03-17T21:53:32-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 350121,
+    "data": "3,19,907,1747,2083,101467,350443,916507,1014787,6603283,27068563,45287587,226432243,243060283,3946895803,5571195667,9259384843,19633449763,229012273627",
+    "name": "Increasing sequence of primes p == 3 (mod 4) such that all of 2,3,5,...,prime(n) are primitive roots mod p.",
+    "comment": [
+        "It is possible, although rather unlikely, that any primes congruent to 3 (mod 4) will appear in A213052.",
+        "a(19) > 10^11."
+    ],
+    "example": [
+        "a(2) = 19 since 19 is the smallest prime (congruent to 3 (mod 4)) such that the first two primes (2 and 3) are primitive roots."
+    ],
+    "mathematica": [
+        "max=0;Do[n=Prime@i;If[Mod[n,4]==3,k=1;While[MultiplicativeOrder[Prime@k,n]==n-1,k++];If[k-1>max,Print@n;max++]],{i,10^6}] (* _Giorgos Kalogeropoulos_, Dec 17 2021 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=10^10;",
+        "default(primelimit, N);",
+        "A=2;",
+        "{ forprime (p=3, N,",
+        "    if (p%4==3,",
+        "    q = 1;",
+        "    forprime (a=2, A,",
+        "        if ( znorder(Mod(a, p)) != p-1,  q=0; break() );",
+        "    );",
+        "    if ( q, A=nextprime(A+1); print1(p, \", \") );",
+        "    );",
+        "); }"
+    ],
+    "xref": [
+        "Cf. A213052."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Paul Vanderveen_, Dec 15 2021",
+    "ext": [
+        "a(19) from _Daniel Suteu_, Dec 20 2021"
+    ],
+    "references": 1,
+    "revision": 23,
+    "time": "2021-12-26T14:11:48-05:00",
+    "created": "2021-12-17T20:57:45-05:00"
+}

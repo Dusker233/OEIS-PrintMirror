@@ -1,0 +1,54 @@
+{
+    "number": 291125,
+    "data": "60,84,120,132,168,180,210,240,252,264,280,300,312,315,330,336,360,390,396,408,420,440,456,468,480,495,504,510,520,528,540,552,560,570,585,588,600,612,616,624,630,660,672,680,684,690,693,720,728,756,760,765,770,780",
+    "name": "\"Doubly A289484\" numbers: numbers with prime factorization p1^e1 * p2^e2 * ... * pk^ek such that there exist i < j < k with p1^e1 * p2^e2 * ... pi^ei > p(i+1) and p1^e1 * p2^e2 * ... pj^ej > p(j+1).",
+    "comment": [
+        "These form a subsemigroup and a subsequence of the sequence A289484.",
+        "Density: Only 4.3% of the integers between 1 and 400 are doubly A289484.divisible by at least 3 primes. If a term in the sequence is squarefree, it must be divisible by at least 4 primes. If a number n is in the sequence, then every multiple is also in it. Using Wolfram Alpha, about 48% of the integers between 10^40+1 to 10^40+62 were found to be doubly A289484."
+    ],
+    "example": [
+        "60=2^2*3*5 is a term because 2^2 > 3 and 2^2*3 > 5.",
+        "315=3^2*5*7 is a term because 3^2 > 5 and 3^2*5 > 7."
+    ],
+    "maple": [
+        "isA291125 := proc(n)",
+        "    local pset,p,pprodidx,pprod,nu,falls ;",
+        "    pset := sort(convert(numtheory[factorset](n),list)) ;",
+        "    pprod := 1;",
+        "    falls := 0 ;",
+        "    for pprodidx from 1 to nops(pset)-1 do",
+        "        p := pset[pprodidx] ;",
+        "        nu := padic[ordp](n,p) ;",
+        "        pprod := pprod*p^nu ;",
+        "        if pprod > pset[pprodidx+1] then",
+        "            falls := falls+1 ;",
+        "            if falls >= 2 then",
+        "                return true;",
+        "            end if;",
+        "        end if;",
+        "    end do:",
+        "    return false ;",
+        "end proc:",
+        "for n from 1 to 3000 do",
+        "    if isA291125(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Oct 20 2017"
+    ],
+    "program": [
+        "(PARI) is(n,f=factor(n))=my(p=1,t,s); for(i=1,#f~, t=f[i,1]^f[i,2]; if(p>t,s++); p*=t); s>1 \\\\ _Charles R Greathouse IV_, Jun 10 2020"
+    ],
+    "xref": [
+        "Cf. A289484."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Richard Locke Peterson_, Aug 17 2017",
+    "ext": [
+        "New name from _Charles R Greathouse IV_, Jun 11 2020"
+    ],
+    "references": 0,
+    "revision": 26,
+    "time": "2020-06-11T11:54:10-04:00",
+    "created": "2018-04-15T14:32:48-04:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 355385,
+    "data": "1,1,2,3,7,12,25,43,81,141,243,409,699,1132,1844,2995,4744,7408,11655,17839,27509,41546,62879,93537,139974,205547,302714,440097,640968,921774,1327538,1891548,2696635,3809860,5380257,7540778,10561566,14687109,20408170,28183998,38882009",
+    "name": "Number of pairs (y, v) of integer partitions of n where the length of v equals the number of distinct parts in y.",
+    "comment": [
+        "Also the number of composable pairs of integer partitions of n, where a partition is regarded as an arrow from (number of parts) to (number of distinct parts). Is there a nice choice of a composition operation making this into an associative category?"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A355385/b355385.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j >= 1} A116608(n,j) * A008284(n,j) for n > 0. - _Andrew Howroyd_, Dec 31 2022"
+    ],
+    "example": [
+        "The a(0) = 1 through a(5) = 10 pairs:",
+        "  ()()  (1)(1)  (2)(2)   (3)(3)    (4)(4)     (5)(5)",
+        "                (11)(2)  (21)(21)  (31)(31)   (41)(41)",
+        "                         (111)(3)  (31)(22)   (41)(32)",
+        "                                   (22)(4)    (32)(41)",
+        "                                   (211)(31)  (32)(32)",
+        "                                   (211)(22)  (311)(41)",
+        "                                   (1111)(4)  (311)(32)",
+        "                                              (221)(41)",
+        "                                              (221)(32)",
+        "                                              (2111)(41)",
+        "                                              (2111)(32)",
+        "                                              (11111)(5)"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Tuples[IntegerPartitions[n],2],Length[Union[#[[1]]]]==Length[#[[2]]]&]],{n,0,15}]"
+    ],
+    "program": [
+        "(PARI) \\\\ P gives A008284 and R gives A116608 as g.f.'s.",
+        "P(n,y) = {1/prod(k=1, n, 1 - y*x^k + O(x*x^n))}",
+        "R(n,y) = {prod(k=1, n, 1 + y/(1 - x^k) - y + O(x*x^n))}",
+        "seq(n) = {my(g=Vec(P(n,y)), h=Vec(R(n,y))); vector(n+1, i, my(p=g[i], q=h[i]); sum(j=0, poldegree(q), polcoef(p,j)*polcoef(q,j)))} \\\\ _Andrew Howroyd_, Dec 31 2022"
+    ],
+    "xref": [
+        "The inhomogeneous version with containment and multiplicity is A339006.",
+        "The inhomogeneous version with containment is A355383.",
+        "The inhomogeneous version with containment for compositions is A355384.",
+        "The version for compositions is A355388.",
+        "A001970 counts multiset partitions of partitions.",
+        "A063834 counts partitions of each part of a partition.",
+        "A323583 counts splittings of partitions.",
+        "Cf. A000009, A008284, A022811, A032020, A070933, A072706, A116608, A279787, A319910, A336135."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jul 02 2022",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Dec 31 2022"
+    ],
+    "references": 7,
+    "revision": 10,
+    "time": "2022-12-31T20:30:03-05:00",
+    "created": "2022-07-03T23:56:35-04:00"
+}

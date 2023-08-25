@@ -1,0 +1,39 @@
+{
+    "number": 317824,
+    "data": "1,21,721,8721,8721,708721,5708721,65708721,165708721,65165708721,1165165708721,861165165708721,5861165165708721,5005861165165708721,55005861165165708721,48055005861165165708721,8448055005861165165708721,388448055005861165165708721,49388448055005861165165708721",
+    "name": "a(n) = A000422(n)^^A000422(n) (mod 10^len(A000422(n))), where ^^ indicates tetration or hyper-4 (e.g., 3^^4 = 3^(3^(3^3))).",
+    "comment": [
+        "For any n, a(n) (mod 10^len(A000422(n))) == a(n + 1) (mod 10^len(A000422(n))), where len(k) := number of digits in k. Assuming len(a(n))>1, this is a general property of every concatenated sequence with fixed rightmost digits (such as A061839 or A014925), as shown in Rip\u00e0's book \"La strana coda della serie n^n^...^n\"."
+    ],
+    "reference": [
+        "Marco Rip\u00e0, La strana coda della serie n^n^...^n, Trento, UNI Service, Nov 2011, page 60. ISBN 978-88-6178-789-6"
+    ],
+    "link": [
+        "Marco Rip\u00e0, <a href=\"https://www.researchgate.net/publication/328493277_On_the_Convergence_Speed_of_Tetration\">On the Convergence Speed of Tetration</a>, ResearchGate (2018).",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Tetration\">Tetration</a>"
+    ],
+    "formula": [
+        "a(n) = (n_n-1_n-2_..._2_1)^^(n_n-1_n-2_..._2_1) (mod 10^len(n_n-1_n-2_..._2_1)), where len(k) := number of digits in k."
+    ],
+    "example": [
+        "For n = 3, a(3) = 321^^321 (mod 10^3) = 721. In fact, a(3) (mod 10^3) == a(4) (mod 10^3), since 721 (mod 10^3) == 8721 (mod 10^3)."
+    ],
+    "program": [
+        "(PARI) tmod(b, n) = {if (b % n == 0, return (0)); if (b % n == 1, return (1)); if (gcd(b, n)==1, return (lift(Mod(b, n)^tmod(b, lift(znorder(Mod(b, n))))))); lift(Mod(b, n)^(eulerphi(n) + tmod(b, eulerphi(n))));}",
+        "f(n) = my(t=n); forstep(k=n-1, 1, -1, t=t*10^#Str(k)+k); t; \\\\ A000422",
+        "a(n) = my(x=f(n)); tmod(x, 10^#Str(x)); \\\\ _Michel Marcus_, Sep 12 2021"
+    ],
+    "xref": [
+        "Cf. A000422, A058183, A171882 (tetration), A317903."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Marco Rip\u00e0_, Aug 10 2018",
+    "ext": [
+        "More terms from _Jinyuan Wang_, Aug 30 2020"
+    ],
+    "references": 8,
+    "revision": 79,
+    "time": "2021-09-12T12:46:27-04:00",
+    "created": "2018-09-15T15:57:42-04:00"
+}

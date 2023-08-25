@@ -1,0 +1,28 @@
+{
+    "number": 256034,
+    "data": "2,8,58,648,9794,187302,4353920,119604518,3803405406,137828444548,5621826966870,255529007818470,12836027705244956,707657189518002658,42563168959162893550,2778631761757307345760,196003207603955109742122",
+    "name": "Number of irreducible idempotents in partition monoid P_n.",
+    "link": [
+        "I. Dolinka, J. East, A. Evangelou, D. FitzGerald, N. Ham, et al., <a href=\"http://arxiv.org/abs/1408.2021\">Enumeration of idempotents in diagram semigroups and algebras</a>, arXiv preprint arXiv:1408.2021 [math.GR], 2014. See Table 3."
+    ],
+    "formula": [
+        "a(n) = A060639(n) + A256033(n)."
+    ],
+    "mathematica": [
+        "f[n_, r_, s_] := f[n, r, s] = Module[{resu, m, a, b}, Which[n <= 0, 0, s == 1, StirlingS2[n, r], r == 1, StirlingS2[n, s], True, resu = s f[n-1, r-1, s] + r f[n-1, r, s-1] + r s f[n-1, r, s]; Do[resu += Binomial[n-2, m] (b (r-a) + a (s-b)) f[m, a, b] f[-m+n-1, r-a, s-b], {m, n}, {a, r-1}, {b, s-1}]; resu]];",
+        "a33[n_] := Module[{b = 0}, Do[b += r s f[n, r, s], {r, n}, {s, n}]; b];",
+        "a39[n_] := Module[{t}, t = Table[BellB[k-1]^2/(k-1)!, {k, 1, n+1}]; n! SeriesCoefficient[1 + Log[O[x]^(n+1) + Sum[t[[i]] x^(i-1), {i, 1, Length[t]}]], n]];",
+        "a[n_] := a33[n] + a39[n];",
+        "Table[a[n], {n, 1, 17}] (* _Jean-Fran\u00e7ois Alcover_, Dec 15 2018  *)"
+    ],
+    "xref": [
+        "Cf. A060639, A256033."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Mar 14 2015",
+    "references": 2,
+    "revision": 13,
+    "time": "2018-12-15T11:50:25-05:00",
+    "created": "2015-03-14T14:39:42-04:00"
+}

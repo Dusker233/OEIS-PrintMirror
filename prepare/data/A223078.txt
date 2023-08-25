@@ -1,0 +1,44 @@
+{
+    "number": 223078,
+    "data": "75,315,1275,5115,19275,20475,76875,81915,307275,322875,327675,1228875,1290555,1310715,4915275,4934475,5161275,5223675,5242875,19660875,19741515,20644155,20890875,20971515,78643275,78720075,78969675,82575675,82652475,83559675",
+    "name": "Positive integers with the property that if the base-4 representation is reversed the result is three times the original number.",
+    "comment": [
+        "From _Robert Israel_, Apr 23 2019: (Start)",
+        "All terms are divisible by 15.",
+        "If x is a term and x < 4^k, then x*(4^k+1) is a term.  In particular the sequence is infinite. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A223078/b223078.txt\">Table of n, a(n) for n = 1..985</a>"
+    ],
+    "maple": [
+        "rev4:= proc(n) local L,i;",
+        "  L:= convert(n,base,4);",
+        "  add(L[-i]*4^(i-1),i=1..nops(L))",
+        "end proc:",
+        "Res:= NULL:",
+        "for d from 2 to 15 do",
+        "  d1:= ceil(d/2); d2:= d-d1;",
+        "  for a from 4^(d1-1) to 4^d1/3 do",
+        "     b:= rev4(a)/3 mod 4^d2;",
+        "     x:= 4^d2*a+b;",
+        "     if rev4(x) = 3*x then Res:= Res, x; fi",
+        "od od:",
+        "Res; # _Robert Israel_, Apr 23 2019"
+    ],
+    "mathematica": [
+        "Select[Range[84*10^6],3#==FromDigits[Reverse[IntegerDigits[#,4]],4]&] (* _Harvey P. Dale_, Mar 03 2018 *)"
+    ],
+    "xref": [
+        "Cf. A173951, A223077, A223079, A214927."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Mar 14 2013",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Mar 14 2013"
+    ],
+    "references": 2,
+    "revision": 10,
+    "time": "2019-04-23T23:53:06-04:00",
+    "created": "2013-03-14T15:11:38-04:00"
+}

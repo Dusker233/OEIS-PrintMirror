@@ -1,0 +1,38 @@
+{
+    "number": 134527,
+    "data": "1,1,1,2,5,11,24,58,149,385,1001,2652,7140,19384,52944,145590,402949,1121117,3133255,8793372,24774557,70045871,198672464,565144064,1611946284,4609140916,13209415116,37937455636,109171460104,314736939884,908930799572,2629120466966",
+    "name": "G.f. A(x) satisfies: A(x) = Sum_{n>=0} [x*A(x)]^(2^n-1).",
+    "comment": [
+        "Number of Dyck n-paths with all ascent lengths being 1 less than a power of 2. [_David Scambler_, May 07 2012]"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A134527/b134527.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: A(x) = Series_Reversion{x/[Sum_{n>=0} x^(2^n-1)]}."
+    ],
+    "maple": [
+        "b:= proc(x, y, t) option remember; `if`(x<0 or y>x, 0,",
+        "      `if`(x=0, 1, b(x-1, y+1, true)+`if`(t, add(",
+        "       b(x-2^j+1, y-2^j+1, false), j=1..ilog2(y+1)), 0)))",
+        "    end:",
+        "a:= n-> b(2*n, 0, true):",
+        "seq(a(n), n=0..32);  # _Alois P. Heinz_, Apr 01 2019"
+    ],
+    "mathematica": [
+        "f[x_, y_, d_] := f[x, y, d] = If[x < 0 || y < x, 0, If[x == 0 && y == 0, 1, f[x - 1, y, 0] + f[x, y - If[d == 0, 1, 2*d], If[d == 0, 1, 2*d]]]];Table[f[n, n, 0], {n, 0, 28}] (* _David Scambler_, May 07 2012 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=polcoeff(serreverse(x/sum(j=0,#binary(n),x^(2^j-1)+ x*O(x^n))),n)"
+    ],
+    "xref": [
+        "Cf. A075864."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Paul D. Hanna_, Nov 19 2007",
+    "references": 1,
+    "revision": 16,
+    "time": "2019-04-01T09:28:44-04:00",
+    "created": "2007-12-09T03:00:00-05:00"
+}

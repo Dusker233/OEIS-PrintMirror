@@ -1,0 +1,44 @@
+{
+    "number": 120151,
+    "data": "5,6,8,11,15,20,26,35,47,62,83,111,148,197,263,350,467,623,830,1107,1476,1968,2624,3499,4665,6220,8293,11058,14744,19658,26211,34948,46597,62130,82840,110453,147271,196361,261815,349086,465448,620598,827464,1103285",
+    "name": "a(n) = 5 + floor( Sum_{j=1..n-1} a(j)/3 ).",
+    "link": [
+        "Harvey P. Dale, <a href=\"/A120151/b120151.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "maple": [
+        "a:= proc(n) option remember;",
+        "       5+floor(add(a(j)/3, j=1..n-1))",
+        "    end:",
+        "seq(a(n), n=1..44);  # _Alois P. Heinz_, Jun 16 2023"
+    ],
+    "mathematica": [
+        "nxt[{t_,n_}]:=Module[{c=Floor[(15+t)/3]},{t+c,c}]; NestList[nxt,{5,5},40][[All,2]] (* _Harvey P. Dale_, Jun 19 2022 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "function f(n,a,b)",
+        "  t:=0;",
+        "    for k in [1..n-1] do",
+        "       t+:= a+Floor((b+t)/3);",
+        "     end for;",
+        "  return t;",
+        "end function;",
+        "g:= func< n,a,b | f(n+1,a,b)-f(n,a,b) >;",
+        "A120151:= func< n | g(n,5,0) >;",
+        "[A120151(n): n in [1..60]]; // _G. C. Greubel_, Jun 15 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def A120151(n): return 5 + (sum(A120151(k) for k in range(1, n)))//3",
+        "[A120151(n) for n in range(1, 61)] # _G. C. Greubel_, Jun 15 2023"
+    ],
+    "xref": [
+        "Cf. A072493, A073941, A112088."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Graeme McRae_, Jun 10 2006",
+    "references": 1,
+    "revision": 10,
+    "time": "2023-06-16T08:11:16-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 305411,
+    "data": "3,5,17,37,43,67,109,151,157,163,181,199,229,331,367,373,421,433,577,601,613,691,757,823,919,997,1009,1051,1093,1231,1399,1429,1459,1579,1669,1777,1789,1831,2083,2179,2389,2521,2731,3019,3229,3301",
+    "name": "Prime p numbers for which the sum with any prime number q <= p is not a square.",
+    "link": [
+        "Robert Israel, <a href=\"/A305411/b305411.txt\">Table of n, a(n) for n = 1..103</a> (conjectured to be all the terms)",
+        "C. G\u00fcll\u00fc et al, Mathematics StackExchange, <a href=\"https://math.stackexchange.com/questions/4614952/primes-that-dont-give-a-square-when-added-any-of-the-primes-less-than-them/4614974#4614974\">\"Primes that don't give a square when added any of the primes less than them\"</a>, Jan 2023."
+    ],
+    "example": [
+        "2 + 2 = 4, so 2 is not in the sequence.",
+        "7 + 2 = 9, so 7 is not in the sequence.",
+        "3 + 2 = 5 and 3 + 3 = 6. 5 and 6 are not squares, so 3 is a term.",
+        "17 + 2 = 19, 17 + 3 = 20, 17 + 5 = 22, 17 + 7 = 24, 17 + 11 = 28, 17 + 13 = 30, 17 + 17 = 34. All these are nonsquares, so 17 is a term."
+    ],
+    "maple": [
+        "filter:= proc(p) local s, s0, q;",
+        "  if issqr(p+2) then return false fi;",
+        "  s0:= floor(sqrt(p));",
+        "  if s0::odd then s0:= s0-1 fi;",
+        "  for s from s0+2 by 2 do",
+        "     q:= s^2-p;",
+        "     if q > p then return true fi;",
+        "     if isprime(q) then return false fi;",
+        "  od;",
+        "end proc:",
+        "R:= NULL: p:= 1:",
+        "while p < 10^7 do",
+        "  p:= nextprime(p);",
+        "  if filter(p) then R:= R,p; fi;",
+        "od:",
+        "R; # _Robert Israel_, Jan 10 2023"
+    ],
+    "mathematica": [
+        "aQ[p_] := PrimeQ[p] && Module[{q = 2}, While[q <= p && !IntegerQ[Sqrt[p + q]], q = NextPrime[q]]; q > p]; Select[Range[1000], aQ] (* _Amiram Eldar_, Dec 04 2018 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = {if (! isprime(p), return (0)); forprime(q=2, p, if (issquare(p+q), return (0));); return (1);} \\\\ _Michel Marcus_, Oct 18 2018"
+    ],
+    "xref": [
+        "Cf. A000040, A000290, A001043."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Marius A. Burtea_, Oct 13 2018",
+    "references": 2,
+    "revision": 59,
+    "time": "2023-01-11T06:22:06-05:00",
+    "created": "2018-12-07T19:04:41-05:00"
+}

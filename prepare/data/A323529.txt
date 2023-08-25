@@ -1,0 +1,53 @@
+{
+    "number": 323529,
+    "data": "1,1,1,1,1,1,1,1,1,1,3,3,5,7,11,13,19,23,31,37,47,55,69,79,95,109,129,145,169,189,217,241,273,301,339,371,413,451,499,541,595,643,703,757,823,925,999,1107,1229,1387,1559,1807,2071,2453,2893,3451,4109,5011",
+    "name": "Number of strict square plane partitions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A323529/b323529.txt\">Table of n, a(n) for n = 0..7500</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{j>=0} A039622(j) * A008289(n,j^2). - _Alois P. Heinz_, Jan 24 2019"
+    ],
+    "example": [
+        "The a(12) = 5 strict square plane partitions:",
+        "  [12]",
+        ".",
+        "  [1 2] [1 2] [1 3] [1 4]",
+        "  [3 6] [4 5] [2 6] [2 5]",
+        "The a(15) = 13 strict square plane partitions:",
+        "  [15]",
+        ".",
+        "  [7 5] [8 4] [9 3] [6 5] [7 4] [9 2] [6 4] [7 3] [8 2] [6 3] [6 3] [7 2]",
+        "  [2 1] [2 1] [2 1] [3 1] [3 1] [3 1] [3 2] [4 1] [4 1] [4 2] [5 1] [5 1]"
+    ],
+    "maple": [
+        "h:= proc(n) h(n):= (n^2)!*mul(k!/(n+k)!, k=0..n-1) end:",
+        "b:= proc(n, i, t) option remember; `if`(n>i*(i+1)/2, 0,",
+        "      `if`(n=0, `if`(issqr(t), h(isqrt(t)), 0),",
+        "         b(n, i-1, t) +b(n-i, min(n-i, i-1), t+1)))",
+        "    end:",
+        "a:= n-> b(n$2, 0):",
+        "seq(a(n), n=0..70);  # _Alois P. Heinz_, Jan 24 2019"
+    ],
+    "mathematica": [
+        "Table[Sum[Length[Select[Union[Sort/@Tuples[Reverse/@IntegerPartitions[#,{Length[ptn]}]&/@ptn]],UnsameQ@@Join@@#&&And@@OrderedQ/@Transpose[#]&]],{ptn,IntegerPartitions[n]}],{n,30}]",
+        "(* Second program: *)",
+        "h[n_] := (n^2)! Product[k!/(k+n)!, {k, 0, n-1}];",
+        "b[n_, i_, t_] := b[n, i, t] = If[n > i(i+1)/2, 0, If[n == 0, If[IntegerQ[ Sqrt[t]], h[Sqrt[t]], 0], b[n-i, Min[n-i, i-1], t+1] + b[n, i-1, t]]];",
+        "a[n_] := b[n, n, 0];",
+        "a /@ Range[0, 70] (* _Jean-Fran\u00e7ois Alcover_, May 19 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000219, A008289, A039622, A047966, A089299, A101509, A319066, A323429, A323434, A323522, A323530."
+    ],
+    "keyword": "nonn",
+    "offset": "0,11",
+    "author": "_Gus Wiseman_, Jan 17 2019",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jan 24 2019"
+    ],
+    "references": 5,
+    "revision": 21,
+    "time": "2021-05-19T05:14:35-04:00",
+    "created": "2019-01-24T09:58:58-05:00"
+}

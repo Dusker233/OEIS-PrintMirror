@@ -1,0 +1,54 @@
+{
+    "number": 351622,
+    "data": "2,11,101,1221221,112111211,121111121,144010441,335414533,12444144421,14244144241,15525152551,34254145243,1034450544301,1044141414401,1044531354401,1045341435401,1053441443501,1054341434501,1054431344501,1055050505501,1055150515501,1055500055501,1104440444011",
+    "name": "Palindromic primes (palprimes) whose sum of factorials of digits is also a palprime.",
+    "comment": [
+        "a(n) has an odd number of digits with the middle digit is 0 or 1 except for the terms 2 and 11. - _David A. Corneth_, May 05 2022"
+    ],
+    "reference": [
+        "1221221 is a term because 1!+2!+2!+1!+2!+2!+1! = 11."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A351622/b351622.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "program": [
+        "(PARI) forprime(i=1, 10^12, di=digits(i); if(di==Vecrev(di), s=sum(j=1,#di,di[j]!); ds=digits(s); if(isprime(s) && ds==Vecrev(ds), print1(i,\", \"))))",
+        "(Python)",
+        "from math import factorial",
+        "from sympy import isprime",
+        "from itertools import count, islice, product",
+        "myfact = {d:factorial(int(d)) for d in \"0123456789\"}",
+        "def ispal(s): return s == s[::-1]",
+        "def sofod(s): return sum(myfact[d] for d in s)",
+        "def palprimecandstrs():",
+        "    yield from [\"2\", \"3\", \"5\", \"7\", \"11\"]",
+        "    for digs in count(3, step=2):",
+        "        for last in \"1379\":",
+        "            for p in product(\"0123456789\", repeat=digs//2-1):",
+        "                left = \"\".join(p)",
+        "                for mid in \"01\": # else sofod even (cf. Corneth comment)",
+        "                    yield last + left + mid + left[::-1] + last",
+        "def agen(): # generator of terms",
+        "    for strp in palprimecandstrs():",
+        "        s = sofod(strp)",
+        "        if ispal(str(s)) and isprime(s):",
+        "            p = int(strp)",
+        "            if isprime(p):",
+        "                yield p",
+        "print(list(islice(agen(), 23))) # _Michael S. Branicky_, May 13 2022"
+    ],
+    "xref": [
+        "Subsequence of A002385.",
+        "Cf. A061602."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Alexandru Petrescu_, May 05 2022",
+    "ext": [
+        "More terms from _David A. Corneth_, May 06 2022"
+    ],
+    "references": 1,
+    "revision": 39,
+    "time": "2022-05-13T09:49:44-04:00",
+    "created": "2022-05-13T08:01:38-04:00"
+}

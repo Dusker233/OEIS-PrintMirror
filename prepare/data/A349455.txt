@@ -1,0 +1,44 @@
+{
+    "number": 349455,
+    "data": "4,42,60,72,618,1488,2730,4230,6762,8010,8232,8538,9282,12540,12822,13008,15582,19212,20898,24420,24918,26712,32718,41412,41610,43542,45318,46830,49530,50130,51060,53172,53550,55662,56598,58230,58368,61560,62130,69930,71712,72090,72222,75402,77688,78192",
+    "name": "Members of A014574 with sum of prime factors (with multiplicity) also in A014574.",
+    "comment": [
+        "Numbers k such that k-1, k+1, A001414(k)-1 and A001414(k)+1 are all prime."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A349455/b349455.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 60 is a term because 60-1 = 59 and 60+1 = 61 are primes, A001414(60) = 2+2+3+5 = 12, and 12-1 = 11 and 12+1 = 13 are primes."
+    ],
+    "maple": [
+        "spf:= proc(n) local F,t;",
+        "  F:= ifactors(n)[2];",
+        "  add(t[1]*t[2],t=F)",
+        "end proc:",
+        "R:= 4: count:= 1:",
+        "for t from 6 by 6 while count < 100 do",
+        "  if isprime(t-1) and isprime(t+1) then",
+        "    s:= spf(t);",
+        "    if isprime(s-1) and isprime(s+1) then",
+        "      count:= count+1;",
+        "      R:= R, t;",
+        "    fi",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Prime@Range@8000,PrimeQ[#+2]&&And@@PrimeQ[Total[Flatten[Table@@@FactorInteger[#+1]]]+{1,-1}]&]+1 (* _Giorgos Kalogeropoulos_, Nov 18 2021 *)"
+    ],
+    "xref": [
+        "Cf. A001414, A014574."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Nov 17 2021",
+    "references": 1,
+    "revision": 11,
+    "time": "2021-11-21T21:16:08-05:00",
+    "created": "2021-11-19T07:37:48-05:00"
+}

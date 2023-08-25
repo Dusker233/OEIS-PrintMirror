@@ -1,0 +1,50 @@
+{
+    "number": 107411,
+    "data": "0,10,100,101,102,120,201,210,1002,1012,1020,1021,1022,1023,1032,1203,1230,1302,1320,2013,2031,2103,2130,2301,2310,3012,3021,3102,3120,3201,3210,10023,10032,10123,10132,10203,10213,10223,10230,10231,10232,10233,10234,10243",
+    "name": "Each digit of a(n) appears in a(n+1) and a(n+1) > a(n) is minimal.",
+    "comment": [
+        "Starting with another integer as 0 (the \"seed\") would lead to another sequence."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A107411/b107411.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "example": [
+        "After 100 we get 101 (and not 1000) because the lone 0 in \"101\" is considered as the copy of both zeros of \"100\"."
+    ],
+    "maple": [
+        "R:= 0: S:= {0}: count:= 1;",
+        "for k from 1 while count < 100 do",
+        "  Sk:= convert(convert(k,base,10),set);",
+        "  if S subset Sk then",
+        "    R:= R, k;",
+        "    count:= count+1;",
+        "    S:= Sk;",
+        "  fi",
+        "od:",
+        "R; # _Robert Israel_, Nov 21 2022"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "def agen(an=0):",
+        "    while True:",
+        "        yield an",
+        "        target, k = set(str(an)), an + 1",
+        "        while not (target <= set(str(k))): k += 1",
+        "        an = k",
+        "print(list(islice(agen(), 41))) # _Michael S. Branicky_, Nov 21 2022"
+    ],
+    "xref": [
+        "Cf. A297065."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "0,2",
+    "author": "_Eric Angelini_, Jun 09 2005",
+    "ext": [
+        "Missing terms a(35)-a(37) inserted by _Michael S. Branicky_, Nov 21 2022"
+    ],
+    "references": 2,
+    "revision": 13,
+    "time": "2022-11-22T02:37:46-05:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

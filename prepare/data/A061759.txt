@@ -1,0 +1,39 @@
+{
+    "number": 61759,
+    "data": "59,71,79,83,89,95,99,104,107,111,119,125,127,131,134,139,143,146,149,153,155,159,161,164,167,174,175,179,181,188,191,194,195,197,199,203,207,209,215,219,220,223,224,227,230,233,237,239,241,242,244,246,249",
+    "name": "Numbers k such that k! is divisible by (k+1)^11.",
+    "link": [
+        "Harry J. Smith, <a href=\"/A061759/b061759.txt\">Table of n, a(n) for n = 1..2000</a>"
+    ],
+    "maple": [
+        "filter:= proc(n) local q,t,p,i,w,F;",
+        "  F:= ifactors(n+1)[2];",
+        "  for q in F do",
+        "    p:= q[1];",
+        "    t:= 0:",
+        "    for i from 1 do",
+        "      w:= floor(n/p^i);",
+        "      if w = 0 then return false fi;",
+        "      t:= t+w;",
+        "      if t >= 11*q[2] then break fi;",
+        "    od;",
+        "  od;",
+        "  true",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Jul 01 2018"
+    ],
+    "mathematica": [
+        "Select[Range[250], IntegerQ[ #!/(# + 1)^11] &]"
+    ],
+    "program": [
+        "(PARI) { n=0; f=1; for (a=1, 3879, f*=a; if (f%(a + 1)^11 == 0, write(\"b061759.txt\", n++, \" \", a)) ) } \\\\ _Harry J. Smith_, Jul 27 2009",
+        "(Magma) [n: n in [1..250]| Factorial(n) mod (n+1)^11 eq 0]; // _Vincenzo Librandi_, Jul 02 2018"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert G. Wilson v_, Jun 21 2001",
+    "references": 7,
+    "revision": 15,
+    "time": "2022-09-08T08:45:03-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,69 @@
+{
+    "number": 349054,
+    "data": "1,1,1,3,3,5,9,11,15,21,35,41,59,75,103,155,193,255,339,443,569,841,1019,1365,1743,2295,2879,3785,5151,6417,8301,10625,13567,17229,21937,27509,37145,45425,58345,73071,93409,115797,147391,182151,229553,297061,365625",
+    "name": "Number of alternating strict compositions of n. Number of alternating (up/down or down/up) permutations of strict integer partitions of n.",
+    "comment": [
+        "A strict composition of n is a finite sequence of distinct positive integers summing to n.",
+        "A sequence is alternating if it is alternately strictly increasing and strictly decreasing, starting with either.",
+        "The case starting with an increase (or decrease, it doesn't matter in the enumeration) is counted by A129838."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Alternating_permutation\">Alternating permutation</a>"
+    ],
+    "formula": [
+        "a(n) = 2 * A129838(n) - 1.",
+        "G.f.: Sum_{n>0} A001250(n)*x^(n*(n+1)/2)/Product_{k=1..n}(1-x^k)."
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 11 compositions:",
+        "  (1)  (2)  (3)    (4)    (5)    (6)      (7)",
+        "            (1,2)  (1,3)  (1,4)  (1,5)    (1,6)",
+        "            (2,1)  (3,1)  (2,3)  (2,4)    (2,5)",
+        "                          (3,2)  (4,2)    (3,4)",
+        "                          (4,1)  (5,1)    (4,3)",
+        "                                 (1,3,2)  (5,2)",
+        "                                 (2,1,3)  (6,1)",
+        "                                 (2,3,1)  (1,4,2)",
+        "                                 (3,1,2)  (2,1,4)",
+        "                                          (2,4,1)",
+        "                                          (4,1,2)"
+    ],
+    "maple": [
+        "g:= proc(u, o) option remember;",
+        "      `if`(u+o=0, 1, add(g(o-1+j, u-j), j=1..u))",
+        "    end:",
+        "b:= proc(n, k) option remember; `if`(k<0 or n<0, 0,",
+        "      `if`(k=0, `if`(n=0, 2, 0), b(n-k, k)+b(n-k, k-1)))",
+        "    end:",
+        "a:= n-> add(b(n, k)*g(k, 0), k=0..floor((sqrt(8*n+1)-1)/2))-1:",
+        "seq(a(n), n=0..46);  # _Alois P. Heinz_, Dec 22 2021"
+    ],
+    "mathematica": [
+        "wigQ[y_]:=Or[Length[y]==0,Length[Split[y]]==Length[y]&&Length[Split[Sign[Differences[y]]]]==Length[y]-1];",
+        "Table[Length[Select[Join@@Permutations/@Select[IntegerPartitions[n],UnsameQ@@#&],wigQ]],{n,0,15}]"
+    ],
+    "xref": [
+        "Ranking sequences are put in parentheses below.",
+        "This is the strict case of A025047/A025048/A025049 (A345167).",
+        "This is the alternating case of A032020 (A233564).",
+        "The unordered case (partitions) is A065033.",
+        "The directed case is A129838.",
+        "A001250 = alternating permutations (A349051), complement A348615 (A350250).",
+        "A003242 = Carlitz (anti-run) compositions, complement A261983.",
+        "A011782 = compositions, unordered A000041.",
+        "A345165 = partitions without an alternating permutation (A345171).",
+        "A345170 = partitions with an alternating permutation (A345172).",
+        "A345192 = non-alternating compositions (A345168).",
+        "A345195 = non-alternating anti-run compositions (A345169).",
+        "A349800 = weakly but not strongly alternating compositions (A349799).",
+        "A349052 = weakly alternating compositions, complement A349053 (A349057).",
+        "Cf. A000111, A008965, A015723, A114901, A128761, A129852, A129853, A218074, A333213, A344614, A345164, A345194, A349060, A349795."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Dec 21 2021",
+    "references": 16,
+    "revision": 21,
+    "time": "2021-12-23T05:23:12-05:00",
+    "created": "2021-12-23T05:23:12-05:00"
+}

@@ -1,0 +1,55 @@
+{
+    "number": 119680,
+    "data": "101,103,107,109,307,401,503,509,601,607,701,709,809,907,10007,10009,10103,10301,10501,10607,10709,10903,10909,20101,20507,20707,20903,30103,30307,30509,30703,30803,30809,40009,40507,40709,50707,50909,60103,60107,60509",
+    "name": "Prime numbers obtained by inserting a 0 between each pair of adjacent digits of a prime number > 10.",
+    "comment": [
+        "From _R\u00e9my Sigrist_, Oct 08 2017: (Start)",
+        "See A159236 for the original prime numbers.",
+        "The least prime numbers > 10 remaining prime during exactly k iterations of the operation of inserting a 0 between each pair of adjacent digits are, for small values of k:",
+        "k prime",
+        "- -----",
+        "0 23",
+        "1 11",
+        "2 19",
+        "3 17",
+        "4 220333",
+        "5 8677267",
+        "(End)"
+    ],
+    "example": [
+        "The first four terms arise from 11 -> 101, 13 -> 103, 17 -> 107, 19 -> 109.",
+        "23 -> 203 is not prime, so 203 is not a term."
+    ],
+    "mathematica": [
+        "a = Table[Table[Mod[Floor[Prime[m]/10^n], 10], {n, 4, 0, -1}], {m, 5, 200}]; Dimensions[a] b = Table[Sum[(If[Mod[n - 1, 2] == 0, a[[m, 1 + Floor[(n - 1)/2]]], 0])*10^(9 - n), {n, 1, 9}], {m, 1, 195}]; c = Flatten[Table[If[PrimeQ[b[[m]]], b[[m]], {}], {m, 1, 195}]]"
+    ],
+    "program": [
+        "(PARI) forprime (p=10, 599, if (isprime(pp=fromdigits(digits(p), 100)), print1 (pp \", \"))) \\\\ _R\u00e9my Sigrist_, Oct 08 2017",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime, nextprime",
+        "def ok(n):",
+        "    return n > 10 and isprime(n) and isprime(int(\"0\".join(list(str(n)))))",
+        "def agen():",
+        "    p = 11",
+        "    while True:",
+        "        t = int(\"0\".join(list(str(p))))",
+        "        if isprime(t): yield t",
+        "        p = nextprime(p)",
+        "print(list(islice(agen(), 50))) # _Michael S. Branicky_, Jul 11 2022"
+    ],
+    "xref": [
+        "Cf. A159236."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Roger L. Bagula_, Jun 11 2006",
+    "ext": [
+        "Name edited by _R\u00e9my Sigrist_, Oct 08 2017",
+        "a(39)-a(41) from _Michael S. Branicky_, Jul 11 2022"
+    ],
+    "references": 1,
+    "revision": 20,
+    "time": "2022-07-11T19:55:02-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

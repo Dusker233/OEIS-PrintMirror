@@ -1,0 +1,45 @@
+{
+    "number": 96202,
+    "data": "1,2,3,6,11,22,45,92,188,382,791,1632,3357,6922,14289,29542,61013,126142,260664,538850,1113372,2300954,4752279,9814226,20257082,41798206,86204773,177729712,366231907,754356336,1553063269,3196028942,6573883225,13515943986,27775807554",
+    "name": "Number of coverings of {1...n} by translation of a single set.",
+    "comment": [
+        "The number of sets (up to translation) that with their translations can cover {1...n} in at least one way is given by A079500(n). For example, for n = 5 the 8 sets are {1}, {1,2}, {1,3}, {1,2,3}, {1,2,4}, {1,3,4}, {1,2,3,4}, {1,2,3,4,5}. - _Andrew Howroyd_, Nov 06 2019"
+    ],
+    "example": [
+        "a(5)=11 because the following are the 11 coverings of {1...5}, each one of which only uses a single set and its translations:",
+        "   {{1},{2},{3},{4},{5}}",
+        "   {{1,2},{3,4},{4,5}}",
+        "   {{1,2},{2,3},{3,4},{4,5}}",
+        "   {{1,2},{2,3},{4,5}}",
+        "   {{1,3},{2,4},{3,5}}",
+        "   {{1,2,3},{2,3,4},{3,4,5}}",
+        "   {{1,2,3},{3,4,5}}",
+        "   {{1,2,4},{2,3,5}}",
+        "   {{1,3,4},{2,4,5}}",
+        "   {{1,2,3,4},{2,3,4,5}}",
+        "   {{1,2,3,4,5}}"
+    ],
+    "program": [
+        "(PARI)",
+        "covers(all, v)={",
+        "  my(u=vector(#v+1)); for(i=1, #v, u[i+1]=bitor(u[i], v[i]));",
+        "  my(recurse(k,b) = if(bitnegimply(b,u[k+1]), 0, if(k==0, 1, my(t=bitnegimply(b,v[k])); if(t==b, 2*self()(k-1, b), self()(k-1, b) + self()(k-1, t)) )));",
+        "  recurse(#v, all)",
+        "}",
+        "a(n)={sum(i=2^(n-1), 2^n-1, covers(2^n-1, vector(valuation(i,2)+1, j, i>>(j-1))))} \\\\ _Andrew Howroyd_, Nov 06 2019"
+    ],
+    "xref": [
+        "Cf. A079500, A096154, A096203."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jon Wild_, Jul 27 2004",
+    "ext": [
+        "a(14)-a(32) from _Andrew Howroyd_, Nov 06 2019",
+        "a(33)-a(35) from _Jinyuan Wang_, Jun 09 2021"
+    ],
+    "references": 4,
+    "revision": 19,
+    "time": "2021-06-09T11:13:08-04:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

@@ -1,0 +1,27 @@
+{
+    "number": 321654,
+    "data": "1,1,1,13,13,45,681,885,2805,8301,237213",
+    "name": "Number of nonnegative integer matrices with sum of entries equal to n and no zero rows or columns, with distinct row sums and distinct column sums.",
+    "example": [
+        "The a(3) = 13 matrices:",
+        "  [3] [2 1] [1 2]",
+        ".",
+        "  [2] [2 0] [1 1] [1 1] [1] [1 0] [1 0] [0 2] [0 1] [0 1]",
+        "  [1] [0 1] [1 0] [0 1] [2] [1 1] [0 2] [1 0] [2 0] [1 1]"
+    ],
+    "mathematica": [
+        "prs2mat[prs_]:=Table[Count[prs,{i,j}],{i,Union[First/@prs]},{j,Union[Last/@prs]}];",
+        "multsubs[set_,k_]:=If[k==0,{{}},Join@@Table[Prepend[#,set[[i]]]&/@multsubs[Drop[set,i-1],k-1],{i,Length[set]}]];",
+        "Table[Length[Select[multsubs[Tuples[Range[n],2],n],And[Union[First/@#]==Range[Max@@First/@#],Union[Last/@#]==Range[Max@@Last/@#],UnsameQ@@Total/@prs2mat[#],UnsameQ@@Total/@Transpose[prs2mat[#]]]&]],{n,5}]"
+    ],
+    "xref": [
+        "Cf. A000219, A001970, A007716, A068313, A114736, A117433, A120733, A319646, A321645, A321646, A321652."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Nov 15 2018",
+    "references": 5,
+    "revision": 5,
+    "time": "2018-11-15T21:12:34-05:00",
+    "created": "2018-11-15T21:12:34-05:00"
+}

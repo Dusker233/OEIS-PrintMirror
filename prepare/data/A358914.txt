@@ -1,0 +1,58 @@
+{
+    "number": 358914,
+    "data": "1,1,1,3,4,7,13,20,32,51,83,130,206,320,496,759,1171,1786,2714,4104,6193,9286,13920,20737,30865,45721,67632,99683,146604,214865,314782,459136,668867,972425,1410458,2040894,2950839,4253713,6123836,8801349,12627079",
+    "name": "Number of twice-partitions of n into distinct strict partitions.",
+    "comment": [
+        "A twice-partition of n (A063834) is a sequence of integer partitions, one of each part of an integer partition of n."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A358914/b358914.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 13 twice-partitions:",
+        "  ((1))  ((2))  ((3))     ((4))      ((5))      ((6))",
+        "                ((21))    ((31))     ((32))     ((42))",
+        "                ((2)(1))  ((3)(1))   ((41))     ((51))",
+        "                          ((21)(1))  ((3)(2))   ((321))",
+        "                                     ((4)(1))   ((4)(2))",
+        "                                     ((21)(2))  ((5)(1))",
+        "                                     ((31)(1))  ((21)(3))",
+        "                                                ((31)(2))",
+        "                                                ((3)(21))",
+        "                                                ((32)(1))",
+        "                                                ((41)(1))",
+        "                                                ((3)(2)(1))",
+        "                                                ((21)(2)(1))"
+    ],
+    "mathematica": [
+        "twiptn[n_]:=Join@@Table[Tuples[IntegerPartitions/@ptn],{ptn,IntegerPartitions[n]}];",
+        "Table[Length[Select[twiptn[n],UnsameQ@@#&&And@@UnsameQ@@@#&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI) seq(n,k)={my(u=Vec(eta(x^2 + O(x*x^n))/eta(x + O(x*x^n))-1)); Vec(prod(k=1, n, my(c=u[k]); sum(j=0, min(c,n\\k), x^(j*k)*c!/(c-j)!,  O(x*x^n))))} \\\\ _Andrew Howroyd_, Dec 31 2022"
+    ],
+    "xref": [
+        "The unordered version is A050342, non-strict A261049.",
+        "This is the distinct case of A270995.",
+        "The case of strictly decreasing sums is A279785.",
+        "The case of constant sums is A279791.",
+        "For distinct instead of weakly decreasing sums we have A336343.",
+        "This is the twice-partition case of A358913.",
+        "A001970 counts multiset partitions of integer partitions.",
+        "A055887 counts sequences of partitions.",
+        "A063834 counts twice-partitions.",
+        "A330462 counts set systems by total sum and length.",
+        "A358830 counts twice-partitions with distinct lengths.",
+        "Cf. A000009, A000219, A075900, A271619, A296122, A304969, A321449, A336342, A358901, A358906, A358907."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Dec 11 2022",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Dec 31 2022"
+    ],
+    "references": 5,
+    "revision": 8,
+    "time": "2022-12-31T14:53:24-05:00",
+    "created": "2022-12-11T09:08:41-05:00"
+}

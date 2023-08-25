@@ -1,0 +1,45 @@
+{
+    "number": 343865,
+    "data": "1,1,2,4,12,21,35,57,84,118,157,206,255,314,377,453,529,612,705,801,904,1014,1129,1249,1375,1512,1654,1801,1952,2115,2280,2451,2632,2816,3007,3203,3404,3617,3831,4055,4285,4517,4759,5004,5254,5514,5780,6052,6333",
+    "name": "Number of lattice points for which polar coordinates (r,theta) exist such that (0 <= r <= theta <= n).",
+    "link": [
+        "Luc Rousseau, <a href=\"/A343865/a343865.png\">An illustration of a(4)=12.</a>"
+    ],
+    "formula": [
+        "a(n) ~ Pi*n*(n-2*Pi) + 4*Pi^3/3 = area covered by the radius vector of the Archimedean spiral (r = theta), when 0 <= n-2*Pi <= theta <= n;",
+        "a(n) ~ Pi*n^2."
+    ],
+    "example": [
+        "Exhaustive lists of lattice points satisfying the conditions for the first few n's:",
+        "n=0:",
+        "    (0,0) is (r=0 <= theta=0 <= 0)",
+        "n=1:",
+        "    (0,0) is (r=0 <= theta=0 <= 1)",
+        "n=2:",
+        "    (0,0) is (r=0 <= theta=0 <= 2)",
+        "    (0,1) is (r=1 <= theta=Pi/2=1.5707... <= 2)",
+        "n=3:",
+        "    (0,0) is (r=0 <= theta=0 <= 3)",
+        "    (0,1) is (r=1 <= theta=Pi/2=1.5707... <= 3)",
+        "    (-1,1) is (r=sqrt(2)=1.4142... <= theta=3*Pi/4=2.3561... <= 3)",
+        "    (-2,1) is (r=sqrt(5)=2.2360... <= theta=arccos(-2/sqrt(5))=2.6679... <= 3)"
+    ],
+    "program": [
+        "(PARI)",
+        "atan2(x,y)=if(x==0&&y==0,0,if(x>0&&y==0,0,if(x==0&&y>0,0.5*Pi,if(x<0&&y==0,Pi,if(x==0&&y<0,1.5*Pi,if(y>0,acos(x/sqrt(x^2+y^2)),2*Pi-acos(x/sqrt(x^2+y^2))))))))",
+        "f(n,n0,t0)=n+t0-n0-(t0>n0)*2*Pi",
+        "b(x,y,n,n0)=my(r=sqrt(x^2+y^2),t0=atan2(x,y));r<=f(n,n0,t0)",
+        "a(n)=my(n0=n%(2*Pi),c=0);for(x=-n,n,for(y=-n,n,if(b(x,y,n,n0),c++)));c",
+        "for(n=0,50,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A000328."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Luc Rousseau_, May 02 2021",
+    "references": 1,
+    "revision": 13,
+    "time": "2021-05-24T01:06:44-04:00",
+    "created": "2021-05-24T01:06:44-04:00"
+}

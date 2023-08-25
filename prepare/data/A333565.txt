@@ -1,0 +1,51 @@
+{
+    "number": 333565,
+    "data": "1,7,33,223,1537,11007,80385,595455,4456449,33615871,255148033,1946337279,14908784641,114597822463,883479412737,6828492980223,52895475040257,410544577183743,3191929428770817,24855137310736383,193811815161921537,1513167009951514623,11827298001565515777",
+    "name": "O.g.f.: (1 + 4*x)/((1 + x)*sqrt(1 - 8*x)).",
+    "comment": [
+        "This sequence satisfies the Gauss congruences a(n*p^k) == a(n*p^(k-1)) ( mod p^k ), for all prime p and positive integers n and k, since the power series E(x) := exp( Sum_{n >= 1} a(n)*x^n/n ) has integer coefficients. See Stanley, Ex. 5.2 (a), p. 72, and its solution on p. 104.",
+        "We conjecture that this sequence satisfies the stronger congruences a(n*p^k) == a(n*p^(k-1)) ( mod p^(3*k) ) for prime p >= 3 and positive integers n and k. The particular case when n = k = 1 follows from the corresponding result for A333564. Some examples of these congruences are given below."
+    ],
+    "reference": [
+        "R. P. Stanley. Enumerative combinatorics. Vol. 2, (volume 62 of Cambridge Studies in Advanced Mathematics). Cambridge University Press, Cambridge, 1999."
+    ],
+    "formula": [
+        "a(n) = (2^n)*binomial(2*n,n) + 3*sum_{k = 0..n-1} (-1)^(n+k+1)*2^k* binomial(2*k,k).",
+        "a(n) = 4*A333564(n) + (-1)^n for n >= 1.",
+        "a(n) = 2*A119259(n) - (-1)^n.",
+        "a(n) = (-1)^n + 4*Sum_{k = 1..n} (3*k-1)*2^(k-1)*A000108(k-1).",
+        "a(n) ~ 8^n * 4/(3*sqrt(Pi*n)).",
+        "Congruences: a(p) == 7 ( mod p^3 ) for all prime p >= 3.",
+        "O.g.f. A(x) = 1 + 7*x + 33*x^2 + ... satisfies the differential equation (x + 1)*(4*x + 1)*(8*x - 1)*A'(x) + (16*x^2 - 4*x + 7)*A(x) = 0. Cf. A333564.",
+        "P-recursive: n*(3*n - 4)*a(n) = (21*n^2 - 40*n + 12)*a(n-1) + 4*(3*n - 1)*(2*n - 3)*a(n-2) with a(0) = 1 and a(1) = 7.",
+        "Alternative form: (a(n) + a(n-1))/(a(n) - a(n-2)) = P(n)/Q(n), where P(n) = 4*(3*n - 1)*(2*n - 3) and Q(n) = (21*n^2 - 40*n + 12).",
+        "Also, n*a(n) = (3*n + 4)*a(n-1) + 4*(9*n - 19)*a(n-2) + 16*(2*n - 5)*a(n-3) with a(0) = 1, a(1) = 7 and a(2) = 33.",
+        "exp( Sum_{n >= 1} a(n)*x^n/n ) = 1 + 7*x + 41*x^2 + 247*x^3 + ... is the o.g.f. of the second diagonal of triangle A113647. See also A115137."
+    ],
+    "example": [
+        "Examples of congruences:",
+        "a(11) - a(1) = 1946337279 - 7 = (2^3)*(11^3)*182789 == 0 ( mod 11^3 ).",
+        "a(2*11) - a(2) = 11827298001565515777 - 33 = (2^5)*(3^2)*(11^3)*107* 288357478039 == 0 ( mod 11^3 ).",
+        "a(5^2) - a(5) = 5680983691406772011007 - 11007 = (2^8)*(3^3)*(5^6)*7* 19*1123*352183001 == 0 ( mod 5^6 )."
+    ],
+    "maple": [
+        "a := proc (n) option remember; `if`(n = 0, 1, `if`(n = 1, 7, `if`(n = 2, 33, ((3*n+4)*a(n-1)+(36*n-76)*a(n-2)+(32*n-80)*a(n-3))/n)))",
+        "end proc:",
+        "seq(a(n), n = 0..25);"
+    ],
+    "mathematica": [
+        "a[n_] := (-1)^n - 2^(n+2) Binomial[2n, n-1] Hypergeometric2F1[1, 2n +1, n + 2, 2];",
+        "Table[Simplify[a[n]], {n, 0, 22}] (* _Peter Luschny_, Apr 13 2020 *)",
+        "CoefficientList[Series[(1+4x)/((1+x)Sqrt[1-8x]),{x,0,30}],x] (* _Harvey P. Dale_, Jan 24 2021 *)"
+    ],
+    "xref": [
+        "Cf. A000984, A113647, A115137, A119259, A333564."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Peter Bala_, Apr 11 2020",
+    "references": 3,
+    "revision": 19,
+    "time": "2021-10-06T14:29:58-04:00",
+    "created": "2020-04-16T03:22:50-04:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 331578,
+    "data": "0,0,0,4,5,186,847,17928,166833,3196630,45667391,925287276,17407857337,393376875906,8989368580935,229332484742416,6094576250570849,174924522900914094,5271210321949744111,168792243040279327860,5674164658298121248361,200870558472768096534490",
+    "name": "Number of labeled series-reduced rooted trees with n vertices and more than two branches of the root.",
+    "comment": [
+        "A rooted tree is series-reduced if no vertex (including the root) has degree 2.",
+        "Also labeled lone-child-avoiding rooted trees with n vertices and more than two branches, where a rooted tree is lone-child-avoiding if no vertex has exactly one child."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A331578/b331578.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "From _Andrew Howroyd_, Dec 09 2020: (Start)",
+        "a(n) = A060313(n) - n*A060356(n-1) for n > 1.",
+        "a(n) = Sum_{k=1..n} (-1)^(n-k)*k^(k-2)*n*(n-2)!*binomial(n-1,k-1)*(2*k*n - n - k^2)/k!) for n > 1.",
+        "E.g.f.: -x - LambertW(-x/(1+x)) - (x/2)*LambertW(-x/(1+x))^2.",
+        "(End)"
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(7) = 847 trees (in the format root[branches]) are:",
+        "  1[2,3,4[5,6,7]]",
+        "  1[2,3,4,5[6,7]]",
+        "  1[2,3,4,5,6,7]"
+    ],
+    "mathematica": [
+        "lrt[set_]:=If[Length[set]==0,{},Join@@Table[Apply[root,#]&/@Join@@Table[Tuples[lrt/@stn],{stn,sps[DeleteCases[set,root]]}],{root,set}]];",
+        "Table[Length[Select[lrt[Range[n]],Length[#]>2&&FreeQ[#,_[_]]&]],{n,6}]"
+    ],
+    "program": [
+        "(PARI) a(n) = {if(n<=1, 0, sum(k=1, n, (-1)^(n-k)*k^(k-2)*n*(n-2)!*binomial(n-1,k-1)*(2*k*n - n - k^2)/k!))} \\\\ _Andrew Howroyd_, Dec 09 2020",
+        "(PARI) seq(n)={my(w=lambertw(-x/(1+x) + O(x*x^n))); Vec(serlaplace(-x - w - (x/2)*w^2), -n)} \\\\ _Andrew Howroyd_, Dec 09 2020"
+    ],
+    "xref": [
+        "The non-series-reduced version is A331577.",
+        "The unlabeled version is A331488.",
+        "Lone-child-avoiding rooted trees are counted by A001678.",
+        "Topologically series-reduced rooted trees are counted by A001679.",
+        "Labeled topologically series-reduced rooted trees are counted by A060313.",
+        "Labeled lone-child-avoiding rooted trees are counted by A060356.",
+        "Matula-Goebel numbers of lone-child-avoiding rooted trees are A291636.",
+        "Matula-Goebel numbers of series-reduced rooted trees are A331489.",
+        "Cf. A000014, A000169, A000669, A005512, A108919, A206429, A331233, A331490."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Gus Wiseman_, Jan 21 2020",
+    "ext": [
+        "Terms a(9) and beyond from _Andrew Howroyd_, Dec 09 2020"
+    ],
+    "references": 7,
+    "revision": 16,
+    "time": "2020-12-09T19:39:42-05:00",
+    "created": "2020-01-21T18:25:01-05:00"
+}

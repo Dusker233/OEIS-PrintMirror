@@ -1,0 +1,34 @@
+{
+    "number": 307756,
+    "data": "1,2,4,10,26,66,184,472,1268,3340,8748,22772,59102,151590,386830,983914,2489384,6263284,15703204,39221884,97498736,241538472,596115898,1465958522,3595196600,8788765304,21421616934,52080152238,126268822824,305365334180,736770528064",
+    "name": "Exponential convolution of number of partitions into distinct parts (A000009) with themselves.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A307756/b307756.txt\">Table of n, a(n) for n = 0..3000</a>"
+    ],
+    "formula": [
+        "E.g.f.: (Sum_{k>=0} A000009(k)*x^k/k!)^2.",
+        "a(n) = Sum_{k=0..n} binomial(n,k)*A000009(k)*A000009(n-k).",
+        "a(n) ~ exp(Pi*sqrt(2*n/3)) * 2^(n - 5/2) / (sqrt(3) * n^(3/2)). - _Vaclav Kotesovec_, May 06 2019"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1, add(b(n-j)*add(",
+        "     `if`(d::odd, d, 0), d=numtheory[divisors](j)), j=1..n)/n)",
+        "    end:",
+        "a:= n-> add(binomial(n, j)*b(j)*b(n-j), j=0..n):",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Apr 26 2019"
+    ],
+    "mathematica": [
+        "nmax = 30; CoefficientList[Series[Sum[PartitionsQ[k] x^k/k!, {k, 0, nmax}]^2, {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[Sum[Binomial[n, k] PartitionsQ[k] PartitionsQ[n - k], {k, 0, n}], {n, 0, 30}]"
+    ],
+    "xref": [
+        "Cf. A000009, A022567, A266232, A307755."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Apr 26 2019",
+    "references": 3,
+    "revision": 11,
+    "time": "2019-05-06T08:33:04-04:00",
+    "created": "2019-04-26T19:42:14-04:00"
+}

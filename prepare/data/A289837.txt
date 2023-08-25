@@ -1,0 +1,77 @@
+{
+    "number": 289837,
+    "data": "1,1,2,16,76,261,757,2003,5035,12286,29426,69554,162670,376923,865971,1973941,4466853,10040524,22430584,49829116,110127536,242254321,530619937,1157676711,2516640751,5452664426,11777687182,25367246038,54492508610,116769551831",
+    "name": "Number of cliques in the n-tetrahedral graph.",
+    "comment": [
+        "Here, \"cliques\" means complete subgraphs (not necessarily the largest).",
+        "Sequence extended to a(1) using formula. - _Andrew Howroyd_, Jul 18 2017",
+        "From _Gus Wiseman_, Jan 11 2019: (Start)",
+        "The n-tetrahedral graph has all 3-subsets of {1,...,n} as vertices, and two are connected iff they share two elements. So a(n) is the number of 3-uniform hypergraphs on n labeled vertices where every two edges have two vertices in common. For example, the a(4) = 16 hypergraphs are:",
+        "  {}",
+        "  {{1,2,3}}",
+        "  {{1,2,4}}",
+        "  {{1,3,4}}",
+        "  {{2,3,4}}",
+        "  {{1,2,3},{1,2,4}}",
+        "  {{1,2,3},{1,3,4}}",
+        "  {{1,2,3},{2,3,4}}",
+        "  {{1,2,4},{1,3,4}}",
+        "  {{1,2,4},{2,3,4}}",
+        "  {{1,3,4},{2,3,4}}",
+        "  {{1,2,3},{1,2,4},{1,3,4}}",
+        "  {{1,2,3},{1,2,4},{2,3,4}}",
+        "  {{1,2,3},{1,3,4},{2,3,4}}",
+        "  {{1,2,4},{1,3,4},{2,3,4}}",
+        "  {{1,2,3},{1,2,4},{1,3,4},{2,3,4}}",
+        "The following are non-isomorphic representatives of the 7 unlabeled 3-uniform cliques on 6 vertices, and their multiplicities in the labeled case, which add up to a(6) = 261.",
+        "   1 X {}",
+        "  20 X {{1,2,3}}",
+        "  90 X {{1,3,4},{2,3,4}}",
+        "  60 X {{1,4,5},{2,4,5},{3,4,5}}",
+        "  60 X {{1,2,4},{1,3,4},{2,3,4}}",
+        "  15 X {{1,5,6},{2,5,6},{3,5,6},{4,5,6}}",
+        "  15 X {{1,2,3},{1,2,4},{1,3,4},{2,3,4}}",
+        "(End)"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A289837/b289837.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Clique.html\">Clique</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TetrahedralGraph.html\">Tetrahedral Graph</a>",
+        "<a href=\"/index/Rec#order_08\">Index entries for linear recurrences with constant coefficients</a>, signature (11,-52,138,-225,231,-146,52,-8)."
+    ],
+    "formula": [
+        "a(n) = 1 + binomial(n,3) + (2^(n-2)-n+1)*binomial(n,2) + 5*binomial(n,4). - _Andrew Howroyd_, Jul 18 2017",
+        "a(n) = 11*a(n-1)-52*a(n-2)+138*a(n-3)-225*a(n-4)+231*a(n-5)-146*a(n-6)+52*a(n-7)-8*a(n-8). - _Eric W. Weisstein_, Jul 21 2017",
+        "From _Colin Barker_, Jul 19 2017: (Start)",
+        "G.f.: x*(1 - 10*x + 43*x^2 - 92*x^3 + 91*x^4 - 25*x^5 - 5*x^6 - 8*x^7) / ((1 - x)^5*(1 - 2*x)^3).",
+        "a(n) = (24 - (34+3*2^n)*n + (67+3*2^n)*n^2 - 38*n^3 + 5*n^4) / 24.",
+        "(End)",
+        "Binomial transform of A323294. - _Gus Wiseman_, Jan 11 2019"
+    ],
+    "mathematica": [
+        "Table[(2^(n - 2) - n + 1) Binomial[n, 2] + Binomial[n, 3] +",
+        "  5 Binomial[n, 4] + 1, {n, 20}] (* _Eric W. Weisstein_, Jul 21 2017 *)",
+        "LinearRecurrence[{11, -52, 138, -225, 231, -146, 52, -8}, {1, 1, 2, 16, 76, 261, 757, 2003}, 20] (* _Eric W. Weisstein_, Jul 21 2017 *)",
+        "CoefficientList[Series[(1 - 10 x + 43 x^2 - 92 x^3 + 91 x^4 - 25 x^5 - 5 x^6 - 8 x^7)/((-1 + x)^5 (-1 + 2 x)^3), {x, 0, 20}], x] (* _Eric W. Weisstein_, Jul 21 2017 *)",
+        "stableSets[u_,Q_]:=If[Length[u]===0,{{}},With[{w=First[u]},Join[stableSets[DeleteCases[u,w],Q],Prepend[#,w]&/@stableSets[DeleteCases[u,r_/;r===w||Q[r,w]||Q[w,r]],Q]]]];",
+        "Table[Length[stableSets[Subsets[Range[n],{3}],Length[Intersection[#1,#2]]<=1&]],{n,6}] (* _Gus Wiseman_, Jan 11 2019 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = 1 + binomial(n,3) + (2^(n-2)-n+1)*binomial(n,2) + 5*binomial(n,4); \\\\ _Andrew Howroyd_, Jul 18 2017",
+        "(PARI) Vec(x*(1 - 10*x + 43*x^2 - 92*x^3 + 91*x^4 - 25*x^5 - 5*x^6 - 8*x^7) / ((1 - x)^5*(1 - 2*x)^3) + O(x^40)) \\\\ _Colin Barker_, Jul 19 2017"
+    ],
+    "xref": [
+        "Cf. A055795 (maximal cliques), A287232 (independent vertex sets), A290056 (triangular graph).",
+        "Cf. A000665, A125791, A299471, A302374, A302394, A322451, A323293, A323296, A323298."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Eric W. Weisstein_, Jul 13 2017",
+    "ext": [
+        "a(1)-a(5) and a(21)-a(30) from _Andrew Howroyd_, Jul 18 2017"
+    ],
+    "references": 10,
+    "revision": 21,
+    "time": "2019-01-12T20:48:38-05:00",
+    "created": "2017-07-13T21:05:45-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 99611,
+    "data": "15,21,35,39,57,77,95,119,143,161,187,221,253,287,323,355,395,437,481,527,573,623,671,723,781,835,899,959,1011,1081,1149,1219,1293,1363,1441,1517,1591,1679,1763,1843,1929,2021,2105,2201,2291,2395,2497,2599,2701",
+    "name": "a(n) is the largest odd number that is less than n^2 and is the product of two distinct primes.",
+    "comment": [
+        "a(n) < A000290(n) < A099610(n); subsequence of A046388.",
+        "The offset is 4 since a(n) does not exist for n <= 3."
+    ],
+    "mathematica": [
+        "Module[{nn=70,p2p},p2p=Reverse[Union[Times@@@Subsets[Prime[Range[ 2,PrimePi[ Ceiling[ nn^2/3]]]],{2}]]];Table[SelectFirst[p2p,#<n^2&],{n,4,nn}]] (* _Harvey P. Dale_, Dec 06 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        "from sympy import factorint",
+        "def A099611(n):",
+        "    for i in count(n**2-(n%2)-1,-2):",
+        "        fs = factorint(i)",
+        "        if len(fs) == 2 == sum(fs.values()):",
+        "            return i # _Chai Wah Wu_, Dec 06 2021",
+        "(PARI) a(n) = forstep(k=n^2-n%2-1, 1, -2, if (bigomega(k)==2&&omega(k)==2, return(k))); \\\\ _Michel Marcus_, Dec 07 2021"
+    ],
+    "xref": [
+        "Cf. A000290, A006881, A099610, A349809."
+    ],
+    "keyword": "nonn",
+    "offset": "4,1",
+    "author": "_Reinhard Zumkeller_, Oct 25 2004",
+    "ext": [
+        "Definition clarified by _N. J. A. Sloane_, Dec 06 2021"
+    ],
+    "references": 3,
+    "revision": 20,
+    "time": "2021-12-07T10:57:35-05:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

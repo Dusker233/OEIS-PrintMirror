@@ -1,0 +1,51 @@
+{
+    "number": 340068,
+    "data": "0,0,0,1,1,2,3,3,3,4,5,5,6,6,6,6,6,7,8,8,9,9,9,9,10,10,10,10,10,10,10,10,10,11,12,12,13,13,13,13,14,14,14,14,14,14,14,14,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,16,17,17,18,18,18,18,19",
+    "name": "a(n) is the number of integers in the set {n+1,n+2, . . . ,2n} whose representation in base 2 contain exactly three digits 1\u2019s.",
+    "comment": [
+        "This sequence is inspired by the 3rd problem, proposed by Romania, during the 35th International Mathematical Olympiad in 1994 at Hong Kong (see the link IMO).",
+        "This sequence is increasing because there are only these two possibilities:",
+        "-> a(n+1) - a(n) = 1 if n has exactly two 1's in its binary representation (A018900);",
+        "-> a(n+1) - a(n) = 0 otherwise.",
+        "Consequence, for any positive integer m, a(x) = m has at least one solution (answer to the 1st Olympiad question).",
+        "Only when m = k*(k-1)/2 + 1 with k >= 2 (A000124 \\ {1}), there exists only one n such that a(n) = m, and then n = 2^k+2 where k >= 2 (A052548 \\ {3, 4}) (answer to the 2nd Olympiad question)."
+    ],
+    "reference": [
+        "Marcin E. Kuczma, International Mathematical Olympiads, 1986-1999, The Mathematical Association of America, 2003, pages 10 and 92-93."
+    ],
+    "link": [
+        "The IMO Compendium, <a href=\"https://imomath.com/othercomp/I/Imo1994.pdf\">Problem 3</a>, 35th IMO 1994.",
+        "<a href=\"/index/O#Olympiads\">Index to sequences related to Olympiads</a>."
+    ],
+    "formula": [
+        "a(2^k+2) = k*(k-1)/2 + 1 for k >= 2."
+    ],
+    "example": [
+        "a(2) = 0 because in {3, 4}, 3 = 11_2 and 4 = 100_2.",
+        "a(4) = 1 because in {5, 6, 7, 8, 9, 10} only 7 = 111_2 has 3 digits in its binary representation.",
+        "a(6) = 2 because in {7, 8, 9, 10, 11, 12}, there are 7 = 111_2 and 11 = 1011_2 that have 3 digits in their binary representation."
+    ],
+    "mathematica": [
+        "a[n_] := Count[Range[n + 1, 2*n], _?(DigitCount[#, 2, 1] == 3 &)]; Array[a, 100] (* _Amiram Eldar_, Dec 28 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def a(n): return sum(bin(k)[2:].count(\"1\")==3 for k in range(n+1, 2*n+1))",
+        "print([a(n) for n in range(1, 68)]) # _Michael S. Branicky_, Dec 28 2020",
+        "(PARI) a(n) = sum(k=n+1, 2*n, hammingweight(k) == 3); \\\\ _Michel Marcus_, Dec 28 2020",
+        "(PARI) first(n) = {my(res = vector(n), t = 0); for(i = 1, n, res[i] = t; if(hammingweight(i) == 2, t++)); res} \\\\ _David A. Corneth_, Dec 29 2020"
+    ],
+    "xref": [
+        "Cf. A000120, A014311, A018900, A057168, A151774 (first differences)."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,6",
+    "author": "_Bernard Schott_, Dec 28 2020",
+    "ext": [
+        "More terms from _David A. Corneth_, Dec 28 2020"
+    ],
+    "references": 2,
+    "revision": 28,
+    "time": "2021-07-03T05:44:23-04:00",
+    "created": "2021-01-01T12:00:52-05:00"
+}

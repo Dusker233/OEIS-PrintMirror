@@ -1,0 +1,62 @@
+{
+    "number": 347813,
+    "data": "1,19,211075,2062017739,32191353922714,977270269148852086,29618256217540107753856,1041952262234097478667071246,43960391382107369608617444946360,2007170356703297211447385988052335644,99624394337129260265907069889802324849302",
+    "name": "Number of cubic lattice walks from (n,n,n) to (0,0,0) using steps that decrease the Euclidean distance to the origin and that change each coordinate by at most 1.",
+    "comment": [
+        "Lattice points may have negative coordinates, and different walks may differ in length.  All walks are self-avoiding."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A347813/b347813.txt\">Table of n, a(n) for n = 0..201</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lattice_path#Counting_lattice_paths\">Counting lattice paths</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Self-avoiding_walk\">Self-avoiding walk</a>"
+    ],
+    "example": [
+        "a(1) = 19:",
+        "  ((1,1,1), (0,0,0)),",
+        "  ((1,1,1), (0,0,1), (0,0,0)),",
+        "  ((1,1,1), (0,1,0), (0,0,0)),",
+        "  ((1,1,1), (0,1,1), (0,0,0)),",
+        "  ((1,1,1), (1,0,0), (0,0,0)),",
+        "  ((1,1,1), (1,0,1), (0,0,0)),",
+        "  ((1,1,1), (1,1,0), (0,0,0)),",
+        "  ((1,1,1), (0,1,1), (-1,0,0), (0,0,0)),",
+        "  ((1,1,1), (0,1,1), (0,0,1), (0,0,0)),",
+        "  ((1,1,1), (0,1,1), (0,1,0), (0,0,0)),",
+        "  ((1,1,1), (0,1,1), (1,0,0), (0,0,0)),",
+        "  ((1,1,1), (1,0,1), (0,-1,0), (0,0,0)),",
+        "  ((1,1,1), (1,0,1), (0,0,1), (0,0,0)),",
+        "  ((1,1,1), (1,0,1), (0,1,0), (0,0,0)),",
+        "  ((1,1,1), (1,0,1), (1,0,0), (0,0,0)),",
+        "  ((1,1,1), (1,1,0), (0,0,-1), (0,0,0)),",
+        "  ((1,1,1), (1,1,0), (0,0,1), (0,0,0)),",
+        "  ((1,1,1), (1,1,0), (0,1,0), (0,0,0)),",
+        "  ((1,1,1), (1,1,0), (1,0,0), (0,0,0))."
+    ],
+    "maple": [
+        "s:= proc(n) option remember;",
+        "     `if`(n=0, [[]], map(x-> seq([x[], i], i=-1..1), s(n-1)))",
+        "    end:",
+        "b:= proc(l) option remember; (n-> `if`(l=[0$n], 1, add((h-> `if`(",
+        "      add(i^2, i=h)<add(i^2, i=l), b(sort(h)), 0))(l+x), x=s(n))))(nops(l))",
+        "    end:",
+        "a:= n-> b([n$3]):",
+        "seq(a(n), n=0..12);"
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = If[n == 0, {{}}, Sequence @@ Table[Append[#, i], {i, -1, 1}]& /@ s[n-1]];",
+        "b[l_List] := b[l] = With[{n = Length[l]}, If[l == Table[0, {n}], 1, Sum[With[{h = l+x}, If[h.h < l.l, b[Sort[h]], 0]], {x, s[n]}]]];",
+        "a[n_] := b[{n, n, n}];",
+        "Table[a[n], {n, 0, 12}] (* _Jean-Fran\u00e7ois Alcover_, Nov 04 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=3 of A347811.",
+        "Cf. A348201."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Sep 14 2021",
+    "references": 3,
+    "revision": 19,
+    "time": "2021-11-04T05:58:09-04:00",
+    "created": "2021-09-15T18:46:44-04:00"
+}

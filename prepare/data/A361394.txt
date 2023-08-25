@@ -1,0 +1,48 @@
+{
+    "number": 361394,
+    "data": "1,1,2,2,4,6,8,11,15,20,30,38,49,65,83,108,139,178,224,286,358,437,550,684,837,1037,1269,1553,1889,2295,2770,3359,4035,4843,5808,6951,8312,9902,11752,13958,16531,19541,23037,27162,31911,37488,43950,51463,60127,70229",
+    "name": "Number of integer partitions of n where 2*(number of distinct parts) >= (number of parts).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A361394/b361394.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 11 partitions:",
+        "  (1)  (2)   (3)   (4)    (5)     (6)     (7)",
+        "       (11)  (21)  (22)   (32)    (33)    (43)",
+        "                   (31)   (41)    (42)    (52)",
+        "                   (211)  (221)   (51)    (61)",
+        "                          (311)   (321)   (322)",
+        "                          (2111)  (411)   (331)",
+        "                                  (2211)  (421)",
+        "                                  (3111)  (511)",
+        "                                          (2221)",
+        "                                          (3211)",
+        "                                          (4111)"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; `if`(n=0, `if`(t>=0, 1, 0),",
+        "     `if`(i<1, 0, add(b(n-i*j, i-1, t+`if`(j>0, 2, 0)-j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> b(n$2, 0):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Mar 19 2023"
+    ],
+    "mathematica": [
+        "Table[Length[Select[IntegerPartitions[n],2*Length[Union[#]]>=Length[#]&]],{n,0,30}]"
+    ],
+    "xref": [
+        "The complement is counted by A360254, ranks A360558.",
+        "These partitions have ranks A361395.",
+        "A000041 counts integer partitions, strict A000009.",
+        "A008284 counts partitions by length, reverse A058398.",
+        "A067538 counts partitions with integer mean, strict A102627.",
+        "A116608 counts partitions by number of distinct parts.",
+        "Cf. A106529, A144300, A237363, A237832, A240219, A316413, A349156."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Mar 17 2023",
+    "references": 15,
+    "revision": 10,
+    "time": "2023-03-19T18:09:06-04:00",
+    "created": "2023-03-19T15:31:35-04:00"
+}

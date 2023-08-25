@@ -1,0 +1,34 @@
+{
+    "number": 327552,
+    "data": "0,1,2,7,11,29,63,125,225,489,930,1704,3260,5859,10868,20026,35062,61660,111789,191119,337432,585847,1003876,1705380,2921394,4930357,8311554,14013583,23435178,38849655,64847870,106784912,175699558,289676875,472418418,772944773",
+    "name": "Number of partitions in all twice partitions of n where the first partition is strict.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327552/b327552.txt\">Table of n, a(n) for n = 0..3200</a>"
+    ],
+    "example": [
+        "a(3) = 7 = 1+1+1+2+2 counting the partitions in 3, 21, 111, 2|1, 11|1."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(i*(i+1)/2<n, 0,",
+        "      `if`(n=0, [1, 0], b(n, i-1)+(p->p+[0, p[1]])(",
+        "      combinat[numbpart](i)*b(n-i, min(n-i, i-1)))))",
+        "    end:",
+        "a:= n-> b(n$2)[2]:",
+        "seq(a(n), n=0..36);"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[i(i+1)/2<n, {0, 0}, If[n==0, {1, 0}, b[n, i-1] + Function[p, p + {0, p[[1]]}][PartitionsP[i] b[n-i, Min[n-i, i-1]]]]];",
+        "a[n_] := b[n, n][[2]];",
+        "a /@ Range[0, 36] (* _Jean-Fran\u00e7ois Alcover_, Dec 17 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000009, A000041, A271619, A327607."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 16 2019",
+    "references": 4,
+    "revision": 15,
+    "time": "2020-12-17T11:56:16-05:00",
+    "created": "2019-09-16T20:26:55-04:00"
+}

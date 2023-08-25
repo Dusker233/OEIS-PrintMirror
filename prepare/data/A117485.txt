@@ -1,0 +1,65 @@
+{
+    "number": 117485,
+    "data": "1,2,5,10,18,30,49,74,110,158,221,302,407,536,698,896,1136,1424,1770,2176,2656,3216,3866,4616,5481,6466,7591,8866,10306,11926,13747,15778,18046,20566,23359,26446,29855,33600,37716,42224,47152,52528,58388,64752,71664",
+    "name": "Expansion of x^9/((1-x)*(1-x^2)*(1-x^3))^2.",
+    "comment": [
+        "Molien series for S_3 X S_3, cf. A001399.",
+        "From _Gus Wiseman_, Apr 06 2019: (Start)",
+        "Also the number of integer partitions of n with Durfee square of length 3. The Heinz numbers of these partitions are given by A307386. For example, the a(9) = 1 through a(13) = 18 partitions are:",
+        "  (333)  (433)   (443)    (444)     (544)",
+        "         (3331)  (533)    (543)     (553)",
+        "                 (3332)   (633)     (643)",
+        "                 (4331)   (3333)    (733)",
+        "                 (33311)  (4332)    (4333)",
+        "                          (4431)    (4432)",
+        "                          (5331)    (4441)",
+        "                          (33321)   (5332)",
+        "                          (43311)   (5431)",
+        "                          (333111)  (6331)",
+        "                                    (33322)",
+        "                                    (33331)",
+        "                                    (43321)",
+        "                                    (44311)",
+        "                                    (53311)",
+        "                                    (333211)",
+        "                                    (433111)",
+        "                                    (3331111)",
+        "(End)"
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_12\">Index entries for linear recurrences with constant coefficients</a>, signature (2,1,-2,-3,0,6,0,-3,-2,1,2,-1)."
+    ],
+    "formula": [
+        "a(n) = 2*a(n-1) + a(n-2) - 2*a(n-3) - 3*a(n-4) + 6*a(n-6) - 3*a(n-8) - 2*a(n-9) + a(n-10) + 2*a(n-11) - a(n-12) for n>20. - _Colin Barker_, Dec 12 2019"
+    ],
+    "example": [
+        "As a cross-check, row sixteen of A115994 yields p(16) = 16 + 140 + 74 + 1."
+    ],
+    "maple": [
+        "with(combstruct):ZL:=[st, {st=Prod(left, right), left=Set(U, card=r), right=Set(U, card=r), U=Sequence(Z, card>=1)}, unlabeled]: subs(r=3, stack): seq(count(subs(r=3, ZL), size=m), m=6..50) ; # _Zerinvary Lajos_, Jan 02 2008"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/((1-x)(1-x^2)(1-x^3))^2,{x,0,50}],x] (* _Harvey P. Dale_, Oct 09 2011 *)",
+        "durf[ptn_]:=Length[Select[Range[Length[ptn]],ptn[[#]]>=#&]];",
+        "Table[Length[Select[IntegerPartitions[n],durf[#]==3&]],{n,0,30}] (* _Gus Wiseman_, Apr 06 2019 *)"
+    ],
+    "program": [
+        "(Magma) n:=3; G:=SymmetricGroup(n); H:=DirectProduct(G,G); MolienSeries(H); // _N. J. A. Sloane_, Mar 10 2007",
+        "(PARI) Vec(x^9 / ((1 - x)^6*(1 + x)^2*(1 + x + x^2)^2) + O(x^60)) \\\\ _Colin Barker_, Dec 12 2019"
+    ],
+    "xref": [
+        "Column k=3 of A115994.",
+        "Cf. A000027 (for k=1), A006918 (for k=2), A117488, A117489, A001399, A117486.",
+        "Cf. A115720, A307386, A325164."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "9,2",
+    "author": "_Alford Arnold_, Mar 22 2006",
+    "ext": [
+        "Entry revised by _N. J. A. Sloane_, Mar 10 2007"
+    ],
+    "references": 21,
+    "revision": 31,
+    "time": "2022-09-08T08:45:24-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

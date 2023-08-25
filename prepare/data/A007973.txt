@@ -1,0 +1,41 @@
+{
+    "number": 7973,
+    "data": "1,3,15,55,184,648,2111,6352,17337,42878",
+    "name": "Number of permutations that are n-2 \"block reversals\" away from 12...n.",
+    "formula": [
+        "a(n) = A300003(n,n-2)."
+    ],
+    "program": [
+        "(Python)",
+        "def a(n):",
+        "    perm = tuple(range(1, n+1)); reach = {perm}; frontier = {perm}",
+        "    for k in range(n-2):",
+        "        r1 = set()",
+        "        while len(frontier) > 0:",
+        "            q = frontier.pop()",
+        "            for i in range(n):",
+        "                for j in range(i+1, n+1):",
+        "                    qp = list(q)",
+        "                    qp[i:j] = qp[i:j][::-1]",
+        "                    qp = tuple(qp)",
+        "                    if qp not in reach:",
+        "                        reach.add(qp)",
+        "                        r1.add(qp)",
+        "        frontier = r1",
+        "    return len(frontier)",
+        "print([a(n) for n in range(2, 10)]) # _Michael S. Branicky_, Jan 26 2023"
+    ],
+    "xref": [
+        "Cf. A007972, A007974, A007975, A300003."
+    ],
+    "keyword": "nonn,more",
+    "offset": "2,2",
+    "author": "_J. H. Conway_",
+    "ext": [
+        "a(9)-a(11) from _Sean A. Irvine_, Feb 22 2018"
+    ],
+    "references": 4,
+    "revision": 21,
+    "time": "2023-01-26T16:14:08-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

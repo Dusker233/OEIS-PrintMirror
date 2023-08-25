@@ -1,0 +1,37 @@
+{
+    "number": 319455,
+    "data": "1,2,7,14,35,66,140,252,485,840,1512,2534,4347,7084,11705,18622,29862,46522,72779,111310,170534,256586,386101,572488,848050,1240974,1812979,2621486,3782669,5410360,7720237,10932740,15443120,21669546,30327570,42196022,58555543,80832850",
+    "name": "Expansion of Product_{k>=1} 1/((1 - x^k)*(1 - x^(2*k)))^2.",
+    "comment": [
+        "Convolution inverse of A002171.",
+        "Self-convolution of A002513.",
+        "Convolution of A000041 and A029862.",
+        "Euler transform of period 2 sequence [2, 4, ...]."
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} (1 + x^k)^2/(1 - x^(2*k))^4.",
+        "G.f.: exp(2*Sum_{k>=1} (4*sigma(k) - sigma(2*k))*x^k/k).",
+        "a(n) ~ exp(Pi*sqrt(2*n)) / (2^(13/4)*n^(7/4)). - _Vaclav Kotesovec_, Sep 14 2021"
+    ],
+    "maple": [
+        "a:=series(mul(1/((1-x^k)*(1-x^(2*k)))^2,k=1..55),x=0,38): seq(coeff(a,x,n),n=0..37); # _Paolo P. Lava_, Apr 02 2019"
+    ],
+    "mathematica": [
+        "nmax = 37; CoefficientList[Series[Product[1/((1 - x^k)*(1 - x^(2*k)))^2, {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 37; CoefficientList[Series[1/(QPochhammer[x] QPochhammer[x^2])^2, {x, 0, nmax}], x]",
+        "nmax = 37; CoefficientList[Series[Exp[2 Sum[(4 DivisorSigma[1, k] - DivisorSigma[1, 2 k]) x^k/k, {k, 1, nmax}]], {x, 0, nmax}], x]"
+    ],
+    "program": [
+        "(PARI) seq(n)={Vec(exp(2*sum(k=1, n, (4*sigma(k) - sigma(2*k))*x^k/k) + O(x*x^n)))} \\\\ _Andrew Howroyd_, Sep 19 2018"
+    ],
+    "xref": [
+        "Cf. A000041, A001934, A001936, A002171, A002513, A029862."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Sep 19 2018",
+    "references": 1,
+    "revision": 10,
+    "time": "2021-09-14T11:36:28-04:00",
+    "created": "2018-09-19T19:30:24-04:00"
+}

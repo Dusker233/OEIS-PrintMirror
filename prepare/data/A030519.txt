@@ -1,0 +1,35 @@
+{
+    "number": 30519,
+    "data": "2,13,101,619,3641,20028,106812,554352,2828660,14244878,71077246,352184306,1736118578,8525182798,41741378126,203929434766,994680883360,4845761306611,23586192274443,114731539477465,557859497501007,2711772157178038,13180227306740726",
+    "name": "Number of polyhexes of class PF2 with four catafusenes annealated to pyrene.",
+    "comment": [
+        "See reference for precise definition."
+    ],
+    "link": [
+        "S. J. Cyvin, Zhang Fuji, B. N. Cyvin, Guo Xiaofeng, and J. Brunvoll, <a href=\"https://doi.org/10.1021/ci00009a021\">Enumeration and classification of benzenoid systems. 32. Normal perifusenes with two internal vertices</a>, J. Chem. Inform. Comput. Sci., 32 (1992), 532-540.",
+        "Sean A. Irvine, <a href=\"https://github.com/archmageirvine/joeis/blob/master/src/irvine/oeis/a030/A030519.java\">Java program</a> (github)"
+    ],
+    "formula": [
+        "a(n+4) = N(n+3) - 9*N(n+2) + 25*N(n+1) - 21*N(n) + (M(n+3) - M(n+2) - 3*M(n+1) + 3*M(n) + L'(n))/2 where N(n)=A002212(n), M(n)=A055879(n), and L'(n)=A039660(n) for n >= 4. - _Sean A. Irvine_, Apr 02 2020"
+    ],
+    "program": [
+        "(PARI) Lp(n)=my(x = 'x + O('x^(n+4))); polcoeff((1+x)*(1-6*x^2+7*x^4-(1-3*x^2)*sqrt(1-6*x^2+5*x^4))/(2*x^4*(1-x)), n); \\\\ A039660",
+        "M(n)= my(A); if( n<1, 0, n--; A = O(x); for( k = 0, n\\2, A = 1 / (1 - x - x^2 / (1 + x - x^2 * A))); polcoeff( A, n)); \\\\ A055879",
+        "N(n) = polcoeff( (1 - x - sqrt(1 - 6*x + 5*x^2 + x^2 * O(x^n))) / 2, n+1); \\\\ A002212",
+        "b(n) = N(n+3) - 9*N(n+2) + 25*N(n+1) - 21*N(n) + (M(n+3) - M(n+2) - 3*M(n+1) + 3*M(n) + Lp(n))/2;",
+        "a(n) = b(n-4); \\\\ _Michel Marcus_, Apr 03 2020"
+    ],
+    "xref": [
+        "Cf. A026106, A026118, A026298, A030519, A030520, A030525, A030529, A030532, A030534."
+    ],
+    "keyword": "nonn",
+    "offset": "8,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms and title improved by _Sean A. Irvine_, Apr 02 2020"
+    ],
+    "references": 9,
+    "revision": 24,
+    "time": "2020-04-05T02:28:44-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

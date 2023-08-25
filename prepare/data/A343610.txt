@@ -1,0 +1,65 @@
+{
+    "number": 343610,
+    "data": "0,4,176,344,58725,80384,85503,88485,176961,440545,846507,881089,10149887,13344765,20299776,21872637,43876345,590299136,600522751,601243645,4607164415,4610834429,9214328832,9290153981,19742392313,36858855424,36869931007,39667007485",
+    "name": "Start of runs of increasing length of consecutive numbers having their Hamming weight A000120 as a substring when both are written in binary.",
+    "comment": [
+        "Inspired by _Eric Angelini_'s post on the math-fun list, we say a number N has Property B if the string A007088(A000120(N)), N's Hamming weight written in binary, occurs within A007088(N), N written in binary. The set of such numbers is the support of the function i(N) = index / position where A007088(A000120(N)) occurs first within A007088(N), or 0 if it doesn't occur.",
+        "We define L(N) >= 0 to be the run length starting at N, i.e., the maximum number of consecutive integers {N, N+1, ...} that all have the Property B.",
+        "This sequence is the RECORD_INDEX transform of the function L, i.e., the indices where increasingly long runs start. The RECORD_VALUE transform of L would list the corresponding run lengths, (3, 11, 23, 39, 42, 63, 64, 90, 189, 290, 340, 574, ...)"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A343610/b343610.txt\">Table of n, a(n) for n = 1..41</a>",
+        "Eric Angelini, <a href=\"https://mailman.xmission.com/postorius/lists/math-fun.mailman.xmission.com/\">14 times property A</a>, math-fun discussion list, May 19 2021"
+    ],
+    "example": [
+        "For n = 0..3 we have, denoting H = A000120 the Hamming weight:",
+        "  H(0) = 0, H(1) = 1, H(2 = 10[2]) = 1, H(3 = 11[2]) = 2 = 10[2]:",
+        "  For the first three, H(n) is a substring of n when both are written in base 2, but not for n = 3, so we have a run of length L(0) = 3, and a(1) = 0.",
+        "For n = 4..15 we have H(4 = 100[2]) = 1 = 1[2], H(5 = 101[2]) = 2 = 10[2],",
+        "  H(6 = 110[2]) = 2 = 10[2], H(7 = 111[2]) = 3 = 11[2],",
+        "  H(8 = 1000[2]) = 1 = 1[2], H(9 = 1001[2]) = 2 = 10[2],",
+        "  H(10 = 1010[2]) = 2 = 10[2], H(11 = 1011[2]) = 3 = 11[2],",
+        "  H(12 = 1100[2]) = 2 = 10[2], H(13 = 1101[2]) = 3 = 11[2],",
+        "  H(14 = 1110[2]) = 3 = 11[2], H(15 = 1111[2]) = 4 = 100[2]. We see that n = 4..14 is a run of L(4) = 11 consecutive numbers with Property B, interrupted by n = 15. Therefore, a(2) = 4."
+    ],
+    "mathematica": [
+        "Block[{s = Array[#1 Boole[SequenceCount[#2, #3] > 0] & @@ {#, IntegerDigits[#, 2], IntegerDigits[DigitCount[#, 2, 1], 2]} &@# &, 2^20, 0], t}, Set[{s, t}, Transpose@ Map[{First[#], Length[#]} &, Most@ DeleteCases[SplitBy[s, # == 0 &], _?(First[#] == 0 &)]]]; MapAt[# - 1 &, Map[s[[FirstPosition[t, #][[1]] ]] &, Union@ FoldList[Max, t]], 1]] (* _Michael De Vlieger_, May 20 2021 *)"
+    ],
+    "program": [
+        "(PARI) {is(n, h=hammingweight(n), m=2<<exponent(h+!h)-1)= until(h > n>>=1, bitand(n,m)==h && return(1))}",
+        "for(n=L=cnt=0, oo, is(n)&& cnt++&& next; cnt>L&& print1(n-L=cnt,\",\"); cnt=0)",
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import count, islice",
+        "def f(k, record):",
+        "    if record > -1:",
+        "        sr = bin(k+record)[2:]",
+        "        if bin(sr.count('1'))[2:] not in sr:",
+        "            return -1, k+record+1",
+        "    j = 0; s = bin(k+j)[2:]",
+        "    while bin(s.count('1'))[2:] in s:",
+        "        j += 1; s = bin(k+j)[2:]",
+        "    return j, k+j+1",
+        "def agen(startk=0, record=-1):",
+        "    k = startk",
+        "    while True:",
+        "        v, nextk = f(k, record)",
+        "        if v > record:",
+        "            record = v; yield k",
+        "        k = nextk",
+        "print(list(islice(agen(), 17))) # _Michael S. Branicky_, Jan 17 2023"
+    ],
+    "xref": [
+        "Cf. A007088 (numbers in binary), A000120 (Hamming weight)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_M. F. Hasler_, May 20 2021",
+    "ext": [
+        "a(17) and beyond from _Michael S. Branicky_, Jan 17 2023"
+    ],
+    "references": 1,
+    "revision": 33,
+    "time": "2023-01-18T02:38:58-05:00",
+    "created": "2021-05-24T00:19:18-04:00"
+}

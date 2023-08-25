@@ -1,0 +1,40 @@
+{
+    "number": 360100,
+    "data": "1,1,5,23,111,562,2952,15948,88076,495077,2823293,16295020,95007654,558765743,3310999269,19748462718,118471172054,714355994997,4327148812557,26319195869861,160677354596769,984236344800234,6047526697800992,37262944840704171",
+    "name": "a(n) = Sum_{k=0..n} binomial(n+2*k-1,n-k) * Catalan(k).",
+    "formula": [
+        "G.f. A(x) satisfies A(x) = 1 + x * A(x)^2 / (1-x)^3.",
+        "G.f.: c(x/(1-x)^3), where c(x) is the g.f. of A000108.",
+        "a(n) ~ sqrt(-2 + (35 - 3*sqrt(129))^(1/3) + (35 + 3*sqrt(129))^(1/3)) * (((7 + (262 - 6*sqrt(129))^(1/3) + (2*(131 + 3*sqrt(129)))^(1/3))/3)^n / (sqrt(2*Pi) * n^(3/2))). - _Vaclav Kotesovec_, Feb 18 2023",
+        "D-finite with recurrence (n+1)*a(n) +(-8*n+5)*a(n-1) +(10*n-27)*a(n-2) +(-4*n+17)*a(n-3) +(n-6)*a(n-4)=0. - _R. J. Mathar_, Mar 12 2023"
+    ],
+    "maple": [
+        "A360100 := proc(n)",
+        "    add(binomial(n+2*k-1,n-k)*A000108(k),k=0..n) ;",
+        "end proc:",
+        "seq(A360100(n),n=0..70) ; # _R. J. Mathar_, Mar 12 2023"
+    ],
+    "mathematica": [
+        "m = 24;",
+        "A[_] = 0;",
+        "Do[A[x_] = 1 + x A[x]^2/(1 - x)^3 + O[x]^m // Normal, {m}];",
+        "CoefficientList[A[x], x] (* _Jean-Fran\u00e7ois Alcover_, Aug 16 2023 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=0, n, binomial(n+2*k-1, n-k)*binomial(2*k, k)/(k+1));",
+        "(PARI) my(N=30, x='x+O('x^N)); Vec(2/(1+sqrt(1-4*x/(1-x)^3)))"
+    ],
+    "xref": [
+        "Partial sums are A360102.",
+        "Cf. A162481, A258973.",
+        "Cf. A002212, A006319, A162475, A360101.",
+        "Cf. A000108."
+    ],
+    "keyword": "nonn,changed",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Jan 25 2023",
+    "references": 3,
+    "revision": 21,
+    "time": "2023-08-16T08:21:59-04:00",
+    "created": "2023-01-26T10:04:49-05:00"
+}

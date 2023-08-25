@@ -1,0 +1,55 @@
+{
+    "number": 317778,
+    "data": "1,2,3,4,5,6,13,22,39,72,131,229,386,641,896,1164,1419,1855,2831,3545,5036,5750,8034,10022,12227,14377,17455,19951,24701,27197,36455,42303,49751,57232,65684,83879,94391,110073,124015,137442,156835,175130,209215,229396,242692",
+    "name": "Starting with 1,2,3,4,5,6: a(n) is the next smallest number greater than a(n-1) such that a[i] + a[j] + a[k] != a[x] + a[y] + a[z] for 1 <= i,j,k,x,y,z <= n all distinct.",
+    "comment": [
+        "a(n) <= a(n-1) + a(n-2) + a(n-3) - 2. - _Charlie Neder_, Feb 09 2019"
+    ],
+    "link": [
+        "Charlie Neder, <a href=\"/A317778/b317778.txt\">Table of n, a(n) for n = 1..70</a>"
+    ],
+    "example": [
+        "After 1,2,3,4,5,6: 7 cannot be the next term because 1+3+7 = 2+4+5."
+    ],
+    "program": [
+        "(Python)",
+        "def u(series):",
+        "    for i in range(0, len(series)):",
+        "        for j in range(i+1, len(series)):",
+        "            for k in range(j+1, len(series)):",
+        "                for l in range(0, len(series)):",
+        "                    for m in range(l+1, len(series)):",
+        "                        for n in range(m+1, len(series)):",
+        "                            if len(set([i,j,k,l,m,n]))==6:",
+        "                                if series[i]+series[j]+series[k]==series[l]+series[m]+series[n]:",
+        "                                    return False",
+        "    return True",
+        "def a(series, n):",
+        "    a = []",
+        "    for i in range(0, len(series)):",
+        "        a.append(series[i])",
+        "    a.append(n)",
+        "    return a",
+        "series = [1, 2, 3,4,5,6]",
+        "for i in range(7, 1000):",
+        "    print(i)",
+        "    nseries = a(series, i)",
+        "    if u(nseries):",
+        "        series.append(i)",
+        "        print(series)",
+        "print(series)"
+    ],
+    "xref": [
+        "Cf. A011185."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ben Paul Thurston_, Aug 06 2018",
+    "ext": [
+        "a(24)-a(45) from _Charlie Neder_, Feb 09 2019"
+    ],
+    "references": 1,
+    "revision": 19,
+    "time": "2019-02-09T11:09:17-05:00",
+    "created": "2019-01-30T06:24:20-05:00"
+}

@@ -1,0 +1,28 @@
+{
+    "number": 344627,
+    "data": "113,131,197,199,311,337,373,719,733,919,971,991,1031,1091,1097,1103,1109,1123,1181,1213,1231,1279,1297,1301,1319,1327,1579,1777,1811,1873,1913,1949,1951,1979,1987,1993,2131,2311,2377,2399,2713,2791,2939,2971,3011",
+    "name": "Primes p such that exactly three numbers among all circular permutations of the digits of p are prime.",
+    "link": [
+        "Felix Fr\u00f6hlich, <a href=\"/A344627/b344627.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[500]],Total[Boole[PrimeQ[FromDigits/@ Table[ RotateRight[ IntegerDigits[#],n],{n,IntegerLength[#]}]]]]==3&] (* _Harvey P. Dale_, Mar 30 2023 *)"
+    ],
+    "program": [
+        "(PARI) rot(n) = if(#Str(n)==1, v=vector(1), v=vector(#n-1)); for(i=2, #n, v[i-1]=n[i]); u=vector(#n); for(i=1, #n, u[i]=n[i]); v=concat(v, u[1]); v",
+        "eva(n) = subst(Pol(n), x, 10)",
+        "is(n) = my(r=rot(digits(n)), i=0); while(r!=digits(n), if(ispseudoprime(eva(r)), i++); r=rot(r)); if(ispseudoprime(eva(r)), i++); if(n==1 || n==11, return(0)); if(i==3, 1, 0)",
+        "forprime(p=1, 1e3, if(is(p), print1(p, \", \")))"
+    ],
+    "xref": [
+        "Cf. A270083. Row 3 of A317716.",
+        "Cf. primes where exactly k numbers among all circular permutations of digits are prime: A068654 (k=1), A344626 (k=2), A344628 (k=4), A344629 (k=5), A344630 (k=6), A344631 (k=7), A344632 (k=8)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, May 25 2021",
+    "references": 7,
+    "revision": 15,
+    "time": "2023-03-30T10:24:25-04:00",
+    "created": "2021-05-26T02:30:58-04:00"
+}

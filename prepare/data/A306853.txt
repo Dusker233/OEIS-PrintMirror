@@ -1,0 +1,62 @@
+{
+    "number": 306853,
+    "data": "1,2,3,4,5,6,7,8,9,261,370,407,52036,724212,223123410",
+    "name": "Positive integers equal to the permanent of the circulant matrix formed by their decimal digits.",
+    "comment": [
+        "1, 2, 3, 4, 5, 6, 7, 8, 9, 370 and 407 are also equal to the determinant of the circulant matrix formed by their decimal digits."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Permanent.html\">Permanent</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CirculantMatrix.html\">Circulant Matrix</a>"
+    ],
+    "example": [
+        "     | 2 6 1 |",
+        "perm | 1 2 6 | = 2*2*2 + 6*6*6 + 1*1*1 + 1*2*6 + 6*1*2 + 2*6*1 = 261.",
+        "     | 6 1 2 |",
+        ".",
+        "     | 2 2 3 1 2 3 4 1 0 |",
+        "     | 0 2 2 3 1 2 3 4 1 |",
+        "     | 1 0 2 2 3 1 2 3 4 |",
+        "     | 4 1 0 2 2 3 1 2 3 |",
+        "perm | 3 4 1 0 2 2 3 1 2 | = 223123410",
+        "     | 2 3 4 1 0 2 2 3 1 |",
+        "     | 1 2 3 4 1 0 2 2 3 |",
+        "     | 3 1 2 3 4 1 0 2 2 |",
+        "     | 2 3 1 2 3 4 1 0 2 |"
+    ],
+    "maple": [
+        "with(linalg): P:=proc(q) local a, b, c, d, i, j, k, n, t;",
+        "for n from 1 to q do d:=ilog10(n)+1; a:=convert(n, base, 10); c:=[];",
+        "for k from 1 to nops(a) do c:=[op(c), a[-k]]; od; t:=[op([]), c];",
+        "for k from 2 to d do b:=[op([]), c[nops(c)]];",
+        "for j from 1 to nops(c)-1 do b:=[op(b), c[j]]; od;",
+        "c:=b; t:=[op(t), c]; od; if n=permanent(t)",
+        "then print(n); fi; od; end: P(10^7);"
+    ],
+    "program": [
+        "(PARI) mpd(n) = {my(d = digits(n)); matpermanent(matrix(#d, #d, i, j, d[1+lift(Mod(j-i, #d))]));}",
+        "isok(n) = mpd(n) == n; \\\\ _Michel Marcus_, Mar 14 2019",
+        "(Python)",
+        "from sympy import Matrix",
+        "A306853_list = []",
+        "for n in range(1,10**6):",
+        "    s = [int(d) for d in str(n)]",
+        "    m = len(s)",
+        "    if n == Matrix(m, m, lambda i, j: s[(i-j) % m]).per():",
+        "        A306853_list.append(n) # _Chai Wah Wu_, Oct 18 2021"
+    ],
+    "xref": [
+        "Cf. A219324, A219327, A306662, A306593, A306714.",
+        "Up to n=110 the permanent of the circulant matrix of the digits of n is equal to A101337 but from n=111 on it can differ."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_Paolo P. Lava_, Mar 13 2019",
+    "ext": [
+        "a(15) from _Vaclav Kotesovec_, Aug 19 2021"
+    ],
+    "references": 2,
+    "revision": 29,
+    "time": "2021-10-18T18:28:42-04:00",
+    "created": "2019-03-15T07:22:39-04:00"
+}

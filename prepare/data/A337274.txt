@@ -1,0 +1,60 @@
+{
+    "number": 337274,
+    "data": "1,1,1,2,6,20,82,376,2010,11788,77816,556016,4366814,36773666,335394762,3251474116,33770466316,370474881290,4317182375632,52861107601060,683129289079532,9234228045432682,131059243976153410",
+    "name": "Number of distinct graceful labelings of trees with n vertices.",
+    "comment": [
+        "Consider vertices numbered 1 to n. Add the edges 1--n, 2--n, and either 1--(n+1-k), 2--(n+2-k), ... or k--n for 3<=k<n. (Altogether (n-1)!/2 possibilities.) If the resulting graph has no cycles, this is a graceful labeling of a tree."
+    ],
+    "link": [
+        "David Anick, <a href=\"https://doi.org/10.1016/j.dam.2015.05.031\">Counting graceful labelings of trees: a theoretical and empirical study</a>, Discrete Applied Mathematics 198 (2016), 65-81."
+    ],
+    "formula": [
+        "If n>3, a(n) = A033472(n)/2."
+    ],
+    "example": [
+        "For example, the six labelings for n=5 are:",
+        "  1--5, 2--5, 1--3, 3--4;",
+        "  1--5, 2--5, 1--3, 4--5;",
+        "  1--5, 2--5, 2--4, 2--3;",
+        "  1--5, 2--5, 2--4, 3--4;",
+        "  1--5, 2--5, 3--5, 3--4;",
+        "  1--5, 2--5, 3--5, 4--5.",
+        "There are three trees (A000055); the path P4 has two labelings, the graph K_{1,4} has one, the other (\"chair\" or \"fork\") has three."
+    ],
+    "program": [
+        "(PARI) \\\\ After David Anick's C program GLs",
+        "a337274(N) = {  if(N<4,return(1)); my (n=N-1, count, i, j, k, m, nn, n1, u, v, z, a=vectorsmall(N), r= vectorsmall(N), t=vectorsmall(N), w=vectorsmall(N,i,-1));",
+        "  nn = n-1; n1 = n+1; w[n1] = 1; w[n] = 2; t[1] = n; t[2] = nn; m = nn - 1;",
+        "  while (a[nn]==0,",
+        "    for (jj=n1-m, n,",
+        "      u = a[n1-jj]; v = u + n1 - jj;",
+        "      z = w[u+1]; while (z > 0, u = r[z]; z = w[u+1]);",
+        "      z = w[v+1]; while (z > 0, v = r[z]; z = w[v+1]);",
+        "      if (v == u, j=jj; break);",
+        "      if (v > u, w[v+1] = jj; r[jj] = u; t[jj] = v,",
+        "                 w[u+1] = jj; r[jj] = v; t[jj] = u);",
+        "      j=jj+1",
+        "    );",
+        "    if (j > n, count++; w[t[n]+1] = -1 );",
+        "    if (j >= n, a[1]++; if (a[1] < nn, m = 1; next );",
+        "                a[1] = 0; j = nn; w[t[nn]+1] = -1 );",
+        "    m = n1 - j; a[m]++;",
+        "    while (a[m]> n-m, a[m]=0; a[m++]++; w[t[n1-m]+1]=-1)",
+        "  ); count};",
+        "for(k=1,12,print1(a337274(k),\", \")) \\\\ _Hugo Pfoertner_, Sep 04 2020"
+    ],
+    "xref": [
+        "Cf. A000055, A033472."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,4",
+    "author": "_Don Knuth_, Sep 03 2020",
+    "ext": [
+        "a(18)-a(19) from _Bert Dobbelaere_, Sep 06 2020",
+        "a(20)-a(23) (from A033472) from _Joerg Arndt_, Sep 15 2020"
+    ],
+    "references": 4,
+    "revision": 40,
+    "time": "2020-09-15T06:35:03-04:00",
+    "created": "2020-09-02T14:07:11-04:00"
+}

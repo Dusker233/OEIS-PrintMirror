@@ -1,0 +1,33 @@
+{
+    "number": 352260,
+    "data": "25,52,125,152,205,215,250,251,455,502,512,520,521,545,554,1025,1052,1125,1152,1205,1215,1250,1251,1455,1502,1512,1520,1521,1545,1554,2005,2015,2050,2051,2105,2115,2150,2151,2255,2500,2501,2510,2511,2525,2552,4055,4155,4505",
+    "name": "Integers that need 2 iterations of the map x->A352172(x) to reach 1.",
+    "example": [
+        "25 -> 1000 -> 1."
+    ],
+    "mathematica": [
+        "f[n_] := (Times @@ Select[IntegerDigits[n], # > 1 &])^3; q[n_, len_] := (v = Nest[f, n, len - 1]) != 1 && f[v] == 1; Select[Range[4505], q[#, 2] &] (* _Amiram Eldar_, Mar 10 2022 *)"
+    ],
+    "program": [
+        "(PARI) f(n) = vecprod(apply(x->x^3, select(x->(x>1), digits(n)))); \\\\ A352172",
+        "isok2(n) = {for (k=1, 2, n = f(n); if ((n==1), return(k==2)););}",
+        "(Python)",
+        "from math import prod",
+        "def A352172(n): return prod(int(d)**3 for d in str(n) if d != '0')",
+        "def ok(x):",
+        "    x = A352172(x)",
+        "    return x != 1 and A352172(x) == 1",
+        "print([k for k in range(4506) if ok(k)]) # _Michael S. Branicky_, Mar 10 2022"
+    ],
+    "xref": [
+        "Cf. A352172. Subsequence of A351876.",
+        "Cf. A352261, A352262, A352263, A352264, A352265, A352266, A352267, A352268."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Mar 10 2022",
+    "references": 8,
+    "revision": 12,
+    "time": "2022-03-10T17:33:37-05:00",
+    "created": "2022-03-10T17:33:37-05:00"
+}

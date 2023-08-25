@@ -1,0 +1,43 @@
+{
+    "number": 322183,
+    "data": "3,6,13,55,3557,466333640,137637397139039684081205979563",
+    "name": "A320890 in decimal representation.",
+    "comment": [
+        "If the terms of A320890 are considered as binary representations, then this sequence expresses these terms in decimal representation."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A322183/b322183.txt\">Table of n, a(n) for n = 1..9</a>"
+    ],
+    "mathematica": [
+        "FromDigits[#,2] &/@ Nest[Append[#, Flatten[IntegerDigits[#, 2] & /@ Table[Count[#, Last@ #] &@ #[[1 ;; k]], {k, Length@ #}]] &[#[[-1]] ] ] &, {{1, 1}}, 6] (* _Amiram Eldar_, Dec 02 2018 after _Michael De Vlieger_ at A320890 *)"
+    ],
+    "program": [
+        "(Python)",
+        "A322183_list = [3]",
+        "while len(A322183_list)<10:",
+        "    a0,a1,s = 0,0,''",
+        "    for d in bin(A322183_list[-1])[2:]:",
+        "        if d == '0':",
+        "            a0 += 1",
+        "            s += bin(a0)[2:]",
+        "        else:",
+        "            a1 += 1",
+        "            s += bin(a1)[2:]",
+        "    A322183_list.append(int(s,2))",
+        "(PARI) decimal(v, base) = my(w=[]); for(k=0, #v-1, w=concat(w, v[#v-k]*base^k)); sum(i=1, #w, w[i])",
+        "replace(v) = my(w=[], zeros=0, ones=0); for(k=1, #v, if(v[k]==0, zeros++; w=concat(w, binary(zeros))); if(v[k]==1, ones++; w=concat(w, binary(ones)))); w",
+        "terms(n) = my(v=[1, 1], i=0); while(i < n, print1(decimal(v, 2), \", \"); i++; v=replace(v))",
+        "/* Print initial 7 terms as follows: */",
+        "terms(7) \\\\ _Felix Fr\u00f6hlich_, Dec 01 2018"
+    ],
+    "xref": [
+        "Cf. A320890."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Chai Wah Wu_, Nov 30 2018",
+    "references": 1,
+    "revision": 15,
+    "time": "2018-12-02T18:44:15-05:00",
+    "created": "2018-12-02T18:44:15-05:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 181198,
+    "data": "1,1,8,169,6392,352184,25097600,2152061145,212012802584,23263015359672,2781709560836960,356806123331844056,48516442013911012288,6930091952294051922080,1032505514388962439665280,159544871422153344631037625,25451354639006231998529405016",
+    "name": "Number of 4 X n matrices containing a permutation of 1..4*n in increasing order rowwise, columnwise, diagonally and (downwards) antidiagonally.",
+    "link": [
+        "Christoph Koutschan, <a href=\"/A181198/b181198.txt\">Table of n, a(n) for n = 1..100</a> (terms 1..27 from Alois P. Heinz)",
+        "Manuel Kauers and Christoph Koutschan, <a href=\"https://arxiv.org/abs/2303.02793\">Some D-finite and some Possibly D-finite Sequences in the OEIS</a>, arXiv:2303.02793 [cs.SC], 2023, pp. 38-40."
+    ],
+    "formula": [
+        "Conjectured recurrence of order 2 and degree 9: 3*(n + 1)*(2*n + 3)*(3*n + 4)*(3*n + 5)*(7*n^2 - 1)*(n + 2)^3*a(n + 2) - 8*(n + 1)*(2*n + 1)*(4*n + 3)*(4*n + 5)*(364*n^5 + 84*n^4 - 1025*n^3 - 534*n^2 + 157*n + 54)*a(n + 1) - 64*(2*n - 1)^2*(2*n + 1)*(4*n - 1)*(4*n + 1)*(4*n + 3)*(4*n + 5)*(7*n^2 + 14*n + 6)*a(n) = 0. - _Christoph Koutschan_, Feb 26 2023",
+        "Conjectured formula, solution to the above recurrence, for n > 1: a(n) = (-64)^n * (n-1) * (-1/2)_{2*n} * (1/2)_{n} / (4*(3*n)!) * (-1 + 3*Sum_{k=2..n-1} (-4)^k * (7*k^2-1) / ((k-1) * k * (k+1)^2 * (2*k-1)^2 * (2*k+1)^3) * binomial(3*k,2*k) * binomial(k+1/2,k)), where (a)_{n} is the Pochhammer symbol."
+    ],
+    "example": [
+        "Some solutions for 4 X 4:",
+        "   1  2  3  4    1  2  3  4    1  2  3  4    1  2  3  4    1  2  3  4",
+        "   5  6  7  8    5  6  7  8    5  6  7  8    5  6  7  8    5  6  7  8",
+        "   9 10 11 12    9 10 11 13    9 10 11 14    9 10 12 13    9 10 12 14",
+        "  13 14 15 16   12 14 15 16   12 13 15 16   11 14 15 16   11 13 15 16"
+    ],
+    "mathematica": [
+        "Table[",
+        " NextPartitions[n1_, n2_, n3_, n4_] :=",
+        "   If[n1 < n, f[n1 + 1, n2, n3, n4], 0] +",
+        "   If[n2 < n1 - 1 || n2 === n - 1, f[n1, n2 + 1, n3, n4], 0] +",
+        "   If[n3 < n2 - 1 || n3 === n - 1 === n2 - 1, f[n1, n2, n3 + 1, n4], 0] +",
+        "   If[n4 < n3 - 1, f[n1, n2, n3, n4 + 1], 0];",
+        " pp = f[1, 0, 0, 0];",
+        " Do[pp = Expand[pp /. f[ns__] :> NextPartitions[ns]], {4 n - 2}];",
+        " pp /. f[n, n, n, n - 1] -> 1,",
+        "{n, 20}] (* _Christoph Koutschan_, Feb 26 2023 *)"
+    ],
+    "xref": [
+        "Row 4 of A181196."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_R. H. Hardin_, Oct 10 2010",
+    "ext": [
+        "a(12)-a(27) from _Alois P. Heinz_, Jul 24 2012",
+        "a(28)-a(100) from _Christoph Koutschan_, Feb 26 2023"
+    ],
+    "references": 2,
+    "revision": 33,
+    "time": "2023-03-10T02:25:19-05:00",
+    "created": "2010-10-20T03:00:00-04:00"
+}

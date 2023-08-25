@@ -1,0 +1,55 @@
+{
+    "number": 353215,
+    "data": "0,1,2,7,14,29,50,95,164,304,475,824,1370,2297,3598,5906,9370,15586,23848,39227,61448,98114,151318,240098,378290,599105,916738,1454537,2261948,3543307,5448094,8486453,13088486,20669311,31151588,49081505,75209263,116597314",
+    "name": "a(n) is the result of n applications of the function f on n, where f(x) = floor((3*x - 1)/2) (A001651).",
+    "formula": [
+        "a(n) = f^n(n) where f(n) = floor((3*n - 1)/2) = A001651(n)."
+    ],
+    "example": [
+        "a(0) = f^0 (0) = 0 (f not applied at all);",
+        "a(1) = f^1 (1) = f(1) = floor((3*1 - 1)/2) = 1;",
+        "a(2) = f^2 (2) = f(f(2)) = floor((3*f(2) - 1)/2) = floor((3*floor((3*2 - 1)/2) - 1)/2) = 2."
+    ],
+    "maple": [
+        "a:= n-> (f-> (f@@n)(n))(t-> floor((3*t-1)/2)):",
+        "seq(a(n), n=0..20);"
+    ],
+    "program": [
+        "(C++)",
+        "#include <iostream>",
+        "using namespace std;",
+        "// Think of unsigned int as a natural number",
+        "unsigned int f(unsigned int n) {",
+        "    return (3*n - 1)/2;",
+        "}",
+        "unsigned int a(unsigned int pow, unsigned int n) {",
+        "    if (pow == 0) return n;",
+        "    else return a(pow-1, f(n));",
+        "}",
+        "int main() {",
+        "    for (unsigned int n(0); n <= 20; ++n)",
+        "        cout << a(n, n) << \" \";",
+        "    return 0;",
+        "}",
+        "(Python)",
+        "def f(n):",
+        "    return (3*n - 1)//2;",
+        "def a(pow, n):",
+        "    if (pow == 0): return n;",
+        "    else: return a(pow-1, f(n));",
+        "l = [a(n, n) for n in range(21)];",
+        "(Python)",
+        "from functools import reduce",
+        "def A353215(n): return reduce(lambda x, _ : (3*x-1)//2, range(n), n) # _Chai Wah Wu_, May 07 2022"
+    ],
+    "xref": [
+        "Cf. A001651 (step), A353220."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Yves Daaboul_, May 01 2022",
+    "references": 2,
+    "revision": 21,
+    "time": "2022-05-07T09:50:15-04:00",
+    "created": "2022-05-01T12:22:10-04:00"
+}

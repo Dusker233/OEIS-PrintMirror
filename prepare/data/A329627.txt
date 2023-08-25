@@ -1,0 +1,45 @@
+{
+    "number": 329627,
+    "data": "0,1,20,52,308,820,2868,68404,199476,723764",
+    "name": "Smallest BII-number of a clutter (connected antichain) with n edges.",
+    "comment": [
+        "A binary index of n is any position of a 1 in its reversed binary expansion. The binary indices of n are row n of A048793. We define the set-system with BII-number n to be obtained by taking the binary indices of each binary index of n. Every set-system (finite set of finite nonempty sets of positive integers) has a different BII-number. For example, 18 has reversed binary expansion (0,1,0,0,1), and since the binary indices of 2 and 5 are {2} and {1,3} respectively, the BII-number of {{2},{1,3}} is 18. Elements of a set-system are sometimes called edges.",
+        "A set-system is an antichain if no edge is a proper subset of any other.",
+        "For n > 1, a(n) appears to be the number whose binary indices are the first n terms of A018900."
+    ],
+    "example": [
+        "The sequence of terms together with their corresponding set-systems begins:",
+        "       0: {}",
+        "       1: {{1}}",
+        "      20: {{1,2},{1,3}}",
+        "      52: {{1,2},{1,3},{2,3}}",
+        "     308: {{1,2},{1,3},{2,3},{1,4}}",
+        "     820: {{1,2},{1,3},{2,3},{1,4},{2,4}}",
+        "    2868: {{1,2},{1,3},{2,3},{1,4},{2,4},{3,4}}",
+        "   68404: {{1,2},{1,3},{2,3},{1,4},{2,4},{3,4},{1,5}}",
+        "  199476: {{1,2},{1,3},{2,3},{1,4},{2,4},{3,4},{1,5},{2,5}}",
+        "  723764: {{1,2},{1,3},{2,3},{1,4},{2,4},{3,4},{1,5},{2,5},{3,5}}"
+    ],
+    "mathematica": [
+        "bpe[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "stableQ[u_,Q_]:=!Apply[Or,Outer[#1=!=#2&&Q[#1,#2]&,u,u,1],{0,1}];",
+        "csm[s_]:=With[{c=Select[Subsets[Range[Length[s]],{2}],Length[Intersection@@s[[#]]]>0&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "First/@GatherBy[Select[Range[0,10000],stableQ[bpe/@bpe[#]]&&Length[csm[bpe/@bpe[#]]]<=1&],Length[bpe[#]]&]"
+    ],
+    "xref": [
+        "The version for MM-numbers is A329555.",
+        "BII-numbers of clutters are A326750.",
+        "Clutters of sets are counted by A048143.",
+        "Minimum BII-numbers of connected set-systems are A329625.",
+        "Minimum BII-numbers of antichains are A329626.",
+        "MM-numbers of connected weak antichains of multisets are A329559.",
+        "Cf. A048793, A070939, A072639, A320275, A322113, A326031, A326704, A326753, A329628, A329632."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Nov 28 2019",
+    "references": 3,
+    "revision": 11,
+    "time": "2020-01-06T18:09:45-05:00",
+    "created": "2019-12-05T17:41:17-05:00"
+}

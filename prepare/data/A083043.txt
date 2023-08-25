@@ -1,0 +1,50 @@
+{
+    "number": 83043,
+    "data": "1,21,419,8359,166761,3326861,66370459,1324082319,26415275921,526981436101,10513213446099,209737287485879,4184232536271481,83474913437943741,1665314036222603339,33222805811014123039",
+    "name": "Integers y such that 11*x^2 - 9*y^2 = 2 for some integer x.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A083043/b083043.txt\">Table of n, a(n) for n = 1..750</a>",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "<a href=\"/index/Tu#2wis\">Index entries for two-way infinite sequences</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (20,-1)."
+    ],
+    "formula": [
+        "G.f.: x*(1+x)/(1-20*x+x^2).",
+        "a(n) = 20*a(n-1) - a(n-2).",
+        "a(1-n) = -a(n).",
+        "11*A075839(n)^2 - 9*a(n)^2 = 2.",
+        "a(n+1) = 10*a(n) + sqrt(99*a(n)^2 + 22). - _Richard Choulet_, Sep 27 2007",
+        "a(n) = ((3 + sqrt(11))*(10 + 3*sqrt(11))^(n-1) + (3 - sqrt(11))*(10 - 3*sqrt(11))^(n-1))/6. - _G. C. Greubel_, Dec 06 2019",
+        "E.g.f.: 1 + (1/3)*exp(10*x)*(-3*cosh(3*sqrt(11)*x) + sqrt(11)*sinh(3*sqrt(11)*x)). - _Stefano Spezia_, Dec 06 2019 after _G. C. Greubel_"
+    ],
+    "maple": [
+        "seq(coeff(series( x*(1+x)/(1-20*x+x^2), x, n+1), x, n), n = 1..20); # _G. C. Greubel_, Dec 06 2019"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{20,-1},{1,21},20] (* _Harvey P. Dale_, Jun 02 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=subst(poltchebi(n+1)-poltchebi(n),x,10)/9",
+        "(Magma) I:=[1,21]; [n le 2 select I[n] else 20*Self(n-1) - Self(n-2): n in [1..20]]; // _G. C. Greubel_, Dec 06 2019",
+        "(Sage)",
+        "def A083043_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( x*(1+x)/(1-20*x+x^2) ).list()",
+        "a=A083043_list(20); a[1:] # _G. C. Greubel_, Dec 06 2019",
+        "(GAP) a:=[1,21];; for n in [3..20] do a[n]:=20*a[n-1]-a[n-2]; od; a; # _G. C. Greubel_, Dec 06 2019"
+    ],
+    "xref": [
+        "Cf. A075839, A075843."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Michael Somos_, Apr 17 2003",
+    "ext": [
+        "Corrected by _T. D. Noe_, Nov 07 2006",
+        "Offset changed to 1 by _G. C. Greubel_, Dec 06 2019"
+    ],
+    "references": 5,
+    "revision": 29,
+    "time": "2022-09-08T08:45:10-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

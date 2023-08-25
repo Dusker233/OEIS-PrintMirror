@@ -1,0 +1,47 @@
+{
+    "number": 321146,
+    "data": "4900,14700,53900,63700,83300,93100,112700,142100,151900,161700,181300,191100,200900,210700,230300,249900,259700,279300,289100,298900,328300,338100,347900,357700,387100,406700,426300,436100,455700,475300,494900,504700,524300",
+    "name": "Exponential weird numbers: numbers that are exponential abundant (A129575) but not exponential pseudoperfect (A318100).",
+    "link": [
+        "Amiram Eldar, <a href=\"/A321146/b321146.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..1000 from Robert Israel)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/e-Divisor.html\">e-Divisor</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/e-PerfectNumber.html\">e-Perfect Number</a>."
+    ],
+    "example": [
+        "4900 is in the sequence since its proper exponential divisors, {70, 140, 350, 490, 700, 980, 2450} sum to 5180 > 4900, yet no subset of its divisors sums to 4900."
+    ],
+    "maple": [
+        "filter:= proc(n)",
+        "  local L,m,P,i,j,T,S,t,v;",
+        "  L:= ifactors(n)[2];",
+        "  m:= nops(L);",
+        "  P:= map(t -> numtheory:-divisors(t[2]),L);",
+        "  if mul(add(L[i][1]^j, j=P[i]),i=1..m) <= 2*n then return false fi;",
+        "  T:= combinat:-cartprod(P);",
+        "  S:= {0}:",
+        "  while not T[finished] do",
+        "    t:= T:-nextvalue();",
+        "    v:= mul(L[i][1]^t[i],i=1..m);",
+        "    if v = n then next fi;",
+        "    if member(n-v,S) then return false fi;",
+        "    S:= S union select(`<=`,map(`+`,S,v),n);",
+        "  od;",
+        "  true",
+        "end proc:",
+        "select(filter, [$1..10^6]); # _Robert Israel_, Feb 19 2019"
+    ],
+    "mathematica": [
+        "dQ[n_, m_] := (n>0&&m>0 &&Divisible[n, m]); expDivQ[n_, d_] := Module[ {ft=FactorInteger[n]}, And@@MapThread[dQ, {ft[[;; , 2]], IntegerExponent[ d, ft[[;; , 1]]]} ]]; eDivs[n_] := Module[ {d=Rest[Divisors[n]]}, Select[ d, expDivQ[n, #]&] ]; esigma[1]=1; esigma[n_] := Total@eDivs[n]; eAbundantQ[n_] := esigma[n] > 2 n; a = {}; n = 0; While[Length[a] < 30, n++; If[!eAbundantQ[n], Continue[]]; d = Most[eDivs[n]]; c = SeriesCoefficient[Series[Product[1 + x^d[[i]], {i, Length[d]}], {x, 0, n}], n]; If[c < 1, AppendTo[a, n]]]; a"
+    ],
+    "xref": [
+        "The exponential version of A006037.",
+        "Cf. A129575, A318100."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Oct 28 2018",
+    "references": 7,
+    "revision": 20,
+    "time": "2023-03-27T03:38:28-04:00",
+    "created": "2018-11-20T05:19:26-05:00"
+}

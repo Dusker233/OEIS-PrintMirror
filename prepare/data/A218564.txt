@@ -1,0 +1,39 @@
+{
+    "number": 218564,
+    "data": "1068,2057,4193,5182,7318,8307,10443,11432,13568,14557,16693,17682,19818,20807,22943,23932,26068,27057,29193,30182,32318,33307,35443,36432,38568,39557,41693,42682,44818,45807,47943,48932,51068,52057,54193,55182,57318,58307",
+    "name": "Numbers n such that n^2 + 1 is divisible by a 5th power.",
+    "comment": [
+        "For each prime p == 1 (mod 4), there are two values of x (mod p^5) that solve x^2 + 1 == 0 (mod p^5), and then x + k*p^5 is in the sequence for every k. Thus the asymptotic density of this sequence should be 1 - Product_p (1 - 2/p^5), where the product is over all primes p == 1 (mod 4). - _Robert Israel_, Sep 04 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A218564/b218564.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "1068 is in the sequence because 1068^2+1 = 1140625 = 5^6*73;",
+        "143044 is in the sequence because 143044^2+1 = 20461585937 = 13^5*55109;",
+        "390112 is in the sequence because 390112^2+1 = 152187372545 = 5*13*17^6*97."
+    ],
+    "maple": [
+        "N:= 10^5: # to get all terms <= N",
+        "P:= select(isprime,[seq(i,i=5..floor((N^2+1)^(1/5)),4)]):",
+        "g:= proc(x,r,N) local t; t:= rhs(op(x)); seq(t+r*k,k=0..(N-t)/r) end proc:",
+        "R:= `union`(seq(map(g, {msolve(n^2+1,p^5)},p^5,N),p=P)):",
+        "sort(convert(R,list)); # _Robert Israel_, Sep 04 2018"
+    ],
+    "mathematica": [
+        "Select[Range[2,20000],Max[Transpose[FactorInteger[#^2+1]][[2]]]>4&]"
+    ],
+    "program": [
+        "(PARI) isok(n) = vecmax(factor(n^2+1)[,2]) >= 5; \\\\ _Michel Marcus_, Sep 04 2018"
+    ],
+    "xref": [
+        "Cf. A002522, A049532, A034939, A218562, A218563."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Nov 02 2012",
+    "references": 3,
+    "revision": 17,
+    "time": "2018-09-04T02:55:31-04:00",
+    "created": "2012-11-02T17:40:11-04:00"
+}

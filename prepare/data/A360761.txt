@@ -1,0 +1,48 @@
+{
+    "number": 360761,
+    "data": "31,601,2593,20478961,204700049,668731841",
+    "name": "Primes p that divide both 3^k-2 and 5^k-1 for some k.",
+    "comment": [
+        "If prime p divides 3^k-2 and 5^k-1, then p divides 3^j-2 and 5^j-1 for all j such that j == k (mod p-1).",
+        "Primes p such that the equation 3^(x*A070677(p)) == 2 (mod p) has a solution.",
+        "Values of k: 24, 108, 64, 376020, 67141466, 487515840, ... - _Chai Wah Wu_, Feb 24 2023"
+    ],
+    "example": [
+        "a(3) = 2593 is a term because 2593 is prime, 3^64 == 2 (mod 2593) and 5^64 == 1 (mod 2593)."
+    ],
+    "maple": [
+        "R:= NULL: count:= 0: p:= 5: with(numtheory):",
+        "while count < 4 do",
+        "  p:= nextprime(p);",
+        "if  mlog(2,3 &^ order(5,p) mod p, p) <> FAIL then R:= R,p; count:= count+1 fi",
+        "od:",
+        "R;"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import discrete_log, nextprime, n_order",
+        "def A360761_gen(): # generator of terms",
+        "    p = 5",
+        "    while True:",
+        "        try:",
+        "            discrete_log(p:=nextprime(p),2,pow(3,n_order(5,p),p))",
+        "        except:",
+        "            continue",
+        "        yield p",
+        "A360761_list = list(islice(A360761_gen(),4)) # _Chai Wah Wu_, Feb 23 2023"
+    ],
+    "xref": [
+        "Cf. A070677."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Feb 19 2023",
+    "ext": [
+        "a(5)-a(6) from _Chai Wah Wu_, Feb 23 2023"
+    ],
+    "references": 0,
+    "revision": 23,
+    "time": "2023-02-24T19:32:27-05:00",
+    "created": "2023-02-23T02:00:56-05:00"
+}

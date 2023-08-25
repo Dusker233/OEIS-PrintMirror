@@ -1,0 +1,36 @@
+{
+    "number": 317794,
+    "data": "1,1,2,8,180,612032,200253854316544,263735716028826427534807159537664,5609038300883759793482640992086670066760184863720423808367168537493504",
+    "name": "Number of non-isomorphic set-systems on n vertices with no singletons.",
+    "link": [
+        "Lo\u00efc Foissy, <a href=\"https://arxiv.org/abs/2304.00810\">Hopf algebraic structures on hypergraphs and multi-complexes</a>, arXiv:2304.00810 [math.CO], 2023."
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(3) = 8 set-systems:",
+        "  0,",
+        "  {12}, {123},",
+        "  {12}{13}, {12}{123},",
+        "  {12}{13}{23}, {12}{13}{123},",
+        "  {12}{13}{23}{123}."
+    ],
+    "mathematica": [
+        "sysnorm[{}] := {};sysnorm[m_]:=If[Union@@m!=Range[Max@@Flatten[m]],sysnorm[m/.Rule@@@Table[{(Union@@m)[[i]],i},{i,Length[Union@@m]}]],First[Sort[sysnorm[m,1]]]];sysnorm[m_,aft_]:=If[Length[Union@@m]<=aft,{m},With[{mx=Table[Count[m,i,{2}],{i,Select[Union@@m,#>=aft&]}]},Union@@(sysnorm[#,aft+1]&/@Union[Table[Map[Sort,m/.{par+aft-1->aft,aft->par+aft-1},{0,1}],{par,First/@Position[mx,Max[mx]]}]])]];",
+        "Table[Length[Union[sysnorm/@Select[Subsets[Select[Subsets[Range[n]],Length[#]>1&]],Or[Length[#]==0,Union@@#==Range[Max@@Union@@#]]&]]],{n,4}]",
+        "(* second program *)",
+        "Table[Sum[2^PermutationCycles[Ordering[Map[Sort,Subsets[Range[n],{2,n}]/.Rule@@@Table[{i,prm[[i]]},{i,n}],{1}]],Length]/n!,{prm,Permutations[Range[n]]}],{n,6}] (* _Gus Wiseman_, Dec 12 2018 *)"
+    ],
+    "xref": [
+        "The spanning case is A317795.",
+        "Cf. A000088, A000612, A003180, A007716, A055621, A283877, A300913, A306005, A317533, A317757, A319876."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Aug 07 2018",
+    "ext": [
+        "More terms from _Gus Wiseman_, Dec 12 2018"
+    ],
+    "references": 15,
+    "revision": 15,
+    "time": "2023-04-07T10:51:05-04:00",
+    "created": "2018-08-08T07:54:03-04:00"
+}

@@ -1,0 +1,55 @@
+{
+    "number": 305992,
+    "data": "1,2,4,8,15,24,32,48,62,80,101,122,147,171,202,230,267,299,339,377,418,464,509,559,611,664,719,776,836,896,960,1024,1098,1167,1240,1315,1392,1471,1553,1642,1724,1816,1906,1999,2094,2190,2290,2392,2499,2599,2713,2818,2937,3048,3166,3288",
+    "name": "The sequence whose indicator function is I in conjectured formula A300997(n) = 2*n - Sum_{k=1..n} I(k), as long as the conjecture holds.",
+    "comment": [
+        "A300997(n) is believed to be equal to 2*n - Sum_{k=1..n} I(k), where I is the indicator function of some other sequence -- let it be this sequence. This sequence is finite if the conjecture is false."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Indicator_function\">Indicator function</a>"
+    ],
+    "program": [
+        "(C)",
+        "#include <stdio.h>",
+        "#include <string.h>",
+        "#define N 10000",
+        "void e(int *t, int *s) {",
+        "  int T[N], i = 0; memset(T, 0, sizeof(T));",
+        "  while (i < *s) {",
+        "    int f = t[i] / 2;",
+        "    T[i] += f + (t[i] % 2);",
+        "    T[++ i] += f;",
+        "  }",
+        "  if (T[*s] != 0) { *s += 1; }",
+        "  for (i = 0; i < *s; i ++) { t[i] = T[i]; }",
+        "}",
+        "int f(int n) {",
+        "  int t[N], s = 1, i = 0; t[0] = n;",
+        "  while (s != n) { i ++; e(t, &s); }",
+        "  return 2 * n - i;",
+        "}",
+        "int main() {",
+        "  int n, last = 1, current;",
+        "  for (n = 1; n <= N; n ++) {",
+        "    current = f(n);",
+        "    switch (current - last) {",
+        "    case 0: break;",
+        "    case 1: printf(\"%d, \", n); fflush(stdout); break;",
+        "    default: fprintf(stderr, \"CONJECTURE IS FALSE\"); return;",
+        "    }",
+        "    last = current;",
+        "  }",
+        "  printf(\"\\n\");",
+        "}"
+    ],
+    "xref": [
+        "Cf. A300997."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Luc Rousseau_, Jun 16 2018",
+    "references": 1,
+    "revision": 8,
+    "time": "2019-10-09T16:28:38-04:00",
+    "created": "2018-07-03T19:02:46-04:00"
+}

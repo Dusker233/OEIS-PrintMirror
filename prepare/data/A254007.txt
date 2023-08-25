@@ -1,0 +1,51 @@
+{
+    "number": 254007,
+    "data": "1,1,2,4,7,13,22,40,66,118,192,338,546,948,1526,2618,4208,7146,11482,19332,31070,51938,83520,138786,223330,369284,594662,979306,1578064,2590138,4176394,6836164,11028942,18012562",
+    "name": "Cardinality of the set of equivalence classes of the set X_n of finite integer sequences {x_1 = 0, x_2, ..., x_n} satisfying |x_k - x_{k+1}| = 1, where two such sequences are deemed equivalent if they are permutations of each other.",
+    "formula": [
+        "G.f.: ((1-x)^3 * (1+x)^2 * (1+x-x^2)) / ((1-x-x^2) * (1-2*x^2)^2) (conjectured). - _David Radcliffe_, May 03 2015"
+    ],
+    "example": [
+        "a(2)=2: {0,1}, {0,-1}.",
+        "a(3)=4: {0,1,2}, {0,1,0}, {0,-1,0}, {0,-1,-2}.",
+        "a(4)=7: There are two choices for each successive x_k, but {0,1,0,-1} and {0,-1,0,1} are equivalent, so a(4)=7 rather than 8.",
+        "a(5)=13: Now there are 3 pairs of equivalences, namely (writing a for -1, b for -2) 01210 ~ 01012, 010a0 ~ 0a010, 0aba0 ~ 0a0ab. So a(5) = 16 - 3 = 13. - _N. J. A. Sloane_, May 03 2015"
+    ],
+    "program": [
+        "(Python)",
+        "def generate_paths(n):",
+        "    if n == 0:",
+        "        yield (), 0",
+        "    else:",
+        "        results = set()",
+        "        for p, last in generate_paths(n-1):",
+        "            q = tuple(sorted(p + (last,)))",
+        "            results.add((q, last+1))",
+        "            results.add((q, last-1))",
+        "        for p, last in results:",
+        "            yield p, last",
+        "def count_paths(n):",
+        "    results = set()",
+        "    for p, last in generate_paths(n):",
+        "        q = tuple(sorted(p + (last,)))",
+        "        if not (q in results):",
+        "            results.add(q)",
+        "    return len(results)",
+        "print([count_paths(n) for n in range(15)])",
+        "(Python)",
+        "from itertools import product, accumulate",
+        "def A254007(n): return 1 if n == 0 else len(set(tuple(sorted(accumulate(d))) for d in product((-1,1),repeat=n-1))) # _Chai Wah Wu_, Nov 13 2021"
+    ],
+    "keyword": "nonn,nice,more",
+    "offset": "0,3",
+    "author": "_John J. Harrison_, May 02 2015",
+    "ext": [
+        "More terms from _David Radcliffe_, May 03 2015",
+        "a(29)-a(33) from _Bert Dobbelaere_, Dec 31 2018",
+        "a(0) = 1 prepended by _Joerg Arndt_, Jan 01 2019"
+    ],
+    "references": 1,
+    "revision": 73,
+    "time": "2021-11-14T00:44:06-05:00",
+    "created": "2015-05-02T22:52:06-04:00"
+}

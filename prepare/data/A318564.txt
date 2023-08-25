@@ -1,0 +1,40 @@
+{
+    "number": 318564,
+    "data": "1,6,36,274,2408,24440,279172,3542798,49354816,747851112,12231881948,214593346534,4016624367288,79843503990710,1678916979373760,37215518578700028,866953456654946948,21167221410812128266,540346299720320080828,14390314687100383124540,399023209689817997883900",
+    "name": "Number of multiset partitions of multiset partitions of normal multisets of size n.",
+    "comment": [
+        "A multiset is normal if it spans an initial interval of positive integers."
+    ],
+    "example": [
+        "The a(2) = 6 multiset partitions of multiset partitions:",
+        "  {{{1,1}}}",
+        "  {{{1,2}}}",
+        "  {{{1},{1}}}",
+        "  {{{1},{2}}}",
+        "  {{{1}},{{1}}}",
+        "  {{{1}},{{2}}}"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "Table[Sum[Length[mps[m]],{m,Join@@mps/@allnorm[n]}],{n,6}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See links in A339645 for combinatorial species functions.",
+        "seq(n)={my(A=symGroupSeries(n)); NormalLabelingsSeq(sExp(sExp(A))-1)} \\\\ _Andrew Howroyd_, Jan 01 2021"
+    ],
+    "xref": [
+        "Cf. A001970, A007716, A050336, A255906, A269134, A317533, A317791, A318566."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Aug 29 2018",
+    "ext": [
+        "Terms a(8) and beyond from _Andrew Howroyd_, Jan 01 2021"
+    ],
+    "references": 16,
+    "revision": 8,
+    "time": "2021-01-01T14:22:04-05:00",
+    "created": "2018-08-29T16:50:40-04:00"
+}

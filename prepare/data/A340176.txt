@@ -1,0 +1,79 @@
+{
+    "number": 340176,
+    "data": "1,1,4,208,121856,772189440,51989627289600,36837279603595907072,273129993621426778551615488,21114078836429317912110529666154496,16975032309392309949804839529585109326888960",
+    "name": "Number of spanning trees in the halved Aztec diamond HMD_n.",
+    "comment": [
+        "                                  *---*",
+        "                                  |   |",
+        "              *---*           *---*---*---*",
+        "              |   |           |   |   |   |",
+        "  *---*   *---*---*---*   *---*---*---*---*---*",
+        "  HMD_1       HMD_2               HMD_3",
+        "-------------------------------------------------",
+        "              *---*",
+        "              |   |",
+        "          *---*---*---*",
+        "          |   |   |   |",
+        "      *---*---*---*---*---*",
+        "      |   |   |   |   |   |",
+        "  *---*---*---*---*---*---*---*",
+        "              HMD_4"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A340176/b340176.txt\">Table of n, a(n) for n = 0..45</a>",
+        "Mihai Ciucu, <a href=\"https://arxiv.org/abs/0710.4500\">Symmetry classes of spanning trees of Aztec diamonds and perfect matchings of odd squares with a unit hole</a>, arXiv:0710.4500 [math.CO], 2007. See Corollary 3.6.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Chebyshev_polynomials\">Chebyshev polynomials</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Resultant\">Resultant</a>"
+    ],
+    "formula": [
+        "a(n) = Product_{1<=j<k<=2*n-1 and j+k<=2*n-1} (4 - 4*cos(j*Pi/(2*n))*cos(k*Pi/(2*n))).",
+        "a(n) = 2^(n-1) * A007726(n) * A334089(n) = sqrt(A007341(n) * A334088(n) / n) for n > 0.",
+        "a(n) = 4^(n-1) * A340139(n) = 4^((n-1)^2) * Product_{1<=j<k<=n-1} (1 - cos(j*Pi/(2*n))^2 * cos(k*Pi/(2*n))^2) for n > 0. - _Seiichi Manyama_, Jan 02 2021",
+        "a(n) ~ sqrt(Gamma(1/4)) * exp(4*G*n^2/Pi) / (Pi^(3/8) * n^(3/4) * 2^(n - 1/4) * (1 + sqrt(2))^n), where G is Catalan's constant A006752. - _Vaclav Kotesovec_, Jan 05 2021"
+    ],
+    "example": [
+        "a(2) = 4;",
+        "      *   *           *---*           *---*           *---*",
+        "      |   |               |           |               |   |",
+        "  *---*---*---*   *---*---*---*   *---*---*---*   *---*   *---*"
+    ],
+    "program": [
+        "(PARI) default(realprecision, 120);",
+        "{a(n) = round(prod(j=1, 2*n-1, prod(k=j+1, 2*n-1-j, 4-4*cos(j*Pi/(2*n))*cos(k*Pi/(2*n)))))}",
+        "(PARI) {a007341(n) = polresultant(polchebyshev(n-1, 2, x/2), polchebyshev(n-1, 2, (4-x)/2))};",
+        "{a334088(n) = sqrtint(polresultant(polchebyshev(2*n, 1, x/2), polchebyshev(2*n, 1, I*x/2)))};",
+        "{a(n) = if(n==0, 1, sqrtint(a007341(n)*a334088(n)/n))}",
+        "(PARI) default(realprecision, 120);",
+        "{a(n) = if(n==0, 1, round(4^((n-1)^2)*prod(j=1, n-1, prod(k=j+1, n-1, 1-(cos(j*Pi/(2*n))*cos(k*Pi/(2*n)))^2))))} \\\\ _Seiichi Manyama_, Jan 02 2021",
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_HMD(n):",
+        "    s = 1",
+        "    grids = []",
+        "    for i in range(2 * n, 0, -2):",
+        "        for j in range(i - 2):",
+        "            a, b, c = s + j, s + j + 1, s + i + j",
+        "            grids.extend([(a, b), (b, c)])",
+        "        grids.append((s + i - 2, s + i - 1))",
+        "        s += i",
+        "    return grids",
+        "def A340176(n):",
+        "    if n == 0: return 1",
+        "    universe = make_HMD(n)",
+        "    GraphSet.set_universe(universe)",
+        "    spanning_trees = GraphSet.trees(is_spanning=True)",
+        "    return spanning_trees.len()",
+        "print([A340176(n) for n in range(7)])"
+    ],
+    "xref": [
+        "Cf. A007341, A007725, A007726, A334088, A334089, A340139, A340166, A340185 (halved Aztec diamond HOD_n)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Dec 31 2020",
+    "references": 3,
+    "revision": 67,
+    "time": "2023-02-28T23:47:25-05:00",
+    "created": "2021-01-01T11:57:08-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 307768,
+    "data": "0,0,2,4,10,20,44,88,186,372,772,1544,3172,6344,12952,25904,52666,105332,213524,427048,863820,1727640,3488872,6977744,14073060,28146120,56708264,113416528,228318856,456637712,918624304,1837248608,3693886906,7387773812,14846262964,29692525928",
+    "name": "Number of n-step random walks on a line starting from the origin and returning to it at least once.",
+    "comment": [
+        "a(n)/2^n tends to 1 as n goes to infinity; this means that on the line any random walk returns sooner or later to its starting point with a probability 1.",
+        "a(n) is also the number of heads-or-tails games of length n during which at some point there are as many heads as tails."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A307768/b307768.txt\">Table of n, a(n) for n = 0..3318</a>",
+        "Monique Laurent, Sven Polak, and Luis Felipe Vargas, <a href=\"https://arxiv.org/abs/2302.08886\">Semidefinite approximations for bicliques and biindependent pairs</a>, arXiv:2302.08886 [math.CO], 2023."
+    ],
+    "formula": [
+        "a(n) = 2^n - A063886(n).",
+        "a(n+1) = 2*A045621(n) = 2*(2^n - binomial(n,floor(n/2))).",
+        "a(2n) = 2^(2n) - binomial(2n,n); a(2n+1) = 2*a(2n).",
+        "G.f.: (1-sqrt(1-4*x^2))/(1-2*x). - _Alois P. Heinz_, May 05 2019",
+        "n*(a(n)-2*a(n-1)) - 4*(n-3)*(a(n-2)-2*a(n-3)) = 0. - _Robert Israel_, May 06 2019",
+        "a(2n+2) - 2*a(2n+1) = A284016(n) = 2*Catalan(n). - _Robert FERREOL_, Aug 26 2019"
+    ],
+    "example": [
+        "The a(3)=4 three-step walks returning to 0 are [0, -1, 0, -1], [0, -1, 0, 1], [0, 1, 0, -1], [0, 1, 0, 1].",
+        "The a(4)=10 three-step walks returning to 0 are [0, -1, -2, -1, 0], [0, -1, 0, -1, -2], [0, -1, 0, -1, 0], [0, -1, 0, 1, 0], [0, -1, 0, 1, 2], [0, 1, 0, -1, -2], [0, 1, 0, -1, 0], [0, 1, 0, 1, 0], [0, 1, 0, 1, 2], [0, 1, 2, 1, 0]."
+    ],
+    "maple": [
+        "b:=n->piecewise(n mod 2 = 0,binomial(n,n/2),2*binomial(n-1,(n-1)/2)):",
+        "seq(2^n-b(n),n=0..20);"
+    ],
+    "mathematica": [
+        "a[n_] := If[n == 0, 0, 2^n - 2*Binomial[n-1, Floor[(n-1)/2]]];",
+        "Array[a, 36, 0] (* _Jean-Fran\u00e7ois Alcover_, May 05 2019 *)"
+    ],
+    "xref": [
+        "Cf. A063886, A045621."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,3",
+    "author": "_Robert FERREOL_, Apr 27 2019",
+    "references": 2,
+    "revision": 50,
+    "time": "2023-02-23T15:30:36-05:00",
+    "created": "2019-05-06T14:34:37-04:00"
+}

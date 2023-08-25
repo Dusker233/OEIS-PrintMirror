@@ -1,0 +1,39 @@
+{
+    "number": 349987,
+    "data": "147,903,1911,3667,3913,4627,5187,8103,10137,11613,12999,13117,13467,14313,16023,16887,18723,19047,19747,20397,22197,23107,24307,25833,28227,30457,30847,31827,32403,37947,38703,39819,45163,46543,50407,57603,58813,61383,63147,68367,68403,70707,71337,74973",
+    "name": "Numbers that can be represented in more than one way as p^2+p*q+q^2 with p and q primes, p<=q.",
+    "link": [
+        "Robert Israel, <a href=\"/A349987/b349987.txt\">Table of n, a(n) for n = 1..2500</a>"
+    ],
+    "example": [
+        "a(3) = 1911 is a term because 1911 = 5^2+5*41+41^2 = 19^2+19*31+31^2 where 5, 41, 19 and 31 are primes."
+    ],
+    "maple": [
+        "N:= 10^6: # for terms <= N",
+        "P:= select(isprime, [2,seq(i,i=3..floor(sqrt(N)),2)]):",
+        "nP:= nops(P):",
+        "S:= {}: T:= {}:",
+        "for i from 1 to nP do",
+        "  for j from 1 to i do",
+        "    x:= P[i]^2 + P[i]*P[j]+P[j]^2;",
+        "    if x > N then break fi;",
+        "    if member(x,S) then T:= T union {x} fi;",
+        "    S:= S union {x};",
+        "od od:",
+        "sort(convert(T,list));"
+    ],
+    "mathematica": [
+        "Do[If[Total@Boole[And@@@PrimeQ[{p,q}/.Solve[p^2+p*q+q^2==k&&p>1&&p<=q,{p,q},Integers]]]>1,Print@k],{k,10^6}] (* _Giorgos Kalogeropoulos_, Jan 09 2022 *)"
+    ],
+    "xref": [
+        "Subsequence of A024614.",
+        "Cf. A349986."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 09 2022",
+    "references": 3,
+    "revision": 29,
+    "time": "2022-01-10T12:57:36-05:00",
+    "created": "2022-01-09T22:48:04-05:00"
+}

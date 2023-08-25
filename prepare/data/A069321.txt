@@ -1,0 +1,79 @@
+{
+    "number": 69321,
+    "data": "1,1,5,31,233,2071,21305,249271,3270713,47580151,760192505,13234467511,249383390393,5057242311031,109820924003705,2542685745501751,62527556173577273,1627581948113854711,44708026328035782905,1292443104462527895991,39223568601129844839353",
+    "name": "Stirling transform of A001563: a(0) = 1 and a(n) = Sum_{k=1..n} Stirling2(n,k)*k*k! for n >= 1.",
+    "comment": [
+        "The number of compatible bipartitions of a set of cardinality n for which at least one subset is not underlined. E.g., for n=2 there are 5 such bipartitions: {1 2}, {1}{2}, {2}{1}, _{1}_{2}, _{2}_{1}. A005649 is the number of bipartitions of a set of cardinality n. A000670 is the number of bipartitions of a set of cardinality n with none of the subsets underlined. - _Kyle Petersen_, Mar 31 2005",
+        "a(n) is the cardinality of the image set summed over \"all surjections\". All surjections means: onto functions f:{1, 2, ..., n} -> {1, 2, ..., k} for every k, 1 <= k <= n.  a(n) = Sum_{k=1..n} A019538(n, k)*k. - _Geoffrey Critzer_, Nov 12 2012",
+        "From _Gus Wiseman_, Jan 15 2022: (Start)",
+        "For n > 1, also the number of finite sequences of length n + 1 covering an initial interval of positive integers with at least two adjacent equal parts, or non-anti-run patterns, ranked by the intersection of A348612 and A333217. The complement is counted by A005649. For example, the a(3) = 31 patterns, grouped by sum, are:",
+        "  (1111)  (1222)  (1122)  (1112)  (1233)  (1223)",
+        "          (2122)  (1221)  (1121)  (1332)  (1322)",
+        "          (2212)  (2112)  (1211)  (2133)  (2213)",
+        "          (2221)  (2211)  (2111)  (2331)  (2231)",
+        "          (1123)                  (3312)  (3122)",
+        "          (1132)                  (3321)  (3221)",
+        "          (2113)",
+        "          (2311)",
+        "          (3112)",
+        "          (3211)",
+        "Also the number of ordered set partitions of {1,...,n + 1} with two successive vertices together in some block.",
+        "(End)"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A069321/b069321.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Benoit Cloitre, <a href=\"https://web.archive.org/web/20150418172931/http://bcmathematics.monsite-orange.fr/FractalOrderOfPrimes.pdf\">On the fractal behavior of primes</a>, 2011. [internet archive]",
+        "Benoit Cloitre, <a href=\"https://www.docsity.com/pt/fractal-order-of-primes/4838318/\">On the fractal behavior of primes</a>, 2011.",
+        "D. Foata and D. Zeilberger, <a href=\"http://arxiv.org/abs/math/9406220\">The Graphical Major Index</a>, arXiv:math/9406220 [math.CO], 1994.",
+        "D. Foata and D. Zeilberger, <a href=\"http://dx.doi.org/10.1016/0377-0427(95)00254-5\">Graphical major indices</a>, J. Comput. Appl. Math. 68 (1996), no. 1-2, 79-101."
+    ],
+    "formula": [
+        "Representation as an infinite series, in Maple notation: a(0) = 1 and a(n) = Sum_{k>=2} (k^n*(k-1)/(2^k))/4 for n >= 1. This is a Dobinski-type summation formula.",
+        "E.g.f.: (exp(x) - 1)/((2 - exp(x))^2).",
+        "a(n) = (1/2)*(A000670(n+1) - A000670(n)).",
+        "O.g.f.: 1 + Sum_{n >= 1} (2*n-1)!/(n-1)! * x^n / (Product_{k=1..n} (1 + (n + k - 1)*x)). - _Paul D. Hanna_, Oct 28 2013",
+        "a(n) = (A000629(n+1) - A000629(n))/4. - _Benoit Cloitre_, Oct 20 2002",
+        "a(n) = A232472(n-1)/2. - _Vincenzo Librandi_, Jan 03 2016",
+        "a(n) ~ n! * n / (4 * (log(2))^(n+2)). - _Vaclav Kotesovec_, Jul 01 2018",
+        "a(n > 0) = A000607(n + 1) - A005649(n). - _Gus Wiseman_, Jan 15 2022"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1,",
+        "      add(b(n-j)*binomial(n, j), j=1..n))",
+        "    end:",
+        "a:= n-> `if`(n=0, 2, b(n+1)-b(n))/2:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Feb 02 2018"
+    ],
+    "mathematica": [
+        "max = 20; t = Sum[n^(n - 1)x^n/n!, {n, 1, max}]; Range[0, max]!CoefficientList[Series[D[1/(1 - y(Exp[x] - 1)), y] /. y -> 1, {x, 0, max}], x] (* _Geoffrey Critzer_, Nov 12 2012 *)",
+        "Prepend[Table[Sum[StirlingS2[n, k]*k*k!, {k, n}], {n, 18}], 1] (* _Michael De Vlieger_, Jan 03 2016 *)",
+        "a[n_] := (PolyLog[-n-1, 1/2] - PolyLog[-n, 1/2])/4; a[0] = 1; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Mar 30 2016 *)",
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "Table[Length[Select[Join@@Permutations/@allnorm[n],MemberQ[Differences[#],0]&]],{n,0,8}] (* _Gus Wiseman_, Jan 15 2022 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=polcoeff(1+sum(m=1, n, (2*m-1)!/(m-1)!*x^m/prod(k=1, m, 1+(m+k-1)*x+x*O(x^n))), n)} \\\\ _Paul D. Hanna_, Oct 28 2013"
+    ],
+    "xref": [
+        "Cf. A000629, A001563, A232472.",
+        "The complement is counted by A005649.",
+        "A version for permutations of prime indices is A336107.",
+        "A version for factorizations is A348616.",
+        "Dominated (n > 1) by A350252, complement A345194, compositions A345192.",
+        "A000670 = patterns, ranked by A333217.",
+        "A001250 = alternating permutations, complement A348615.",
+        "A003242 = anti-run compositions, ranked by A333489.",
+        "A019536 = necklace patterns.",
+        "A226316 = patterns avoiding (1,2,3), weakly A052709, complement A335515.",
+        "A261983 = not-anti-run compositions, ranked by A348612.",
+        "A333381 = anti-runs of standard compositions.",
+        "Cf. A000110, A008277, A055932, A106356, A238424, A333382, A335456, A336103, A349050, A349055, A350138."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Karol A. Penson_, Mar 14 2002",
+    "references": 17,
+    "revision": 69,
+    "time": "2022-01-25T10:25:50-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

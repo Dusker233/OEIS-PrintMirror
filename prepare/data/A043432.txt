@@ -1,0 +1,39 @@
+{
+    "number": 43432,
+    "data": "1170,5266,8338,8850,9234,9298,9346,9354,9360,9361,9363,9364,9365,9366,9367,9370,9378,9386,9394,9402,9426,9490,9554,9618,9682,9874,10386,10898,11410,11922,13458,17554,21650,25746,29842",
+    "name": "Numbers having four 2's in base 8.",
+    "link": [
+        "Robert Israel, <a href=\"/A043432/b043432.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "F:= proc(d) local r, L,M,S, Res; # to get all terms < 8^d",
+        "   Res:= NULL;",
+        "   for S in combinat:-choose(d,d-4) do",
+        "     L:= Vector(d,2);",
+        "     for r from 0 to 7^(d-4)-1 do",
+        "       M:= subs(2=7,convert(r+7^(d-4),base,7)[1..d-4]);",
+        "       L[S]:= Vector(M);",
+        "       Res:= Res, add(8^(i-1)*L[i],i=1..d);",
+        "     od",
+        "   od;",
+        "   sort([Res]);",
+        "end proc:",
+        "F(6); # _Robert Israel_, Mar 20 2018"
+    ],
+    "mathematica": [
+        "Select[Range[0, 30000], DigitCount[#, 8, 2]==4 &] (* _Vincenzo Librandi_, Mar 21 2018 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = #select(x->(x==2), digits(n, 8)) == 4; \\\\ _Michel Marcus_, Mar 21 2018"
+    ],
+    "xref": [
+        "Cf. A007094."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_",
+    "references": 1,
+    "revision": 18,
+    "time": "2021-04-24T17:42:19-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

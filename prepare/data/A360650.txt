@@ -1,0 +1,37 @@
+{
+    "number": 360650,
+    "data": "0,0,1,6,16,37,73,133,227,370,580,881,1305,1890,2687,3756,5175,7037,9460,12582,16577,21649,28048,36070,46072,58474,73778,92574,115559,143551,177510,218556,267997,327355,398394,483162,584023,703708,845361,1012600,1209573",
+    "name": "Number of sets of nonempty words over binary alphabet with a total of n letters of which 2 are the first letter.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A360650/b360650.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A360634(n,2)."
+    ],
+    "example": [
+        "a(2) = 1: {aa}.",
+        "a(3) = 6: {aab}, {aba}, {baa}, {a,ab}, {a,ba}, {aa,b}.",
+        "a(4) = 16: {aabb}, {abab}, {abba}, {baab}, {baba}, {bbaa}, {a,abb}, {a,bab}, {a,bba}, {aa,bb}, {aab,b}, {ab,ba}, {aba,b}, {b,baa}, {a,ab,b}, {a,b,ba}."
+    ],
+    "maple": [
+        "g:= proc(n, i, j) option remember; convert(series(`if`(j=0, 1,",
+        "      `if`(i<0, 0, add(g(n, i-1, j-k)*x^(i*k)*binomial(",
+        "          binomial(n, i), k), k=0..j))), x, 3), polynom)",
+        "    end:",
+        "b:= proc(n, i) option remember; convert(series(`if`(n=0, 1, `if`(i<1, 0,",
+        "      add(b(n-i*j, i-1)*g(i$2, j), j=0..n/i))), x, 3), polynom)",
+        "    end:",
+        "a:= n-> coeff(b(n$2), x, 2):",
+        "seq(a(n), n=0..45);"
+    ],
+    "xref": [
+        "Column k=2 of A360634."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Feb 15 2023",
+    "references": 2,
+    "revision": 10,
+    "time": "2023-02-15T10:23:08-05:00",
+    "created": "2023-02-15T10:23:08-05:00"
+}

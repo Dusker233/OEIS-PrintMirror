@@ -1,0 +1,34 @@
+{
+    "number": 326134,
+    "data": "6,28,69,91,496,2211,4825,8128,12639,22799825,33550336,60406599,68258725,569173299,794579511,984210266,2830283326",
+    "name": "Numbers n such that A326057(n) is equal to A252748(n) and A252748(n) is not 1.",
+    "comment": [
+        "Numbers n such that A252748(n) <> 1, and A286385(n) = k*A252748(n) for some positive k.",
+        "No other terms below 3221225472.",
+        "Conjecture: terms that are not in A000396 all occur in A337372, apparently because apart from 6, all other terms of A337372 are deficient. Note that after 1, all nondeficient numbers k have A337345(k) > 1."
+    ],
+    "link": [
+        "<a href=\"/index/O#opnseqs\">Index entries for sequences where any odd perfect numbers must occur</a>",
+        "<a href=\"/index/Pri#prime_indices\">Index entries for sequences computed from indices in prime factorization</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "mathematica": [
+        "Select[Range[10^5], And[#3 - #1 != 1, GCD[#3 - #1, #3 - #2] == #3 - #1] & @@ {2 #, DivisorSigma[1, #], Times @@ Map[#1^#2 & @@ # &, FactorInteger[#] /. {p_, e_} /; e > 0 :> {Prime[PrimePi@ p + 1], e}] - Boole[# == 1]} &] (* _Michael De Vlieger_, Feb 22 2021 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A003961(n) = my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(f[i, 1]+1)); factorback(f); \\\\ From A003961",
+        "isA326134(n) = { my(s = A003961(n), t = (s-(2*n)), u = s-sigma(n)); ((1!=t)&&!(u%t)&&((u/t)>0)); };"
+    ],
+    "xref": [
+        "Cf. A000396 (a subsequence), A003961, A252748, A286385, A326057, A337345, A337372.",
+        "Subsequence of A246282 and of A341614."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jun 11 2019",
+    "references": 8,
+    "revision": 20,
+    "time": "2021-03-06T01:32:50-05:00",
+    "created": "2019-06-12T07:34:47-04:00"
+}

@@ -1,0 +1,47 @@
+{
+    "number": 236386,
+    "data": "3,4,6,7,9,13,14,18,21,25,26,28,31,33,36,42,43,44,49,50,62,66,73,86,87,91,95,98,111,116,117,121,135,146,148,152,157,161,169,174,182,190,201,207,211,216,222,228,234,237,241,242,252,268,270,287,289,305",
+    "name": "Numbers m such that phi(m) is an oblong number.",
+    "comment": [
+        "An oblong number (A002378) is of the form k*(k+1) where k is a natural number.",
+        "From _Bernard Schott_, Feb 27 2023: (Start)",
+        "Subsequence of primes is A002383 because in this case phi(k^2+k+1) = k*(k+1).",
+        "Subsequence of oblong numbers is A359847 where k and phi(k) are both oblong numbers. (End)"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A236386/b236386.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "phi(13) = 12 = 3*4, an oblong number; so 13 is a term of the sequence."
+    ],
+    "maple": [
+        "filter := m -> issqr(1 + 4*phi(m)) : select(filter, [$(1 .. 700)]); # _Bernard Schott_, Feb 26 2023"
+    ],
+    "mathematica": [
+        "Select[Range[500], IntegerQ@Sqrt[1 + 4*EulerPhi[#]] &] (* _Giovanni Resta_, Jan 24 2014 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = my(t=eulerphi(m)); !(t%2) && ispolygonal(t/2, 3); \\\\ _Michel Marcus_, Feb 27 2023",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy.ntheory.primetest import is_square",
+        "from sympy import totient",
+        "def A236386_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:is_square((totient(n)<<2)+1), count(max(1,startvalue)))",
+        "A236386_list = list(islice(A236386_gen(),20)) # _Chai Wah Wu_, Feb 28 2023"
+    ],
+    "xref": [
+        "Cf. A000010, A002378, A002383, A359847.",
+        "Similar, but where phi(m) is: A039770 (square), A039771 (cube), A078164 (biquadrate), A096503 (repdigit), A117296 (palindrome), A360944 (triangular)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Joseph L. Pe_, Jan 24 2014",
+    "ext": [
+        "a(16)-a(58) from _Giovanni Resta_, Jan 24 2014"
+    ],
+    "references": 3,
+    "revision": 27,
+    "time": "2023-03-03T06:34:10-05:00",
+    "created": "2014-01-24T19:39:52-05:00"
+}

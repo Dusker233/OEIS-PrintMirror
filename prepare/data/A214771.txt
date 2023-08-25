@@ -1,0 +1,61 @@
+{
+    "number": 214771,
+    "data": "3,9,15,45,45,105,105,225,315,315,315,945,945,945,945,1575,1575,2835,2835,3465,3465,3465,3465,10395,10395,10395,10395,10395,10395,10395,10395,17325,17325,17325,17325,31185,31185,31185,31185,45045,45045,45045,45045",
+    "name": "a(n) is the smallest number that can be written as the sum of consecutive positive integers in at least n ways.",
+    "comment": [
+        "The number of forms of writing a number x with odd prime factors as distinct sums of at least two nonzero summands of consecutive positive integers is: d(2x)/2 -1 = d(x) - 1, where d(x) is the number of divisors of x."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A214771/b214771.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..200 from T. D. Noe; terms 576 onward using A053624)",
+        "Zach Wissner-Gross, The Riddler, <a href=\"https://fivethirtyeight.com/features/can-you-find-the-luckiest-coin/\">Solution to last week's Riddler Express</a>, FiveThirtyEight, Feb 18 2022."
+    ],
+    "formula": [
+        "a(n) = A053624(i) for n in d(A053624(i-1))..d(A053624(i))-1, where d(x) is the number of divisors of x. - _Michael S. Branicky_, Feb 18 2022"
+    ],
+    "example": [
+        "a(1) = 3 = 1+2;",
+        "a(2) = 9 = 4+5 = 2+3+4;",
+        "a(3) = 15 = 7+8 = 4+5+6 = 1+2+3+4+5;",
+        "a(4) = a(5) = 45 is the sum of 2,3,5,6 and 9 consecutive integers beginning with 22, 14, 7, 5 and 1 respectively."
+    ],
+    "mathematica": [
+        "nn = 50000; t = Table[0, {nn}]; Do[tot = i; j = i; While[j++; tot = tot + j; tot <= nn, t[[tot]]++], {i, nn/2 - 1}]; Table[Position[t, _?(# >= n &), 1, 1][[1, 1]], {n, Max[t]}] (* _T. D. Noe_, Jul 28 2012 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import heapq",
+        "from itertools import islice",
+        "def agen(): # generator of terms",
+        "    p = v = 3; h = [(v, 1, 2)]; nextcount = 3; oldv = ways = highways = 0",
+        "    while True:",
+        "        (v, s, l) = heapq.heappop(h)",
+        "        if v == oldv: ways += 1",
+        "        else:",
+        "            if ways > highways:",
+        "                for n in range(highways+1, ways+1):",
+        "                    yield oldv",
+        "                highways = ways",
+        "            ways = 1",
+        "        if v >= p:",
+        "            p += nextcount",
+        "            heapq.heappush(h, (p, 1, nextcount))",
+        "            nextcount += 1",
+        "        oldv = v",
+        "        v -= s; s += 1; l += 1; v += l",
+        "        heapq.heappush(h, (v, s, l))",
+        "print(list(islice(agen(), 50))) # _Michael S. Branicky_, Feb 18 2022"
+    ],
+    "xref": [
+        "Cf. A053624 (union of these terms), A057716 (not powers of 2)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robin Garcia_, Jul 27 2012",
+    "ext": [
+        "Definition corrected by _Jonathan Sondow_, Feb 19 2014"
+    ],
+    "references": 3,
+    "revision": 32,
+    "time": "2022-02-18T22:48:46-05:00",
+    "created": "2012-07-29T14:53:50-04:00"
+}

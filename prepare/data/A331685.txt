@@ -1,0 +1,67 @@
+{
+    "number": 331685,
+    "data": "1,3,7,23,69,261,943,3815,15107,63219,262791,1130953,4838813,21185125,92593943,411160627,1823656199,8186105099,36728532951,166310761655",
+    "name": "Number of tree-factorizations of Heinz numbers of integer partitions of n.",
+    "comment": [
+        "A tree-factorization of n > 1 is either (case 1) the number n itself, or (case 2) a sequence of two or more tree-factorizations, one of each part of a weakly increasing factorization of n into factors > 1.",
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k)."
+    ],
+    "formula": [
+        "a(n) = Sum_i A281118(A215366(n,i))."
+    ],
+    "example": [
+        "The a(1) = 1 through a(4) = 23 tree-factorizations:",
+        "  2  3      5          7",
+        "     4      6          9",
+        "     (2*2)  8          10",
+        "            (2*3)      12",
+        "            (2*4)      16",
+        "            (2*2*2)    (2*5)",
+        "            (2*(2*2))  (2*6)",
+        "                       (2*8)",
+        "                       (3*3)",
+        "                       (3*4)",
+        "                       (4*4)",
+        "                       (2*2*3)",
+        "                       (2*2*4)",
+        "                       (2*2*2*2)",
+        "                       (2*(2*3))",
+        "                       ((2*2)*4)",
+        "                       (2*(2*4))",
+        "                       (3*(2*2))",
+        "                       (4*(2*2))",
+        "                       (2*(2*2*2))",
+        "                       (2*2*(2*2))",
+        "                       ((2*2)*(2*2))",
+        "                       (2*(2*(2*2)))"
+    ],
+    "mathematica": [
+        "facs[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[facs[n/d],Min@@#>=d&]],{d,Rest[Divisors[n]]}]];",
+        "physemi[n_]:=Prepend[Join@@Table[Tuples[physemi/@f],{f,Select[facs[n],Length[#]>1&]}],n];",
+        "Table[Sum[Length[physemi[Times@@Prime/@m]],{m,IntegerPartitions[n]}],{n,8}]"
+    ],
+    "program": [
+        "(PARI) \\\\ here TF(n) is n terms of A281118 as vector.",
+        "TF(n)={my(v=vector(n), w=vector(n)); w[1]=v[1]=1; for(k=2, n, w[k]=v[k]+1; forstep(j=n\\k*k, k, -k, my(i=j, e=0); while(i%k==0, i/=k; e++; v[j] += w[k]^e*v[i]))); w}",
+        "a(n)={my(v=[prod(i=1, #p, prime(p[i])) | p<-partitions(n)], tf=TF(vecmax(v))); sum(i=1, #v, tf[v[i]])} \\\\ _Andrew Howroyd_, Dec 09 2020"
+    ],
+    "xref": [
+        "The orderless version is A319312.",
+        "Factorizations are A001055.",
+        "P-trees are A196545.",
+        "Twice-factorizations are A281113.",
+        "Tree-factorizations are A281118.",
+        "Enriched p-trees are A289501.",
+        "Cf. A000081 A000669, A000720, A001678, A005804, A056239, A112798, A141268, A273873, A330465."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jan 31 2020",
+    "ext": [
+        "a(13)-a(20) from _Andrew Howroyd_, Dec 09 2020"
+    ],
+    "references": 1,
+    "revision": 9,
+    "time": "2020-12-15T09:11:08-05:00",
+    "created": "2020-02-01T07:09:55-05:00"
+}

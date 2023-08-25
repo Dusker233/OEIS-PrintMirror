@@ -1,0 +1,48 @@
+{
+    "number": 320664,
+    "data": "1,1,2,6,12,30,82,198,533,1459,4039,11634,34095,102520,316456,995709,3215552,10591412,35633438,122499429,428988392,1532929060,5579867442,20677066725,78027003260,299413756170,1168536196157,4635420192861,18678567555721,76451691937279,317625507668759",
+    "name": "Number of non-isomorphic multiset partitions of weight n with all parts of odd size.",
+    "comment": [
+        "Also the number of non-isomorphic multiset partitions of weight n in which each vertex appears an odd number of times."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320664/b320664.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(1) = 1 through a(4) = 12 multiset partitions with all parts of odd size:",
+        "  {{1}}  {{1},{1}}  {{1,1,1}}      {{1},{1,1,1}}",
+        "         {{1},{2}}  {{1,2,2}}      {{1},{1,2,2}}",
+        "                    {{1,2,3}}      {{1},{2,2,2}}",
+        "                    {{1},{1},{1}}  {{1},{2,3,3}}",
+        "                    {{1},{2},{2}}  {{1},{2,3,4}}",
+        "                    {{1},{2},{3}}  {{2},{1,2,2}}",
+        "                                   {{3},{1,2,3}}",
+        "                                   {{1},{1},{1},{1}}",
+        "                                   {{1},{1},{2},{2}}",
+        "                                   {{1},{2},{2},{2}}",
+        "                                   {{1},{2},{3},{3}}",
+        "                                   {{1},{2},{3},{4}}"
+    ],
+    "program": [
+        "(PARI) \\\\ See links in A339645 for combinatorial species functions.",
+        "seq(n)={my(A=symGroupSeries(n)); NumUnlabeledObjsSeq(sCartProd(sExp(A), sExp((A-subst(A,x,-x))/2)))} \\\\ _Andrew Howroyd_, Jan 17 2023",
+        "(PARI)",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "J(q, t, k, y)={1/prod(j=1, #q, my(s=q[j], g=gcd(s,t)); (1 + O(x*x^k) - y^(s/g)*x^(s*t/g))^g)}",
+        "K(q, t, k) = Vec(J(q,t,k,1)-J(q,t,k,-1), -k)/2",
+        "a(n)={my(s=0); forpart(q=n, s+=permcount(q)*polcoef(exp(x*Ser(sum(t=1, n, K(q, t, n)/t))), n)); s/n!} \\\\ _Andrew Howroyd_, Jan 17 2023"
+    ],
+    "xref": [
+        "Cf. A001055, A001222, A007716, A298118, A300300, A300301, A318871, A320663, A320665."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Oct 18 2018",
+    "ext": [
+        "Terms a(11) and beyond from _Andrew Howroyd_, Jan 16 2023"
+    ],
+    "references": 4,
+    "revision": 14,
+    "time": "2023-01-17T12:08:43-05:00",
+    "created": "2018-10-22T12:42:34-04:00"
+}

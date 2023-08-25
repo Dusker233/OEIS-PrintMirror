@@ -1,0 +1,39 @@
+{
+    "number": 303840,
+    "data": "0,1,1,2,4,10,24,63,164,444,1204,3328,9233,25865,72734,205656,583320,1660318,4737540,13551165,38837535,111512229,320681604,923528963,2663057582,7688068638,22218350303,64272720521,186091334380,539237928902,1563731491958,4537823968645,13176960639940,38286514506439,111306880581963",
+    "name": "Unlabeled trees with n nodes rooted at 2 indistinguishable roots that are leaves.",
+    "example": [
+        "a(2)=a(3)=1, because the two roots must be the (all) leaves. a(4)=2 (one pattern from the linear tree, one from the star tree). a(6)=10: 1 pattern from n-Hexane. 2 patterns from 2-Methyl-Pentane. 2 patterns from (2,3)-Bimethyl-Butane. 1 pattern from the star graph. 2 patterns from 3-Methyl-Pentane. 2 patterns from (2,2)-Bimethyl-Butane."
+    ],
+    "maple": [
+        "a000081 := [1, 1, 2, 4, 9, 20, 48, 115, 286, 719, 1842, 4766, 12486, 32973, 87811, 235381, 634847, 1721159, 4688676, 12826228,",
+        "35221832, 97055181, 268282855, 743724984, 2067174645, 5759636510, 16083734329, 45007066269, 126186554308, 354426847597,",
+        "997171512998, 2809934352700, 7929819784355, 22409533673568, 63411730258053, 179655930440464, 509588049810620, 1447023384581029,",
+        "4113254119923150, 11703780079612453, 33333125878283632] ;",
+        "g81 := add( op(i,a000081)*x^i,i=1..nops(a000081) ) ;",
+        "g81fin := x ;",
+        "g := 0 ;",
+        "nmax := nops(a000081) ;",
+        "for m from 0 to nmax do",
+        "    mhalf := floor(m/2) ;",
+        "    ghalf := g81^mhalf*g81fin ;",
+        "    gcyc := (ghalf^2+subs(x=x^2,ghalf))/2 ;",
+        "    if type(m,odd) then",
+        "        gcyc := gcyc*g81 ;",
+        "    end if;",
+        "    g := g+gcyc ;",
+        "end do:",
+        "taylor(g,x=0,nmax) ;",
+        "gfun[seriestolist](%) ;"
+    ],
+    "xref": [
+        "Cf. A303833 (roots need not be leaves), A055290 (cardinality of candidates)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_R. J. Mathar_, May 01 2018",
+    "references": 2,
+    "revision": 10,
+    "time": "2018-05-04T04:44:15-04:00",
+    "created": "2018-05-01T13:00:17-04:00"
+}

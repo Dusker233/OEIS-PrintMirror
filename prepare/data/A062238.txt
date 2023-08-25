@@ -1,0 +1,35 @@
+{
+    "number": 62238,
+    "data": "15,25,125,1537,3977,11371,38117,110317,117197,123679,143323,146137,179297,197513,316619,390913,397139,399797,485357,779917,797191,990919,1110691,1178951,1483117,1723717,1813733,2165299,2273099,2369777,2947969,3035171,3099013,3183113",
+    "name": "Composite numbers which contain their largest proper divisor as a substring.",
+    "link": [
+        "Michel Marcus, <a href=\"/A062238/b062238.txt\">Table of n, a(n) for n = 1..272</a>"
+    ],
+    "example": [
+        "3{97}7 = 97*41."
+    ],
+    "mathematica": [
+        "Do[ If[ !PrimeQ[ n ] && StringPosition[ ToString[ n ], ToString[ Divisors[ n ] [ [ -2 ] ] ] ] != {}, Print[ n ] ], {n, 2, 10^7} ]",
+        "Select[Range[319*10^4],CompositeQ[#]&&SequenceCount[IntegerDigits[ #],IntegerDigits[ Divisors[#][[-2]]]]>0&] (* _Harvey P. Dale_, Dec 26 2022 *)"
+    ],
+    "program": [
+        "(PARI) gpd(n) = if(n==1, 1, n/factor(n)[1, 1]); \\\\ A032742",
+        "issub(vv, v) = {for (i=1, #v - #vv + 1, if (vector(#vv, k, v[k+i-1]) == vv, return(1)););}",
+        "isok(n) = if ((n>1) && !isprime(n), issub(digits(gpd(n)), digits(n))); \\\\ _Michel Marcus_, Dec 31 2020"
+    ],
+    "xref": [
+        "Cf. A002808 (composite numbers), A032742."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Erich Friedman_, Jun 30 2001",
+    "ext": [
+        "More terms from _Robert G. Wilson v_, Aug 08 2001",
+        "More terms from _Michel Marcus_, Dec 31 2020",
+        "Clarified definition at the suggestion of _Harvey P. Dale_. - _N. J. A. Sloane_, Dec 26 2022"
+    ],
+    "references": 14,
+    "revision": 13,
+    "time": "2022-12-26T13:04:56-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

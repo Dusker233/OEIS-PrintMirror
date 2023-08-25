@@ -1,0 +1,65 @@
+{
+    "number": 350947,
+    "data": "1,6,84,210,490,525,2184,2340,5460,9464,12012,12740,12870,13650,14625,19152,22308,30030,34125,43940,45144,55770,59150,66066,70070,70785,75075,79625,82992,88920",
+    "name": "Heinz numbers of integer partitions with the same number of even parts, odd parts, even conjugate parts, and odd conjugate parts.",
+    "comment": [
+        "The Heinz number of a partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k). This gives a bijective correspondence between positive integers and integer partitions."
+    ],
+    "formula": [
+        "A257992(a(n)) = A257991(a(n)) = A350847(a(n)) = A344616(a(n))."
+    ],
+    "example": [
+        "The terms together with their prime indices begin:",
+        "      1: ()",
+        "      6: (2,1)",
+        "     84: (4,2,1,1)",
+        "    210: (4,3,2,1)",
+        "    490: (4,4,3,1)",
+        "    525: (4,3,3,2)",
+        "   2184: (6,4,2,1,1,1)",
+        "   2340: (6,3,2,2,1,1)",
+        "   5460: (6,4,3,2,1,1)",
+        "   9464: (6,6,4,1,1,1)",
+        "  12012: (6,5,4,2,1,1)",
+        "  12740: (6,4,4,3,1,1)",
+        "  12870: (6,5,3,2,2,1)",
+        "  13650: (6,4,3,3,2,1)",
+        "  14625: (6,3,3,3,2,2)",
+        "  19152: (8,4,2,2,1,1,1,1)",
+        "For example, the partition (6,6,4,1,1,1) has conjugate (6,3,3,3,2,2), and all four statistics are equal to 3, so 9464 is in the sequence."
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "conj[y_]:=If[Length[y]==0,y,Table[Length[Select[y,#>=k&]],{k,1,Max[y]}]];",
+        "Select[Range[1000],Count[primeMS[#],_?EvenQ]==Count[primeMS[#],_?OddQ]==Count[conj[primeMS[#]],_?EvenQ]==Count[conj[primeMS[#]],_?OddQ]&]"
+    ],
+    "xref": [
+        "These partitions are counted by A351978.",
+        "There are four individual statistics:",
+        "- A257991 counts odd parts, conjugate A344616.",
+        "- A257992 counts even parts, conjugate A350847.",
+        "There are six possible pairings of statistics:",
+        "- A325698: # of even parts = # of odd parts, counted by A045931.",
+        "- A349157: # of even parts = # of odd conjugate parts, counted by A277579.",
+        "- A350848: # of even conj parts = # of odd conj parts, counted by A045931.",
+        "- A350943: # of even conjugate parts = # of odd parts, counted by A277579.",
+        "- A350944: # of odd parts = # of odd conjugate parts, counted by A277103.",
+        "- A350945: # of even parts = # of even conjugate parts, counted by A350948.",
+        "There are three possible double-pairings of statistics:",
+        "- A350946, counted by A351977.",
+        "- A350949, counted by A351976.",
+        "- A351980, counted by A351981.",
+        "A056239 adds up prime indices, counted by A001222, row sums of A112798.",
+        "A122111 represents partition conjugation using Heinz numbers.",
+        "A195017 = # of even parts - # of odd parts.",
+        "A316524 = alternating sum of prime indices.",
+        "Cf. A026424, A028260, A098123, A239241, A241638, A325700, A350849, A350941, A350942, A350950, A350951."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Mar 14 2022",
+    "references": 19,
+    "revision": 7,
+    "time": "2022-03-16T16:37:54-04:00",
+    "created": "2022-03-16T16:37:54-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 12259,
+    "data": "1,1,1,5,17,121,721,6845,58337,698161,7734241,111973685,1526099057,25947503401,419784870961,8200346492525,153563504618177,3389281372287841,72104198836466881,1774459993676715365,42270463533824671697,1147649139272698443481",
+    "name": "Expansion of e.g.f. exp(arctanh(tan(x))).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A012259/b012259.txt\">Table of n, a(n) for n = 0..425</a>",
+        "Shi-Mei Ma, Jun Ma, and Yeong-Nan Yeh, <a href=\"https://arxiv.org/abs/1904.11437\">The alternating run polynomials of permutations</a>, arXiv:1904.11437 [math.CO], 2019.",
+        "Shi-Mei Ma, Jun Ma, and Yeong-Nan Yeh, <a href=\"https://www.math.sinica.edu.tw/www/file_upload/mayeh/DavidBarton-revision20191116.pdf\">David-Barton type identities and alternating run polynomials</a>, Academia Sinica (Taipei, 2019).",
+        "Mathematics Stack Exchange, <a href=\"http://math.stackexchange.com/questions/6939/\">Mystery regarding power series of 1/sqrt(1+x^x)</a>, Question 6939."
+    ],
+    "formula": [
+        "Alternative form of e.g.f: sqrt(sec(2*x) + tan(2*x)) = 1 + x + x^2/2! + 5*x^3/3! + 17*x^4/4! + ... (where sec(x)=1/cos(x)). - _Peter Bala_, Jan 11 2011",
+        "a(n) = 2^n*Z(n,1/2), where Z(n,x) is the n-th zigzag polynomial as defined in A147309.",
+        "Put y = x*log(x)/4. The connection between the expansion sqrt(2/(1+x^x)) = 1 - y - y^2/2! + 5*y^3/3! + 17*y^4/4! - 121*y^5/5! ... and the present sequence is explained in the answer to Mathematics Stack Exchange Question 6939. - _Peter Bala_, Jul 10 2011",
+        "exp(arctanh(tan(x))) = sqrt( (1 + tan(x))/(1 - tan(x) ) ) = sqrt( tan(x+pi/4) ). - _David Callan_, Dec 13 2011",
+        "a(n) ~ 2^(2*n+3/2) * n^n / (Pi^(n+1/2) * exp(n)). - _Vaclav Kotesovec_, Oct 23 2013",
+        "E.g.f. A(x) satisfies: A(x) = exp( Integral (A(x)^2 + A(-x)^2)/2 dx ). - _Paul D. Hanna_, Feb 04 2017",
+        "E.g.f. A(x) satisfies: A'(x) = A(x) * (A(x)^2 + A(-x)^2)/2. - _Paul D. Hanna_, Feb 04 2017"
+    ],
+    "example": [
+        " exp(arctanh(tan(x))) = 1 + x + x^2/2! + 5*x^3/3! + 17*x^4/4! + 121*x^5/5! + ..."
+    ],
+    "mathematica": [
+        "With[{nn=30}, CoefficientList[Series[Sqrt[(1+Tan[x])/(1-Tan[x])], {x, 0, nn}], x]*Range[0,nn]!] (* _Vaclav Kotesovec_, Oct 23 2013 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=local(A=1); for(i=0, n, A = exp( intformal( (A^2 + subst(A^2, x, -x))/2 +x*O(x^n)) )); n!*polcoeff(A, n)}",
+        "for(n=0, 25, print1(a(n), \", \")) \\\\ _Paul D. Hanna_, Feb 04 2017",
+        "(PARI) my(x='x+O('x^30)); Vec(serlaplace( sqrt((1+tan(x))/(1-tan(x))) )) \\\\ _G. C. Greubel_, Jun 06 2019",
+        "(Magma) m:=30; R<x>:=PowerSeriesRing(Rationals(), m); b:=Coefficients(R!( Sqrt((1+Tan(x))/(1-Tan(x))) )); [Factorial(n-1)*b[n]: n in [1..m]]; // _G. C. Greubel_, Jun 06 2019",
+        "(Sage) m = 30; T = taylor(sqrt((1+tan(x))/(1-tan(x))), x, 0, m); [factorial(n)*T.coefficient(x, n) for n in (0..m)] # _G. C. Greubel_, Jun 06 2019"
+    ],
+    "xref": [
+        "Cf. A012077, A012085, A185411, A202038 (signed version)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "Patrick Demichel (patrick.demichel(AT)hp.com)",
+    "references": 5,
+    "revision": 50,
+    "time": "2022-08-25T08:32:57-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 299111,
+    "data": "4,13,37,82,183,344,601,918,1355,2048,2873,3978,5455,7112,9105,11530,14391,17504,21353,25686,30311,35536,41421,48010,55911,64632,73869,83766,94151,105420,118569,132566,148247,164564,182617,201770,222975,245532,269253",
+    "name": "Maximum value of the cyclic convolution of first n primes with themselves.",
+    "link": [
+        "Robert Israel, <a href=\"/A299111/b299111.txt\">Table of n, a(n) for n = 1..2000</a>"
+    ],
+    "formula": [
+        "a(n) = Max_{k=1..n} Sum_{i=1..n} prime(n-i+1)*prime(1+(i+k) mod n).",
+        "a(n) >= A014342(n). Does the ratio a(n)/A014342(n) have a limit as n -> infinity? - _Robert Israel_, Feb 07 2018"
+    ],
+    "example": [
+        "For n = 4 the four possible cyclic convolution of first four primes with themselves are:",
+        "(2,3,5,7).(7,5,3,2) = 2*7 + 3*5 + 5*3 + 7*2 = 14 + 15 + 15 + 14 = 58,",
+        "(2,3,5,7).(2,7,5,3) = 2*2 + 3*7 + 5*5 + 7*3 = 4 + 21 + 25 + 21 = 71,",
+        "(2,3,5,7).(3,2,7,5) = 2*3 + 3*2 + 5*7 + 7*5 = 6 + 6 + 35 + 35 = 82,",
+        "(2,3,5,7).(5,3,2,7) = 2*5 + 3*3 + 5*2 + 7*7 = 10 + 9 + 10 + 49 = 78,",
+        "then a(4)=82 because 82 is the maximum among the four values."
+    ],
+    "maple": [
+        "f:= proc(n) local V,R,i;",
+        "    V:= Vector(n, ithprime);",
+        "    R:= ArrayTools:-FlipDimension(V,1)^%T;",
+        "    max(seq(ArrayTools:-CircularShift(R,i) . V, i=0..n-1))",
+        "end proc:",
+        "map(f, [$1..100]); # _Robert Israel_, Feb 07 2018"
+    ],
+    "mathematica": [
+        "a[n_]:=Prime[Range[n]];",
+        "Table[Max@Table[a[n].RotateRight[Reverse[a[n]], j], {j, 0, n - 1}], {n,1,36}]"
+    ],
+    "program": [
+        "(PARI) a(n) = my(vp=primes(n)); vecmax(vector(n, k, sum(i=1, n, vp[n-i+1]*vp[1+(i+k)%n]))); \\\\ _Michel Marcus_, Feb 07 2018; Jun 15 2022"
+    ],
+    "xref": [
+        "Cf. A014342, A299053."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Andres Cicuttin_, Feb 02 2018",
+    "references": 8,
+    "revision": 44,
+    "time": "2022-06-15T08:15:04-04:00",
+    "created": "2018-02-08T15:26:41-05:00"
+}

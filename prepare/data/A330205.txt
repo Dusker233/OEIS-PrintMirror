@@ -1,0 +1,36 @@
+{
+    "number": 330205,
+    "data": "6,15,21,22,105,119,231,426,483,1290,1939,4429,4450,4578,10609,12999,14118,16899,23262,26733,37401,39858,82194,108345,121335,127434,302253,380757,724647,836437,840147,1078270,1522677,2007411,15009050,28913991",
+    "name": "Composite numbers k such that P(k, 7) == 7 (mod k), where P(k, 7) = A084768(k) is the k-th Legendre polynomial evaluated at 7.",
+    "comment": [
+        "P(p, 7) == 7 (mod p) for all primes p. This is a special case of Schur congruences (see A330203 for references). This sequence consists of the composite numbers for which the congruence holds."
+    ],
+    "example": [
+        "6 is in the sequence since it is composite and P(6, 7) = 1651609 == 7 (mod 6)."
+    ],
+    "mathematica": [
+        "Select[Range[2000], CompositeQ[#] && Divisible[LegendreP[#, 7] - 7, #] &]"
+    ],
+    "program": [
+        "(PARI) isok(k) = Mod(subst(pollegendre(k), x, 7), k) == 7;",
+        "forcomposite (k=1, 10000, if (isok(k), print1(k, \", \"))); \\\\ _Michel Marcus_, Dec 06 2019",
+        "(Sage)",
+        "a, b = 1, 7",
+        "for n in range(2, 10000):",
+        "    a, b = b, ((14*n-7)*b - (n-1)*a)//n",
+        "    if (b%n == 7%n) and (not Integer(n).is_prime()): print(n)  # _Robin Visser_, Aug 18 2023"
+    ],
+    "xref": [
+        "Cf. A008316, A084768, A330203."
+    ],
+    "keyword": "nonn,more,changed",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Dec 05 2019",
+    "ext": [
+        "a(35)-a(36) from _Robin Visser_, Aug 18 2023"
+    ],
+    "references": 0,
+    "revision": 15,
+    "time": "2023-08-18T15:05:18-04:00",
+    "created": "2019-12-06T08:51:19-05:00"
+}

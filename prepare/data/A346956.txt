@@ -1,0 +1,47 @@
+{
+    "number": 346956,
+    "data": "4,9,14,16,25,38,42,49,51,55,62,64,70,81,86,92,96,117,121,130,134,138,140,158,159,161,168,169,182,206,209,234,254,256,266,267,278,282,284,289,302,322,326,351,361,376,390,398,408,410,422,426,434,446,477,508,529,532,534,542,551,566,590",
+    "name": "Numbers k such that A000203(k) and A007955(k) are both divisible by A187680(k).",
+    "comment": [
+        "Numbers k such that both the sum s and product p of the divisors of k are divisible by (p mod s)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A346956/b346956.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 14 is a term because A000203(14) = 1+2+7+14 = 24, A007955(14) = 1*2*7*14 = 196, A187680(14) = 196 mod 24 = 4, and both 24 and 196 are divisible by 4."
+    ],
+    "maple": [
+        "filter:= proc(n) local d,s,p,r;",
+        "  d:= numtheory:-divisors(n);",
+        "  s:= convert(d,`+`);",
+        "  p:= convert(d,`*`);",
+        "  r:= p mod s;",
+        "  r <> 0 and p mod r = 0 and s mod r = 0",
+        "end proc:",
+        "select(filter, [$1..1000]);"
+    ],
+    "mathematica": [
+        "okQ[n_] := Module[{d, s, p, m},",
+        "  d = Divisors[n];",
+        "  s = Total[d];",
+        "  p = Times @@ d;",
+        "  m = Mod[p, s];",
+        "  If[m == 0, False, Divisible[s, m] && Divisible[p, m]]];",
+        "Select[Range[1000], okQ] (* _Jean-Fran\u00e7ois Alcover_, May 16 2023 *)"
+    ],
+    "program": [
+        "(PARI) isok(k) = my(d=divisors(k), s=vecsum(d), p=vecprod(d), m=p % s); (m>0) && !(s%m) && !(p%m); \\\\ _Michel Marcus_, Aug 09 2021"
+    ],
+    "xref": [
+        "Cf. A000203, A007955, A187680.",
+        "Includes A188061."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Aug 08 2021",
+    "references": 2,
+    "revision": 16,
+    "time": "2023-05-16T10:40:04-04:00",
+    "created": "2021-08-09T11:20:47-04:00"
+}

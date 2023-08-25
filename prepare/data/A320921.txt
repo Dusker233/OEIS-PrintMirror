@@ -1,0 +1,49 @@
+{
+    "number": 320921,
+    "data": "1,1,1,3,5,10,19,35,60",
+    "name": "Number of connected graphical partitions of 2n.",
+    "comment": [
+        "An integer partition is connected and graphical if it comprises the multiset of vertex-degrees of some connected simple graph."
+    ],
+    "link": [
+        "Gus Wiseman, <a href=\"/A320921/a320921.png\">Connected simple graphs realizing each of the a(6) = 19 connected graphical partitions of 12.</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(6) = 19 connected graphical partitions:",
+        "  (11)  (211)  (222)   (2222)   (3322)    (3333)",
+        "               (2211)  (3221)   (22222)   (33222)",
+        "               (3111)  (22211)  (32221)   (33321)",
+        "                       (32111)  (33211)   (42222)",
+        "                       (41111)  (42211)   (43221)",
+        "                                (222211)  (222222)",
+        "                                (322111)  (322221)",
+        "                                (331111)  (332211)",
+        "                                (421111)  (333111)",
+        "                                (511111)  (422211)",
+        "                                          (432111)",
+        "                                          (522111)",
+        "                                          (2222211)",
+        "                                          (3222111)",
+        "                                          (3321111)",
+        "                                          (4221111)",
+        "                                          (4311111)",
+        "                                          (5211111)",
+        "                                          (6111111)"
+    ],
+    "mathematica": [
+        "prptns[m_]:=Union[Sort/@If[Length[m]==0,{{}},Join@@Table[Prepend[#,m[[ipr]]]&/@prptns[Delete[m,List/@ipr]],{ipr,Select[Prepend[{#},1]&/@Select[Range[2,Length[m]],m[[#]]>m[[#-1]]&],UnsameQ@@m[[#]]&]}]]];",
+        "strnorm[n_]:=Flatten[MapIndexed[Table[#2,{#1}]&,#]]&/@IntegerPartitions[n];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Union[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[strnorm[2*n],Select[prptns[#],And[UnsameQ@@#,Length[csm[#]]==1]&]!={}&]],{n,5}]"
+    ],
+    "xref": [
+        "Cf. A000070, A000569, A007717, A025065, A096373, A147878, A209816, A320891, A320911, A320923."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Oct 24 2018",
+    "references": 24,
+    "revision": 9,
+    "time": "2018-11-14T11:30:16-05:00",
+    "created": "2018-10-24T19:21:19-04:00"
+}

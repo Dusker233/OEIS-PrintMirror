@@ -1,0 +1,43 @@
+{
+    "number": 172506,
+    "data": "11,303,123123,6170617,246902469,1929001929,12345671234567,617283906172839,123456789123456789,123456789101234567891,12345678910111234567891011,15432098637639015432098637639,1234567891011121312345678910111213,6172839455055606570617283945505560657",
+    "name": "a(n) = numerator of fraction a/b, where gcd(a, b) = 1, whose decimal representation has the form (1)(2)(3)...(n-1)(n).(1)(2)(3)...(n-1)(n).",
+    "comment": [
+        "Sequence of denominators: 10, 25, 1000, 5000, 20000, 15625, 10000000, 50000000, ... Conjecture: this sequence is not equal to the sequence A078257.",
+        "From _Michael S. Branicky_, Nov 30 2022: (Start)",
+        "The conjecture is false: the denominators here are the same as in A078257.",
+        "Proof.  Let Cn denote the concatenation (1)(2)(3)...(n-1)(n) and en its number of decimal digits.  The unreduced numerator and denominator for a(n) are Cn and 10^en, respectively.  For A078527(n), they are Cn*(10^en + 1) and 10^en.  Since (10^en + 1) is never divisible by 2 or 5, no reductions can be made in the denominator of A078527(n) beyond those allowed by the unreduced numerator of a(n). (End)"
+    ],
+    "example": [
+        "a(6) = 1929001929; 1929001929/15625 = 123456.123456."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    k, den, pow = 0, 1, 0",
+        "    for n in count(1):",
+        "        sn = str(n)",
+        "        k = k*10**len(sn) + n",
+        "        den *= 10**len(sn)",
+        "        pow += len(sn)",
+        "        nr, c2, c5 = k*(den+1), pow, pow",
+        "        while nr%2 == 0 and c2 > 0: nr //= 2; c2 -= 1",
+        "        while nr%5 == 0 and c5 > 0: nr //= 5; c5 -= 1",
+        "        yield nr",
+        "print(list(islice(agen(), 19))) # _Michael S. Branicky_, Nov 30 2022"
+    ],
+    "xref": [
+        "Cf. A078257, A078258."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jaroslav Krizek_, Feb 05 2010",
+    "ext": [
+        "a(9) and beyond from _Michael S. Branicky_, Nov 30 2022"
+    ],
+    "references": 1,
+    "revision": 17,
+    "time": "2022-11-30T11:20:32-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

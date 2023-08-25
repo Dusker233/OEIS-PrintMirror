@@ -1,0 +1,40 @@
+{
+    "number": 228640,
+    "data": "0,1,6,33,280,3145,46956,823585,16781472,387422001,10000100440,285311670721,8916103479504,302875106592409,11112006930972780,437893890382391745,18446744078004651136,827240261886336764449,39346408075494964903956,1978419655660313589124321",
+    "name": "a(n) = Sum_{d|n} phi(d)*n^(n/d).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A228640/b228640.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} n^gcd(k,n) = n * A056665(n). - _Seiichi Manyama_, Mar 10 2021",
+        "a(n) = Sum_{k=1..n} n^(n/gcd(n,k))*phi(gcd(n,k))/phi(n/gcd(n,k)). - _Richard L. Ollerton_, May 07 2021"
+    ],
+    "maple": [
+        "with(numtheory):",
+        "a:= n-> add(phi(d)*n^(n/d), d=divisors(n)):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "a[0] = 0; a[n_] := DivisorSum[n, EulerPhi[#]*n^(n/#)&]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Mar 21 2017 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import totient, divisors",
+        "def A228640(n):",
+        "    return sum(totient(d)*n**(n//d) for d in divisors(n,generator=True)) # _Chai Wah Wu_, Feb 15 2020",
+        "(PARI) a(n) = if (n, sumdiv(n, d, eulerphi(d)*n^(n/d)), 0); \\\\ _Michel Marcus_, Feb 15 2020; corrected Jun 13 2022",
+        "(PARI) a(n) = sum(k=1, n, n^gcd(k, n)); \\\\ _Seiichi Manyama_, Mar 10 2021",
+        "(Magma) [0] cat [&+[EulerPhi(d)*n^(n div d): d in Divisors(n)]:n in [1..20]]; // _Marius A. Burtea_, Feb 15 2020"
+    ],
+    "xref": [
+        "Main diagonal of A054618, A054619, A185651.",
+        "Cf. A000010, A056665."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 28 2013",
+    "references": 11,
+    "revision": 36,
+    "time": "2022-09-08T08:46:05-04:00",
+    "created": "2013-08-28T16:43:13-04:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 122068,
+    "data": "1,3,10,35,126,462,1715,6419,24157,91238,345401,1309574,4970070,18874261,71705865,272491891,1035680954,3936821259,14965658694,56893879910,216295686467,822315097387,3126323230541,11885921055638",
+    "name": "Expansion of x*(1-3*x)*(1-x)/(1-7*x+14*x^2-7*x^3).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A122068/b122068.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Peter Steinbach, <a href=\"http://www.jstor.org/stable/2691048\">Golden fields: a case for the heptagon</a>, Math. Mag. Vol. 70, No. 1, Feb. 1997, 22-31.",
+        "R. Witula, P. Lorenc, M. Rozanski, and M. Szweda, <a href=\"https://bibliotekanauki.pl/articles/87290\">Sums of the rational powers of roots of cubic polynomials</a>, Zeszyty Naukowe Politechniki Slaskiej, Seria: Matematyka Stosowana z. 4, Nr. kol. 1920, 2014.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (7,-14,7)."
+    ],
+    "formula": [
+        "From _Roman Witula_, May 16 2014: (Start)",
+        "a(n) = (1/2)*Sum_{k=0..2}(1 - 1/sqrt(7)*cot(2^k * alpha))* (2*sin(2^k * alpha))^(2n), where alpha := 2*Pi/7.",
+        "a(n) = (A215007(n) + A215008(n+1) - 2*A215008(n))/2. (End)",
+        "a(n) = binomial(2*n-1, n-1) + Sum_{k=1..n} (-1)^k*binomial(2*n, n+7*k). - _Greg Dresden_, Jan 28 2023"
+    ],
+    "maple": [
+        "seq(coeff(series(x*(1-3*x)*(1-x)/(1-7*x+14*x^2-7*x^3), x, n+1), x, n), n =1..30); # _G. C. Greubel_, Oct 03 2019"
+    ],
+    "mathematica": [
+        "M = {{2,1,0,0,0,0}, {1,2,1,0,0,0}, {0,1,2,1,0,0}, {0,0,1,2,1,0}, {0,0,0, 1,2,1}, {0,0,0,0,1,2}}; v[1] = {1,1,1,1,1,1}; v[n_]:= v[n] = M.v[n-1]; Table[v[n][[1]], {n,30}]",
+        "Rest@CoefficientList[Series[x*(1-3*x)*(1-x)/(1-7*x+14*x^2-7*x^3), {x, 0, 30}], x] (* _G. C. Greubel_, Oct 03 2019 *)",
+        "LinearRecurrence[{7,-14,7},{1,3,10},30] (* _Harvey P. Dale_, Mar 08 2020 *)"
+    ],
+    "program": [
+        "(PARI) Vec(x*(1-3*x)*(1-x)/(1-7*x+14*x^2-7*x^3)+O(x^30)) \\\\ _Charles R Greathouse IV_, Sep 27 2012",
+        "(Magma) I:=[1,3,10]; [n le 3 select I[n] else 7*(Self(n-1) -2*Self(n-2) + Self(n-3)): n in [1..30]]; // _G. C. Greubel_, Oct 03 2019",
+        "(Sage)",
+        "def A122068_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P(x*(1-3*x)*(1-x)/(1-7*x+14*x^2-7*x^3)).list()",
+        "a=A122068_list(30); a[1:] # _G. C. Greubel_, Oct 03 2019",
+        "(GAP) a:=[1,3,10];; for n in [4..30] do a[n]:=7*(a[n-1]-2*a[n-2]+a[n-3]); od; a; # _G. C. Greubel_, Oct 03 2019"
+    ],
+    "xref": [
+        "Cf. A087946, A081567.",
+        "Cf. A215007, A215008. - _Roman Witula_, May 16 2014"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Gary W. Adamson_, Oct 15 2006",
+    "references": 3,
+    "revision": 46,
+    "time": "2023-01-29T06:02:53-05:00",
+    "created": "2006-12-06T03:00:00-05:00"
+}

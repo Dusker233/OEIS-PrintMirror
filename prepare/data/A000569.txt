@@ -1,0 +1,62 @@
+{
+    "number": 569,
+    "data": "1,2,5,9,17,31,54,90,151,244,387,607,933,1420,2136,3173,4657,6799,9803,14048,19956,28179,39467,54996,76104,104802,143481,195485,264941,357635,480408,642723,856398,1136715,1503172,1980785",
+    "name": "Number of graphical partitions of 2n.",
+    "comment": [
+        "A partition of n is a sequence p_1, ..., p_k for some k with p_1 >= p_2 >= ... >= p_k and p_1+...+p_k=n. A partition is graphical if it is the degree sequence of a simple graph (this requires that n be even). Some authors set a(0)=1 by convention."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A000569/b000569.txt\">Table of n, a(n) for n = 1..860</a>. [Terms 1 through 110 were computed by Tiffany M. Barnes and Carla D. Savage; terms 111 through 585 were computed by Axel Kohnert; terms 586 to 860 by Wang Kai, Jun 05 2016; a typo of a(547) in <a href=\"http://www.mathe2.uni-bayreuth.de/axel/numberofgraphicalpartitions.pdf\">Number of Graphical Partitions</a> is corrected by Wang Kai, Aug 03 2016]",
+        "Tiffany M. Barnes and Carla D. Savage, <a href=\"http://dx.doi.org/10.1016/S0166-218X(97)00022-X\">Efficient generation of graphical partitions</a> Discrete Appl. Math. 78 (1997), no. 1-3, 17-26.",
+        "T. M. Barnes and C. D. Savage, <a href=\"https://doi.org/10.37236/1205\">A recurrence for counting graphical partitions</a>, Electronic J. Combinatorics, 2 (1995).",
+        "K. Blum, <a href=\"https://arxiv.org/abs/2103.03196\">Bounds on the Number of Graphical Partitions</a>, arXiv:2103.03196 [math.CO], 2021. See Table on p. 7.",
+        "P. Erd\u00f5s and T. Gallai, <a href=\"https://users.renyi.hu/~p_erdos/1961-05.pdf\">Graphs with a given degree of vertices</a>, Mat. Lapok, 11 (1960), 264-274.",
+        "P. Erd\u0151s and L. B. Richmond, <a href=\"https://doi.org/10.1007/BF01202789\">On graphical partitions</a> Combinatorica 13 (1993), no. 1, 57-63.",
+        "Axel Kohnert, <a href=\"https://doi.org/10.37236/1845\">Dominance Order and Graphical Partitions</a>, Electronic J. Combinatorics, 11 (2004).",
+        "Gerard Sierksma and Han Hoogeveen, <a href=\"http://dx.doi.org/10.1002/jgt.3190150209\">Seven criteria for integer sequences being graphic</a>, J. Graph Theory 15 (1991), no. 2, 223-231.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/GraphicalPartition.html\">Graphical partition.</a>",
+        "Gus Wiseman, <a href=\"/A000569/a000569.png\">Simple graphs realizing each of the a(6) = 31 graphical partitions of 12.</a>",
+        "<a href=\"/index/Gra#graph_part\">Index entries for sequences related to graphical partitions</a>"
+    ],
+    "example": [
+        "a(2)=2: the graphical partitions of 4 are 2+1+1 and 1+1+1+1, corresponding to the degree sequences of the graphs V and ||.",
+        "From _Gus Wiseman_, Oct 26 2018: (Start)",
+        "The a(1) = 1 through a(5) = 17 graphical partitions:",
+        "  (11)  (211)   (222)     (2222)      (3322)",
+        "        (1111)  (2211)    (3221)      (22222)",
+        "                (3111)    (22211)     (32221)",
+        "                (21111)   (32111)     (33211)",
+        "                (111111)  (41111)     (42211)",
+        "                          (221111)    (222211)",
+        "                          (311111)    (322111)",
+        "                          (2111111)   (331111)",
+        "                          (11111111)  (421111)",
+        "                                      (511111)",
+        "                                      (2221111)",
+        "                                      (3211111)",
+        "                                      (4111111)",
+        "                                      (22111111)",
+        "                                      (31111111)",
+        "                                      (211111111)",
+        "                                      (1111111111)",
+        "(End)"
+    ],
+    "mathematica": [
+        "<< MathWorld`Graphs`",
+        "Table[Count[RealizeDegreeSequence /@ Partitions[n], _Graph], {n, 2, 20, 2}]",
+        "(* second program *)",
+        "prptns[m_]:=Union[Sort/@If[Length[m]==0,{{}},Join@@Table[Prepend[#,m[[ipr]]]&/@prptns[Delete[m,List/@ipr]],{ipr,Select[Prepend[{#},1]&/@Select[Range[2,Length[m]],m[[#]]>m[[#-1]]&],UnsameQ@@m[[#]]&]}]]];",
+        "strnorm[n_]:=Flatten[MapIndexed[Table[#2,{#1}]&,#]]&/@IntegerPartitions[n];",
+        "Table[Length[Select[strnorm[2*n],Select[prptns[#],UnsameQ@@#&]!={}&]],{n,6}] (* _Gus Wiseman_, Oct 26 2018 *)"
+    ],
+    "xref": [
+        "Cf. A000070, A000219, A004250, A004251, A007717, A025065, A029889, A095268, A096373, A147878, A209816, A320911, A320921, A320922."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 79,
+    "revision": 76,
+    "time": "2022-07-14T09:36:10-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

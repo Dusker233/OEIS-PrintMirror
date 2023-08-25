@@ -1,0 +1,35 @@
+{
+    "number": 257689,
+    "data": "1,2,3,5,7,11,13,17,19,23,25,29,31,37,41,43,47,53,59,61,67,71,73,77,79,83,89,91,97,101,103,107,109,113,115,119,121,127,131,137,139,143,149,151,157,161,163,167,173,175,179,181,191,193,197,199,209,211,221,223,227,229,233,235,239,241,247,251,257,263,265",
+    "name": "Numbers that are either ludic or prime.",
+    "link": [
+        "Antti Karttunen, <a href=\"/A257689/b257689.txt\">Table of n, a(n) for n = 1..10181</a>"
+    ],
+    "mathematica": [
+        "a3309[nmax_] := a3309[nmax] = Module[{t = Range[2, nmax], k, r = {1}}, While[Length[t] > 0, k = First[t]; AppendTo[r, k]; t = Drop[t, {1, -1, k}]]; r];",
+        "ludicQ[n_, nmax_] /; 1 <= n <= nmax := MemberQ[a3309[nmax], n];",
+        "terms = 1000;",
+        "f[nmax_] := f[nmax] = Select[Range[nmax], ludicQ[#, nmax] || PrimeQ[#]&] // PadRight[#, terms]&;",
+        "f[nmax = terms];",
+        "f[nmax = 2 nmax];",
+        "While[f[nmax] != f[nmax/2], nmax = 2 nmax];",
+        "seq = f[nmax] (* _Jean-Fran\u00e7ois Alcover_, Dec 10 2021, after _Ray Chandler_ in A003309 *)"
+    ],
+    "program": [
+        "(Scheme, with _Antti Karttunen_'s IntSeq-library)",
+        "(define A257689 (MATCHING-POS 1 1 (lambda (n) (or (= 1 (A192490 n)) (= 1 (A010051 n))))))"
+    ],
+    "xref": [
+        "Union of primes (A000040) and ludic numbers (A003309).",
+        "Cf. A192506 (complement, neither ludic nor prime), A192503 (ludic and prime), A192504 (ludic and nonprime), A192505 (nonludic and prime).",
+        "Differs from A206074(n-1), A186891(n) and A257688(n) for the first time at n=19, where a(19) = 59, while A206074(18) = A186891(19) = A257688(19) = 55, a term missing from here.",
+        "Differs from A257691 for the first time at n=24, where a(24) = 77, while A257691(24) = 79."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, May 07 2015",
+    "references": 4,
+    "revision": 19,
+    "time": "2021-12-10T07:24:41-05:00",
+    "created": "2015-05-14T15:58:30-04:00"
+}

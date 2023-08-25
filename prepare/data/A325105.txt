@@ -1,0 +1,57 @@
+{
+    "number": 325105,
+    "data": "1,2,3,7,8,20,48,112,113,325,777,1737,3709,7741,15869,32253,32254,96538,225798,485702,1006338,2049602,4137346,8315266,16697102,33465934,67007886,134100366,268301518,536720590,1073575118,2147316942,2147316943,6441886323",
+    "name": "Number of binary carry-connected subsets of {1...n}.",
+    "comment": [
+        "A binary carry of two positive integers is an overlap of the positions of 1's in their reversed binary expansion. A subset is binary carry-connected if the graph whose vertices are the elements and whose edges are binary carries is connected."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A325105/b325105.txt\">Table of n, a(n) for n = 0..1023</a>"
+    ],
+    "formula": [
+        "a(n) = A306297(n,0) + A306297(n,1). - _Alois P. Heinz_, Mar 31 2019"
+    ],
+    "example": [
+        "The a(0) = 1 through a(4) = 8 subsets:",
+        "  {}  {}   {}   {}       {}",
+        "      {1}  {1}  {1}      {1}",
+        "           {2}  {2}      {2}",
+        "                {3}      {3}",
+        "                {1,3}    {4}",
+        "                {2,3}    {1,3}",
+        "                {1,2,3}  {2,3}",
+        "                         {1,2,3}"
+    ],
+    "maple": [
+        "h:= proc(n, s) local i, m; m:= n;",
+        "      for i in s do m:= Bits[Or](m, i) od; {m}",
+        "    end:",
+        "g:= (n, s)-> (w-> `if`(w={}, s union {n}, s minus w union",
+        "              h(n, w)))(select(x-> Bits[And](n, x)>0, s)):",
+        "b:= proc(n, s) option remember; `if`(n=0,",
+        "      `if`(nops(s)>1, 0, 1), b(n-1, s)+b(n-1, g(n, s)))",
+        "    end:",
+        "a:= n-> b(n, {}):",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, Mar 31 2019"
+    ],
+    "mathematica": [
+        "binpos[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[Subsets[Range[n]],Length[csm[binpos/@#]]<=1&]],{n,0,10}]"
+    ],
+    "xref": [
+        "Cf. A019565, A080572, A247935, A304714, A304716, A305078.",
+        "Cf. A325095, A325098, A325099, A325104, A325107, A325118, A325119.",
+        "Partial sums of A306299."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Mar 28 2019",
+    "ext": [
+        "a(16)-a(33) from _Alois P. Heinz_, Mar 31 2019"
+    ],
+    "references": 10,
+    "revision": 13,
+    "time": "2019-07-27T14:57:51-04:00",
+    "created": "2019-03-29T08:14:50-04:00"
+}

@@ -1,0 +1,29 @@
+{
+    "number": 361459,
+    "data": "0,0,0,0,0,1,1,2,3,5,7,12,15,23,31,44,58,82,105,142,185,244,312,409,516,664,837,1063,1328,1674,2074,2588,3194,3952,4847,5964,7270,8884,10786,13104,15832,19147,23027,27709,33203,39776,47476,56661,67382,80108,94960,112494,132919,156965",
+    "name": "Number of partitions p of n such that 5*min(p) is a part of p.",
+    "formula": [
+        "G.f.: Sum_{k>=1} x^(6*k)/Product_{j>=k} (1-x^j)."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0, 1,",
+        "      `if`(i>n, 0, b(n, i+1)+b(n-i, i)))",
+        "    end:",
+        "a:= n-> add(b(n-6*i, i), i=1..n/6):",
+        "seq(a(n), n=1..60);  # _Alois P. Heinz_, May 17 2023"
+    ],
+    "program": [
+        "(PARI) my(N=60, x='x+O('x^N)); concat([0, 0, 0, 0, 0], Vec(sum(k=1, N, x^(6*k)/prod(j=k, N, 1-x^j))))"
+    ],
+    "xref": [
+        "Cf. A117989, A238589, A238590, A238591.",
+        "Cf. A237827, A363068."
+    ],
+    "keyword": "nonn",
+    "offset": "1,8",
+    "author": "_Seiichi Manyama_, May 17 2023",
+    "references": 0,
+    "revision": 15,
+    "time": "2023-05-17T11:30:03-04:00",
+    "created": "2023-05-17T11:30:03-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 319919,
+    "data": "1,1,3,10,25,70,182,476,1220,3122,7883,19794,49340,122237,301114,737923,1799597,4369204,10563800,25441377,61048713,145988775,347981713,826921992,1959363778,4629903905,10911757432,25652950459,60165831361,140792215037,328750398275,766041930160,1781452975346",
+    "name": "Expansion of Product_{k>=1} (1 + x^k)^(2^k-1).",
+    "comment": [
+        "Convolution of A081362 and A102866.",
+        "Weigh transform of A000225."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A319919/b319919.txt\">Table of n, a(n) for n = 0..3000</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f.: exp(Sum_{k>=1} (-1)^(k+1)*x^k/(k*(1 - x^k)*(1 - 2*x^k))).",
+        "a(n) ~ c * exp(2*sqrt(n) - 1/2) * 2^(n-1) / (A079555 * sqrt(Pi) * n^(3/4)), where c = exp(Sum_{k>=2} (-1)^(k-1)/(k*(2^(k-1)-1)) = 0.6602994483152065685... - _Vaclav Kotesovec_, Sep 15 2021"
+    ],
+    "maple": [
+        "a:=series(mul((1+x^k)^(2^k-1),k=1..100),x=0,33): seq(coeff(a,x,n),n=0..32); # _Paolo P. Lava_, Apr 02 2019"
+    ],
+    "mathematica": [
+        "nmax = 32; CoefficientList[Series[Product[(1 + x^k)^(2^k - 1), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 32; CoefficientList[Series[Exp[Sum[(-1)^(k + 1) x^k/(k (1 - x^k) (1 - 2 x^k)), {k, 1, nmax}]], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[(-1)^(k/d + 1) d (2^d - 1), {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 32}]"
+    ],
+    "xref": [
+        "Cf. A000225, A007070, A081362, A098407, A102866, A319918."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Oct 01 2018",
+    "references": 2,
+    "revision": 10,
+    "time": "2021-09-15T05:11:30-04:00",
+    "created": "2018-10-01T21:14:48-04:00"
+}

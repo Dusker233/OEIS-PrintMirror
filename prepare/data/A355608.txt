@@ -1,0 +1,57 @@
+{
+    "number": 355608,
+    "data": "4,11,12,13,14,15,16,17,18,19,21,22,23,24,25,26,27,28,29,31,32,33,34,35,36,37,38,39,41,42,43,44,45,46,47,48,49,51,52,53,54,55,56,57,58,59,61,62,63,64,65,66,67,68,69,71,72,73,74,75,76,77,78,79,81,82,83,84,85,86,87,88,89,91,92,93,94,95,96,97,98,99,122,134,143,146",
+    "name": "Zeroless numbers k such that x^2 - s*x + p has only integer roots, where s and p denote the sum and product of the digits of k respectively.",
+    "comment": [
+        "Intersection of A052382 (zeroless numbers) and A355497.",
+        "There are respectively 1, 81, 52, 247, 650, 2335, 3129, 9100, 20682 terms with 1, 2, ..., 9 digits."
+    ],
+    "link": [
+        "Jean-Marc Rebert, <a href=\"/A355608/b355608.txt\">Table of n, a(n) for n = 1..3366</a>"
+    ],
+    "example": [
+        "k = 4 is a term, since 4 is zeroless, the sum of the digits of 4 is 4, the product of the digits of 4 is 4 and the root 2 of x^2 - 4x + 4 is an integer."
+    ],
+    "maple": [
+        "isA355608 := proc(n)",
+        "    local dgs,p,s ;",
+        "    dgs := convert(n,base,10) ;",
+        "    p := mul(d,d=dgs) ;",
+        "    s := add(d,d=dgs) ;",
+        "    if p <> 0 then",
+        "        -s/2+sqrt(s^2/4-p) ;",
+        "        if type(simplify(%),integer) then",
+        "            -s/2-sqrt(s^2/4-p) ;",
+        "            if type(simplify(%),integer) then",
+        "                true ;",
+        "            else",
+        "                false ;",
+        "            end if;",
+        "        else",
+        "            false ;",
+        "        end if;",
+        "    else",
+        "        false ;",
+        "    end if ;",
+        "end proc:",
+        "for n from 1 to 180 do",
+        "    if isA355608(n) then",
+        "        printf(\"%d,\",n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 24 2023"
+    ],
+    "program": [
+        "(PARI) is(n)=my(v=digits(n), c=vecprod(v)); c&& issquare(vecsum(v)^2-4*c)"
+    ],
+    "xref": [
+        "Cf. A007953, A007954, A052382 (zeroless numbers).",
+        "Cf. A355497, A355547."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Jean-Marc Rebert_, Jul 09 2022",
+    "references": 1,
+    "revision": 46,
+    "time": "2023-01-24T10:30:26-05:00",
+    "created": "2022-07-12T08:28:25-04:00"
+}

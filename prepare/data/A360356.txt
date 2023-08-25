@@ -1,0 +1,31 @@
+{
+    "number": 360356,
+    "data": "56,104,196,304,364,368,464,532,644,812,1036,1184,1204,1316,1376,1484,1504,1696,1708,1952,1988,2044,2212,2492,2716,2828,2884,2996,3164,3496,3668,3836,3892,4172,4228,4408,4544,4564,4672,4676,4844,5056,5068,5336,5404,5516",
+    "name": "Primitive terms of A360332: terms of A360332 with no proper divisor in A360332.",
+    "comment": [
+        "If m is a term then k*m is a term of A360332 for all k in A320628.",
+        "Analogous to primitive abundant numbers (A091191) with divisors that are restricted to numbers that have only nonprime-indexed prime factors."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A360356/b360356.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "f[p_, e_] := If[PrimeQ[PrimePi[p]], 1, (p^(e + 1) - 1)/(p - 1)]; s[1] = 1; s[n_] := Times @@ f @@@ FactorInteger[n]; primQ[n_] := s[n] > 2*n && AllTrue[Divisors[n], # == n || s[#] <= 2*# &]; Select[Range[6000], primQ]"
+    ],
+    "program": [
+        "(PARI) isab(n) = {my(f = factor(n), p = f[,1], e = f[,2]); prod(i = 1, #p, if(isprime(primepi(p[i])), 1, (p[i]^(e[i]+1)-1)/(p[i]-1))) > 2*n;}",
+        "is(n) = {if(!isab(n), return(0)); fordiv(n, d, if(d < n && isab(d), return(0))); return(1)};"
+    ],
+    "xref": [
+        "Subsequence of A360332.",
+        "Cf. A320628.",
+        "Similar sequences: A006038, A091191, A249263, A302574, A360355."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Feb 04 2023",
+    "references": 2,
+    "revision": 9,
+    "time": "2023-02-06T01:28:09-05:00",
+    "created": "2023-02-04T20:57:01-05:00"
+}

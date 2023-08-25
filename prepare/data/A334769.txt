@@ -1,0 +1,65 @@
+{
+    "number": 334769,
+    "data": "151,233,543,599,937,993,1379,1483,1589,1693,2359,2391,3753,3785,8607,9559,10707,11547,13029,13869,15017,15969,22115,22243,23627,23755,25397,25525,26909,27037,33151,34591,35535,36015,37687,38231,39047,40679,57625,59257",
+    "name": "Numbers m that generate rotationally symmetrical XOR-triangles T(m) that have central triangles of zeros.",
+    "comment": [
+        "An XOR-triangle T(m) is an inverted 0-1 triangle formed by choosing as top row the binary rendition of n and having each entry in subsequent rows be the XOR of the two values above it, i.e., A038554(n) applied recursively until we reach a single bit.",
+        "A334556 is the sequence of rotationally symmetrical T(m) (here abbreviated RST).",
+        "A central zero-triangle (CZT) is a field of contiguous 0-bits in T(m) surrounded on all sides by a layer of 1 bits, and generally k > 1 bits of any parity. Alternatively, these might be referred to as \"central bubbles\"."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A334769/b334769.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Michael De Vlieger, <a href=\"http://vincico.com/seq/a334769.html\">Central zero-triangles in rotationally symmetrical XOR-Triangles</a>, 2020.",
+        "Michael De Vlieger, <a href=\"/A334769/a334769_2.txt\">Basic aspects of rotationally symmetrical XOR-triangles that have central zero triangles</a>",
+        "Michael De Vlieger, <a href=\"/A334769/a334769_3.png\">Diagram montage</a> of XOR-triangles for terms 1 <= n <= 1000.",
+        "R\u00e9my Sigrist, <a href=\"/A334769/a334769_1.txt\">C program for A334769K</a>",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>",
+        "<a href=\"/index/X#XOR-triangles\">Index entries for sequences related to XOR-triangles</a>"
+    ],
+    "example": [
+        "For n = 151, we have rotationally symmetrical T(151) as below, replacing 0 with \".\" for clarity:",
+        "  1 . . 1 . 1 1 1",
+        "   1 . 1 1 1 . .",
+        "    1 1 . . 1 .",
+        "     . 1 . 1 1",
+        "      1 1 1 .",
+        "       . . 1",
+        "        . 1",
+        "         1",
+        "At the center of the figure we see a CZT with s = 2, ringed by 1s, with k = 2. Thus 151 is in the sequence.",
+        "For n = 11, we have rotationally symmetrical T(11):",
+        "  1 . 1 1",
+        "   1 1 .",
+        "    . 1",
+        "     1",
+        "Since there is no CZT, 11 is not in the sequence.",
+        "For n = 91, we have rotationally symmetrical T(91):",
+        "  1 . 1 1 . 1 1",
+        "   1 1 . 1 1 .",
+        "    . 1 1 . 1",
+        "     1 . 1 1",
+        "      1 1 .",
+        "       . 1",
+        "        1",
+        "This XOR-triangle has many bubbles but none in the center, so 91 is not in the sequence."
+    ],
+    "mathematica": [
+        "Block[{s, t = Array[NestWhileList[Map[BitXor @@ # &, Partition[#, 2, 1]] &, IntegerDigits[#, 2], Length@ # > 1 &] &, 2^18]}, s = Select[Range[Length@ t], Function[{n, h}, (Reverse /@ Transpose[MapIndexed[PadRight[#, h, -1] &, t[[n]] ]] /. -1 -> Nothing) == t[[n]]] @@ {#, IntegerLength[#, 2]} &]; Array[Block[{n = s[[#]]}, If[# == 0, Nothing, n] &@ FirstCase[MapIndexed[If[2 #2 > #3 + 1, Nothing, #1[[#2 ;; -#2]]] & @@ {#1, First[#2], Length@ #1} &, NestWhileList[Map[BitXor @@ # &, Partition[#, 2, 1]] &, IntegerDigits[n, 2], Length@ # > 1 &][[1 ;; Ceiling[IntegerLength[#, 2]/(2 Sqrt[3])] + 3]]  ], r_List /; FreeQ[r, 1] :> Length@ r] /. k_ /; MissingQ@ k -> 0] &, Length@ s - 1, 2] ]"
+    ],
+    "program": [
+        "(C) See Links section."
+    ],
+    "xref": [
+        "Cf. A038554, A070939, A334556, A334770, A334771, A334796, A334836."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michael De Vlieger_, May 10 2020",
+    "ext": [
+        "Data corrected by _R\u00e9my Sigrist_, May 15 2020"
+    ],
+    "references": 12,
+    "revision": 27,
+    "time": "2020-05-20T16:00:10-04:00",
+    "created": "2020-05-12T22:53:40-04:00"
+}

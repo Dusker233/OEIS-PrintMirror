@@ -1,0 +1,40 @@
+{
+    "number": 350341,
+    "data": "1,4,1225,354025,187279225,256385259025,720186192601225,2898439345541083201,6402652514300252791009,32275771324587574319476369,171997585388727183548489570401,1618325280922534070007738367903009,18528206141282092567518596574121550041,298841436852738871021507444144006480611289",
+    "name": "a(n) is the smallest abelian order with precisely 2^n groups.",
+    "comment": [
+        "If m is an abelian order, then m = (p_1)^2 * (p_2)^2 * ... * (p_r)^2 * q_1 * q_2 * ... * q_s, where p_1, p_2, ... p_r, q_1, q_2, ..., q_s are distinct primes such that (p_i)^2 !== 1 (mod p_j) for i != j, (p_i)^2 !== 1 (mod q_j), q_i !== 1 (mod p_j), q_i !== 1 (mod q_j) for i != j. In this case there are 2^r groups of order m.",
+        "Note that the smallest abelian order with precisely 2^n groups must be the square of a squarefree number.",
+        "a(n) is the smallest square number with n distinct prime factors that is an abelian order.",
+        "a(n) is the smallest number of the form (p_1*p_2*...*p_n)^2 where the p_i are distinct primes and no (p_j)^2-1 is divisible by any p_i.",
+        "a(n) exists for all n.",
+        "Except for a(1) = 4, no term can be divisible by 2 or 3. Conjecture: lpf(a(n+1)) >= lpf(a(n)) for all n, where lpf = least prime factor."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A350341/b350341.txt\">Table of n, a(n) for n = 0..18</a>"
+    ],
+    "formula": [
+        "a(n) = A350340(n)^2."
+    ],
+    "example": [
+        "a(2) = 1225 = 35^2 since the smallest square number with 2 distinct prime factors that is an abelian order is 1225.",
+        "a(3) = 354025 = 595^2 since the smallest square number with 3 distinct prime factors that is an abelian order is 354025."
+    ],
+    "program": [
+        "(PARI) isA051532(n) = my(f=factor(n), v=vector(#f[, 1])); for(i=1, #v, if(f[i, 2]>2, return(0), v[i]=f[i, 1]^f[i, 2])); for(i=1, #v, for(j=i+1, #v, if(v[i]%f[j, 1]==1 || v[j]%f[i, 1]==1, return(0)))); 1 \\\\ _Charles R Greathouse IV_'s program for A051532",
+        "a(n) = for(k=1, oo, if(issquarefree(k) && omega(k)==n && isA051532(k^2), return(k^2)))"
+    ],
+    "xref": [
+        "Cf. A051532 (abelian orders), A264907, A350340."
+    ],
+    "keyword": "nonn,hard",
+    "offset": "0,2",
+    "author": "_Jianing Song_, Dec 25 2021",
+    "ext": [
+        "a(7)-a(11) from _David A. Corneth_, Jan 02 2022"
+    ],
+    "references": 4,
+    "revision": 25,
+    "time": "2022-01-11T22:14:10-05:00",
+    "created": "2022-01-03T13:42:14-05:00"
+}

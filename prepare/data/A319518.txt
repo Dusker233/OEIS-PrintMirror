@@ -1,0 +1,38 @@
+{
+    "number": 319518,
+    "data": "1,1,4,27,218,2178,25529,343392,5205948,87740878,1626182463,32852520594,718169744206,16883948532684,424649281630018,11374387591643065,323183885622356184,9706973096869527210,307248234238900686688,10220414166250239718518",
+    "name": "Number of sets of nonempty words with a total of n letters over n-ary alphabet such that if a letter occurs in the set all predecessors occur at least once.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A319518/b319518.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "example": [
+        "a(0) = 1: {}.",
+        "a(1) = 1: {a}.",
+        "a(2) = 4: {aa}, {ab}, {ba}, {a,b}.",
+        "a(3) = 27: {aaa}, {aab}, {aba}, {abb}, {abc}, {acb}, {baa}, {bab}, {bac}, {bba}, {bca}, {cab}, {cba}, {a,aa}, {a,ab}, {a,ba}, {a,bb}, {a,bc}, {a,cb}, {aa,b}, {ab,b}, {ab,c}, {ac,b}, {b,ba}, {b,ca}, {ba,c}, {a,b,c}."
+    ],
+    "maple": [
+        "h:= proc(n, i, k) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(h(n-i*j, i-1, k)*binomial(k^i, j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> add(add((-1)^i*binomial(k, i)*h(n$2, k-i), i=0..k), k=0..n):",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "h[n_, i_, k_] := h[n, i, k] = If[n == 0, 1, If[i < 1, 0,",
+        "     Sum[h[n - i*j, i - 1, k]*Binomial[k^i, j], {j, 0, n/i}]]];",
+        "a[n_] := Sum[Sum[(-1)^i*Binomial[k, i]*h[n, n, k-i], {i, 0, k}], {k, 0, n}];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Mar 10 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Row sums of A319501.",
+        "Cf. A257741."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 21 2018",
+    "references": 4,
+    "revision": 17,
+    "time": "2022-03-10T09:31:26-05:00",
+    "created": "2018-09-23T13:56:58-04:00"
+}

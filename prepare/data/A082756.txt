@@ -1,0 +1,46 @@
+{
+    "number": 82756,
+    "data": "3,5,7,227,733,3257,3733,5237,5333,7577,7727,7757,22277,23333,25537,27737,32237,32327,32537,35327,35537,37273,37277,52237,52733,53327,53353,53777,55337,72227,72733,75227,75533,75557,222533,222553,222557,223277,223757,225227",
+    "name": "Larger of a pair of consecutive primes having only prime digits.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A082756/b082756.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "227 is a term as the previous prime 223 also has only prime digits."
+    ],
+    "mathematica": [
+        "NextPrim[n_] := Block[{k = n + 1}, While[ !PrimeQ[k], k++ ]; k]; p = 0; q = 1; pd = {1}; Do[p = q; pd = qd; q = NextPrim[p]; qd = Union[ Join[{2, 3, 5, 7}, IntegerDigits[q]]]; If[pd == qd == {2, 3, 5, 7}, Print[q]], {n, 1, 20000}]",
+        "Transpose[Select[Partition[Prime[Range[20000]],2,1],And@@PrimeQ[ Flatten[ IntegerDigits/@#]]&]] [[2]] (* _Harvey P. Dale_, Jul 19 2011 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import nextprime, isprime",
+        "from itertools import count, islice, product",
+        "def onlypd(n): return set(str(n)) <= set(\"2357\")",
+        "def agen():",
+        "    yield from [3, 5, 7]",
+        "    for digits in count(2):",
+        "        for p in product(\"2357\", repeat=digits-1):",
+        "            for end in \"37\":",
+        "                t = int(\"\".join(p) + end)",
+        "                if isprime(t):",
+        "                    t2 = nextprime(t)",
+        "                    if onlypd(t2):",
+        "                        yield t2",
+        "print(list(islice(agen(), 40))) # _Michael S. Branicky_, Mar 11 2022"
+    ],
+    "xref": [
+        "Cf. A019546, A082755."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Apr 18 2003",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Apr 22 2003",
+        "a(38) and beyond from _Michael S. Branicky_, Mar 11 2022"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2022-03-11T13:01:17-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

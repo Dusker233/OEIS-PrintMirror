@@ -1,0 +1,39 @@
+{
+    "number": 349791,
+    "data": "6,12,19,30,42,59,72,89,107,134,157,181,205,236,271,311,348,381,421,461,503,560,601,650,701,754,821,870,933,994,1051,1113,1193,1268,1319,1423,1482,1559,1624,1723,1801,1884,1993,2081,2148,2267,2357,2444,2549,2663",
+    "name": "a(n) is the median of the primes between n^2 and (n+1)^2.",
+    "comment": [
+        "The median of an even number of values is assumed to be defined as the arithmetic mean of the two central elements in their sorted list. The special case of the primes 2 and 3 in the interval [1,4] is excluded because their median would be 5/2."
+    ],
+    "link": [
+        "Hugo Pfoertner, <a href=\"/A349791/b349791.txt\">Table of n, a(n) for n = 2..10000</a>"
+    ],
+    "mathematica": [
+        "Table[Median@Select[Range[n^2,(n+1)^2],PrimeQ],{n,2,51}] (* _Giorgos Kalogeropoulos_, Dec 05 2021 *)"
+    ],
+    "program": [
+        "(PARI) medpsq(n) = {my(p1=nextprime(n^2), p2=precprime((n+1)^2), np1=primepi(p1), np2=primepi(p2), nm=(np1+np2)/2);",
+        "if(denominator(nm)==1, prime(nm), (prime(nm-1/2)+prime(nm+1/2))/2)};",
+        "for(k=2,51,print1(medpsq(k),\", \"))",
+        "(Python)",
+        "from sympy import primerange",
+        "from statistics import median",
+        "def a(n): return int(median(primerange(n**2, (n+1)**2)))",
+        "print([a(n) for n in range(2, 52)]) # _Michael S. Branicky_, Dec 05 2021",
+        "(Python)",
+        "from sympy import primepi, prime",
+        "def A349791(n):",
+        "    b = primepi(n**2)+primepi((n+1)**2)+1",
+        "    return (prime(b//2)+prime((b+1)//2))//2 if b % 2 else prime(b//2) # _Chai Wah Wu_, Dec 05 2021"
+    ],
+    "xref": [
+        "Cf. A000290, A000720, A014085, A309359, A349792."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Hugo Pfoertner_, Dec 05 2021",
+    "references": 2,
+    "revision": 21,
+    "time": "2022-12-27T08:32:59-05:00",
+    "created": "2021-12-05T10:39:46-05:00"
+}

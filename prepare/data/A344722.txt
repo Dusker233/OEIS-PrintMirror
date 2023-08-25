@@ -1,0 +1,33 @@
+{
+    "number": 344722,
+    "data": "1,15,81,240,610,1230,2336,3840,6371,9455,14097,19615,27441,36205,48849,61874,79860,99470,124816,150846,186498,221646,267232,313840,373059,431599,508595,581009,673635,767835,881357,989615,1131667,1264111,1429875,1590464,1785010",
+    "name": "a(n) = Sum_{k=1..n} (-1)^(k+1) * floor(n/k)^4.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A344722/b344722.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1,..n} Sum_{d|k} (-1)^(k/d + 1) * (d^4 - (d - 1)^4).",
+        "G.f.: (1/(1 - x)) * Sum_{k>=1} (k^4 - (k - 1)^4) * x^k/(1 + x^k).",
+        "a(n) ~ 7 * Pi^4 * n^4 / 720. - _Vaclav Kotesovec_, May 28 2021"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[(-1)^(k + 1) * Quotient[n, k]^4, {k, 1, n}]; Array[a, 50] (* _Amiram Eldar_, May 27 2021 *)",
+        "Accumulate[Table[3*DivisorSigma[0, n] - 2*DivisorSigma[0, 2*n] - 8*DivisorSigma[1, n] + 4*DivisorSigma[1, 2*n] + 9*DivisorSigma[2, n] - 3*DivisorSigma[2, 2*n] - 5*DivisorSigma[3, n] + DivisorSigma[3, 2*n], {n, 1, 50}]] (* _Vaclav Kotesovec_, May 28 2021 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, (-1)^(k+1)*(n\\k)^4);",
+        "(PARI) a(n) = sum(k=1, n, sumdiv(k, d, (-1)^(k/d+1)*(d^4-(d-1)^4)));",
+        "(PARI) my(N=40, x='x+O('x^N)); Vec(sum(k=1, N, (k^4-(k-1)^4)*x^k/(1+x^k))/(1-x))"
+    ],
+    "xref": [
+        "Column k=4 of A344726.",
+        "Cf. A318743."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, May 27 2021",
+    "references": 2,
+    "revision": 22,
+    "time": "2021-05-28T17:17:59-04:00",
+    "created": "2021-05-27T17:09:50-04:00"
+}

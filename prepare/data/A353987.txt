@@ -1,0 +1,42 @@
+{
+    "number": 353987,
+    "data": "1,51,130,996,3224,4287,9951,12676,72004,53812945",
+    "name": "Numbers k such that F(k), F(k+1) and F(k+2) have the same binary weight (A000120), where F(k) is the k-th Fibonacci number (A000045).",
+    "comment": [
+        "Numbers k such that A011373(k) = A011373(k+1) = A011373(k+2).",
+        "The corresponding values of A011373(k) are 1, 17, 42, 354, 1110, 1490, 3451, 4383, 24988, 18678035, ..."
+    ],
+    "example": [
+        "1 is a term since A011373(1) = A011373(2) = A011373(3) = 1.",
+        "51 is a term since A011373(51) = A011373(52) = A011373(53) = 17."
+    ],
+    "mathematica": [
+        "s[n_] := s[n] = DigitCount[Fibonacci[n], 2, 1]; Select[Range[10^4], s[#] == s[# + 1] == s[# + 2] &] (* _Amiram Eldar_, May 13 2022 *)"
+    ],
+    "program": [
+        "(PARI) hf(k) = hammingweight(fibonacci(k)); \\\\ A011373",
+        "isok(k) = my(h=hf(k)); (h == hf(k+1)) && (h == hf(k+2)); \\\\ _Michel Marcus_, May 13 2022",
+        "(Python 3.10+)",
+        "# if Python version < 3.10, replace c.bit_count() with bin(c).count('1')",
+        "from itertools import islice",
+        "def A353987_gen(): # generator of terms",
+        "        b, c, k, ah, bh = 1, 2, 1, 1, 1",
+        "        while True:",
+        "            if ah == (ch := c.bit_count()) == bh:",
+        "                yield k",
+        "            b, c, ah, bh = c, b+c, bh, ch",
+        "            k += 1",
+        "A353987_list = list(islice(A353987_gen(),7)) # _Chai Wah Wu_, May 14 2022"
+    ],
+    "xref": [
+        "Cf. A000045, A000120, A011373.",
+        "Subsequence of A353986."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, May 13 2022",
+    "references": 2,
+    "revision": 9,
+    "time": "2022-05-15T07:30:17-04:00",
+    "created": "2022-05-15T07:30:17-04:00"
+}

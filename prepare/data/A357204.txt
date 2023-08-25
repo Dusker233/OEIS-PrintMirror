@@ -1,0 +1,44 @@
+{
+    "number": 357204,
+    "data": "1,1,4,30,245,2256,21849,220655,2294241,24402721,264251525,2903503779,32289673568,362755014742,4110792367801,46933876797456,539362815736466,6234031681945681,72421584940086375,845164178044504188,9903469546224045896,116475680442085941037",
+    "name": "Coefficients in the power series A(x) such that: A(x)^4 = Sum_{n=-oo..+oo} x^n * (1 - x^(n+1))^(n+1) * A(x)^n.",
+    "comment": [
+        "Compare to A357154 and A357164.",
+        "Related identity: 0 = Sum_{n=-oo..+oo} x^n * (1 - x^(n+1))^(n+1).",
+        "Related identity: 0 = Sum_{n=-oo..+oo} x^(k*n) * (y - x^(n+1-k))^n, which holds for any positive integer k and real y."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A357204/b357204.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n) * x^n satisfies the following relations.",
+        "(1) A(x)^4 = Sum_{n=-oo..+oo} x^n * (1 - x^(n+1))^(n+1) * A(x)^n.",
+        "(2) x*A(x)^5 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n-1)) / ( (1 - x^n)^n * A(x)^n ).",
+        "(3) -x*A(x)^6 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n-1)) * A(x)^n / (1 - x^n*A(x))^n.",
+        "(4) -A(x)^7 = Sum_{n=-oo..+oo} x^n * (A(x) - x^(n+1))^(n+1) / A(x)^n.",
+        "(5) 0 = Sum_{n=-oo..+oo} x^n * (1 - x^(n+1)*A(x))^(n+1) / A(x)^n.",
+        "(6) 0 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(n-1)) * A(x)^n / (A(x) - x^n)^n."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 4*x^2 + 30*x^3 + 245*x^4 + 2256*x^5 + 21849*x^6 + 220655*x^7 + 2294241*x^8 + 24402721*x^9 + 264251525*x^10 + ...",
+        "such that",
+        "A(x)^4 = ... + x^(-2)*(1 - 1/x)^(-1)/A(x)^2 + x^(-1)/A(x) + (1 - x) + x*(1 - x^2)*A(x) + x^2*(1 - x^3)^3*A(x)^2 + x^3*(1 - x^4)^4*A(x)^3 + ... + x^n*(1 - x^(n+1))^(n+1)*A(x)^n + ...",
+        "also",
+        "-A(x)^7 = ... + x^(-2)*(A(x) - 1/x)^(-1)*A(x)^2 + x^(-1)*A(x) + (A(x) - x) + x*(A(x) - x^2)^2/A(x) + x^2*(A(x) - x^3)^3/A(x)^2 + x^3*(A(x) - x^4)^4/A(x)^3 + ... + x^n*(A(x) - x^(n+1))^(n+1)/A(x)^n + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1]); for(i=0, n, A = concat(A, 0);",
+        "A[#A] = polcoeff(Ser(A)^4 - sum(n=-#A-2, #A+2, x^(n) * (1 - x^(n+1) +x*O(x^#A))^(n+1) * Ser(A)^n  ), #A-2); ); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A357154, A357164, A357200, A357201, A357202, A357203, A357205."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Sep 17 2022",
+    "references": 6,
+    "revision": 7,
+    "time": "2022-09-20T00:02:25-04:00",
+    "created": "2022-09-18T12:37:18-04:00"
+}

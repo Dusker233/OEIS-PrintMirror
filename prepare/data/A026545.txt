@@ -1,0 +1,40 @@
+{
+    "number": 26545,
+    "data": "1,1,6,19,79,306,1247,5069,20889,86479,360205,1506462,6324176,26630423,112439094,475838291,2017827545,8572102713,36474080228,155418445421,663102388605,2832471934357,12111891668431,51841780973922,222092855692496,952237575555176,4085873505697131,17544024146446621",
+    "name": "a(n) = T(2n-1, n-1), T given by A026536.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A026545/b026545.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "formula": [
+        "a(n) = A026536(2*n-1, n-1)."
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[k==0 || k==2*n, 1, If[k==1 || k==2*n-1, Floor[n/2], If[EvenQ[n], T[n-1, k-2] +T[n-1, k-1] +T[n-1, k], T[n-1, k-2] +T[n-1, k]] ]];",
+        "Table[T[2*n-1, n-1], {n,40}] (* _G. C. Greubel_, Apr 11 2022 *)"
+    ],
+    "program": [
+        "(SageMath)",
+        "@CachedFunction",
+        "def T(n, k): # A026536",
+        "    if k < 0 or n < 0: return 0",
+        "    elif k == 0 or k == 2*n: return 1",
+        "    elif k == 1 or k == 2*n-1: return n//2",
+        "    elif n % 2 == 1: return T(n-1, k-2) + T(n-1, k)",
+        "    return T(n-1, k-2) + T(n-1, k-1) + T(n-1, k)",
+        "def A026545(n): return T(2*n-1, n-1)",
+        "[A026545(n) for n in (1..40)] # _G. C. Greubel_, Apr 11 2022"
+    ],
+    "xref": [
+        "Cf. A026536."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Clark Kimberling_",
+    "ext": [
+        "Terms a(20) onward added by _G. C. Greubel_, Apr 11 2022"
+    ],
+    "references": 2,
+    "revision": 8,
+    "time": "2022-04-12T01:35:36-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 336826,
+    "data": "0,1,4,9,11,16,24,25,36,39,42,49,56,64,75,81,88,93,96,111,119,138,144,164,171,192,224,242,250,255,297,312,336,339,366,378,393,408,422,448,456,488,497,516,520,522,525,564,575,648,696,704,738,744,755,777,792",
+    "name": "Bogot\u00e1 numbers: numbers k such that k = m*p(m) where p(m) is the digital product of m.",
+    "comment": [
+        "Named Bogot\u00e1 numbers by Tom\u00e1s Uribe and Juan Pablo Fern\u00e1ndez based on similarity of the construction to the Colombian numbers (A003052).",
+        "Some questions about these numbers:",
+        "(i) Some Bogot\u00e1 numbers occur in pairs (such as 24 and 25). Are there infinitely many such pairs?",
+        "(ii) More generally, can arbitrarily long sets of consecutive numbers be found all of which are Bogot\u00e1 numbers?",
+        "(iii) Can the gap between two consecutive Bogot\u00e1 numbers be arbitrarily large? Answer: Yes.",
+        "From _David A. Corneth_, Aug 06 2020: (Start)",
+        "The only primes in this sequence are A004022.",
+        "To see if a number is a Bogot\u00e1 number, we only have to look at its 7-smooth divisors. Proof: If a number k is a Bogot\u00e1 number then k = m*p(m) where p(m) is 7-smooth as it's a product of digits. Furthermore, if k = m*p(m) then p(m) | k. Q.e.d. Below is an example using this idea.",
+        "To find Bogot\u00e1 numbers k up to N we can make a list of 7-smooth numbers up to sqrt(N) and list the factorizations into single-digit numbers of each of these 7-smooth numbers that when concatenated give m such that m * p(m) = k where p(m) is that 7-smooth number.",
+        "For example, 10 is a 7-smooth number. Its factorizations into single-digit numbers are 2*5, 5*2, 1*2*5 and so on. This tells us that 10*25 = 250, 10*52 = 520, 10*125 = 1250 all are Bogot\u00e1 numbers.",
+        "Similarily we can find odd Bogot\u00e1 numbers to then find consecutive Bogot\u00e1 numbers (See A336864). (End)"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A336826/b336826.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Sean A. Irvine, <a href=\"https://github.com/archmageirvine/joeis/blob/master/src/irvine/oeis/a336/A336826.java\">Java program</a> (github)",
+        "Math Stackexchange, <a href=\"https://math.stackexchange.com/questions/3718212/gaps-between-bogot%c3%a1-numbers/3718477#3718477\">Gaps between Bogot\u00e1 numbers</a>, 2020.",
+        "Puzzling Stackexchange, <a href=\"https://puzzling.stackexchange.com/questions/98998/pairs-of-bogot%c3%a1-numbers?noredirect=1#comment281441_98998\">Pairs of Bogot\u00e1 numbers</a>, 2020."
+    ],
+    "example": [
+        "From _David A. Corneth_, Aug 06 2020: (Start)",
+        "520 is a term because 52 * p(52) = 52 * 10 = 520.",
+        "Example using we only have to look at 7-smooth divisors:",
+        "520 is a term as its 7-smooth divisors d are 1, 2, 4, 5, 8, 10, 20, 40. values 520/d are 520, 260, 130, 104, 65, 52, 26, 13 of which 52 * (5*2) = 520 where (5*2) are the products of 52. (End)"
+    ],
+    "program": [
+        "(PARI) f(n) = vecprod(digits(n))*n; \\\\ A098736",
+        "isok(n) = my(k=0); for (k=0, n, if (f(k) == n, return(1))); \\\\ _Michel Marcus_, Aug 06 2020",
+        "(PARI) is(n) = { my(f = factor(n), s7 = 1, d, sl = sqrtint(n)); for(i = 1, #f~, if(f[i, 1] > 7, break ); s7 *= f[i, 1]^f[i, 2]; ); d = divisors(s7); for(i = 1, #d, if(d[i] > sl, return(0)); if(n/d[i] * vecprod(digits(n/d[i])) == n, return(1); ) ); 0 } \\\\ _David A. Corneth_, Aug 06 2020"
+    ],
+    "xref": [
+        "Cf. A003052, A004022, A007954, A098736, A336864, A336876."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Sean A. Irvine_, Aug 05 2020",
+    "references": 17,
+    "revision": 45,
+    "time": "2021-01-14T16:29:51-05:00",
+    "created": "2020-08-05T22:02:57-04:00"
+}

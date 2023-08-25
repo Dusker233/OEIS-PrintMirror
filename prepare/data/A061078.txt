@@ -1,0 +1,60 @@
+{
+    "number": 61078,
+    "data": "2,6,12,20,20,22,26,32,40,40,44,52,64,80,80,86,98,116,140,140,148,164,188,220,220,230,250,280,320,320,332,356,392,440,440,454,482,524,580,580,596,628,676,740,740,758,794,848,920,920,920,920,920,920,920,922",
+    "name": "Sum of the products of the digits of the first n positive even numbers.",
+    "comment": [
+        "For n = (10^r)/2, a(n) is the sum of the r terms of the geometric progression with first term 20 and common ratio 45."
+    ],
+    "reference": [
+        "Amarnath Murthy, Smarandache friendly numbers and a few more sequences, Smarandache Notions Journal, Vol. 12, No. 1-2-3, Spring 2001."
+    ],
+    "link": [
+        "Luca Onnis, <a href=\"/A061078/b061078.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Luca Onnis, <a href=\"/A061078/a061078.txt\">Mathematica prog which computes the first 10000 terms</a>",
+        "Luca Onnis <a href=\"https://arxiv.org/abs/2203.07227\">On the general Smarandache's sigma product of digits</a>, arXiv:2203.07227 [math.GM], 2022."
+    ],
+    "formula": [
+        "From _Luca Onnis_, Mar 13 2022: (Start)",
+        "a(5*10^n-1) = a(5*10^n) = (5/11)*(45^(n+1)-1).",
+        "a(n) <= (5/11)*(45^(log((n+1)/5)+1)-1) for all n.",
+        "a(n) ~ (4/5)*A061077(n) as n -> infinity.",
+        "Conjecture: let a >= 1, b >= 0, where p is not a multiple of 2 nor 5. Then:",
+        "a(5^a*2^b*p-1) = a(5^a*2^b*p) = ... = a(5^a*2^b*p + 55...5) where the number of fives is equal to b if a > b, and is equal to a-1 if 1 <= a <= b. (End)"
+    ],
+    "example": [
+        "a(5) = 2 + 4 + 6 + 8 + 1*0 = 20; (a(18)=116, not 114).",
+        "a(1199) = a(5^2*2^4*3 - 1) = ... = a(5^2*2^4*3 + 5) = a(1205). In fact, the number of \"fives\" is exactly equal to 1 = 2-1 (where 2 is the exponent of 5)."
+    ],
+    "mathematica": [
+        "Accumulate[Times@@@IntegerDigits[Range[2,120,2]]] (* _Harvey P. Dale_, Jun 18 2021 *)"
+    ],
+    "program": [
+        "(PARI) pd(n) = my(d = digits(n)); prod(i=1, #d, d[i]);",
+        "a(n) = sum(k=1, n, pd(2*k)); \\\\ _Michel Marcus_, Feb 01 2015",
+        "(PARI) a(n) = sum(k=1, n, vecprod(digits(2*k))); \\\\ _Michel Marcus_, Mar 13 2022",
+        "(PARI) a(n) = {t=digits(2*n); p=1; d=#t; for(i=1, #t, if(t[i]==0, d=i-1; break));",
+        "(5/11) * (45^(#t-1)-1) + (sum(i=1, #t-1, ((prod(j=1,#t-i-1,t[j])) * (t[#t-i]) * (t[#t-i]-1) * 2 * (5^(i))* (9^(i-1)))))+(prod(k=1,#t-1,t[k]))*((((t[#t])^2))/4+(t[#t])/2)} \\\\ _Luca Onnis_, Mar 17 2022",
+        "(Python)",
+        "from math import prod",
+        "from itertools import accumulate",
+        "def p(n): return prod(map(int, str(n)))",
+        "def a(n): return sum(p(2*i) for i in range(1, n+1))",
+        "def aupton(nn): return list(accumulate([pd(2*k) for k in range(1, nn+1)]))",
+        "print(aupton(56)) # _Michael S. Branicky_, Mar 13 2022"
+    ],
+    "xref": [
+        "Cf. A061076, A061077."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Apr 14 2001",
+    "ext": [
+        "Corrected and extended by _Matthew Conroy_, Apr 17 2001",
+        "Incorrect formula removed by _Luca Onnis_, Mar 13 2022",
+        "Name clarified by _Chai Wah Wu_, Mar 21 2022"
+    ],
+    "references": 5,
+    "revision": 84,
+    "time": "2022-03-21T11:48:21-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

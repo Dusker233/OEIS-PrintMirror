@@ -1,0 +1,52 @@
+{
+    "number": 359914,
+    "data": "1,2,4,30,154,1078,7046,50766,364268,2713444,20384884,155954760,1204192106,9400024042,73945396990,586088682472,4673927031694,37484566094970,302098932029282,2445538771089012,19875632898821430,162118004651048048,1326658157736876148",
+    "name": "a(n) = coefficient of x^n in A(x) such that 2 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(3*n-1)/2) * A(x)^(3*n) * (1 + x^n*A(x)).",
+    "comment": [
+        "Conjecture: a(n)/2 == A000041(n) (mod 2) for n >= 1; that is, a(n) is even, and a(n)/2 has the same parity as the number of partitions of n, for n >= 1.",
+        "Conjecture: a(n) == A361552(n+1) (mod 4) for n >= 0. - _Paul D. Hanna_, Mar 19 2023"
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A359914/b359914.txt\">Table of n, a(n) for n = 0..400</a>",
+        "Weisstein, Eric W., <a href=\"https://mathworld.wolfram.com/QuintupleProductIdentity.html\">Quintuple Product Identity</a> from MathWorld."
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=1} a(n)*x^n satisfies the following.",
+        "(1) 2 = Sum_{n=-oo..+oo} (-1)^n * x^(n*(3*n-1)/2) * A(x)^(3*n) * (1 + x^n*A(x)).",
+        "(2) 2 = Product_{n>=1} (1 - x^n) * (1 + x^(n-1)*A(x)) * (1 + x^n/A(x)) * (1 - x^(2*n-1)*A(x)^2) * (1 - x^(2*n-1)/A(x)^2), by the Watson quintuple product identity.",
+        "a(n) ~ c * d^n / n^(3/2), where d = 8.762505108391427770669887... and c = 0.25785454119524349137288... - _Vaclav Kotesovec_, Jan 24 2023"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 4*x^2 + 30*x^3 + 154*x^4 + 1078*x^5 + 7046*x^6 + 50766*x^7 + 364268*x^8 + 2713444*x^9 + 20384884*x^10 + ...",
+        "where A = A(x) satisfies the doubly infinite sum",
+        "2 = ... + x^26/A^12*(1 + 1/x^4*A) - x^15/A^9*(1 + 1/x^3*A) + x^7/A^6*(1 + 1/x^2*A) - x^2/A^3*(1 + 1/x^1*A) + x^0*A^0*(1 + x^0*A) - x^1*A^3*(1 + x^1*A) + x^5*A^6*(1 + x^2*A) - x^12*A^9*(1 + x^3*A) + x^22*A^12*(1 + x^4*A) + ... + (-1)^n*x^(n*(3*n+1)/2)*A^(3*n)*(1 + x^n*A) + ...",
+        "also, by the Watson quintuple product identity,",
+        "2 = (1-x)*(1+1*A)*(1+x/A)*(1-x*A^2)*(1-x/A^2) * (1-x^2)*(1+x*A)*(1+x^2/A)*(1-x^3*A^2)*(1-x^3/A^2) * (1-x^3)*(1+x^2*A)*(1+x^3/A)*(1-x^5*A^2)*(1-x^5/A^2) * (1-x^4)*(1+x^3*A)*(1+x^4/A)*(1-x^7*A^2)*(1-x^7/A^2) * ...",
+        "SPECIFIC VALUES.",
+        "A(x) at x = 100/876 diverges.",
+        "A(100/877) = 1.557056751214068970380867667963285879403994350720494...",
+        "A(1/9) = 1.450191456209956107571253359997937360795442585014595870...",
+        "A(1/10) = 1.324252801492679846747365280925526932201317768972870665..."
+    ],
+    "program": [
+        "(PARI) /* Using the doubly infinite series */",
+        "{a(n) = my(A=[1]); for(i=1, n, A = concat(A, 0);",
+        "A[#A] = polcoeff(2 - sum(m=-#A, #A, (-1)^m * x^(m*(3*m-1)/2) * Ser(A)^(3*m) * (1 + x^m*Ser(A)) ), #A-1) ); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) /* Using the quintuple product */",
+        "{a(n) = my(A=[1]); for(i=1, n, A = concat(A, 0);",
+        "A[#A] = polcoeff(2 - prod(m=1, #A, (1 - x^m) * (1 + x^(m-1)*Ser(A)) * (1 + x^m/Ser(A)) * (1 - x^(2*m-1)*Ser(A)^2) * (1 - x^(2*m-1)/Ser(A)^2) ), #A-1) ); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A359920, A359915, A359916, A359919, A359921, A359924.",
+        "Cf. A361552, A040051, A000041."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jan 23 2023",
+    "references": 6,
+    "revision": 36,
+    "time": "2023-03-19T02:26:10-04:00",
+    "created": "2023-01-24T10:06:31-05:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 248434,
+    "data": "2,9,16,29,42,61,80,105,130,161,192,229,266,309,352,401,450,505,560,621,682,749,816,889,962,1041,1120,1205,1290,1381,1472,1569,1666,1769,1872,1981,2090,2205,2320,2441,2562,2689,2816,2949,3082,3221,3360,3505,3650",
+    "name": "Number of length three 0..n arrays with the sum of two elements equal to twice the third.",
+    "comment": [
+        "Number of length three 0..n vectors that contain their arithmetic mean. - _Hywel Normington_, Aug 15 2020"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A248434/b248434.txt\">Table of n, a(n) for n = 1..10000</a> (first 210 terms from R. H. Hardin)",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (2,0,-2,1)."
+    ],
+    "formula": [
+        "Empirical: a(n) = 2*a(n-1) -2*a(n-3) +a(n-4).",
+        "Empirical for n mod 2 = 0: a(n) = (3/2)*n^2 + n + 1.",
+        "Empirical for n mod 2 = 1: a(n) = (3/2)*n^2 + n - (1/2).",
+        "From _Hywel Normington_, Aug 21 2020: (Start)",
+        "a(n) = a(n-1) + 1 + 6*floor(n/2)",
+        "a(n) = A319127(n+1) + n + 1 = 6*floor((n+1)/2)*floor(n/2) + n + 1.",
+        "(End)",
+        "From _Colin Barker_, Aug 28 2020: (Start)",
+        "G.f.: x*(2 + 5*x - 2*x^2 + x^3) / ((1 - x)^3*(1 + x)).",
+        "a(n) = (1 + 3*(-1)^n + 4*n + 6*n^2) / 4 for n>0.",
+        "(End)"
+    ],
+    "example": [
+        "Some solutions for n=6:",
+        "..2....3....6....1....3....4....3....1....6....2....4....0....4....5....4....3",
+        "..6....1....2....0....2....3....3....2....5....3....0....1....3....6....4....5",
+        "..4....5....4....2....1....5....3....3....4....1....2....2....2....4....4....4"
+    ],
+    "program": [
+        "(PARI) a(n) = {my(res = 2); if(n % 2 == 0, res+=(1 + 6*floor(n/2))); n = (n-1)>>1; res+=6*n^2 + 8*n; res} \\\\ _David A. Corneth_, Aug 26 2020",
+        "(PARI) first(n) = {my(res = vector(n), inc = 7); res[1] = 2; for(i = 2, n, res[i] = res[i-1] + inc; inc += 6 * (i%2 == 1)); res} \\\\ _David A. Corneth_, Aug 26 2020"
+    ],
+    "xref": [
+        "Row 1 of A248433.",
+        "Cf. A168328, A319127, A319127. First differences A168301."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. H. Hardin_, Oct 06 2014",
+    "ext": [
+        "Name simplified by _Andrew Howroyd_, Aug 14 2020"
+    ],
+    "references": 5,
+    "revision": 42,
+    "time": "2020-08-29T02:14:54-04:00",
+    "created": "2014-10-06T16:37:38-04:00"
+}

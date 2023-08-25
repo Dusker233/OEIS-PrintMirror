@@ -1,0 +1,46 @@
+{
+    "number": 82940,
+    "data": "1,2,22,141,171,202,333,2002,2772,7227,10401,10701,12221,13131,14841,15651,16461,17271,20002,21212,25452,26262,27072,30303,31113,33633,35253,41814,51615,52425,53235,55755,58185,61416,62226,66366,69696,71217,72027,85158,96669,117711",
+    "name": "Palindromes in A082939.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A082940/b082940.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..670 from J.W.L. (Jan) Eerland)"
+    ],
+    "example": [
+        "22 = 2!*2! = 4 and 2 + 2 = 4.",
+        "141 = 1!*4!*1! = 24; 2 + 4 = 6 and 1 + 4 + 1 = 6."
+    ],
+    "mathematica": [
+        "DeleteCases[ParallelTable[If[PalindromeQ[n]&&Total@IntegerDigits[Times@@Map[Factorial,IntegerDigits[n]]]==Total@IntegerDigits[n],n,a],{n,0,10^8}],a] (* _J.W.L. (Jan) Eerland_, Dec 26 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from math import factorial, prod",
+        "from itertools import count, islice, product",
+        "def isA082939(n):",
+        "    d = list(map(int, str(n)))",
+        "    return sum(map(int, str(prod(map(factorial, d))))) == sum(d)",
+        "def pals(): # generator of terms",
+        "    digits = \"0123456789\"",
+        "    for d in count(1):",
+        "        for p in product(digits, repeat=d//2):",
+        "            if d > 1 and p[0] == \"0\": continue",
+        "            left = \"\".join(p); right = left[::-1]",
+        "            for mid in [[\"\"], digits][d%2]:",
+        "                yield int(left + mid + right)",
+        "def agen(): yield from filter(isA082939, pals())",
+        "print(list(islice(agen(), 42))) # _Michael S. Branicky_, Aug 15 2022"
+    ],
+    "xref": [
+        "Intersection of A002113 and A082939."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "Meenakshi Srikanth (menakan_s(AT)yahoo.com), Apr 27 2003, following a suggestion by _Amarnath Murthy_.",
+    "ext": [
+        "Corrected and extended by _J.W.L. (Jan) Eerland_, Dec 26 2021"
+    ],
+    "references": 3,
+    "revision": 31,
+    "time": "2022-08-15T15:30:43-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

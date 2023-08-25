@@ -1,0 +1,32 @@
+{
+    "number": 344521,
+    "data": "1,5,13,28,47,82,116,172,235,321,397,538,641,798,980,1192,1361,1655,1863,2218,2553,2912,3210,3766,4171,4661,5183,5840,6303,7168,7694,8510,9283,10095,10951,12190,12929,13932,14990,16414,17315,18925,19913,21438,23055,24500,25674,27862",
+    "name": "a(n) = Sum_{1 <= i <= j <= k <= n} gcd(i,j,k).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A344521/b344521.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "From _Vaclav Kotesovec_, Jun 05 2021: (Start)",
+        "a(n) ~ Pi^2 * n^3 / (36*zeta(3)).",
+        "G.f.: 1/(1-x) * Sum_{k>=1} phi(k) * x^k/(1 - x^k)^3, where phi is the Euler totient function (A000010).",
+        "a(n) = Sum_{k=1..n} Sum_{d|k} phi(k/d) * d*(d+1)/2. (End)"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[Sum[Sum[GCD[i, j, k], {i, 1, j}], {j, 1, k}], {k, 1, n}]; Array[a, 50] (* _Amiram Eldar_, May 25 2021 *)",
+        "nmax = 100; Rest[CoefficientList[Series[1/(1 - x)*Sum[EulerPhi[k]*x^k/(1 - x^k)^3, {k, 1, nmax}], {x, 0, nmax}], x]] (* _Vaclav Kotesovec_, Jun 05 2021 *)",
+        "Accumulate[Table[Sum[EulerPhi[n/d] * d*(d+1)/2, {d, Divisors[n]}], {n, 1, 100}]] (* _Vaclav Kotesovec_, Jun 05 2021 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(i=1, n, sum(j=i, n, sum(k=j, n, gcd([i, j, k]))));"
+    ],
+    "xref": [
+        "Cf. A272718, A309322, A344132, A344522, A344992."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, May 22 2021",
+    "references": 4,
+    "revision": 23,
+    "time": "2021-06-05T16:43:27-04:00",
+    "created": "2021-05-22T04:35:54-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 346387,
+    "data": "0,1,1,323,21615,301654585",
+    "name": "Number of permutations f of {1,...,prime(n)-1} with f(prime(n)-1) = prime(n)-1 and f(prime(n)-2) = prime(n)-2 such that 1/(f(1)*f(2)) + 1/(f(2)*f(3)) + ... + 1/(f(prime(n)-2)*f(prime(n)-1)) + 1/(f(prime(n)-1)*f(1)) == 0 (mod prime(n)^2).",
+    "comment": [
+        "Conjecture: a(n) > 0 for all n > 2. In other words, for any prime p > 3, there is a permutation f of {1,...,p-1} with f(p-1) = p-1 and f(p-2) = p-2 such that 1/(f(1)*f(2)) + 1/(f(2)*f(3)) + ... + 1/(f(p-2)*f(p-1)) + 1/(f(p-1)*f(1)) == 0 (mod p^2).",
+        "As Wolstenholme proved, for any prime p > 3 we have 1/1^2 + 1/2^2 + ... + 1/(p-1)^2 == 0 (mod p).",
+        "For any integer n > 2, clearly 1/(1*2) + 1/(2*3) + ... + 1/((n-1)*n) + 1/(n*1) = 1."
+    ],
+    "example": [
+        "a(3) = 1, and 1/(2*1) + 1/(1*3) + 1/(3*4) + 1/(4*2) = 5^2/24 == 0 (mod 5^2).",
+        "a(4) = 1, and 1/(2*3) + 1/(3*4) + 1/(4*1) + 1/(1*5) + 1/(5*6) + 1/(6*2) = 7^2/60 == 0 (mod 7^2).",
+        "a(5) > 0, and 1/(1*2) + 1/(2*4) + 1/(4*6) + 1/(6*3) + 1/(3*5) + 1/(5*7) + 1/(7*8) + 1/(8*9) + 1/(9*10) + 1/(10*1) = 11^2/126 == 0 (mod 11^2).",
+        "a(6) > 0, and 1/(1*2) + 1/(2*3) + 1/(3*7) + 1/(7*4) + 1/(4*9) + 1/(9*5) + 1/(5*8) + 1/(8*10) + 1/(10*6) + 1/(6*11) + 1/(11*12) + 1/(12*1) = 13^2/176 ==0 (mod 13^2)."
+    ],
+    "mathematica": [
+        "(* A program to compute a(5): *)",
+        "VV[i_]:=Part[Permutations[{1,2,3,4,5,6,7,8}],i];",
+        "rMod[m_,n_]:=Mod[Numerator[m]*PowerMod[Denominator[m],-1,n],n,-n/2];",
+        "n=0;Do[If[rMod[Sum[1/(VV[i][[k]]VV[i][[k+1]]),{k,1,7}]+1/(VV[i][[8]]*9)+1/(9*10)+1/(10*VV[i][[1]]),11^2]==0,n=n+1],{i,1,8!}];Print[n]",
+        "a[n_] := Block[{p = Prime@n, inv}, inv = ModularInverse[#, p^2] & /@ Range[p-1]; Length@ Select[ Join[#, Take[inv, -2]] & /@ Permutations[ Take[inv, p-3]], Mod[#[[1]] #[[-1]] + Total[Times @@@ Partition[#, 2, 1]], p^2] == 0 &]]; a /@ Range[2, 6] (* _Giovanni Resta_, Jul 15 2021 *)"
+    ],
+    "xref": [
+        "Cf. A000040, A322070, A322099, A342965, A346391."
+    ],
+    "keyword": "nonn,more",
+    "offset": "2,4",
+    "author": "_Zhi-Wei Sun_, Jul 15 2021",
+    "ext": [
+        "a(6)-a(7) from _Giovanni Resta_, Jul 15 2021"
+    ],
+    "references": 1,
+    "revision": 18,
+    "time": "2021-07-16T10:08:49-04:00",
+    "created": "2021-07-16T10:08:49-04:00"
+}

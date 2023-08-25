@@ -1,0 +1,57 @@
+{
+    "number": 350432,
+    "data": "1,1,1,2,2,3,5,9,14,18,25,38,60,97,159,265,444,735,1187,1865,2851,4271,6378,9621,14724,22864,35947,57044,91141,146384,236102,382124,620298,1009685,1647703,2694709,4413524,7232548,11845740,19369888,31590755,51346902,83126317",
+    "name": "G.f. A(x) satisfies: A(x) = A(x^2 + x^3) / x.",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A350432/b350432.txt\">Table of n, a(n) for n = 1..2050</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=1} a(n)*x^n satisfies:",
+        "(1) A(x) = A(x^2 + x^3) / x.",
+        "(2) R(x*A(x)) = x^2 + x^3, where R(A(x)) = x.",
+        "(3) A(x) = Product_{n>=0} F(n), where F(0) = x, F(1) = 1+x, and F(n+1) = 1 - (F(n) - 1)^2 * F(n) for n > 0."
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^2 + x^3 + 2*x^4 + 2*x^5 + 3*x^6 + 5*x^7 + 9*x^8 + 14*x^9 + 18*x^10 + 25*x^11 + 38*x^12 + 60*x^13 + ...",
+        "Let R(x) be the series reversion of A(x),",
+        "R(x) = x - x^2 + x^3 - 2*x^4 + 6*x^5 - 17*x^6 + 45*x^7 - 123*x^8 + 360*x^9 - 1085*x^10 + 3271*x^11 - 9905*x^12 + 30417*x^13 + ... + A350431(n)*x^n + ...",
+        "then R(x) and g.f. A(x) satisfy:",
+        "(1) R(A(x)) = x,",
+        "(2) R(x*A(x)) = x^2 + x^3.",
+        "GENERATING METHOD.",
+        "Define F(n), a polynomial in x of order 3^(n-1), by the following recurrence:",
+        "F(0) = x,",
+        "F(1) = (1 + x),",
+        "F(2) = (1 + x^2 * (1+x)),",
+        "F(3) = (1 + x^4 * (1+x)^2 * F(2)),",
+        "F(4) = (1 + x^8 * (1+x)^4 * F(2)^2 * F(3)),",
+        "F(5) = (1 + x^16 * (1+x)^8 * F(2)^4 * F(3)^2 * F(4)),",
+        "...",
+        "F(n+1) = 1 + (F(n) - 1)^2 * F(n)",
+        "...",
+        "Then the g.f. A(x) equals the infinite product:",
+        "A(x) = x * F(1) * F(2) * F(3) * ... * F(n) * ...",
+        "that is,",
+        "A(x) = x * (1+x) * (1 + x^2*(1+x)) * (1 + x^4*(1+x)^2*(1 + x^2*(1+x))) * (1 + x^8*(1+x)^4*(1 + x^2*(1+x))^2*(1 + x^4*(1+x)^2*(1 + x^2*(1+x)))) * ..."
+    ],
+    "program": [
+        "(PARI) /* Using Functional Equation in Definition */",
+        "{a(n) = my(A=x); for(i=0,#binary(n),",
+        "A = subst(A,x, x^2*(1 + x) +x^2*O(x^n) )/x ); polcoeff(A,n)}",
+        "for(n=1,50,print1(a(n),\", \"))",
+        "(PARI) /* Using Infinite Product Formula */",
+        "{F(n) = my(G=x); if(n==0,G=x, if(n==1,G=1+x, G = 1 + (F(n-1) - 1)^2 * F(n-1) ));G}",
+        "{a(n) = my(A = prod(k=0,#binary(n), F(k) +x*O(x^n))); polcoeff(A,n)}",
+        "for(n=1,50,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A350431 (inverse), A273162, A350433, A350434."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Paul D. Hanna_, Dec 30 2021",
+    "references": 4,
+    "revision": 7,
+    "time": "2022-01-05T10:02:38-05:00",
+    "created": "2021-12-30T23:23:11-05:00"
+}

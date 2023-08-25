@@ -1,0 +1,33 @@
+{
+    "number": 321394,
+    "data": "1,1,2,10,75,816,11407,194480,3871075,87700736,2220246387,62010892800,1892138207375,62591994720256,2230631475837767,85188256574494720,3470563987113896475,150234341045137637376,6886077311552162511547,333165973379285030666240,16967906593223743786978375",
+    "name": "a(n) = (1/24)*n!*[x^n] (9 + sectan(4*x) + 6*sectan(2*x) + 8*sectan(x)) where sectan(x) = sec(x) + tan(x).",
+    "comment": [
+        "See A320956 for motivation and definitions."
+    ],
+    "maple": [
+        "sectan := x -> sec(x) + tan(x): # sin(Pi/4 + x/2)*csc(Pi/4 - x/2)",
+        "egf := 9 + sectan(4*x) + 6*sectan(2*x) + 8*sectan(x):",
+        "ser := series(egf, x, 22): seq((1/24)*n!*coeff(ser, x, n), n=0..20);"
+    ],
+    "mathematica": [
+        "m = 20;",
+        "sectan[x_] := Sec[x] + Tan[x];",
+        "egf = 9 + sectan[4x] + 6 sectan[2x] + 8 sectan[x];",
+        "(1/24) CoefficientList[egf + O[x]^(m+1), x] Range[0, m]! (* _Jean-Fran\u00e7ois Alcover_, Aug 19 2021 *)"
+    ],
+    "program": [
+        "(PARI) sectan(x) = 1/cos(x) + tan(x);",
+        "my(x='x+O('x^25)); Vec(serlaplace(9 + sectan(4*x) + 6*sectan(2*x) + 8*sectan(x)))/24 \\\\ _Michel Marcus_, Aug 19 2021"
+    ],
+    "xref": [
+        "Cf. A000111 (n=1), A000828 (n=2), A320957 (n=3), this sequence (n=4), A320956."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, Nov 08 2018",
+    "references": 3,
+    "revision": 10,
+    "time": "2021-08-19T11:04:05-04:00",
+    "created": "2018-11-08T16:34:30-05:00"
+}

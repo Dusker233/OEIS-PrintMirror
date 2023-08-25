@@ -1,0 +1,41 @@
+{
+    "number": 338216,
+    "data": "1,2,3,13,18,26,66,176,313,657,1022,2575,5142,9269",
+    "name": "a(n) is the maximum length of the sequence obtained with the same scheme as in A338134 but starting with n primes.",
+    "example": [
+        "a(6) = 26, which is based on the length of the sequence 3, 5, 7, 11, 13, 17, 19, 23, 31, 41, 53, 59, 73, 107, 131, 167, 233, 239, 311, 877, 1277, 1283, 1427, 2393, 3581, 4547."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, prime",
+        "from itertools import chain, combinations as C",
+        "def powerset(s): # skip empty set & singletons",
+        "  return chain.from_iterable(C(s, r) for r in range(2, len(s)+1))",
+        "def a(n):",
+        "  alst, next_set = [prime(i+1) for i in range(1, n)], {prime(n+1)}",
+        "  while len(next_set):",
+        "    alst.append(min(next_set)); next_set = set()",
+        "    for s in powerset(alst[-n:]):",
+        "      ss = sum(s)",
+        "      if len(next_set):",
+        "        if ss > min(next_set): continue",
+        "      if ss > alst[-1]:",
+        "        if isprime(ss): next_set.add(ss)",
+        "  return len(alst) # return alst on a(11) for A338134",
+        "for n in range(1, 12):",
+        "  print(a(n), end=\", \") # _Michael S. Branicky_, Dec 17 2020"
+    ],
+    "xref": [
+        "Cf. A338134 (when n=11)."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,2",
+    "author": "_Anthony Winkelspecht_, Oct 16 2020",
+    "ext": [
+        "a(14) from _Michael S. Branicky_, Dec 17 2020"
+    ],
+    "references": 0,
+    "revision": 19,
+    "time": "2020-12-18T02:35:59-05:00",
+    "created": "2020-11-26T14:51:32-05:00"
+}

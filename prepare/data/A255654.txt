@@ -1,0 +1,37 @@
+{
+    "number": 255654,
+    "data": "1,6,11,18,23,40,47,66,71,96,113,132,139,170,189,214,219,244,269,304,321,382,401,472,479,514,545,586,605,676,701,778,783,808,833,868,893,978,1013,1108,1125,1210,1271,1342,1361,1452,1523,1600,1607,1642,1677,1726,1757,1864,1905,2026,2045,2140,2211,2296,2321,2434,2511,2614",
+    "name": "Partial sums of A247649.",
+    "link": [
+        "<a href=\"/index/Ce#cell\">Index entries for sequences related to cellular automata</a>"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice, count",
+        "import sympy",
+        "def A225654gen(): # generator of terms",
+        "    from sympy.abc import x",
+        "    f, g, blist, c = 1/x**2+1/x+1+x+x**2, 1, [1], 1",
+        "    yield c",
+        "    for n in count(1):",
+        "        s = [int(d,2) for d in bin(n)[2:].split('00') if d != '']",
+        "        g = (g*f).expand(modulus=2)",
+        "        if len(s) == 1:",
+        "            blist.append(g.subs(x,1))",
+        "        else:",
+        "            blist.append(prod(blist[d] for d in s))",
+        "        c += blist[-1]",
+        "        yield c",
+        "A225654_list = list(islice(A225654gen(),26)) # _Chai Wah Wu_, Dec 23 2021"
+    ],
+    "xref": [
+        "Cf. A247649."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Omar E. Pol_, Mar 01 2015",
+    "references": 1,
+    "revision": 15,
+    "time": "2021-12-24T08:17:09-05:00",
+    "created": "2015-03-05T13:36:07-05:00"
+}

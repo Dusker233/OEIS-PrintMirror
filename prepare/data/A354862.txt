@@ -1,0 +1,29 @@
+{
+    "number": 354862,
+    "data": "1,5,37,601,14401,520801,25401601,1626189601,131682257281,13168407228481,1593350922240001,229442707280223361,38775788043632640001,7600054676241325858561,1710012252750418295078401,437763137119219420513804801,126513546505547170185216000001",
+    "name": "a(n) = n! * Sum_{d|n} (n/d)! / d!.",
+    "formula": [
+        "E.g.f.: Sum_{k>0} k! * (exp(x^k) - 1).",
+        "If p is prime, a(p) = 1 + (p!)^2 = A020549(p)."
+    ],
+    "program": [
+        "(PARI) a(n) = n!*sumdiv(n, d, (n/d)!/d!);",
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(serlaplace(sum(k=1, N, k!*(exp(x^k)-1))))",
+        "(Python)",
+        "from math import factorial",
+        "from sympy import divisors",
+        "def A354862(n):",
+        "    f = factorial(n)",
+        "    return sum(f*(a := factorial(n//d))//(b:= factorial(d)) + (f*b//a if d**2 < n else 0) for d in divisors(n,generator=True) if d**2 <= n) # _Chai Wah Wu_, Jun 09 2022"
+    ],
+    "xref": [
+        "Cf. A020549, A057625, A121860, A354843, A354863."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, Jun 09 2022",
+    "references": 2,
+    "revision": 21,
+    "time": "2022-06-09T16:38:47-04:00",
+    "created": "2022-06-09T11:02:52-04:00"
+}

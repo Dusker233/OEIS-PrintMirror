@@ -1,0 +1,33 @@
+{
+    "number": 352537,
+    "data": "2,3,919,1223,1699,3329,8009,11717,13691,19079,20921,21011,22643,22739,24623,26309,28571,28619,28979,30389,33629,34739,35257,41179,42577,48647,54133,58601,59627,61511,65171,70979,75707,80141,84221,86869,90677,93557,94781",
+    "name": "Primes whose position in the Wythoff array is immediately followed by a prime both in the next column and the next row.",
+    "example": [
+        "The Wythoff array begins:",
+        "   1    2    3    5   ...",
+        "   4    7   11   18   ...",
+        "   6   10   16   26   ...",
+        "   ...",
+        "where one can see these 2 patterns:",
+        "   2    3   and   3    5",
+        "   7             11",
+        "so 2 and 3 are terms."
+    ],
+    "program": [
+        "(PARI) T(n,k) = (n+sqrtint(5*n^2))\\2*fibonacci(k+1) + (n-1)*fibonacci(k); \\\\ A035513",
+        "cell(n) = for (r=1, oo, for (c=1, oo, if (T(r,c) == n, return([r, c])); if (T(r,c) > n, break);););",
+        "isokp(m) = my(pos = cell(prime(m))); isprime (T(pos[1], pos[2]+1)) && isprime(T(pos[1]+1, pos[2]));",
+        "lista(nn) = for (n=1, nn, if (isokp(n), print1(prime(n), \", \")));"
+    ],
+    "xref": [
+        "Cf. A003603, A035612, A035513 (Wythoff array).",
+        "Intersection of A352538 and A352539."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Mar 20 2022",
+    "references": 2,
+    "revision": 9,
+    "time": "2022-03-20T06:44:26-04:00",
+    "created": "2022-03-20T06:44:26-04:00"
+}

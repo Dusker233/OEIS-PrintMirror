@@ -1,0 +1,36 @@
+{
+    "number": 321294,
+    "data": "1,9,83,1058,15629,282381,5764807,134480900,3486902505,100048836321,3138428376731,107006403495850,3937376385699301,155572843119518781,6568408661060858767,295150157013526773768,14063084452067724991025,708236697425777157039381",
+    "name": "a(n) = Sum_{d|n} mu(n/d)*d*sigma_n(d).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A321294/b321294.txt\">Table of n, a(n) for n = 1..385</a>"
+    ],
+    "formula": [
+        "a(n) = [x^n] Sum_{i>=1} Sum_{j>=1} mu(i)*j^(n+1)*x^(i*j)/(1 - x^(i*j))^2.",
+        "a(n) = Sum_{d|n} phi(n/d)*d^(n+1).",
+        "a(n) = Sum_{k=1..n} gcd(n,k)^(n+1).",
+        "a(n) ~ n^(n+1). - _Vaclav Kotesovec_, Nov 02 2018"
+    ],
+    "mathematica": [
+        "Table[Sum[MoebiusMu[n/d] d DivisorSigma[n, d], {d, Divisors[n]}], {n, 18}]",
+        "Table[Sum[EulerPhi[n/d] d^(n + 1), {d, Divisors[n]}], {n, 18}]",
+        "Table[Sum[GCD[n, k]^(n + 1), {k, n}], {n, 18}]"
+    ],
+    "program": [
+        "(PARI) a(n) = sumdiv(n, d, moebius(n/d)*d*sigma(d, n)); \\\\ _Michel Marcus_, Nov 03 2018",
+        "(Python)",
+        "from sympy import totient, divisors",
+        "def A321294(n):",
+        "    return sum(totient(d)*(n//d)**(n+1) for d in divisors(n,generator=True)) # _Chai Wah Wu_, Feb 15 2020"
+    ],
+    "xref": [
+        "Cf. A018804, A069097, A320940, A332517, A342432, A342433."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Nov 02 2018",
+    "references": 3,
+    "revision": 20,
+    "time": "2021-03-12T09:30:50-05:00",
+    "created": "2018-11-03T06:40:59-04:00"
+}

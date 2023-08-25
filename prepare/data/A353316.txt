@@ -1,0 +1,56 @@
+{
+    "number": 353316,
+    "data": "4,8,16,27,32,45,54,63,64,81,90,99,108,117,126,128,135,153,162,171,180,189,198,207,216,234,243,252,256,261,270,279,297,306,324,333,342,351,360,369,378,387,396,405,414,423,432,459,468,477,486,504,512,513,522",
+    "name": "Heinz numbers of integer partitions that have a fixed point but whose conjugate does not (counted by A118199).",
+    "comment": [
+        "A fixed point of a sequence y is an index y(i) = i. A fixed point of a partition is unique if it exists.",
+        "The Heinz number of a partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k). This gives a bijective correspondence between positive integers and integer partitions."
+    ],
+    "example": [
+        "The terms together with their prime indices begin:",
+        "    4: (1,1)",
+        "    8: (1,1,1)",
+        "   16: (1,1,1,1)",
+        "   27: (2,2,2)",
+        "   32: (1,1,1,1,1)",
+        "   45: (3,2,2)",
+        "   54: (2,2,2,1)",
+        "   63: (4,2,2)",
+        "   64: (1,1,1,1,1,1)",
+        "   81: (2,2,2,2)",
+        "   90: (3,2,2,1)",
+        "   99: (5,2,2)",
+        "  108: (2,2,2,1,1)",
+        "  117: (6,2,2)",
+        "  126: (4,2,2,1)",
+        "  128: (1,1,1,1,1,1,1)",
+        "For example, the partition (3,2,2,1) with Heinz number 90 has a fixed point at the second position, but its conjugate (4,3,1) has no fixed points, so 90 is in the sequence."
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "pq[y_]:=Length[Select[Range[Length[y]],#==y[[#]]&]];",
+        "conj[y_]:=If[Length[y]==0,y,Table[Length[Select[y,#>=k&]],{k,1,Max[y]}]];",
+        "Select[Range[100],pq[Reverse[primeMS[#]]]>0&& pq[conj[Reverse[primeMS[#]]]]==0&]"
+    ],
+    "xref": [
+        "These partitions are counted by A118199.",
+        "Crank: A342192, A352873, A352874; counted by A064410, A064428, A001522.",
+        "A000700 counts self-conjugate partitions, ranked by A088902.",
+        "A056239 adds up prime indices, row sums of A112798 and A296150.",
+        "A115720/A115994 count partitions by their Durfee square, rank stat A257990.",
+        "A122111 represents partition conjugation using Heinz numbers.",
+        "A238352 counts reversed partitions by fixed points, rank statistic A352822.",
+        "A238394 counts reversed partitions without a fixed point, ranked by A352830.",
+        "A238395 counts reversed partitions with a fixed point, ranked by A352872.",
+        "A352826 ranks partitions w/o a fixed point, counted by A064428 (unproved).",
+        "A352827 ranks partitions with a fixed point, counted by A001522 (unproved).",
+        "Cf. A001222, A065770, A093641, A114088, A188674, A252464, A300788, A325163, A325169, A352831, A352828, A352829."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, May 15 2022",
+    "references": 3,
+    "revision": 10,
+    "time": "2022-05-16T10:02:20-04:00",
+    "created": "2022-05-16T10:02:20-04:00"
+}

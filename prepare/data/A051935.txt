@@ -1,0 +1,42 @@
+{
+    "number": 51935,
+    "data": "2,3,6,8,10,12,18,20,22,26,30,34,36,42,44,46,50,52,60,66,72,74,76,78,80,82,102,108,114,116,118,126,128,132,136,138,144,146,150,154,158,162,166,170,174,186,196,198,210,222,228,236,240,244,246,254,270,280,282",
+    "name": "a(n) = smallest number > a(n-1) such that a(1) + a(2) + ... + a(n) is a prime.",
+    "link": [
+        "David A. Corneth, <a href=\"/A051935/b051935.txt\">Table of n, a(n) for n = 1..10000</a> (first 2000 terms from T. D. Noe)",
+        "Code Golf StackExchange, <a href=\"https://codegolf.stackexchange.com/questions/170787/compute-the-minimum-anan-1-such-that-a1a2-dotsan-is-prime/254197\">Compute the minimum a(n)>a(n-1) such that a(1)+a(2)+ ... +a(n) is prime</a>, coding challenge started Aug 17 2018."
+    ],
+    "example": [
+        "The third term is 6 because 2 + 3 + 6 = 11 is a prime."
+    ],
+    "mathematica": [
+        "p=2;lst={p};Do[If[PrimeQ[p+n], AppendTo[lst, n];p=p+n], {n, 3, 10^3}];lst (* _Vladimir Joseph Stephan Orlovsky_, Aug 14 2008 *)",
+        "nxt[{t_,a_}]:=Module[{k=a+1},While[!PrimeQ[t+k],k++];{t+k,k}]; Transpose[ NestList[ nxt,{2,2},60]][[2]] (* _Harvey P. Dale_, Apr 10 2016 *)",
+        "nxt[{t_,a_}]:=Module[{k=a+1},k=NextPrime[t+k-1]-t;{t+k,k}]; NestList[ nxt,{2,2},60][[All,2]] (* More efficient than the program immediately above *) (* _Harvey P. Dale_, Aug 26 2019 *)"
+    ],
+    "program": [
+        "(Perl) use ntheory \":all\"; my($s,@L)=(2,2); for (1..99) { push @L, next_prime($s+$L[-1])-$s; $s+=$L[-1]; } print \"[@L]\\n\"; # _Dana Jacobsen_, Sep 25 2018",
+        "(PARI) first(n) = {my(res = vector(n), os = 2, ns); res[1] = 2; for(i = 2, n, ns = nextprime(os + res[i-1] + 1); res[i] = ns - os; os = ns); res} \\\\ _David A. Corneth_, Aug 26 2019",
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import islice",
+        "def agen(): # generator of terms",
+        "    yield from [2, 3]",
+        "    s, an = 5, 4",
+        "    while True:",
+        "        while not isprime(s+an): an += 2",
+        "        yield an",
+        "        an, s = an+2, s+an",
+        "print(list(islice(agen(), 60))) # _Michael S. Branicky_, Oct 30 2022"
+    ],
+    "xref": [
+        "Cf. A051934, A078706, A360061."
+    ],
+    "keyword": "easy,nice,nonn",
+    "offset": "1,1",
+    "author": "_Felice Russo_, Dec 21 1999",
+    "references": 7,
+    "revision": 46,
+    "time": "2023-04-24T12:13:33-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

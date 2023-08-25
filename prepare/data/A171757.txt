@@ -1,0 +1,47 @@
+{
+    "number": 171757,
+    "data": "2,4,8,10,16,18,20,22,32,34,36,38,40,42,44,46,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,128,130,132,134,136,138,140,142,144,146,148,150,152,154,156,158,160,162,164,166,168,170,172,174,176,178",
+    "name": "Even numbers whose binary expansion begins 10.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A171757/b171757.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..1024 from R. J. Mathar)"
+    ],
+    "formula": [
+        "a(n) = 2*A004761(n+1). - _Jon Maiga_ / _Georg Fischer_, Jun 24 2021"
+    ],
+    "maple": [
+        "n := 1 ;",
+        "for k from 2 to 4000 by 2 do",
+        "    dgs := convert(k,base,2) ;",
+        "    if op(-1,dgs) = 1 and op(-2,dgs) = 0 then",
+        "        printf(\"%d %d\\n\",n,k) ;",
+        "        n := n+1 ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Jan 31 2015"
+    ],
+    "mathematica": [
+        "Select[Range[2, 200, 2], IntegerDigits[#, 2][[1 ;; 2]] == {1, 0} &] (* _Amiram Eldar_, Sep 01 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, product, takewhile",
+        "def agen(): # generator for sequence",
+        "    yield 2",
+        "    for digits in count(0):",
+        "        for mid in product(\"01\", repeat=digits):",
+        "            yield int(\"10\" + \"\".join(mid) + \"0\", 2)",
+        "def aupto(lim): return list(takewhile(lambda x: x <= lim, agen()))",
+        "print(aupto(180)) # _Michael S. Branicky_, Jun 24 2021",
+        "(PARI) isok(m) = if (!(m%2), my(b=binary(m)); (b[1]==1) && (b[2]==0)); \\\\ _Michel Marcus_, Jun 24 2021"
+    ],
+    "xref": [
+        "Cf. A004761, A171758, A171763, A171764.",
+        "A subsequence of A004754."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Oct 12 2010",
+    "references": 9,
+    "revision": 25,
+    "time": "2021-06-24T17:11:40-04:00",
+    "created": "2010-10-20T03:00:00-04:00"
+}

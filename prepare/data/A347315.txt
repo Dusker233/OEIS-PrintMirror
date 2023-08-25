@@ -1,0 +1,55 @@
+{
+    "number": 347315,
+    "data": "0,2,6,11,17,24,32,40,51,63,76,89,102,116,132,149,169,188,208,228,249,272,297,322,349,377,404,432,461,494,528,562,597,632,667,703,740,778,820,862,903,945,991,1038,1085,1132,1181,1229,1277,1328,1380,1434,1487",
+    "name": "a(n) = sum of row beginning with n when inventory sequence A342585 is written as an irregular triangle.",
+    "comment": [
+        "The inventory sequence A342585 counts, for k = 0, 1, 2, ..., the k's that have occurred so far, and if zero, restarts with k = 0. The rows end where the zeros occur.",
+        "The sequence appears to grow approximately quadratically. More precisely, b(n) = sqrt(a(n)) is roughly a straight line over increasingly large intervals, but the slope is slightly larger at the beginning and then decreasing towards the end of these intervals. For example, on [1..80] the slope is almost exactly 0.72; on [150..250] the slope is roughly 1.0, over [320..420] the slope is again 0.8, over [430..520] it is again 1.0, over [530..620] it is again 0.8; then the slope increases: b(780..1000) is again a nearly straight line with slope 1.67, etc. - _M. F. Hasler_, Nov 14 2021"
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A347315/b347315.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "As an irregular triangle A342585 begins:",
+        "   0;",
+        "   1,  1,  0;",
+        "   2,  2,  2,  0;",
+        "   3,  2,  4,  1,  1,  0;",
+        "   4,  4,  4,  1,  4,  0;",
+        "...",
+        "and the row sums are 0, 2, 6, 11, 17, ..."
+    ],
+    "mathematica": [
+        "Join[{0}, Total /@ SplitBy[Block[{c, k, m, nn = 52}, c[0] = 1; Reap[Do[k = 0; While[IntegerQ[c[k]], Set[m, c[k]]; Sow[m]; If[IntegerQ@ c[m], c[m]++, c[m] = 1]; k++]; Sow[0]; c[0]++, nn]][[-1, -1]]], # == 0 &][[1 ;; -1 ;; 2]]] (* _Michael De Vlieger_, Oct 12 2021 *)"
+    ],
+    "program": [
+        "(PARI) A347315_vec(N, c=[], i, s)=vector(N, j, until(c[1+c[i]]++&&!c[i]||j==1, while(#c<=i||#c<=c[i+1], c=concat(c, 0)); s+=c[i+=1]); s+s=i=0) \\\\ _M. F. Hasler_, Nov 14 2021",
+        "(Python)",
+        "from collections import Counter",
+        "def aupton(nn):",
+        "    num, inventory, rowsum, alst = 0, Counter([0]), 0, [0]",
+        "    while len(alst) <= nn:",
+        "        c = inventory[num]",
+        "        num += 1",
+        "        rowsum += c",
+        "        inventory.update([c])",
+        "        if c == 0:",
+        "            alst.append(rowsum)",
+        "            num = rowsum = 0",
+        "    return alst",
+        "print(aupton(52)) # _Michael S. Branicky_, Nov 14 2021"
+    ],
+    "xref": [
+        "Cf. A342585."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Sep 09 2021",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Sep 09 2021"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2022-09-18T11:05:38-04:00",
+    "created": "2021-09-09T16:18:21-04:00"
+}

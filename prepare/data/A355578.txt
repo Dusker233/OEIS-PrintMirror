@@ -1,0 +1,49 @@
+{
+    "number": 355578,
+    "data": "1,2,3,4,6,8,12,16,18,24,32,36,48,64,72,96,108,144,192,216,288,324,384,432,576,648,768,864,972,1152,1296,1536,1728,1944,2304,2592,2916,3072,3456,3888,4608,5184,5832,6912,7776,8748,9216,10368,11664,13824,15552,17496",
+    "name": "Numbers whose sum of 3-smooth divisors sets a new record.",
+    "comment": [
+        "Numbers m such that A072079(m) > A072079(k) for all k < m.",
+        "All the terms are 3-smooth numbers (A003586).",
+        "Equivalently, 3-smooth numbers k such that A000203(k) sets a new record.",
+        "Analogous to highly abundant numbers (A002093) with 3-smooth numbers only."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A355578/b355578.txt\">Table of n, a(n) for n = 1..11233</a> (all < 10^60)"
+    ],
+    "example": [
+        "The numbers of 3-smooth divisors of the first 6 positive integers are 1, 3, 4, 7, 1 and 12. The record values, 1, 3, 4 and 12, occur at 1, 2, 3, 4 and 6, the first 5 terms of this sequence."
+    ],
+    "mathematica": [
+        "s[n_] := Module[{e = IntegerExponent[n, {2, 3}], p}, p = {2, 3}^e; If[Times @@ p == n, (2^(e[[1]] + 1) - 1)*(3^(e[[2]] + 1) - 1)/2, 0]]; sm = 0; seq = {}; Do[sn = s[n]; If[sn > sm, sm = sn; AppendTo[seq, n]], {n, 1, 18000}]; seq"
+    ],
+    "program": [
+        "(PARI) lista(nmax) = {my(list = List(), smax = 0, e2, e3, s); for(n = 1, nmax, e2 = valuation(n, 2); e3 = valuation(n, 3); s = if(2^e2 * 3^e3 == n, (2^(e2 + 1) - 1)*(3^(e3 + 1) - 1)/2, 0); if(s > smax, smax = s;  listput(list, n))); Vec(list)};",
+        "(Python)",
+        "from sympy import multiplicity as v",
+        "from itertools import count, takewhile",
+        "def f(n): return (2**(v(2, n)+1)-1) * (3**(v(3, n)+1)-1)//2",
+        "def smooth3(lim):",
+        "    pows2 = list(takewhile(lambda x: x<lim, (2**i for i in count(0))))",
+        "    pows3 = list(takewhile(lambda x: x<lim, (3**i for i in count(0))))",
+        "    return sorted(c*d for c in pows2 for d in pows3 if c*d <= lim)",
+        "def aupto(lim):",
+        "    data, records, record = smooth3(lim), [], -1",
+        "    for argv, v in zip(data, map(f, data)):",
+        "        if v > record: record = v; records.append(argv)",
+        "    return records",
+        "print(aupto(10**5)) # _Michael S. Branicky_, Jul 08 2022"
+    ],
+    "xref": [
+        "Subsequence of A003586.",
+        "A355579 is a subsequence.",
+        "Cf. A000203, A002093, A072079, A309015."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Jul 08 2022",
+    "references": 2,
+    "revision": 18,
+    "time": "2022-07-08T15:56:00-04:00",
+    "created": "2022-07-08T13:33:55-04:00"
+}

@@ -1,0 +1,68 @@
+{
+    "number": 59168,
+    "data": "2,3,5,7,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,131,151,163,173,181,191,193,197,241,251,263,271,281,283,293,307,313,317,353,373,383,397,401,409,419,439,461,463,487,491",
+    "name": "Primes in which digits alternately rise and fall (or vice versa); sometimes called undulating primes.",
+    "reference": [
+        "C. A. Pickover, \"Wonders of Numbers\", Oxford New York 2001, Chapter 52, pp. 123-124, 316-317."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A059168/b059168.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "C. A. Pickover, \"Wonders of Numbers, Adventures in Mathematics, Mind and Meaning,\" <a href=\"http://www.zentralblatt-math.org/zmath/en/search/?q=an:0983.00008&amp;format=complete\">Zentralblatt review</a>"
+    ],
+    "maple": [
+        "extend:= proc(n) local L,j;",
+        "  L:= convert(n,base,10);",
+        "  if (L[-1] < L[-2]) xor (nops(L)::odd) then",
+        "    seq(10*n+j,j=0..L[1]-1)",
+        "  else",
+        "    seq(10*n+j,j=L[1]+1..9)",
+        "  fi",
+        "end proc:",
+        "und[2]:= [seq(seq(10*i+j,j=subs(i=NULL,[$0..9])),i=1..9)]:",
+        "for i from 3 to 4 do und[i]:= map(extend,und[i-1]) od:",
+        "select(isprime, [2,3,5,7,seq(op(und[i],i=2..4)]); # _Robert Israel_, Nov 15 2018"
+    ],
+    "mathematica": [
+        "d[n_]:=Differences[IntegerDigits[n]]; mQ[n_]:=MemberQ[d[n],0]==False; a[n_]:=DeleteDuplicates[Sign[Take[d[n],{1,-1,2}]]]; b[n_]:=DeleteDuplicates[Sign[Take[d[n],{2,-1,2}]]]; t={}; Do[p=Prime[n]; If[mQ[p],If[Length[IntegerDigits[p]]<=2,AppendTo[t,p],If[Length[a[p]]==Length[b[p]]==1 && a[p][[1]]!=b[p][[1]],AppendTo[t,p]]]],{n,95}]; t (* _Jayanta Basu_, May 08 2013 *)",
+        "Table[Which[p<10,p,p<100&&Differences[IntegerDigits[p]]!={0},p,p>100&&Union[Total/@ Partition[Sign[Differences[IntegerDigits[p]]],2,1]]=={0},p,True,Nothing],{p,Prime[ Range[ 150]]}] (* _Harvey P. Dale_, Aug 07 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def f(w,dir):",
+        "    if dir == 1:",
+        "        for s in w:",
+        "            for t in range(int(s[-1])+1,10):",
+        "                yield s+str(t)",
+        "    else:",
+        "        for s in w:",
+        "            for t in range(0,int(s[-1])):",
+        "                yield s+str(t)",
+        "A059168_list = []",
+        "for l in range(5):",
+        "    for d in '123456789':",
+        "        x = d",
+        "        for i in range(1,l+1):",
+        "            x = f(x,(-1)**i)",
+        "        A059168_list.extend([int(p) for p in x if isprime(int(p))])",
+        "        if l > 0:",
+        "            y = d",
+        "            for i in range(1,l+1):",
+        "                y = f(y,(-1)**(i+1))",
+        "            A059168_list.extend([int(p) for p in y if isprime(int(p))]) # _Chai Wah Wu_, Apr 25 2021"
+    ],
+    "xref": [
+        "Cf. A032758, A059170."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Feb 14 2001",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), Feb 15 2001",
+        "Offset changed by _Robert Israel_, Nov 15 2018"
+    ],
+    "references": 10,
+    "revision": 25,
+    "time": "2023-08-07T19:04:22-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

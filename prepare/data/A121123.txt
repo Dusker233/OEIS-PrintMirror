@@ -1,0 +1,46 @@
+{
+    "number": 121123,
+    "data": "1,3,12,63,342,1998,11772,70308,420552,2521368,15120432,90710928,544218912,3265243488,19591180992,117546666048,705278316672,4231667380608,25389994205952,152339950119168,914039640248832,5484237750793728,32905426141965312,197432556307596288",
+    "name": "Unbranched a-4-catapolynonagons (see Brunvoll reference for precise definition).",
+    "link": [
+        "J. Brunvoll, S. J. Cyvin and B. N. Cyvin, <a href=\"https://doi.org/10.1016/0166-1280(95)04463-9\">Isomer enumeration of polygonal systems...</a>, J. Molec. Struct. (Theochem), 364 (1996), 1-13, Table 12, q=9, alpha=0.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (6,6,-36)."
+    ],
+    "formula": [
+        "From _Colin Barker_, Aug 30 2013: (Start)",
+        "a(n) = 6*a(n-1)+6*a(n-2)-36*a(n-3) for n>5.",
+        "G.f.: x^2 -3*x^3*(-1+2*x+9*x^2) / ( (6*x-1)*(6*x^2-1) ). (End)",
+        "a(n) = A026532(n+1)/12 +6^(n-2)/4, n>2. - _R. J. Mathar_, Aug 01 2019"
+    ],
+    "maple": [
+        "# Exhibit 1",
+        "Hra := proc(r::integer,a::integer,q::integer)",
+        "    binomial(r-1,a-1)*(q-3)+binomial(r-1,a) ;",
+        "    %*(q-3)^(r-a-1) ;",
+        "end proc:",
+        "Jra := proc(r::integer,a::integer,q::integer)",
+        "    binomial(r-2,a-2)*(q-3)^2 +2*binomial(r-2,a-1)*(q-3) +binomial(r-2,a) ;",
+        "    %*(q-3)^(r-a-2) ;",
+        "end proc:",
+        "# Exhibit 2, I_m",
+        "A121123 := proc(r::integer)",
+        "    local q,a,f ;",
+        "    q := 9 ;",
+        "    a := 0 ;",
+        "    f := 1 +(-1)^(r+a) +(1+(-1)^a) *(1-(-1)^r) *floor((q-3)/2) /2 ;",
+        "    Jra(r,a,q)+binomial(2,r-a)+f*Hra(floor(r/2),floor(a/2),q) ;",
+        "    %/4 ;",
+        "end proc:",
+        "seq(A121123(n),n=2..30) ; # _R. J. Mathar_, Aug 01 2019"
+    ],
+    "mathematica": [
+        "Join[{1}, LinearRecurrence[{6, 6, -36}, {3, 12, 63}, 23]] (* _Jean-Fran\u00e7ois Alcover_, Mar 31 2020 *)"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "2,2",
+    "author": "_N. J. A. Sloane_, Aug 13 2006",
+    "references": 2,
+    "revision": 21,
+    "time": "2020-03-31T10:53:47-04:00",
+    "created": "2006-09-29T03:00:00-04:00"
+}

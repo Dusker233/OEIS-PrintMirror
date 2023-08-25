@@ -1,0 +1,42 @@
+{
+    "number": 300570,
+    "data": "1,101,11101,10011101,10110011101,11010110011101,11111010110011101,100011111010110011101,1001100011111010110011101,10101001100011111010110011101,101110101001100011111010110011101,1100101110101001100011111010110011101",
+    "name": "a(n) is the concatenation n in base 2, n-1 in base 2, ..., 1 in base 2.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A300570/b300570.txt\">Table of n, a(n) for n = 1..155</a>",
+        "<a href=\"/index/Mo#MWP\">Index entries for sequences related to Most Wanted Primes video</a>"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=1, 1,",
+        "      parse(cat(convert(n, binary), a(n-1))))",
+        "    end:",
+        "seq(a(n), n=1..12);  # _Alois P. Heinz_, Feb 19 2023"
+    ],
+    "mathematica": [
+        "Table[FromDigits[Flatten[IntegerDigits[#,2]&/@Range[n,1,-1]]],{n,20}] (* _Harvey P. Dale_, Sep 07 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    s = \"\"",
+        "    for k in count(1):",
+        "        s = bin(k)[2:] + s",
+        "        yield int(s)",
+        "print(list(islice(agen(), 15))) # _Michael S. Branicky_, Feb 19 2023",
+        "(Python)",
+        "from functools import reduce",
+        "def A300570(n): return int(bin(reduce(lambda i,j:(i<<j.bit_length())+j,range(n,0,-1)))[2:]) # _Chai Wah Wu_, Feb 26 2023"
+    ],
+    "xref": [
+        "Cf. A007088, A058935, A300571.",
+        "Cf. A098780 (decimal expansion of terms)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, Mar 08 2018",
+    "references": 3,
+    "revision": 35,
+    "time": "2023-02-26T10:31:04-05:00",
+    "created": "2018-03-08T21:14:46-05:00"
+}

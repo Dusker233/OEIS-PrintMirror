@@ -1,0 +1,48 @@
+{
+    "number": 309417,
+    "data": "2,11,81,611,4798,39320,333583,2897573,25632474,230231687,2091437006,19145032382,176258021378,1630867803755,15161044498785",
+    "name": "Number of steps needed to reduce 10^n to zero by subtracting its digital sum.",
+    "comment": [
+        "Conjecture: lim_{n->infinity} a(n+1)/a(n) = 10."
+    ],
+    "example": [
+        "a(100)=11 since 100->99->81->72->63->54->45->36->27->18->9->0."
+    ],
+    "mathematica": [
+        "f[n_] := Length[NestWhileList[# - Total[IntegerDigits[#]]&, n, # > 0 &]]-1; f /@ (10^Range[8]) (* _Amiram Eldar_, Aug 08 2019 *)"
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "def digitsum(n):",
+        "   ds = 0",
+        "   while n > 0:",
+        "      ds += n % 10",
+        "      n = n // 10",
+        "   return ds",
+        "def steps(n):",
+        "   count = 0",
+        "   while n > 0:",
+        "      n = n - digitsum(n)",
+        "      count += 1",
+        "   return count",
+        "n = 1",
+        "for i in range(1,10):",
+        "   n = 10 * n",
+        "   print(steps(n))",
+        "(PARI) a(n)={my(s=10^n, k=0); while(s, k++; s-=sumdigits(s)); k} \\\\ _Andrew Howroyd_, Sep 09 2019"
+    ],
+    "xref": [
+        "Cf. A066568 (n - sum of digits of n)."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Reiner Moewald_, Jul 30 2019",
+    "ext": [
+        "a(13)-a(15) from _Giovanni Resta_, Sep 10 2019"
+    ],
+    "references": 0,
+    "revision": 28,
+    "time": "2019-09-23T14:14:15-04:00",
+    "created": "2019-09-23T14:14:15-04:00"
+}

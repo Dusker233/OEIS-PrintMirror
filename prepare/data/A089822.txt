@@ -1,0 +1,51 @@
+{
+    "number": 89822,
+    "data": "0,0,2,4,12,24,48,96,192,384,640,1280,1920,3840,7680,15360,21504,43008,57344,114688,229376,458752,589824,1179648,2359296,4718592,9437184,18874368,23592960,47185920,57671680,115343360,230686720",
+    "name": "Number of subsets of {1,.., n} containing exactly two primes.",
+    "link": [
+        "Robert Israel, <a href=\"/A089822/b089822.txt\">Table of n, a(n) for n = 1..3830</a>"
+    ],
+    "formula": [
+        "a(n) = (pi(n)*(pi(n)-1)*2^(n-pi(n)))/2, with pi = A000720.",
+        "a(n) = A000217(A000720(n)-1)*A089819(n);",
+        "for n>2: a(n) = A089818(n,2)."
+    ],
+    "example": [
+        "a(5)=12 subsets of {1,2,3,4,5} contain exactly two primes: {2,3}, {2,5}, {3,5}, {1,2,3}, {1,2,5}, {1,3,5}, {2,3,4}, {2,4,5}, {3,4,5}, {1,2,3,4}, {1,2,4,5} and {1,3,4,5}."
+    ],
+    "maple": [
+        "N:= 100: # for a(1)..a(N)",
+        "V:= Vector(N):",
+        "p:= 1: n:= 1: pi:= 0:",
+        "while n <= N do",
+        "  p:= nextprime(p);",
+        "  for n from n to min(N,p-1) do",
+        "    V[n]:= pi*(pi-1)*2^(n-pi)/2;",
+        "  od;",
+        "  pi:= pi+1;",
+        "  n:= p;",
+        "od:",
+        "convert(V,list); # _Robert Israel_, Jul 14 2019",
+        "# second Maple program:",
+        "b:= proc(n, c) option remember; `if`(n=0, `if`(c=0, 1, 0),",
+        "     `if`(c<0, 0, b(n-1, c)+b(n-1, c-`if`(isprime(n), 1, 0))))",
+        "    end:",
+        "a:= n-> b(n, 2):",
+        "seq(a(n), n=1..42);  # _Alois P. Heinz_, Dec 19 2019"
+    ],
+    "mathematica": [
+        "b[n_, c_] := b[n, c] = If[n == 0, If[c == 0, 1, 0], If[c < 0, 0, b[n-1, c] + b[n-1, c - If[PrimeQ[n], 1, 0]]]];",
+        "a[n_] := b[n, 2];",
+        "Array[a, 42] (* _Jean-Fran\u00e7ois Alcover_, May 30 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000217, A000720, A089818, A089819, A089821."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Reinhard Zumkeller_, Nov 12 2003",
+    "references": 6,
+    "revision": 26,
+    "time": "2020-05-30T09:20:57-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

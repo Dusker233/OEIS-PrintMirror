@@ -1,0 +1,44 @@
+{
+    "number": 317580,
+    "data": "1,1,1,3,5,12,28,66,153,367,880,2121,5127,12441,30248,73746,180077,440571,1079438,2648511,6506170,16001256,39393173,97074140,239419963,590972968,1459808862,3608483107,8925476591,22090139751,54702648393,135533335933,335967782916",
+    "name": "Number of unlabeled rooted identity trees with n nodes and a distinguished leaf.",
+    "comment": [
+        "Total number of leaves in all rooted identity trees with n nodes. - _Andrew Howroyd_, Aug 28 2018"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A317580/b317580.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1, n} k*A055327(n, k). - _Andrew Howroyd_, Aug 28 2018"
+    ],
+    "example": [
+        "The a(6) = 12 rooted identity trees with a distinguished leaf:",
+        "(((((O))))),",
+        "(((O(o)))), (((o(O)))),",
+        "((O((o)))), ((o((O)))),",
+        "(O(((o)))), (o(((O)))),",
+        "((O)((o))), ((o)((O))),",
+        "(O(o(o))), (o(O(o))), (o(o(O)))."
+    ],
+    "mathematica": [
+        "urit[n_]:=Join@@Table[Select[Union[Sort/@Tuples[urit/@ptn]],UnsameQ@@#&],{ptn,IntegerPartitions[n-1]}];",
+        "Table[Sum[Length[Flatten[{t/.{}->1}]],{t,urit[n]}],{n,10}]"
+    ],
+    "program": [
+        "(PARI) WeighMT(u)={my(n=#u, p=x*Ser(u), vars=variables(p)); Vec(exp( sum(i=1, n, (-1)^(i-1)*substvec(p + O(x*x^(n\\i)), vars, apply(v->v^i,vars))/i ))-1)}",
+        "seq(n)={my(v=[y]); for(n=2, n, v=concat([y], WeighMT(v))); apply(p -> subst(deriv(p), y, 1), v)} \\\\ _Andrew Howroyd_, Aug 28 2018"
+    ],
+    "xref": [
+        "Cf. A000081, A001678, A003227, A003238, A004111, A038046, A055327, A067824, A301342, A316784."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Gus Wiseman_, Jul 31 2018",
+    "ext": [
+        "Terms a(26) and beyond from _Andrew Howroyd_, Aug 28 2018"
+    ],
+    "references": 3,
+    "revision": 10,
+    "time": "2018-08-28T23:37:57-04:00",
+    "created": "2018-08-01T09:22:34-04:00"
+}

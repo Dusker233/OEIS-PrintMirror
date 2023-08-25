@@ -1,0 +1,68 @@
+{
+    "number": 225035,
+    "data": "13,17,31,37,71,73,79,97,101,103,107,109,113,127,131,137,139,149,157,163,167,173,179,181,191,193,197,199,239,241,251,271,277,281,283,293,307,311,313,317,331,337,347,349,359,367,373,379,389,397,401,419,421",
+    "name": "Primes such that there is a nontrivial rearrangement of the digits which is a prime.",
+    "comment": [
+        "The new prime is necessarily different from the original prime (so 11, for example) is not a term. - _N. J. A. Sloane_, Jan 22 2023",
+        "Permutations producing leading zeros are allowed: thus 101 is in the sequence because a nontrivial permutation of its digits is 011. - _Robert Israel_, Aug 13 2019",
+        "It seems reasonable to expect that the proportion of n-digit primes that are in this sequence approaches 1 as n increases. - _Peter Munn_, Sep 13 2022"
+    ],
+    "reference": [
+        "H.-E. Richert, On permutation prime numbers, Norsk. Mat. Tidsskr. 33 (1951), p. 50-53.",
+        "Joe Roberts, Lure of the Integers, Math. Assoc. of Amer., 1992, p. 293.",
+        "James J. Tattersall, Elementary Number Theory in Nine Chapters, Second Edition, Cambridge University Press, p. 121."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A225035/b225035.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "13 is a term since a nontrivial permutation of its digits yields 31, which is also a prime."
+    ],
+    "maple": [
+        "dmax:=3: # for all terms of up to dmax digits",
+        "Res:= {}:",
+        "p:= 1:",
+        "do",
+        "  p:= nextprime(p);",
+        "  if p > 10^dmax then break fi;",
+        "  L:= sort(convert(p,base,10),`>`);",
+        "  m:= add(L[i]*10^(i-1),i=1..nops(L));",
+        "  if assigned(A[m]) then",
+        "    if ilog10(A[m])=ilog10(p) then",
+        "      Res:= Res union {A[m], p}",
+        "    else Res:= Res union {p}",
+        "    fi",
+        "  else A[m]:= p",
+        "  fi",
+        "od:",
+        "sort(convert(Res,list)); # _Robert Israel_, Aug 13 2019"
+    ],
+    "mathematica": [
+        "t={}; Do[p = Prime[n]; list1 = Permutations[IntegerDigits[p]]; If[Length[ Select[Table[FromDigits[n], {n,list1}], PrimeQ]] > 1, AppendTo[t,p]], {n,84}]; t"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import permutations",
+        "def ok(n):",
+        "    if not isprime(n): return False",
+        "    perms = (int(\"\".join(p)) for p in permutations(str(n)))",
+        "    return any(isprime(t) for t in perms if t != n)",
+        "print([k for k in range(500) if ok(k)]) # _Michael S. Branicky_, Sep 14 2022",
+        "(PARI) is(p) = if(isprime(p), my(d=vecsort(digits(p))); d==vector(#d,x,1)&&return(1); forperm(d, e, my(c = fromdigits(Vec(e))); p!=c && isprime(c) && return(1))); \\\\ _Ruud H.G. van Tol_, Jan 22 2023"
+    ],
+    "xref": [
+        "Cf. A052902, A007933, A007935, A166681.",
+        "See A055387, A359136-A359139 for other versions."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jayanta Basu_, Apr 24 2013",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Jan 22 2023"
+    ],
+    "references": 4,
+    "revision": 58,
+    "time": "2023-01-22T19:51:59-05:00",
+    "created": "2013-04-25T13:21:03-04:00"
+}

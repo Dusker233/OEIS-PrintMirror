@@ -1,0 +1,53 @@
+{
+    "number": 52219,
+    "data": "5,14,23,32,41,50,104,113,122,131,140,203,212,221,230,302,311,320,401,410,500,1004,1013,1022,1031,1040,1103,1112,1121,1130,1202,1211,1220,1301,1310,1400,2003,2012,2021,2030,2102,2111,2120,2201,2210,2300,3002",
+    "name": "Numbers whose sum of digits is 5.",
+    "comment": [
+        "A007953(a(n)) = 5; number of repdigits = #{5,11111} = A242627(5) = 2. - _Reinhard Zumkeller_, Jul 17 2014"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A052219/b052219.txt\">Table of n, a(n) for n = 1..11628</a> (all terms through 15 digits; terms 1..1287 from Vincenzo Librandi and T. D. Noe, terms 1..462 from Vincenzo Librandi)"
+    ],
+    "mathematica": [
+        "Select[Range[10^4], Total[IntegerDigits[#]] == 5 &] (* _Vincenzo Librandi_, Mar 07 2013 *)",
+        "Union[Flatten[Table[FromDigits /@ Permutations[PadRight[s, 9]], {s, IntegerPartitions[5]}]]] (* _T. D. Noe_, Mar 08 2013 *)"
+    ],
+    "program": [
+        "(Magma) [n: n in [1..3010] | &+Intseq(n) eq 5 ]; // _Vincenzo Librandi_, Mar 07 2013",
+        "(Haskell)",
+        "a052219 n = a052219_list !! (n-1)",
+        "a052219_list = filter ((== 5) . a007953) [0..]",
+        "-- _Reinhard Zumkeller_, Jul 17 2014",
+        "(PARI) isok(n) = sumdigits(n) == 5; \\\\ _Michel Marcus_, Dec 28 2015",
+        "(Python)",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def auptodigs(maxdigits):",
+        "  alst = [5]",
+        "  for d in range(2, maxdigits+1):",
+        "    fulldigset = list(\"0\"*(d-1) + \"1111122345\")",
+        "    for firstdig in \"12345\":",
+        "      target_sum, restdigset = 5-int(firstdig), fulldigset[:]",
+        "      restdigset.remove(firstdig)",
+        "      for p in multiset_permutations(restdigset, d-1):",
+        "        if sum(map(int, p)) == target_sum:",
+        "          alst.append(int(firstdig+\"\".join(p)))",
+        "          if int(p[0]) == target_sum: break",
+        "  return alst",
+        "print(auptodigs(4)) # _Michael S. Branicky_, May 14 2021"
+    ],
+    "xref": [
+        "Cf. A007953.",
+        "Cf. A011557 (1), A052216 (2), A052217 (3), A052218 (4), A052220 (6), A052221 (7), A052222 (8), A052223 (9), A052224 (10), A166311 (11), A235151 (12), A143164 (13), A235225(14), A235226 (15), A235227 (16), A166370 (17), A235228 (18), A166459 (19), A235229 (20).",
+        "Cf. A242614, A242627."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Henry Bottomley_, Feb 01 2000",
+    "ext": [
+        "Offset changed from _Bruno Berselli_, Mar 07 2013"
+    ],
+    "references": 34,
+    "revision": 28,
+    "time": "2022-09-08T08:44:59-04:00",
+    "created": "2000-05-08T03:00:00-04:00"
+}

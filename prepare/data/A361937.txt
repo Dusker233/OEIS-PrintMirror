@@ -1,0 +1,34 @@
+{
+    "number": 361937,
+    "data": "1,2,4,8,16,32,64,128,256,336,420,840,1680,3360,6720,7560,15120,30240,60480,95760,120960,176400,191520,257040,352800,383040,514080,1028160,1681680,2056320,2998800,3112200,5525520,5997600,6224400,8353800,12448800,16216200,24897600",
+    "name": "Numbers k with record values of the ratio A000005(k)/A246600(k) between the total number of divisors of k and the number of divisors d of k such that the bitwise OR of k and d is equal to k.",
+    "comment": [
+        "This sequence is infinite since the ratio A000005(k)/A246600(k) is unbounded. For example, if k = 2^m then A000005(k)/A246600(k) = m+1.",
+        "All the terms except for 1 are in A355670."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A361937/b361937.txt\">Table of n, a(n) for n = 1..52</a>"
+    ],
+    "example": [
+        "The ratios A000005(k)/A246600(k) for k = 1, 2, 3 and 4 are 1, 2, 1 and 3. The record values, 1, 2 and 3, occur at 1, 2 and 4, the first 3 terms of this sequence."
+    ],
+    "mathematica": [
+        "r[n_] := DivisorSigma[0,n]/DivisorSum[n, Boole[BitOr[#, n] == n] &];",
+        "seq[kmax_] := Module[{rm = 0, k = 1, s = {}, r1}, Do[r1 = r[k]; If[r1 > rm, rm = r1; AppendTo[s, k]], {k, 1 , kmax}]; s]; seq[10^6]"
+    ],
+    "program": [
+        "(PARI) r(n) = numdiv(n)/sumdiv(n, d, bitor(d, n) == n);",
+        "lista(kmax) = {my(rm = 0, r1); for(k = 1, kmax, r1 = r(k); if(r1 > rm, rm = r1; print1(k, \", \"))); }"
+    ],
+    "xref": [
+        "Cf. A000005, A246600, A355670, A359080, A359082, A359083.",
+        "Similar sequences: A307870, A335832, A361807."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Mar 31 2023",
+    "references": 3,
+    "revision": 8,
+    "time": "2023-04-10T02:42:02-04:00",
+    "created": "2023-03-31T07:01:49-04:00"
+}

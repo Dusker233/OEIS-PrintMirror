@@ -1,0 +1,60 @@
+{
+    "number": 158896,
+    "data": "5,17,53,151,157,163,173,463,467,491,523,541,1451,1471,1483,1489,1499,1511,1549,1553,1567,1609,1657,1721,1723,4583,4597,4621,4649,4663,4673,4703,4729,4751,4759,4787,4813,4937,4943,4973,4993,5039,5077,5227,5297",
+    "name": "Primes whose squares are a concatenation of 2 with some prime.",
+    "comment": [
+        "Leading zeros of the prime within the concatenation are not admitted. Example: 449^2=201601 is a square of a prime which is 2 concatenated with a zero-padded prime 1601. 449 is not in the sequence. - _R. J. Mathar_, Apr 06 2009"
+    ],
+    "reference": [
+        "Wladyslaw Narkiewicz, The development of prime number theory. From Euclid to Hardy and Littlewood. Springer Monographs in Mathematics, Springer-Verlag, Berlin, 2000.",
+        "I. Niven, H. S. Zuckerman and H. L. Montgomery, An Introduction to the Theory of Numbers (5th ed.). Wiley Text Books, 1991.",
+        "Paulo Ribenboim, The New Book of Prime Number Records. Springer, 1996."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A158896/b158896.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "i) The prime 47 has the square 47^2=2209, but 209=11*19 is not prime, so 47 is not in the sequence.",
+        "ii) If we attach 2 to the prime p=401 we get 2401=49^2, but 49=7^2 is not a prime, so there is no contribution to the sequence.",
+        "iii) The square of the prime 53 is 2809, i.e., 2 followed by the prime 809, so 53 is in the sequence."
+    ],
+    "maple": [
+        "count:= 0: N:= 100: Res:= NULL:",
+        "for d from 1 while count < N do",
+        "  p:= floor(sqrt(2*10^d+10^(d-1)));",
+        "  while count < N do",
+        "    p:= nextprime(p);",
+        "    if p^2 >= 3*10^d then break fi;",
+        "    q:= p^2 - 2*10^d;",
+        "    if isprime(q) then",
+        "       count:= count+1;",
+        "       Res:= Res, p;",
+        "    fi",
+        "od od:",
+        "Res; # _Robert Israel_, Mar 06 2018"
+    ],
+    "mathematica": [
+        "okQ[n_]:=Module[{idn=IntegerDigits[n^2]},First[idn]==2&& idn[[2]]!=0 && PrimeQ[FromDigits[Rest[idn]]]]; Select[Prime[Range[750]],okQ] (* _Harvey P. Dale_, Jul 22 2011 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, primerange",
+        "def ok(p):",
+        "  s = str(p*p); return s[0] == '2' and s[1] != '0' and isprime(int(s[1:]))",
+        "print(list(filter(ok, primerange(2, 5298)))) # _Michael S. Branicky_, May 17 2021"
+    ],
+    "xref": [
+        "Cf. A001248."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "Ulrich Krug (leuchtfeuer37(AT)gmx.de), Mar 29 2009",
+    "ext": [
+        "1451 inserted, and sequence extended beyond 4673, by _R. J. Mathar_, Apr 01 2009",
+        "Edited by _R. J. Mathar_, Apr 06 2009"
+    ],
+    "references": 3,
+    "revision": 19,
+    "time": "2021-05-18T01:23:21-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

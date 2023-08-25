@@ -1,0 +1,46 @@
+{
+    "number": 364385,
+    "data": "1,4,6,12,15,21,23,31,35,42,46,54,56,66,70,78,83,93,95,105,109,119,123,133,137,148,154,162,166,178,180,194,198,206,212,224,229,241,245,255,259,273,275,289,295,303,309,321,325,340,346,356,360,372,376,390,396",
+    "name": "a(n) is the number of quadratic equations u*x^2 + v*x + w = 0 with different solution sets L != {}, where n >= abs(u) + abs(v) + abs(w) and the coefficients u, v, w as well as the solutions x_1, x_2 are integers.",
+    "link": [
+        "Felix Huber, <a href=\"/A364385/a364385.txt\">Equations for a given n</a>.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Quadratic_equation\">Quadratic equation</a>."
+    ],
+    "example": [
+        "For n = 3 the a(3) = 6 solutions (u, v, w, x_1, x_2) with positive u are (1, 0, 0, 0, 0), (1, -1, 0, 1, 0), (1, 0, -1, 1, -1), (1, 1, 0, 0, -1), (1, -2, 0, 2, 0), (1, 2, 0, 0, -2).",
+        "Equations multiplied by -1 do not have a different solution set, for example (-1, 1, 0, 1, 0) has the same solution set as (1, -1, 0, 1, 0)."
+    ],
+    "maple": [
+        "nqueqs:=proc(n)",
+        "  local i,u,v,w,x_1,x_2,a_n,L;",
+        "  L:=[];",
+        "  a_n:=0;\t",
+        "  for i from 1 to n do",
+        "    for v from 1-i to i-1 do",
+        "      for w from abs(v)-i+1 to i-abs(v)-1 do",
+        "        u:=i-abs(v)-abs(w);",
+        "        if igcd(u,v,w)=1 then",
+        "          x_1:=(-v+sqrt(v**2-4*u*w))/(2*u);",
+        "          x_2:=(-v-sqrt(v**2-4*u*w))/(2*u);",
+        "          if  floor(Re(x_1))=x_1 and floor(Re(x_2))=x_2 then",
+        "            a_n:=a_n+1;",
+        "          end if;",
+        "        end if;",
+        "      end do;",
+        "    end do;",
+        "    L:=[op(L),a_n]",
+        "  end do;",
+        "  print(L);",
+        "end proc:"
+    ],
+    "xref": [
+        "For the situation with n = abs(u) + abs(v) + abs(w), see A364384."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,2",
+    "author": "_Felix Huber_, Jul 22 2023",
+    "references": 2,
+    "revision": 18,
+    "time": "2023-08-08T05:36:50-04:00",
+    "created": "2023-08-08T05:36:50-04:00"
+}

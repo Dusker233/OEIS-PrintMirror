@@ -1,0 +1,40 @@
+{
+    "number": 358689,
+    "data": "941,1031,1201,1471,7523,7673,7687,9133,9293,9479,9491,9601,9781,9923,10091,10711,12071,14891,15511,17491,17681,18671,32633,33623,34963,35983,36943,36973,37963,39157,70913,72253,72337,72353,73327,74093,75223,75577,75833,75913,77263,77557,79393,79973",
+    "name": "Emirps p such that 2*p - reverse(p) is also an emirp.",
+    "link": [
+        "Robert Israel, <a href=\"/A358689/b358689.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 1201 is a term because it is an emirp, i.e., 1201 and its reverse 1021 are distinct primes, and 2*1201 - 1021 = 1381 is also an emirp."
+    ],
+    "maple": [
+        "rev:= proc(n) local L,t;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-t]*10^(t-1),t=1..nops(L));",
+        "end proc:",
+        "filter:= proc(n) local r,s,t;",
+        "   if not isprime(n) then return false fi;",
+        "   r:= rev(n);",
+        "   if r = n or not isprime(r) then return false fi;",
+        "   s:= 2*n-r;",
+        "   if not isprime(s) then return false fi;",
+        "   t:= rev(s);",
+        "   t <> s and isprime(t)",
+        "end proc:",
+        "select(filter, [seq(i,i=3..100000,2)]);"
+    ],
+    "mathematica": [
+        "emirpQ[n_] := ! PalindromeQ[n] && AllTrue[{n, IntegerReverse[n]}, PrimeQ]; q[n_] := emirpQ[n] && (d = 2*n - IntegerReverse[n]) > 0 && AllTrue[{d, IntegerReverse[d]}, emirpQ]; Select[Range[80000], q] (* _Amiram Eldar_, Dec 08 2022 *)"
+    ],
+    "xref": [
+        "Cf. A006567."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Dec 08 2022",
+    "references": 2,
+    "revision": 29,
+    "time": "2022-12-11T01:34:07-05:00",
+    "created": "2022-12-10T20:42:56-05:00"
+}

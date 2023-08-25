@@ -1,0 +1,60 @@
+{
+    "number": 36537,
+    "data": "1,2,3,5,6,7,8,10,11,13,14,15,17,19,21,22,23,24,26,27,29,30,31,33,34,35,37,38,39,40,41,42,43,46,47,51,53,54,55,56,57,58,59,61,62,65,66,67,69,70,71,73,74,77,78,79,82,83,85,86,87,88,89,91,93,94,95,97,101,102",
+    "name": "Numbers whose number of divisors is a power of 2.",
+    "comment": [
+        "Primes and A030513(d(x)=4) are subsets; d(16k+4) and d(16k+12) have the form 3Q, so x=16k+4 or 16k-4 numbers are missing.",
+        "A number m is a term if and only if all its divisors are infinitary, or A000005(m) = A037445(m). - _Vladimir Shevelev_, Feb 23 2017",
+        "All exponents in the prime number factorization of a(n) have the form 2^k-1, k >= 1. So it is an S-exponential sequence (see Shevelev link) with S={2^k-1}. Using Theorem 1, we obtain that a(n) ~ C*n, where C = Product((1-1/p)*(1 + Sum_{i>=1} 1/p^(2^i-1))). - _Vladimir Shevelev_ Feb 27 2017",
+        "This constant is C = 0.687827... . - _Peter J. C. Moses_, Feb 27 2017",
+        "From _Peter Munn_, Jun 18 2022: (Start)",
+        "1 and numbers j*m^2, j squarefree, m >= 1, such that all prime divisors of m divide j, and m is in the sequence.",
+        "Equivalently, the nonempty set of numbers whose squarefree part (A007913) and squarefree kernel (A007947) are equal, and whose square part's square root (A000188) is in the set.",
+        "(End)"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A036537/b036537.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Vladimir Shevelev, <a href=\"https://www.math.bgu.ac.il/~shevelev/S_exp_numb.pdf\">S-exponential numbers</a>, Acta Arithm., 175(2016), 385-395.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SquarePart.html\">Square Part</a>, <a href=\"http://mathworld.wolfram.com/SquarefreePart.html\">Squarefree Part</a>"
+    ],
+    "formula": [
+        "A209229(A000005(a(n))) = 1. - _Reinhard Zumkeller_, Nov 15 2012",
+        "a(n) << n. - _Charles R Greathouse IV_, Feb 25 2017",
+        "m is in the sequence iff for k >= 0, A352780(m, k+1) | A352780(m, k)^2. - _Peter Munn_, Jun 18 2022"
+    ],
+    "example": [
+        "383, 384, 385, 386 have 2, 16, 8, 4 divisors, respectively, so they are consecutive terms of this sequence."
+    ],
+    "mathematica": [
+        "bi[ x_ ] := 1-Sign[ N[ Log[ 2, x ], 5 ]-Floor[ N[ Log[ 2, x ], 5 ] ] ]; ld[ x_ ] := Length[ Divisors[ x ] ]; Flatten[ Position[ Table[ bi[ ld[ x ] ], {x, 1, m} ], 1 ] ]",
+        "Select[Range[110],IntegerQ[Log[2,DivisorSigma[0,#]]]&] (* _Harvey P. Dale_, Nov 20 2016 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a036537 n = a036537_list !! (n-1)",
+        "a036537_list = filter ((== 1) . a209229 . a000005) [1..]",
+        "-- _Reinhard Zumkeller_, Nov 15 2012",
+        "(PARI) is(n)=n=numdiv(n);n>>valuation(n,2)==1 \\\\ _Charles R Greathouse IV_, Mar 27 2013",
+        "(PARI) isok(m) = issquarefree(m) || (omega(m) == omega(core(m)) && isok(core(m,1)[2])); \\\\ _Peter Munn_, Jun 18 2022",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import factorint",
+        "def A036537_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:all(map(lambda m:not((k:=m+1)&-k)^k,factorint(n).values())),count(max(startvalue,1)))",
+        "A036537_list = list(islice(A036537_gen(),30)) # _Chai Wah Wu_, Jan 04 2023"
+    ],
+    "xref": [
+        "A005117, A030513, A058891, A175496, A336591 are subsequences.",
+        "Complement of A162643; subsequence of A002035. - _Reinhard Zumkeller_, Jul 08 2009",
+        "Subsequence of A162644, A337533.",
+        "Cf. A000005, A000188, A007913, A007947, A036538, A352780.",
+        "The closure of the squarefree numbers under application of A355038(.) and lcm."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Labos Elemer_",
+    "references": 35,
+    "revision": 66,
+    "time": "2023-01-04T15:06:16-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

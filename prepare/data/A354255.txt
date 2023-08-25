@@ -1,0 +1,41 @@
+{
+    "number": 354255,
+    "data": "2,4,8,16,26,32,64,128,206,256,478,512,998,1024,2048,3134,4096,6514,8192,13942,16384,28894,32768,60518,65536,126634,131072,261398,262144",
+    "name": "Even numbers in A090252 in order of appearance.",
+    "comment": [
+        "The n-th even term in A090252 appears at index k <= A083329(n).",
+        "Conjecture: The indices of even numbers in A090252 are precisely the numbers {A083329(n), n >= 1}. See A090252 for discussion. - _N. J. A. Sloane_, May 22 2022",
+        "Taking logs to base 2 of these terms produces 1., 2., 3., 4., 4.700439718, 5., 6., 7., 7.686500527, 8., 8.900866807, 9., 9.962896004, 10., 11., 11.61378946, 12., 12.66932800, 13., 13.76714991, 14. - _N. J. A. Sloane_, Jun 01 2022"
+    ],
+    "program": [
+        "(Python)",
+        "from math import gcd, prod",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    alst, aset, mink = [1], {1}, 2",
+        "    for n in count(2):",
+        "        k, s = mink, n - n//2",
+        "        prodall = prod(alst[n-n//2-1:n-1])",
+        "        while k in aset or gcd(prodall, k) != 1: k += 1",
+        "        alst.append(k); aset.add(k)",
+        "        if k%2 == 0: yield k",
+        "        while mink in aset: mink += 1",
+        "print(list(islice(agen(), 9))) # _Michael S. Branicky_, May 23 2022"
+    ],
+    "xref": [
+        "Cf. A083329, A090252, A247665, A248379, A353730, A354146, A354159."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Michael S. Branicky_, May 21 2022",
+    "ext": [
+        "a(14) from _Michael S. Branicky_, May 26 2022",
+        "a(15)-a(21) from _Michael S. Branicky_, Jun 01 2022 using gzipped b-file in A090252",
+        "a(22)-a(26) from _Hugo van der Sanden_, Jun 14 2022",
+        "a(27)-a(29) from _Jinyuan Wang_, Jul 15 2022"
+    ],
+    "references": 4,
+    "revision": 47,
+    "time": "2022-07-15T10:37:18-04:00",
+    "created": "2022-05-21T14:05:10-04:00"
+}

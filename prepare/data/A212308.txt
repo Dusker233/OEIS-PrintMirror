@@ -1,0 +1,47 @@
+{
+    "number": 212308,
+    "data": "1,6,12,15,18,24,30,36,45,48,54,60,66,72,75,84,90,91,96,108,120,132,135,144,150,162,168,180,192,198,216,225,240,252,264,270,276,288,300,306,312,324,330,336,360,375,384,396,405,420,432,435,450,480,486,504",
+    "name": "Numbers with no proper divisor that is not in an arithmetic progression of at least three proper divisors.",
+    "comment": [
+        "Equivalently, the numbers with exactly one divisor that is not in an arithmetic progression of at least three divisors.",
+        "Contains p^j*(2*p-1)^k for j,k>=1 if p and 2*p-1 are primes. - _Robert Israel_, Apr 13 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A212308/b212308.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "36 appears in this sequence because its proper divisors are 1, 2, 3, 4, 6, 9, 12 and 18, each of which appears in at least one of the following arithmetic progressions of at least three proper divisors of 36: {1, 2, 3, 4}, {3, 6, 9, 12}, {6, 12, 18}."
+    ],
+    "maple": [
+        "filter:= proc(n) local S,D,tau,a,b;",
+        "  S:= numtheory:-divisors(n) minus {n};",
+        "  D:= sort(convert(S,list));",
+        "  tau:= nops(D);",
+        "  for a from 1 to tau-2 do for b from a+1 to tau-1 do",
+        "    if member(2*D[b]-D[a],D) then",
+        "      S:= S minus {D[a],D[b],2*D[b]-D[a]};",
+        "      if S = {} then return true fi;",
+        "    fi",
+        "  od od;",
+        "  false;",
+        "end proc:",
+        "filter(1):= true:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Apr 13 2020"
+    ],
+    "mathematica": [
+        "filterQ[n_] := Module[{S, D, tau, a, b}, S = Most @ Divisors[n]; D = S; tau = Length[D]; For[a = 1, a <= tau - 2, a++, For[b = a + 1, b <= tau - 1, b++, If [MemberQ[D, 2 D[[b]] - D[[a]]], S = S ~Complement~ {D[[a]], D[[b]], 2 D[[b]] - D[[a]]}; If[S == {}, Return[True]]]]]; False];",
+        "filterQ[1] = True;",
+        "Select[Range[1000], filterQ] (* _Jean-Fran\u00e7ois Alcover_, Sep 26 2020, after _Robert Israel_ *)"
+    ],
+    "xref": [
+        "Cf. A091010, A091011.",
+        "Contains A033845, A129521."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_William Rex Marshall_, Oct 24 2013",
+    "references": 1,
+    "revision": 18,
+    "time": "2020-09-26T11:43:03-04:00",
+    "created": "2013-10-25T13:05:49-04:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 307221,
+    "data": "0,1,6,30,36,540,2100,3780,15120,37800,85680,120960,126000,131040,196560,302400,332640,786240,917280,1179360,2702700,3341520,4324320,8648640,19656000,19958400,21205800,43243200,46781280,57657600,64864800,122522400,151351200",
+    "name": "Positions of records in A306440.",
+    "comment": [
+        "Numbers k such that A306440(k) > A306440(j) for all j < k."
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A307221/b307221.txt\">Table of n, a(n) for n = 1..50</a>"
+    ],
+    "example": [
+        "a(3) = 6 is in the sequence because A306440(6) = 2 while A306440(j) < 2 for 0 <= j < 6."
+    ],
+    "maple": [
+        "A306440:= proc(n) local t;",
+        "    nops(select(t -> t^2<2*n and isprime(t+1) and isprime(2*n/t+1), numtheory:-divisors(2*n)))",
+        "end proc:",
+        "Res:= 0: vmax:= 0:",
+        "for n from 1 to 10^6 do",
+        "  v:= A306440(n);",
+        "  if v > vmax then",
+        "    Res:= Res, n; vmax:= v;",
+        "  fi",
+        "od:",
+        "Res;"
+    ],
+    "mathematica": [
+        "A306440[n_] := Length[Select[Divisors[2n], #^2 < 2n && PrimeQ[#+1] && PrimeQ[2n/#+1]&]];",
+        "Res = {0}; vmax = 0;",
+        "For[n = 1, n <= 10^6 , n++, v = A306440[n]; If[v > vmax, Print[n]; AppendTo[Res, n]; vmax = v]];",
+        "Res (* _Jean-Fran\u00e7ois Alcover_, Oct 17 2020, translated from Maple *)"
+    ],
+    "xref": [
+        "Cf. A306440."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Robert Israel_, Mar 29 2019",
+    "ext": [
+        "a(24)-a(33) from _Daniel Suteu_, Mar 29 2019"
+    ],
+    "references": 1,
+    "revision": 20,
+    "time": "2020-10-19T12:35:47-04:00",
+    "created": "2019-03-29T21:06:40-04:00"
+}

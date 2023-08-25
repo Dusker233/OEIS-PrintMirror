@@ -1,0 +1,63 @@
+{
+    "number": 29907,
+    "data": "0,1,2,4,8,15,28,51,92,164,290,509,888,1541,2662,4580,7852,13419,22868,38871,65920,111556,188422,317689,534768,898825,1508618,2528836,4233872,7080519,11828620,19741179,32916068,54835556,91276202,151814645,252318312",
+    "name": "a(n+1) = a(n) + a(n-1) + Fibonacci(n), with a(0) = 0 and a(1) = 1.",
+    "comment": [
+        "Number of matchings of the fan graph on n vertices, n>0 (a fan is the join of the path graph with one extra vertex).",
+        "a(n+1) gives row sums of A054450. - _Paul Barry_, Oct 23 2004",
+        "Number of parts in all compositions of n into odd parts. Example: a(5)=15 because the compositions 5, 311, 131, 113, and 11111 have a total of 1+3+3+3+5=15 parts.",
+        "a(n-1) is the number of compositions of n that contain one even part; for example, a(5-1)=a(4)=8 counts the compositions 1112, 1121, 1211, 14, 2111, 23, 32, 41. - _Joerg Arndt_, May 21 2013"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A029907/b029907.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Jia Huang, <a href=\"https://arxiv.org/abs/1812.11010\">Compositions with restricted parts</a>, arXiv:1812.11010 [math.CO], 2018.",
+        "Mengmeng Liu and Andrew Yezhou Wang, <a href=\"https://www.emis.de/journals/JIS/VOL23/Wang/wang61.html\">The Number of Designated Parts in Compositions with Restricted Parts</a>, J. Int. Seq., Vol. 23 (2020), Article 20.1.8.",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (2,1,-2,-1)."
+    ],
+    "formula": [
+        "G.f.: x*(1-x^2)/(1-x-x^2)^2.",
+        "a(n) = ((n+4)*Fibonacci(n) + 2*n*Fibonacci(n-1))/5.",
+        "a(n+1) = Sum_{k=0..n} Sum_{j=0..floor(k/2)} binomial(n-j, j). - _Paul Barry_, Oct 23 2004",
+        "a(n) = A010049(n+1) + A152163(n+1). - _R. J. Mathar_, Dec 10 2011",
+        "a(n) = F(n) + Sum_{k=1..n-1} F(k)*F(n-k), where F=Fibonacci. - _Reinhard Zumkeller_, Nov 01 2013",
+        "a(n) = (1/5)*(n*A000032(n) + 4*A000045(n)). - _G. C. Greubel_, Apr 06 2022",
+        "a(n) = A001629(n+1) - A001629(n-1), where A001629 is the first convolution of the Fibonacci numbers. - _Gregory L. Simay_, Aug 30 2022"
+    ],
+    "example": [
+        "a(4)=8 because matchings of fan graph with edges {OA,OB,OC,AB,AC} are: {},{OA},{OB},{OC},{AB},{AC},{OA,BC},{OC,AB}."
+    ],
+    "maple": [
+        "with(combinat); A029907 := proc(n) options remember; if n <= 1 then n else procname(n-1)+procname(n-2)+fibonacci(n-1); fi; end;"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[x(1-x^2)/(1-x-x^2)^2, {x, 0, 37}], x] (* or *)",
+        "a[n_]:= a[n]= a[n-1] +a[n-2] +Fibonacci[n-1]; a[0]=0; a[1]=1; Array[a, 37] (* or *)",
+        "LinearRecurrence[{2,1,-2,-1}, {0,1,2,4}, 38] (* _Robert G. Wilson v_, Jun 22 2014 *)"
+    ],
+    "program": [
+        "(PARI) alias(F,fibonacci); a(n)=((n+4)*F(n)+2*n*F(n-1))/5;",
+        "(Haskell)",
+        "a029907 n = a029907_list !! n",
+        "a029907_list = 0 : 1 : zipWith (+) (tail a000045_list)",
+        "                      (zipWith (+) (tail a029907_list) a029907_list)",
+        "-- _Reinhard Zumkeller_, Nov 01 2013",
+        "(Magma) [((n+4)*Fibonacci(n)+2*n*Fibonacci(n-1))/5: n in [0..40]]; // _Vincenzo Librandi_, Feb 25 2018",
+        "(SageMath)",
+        "def A029907(n): return (1/5)*(n*lucas_number2(n, 1, -1) + 4*fibonacci(n))",
+        "[A029907(n) for n in (0..40)] # _G. C. Greubel_, Apr 06 2022"
+    ],
+    "xref": [
+        "Cf. A000032, A000045, A001629, A010049, A240847."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Additional formula from _Wolfdieter Lang_, May 02 2000",
+        "Additional comments from _Michael Somos_, Jul 23 2002"
+    ],
+    "references": 30,
+    "revision": 104,
+    "time": "2022-09-08T08:44:50-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

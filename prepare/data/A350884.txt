@@ -1,0 +1,51 @@
+{
+    "number": 350884,
+    "data": "15733,15803,18413,19037,37243,75913,157363,371057,393919,396509,705169,722983,740477,794141,1857599,1858093,1858643,1865491,1918529,1922351,1950989,3002977,3006551,3007723,3127139,3234857,3266369,3444017,3548891,3614339,3658981,3687127,3734657,3763567,3807173",
+    "name": "Emirps p such that, if q is the next emirp after p, p*q mod (p+q) and floor(p*q/(p+q)) are both emirps.",
+    "link": [
+        "Robert Israel, <a href=\"/A350884/b350884.txt\">Table of n, a(n) for n = 1..2000</a>"
+    ],
+    "example": [
+        "a(3) = 18413 = p is a term because it is an emirp (18413 and 31481 being distinct primes), the next emirp is q = 18427, and (p*q) mod (p+q) = 36791 and floor((p*q)/(p+q)) = 9209 are emirps."
+    ],
+    "maple": [
+        "rev:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "isemirp:= proc(n) local r;",
+        "   if not isprime(n) then return false fi;",
+        "   r:= rev(n);",
+        "   r <> n and isprime(r)",
+        "end proc:",
+        "R:= NULL: count:= 0:",
+        "p:= 0:",
+        "for d from 1 while count < 40 do",
+        "for i in [1,3,7,9] do",
+        "   for j from 1 to 10^d-1 by 2 while count < 40 do",
+        "     q:= i*10^d+j;",
+        "     if isemirp(q) then",
+        "        s:= p+q;",
+        "        t:= p*q;",
+        "        if isemirp(t mod s) and isemirp(floor(t/s)) then",
+        "           count:= count+1; R:= R, p;",
+        "        fi;",
+        "        p:= q;",
+        "     fi;",
+        "od od od;",
+        "R;"
+    ],
+    "mathematica": [
+        "emirpQ[p_] := (q = IntegerReverse[p]) != p && And @@ PrimeQ[{p, q}]; nextEmirp[p_] := Module[{k = NextPrime[p]}, While[(q = IntegerReverse[k]) == k || ! PrimeQ[q], k = NextPrime[k]]; k]; seqQ[p_] := emirpQ[p] && Module[{q = nextEmirp[p]}, And @@ emirpQ /@ {Mod[p*q, p + q], Floor[p*q/(p + q)]}]; Select[Range[2*10^6], seqQ] (* _Amiram Eldar_, Jan 21 2022 *)"
+    ],
+    "xref": [
+        "Cf. A006567, A346147."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 20 2022",
+    "references": 1,
+    "revision": 10,
+    "time": "2022-01-25T04:21:36-05:00",
+    "created": "2022-01-24T16:06:42-05:00"
+}

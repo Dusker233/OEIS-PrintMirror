@@ -1,0 +1,32 @@
+{
+    "number": 308267,
+    "data": "1,2,4,7,8,14,16,28,31,32,56,62,64,83,112,124,127,128,166,224,248,254,256,332,397,448,496,508,511,512,664,794,891,896,992,1016,1022,1024,1163,1328,1588,1782,1792,1984,2032,2044,2047,2048,2326,2656,3176,3441,3564,3584,3968",
+    "name": "Numbers k such that k divides A048678(k).",
+    "comment": [
+        "Apparently includes all powers of 2.",
+        "All numbers 2^(2k+1)-1 are in this sequence, and if n is in this sequence then so is 2n. - _Charlie Neder_, May 17 2019"
+    ],
+    "example": [
+        "The first few terms of A048678 are 1,2,5,4,9,10,21,8. 2 is a multiple of 2, 5 isn't a multiple of 3, 4 is a multiple of 4, 9 isn't a multiple of 5, 10 isn't a multiple of 6, 21 is a multiple of 7, etc."
+    ],
+    "mathematica": [
+        "Select[Range[4000], Divisible[FromDigits[Flatten[IntegerDigits[#, 2] /. {1 -> {0, 1}}], 2], #] &] (* _Amiram Eldar_, Jul 08 2019 after _Robert G. Wilson v_ at A048678 *)"
+    ],
+    "program": [
+        "(Haskell) bintodec :: [Integer] -> Integerbintodec = sum . zipWith (*) (iterate (*2) 1) . reverse",
+        "decomp :: (Integer, [Integer]) -> (Integer, [Integer])decomp (x, ys) = if even x then (x `div` 2, 0:ys) else (x - 1, 1:ys)",
+        "zeck :: Integer -> Integerzeck n = bintodec (1 : snd (last . takeWhile (\\(x, _) -> x > 0) $ iterate decomp (n, [])))",
+        "output :: [Integer]output = filter (\\x -> 0 == zeck x `mod` x) [1..100]",
+        "main :: IO ()main = print output"
+    ],
+    "xref": [
+        "Cf. A048678, A083420 (subsequence)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Dan Dart_, May 17 2019",
+    "references": 0,
+    "revision": 33,
+    "time": "2022-01-10T22:30:10-05:00",
+    "created": "2019-07-09T13:17:45-04:00"
+}

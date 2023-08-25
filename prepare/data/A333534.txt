@@ -1,0 +1,42 @@
+{
+    "number": 333534,
+    "data": "0,1,1,1,1,1,4,4,4,4,4,4,4,4,5,5,5,5,5,10,10,10,11,11,11,12,12,12,12,12,13,13,13,13,14,14,14,14,14,14,14,14,14,14,14,14,15,15,15,15,15,15,16,16,16,16,16,16,16,16,16,16,17,17,17,17,17,17,17,17,18,18,18,18,18,18,18,18,18,19,19,19,19,19,19",
+    "name": "a(n) is the number of log(n)-smooth numbers <= n.",
+    "comment": [
+        "Number of k <= n such that the greatest prime factor of k is <= log(n)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A333534/b333534.txt\">Table of n, a(n) for n = 2..65536</a>"
+    ],
+    "formula": [
+        "a(n) = A096300(n), n>2. - _R. J. Mathar_, Apr 27 2020"
+    ],
+    "maple": [
+        "A333534 := n -> nops(select(k -> A006530(k) <= ilog(n), [$1..n])):",
+        "seq(A333534(n), n=2..86); # _Peter Luschny_, Apr 09 2020",
+        "# second Maple program:",
+        "b:= proc(n) option remember; max(1, map(i-> i[1], ifactors(n)[2])) end:",
+        "a:= n-> (t-> add(`if`(b(i)<= t, 1, 0), i=1..n))(ilog(n)):",
+        "seq(a(n), n=2..100);  # _Alois P. Heinz_, Apr 09 2020"
+    ],
+    "mathematica": [
+        "a[n_] := Select[Range[n], FactorInteger[#][[-1, 1]] <= Log[n]&] // Length;",
+        "a /@ Range[2, 100] (* _Jean-Fran\u00e7ois Alcover_, May 17 2020 *)"
+    ],
+    "program": [
+        "(PARI) gpf(j)={if(j==1,1,my(f=factor(j));f[#f[,2],1])};",
+        "for(n=2,80,my(L=log(n));print1(sum(k=1,n,gpf(k)<=L),\", \")) \\\\ _Hugo Pfoertner_, Apr 09 2020",
+        "(PARI) sm(lim, p)=if(p==2, return(logint(lim\\1, 2)+1)); my(s=0, q=precprime(p-1), t=1); for(e=0, logint(lim\\=1, p), s+=sm(lim\\t, q); t*=p); s",
+        "a(n)=if(n<8,return(n>2)); sm(n, precprime(log(n))) \\\\ _Charles R Greathouse IV_, Apr 16 2020"
+    ],
+    "xref": [
+        "Cf. A001671, A006530, A051102, A137845, A295084."
+    ],
+    "keyword": "nonn",
+    "offset": "2,7",
+    "author": "_N. J. A. Sloane_, Apr 08 2020",
+    "references": 2,
+    "revision": 36,
+    "time": "2020-05-17T07:29:16-04:00",
+    "created": "2020-04-09T06:50:37-04:00"
+}

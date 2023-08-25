@@ -1,0 +1,38 @@
+{
+    "number": 364685,
+    "data": "4,10,18,30,48,76,120,190,302,482,772,1240,1996,3218,5194,8390,13560,21924,35456,57350,92774,150090,242828,392880,635668,1028506,1664130,2692590,4356672,7049212,11405832,18454990,29860766,48315698,78176404,126492040,204668380",
+    "name": "The number of binary sequences of length n for which all patterns {0,1},{0,0},{1,0},{1,1} appear for the first time. In particular, three of the patterns will have appeared at least once before the (n-1)st digit in the sequence and the remaining pattern appears for the first and only time at positions {n-1,n} in the sequence.",
+    "link": [
+        "Evan Fisher, Tianman Huang, and Xiaoshi Wang, <a href=\"https://doi.org/10.1216/rmj.2020.50.957\">Cover Times for Markov Generated Sequences of Length Two</a>, Rocky Mountain J. Math. 50 (3) 957 - 974, June 2020.",
+        "<a href=\"/index/Rec#order_04\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-2,-1,1)."
+    ],
+    "formula": [
+        "a(n) = 2*(n-6+F(n-1)), F(n) is the n-th Fibonacci number A000045(n).",
+        "G.f.: 2*x^5*(2*x^2+x-2)/((x^2+x-1)*(x-1)^2)."
+    ],
+    "example": [
+        "a(6)=10 is the number of cover time sequences of length 6 for binary patterns of length 2: {{0, 0, 0, 1, 1, 0}, {0, 0, 1, 0, 1, 1}, {0, 0, 1, 1, 1, 0}, {0, 1, 0, 0, 1, 1}, {0, 1, 1, 1, 0, 0}, {1, 0, 0, 0, 1, 1}, {1, 0, 1, 1, 0, 0}, {1, 1, 0, 0, 0, 1}, {1, 1, 0, 1, 0, 0}, {1, 1, 1, 0, 0, 1}}. (Notice that the final two digits in each of these sequences completes the appearance of all four patterns.)"
+    ],
+    "mathematica": [
+        "b[n_]:= b[n] = Tuples[{0, 1}, n];",
+        "a1[n_]:=",
+        "  Select[b[n],",
+        "   MatchQ[#, {___, PatternSequence[0, 0], ___}] &&",
+        "     MatchQ[#, {___, PatternSequence[0, 1], ___}] &&",
+        "     MatchQ[#, {___, PatternSequence[1, 0], ___}] &&",
+        "     MatchQ[#, {___, PatternSequence[1, 1], ___}] &];",
+        "Table[Length[",
+        "  Select[a1[k], Length[SequencePosition[#, Take[#, -2]]] == 1 &]], {k,",
+        "   5, 20}]"
+    ],
+    "xref": [
+        "Cf. A000045, A242206."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "5,1",
+    "author": "_Evan Fisher_ and Ruiqi (Violet) Cai, Aug 02 2023",
+    "references": 0,
+    "revision": 26,
+    "time": "2023-08-05T21:27:47-04:00",
+    "created": "2023-08-05T21:27:47-04:00"
+}

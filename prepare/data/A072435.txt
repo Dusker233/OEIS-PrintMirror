@@ -1,0 +1,45 @@
+{
+    "number": 72435,
+    "data": "2552,3333,3432,4224,4653,5764,6116,7876,13123,14883,15235,16346,16775,17567,17666,18447,25052,25252,25452,25652,25852,26052,26252,26452,26652,26852,33033,33132,33233,33332,33433,33532,33633,33732,33833",
+    "name": "Numbers n for which there are exactly twelve k such that n = k + reverse(k).",
+    "comment": [
+        "Subsequence of A067030. First term is A072041(12).",
+        "Includes 25*10^k+52, 33*10^k+33, 42*10^k+24 and 61*10^k+16 for k >= 2. - _Robert Israel_, Jul 12 2019"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A072435/b072435.txt\">Table of n, a(n) for n = 1..896</a>",
+        "<a href=\"/index/Res#RAA\">Index entries for sequences related to Reverse and Add!</a>"
+    ],
+    "example": [
+        "2552 = k + reverse(k) for k = 1051, 1141, 1231, 1321, 1411, 1501, 2050, 2140, 2230, 2320, 2410, 2500."
+    ],
+    "maple": [
+        "N:= 10^5:",
+        "revdigs:= proc(n) local L, i;",
+        "  L:= convert(n, base, 10);",
+        "  add(L[-i]*10^(i-1), i=1..nops(L))",
+        "end proc:",
+        "V:= Vector(N):",
+        "for x from 1 to N do",
+        "  v:= x + revdigs(x);",
+        "  if v <= N then V[v]:= V[v]+1 fi;",
+        "od:",
+        "select(t -> V[t]=12, [$1..N]); # Robert Israel, Jul 12 2019"
+    ],
+    "mathematica": [
+        "Module[{nn=40000},Select[Tally[Table[n+IntegerReverse[n],{n,nn}]],#[[2]] == 12&&#[[1]]<nn&]][[All,1]]//Sort(* Requires Mathematica version 10 or later *) (* _Harvey P. Dale_, Apr 25 2020 *)"
+    ],
+    "program": [
+        "(ARIBAS) var n,k,c,i,rev: integer; st,nst: string; end; m := 12; for n := 0 to 34200 do k := n div 2; c := 0; while k <= n and c < m + 1 do st := itoa(k); nst := \"\"; for i := 0 to length(st) - 1 do nst := concat(st[i],nst); end; rev := atoi(nst); if n = k + rev then inc(c); if k mod 10 <> 0 and k <> rev then inc(c); end; end; inc(k); end; if c = m then write(n,\",\"); end; end;"
+    ],
+    "xref": [
+        "Cf. A067030, A072041."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Klaus Brockhaus_, Jun 17 2002",
+    "references": 1,
+    "revision": 13,
+    "time": "2020-04-25T15:34:49-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

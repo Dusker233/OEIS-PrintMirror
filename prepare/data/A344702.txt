@@ -1,0 +1,30 @@
+{
+    "number": 344702,
+    "data": "108,196,200,216,288,432,441,500,540,588,600,675,676,756,784,800,864,882,980,1000,1080,1125,1188,1225,1323,1350,1372,1400,1404,1440,1444,1500,1512,1521,1568,1728,1764,1800,1836,2000,2016,2028,2052,2156,2160,2200,2205,2250,2352,2376,2400,2450,2484,2548,2592,2600",
+    "name": "Positions k where A344695(k) is not multiplicative.",
+    "comment": [
+        "Numbers k with a factorization into coprime x and k/x with A344695(x) * A344695(k/x) <> A344695(k). - _Peter Munn_, 04 Jun 2021"
+    ],
+    "example": [
+        "For 108 = 4*27, A344695(108) = 8, although A344695(4) = 1 and A344695(27) = 4, and 1*4 != 8, therefore 108 is included in this sequence.",
+        "For 441 = 9*49, A344695(441) = 3, although A344695(9) = 1 and A344695(49) = 1, and 1*1 != 3, therefore 441 is included in this sequence."
+    ],
+    "program": [
+        "(PARI)",
+        "A001615(n) = if(1==n,n, my(f=factor(n)); prod(i=1, #f~, f[i, 1]^f[i, 2] + f[i, 1]^(f[i, 2]-1))); \\\\ After code in A001615",
+        "A344695(n) = gcd(sigma(n), A001615(n));",
+        "A344695mult(n) = { my(f = factor(n)); prod(k=1, #f~, A344695(f[k, 1]^f[k, 2])); };",
+        "isA344702(n) = (A344695(n)!=A344695mult(n));"
+    ],
+    "xref": [
+        "Cf. A000203, A001615, A344695, A344696, A344697.",
+        "Subsequence of A013929 and of A024619."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, May 27 2021",
+    "references": 4,
+    "revision": 13,
+    "time": "2021-06-05T17:11:05-04:00",
+    "created": "2021-06-05T17:11:05-04:00"
+}

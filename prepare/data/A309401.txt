@@ -1,0 +1,48 @@
+{
+    "number": 309401,
+    "data": "1,1,3,43,5949,12950796,586826390263,669793946192984257,22558227235537152753501561,25741074696455818592335996518315259,1124843928218943684789052411802502269971863691,2100464404490451025972467064515428575200326254804659324780",
+    "name": "a(n) = A306245(n,n).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A309401/b309401.txt\">Table of n, a(n) for n = 0..36</a>"
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; `if`(n=0, 1,",
+        "      add(k^j*binomial(n-1, j)*b(j, k), j=0..n-1))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..12);  # _Alois P. Heinz_, Jul 28 2019"
+    ],
+    "mathematica": [
+        "b[0, _] = 1;",
+        "b[n_, k_] := b[n, k] = Sum[k^j Binomial[n-1, j] b[j, k], {j, 0, n-1}];",
+        "a[n_] := b[n, n];",
+        "a /@ Range[0, 12] (* _Jean-Fran\u00e7ois Alcover_, Nov 14 2020, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def ncr(n, r)",
+        "  return 1 if r == 0",
+        "  (n - r + 1..n).inject(:*) / (1..r).inject(:*)",
+        "end",
+        "def A(k, n)",
+        "  ary = [1]",
+        "  (1..n).each{|i| ary << (0..i - 1).inject(0){|s, j| s + k ** j * ncr(i - 1, j) * ary[j]}}",
+        "  ary",
+        "end",
+        "def A309401(n)",
+        "  (0..n).map{|i| A(i, i)}",
+        "end",
+        "p A309401(20)"
+    ],
+    "xref": [
+        "Main diagonal of A306245.",
+        "Cf. A126443, A301419."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Jul 28 2019",
+    "references": 2,
+    "revision": 17,
+    "time": "2020-11-14T09:47:56-05:00",
+    "created": "2019-07-28T20:32:49-04:00"
+}

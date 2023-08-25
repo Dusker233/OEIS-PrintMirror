@@ -1,0 +1,52 @@
+{
+    "number": 322442,
+    "data": "1,1,4,25,195,1894,22159,303769",
+    "name": "Number of pairs of set partitions of {1,...,n} where every block of one is a subset or superset of some block of the other.",
+    "example": [
+        "The a(3) = 25 pairs of set partitions (these are actually all pairs of set partitions of {1,2,3}):",
+        "  (1)(2)(3)|(1)(2)(3)",
+        "  (1)(2)(3)|(1)(23)",
+        "  (1)(2)(3)|(12)(3)",
+        "  (1)(2)(3)|(13)(2)",
+        "  (1)(2)(3)|(123)",
+        "    (1)(23)|(1)(2)(3)",
+        "    (1)(23)|(1)(23)",
+        "    (1)(23)|(12)(3)",
+        "    (1)(23)|(13)(2)",
+        "    (1)(23)|(123)",
+        "    (12)(3)|(1)(2)(3)",
+        "    (12)(3)|(1)(23)",
+        "    (12)(3)|(12)(3)",
+        "    (12)(3)|(13)(2)",
+        "    (12)(3)|(123)",
+        "    (13)(2)|(1)(2)(3)",
+        "    (13)(2)|(1)(23)",
+        "    (13)(2)|(12)(3)",
+        "    (13)(2)|(13)(2)",
+        "    (13)(2)|(123)",
+        "      (123)|(1)(2)(3)",
+        "      (123)|(1)(23)",
+        "      (123)|(12)(3)",
+        "      (123)|(13)(2)",
+        "      (123)|(123)",
+        "Non-isomorphic representatives of the pairs of set partitions of {1,2,3,4} for which the condition fails:",
+        "    (12)(34)|(13)(24)",
+        "    (12)(34)|(1)(3)(24)",
+        "  (1)(2)(34)|(13)(24)"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "costabQ[s_,t_]:=And@@Cases[s,x_:>Select[t,SubsetQ[x,#]||SubsetQ[#,x]&]!={}];",
+        "Table[Length[Select[Tuples[sps[Range[n]],2],And[costabQ@@#,costabQ@@Reverse[#]]&]],{n,5}]"
+    ],
+    "xref": [
+        "Cf. A000110, A000258, A001247, A008277, A059849, A060639, A181939, A318393, A322435, A322437, A322439, A322440, A322441."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Dec 08 2018",
+    "references": 9,
+    "revision": 5,
+    "time": "2018-12-09T12:28:12-05:00",
+    "created": "2018-12-09T12:28:12-05:00"
+}

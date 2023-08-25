@@ -1,0 +1,64 @@
+{
+    "number": 322525,
+    "data": "2700,5292,9000,13068,18252,24300,24500,24696,31212,38988,47628,55125,57132,60500,68600,84500,90828,95832,103788,117612,136125,144500,147852,158184,164268,166012,180500,181548,190125,199692,218700,231525,231868,238572,243000,264500,266200,280908,303372,325125",
+    "name": "Numbers such that the list of exponents of their factorization is a palindromic list of primes.",
+    "comment": [
+        "I mean nontrivial palindrome: more than one number and not all equal numbers.",
+        "Factorization is meant to produce p1^e1*...*pk^ek, with pi in increasing order."
+    ],
+    "example": [
+        "9000 is a term as 9000=2^3*3^2*5^3 and the correspondent exponents list [3,2,3] is a palindromic list of primes."
+    ],
+    "mathematica": [
+        "aQ[s_] := Length[Union[s]]>1 && AllTrue[s, PrimeQ] && PalindromeQ[s]; Select[Range[1000], aQ[FactorInteger[#][[;;,2]]] &] (* _Amiram Eldar_, Dec 14 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory import factorint,isprime",
+        "def all_prime(l):",
+        "    for i in l:",
+        "        if not(isprime(i)): return(False)",
+        "    return(True)",
+        "def all_equal(l):",
+        "    ll=len(l)",
+        "    set_l=set(l)",
+        "    lsl=list(set_l)",
+        "    llsl=len(lsl)",
+        "    return(llsl==1)",
+        "def pal(l):",
+        "    return(l == l[::-1])",
+        "n=350000",
+        "r=\"\"",
+        "lp=[]",
+        "lexp=[]",
+        "def calc(n):",
+        "    global lp,lexp",
+        "    a=factorint(n)",
+        "    lp=[]",
+        "    for p in a.keys():",
+        "        lp.append(p)",
+        "    lexp=[]",
+        "    for exp in a.values():",
+        "        lexp.append(exp)",
+        "    return",
+        "for i in range(4,n):",
+        "    calc(i)",
+        "    if len(lexp)>1:",
+        "        if all_prime(lexp):",
+        "            if not(all_equal(lexp)):",
+        "                if pal(lexp):",
+        "                    r += \",\"+str(i)",
+        "print(r[1:])",
+        "(PARI) isok(n) = (ve=factor(n)[,2]~) && (Vecrev(ve)==ve) && (#ve>1) && (#Set(ve)>1) && (#select(x->(!isprime(x)), ve) == 0); \\\\ _Michel Marcus_, Dec 14 2018"
+    ],
+    "xref": [
+        "Subsequence of A242414."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Pierandrea Formusa_, Dec 13 2018",
+    "references": 0,
+    "revision": 25,
+    "time": "2019-01-27T09:02:09-05:00",
+    "created": "2019-01-27T09:02:09-05:00"
+}

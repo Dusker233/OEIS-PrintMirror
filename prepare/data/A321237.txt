@@ -1,0 +1,61 @@
+{
+    "number": 321237,
+    "data": "1,8,28,68,148,308,628,1268,2548,5108,10228,20468,40948,81908,163828,327668,655348,1310708,2621428,5242868,10485748,20971508,41943028,83886068,167772148,335544308,671088628,1342177268,2684354548,5368709108,10737418228,21474836468",
+    "name": "Start with a square of dimension 1 X 1, and repeatedly append along the squares of the previous step squares with half their side length that do not overlap with any prior square; a(n) gives the number of squares appended at n-th step.",
+    "comment": [
+        "The following diagram depicts the first three steps of the construction:",
+        "                       +----+----+----+----+",
+        "                       |  3 |  3 |  3 |  3 |",
+        "                  +----+----+----+----+----+----+",
+        "                  |  3 |         |         |  3 |",
+        "             +----+----+    2    |    2    +----+----+",
+        "             |  3 |  3 |         |         |  3 |  3 |",
+        "        +----+----+----+---------+---------+----+----+----+",
+        "        |  3 |         |                   |         |  3 |",
+        "        +----+    2    |                   |    2    +----+",
+        "        |  3 |         |                   |         |  3 |",
+        "        +----+---------+         1         +---------+----+",
+        "        |  3 |         |                   |         |  3 |",
+        "        +----+    2    |                   |    2    +----+",
+        "        |  3 |         |                   |         |  3 |",
+        "        +----+----+----+---------+---------+----+----+----+",
+        "             |  3 |  3 |         |         |  3 |  3 |",
+        "             +----+----+    2    |    2    +----+----+",
+        "                  |  3 |         |         |  3 |",
+        "                  +----+----+----+----+----+----+",
+        "                       |  3 |  3 |  3 |  3 |",
+        "                       +----+----+----+----+",
+        "A square of step n+1 touches one or two squares of step n.",
+        "The limiting construction is an octagon (truncated square); its area is 7 times the area of the initial square.",
+        "See A321257 for a similar sequence."
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A321237/b321237.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "R\u00e9my Sigrist, <a href=\"/A321237/a321237.png\">Illustration of the construction after 7 steps</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-2)."
+    ],
+    "formula": [
+        "a(n) = 4 * (2^(n-1) + 3 * (2^(n-2)-1)) for any n > 1.",
+        "a(n) = 4 * A154117(n-1) for any n > 1.",
+        "Sum_{n > 0} a(n) / 4^(n-1) = 7.",
+        "From _Colin Barker_, Nov 02 2018: (Start)",
+        "G.f.: x*(1 + 2*x)*(1 + 3*x) / ((1 - x)*(1 - 2*x)).",
+        "a(n) = 5*2^n - 12 for n>1.",
+        "a(n) = 3*a(n-1) - 2*a(n-2) for n>3.",
+        "(End)"
+    ],
+    "program": [
+        "(PARI) a(n) = if (n==1, return (1), return (4*( 2^(n-1) + 3 * floor( (2^(n-2)-1) ) )))",
+        "(PARI) Vec(x*(1 + 2*x)*(1 + 3*x) / ((1 - x)*(1 - 2*x)) + O(x^40)) \\\\ _Colin Barker_, Nov 02 2018"
+    ],
+    "xref": [
+        "Cf. A154117, A321257."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_R\u00e9my Sigrist_, Nov 01 2018",
+    "references": 2,
+    "revision": 17,
+    "time": "2018-11-02T12:02:02-04:00",
+    "created": "2018-11-02T11:27:55-04:00"
+}

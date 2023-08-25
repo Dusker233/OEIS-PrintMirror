@@ -1,0 +1,68 @@
+{
+    "number": 284778,
+    "data": "0,1,1,4,8,22,54,142,370,983,2627,7086,19238,52561,144377,398518,1104794,3074809,8588093,24064642,67630898,190584766,538412426,1524554956,4326119748,12300296227,35037658099,99977847308,285741659312,817901027070,2344475178110",
+    "name": "Number of self-avoiding planar walks of length n+1 starting at (0,0), ending at (n,0), remaining in the first quadrant and using steps (0,1), (1,0), (1,1), (-1,1), and (1,-1) with the restriction that (0,1) is never used below the diagonal and (1,0) is never used above the diagonal.",
+    "comment": [
+        "From _Gus Wiseman_, Nov 15 2022: (Start)",
+        "Conjecture: Also the number of topologically series-reduced ordered rooted trees with n + 3 vertices and more than one branch of the root. This would imply a(n) = A187306(n+1) - A005043(n+1). For example, the a(1) = 1 through a(5) = 22 trees are:",
+        "  (ooo)  (oooo)  (ooooo)   (oooooo)   (ooooooo)",
+        "                 ((oo)oo)  ((oo)ooo)  ((oo)oooo)",
+        "                 (o(oo)o)  ((ooo)oo)  ((ooo)ooo)",
+        "                 (oo(oo))  (o(oo)oo)  ((oooo)oo)",
+        "                           (o(ooo)o)  (o(oo)ooo)",
+        "                           (oo(oo)o)  (o(ooo)oo)",
+        "                           (oo(ooo))  (o(oooo)o)",
+        "                           (ooo(oo))  (oo(oo)oo)",
+        "                                      (oo(ooo)o)",
+        "                                      (oo(oooo))",
+        "                                      (ooo(oo)o)",
+        "                                      (ooo(ooo))",
+        "                                      (oooo(oo))",
+        "                                      (((oo)o)oo)",
+        "                                      ((o(oo))oo)",
+        "                                      ((oo)(oo)o)",
+        "                                      ((oo)o(oo))",
+        "                                      (o((oo)o)o)",
+        "                                      (o(o(oo))o)",
+        "                                      (o(oo)(oo))",
+        "                                      (oo((oo)o))",
+        "                                      (oo(o(oo)))",
+        "(End)"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A284778/b284778.txt\">Table of n, a(n) for n = 0..2105</a>",
+        "Alois P. Heinz, <a href=\"/A284778/a284778.gif\">Animation of a(6)=54 walks</a>"
+    ],
+    "formula": [
+        "G.f.: (1-2*x-x^2-sqrt(1-4*x+2*x^2+4*x^3-3*x^4))/(2*(x+1)*x^3).",
+        "Recursion: see Maple program.",
+        "a(n) = A284414(n,n+1) = A284652(n,n+1).",
+        "a(n) ~ 3^(n+5/2) / (4*sqrt(Pi)*n^(3/2)). - _Vaclav Kotesovec_, Apr 02 2017",
+        "a(n) = Sum_{k=0..floor(n/2)} (k+1)^2/(n-k)*Sum_{i=0..n-1-2*k} C(i,n-1-2*k-i)*C(n-k,i), n>0, a(0)=0. - _Vladimir Kruchinin_, Mar 20 2023"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<3, (3-n)*n/2,",
+        "      ((n^2-n+3)*a(n-1)+(5*n-2)*n*a(n-2)+",
+        "       3*(n-1)*n*a(n-3))/((n+3)*(n-1)))",
+        "    end:",
+        "seq(a(n), n=0..35);"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1 - 2*x - x^2 - Sqrt[1 - 4*x + 2*x^2 + 4*x^3 - 3*x^4])/(2*(x + 1)*x^3), {x, 0, 50}], x] (* _Indranil Ghosh_, Apr 02 2017 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=if n=0 then 0 else sum(((k+1)^2*sum(binomial(i,n-1-2*k-i)*binomial(n-k,i),i,0,n-1-2*k))/(n-k),k,0,floor((n)/2)); /* _Vladimir Kruchinin_, Mar 20 2023 */"
+    ],
+    "xref": [
+        "First upper diagonal of A284414, A284652.",
+        "CF. A005043, A187306."
+    ],
+    "keyword": "nonn,walk",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Apr 02 2017",
+    "references": 10,
+    "revision": 34,
+    "time": "2023-03-21T04:10:41-04:00",
+    "created": "2017-04-02T15:16:16-04:00"
+}

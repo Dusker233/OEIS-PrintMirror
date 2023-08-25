@@ -1,0 +1,35 @@
+{
+    "number": 364547,
+    "data": "1,3,5,1035,524295,16777217",
+    "name": "Odd numbers k such that k is a multiple of A005940(k).",
+    "comment": [
+        "Sequence A005941(A364549(.)) sorted into ascending order.",
+        "Those terms of A000051 (= 2^k + 1) are included that have A000040(1+k) as one of their prime factors.",
+        "a(7) > 402653184."
+    ],
+    "example": [
+        "1035 is included because 1034 in binary is \"10000001010\", which Doudna isomorphism maps to 345 = 3*5*23, which thus divides 1035 (= 3^2 * 5 * 23). Note that there are six 0's in the binary representation between its most significant bit and the trailing \"1010\", thus we get the prime factors A000040(1+1) = 3, A000040(1+1+1) = 5 and A000040(1+1+1+6) = 23.",
+        "524295 is included because 524294 in binary is \"10000000000000000110\", which Doudna isomorphism maps to 549 = 3^2 * 61, which thus divides 524295 (= 3^2 * 5 * 61 * 191). Note that there are sixteen 0's in the binary representation between its most significant bit and the trailing \"110\", thus we get the prime factors A000040(2) = 3 and A000040(2+16) = 61.",
+        "16777217 = 2^24 + 1 is included because A000040(1+24) = 97, and 16777217 = 97*257*673."
+    ],
+    "mathematica": [
+        "nn = 2^20 + 2; Array[Set[a[#], #] &, 2]; {1}~Join~Reap[Do[If[EvenQ[n], Set[a[n], 2 a[n/2]], a[n] = k = Times @@ Power @@@ Map[{Prime[PrimePi[#1] + 1], #2} & @@ # &, FactorInteger[a[(n + 1)/2]]]; If[Divisible[n, a[n]], Sow[n]]], {n, 3, nn}] ][[-1, 1]] (* _Michael De Vlieger_, Jul 28 2023 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A005940(n) = { my(p=2, t=1); n--; until(!n\\=2, if((n%2), (t*=p), p=nextprime(p+1))); t };",
+        "isA364547(n) = ((n%2)&&!(n%A005940(n)));"
+    ],
+    "xref": [
+        "Odd terms in A364546.",
+        "Cf. A000040, A000051, A005940, A005941, A364502, A364549.",
+        "Cf. also A364545, A364551."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Jul 28 2023",
+    "references": 4,
+    "revision": 17,
+    "time": "2023-08-02T09:59:52-04:00",
+    "created": "2023-07-28T16:31:35-04:00"
+}

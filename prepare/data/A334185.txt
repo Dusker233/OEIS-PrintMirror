@@ -1,0 +1,46 @@
+{
+    "number": 334185,
+    "data": "9,28,34,65,75,110,126,132,205,217,246,258,294,344,399,436,502,513,520,579,657,680,730,810,866,978,979,1001,1028,1128,1164,1330,1332,1365,1374,1582,1605,1729,1736,1815,1947,2004,2050,2064,2196,2198,2310,2329,2610,2710",
+    "name": "Let m = d*q + r be the Euclidean division of m by d. The terms m of this sequence satisfy that r, q, d are consecutive positive integer terms in a geometric progression with a common integer ratio.",
+    "comment": [
+        "Inspired by the problem 141 of Project Euler (see the link).",
+        "If b is the common ratio, then b is an integer >= 2.",
+        "So, when b >= 2 and r >= 1, q=r*b, d=r*b^2, then every m = r * (1+r*b^3) is a term, and the division becomes: r*(1+r*b^3) = (r*b^2) * (r*b) + r. The integers (r, r*b, r*b^2) are in geometric progression.",
+        "When (r < q < d) is solution with m = d * q + r, then, with d' = q and q' = d, m = d' * q' + r and (r < d' < q') is also a solution with another order between remainder, divisor and quotient (see last example).",
+        "m is a term if m = r * (1+r*b^3) with r >= 1 and b >= 2; so, when r = 1, A001093(n) for n > 1 are terms (see 1st example)."
+    ],
+    "link": [
+        "Project Euler, <a href=\"https://projecteuler.net/problem=141\">Problem 141: Investigating progressive numbers, n, which are also square</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Euclidean_division\">Euclidean division</a>"
+    ],
+    "example": [
+        "a(2) = 28 = 9*3 + 1 with (1,3,9) and ratio = 3;",
+        "a(5) = 75 = 12*6 + 3 with (3,6,12) and ratio = 2;",
+        "a(12) = 258 = 32*8 + 2 with (2,8,32) and ratio = 4;",
+        "a(42) = 2004 = 100*20 + 4 with (r=4, q=20, d=100) but also 2004 = 20*100 + 4 with (r=4, d'=20, q'=100) both with ratio = 5:",
+        "2004 | 100             2004 |  20",
+        "     +-----                 +-----",
+        "   4 |  20                4 | 100"
+    ],
+    "mathematica": [
+        "Select[Range[2000], Length @ Solve[r * (1 + r*b^3) == # && r >=1 && b >= 2, {r, b}, Integers] > 0 &] (* _Amiram Eldar_, Apr 18 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = {for (d=1, m, if (m % d, q = m\\d; r = m % d; if (!(d % q) && (d/q == q/r), return (1));););} \\\\ _Michel Marcus_, Apr 19 2020"
+    ],
+    "xref": [
+        "Cf. A334186 (similar, with b is an irreducible fraction).",
+        "Subsequence: A001093 \\ {0, 1, 2} (for r = 1)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Apr 18 2020",
+    "ext": [
+        "Name improved by _Michel Marcus_, Apr 19 2020",
+        "More terms from _Michel Marcus_, Apr 19 2020"
+    ],
+    "references": 5,
+    "revision": 56,
+    "time": "2022-05-06T13:13:51-04:00",
+    "created": "2020-04-26T05:26:59-04:00"
+}

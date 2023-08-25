@@ -1,0 +1,38 @@
+{
+    "number": 336021,
+    "data": "1,1,1,1,1,1,2,5,15,52,204,902,4532,26196,175320,1351296,11819348,115309534,1236465988,14419850138,181652022376,2462053028798,35834756184146,559816444117400,9389648056139010,169166236946379128,3273760080403458226,67994123544008546820",
+    "name": "a(0) = ... = a(3) = 1; a(n) = Sum_{k=0..n-4} Stirling2(n-4,k) * a(k).",
+    "comment": [
+        "Shifts left 4 places under Stirling transform."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A336021/b336021.txt\">Table of n, a(n) for n = 0..384</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) satisfies A(x) = 1 + x + x^2/2 + x^3/6 + Integral( Integral( Integral( Integral A(exp(x) - 1) dx) dx) dx) dx."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0,",
+        "      a(m), m*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> `if`(n<4, 1, b(n-4, 0)):",
+        "seq(a(n), n=0..27);  # _Alois P. Heinz_, Aug 13 2021"
+    ],
+    "mathematica": [
+        "a[0] = a[1] = a[2] = a[3] = 1; a[n_] := a[n] = Sum[StirlingS2[n - 4, k] a[k], {k, 0, n - 4}]; Table[a[n], {n, 0, 27}]",
+        "nmax = 27; A[_] = 0; Do[A[x_] = 1 + x + x^2/2 + x^3/6 + Integrate[Integrate[Integrate[Integrate[A[Exp[x] - 1 + O[x]^(nmax + 1)], x], x], x], x] + O[x]^(nmax + 1) // Normal, nmax + 1]; CoefficientList[A[x], x] Range[0, nmax]!"
+    ],
+    "program": [
+        "(PARI) lista(nn) = {my(va = vector(nn, k, 1)); for (n=5, nn, va[n] = sum(k=0, n-4, stirling(n-5, k, 2)*va[k+1]);); va;} \\\\ _Michel Marcus_, Jul 06 2020"
+    ],
+    "xref": [
+        "Cf. A003659, A007469, A336020, A336022."
+    ],
+    "keyword": "nonn",
+    "offset": "0,7",
+    "author": "_Ilya Gutkovskiy_, Jul 05 2020",
+    "references": 3,
+    "revision": 14,
+    "time": "2021-08-13T21:27:39-04:00",
+    "created": "2020-07-05T07:58:56-04:00"
+}

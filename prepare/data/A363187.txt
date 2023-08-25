@@ -1,0 +1,47 @@
+{
+    "number": 363187,
+    "data": "31,41,59,83,107,139,163,191,197,281,311,383,397,443,521,673,677,757,821,887,997,1061,1109,1151,1171,1229,1237,1373,1423,1453,1619,1823,1889,1931,2053,2141,2203,2221,2309,2339,2437,2473,2477,2749,2801,2837,2953,3019,3119,3163,3209,3257,3347",
+    "name": "Prime numbers that are the average of three consecutive odd semiprimes.",
+    "link": [
+        "Gabriel Whigham, <a href=\"/A363187/b363187.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "31 is a term because (25 + 33 + 35)/3 = 31 is prime.",
+        "41 is a term because (35 + 39 + 49)/3 = 41 is prime."
+    ],
+    "maple": [
+        "OP:= select(isprime, [seq(i, i=3..10000, 2)]):",
+        "OSP:= sort(select(`<=`, [seq(seq(OP[i]*OP[j], j=1..i), i=1..nops(OP))], 3*OP[-1])):",
+        "SA:= [seq(add(OSP[i+j], j=0..2)/3, i=1..nops(OSP)-2)]:",
+        "select(t -> t::integer and isprime(t), SA); # _Robert Israel_, May 22 2023"
+    ],
+    "mathematica": [
+        "Select[Plus @@@ Partition[Select[Range[1, 3400, 2], PrimeOmega[#] == 2 &], 3, 1] / 3, PrimeQ] (* _Amiram Eldar_, May 21 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import factorint, isprime",
+        "def semiprime(n): return sum(e for e in factorint(n).values()) == 2",
+        "def nextoddsemiprime(n): return next(k for k in count(n+1+(n&1), 2) if semiprime(k))",
+        "def agen(): # generator of terms",
+        "    osp = [9, 15, 21]",
+        "    while True:",
+        "        q, r = divmod(sum(osp), len(osp))",
+        "        if r == 0 and isprime(q):",
+        "            yield q",
+        "        osp = osp[1:] + [nextoddsemiprime(osp[-1])]",
+        "print(list(islice(agen(), 53))) # _Michael S. Branicky_, May 21 2023"
+    ],
+    "xref": [
+        "Cf. A000040, A046315.",
+        "Cf. A363074, A363188."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Elmo R. Oliveira_, May 20 2023",
+    "references": 6,
+    "revision": 25,
+    "time": "2023-07-11T11:28:00-04:00",
+    "created": "2023-07-09T18:40:37-04:00"
+}

@@ -1,0 +1,51 @@
+{
+    "number": 189000,
+    "data": "1,6,60,90,120,672,2160,10080,22848,30240,342720,523776,1028160,1528800,6168960,7856640,7983360,14443520,22932000,23569920,43330560,44553600,51979200,57657600,68796000,133660800,172972800,779688000,1476304896,2339064000,6840038400",
+    "name": "Bi-unitary multiperfect numbers.",
+    "comment": [
+        "All entries greater than 1 are even [Hagis].",
+        "14443520 is the first (only?) composite term not divisible by 3.  Excluding the factor p=3, all composite terms <= 172972800 have nonincreasing exponents in the factorization (sorted by primes). - _D. S. McNeil_, Apr 15 2011",
+        "Wall shows that 6, 60, and 90 are the only bi-unitary perfect numbers. - _Tomohiro Yamada_, Apr 15 2017",
+        "McNeil's observation about exponents does not hold in general. Indeed, a(41) = 2^8 * 3^5 * 5^2 * 7 * 11 * 13^2 * 17. - _Giovanni Resta_, Apr 15 2017",
+        "a(43) > 4.66*10^12. - _Giovanni Resta_, Sep 07 2018",
+        "We include 1 here, although this is not \"multi\"-perfect. - _R. J. Mathar_, Sep 08 2018"
+    ],
+    "link": [
+        "Giovanni Resta, <a href=\"/A189000/b189000.txt\">Table of n, a(n) for n = 1..42</a>",
+        "Peter Hagis, <a href=\"http://www.fq.math.ca/Scanned/25-2/hagis.pdf\">Bi-Unitary amicable and multiperfect numbers</a>, Fib. Quart. 25 (2) (1987) 144-151",
+        "Pentti Haukkanen and V. Sitaramaiah, <a href=\"https://doi.org/10.7546/nntdm.2020.26.1.93-171\">Bi-unitary multiperfect numbers, I</a>, Notes Number Theory Discrete Math. 26 (1) (2020) 93-171.",
+        "Michel Marcus, <a href=\"/A189000/a189000.txt\">Unexhaustive list of terms</a>",
+        "C. R. Wall, <a href=\"http://dx.doi.org/10.1090/S0002-9939-1972-0289403-9\">Bi-unitary perfect numbers</a>, Proc. Amer. Math. Soc. 33 (1) (1972) 39-42."
+    ],
+    "formula": [
+        "{n | A188999(n)}."
+    ],
+    "example": [
+        "n=120 divides A188999(120)=360.",
+        "n=90 divides A188999(90)=180.",
+        "n=672 divides A188999(672)=2016."
+    ],
+    "mathematica": [
+        "bsig[n_] := If[n == 1, 1, Block[{p, e}, Product[{p, e} = pe; (p^(e + 1) - 1)/(p - 1) - If[EvenQ[e], p^(e/2), 0], {pe, FactorInteger[n]}]]]; Select[Range[10^5], Mod[bsig[#], #] == 0 &] (* _Giovanni Resta_, Apr 15 2017 *)"
+    ],
+    "program": [
+        "(PARI) a188999(n) = {my(f = factor(n)); for (i=1, #f~, p = f[i, 1]; e = f[i, 2]; f[i, 1] = if (e % 2, (p^(e+1)-1)/(p-1), (p^(e+1)-1)/(p-1) -p^(e/2)); f[i, 2] = 1; ); factorback(f); }",
+        "isok(n) = ! frac(a188999(n)/n); // _Michel Marcus_, Sep 03 2018"
+    ],
+    "xref": [
+        "Cf. A007691 (analog for sigma).",
+        "Cf. A188999 (bi-unitary sigma), A318175, A318781 (the k coefficients)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_R. J. Mathar_, Apr 15 2011",
+    "ext": [
+        "a(18)-a(27) by _D. S. McNeil_, Apr 15 2011",
+        "a(28)-a(31) from _Giovanni Resta_, Apr 15 2017",
+        "a(1)=1 inserted by _Giovanni Resta_, Sep 07 2018"
+    ],
+    "references": 5,
+    "revision": 48,
+    "time": "2020-05-07T11:09:47-04:00",
+    "created": "2011-04-15T14:35:39-04:00"
+}

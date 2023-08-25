@@ -1,0 +1,34 @@
+{
+    "number": 289257,
+    "data": "1,3,9,27,81,171,243,513,729,1539,2187,3249,4617,6561,9747,13203,13851,19683,29241,39609,41553,59049,61731,87723,118827,124659,177147,185193,250857,263169,356481,373977,531441,555579,752571,789507,1063611,1069443,1121931,1172889,1594323,1666737",
+    "name": "Terms k of A006521 such that 2*k is a term of A124240.",
+    "comment": [
+        "Nov\u00e1k numbers n that are 2n Nov\u00e1k-Carmichael. See Kalmynin link."
+    ],
+    "link": [
+        "Alexander Kalmynin, <a href=\"https://arxiv.org/abs/1611.00417\">On Nov\u00e1k numbers</a>, arXiv:1611.00417 [math.NT], 2016. See Theorem 7 p. 11."
+    ],
+    "mathematica": [
+        "Reap[Do[If[PowerMod[2, n, n]+1 == n && Divisible[2n, CarmichaelLambda[2n]], Print[n]; Sow[n]], {n, 2 10^6}]][[2, 1]] (* _Jean-Fran\u00e7ois Alcover_, Sep 25 2018 *)"
+    ],
+    "program": [
+        "(PARI) isnov(n) = Mod(2, n)^n==-1; \\\\ A006521",
+        "isnovcar(n) = n%lcm(znstar(n)[2])==0; \\\\ A124240",
+        "isok(n) = isnov(n) && isnovcar(2*n);",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy.ntheory.factor_ import reduced_totient",
+        "def A289257gen(): return filter(lambda n:2*n % reduced_totient(2*n) == 0 and pow(2,n,n)==n-1, count(1))",
+        "A289257_list = list(islice(A289257gen(),20)) # _Chai Wah Wu_, Dec 11 2021"
+    ],
+    "xref": [
+        "Cf. A006521, A124240, A289258."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Marcus_, Jun 29 2017",
+    "references": 1,
+    "revision": 14,
+    "time": "2021-12-11T14:35:22-05:00",
+    "created": "2017-06-29T19:52:10-04:00"
+}

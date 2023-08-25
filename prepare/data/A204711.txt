@@ -1,0 +1,43 @@
+{
+    "number": 204711,
+    "data": "193,1361,8705,58449,382849,2542369,16748161,110871041,731709057,4838473473,31954317953,211206670209,1395251843713,9220409667201,60918293373569,402541765541505,2659689937121921,17574356285235841",
+    "name": "Number of (n+1)X7 0..1 arrays with the permanents of all 2X2 subblocks equal and nonzero",
+    "comment": [
+        "Column 6 of A204713"
+    ],
+    "link": [
+        "R. H. Hardin, <a href=\"/A204711/b204711.txt\">Table of n, a(n) for n = 1..210</a>",
+        "Robert Israel, <a href=\"/A204711/a204711.pdf\">Maple-assisted proof of formula</a>"
+    ],
+    "formula": [
+        "Empirical: a(n) = 4*a(n-1) +45*a(n-2) -126*a(n-3) -642*a(n-4) +1332*a(n-5) +3620*a(n-6) -5624*a(n-7) -6800*a(n-8) +8192*a(n-9).",
+        "Empirical formula confirmed by _Robert Israel_, Jun 11 2018: see link."
+    ],
+    "example": [
+        "Some solutions for n=4",
+        "..1..0..1..0..1..0..1....0..1..0..1..0..1..1....1..0..1..0..1..1..0",
+        "..0..1..0..1..0..1..0....1..0..1..0..1..1..0....0..1..1..1..0..1..1",
+        "..1..0..1..1..1..1..1....1..1..1..1..0..1..1....1..1..0..1..1..1..0",
+        "..0..1..0..1..0..1..0....0..1..0..1..1..0..1....0..1..1..0..1..0..1",
+        "..1..0..1..0..1..1..1....1..0..1..1..0..1..0....1..1..0..1..1..1..1"
+    ],
+    "maple": [
+        "Configs:=  [seq(convert(2^7+i,base,2)[1..7],i=0..2^7-1)]:",
+        "Compatible:= proc(i,j)",
+        "if andmap(k -> Configs[i][k]*Configs[j][k+1]+Configs[i][k+1]*Configs[j][k] = 1, [$1..6]) then 1 else 0 fi",
+        "end proc:",
+        "T:= Matrix(128,128,Compatible):",
+        "u:= Vector[row](128, 1):",
+        "v:= Vector(128, 1):",
+        "TV[0]:= v:",
+        "for n from 1 to 40 do TV[n]:= T . TV[n-1] od:",
+        "seq(1+u . TV[n],n=1..40); # _Robert Israel_, Jun 11 2018"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. H. Hardin_, Jan 18 2012",
+    "references": 1,
+    "revision": 10,
+    "time": "2018-06-12T02:44:10-04:00",
+    "created": "2012-01-18T17:01:58-05:00"
+}

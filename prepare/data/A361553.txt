@@ -1,0 +1,44 @@
+{
+    "number": 361553,
+    "data": "1,3,24,171,1335,11940,115773,1160901,11901537,124726644,1332688035,14455451526,158660036535,1758835084221,19667067522966,221573079684087,2512635069594897,28656903391830291,328500210705228867,3782806859877522522,43738575934977450465",
+    "name": "Expansion of g.f. A(x) satisfying 3*x = Sum_{n=-oo..+oo} x^(n*(3*n+1)/2) * (A(x)^(3*n) - 1/A(x)^(3*n+1)).",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A361553/b361553.txt\">Table of n, a(n) for n = 0..300</a>",
+        "Weisstein, Eric W., <a href=\"https://mathworld.wolfram.com/QuintupleProductIdentity.html\">Quintuple Product Identity</a>."
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n satisfies the following.",
+        "(1) 3*x = Sum_{n=-oo..+oo} x^(n*(3*n+1)/2) * (A(x)^(3*n) - 1/A(x)^(3*n+1)).",
+        "(2) 3*x = Sum_{n=-oo..+oo} x^(n*(3*n-1)/2) * A(x)^(3*n) * (x^n - 1/A(x)).",
+        "(3) 3*x = Product_{n>=1} (1 - x^n) * (1 - x^n*A(x)) * (1 - x^(n-1)/A(x)) * (1 - x^(2*n-1)*A(x)^2) * (1 - x^(2*n-1)/A(x)^2), by the Watson quintuple product identity.",
+        "(4) a(n) = Sum_{k=0..n} A361550(n,k) * 3^k for n >= 0.",
+        "a(n) ~ c * d^n / n^(3/2), where d = 12.47776743014414138089586... and c = 0.474320402676760199022... - _Vaclav Kotesovec_, Mar 29 2023"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 3*x + 24*x^2 + 171*x^3 + 1335*x^4 + 11940*x^5 + 115773*x^6 + 1160901*x^7 + 11901537*x^8 + 124726644*x^9 + ...",
+        "where A = A(x) satisfies the doubly infinite sum",
+        "3*x = ... + x^12*(1/A^9 - A^8) + x^5*(1/A^6 - A^5) + x*(1/A^3 - A^2) + (1 - 1/A) + x^2*(A^3 - 1/A^4) + x^7*(A^6 - 1/A^7) + x^15*(A^9 - 1/A^10) + ... + x^(n*(3*n+1)/2) * (A(x)^(3*n) - 1/A(x)^(3*n+1)) + ...",
+        "also, by the Watson quintuple product identity,",
+        "3*x = (1-x)*(1-x*A)*(1-1/A)*(1-x*A^2)*(1-x/A^2) * (1-x^2)*(1-x^2*A)*(1-x/A)*(1-x^3*A^2)*(1-x^3/A^2) * (1-x^3)*(1-x^3*A)*(1-x^2/A)*(1-x^5*A^2)*(1-x^5/A^2) * (1-x^4)*(1-x^4*A)*(1-x^3/A)*(1-x^7*A^2)*(1-x^7/A^2) * ..."
+    ],
+    "program": [
+        "(PARI) /* Using the doubly infinite series */",
+        "{a(n) = my(A=[1]); for(i=1, n, A = concat(A, 0);",
+        "A[#A] = polcoeff(3*x - sum(m=-#A, #A, x^(m*(3*m-1)/2) * Ser(A)^(3*m-1) * (x^m*Ser(A) - 1) ) , #A-1) ); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) /* Using the quintuple product */",
+        "{a(n) = my(A=[1]); for(i=1, n, A = concat(A, 0);",
+        "A[#A] = polcoeff(3*x - prod(m=1, #A, (1 - x^m) * (1 - x^m*Ser(A)) * (1 - x^(m-1)/Ser(A)) * (1 - x^(2*m-1)*Ser(A)^2) * (1 - x^(2*m-1)/Ser(A)^2) ), #A-1) ); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A361550, A359920, A361552, A361554, A361555."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Mar 19 2023",
+    "references": 5,
+    "revision": 9,
+    "time": "2023-03-29T03:55:13-04:00",
+    "created": "2023-03-19T08:28:59-04:00"
+}

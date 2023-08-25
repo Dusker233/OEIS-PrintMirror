@@ -1,0 +1,39 @@
+{
+    "number": 333885,
+    "data": "0,0,0,1,1,3,3,6,7,9,9,16,16,18,20,26,26,33,33,40,42,44,44,59,60,62,65,72,72,84,84,94,96,98,100,119,119,121,123,138,138,150,150,157,164,166,166,192,193,200,202,209,209,224,226,241,243,245,245,276,276",
+    "name": "Number of triples (i,j,k) with 1 <= i < j < k <= n such that i divides j divides k.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A333885/b333885.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{m=1..n} Sum_{d|m, d<m} (tau(d)-1). - _Alois P. Heinz_, Apr 09 2020"
+    ],
+    "example": [
+        "The a(4) = 1 triple is (1,2,4).",
+        "The a(8) = 6 triples are (1,2,4), (1,2,6), (1,2,8), (1,3,6), (1,4,8), (2,4,8)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "a:= proc(n) option remember; `if`(n=0, 0, a(n-1)+",
+        "       add(tau(d)-1, d=divisors(n) minus {n}))",
+        "    end:",
+        "seq(a(n), n=1..80);  # _Alois P. Heinz_, Apr 09 2020"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n == 0, 0, a[n - 1] + Sum[DivisorSigma[0, d] - 1, {d, Most @ Divisors[n]}]];",
+        "Array[a, 80] (* _Jean-Fran\u00e7ois Alcover_, Nov 27 2020, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Python) an = len([(i,j,k) for i in range(1,n+1) for j in range(i+1,n+1) for k in range(j+1,n+1) if j%i==0 and k%j==0])"
+    ],
+    "xref": [
+        "Cf. A000005, A002541, A320224."
+    ],
+    "keyword": "nonn",
+    "offset": "1,6",
+    "author": "_Derek Lim_, Apr 08 2020",
+    "references": 1,
+    "revision": 27,
+    "time": "2020-11-27T07:41:33-05:00",
+    "created": "2020-05-10T19:32:55-04:00"
+}

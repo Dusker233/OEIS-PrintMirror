@@ -1,0 +1,40 @@
+{
+    "number": 300057,
+    "data": "1,164,47148,15454820,5361965980,1919987703504,701459496193236,259867456921970040,97260263038893462300,36686877800581349096240,13924013746979490475444528,5311128944356277793155688612,2034235241375650519750351973188",
+    "name": "Coefficient of z^(3*n) in the expansion of (1 + 9*z + 9*z^2 + z^3)^(2*n).",
+    "link": [
+        "Muniru A Asiru, <a href=\"/A300057/b300057.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "a(n) = 1/(2*Pi)*Integral_{0..2*Pi}(12*cos^2(x)*sin(x) + 20*sin^3(x))^(2*n) dx.",
+        "a(n) = Sum_{k1=0..2*n} Sum_{k2=0..2*n} binomial(2*n,k1)*binomial(2*n,k2)*binomial(2*n,3*n-k1-k2)*((4-sqrt(15))^(2*n-k1))*((4+sqrt(15))^(2*n-k2)).",
+        "a(n) = (c1/c3)*a(n-1)+(c2/c3)*a(n-2); with a(0)=1; a(1)=164; and",
+        "  c1=16*(n-1/2)*(-230+2259*n-3933*n^2+1863*n^3);",
+        "  c2=1036800*(n-1)*(n-3/2)*(n-1/2)*(n-1/9);",
+        "  c3=81*n*(n-2/3)*(n-1/3)*(n-10/9).",
+        "From _Wolfdieter Lang_, Apr 06 2018: (Start)",
+        "a(n) = 4^(2*n)*(2/Pi)*Integral_{0..Pi/2} sin(x)^(2*n)*(3 + 2*sin(x)^2)^(2*n) dx. With the binomial formula and integrals over even powers of sin(x) this becomes",
+        "a(n) = 6^(2*n)*Sum_{k=0..2*n} binomial(2*n, k)*binomial(2*(n+k), n+k)*(1/6)^k = 6^(2*n)*binomial(2*n, n)*hypergeometric([-2*n, n+1/2], [n+1], -2/3). (End)",
+        "a(n) ~ 2^(4*n) * 5^(2*n + 1/2) / (3*sqrt(Pi*n)). - _Vaclav Kotesovec_, Apr 18 2018"
+    ],
+    "mathematica": [
+        "c1=16*(n-1/2)*(-230+2259*n-3933*n^2+1863*n^3);c2=1036800*(n-1)*(n-3/2)*(n-1/2)*(n-1/9);c3=81*n*(n-2/3)*(n-1/3)*(n-10/9);a[0]=1;a[1]=164;a[n0_]:=ReplaceAll[(c1/c3)*a[n0-1]+(c2/c3)*a[n0-2],n->n0]",
+        "b[NN_]:=Expand[Total[Flatten[#]]&/@Table[Binomial[2*n,k2]*Binomial[2*n,k1]*Binomial[2*n, 3*n-k1-k2]*(4 + Sqrt[15])^(2*n-k1)*(4-Sqrt[15])^(2*n-k2),{n,0,NN},{k1,0,2*n},{k2,0,2*n}]]",
+        "({#,SameQ[Coefficient[(1+9*z+9*z^2+z^3)^(2*#),z,3*#]&/@Range[0,10],#],SameQ[a/@Range[0,10],#]}&@b[10])[[1]]",
+        "Table[SeriesCoefficient[(1 + 9*z + 9*z^2 + z^3)^(2*n), {z, 0, 3*n}], {n, 0, 15}] (* _Vaclav Kotesovec_, Apr 18 2018 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = polcoeff((1 + 9*z + 9*z^2 + z^3)^(2*n), 3*n); \\\\ _Michel Marcus_, Mar 06 2018",
+        "(GAP) List([0..15],n->6^(2*n)Sum([0..2*n],k->Binomial(2*n,k)*Binomial(2*(n+k),n+k)*(1/6)^k)); # _Muniru A Asiru_, Apr 07 2018"
+    ],
+    "xref": [
+        "Cf. A300058, A295870, A005721."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Bradley Klee_, Feb 23 2018",
+    "references": 2,
+    "revision": 32,
+    "time": "2018-06-24T12:06:56-04:00",
+    "created": "2018-04-21T06:17:07-04:00"
+}

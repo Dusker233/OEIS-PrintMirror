@@ -1,0 +1,60 @@
+{
+    "number": 325833,
+    "data": "0,0,0,1,2,3,5,7,9,14,20,21,27,43,50,56,69,98,118,143,165,200,229,249,282,454,507,555,637,706,789,889,986,1406,1567,1690,1875,2396,2602,2841,3078,3672,3977,4344,4660,5079,5488,5840,6296,10424,11306",
+    "name": "Number of integer partitions of n whose number of submultisets is less than n.",
+    "comment": [
+        "The number of submultisets of a partition is the product of its multiplicities, each plus one.",
+        "The Heinz numbers of these partitions are given by A325797."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A325833/b325833.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "a(n) = A000041(n) - A325832(n).",
+        "For n even, a(n) = A325834(n) - A325830(n/2); for n odd, a(n) = A325834(n)."
+    ],
+    "example": [
+        "The a(3) = 1 through a(9) = 14 partitions:",
+        "  (3)  (4)   (5)   (6)    (7)    (8)     (9)",
+        "       (22)  (32)  (33)   (43)   (44)    (54)",
+        "             (41)  (42)   (52)   (53)    (63)",
+        "                   (51)   (61)   (62)    (72)",
+        "                   (222)  (322)  (71)    (81)",
+        "                          (331)  (332)   (333)",
+        "                          (511)  (422)   (432)",
+        "                                 (611)   (441)",
+        "                                 (2222)  (522)",
+        "                                         (531)",
+        "                                         (621)",
+        "                                         (711)",
+        "                                         (3222)",
+        "                                         (6111)"
+    ],
+    "maple": [
+        "b:= proc(n, i, p) option remember; `if`(n=0 or i=1,",
+        "      `if`(n=p-1, 1, 0), add(`if`(irem(p, j+1, 'r')=0,",
+        "      (w-> b(w, min(w, i-1), r))(n-i*j), 0), j=0..n/i))",
+        "    end:",
+        "a:= n-> add(b(n$2, k), k=0..n-1):",
+        "seq(a(n), n=0..55);  # _Alois P. Heinz_, Aug 17 2019"
+    ],
+    "mathematica": [
+        "Table[Length[Select[IntegerPartitions[n],Times@@(1+Length/@Split[#])<n&]],{n,0,30}]",
+        "(* Second program: *)",
+        "b[n_, i_, p_] := b[n, i, p] = If[n == 0 || i == 1,",
+        "     If[n == p - 1, 1, 0], Sum[If[Mod[p, j + 1] == 0, r = p/(j + 1);",
+        "     Function[w, b[w, Min[w, i - 1], r]][n - i*j], 0], {j, 0, n/i}]];",
+        "a[n_] := Sum[b[n, n, k], {k, 0, n - 1}];",
+        "a /@ Range[0, 55] (* _Jean-Fran\u00e7ois Alcover_, May 12 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A002033, A088880, A088881, A098859, A108917, A307699, A325694, A325792, A325797, A325828, A325830, A325831, A325832, A325834, A325836."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Gus Wiseman_, May 29 2019",
+    "references": 12,
+    "revision": 12,
+    "time": "2021-05-12T06:44:18-04:00",
+    "created": "2019-05-31T05:33:45-04:00"
+}

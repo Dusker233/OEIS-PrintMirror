@@ -1,0 +1,38 @@
+{
+    "number": 308394,
+    "data": "0,2,6,14,20,24,30,42,62,78,110,120,126,156,240,254,272,336,342,506,510,620,726,812,930,1022,1320,1332,1640,1806,2046,2162,2184,2394,2756,3120,3422,3660,4094,4422,4896,4970,5256,6162,6558,6806,6840,7832,8190,9312",
+    "name": "Numbers which can be written in the form m^k - m with m prime and k a positive integer.",
+    "comment": [
+        "The only known terms which have two representations where m is prime are 6 and 2184. It is conjectured by Bennett these are the only terms with this property."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A308394/b308394.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Michael Bennett, <a href=\"https://doi.org/10.4153/CJM-2001-036-6\">On some exponential equations of S. S. Pillai</a>, Canad. J. Math. 53 (2001), 897-922.",
+        "Dana Mackenzie, <a href=\"http://math.colgate.edu/~integers/s33/s33.Abstract.html\">2184: An Absurd (and Adsurd) Tale</a>, Integers (Electronic Journal of Combinatorial Number Theory), 18 (2018), A33."
+    ],
+    "example": [
+        "a(9) = 2^6 - 2 = 62.",
+        "For the two terms known to have two representations we have a(3) = 6 = 2^3 - 2 = 3^2 - 3 and a(33)= 2184 = 3^7 - 3 = 13^3 - 13."
+    ],
+    "maple": [
+        "N:= 10^6; # to get all terms <= N",
+        "P:= select(isprime,[2,seq(i,i=3..floor((1+sqrt(1+4*N))/2),2)]):",
+        "S:= {0,seq(seq(m^k-m,k=2..floor(log[m](N+m))),m=P)}:",
+        "sort(convert(S,list)); # _Robert Israel_, Aug 11 2019"
+    ],
+    "program": [
+        "(PARI) x=List([]); lim=10000; forprime(m=2, lim, for(k=1, 100, y=(m^k-m); if(y>lim, break, i=setsearch(x, y, 1); if(i>0, listinsert(x, y, i))))); for(i=1, #x, print(x[i]));",
+        "(PARI) isok(n) = {forprime(p=2, oo, my(keepk = 0); for (k=1, oo, if ((x=p^k - p) == n, return(1)); if (x > n, keepk = k; break);); if (keepk == 2, break););} \\\\ _Michel Marcus_, Aug 06 2019"
+    ],
+    "xref": [
+        "Cf. A057895, A057896, A246068, A308324.",
+        "Subsequences: A000918 (2^n - 2), A036689 (p^2 - p), A058809 (3^n - 3), A178671 (5^n - 5)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Craig J. Beisel_, May 24 2019",
+    "references": 1,
+    "revision": 24,
+    "time": "2019-08-12T02:24:59-04:00",
+    "created": "2019-08-10T23:52:19-04:00"
+}

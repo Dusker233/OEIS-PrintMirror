@@ -1,0 +1,38 @@
+{
+    "number": 344708,
+    "data": "1,1,2,2,3,5,10,16,30,65,126,248,527,1024,2061,4310,8213,16367,33041,63217,122919,242242,458198,877519,1685444,3159685,5944954,11204470,20745676,38471990,71245358,130408025,238462989,435146790,787184098,1421400530,2559536132",
+    "name": "Number of partitions of n^2 into a square number of square parts.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A344708/b344708.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "example": [
+        "a(5) = 5: [25], [16,4,4,1], [9,9,1,1,1,1,1,1,1], [4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1], [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]."
+    ],
+    "maple": [
+        "s:= n-> issqr(n):",
+        "h:= proc(n) option remember; `if`(s(n), n, h(n-1)) end:",
+        "b:= proc(n, i, c) option remember; `if`(n=0 or i=1, `if`(",
+        "      s(c+n), 1, 0), b(n-i, h(min(n-i, i)), c+1)+b(n, h(i-1), c))",
+        "    end:",
+        "a:= n-> b(n^2$2, 0):",
+        "seq(a(n), n=0..40);"
+    ],
+    "mathematica": [
+        "s[n_] := IntegerQ@Sqrt[n];",
+        "h[n_] := h[n] = If[s[n], n, h[n - 1]];",
+        "b[n_, i_, c_] := b[n, i, c] = If[n == 0 || i == 1, If[s[c + n], 1, 0],",
+        "     b[n - i, h[Min[n - i, i]], c + 1] + b[n, h[i - 1], c]];",
+        "a[n_] := b[n^2, n^2, 0];",
+        "Table[a[n], {n, 0, 40}] (* _Jean-Fran\u00e7ois Alcover_, Jun 25 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000290."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, May 26 2021",
+    "references": 1,
+    "revision": 13,
+    "time": "2022-06-25T12:54:03-04:00",
+    "created": "2021-05-28T20:50:04-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 244039,
+    "data": "1,5,39,338,3075,28770,274134,2645844,25781283,253068530,2498678754,24788450076,246889978062,2467197059124,24725226928140,248396412496488,2500825206700323,25225687837101330,254877697946626410,2579123090162503500,26133512970919973850,265126176290618366460",
+    "name": "a(n) = 2^(2*n-1)*( binomial(3*n/2,n) + binomial((3*n-1)/2,n) ).",
+    "reference": [
+        "R. P. Stanley, Enumerative Combinatorics Volume 2, Cambridge Univ. Press, 1999, Theorem 6.33, p. 197."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A244039/b244039.txt\">Table of n, a(n) for n = 0..200</a>",
+        "I. M. Gessel, <a href=\"http://arxiv.org/abs/1403.7656\">A short proof of the Deutsch-Sagan congruence for connected non crossing graphs</a>, arXiv preprint arXiv:1403.7656 [math.CO], 2014. See f_3(n)."
+    ],
+    "formula": [
+        "From _Peter Bala_, Mar 04 2022: (Start)",
+        "a(n) = [x^n] ( (1 + 2*x)^3/(1 + x) )^n. Cf. A091527.",
+        "a(n) = Sum_{k = 0..n} (-1)^k*2^(n-k)*binomial(3*n,n-k)*binomial(n+k-1,k).",
+        "n*(n-1)*(6*n-11)*a(n) = - 18*(n-1)*a(n-1) + 12*(3*n-4)*(3*n-5)*(6*n-5)*a(n-2) with a(0) = 1 and a(1) = 5.",
+        "The o.g.f. A(x) = 1 + 5*x + 39*x^2 + 338*x^3 + ... is the diagonal of the bivariate rational function 1/(1 - t*(1 + 2*x)^3/(1 + x)) and hence is an algebraic function over the field of rational functions Q(x) by Stanley 1999, Theorem 6.33, p. 197.",
+        "Calculation gives (1 - 108*x^2)*A(x)^3 - (1 + 9*x)*A(x) = x.",
+        "The Gauss congruences a(n*p^k) == a(n*p^(k-1)) (mod p^k) hold for all primes p and positive integers n and k. (End)",
+        "a(n) = 2^n*binomial(3*n, n)*hypergeom([-n, n], [2*n + 1], 1/2). - _Peter Luschny_, Mar 07 2022"
+    ],
+    "maple": [
+        "a := n -> 2^(2*n-1)*(binomial(3*n/2,n) + binomial((3*n-1)/2,n));",
+        "seq(a(n), n=0..25);"
+    ],
+    "mathematica": [
+        "Table[2^(2n-1)*(Binomial[3n/2, n] + Binomial[(3n-1)/2, n]), {n, 0, 25}] (* _Vincenzo Librandi_, Jun 29 2014 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = 2^(2*n-1)*(binomial(3*n/2, n) + binomial((3*n-1)/2, n));",
+        "vector(25, n, n--; a(n)) \\\\ _G. C. Greubel_, Aug 20 2019",
+        "(Magma) [Round(2^(2*n-1)*( Gamma(3*n/2+1)/Gamma(n/2+1) + Gamma((3*n+1)/2)/Gamma((n+1)/2) )/Factorial(n)): n in [0..25]]; // _G. C. Greubel_, Aug 20 2019",
+        "(Sage) [2^(2*n-1)*(binomial(3*n/2, n) + binomial((3*n-1)/2, n)) for n in (0..25)] # _G. C. Greubel_, Aug 20 2019"
+    ],
+    "xref": [
+        "Cf. A045741, A091527, A244038, A244469."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Jun 28 2014",
+    "references": 5,
+    "revision": 34,
+    "time": "2022-09-08T08:46:08-04:00",
+    "created": "2014-06-28T23:50:05-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 320192,
+    "data": "3,6,12,20,27,37,46,59,72,84,98,111,125,140,157,172,188,205,221,239,258,277,296,316,334,353,374,395,418,441,462,484,505,528,549,572,595,618,641,664,688,712,736,761,786,813,838,862,886,912,937,963,991",
+    "name": "Number of summation terms of the reciprocal integer squares series that gives the best approximation to n terms of the Euler product for zeta(2).",
+    "comment": [
+        "Conjecture: It appears that for integer n the number of summation terms of the reciprocal integer squares series that gives the best approximation to Pi^2/6 - 1/n is n. - _Andrew Howroyd_, Nov 24 2018"
+    ],
+    "formula": [
+        "Conjecture: a(n) = floor(1/(Pi^2/6 - Product{k=1..n} 1/(1-1/prime(k)^2) )). - _Andrew Howroyd_, Nov 24 2018"
+    ],
+    "example": [
+        "First term of Euler product: 4/3 needs 3 terms for best approximation: 1 + 1/4 + 1/9.",
+        "Case n=2: The second term of the Euler product is 1/((1-1/2^2)*(1-1/3^2)) = 3/2 = 1.5 which lies between Sum_{k=1..6} 1/k^2 and Sum_{k=1..7} 1/k^2. The first of these is the better approximation so a(2) = 6."
+    ],
+    "mathematica": [
+        "x = 70;",
+        "y = Round[x^1.8];",
+        "eulerp = Table[Product[1./(1 - 1/Prime[n]^2), {n, 1, k}], {k, 1, y}];",
+        "sums = Table[{k, Sum[1./n^2, {n, 1, k}]}, {k, 1, y}];",
+        "diff = Table[Abs[eulerp[[r]] - sums[[All, 2]]], {r, x}];",
+        "count = Flatten[Array[Range[y] &, x]];",
+        "fldiff = Flatten[diff];",
+        "t5 = Transpose[{count, fldiff}];",
+        "t6 = Partition[t5, y];",
+        "t7 = Table[MinimalBy[t6[[i]], Last], {i, x}];",
+        "sol = Flatten[t7, 1][[All, 1]]"
+    ],
+    "program": [
+        "(PARI) \\\\ to make this faster use floating point, but beware precision.",
+        "c(r)={my(s=r-r, k=0); while(s < r, k++; s+=1/k^2); k - (2*(s-r) >= 1/k^2)}",
+        "a(n)={c(prod(k=1, n, 1/(1-1/prime(k)^2)))} \\\\ _Andrew Howroyd_, Nov 23 2018"
+    ],
+    "xref": [
+        "Cf. A007406, A007407, A013661 (zeta(2)), A261208."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Horst H. Manninger_, Oct 07 2018",
+    "references": 0,
+    "revision": 35,
+    "time": "2019-02-11T21:30:39-05:00",
+    "created": "2019-02-11T21:30:39-05:00"
+}

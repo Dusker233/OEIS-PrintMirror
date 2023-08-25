@@ -1,0 +1,40 @@
+{
+    "number": 51760,
+    "data": "1,8,27,32,128,729",
+    "name": "Numbers that are simultaneously a sum of distinct factorials and of the form a^b with b >= 3.",
+    "comment": [
+        "No further terms up to 10^18. - _Robert Israel_, Jan 30 2019"
+    ],
+    "example": [
+        "2! + 3! = 2^3;",
+        "1! + 2! + 4! = 3^3;",
+        "2! + 3! + 4! = 2^5;",
+        "2! + 3! + 5! = 2^7;",
+        "1! + 2! + 3! + 6! = 3^6 = 9^3."
+    ],
+    "maple": [
+        "N:= 10^5; # to get all terms <= N",
+        "S:= {1}:",
+        "for n from 2 do",
+        "v:= n!;",
+        "if v > N then break fi;",
+        "S:= S union {v} union map(`+`,S,v)",
+        "od:",
+        "filter:= proc(n) local F;",
+        "  F:= ifactors(n)[2];",
+        "  igcd(op(map(t ->t[2],F))) >= 3",
+        "end proc:",
+        "filter(1):= true:",
+        "select(filter, S); # _Robert Israel_, Jan 30 2019"
+    ],
+    "xref": [
+        "Cf. A025494, A051761."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "Paul.Jobling(AT)WhiteCross.com, Aug 10 2000",
+    "references": 4,
+    "revision": 14,
+    "time": "2019-01-31T19:59:26-05:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

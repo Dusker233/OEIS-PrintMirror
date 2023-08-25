@@ -1,0 +1,69 @@
+{
+    "number": 183307,
+    "data": "5,14,93,572,4212,29400,206755,1447110,10149621,71244598,500184679,3512112015,24658885220,173129289198,1215525172167,8534122345666,59917715208287,420680331462689,2953583636803146,20737016295243029",
+    "name": "Half the number of nX6 binary arrays with no element equal to a strict majority of its horizontal and vertical neighbors",
+    "comment": [
+        "Column 6 of A183312"
+    ],
+    "link": [
+        "R. H. Hardin, <a href=\"/A183307/b183307.txt\">Table of n, a(n) for n = 1..200</a>",
+        "Robert Israel, <a href=\"/A183307/a183307.txt\">Linear recurrence of order 93</a>",
+        "Robert Israel, <a href=\"/A183307/a183307.pdf\">Maple-assisted derivation of recurrence</a>"
+    ],
+    "formula": [
+        "Linear recurrence of order 93 for n >= 95: see links. - _Robert Israel_, Oct 23 2019"
+    ],
+    "example": [
+        "Some solutions with a(1,1)=0 for 6X4",
+        "..0..0..1..0....0..1..0..1....0..1..0..1....0..1..0..0....0..1..0..1",
+        "..1..1..0..1....1..0..1..0....0..1..0..0....1..0..1..1....1..1..0..1",
+        "..0..1..0..0....1..0..0..1....1..0..1..1....0..0..1..0....0..0..1..0",
+        "..1..0..1..1....0..1..1..0....0..1..1..0....1..1..0..1....1..1..0..1",
+        "..0..1..0..0....1..0..0..1....1..0..0..1....0..1..0..0....0..0..1..0",
+        "..1..0..1..1....1..0..1..0....0..1..1..0....1..0..1..1....1..0..1..0"
+    ],
+    "maple": [
+        "Allowed:= proc(a)",
+        "  if nops({a[1],a[2],a[7]})=1 or nops({a[1],a[2],a[3],a[8]})=1",
+        "  or nops({a[2],a[3],a[4],a[9]})=1 or nops({a[3],a[4],a[5],a[10]})=1",
+        "  or nops({a[4],a[5],a[6],a[11]})=1 or nops({a[5],a[6],a[12]})=1",
+        "  or nops({a[1],a[7],a[8]})=1 or nops({a[2],a[7],a[8],a[9]})=1",
+        "  or nops({a[3],a[8],a[9],a[10]})=1 or nops({a[4],a[9],a[10],a[11]})=1",
+        "  or nops({a[5],a[10],a[11],a[12]})=1 or nops({a[6],a[11],a[12]})=1",
+        "  then false else true fi",
+        "end proc:",
+        "Configs:= select(Allowed,[seq(convert(n,base,2)[1..12],n=2^12..2^13-1)]):",
+        "Compatible:= proc(i,j) local Xi,Xj,k;",
+        " Xi:= map(t -> 2*t-1,Configs[i]); Xj:= map(t -> 2*t-1,Configs[j]);",
+        " if Xi[7..12] <> Xj[1..6] then return 0 fi;",
+        " if Xi[7] = signum(Xi[1]+Xi[8]+Xj[7]) then return 0 fi;",
+        " for k from 8 to 11 do if Xi[k] = signum(Xi[k-6]+Xi[k-1]+Xi[k+1]+Xj[k]) then return 0 fi od;",
+        " if Xi[12] = signum(Xi[6]+Xi[11]+Xj[12]) then return 0 fi;",
+        " 1",
+        "end proc:",
+        "T:= Matrix(722,722,Compatible):",
+        "uok:= proc(i) local a,k;",
+        "   a:= map(t -> 2*t-1, Configs[i]);",
+        "   for k from 2 to 5 do if a[k] = signum(a[k-1]+a[k+1]+a[k+6]) then return 0 fi od;",
+        "   1",
+        "end proc:",
+        "u:= Vector(722, uok):",
+        "vok:= proc(i) local a,k;",
+        "    a:= map(t -> 2*t-1, Configs[i]);",
+        "    for k from 8 to 11 do if a[k] = signum(a[k-1]+a[k+1]+a[k-6]) then return 0 fi od;",
+        "    1",
+        "end proc:",
+        "v:= Vector(722,vok):",
+        "Tv[0]:= v:",
+        "for nn from 1 to 50 do Tv[nn]:= T . Tv[nn-1] od:",
+        "A:= [10, seq(u^%T . Tv[n],n=0..50)]/2:",
+        "A[1..50]; # _Robert Israel_, Oct 23 2019"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_R. H. Hardin_ Jan 03 2011",
+    "references": 2,
+    "revision": 9,
+    "time": "2019-10-23T22:14:35-04:00",
+    "created": "2011-01-03T17:53:00-05:00"
+}

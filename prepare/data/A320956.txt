@@ -1,0 +1,54 @@
+{
+    "number": 320956,
+    "data": "1,1,2,10,75,832,12383,238544,5733900,167822592,5859172975,240072637440,11388362495705,618357843791872,38057876106154882,2632817442236631040,203225803724876875315,17390464322078045896704,1640312648221489789841119,169667967895669459925991424",
+    "name": "The exponential limit of sec + tan.",
+    "comment": [
+        "We say that the sequence S is the exponential limit of the function f relative to the kernel K if and only if the exponential generating functions",
+        "  egf(n) = Sum_{k=0..n} K(n, k)*f(x*(n-k)) generate a family of sequences",
+        "T(n) = k -> (k!/n!)*[x^k] egf(n) which converge to S. Convergence here means that for every fixed k the terms T(n)(k) differ from S(k) only for finitely many indices.",
+        "The paradigmatic example is to set f(x) = exp(x), K(n, k) = !k*binomial(n, k) (!n is the subfactorial of n) and obtain for S the Bell numbers. This example is set forth in A320955.",
+        "Let D(f)(x) represent the derivative of f(x) with respect to x and (D^(n))(f) the n-th derivative of f. Then the exponential limit of f is B(n)*((D^(n))(f))(0) where B(n) is the n-th Bell number: ExpLim(f) = f(0), (D(f))(0), 2*((D^(2))(f))(0), 5*((D^(3))(f))(0), 15*((D^(4))(f))(0), 52*((D^(5))(f))(0), ... Since exp is a fixed point of D and exp(0) = 1 we have the identity ExpLim(exp)[n] = B(n). Similarly ExpLim(sin)[n] = B(n)*mod(n,2)*(-1)^binomial(n,2).",
+        "If we set f = sec + tan and K(n, k) = !k*binomial(n, k) the exponential limit is this sequence, a(n)."
+    ],
+    "link": [
+        "Peter Luschny, <a href=\"/A320956/b320956.txt\">Table of n, a(n) for n = 0..296</a>"
+    ],
+    "example": [
+        "Illustration of the convergence:",
+        "  [0] 1, 0, 0,  0,  0,   0,     0,      0,       0, ... A000007",
+        "  [1] 1, 1, 1,  2,  5,  16,    61,    272,    1385, ... A000111",
+        "  [2] 1, 1, 2,  8, 40, 256,  1952,  17408,  177280, ... A000828",
+        "  [3] 1, 1, 2, 10, 70, 656,  7442,  99280, 1515190, ... A320957",
+        "  [4] 1, 1, 2, 10, 75, 816, 11407, 194480, 3871075, ... A321394",
+        "  [5] 1, 1, 2, 10, 75, 832, 12322, 232560, 5325325, ...",
+        "  [6] 1, 1, 2, 10, 75, 832, 12383, 238272, 5693735, ...",
+        "  [7] 1, 1, 2, 10, 75, 832, 12383, 238544, 5732515, ...",
+        "  [8] 1, 1, 2, 10, 75, 832, 12383, 238544, 5733900, ..."
+    ],
+    "maple": [
+        "ExpLim := proc(len, f) local kernel, sf, egf:",
+        "sf := proc(n) option remember; `if`(n <= 1, 1 - n, (n-1)*(sf(n-1) + sf(n-2))) end:",
+        "kernel := proc(n, k) option remember; binomial(n, k)*sf(k) end:",
+        "egf := n -> add(kernel(n, k)*f(x*(n-k)), k=0..n):",
+        "series(egf(len), x, len+2): seq(coeff(%, x, k)*k!/len!, k=0..len) end:",
+        "ExpLim(19, sec + tan);",
+        "# Alternative:",
+        "explim := (len, f) -> seq(combinat:-bell(n)*((D@@n)(f))(0), n=0..len):",
+        "explim(19, sec + tan);"
+    ],
+    "mathematica": [
+        "m = 20; CoefficientList[Sec[x] + Tan[x] + O[x]^m, x] * Range[0, m-1]! *",
+        "BellB[Range[0, m-1]] (* _Jean-Fran\u00e7ois Alcover_, Jun 19 2019 *)"
+    ],
+    "xref": [
+        "Cf. A000111 (n=1), A000828 (n=2), A320957 (n=3), A321394 (n=4).",
+        "Cf. A320955 (exp), A320962 (log(x+1)), this sequence (sec+tan), A320958 (arcsin), A320959 (arctanh)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, Nov 07 2018",
+    "references": 9,
+    "revision": 32,
+    "time": "2019-07-18T01:05:47-04:00",
+    "created": "2018-11-07T16:13:21-05:00"
+}

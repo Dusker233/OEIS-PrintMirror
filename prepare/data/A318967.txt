@@ -1,0 +1,31 @@
+{
+    "number": 318967,
+    "data": "1,1,3,15,69,477,4167,34731,333225,4058073,48535659,638782119,9690930477,146665611765,2428164153711,44904494549763,820664075440593,16238018609968689,350155700132388435,7568774583230565567,175171222712837235861,4318996957424273510541,107317465474650443023383",
+    "name": "Expansion of e.g.f. Product_{i>=1, j>=1, k>=1} (1 + x^(i*j*k))^(1/(i*j*k)).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A318967/b318967.txt\">Table of n, a(n) for n = 0..444</a>",
+        "Lida Ahmadi, Ricardo G\u00f3mez A\u00edza, and Mark Daniel Ward, <a href=\"https://arxiv.org/abs/2303.02240\">A unified treatment of families of partition functions</a>, arXiv:2303.02240 [math.CO], 2023."
+    ],
+    "formula": [
+        "E.g.f.: Product_{k>=1} (1 + x^k)^(tau_3(k)/k), where tau_3 = A007425.",
+        "E.g.f.: exp(Sum_{k>=1} ( Sum_{d|k} (-1)^(k/d+1) * Sum_{j|d} tau(j) ) * x^k/k), where tau = number of divisors (A000005)."
+    ],
+    "maple": [
+        "a:=series(mul(mul(mul((1+x^(i*j*k))^(1/(i*j*k)),k=1..55),j=1..55),i=1..55),x=0,23): seq(n!*coeff(a,x,n),n=0..22); # _Paolo P. Lava_, Apr 02 2019"
+    ],
+    "mathematica": [
+        "nmax = 22; CoefficientList[Series[Product[Product[Product[(1 + x^(i j k))^(1/(i j k)), {i, 1, nmax}], {j, 1, nmax}], {k, 1, nmax} ], {x, 0, nmax}], x] Range[0, nmax]!",
+        "nmax = 22; CoefficientList[Series[Product[(1 + x^k)^(Sum[DivisorSigma[0, d], {d, Divisors[k]}]/k), {k, 1, nmax}], {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[n_] := a[n] = (n - 1)! Sum[Sum[(-1)^(k/d + 1) Sum[DivisorSigma[0, j], {j, Divisors[d]}], {d, Divisors[k]}] a[n - k]/(n - k)!, {k, 1, n}]; a[0] = 1; Table[a[n], {n, 0, 22}]"
+    ],
+    "xref": [
+        "Cf. A000005, A007425, A168243, A280473, A318414, A318696, A318768, A318966."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Sep 06 2018",
+    "references": 2,
+    "revision": 12,
+    "time": "2023-03-10T10:16:34-05:00",
+    "created": "2018-09-07T04:47:08-04:00"
+}

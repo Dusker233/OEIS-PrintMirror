@@ -1,0 +1,34 @@
+{
+    "number": 361387,
+    "data": "1,6,60,270,420,630,2970,5460,8190,36720,136500,172900,204750,245700,491400,790398,791700,819000,1037400,1138320,1187550,1228500,1801800,2457000,3767400,4176900,4504500,5405400,6397300,6688500,6741630,7698600,8353800,10032750,10228680",
+    "name": "Infinitary arithmetic numbers k whose mean infinitary divisor is an infinitary divisor of k.",
+    "comment": [
+        "Also, infinitary harmonic numbers k whose harmonic mean of the infinitary divisors of k is an infinitary divisor of k."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A361387/b361387.txt\">Table of n, a(n) for n = 1..135</a>"
+    ],
+    "example": [
+        "6 is a term since the arithmetic mean of its infinitary divisors, {1, 2, 3, 6}, is 3, and 3 is also an infinitary divisor of 6.",
+        "60 is a term since the arithmetic mean of its infinitary divisors, {1, 3, 4, 5, 12, 15, 20, 60}, is 15, and 15 is also an infinitary divisor of 60."
+    ],
+    "mathematica": [
+        "idivs[1] = {1}; idivs[n_] := Sort@ Flatten@ Outer[Times, Sequence @@ (FactorInteger[n] /. {p_, e_Integer} :> p^Select[Range[0, e], BitOr[e, #] == e &])]; Select[Range[10^5], IntegerQ[(r = Mean[(i = idivs[#])])] && MemberQ[i, r] &]"
+    ],
+    "program": [
+        "(PARI) isidiv(d, f) = {if (d==1, return (1)); for (k=1, #f~, bne = binary(f[k, 2]); bde = binary(valuation(d, f[k, 1])); if (#bde < #bne, bde = concat(vector(#bne-#bde), bde)); for (j=1, #bne, if (! bne[j] && bde[j], return (0)); ); ); return (1); } \\\\ Michel Marcus at A077609",
+        "is(n) = {my(f = factor(n), b, r); r = prod(i=1, #f~, b = binary(f[i, 2]); prod(k=1, #b, if(b[k], (f[i, 1]^(2^(#b-k))+1)/2, 1))); denominator(r) == 1 && n%r==0 && isidiv(r, f); }"
+    ],
+    "xref": [
+        "Subsequence of A063947 and A361386.",
+        "Similar sequence: A007340, A353039.",
+        "Cf. A037445, A049417, A077609."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Mar 10 2023",
+    "references": 2,
+    "revision": 9,
+    "time": "2023-03-10T10:53:37-05:00",
+    "created": "2023-03-10T10:09:55-05:00"
+}

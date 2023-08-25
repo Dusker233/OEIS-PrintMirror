@@ -1,0 +1,45 @@
+{
+    "number": 362003,
+    "data": "42,66,78,362,1086,1122,1254,1794,1810,1846,1974,2534,2730,3318,3982,4890,5538,5590,6006,6214,9230,12922,12990,13515,15510,16205,17430,18642,20306,22170,23170,25098,26962,27030,29274,31070,32142,32410",
+    "name": "Squarefree composite numbers m such that k - m^2 < m, where k is the smallest number greater than m^2 such that rad(k) | m.",
+    "comment": [
+        "Most small squarefree m have k - m^2 > m. For prime m = p, k = p^3, hence (p^3 - p^2) > p."
+    ],
+    "formula": [
+        "This sequence is { m : A362045(n) - m^2 < m and m in A120944 }."
+    ],
+    "example": [
+        "a(1) = 42 since 42 is the smallest squarefree number such that the smallest k > m^2 such that rad(k) | m also has difference k - m^2 < m.",
+        "Table showing a(n) = A120944(i) = m, A362045(i) = k, and the difference k-m^2.",
+        "    i      m         k  (k-m^2)",
+        "  -----------------------------",
+        "   14     42      1792      28",
+        "   22     66      4374      18",
+        "   27     78      6144      60",
+        "  147    362    131072      28",
+        "  478   1086   1179648     252",
+        "  495   1122   1259712     828",
+        "  558   1254   1572864     348",
+        "  813   1794   3219264     828",
+        "  822   1810   3276800     700",
+        "  840   1846   3407872     156",
+        "  900   1974   3898368    1692"
+    ],
+    "mathematica": [
+        "s = Select[Range[6, 400], And[CompositeQ[#], SquareFreeQ[#]] &]; Reap[Do[(m = #^2 + 1; While[! Divisible[#, Times @@ FactorInteger[m][[All, 1]]], m++]; If[m - #^2 < #, Sow[#]]) &[s[[i]]], {i, Length[s]}] ][[-1, -1]]"
+    ],
+    "program": [
+        "(PARI) rad(n) = factorback(factorint(n)[, 1]); \\\\ A007947",
+        "isok(m) = if (!isprime(m) && issquarefree(m), for (k=1+m^2, m+m^2, if (!(m % rad(k)), return(1)))); \\\\ _Michel Marcus_, Apr 21 2023"
+    ],
+    "xref": [
+        "Cf. A007947, A120944, A362045."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michael De Vlieger_, Apr 05 2023",
+    "references": 0,
+    "revision": 30,
+    "time": "2023-04-23T22:43:52-04:00",
+    "created": "2023-04-23T22:43:52-04:00"
+}

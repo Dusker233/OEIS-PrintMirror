@@ -1,0 +1,39 @@
+{
+    "number": 348077,
+    "data": "603,1250,1323,2523,4203,4923,4948,7442,10467,12591,18027,20402,21123,23823,31507,31850,36162,40327,54475,54511,55323,58923,63747,64386,71523,73204,79011,83151,85291,88047,97675,103923,104211,118323,120787,122571,124891,126927",
+    "name": "Starts of runs of 3 consecutive numbers that have an equal number of even and odd exponents in their prime factorization (A187039).",
+    "link": [
+        "Amiram Eldar, <a href=\"/A348077/b348077.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "603 is a term since 603 = 3^2 * 67, 603 + 1 = 604 = 2^2 * 151 and 603 + 2 = 605 = 5 * 11^2 all have one even and one odd exponent in their prime factorization."
+    ],
+    "mathematica": [
+        "q[n_] := n == 1 || Count[(e = FactorInteger[n][[;; , 2]]), _?OddQ] == Count[e, _?EvenQ]; v = q /@ Range[3]; seq = {}; Do[v = Append[Drop[v, 1], q[k]]; If[And @@ v, AppendTo[seq, k - 2]], {k, 4, 130000}]; seq"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def aupto(limit):",
+        "    alst, condvec = [], [False, False, False]",
+        "    for kp2 in range(4, limit+3):",
+        "        evenodd = [0, 0]",
+        "        for e in factorint(kp2).values():",
+        "            evenodd[e%2] += 1",
+        "        condvec = condvec[1:] + [evenodd[0] == evenodd[1]]",
+        "        if all(condvec):",
+        "            alst.append(kp2-2)",
+        "    return alst",
+        "print(aupto(126927)) # _Michael S. Branicky_, Sep 27 2021"
+    ],
+    "xref": [
+        "Subsequence of A187039 and A348076."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Sep 27 2021",
+    "references": 4,
+    "revision": 11,
+    "time": "2021-09-28T08:34:01-04:00",
+    "created": "2021-09-28T04:50:53-04:00"
+}

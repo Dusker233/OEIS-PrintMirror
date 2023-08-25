@@ -1,0 +1,52 @@
+{
+    "number": 331679,
+    "data": "1,2,3,8,16,48,116,341,928,2753,7996,24254,73325,226471,702122",
+    "name": "Number of lone-child-avoiding locally disjoint rooted trees whose leaves are positive integers summing to n, with no two distinct leaves directly under the same vertex.",
+    "comment": [
+        "A tree is locally disjoint if no child of any vertex has branches overlapping the branches of any other unequal child of the same vertex. It is lone-child-avoiding if there are no unary branchings."
+    ],
+    "link": [
+        "David Callan, <a href=\"http://arxiv.org/abs/1406.7784\">A sign-reversing involution to count labeled lone-child-avoiding trees</a>, arXiv:1406.7784 [math.CO], (30-June-2014).",
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/e/2PACX-1vS1zCO9fgAIe5rGiAhTtlrOTuqsmuPos2zkeFPYB80gNzLb44ufqIqksTB4uM9SIpwlvo-oOHhepywy/pub\">Sequences counting series-reduced and lone-child-avoiding trees by number of vertices.</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(5) = 16 trees:",
+        "  1  2     3        4           5",
+        "     (11)  (111)    (22)        (11111)",
+        "           (1(11))  (1111)      ((11)3)",
+        "                    (2(11))     (1(22))",
+        "                    (1(111))    (2(111))",
+        "                    (11(11))    (1(1111))",
+        "                    ((11)(11))  (11(111))",
+        "                    (1(1(11)))  (111(11))",
+        "                                (1(2(11)))",
+        "                                (2(1(11)))",
+        "                                (1(1(111)))",
+        "                                (1(11)(11))",
+        "                                (1(11(11)))",
+        "                                (11(1(11)))",
+        "                                (1((11)(11)))",
+        "                                (1(1(1(11))))"
+    ],
+    "mathematica": [
+        "disjointQ[u_]:=Apply[And,Outer[#1==#2||Intersection[#1,#2]=={}&,u,u,1],{0,1}];",
+        "usot[n_]:=Prepend[Join@@Table[Select[Union[Sort/@Tuples[usot/@ptn]],disjointQ[DeleteCases[#,_?AtomQ]]&&SameQ@@Select[#,AtomQ]&],{ptn,Select[IntegerPartitions[n],Length[#]>1&]}],n];",
+        "Table[Length[usot[n]],{n,12}]"
+    ],
+    "xref": [
+        "The non-locally disjoint version is A141268.",
+        "Locally disjoint trees counted by vertices are A316473.",
+        "The case where all leaves are 1's is A316697.",
+        "Number of trees counted by A331678 with all atoms equal to 1.",
+        "Matula-Goebel numbers of locally disjoint rooted trees are A316495.",
+        "Unlabeled lone-child-avoiding locally disjoint rooted trees are A331680.",
+        "Cf. A000081, A000669, A001678, A005804, A060356, A300660, A316471, A316694, A316696, A319312, A330465, A331681."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Jan 25 2020",
+    "references": 12,
+    "revision": 15,
+    "time": "2020-01-30T08:42:13-05:00",
+    "created": "2020-01-30T08:42:13-05:00"
+}

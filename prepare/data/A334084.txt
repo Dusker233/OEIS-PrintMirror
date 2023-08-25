@@ -1,0 +1,47 @@
+{
+    "number": 334084,
+    "data": "1,3,5,7,15,31,63,127,255,511,1023,2047,4095,8191,16383,32767",
+    "name": "Integers m such that only 2 binomial coefficients C(m,k), with 0<=k<=m, are practical numbers.",
+    "comment": [
+        "Integers m such that A334082(m) = m-1.",
+        "Integers of the form 2^k-1 with k>0 are terms, but this condition is not necessary since 5 is a term."
+    ],
+    "program": [
+        "(PARI) isok(n) = sum(k=0, n, !is_A005153(binomial(n, k))) == n-1;",
+        "(Python)",
+        "from itertools import count, islice",
+        "from math import comb",
+        "from sympy import factorint",
+        "def A334084_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        for k in range(1,n):",
+        "            c = comb(n,k)",
+        "            l = (~c & c-1).bit_length()",
+        "            if l>0:",
+        "                P = (1<<l+1)-1",
+        "                for p, e in factorint(c>>l).items():",
+        "                    if p > 1+P:",
+        "                        break",
+        "                    P *= (p**(e+1)-1)//(p-1)",
+        "                else:",
+        "                    break",
+        "        else:",
+        "            yield n",
+        "A334084_list = list(islice(A334084_gen(),10)) # _Chai Wah Wu_, Jul 05 2023"
+    ],
+    "xref": [
+        "Cf. A005153 (practical numbers), A007318 (binomial coefficients).",
+        "Cf. A334082, A334083."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Michel Marcus_, Apr 14 2020",
+    "ext": [
+        "a(11) from _Jinyuan Wang_, Apr 14 2020",
+        "a(12)-a(16) from _Chai Wah Wu_, Jul 05 2023"
+    ],
+    "references": 2,
+    "revision": 23,
+    "time": "2023-07-05T15:03:41-04:00",
+    "created": "2020-04-14T07:30:57-04:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 24631,
+    "data": "0,1,2,3,30,31,32,33,320,321,322,323,3210,3211,3212,3213,32100,32101,32102,32103,32130,32131,32132,32133,321020,321021,321022,321023,321310,321311,321312,321313,3210200,3210201,3210202,3210203,3210230,3210231",
+    "name": "n written in fractional base 4/3.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A024631/b024631.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "K. Burde, <a href=\"http://dx.doi.org/10.1016/0022-314X(87)90078-3\">Das Problem der Abz\u00e4hlreime und Zahlentwicklungen mit gebrochenen Basen [The problem of counting rhymes and number expansions with fractional bases]</a>, J. Number Theory 26(2) (1987), 192-209. [The author deals with the representation of n in fractional bases k/(k-1) and its relation to counting-off games (variations of Josephus problem). Here k = 4. See the review in MathSciNet (MR0889384) by R. G. Stoneham.]",
+        "<a href=\"/index/J#Josephus\">Index entries for sequences related to the Josephus Problem</a>"
+    ],
+    "formula": [
+        "To represent a number in base b, if a digit is greater than or equal to b, subtract b and carry 1. In fractional base a/b, subtract a and carry b."
+    ],
+    "maple": [
+        "a:= proc(n) `if`(n<1, 0, irem(n, 4, 'q')+a(3*q)*10) end:",
+        "seq(a(n), n=0..45);  # _Alois P. Heinz_, Aug 20 2019"
+    ],
+    "mathematica": [
+        "p:= 4; q:= 3; a[n_]:= a[n]= If[n==0, 0, 10*a[q*Floor[n/p]] + Mod[n, p]]; Table[a[n], {n,0,40}] (* _G. C. Greubel_, Aug 20 2019 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = my(p=4, q=3); if(n==0,0, 10*a(q*(n\\p)) + (n%p));",
+        "vector(40, n, n--; a(n)) \\\\ _G. C. Greubel_, Aug 20 2019",
+        "(Sage)",
+        "def basepqExpansion(p, q, n):",
+        "    L, i = [n], 1",
+        "    while L[i-1] >= p:",
+        "        x=L[i-1]",
+        "        L[i-1]=x.mod(p)",
+        "        L.append(q*(x//p))",
+        "        i+=1",
+        "    return Integer(''.join(str(x) for x in reversed(L)))",
+        "[basepqExpansion(4,3,n) for n in [0..40]] # _G. C. Greubel_, Aug 20 2019"
+    ],
+    "xref": [
+        "Cf. A244041 (sum of digits).",
+        "Cf. A024629 (base 3/2)."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "0,3",
+    "author": "_David W. Wilson_",
+    "references": 8,
+    "revision": 29,
+    "time": "2022-09-23T02:33:57-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

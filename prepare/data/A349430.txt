@@ -1,0 +1,46 @@
+{
+    "number": 349430,
+    "data": "1,1,2,4,10,20,58,124,344,811,2071,4973,15454,36031,96212,237563,668695,1626751,4674373,11470722,31460456,81705943,224598113",
+    "name": "Number of set partitions of [5n] into 5-element subsets {i, i+k, i+2k, i+3k, i+4k} with 1<=k<=n.",
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "example": [
+        "a(4) = 10: {{1,2,3,4,5}, {6,7,8,9,10}, {11,12,13,14,15}, {16,17,18,19,20}},",
+        "  {{1,3,5,7,9}, {2,4,6,8,10}, {11,12,13,14,15}, {16,17,18,19,20}},",
+        "  {{1,2,3,4,5}, {6,8,10,12,14}, {7,9,11,13,15}, {16,17,18,19,20}},",
+        "  {{1,4,7,10,13}, {2,5,8,11,14}, {3,6,9,12,15}, {16,17,18,19,20}},",
+        "  {{1,2,3,4,5}, {6,7,8,9,10}, {11,13,15,17,19}, {12,14,16,18,20}},",
+        "  {{1,3,5,7,9}, {2,4,6,8,10}, {11,13,15,17,19}, {12,14,16,18,20}},",
+        "  {{1,5,9,13,17}, {2,4,6,8,10}, {3,7,11,15,19}, {12,14,16,18,20}},",
+        "  {{1,2,3,4,5}, {6,9,12,15,18}, {7,10,13,16,19}, {8,11,14,17,20}},",
+        "  {{1,3,5,7,9}, {2,6,10,14,18}, {4,8,12,16,20}, {11,13,15,17,19}},",
+        "  {{1,5,9,13,17}, {2,6,10,14,18}, {3,7,11,15,19}, {4,8,12,16,20}}."
+    ],
+    "maple": [
+        "b:= proc(s, t) option remember; `if`(s={}, 1, (m-> add(",
+        "     `if`({seq(m-h*j, h=1..4)} minus s={}, b(s minus {seq(m-h*j,",
+        "      h=0..4)}, t), 0), j=1..min(t, iquo(m-1, 4))))(max(s)))",
+        "    end:",
+        "a:= proc(n) option remember; forget(b): b({$1..5*n}, n) end:",
+        "seq(a(n), n=0..10);"
+    ],
+    "mathematica": [
+        "b[s_, t_] := b[s, t] = If[s == {}, 1, Function[m, Sum[If[Union[Table[m - h*j, {h, 1, 4}] ~Complement~ s] == {}, b[s  ~Complement~ Union[Table[m - h*j, {h, 0, 4}]], t], 0], {j, 1, Min[t, Quotient[m-1, 4]]}]][Max[s]]];",
+        "a[n_] := a[n] = b[Range[5n], n];",
+        "Table[Print[n, \" \", a[n]]; a[n], {n, 0, 15}] (* _Jean-Fran\u00e7ois Alcover_, May 16 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000567 (number of subsets), A008587 (number of elements), A104431 (when k is unbounded), A337520."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Nov 17 2021",
+    "ext": [
+        "a(22) from _Alois P. Heinz_, Nov 23 2022"
+    ],
+    "references": 1,
+    "revision": 26,
+    "time": "2022-11-23T19:04:43-05:00",
+    "created": "2021-11-24T21:19:08-05:00"
+}

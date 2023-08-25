@@ -1,0 +1,38 @@
+{
+    "number": 343444,
+    "data": "0,11,22,33,44,55,66,77,88,99,101,110,123,132,145,154,167,176,189,198,202,213,220,231,246,257,264,275,303,312,321,330,347,356,365,374,404,415,426,437,440,451,462,473,505,514,527,536,541,550,563,572,606,617,624,635,642,653,660,671,707,716,725,734,743,752",
+    "name": "Smallest nonnegative integer such that altering at most one of its digits cannot result in a previous term.",
+    "comment": [
+        "Allowing prepending the integer representation with zeros; this means the Hamming distance between two digit strings representing different terms is at least 2.",
+        "Numbers whose bitwise XOR of digits is equal to zero. - _Jeremias M. Gomes_, Jul 25 2021"
+    ],
+    "link": [
+        "J. H. Conway and N. J. A. Sloane, <a href=\"https://doi.org/10.1109/TIT.1986.1057187\">Lexicographic codes: error-correcting codes from game theory</a>, IEEE Transactions on Information Theory, 32:337-348, 1986.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Hamming_distance\">Hamming distance</a>"
+    ],
+    "program": [
+        "(Python)",
+        "def ham(m, n):",
+        "  s, t = str(min(m, n)), str(max(m, n))",
+        "  s = '0'*(len(t)-len(s)) + s",
+        "  return sum(s[i] != t[i] for i in range(len(t)))",
+        "def aupton(terms):",
+        "  alst = [0]",
+        "  for n in range(2, terms+1):",
+        "    an = alst[-1] + 1",
+        "    while any(ham(an, alst[-i]) < 2 for i in range(1, len(alst)+1)): an += 1",
+        "    alst.append(an)",
+        "  return alst",
+        "print(aupton(66)) # _Michael S. Branicky_, Apr 15 2021"
+    ],
+    "xref": [
+        "Cf. A001969, A075928, A333568, A346261."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,2",
+    "author": "_Bert Dobbelaere_, Apr 15 2021",
+    "references": 5,
+    "revision": 26,
+    "time": "2021-08-08T02:02:49-04:00",
+    "created": "2021-04-22T22:19:37-04:00"
+}

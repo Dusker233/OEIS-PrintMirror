@@ -1,0 +1,39 @@
+{
+    "number": 327040,
+    "data": "1,1,4,72,25104",
+    "name": "Number of set-systems covering n vertices, every two of which appear together in some edge (cointersecting).",
+    "comment": [
+        "A set-system is a finite set of finite nonempty sets. Its elements are sometimes called edges. The dual of a set-system has, for each vertex, one edge consisting of the indices (or positions) of the edges containing that vertex. For example, the dual of {{1,2},{2,3}} is {{1},{1,2},{2}}. This sequence counts covering set-systems that are cointersecting, meaning their dual is pairwise intersecting."
+    ],
+    "formula": [
+        "Inverse binomial transform of A327039."
+    ],
+    "example": [
+        "The a(0) = 1 through a(2) = 4 set-systems:",
+        "  {}  {{1}}  {{1,2}}",
+        "             {{1},{1,2}}",
+        "             {{2},{1,2}}",
+        "             {{1},{2},{1,2}}"
+    ],
+    "mathematica": [
+        "dual[eds_]:=Table[First/@Position[eds,x],{x,Union@@eds}];",
+        "stableQ[u_,Q_]:=!Apply[Or,Outer[#1=!=#2&&Q[#1,#2]&,u,u,1],{0,1}];",
+        "Table[Length[Select[Subsets[Subsets[Range[n],{1,n}]],Union@@#==Range[n]&&stableQ[dual[#],Intersection[#1,#2]=={}&]&]],{n,0,3}]"
+    ],
+    "xref": [
+        "The unlabeled multiset partition version is A319752.",
+        "The BII-numbers of these set-systems are A326853.",
+        "The antichain case is A327020.",
+        "The pairwise intersecting case is A327037.",
+        "The non-covering version is A327039.",
+        "The case where the dual is strict is A327053.",
+        "Cf. A003465, A305843, A305844, A306006, A319774, A327052."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Aug 18 2019",
+    "references": 16,
+    "revision": 6,
+    "time": "2019-08-18T11:27:31-04:00",
+    "created": "2019-08-18T11:27:31-04:00"
+}

@@ -1,0 +1,38 @@
+{
+    "number": 355511,
+    "data": "0,0,55,440,5170,56408,620950,6830120,75131485,826446280,9090909091,100000000000,1100000000000,12100000000000,133100000000000,1464100000000000,16105100000000000,177156100000000000,1948717100000000000,21435888100000000000,235794769100000000000",
+    "name": "a(n) is the number of monic polynomials of degree n over GF(11) without linear factors.",
+    "formula": [
+        "O.g.f. (1 - z)^(11)/(1-11*z) - 1"
+    ],
+    "example": [
+        "a(0) = 0 since there are no irreducible constant polynomials (as GF(11) is a field).",
+        "a(1) = 0 since all polynomials of degree 1 have linear factors.",
+        "a(2), the number of quadratic polynomials without linear factors, then coincides with the number of irreducible quadratics in GF(11), which is known to be M(11,2), where M(a,d) is the necklace polynomial, so a(2) = 55."
+    ],
+    "mathematica": [
+        "necklacePolynomial[q_, n_] :=",
+        "  necklacePolynomial[q, n] = (1/n)*",
+        "    DivisorSum[n, MoebiusMu[n/#1]*q^#1 & ];",
+        "numIrreds[q_, n_] := If[n != 0, necklacePolynomial[q, n], 0];",
+        "restrictedPolynomialsOGF[q_, n_, d_] :=",
+        "  Product[(1 - z^If[ArrayDepth[d[[l]]] == 0, d[[l]], d[[l]][[1]]])^",
+        "     If[ArrayDepth[d[[l]]] == 0, numIrreds[q, d[[l]]],",
+        "             d[[l]][[2]]], {l, 1, Length[d]}]/(1 - q*z);",
+        "numRestrictedPolys[q_, n_, d_] :=",
+        "  SeriesCoefficient[restrictedPolynomialsOGF[q, n, d], {z, 0, n}];",
+        "q = 11;",
+        "TableForm[{#, numRestrictedPolys[q, #, {1}]} & /@ (Range[20]),",
+        "TableHeadings -> {{Row[{\"(q=\", q, \")\"}]}, {\"n\", \"#rootless monics\"}}]"
+    ],
+    "xref": [
+        "Cf. A355510."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Greyson C. Wesley_, Jul 04 2022",
+    "references": 0,
+    "revision": 14,
+    "time": "2022-09-07T11:12:16-04:00",
+    "created": "2022-09-07T11:12:16-04:00"
+}

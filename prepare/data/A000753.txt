@@ -1,0 +1,42 @@
+{
+    "number": 753,
+    "data": "1,2,5,16,59,243,1101,5461,29619,175641,1137741,8031838,61569345,510230087,4549650423,43452408496,442620720531,4790322653809,54893121512453,663974736739232,8453986695437957,113021461431438475",
+    "name": "Boustrophedon transform of Catalan numbers.",
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A000753/b000753.txt\">Table of n, a(n) for n = 0..400</a>",
+        "J. Millar, N. J. A. Sloane and N. E. Young, A new operation on sequences: the Boustrophedon transform, J. Combin. Theory, 17A (1996), 44-54 (<a href=\"http://neilsloane.com/doc/bous.txt\">Abstract</a>, <a href=\"http://neilsloane.com/doc/bous.pdf\">pdf</a>, <a href=\"http://neilsloane.com/doc/bous.ps\">ps</a>).",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>.",
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A109449(n,k)*A000108(k). - _Reinhard Zumkeller_, Nov 05 2013",
+        "E.g.f.: (sec(x) + tan(x))*exp(2*x)*(BesselI(0,2*x) - BesselI(1,2*x)). - _Sergei N. Gladkovskii_, Oct 30 2014",
+        "a(n) ~ n! * exp(Pi) * (BesselI(0, Pi) - BesselI(1, Pi)) * 2^(n+2) / Pi^(n+1). - _Vaclav Kotesovec_, Oct 30 2014"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[E^(2*x) * (BesselI[0,2*x] - BesselI[1,2*x]) * (Sec[x] + Tan[x]),{x,0,20}],x] * Range[0,20]! (* _Vaclav Kotesovec_, Oct 30 2014 after _Sergei N. Gladkovskii_ *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a000753 n = sum $ zipWith (*) (a109449_row n) a000108_list",
+        "-- _Reinhard Zumkeller_, Nov 05 2013",
+        "(Python)",
+        "from itertools import accumulate, count, islice",
+        "def A000753_gen(): # generator of terms",
+        "    blist, c = tuple(), 1",
+        "    for i in count(0):",
+        "        yield (blist := tuple(accumulate(reversed(blist),initial=c)))[-1]",
+        "        c = c*(4*i+2)//(i+2)",
+        "A000753_list = list(islice(A000753_gen(),30)) # _Chai Wah Wu_, Jun 11 2022"
+    ],
+    "xref": [
+        "Cf. A000108, A000736, A109449."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 8,
+    "revision": 37,
+    "time": "2022-06-11T15:33:05-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

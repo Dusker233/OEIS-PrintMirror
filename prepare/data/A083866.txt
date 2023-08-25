@@ -1,0 +1,41 @@
+{
+    "number": 83866,
+    "data": "0,5,10,17,20,27,34,40,45,54,65,68,75,80,85,90,99,105,108,119,130,136,141,150,160,165,170,177,180,187,198,210,216,221,238,257,260,267,272,277,282,291,297,300,311,320,325,330,337,340,347,354,360",
+    "name": "Positions of zeros in Per N\u00f8rg\u00e5rd's infinity sequence (A004718).",
+    "comment": [
+        "First differences seem to be always >2.",
+        "Many (but not all) prime members are in A005107.",
+        "The composer Per N\u00f8rg\u00e5rd's name is also written in the OEIS as Per Noergaard."
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A083866/b083866.txt\">Table of n, a(n) for n = 0..10000</a>",
+        "Yu Hin (Gary) Au, Christopher Drexler-Lemire, and Jeffrey Shallit, <a href=\"https://doi.org/10.1080/17459737.2017.1299807\">Notes and note pairs in Norgard's infinity series</a>, Journal of Mathematics and Music, Volume 11, Issue 1, 2017, pages 1-19."
+    ],
+    "program": [
+        "(Haskell)",
+        "a083866 n = a083866_list !! n",
+        "a083866_list = filter ((== 0) . a004718) [0..]",
+        "-- _Reinhard Zumkeller_, Mar 19 2015, Nov 10 2012",
+        "(Python)",
+        "from itertools import groupby, islice",
+        "def A083866_gen(startvalue=0): # generator of terms >= startvalue",
+        "    n, c = max(0,startvalue),0",
+        "    for k, g in groupby(bin(n)[2:]):",
+        "        c = c+len(list(g)) if k == '1' else (-c if len(list(g))&1 else c)",
+        "    while True:",
+        "        if c == 0: yield n",
+        "        n += 1",
+        "        c = c-t-1 if (t:=(~n & n-1).bit_length())&1 else t+1-c",
+        "A083866_list = list(islice(A083866_gen(),20)) # _Chai Wah Wu_, Mar 02 2023"
+    ],
+    "xref": [
+        "Cf. A004718, A005107."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ralf Stephan_, May 07 2003",
+    "references": 6,
+    "revision": 27,
+    "time": "2023-07-08T08:05:47-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

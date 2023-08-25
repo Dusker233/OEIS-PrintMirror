@@ -1,0 +1,44 @@
+{
+    "number": 356750,
+    "data": "3,5,7,9,11,101,121,131,151,181,191,313,343,353,373,383,525,555,585,595,727,757,777,787,797,919,929,969,1001,1221,1331,1551,1771,1881,3333,3553,3663,5225,5335,5445,5555,5665,5885,5995,7007,7227,7337,7557,7667,7777,7887,9339,9669,9779,9889,9999,10201,10301",
+    "name": "Palindromic odd numbers with an odd number of distinct prime factors.",
+    "comment": [
+        "Numbers in this sequence can be divided by nontrivial prime powers.",
+        "This sequence contains palindromic primes: A002385.",
+        "This sequence contains palindromic odd composite numbers that are products of an odd number of distinct primes: A075808."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A356750/b356750.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "Number 525 = 3*5^2*7 has 3 prime factors 3, 5, and 7. Thus, it is in the sequence."
+    ],
+    "mathematica": [
+        "Select[Range[2,12000], OddQ[#] && PalindromeQ[#] && OddQ[Length[Transpose[FactorInteger[#]][[2]]]] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, factorint",
+        "from itertools import count, islice, product",
+        "def cond(n): return n&1 and (isprime(n) or len(factorint(n))&1)",
+        "def oddpals(): # generator of odd palindromes",
+        "    yield from [1, 3, 5, 7, 9]",
+        "    for d in count(2):",
+        "        for first in \"13579\":",
+        "            for p in product(\"0123456789\", repeat=(d-2)//2):",
+        "                left = \"\".join(p); right = left[::-1]",
+        "                for mid in [[\"\"], \"0123456789\"][d%2]:",
+        "                    yield int(first + left + mid + right + first)",
+        "def agen(): yield from filter(cond, oddpals())",
+        "print(list(islice(agen(), 58))) # _Michael S. Branicky_, Aug 25 2022",
+        "(PARI) ispal(n) = my(d1=digits(n)); d1 == Vecrev(d1)",
+        "forstep(k=3,10^6,2,if(ispal(k)&&omega(k)%2==1,print1(k,\", \"))) \\\\ _Alexandru Petrescu_, Sep 10 2022"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Aug 25 2022",
+    "references": 2,
+    "revision": 24,
+    "time": "2022-09-14T08:25:41-04:00",
+    "created": "2022-08-28T10:35:50-04:00"
+}

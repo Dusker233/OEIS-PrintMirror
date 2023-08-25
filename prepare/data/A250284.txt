@@ -1,0 +1,33 @@
+{
+    "number": 250284,
+    "data": "1,1,1,1,1,1,1,1,7,35,119,329,791,1715,3431,45031,400281,2313633,10467037,39845281,132908041,398840401,7677528495,98103087719,800524248391,5030038213949,26202586666879,117991927960739,472105349529479,11979440405949527",
+    "name": "Number of permutations p of [n] such that p(i) > p(i+1) iff i == 0 (mod 7).",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A250284/b250284.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "example": [
+        "a(7) = 1: 1234567.",
+        "a(8) = 7: 12345687, 12345786, 12346785, 12356784, 12456783, 13456782, 23456781."
+    ],
+    "maple": [
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, 1,",
+        "     `if`(t=0, add(b(u-j, o+j-1, irem(t+1, 7)), j=1..u),",
+        "               add(b(u+j-1, o-j, irem(t+1, 7)), j=1..o)))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..35);"
+    ],
+    "mathematica": [
+        "nmax = 30; CoefficientList[Series[1 + Sum[(x^(7 - k) * HypergeometricPFQ[{1}, {8/7 - k/7, 9/7 - k/7, 10/7 - k/7, 11/7 - k/7, 12/7 - k/7, 13/7 - k/7, 2 - k/7}, -x^7/823543])/(7 - k)!, {k, 0, 6}] / HypergeometricPFQ[{}, {1/7, 2/7, 3/7, 4/7, 5/7, 6/7}, -x^7/823543], {x, 0, nmax}], x] * Range[0, nmax]! (* _Vaclav Kotesovec_, Apr 21 2021 *)"
+    ],
+    "xref": [
+        "Row n=7 of A181937."
+    ],
+    "keyword": "nonn",
+    "offset": "0,9",
+    "author": "_Alois P. Heinz_, Nov 16 2014",
+    "references": 3,
+    "revision": 14,
+    "time": "2023-08-01T12:10:32-04:00",
+    "created": "2014-11-16T13:57:22-05:00"
+}

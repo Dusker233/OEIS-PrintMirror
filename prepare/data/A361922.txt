@@ -1,0 +1,25 @@
+{
+    "number": 361922,
+    "data": "1,2,3,6,8,12,15,24,30,40,42,56,60,72,84,105,108,120,132,135,156,165,168,195,210,216,240,255,264,270,280,312,330,360,378,384,390,408,420,440,456,462,480,504,510,520,540,546,552,570,600,616,640,660,672,680,690",
+    "name": "Infinitary phi-practical numbers: numbers m such that each k <= m is a subsum of a the multiset {iphi(d) : d infinitary divisor of m}, where iphi is an infinitary analog of Euler's phi function (A091732).",
+    "link": [
+        "Amiram Eldar, <a href=\"/A361922/b361922.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "f[p_, e_] := p^(2^(-1 + Position[Reverse@IntegerDigits[e, 2], 1]));",
+        "iphi[1] = 1; iphi[n_] := Times @@ (Flatten@ (f @@@ FactorInteger[n]) - 1);",
+        "idivs[n_] := Sort@ Flatten@ Outer[Times, Sequence @@ (FactorInteger[n] /. {p_, m_Integer} :> p^Select[Range[0, m], BitOr[m, #] == m &])]; idivs[1] = {1};",
+        "iPhiPracticalQ[n_] := Module[{s = Sort@ Map[iphi, idivs[n]], ans = True}, Do[If[s[[j]] > Sum[s[[i]], {i, 1, j - 1}] + 1, ans = False; Break[]], {j, 1, Length[s]}]; ans]; Select[Range[700], iPhiPracticalQ]"
+    ],
+    "xref": [
+        "Cf. A077609, A091732.",
+        "Similar sequences: A260653, A286906, A334901."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Mar 30 2023",
+    "references": 2,
+    "revision": 10,
+    "time": "2023-03-31T06:56:39-04:00",
+    "created": "2023-03-31T02:55:14-04:00"
+}

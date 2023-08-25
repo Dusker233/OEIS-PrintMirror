@@ -1,0 +1,45 @@
+{
+    "number": 356824,
+    "data": "4,5,6,7,8,9,22,202,232,252,262,282,292,414,444,454,464,474,484,494,626,666,686,696,808,828,858,878,888,898,20002,20602,20802,20902,21612,21712,21812,21912,22622,22722,22822,22922,23632,23732,23832,23932,24642,24742,24842,24942",
+    "name": "Palindromes that can be written as the sum of two palindromic primes.",
+    "comment": [
+        "With the exception of 22, which is the sum of 11 and 11, no term of this sequence has an even number of digits. Proof: Other than 11, palindromes with an even number of digits are not primes (since they are divisible by 11). Suppose m is a term of this sequence with 2k digits. Then m must be the sum of two palindromic primes p and q with 2k-1 digits each. It follows that the first and the last digit of m is 1. Hence, either p or q is even, creating a contradiction with primality.",
+        "With the exception of 5, 7, and 9, all terms of this sequence are even. Proof: two consecutive multi-digit palindromes differ by at least 10, so larger palindromes can't be the sum of a palindromic prime and 2. Thus, each multi-digit term is the sum of two odd numbers."
+    ],
+    "example": [
+        "282 can be written as the sum of two prime palindromes, 101 and 181. Thus, 282 is in the sequence."
+    ],
+    "mathematica": [
+        "q := Select[Range[30000], PalindromeQ[#] && PrimeQ[#] &]",
+        "Select[Union[Flatten[Table[q[[n]] + q[[m]], {n, Length[q]}, {m, Length[q]}]]],",
+        "PalindromeQ[#] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import product",
+        "def ispal(n): s = str(n); return s == s[::-1]",
+        "def oddpals(d): # generator of odd palindromes with d digits",
+        "    if d == 1: yield from [1, 3, 5, 7, 9]; return",
+        "    for first in \"13579\":",
+        "        for p in product(\"0123456789\", repeat=(d-2)//2):",
+        "            left = \"\".join(p); right = left[::-1]",
+        "            for mid in [[\"\"], \"0123456789\"][d%2]:",
+        "                yield int(first + left + mid + right + first)",
+        "def auptod(dd):",
+        "    N, alst, pp = 10**dd, [], [2, 3, 5, 7, 11]",
+        "    pp += [p for d in range(3, dd+1, 2) for p in oddpals(d) if isprime(p)]",
+        "    return sorted(set(p+q for p in pp for q in pp if p+q<N and ispal(p+q)))",
+        "print(auptod(5)) # _Michael S. Branicky_, Aug 29 2022"
+    ],
+    "xref": [
+        "Cf. A002113, A002385, A261906."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Aug 29 2022",
+    "references": 2,
+    "revision": 17,
+    "time": "2022-09-04T12:46:24-04:00",
+    "created": "2022-09-04T12:46:24-04:00"
+}

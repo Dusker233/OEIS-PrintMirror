@@ -1,0 +1,90 @@
+{
+    "number": 306302,
+    "data": "0,4,16,46,104,214,380,648,1028,1562,2256,3208,4384,5924,7792,10052,12744,16060,19880,24486,29748,35798,42648,50648,59544,69700,80992,93654,107596,123374,140488,159704,180696,203684,228624,255892,285152,317400,352096,389576",
+    "name": "Number of regions into which a figure made up of a row of n adjacent congruent rectangles is divided upon drawing diagonals of all possible rectangles (a(0)=0 by convention).",
+    "comment": [
+        "Assuming that the rectangles have vertices at (k,0) and (k,1), k=0..n, the projective map (x,y) -> ((1-y)/(x+1),y/(x+1)) maps their partition to the partition of the right isosceles triangle described by Alekseyev et al. (2015), for which Theorem 13 gives the number of regions, line segments, and intersection points. - _Max Alekseyev_, Apr 10 2019",
+        "The figure is made up of A324042 triangles and A324043 quadrilaterals. - _N. J. A. Sloane_, Mar 03 2020"
+    ],
+    "link": [
+        "Jinyuan Wang, <a href=\"/A306302/b306302.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Max Alekseyev, <a href=\"/A306302/a306302.png\">Illustration for n = 3</a>.",
+        "M. A. Alekseyev. <a href=\"https://arxiv.org/abs/math/0602511\">On the number of two-dimensional threshold functions</a>, arXiv:math/0602511 [math.CO], 2006-2010; doi:<a href=\"http://dx.doi.org/10.1137/090750184\">10.1137/090750184</a>, SIAM J. Disc. Math. 24(4), 2010, pp. 1617-1631.",
+        "M. A. Alekseyev, M. Basova, and N. Yu. Zolotykh. <a href=\"https://doi.org/10.1137/140978090\">On the minimal teaching sets of two-dimensional threshold functions</a>, SIAM Journal on Discrete Mathematics 29:1 (2015), 157-165. doi:10.1137/140978090.",
+        "Lars Blomberg, Scott R. Shannon and N. J. A. Sloane, <a href=\"http://neilsloane.com/doc/rose_5.pdf\">Graphical Enumeration and Stained Glass Windows, 1: Rectangular Grids</a>, (2020). Also arXiv:2009.07918.",
+        "M. Griffiths, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL13/Griffiths2/griffiths.html\">Counting the regions in a regular drawing of K_{n,n}</a>, J. Int. Seq. 13 (2010) # 10.8.5, Lemma 2.",
+        "Robert Israel, <a href=\"/A306302/a306302.txt\">Maple program</a>, Feb 07 2019",
+        "S. Legendre, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL12/Legendre/legendre2.html\">The Number of Crossings in a Regular Drawing of the Complete Bipartite Graph</a>, J. Integer Seqs., Vol. 12, 2009.",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_6.png\">Colored illustration for T(1,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_7.png\">Colored illustration for T(2,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_8.png\">Colored illustration for T(3,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_9.png\">Colored illustration for T(4,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_10.png\">Colored illustration for T(5,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_11.png\">Colored illustration for T(6,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_32.png\">Colored illustration for T(7,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_33.png\">Colored illustration for T(8,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_34.png\">Colored illustration for T(9,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_35.png\">Colored illustration for T(10,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_36.png\">Colored illustration for T(11,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_37.png\">Colored illustration for T(12,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_38.png\">Colored illustration for T(13,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_39.png\">Colored illustration for T(14,1)</a>",
+        "Scott R. Shannon, <a href=\"/A331452/a331452_40.png\">Colored illustration for T(15,1)</a>",
+        "N. J. A. Sloane, <a href=\"/A115004/a115004.txt\">Families of Essentially Identical Sequences</a>, Mar 24 2021 (Includes this sequence)",
+        "<a href=\"/index/St#Stained\">Index entries for sequences related to stained glass windows</a>"
+    ],
+    "formula": [
+        "a(n) = n + (A114043(n+1) - 1)/2, conjectured by _N. J. A. Sloane_, Feb 07 2019; proved by _Max Alekseyev_, Apr 10 2019",
+        "a(n) = n + A115005(n+1) = n + A141255(n+1)/2. - _Max Alekseyev_, Apr 10 2019",
+        "a(n) = A324042(n) + A324043(n). - _Jinyuan Wang_, Mar 19 2020",
+        "a(n) = Sum_{i=1..n, j=1..n, gcd(i,j)=1} (n+1-i)*(n+1-j) + n^2 + 2*n. - _N. J. A. Sloane_, Apr 11 2020",
+        "a(n) = 2n(n+1) + Sum_{i=2..n} (n+1-i)*(2n+2-i)*phi(i). - _Chai Wah Wu_, Aug 16 2021"
+    ],
+    "maple": [
+        "# Maple from _N. J. A. Sloane_, Mar 04 2020, starting at n=1:  First define z(n) = A115004",
+        "z := proc(n)",
+        "    local a, b, r ;",
+        "    r := 0 ;",
+        "    for a from 1 to n do",
+        "    for b from 1 to n do",
+        "        if igcd(a, b) = 1 then",
+        "            r := r+(n+1-a)*(n+1-b);",
+        "        end if;",
+        "    end do:",
+        "    end do:",
+        "    r ;",
+        "end proc:",
+        "a := n-> z(n)+n^2+2*n;",
+        "[seq(a(n), n=1..50)];"
+    ],
+    "mathematica": [
+        "z[n_] := Sum[(n - i + 1)(n - j + 1) Boole[GCD[i, j] == 1], {i, n}, {j, n}];",
+        "a[0] = 0;",
+        "a[n_] := z[n] + n^2 + 2n;",
+        "a /@ Range[0, 40] (* _Jean-Fran\u00e7ois Alcover_, Mar 24 2020 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import totient",
+        "def A306302(n): return 2*n*(n+1) + sum(totient(i)*(n+1-i)*(2*n+2-i) for i in range(2,n+1)) # _Chai Wah Wu_, Aug 16 2021"
+    ],
+    "xref": [
+        "See A331755 for the number of vertices, A331757 for the number of edges.",
+        "Cf. A007678, A108914, A114043, A324042, A324043, A333286, A333287, A333288, A334694.",
+        "A column of A288187. See A288177 for additional references.",
+        "Also a column of A331452 and A356790.",
+        "The following eight sequences are all essentially the same. The simplest is A115004(n), which we denote by z(n). Then A088658(n) = 4*z(n-1); A114043(n) = 2*z(n-1)+2*n^2-2*n+1; A114146(n) = 2*A114043(n); A115005(n) = z(n-1)+n*(n-1); A141255(n) = 2*z(n-1)+2*n*(n-1); A290131(n) = z(n-1)+(n-1)^2; A306302(n) = z(n)+n^2+2*n. - _N. J. A. Sloane_, Feb 04 2020"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paarth Jain_, Feb 05 2019",
+    "ext": [
+        "a(6)-a(20) from _Robert Israel_, Feb 07 2019",
+        "Edited and more terms added by _Max Alekseyev_, Apr 10 2019",
+        "a(0) added by _N. J. A. Sloane_, Feb 04 2020"
+    ],
+    "references": 46,
+    "revision": 88,
+    "time": "2022-09-14T10:42:23-04:00",
+    "created": "2019-02-07T13:00:12-05:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 318206,
+    "data": "1,2,4,8,11,13,16,19,22,23,26,29,32,37,38,41,43,44,46,47,52,53,58,59,61,64,67,71,74,76,79,82,83,86,88,89,92,94,97,101,103,104,106,109,113,116,118,121,122,128,131,134,137,139,142,143,148,149,151,152,157",
+    "name": "Numbers having no divisor d > 1 that is a binary palindrome (i.e., an element of A006995).",
+    "example": [
+        "The nonunit divisors of 22 are 2,11,22 and none of these are binary palindromes."
+    ],
+    "maple": [
+        "dmax:= 10: # to get all terms with at most dmax binary digits",
+        "N:= 2^dmax-1:",
+        "revdigs:= proc(n)",
+        "  local L, Ln, i;",
+        "  L:= convert(n, base, 2);",
+        "  Ln:= nops(L);",
+        "  add(L[i]*2^(Ln-i), i=1..Ln);",
+        "end proc:",
+        "P:= {}:",
+        "for d from 2 to dmax do",
+        "  if d::even then",
+        "    P:= P union {seq(2^(d/2)*x + revdigs(x), x=2^(d/2-1)..2^(d/2)-1)}",
+        "  else",
+        "    m:= (d-1)/2;",
+        "    B:={seq(2^(m+1)*x + revdigs(x), x=2^(m-1)..2^m-1)};",
+        "    P:= P union B union map(`+`, B, 2^m)",
+        "  fi",
+        "od:",
+        "L:= Vector(N,1):",
+        "for t in P  do",
+        "  L[[seq(k,k=t..N,t)]]:= 0",
+        "od:",
+        "select(t -> L[t]=1, [$1..N]); # _Robert Israel_, Aug 21 2018"
+    ],
+    "program": [
+        "(PARI) isok(n) = #select(x->((binary(x) == Vecrev(binary(x))) && (x>1)), divisors(n)) == 0; \\\\ _Michel Marcus_, Aug 21 2018"
+    ],
+    "xref": [
+        "Cf. A006995."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Jeffrey Shallit_, Aug 21 2018",
+    "references": 0,
+    "revision": 15,
+    "time": "2018-08-22T01:54:27-04:00",
+    "created": "2018-08-22T01:54:27-04:00"
+}

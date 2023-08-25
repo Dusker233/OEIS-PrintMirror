@@ -1,0 +1,73 @@
+{
+    "number": 350952,
+    "data": "0,1,2,11,38,311,2254,36079,549790,17593311,549687102,35179974591,2225029922430,284803830071167,36240869367020798,9277662557957324543,2368116566113212692990,1212475681849964898811391,619877748107024946567312382,634754814061593545284927880191",
+    "name": "The smallest number whose binary expansion has exactly n distinct runs.",
+    "comment": [
+        "Positions of first appearances in A297770 (with offset 0).",
+        "The binary expansion of terms for n > 0 starts with 1, then floor(n/2) 0's, then alternates runs of increasing numbers of 1's, and decreasing numbers of 0's; see Python code.  Thus, for n even, terms have n*(n/2+1)/2 binary digits, and for n odd, ((n+1) + (n-1)*((n-1)/2+1))/2 binary digits. - _Michael S. Branicky_, Feb 14 2022"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A350952/b350952.txt\">Table of n, a(n) for n = 0..114</a>",
+        "Mathematics Stack Exchange, <a href=\"https://math.stackexchange.com/q/87559\">What is a sequence run? (answered 2011-12-01)</a>"
+    ],
+    "example": [
+        "The terms and their binary expansions begin:",
+        "       0:                   ()",
+        "       1:                    1",
+        "       2:                   10",
+        "      11:                 1011",
+        "      38:               100110",
+        "     311:            100110111",
+        "    2254:         100011001110",
+        "   36079:     1000110011101111",
+        "  549790: 10000110001110011110",
+        "For example, 311 has binary expansion 100110111 with 5 distinct runs: 1, 00, 11, 0, 111."
+    ],
+    "mathematica": [
+        "q=Table[Length[Union[Split[If[n==0,{},IntegerDigits[n,2]]]]],{n,0,1000}];Table[Position[q,i][[1,1]]-1,{i,Union[q]}]"
+    ],
+    "program": [
+        "(Python)",
+        "def a(n): # returns term by construction",
+        "    if n == 0: return 0",
+        "    q, r = divmod(n, 2)",
+        "    if r == 0:",
+        "        s = \"\".join(\"1\"*i + \"0\"*(q-i+1) for i in range(1, q+1))",
+        "        assert len(s) == n*(n//2+1)//2",
+        "    else:",
+        "        s = \"1\" + \"\".join(\"0\"*(q-i+2) + \"1\"*i for i in range(2, q+2))",
+        "        assert len(s) == ((n+1) + (n-1)*((n-1)//2+1))//2",
+        "    return int(s, 2)",
+        "print([a(n) for n in range(20)]) # _Michael S. Branicky_, Feb 14 2022",
+        "(PARI) a(n)={my(t=0); for(k=1, (n+1)\\2, t=((t<<k)+(2^k-1))<<(n\\2+1-k)); t} \\\\ _Andrew Howroyd_, Feb 15 2022"
+    ],
+    "xref": [
+        "Runs in binary expansion are counted by A005811, distinct A297770.",
+        "The version for run-lengths instead of runs is A165933, for A165413.",
+        "Subset of A175413 (binary expansion has distinct runs), for lengths A044813.",
+        "The version for standard compositions is A351015.",
+        "A000120 counts binary weight.",
+        "A011782 counts integer compositions.",
+        "A242882 counts compositions with distinct multiplicities.",
+        "A318928 gives runs-resistance of binary expansion.",
+        "A334028 counts distinct parts in standard compositions.",
+        "A351014 counts distinct runs in standard compositions.",
+        "Counting words with all distinct runs:",
+        "- A351013 = compositions, for run-lengths A329739, ranked by A351290.",
+        "- A351016 = binary words, for run-lengths A351017.",
+        "- A351018 = binary expansions, for run-lengths A032020.",
+        "- A351200 = patterns, for run-lengths A351292.",
+        "- A351202 = permutations of prime factors.",
+        "Cf. A003242, A070939, A085207, A098859, A233564, A325545, A328592, A333489, A351203, A351291."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Feb 14 2022",
+    "ext": [
+        "a(9)-a(19) from _Michael S. Branicky_, Feb 14 2022"
+    ],
+    "references": 14,
+    "revision": 15,
+    "time": "2022-02-22T10:18:06-05:00",
+    "created": "2022-02-15T21:58:55-05:00"
+}

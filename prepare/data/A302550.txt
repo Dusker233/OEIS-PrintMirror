@@ -1,0 +1,41 @@
+{
+    "number": 302550,
+    "data": "1,3,6,11,17,36,50,94,148,254,386,671,1005,1651,2543,4034,6112,9599,14410,22178,33189,50196,74485,111591,164149,242967,355317,520817,755895,1099219,1584520,2285960,3275667,4691845,6682765,9512213,13471240,19059192,26851931,37778822",
+    "name": "Expansion of Sum_{k>=1} (-1 + Product_{j>=1} (1 + x^(k*j))^j).",
+    "comment": [
+        "Inverse Moebius transform of A026007."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=1} A026007(k)*x^k/(1 - x^k).",
+        "a(n) = Sum_{d|n} A026007(d)."
+    ],
+    "maple": [
+        "with(numtheory):",
+        "b:= proc(n) option remember;",
+        "      add((-1)^(n/d+1)*d^2, d=divisors(n))",
+        "    end:",
+        "g:= proc(n) option remember;",
+        "      `if`(n=0, 1, add(b(k)*g(n-k), k=1..n)/n)",
+        "    end:",
+        "a:= n-> add(g(d), d=divisors(n)):",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, Jun 21 2018"
+    ],
+    "mathematica": [
+        "nmax = 40; Rest[CoefficientList[Series[Sum[-1 + Product[(1 + x^(k j))^j, {j, 1, nmax}], {k, 1, nmax}], {x, 0, nmax}], x]]",
+        "b[n_] := b[n] = SeriesCoefficient[Product[(1 + x^k)^k , {k, 1, n}], {x, 0, n}]; a[n_] := a[n] = SeriesCoefficient[Sum[b[k] x^k/(1 - x^k), {k, 1, n}], {x, 0, n}]; Table[a[n], {n, 40}]",
+        "b[0] = 1; b[n_] := b[n] = Sum[Sum[(-1)^(j/d + 1) d^2, {d, Divisors[j]}] b[n - j], {j, n}]/n; a[n_] := a[n] = Sum[b[d], {d, Divisors[n]}]; Table[a[n], {n, 40}]"
+    ],
+    "xref": [
+        "Cf. A026007, A047966, A047968, A300276, A302549."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Jun 20 2018",
+    "references": 2,
+    "revision": 8,
+    "time": "2018-06-21T20:02:00-04:00",
+    "created": "2018-06-21T20:02:00-04:00"
+}

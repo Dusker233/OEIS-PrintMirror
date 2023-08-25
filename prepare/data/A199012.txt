@@ -1,0 +1,41 @@
+{
+    "number": 199012,
+    "data": "0,3,48,1308,96080,23114160,18522702240,50214057399744,469006445678383872,15356719437883766115840,1788760016178073736115859200,750205198434476437912637004278784,1144188684031608529784893493874665232384,6398724751986384956446081096594171272300830720",
+    "name": "The total number of edges in all unlabeled directed graphs (no self loops allowed) on n nodes.",
+    "formula": [
+        "a(n) = A000273(n) * n(n-1)/2.",
+        "a(n) = Sum_{k=1..n*(n-1)} k*A052283(n,k). - _Andrew Howroyd_, Nov 05 2017"
+    ],
+    "maple": [
+        "b:= proc(n, i, l) `if`(n=0 or i=1, 1/n!*2^((p-> add(p[j]-1+add(",
+        "      igcd(p[k], p[j]), k=1..j-1)*2, j=1..nops(p)))([l[], 1$n])),",
+        "      add(b(n-i*j, i-1, [l[], i$j])/j!/i^j, j=0..n/i))",
+        "    end:",
+        "a:= n-> b(n$2, [])*n*(n-1)/2:",
+        "seq(a(n), n=1..16);  # _Alois P. Heinz_, Sep 04 2019"
+    ],
+    "mathematica": [
+        "Table[D[GraphPolynomial[n,x,Directed],x]/.x->1, {n,1,15}]",
+        "(* Second program: *)",
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_, t_] := Product[g = GCD[v[[i]], v[[j]]]; t[v[[i]]*v[[j]]/g]^(2*g), {i, 2, Length[v]}, {j, 1, i - 1}] * Product[ t[v[[i]]]^(v[[i]] - 1), {i, 1, Length[v]}]",
+        "a[n_] := (s = 0; Do[s += permcount[p]*(D[edges[p, 1 + x^# &], x] /. x -> 1), {p, IntegerPartitions[n]}]; s/n!);",
+        "Array[a, 15] (* _Jean-Fran\u00e7ois Alcover_, Jul 08 2018, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1,s=0,k=0,t); for(i=1,#v,t=v[i]; k=if(i>1&&t==v[i-1],k+1,1); m*=t*k;s+=t); s!/m}",
+        "edges(v,t) = {prod(i=2, #v, prod(j=1, i-1, my(g=gcd(v[i],v[j])); t(v[i]*v[j]/g)^(2*g))) * prod(i=1, #v, t(v[i])^(v[i]-1))}",
+        "a(n) = {my(s=0); forpart(p=n, s+=permcount(p)*subst(deriv(edges(p,i->1+x^i)),x,1)); s/n!} \\\\ _Andrew Howroyd_, Nov 05 2017"
+    ],
+    "xref": [
+        "Cf. A000273, A052283, A086314."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Geoffrey Critzer_, Nov 01 2011",
+    "references": 0,
+    "revision": 17,
+    "time": "2019-09-04T21:18:57-04:00",
+    "created": "2011-11-01T21:53:13-04:00"
+}

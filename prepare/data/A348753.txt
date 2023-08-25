@@ -1,0 +1,35 @@
+{
+    "number": 348753,
+    "data": "5,7,11,13,17,19,23,29,31,35,37,41,43,47,53,55,59,61,65,67,71,73,77,79,83,85,89,91,95,97,101,103,107,109,113,115,119,125,127,131,133,137,139,143,145,149,151,155,157,161,163,167,173,179,181,185,187,191,193,197,199,203,205,209,211,215,217,221,223,227",
+    "name": "Numbers k congruent to 1 or 5 mod 6, for which A064989(A064989(sigma(k))) < A064989(A064989(k)), where A064989 shifts the prime factorization one step towards lower primes, and sigma is the sum of divisors function.",
+    "comment": [
+        "Sequence A003961(A003961(A348751(n))), n>=1, sorted into ascending order.",
+        "a(38) = 125 is the first term not in A276378.",
+        "Not a subsequence of A348748. The first terms that occur here but not there are: 529, 605, 2825, 6425, 7025, 8425, 10825, 15425, 16025, 16325, 16925, 17689, ...",
+        "The first squares in this sequence are: 361, 529, 961, 1369, 1849, 2209, 2809, 3721, etc., see A348935 for their square roots.",
+        "Of the natural numbers < 2^20, 347712 are in this sequence and only 1812 in A348754."
+    ],
+    "link": [
+        "<a href=\"/index/Pri#prime_indices\">Index entries for sequences computed from indices in prime factorization</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "mathematica": [
+        "f[2, e_] := 1; f[p_, e_] := NextPrime[p, -1]^e; s[1] = 1; s[n_] := Times @@ f @@@ FactorInteger[n]; Select[Range[250], MemberQ[{1, 5}, Mod[#, 6]] && s[s[DivisorSigma[1, #]]] < s[s[#]] &] (* _Amiram Eldar_, Nov 04 2021 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A064989(n) = {my(f); f = factor(n); if((n>1 && f[1,1]==2), f[1,2] = 0); for (i=1, #f~, f[i,1] = precprime(f[i,1]-1)); factorback(f)};",
+        "isA348753(n) = ((n%2)&&(n%3)&&(A064989(A064989(sigma(n))) < A064989(A064989(n))));"
+    ],
+    "xref": [
+        "Cf. A003961, A007310, A064989, A276378, A348750, A348751, A348754.",
+        "Cf. also A348748, A348931, A348935."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Nov 04 2021",
+    "references": 6,
+    "revision": 18,
+    "time": "2021-11-04T20:46:43-04:00",
+    "created": "2021-11-04T20:46:43-04:00"
+}

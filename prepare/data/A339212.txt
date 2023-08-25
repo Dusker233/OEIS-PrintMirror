@@ -1,0 +1,31 @@
+{
+    "number": 339212,
+    "data": "1,4,8,10,14,17,19,28,31,33,39,41,50,53,55,59,63,66,68,74,76,85,88,90,97,106,109,111,115,119,122,124,130,132,141,144,146,153,156,158,164,166,175,178,180,187,196,199,201,205,209,212,214,220,222,231,234,236",
+    "name": "Dual-Zeckendorf self numbers: numbers not of the form k + A112310(k).",
+    "comment": [
+        "Analogous to self numbers (A003052) using the dual Zeckendorf representation (A104326) instead of decimal expansion."
+    ],
+    "reference": [
+        "J\u00f3zsef S\u00e1ndor and Borislav Crstici, Handbook of Number theory II, Kluwer Academic Publishers, 2004, Chapter 4, p. 384-386."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A339212/b339212.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "J. L. Brown, Jr., <a href=\"http://www.fq.math.ca/Scanned/3-1/brown.pdf\">A new characterization of the Fibonacci numbers</a>, Fibonacci Quarterly, Vol. 3, No. 1 (1965) pp. 1-8.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SelfNumber.html\">Self Number</a>.",
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Self_number\">Self number</a>.",
+        "<a href=\"/index/Coi#Colombian\">Index entries for Colombian or self numbers and related sequences</a>"
+    ],
+    "mathematica": [
+        "fibTerms[n_] := Module[{k = Ceiling[Log[GoldenRatio, n*Sqrt[5]]], t = n, fr = {}}, While[k > 1, If[t >= Fibonacci[k], AppendTo[fr, 1]; t = t - Fibonacci[k], AppendTo[fr, 0]]; k--]; fr]; dzs[n_] := n + Module[{v = fibTerms[n]}, nv = Length[v]; i = 1; While[i <= nv - 2, If[v[[i]] == 1 && v[[i + 1]] == 0 && v[[i + 2]] == 0, v[[i]] = 0; v[[i + 1]] = 1; v[[i + 2]] = 1; If[i > 2, i -= 3]]; i++]; i = Position[v, _?(# > 0 &)]; If[i == {}, 0, Total[v[[i[[1, 1]] ;; -1]]]]]; m = 240; Complement[Range[m], Array[dzs, m]]"
+    ],
+    "xref": [
+        "Cf. A003052, A010061, A010064, A010067, A010070, A104326, A112310, A328212, A339211, A339213, A339214, A339215."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Nov 27 2020",
+    "references": 8,
+    "revision": 8,
+    "time": "2020-11-29T02:10:08-05:00",
+    "created": "2020-11-28T09:10:59-05:00"
+}

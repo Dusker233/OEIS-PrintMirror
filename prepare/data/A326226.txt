@@ -1,0 +1,38 @@
+{
+    "number": 326226,
+    "data": "0,2,3,24,858",
+    "name": "Number of unlabeled n-vertex Hamiltonian digraphs (with loops).",
+    "comment": [
+        "A digraph is Hamiltonian if it contains a directed cycle passing through every vertex exactly once."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Hamiltonian_path\">Hamiltonian path</a>",
+        "Gus Wiseman, <a href=\"/A326226/a326226.png\">Non-isomorphic representatives of the a(3) = 24 Hamiltonian digraphs</a>"
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(2) = 3 digraph edge-sets:",
+        "  {12,21}",
+        "  {11,12,21}",
+        "  {11,12,21,22}"
+    ],
+    "mathematica": [
+        "dinorm[m_]:=If[m=={},{},If[Union@@m!=Range[Max@@Flatten[m]],dinorm[m/. Apply[Rule,Table[{(Union@@m)[[i]],i},{i,Length[Union@@m]}],{1}]],First[Sort[dinorm[m,1]]]]];",
+        "dinorm[m_,aft_]:=If[Length[Union@@m]<=aft,{m},With[{mx=Table[Count[m,i,{2}],{i,Select[Union@@m,#1>=aft&]}]},Union@@(dinorm[#1,aft+1]&)/@Union[Table[Map[Sort,m/. {par+aft-1->aft,aft->par+aft-1},{0}],{par,First/@Position[mx,Max[mx]]}]]]];",
+        "Table[Length[Select[Union[dinorm/@Subsets[Tuples[Range[n],2]]],FindHamiltonianCycle[Graph[Range[n],DirectedEdge@@@#]]!={}&]],{n,0,4}] (* Mathematica 8.0+. Warning: Using HamiltonianGraphQ instead of FindHamiltonianCycle returns a(4) = 867 which is incorrect *)"
+    ],
+    "xref": [
+        "The labeled case is A326204.",
+        "The case without loops is A326225.",
+        "The undirected case is A003216 (without loops) or A326215 (with loops).",
+        "Unlabeled non-Hamiltonian digraphs are A326223.",
+        "Unlabeled digraphs with a Hamiltonian path are A326221.",
+        "Cf. A000595, A002416, A003087, A057864, A246446, A326208."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Jun 14 2019",
+    "references": 10,
+    "revision": 14,
+    "time": "2019-06-17T01:36:36-04:00",
+    "created": "2019-06-16T22:34:52-04:00"
+}

@@ -1,0 +1,55 @@
+{
+    "number": 98,
+    "id": "M1373 N0533",
+    "data": "1,2,5,10,19,33,57,92,147,227,345,512,752,1083,1545,2174,3031,4179,5719,7752,10438,13946,18519,24428,32051,41805,54265,70079,90102,115318,147005,186626,236064,297492,373645,467707",
+    "name": "Number of partitions of n if there are two kinds of 1, two kinds of 2 and two kinds of 3.",
+    "comment": [
+        "Also number of partitions of 2*n+1 with exactly 3 odd parts (offset 1). - _Vladeta Jovovic_, Jan 12 2005",
+        "Convolution of A000041 and A001399. - _Vaclav Kotesovec_, Aug 18 2015",
+        "Also the sum of binomial(D(p),3) over partitions p of n+6, where D(p) is the number of different sizes of parts in p. - _Emily Anible_, May 13 2018"
+    ],
+    "reference": [
+        "H. Gupta et al., Tables of Partitions. Royal Society Mathematical Tables, Vol. 4, Cambridge Univ. Press, 1958, p. 90.",
+        "J. Riordan, Combinatorial Identities, Wiley, 1968, p. 199.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A000098/b000098.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "\u00c1lvaro Guti\u00e9rrez and Mercedes H. Rosas, <a href=\"https://arxiv.org/abs/2201.00240\">Partial symmetries of iterated plethysms</a>, arXiv:2201.00240 [math.CO], 2022.",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "Euler transform of 2 2 2 1 1 1 1...",
+        "G.f.: 1/((1-x)(1-x^2)(1-x^3)*Product_{k>=1} (1-x^k)).",
+        "a(n) = Sum_{j=0..floor(n/3)} A000097(n-3*j), n >= 0.",
+        "a(n) ~ sqrt(n) * exp(Pi*sqrt(2*n/3)) / (2*sqrt(2)*Pi^3). - _Vaclav Kotesovec_, Aug 18 2015"
+    ],
+    "example": [
+        "a(3)=10 because we have 3, 3', 2+1, 2+1', 2'+1, 2'+1', 1+1+1, 1+1+1', 1+1'+1' and 1'+1'+1'."
+    ],
+    "mathematica": [
+        "CoefficientList[1/((1-x)*(1-x^2)*(1-x^3)*QPochhammer[x]) + O[x]^40, x] (* _Jean-Fran\u00e7ois Alcover_, Feb 04 2016 *)",
+        "Table[Length@IntegerPartitions[n, All, Range@n~Join~Range@3], {n,0,35}] (* _Robert Price_, Jul 28 2020 *)",
+        "T[n_, 0] := PartitionsP[n];",
+        "T[n_, m_] /; (n >= m (m + 1)/2) := T[n, m] = T[n - m, m - 1] + T[n - m, m];",
+        "T[_, _] = 0;",
+        "a[n_] := T[n + 6, 3];",
+        "Table[a[n], {n, 0, 60}] (* _Jean-Fran\u00e7ois Alcover_, May 30 2021 *)"
+    ],
+    "xref": [
+        "Cf. A000070, A008951, A000097, A000710.",
+        "Cf. A000041, A001399.",
+        "Fourth column of Riordan triangle A008951 and of triangle A103923."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Edited by _Emeric Deutsch_, Mar 23 2005"
+    ],
+    "references": 12,
+    "revision": 51,
+    "time": "2022-02-16T05:32:28-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

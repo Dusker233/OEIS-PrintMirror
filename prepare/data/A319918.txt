@@ -1,0 +1,40 @@
+{
+    "number": 319918,
+    "data": "1,1,4,11,32,84,230,597,1567,4020,10286,25994,65387,163065,404617,997687,2448220,5977334,14530835,35173496,84814982,203760809,487845377,1164191563,2769721073,6570218773,15542642042,36671354125,86306246887,202637312099,474684979292,1109539437382",
+    "name": "Expansion of Product_{k>=1} 1/(1 - x^k)^(2^k-1).",
+    "comment": [
+        "Convolution of A010815 and A034899.",
+        "Euler transform of A000225."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A319918/b319918.txt\">Table of n, a(n) for n = 0..3171</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "G.f.: exp(Sum_{k>=1} x^k/(k*(1 - x^k)*(1 - 2*x^k))).",
+        "a(n) ~ A247003^2 * exp(2*sqrt(n) - 1/2) * 2^(n-1) / (A065446 * sqrt(Pi) * n^(3/4)). - _Vaclav Kotesovec_, Sep 15 2021"
+    ],
+    "maple": [
+        "a:=series(mul(1/(1-x^k)^(2^k-1),k=1..100),x=0,32): seq(coeff(a,x,n),n=0..31); # _Paolo P. Lava_, Apr 02 2019",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n=0, 1, add(a(n-j)*add(",
+        "       d*(2^d-1), d=numtheory[divisors](j)), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, Aug 13 2021"
+    ],
+    "mathematica": [
+        "nmax = 31; CoefficientList[Series[Product[1/(1 - x^k)^(2^k - 1), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 31; CoefficientList[Series[Exp[Sum[x^k/(k (1 - x^k) (1 - 2 x^k)), {k, 1, nmax}]], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[d (2^d - 1), {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 31}]"
+    ],
+    "xref": [
+        "Cf. A000225, A007070, A010815, A034691, A034899, A319919."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Oct 01 2018",
+    "references": 5,
+    "revision": 12,
+    "time": "2021-09-15T05:22:42-04:00",
+    "created": "2018-10-01T21:14:41-04:00"
+}

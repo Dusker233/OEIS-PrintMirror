@@ -1,0 +1,67 @@
+{
+    "number": 325107,
+    "data": "1,2,4,5,10,13,18,19,38,52,77,83,133,147,166,167,334,482,764,848,1465,1680,1987,2007,3699,4413,5488,5572,7264,7412,7579,7580,15160,22573,37251,42824,77387,92863,116453,118461,227502,286775,382573,392246,555661,574113",
+    "name": "Number of subsets of {1...n} with no binary containments.",
+    "comment": [
+        "A pair of positive integers is a binary containment if the positions of 1's in the reversed binary expansion of the first are a subset of the positions of 1's in the reversed binary expansion of the second."
+    ],
+    "link": [
+        "Fausto A. C. Cariboni, <a href=\"/A325107/b325107.txt\">Table of n, a(n) for n = 0..129</a>, (terms up to a(71) from Alois P. Heinz)"
+    ],
+    "formula": [
+        "a(2^n - 1) = A014466(n)."
+    ],
+    "example": [
+        "The a(0) = 1 through a(6) = 18 subsets:",
+        "  {}  {}   {}     {}     {}       {}       {}",
+        "      {1}  {1}    {1}    {1}      {1}      {1}",
+        "           {2}    {2}    {2}      {2}      {2}",
+        "           {1,2}  {3}    {3}      {3}      {3}",
+        "                  {1,2}  {4}      {4}      {4}",
+        "                         {1,2}    {5}      {5}",
+        "                         {1,4}    {1,2}    {6}",
+        "                         {2,4}    {1,4}    {1,2}",
+        "                         {3,4}    {2,4}    {1,4}",
+        "                         {1,2,4}  {2,5}    {1,6}",
+        "                                  {3,4}    {2,4}",
+        "                                  {3,5}    {2,5}",
+        "                                  {1,2,4}  {3,4}",
+        "                                           {3,5}",
+        "                                           {3,6}",
+        "                                           {5,6}",
+        "                                           {1,2,4}",
+        "                                           {3,5,6}"
+    ],
+    "maple": [
+        "c:= proc() option remember; local i, x, y;",
+        "      x, y:= map(n-> Bits[Split](n), [args])[];",
+        "      for i to nops(x) do",
+        "        if x[i]=1 and y[i]=0 then return false fi",
+        "      od; true",
+        "    end:",
+        "b:= proc(n, s) option remember; `if`(n=0, 1, b(n-1, s)+",
+        "     `if`(ormap(i-> c(n, i), s), 0, b(n-1, s union {n})))",
+        "    end:",
+        "a:= n-> b(n, {}):",
+        "seq(a(n), n=0..34);  # _Alois P. Heinz_, Mar 28 2019"
+    ],
+    "mathematica": [
+        "binpos[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "stableQ[u_,Q_]:=!Apply[Or,Outer[#1=!=#2&&Q[#1,#2]&,u,u,1],{0,1}];",
+        "Table[Length[Select[Subsets[Range[n]],stableQ[#,SubsetQ[binpos[#1],binpos[#2]]&]&]],{n,0,13}]"
+    ],
+    "xref": [
+        "Cf. A006126, A014466, A019565, A267610.",
+        "Cf. A325095, A325096, A325101, A325105, A325106, A325108, A325109, A325110."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Mar 28 2019",
+    "ext": [
+        "a(16)-a(45) from _Alois P. Heinz_, Mar 28 2019"
+    ],
+    "references": 8,
+    "revision": 28,
+    "time": "2020-12-12T04:30:36-05:00",
+    "created": "2019-03-28T17:35:35-04:00"
+}

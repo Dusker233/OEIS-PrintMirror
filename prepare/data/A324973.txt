@@ -1,0 +1,42 @@
+{
+    "number": 324973,
+    "data": "6,15,66,70,91,190,231,435,561,703,715,782,861,946,1045,1105,1426,1653,1729,1770,1785,1794,1891,2035,2278,2465,2701,2821,2926,3059,3290,3367,3486,3655,4371,4641,4830,5005,5083,5151,5365,5551,5565,5995,6441,6545,6601",
+    "name": "Special polygonal numbers.",
+    "comment": [
+        "Squarefree polygonal numbers P(r,p) = (p^2*(r-2)-p*(r-4))/2 whose greatest prime factor is p >= 3, and whose rank (or order) is r >= 3 (see A324974).",
+        "The Carmichael numbers A002997 and primary Carmichael numbers A324316 are subsequences. See Kellner and Sondow 2019."
+    ],
+    "link": [
+        "Bernd C. Kellner and Jonathan Sondow, <a href=\"http://math.colgate.edu/~integers/v52/v52.pdf\">On Carmichael and polygonal numbers, Bernoulli polynomials, and sums of base-p digits</a>, Integers 21 (2021), #A52, 21 pp.; arXiv:<a href=\"https://arxiv.org/abs/1902.10672\">1902.10672</a> [math.NT], 2019.",
+        "Bernd C. Kellner, <a href=\"http://math.colgate.edu/~integers/w38/w38.pdf\">On primary Carmichael numbers</a>, Integers 22 (2022), #A38, 39 pp.; arXiv:<a href=\"https://arxiv.org/abs/1902.11283\">1902.11283</a> [math.NT], 2019.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Polygonal_number\">Polygonal number</a>"
+    ],
+    "example": [
+        "P(3,5) = 15 is squarefree, and its greatest prime factor is 5, so 15 is a member.",
+        "More generally, if p is an odd prime and P(3,p) is squarefree, then P(3,p) is a member, since P(3,p) = (p^2+p)/2 = p*(p+1)/2, so p is its greatest prime factor.",
+        "CAUTION: P(6,7) = 91 = 7*13 is a member even though 7 is NOT its greatest prime factor, as P(6,7) = P(3,13) and 13 is its greatest prime factor."
+    ],
+    "mathematica": [
+        "GPF[n_] := Last[Select[Divisors[n], PrimeQ]];",
+        "T = Select[Flatten[Table[{p, (p^2*(r - 2) - p*(r - 4))/2}, {p, 3, 150}, {r, 3, 100}], 1], SquareFreeQ[Last[#]] && First[#] == GPF[Last[#]] &];",
+        "Take[Union[Table[Last[t], {t, T}]], 47]"
+    ],
+    "program": [
+        "(PARI) is(k) = if(issquarefree(k) && k>1, my(p=vecmax(factor(k)[, 1]), r); p>2 && (r=2*(k/p-1)/(p-1)) && denominator(r)==1, 0); \\\\ _Jinyuan Wang_, Feb 18 2021"
+    ],
+    "xref": [
+        "Subsequence of A324972 = intersection of A005117 and A090466.",
+        "A002997, A324316, A324319 and A324320 are subsequences.",
+        "Cf. A324974, A324975, A324976."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernd C. Kellner_ and _Jonathan Sondow_, Mar 21 2019",
+    "ext": [
+        "Several missing terms inserted by _Jinyuan Wang_, Feb 18 2021"
+    ],
+    "references": 8,
+    "revision": 49,
+    "time": "2022-06-30T08:37:39-04:00",
+    "created": "2019-03-25T04:34:19-04:00"
+}

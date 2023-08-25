@@ -1,0 +1,52 @@
+{
+    "number": 161001,
+    "data": "1,3,4,6,7,15,24,28,31,35,39,49,55,57,59,63,112,120,127,255,391,399,451,463,480,483,487,496,511,536,540,560,572,624,632,776,782,784,798,880,888,900,902,912,926,944,956,964,966,968,974,984,988,1023,1984,2016",
+    "name": "Those positive integers n that when read in binary contains runs of 0's and 1's being of distinct lengths, the list of lengths forming a permutation of some number of consecutive positive integers.",
+    "comment": [
+        "Think of binary n as a string S of 0's and 1's. By a \"run\" of 0's or 1's, it is meant either a substring all of contiguous 0's, each run bounded by 1's or the edge of S; or a substring all of contiguous 1's, each run bounded by 0's or the edge of S."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A161001/b161001.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "451 in binary is 111000011. This contains a run of three 1's, followed by a run of four 0's, followed by a run of two 1's. Since (3,4,2) is a permutation of some number of consecutive positive integers (2,3,4), then 451 is in the sequence."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import groupby",
+        "def ok(n):",
+        "  runlengths = [len(list(g)) for k, g in groupby(bin(n)[2:])]",
+        "  minrl = min(runlengths)",
+        "  return sorted(runlengths) == list(range(minrl, minrl+len(runlengths)))",
+        "print([n for n in range(1, 2021) if ok(n)]) # _Michael S. Branicky_, Jan 04 2021",
+        "(Python) # alternate that directly generates terms",
+        "from itertools import permutations",
+        "def runlengths(k, r): # all terms with runlengths a permutation of k, ..., r",
+        "  c = ['1', '0']",
+        "  return sorted([int(\"\".join([c[j%2]*p[j] for j in range(r-k+1)]), 2)",
+        "    for p in permutations(range(k, r+1))])",
+        "def aupto(nn):",
+        "  digits, k, r, out = 1, 1, 1, []",
+        "  while len(out) < nn:",
+        "    for r in range(1, digits + 1):",
+        "      for k in range(1, r + 1):",
+        "        if sum(range(k, r+1)) == digits:",
+        "          out += runlengths(k, r)",
+        "    digits += 1",
+        "  return sorted(set(out))[:nn]",
+        "print(aupto(56)) # _Michael S. Branicky_, Jan 04 2021"
+    ],
+    "xref": [
+        "Cf. A161000."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Leroy Quet_, Jun 01 2009",
+    "ext": [
+        "Extended by _Ray Chandler_, Jun 13 2009"
+    ],
+    "references": 3,
+    "revision": 12,
+    "time": "2021-01-05T03:30:02-05:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

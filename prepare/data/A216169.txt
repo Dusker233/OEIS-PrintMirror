@@ -1,0 +1,42 @@
+{
+    "number": 216169,
+    "data": "49,119,121,133,161,169,203,253,299,301,319,323,403,407,473,493,511,539,551,581,611,667,679,713,869,901,913,943,1007,1067,1079,1099,1211,1273,1691,1729,1799,1909,2021,2047,2101,2117,2359,2407,2533,2717,2759,2899",
+    "name": "Composite numbers > 9 which yield a prime whenever a 0 is inserted between any two digits.",
+    "link": [
+        "Paolo P. Lava and Giovanni Resta, <a href=\"/A216169/b216169.txt\">Table of n, a(n) for n = 1..10000</a> (first 1500 terms from Paolo P. Lava)"
+    ],
+    "example": [
+        "2359 is not prime but 23509, 23059 and 20359 are all primes."
+    ],
+    "maple": [
+        "A216169:=proc(q,x)",
+        "local a,b,c,i,n,ok;",
+        "for n from 10 to q do",
+        "if not isprime(n) then",
+        "  a:=n; b:=0; while a>0 do b:=b+1; a:=trunc(a/10); od; a:=n; ok:=1;",
+        "  for i from 1 to b-1 do c:=a+9*10^i*trunc(a/10^i)+10^i*x;",
+        "    if not isprime(c) then ok:=0; break; fi; od;",
+        "  if ok=1 then print(n); fi;",
+        "fi; od; end: A216169(1000,0);"
+    ],
+    "mathematica": [
+        "Select[Range[10,3000],CompositeQ[#]&&AllTrue[Table[FromDigits[ Insert[ IntegerDigits[ #],0,n]],{n,2,IntegerLength[#]}],PrimeQ]&] (* The program uses the AllTrue function from Mathematica version 10 *) (* _Harvey P. Dale_, Mar 13 2018 *)"
+    ],
+    "program": [
+        "(PARI) is(n, L=logint(n+!n, 10)+1, P)={!isprime(n) && !for(k=1, L-1, isprime([10*P=10^(L-k),1]*divrem(n, P))||return) && n>9} \\\\ _M. F. Hasler_, May 10 2018"
+    ],
+    "xref": [
+        "Subset of composite numbers in A164329. - _M. F. Hasler_, May 10 2018",
+        "Cf. A068673, A068674, A068677, A068679, A069246, A215417, A215419-A215421, A216165-A216168."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Sep 03 2012",
+    "ext": [
+        "Name edited by _M. F. Hasler_, May 10 2018"
+    ],
+    "references": 13,
+    "revision": 24,
+    "time": "2018-05-17T05:33:58-04:00",
+    "created": "2012-09-03T11:40:08-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 343607,
+    "data": "0,0,1,2,2,2,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+    "name": "Minimal number of colors required for an edge-coloring of the complete graph K_n with no monochromatic triangle.",
+    "comment": [
+        "The complete graph K_n has n(n-1)/2 edges (i,j), 1 <= i < j <= n, connecting the n vertices to each other. A triangle is a subgraph of edges {(i,j), (i,k), (j,k)} with i < j < k; monochromatic means that all edges have the same color.",
+        "The edge-colorings are obviously not required to be proper, i.e., adjacent edges may have the same color.",
+        "Corollary 3 of Cummings et al. (2013) gives a formula for an upper bound on M_3(K_3,n), the minimal number of monochromatic triangles in a 3-colored K_n, which is positive iff n >= 11 (which, if tight, would mean a(n) > 3 for n > 10). However, the paper only claims that the bound is tight for all sufficiently large n. We have indeed 3-edge-colorings up to n = 16 with no monochromatic triangle. It is known that a(n) > 3 iff n = 17, cf. A343606.",
+        "Rows of A343606 give the lexicographic earliest edge-colorings of K_n without monochromatic triangles using the minimum number of colors a(n)."
+    ],
+    "link": [
+        "James Cummings, Daniel Kr\u00e1l', Florian Pfender, Konrad Sperfeld, Andrew Treglown and Michael Young, <a href=\"https://doi.org/10.1016/j.jctb.2013.05.002\">Monochromatic triangles in three-coloured graphs</a>, Journal of Combinatorial Theory B 103 no. 4 (2013) 489-503 (also: arXiv:1206.1987).",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Monochromatic_triangle\">Monochromatic triangle</a>."
+    ],
+    "formula": [
+        "a(n) = max { A343606(n,k)+1; k >= 1 } U { 0 }.",
+        "a(n) = min {k >= 0; A003323(k) > n}. - _Pontus von Br\u00f6mssen_, Aug 01 2021"
+    ],
+    "example": [
+        "For n = 0 and n = 1, the empty graph K_0 and the singleton graph K_1 don't have any edge, so zero colors are needed.",
+        "For n = 2 we have one edge, so one color is needed.",
+        "For n = 3 we have a triangle, so we need a second color for the third edge.",
+        "For n = 4 (square + diagonals) and n = 5 (pentagon + diagonals forming a pentagram) two colors are still enough: one can use one color for the \"circumference\", i.e., edges (i,i+1), and the other color for the diagonals.",
+        "For n >= 6, a third color is needed."
+    ],
+    "program": [
+        "(PARI) A343607(n)=if(n>1, vecmax(color(n))+1, 0) \\\\ using the helper function:",
+        "{M343607=List([[]]); color(n, i=matrix(n,n,r,c,r+c--*c--/2), C, k)= C|| C = if(#M343607 >= n, M343607[n], n>2, color(n-1,i)); k|| k=if(n>3, vecmax(C)+1, n-1); C=Vec(C, n*(n-1)/2); my(bad(C)= for(a=1,n-2, my(c=C[i[a,n]]); for(b=a+1, n-1, C[i[a,b]] !=c || C[i[b,n]] !=c || return( i[b,n] ))), C0=C, j); while(j=bad(C), until(j-- < i[1,n], if(C[j]++ < k, while(j<#C, C[j++]=0); next(2))); while(C[j]++ >= k, C[j]=0; j--); C=Vec(color(n-1,i,C[1..-n]),#C); if(C[1..n] != C0[1..n], k++; C=C0)); #M343607<n && listput(M343607,C); C} \\\\ becomes *very* slow for n >= 13. Changing 1..n to 1..2-2*n is much faster but yields suboptimal solution for n >= 12 (using 4 instead of 3 required colors)."
+    ],
+    "xref": [
+        "Cf. A343606 (gives corresponding colorings), A000217 (triangular numbers - row lengths of A343606), A003323."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_M. F. Hasler_, Jun 25 2021",
+    "ext": [
+        "More terms from _Pontus von Br\u00f6mssen_, Jul 21 2021"
+    ],
+    "references": 4,
+    "revision": 55,
+    "time": "2021-08-02T02:08:41-04:00",
+    "created": "2021-07-21T09:46:30-04:00"
+}

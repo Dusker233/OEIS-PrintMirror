@@ -1,0 +1,43 @@
+{
+    "number": 339978,
+    "data": "0,449,981961,9819619801,981961980196721,981961980199856194481,9819619801998569980018946081,981961980199856998001999824499740169,981961980199856998001999824499980001989039601,9819619801998569980019998244999800019999508849977812321",
+    "name": "a(n) is the largest prime whose decimal expansion consists of the concatenation of a 1-digit square, a 2-digit square, a 3-digit square, ..., and an n-digit square, or 0 if there is no such prime.",
+    "comment": [
+        "If a(n) exists it has A000217(n)= n*(n+1)/2 digits.",
+        "All the terms end with 1 or 9."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A339978/b339978.txt\">Table of n, a(n) for n = 1..40</a> (first 16 terms from Michael S. Branicky)"
+    ],
+    "example": [
+        "a(1) = 0 because no 1-digit square {0, 1, 4, 9} is prime.",
+        "a(2) = 449 because 464, 481, 916, 925, 936, 949, 964, and 981 are not primes and 449, concatenation of 4 = 2^2 with 49 = 7^2, is prime.",
+        "a(4) = 9819619801, which is a prime is the concatenation of 9 = 3^2 with 81 = 9^2, then 961 = 31^2 and 9801 = 99^2. Observation, 9, 81, 961 and 9801 are the largest squares with respectively 1, 2, 3 and 4 digits."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import product",
+        "def a(n):",
+        "  squares = [str(k*k) for k in range(1, int((10**n)**.5)+2)]",
+        "  revsqrs = [[kk for kk in squares if len(kk)==i+1][::-1] for i in range(n)]",
+        "  for t in product(*revsqrs):",
+        "    intt = int(\"\".join(t))",
+        "    if isprime(intt): return intt",
+        "  return 0",
+        "print([a(n) for n in range(1, 11)]) # _Michael S. Branicky_, Dec 25 2020"
+    ],
+    "xref": [
+        "Cf. A000290, A003618, A061433 (largest squares), A338968 (concatenate primes)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Bernard Schott_, Dec 25 2020",
+    "ext": [
+        "a(5)-a(10) from _Michael S. Branicky_, Dec 25 2020"
+    ],
+    "references": 9,
+    "revision": 28,
+    "time": "2020-12-30T07:46:55-05:00",
+    "created": "2020-12-28T14:59:55-05:00"
+}

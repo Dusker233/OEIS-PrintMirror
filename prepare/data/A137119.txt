@@ -1,0 +1,47 @@
+{
+    "number": 137119,
+    "data": "26,27,277,269777",
+    "name": "Numbers k such that k and k^2 use only the digits 2, 6, 7 and 9.",
+    "comment": [
+        "Generated with DrScheme.",
+        "No further terms up to 2*10^27. - _Robert Israel_, Oct 04 2019"
+    ],
+    "link": [
+        "J. Wellons, <a href=\"https://web.archive.org/web/20090206165028/http://jonathanwellons.com/shared-digits/\">Tables of Shared Digits</a>"
+    ],
+    "example": [
+        "269777^2 = 72779629729."
+    ],
+    "maple": [
+        "Extend:= proc(x,d)",
+        "local i;",
+        "  op(select(t -> member(floor(t^2/10^(d)) mod 10, {2,6,7,9}), [seq(i*10^d+x,i=[2,6,7,9])]))",
+        "end proc:",
+        "R[0]:= {6,7}:",
+        "for m from 1 to 10 do R[m]:= map(Extend,R[m-1],m) od:",
+        "{seq(op(select(t -> convert(convert(t^2,base,10),set) subset {2,6,7,9}, R[m])),m=0..10)}; # _Robert Israel_, Oct 04 2019"
+    ],
+    "program": [
+        "(Magma) [k:k in [1..10^6]| Set(Intseq(k)) join Set(Intseq(k^2)) subset {2,6,7,9}]; // _Marius A. Burtea_, Oct 04 2019",
+        "(Python)",
+        "def test(n):",
+        "    while n > 0:",
+        "        d, n = n%10, n//10",
+        "        if d == 0 or d == 1 or d == 3 or d == 4 or d == 5 or d == 8:",
+        "            return 0",
+        "    return 1",
+        "n, a = 0, 1",
+        "while n >= 0:",
+        "    if test(a) and test(a*a):",
+        "        n = n+1",
+        "        print(n,a)",
+        "    a = a+1 # _A.H.M. Smeets_, Oct 05 2019"
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "Jonathan Wellons (wellons(AT)gmail.com), Jan 22 2008",
+    "references": 0,
+    "revision": 19,
+    "time": "2022-09-08T08:45:32-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

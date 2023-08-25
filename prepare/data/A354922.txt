@@ -1,0 +1,37 @@
+{
+    "number": 354922,
+    "data": "1,6,10,14,15,18,20,22,24,26,33,34,36,38,42,45,46,50,51,52,54,58,62,63,65,68,69,70,72,74,77,78,82,84,86,87,88,91,94,95,96,98,100,106,110,112,114,115,116,118,122,123,134,136,140,141,142,143,145,146,148,150,152,153,156,158,159,160,161,162,164,166",
+    "name": "Positions of even terms in A182665.",
+    "comment": [
+        "Numbers k such that the parity of A344005(k) is the same as the parity of k itself, or in other words, numbers k for which A354918(k) = A000035(k)."
+    ],
+    "program": [
+        "(PARI)",
+        "A354920(n) = forstep(x=n-1,0,-1,if(!((x*(x-1))%n),return(x%2)));",
+        "isA354922(n) = !A354920(n);",
+        "(Python 3.8+)",
+        "from itertools import combinations, islice, count",
+        "from math import prod",
+        "from sympy import factorint",
+        "from sympy.ntheory.modular import crt",
+        "def A354922_gen(startvalue=1): # generator of terms >= startvalue",
+        "    if startvalue <= 1:",
+        "        yield 1",
+        "    for n in count(max(startvalue,2)):",
+        "        plist = tuple(p**q for p, q in factorint(n).items())",
+        "        if len(plist) != 1 and not (n-int(min(min(crt((m, n//m), (0, -1))[0], crt((n//m, m), (0, -1))[0]) for m in (prod(d) for l in range(1, len(plist)//2+1) for d in combinations(plist, l))))) & 1:",
+        "            yield n",
+        "A354922_list = list(islice(A354922_gen(),40)) # _Chai Wah Wu_, Jun 12 2022"
+    ],
+    "xref": [
+        "Positions of zeros in A354920.",
+        "Cf. A000035, A182665, A344005, A354918, A354921 (complement)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Jun 12 2022",
+    "references": 3,
+    "revision": 15,
+    "time": "2022-06-17T16:06:12-04:00",
+    "created": "2022-06-12T15:39:26-04:00"
+}

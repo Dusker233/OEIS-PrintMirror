@@ -1,0 +1,36 @@
+{
+    "number": 318415,
+    "data": "1,1,5,11,35,69,200,398,1014,2069,4820,9716,21787,43209,92530,182773,378676,737526,1492451,2872788,5686194,10837935,21052463,39699970,75972300,141818166,267607065,495142606,922920753,1692529453,3121105278,5676677651,10364752129,18708292447,33851433117,60656841965",
+    "name": "Expansion of Product_{i>=1, j>=1} 1/(1 - i*j*x^(i*j)).",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A318415/b318415.txt\">Table of n, a(n) for n = 0..5000</a>"
+    ],
+    "formula": [
+        "G.f.: Product_{k>=1} 1/(1 - k*x^k)^tau(k), where tau = number of divisors (A000005).",
+        "G.f.: exp(Sum_{k>=1} ( Sum_{d|k} d^(k/d+1)*tau(d) ) * x^k/k).",
+        "From _Vaclav Kotesovec_, Aug 27 2018: (Start)",
+        "a(n) ~ c * n * 3^(n/3), where",
+        "c = 10751825728554.298582954430359167227238488440778317... if mod(n,3)=0",
+        "c = 10751825728553.835664124121831524829543267756895348... if mod(n,3)=1",
+        "c = 10751825728553.838520991588115910603754564083195806... if mod(n,3)=2",
+        "In closed form, c = (Product_{k>=4}((1 - k/3^(k/3))^(-sigma(0,k)))) / (21 - 16*3^(1/3) + 3^(2/3)) - (3*Product_{k>=4}((1 + ((-1)^(1 + 2*k/3)*k)/3^(k/3))^(-sigma(0,k)))) / ((-1)^(2*n/3)*((3 + 2*(-3)^(1/3))^2*(-3 + (-3)^(2/3)))) + Product_{k>=4}((1 + ((-1)^(1 + 4*k/3)*k)/3^(k/3))^(-sigma(0,k))) / (9*(-1)^(4*n/3)*((1 + (-1/3)^(1/3))*(1 - 2*(-1/3)^(2/3))^2))",
+        "(End)"
+    ],
+    "mathematica": [
+        "nmax = 35; CoefficientList[Series[Product[Product[1/(1 - i j x^(i j)), {i, 1, nmax}], {j, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 35; CoefficientList[Series[Product[1/(1 - k x^k)^DivisorSigma[0, k], {k, 1, nmax}], {x, 0, nmax}], x]",
+        "nmax = 35; CoefficientList[Series[Exp[Sum[Sum[d^(k/d + 1) DivisorSigma[0, d], {d, Divisors[k]}] x^k/k, {k, 1, nmax}]], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[d^(k/d + 1) DivisorSigma[0, d], {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 35}]",
+        "nmax = 40; s = 1 - x; Do[s *= Sum[Binomial[DivisorSigma[0, k], j]*(-1)^j*k^j*x^(j*k), {j, 0, nmax/k}]; s = Expand[s]; s = Take[s, Min[nmax + 1, Exponent[s, x] + 1, Length[s]]];, {k, 2, nmax}]; CoefficientList[Series[1/s, {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Aug 27 2018 *)"
+    ],
+    "xref": [
+        "Cf. A000005, A006171, A006906, A280540, A318416."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Aug 26 2018",
+    "references": 6,
+    "revision": 12,
+    "time": "2018-08-27T09:33:56-04:00",
+    "created": "2018-08-26T11:10:33-04:00"
+}

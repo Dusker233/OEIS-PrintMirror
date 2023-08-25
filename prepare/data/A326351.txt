@@ -1,0 +1,27 @@
+{
+    "number": 326351,
+    "data": "1,1,2,8,46,323,2565",
+    "name": "Number of non-nesting connected simple graphs on a subset of {1..n}.",
+    "comment": [
+        "Two edges {a,b}, {c,d} are nesting if a < c < d < b or c < a < b < d."
+    ],
+    "mathematica": [
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[Subsets[Subsets[Range[n],{2}]],Length[csm[#]]<=1&&!MatchQ[#,{___,{x_,y_},___,{z_,t_},___}/;x<z<t<y||z<x<y<t]&]],{n,0,5}]"
+    ],
+    "xref": [
+        "The binomial transform is the covering case A326350.",
+        "Connected simple graphs are A001349.",
+        "Connected simple graphs with no crossing or nesting edges are A326294.",
+        "Simple graphs without crossing or nesting edges are A326244.",
+        "Cf. A006125, A054726, A117662, A136653.",
+        "Cf. A324169, A326210, A326293, A326329, A326340."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jun 30 2019",
+    "references": 1,
+    "revision": 4,
+    "time": "2019-06-30T06:51:08-04:00",
+    "created": "2019-06-30T06:51:08-04:00"
+}

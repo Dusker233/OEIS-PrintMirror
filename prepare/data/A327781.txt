@@ -1,0 +1,64 @@
+{
+    "number": 327781,
+    "data": "0,0,1,2,4,5,9,12,18,22,30,37,52,69,89,110,143,163,204,243,298,374,451,516,620,790,932,1064,1243,1454,1699,2365,2733,3071,3524,3945,4526,5600,6361,7111,8057,9405,10621,12836,14395,16066,18047,19860,22143,25748",
+    "name": "Number of integer partitions of n whose LCM is less than n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327781/b327781.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "example": [
+        "The a(2) = 1 through a(8) = 18 partitions:",
+        "  (11)  (21)   (22)    (41)     (33)      (61)       (44)",
+        "        (111)  (31)    (221)    (42)      (322)      (62)",
+        "               (211)   (311)    (51)      (331)      (71)",
+        "               (1111)  (2111)   (222)     (421)      (332)",
+        "                       (11111)  (411)     (511)      (422)",
+        "                                (2211)    (2221)     (611)",
+        "                                (3111)    (3211)     (2222)",
+        "                                (21111)   (4111)     (3221)",
+        "                                (111111)  (22111)    (3311)",
+        "                                          (31111)    (4211)",
+        "                                          (211111)   (5111)",
+        "                                          (1111111)  (22211)",
+        "                                                     (32111)",
+        "                                                     (41111)",
+        "                                                     (221111)",
+        "                                                     (311111)",
+        "                                                     (2111111)",
+        "                                                     (11111111)"
+    ],
+    "maple": [
+        "a:= proc(m) option remember; local b; b:=",
+        "      proc(n, i, l) option remember; `if`(n=0, 1,",
+        "       `if`(i>1, b(n, i-1, l), 0) +(h-> `if`(h<m,",
+        "        b(n-i, min(n-i, i), h), 0))(ilcm(l, i)))",
+        "      end: `if`(m>0, b(m$2, 1), 0)",
+        "    end:",
+        "seq(a(n), n=0..70);  # _Alois P. Heinz_, Oct 10 2019"
+    ],
+    "mathematica": [
+        "Table[Length[Select[IntegerPartitions[n],LCM@@#<n&]],{n,30}]",
+        "(* Second program: *)",
+        "a[m_] := a[m] = Module[{b}, b[n_, i_, l_] := b[n, i, l] =",
+        "     If[n == 0, 1, If[i>1, b[n, i - 1, l], 0] + Function[h, If[h<m,",
+        "     b[n - i, Min[n - i, i], h], 0]][LCM[l, i]]]; If[m>0, b[m, m, 1], 0]];",
+        "a /@ Range[0, 70] (* _Jean-Fran\u00e7ois Alcover_, May 18 2021, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "b(m,n)={my(d=divisors(m)); polcoef(1/prod(i=1, #d, 1 - x^d[i] + O(x*x^n)), n)}",
+        "a(n)={sum(m=1, n-1, b(m, n)*sum(i=1, (n-1)\\m, moebius(i)))} \\\\ _Andrew Howroyd_, Oct 09 2019"
+    ],
+    "xref": [
+        "The Heinz numbers of these partitions are given by A327776.",
+        "Partitions whose LCM is equal to their sum are A074761.",
+        "Partitions whose LCM is greater than their sum are A327779.",
+        "Cf. A018818, A290103, A316413, A319333, A326842, A327778, A327780."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Sep 25 2019",
+    "references": 6,
+    "revision": 17,
+    "time": "2021-05-18T08:41:28-04:00",
+    "created": "2019-10-10T06:28:54-04:00"
+}

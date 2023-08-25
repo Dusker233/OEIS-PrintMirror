@@ -1,0 +1,92 @@
+{
+    "number": 665,
+    "id": "M1550 N0606",
+    "data": "1,1,1,2,5,34,2136,7013320,1788782616656,53304527811667897248,366299663432194332594005123072,1171638318502989084030402509596875836036608,3517726593606526072882013063011594224625680712384971214848",
+    "name": "Number of 3-uniform hypergraphs on n unlabeled nodes, or equivalently number of relations with 3 arguments on n nodes.",
+    "comment": [
+        "The Qian reference has one incorrect term. The formula given in corollary 2.6 also contains a minor error. The second summation needs to be over p_i*p_j*p_h/lcm(p_i, p_j, p_h) rather than gcd(p_i, p_j, p_h)^2. - _Andrew Howroyd_, Dec 11 2018"
+    ],
+    "reference": [
+        "F. Harary and E. M. Palmer, Graphical Enumeration, Academic Press, NY, 1973, p. 231.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A000665/b000665.txt\">Table of n, a(n) for n = 0..28</a> (first 26 terms from Andrew Howroyd)",
+        "P. J. Cameron, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/groups.html\">Sequences realized by oligomorphic permutation groups</a>, J. Integ. Seqs. Vol. 3 (2000), #00.1.5.",
+        "Victor Falgas-Ravry and Emil R. Vaughan, <a href=\"http://arxiv.org/abs/1110.1623\">On applications of Razborov's flag algebra calculus to extremal 3-graph theory</a>, arXiv preprint arXiv:1110.1623 [math.CO], 2011.",
+        "W. Oberschelp, <a href=\"http://gdz.sub.uni-goettingen.de/dms/resolveppn/?PPN=GDZPPN002298732\">Kombinatorische Anzahlbestimmungen in Relationen</a>, Math. Ann., 174 (1967), 53-78.",
+        "E. M. Palmer, <a href=\"http://dx.doi.org/10.1016/0012-365X(73)90069-1\">On the number of n-plexes</a>, Discrete Math., 6 (1973), 377-390.",
+        "Jianguo Qian, <a href=\"https://doi.org/10.1016/j.disc.2014.03.005\">Enumeration of unlabeled uniform hypergraphs</a>, Discrete Math. 326 (2014), 66--74. MR3188989."
+    ],
+    "example": [
+        "From _Gus Wiseman_, Dec 13 2018: (Start)",
+        "Non-isomorphic representatives of the a(5) = 34 hypergraphs:",
+        "  {}",
+        "  {{123}}",
+        "  {{125}{345}}",
+        "  {{134}{234}}",
+        "  {{123}{245}{345}}",
+        "  {{124}{134}{234}}",
+        "  {{135}{245}{345}}",
+        "  {{145}{245}{345}}",
+        "  {{123}{124}{134}{234}}",
+        "  {{123}{145}{245}{345}}",
+        "  {{124}{135}{245}{345}}",
+        "  {{125}{135}{245}{345}}",
+        "  {{134}{235}{245}{345}}",
+        "  {{145}{235}{245}{345}}",
+        "  {{123}{124}{135}{245}{345}}",
+        "  {{123}{145}{235}{245}{345}}",
+        "  {{124}{134}{235}{245}{345}}",
+        "  {{134}{145}{235}{245}{345}}",
+        "  {{135}{145}{235}{245}{345}}",
+        "  {{145}{234}{235}{245}{345}}",
+        "  {{123}{124}{134}{235}{245}{345}}",
+        "  {{123}{134}{145}{235}{245}{345}}",
+        "  {{123}{145}{234}{235}{245}{345}}",
+        "  {{124}{135}{145}{235}{245}{345}}",
+        "  {{125}{135}{145}{235}{245}{345}}",
+        "  {{135}{145}{234}{235}{245}{345}}",
+        "  {{123}{124}{135}{145}{235}{245}{345}}",
+        "  {{124}{135}{145}{234}{235}{245}{345}}",
+        "  {{125}{135}{145}{234}{235}{245}{345}}",
+        "  {{134}{135}{145}{234}{235}{245}{345}}",
+        "  {{123}{124}{135}{145}{234}{235}{245}{345}}",
+        "  {{125}{134}{135}{145}{234}{235}{245}{345}}",
+        "  {{124}{125}{134}{135}{145}{234}{235}{245}{345}}",
+        "  {{123}{124}{125}{134}{135}{145}{234}{235}{245}{345}}",
+        "(End)"
+    ],
+    "mathematica": [
+        "(* about 85 seconds on a laptop computer *)",
+        "Needs[\"Combinatorica`\"];Table[A = Subsets[Range[n],{3}];CycleIndex[Replace[Map[Sort,System`PermutationReplace[A, SymmetricGroup[n]], {2}],Table[A[[i]] -> i, {i, 1, Length[A]}], 2], s] /. Table[s[i] -> 2, {i, 1, Binomial[n, 3]}], {n, 1, 8}] (* _Geoffrey Critzer_, Oct 28 2015 *)",
+        "Table[Sum[2^PermutationCycles[Ordering[Map[Sort,Subsets[Range[n],{3}]/.Rule@@@Table[{i,prm[[i]]},{i,n}],{1}]],Length],{prm,Permutations[Range[n]]}]/n!,{n,8}] (* _Gus Wiseman_, Dec 13 2018 *)",
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[p_] := Sum[Ceiling[(p[[i]] - 1)*((p[[i]] - 2)/6)], {i, 1, Length[p]}] + Sum[Sum[c = p[[i]]; d = p[[j]]; GCD[c, d]*(c + d - 2 + Mod[(c - d)/GCD[c, d], 2])/2 + Sum[c*d*p[[k]]/LCM[c, d, p[[k]]], {k, 1, j - 1}], {j, 1, i - 1}], {i, 2, Length[p]}];",
+        "a[n_] := Module[{s = 0}, Do[s += permcount[p]*2^edges[p], {p, IntegerPartitions[n]}]; s/n!];",
+        "a /@ Range[0, 12] (* _Jean-Fran\u00e7ois Alcover_, Jan 08 2021, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "permcount(v) = {my(m=1,s=0,k=0,t); for(i=1,#v,t=v[i]; k=if(i>1&&t==v[i-1],k+1,1); m*=t*k;s+=t); s!/m}",
+        "edges(p)={sum(i=1, #p, ceil((p[i]-1)*(p[i]-2)/6)) + sum(i=2, #p, sum(j=1, i-1, my(c=p[i], d=p[j]); gcd(c,d)*(c + d - 2 + (c-d)/gcd(c,d)%2)/2 + sum(k=1, j-1, c*d*p[k]/lcm(lcm(c,d), p[k]))))}",
+        "a(n) = {my(s=0); forpart(p=n, s+=permcount(p)*2^edges(p)); s/n!} \\\\ _Andrew Howroyd_, Dec 11 2018"
+    ],
+    "xref": [
+        "Row sums of A092337. Spanning 3-uniform hypergraphs are counted by A322451.",
+        "Cf. A000088, A006129, A038041, A299471, A301922, A302374, A302394, A306017, A306021, A320395.",
+        "Column k=3 of A309858."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "0,4",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Corrected and extended by _Vladeta Jovovic_",
+        "a(0)=1 prepended and a(12) from _Andrew Howroyd_, Dec 11 2018"
+    ],
+    "references": 22,
+    "revision": 62,
+    "time": "2021-01-08T04:18:59-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

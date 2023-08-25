@@ -1,0 +1,47 @@
+{
+    "number": 358744,
+    "data": "13,29,137,521,577,691,823,1879,3469,4799,8783,21569,25453,26263,26591,27529,27919,34607,39509,45631,48869,53653,56099,56633,57641,63313,63809,67733,68819,74381,76031,76421,94781,97187,98873,101279,105683,110291,118967,119569,119849,120577,123737,128951",
+    "name": "First of three consecutive primes p, q, r such that p + q - r, p^2 + q^2 - r^2 and p^3 + q^3 - r^3 are all prime.",
+    "link": [
+        "Robert Israel, <a href=\"/A358744/b358744.txt\">Table of n, a(n) for n = 1..2500</a>"
+    ],
+    "example": [
+        "a(3) = 137 is a term because 137, 139, 149 are consecutive primes and",
+        "137^1 + 139^1 - 149^1 = 127,",
+        "137^2 + 139^2 - 149^2 = 15889,",
+        "and 137^3 + 139^3 - 149^3 = 1949023 are all prime."
+    ],
+    "maple": [
+        "R:= NULL: count:= 0: q:= 2: r:= 3:",
+        "while count < 100 do",
+        "  p:= q; q:= r; r:=nextprime(r);",
+        "  if isprime(p+q-r) and isprime(p^2+q^2-r^2) and isprime(p^3+q^3-r^3) then count:= count+1; R:= R,p fi;",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Partition[Prime[Range[13000]], 3, 1], AllTrue[Table[#[[1]]^k + #[[2]]^k - #[[3]]^k, {k, 1, 3}], PrimeQ] &][[;; , 1]] (* _Amiram Eldar_, Nov 29 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import isprime, nextprime",
+        "def agen():",
+        "    p, q, r = 2, 3, 5",
+        "    while True:",
+        "        if all(isprime(t) for t in [p+q-r, p**2+q**2-r**2, p**3+q**3-r**3]):",
+        "            yield p",
+        "        p, q, r = q, r, nextprime(r)",
+        "print(list(islice(agen(), 44))) # _Michael S. Branicky_, Nov 29 2022"
+    ],
+    "xref": [
+        "Intersection of A358743, A255581 and A358742."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Nov 29 2022",
+    "references": 4,
+    "revision": 11,
+    "time": "2022-12-09T15:43:27-05:00",
+    "created": "2022-12-06T10:01:15-05:00"
+}

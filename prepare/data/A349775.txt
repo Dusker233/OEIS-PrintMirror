@@ -1,0 +1,52 @@
+{
+    "number": 349775,
+    "data": "2,2,3,4,4,5,6,7,8,9,9,10,11,12,13,14,15,15,16,17,18,19,20,21,22,23,23,24",
+    "name": "The maximum cardinality of an irreducible subset of {0, 1, 2, ..., n}.",
+    "comment": [
+        "A subset S of {0,1,2, ... n} is \"irreducible\" if it cannot be written as A + B = S for any A and B subsets of the integers with |A|, |B| >= 2. In this case, A + B is defined as the set of a + b for a in A and b in B.",
+        "Irreducible sets are also sometimes referred to as \"Ostmann irreducible,\" \"prime,\" or \"primitive\"."
+    ],
+    "reference": [
+        "M. B. Nathanson, Additive Number Theory: Inverse Problems and the Geometry of Subsets, Springer 1996.",
+        "H. H. Ostmann, Additive Zahlentheorie, Springer 1956."
+    ],
+    "link": [
+        "Henry L. Fleischmann, <a href=\"/A349775/a349775.txt\">Python Code</a>"
+    ],
+    "example": [
+        "{0,1,2} is reducible since {0,1} + {0,1} = {0,1,2}. All other subsets of {0,1,2} are irreducible, so a(2) = 2. It is possible to reduce to the case of assuming every set contains only nonnegative integers and each set contains 0 by shifting the summand sets."
+    ],
+    "program": [
+        "(Python) See link.",
+        "(Python)",
+        "from itertools import combinations",
+        "from collections import Counter",
+        "from math import comb",
+        "def A349775sumsetgen(n): # generate sums of 2 subsets A,B with |A|,|B| >= 2",
+        "    for l in range(2,n+2):",
+        "        for a in combinations(range(n+1),l):",
+        "            amax = max(a)",
+        "            bmax = min(amax,n-amax)",
+        "            for lb in range(2,bmax+2):",
+        "                for b in combinations(range(bmax+1),lb):",
+        "                    yield tuple(sorted(set(x+y for x in a for y in b)))",
+        "def A349775(n):",
+        "    c = Counter()",
+        "    for s in set(A349775sumsetgen(n)):",
+        "        c[len(s)] += 1",
+        "    for i in range(n+1,1,-1):",
+        "        if c[i] < comb(n+1,i):",
+        "            return i # _Chai Wah Wu_, Dec 14 2021"
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,1",
+    "author": "_Henry L. Fleischmann_, Nov 29 2021",
+    "ext": [
+        "a(25)-a(27) from _Chai Wah Wu_, Dec 14 2021",
+        "a(28) from _Chai Wah Wu_, Dec 17 2021"
+    ],
+    "references": 1,
+    "revision": 31,
+    "time": "2021-12-17T00:54:41-05:00",
+    "created": "2021-12-13T17:12:49-05:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 73841,
+    "data": "1,4,12,24,360,360,2520,5040,5040,5040,55440,55440,3603600,10810800,10810800,21621600,367567200,367567200,6983776800,6983776800,6983776800,6983776800,160626866400,160626866400,1124388064800,1124388064800,1124388064800,1124388064800",
+    "name": "LCM of the composite numbers between n and 2n (both inclusive).",
+    "comment": [
+        "Also, smallest number divisible by all integers 1 through n as well as all composite numbers 1 through 2n. - _J. Lowell_, Jul 16 2008 [Definition of A140813, that is a duplicate of this sequence]",
+        "Not a subsequence of A002182: a(79) = 10703173554082014360835514860858032000 is the smallest term that is not in A002182. [_Klaus Brockhaus_, Aug 28 2008]"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A073841/b073841.txt\">Table of n, a(n) for n = 1..2286</a>"
+    ],
+    "example": [
+        "a(6) = lcm(6,8,9,10,12) = 360.",
+        "The primes <= 10 are 2, 3, 5 and 7. Their highest powers below 2 * 10 = 20 are 16, 9, 5 and 7 respectively. Therefore, a(10) = 16 * 9 * 5 * 7 = 5040. - _David A. Corneth_, Mar 19 2018"
+    ],
+    "maple": [
+        "for n from 1 to 100 do l := 1:for j from n to 2*n do if not isprime(j) then l := lcm(l,j):fi:od:a[n] := l:od: seq(a[j],j=1..100);"
+    ],
+    "mathematica": [
+        "Table[ Apply[ LCM, Select[Range[n, 2n], !PrimeQ[ # ] & ]], {n, 2, 26}]"
+    ],
+    "program": [
+        "(PARI) iscomposite(x) = (x!=1) && !isprime(x);",
+        "a(n) = lcm(select(x->iscomposite(x), vector(n+1, k, n+k-1))); \\\\ _Michel Marcus_, Mar 18 2018",
+        "(PARI) a(n) = my(res = 1); forprime(p = 2, n, res *= p^(logint(n<<1, p))); res \\\\ _David A. Corneth_, Mar 19 2018"
+    ],
+    "xref": [
+        "Cf. A073839, A073640."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Aug 13 2002",
+    "ext": [
+        "Edited by _Robert G. Wilson v_, _Sascha Kurz_ and _Labos Elemer_, Aug 14 2002",
+        "a(1) changed to 1 by _Alois P. Heinz_, Mar 18 2018"
+    ],
+    "references": 2,
+    "revision": 38,
+    "time": "2018-03-22T05:12:19-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

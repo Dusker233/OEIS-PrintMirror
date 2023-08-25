@@ -1,0 +1,33 @@
+{
+    "number": 352538,
+    "data": "2,3,7,19,23,29,67,97,103,107,149,181,227,271,311,353,379,433,449,563,631,719,761,883,919,941,971,997,1049,1087,1223,1291,1297,1427,1447,1453,1531,1601,1627,1699,1753,1831,1861,1877,2039,2207,2213,2239,2269,2281,2287",
+    "name": "Primes whose position in the Wythoff array is immediately followed by another prime in the next column.",
+    "example": [
+        "The Wythoff array begins:",
+        "   1    2    3    5    8 ...",
+        "   4    7   11   18   29 ...",
+        "   6   10   16   26   42 ...",
+        "   ...",
+        "So 2, 3 and 7 are terms, since they are horizontally followed by 3, 5 and 11."
+    ],
+    "program": [
+        "(PARI) T(n,k) = (n+sqrtint(5*n^2))\\2*fibonacci(k+1) + (n-1)*fibonacci(k); \\\\ A035513",
+        "cell(n) = for (r=1, oo, for (c=1, oo, if (T(r,c) == n, return([r, c])); if (T(r,c) > n, break);););",
+        "isokh(m) = {my(pos = cell(prime(m))); isprime (T(pos[1], pos[2]+1));",
+        "lista(nn) = for (n=1, nn, if (isokh(n), print1(prime(n), \", \")));",
+        "(PARI) right(n) = n++; (sqrtint(5*n^2)+n-2)\\2; \\\\ see A022342",
+        "isokh(n) = isprime(right(n));",
+        "lista(nn) = for (n=1, nn, my(p=prime(n)); if (isokh(p), print1(p, \", \")));"
+    ],
+    "xref": [
+        "Cf. A003603, A022342, A035612, A035513 (Wythoff array).",
+        "Cf. A352537 (next row and column), A352539 (next row)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Mar 20 2022",
+    "references": 3,
+    "revision": 15,
+    "time": "2022-03-21T03:55:00-04:00",
+    "created": "2022-03-20T18:50:41-04:00"
+}

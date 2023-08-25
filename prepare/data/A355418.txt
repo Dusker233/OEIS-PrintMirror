@@ -1,0 +1,53 @@
+{
+    "number": 355418,
+    "data": "0,51,494,712,1017,1080,1081,1196,1828,2131,2132,2133,2994,3885,4622,4624,4626,5700,5733,5735,5755,5757,5775,5777,6681,6886,6888,7179,7696,7697,7798,8010,8100,8201,9193,9691,9711,9717,11263,11371,11373,11377,11483,11593,12418,12499",
+    "name": "Numbers k that have the same set of digits in base 10 as primepi(k).",
+    "comment": [
+        "For the values k = 0, 51, 712, 8010, 8201, 9711 the multisets of digits are the same as the multisets of digits of primepi(k). Are there other such integers?",
+        "No. As prime(n) >= n*(log(n) + log(log(n)) - 1) and log(n) > 10 for n >= 22027 with some additional search these are all such integers. - _David A. Corneth_, Jul 06 2022"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A355418/b355418.txt\">Table of n, a(n) for n = 1..10000</a> (first 1846 terms from Michel Marcus)"
+    ],
+    "example": [
+        "There are 15 primes <= 51, so 51 is a term.",
+        "There are 180 primes <= 1080, so 1080 is a term.",
+        "There are 321 primes <= 2131 (a prime), so 2131 is a term."
+    ],
+    "maple": [
+        "q:= n-> (s-> is(s(n)=s(numtheory[pi](n))))({k-> convert(k, base, 10)[]}):",
+        "select(q, [$0..15000])[]; # _Alois P. Heinz_, Jul 06 2022"
+    ],
+    "mathematica": [
+        "d[n_] := Union[IntegerDigits[n]]; Select[Range[0, 12500], d[#] == d[PrimePi[#]] &] (* _Amiram Eldar_, Jul 06 2022 *)"
+    ],
+    "program": [
+        "(PARI) digs(k) = Set(digits(k));",
+        "isok(k) = digs(k) == digs(primepi(k));",
+        "(PARI) upto(n) = { my(u = nextprime(n), p = 2, t = 0, res = List(0)); forprime(q = 3, u, t++; st = Set(digits(t)); for(i = p, q-1, si = Set(digits(i)); if(si == st, listput(res, i); ) ); p = q; ); res } \\\\ _David A. Corneth_, Jul 07 2022",
+        "(Python)",
+        "from sympy import primepi",
+        "def ok(n): return set(str(n)) == set(str(primepi(n)))",
+        "print([k for k in range(13000) if ok(k)]) # _Michael S. Branicky_, Jul 06 2022",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import nextprime",
+        "def A355418_gen(): # generator of terms",
+        "    p, q = 0, 2",
+        "    for i in count(0):",
+        "        s = set(str(i))",
+        "        yield from filter(lambda n:set(str(n))==s,range(p,q))",
+        "        p, q = q, nextprime(q)",
+        "A355418_list = list(islice(A355418_gen(),30)) # _Chai Wah Wu_, Jul 06 2022"
+    ],
+    "xref": [
+        "Cf. A000720 (primepi), A074350, A355317."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Michel Marcus_, Jul 06 2022",
+    "references": 2,
+    "revision": 63,
+    "time": "2022-07-07T11:46:16-04:00",
+    "created": "2022-07-06T22:19:52-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 189002,
+    "data": "1,1,2,4,36,192,6728,100352,12988816,557568000,258584046368,32565539635200,53060477521960000,19872369301840986112,112202208776036178000000,126231322912498539682594816,2444888770250892795802079170816,8326627661691818545121844900397056",
+    "name": "Number of domino tilings of the n X n grid with upper left corner removed iff n is odd.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A189002/b189002.txt\">Table of n, a(n) for n = 0..50</a>",
+        "<a href=\"/index/Do#domino\">Index entries for sequences related to dominoes</a>"
+    ],
+    "formula": [
+        "a(n) = A189006(n,n)."
+    ],
+    "example": [
+        "a(3) = 4 because there are 4 domino tilings of the 3 X 3 grid with upper left corner removed:",
+        "  . .___.  . .___.  . .___.  . .___.",
+        "  ._|___|  ._|___|  ._| | |  ._|___|",
+        "  | |___|  | | | |  | |_|_|  |___| |",
+        "  |_|___|  |_|_|_|  |_|___|  |___|_|"
+    ],
+    "mathematica": [
+        "A[1, 1] = 1;",
+        "A[m_, n_] := A[m, n] = Module[{i, j, s, t, M}, Which[m == 0 || n == 0, 1, m < n, A[n, m], True, s = Mod[n*m, 2]; M[i_, j_] /; j < i := -M[j, i]; M[_, _] = 0; For[i = 1, i <= n, i++, For[j = 1, j <= m, j++, t = (i - 1)*m + j - s; If[i > 1 || j > 1 || s == 0, If[j < m, M[t, t + 1] = 1]; If[i < n, M[t, t + m] = 1 - 2*Mod[j, 2]]]]]; Sqrt[Det[Array[M, {n*m - s, n*m - s}]] ]]];",
+        "a[n_] := A[n, n];",
+        "a /@ Range[0, 17] (* _Jean-Fran\u00e7ois Alcover_, Feb 27 2020, after _Alois P. Heinz_ in A189006 *)"
+    ],
+    "xref": [
+        "Main diagonal of A189006.",
+        "Bisection gives: A004003 (even part), A007341 (odd part)."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Apr 15 2011",
+    "references": 2,
+    "revision": 21,
+    "time": "2020-07-14T15:26:35-04:00",
+    "created": "2011-04-16T06:29:39-04:00"
+}

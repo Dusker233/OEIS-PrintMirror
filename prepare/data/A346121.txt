@@ -1,0 +1,45 @@
+{
+    "number": 346121,
+    "data": "1,1,2,6,24,240,720,5040,40320,816480,3628800,108108000,479001600,14789174400,254431457280,1307674368000,20922789888000,872545722048000,6402373705728000,411616608508385280,7817896752906240000,128126503414990080000,1124000727777607680000",
+    "name": "Number of permutations of [n] whose order is a multiple of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A346121/b346121.txt\">Table of n, a(n) for n = 1..450</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation\">Permutation</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{i>=1} A057731(n,i*n).",
+        "a(n) = (n-1)! <=> n in { A000961 }.",
+        "a(n) = A057731(n,n) = A074351(n) = A052699(n-1) for n <= 9."
+    ],
+    "maple": [
+        "b:= proc(n, g) option remember; `if`(n=0, x^g, add((j-1)!",
+        "      *b(n-j, ilcm(g, j))*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "a:= n-> (p-> add(coeff(p, x, i*n), i=1..degree(p)/n))(b(n, 1)):",
+        "seq(a(n), n=1..23);",
+        "# second Maple program:",
+        "h:= proc(n, j) option remember; uses padic, numtheory; n/mul(`if`(",
+        "      ordp(j, p)<ordp(n, p), 1, p^ordp(n, p)), p=factorset(igcd(n, j)))",
+        "    end:",
+        "b:= proc(n, m) option remember; `if`(n=0, `if`(m=1, 1, 0),",
+        "      add((j-1)!*b(n-j, h(m, j))*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=1..23);"
+    ],
+    "mathematica": [
+        "b[n_, g_] := b[n, g] = If[n == 0, x^g, Sum[(j - 1)!*b[n - j, LCM[g, j]]* Binomial[n - 1, j - 1], {j, 1, n}]] // Expand;",
+        "a[n_] := With[{p = b[n, 1]}, Sum[Coefficient[p, x, i*n], {i, 1, Exponent[p, x]/n}]];",
+        "Array[a, 40] (* _Jean-Fran\u00e7ois Alcover_, Aug 23 2021, after _Alois P. Heinz_'s first program *)"
+    ],
+    "xref": [
+        "Cf. A000142, A000961, A052699, A057731, A074351, A074759."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Alois P. Heinz_, Jul 05 2021",
+    "references": 1,
+    "revision": 23,
+    "time": "2021-08-23T10:22:33-04:00",
+    "created": "2021-07-05T09:09:33-04:00"
+}

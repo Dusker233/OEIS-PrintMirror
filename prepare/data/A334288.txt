@@ -1,0 +1,55 @@
+{
+    "number": 334288,
+    "data": "1,6,30,180,1002,6012,34224,205344,1180010,7080060,40911324,245467944,1423944024,8543664144,49710351720,298262110320,1739627237002,10437763422012,61002039226716,366012235360296,2142786218045748,12856717308274488,75380119335678608",
+    "name": "Number of tieless rugby (union) games with n scoring events.",
+    "comment": [
+        "In rugby (union) a scoring event can give 3, 5 or 7 points.",
+        "In April 1992 the current scoring format was introduced: 3 points are awarded for kicks/penalties, 5 points for unconverted tries and 7 points for converted tries. A game is a list of members of {-7,-5,-3,3,5,7} with negative points for the away team, positive for the home team.",
+        "A tieless game is one in which the teams never have the same score (except at the beginning, when no team has scored yet)."
+    ],
+    "link": [
+        "Cameron Ford, <a href=\"/A334288/b334288.txt\">Table of n, a(n) for n = 0..1286</a>"
+    ],
+    "example": [
+        "a(2)=30, because there are 6^2=36 sequences of length 2 from {3,5,7,-3,-5,-7}; the 6 sequences that correspond to games with ties are precisely those of the form {k,-k}."
+    ],
+    "program": [
+        "(Python)",
+        "def number_of_tieless_rugby_games(n):",
+        "    \"\"\"",
+        "    Returns the number of tieless rugby games with n scoring events.",
+        "    A scoring event is a number in (-7,-5,-3,3,5,7) and a game is tieless",
+        "    if the score is never zero, apart from at the start.",
+        "    Negative points represent points for the away team, positive points",
+        "    represent points for the home team",
+        "    \"\"\"",
+        "    dictionary_of_scores = {0:1}",
+        "    # The keys of this dictionary represent possible scores.",
+        "    # The values represent the number of ways this score can be reached.",
+        "    scoring_events = (-7,-5,-3,3,5,7)",
+        "    for i in range(n):",
+        "        # At each stage, we have the nonzero scores with i scoring events in",
+        "        # dictionary_of_scores. To find nonzero scores with i+1 scoring events",
+        "        # consider each nonzero score, and each possibility for the next",
+        "        # scoring event.",
+        "        old_dictionary = dictionary_of_scores",
+        "        dictionary_of_scores = {}",
+        "        for score, number_of_ways in old_dictionary.items():",
+        "            for scoring_event in scoring_events:",
+        "                new_score = score + scoring_event",
+        "                if new_score != 0:",
+        "                    dictionary_of_scores[new_score] =\\",
+        "                    dictionary_of_scores.get(new_score, 0) + number_of_ways",
+        "    return sum(dictionary_of_scores.values())"
+    ],
+    "xref": [
+        "Inspired by A137684."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Cameron Ford_, Jun 13 2020",
+    "references": 2,
+    "revision": 35,
+    "time": "2021-01-09T02:11:23-05:00",
+    "created": "2020-06-25T16:05:53-04:00"
+}

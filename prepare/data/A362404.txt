@@ -1,0 +1,30 @@
+{
+    "number": 362404,
+    "data": "24,27,48,79,120,168,199,288,350,360,378,391,447,507,528,775,840,895,960,1088,1136,1368,1638,1639,1680,1848,1849,2095,2127,2208,2322,2749,2808,3720,3726,3798,3799,3919,4050,4087,4488,4550,4872,5040,5328,5448,5631,6240",
+    "name": "Numbers k such that k and k+1 are both in A362401.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A362404/b362404.txt\">Table of n, a(n) for n = 1..3557</a> (terms below 10^8)"
+    ],
+    "example": [
+        "24 is a term since 24 and 25 are both in the range of A162296: A162296(20) = 24 and A162296(25) = 25."
+    ],
+    "mathematica": [
+        "s[n_] := Module[{f = FactorInteger[n], p, e}, p = f[[;; , 1]]; e = f[[;; , 2]]; Times @@ ((p^(e + 1) - 1)/(p - 1)) - Times @@ (p + 1)]; s[1] = 0; seq[max_] := Module[{v = Select[Union[Array[s, max]], 0 < # <= max &], i}, i = Position[Differences[v], 1] // Flatten; v[[i]]]; seq[10^4]"
+    ],
+    "program": [
+        "(PARI) s(n) = {my(f = factor(n), p, e); prod(i = 1, #f~, p = f[i, 1]; e = f[i, 2]; ((p^(e + 1) - 1)/(p - 1))) -  prod(i = 1, #f~, f[i, 1] + 1);}",
+        "lista(kmax) = {my(v = select(x -> (x < kmax), Set(vector(kmax, k, s(k))))); for(k=1, #v-1, if(v[k+1] - v[k] == 1, print1(v[k], \", \")));}"
+    ],
+    "xref": [
+        "Subsequence of A362401.",
+        "A362405 is a subsequence.",
+        "Cf. A162296."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Apr 18 2023",
+    "references": 2,
+    "revision": 12,
+    "time": "2023-04-20T13:21:13-04:00",
+    "created": "2023-04-20T11:51:47-04:00"
+}

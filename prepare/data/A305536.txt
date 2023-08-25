@@ -1,0 +1,40 @@
+{
+    "number": 305536,
+    "data": "1,1,3,12,62,410,3426,35360,438390,6358306,105544388,1970997142,40860191470,930482058472,23079257369054,619157277351618,17860295754328884,551188620179519302,18119420989759583998,632069815329176122584,23318435171385786420958,907077442499274638005314",
+    "name": "Expansion of 1/(1 - x/(1 - x - 1*x/(1 - x - 2*x/(1 - x - 3*x/(1 - x - 4*x/(1 - ...)))))), a continued fraction.",
+    "comment": [
+        "Invert transform of A001515, shifted right one place."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A305536/b305536.txt\">Table of n, a(n) for n = 0..405</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>",
+        "<a href=\"/index/Be#Bessel\">Index entries for sequences related to Bessel functions or polynomials</a>"
+    ],
+    "formula": [
+        "a(n) ~ 2^(n - 1/2) * n^(n-1) / exp(n-1). - _Vaclav Kotesovec_, Sep 18 2021"
+    ],
+    "maple": [
+        "b:= proc(n) option remember;",
+        "     `if`(n<2, n+1, (2*n-1)*b(n-1)+b(n-2))",
+        "    end:",
+        "a:= proc(n) option remember;",
+        "     `if`(n=0, 1, add(b(j-1)*a(n-j), j=1..n))",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Jan 11 2023"
+    ],
+    "mathematica": [
+        "nmax = 21; CoefficientList[Series[1/(1 - x/(1 - x + ContinuedFractionK[-k x, 1 - x, {k, 1, nmax}])), {x, 0, nmax}], x]",
+        "nmax = 21; CoefficientList[Series[1/(1 - Sum[HypergeometricPFQ[{k, 1 - k}, {}, -1/2] x^k, {k, 1, nmax}]), {x, 0, nmax}], x]",
+        "a[0] = 1; a[n_] := a[n] = Sum[HypergeometricPFQ[{k, 1 - k}, {}, -1/2] a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 21}]"
+    ],
+    "xref": [
+        "Cf. A001003, A001515, A144301, A258173."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Jun 04 2018",
+    "references": 1,
+    "revision": 8,
+    "time": "2023-01-11T12:31:12-05:00",
+    "created": "2018-06-04T17:55:11-04:00"
+}

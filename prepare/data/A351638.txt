@@ -1,0 +1,34 @@
+{
+    "number": 351638,
+    "data": "1,1,1,3,3,5,17,19,31,45,177,191,335,469,733,2679,3063,5129,7445,11431,15667,59025,65301,112379,159827,248185,336913,505683,1660611,1909901,3184601,4576771,6994351,9606093,14229033,19085255,61388207,69587029,116257501,164298495,252820047",
+    "name": "Number of length n word structures with all distinct run-lengths using an infinite alphabet.",
+    "comment": [
+        "Permuting the symbols will not change the structure.",
+        "Equivalently, a(n) is the number of restricted growth strings [s(0), s(1), ..., s(n-1)] where s(0)=0 and s(i) <= 1 + max(prefix) for i >= 1 and every run has a different length."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A351638/b351638.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "example": [
+        "The a(3) = 3 words are 111, 112, 122.",
+        "The a(4) = 3 words are 1111, 1112, 1222. The word 1122 is not included because both runs have the same length.",
+        "The a(6) = 17 words are 111111, 111112, 111122, 111211, 111221, 112111, 112221, 112222, 122111, 122211, 122222, 111223, 111233, 112333, 112223, 122333, 122233."
+    ],
+    "program": [
+        "(PARI)",
+        "P(n) = {Vec(-1 + prod(k=1, n, 1 + y*x^k + O(x*x^n)))}",
+        "R(u, k) = {k*[subst(serlaplace(p)/y, y, k-1) | p<-u]}",
+        "seq(n)={my(u=P(n)); concat([1], sum(k=1, n, R(u, k)*sum(r=k, n, binomial(r, k)*(-1)^(r-k)/r!) ))}"
+    ],
+    "xref": [
+        "Row sums of A351637.",
+        "Cf. A351292, A351642."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Andrew Howroyd_, Feb 15 2022",
+    "references": 6,
+    "revision": 13,
+    "time": "2023-01-29T13:31:41-05:00",
+    "created": "2022-02-15T21:56:00-05:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 308099,
+    "data": "46,58,92,93,111,116,143,184,187,209,232,265,279,295,333,368,403,422,446,454,458,464,466,478,481,482,497,502,511,514,526,538,542,553,554,562,566,586,713,736,837,844,851,892,908,916,921,928,932,933,939,951,956,964,993,999",
+    "name": "Numbers k with 2 or more chained distinct prime factors: the last digit of every prime factor is the same as the first digit of the next prime factor. Prime factors must be in ascending order.",
+    "link": [
+        "Robert Israel, <a href=\"/A308099/b308099.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "144026 is such a number because its distinct prime factors in ascending order are 2, 23, 31, 101 and the last digit of each prime factor is the same as the first digit of the next one."
+    ],
+    "maple": [
+        "filter:= proc(n) local F,i;",
+        "  F:= sort(convert(numtheory:-factorset(n),list));",
+        "  nops(F) >= 2 and andmap(i -> F[i] mod 10 = floor(F[i+1]/10^ilog10(F[i+1])),[$1..nops(F)-1])",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Jun 21 2019"
+    ],
+    "mathematica": [
+        "Select[Range@1000,PrimeNu@#>1&&And@@(Last@#[[1]]==First@#[[2]]&/@Partition[IntegerDigits@*First/@FactorInteger@#,2,1])&]"
+    ],
+    "program": [
+        "(PARI) isok(n) = {my(f=factor(n)[, 1]); if (#f <= 1, return(0)); my(vd=digits(f[1]), d=vd[#vd], vd2, d2); for (k=2, #f, vd2 = digits(f[k]); d2 = vd2[1]; if (d2 != d, return (0)); vd = vd2; d = vd[#vd];); return (1);} \\\\ _Michel Marcus_, May 18 2019"
+    ],
+    "xref": [
+        "Cf. A307858, A308252, A308101."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Giorgos Kalogeropoulos_, May 12 2019",
+    "references": 3,
+    "revision": 24,
+    "time": "2019-06-21T22:46:24-04:00",
+    "created": "2019-06-18T10:00:24-04:00"
+}

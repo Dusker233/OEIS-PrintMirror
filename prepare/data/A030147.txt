@@ -1,0 +1,44 @@
+{
+    "number": 30147,
+    "data": "0,1,2,3,4,5,6,7,8,9,101,121,141,161,181,212,232,252,272,292,303,323,343,363,383,414,434,454,474,494,505,525,545,565,585,616,636,656,676,696,707,727,747,767,787,818,838,858,878,898,909,929,949",
+    "name": "Palindromes in which parity of digits alternates.",
+    "comment": [
+        "All terms have an odd number of digits. - _Alonso del Arte_, Jan 31 2020"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A030147/b030147.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Pac#palindromes\">Index entries for sequences related to palindromes</a>"
+    ],
+    "formula": [
+        "A136522(a(n)) * A228710(a(n)) = 1. - _Reinhard Zumkeller_, Aug 31 2013"
+    ],
+    "mathematica": [
+        "palQ[n_, b_:10] := (IntegerDigits[n, b] == Reverse[IntegerDigits[n, b]]); alternParQ[n_, b_:10] := (Union[BlockMap[Xor @@ # &, OddQ[IntegerDigits[n, b]], 2, 1]] == {True}); Join[Range[0, 9], Select[Range[1000], palQ[#] && alternParQ[#] &]] (* _Alonso del Arte_, Feb 02 2020 *)",
+        "Join[Range[0,9],Select[Range[100000],PalindromeQ[#]&&Union[Total/@Partition[Boole[ EvenQ[ IntegerDigits[ #]]],2,1]] =={1}&]] (* _Harvey P. Dale_, Jul 04 2023 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a030147 n = a030147_list !! (n-1)",
+        "a030147_list = filter ((== 1) . a228710) a002113_list",
+        "-- _Reinhard Zumkeller_, Aug 31 2013",
+        "(Scala) def isPal(n: Int) = (n.toString == n.toString.reverse)",
+        "def alternsPar(n: Int): Boolean = {",
+        "  val dPars = Integer.toString(n).toList.map(_ % 2 == 0)",
+        "  val scanPars = (dPars zip dPars.tail).map{ case (x, y) => x ^ y }",
+        "  scanPars.toSet == Set(true)",
+        "}",
+        "(0 to 9) ++: (10 to 999).filter(isPal).filter(alternsPar) // _Alonso del Arte_, Feb 02 2020"
+    ],
+    "xref": [
+        "Intersection of A002113 and A030141.",
+        "Subsequence of A001633.",
+        "Cf. A030143, A030144, A030152."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Patrick De Geest_",
+    "references": 6,
+    "revision": 24,
+    "time": "2023-07-04T18:53:50-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

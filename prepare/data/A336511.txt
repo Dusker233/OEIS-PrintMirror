@@ -1,0 +1,34 @@
+{
+    "number": 336511,
+    "data": "0,1,3,9,22,52,117,260,565,1217,2593,5487,11538,24146,50316,104490,216337,446754,920506,1892904,3885719,7964162,16300646,33321640,68038796,138784403,282824924,575866839,1171612786,2381938742,4839331484,9825841526,19938975797",
+    "name": "Total sum of the left-to-right maxima in all compositions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A336511/b336511.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "a(4) = 1 + 1 + 2 + 1 + 2 + 2 + 2 + 1 + 3 + 3 + 4 = 22: (1)111, (1)1(2), (1)(2)1, (2)11, (2)2, (1)(3), (3)1, (4)."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0, [1, 0], add((p-> [0,",
+        "      `if`(j>m, j*p[1], 0)]+p)(b(n-j, max(m, j))), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, -1)[2]:",
+        "seq(a(n), n=0..50);"
+    ],
+    "mathematica": [
+        "b[n_, m_] := b[n, m] = If[n == 0, {1, 0}, Sum[Function[p, {0,",
+        "     If[j > m, j*p[[1]], 0]} + p][b[n - j, Max[m, j]]], {j, 1, n}]];",
+        "a[n_] := b[n, -1][[2]];",
+        "Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Mar 04 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A001705 (the same for permutations of [n]), A336482, A336512, A336516, A336771."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 23 2020",
+    "references": 5,
+    "revision": 18,
+    "time": "2022-03-04T08:34:30-05:00",
+    "created": "2020-07-24T16:17:13-04:00"
+}

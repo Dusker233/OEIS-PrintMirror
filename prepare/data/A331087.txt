@@ -1,0 +1,29 @@
+{
+    "number": 331087,
+    "data": "4,12,86,87,88,176,230,231,232,320,464,655,1194,1592,1596,1854,1914,2815,3016,3294,4124,4178,4179,4180,4268,4412,5663,5755,8360,9894,10614,10703,10915,10975,13936,14994,15114,15714,17630,18976,19984,20824,21835,23175,23513",
+    "name": "Starts of runs of 3 consecutive positive negaFibonacci-Niven numbers (A331085).",
+    "comment": [
+        "Numbers of the form F(6*k + 1) - 1, where F(m) is the m-th Fibonacci number, are terms.",
+        "Numbers of the form F(k) - 3, where k is congruent to {5, 11, 13, 19} mod 24 (A269819) are starts of runs of 5 consecutive negaFibonacci-Niven numbers."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A331087/b331087.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "ind[n_] := Floor[Log[Abs[n]*Sqrt[5] + 1/2]/Log[GoldenRatio]];",
+        "f[1] = 1; f[n_] := If[n > 0, i = ind[n - 1]; If[EvenQ[i], i++]; i, i = ind[-n]; If[OddQ[i], i++]; i];",
+        "negaFibTermsNum[n_] := Module[{k = n, s = 0}, While[k != 0, i = f[k]; s += 1; k -= Fibonacci[-i]]; s];",
+        "negFibQ[n_] := Divisible[n, negaFibTermsNum[n]];",
+        "nConsec = 3; neg = negFibQ /@ Range[nConsec]; seq = {}; c = 0; k = nConsec + 1; While[c < 55, If[And @@ neg, c++; AppendTo[seq, k - nConsec]];neg = Join[Rest[neg], {negFibQ[k]}]; k++]; seq"
+    ],
+    "xref": [
+        "Cf. A000045, A154701, A269819, A328210, A328214, A330932, A331085."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jan 08 2020",
+    "references": 17,
+    "revision": 10,
+    "time": "2020-01-09T03:06:32-05:00",
+    "created": "2020-01-08T20:42:21-05:00"
+}

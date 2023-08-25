@@ -1,0 +1,61 @@
+{
+    "number": 226,
+    "id": "M2668 N1066",
+    "data": "1,1,3,7,18,44,117,299,793,2095,5607,15047,40708,110499,301541,825784,2270211,6260800,17319689,48042494,133606943,372430476,1040426154,2912415527,8167992598,22947778342,64577555147,182009003773,513729375064,1452007713130",
+    "name": "Number of n-node unlabeled connected graphs with one cycle of length 3.",
+    "comment": [
+        "Number of rooted trees on n+1 nodes where root has degree 3. - _Christian G. Bower_",
+        "Third column of A033185. - _Michael Somos_, Aug 20 2018",
+        "From _Washington Bomfim_, Dec 22 2020: (Start)",
+        "Number of forests of 3 rooted trees with a total of n nodes.",
+        "Number of unicyclic graphs with a cycle of length 3 and a total of n nodes.",
+        "(End)"
+    ],
+    "reference": [
+        "J. Riordan, An Introduction to Combinatorial Analysis, Wiley, 1958, p. 150.",
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A000226/b000226.txt\">Table of n, a(n) for n = 3..1000</a> (first 198 terms from Vincenzo Librandi)",
+        "Sergei Abramovich, <a href=\"https://sie.scholasticahq.com/article/4599-partitions-of-integers-ferrers-young-diagrams-and-representational-efficacy-of-spreadsheet-modeling\">Partitions of integers, Ferrers-Young diagrams, and representational efficacy of spreadsheet modeling</a>, Spreadsheets in Education (eJSiE): Vol. 5: Iss. 2, Article 1, p. 5",
+        "Washington Bomfim, <a href=\"/A000226/a000226_1.png\">Illustration of initial terms</a>",
+        "F. Ruskey, <a href=\"https://page.math.tu-berlin.de/~felsner/SemWS17-18/Ruskey-Comb-Gen.pdf\">Combinatorial Generation, Eq.(4.27)</a>, 2003",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/RootedTree.html\">Rooted Tree</a>",
+        "<a href=\"/index/Ro#rooted\">Index entries for sequences related to rooted trees</a>"
+    ],
+    "formula": [
+        "G.f.: (r(x)^3+3*r(x)*r(x^2)+2*r(x^3))/6 where r(x) is g.f. for rooted trees (A000081).",
+        "a(n) = Sum_{j1+2j2+\u00b7\u00b7\u00b7= n} (Product_{i=1..n} binomial(A000081(i) + j_i -1, j_i)) [(4.27) of [F. Ruskey] with n replaced by n+1]. - _Washington Bomfim_, Dec 22 2020",
+        "a(n) ~ (A187770 + A339986) * A051491^n / (2 * n^(3/2)). - _Vaclav Kotesovec_, Dec 25 2020"
+    ],
+    "maple": [
+        "b:= proc(n) option remember; if n<=1 then n else add(k*b(k)* s(n-1, k), k=1..n-1)/(n-1) fi end: s:= proc(n,k) option remember; add(b(n+1-j*k), j=1..iquo(n,k)) end: B:= proc(n) option remember; unapply(add(b(k)*x^k, k=1..n),x) end: a:= n-> coeff(series((B(n-2)(x)^3+ 3*B(n-2)(x)* B(n-2)(x^2)+ 2*B(n-2)(x^3))/6, x=0, n+1), x,n): seq(a(n), n=3..40); # _Alois P. Heinz_, Aug 21 2008"
+    ],
+    "mathematica": [
+        "terms = 30; r[_] = 0; Do[r[x_] = x *Exp[Sum[r[x^k]/k, {k, 1, j}]] + O[x]^j // Normal, {j, 1, terms+3}]; A[x_] = (r[x]^3 + 3*r[x]*r[x^2] + 2*r[x^3])/6 + O[x]^(terms+3); Drop[CoefficientList[A[x], x], 3] (* _Jean-Fran\u00e7ois Alcover_, Nov 23 2011, updated Jan 11 2018 *)"
+    ],
+    "program": [
+        "(PARI) seq(max_n) = {my(a = f = vector(max_n), s, D); f[1]=1;",
+        "for(j=1, max_n - 1, f[j+1] = 1/j * sum(k=1, j, sumdiv(k,d, d * f[d]) * f[j-k+1]));",
+        "for(n=3,max_n,s=0;forpart(P=n,D=Set(P);if(#D==3,s+=f[P[1]]*f[P[2]]*f[P[3]];next());",
+        "if(#D==1, s+= binomial(f[P[1]]+2, 3); next());",
+        "if(P[1] == P[2], s += binomial(f[P[1]]+1, 2) * f[P[3]],",
+        "s += binomial(f[P[2]]+1, 2) * f[P[1]]),[1,n],[3,3]); a[n] = s ); a[3..max_n] }; \\\\ _Washington Bomfim_, Dec 22 2020"
+    ],
+    "xref": [
+        "Column 3 of A033185 and A217781.",
+        "Cf. A000081, A001429.",
+        "For n >= 3 a(n) = A217781(n, 3) = A058879(n, n-2) = A033185(n, 3)."
+    ],
+    "keyword": "nonn,nice",
+    "offset": "3,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Apr 19 2000"
+    ],
+    "references": 9,
+    "revision": 82,
+    "time": "2022-11-16T15:31:58-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

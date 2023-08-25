@@ -1,0 +1,55 @@
+{
+    "number": 343118,
+    "data": "2,2,3,3,3,3,3,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6",
+    "name": "Length of the longest sequence of equidistant primes among the first n primes.",
+    "comment": [
+        "This sequence is unbounded as stated by the Green-Tao theorem."
+    ],
+    "link": [
+        "Ben Green and Terence Tao, <a href=\"https://doi.org/10.4007/annals.2008.167.481\">The primes contain arbitrarily long arithmetic progressions</a>, Annals of Mathematics, Vol 167 (2008), pp. 481-547.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Primes_in_arithmetic_progression\">Primes in arithmetic progression</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Green%E2%80%93Tao_theorem\">Green-Tao theorem</a>"
+    ],
+    "formula": [
+        "a(A000720(A005115(n))) = n. - _R\u00e9my Sigrist_, Apr 15 2021"
+    ],
+    "example": [
+        "For the first 2 primes {2,3}, the sequence is itself a list of two equidistant primes, so a(2) = 2.",
+        "For the first 3 primes {2,3,5}, there is at most two equidistant primes, so a(3) = 2.",
+        "For the first 4 primes {2,3,5,7}, the subsequence {3,5,7} is the longest subsequence with 3 equidistant primes, so a(4) = 3.",
+        "For the first 10 primes {2,3,5,7,11,13,17,19,23,29}, the subsequence {5,11,17,23,29} is the longest subsequence with 5 equidistant primes, so a(10) = 5."
+    ],
+    "mathematica": [
+        "nmax = 128; (* Last n *)",
+        "maxlen = 11 ; (* Maximum exploratory length of sequences of equidistant primes. \"maxlen\" must be larger than the maximum term obtained with \"nmax\" *)",
+        "(* a[n,p,s] returns the sequence of \"s\" equidistant primes with period \"p\" and last prime prime(n) if it exists, otherwise it returns {} *)",
+        "a[n_, period_, seqlen_] := Module[{tab, test},",
+        "(* Building sequences of equidistant numbers ending with prime(n) *)",
+        "  tab = Table[Prime[n] - k*period, {k, 0, seqlen - 1}];",
+        "(* Checking if all elements are primes and greater than 2 *)",
+        "  test = (And @@ PrimeQ@tab) && (And @@ Map[(# > 2 &), tab]);",
+        "  Return[If[test, tab, {}]]];",
+        "atab = {}; aterms = {};",
+        "(* For every n, exploring all sequences of equidistant primes among the first n primes with n > 2 *)",
+        "Do[",
+        "  Do[Do[",
+        "    If[a[n, period, seqlen] != {}, AppendTo[atab, seqlen]]",
+        "    , {period, 2, Ceiling[Prime[n]/(seqlen - 1)], 2}]",
+        "   , {seqlen, 2, maxlen}];",
+        "(* Saving the pairs {n, corresponding maximum lengths} *)",
+        "  AppendTo[aterms, {n, Max[atab]}]",
+        "  , {n, 3, nmax}];",
+        "(* Prepending the first term corresponding to the trivial case of first two primes {2,3} *)",
+        "Join[{2}, (Transpose[aterms][[2]])]"
+    ],
+    "xref": [
+        "Cf. A000720, A005115, A338869, A343122."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Andres Cicuttin_, Apr 05 2021",
+    "references": 1,
+    "revision": 35,
+    "time": "2021-05-21T19:19:12-04:00",
+    "created": "2021-05-21T19:19:12-04:00"
+}

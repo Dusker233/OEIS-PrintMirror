@@ -1,0 +1,42 @@
+{
+    "number": 358055,
+    "data": "1,2,5,8,14,20,32,38,59,59,63,116,122,158,158,218,278,278,402,548,642,642,642,642,642,1062,1062,1668,2474,2690,2690,2690,2690,2690,3170,3170,3170,3170,3170,3170,3170,9260,9260,9260,9788,9788,11772,11942,11942,11942,11942,11942",
+    "name": "a(n) is the least m such that A358052(m,k) = n for some k.",
+    "comment": [
+        "a(n) is the least m such that iteration of the map x -> floor(m/x) + (m mod x), starting at some k in [1,m], produces n distinct values before repeating."
+    ],
+    "example": [
+        "a(4) = 8 because A358052(8,6) = 4 and this is the first appearance of 4 in A358052.",
+        "Thus the map x -> floor(8/x) + (8 mod x) starting at 6 produces 4 distinct values before repeating: 6 -> 3 -> 4 -> 2 -> 4."
+    ],
+    "maple": [
+        "f:= proc(n, k) local x, S, count;",
+        "  S:= {k};",
+        "  x:= k;",
+        "  for count from 1 do",
+        "     x:= iquo(n, x) + irem(n, x);",
+        "     if member(x, S) then return count fi;",
+        "     S:= S union {x};",
+        "  od",
+        "end proc:",
+        "V:= Vector(50): count:= 0:",
+        "for n from 1 while count < 50 do",
+        "  for k from 1 to n do",
+        "    v:= f(n,k);",
+        "    if v <= 50 and V[v] = 0 then",
+        "       V[v]:= n; count:= count+1;",
+        "    fi",
+        "od od:",
+        "convert(V,list);"
+    ],
+    "xref": [
+        "Cf. A234575, A358052."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Oct 27 2022",
+    "references": 0,
+    "revision": 10,
+    "time": "2022-11-09T19:11:10-05:00",
+    "created": "2022-11-09T19:11:10-05:00"
+}

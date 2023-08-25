@@ -1,0 +1,56 @@
+{
+    "number": 299706,
+    "data": "0,17,325,4858,64741,808950,9706567,113236940,1294080089,14557915466",
+    "name": "Number of Pythagorean triples with perimeter <= 10^n.",
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PythagoreanTriple.html\">Pythagorean Triple</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Tree_of_primitive_Pythagorean_triples\">Tree of primitive Pythagorean triples</a>"
+    ],
+    "example": [
+        "n = 2",
+        "perimeter | Pythagorean triple",
+        "-------------------------------",
+        "   12     | [ 3,  4,  5]",
+        "   30     | [ 5, 12, 13]",
+        "   24     | [ 6,  8, 10]",
+        "   56     | [ 7, 24, 25]",
+        "   40     | [ 8, 15, 17]",
+        "   36     | [ 9, 12, 15]",
+        "   90     | [ 9, 40, 41]",
+        "   60     | [10, 24, 26]",
+        "   48     | [12, 16, 20]",
+        "   84     | [12, 35, 37]",
+        "   60     | [15, 20, 25]",
+        "   90     | [15, 36, 39]",
+        "   80     | [16, 30, 34]",
+        "   72     | [18, 24, 30]",
+        "   70     | [20, 21, 29]",
+        "   84     | [21, 28, 35]",
+        "   96     | [24, 32, 40]"
+    ],
+    "program": [
+        "(Ruby)",
+        "def f(a, b, c, n)",
+        "  return 0 if a + b + c > n",
+        "  s = n / (a + b + c)",
+        "  s += f( a - 2 * b + 2 * c,  2 * a - b + 2 * c,  2 * a - 2 * b + 3 * c, n)",
+        "  s += f( a + 2 * b + 2 * c,  2 * a + b + 2 * c,  2 * a + 2 * b + 3 * c, n)",
+        "  s += f(-a + 2 * b + 2 * c, -2 * a + b + 2 * c, -2 * a + 2 * b + 3 * c, n)",
+        "  return s",
+        "end",
+        "def A299706(n)",
+        "  (1..n).map{|i| f(3, 4, 5, 10 ** i)}",
+        "end",
+        "p A299706(8)"
+    ],
+    "xref": [
+        "Cf. A024155, A101929, A101930, A101931, A249750."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, Feb 26 2018",
+    "references": 1,
+    "revision": 59,
+    "time": "2018-02-26T09:16:40-05:00",
+    "created": "2018-02-26T09:16:40-05:00"
+}

@@ -1,0 +1,61 @@
+{
+    "number": 363593,
+    "data": "3,8,22,29,36,42,45,53,57,64,82,85,88,94,110,119,124,132,135,141,144,152,159,165,170,177,183,190,195,201,214,220,224,231,239,246,252,264,270,281,287,292,299,302,306,309,323,328,334,341,347,350,356,361,372,378,381,386,397,402,411,418,424,431",
+    "name": "Numbers k such that both A359804(k) and A359804(k+1) are odd.",
+    "comment": [
+        "Odd numbers may occur no more than twice in a row in A359804 as consequence of definition of that sequence.",
+        "Let b(n) = A359804(n). Let D(n) = b(a(n)..a(n)+1).",
+        "Since the product of 2 odd numbers b(n-2) and b(n-1) is odd, and since b(n) = mp, where p = A053669(b(n-2)*b(n-1)) = 2, D(n) implies b(a(n)+2) = 2m.",
+        "b(a(n)+2) = 2k and b(a(n+j)+2) = 2m, j >= 1 imply m > k as consequence of definition of A359804.",
+        "Perfect powers 2^k = b(j) occur such that j = a(n)+2 for some n. Therefore, A361505 is a subset of { a(n) + 2 }. Generally, perfect powers p^e in A246547 follow b(n-2) and b(n-1) such that b(n-2)*b(n-1) mod p != 0.",
+        "Conjecture: for prime q > 11, even squarefree semiprimes 2q follow D(n) for some n. Consider that primes in A359804 appear late for q > 11, yet pairs of successive odd numbers in that sequence occur rather often.",
+        "Conjectured to be an infinite sequence, meaning that consecutive odd terms appear infinitely many times in A359804. - _David James Sycamore_, Jun 21 2023"
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A363593/b363593.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Michael De Vlieger, <a href=\"/A363593/a363593.png\">Plot A359804(n) mod 2 at (x,y) = (n mod 256, -floor(n/256))</a>, 8X magnification, where white represents even terms, and odd terms are shown in color. Singleton odd numbers are shown in dark blue, while red indicates two odd terms in a row. Shows A359804(n) mod 2 for n = 1..2^16.",
+        "Michael De Vlieger, <a href=\"/A363593/a363593_1.png\">Plot A359804(n) mod 2 at (x,y) = (n mod 2^10, -floor(n/2^10))</a>, where white represents even terms, and odd terms are shown in color. Singleton odd numbers are shown in dark blue, while red indicates two odd terms in a row. Shows A359804(n) mod 2 for n = 1..2^20."
+    ],
+    "formula": [
+        "A361503(a(n)+1) = 2, consequence of definition of A359804."
+    ],
+    "example": [
+        "Table of a(n) showing i = b(n) = p(i)*m(i), j = b(n+1) = p(j)*m(j), and k = b(n+2), where p(n) = A361503(n) and m(n) = A359804(n)/A361503(n):",
+        "   n  a(n)    i     j    k   p(i) p(j) m(i) m(j)",
+        "  ----------------------------------------------",
+        "   1    3     3     5    4     3    5    1    1",
+        "   2    8     7     9    8     7    3    1    3",
+        "   3   22    33    35   16    11    7    3    5",
+        "   4   29    45    49   26     5    7    9    7",
+        "   5   36    55    63   32     5    7   11    9",
+        "   6   42    13    65   34    13    5    1   13",
+        "   7   45    39    75   38     3    5   13   15",
+        "   8   53    85    51   46     5    3   17   17",
+        "   9   57    91    99   52     7   11   13    9",
+        "  10   64    57   105   58     3    7   19   15",
+        "  11   82   143    81   62    11    3   13   27",
+        "  12   85   135   147   64     5    7   27   21",
+        "  ..."
+    ],
+    "mathematica": [
+        "nn = 432; c[_] = False; q[_] = 1;",
+        "Set[{i, j}, {1, 2}]; c[1] = c[2] = True; q[2] = 2; u = 3;",
+        "Reap[Do[",
+        "    (k = q[#]; While[c[k #], k++]; k *= #;",
+        "       While[c[# q[#]], q[#]++]) &[(p = 2;",
+        "      While[Divisible[i j, p], p = NextPrime[p]]; p)];",
+        "    If[OddQ[j k], Sow[n - 1]];",
+        "    Set[{c[k], i, j}, {True, j, k}];",
+        "    If[k == u, While[c[u], u++]], {n, 3, nn}] ][[-1, -1]]"
+    ],
+    "xref": [
+        "Cf. A000079, A053669, A100484, A359804, A361503, A361505, A363594."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Michael De Vlieger_ and _David James Sycamore_, Jun 12 2023",
+    "references": 2,
+    "revision": 17,
+    "time": "2023-06-22T06:01:26-04:00",
+    "created": "2023-06-22T06:01:26-04:00"
+}

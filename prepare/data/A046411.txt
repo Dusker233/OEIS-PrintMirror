@@ -1,0 +1,43 @@
+{
+    "number": 46411,
+    "data": "6,12,18,21,22,28,33,39,46,51,52,54,58,63,66,70,82,84,93,98,111,115,117,133,141,142,148,154,159,162,165,166,171,172,175,177,182,187,198,201,205,207,210,219,220,226,232,235,237,245,246,247,249,253,255,261",
+    "name": "Composite numbers the concatenation of whose prime factors is a prime.",
+    "comment": [
+        "For the corresponding primes, see A038514. - _Lekraj Beedassy_, Jun 05 2009"
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A046411/b046411.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Patrick De Geest, <a href=\"http://www.worldofnumbers.com/topic1.htm\">Home Primes</a>"
+    ],
+    "example": [
+        "162 = 2 * 3 * 3 * 3 * 3 and 23333 is a prime, so 162 is in the sequence."
+    ],
+    "mathematica": [
+        "co[n_,k_]:=Nest[FromDigits[Flatten[IntegerDigits[{#,n}]]]&,n,k-1]; Select[Range[261],!PrimeQ[#]&&PrimeQ[FromDigits[Flatten[IntegerDigits[co@@@FactorInteger[#]]]]]&](* _Jayanta Basu_, Jun 04 2013 *)"
+    ],
+    "program": [
+        "(PARI) is(n)=my(f=factor(n),s=\"\");for(i=1,#f~,for(j=1,f[i,2],s=Str(s,f[i,1]))); isprime(eval(s)) && !isprime(n) \\\\ _Charles R Greathouse IV_, May 14 2015",
+        "(Python)",
+        "from sympy import isprime, factorint",
+        "def ok(n):",
+        "    f = factorint(n)",
+        "    if sum(e for e in f.values()) < 2: return False",
+        "    return isprime(int(\"\".join(str(p)*e for p, e in f.items())))",
+        "print(list(filter(ok, range(2, 262)))) # _Michael S. Branicky_, Jun 12 2021"
+    ],
+    "xref": [
+        "Cf. A037271-A037281.",
+        "Cf. A038514 (corresponding primes), A221220 (factors without multiplicity)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Jun 15 1998",
+    "ext": [
+        "Edited by _Charles R Greathouse IV_, Apr 23 2010",
+        "Title clarified by _Sean A. Irvine_, Jan 16 2021"
+    ],
+    "references": 12,
+    "revision": 28,
+    "time": "2021-06-12T09:07:19-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

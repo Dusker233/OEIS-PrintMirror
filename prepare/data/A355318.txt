@@ -1,0 +1,36 @@
+{
+    "number": 355318,
+    "data": "751,2971,5174,5594,5789,6106,6151,6376,6613,7129,12376,23719,24758,47135,53146,73906,73969,74956,96512,111406,114475,119825,126896,128377,131657,135815,135817,137681,152402,158924,182045,192641,197269,203383,203758,215809,218332,230261,230431,232946,233485,235918",
+    "name": "Indices of the primes that have the same base-10 digits as the corresponding prime number (with multiplicity), disregarding zero digits.",
+    "example": [
+        "976571 is a term since prime(976571) = 15097067 has the same multiset of nonzero digits {1,5,6,7,7,9} as its index 976571."
+    ],
+    "mathematica": [
+        "a[max_] := Module[{l}, Select[{#, Prime[#]} & /@ Range[max], (l = IntegerDigits[#[[2]]]; SortBy[Tally[l], First] === SortBy[Tally[PadLeft[IntegerDigits[#[[1]]], Length[l]]], First]) &]]; a[10^6][[All, 1]] (* Gives the first 108 terms *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import nextprime",
+        "from itertools import islice",
+        "def b10s(n): return \"\".join(sorted(str(n))).lstrip(\"0\")",
+        "def agen():",
+        "    k, pk = 1, 2",
+        "    while True:",
+        "        if b10s(k) == b10s(pk): yield k",
+        "        k, pk = k+1, nextprime(pk)",
+        "print(list(islice(agen(), 32))) # _Michael S. Branicky_, Jun 28 2022",
+        "(PARI) strip0(v) = {my(nn=1); while(v[nn]==0, nn++); v[nn..#v]};",
+        "a355318(upto) = {my(k=0); forprime (p=2, upto, k++; if(strip0(vecsort(digits(k))) == strip0(vecsort(digits(p))), print1(k,\", \")))};",
+        "a355318(4000000); \\\\ _Hugo Pfoertner_, Jul 05 2022"
+    ],
+    "xref": [
+        "Cf. A355317 (the corresponding primes), A355539."
+    ],
+    "keyword": "base,easy,nonn",
+    "offset": "1,1",
+    "author": "_Xiaofeng Wang_, Jun 28 2022",
+    "references": 3,
+    "revision": 29,
+    "time": "2022-07-07T08:03:33-04:00",
+    "created": "2022-07-07T08:03:33-04:00"
+}

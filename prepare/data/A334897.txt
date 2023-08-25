@@ -1,0 +1,51 @@
+{
+    "number": 334897,
+    "data": "0,0,0,1,1,1,1,2,4,4,4,4,4,4,4,6,6,6,6,7,7,7,7,7,10,10,12,13,13,13,13,15,15,15,15,16,16,16,16,16,16,16,16,17,17,17,17,18,23,24,24,25,25,25,25,25,25,25,25,25,25,25,25,28,28,28,28,29,29,29,29,30,30,30,31,32,32,32,32,32,36,36,36,36,36,36,36,37,37,37,37,38,38,38,38,38,38,40,42,45",
+    "name": "a(n) is the number of positive integers less than or equal to n that can be written as the geometric mean of two different positive integers less than or equal to n.",
+    "comment": [
+        "For n <= 127, a(n) = n - A335152. For n > 127, a(n) <= n - A335152. This sequence is nondecreasing, i.e., a(n) >= a(n-1) as the a(n) positive integers include all the a(n-1) positive integers for n-1."
+    ],
+    "link": [
+        "Ya-Ping Lu and Shu-Fang Deng, <a href=\"http://arxiv.org/abs/2003.08968\">Properties of Polytopes Representing Natural Numbers</a>, arXiv:2003.08968 [math.GM], 2020. See Table 3.1."
+    ],
+    "formula": [
+        "a(n) = n - A064047(n)."
+    ],
+    "example": [
+        "a(1) = 0 because 1 is the only positive integer <= 1.",
+        "a(2) = 0 because 1 and 2 are the only two positive integers <= 2, and sqrt(1*2) is not an integer.",
+        "a(4) = 1 because 2 = sqrt(1*4).",
+        "a(8) = 2 because 2 = sqrt(1*4) and 4 = sqrt(2*8).",
+        "a(9) = 4 because 2 = sqrt(1*4), 3 = sqrt(1*9), 4 = sqrt(2*8), and 6 = sqrt(4*9).",
+        "a(16) = 6 because 2 = sqrt(1*4), 3 = sqrt(1*9), 4 = sqrt(2*8), 6 = sqrt(4*9), 8 = sqrt(4*16), and 12 = sqrt(9*16)."
+    ],
+    "program": [
+        "(Python)",
+        "list1 = []",
+        "list2 = []",
+        "nmax = 100",
+        "for i in range(1, nmax+1):",
+        "    list1.append(i*i)",
+        "    for j in range(1, i+1):",
+        "        for k in range(j+1, i+1):",
+        "            m = j*k",
+        "            if m in list1:",
+        "                list1.remove(m)",
+        "                list2.append(m)",
+        "    print(i, len(list2))",
+        "(PARI) a(n)={sum(i=1, n, sum(j=1, i-1, i^2%j==0 && i^2/j<=n)>0)} \\\\ _Andrew Howroyd_, May 15 2020"
+    ],
+    "xref": [
+        "Cf. A064047, A333524, A333525, A333526, A333527, A333528, A335152."
+    ],
+    "keyword": "nonn",
+    "offset": "1,8",
+    "author": "_Ya-Ping Lu_, May 15 2020",
+    "ext": [
+        "Terms a(51) and beyond from _Andrew Howroyd_, May 15 2020"
+    ],
+    "references": 1,
+    "revision": 40,
+    "time": "2020-05-27T02:42:55-04:00",
+    "created": "2020-05-25T23:47:28-04:00"
+}

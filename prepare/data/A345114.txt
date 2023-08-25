@@ -1,0 +1,37 @@
+{
+    "number": 345114,
+    "data": "49,58,59,67,68,69,76,77,78,79,85,86,87,88,94,95,96,97,103,114,115,116,117,119,121,124,125,126,128,129,131,134,135,137,138,139,141,142,143,146,148,149,151,153,154,155,157,158,159,160,161,162,163,164,165,168",
+    "name": "Numbers whose trajectories under the map x -> A345111(x) do not reach a palindrome (conjectured).",
+    "comment": [
+        "The trajectories of the given terms do not reach a palindrome in 10000 (10^4) or fewer steps. The trajectory of 49 does not reach a palindrome in 100000 (10^5) or fewer steps."
+    ],
+    "program": [
+        "(PARI) eva(n) = subst(Pol(n), x, 10)",
+        "rot(vec) = if(#vec < 2, return(vec)); my(s=concat(Str(2), \"..\"), v=[]); s=concat(s, Str(#vec)); v=vecextract(vec, s); v=concat(v, vec[1]); v",
+        "a345112(n, bound) = my(x=n, i=0); while(1, x=x+eva(rot(digits(x))); i++; if(digits(x)==Vecrev(digits(x)), break); if(i > bound, return(-1))); i",
+        "is(n) = a345112(n, 10000)==-1",
+        "(Python)",
+        "def pal(s): return s == s[::-1]",
+        "def rotl(s): return s[1:] + s[0]",
+        "def A345111(n): return n + int(rotl(str(n)))",
+        "def A345112_bd(n, bd=10000):",
+        "    i, iter, seen = 0, n, set()",
+        "    while not (iter > n and pal(str(iter))) and iter not in seen and i < bd:",
+        "        seen.add(iter)",
+        "        i, iter = i+1, A345111(iter)",
+        "    return i if iter > n and pal(str(iter)) else 0",
+        "def aupto(lim, bd=10000):",
+        "    return [n for n in range(1, lim+1) if A345112_bd(n, bd=bd) == 0]",
+        "print(aupto(168, bd=100)) # _Michael S. Branicky_, Jun 09 2021"
+    ],
+    "xref": [
+        "Cf. A023108 (analog for the map x -> A056964(x)), A345110, A345111, A345112, A345113, A345115."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Felix Fr\u00f6hlich_, Jun 09 2021",
+    "references": 5,
+    "revision": 7,
+    "time": "2021-06-09T23:24:18-04:00",
+    "created": "2021-06-09T23:24:18-04:00"
+}

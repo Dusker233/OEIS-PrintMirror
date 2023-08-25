@@ -1,0 +1,74 @@
+{
+    "number": 342493,
+    "data": "1,1,2,3,6,8,11,16,22,28,39,49,61,77,93,114,140,169,198,233,276,321,381,439,509,591,678,774,883,1007,1147,1300,1465,1641,1845,2068,2317,2590,2881,3193,3549,3928,4341,4793,5282,5813,6401,7027,7699,8432,9221,10076",
+    "name": "Number of compositions of n with strictly increasing first quotients.",
+    "comment": [
+        "The first quotients of a sequence are defined as if the sequence were an increasing divisor chain, so for example the first quotients of (6,3,1) are (1/2,1/3)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A342493/b342493.txt\">Table of n, a(n) for n = 0..500</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/LogarithmicallyConcaveSequence.html\">Logarithmically Concave Sequence</a>.",
+        "Gus Wiseman, <a href=\"/A069916/a069916.txt\">Sequences counting and ranking partitions and compositions by their differences and quotients</a>."
+    ],
+    "example": [
+        "The composition (3,1,1,2) has first quotients (1/3,1,2) so is counted under a(7).",
+        "The a(1) = 1 through a(7) = 16 compositions:",
+        "  (1)  (2)    (3)    (4)      (5)      (6)        (7)",
+        "       (1,1)  (1,2)  (1,3)    (1,4)    (1,5)      (1,6)",
+        "              (2,1)  (2,2)    (2,3)    (2,4)      (2,5)",
+        "                     (3,1)    (3,2)    (3,3)      (3,4)",
+        "                     (1,1,2)  (4,1)    (4,2)      (4,3)",
+        "                     (2,1,1)  (1,1,3)  (5,1)      (5,2)",
+        "                              (2,1,2)  (1,1,4)    (6,1)",
+        "                              (3,1,1)  (2,1,3)    (1,1,5)",
+        "                                       (3,1,2)    (2,1,4)",
+        "                                       (4,1,1)    (2,2,3)",
+        "                                       (2,1,1,2)  (3,1,3)",
+        "                                                  (3,2,2)",
+        "                                                  (4,1,2)",
+        "                                                  (5,1,1)",
+        "                                                  (2,1,1,3)",
+        "                                                  (3,1,1,2)"
+    ],
+    "maple": [
+        "b:= proc(n, q, l) option remember; `if`(n=0, 1, add(",
+        "     `if`(q=0 or q>l/j, b(n-j, l/j, j), 0), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..55);  # _Alois P. Heinz_, Mar 25 2021"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],Less@@Divide@@@Reverse/@Partition[#,2,1]&]],{n,0,15}]",
+        "(* Second program: *)",
+        "b[n_, q_, l_] := b[n, q, l] = If[n == 0, 1, Sum[",
+        "     If[q == 0 || q > l/j, b[n - j, l/j, j], 0], {j, 1, n}]];",
+        "a[n_] := b[n, 0, 0];",
+        "a /@ Range[0, 55] (* _Jean-Fran\u00e7ois Alcover_, May 19 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "The version for differences instead of quotients is A325547.",
+        "The weakly increasing version is A342492.",
+        "The strictly decreasing version is A342494.",
+        "The unordered version is A342498, ranked by A342524.",
+        "The strict unordered version is A342517.",
+        "A000005 counts constant compositions.",
+        "A000009 counts strictly increasing (or strictly decreasing) compositions.",
+        "A000041 counts weakly increasing (or weakly decreasing) compositions.",
+        "A001055 counts factorizations.",
+        "A003238 counts chains of divisors summing to n - 1 (strict: A122651).",
+        "A074206 counts ordered factorizations.",
+        "A167865 counts strict chains of divisors > 1 summing to n.",
+        "A274199 counts compositions with all adjacent parts x < 2y.",
+        "Cf. A003242, A008965, A048004, A059966, A067824, A167606, A253249, A318991, A318992, A342527, A342528."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Mar 16 2021",
+    "ext": [
+        "a(21)-a(51) from _Alois P. Heinz_, Mar 18 2021"
+    ],
+    "references": 6,
+    "revision": 26,
+    "time": "2023-02-21T13:23:17-05:00",
+    "created": "2021-03-18T08:29:41-04:00"
+}

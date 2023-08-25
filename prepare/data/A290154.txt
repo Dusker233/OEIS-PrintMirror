@@ -1,0 +1,85 @@
+{
+    "number": 290154,
+    "data": "6,20,42,78,118,184,248,332,428,534,654,772,906,1052,1208,1388,1562,1754,1958,2164,2396,2638,2896,3144,3424,3682,3986,4304,4622,4976,5286,5652,6002,6374,6748,7148,7532,7934,8356,8786,9224,9684,10158,10618,11114,11604",
+    "name": "Smallest number k such that exactly half the numbers in [1..k] are prime(n)-smooth.",
+    "comment": [
+        "All terms are even numbers (because of the \"exactly half the numbers in [1..k]\" part of the definition)."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A290154/b290154.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..2000 from Robert Israel)",
+        "Michael S. Branicky, <a href=\"/A290154/a290154.txt\">Python program for bfile</a>"
+    ],
+    "example": [
+        "The 2-smooth numbers are 1, 2, 4, 8, 16, 32, ... (A000079, the powers of 2), so the numbers of 2-smooth numbers in the interval [1..k] for k = 2, 4, and 6 are 2, 3, and 3, respectively; thus, the smallest k at which the number of 2-smooth numbers in [1..k] is exactly k/2 is k=6, so a(1)=6.",
+        "The 3-smooth numbers are 1, 2, 3, 4, 6, 8, 9, 12, 16, 18, 24, 27, 32, ... (A003586), so there are more than k/2 3-smooth numbers in [1..k] for every positive k < 20, but exactly k/2 3-smooth numbers in [1..20], so a(2) = 20."
+    ],
+    "maple": [
+        "N:= 100:",
+        "mypi:= proc(n) option remember; global pmax; local k;",
+        "  k:= procname(pmax);",
+        "  while pmax < n do pmax:= nextprime(pmax); k:= k+1 od;",
+        "  k",
+        "end proc:",
+        "pmax:= 2: mypi(2):= 1:",
+        "V:= Vector(N):",
+        "count:= 0:",
+        "loheap:=heap[new](`<`,0): nlo:= 1:",
+        "hiheap:= heap[new](`>`,1): nhi:= 1:",
+        "for k from 4 by 2 while count < N do",
+        "   for v in [mypi(max(numtheory:-factorset(k-1))), mypi(max(numtheory:-factorset(k)))] do",
+        "     if v <= heap[max](loheap) then heap[insert](v,loheap); nlo:= nlo+1;",
+        "     elif v >= heap[max](hiheap) then heap[insert](v,hiheap); nhi:= nhi+1;",
+        "     elif nlo <= nhi then heap[insert](v,loheap); nlo:= nlo+1;",
+        "     else heap[insert](v,hiheap); nhi:= nhi+1;",
+        "     fi;",
+        "   od;",
+        "   if nlo < nhi-1 then",
+        "        t:= heap[extract](hiheap);",
+        "        heap[insert](t,loheap);",
+        "        nlo:= nlo+1; nhi:= nhi-1;",
+        "   elif nhi < nlo-1 then",
+        "        t:= heap[extract](loheap);",
+        "        heap[insert](t,hiheap);",
+        "        nhi:= nhi+1; nlo:= nlo-1;",
+        "   fi;",
+        "   for n from heap[max](loheap) to min(heap[max](hiheap)-1, N) do",
+        "     if V[n] = 0 then count:= count+1; V[n]:= k;",
+        "     fi",
+        "   od;",
+        "od:",
+        "convert(V,list); # _Robert Israel_, Mar 28 2019"
+    ],
+    "mathematica": [
+        "smoothQ[k_, p_] := k <= p || Max[FactorInteger[k][[All, 1]]] <= p; a[n_] := For[p = Prime[n]; cnt = 0; k = 1, True, k++, If[smoothQ[k, p], cnt++]; If[cnt == k/2, Return[k]]]; Array[a, 46] (* _Jean-Fran\u00e7ois Alcover_, Jul 22 2017 *)"
+    ],
+    "program": [
+        "(PARI) is(k,n) = {m=k; forprime(p=2, prime(n), while(m%p==0, m=m/p)); return(m==1); }",
+        "a(n) = {j=2; x=2; y=0; while(x!=y, j+=2; s=is(j,n)+is(j-1,n); x+=s; y+=2-s); j; } \\\\ _Jinyuan Wang_, Aug 03 2019",
+        "(Python) # see link for a faster version producing bfile",
+        "from sympy import factorint, prevprime, primerange, prod",
+        "def aupto(limit):",
+        "    adict, pN = dict(), prevprime(limit+1)",
+        "    pi = {p: i for i, p in enumerate(primerange(1, pN+1), start=1)}",
+        "    smooth = {i: 0 for i in pi.values()}",
+        "    watching = smooth[0] = 1  # 1 is prime(n) smooth for all n",
+        "    for n in range(2, limit+1):",
+        "        f = factorint(n, limit=pN)",
+        "        nt = prod(p**f[p] for p in f if p <= pN)",
+        "        if nt == n: smooth[pi[max(f)]] += 1",
+        "        if 2*sum(smooth[i] for i in range(watching+1)) == n:",
+        "            adict[watching] = n",
+        "            watching += 1",
+        "    return sorted(adict.values())",
+        "print(aupto(12000)) # _Michael S. Branicky_, Jun 20 2021"
+    ],
+    "xref": [
+        "Cf. A000079, A003586, A126283."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jon E. Schoenfield_, Jul 21 2017",
+    "references": 5,
+    "revision": 33,
+    "time": "2021-06-22T08:36:49-04:00",
+    "created": "2017-07-22T09:02:47-04:00"
+}

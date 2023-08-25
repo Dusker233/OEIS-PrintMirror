@@ -1,0 +1,37 @@
+{
+    "number": 308564,
+    "data": "1,2,6,22,90,404,1974,10366,57864,341690,2134022,14104624,98498972,723664482,5561589508,44473028634,368602225688,3159852790392,27997141025686,256410638073082,2428063270357748,23774001479212114,240580239864321604,2513553050765310236",
+    "name": "Expansion of e.g.f. Sum_{k>=1} phi(k)*(exp(x) - 1)^k/k!, where phi = Euler totient function (A000010).",
+    "comment": [
+        "Stirling transform of A000010."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A308564/b308564.txt\">Table of n, a(n) for n = 1..575</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=1} phi(k)*x^k / Product_{j=1..k} (1 - j*x).",
+        "a(n) = Sum_{k=1..n} Stirling2(n,k)*phi(k)."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; uses numtheory;",
+        "     `if`(n=0, phi(m), m*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=1..24);  # _Alois P. Heinz_, Aug 04 2021"
+    ],
+    "mathematica": [
+        "nmax = 24; Rest[CoefficientList[Series[Sum[EulerPhi[k] (Exp[x] - 1)^k/k!, {k, 1, nmax}], {x, 0, nmax}], x] Range[0, nmax]!]",
+        "nmax = 24; Rest[CoefficientList[Series[Sum[EulerPhi[k] x^k/Product[(1 - j x), {j, 1, k}], {k, 1, nmax}], {x, 0, nmax}], x]]",
+        "Table[Sum[StirlingS2[n, k] EulerPhi[k], {k, 1, n}], {n, 1, 24}]"
+    ],
+    "xref": [
+        "Cf. A000010, A306988."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Jun 07 2019",
+    "references": 1,
+    "revision": 10,
+    "time": "2021-08-04T09:36:33-04:00",
+    "created": "2019-06-07T21:59:22-04:00"
+}

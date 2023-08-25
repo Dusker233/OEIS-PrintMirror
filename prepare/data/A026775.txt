@@ -1,0 +1,44 @@
+{
+    "number": 26775,
+    "data": "1,1,2,4,7,17,28,76,120,352,538,1674,2493,8129,11854,40156,57558,201236,284392,1020922,1426038,5234660,7241356,27089726,37173304,141335846,192638992,742712598,1006564439,3927908193,5297715628",
+    "name": "a(n) = T(n, floor(n/2)), T given by A026769.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A026775/b026775.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "maple": [
+        "T:= proc(n,k) option remember;",
+        "   if n<0 then 0;",
+        "   elif k=0 or k=n then 1;",
+        "   elif n=2 and k=1 then 2;",
+        "   elif k <= (n-1)/2 then",
+        "        procname(n-1,k-1)+procname(n-2,k-1)+procname(n-1,k) ;",
+        "   else",
+        "       procname(n-1,k-1)+procname(n-1,k) ;",
+        "   end if ;",
+        "end proc;",
+        "seq(T(n, floor(n/2)), n=0..30); # _G. C. Greubel_, Nov 01 2019"
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k]= If[n<0, 0, If[k==0 || k==n, 1, If[n==2 && k==1, 2, If[k<=(n-1)/2, T[n-1, k-1] + T[n-2, k-1] + T[n-1, k], T[n-1, k-1] + T[n-1, k] ]]]]; Table[T[n, Floor[n/2]], {n,0,30}] (* _G. C. Greubel_, Nov 01 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n, k):",
+        "    if (k==0 or k==n): return 1",
+        "    elif (n==2 and k==1): return 2",
+        "    elif (k<=(n-1)/2): return T(n-1,k-1) + T(n-2,k-1) + T(n-1,k)",
+        "    else: return T(n-1,k-1) + T(n-1,k)",
+        "[T(n, floor(n/2)) for n in (0..30)] # _G. C. Greubel_, Nov 01 2019"
+    ],
+    "xref": [
+        "Cf. A026769, A026770, A026771, A026772, A026773, A026774, A026776, A026777, A026778, A026779."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_",
+    "references": 11,
+    "revision": 7,
+    "time": "2019-11-01T22:23:13-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

@@ -1,0 +1,67 @@
+{
+    "number": 337069,
+    "data": "1,1,3,34,1591,360144,442349835,3255845551937,156795416820025934,53452979022001011490033,138542156296245533221812350867,2914321438328993304235584538307144802,528454951438415221505169213611461783474874149,873544754831735539240447436467067438924478174290477803",
+    "name": "Number of strict factorizations of the superprimorial A006939(n).",
+    "comment": [
+        "The n-th superprimorial is A006939(n) = Product_{i = 1..n} prime(i)^(n - i + 1).",
+        "Also the number of strict multiset partitions of  {1,2,2,3,3,3,...,n}, a multiset with i copies of i for i = 1..n."
+    ],
+    "formula": [
+        "a(n) = A045778(A006939(n)).",
+        "a(n) = A318286(A002110(n)). - _Andrew Howroyd_, Sep 01 2020"
+    ],
+    "example": [
+        "The a(3) = 34 factorizations:",
+        "  2*3*4*15  2*3*60   2*180  360",
+        "  2*3*5*12  2*4*45   3*120",
+        "  2*3*6*10  2*5*36   4*90",
+        "  2*4*5*9   2*6*30   5*72",
+        "  3*4*5*6   2*9*20   6*60",
+        "            2*10*18  8*45",
+        "            2*12*15  9*40",
+        "            3*4*30   10*36",
+        "            3*5*24   12*30",
+        "            3*6*20   15*24",
+        "            3*8*15   18*20",
+        "            3*10*12",
+        "            4*5*18",
+        "            4*6*15",
+        "            4*9*10",
+        "            5*6*12",
+        "            5*8*9"
+    ],
+    "mathematica": [
+        "chern[n_]:=Product[Prime[i]^(n-i+1),{i,n}];",
+        "stfa[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[stfa[n/d],Min@@#>d&]],{d,Rest[Divisors[n]]}]];",
+        "Table[Length[stfa[chern[n]]],{n,0,3}]"
+    ],
+    "program": [
+        "(PARI) \\\\ See A318286 for count.",
+        "a(n) = {if(n==0, 1, count(vector(n, i, i)))} \\\\ _Andrew Howroyd_, Sep 01 2020"
+    ],
+    "xref": [
+        "A022915 counts permutations of the same multiset.",
+        "A157612 is the version for factorials instead of superprimorials.",
+        "A317829 is the non-strict version.",
+        "A337072 is the non-strict version with squarefree factors.",
+        "A337073 is the case with squarefree factors.",
+        "A000217 counts prime factors (with multiplicity) of superprimorials.",
+        "A001055 counts factorizations.",
+        "A006939 lists superprimorials or Chernoff numbers.",
+        "A045778 counts strict factorizations.",
+        "A076954 can be used instead of A006939 (cf. A307895, A325337).",
+        "A181818 lists products of superprimorials, with complement A336426.",
+        "A322583 counts factorizations into factorials.",
+        "Cf. A000142, A000178, A002110, A022559, A027423, A303279, A318286, A322583, A337070, A337071."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Aug 15 2020",
+    "ext": [
+        "a(7)-a(13) from _Andrew Howroyd_, Sep 01 2020"
+    ],
+    "references": 4,
+    "revision": 15,
+    "time": "2020-09-05T03:42:39-04:00",
+    "created": "2020-08-17T20:48:54-04:00"
+}

@@ -1,0 +1,31 @@
+{
+    "number": 321732,
+    "data": "1,1,3,11,53,317,2293",
+    "name": "Number of nonnegative integer square matrices with sum of entries equal to n, no zero rows or columns, and the same row sums as column sums.",
+    "example": [
+        "The a(3) = 11 matrices:",
+        "  [3]",
+        ".",
+        "  [2 0] [1 1] [1 0] [0 1]",
+        "  [0 1] [1 0] [0 2] [1 1]",
+        ".",
+        "  [1 0 0] [1 0 0] [0 1 0] [0 1 0] [0 0 1] [0 0 1]",
+        "  [0 1 0] [0 0 1] [1 0 0] [0 0 1] [1 0 0] [0 1 0]",
+        "  [0 0 1] [0 1 0] [0 0 1] [1 0 0] [0 1 0] [1 0 0]"
+    ],
+    "mathematica": [
+        "prs2mat[prs_]:=Table[Count[prs,{i,j}],{i,Union[First/@prs]},{j,Union[Last/@prs]}];",
+        "multsubs[set_,k_]:=If[k==0,{{}},Join@@Table[Prepend[#,set[[i]]]&/@multsubs[Drop[set,i-1],k-1],{i,Length[set]}]];",
+        "Table[Length[Select[multsubs[Tuples[Range[n],2],n],And[Union[First/@#]==Range[Max@@First/@#]==Union[Last/@#],Total/@prs2mat[#]==Total/@Transpose[prs2mat[#]]]&]],{n,5}]"
+    ],
+    "xref": [
+        "Cf. A000700, A000701, A006052, A007016, A120732, A319056, A320451, A321718, A321719, A321722, A321733, A321734, A321735, A321736, A321739."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Nov 18 2018",
+    "references": 5,
+    "revision": 4,
+    "time": "2018-11-19T07:22:01-05:00",
+    "created": "2018-11-19T07:22:01-05:00"
+}

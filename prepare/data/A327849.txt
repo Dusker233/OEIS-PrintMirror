@@ -1,0 +1,28 @@
+{
+    "number": 327849,
+    "data": "157,4789,12615,46257,78765,120147,201069,46343011,156666811,1235649115,45728246203,78080354869,95882561515,775752845083",
+    "name": "Nontrivial odd solutions n to P(n) == 1 + r*Sum_{i=1..d(n)} x^i (mod m) where P(n) is the n-th Stern polynomial, d(n) is the degree of P(n), r=1, m=3.",
+    "comment": [
+        "Nontrivial means solutions neither of the form 2^(k+1)-1 nor of the form 2^(k+2)-3."
+    ],
+    "link": [
+        "Maciej Ulas, <a href=\"https://arxiv.org/abs/1909.10844\">Strong arithmetic property of certain Stern polynomials</a>, arXiv:1909.10844 [math.NT], 2019. See Table 3 p. 12."
+    ],
+    "program": [
+        "(PARI) pol(n) = {if (n<2, return (n)); if (n%2, pol((n+1)/2) + pol((n-1)/2), x*pol(n/2));} \\\\ A125184",
+        "ispow2(n) = if ((n==1) || (n==2), return (1)); my(p); isprimepower(n,&p) && (p==2);",
+        "istrivial(n) = ispow2(n+1) || ispow2(n+3);",
+        "isokrm(n, r, m) = {if ((n%2) && !istrivial(n), my(p=pol(n), d=poldegree(p)); Mod(p, m) == Mod(1+r*sum(i=1, d, x^i), m););}",
+        "lista(nn) = forstep(n=1, nn, 2, if (isokrm(n, 1, 3), print1(n, \", \")));"
+    ],
+    "xref": [
+        "Cf. A125184 (Stern polynomials), A327848, A327850."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Sep 28 2019",
+    "references": 2,
+    "revision": 11,
+    "time": "2019-09-28T22:29:50-04:00",
+    "created": "2019-09-28T09:57:56-04:00"
+}

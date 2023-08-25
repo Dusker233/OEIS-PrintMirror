@@ -1,0 +1,49 @@
+{
+    "number": 337347,
+    "data": "2,3,5,11,19,37,73,193,337,1741,5851,39157,50857,987713,1292701,11168887,21510131,177872951,220893209,932384951,15511295531,43482833879,974160518137,2539542521143,12281147701703,22439317786231,47001613189621,899695689045059",
+    "name": "a(n) = a(n-2) + a(n-1) if that sum is prime. Otherwise, a(n) = a(n-2) + a(n-1) + prime(m-1) + prime(m-2) + ... + prime(s), where a(-1) = a(0) = prime(0) = 1, m = pi(a(n-2)), and s = max(0, 1, 2, ..., m-1) such that the sum is prime.",
+    "comment": [
+        "This sequence is similar to Fibonacci sequence except that, if a(n) = a(n-1) + a(n-2) is not a prime, the prime numbers < a(n-2) are added to a(n-1)+a(n-2) sequentially starting from the largest prime number < a(n-2) until the sum becomes a prime.",
+        "If the prime numbers added to a(n-1)+a(n-2) are limited to the terms < a(n-2) that are already in the sequence including a(0)=1, we would have a new sequence with 9 terms only: 2, 3, 5, 11, 19, 41, 71, 131, 281.",
+        "When a(n-1)+a(n-2) is not prime, the last digit of the last term, prime(s), added to a(n-1)+a(n-2) is either \"1\", \"7\", or \"9\" for n up to 35, except prime(s) = 3 for n = 5 and prime(s) = 23 for n=8. This trend has yet to be verified for n > 35.",
+        "Although a(0)=1 is an anchor for the sequence, a(0) does not appear in the sequence because the obvious intent is to construct a sequence of primes. - _R. J. Mathar_, Jun 18 2021"
+    ],
+    "formula": [
+        "a(n) = a(n-1) + a(n-2) + Sum{i=1..m-s}prime(m-i), where a(-1) = a(0) = prime(0) = 1, m = pi(a(n-2)), and s = max(0, 1, 2, ..., m) such that a(n) is prime."
+    ],
+    "example": [
+        "a(1) = a(0) + a(-1) = 1 + 1 = 2;",
+        "a(2) = a(1) + a(0) = 2 + 1 = 3;",
+        "a(3) = a(2) + a(1) = 3 + 2 = 5;",
+        "a(4) = a(3) + a(2) + prime(pi(a(2))-1) + prime(pi(a(2))-2) = 5 + 3 + prime(1) + prime(0) = 8 + 2 + 1 = 11;",
+        "a(5) = a(4) + a(3) + prime(pi(a(3))-1) = 11 + 5 + prime(2) = 16 + 3 = 19;",
+        "a(15) = a(14) + a(13) + prime(pi(a(13))-1) + prime(pi(a(13))-2) + prime(pi(a(13))-3) + prime(pi(a(13))-4) + prime(pi(a(13))-5) = 987713 + 50857 + prime(5208) + prime(5207) + prime(5206) + prime(5205) + prime(5204) = 1038570 + 50849 + 50839 + 50833 + 50821 + 50789 = 1292701."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime, prime, primepi",
+        "a_1 = 1",
+        "a0 = 1",
+        "for n in range(1, 101):",
+        "    a = a_1 + a0",
+        "    m = primepi(a_1)",
+        "    b = 0",
+        "    while not isprime(a + b):",
+        "        m = m - 1",
+        "        b = b + prime(m)",
+        "    a = a + b",
+        "    print(a)",
+        "    a_1 = a0",
+        "    a0 = a"
+    ],
+    "xref": [
+        "Cf. A000045 (Fibonacci), A000213 (tribonacci)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ya-Ping Lu_, Aug 25 2020",
+    "references": 1,
+    "revision": 43,
+    "time": "2021-07-21T22:50:12-04:00",
+    "created": "2020-09-04T15:58:25-04:00"
+}

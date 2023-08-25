@@ -1,0 +1,33 @@
+{
+    "number": 362054,
+    "data": "70,1092,1428,1596,4030,5830,50388,133042,216300,269990,437745,442365,4199030,22982388,124540390,361745930,507298090,541900788,624032630,1113445430,3002432810,6771402960,13455037365,17242767300,60428265370",
+    "name": "Primitive unitary abundant numbers k (A302573) whose unitary abundancy index usigma(k)/k has a record low value.",
+    "comment": [
+        "The unitary abundancy index of an integer k is usigma(k)/k, where usigma is the sum-of-unitary-divisors function (A034448).",
+        "Terms k of A302573 such that usigma(k)/k < usigma(m)/m for all smaller terms m < k of A302573."
+    ],
+    "example": [
+        "The unitary abundancy indices of the first terms are 72/35 > 80/39 > 240/119 > 800/399 > 4032/2015 > 5832/2915 > ... > 2."
+    ],
+    "mathematica": [
+        "f1[p_, e_] := 1 + 1/p^e; f2[p_, e_] := p^e/(p^e + 1);",
+        "(* Returns the unitary abundancy index of n if n is primitive unitary abundant,and 0 otherwise: *)",
+        "uabIndex[n_] := If[(r = Times @@ f1 @@@ (f = FactorInteger[n])) > 2 && r * Max @@ f2 @@@ f < 2, r, 0]; uabIndex[1] = 0;",
+        "seq[kmax_] := Module[{s = {}, uab, uabm = 3}, Do[If[0 < (uab = uabIndex[k]) < uabm, uabm = uab; AppendTo[s, k]], {k, 1, kmax}]; s]; seq[10^6]"
+    ],
+    "program": [
+        "(PARI) uabindex(n) = {my(f = factor(n), r); r = prod(i = 1, #f~, 1 + 1/f[i, 1]^f[i, 2]); if(r <= 2, return(0)); if(vecmax(vector(#f~, i, f[i, 1]^f[i, 2]/(f[i, 1]^f[i, 2] + 1))) * r < 2, r, 0);} \\\\ Returns the unitary abundancy index of n if n is primitive unitary abundant, and 0 otherwise.",
+        "lista(kmax) = {my(uab, uabm = 3); for(k = 1, kmax, uab = uabindex(k); if(uab > 0 && uab < uabm, uabm = uab; print1(k, \", \")));}"
+    ],
+    "xref": [
+        "The unitary version of A362053.",
+        "Cf. A034448, A302573."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Apr 06 2023",
+    "references": 0,
+    "revision": 6,
+    "time": "2023-04-07T17:42:50-04:00",
+    "created": "2023-04-07T17:42:50-04:00"
+}

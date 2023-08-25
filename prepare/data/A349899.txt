@@ -1,0 +1,25 @@
+{
+    "number": 349899,
+    "data": "2,3,5,7,22,52,136,190,1610,12760,35464,196840,2112320,4093600,22789360,288608320",
+    "name": "Least number in A349898 divisible by the n-th prime.",
+    "comment": [
+        "Least value of A349194(k) divisible by the n-th prime for some k.",
+        "Does a(n) exist for each n? Is the sequence increasing?"
+    ],
+    "program": [
+        "(PARI) smooth(P,lim)=my(v=List([1]), nxt=vector(#P,i,1), indx, t); while(1, t=vecmin(vector(#P, i, v[nxt[i]]*P[i]), &indx); if(t>lim, break); if(t>v[#v], listput(v, t)); nxt[indx]++); Vec(v);",
+        "has(n)=my(v=apply(k->[k,k],select(k->n%k==0,[2..10]))); while(#v, my(u=List()); for(i=1,#v, my(sd=v[i][1],a=v[i][2]); for(k=0,9, my(nsd=sd+k,t=nsd*a); if(n%t==0, if(n==t, return(1)); listput(u,[nsd,t])))); v=Set(u)); 0",
+        "a(n)=if(n<5,return(prime(n))); my(P=primes(n+1),p=P[n],L=p,v=smooth(P,L),x); while(1, for(i=x+1,#v, if(has(p*v[i]), return(p*v[i]))); x=#v; v=smooth(P,L*=2))",
+        "\\\\ This program is heuristic and fails if a(n) is divisible by a prime >= prime(n+2). If this sequence is strictly increasing, \"primes(n+1)\" can be replaced with \"primes(n)\" for better speed and memory use."
+    ],
+    "xref": [
+        "Cf. A349194, A349898."
+    ],
+    "keyword": "base,nonn,more",
+    "offset": "1,1",
+    "author": "_Charles R Greathouse IV_, Dec 04 2021",
+    "references": 2,
+    "revision": 9,
+    "time": "2023-01-14T16:35:19-05:00",
+    "created": "2022-01-10T11:10:27-05:00"
+}

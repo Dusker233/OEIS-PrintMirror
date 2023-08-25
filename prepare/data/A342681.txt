@@ -1,0 +1,51 @@
+{
+    "number": 342681,
+    "data": "241,443,613,641,811,20011,20047,20051,20101,20161,20201,20347,20441,20477,21001,21157,21211,21377,21467,22027,22031,22147,22171,22247,22367,23017,23021,23131,23357,23417,23447,24007,24121,24151,24407,25031,25111,25117,25121,26021,26107,26111,26417,27011,27407,28001",
+    "name": "Primes which, when added to their reversals, produce palindromic primes.",
+    "comment": [
+        "It appears that all terms have an odd number of digits. - _Robert Israel_, Mar 24 2021"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A342681/b342681.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "241 is a prime number. The sum with its reverse is 383 = 241+142, which is a palindromic prime. Thus, 241 is in this sequence."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local i,L;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "ispali:= proc(n) local L;",
+        "  L:= convert(n,base,10);",
+        "  andmap(t -> L[t]=L[-t], [$1..nops(L)/2])",
+        "end proc:",
+        "filter:= proc(t) local r; r:= t + revdigs(t);",
+        "  ispali(r) and isprime(r);",
+        "end proc:",
+        "select(filter, [seq(ithprime(i),i=1..10000)]); # _Robert Israel_, Mar 24 2021"
+    ],
+    "mathematica": [
+        "Select[Range[30000], PrimeQ[#] && PrimeQ[# + IntegerReverse[#]] && PalindromeQ[# + IntegerReverse[#]] &]"
+    ],
+    "program": [
+        "(PARI) isok(p) = my(q); isprime(p) && isprime(q=p+fromdigits(Vecrev(digits(p)))) && (q==fromdigits(Vecrev(digits(q)))); \\\\ _Michel Marcus_, Mar 18 2021",
+        "(Python)",
+        "from sympy import isprime, primerange",
+        "def ok(p):",
+        "  t = p + int(str(p)[::-1]); strt = str(t)",
+        "  return strt == strt[::-1] and isprime(t)",
+        "print([p for p in primerange(1, 28002) if ok(p)]) # _Michael S. Branicky_, Mar 18 2021",
+        "(Magma) [p: p in PrimesUpTo(10^6) | IsPrime(t) and Intseq(t) eq Reverse(Intseq(t)) where t is p+Seqint(Reverse(Intseq(p)))]; // _Bruno Berselli_, Mar 23 2021"
+    ],
+    "xref": [
+        "Cf. A002385. Subsequence of A061783 (Luhn primes: primes p such that p + (p reversed) is also a prime)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Mar 18 2021",
+    "references": 1,
+    "revision": 20,
+    "time": "2022-09-08T08:46:26-04:00",
+    "created": "2021-03-23T05:56:44-04:00"
+}

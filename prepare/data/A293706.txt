@@ -1,0 +1,50 @@
+{
+    "number": 293706,
+    "data": "0,0,0,0,0,0,0,0,0,2,2,4,4,6,6,8,8,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10",
+    "name": "a(n) is the shift of the longest palindromic subsequence within the first differences of the concatenation of the first n negative and positive roots of floor(tan(k)) = 1.",
+    "comment": [
+        "Shift is the measure of the position of a palindromic subsequence within the corresponding sequence of first differences, being defined as the number of terms omitted from the left end of the sequence of first differences minus those omitted from its right end. Thus, when shift is, say, 10, the position of the palindrome is 10 steps to the right from the center of the first differences.",
+        "a(n) remains at value 10 from n=18 to 1183 after which it drops stepwise linearly to -1544."
+    ],
+    "link": [
+        "V.J. Pohjola, <a href=\"/A293706/b293706.txt\">Table of n, a(n) for n = 1..3001</a>",
+        "V.J. Pohjola, <a href=\"https://palindromesdotblog.files.wordpress.com/2018/02/shiftcon-1-30-a293706.pdf\">Line plot for n=1..30</a>",
+        "V.J. Pohjola, <a href=\"https://palindromesdotblog.files.wordpress.com/2018/02/shiftcon-1-3000-a293706.pdf\">Line plot for n=1..3000</a>"
+    ],
+    "example": [
+        "For n = 1, roots=-18,1; differences = 19; longest palindrome = 19; a(n) = 0.",
+        "For n = 2, roots=-21, -18, 1, 4; differences = 3,19,3; longest palindrome = 3,19,3  a(2) = 0.",
+        "For n = 9, roots=-106, -90, -87, -84, -65, -62, -43, -40, -21, -18, 1, 4, 23, 26, 45, 48, 67, 70, 89, 92; differences = 16, 3, 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3; longest palindrome = 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3, 19, 3; a(9) = 2 - 0 = 2."
+    ],
+    "mathematica": [
+        "rootsA = {}; Do[",
+        "If[Floor[Tan[i]] == 1, AppendTo[rootsA, i]], {i, -10^4, 10^4}]",
+        "lenN = Length[Select[rootsA, # < 0 &]];",
+        "r = 1000; roots = rootsA[[lenN - r ;; lenN + r + 1]];",
+        "diff = Differences[roots];",
+        "center = Length[roots]/2;",
+        "pals = {}; lenpals = {}; lenpal = 1; pos = {}; shift = {};",
+        "Do[diffn = diff[[center - (n - 1) ;; center + (n - 1)]];",
+        "lendiffn = Length[diffn]; w = 3;",
+        "lenpal = lenpal + 2; (Label[alku]; w = w - 1;",
+        "  pmax = lendiffn - lenpal - (w - 1);",
+        "  t = Table[diffn[[p ;; lenpal + w + p - 1]], {p, 1, pmax}];",
+        "  s = Select[t, # == Reverse[#] &]; If[s != {}, Goto[end], Goto[alku]];",
+        "  Label[end]); AppendTo[pals, First[s]];",
+        "AppendTo[lenpals, Length[Flatten[First[s]]]];",
+        "AppendTo[pos, Flatten[Position[t, First[s]]]]; pp = Last[Flatten[pos]];",
+        "qq = lendiffn - (pp - 1 + Last[lenpals]);",
+        "AppendTo[shift, pp - 1 - qq], {n, 1, center}]",
+        "shift"
+    ],
+    "xref": [
+        "Cf. A293698, A293751, A293700, A293703, A293704, A293699, A293701, A293705, A293702."
+    ],
+    "keyword": "sign",
+    "offset": "1,10",
+    "author": "_V.J. Pohjola_, Oct 23 2017",
+    "references": 6,
+    "revision": 30,
+    "time": "2019-02-15T10:02:48-05:00",
+    "created": "2017-12-31T01:31:48-05:00"
+}

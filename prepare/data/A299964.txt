@@ -1,0 +1,41 @@
+{
+    "number": 299964,
+    "data": "19,39,97,147,247,259,327,399,410,427,481,650,777,890,903,1010,1027,1130,1209,1267,1443,1490,1533,1677,1730,1767,1802,1813,1898,1911,1970,2037,2119,2210,2330,2378,2667,2793,2847,3050,3170,3297,3367,3477,3530,3603",
+    "name": "Integers represented in more than one way by a cyclotomic binary form f(x,y) where x and y are prime numbers and 0 < y < x.",
+    "comment": [
+        "A cyclotomic binary form over Z is a homogeneous polynomial in two variables which has the form f(x, y) = y^EulerPhi(k)*CyclotomicPolynomial(k, x/y) where k is some integer >= 3. An integer n is in this sequence if f(x,y) = n has more than one integer solution where f is a cyclotomic binary form and x and y are prime numbers with 0 < y < x."
+    ],
+    "link": [
+        "Etienne Fouvry, Claude Levesque, Michel Waldschmidt, <a href=\"https://arxiv.org/abs/1712.09019\">Representation of integers by cyclotomic binary forms</a>, arXiv:1712.09019 [math.NT], 2017."
+    ],
+    "program": [
+        "(Julia)",
+        "function countA299928(n)",
+        "    R, z = PolynomialRing(ZZ, \"z\")",
+        "    K = Int(floor(5.383*log(n)^1.161)) # Bounds from",
+        "    M = Int(floor(2*sqrt(n/3)))  # Fouvry & Levesque & Waldschmidt",
+        "    N = QQ(n); count = 0",
+        "    P(u) = (p for p in u:M if isprime(ZZ(p)))",
+        "    for k in 3:K",
+        "        e = Int(eulerphi(ZZ(k)))",
+        "        c = cyclotomic(k, z)",
+        "        for y in P(2), x in P(y+1)",
+        "            if N == y^e*subst(c, QQ(x, y))",
+        "                count += 1",
+        "    end end end",
+        "    return count",
+        "end",
+        "A299964list(upto) = [n for n in 1:upto if countA299928(n) > 1]",
+        "println(A299964list(3640))"
+    ],
+    "xref": [
+        "Cf. A293654, A296095, A299214, A299498, A299733, A299928, A299929, A299930, A299956."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Feb 25 2018",
+    "references": 8,
+    "revision": 5,
+    "time": "2018-02-26T09:19:21-05:00",
+    "created": "2018-02-26T09:19:21-05:00"
+}

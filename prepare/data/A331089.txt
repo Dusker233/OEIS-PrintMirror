@@ -1,0 +1,29 @@
+{
+    "number": 331089,
+    "data": "1,2,3,15,20,21,44,50,54,55,56,57,75,104,110,111,115,128,141,152,175,207,264,291,304,308,335,351,363,376,377,380,392,398,399,435,452,455,534,584,594,605,623,654,735,740,744,753,795,804,875,884,897,924,964,968",
+    "name": "Positive numbers k such that -k and -(k + 1) are both negative negaFibonacci-Niven numbers (A331088).",
+    "comment": [
+        "The Fibonacci numbers F(6*k + 2) and F(6*k + 4) are terms."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A331089/b331089.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "ind[n_] := Floor[Log[Abs[n]*Sqrt[5] + 1/2]/Log[GoldenRatio]];",
+        "f[1] = 1; f[n_] := If[n > 0, i = ind[n - 1]; If[EvenQ[i], i++]; i, i = ind[-n]; If[OddQ[i], i++]; i];",
+        "negaFibTermsNum[n_] := Module[{k = n, s = 0}, While[k != 0, i = f[k]; s += 1; k -= Fibonacci[-i]]; s];",
+        "negFibQ[n_] := Divisible[n, negaFibTermsNum[-n]];",
+        "nConsec = 2; neg = negFibQ /@ Range[nConsec]; seq = {}; c = 0;",
+        "k = nConsec+1; While[c < 55, If[And @@ neg, c++; AppendTo[seq, k - nConsec]];neg = Join[Rest[neg], {negFibQ[k]}]; k++]; seq"
+    ],
+    "xref": [
+        "Cf. A328209, A328213, A330927, A330931, A331086, A331088."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Jan 08 2020",
+    "references": 4,
+    "revision": 13,
+    "time": "2020-01-09T03:06:42-05:00",
+    "created": "2020-01-08T20:42:33-05:00"
+}

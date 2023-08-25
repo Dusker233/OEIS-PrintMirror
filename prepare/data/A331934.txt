@@ -1,0 +1,60 @@
+{
+    "number": 331934,
+    "data": "1,1,1,2,4,7,15,29,62,129,279,602,1326,2928,6544,14692,33233,75512,172506,395633,911108,2105261,4880535,11346694,26451357,61813588,144781303,339820852,799168292,1882845298,4443543279,10503486112,24864797324,58944602767,139918663784",
+    "name": "Number of semi-lone-child-avoiding rooted trees with n unlabeled vertices.",
+    "comment": [
+        "A rooted tree is semi-lone-child-avoiding if there are no vertices with exactly one child unless the child is an endpoint/leaf."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A331934/b331934.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "David Callan, <a href=\"http://arxiv.org/abs/1406.7784\">A sign-reversing involution to count labeled lone-child-avoiding trees</a>, arXiv:1406.7784 [math.CO], (30-June-2014).",
+        "Gus Wiseman, <a href=\"https://docs.google.com/document/d/e/2PACX-1vS1zCO9fgAIe5rGiAhTtlrOTuqsmuPos2zkeFPYB80gNzLb44ufqIqksTB4uM9SIpwlvo-oOHhepywy/pub\">Sequences counting series-reduced and lone-child-avoiding trees by number of vertices.</a>"
+    ],
+    "formula": [
+        "Product_{k > 0} 1/(1 - x^k)^a(k) = A(x) + A(x)/x - x where A(x) = Sum_{k > 0} x^k a(k).",
+        "Euler transform is b(1) = 1, b(n > 1) = a(n) + a(n + 1)."
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 15 trees:",
+        "  o  (o)  (oo)  (ooo)   (oooo)    (ooooo)    (oooooo)",
+        "                (o(o))  (o(oo))   (o(ooo))   (o(oooo))",
+        "                        (oo(o))   (oo(oo))   (oo(ooo))",
+        "                        ((o)(o))  (ooo(o))   (ooo(oo))",
+        "                                  ((o)(oo))  (oooo(o))",
+        "                                  (o(o)(o))  ((o)(ooo))",
+        "                                  (o(o(o)))  ((oo)(oo))",
+        "                                             (o(o)(oo))",
+        "                                             (o(o(oo)))",
+        "                                             (o(oo(o)))",
+        "                                             (oo(o)(o))",
+        "                                             (oo(o(o)))",
+        "                                             ((o)(o)(o))",
+        "                                             ((o)(o(o)))",
+        "                                             (o((o)(o)))"
+    ],
+    "mathematica": [
+        "sse[n_]:=Switch[n,1,{{}},2,{{{}}},_,Join@@Function[c,Union[Sort/@Tuples[sse/@c]]]/@Rest[IntegerPartitions[n-1]]];",
+        "Table[Length[sse[n]],{n,10}]"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "seq(n)={my(v=[1,1]); for(n=2, n-1, v=concat(v, EulerT(v)[n] - v[n])); v} \\\\ _Andrew Howroyd_, Feb 09 2020"
+    ],
+    "xref": [
+        "The same trees counted by leaves are A050381.",
+        "The locally disjoint version is A331872.",
+        "Matula-Goebel numbers of these trees are A331935.",
+        "Lone-child-avoiding rooted trees are A001678.",
+        "Cf. A000081, A000669, A198518, A289501, A291636, A306200, A320268, A330465, A330951, A331873, A331874, A331933, A331966."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Gus Wiseman_, Feb 03 2020",
+    "ext": [
+        "Terms a(25) and beyond from _Andrew Howroyd_, Feb 09 2020"
+    ],
+    "references": 19,
+    "revision": 9,
+    "time": "2020-02-09T17:34:03-05:00",
+    "created": "2020-02-03T22:18:30-05:00"
+}

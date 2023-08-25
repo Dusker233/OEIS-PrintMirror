@@ -1,0 +1,60 @@
+{
+    "number": 343403,
+    "data": "0,1,2,3,4,5,6,7,8,9,25,26,27,28,29,35,37,38,39,45,47,48,49,55,56,57,58,59,67,68,69,77,78,79,88,89,99,255,256,257,258,259,267,268,269,277,278,279,288,289,299,355,357,358,359,377,378,379,388,389,399,455",
+    "name": "Numbers k such that the product of the digits of k is not the product of digits of any earlier term in the sequence.",
+    "comment": [
+        "Observations:",
+        "The digits 0 and 1 appear only in terms 0 and 1, respectively.",
+        "Terms cannot contain two 2s, two 3s, a 2 and a 3, a 2 and a 4, a 3 and a 4, or a 4 and a 6.",
+        "Digits in each term appear in ascending order (A009994)."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A343403/b343403.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "R\u00e9my Sigrist, <a href=\"/A343403/a343403.gp.txt\">PARI program for A343403</a>"
+    ],
+    "maple": [
+        "# product of digits",
+        "A007954 := proc(n::integer)",
+        "    if n = 0 then",
+        "        0;",
+        "    else",
+        "        mul( d, d=convert(n, base, 10)) ;",
+        "    end if;",
+        "end proc:",
+        "hit:=Array(0..10000,-1);",
+        "a:=[0];",
+        "hit[0]:=0;",
+        "for n from 1 to 50000 do p:=A007954(n);",
+        "   if p>0 and hit[p]=-1 then hit[p]:=n; a:=[op(a),n]; fi; od:",
+        "a; # _N. J. A. Sloane_, Apr 14 2021"
+    ],
+    "program": [
+        "(Python 3.7)",
+        "def getBaseTen(howMany=100):",
+        "    listToReturn = []",
+        "    listOfObtainedValues = []",
+        "    count = 0",
+        "    while len(listToReturn) < howMany:",
+        "        afterOnePermutation = 1",
+        "        for num in str(count):",
+        "            afterOnePermutation *= int(num)",
+        "            if afterOnePermutation is 0:",
+        "                break",
+        "        if not afterOnePermutation in listOfObtainedValues:",
+        "            listToReturn.append(str(count))",
+        "            listOfObtainedValues.append(afterOnePermutation)",
+        "        count += 1",
+        "    return listToReturn",
+        "(PARI) See Links section."
+    ],
+    "xref": [
+        "Cf. A003001, A007954, A009994 (ascending digits), A031346, A068189, A343160."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_Collin King_, Apr 14 2021",
+    "references": 2,
+    "revision": 30,
+    "time": "2021-06-13T03:24:33-04:00",
+    "created": "2021-04-14T10:02:29-04:00"
+}

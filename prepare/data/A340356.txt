@@ -1,0 +1,43 @@
+{
+    "number": 340356,
+    "data": "1,2,6,27,144,848,5294,34385,229895,1571526,10933068,77154348,550955270,3973757907,28905779879,211818655703,1562190147576,11586722064844,86370917023313,646728926117338,4862143288139771,36687265058186722,277740810853563225,2108990691307904601",
+    "name": "G.f. A(x) satisfies: A(x) = Sum_{n>=0} x^n / (1 - x^(n+1)*A(x)^2).",
+    "comment": [
+        "The g.f. A(x) of this sequence is motivated by the following identity:",
+        "Sum_{n>=0} p^n/(1 - q*r^n) = Sum_{n>=0} q^n/(1 - p*r^n) = Sum_{n>=0} p^n*q^n*r^(n^2)*(1 - p*q*r^(2*n))/((1 - p*r^n)*(1 - q*r^n)) ;",
+        "here, p = x, q = x*A(x)^2, and r = x."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A340356/b340356.txt\">Table of n, a(n) for n = 0..350</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies the following relations.",
+        "(1) A(x) = Sum_{n>=0} x^n / (1 - x^(n+1)*A(x)^2).",
+        "(2) A(x) = Sum_{n>=0} x^n * A(x)^(2*n) / (1 - x^(n+1)).",
+        "(3) A(x) = Sum_{n>=0} x^(n^2+2*n) * A(x)^(2*n) * (1 - x^(2*n+2)*A(x)^2) / ((1 - x^(n+1))*(1 - x^(n+1)*A(x)^2)).",
+        "a(n) ~ c * d^n / n^(3/2), where d = 8.1095436670033855687235661331498800514999688916... and c = 0.2942244566611830970157343920557270211951238... - _Vaclav Kotesovec_, Jan 07 2021"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 6*x^2 + 27*x^3 + 144*x^4 + 848*x^5 + 5294*x^6 + 34385*x^7 + 229895*x^8 + 1571526*x^9 + 10933068*x^10 + ...",
+        "where",
+        "A(x) = 1/(1 - x*A(x)^2) + x/(1 - x^2*A(x)^2) + x^2/(1 - x^3*A(x)^2) + x^3/(1 - x^4*A(x)^2) + x^4/(1 - x^5*A(x)^2) + ...",
+        "also",
+        "A(x) = 1/(1 - x) + x*A(x)^2/(1 - x^2) + x^2*A(x)^4/(1 - x^3) + x^3*A(x)^6/(1 - x^4) + x^4*A(x)^8/(1 - x^5) + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=1); for(i=1,n, A = sum(m=0,n, x^m / (1 - x^(m+1)*A^2 +x*O(x^n)) )); polcoeff(A, n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) {a(n) = my(A=1); for(i=1,n, A = sum(m=0,n, x^m*A^(2*m) / (1 - x^(m+1) +x*O(x^n)) )); ; polcoeff(A, n)}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A340329, A340338, A340355."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jan 06 2021",
+    "references": 8,
+    "revision": 10,
+    "time": "2021-02-19T11:52:16-05:00",
+    "created": "2021-01-06T20:49:49-05:00"
+}

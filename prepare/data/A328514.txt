@@ -1,0 +1,52 @@
+{
+    "number": 328514,
+    "data": "1,2,3,5,11,13,17,29,31,39,41,43,47,59,65,67,73,79,83,87,101,109,113,127,129,137,139,149,157,163,167,179,181,191,195,199,211,233,235,237,241,257,269,271,277,283,293,303,313,317,319,331,339,347,349,353,365",
+    "name": "MM-numbers of connected sets of sets.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798. The multiset of multisets with MM-number n is formed by taking the multiset of prime indices of each part of the multiset of prime indices of n. For example, the prime indices of 78 are {1,2,6}, so the multiset of multisets with MM-number 78 is {{},{1},{1,2}}."
+    ],
+    "formula": [
+        "Intersection of A302494 and A305078."
+    ],
+    "example": [
+        "The sequence all connected set of sets together with their MM-numbers begins:",
+        "   1: {}",
+        "   2: {{}}",
+        "   3: {{1}}",
+        "   5: {{2}}",
+        "  11: {{3}}",
+        "  13: {{1,2}}",
+        "  17: {{4}}",
+        "  29: {{1,3}}",
+        "  31: {{5}}",
+        "  39: {{1},{1,2}}",
+        "  41: {{6}}",
+        "  43: {{1,4}}",
+        "  47: {{2,3}}",
+        "  59: {{7}}",
+        "  65: {{2},{1,2}}",
+        "  67: {{8}}",
+        "  73: {{2,4}}",
+        "  79: {{1,5}}",
+        "  83: {{9}}",
+        "  87: {{1},{1,3}}"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "zsm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[Less@@#,GCD@@s[[#]]]>1&]},If[c=={},s,zsm[Sort[Append[Delete[s,List/@c[[1]]],LCM@@s[[c[[1]]]]]]]]];",
+        "Select[Range[1000],SquareFreeQ[#]&&And@@SquareFreeQ/@primeMS[#]&&Length[zsm[primeMS[#]]]<=1&]"
+    ],
+    "xref": [
+        "The not-necessarily-connected case is A302494.",
+        "BII-numbers of connected set-systems are A326749.",
+        "MM-numbers of connected sets of multisets are A328513.",
+        "Cf. A005117, A007947, A056239, A112798, A286518, A302242, A302569, A304714, A305078, A305079, A327398."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Oct 20 2019",
+    "references": 15,
+    "revision": 9,
+    "time": "2019-11-19T06:26:33-05:00",
+    "created": "2019-10-22T10:20:17-04:00"
+}

@@ -1,0 +1,41 @@
+{
+    "number": 164354,
+    "data": "1,5,20,80,320,1280,5120,20470,81840,327210,1308240,5230560,20912640,83612160,334295130,1336566780,5343813270,21365442180,85422543120,341533342080,1365506334720,5459518355670,21828050092440,87272125451010",
+    "name": "Number of reduced words of length n in Coxeter group on 5 generators S_i with relations (S_i)^2 = (S_i S_j)^7 = I.",
+    "comment": [
+        "The initial terms coincide with those of A003947, although the two sequences are eventually different.",
+        "Computed with MAGMA using commands similar to those used to compute A154638."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A164354/b164354.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (3,3,3,3,3,3,-6)."
+    ],
+    "formula": [
+        "G.f.: (t^7 + 2*t^6 + 2*t^5 + 2*t^4 + 2*t^3 + 2*t^2 + 2*t + 1)/(6*t^7 - 3*t^6 - 3*t^5 - 3*t^4 - 3*t^3 - 3*t^2 - 3*t + 1).",
+        "a(n) = -6*a(n-7) + 3*Sum_{k=1..6} a(n-k). - _Wesley Ivan Hurt_, May 11 2021"
+    ],
+    "maple": [
+        "seq(coeff(series((1+t)*(1-t^7)/(1-4*t+9*t^7-6*t^8), t, n+1), t, n), n = 0 .. 30); # _G. C. Greubel_, Aug 28 2019"
+    ],
+    "mathematica": [
+        "coxG[{7,6,-3,30}] (* The coxG program is at A169452 *) (* _Harvey P. Dale_, May 01 2017 *)",
+        "CoefficientList[Series[(1+t)*(1-t^7)/(1-4*t+9*t^7-6*t^8), {t, 0, 30}], t] (* _G. C. Greubel_, Sep 15 2017 *)"
+    ],
+    "program": [
+        "(PARI) my(t='t+O('t^30)); Vec((1+t)*(1-t^7)/(1-4*t+9*t^7-6*t^8)) \\\\ _G. C. Greubel_, Sep 15 2017",
+        "(Magma) R<t>:=PowerSeriesRing(Integers(), 30); Coefficients(R!( (1+t)*(1-t^7)/(1-4*t+9*t^7-6*t^8) )); // _G. C. Greubel_, Aug 28 2019",
+        "(Sage)",
+        "def A164354_list(prec):",
+        "    P.<t> = PowerSeriesRing(ZZ, prec)",
+        "    return P((1+t)*(1-t^7)/(1-4*t+9*t^7-6*t^8)).list()",
+        "A164354_list(30) # _G. C. Greubel_, Aug 28 2019",
+        "(GAP) a:=[5, 20, 80, 320, 1280, 5120, 20470];; for n in [8..30] do a[n]:=3*(a[n-1] +a[n-2]+a[n-3]+a[n-4]+a[n-5]+a[n-6]) -6*a[n-7]; od; Concatenation([1], a); # _G. C. Greubel_, Aug 28 2019"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_John Cannon_ and _N. J. A. Sloane_, Dec 03 2009",
+    "references": 1,
+    "revision": 19,
+    "time": "2022-09-08T08:45:47-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

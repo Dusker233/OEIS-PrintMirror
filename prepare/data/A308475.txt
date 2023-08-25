@@ -1,0 +1,36 @@
+{
+    "number": 308475,
+    "data": "1,2,9,40,315,1896,21651,191360,2546487,28064080,488517183,5879603280,124673371719,1928346159572,42684093159480,754925802649360,20289814995554811,366300418631427144,11352374441063693655,250187625076714423520,7774760839170720287739",
+    "name": "a(1) = 1; a(n) = Sum_{k=1..n-1, gcd(n,k) = 1} binomial(n,k)*a(k).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A308475/b308475.txt\">Table of n, a(n) for n = 1..425</a>"
+    ],
+    "maple": [
+        "a:= proc(n) option remember;",
+        "if n=1 then 1;",
+        "else add( `if`(gcd(n,j)=1, binomial(n,j)*a(j), 0), j=1..n-1);",
+        "end if; end proc;",
+        "seq(a(n), n = 1..30); # _G. C. Greubel_, Mar 08 2021"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[If[GCD[n, k] == 1, Binomial[n, k] a[k], 0], {k, 1, n - 1}]; a[1] = 1; Table[a[n], {n, 1, 21}]"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def a(n):",
+        "    if n==1: return 1",
+        "    else: return sum( kronecker_delta(gcd(n,j), 1)*binomial(n,j)*a(j) for j in (1..n-1) )",
+        "[a(n) for n in (1..30)] # _G. C. Greubel_, Mar 08 2021"
+    ],
+    "xref": [
+        "Cf. A000670, A045545, A052882, A056188."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, May 29 2019",
+    "references": 1,
+    "revision": 9,
+    "time": "2021-03-08T20:07:41-05:00",
+    "created": "2019-05-30T02:55:26-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 94303,
+    "data": "1,2,2,6,30,330,13530,5019630,69777876630,351229105131280530,24509789089304573335878465330,8608552999157278550998626549630446732052243030",
+    "name": "a(1) = 1, a(2) = 2, and a(n+1) = a(n) * sum of all previous terms up to a(n-1) for n >= 2.",
+    "comment": [
+        "From _Petros Hadjicostas_, May 11 2020: (Start)",
+        "_R. J. Mathar_'s conjecture is correct and this is identical to A064847 starting at n = 3. To see why this is the case, consider the sequences u(n) and v(n) defined by u(1) = v(1) = 1, and u(k+1) = u(k) + v(k), v(k+1) = u(k)*v(k) for k >= 1. Then u(n) = A003686(n) and v(n) = A064847(n) for n >= 1.",
+        "Then v(n) = u(n+1) - u(n), and thus Sum_{k=1..n-1} v(k) = u(n) - u(1) = u(n) - 1 for n >= 2. Then v(n-1) + ... + v(3) + (v(2) + 1) + v(1) = u(n) for n >= 3, and hence v(n)*(v(n-1) + ... + v(3) + (v(2) + 1) + v(1)) = u(n)*v(n) = v(n+1).",
+        "Since v(1) = 1 = a(1) and v(2) + 1 = 2 = a(2), the sequence (v(1), v(2) + 1, v(3), ..., v(n), ...) is identical to the current sequence. Hence, a(n) = v(n) = u(n+1) - u(n) = A003686(n+1) - A003686(n) for n >= 3. (End)"
+    ],
+    "link": [
+        "Petros Hadjicostas, <a href=\"/A094303/b094303.txt\">Table of n, a(n) for n = 1..17</a>"
+    ],
+    "formula": [
+        "Conjecture: a(n) = A003686(n+1) - A003686(n) for n >= 3. - _R. J. Mathar_, Apr 24 2007"
+    ],
+    "mathematica": [
+        "nxt[{t1_,t2_,a_}]:=Module[{c=t1*a},{t1+t2,c,c}]; Join[{1},NestList[nxt,{1,2,2},10][[All,2]]] (* _Harvey P. Dale_, Aug 30 2020 *)"
+    ],
+    "program": [
+        "(PARI) lista(nn) = { my(va = vector(nn)); va[1] = 1; va[2] = 2; for(n=3, nn, va[n] = va[n-1]*sum(k=1, n-2, va[k]);); va; } \\\\ _Petros Hadjicostas_, May 11 2020"
+    ],
+    "xref": [
+        "See A064847 for another version.",
+        "Cf. A003686, A064183, A064526, A070231, A070233, A070234."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amarnath Murthy_, Apr 29 2004",
+    "ext": [
+        "More terms from Gareth McCaughan (gareth.mccaughan(AT)pobox.com), Jun 10 2004"
+    ],
+    "references": 8,
+    "revision": 27,
+    "time": "2020-08-30T19:53:28-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

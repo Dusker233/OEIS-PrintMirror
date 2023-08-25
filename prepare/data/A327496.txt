@@ -1,0 +1,34 @@
+{
+    "number": 327496,
+    "data": "1,16,64,1024,16384,262144,1048576,16777216,1073741824,17179869184,68719476736,1099511627776,17592186044416,281474976710656,1125899906842624,18014398509481984,4611686018427387904,73786976294838206464,295147905179352825856,4722366482869645213696",
+    "name": "a(n) = a(n - 1) * 4^r where r = valuation(n, 2) if 4 divides n else r = (n mod 2) + 1; a(0) = 1. The denominators of A327495.",
+    "formula": [
+        "a(n) = denominator(r(n)) where r(n) = Sum_{j=0..n} j!^2 / (2^j*floor(j/2))^4.",
+        "a(n) = 4^A327492(n). - _Kevin Ryde_, May 31 2022"
+    ],
+    "maple": [
+        "A327496 := n -> denom(add(j!^2 / (2^j*iquo(j, 2)!)^4, j=0..n)):",
+        "seq(A327496(n), n=0..19);"
+    ],
+    "program": [
+        "(SageMath)",
+        "@cached_function",
+        "def A327496(n):",
+        "    if n == 0: return 1",
+        "    r = valuation(n, 2) if 4.divides(n) else n % 2 + 1",
+        "    return 4^r * A327496(n-1)",
+        "print([A327496(n) for n in (0..19)])",
+        "(PARI) a(n) = 1 << (4*n - 2*hammingweight(n>>1)); \\\\ _Kevin Ryde_, May 31 2022"
+    ],
+    "xref": [
+        "Cf. A327491, A327492, A327493, A327494, A327495.",
+        "Cf. A056982."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Peter Luschny_, Sep 29 2019",
+    "references": 2,
+    "revision": 11,
+    "time": "2022-05-31T22:26:46-04:00",
+    "created": "2019-09-29T05:56:10-04:00"
+}

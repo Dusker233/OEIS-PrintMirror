@@ -1,0 +1,66 @@
+{
+    "number": 329946,
+    "data": "3,5,11,17,29,41,53,59,83,89,101,107,113,131,137,149,173,197,233,257,269,293,317,353,389,419,443,449,461,467,509,557,563,569,587,593,617,653,677,761,773,797,809,827,857,929,941,947,977,1013,1049,1097,1109",
+    "name": "Primes that are not of the form u(u+1)/2 - v(v-3)/2 for any u >= v >= 1.",
+    "comment": [
+        "These primes were originally called \"hidden primes\", but since that term is already in use (see A187399) it has been replaced by an explicit definition. - Editors of OEIS, Dec 16 2019",
+        "The following is the original definition. Assume n and s are positive integers. We say a prime p is 'reachable' from n if there exists an s such that 8*(p - (s + 1)*n) + 1 is a perfect square, and that a prime p is 'hidden' if it is not reachable from any n.",
+        "Equivalently, a prime p is reachable if there exists m >= n such that p = m(m+1)/2 - n(n-3)/2.",
+        "A description of the sequence as an arithmetic training game for children was given on the Sequence Fans Mailing List. A representation as a sieve is given in the Maple script.",
+        "The game is to start at n and (cumulatively) add n, n+1, n+2, ..., m until a prime is reached, which appears to happen for all n, usually with m close to n, except for n = 3.",
+        "Conjecture: The sequence is infinite.",
+        "For comparison the number of primes < 10^n:",
+        "n              :  1   2   3    4     5      6       7        8",
+        "Ramanujan p.   :  1, 10, 72, 559, 4459, 36960, 316066, 2760321, ...",
+        "Hidden primes  :  2, 10, 49, 271, 1768, 34181, 601549,",
+        "Lesser twin p. :  2,  8, 35, 205, 1224,  8169,  58980,  440312, ...",
+        "All terms except a(1) = 3 are congruent to 5 (mod 6), i.e., in A007528. Indeed, any prime p = 6k + 1 is reached from n = 2k in 2 steps. - _M. F. Hasler_, Dec 16 2019",
+        "Only one prime is eliminated (for n != 3) by each (variable sized) \"grid\" G(n) = (2n, 3n + 1, 4n + 3, 5n + 6, ..., (m+2)n + T(m), ...), since the scan stops as soon as the first prime is found. If used as a sieve in the usual sense, the grid G(n) should also eliminate all subsequent primes of the form (m+2)n + T(m). If this were done, only Fermat primes A019434 = {3, 5, 17, 257, 65537, ?} would remain. - _M. F. Hasler_, Dec 17 2019"
+    ],
+    "link": [
+        "Peter Luschny, <a href=\"http://list.seqfan.eu/oldermail/seqfan/2019-December/\">Hopping for primes</a>, SeqFan list, Dec 13 2019."
+    ],
+    "maple": [
+        "aList := proc(lim) local n, p, k, L:",
+        "L := select(isprime, {$1..lim}):",
+        "for n from 1 to iquo(lim, 2) do",
+        "   p := n:",
+        "   for k from n to 10000 do",
+        "      p := p + k:",
+        "      if isprime(p)",
+        "      then L := L minus {p}: break fi;",
+        "      if p > lim then break fi;",
+        "   od:",
+        "od: sort(L) end:",
+        "aList(1111);"
+    ],
+    "program": [
+        "(SageMath)",
+        "def aSieve(lim):",
+        "    S = Set(prime_range(lim))",
+        "    for n in (1..lim//2):",
+        "        p = n",
+        "        for k in (n..10000):",
+        "            p += k",
+        "            if p > lim: break",
+        "            if is_prime(p):",
+        "                S = S.difference({p})",
+        "                break",
+        "    return sorted(S)",
+        "aSieve(1111)",
+        "(PARI) A329946=setminus(primes(199), Set(apply((n,p=n)->while(!isprime(p+=n), n++); p, [1..1199][^3]))) \\\\ _M. F. Hasler_, Dec 16 2019"
+    ],
+    "xref": [
+        "Cf. A000040, A000217 (triangular numbers), A000096 (n(n+3)/2), A187399, A330501 (least prime m(m+1)/2 - n(n-3)/2, m >= n), A330502 (corresponding m)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Dec 16 2019",
+    "ext": [
+        "Edited by  _M. F. Hasler_ and _N. J. A. Sloane_, Dec 16 2019"
+    ],
+    "references": 4,
+    "revision": 35,
+    "time": "2023-01-02T12:30:54-05:00",
+    "created": "2019-12-16T21:30:28-05:00"
+}

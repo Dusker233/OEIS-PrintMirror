@@ -1,0 +1,38 @@
+{
+    "number": 193153,
+    "data": "1296,82944,9150625,1575296100,391476713761,132821015040000,59042071787233536,33317165538875522500,23276866101199344597601,19729668557004748392960000,19950922411933407541569256321,23731310247317631978185581240644",
+    "name": "Numbers of spanning trees in the graph join of C_n and C_n.",
+    "comment": [
+        "The graph join is the graph obtained by adding all possible edges between different graphs to the graph union."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A193153/b193153.txt\">Table of n, a(n) for n = 3..80</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/SpanningTree.html\">Spanning Tree</a>"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "a:= proc(n) local h, i, M;",
+        "      M:= Matrix(2*n, shape=symmetric);",
+        "      for h in [seq(seq([i, j+n], j=1..n), i=1..n),",
+        "                seq([[i, 1+(i mod n)], [n+i, n+1+(i mod n)]][], i=1..n)]",
+        "      do M[h[]]:= -1 od;",
+        "      for i to 2*n do M[i, i]:= -add(M[i, j], j=1..2*n) od;",
+        "      Determinant(DeleteColumn(DeleteRow(M, 1), 1))",
+        "    end:",
+        "seq(a(n), n=3..20);  # _Alois P. Heinz_, Jul 17 2011"
+    ],
+    "mathematica": [
+        "a[n_] := Module[{h, i, M}, M = Array[0&, {2n, 2n}]; Do[M[[Sequence@@h]] = M[[Sequence@@Reverse[h]]] = -1, {h, Flatten[Table[{i, j+n}, {i, 1, n}, {j, 1, n}], 1] ~Join~ Flatten[Table[{{i, 1+Mod[i, n]}, {n+i, n+1 + Mod[i, n]}}, {i, 1, n}], 1]}]; For[i = 1, i <= 2n, i++, M[[i, i]] = -Sum[M[[i, j]], {j, 1, 2n}]]; Det[Rest /@ Rest[M]]];",
+        "Table[a[n], {n, 3, 20}] (* _Jean-Fran\u00e7ois Alcover_, Feb 12 2023, after _Alois P. Heinz_ *)"
+    ],
+    "keyword": "nonn",
+    "offset": "3,1",
+    "author": "_Eric W. Weisstein_, Jul 16 2011",
+    "ext": [
+        "Description corrected by _Eric W. Weisstein_, May 10 2017"
+    ],
+    "references": 3,
+    "revision": 34,
+    "time": "2023-02-12T06:08:05-05:00",
+    "created": "2011-07-18T02:44:31-04:00"
+}

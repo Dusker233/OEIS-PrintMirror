@@ -1,0 +1,47 @@
+{
+    "number": 358588,
+    "data": "0,0,0,0,1,8,41,171,633,2171,7070,22195,67830,203130,598806,1743258,5023711,14356226,40737383,114904941,322432215,900707165,2506181060,6948996085,19207795836,52944197508,145567226556,399314965956,1093107693133,2986640695436",
+    "name": "Number of n-node ordered rooted trees of height equal to the number of internal (non-leaf) nodes.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A358588/b358588.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "The a(5) = 1 and a(6) = 8 ordered trees:",
+        "  ((o)(o))  ((o)(o)o)",
+        "            ((o)(oo))",
+        "            ((o)o(o))",
+        "            ((oo)(o))",
+        "            (o(o)(o))",
+        "            (((o))(o))",
+        "            (((o)(o)))",
+        "            ((o)((o)))"
+    ],
+    "mathematica": [
+        "aot[n_]:=If[n==1,{{}},Join@@Table[Tuples[aot/@c],{c,Join@@Permutations/@IntegerPartitions[n-1]}]];",
+        "Table[Length[Select[aot[n],Count[#,_[__],{0,Infinity}]==Depth[#]-1&]],{n,1,10}]"
+    ],
+    "program": [
+        "(PARI) \\\\ Needs R(n,f) defined in A358590.",
+        "seq(n) = {Vec(R(n, (h,p)->polcoef(subst(p, x, x/y), -h, y)), -n)} \\\\ _Andrew Howroyd_, Jan 01 2023"
+    ],
+    "xref": [
+        "For leaves instead of height we have A000891, unordered A185650 aerated.",
+        "The unordered version is A358587, ranked by A358576.",
+        "For leaves instead of internal nodes we have A358590, unordered A358589.",
+        "A000108 counts ordered rooted trees, unordered A000081.",
+        "A001263 counts ordered rooted trees by nodes and leaves, unordered A055277.",
+        "A080936 counts ordered rooted trees by nodes and height, unordered A034781.",
+        "A090181 counts ordered rooted trees by nodes and internals, unord. A358575.",
+        "Cf. A065097, A342507, A358552, A358371, A358578, A358579, A358586, A358591."
+    ],
+    "keyword": "nonn",
+    "offset": "1,6",
+    "author": "_Gus Wiseman_, Nov 25 2022",
+    "ext": [
+        "Terms a(16) and beyond from _Andrew Howroyd_, Jan 01 2023"
+    ],
+    "references": 13,
+    "revision": 8,
+    "time": "2023-01-02T00:06:16-05:00",
+    "created": "2022-11-25T13:17:21-05:00"
+}

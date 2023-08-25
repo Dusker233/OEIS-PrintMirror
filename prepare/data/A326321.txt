@@ -1,0 +1,47 @@
+{
+    "number": 326321,
+    "data": "1,1,5,271,395793,28076306251,150414812114874563,86530666539373619904011413,7177587537701279221012034803727966465,110824376322428312270365608303690048162629868273811,399431453468560513224979712848478555015392084082614167438553312275",
+    "name": "Sum of the n-th powers of multinomials M(n; mu), where mu ranges over all compositions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A326321/b326321.txt\">Table of n, a(n) for n = 0..30</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Multinomial_theorem#Multinomial_coefficients\">Multinomial coefficients</a>"
+    ],
+    "formula": [
+        "From _Vaclav Kotesovec_, Sep 14 2019: (Start)",
+        "a(n) ~ (n!)^n.",
+        "a(n) ~ 2^(n/2) * Pi^(n/2) * n^(n*(2*n+1)/2) / exp(n^2-1/12). (End)",
+        "a(n) = (n!)^n * [x^n] 1 / (1 - Sum_{k>=1} x^k / (k!)^n). - _Ilya Gutkovskiy_, Jul 11 2020"
+    ],
+    "example": [
+        "a(2) = M(2; 2)^2 + M(2; 1,1)^2 = 1 + 4 = 5."
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; `if`(n=0, 1,",
+        "      add(b(n-i, k)/i!^k, i=1..n))",
+        "    end:",
+        "a:= n-> n!^n*b(n$2):",
+        "seq(a(n), n=0..12);",
+        "# second Maple program:",
+        "b:= proc(n, k) option remember; `if`(n=0, 1,",
+        "      add(binomial(n, j)^k*b(j, k), j=0..n-1))",
+        "    end:",
+        "a:= n-> b(n$2):",
+        "seq(a(n), n=0..10);"
+    ],
+    "mathematica": [
+        "b[n_, k_] := b[n, k] = If[n==0, 1, Sum[Binomial[n, j]^k b[j, k], {j, 0, n-1}]];",
+        "a[n_] := b[n, n];",
+        "a /@ Range[0, 10] (* _Jean-Fran\u00e7ois Alcover_, Dec 03 2020, after 2nd Maple program *)"
+    ],
+    "xref": [
+        "Main diagonal of A326322.",
+        "Cf. A215910."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 11 2019",
+    "references": 4,
+    "revision": 24,
+    "time": "2020-12-03T11:48:20-05:00",
+    "created": "2019-09-11T09:48:47-04:00"
+}

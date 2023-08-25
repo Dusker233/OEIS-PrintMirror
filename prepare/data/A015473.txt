@@ -1,0 +1,42 @@
+{
+    "number": 15473,
+    "data": "0,1,2,9,74,1193,38250,2449193,313534954,80267397417,41097221012458,42083634584154409,86187324725569242090,353023324159566199755049,2891967157702491033962603498,47381990264820937260009495466281",
+    "name": "q-Fibonacci numbers for q=2.",
+    "comment": [
+        "a(1) = 1, a(n+1) = denominator of continued fraction [1;2,4,8,...,2^n]. - _Amarnath Murthy_, May 02 2001",
+        "The difference equation y(n, x, s) = q^(n-1)*x*y(n-1, x, s) + s*y(n-2, x, s) yields a type of two variable q-Fibonacci polynomials in the form F(n, x, s, q) = Sum_{j=0..floor((n-1)/2)} q-binomial(n-j-1,j, q^2)*q^binomial(n-2*j,2)* x^(n-2*j)*s^j. When x=s=1 these polynomials reduce to q-Fibonacci numbers. This family of q-Fibonacci numbers is different from that of the q-Fibonacci numbers defined in A015459. - _G. C. Greubel_, Dec 17 2019"
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A015473/b015473.txt\">Table of n, a(n) for n = 0..80</a>"
+    ],
+    "formula": [
+        "a(n) = 2^(n-1)*a(n-1) + a(n-2)."
+    ],
+    "maple": [
+        "q:=2; seq(add((product((1-q^(2*(n-j-1-k)))/(1-q^(2*k+2)), k=0..j-1))* q^binomial(n-2*j,2), j = 0..floor((n-1)/2)), n = 0..20); # _G. C. Greubel_, Dec 17 2019"
+    ],
+    "mathematica": [
+        "RecurrenceTable[{a[0]==0, a[1]==1, a[n]==a[n-1]*2^(n-1)+a[n-2]},  a, {n, 30}] (* _Vincenzo Librandi_, Nov 09 2012 *)",
+        "Join[{0},Denominator[Table[FromContinuedFraction[2^Range[0,n]],{n,0,20}]]] (* _Harvey P. Dale_, Feb 09 2013 *)",
+        "F[n_, q_]:= Sum[QBinomial[n-j-1,j,q^2]*q^Binomial[n-2*j,2], {j,0,Floor[(n-1)/2] }]; Table[F[n, 2], {n, 0, 20}] (* _G. C. Greubel_, Dec 17 2019 *)"
+    ],
+    "program": [
+        "(Magma) [0] cat [n le 2 select n else 2^(n-1)*Self(n-1) + Self(n-2): n in [1..16]]; // _Vincenzo Librandi_, Nov 09 2012",
+        "(PARI) q=2; m=20; v=concat([0,1], vector(m-2)); for(n=3, m, v[n]=q^(n-2)*v[n-1]+v[n-2]); v \\\\ _G. C. Greubel_, Dec 17 2019",
+        "(Sage)",
+        "def F(n,q): return sum( q_binomial(n-j-1, j, q^2)*q^binomial(n-2*j,2) for j in (0..floor((n-1)/2)))",
+        "[F(n,2) for n in (0..20)] # _G. C. Greubel_, Dec 17 2019",
+        "(GAP) q:=2;; a:=[0,1];; for n in [3..20] do a[n]:=q^(n-2)*a[n-1]+a[n-2]; od; a; # _G. C. Greubel_, Dec 17 2019"
+    ],
+    "xref": [
+        "Cf. A061377.",
+        "q-Fibonacci numbers: A000045 (q=1), this sequence (q=2), A015474 (q=3), A015475 (q=4), A015476 (q=5), A015477 (q=6), A015479 (q=7), A015480 (q=8), A015481 (q=9), A015482 (q=10), A015484 (q=11), A015485 (q=12)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Olivier G\u00e9rard_",
+    "references": 18,
+    "revision": 20,
+    "time": "2022-03-15T22:43:27-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

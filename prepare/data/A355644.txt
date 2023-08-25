@@ -1,0 +1,45 @@
+{
+    "number": 355644,
+    "data": "2,3,467,487,787,887,1279,2063,2557,2657,2903,3323,3413,3547,3583,4273,4373,4517,4567,4801,5233,5393,5443,6047,6823,6911,7507,9133,9137,9721,9973,10103,10313,10937,12227,12763,13183,13627,14407,15073,15083,15187,15359,15787,16903,17047,17911,18013,18587",
+    "name": "Primes p such that p^2-1 does not have a divisor d with d + (p^2-1)/d prime.",
+    "comment": [
+        "Primes p such that p^2-1 is not in A355643."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A355644/b355644.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(2) = 3 is a term because it is prime, the divisors of 3^2-1 = 8 are 1, 2, 4 and 8, and none of 1+8/1 = 9, 2+8/2 = 6, 4+8/4 = 6, 8+8/8 = 9 are prime."
+    ],
+    "maple": [
+        "filter:= proc(p) local n,F,t;",
+        "    n:= p^2-1;",
+        "  F:= select(t -> t^2 <=n, numtheory:-divisors(n));",
+        "  not ormap(isprime, map(t -> t+n/t, F))",
+        "end proc:",
+        "select(filter, [seq(ithprime(i),i=1..3000)]);"
+    ],
+    "mathematica": [
+        "q[n_] := AllTrue[Divisors[n], !PrimeQ[# + n/#] &]; Select[Prime[Range[2000]], q[#^2 - 1] &] (* _Amiram Eldar_, Jul 11 2022 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = isprime(p) && fordiv(p^2-1, d, if (isprime(d + (p^2-1)/d), return(0))); return(1); \\\\ _Michel Marcus_, Jul 11 2022",
+        "(Python)",
+        "from sympy import divisors, isprime",
+        "def ok(n):",
+        "    if not isprime(n): return False",
+        "    t = n**2 - 1",
+        "    return not any(isprime(d+t//d) for d in divisors(t, generator=True))",
+        "print([k for k in range(19000) if ok(k)]) # _Michael S. Branicky_, Jul 11 2022"
+    ],
+    "xref": [
+        "Cf. A355643."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jul 11 2022",
+    "references": 2,
+    "revision": 12,
+    "time": "2022-07-13T17:41:50-04:00",
+    "created": "2022-07-13T07:22:20-04:00"
+}

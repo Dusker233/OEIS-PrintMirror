@@ -1,0 +1,60 @@
+{
+    "number": 218531,
+    "data": "1,1,2,6,22,105,675,4872,40614,403704,4342080,50457000,631548456,8484089328,121882518576,1865935562400,30341974222944,522466493255424,9499883854364928,181927524046316544,3713847873452280000,80378118226450517760,1816649795206970760960,42807228653571471429120",
+    "name": "The maximal number of solutions for a given row of a skyscraper puzzle of size n X n.",
+    "comment": [
+        "In skyscraper puzzles one row represent skyscrapers of different heights. The number on the left/right of the row says how many skyscrapers are seen from the left/right. For example the row of length 4 with number 2 on the left and 2 on the right can be resolved in 6 ways: 1423, 2143, 2413, 3142, 3241, 3412.",
+        "a(n) is the size of the largest equivalence class of permutations of length n, where two permutations are considered equivalent if they have the same number of left-to-right maxima and the same number of right-to-left maxima."
+    ],
+    "link": [
+        "Mauro Fiorentini, <a href=\"/A218531/b218531.txt\">Table of n, a(n) for n = 1..100</a>",
+        "Tanya Khovanova and Joel Brewster Lewis, <a href=\"http://blog.tanyakhovanova.com/?p=451\">Skyscrapers</a>",
+        "T. Khovanova and J. B. Lewis, <a href=\"https://arxiv.org/abs/1304.6445\">Skyscraper Numbers</a>, arXiv preprint arXiv:1304.6445 [math.CO], 2013.",
+        "T. Khovanova and J. B. Lewis, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL16/Khovanova/khova6.html\">Skyscraper Numbers</a>, J. Int. Seq. 16 (2013) #13.7.2."
+    ],
+    "formula": [
+        "a(n+1) is the maximum over all u, v of Sum_{k=1..n} binomial(n,k) * c(k,u-1) * c(n-k,v-1), where c(l,m) is an unsigned Stirling number of the first kind (see A132393)."
+    ],
+    "example": [
+        "Consider permutations of length 3.",
+        "Permutation 123 has 3 left-to-right maxima and 1 right-to-left maximum.",
+        "Permutation 321 has 1 left-to-right maximum and 3 right-to-left maxima.",
+        "Permutations 213 (312) have 2(1) left-to right maxima and 1(2) right-to-left maximum.",
+        "Permutations 132 and 231 have 2 left-to right maxima and 2 right-to-left maxima.",
+        "Hence, the largest class consists of 2 permutations and a(3)=2."
+    ],
+    "mathematica": [
+        "st1[n_, k_] := Abs[StirlingS1[n, k]];",
+        "sm[n_, u_, v_] := Sum[Binomial[n, k] st1[k, u-1] st1[n-k, v-1], {k, 1, n}];",
+        "a[1] = a[2] = 1; a[n_] := Module[{r = 0, t}, Do[t = sm[n-1, u, v]; If[t>r, r = t], {u, 1, n-1}, {v, 1, n-1}]; r];",
+        "Array[a, 20] (* _Jean-Fran\u00e7ois Alcover_, Jul 23 2018, after _Joerg Arndt_ *)"
+    ],
+    "program": [
+        "(PARI)",
+        "st1(n,k) = abs(stirling(n,k,1));",
+        "sm(n,u,v) = sum(k=1,n, binomial(n,k) * st1(k,u-1) * st1(n-k,v-1));",
+        "a(n)= {",
+        "    my(r=0, t);",
+        "    if ( n<=2, return(1) );",
+        "    n -= 1;",
+        "    for (u=1, n,",
+        "        for (v=1, n,",
+        "            t = sm(n, u, v);",
+        "            if ( t>r, r=t );",
+        "        );",
+        "    );",
+        "    return( r );",
+        "}",
+        "/* _Joerg Arndt_, Mar 28 2013 */"
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Tanya Khovanova_ and _Joel B. Lewis_, Mar 27 2013",
+    "ext": [
+        "a(13) corrected by _Mauro Fiorentini_, Jan 15 2019"
+    ],
+    "references": 1,
+    "revision": 37,
+    "time": "2019-01-15T16:18:45-05:00",
+    "created": "2013-03-28T12:31:48-04:00"
+}

@@ -1,0 +1,34 @@
+{
+    "number": 355316,
+    "data": "0,10,1110,333110,333322110,4444322222110,444441355555222110,5555541113555555333222110,5555551433311366666653333333222110,6666665111433332211366666661577777773333222110,66666661533311444443222221137777777611157777777744443333222110",
+    "name": "Stuttering Look and Say sequence with seed 0.",
+    "comment": [
+        "If we let L(n) denote the number of digits in the n-th term, then the limit of L(n+1)/L(n) is an algebraic integer of degree 415. This limit is a stuttering analog of Conway's constant (see A014715)."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A355316/b355316.txt\">Table of n, a(n) for n = 1..18</a>",
+        "Jonathan Comes, <a href=\"https://arxiv.org/abs/2206.11991\">Stuttering look and say sequences and a challenger to Conway's most complicated algebraic number from the silliest source</a>, arXiv:2206.11991 [math.HO], 2022."
+    ],
+    "example": [
+        "E.g., to obtain the term after 1110, we look at 1110 and see \"three 1's and one 0\". We then say what we saw by stuttering the counts as many times as the count prescribes: we stutter the \"three\" 3 times and the \"one\" 1 time (no stutter); so we say \"three three three 1's and one 0\" to get 333110."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import accumulate, groupby, repeat",
+        "def summarize(n, _): return int(\"\".join(str(c:=len(list(g)))*c+k for k, g in groupby(str(n))))",
+        "def aupton(terms): return list(accumulate(repeat(0, terms), summarize))",
+        "print(aupton(11)) # _Michael S. Branicky_, Jun 28 2022",
+        "(PARI) first(n) = my(c, d=[0], x, res=vector(n)); for(i=2, n, c=1; x=\"\"; for(j=1, #d, if(j<#d && d[j]==d[j+1], c++, x=concat(x, concat(vector(c+1, k, Str(if(k==c+1, d[j], c))))); c=1)); res[i]=eval(x); d=digits(res[i])); res \\\\ _Iain Fox_, Jun 30 2022"
+    ],
+    "xref": [
+        "Stuttering variant of A001155.",
+        "Cf. A014715."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Jonathan Comes_, Jun 28 2022",
+    "references": 1,
+    "revision": 27,
+    "time": "2022-08-30T16:08:05-04:00",
+    "created": "2022-08-30T14:19:35-04:00"
+}

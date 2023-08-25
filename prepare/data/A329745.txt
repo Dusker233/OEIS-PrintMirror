@@ -1,0 +1,57 @@
+{
+    "number": 329745,
+    "data": "0,0,2,3,6,15,22,41,72,129,213,395,660,1173,2031,3582,6188,10927,18977,33333,58153,101954,178044,312080,545475,955317,1670990,2925711,5118558,8960938,15680072,27447344,48033498,84076139,147142492,257546234,450748482,788937188",
+    "name": "Number of compositions of n with runs-resistance 2.",
+    "comment": [
+        "A composition of n is a finite sequence of positive integers with sum n.",
+        "For the operation of taking the sequence of run-lengths of a finite sequence, runs-resistance is defined as the number of applications required to reach a singleton.",
+        "These are non-constant compositions with equal run-lengths (A329738)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A329745/b329745.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "formula": [
+        "a(n) = A329738(n) - A000005(n).",
+        "a(n) = Sum_{d|n} (A003242(d) - 1). - _Andrew Howroyd_, Dec 30 2020"
+    ],
+    "example": [
+        "The a(3) = 2 through a(6) = 15 compositions:",
+        "  (1,2)  (1,3)    (1,4)    (1,5)",
+        "  (2,1)  (3,1)    (2,3)    (2,4)",
+        "         (1,2,1)  (3,2)    (4,2)",
+        "                  (4,1)    (5,1)",
+        "                  (1,3,1)  (1,2,3)",
+        "                  (2,1,2)  (1,3,2)",
+        "                           (1,4,1)",
+        "                           (2,1,3)",
+        "                           (2,3,1)",
+        "                           (3,1,2)",
+        "                           (3,2,1)",
+        "                           (1,1,2,2)",
+        "                           (1,2,1,2)",
+        "                           (2,1,2,1)",
+        "                           (2,2,1,1)"
+    ],
+    "mathematica": [
+        "runsres[q_]:=Length[NestWhileList[Length/@Split[#]&,q,Length[#]>1&]]-1;",
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],runsres[#]==2&]],{n,10}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(b=Vec(1/(1 - sum(k=1, n, x^k/(1+x^k) + O(x*x^n)))-1)); vector(n, k, sumdiv(k, d, b[d]-1))} \\\\ _Andrew Howroyd_, Dec 30 2020"
+    ],
+    "xref": [
+        "Column k = 2 of A329744.",
+        "Column k = n - 2 of A329750.",
+        "Cf. A000740, A003242, A008965, A098504, A242882, A318928, A329743, A329746, A329747, A329767."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Gus Wiseman_, Nov 21 2019",
+    "ext": [
+        "Terms a(21) and beyond from _Andrew Howroyd_, Dec 30 2020"
+    ],
+    "references": 20,
+    "revision": 9,
+    "time": "2020-12-30T19:44:02-05:00",
+    "created": "2019-11-21T10:43:48-05:00"
+}

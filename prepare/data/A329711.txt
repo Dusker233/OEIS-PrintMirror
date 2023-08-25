@@ -1,0 +1,31 @@
+{
+    "number": 329711,
+    "data": "14,154,1196,2127,61411,172482,223227,279174,291318,1233822,1346235,2681318,3127010,6541482,9105217,14216826,15136418,15454362,17211896,22442133,24174129,32693925,35219085,35523825,51157348,51431138,57121662,58935162,91242978,101721214",
+    "name": "Numbers n such that n = prime(d_1) * prime(d_2) * ... * prime(d_k), where n is a concatenation of d_1, d_2, ..., d_k.",
+    "link": [
+        "Giovanni Resta, <a href=\"/A329711/b329711.txt\">Table of n, a(n) for n = 1..191</a>",
+        "Bartlomiej Pawlik, <a href=\"/A329711/a329711_1.txt\">Table of concatenations and prime factorizations of a(n) for n = 1..191</a>"
+    ],
+    "example": [
+        "14 = prime(1)*prime(4) = 2*7, so 14 is a term.",
+        "154 = prime(1)*prime(5)*prime(4) = 2*11*7, so 154 is a term.",
+        "2127 = prime(2)*prime(127) = 3*709, so 2127 is a term.",
+        "9105217 = prime(9)*prime(10)*prime(5)*prime(21)*prime(7), so 9105217 is a term."
+    ],
+    "mathematica": [
+        "ok[n_] := Block[{d = DigitCount@ n}, AllTrue[Range@ 9, IntegerExponent[n, Prime@ #] <= d[[#]] &]]; ric[v_, d_] := If[PrimeQ@ v, PrimePi@ v == FromDigits@ d, Block[ {r=False, p, m = Length@ d}, Do[ If[ d[[i + 1]] > 0, p = Prime@ FromDigits@ Take[d, i]; If[Mod[v, p] == 0 && (r = ric[v/p, Take[d, i - m]]), Break[]]], {i, m - 1}]; r]]; Select[ Range@ 300000, If[ok@# && ric[#, IntegerDigits@ #], Print@#; True, False] &] (* _Giovanni Resta_, Mar 12 2020 *)"
+    ],
+    "xref": [
+        "Cf. A097227 (a subsequence), A318298."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bartlomiej Pawlik_, Mar 07 2020",
+    "ext": [
+        "More terms from _Giovanni Resta_, Mar 12 2020"
+    ],
+    "references": 2,
+    "revision": 47,
+    "time": "2022-05-04T17:13:34-04:00",
+    "created": "2020-03-20T06:47:28-04:00"
+}

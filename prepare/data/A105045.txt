@@ -1,0 +1,56 @@
+{
+    "number": 105045,
+    "data": "0,1,2,3,12,20,91,154,713,1209,5610,9515,44164,74908,347699,589746,2737425,4643057,21551698,36554707,169676156,287794596,1335857547,2265802058,10517184217,17838621865,82801616186,140443172859,651895745268,1105706761004,5132364345955",
+    "name": "a(0)=0, a(1)=1, a(2)=2, a(3)=3, a(4)=12; for n > 4, a(n) = 8*a(n-2) - a(n-4) - 3.",
+    "comment": [
+        "It appears that this sequence gives all nonnegative m such that 60*m^2 - 60*m + 1 is a square and that for n > 3, a(n+1) = A103200(n) + 1.",
+        "From _Paul Weisenhorn_, Jun 30 2010: (Start)",
+        "Given b(n) red and a(n) blue balls in an urn then draw 6 balls without replacement.",
+        "This gives binomial(b(n), 6) = binomial(b(n), 4) * binomial(a(n), 2), where b(n) = A179123(n). (End)"
+    ],
+    "link": [
+        "Muniru A Asiru, <a href=\"/A105045/b105045.txt\">Table of n, a(n) for n = 0..2000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (1,8,-8,-1,1)."
+    ],
+    "formula": [
+        "a(n) = 8*a(n-2) - a(n-4) - 3, for n > 4.",
+        "From _Paul Weisenhorn_, Jun 30 2010: (Start)",
+        "Let r=sqrt(15), then",
+        "a(n) = ((15+r)*(4+r)^((n-1)/2) + (15-r)*(4-r)^((n-1)/2) + 30)/60 when n is odd, and",
+        "a(n) = ((45+11*r)*(4+r)^((n-2)/2) + (45-11*r)*(4-r)^((n-2)/2) + 30)/60 when n is even. (End)",
+        "a(n) = a(n-1) + 8*a(n-2) - 8*a(n-3) - a(n-4) + a(n-5), a(0)=0, a(1)=1, a(2)=2, a(3)=3, a(4)=12, a(5)=20. - _Harvey P. Dale_, Nov 10 2011",
+        "G.f.: x*(1 +x -7*x^2 +x^3 +x^4)/((1-x)*(1-8*x^2+x^4)). - _Colin Barker_, Jan 01 2013"
+    ],
+    "example": [
+        "For n=3, a(3)=3; b(3)=14; binomial(14,6)=3003; binomial(14,4)*binomial(3,2) = 1001*3 = 3003. - _Paul Weisenhorn_, Jun 30 2010"
+    ],
+    "maple": [
+        "n:=1: for m from 1 to 2000 do w:=sqrt(1+60*m*(m-1)):",
+        "if (w=floor(w)) then a(n)=m: b(n)=(9+w)/2: inc(n): end if: end do # _Paul Weisenhorn_, Jun 30 2010"
+    ],
+    "mathematica": [
+        "Join[{0},RecurrenceTable[{a[1]==1,a[2]==2,a[3]==3,a[4]==12,a[n] == 8a[n-2]-a[n-4]-3},a,{n,30}]] (* or *) LinearRecurrence[{1,8,-8,-1, 1}, {0,1,2,3,12,20}, 30] (* _Harvey P. Dale_, Nov 10 2011 *)"
+    ],
+    "program": [
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 40); [0] cat Coefficients(R!( x*(1+x-7*x^2+x^3+x^4)/((1-x)*(1-8*x^2+x^4)) )); // _G. C. Greubel_, Mar 14 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def a(n): # a = A105045",
+        "    if (n<6): return (0,1,2,3,12,20)[n]",
+        "    else: return a(n-1) +8*a(n-2) -8*a(n-3) -a(n-4) +a(n-5)",
+        "[a(n) for n in range(41)] # _G. C. Greubel_, Mar 14 2023"
+    ],
+    "xref": [
+        "Cf. A001090, A103200, A179123."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Gerald McGarvey_, Apr 03 2005",
+    "ext": [
+        "More terms from _Colin Barker_, Jan 01 2013"
+    ],
+    "references": 4,
+    "revision": 38,
+    "time": "2023-03-14T09:26:24-04:00",
+    "created": "2005-04-09T03:00:00-04:00"
+}

@@ -1,0 +1,40 @@
+{
+    "number": 325113,
+    "data": "1,2,3,5,6,7,9,10,11,13,15,17,19,21,22,23,25,26,27,29,30,31,33,35,37,39,50,51,53,55,57,59,61,62,63,65,66,67,69,70,71,73,75,77,79,90,91,93,95,97,99,101,103,105,107,109,110,111,113,115,117",
+    "name": "Positive integers whose decimal representation has no nonzero subsequence that is divisible by 4.",
+    "comment": [
+        "From _Robert Israel_, Apr 14 2020: (Start)",
+        "There are no digits 4 or 8.",
+        "If there is a digit 2 or 6, all previous digits must be even.",
+        "If there is a digit 0, all previous digits must be odd. (End)"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A325113/b325113.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "filter:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  if member(4,L) or member(8,L) then return false fi;",
+        "  if member(0,L,i) and hastype(L[i+1..-1],even) then return false fi;",
+        "  i:= ListTools:-SelectFirst(t -> t=2 or t=6, L,output=indices);",
+        "  i = NULL or not hastype(L[i+1..-1],odd);",
+        "end proc:",
+        "select(filter, [$1..300]); # _Robert Israel_, Apr 14 2020"
+    ],
+    "mathematica": [
+        "With[{k = 4}, Select[Range@ 120, NoneTrue[DeleteCases[FromDigits /@ Rest@ Subsequences[IntegerDigits@ #], 0], Mod[#, k] == 0 &] &]] (* _Michael De Vlieger_, Mar 31 2019 *)"
+    ],
+    "xref": [
+        "Cf. A014261 (for 2), A325112 (for 3), A261189 (for 5)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Jonathan Kal-El Per\u00e9z_, Mar 27 2019",
+    "ext": [
+        "Corrected by _Robert Israel_, Apr 14 2020"
+    ],
+    "references": 3,
+    "revision": 26,
+    "time": "2020-04-14T19:58:32-04:00",
+    "created": "2019-07-14T13:15:06-04:00"
+}

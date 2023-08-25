@@ -1,0 +1,34 @@
+{
+    "number": 363286,
+    "data": "3,5,7,11,13,17,19,23,29,37,41,47,53,59,61,67,71,79,83,97,101,103,107,131,137,139,149,163,167,173,179,181,191,193,197,199,211,227,239,263,269,271,293,311,313,317,347,349,359,367,373,379,383,389,401,409,419",
+    "name": "Odd primes p such that the congruence 2^x == 1 (mod p) has no solution for 0 < x < (p - 1)/2.",
+    "comment": [
+        "An odd prime p belongs to this sequence if and only if A001917(A000720(p)) is equal to 1 or 2."
+    ],
+    "formula": [
+        "a(n) ~ (3/2)*n*log((3/2)*n)."
+    ],
+    "program": [
+        "(Magma) [p: p in [3..419 by 2] | IsPrime(p) and (p-1)/Modorder(2, p) le 2];",
+        "(PARI) isok(p) = p%2 && isprime(p) && (p-1)/znorder(Mod(2, p))<=2;",
+        "(Python)",
+        "from itertools import islice",
+        "from sympy import nextprime, n_order",
+        "def A363286_gen(startvalue=3): # generator of terms >= startvalue",
+        "    p = max(startvalue,3)-1",
+        "    while (p:=nextprime(p)):",
+        "        if n_order(2,p)<<1 >= p-1:",
+        "            yield p",
+        "A363286_list = list(islice(A363286_gen(),30)) # _Chai Wah Wu_, Jul 17 2023"
+    ],
+    "xref": [
+        "Cf. A001917, A014664."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Arkadiusz Wesolowski_, May 25 2023",
+    "references": 0,
+    "revision": 11,
+    "time": "2023-07-17T09:03:29-04:00",
+    "created": "2023-07-16T23:30:57-04:00"
+}

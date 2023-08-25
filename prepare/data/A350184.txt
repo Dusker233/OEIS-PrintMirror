@@ -1,0 +1,61 @@
+{
+    "number": 350184,
+    "data": "2688,18816,26244,98784,222264,262144,331776,333396,666792,688128,1769472,2939328,3687936,4214784,4917248,13226976,19361664,38118276,71663616,111476736,133413966,161414428,169869312,184473632,267846264,368947264,476171136,1783627776",
+    "name": "Numbers of multiplicative persistence 5 which are themselves the product of digits of a number.",
+    "comment": [
+        "The multiplicative persistence of a number mp(n) is the number of times the product of digits function p(n) must be applied to reach a single digit, i.e., A031346(n).",
+        "The product of digits function partitions all numbers into equivalence classes. There is a one-to-one correspondence between values in this sequence and equivalence classes of numbers with multiplicative persistence 5.",
+        "There are infinitely many numbers with mp of 1 to 11, but the classes of numbers (p(n)) are postulated to be finite for sequences A350181....",
+        "Equivalently:",
+        "This sequence consists of all numbers A007954(k) such that A031346(k) = 6.",
+        "These are the numbers k in A002473 such that A031346(k) = 5.",
+        "Or:",
+        "- they factor into powers of 2, 3, 5 and 7 exclusively.",
+        "- p(n) goes to a single digit in 5 steps.",
+        "Postulated to be finite and complete."
+    ],
+    "link": [
+        "Daniel Mondot, <a href=\"/A350184/b350184.txt\">Table of n, a(n) for n = 1..41</a>",
+        "Daniel Mondot, <a href=\"https://oeis.org/wiki/File:Multiplicative_Persistence_Tree.txt\">Multiplicative Persistence Tree</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/MultiplicativePersistence.html\">Multiplicative Persistence</a>"
+    ],
+    "example": [
+        "2688 is in this sequence because:",
+        "- 2688 goes to a single digit in 5 steps: p(2688)=768, p(768)=336, p(336)=54, p(54)=20, p(20)=0.",
+        "- p(27648) = p(47628) = 2688, etc.",
+        "331776 is in this sequence because:",
+        "- 331776 goes to a single digit in 5 steps: p(331776)=2646, p(2646)=288, p(288)=128, p(128)=16, p(16)=6.",
+        "- p(914838624) = p(888899) = 331776, etc."
+    ],
+    "mathematica": [
+        "mx=10^10;lst=Sort@Flatten@Table[2^i*3^j*5^k*7^l,{i,0,Log[2,mx]},{j,0,Log[3,mx/2^i]},{k,0,Log[5,mx/(2^i*3^j)]},{l,0,Log[7,mx/(2^i*3^j*5^k)]}];",
+        "Select[lst,Length@Most@NestWhileList[Times@@IntegerDigits@#&,#,#>9&]==5&] (* code for 7-smooth numbers from A002473. - _Giorgos Kalogeropoulos_, Jan 16 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from math import prod",
+        "def hd(n):",
+        "    while (n&1) == 0:  n >>= 1",
+        "    while (n%3) == 0:  n /= 3",
+        "    while (n%5) == 0:  n /= 5",
+        "    while (n%7) == 0:  n /= 7",
+        "    return(n)",
+        "def pd(n): return prod(map(int, str(n)))",
+        "def ok(n):",
+        "    if hd(n) > 9: return False",
+        "    return (p := pd(n)) > 9 and (q := pd(p)) > 9 and (r := pd(q)) > 9 and (s := pd(r)) > 9 and pd(s) < 10",
+        "print([k for k in range(10,476200000) if ok(k)])"
+    ],
+    "xref": [
+        "Intersection of A002473 and A046514 (all numbers with mp of 5).",
+        "Cf. A003001 (smallest number with multiplicative persistence n), A031346 (multiplicative persistence), A031347 (multiplicative digital root).",
+        "Cf. A350180, A350181, A350182, A350183, A350185, A350186, A350187 (numbers with mp 1 to 4 and 6 to 10 that are themselves 7-smooth numbers)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Daniel Mondot_, Dec 18 2021",
+    "references": 8,
+    "revision": 38,
+    "time": "2022-03-09T00:37:13-05:00",
+    "created": "2022-01-27T21:09:43-05:00"
+}

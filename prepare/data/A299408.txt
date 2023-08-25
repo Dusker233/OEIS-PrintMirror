@@ -1,0 +1,47 @@
+{
+    "number": 299408,
+    "data": "0,1,1,2,2,4,6,9,11,17,24,33,41,59,75,99,128,168,214,278,347,438,559,696,866,1084,1346,1653,2044,2500,3070,3741,4559,5507,6712,8061,9746,11699,14076,16794,20141,23943,28588,33904,40291,47593,56461,66462,78495",
+    "name": "Number of partitions of n whose minimal excluded multiplicity is even.",
+    "comment": [
+        "This is analogous to the minimal excludant of Fraenkel."
+    ],
+    "link": [
+        "A. S. Fraenkel, U. Peled, <a href=\"http://www.wisdom.weizmann.ac.il/~fraenkel/Papers/Harnessing.The.Unwieldy.MEX.Function_2.pdf\">Harnessing the Unwieldy MEX Function</a>, In: Games of No Chance 4, Proc. BIRS Workshop on Combinatorial Games, 2008, Banff, Alberta, Canada, MSRI Publ. (R. J. Nowakowski, ed.), Vol. 63, Cambridge University Press, Cambridge, 77-94, 2015."
+    ],
+    "formula": [
+        "a(n) = A000041(n) - A300183(n)."
+    ],
+    "example": [
+        "For the partition 1+1+2; 2 has multiplicity 1; 1 has multiplicity 2, so the smallest absent multiplicity is 3, which is odd. So this partition is not counted.",
+        "a(4) = 2: [3,1], [4].",
+        "a(5) = 4: [2,1,1,1], [3,2], [4,1], [5].",
+        "a(6) = 6: [2,1,1,1,1], [3,1,1,1], [3,2,1], [4,2], [5,1], [6]."
+    ],
+    "mathematica": [
+        "<< Combinatorica`;",
+        "nend = 15;",
+        "For[n = 1, n <= nend, n++, count[n] = 0;",
+        "  For[i = 1, i <= PartitionsP[n], i++, partition = Partitions[n][[i]];",
+        "    set = {};",
+        "   tally = Tally[partition];",
+        "   For[j = 1, j <= Length[tally], j++,",
+        "    set = Union[set, {tally[[j]][[2]]}]];",
+        "   comp = Complement[Range[Max[set] + 1], set];",
+        "   If[EvenQ[Min[comp]], count[n]++]",
+        "   ]];",
+        "Table[count[i], {i, 1, nend}]"
+    ],
+    "xref": [
+        "Cf. A000041, A300183."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_David S. Newman_, Feb 20 2018",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Feb 26 2018"
+    ],
+    "references": 1,
+    "revision": 29,
+    "time": "2018-02-27T19:08:26-05:00",
+    "created": "2018-02-27T19:08:26-05:00"
+}

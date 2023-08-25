@@ -1,0 +1,48 @@
+{
+    "number": 100524,
+    "data": "0,3,13,292,5511,166091,6096546,281962395,15743194025,1044554014702,80967658322673,7236647136567861,737470098999168640,84879860776191764271,10943491685936397689965,1569258830662933925039980,248708981505469070789015751,43323893019300876864736656191",
+    "name": "a(n) = ( Sum_{k=0..n} (-1)^(n-k)*binomial(n, k)*Bell(k) )*( Sum_{k=1..n} (k-1)!*binomial(n-1, k-1)*binomial(n, k-1) ).",
+    "comment": [
+        "Arises in combinatorial field theory."
+    ],
+    "reference": [
+        "P. Blasiak, K. A. Penson, A. I. Solomon, A. Horzela and G. E. H. Duchamp, Some useful combinatorial formulas for bosonic operators, J. Math. Phys. 46, 052110 (2005) (6 pages).",
+        "P. Blasiak, K. A. Penson, A. I. Solomon, A. Horzela and G E. H. Duchamp, Combinatorial field theories via boson normal ordering, preprint, Apr 27 2004."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A100524/b100524.txt\">Table of n, a(n) for n = 1..280</a>",
+        "P. Blasiak, K. A. Penson, A. I. Solomon, A. Horzela and G. E. H. Duchamp, <a href=\"http://arXiv.org/abs/quant-ph/0405103\">Combinatorial field theories via boson normal ordering</a>"
+    ],
+    "formula": [
+        "a(n) = ( Sum_{k=0..n} (-1)^(n-k)*binomial(n, k)*Bell(k) )*( Sum_{k=1..n} (k-1)!*binomial(n-1, k-1)*binomial(n, k-1) ).",
+        "a(n) = A000296(n)*A000262(n)."
+    ],
+    "maple": [
+        "with(combinat): A:=n->add((-1)^(n-k)*binomial(n, k)*bell(k), k=0..n)*add((k-1)!*binomial(n-1, k-1)*binomial(n, k-1), k=1..n): seq(A(n), n=1..18);"
+    ],
+    "mathematica": [
+        "a[n_]:= Sum[(-1)^(n-k) Binomial[n,k] BellB[k], {k,0,n}] Sum[(k-1)! Binomial[n-1, k-1] Binomial[n, k-1], {k,n}];",
+        "Table[a[n], {n,20}] (* _Jean-Fran\u00e7ois Alcover_, Nov 11 2018 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "F:= Factorial;",
+        "A000262:= func< n | F(n)*(&+[Binomial(n-1, k)/F(k+1): k in [0..n-1]]) >;",
+        "A000296:= func< n | (&+[(-1)^(n-k)*Binomial(n, k)*Bell(k): k in [0..n]]) >;",
+        "A100524:= func< n | A000262(n)*A000296(n) >;",
+        "[A100524(n): n in [1..30]]; // _G. C. Greubel_, Jun 27 2022",
+        "(SageMath)",
+        "def A100524(n): return ( sum((-1)^(n-k)*binomial(n, k)*bell_number(k) for k in (0..n)) )*factorial(n-1)*gen_laguerre(n-1,1,-1)",
+        "[A100524(n) for n in (1..30)] # _G. C. Greubel_, Jun 27 2022"
+    ],
+    "xref": [
+        "Cf. A000262, A000296."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Emeric Deutsch_, Nov 24 2004",
+    "references": 1,
+    "revision": 16,
+    "time": "2022-06-27T19:03:49-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

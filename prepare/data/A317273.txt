@@ -1,0 +1,39 @@
+{
+    "number": 317273,
+    "data": "1,1,4,202,163692,2487100956,832252747110528,7116720347983770858600,1776529280247277318394451118272,14580103976468323893693256154922439405632,4377460729080839690885111988468699720430287682744896,52959485251272238069446517666752040946228209263610778166878160384",
+    "name": "Number of permutations of [n*(n+1)/2] whose lengths of increasing runs are the positive integers from 1 to n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A317273/b317273.txt\">Table of n, a(n) for n = 0..14</a>"
+    ],
+    "formula": [
+        "a(n) = A317327(A000217(n),n).",
+        "a(n) <= A317165(n)."
+    ],
+    "maple": [
+        "g:= (n, s)-> `if`(n in s, 1, 0):",
+        "b:= proc(u, o, t, s) option remember; `if`(u+o=0, g(t, s),",
+        "      `if`(g(t, s)=1, add(b(u-j, o+j-1, 1, s minus {t})",
+        "       , j=1..u), 0)+ add(b(u+j-1, o-j, t+1, s), j=1..o))",
+        "    end:",
+        "a:= n-> b(n*(n+1)/2, 0$2, {$0..n}):",
+        "seq(a(n), n=0..10);"
+    ],
+    "mathematica": [
+        "g[n_, s_] := If[MemberQ[s, n], 1, 0];",
+        "b[u_, o_, t_, s_] := b[u, o, t, s] = If[u + o == 0, g[t, s],",
+        "     If[g[t, s] == 1, Sum[b[u - j, o + j - 1, 1, s ~Complement~ {t}],",
+        "     {j, u}], 0] + Sum[b[u + j - 1, o - j, t + 1, s], {j, o}]];",
+        "a[n_] := b[n(n+1)/2, 0, 0, Range[0, n]];",
+        "Table[a[n], {n, 0, 10}] (* _Jean-Fran\u00e7ois Alcover_, Sep 01 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000027, A000217, A317165."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 25 2018",
+    "references": 3,
+    "revision": 17,
+    "time": "2021-09-01T16:07:22-04:00",
+    "created": "2018-07-25T15:01:12-04:00"
+}

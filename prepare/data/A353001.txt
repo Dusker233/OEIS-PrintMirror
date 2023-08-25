@@ -1,0 +1,38 @@
+{
+    "number": 353001,
+    "data": "4,57,70,93,129,217,322,381,417,453,513,565,597,646,682,781,813,921,925,1057,1081,1102,1137,1165,1197,1261,1317,1393,1405,1558,1582,1641,1750,1798,1846,1857,1918,1929,2073,2101,2110,2173,2181,2305,2329,2361,2482,2506,2569,2577,2626,2649,2653",
+    "name": "Numbers k such that the k-th triangular number mod the sum (with multiplicity) of prime factors of k, and the k-th triangular number mod the sum of divisors of k, are both prime.",
+    "comment": [
+        "Numbers k such that A232324(k) and A352996(k) are prime."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A353001/b353001.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 70 is a term because 70*71/2 = 2485, A000217(70) = 144, A001414(70) = 14, and both 2485 mod 144 = 37 and 2485 mod 14 = 7 are prime."
+    ],
+    "maple": [
+        "filter:= proc(n) local a,b,c,t;",
+        "  a:= n*(n+1)/2;",
+        "  b:= add(t[1]*t[2],t=ifactors(n)[2]);",
+        "  if not isprime(a mod b) then return false fi;",
+        "  c:= numtheory:-sigma(n);",
+        "  isprime(a mod c)",
+        "end proc:",
+        "select(filter, [$2..3000]);"
+    ],
+    "mathematica": [
+        "Select[Range[3000], And @@ PrimeQ[Mod[#*(# + 1)/2, {DivisorSigma[1, #], Plus @@ Times @@@ FactorInteger[#]}]] &] (* _Amiram Eldar_, Apr 15 2022 *)"
+    ],
+    "xref": [
+        "Intersection of A352908 and A352997.",
+        "Cf. A000217, A001414, A232324, A352996."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Apr 14 2022",
+    "references": 2,
+    "revision": 14,
+    "time": "2022-04-19T09:24:43-04:00",
+    "created": "2022-04-18T22:26:05-04:00"
+}

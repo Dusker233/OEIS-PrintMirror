@@ -1,0 +1,46 @@
+{
+    "number": 352971,
+    "data": "1,12,258,8274,353742,18904602,1212354798,90706565514,7756033173342,746093257148442,79745110236049038,9375786203927344554,1202540991574287431742,167091435183140588426682,25003060551369349424359278,4008624526767825553573112394",
+    "name": "Moments of the distribution of position of the first occurrence of pattern aa in a random ternary word.",
+    "comment": [
+        "Let X be the random variable that assigns to each word on alphabet {a,b,c} the number of letters required for the first occurrence of the pattern aa. Then a(n) = E(X^n).",
+        "Let X(m,k) be the random variable that assigns to each m-ary word the number of letters required for the first occurrence of the pattern aa...a (k copies of a). The moment generating function for X(m,k) is G(exp(t)) where G(t) = T(t/m), T(z) = z^k/(z^k + c(z)(1- m*z)), c(z) = (1-z^k)/(1-z)."
+    ],
+    "link": [
+        "Philippe Flajolet and Robert Sedgewick, <a href=\"http://algo.inria.fr/flajolet/Publications/AnaCombi/anacombi.html\">Analytic Combinatorics</a>, Cambridge Univ. Press, 2009, page 59."
+    ],
+    "formula": [
+        "E.g.f.: exp(2*t)/(9 - 6*exp(t) - 2*exp(2*t)).",
+        "a(n) ~ n! * (3 - sqrt(3)) / (12 * (log(3*(sqrt(3) - 1)/2))^(n+1)). - _Vaclav Kotesovec_, Apr 13 2022"
+    ],
+    "maple": [
+        "g := exp(2*x)/(9-6*exp(x)-2*exp(2*x)) ;",
+        "taylor(g,x=0,40) ;",
+        "L := gfun[seriestolist](%) ;",
+        "seq( op(i,L)*(i-1)!,i=1..nops(L)) ; # _R. J. Mathar_, Mar 02 2023"
+    ],
+    "mathematica": [
+        "nn = 15; c[z_] := (1 - z^k)/(1 - z);",
+        "T[z_] := z^k/(z^k + (1 - m z) c[z]); G[t_] := T[t/m];",
+        "Range[0, nn]! CoefficientList[Series[G[Exp[t]] /. {k -> 2, m -> 3}, {t, 0, nn}],t]"
+    ],
+    "program": [
+        "(PARI) seq(n)=my(p=exp(x + O(x*x^n))); Vec(serlaplace(p^2/(9 - 6*p - 2*p^2))) \\\\ _Andrew Howroyd_, May 06 2023",
+        "(SageMath) # uses[egfExpand from A362718]",
+        "def egf(x): return exp(2*x)/(9 - 6*exp(x) - 2*exp(2*x))",
+        "print(egfExpand(egf, 1, 15))  # _Peter Luschny_, May 06 2023"
+    ],
+    "xref": [
+        "Cf. A302922."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Geoffrey Critzer_, Apr 12 2022",
+    "ext": [
+        "Typo in a(7) corrected by _Georg Fischer_, May 06 2023"
+    ],
+    "references": 0,
+    "revision": 24,
+    "time": "2023-05-06T21:32:28-04:00",
+    "created": "2022-05-13T10:05:11-04:00"
+}

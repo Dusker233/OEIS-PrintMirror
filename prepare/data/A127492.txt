@@ -1,0 +1,51 @@
+{
+    "number": 127492,
+    "data": "2,10,17,49,71,72,75,145,161,167,170,184,244,250,257,266,267,282,286,301,307,325,343,391,405,429,450,537,556,561,584,685,710,743,790,835,861,904,928,953",
+    "name": "Indices m of primes such that Sum_{k=0..2, k<j<=3} prime(m+k)*prime(m+j)*prime(m+j+1) is twice a prime.",
+    "comment": [
+        "Let p_0 .. p_4 be five consecutive primes, starting with the m-th prime. The index m is in the sequence if the absolute value [x^0] of the polynomial (x-p_0)*[(x-p_1)*(x-p_2) + (x-p_2)*(x-p_3) + (x-p_3)*(x-p_4)] + (x-p_1)*[(x-p_2)*(x-p_3) + (x-p_3)*(x-p_4)] + (x-p_2)*(x-p_3)*(x-p_4) is two times a prime. The correspondence with A127491: the coefficient [x^2] of the polynomial (x-p_0)*(x-p_1)*..*(x-p_4) is the sum of 10 products of a set of 3 out of the 5 primes. Here the sum is restricted to the 6 products where the two largest of the 3 primes are consecutive. - _R. J. Mathar_, Apr 23 2023"
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A127492/b127492.txt\">Table of n, a(n) for n = 2..1000</a>"
+    ],
+    "maple": [
+        "isA127492 := proc(k)",
+        "    local x,j ;",
+        "    (x-ithprime(k))* mul( x-ithprime(k+j),j=1..2)",
+        "    +(x-ithprime(k))* mul( x-ithprime(k+j),j=2..3)",
+        "    +(x-ithprime(k))* mul( x-ithprime(k+j),j=3..4)",
+        "    +(x-ithprime(k+1))* mul( x-ithprime(k+j),j=2..3)",
+        "    +(x-ithprime(k+1))* mul( x-ithprime(k+j),j=3..4)",
+        "    +(x-ithprime(k+2))* mul( x-ithprime(k+j),j=3..4) ;",
+        "    p := abs(coeff(expand(%/2),x,0)) ;",
+        "    if type(p,'integer') then",
+        "        isprime(p) ;",
+        "    else",
+        "        false ;",
+        "    end if ;",
+        "end proc:",
+        "for k from 1 to 900 do",
+        "    if isA127492(k) then",
+        "        printf(\"%a,\",k) ;",
+        "    end if ;",
+        "end do: # _R. J. Mathar_, Apr 23 2023"
+    ],
+    "mathematica": [
+        "a = {}; Do[If[PrimeQ[(Prime[x] Prime[x + 1]Prime[x + 2] + Prime[x] Prime[x + 2]Prime[x + 3] + Prime[x] Prime[x + 3] Prime[x + 4] + Prime[x + 1] Prime[x + 2]Prime[x + 3] + Prime[x + 1] Prime[x + 3]Prime[x + 4] + Prime[x + 2] Prime[x + 3] Prime[x + 4])/2], AppendTo[a, x]], {x, 1, 1000}]; a",
+        "prQ[{a_,b_,c_,d_,e_}]:=PrimeQ[(a b c+a c d+a d e+b c d+b d e+c d e)/2]; PrimePi/@Select[ Partition[ Prime[Range[1000]],5,1],prQ][[;;,1]] (* _Harvey P. Dale_, Apr 21 2023 *)"
+    ],
+    "xref": [
+        "Cf. A001043, A034961, A034963, A034964, A127333, A127334, A127335, A127336, A127337, A127338, A127339, A127340, A127341, A127342, A127343, A127345, A127346, A127347, A127348, A127349, A127351, A037171, A034962, A034965, A082246, A082251, A070934, A006094, A046301, A046302, A046303, A046324, A046325, A046326, A046327, A127489, A127490, A127491."
+    ],
+    "keyword": "nonn,uned,obsc",
+    "offset": "1,1",
+    "author": "_Artur Jasinski_, Jan 16 2007",
+    "ext": [
+        "Definition simplified by _R. J. Mathar_, Apr 23 2023",
+        "Edited by _Jon E. Schoenfield_, Jul 23 2023"
+    ],
+    "references": 2,
+    "revision": 27,
+    "time": "2023-08-02T14:37:29-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

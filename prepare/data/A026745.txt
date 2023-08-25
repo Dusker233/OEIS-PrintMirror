@@ -1,0 +1,35 @@
+{
+    "number": 26745,
+    "data": "1,3,7,15,32,66,139,285,599,1227,2577,5277,11075,22671,47543,97287,203860,417006,873175,1785513,3736210,7637604,15972143,32641221,68224004,139389570,291199307,594818781,1242097912,2536656174",
+    "name": "a(n) = Sum_{j=0..n} Sum_{i=0..n} T(j,i), T given by A026736.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A026745/b026745.txt\">Table of n, a(n) for n = 0..2000</a> (terms 0..1000 from G. C. Greubel)"
+    ],
+    "formula": [
+        "a(n) ~ c * phi^(3*n/2), where c = 1/2 + 3*phi^2 / (2*sqrt(5)) if n is even, c = 3*phi^(5/2) / (2*sqrt(5)) if n is odd and phi = A001622 = (1+sqrt(5))/2 is the golden ratio. - _Vaclav Kotesovec_, Jul 22 2019"
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k] = If[k==0 || k==n, 1, If[EvenQ[n] && k==(n-2)/2, T[n-1, k-1] + T[n-2, k-1] + T[n-1, k], T[n-1, k-1] + T[n-1, k]]];",
+        "b[n_]:= Sum[T[n, j], {j,0,n}]; Table[Sum[b[j], {j,0,n}], {n,0,35}] (* _G. C. Greubel_, Jul 22 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n, k):",
+        "    if (k==0 or k==n): return 1",
+        "    elif (mod(n,2)==0 and k==(n-2)/2): return T(n-1, k-1) + T(n-2, k-1) + T(n-1, k)",
+        "    else: return T(n-1, k-1) + T(n-1, k)",
+        "def b(n): return sum(T(n, j) for j in (0..n))",
+        "[sum(b(j) for j in (0..n)) for n in (0..35)] # _G. C. Greubel_, Jul 22 2019"
+    ],
+    "xref": [
+        "Cf. A026736."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Clark Kimberling_",
+    "references": 1,
+    "revision": 12,
+    "time": "2019-07-22T06:30:17-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

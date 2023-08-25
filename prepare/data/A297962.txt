@@ -1,0 +1,46 @@
+{
+    "number": 297962,
+    "data": "13,59,631,7039,64063,761087,3619327,74347519,1577707519,22200700927,1668463173631,290703062134783,3413184213843967,121597545150218239",
+    "name": "Take a prime, convert it to base 2. Remove its most significant digit and its least significant digit; repeat this process. a(n) is the least prime that, in the first n steps of this process, generates n primes.",
+    "comment": [
+        "From _Jon E. Schoenfield_, Jan 11 2018: (Start)",
+        "a(15) <= 6937869050647642111;",
+        "a(16) <= 7088202090368908328959;",
+        "a(17) <= 348624306087955627410980863. (End)"
+    ],
+    "formula": [
+        "Let C(p) be the result of removing the MSD and the LSD of a prime p. C(p) = (p - 2^floor(log_2(p)) - 1)/2."
+    ],
+    "example": [
+        "a(1) = 13, because 13 in base 2 is 1101, 10 is the prime 2; and 13 is the least prime with this property.",
+        "a(2) = 59, because 59 = 111011_2, 1101_2 is the prime 13, 10_2 is the prime 2; and 59 is the least prime with this property.",
+        "a(3) = 631, because 631 = 1001110111_2, 111011_2 is the prime 59, 1101_2 is the prime 13, 10_2 is the prime 2; and 631 is the least prime with this property."
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,i,k,n,ok,x; x:=1;",
+        "for n from 1 to q do for k from x to q do",
+        "a:=convert(ithprime(k),binary,decimal);",
+        "ok:=1; for i from 1 to n do a:=trunc(a/10) mod 10^(ilog10(a)-1);",
+        "if not isprime(convert(a,decimal,binary)) then ok:=0; break; fi; od;",
+        "if ok=1 then x:=k; print(ithprime(k)); break; fi; od; od; end: P(10^10);"
+    ],
+    "mathematica": [
+        "With[{s = Map[LengthWhile[#, PrimeQ] &@ NestWhileList[((# - 2^Floor@ Log2@ #) - 1)/2 &, #, # > 2 &] &, Prime@ Range[2^18]]}, Map[Prime@ First@ FirstPosition[s, #] &, Range@ Max@ s]] (* _Michael De Vlieger_, Jan 10 2018 *)"
+    ],
+    "program": [
+        "(Java) private static BigInteger SearchAn() { BigInteger BIW, BICore; int tN=10; int j3; static final BigInteger BILim = new BigInteger(\"1000000000\"); static final BigInteger BI2 = new BigInteger(\"2\");for (BIW=BI2; BIW.compareTo(BILim)<0; BIW=BIW.add(BI2)) { BICore = BIW;  for (j3=1;j3<tN+1;j3++) { if (!(BICore.isProbablePrime(10))) break; else { BICore=((BICore.subtract(BI2.pow(BICore.bitLength()-1)).subtract(BI1))).divide(BI2); } } if (j3==tN+1) { return BIW; } return BigInteger.ZERO; } }"
+    ],
+    "xref": [
+        "Cf. A296806, A296807."
+    ],
+    "keyword": "nonn,base,hard,more",
+    "offset": "1,1",
+    "author": "_Paolo Iachia_, _Paolo P. Lava_, Jan 09 2018",
+    "ext": [
+        "a(10)-a(14) from _Jon E. Schoenfield_, Jan 11 2018"
+    ],
+    "references": 0,
+    "revision": 41,
+    "time": "2022-05-30T16:33:15-04:00",
+    "created": "2018-01-10T15:34:06-05:00"
+}

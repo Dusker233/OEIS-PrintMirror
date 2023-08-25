@@ -1,0 +1,48 @@
+{
+    "number": 364446,
+    "data": "1,2,17,205,3876,99585,3313117,138046940,6974868139,419104459913,29405917751526,2376498296500063,218615700758838253,22667167720595002186,2626657814273218158997,337692419653329329932633,47859496337287704749354668",
+    "name": "Odd bisection of A097514.",
+    "comment": [
+        "Closed-form expression in terms of known functions.",
+        "a(n) is the number of partitions of a (2n+1)-set without blocks of size 2. - _Alois P. Heinz_, Jul 25 2023"
+    ],
+    "formula": [
+        "a(n) = Sum_{p >= 1} (p^(2*n + 1)*hypergeom([-n, -n - 1/2], [ ], -2/p^2)/p!) / exp(1).",
+        "a(n) = (2*n+1)! * [x^(2*n+1)] exp(exp(x)-1-x^2/2). - _Alois P. Heinz_, Jul 25 2023"
+    ],
+    "maple": [
+        "# Maple program 1:",
+        "Digits:=48;",
+        "a:= proc(n) round(evalf(sum(p^(2*n + 1)*hypergeom([-n, -n - 1/2],",
+        "       [ ], -2/p^2)/p!, p = 1 .. infinity)/exp(1)));",
+        "    end:",
+        "seq(a(n),n=0..16);",
+        "# Alternative formula in terms of generalized Laguerre",
+        "# polynomials LaguerreL(n,b,z):",
+        "# Maple program 2:",
+        "Digits:=48;",
+        "a:= proc(n) round(evalf(sum(factor(expand(p^(2*n+1)*n!*",
+        "      (-2/p^2)^n*LaguerreL(n,1/2,p^2/2)))/p!,p=1..infinity)/exp(1)));",
+        "    end:",
+        "seq(a(n),n=0..16);",
+        "# third Maple program:",
+        "b:= proc(n) option remember; `if`(n=0, 1, add(`if`(",
+        "       j=2, 0, b(n-j)*binomial(n-1, j-1)), j=1..n))",
+        "    end:",
+        "a:= n-> b(2*n+1):",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Jul 25 2023"
+    ],
+    "program": [
+        "(PARI)  my(N=44,x='x+O('x^N)); v=Vec(serlaplace(exp(exp(x)-1-x^2/2))); vector(#v\\2,n,v[2*n]) \\\\ _Joerg Arndt_, Jul 26 2023"
+    ],
+    "xref": [
+        "Cf. A097514."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Karol A. Penson_, Jul 25 2023",
+    "references": 0,
+    "revision": 23,
+    "time": "2023-07-28T07:51:26-04:00",
+    "created": "2023-07-28T07:51:26-04:00"
+}

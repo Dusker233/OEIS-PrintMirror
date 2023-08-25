@@ -1,0 +1,55 @@
+{
+    "number": 160078,
+    "data": "22,26,28,35,37,41,45,46,47,49,60,61,67,75,77,78,84,86,89,90,93,94,95,97,105,106,108,110,116,120,122,124,125,131,135,139,141,147,149,152",
+    "name": "Positive integers which apparently never result in a palindrome under repeated applications of the function f(x) = x + (x with digits in binary expansion reversed). Binary analog of Lychrel numbers.",
+    "comment": [
+        "Number of iterations equals 1000, but all non-seeded numbers (under) fall out in 32 iterations"
+    ],
+    "link": [
+        "Diofant.ru <a href=\"http://diofant.ru/problem/287/\"> Problem: binary Lychrel numbers under 1024.</a> (Russian language!) [From Dremov Dmitry (dremovd(AT)gmail.com), May 03 2009]"
+    ],
+    "example": [
+        "22 = 10110",
+        "10110 + 01101 = 100011",
+        "100011 + 110001 = 1010100...",
+        "Not forming a palindrome after 1000 iterations."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory.digits import digits",
+        "def make_int(l, b):",
+        "    return int(''.join(str(d) for d in l), b)",
+        "maxn = 102",
+        "it = []",
+        "for i in range( 1, maxn ) :",
+        "    d = digits( i, 2 )[1:]",
+        "    isLychrel = True",
+        "    for j in range( 1000 ) :",
+        "        d = digits( make_int( d, 2 ) + make_int( d[::-1], 2 ), 2 )[1:]",
+        "        if d == d[::-1] :",
+        "            it.append( j + 1 )",
+        "            isLychrel = False",
+        "            break",
+        "    if isLychrel :",
+        "        it.append( 0 )",
+        "print('Maximum iterations for non-seed numbers', max( it ))",
+        "Lychrel = []",
+        "for i in range( len(it) ) :",
+        "    if it[i] == 0 :",
+        "        Lychrel.append( i + 1 )",
+        "print('Count of binary Lychrel numbers', len( Lychrel ))",
+        "print('All binary lichler under', maxn)",
+        "print('Decimal form', Lychrel)",
+        "print('Binary form', list(map( lambda x: ''.join( map( str, toSystem( x, 2 ) ) ), Lychrel )))"
+    ],
+    "xref": [
+        "Binary version of A023108."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "Dremov Dmitry (dremovd(AT)gmail.com), May 01 2009",
+    "references": 0,
+    "revision": 19,
+    "time": "2021-05-12T06:20:26-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

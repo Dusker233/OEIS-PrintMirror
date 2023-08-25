@@ -1,0 +1,46 @@
+{
+    "number": 360301,
+    "data": "2,18,84,858,31122,3383898,188841114,68588585868,440400004044,7722272777722272",
+    "name": "Smallest exclusionary square (A029783) with exactly n distinct prime factors.",
+    "comment": [
+        "There is no 5 in the prime factorization of these terms.",
+        "No other terms less than 10^14. - _Michael S. Branicky_, Feb 02 2023",
+        "1.69 * 10^15 < a(10) <= 7722272777722272. - _Daniel Suteu_, Feb 05 2023"
+    ],
+    "reference": [
+        "Clifford A. Pickover, A Passion for Mathematics, Wiley, 2005; see p. 60.",
+        "David Wells, The Penguin Dictionary of Curious and Interesting Numbers, Revised Edition, 1997, page 144, entry 567."
+    ],
+    "link": [
+        "Cliff Pickover et al., <a href=\"https://groups.google.com/forum/#!topic/rec.puzzles/ubSItPD_DGY\">Exclusionary Squares and Cubes</a>, rec.puzzles topic on google groups, January 2002.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/DistinctPrimeFactors.html\">Distinct Prime Factors</a>."
+    ],
+    "formula": [
+        "Assuming a(n) exists, a(n) >= A002110(n+1)/5 >> exp((1 + o(1)) * n * log(n)). (The inequality is presumably strict for all n; for n > 34 it seems that all A002110(n) are pandigital.) - _Charles R Greathouse IV_, Feb 05 2023"
+    ],
+    "example": [
+        "84 = 2^2 * 3 * 7 is the smallest integer with 3 distinct prime factors that is also an exclusionary square, because 84^2 = 7056, so a(3) = 84.",
+        "858 = 2 * 3 * 11 * 13 is the smallest integer with 4 distinct prime factors that is also an exclusionary square, because 858^2 = 736164, so a(4) = 858."
+    ],
+    "program": [
+        "(PARI)",
+        "omega_exclusionary_squares(A, B, n) = A=max(A, vecprod(primes(n))); (f(m, p, j) = my(list=List()); forprime(q=p, sqrtnint(B\\m, j), if(q == 5, next); my(v=m*q); while(v <= B, if(j==1, if(v>=A && #setintersect(Set(digits(v)), Set(digits(v^2))) == 0, listput(list, v)), if(v*(q+1) <= B, list=concat(list, f(v, q+1, j-1)))); v *= q)); list); vecsort(Vec(f(1, 2, n)));",
+        "a(n) = my(x=vecprod(primes(n)), y=2*x); while(1, my(v=omega_exclusionary_squares(x, y, n)); if(#v >= 1, return(v[1])); x=y+1; y=2*x); \\\\ _Daniel Suteu_, Feb 05 2023"
+    ],
+    "xref": [
+        "Cf. A029783.",
+        "Similar: A060319 (Fibonacci), A083002 (oblong), A359960 (Niven), A359961 (Zuckerman)."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Feb 02 2023",
+    "ext": [
+        "a(4)-a(7) from _Amiram Eldar_, Feb 02 2023",
+        "a(8)-a(9) from _Michael S. Branicky_, Feb 02 2023",
+        "a(10) from _Michael S. Branicky_, Feb 07 2023"
+    ],
+    "references": 0,
+    "revision": 32,
+    "time": "2023-02-12T05:38:15-05:00",
+    "created": "2023-02-12T05:38:15-05:00"
+}

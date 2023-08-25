@@ -1,0 +1,32 @@
+{
+    "number": 346550,
+    "data": "1,2,4,13,54,278,1704,12126,98280,893904,9017280,99918120,1206500400,15768729360,221792780160,3340515069360,53641756586880,914849722725120,16514863528665600,314599179867396480,6306817346711481600,132727279189258656000",
+    "name": "Expansion of Sum_{k>=0} k! * x^k * (1 + x)^(k+1).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A346550/b346550.txt\">Table of n, a(n) for n = 0..449</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=floor(n/2)..n} k! * binomial(k+1,n-k).",
+        "a(n) = A240172(n-1) + A240172(n) for n > 0.",
+        "a(n) = (n-2) * a(n-1) + 2 * (n-1) * a(n-2) + (n-2) * a(n-3) for n > 2.",
+        "a(n) ~ exp(1) * n! * (1 - 1/n + 3/(2*n^2) - 2/(3*n^3) - 47/(24*n^4) + 49/(120*n^5) + 6421/(720*n^6) + ...). - _Vaclav Kotesovec_, Dec 11 2021"
+    ],
+    "mathematica": [
+        "a[n_] := Sum[k! * Binomial[k + 1, n - k], {k, Floor[n/2], n}]; Array[a, 22, 0] (* _Amiram Eldar_, Nov 30 2021 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=n\\2, n, k!*binomial(k+1, n-k));",
+        "(PARI) a(n) = if(n<3, 2^n, (n-2)*a(n-1)+2*(n-1)*a(n-2)+(n-2)*a(n-3));",
+        "(PARI) my(N=40, x='x+O('x^N)); Vec(sum(k=0, N, k!*x^k*(1+x)^(k+1)))"
+    ],
+    "xref": [
+        "Cf. A184185, A240172."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Seiichi Manyama_, Nov 30 2021",
+    "references": 1,
+    "revision": 44,
+    "time": "2021-12-11T03:35:18-05:00",
+    "created": "2021-11-30T20:17:37-05:00"
+}

@@ -1,0 +1,58 @@
+{
+    "number": 362047,
+    "data": "10,30,39,90,98,99,100,115,259,270,273,300,490,495,517,663,665,793,810,900,1000,1083,1241,1421,1495,1521,1691,1911,2058,2079,2125,2145,2369,2430,2450,2475,2662,2700,2755,2821,3000,3277,4247,4495,4921,5587,5863,6069",
+    "name": "Numbers whose prime indices satisfy: (maximum) - (minimum) = (mean).",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798."
+    ],
+    "formula": [
+        "A359360(a(n)) = A326844(a(n)).",
+        "A243055(a(n)) = A061395(a(n)) - A055396(a(n))",
+        "              = A326567(a(n))/A326568(a(n))",
+        "              = A056239(a(n))/A001222(a(n))."
+    ],
+    "example": [
+        "The terms together with their prime indices begin:",
+        "      10: {1,3}",
+        "      30: {1,2,3}",
+        "      39: {2,6}",
+        "      90: {1,2,2,3}",
+        "      98: {1,4,4}",
+        "      99: {2,2,5}",
+        "     100: {1,1,3,3}",
+        "     115: {3,9}",
+        "     259: {4,12}",
+        "     270: {1,2,2,2,3}",
+        "     273: {2,4,6}",
+        "     300: {1,1,2,3,3}",
+        "The prime indices of 490 are {1,3,4,4}, with minimum 1, maximum 4, and mean 3, and 4-1 = 3, so 490 is in the sequence."
+    ],
+    "mathematica": [
+        "prix[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "Select[Range[100],Max@@prix[#]-Min@@prix[#]==Mean[prix[#]]&]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import primepi, factorint",
+        "def A362047_gen(startvalue=2): # generator of terms >= startvalue",
+        "    return filter(lambda n:(primepi(max(f:=factorint(n)))-primepi(min(f)))*sum(f.values())==sum(primepi(i)*j for i, j in f.items()),count(max(startvalue,2)))",
+        "A362047_list = list(islice(A362047_gen(),20)) # _Chai Wah Wu_, Apr 13 2023"
+    ],
+    "xref": [
+        "Partitions of this type are counted by A361862.",
+        "For minimum instead of mean we have A361908, counted by A118096.",
+        "A055396 gives minimum prime index, A061395 maximum.",
+        "A112798 list prime indices, length A001222, sum A056239.",
+        "A243055 subtracts the least prime index from the greatest.",
+        "A326844 gives the diagram complement size of Heinz partition.",
+        "Cf. A111907, A237832, A268192, A316413, A326836, A326837, A326846, A359358, A359360, A361855."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Apr 11 2023",
+    "references": 2,
+    "revision": 12,
+    "time": "2023-04-14T02:13:12-04:00",
+    "created": "2023-04-13T09:25:51-04:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 330743,
+    "data": "1,2,4,6,12,24,40,60,84,168,336,528,792,936,1872,2448,3060,4560,4788,8280,15456,23184,29232,31248,62496,74592,124320,137760,144480,157920,315840,356160,559680,623040,644160,966240,1061280,1124640,1686960,1734480,2049840,2218320,2330640,2499120,4165200,4539600,4726800,4820400",
+    "name": "a(n) is the first term k of A329902 for which A056239(k) = n.",
+    "comment": [
+        "Note that in contrast to A330744 this is not monotonic. The first point where a(n) > a(n+1) occurs is at a(120) = 5481774144 > a(121) = 5452302240. See also comment in A328521, whose primorial deflation this sequence is.",
+        "a(n-1) differs from A330744(n) at n = 17, 19, 21, 51, 52, 55, 56, 57, 58, 59, 60, 61, ..."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A330743/b330743.txt\">Table of n, a(n) for n = 0..4257</a>"
+    ],
+    "formula": [
+        "a(n) = A329902(min{i: A056239(A329902(i))==n}).",
+        "a(n) = A329902(A330748(n)).",
+        "a(n) = A329900(A328521(n)) = A319626(A328521(n))."
+    ],
+    "program": [
+        "(PARI) A330743(n) = { for(k=1,oo,if(A056239(A329902(k))==n,return(A329902(k)))); };",
+        "(PARI)",
+        "v329902 = readvec(\"a329902.txt\"); \\\\ File for the first 779674 terms of A329902 as prepared by Michael De Vlieger.",
+        "A056239(n) = if(1==n,0,my(f=factor(n)); sum(i=1, #f~, f[i,2] * primepi(f[i,1])));",
+        "A330743list() = { my(m=Map(), lista=List([]), t); for(i=1, #v329902, t = A056239(v329902[i]); if(!mapisdefined(m,t), mapput(m,t,v329902[i]))); for(n=0,oo,if(mapisdefined(m,n,&t), listput(lista,t), return(Vec(lista)))); };",
+        "v330743 = A330743list();",
+        "A330743(n) = v330743[1+n];",
+        "for(n=0,#v330743-1,write(\"b330743.txt\", n, \" \", A330743(n)));"
+    ],
+    "xref": [
+        "Primorial deflation of A328521.",
+        "Cf. A056239, A319626, A329900, A329902, A330748.",
+        "Cf. also A330744."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Antti Karttunen_, Jan 13 2020",
+    "references": 4,
+    "revision": 15,
+    "time": "2020-01-17T23:37:38-05:00",
+    "created": "2020-01-17T23:37:38-05:00"
+}

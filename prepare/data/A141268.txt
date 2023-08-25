@@ -1,0 +1,72 @@
+{
+    "number": 141268,
+    "data": "1,2,4,11,30,96,308,1052,3648,13003,47006,172605,640662,2402388,9082538,34590673,132566826,510904724,1978728356,7697565819,30063818314,117840547815,463405921002,1827768388175,7228779397588,28661434308095,113903170011006,453632267633931",
+    "name": "Number of phylogenetic rooted trees with n unlabeled objects.",
+    "comment": [
+        "Unlabeled analog of A005804 = Phylogenetic trees with n labels.",
+        "From _Gus Wiseman_, Jul 31 2018: (Start)",
+        "a(n) is the number of series-reduced rooted trees whose leaves form an integer partition of n. For example, the following are the a(4) = 11 series-reduced rooted trees whose leaves form an integer partition of 4.",
+        "  4,",
+        "  (13),",
+        "  (22),",
+        "  (112), (1(12)), (2(11)),",
+        "  (1111), (11(11)), (1(1(11))), (1(111)), ((11)(11)).",
+        "(End)"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A141268/b141268.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Moshe Klein and A. Yu Khrennikov, <a href=\"http://www.hamataraemet.org/wp-content/uploads/2014/10/Recursion-over-partitions-4.10.2014.pdf\">Recursion over partitions</a, P-Adic Numbers, Ultrametric Analysis, and Applications 6.4 (2014): 303-309. See sp_n."
+    ],
+    "formula": [
+        "a(n) ~ c * d^n / n^(3/2), where d = 4.210216501727104448901818751..., c = 0.21649387167268793159311306... . - _Vaclav Kotesovec_, Sep 04 2014"
+    ],
+    "example": [
+        "For n=4 we have A141268(4)=11 because",
+        "Set(Set(Z),Set(Z),Set(Z,Z)),",
+        "Set(Set(Z),Set(Set(Z),Set(Z,Z))),",
+        "Set(Z,Z,Z,Z),",
+        "Set(Set(Z,Z),Set(Z,Z)),",
+        "Set(Set(Set(Z),Set(Z)),Set(Z,Z)),",
+        "Set(Set(Z),Set(Z),Set(Set(Z),Set(Z))),",
+        "Set(Set(Z),Set(Z),Set(Z),Set(Z)),",
+        "Set(Set(Z),Set(Set(Z),Set(Z),Set(Z))),",
+        "Set(Set(Set(Z),Set(Z)),Set(Set(Z),Set(Z))),",
+        "Set(Set(Z),Set(Z,Z,Z)),",
+        "Set(Set(Z),Set(Set(Z),Set(Set(Z),Set(Z))))"
+    ],
+    "maple": [
+        "with(combstruct): A141268 := [H, {H=Union(Set(Z,card>=1),Set(H,card>=2))}, unlabelled]; seq(count(A141268, size=j), j=1..20);",
+        "# second Maple program:",
+        "b:= proc(n,i) option remember; `if`(n=0, 1, `if`(i<1, 0,",
+        "      add(b(n-i*j, i-1)*binomial(a(i)+j-1, j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> `if`(n<2, n, 1+b(n, n-1)):",
+        "seq(a(n), n=1..30);  # _Alois P. Heinz_, Jun 18 2018"
+    ],
+    "mathematica": [
+        "facs[n_]:=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[facs[n/d],Min@@#>=d&]],{d,Rest[Divisors[n]]}]];",
+        "t[n_]:=t[n]=If[PrimeQ[n],{n},Join@@Table[Union[Sort/@Tuples[t/@fac]],{fac,Select[facs[n],Length[#]>1&]}]];",
+        "Table[Sum[Length[t[Times@@Prime/@ptn]],{ptn,IntegerPartitions[n]}],{n,7}] (* _Gus Wiseman_, Jul 31 2018 *)",
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, If[i < 1, 0,",
+        "     Sum[b[n-i*j, i-1]*Binomial[a[i]+j-1, j], {j, 0, n/i}]]];",
+        "a[n_] := If[n < 2, n, 1 + b[n, n-1]];",
+        "Array[a, 30] (* _Jean-Fran\u00e7ois Alcover_, May 21 2021, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "seq(n)={my(v=vector(n)); for(n=1, n, v[n]=1 + EulerT(v[1..n])[n]); v} \\\\ _Andrew Howroyd_, Oct 26 2018"
+    ],
+    "xref": [
+        "Cf. A000081, A000311, A000669, A001678, A005804, A141268, A292504, A300660, A316655."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Thomas Wieder_, Jun 20 2008",
+    "ext": [
+        "Offset corrected and more terms from _Alois P. Heinz_, Apr 21 2012"
+    ],
+    "references": 79,
+    "revision": 31,
+    "time": "2021-05-21T04:16:16-04:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

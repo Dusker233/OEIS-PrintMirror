@@ -1,0 +1,36 @@
+{
+    "number": 104987,
+    "data": "0,1,4,14,58,300,1886,13878,116310,1090500,11296810,128102714,1578342010,20998804576,300081098918,4584908039142,74594230462318,1287634918033836,23506502407089874,452508152936326482",
+    "name": "Row sums of triangle A104986, which equals the matrix logarithm of triangle A104980.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A104987/b104987.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "mathematica": [
+        "(* First program *)",
+        "nmax = 19;",
+        "M = Table[If[n==k, 0, If[n==k+1, -n+1, -Coefficient[(1 -1/Sum[i!*x^i, {i,0,n}])/x + O[x]^n, x, n-k-1]]], {n,1,nmax+1}, {k,1,nmax+1}];",
+        "T[n_, k_]/; 0<=k<=n:= Sum[(-1)^p MatrixPower[M, p][[n+1, k+1]]/p, {p,n+1}]; T[_, _] = 0;",
+        "a[n_]:= Sum[T[n, k], {k,0,n}];",
+        "Table[a[n], {n, 0, nmax}] (* _Jean-Fran\u00e7ois Alcover_, Aug 09 2018, from PARI *)",
+        "(* Second program *)",
+        "t[n_, k_]:= t[n, k] = If[n<k || k<0, 0, If[n==k, 1, If[n==k+1, n, k*t[n, k+1] + Sum[t[j, 0]*t[n, j+k+1], {j,0,n-k-1}]]]];",
+        "M:= M= With[{q=52}, Table[If[k>=n, 0, t[n, k]], {n,0,q}, {k,0,q}]];",
+        "f[j_]:= f[j]= MatrixPower[M, j];",
+        "T[n_, k_]:= T[n, k]= If[k>n-1, 0, Sum[(-1)^(j-1)*f[j][[n+1, k+1]]/j, {j, n}]];",
+        "a[n_]:= a[n]= Sum[T[n, k], {k,0,n}];",
+        "Table[a[n], {n, 0, 40}] (* _G. C. Greubel_, Jun 08 2021 *)"
+    ],
+    "program": [
+        "(PARI) {a(n)=sum(k=0,n,sum(p=1,n+1, (-1)^p*(matrix(n+1,n+1,m,j,if(m==j,0,if(m==j+1,-m+1, -polcoeff((1-1/sum(i=0,m,i!*x^i))/x+O(x^m),m-j-1))))^p)[n+1,k+1]/p))}"
+    ],
+    "xref": [
+        "Cf. A104986, A104980."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Apr 10 2005",
+    "references": 2,
+    "revision": 11,
+    "time": "2021-06-09T02:27:55-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

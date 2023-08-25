@@ -1,0 +1,41 @@
+{
+    "number": 323443,
+    "data": "2,2,2,2,2,8,14,26,42,84,154,314,610,1220,2400,4836,9590,19220,38326,76684,153110,306294,612082,1224304,2447620,4895468,9789002,19578586,39153160,78307450,156607388,313216848,659125988,1491573926,2990216920,5536326412",
+    "name": "Number of binary squares of length 2n that neither begin nor end with a shorter square.",
+    "comment": [
+        "A square is a word of the form XX, where X is a nonempty block."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A323443/b323443.txt\">Table of n, a(n) for n = 1..39</a>",
+        "R\u00e9my Sigrist, <a href=\"/A323443/a323443.txt\">C program for A323443</a>"
+    ],
+    "example": [
+        "For n = 7 the squares are (0100001)^2, (0100110)^2, (0110001)^2, (0110010)^2, (0111001)^2, (0111101)^2, (0111110)^2 and their complements."
+    ],
+    "program": [
+        "(C) See Links section.",
+        "(Python)",
+        "from itertools import product as prod",
+        "def c(w): # string ww begins or ends with a shorter square",
+        "    ww = w+w",
+        "    if any(ww[:i] == ww[i:2*i] for i in range(1, len(w))): return True",
+        "    if any(ww[-i:] == ww[-2*i:-i] for i in range(1, len(w))): return True",
+        "    return False",
+        "def a(n):",
+        "    return sum(2 for b in prod(\"01\", repeat=n-1) if not c(\"0\"+\"\".join(b)))",
+        "print([a(n) for n in range(1, 21)]) # _Michael S. Branicky_, Jul 04 2022"
+    ],
+    "xref": [
+        "Similar to, but not the same as, A323442."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Jan 15 2019",
+    "ext": [
+        "More terms from _R\u00e9my Sigrist_, Jan 19 2019"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2022-07-04T19:50:15-04:00",
+    "created": "2019-01-15T09:24:54-05:00"
+}

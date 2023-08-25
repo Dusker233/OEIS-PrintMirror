@@ -1,0 +1,43 @@
+{
+    "number": 348488,
+    "data": "2,22,68,202,208,218,222,642,648,652,658,672,678,682,692,698,702,2002,2008,2018,2022,2028,2032,2042,2048,2052,2058,2068,2072,2078,2082,2092,2122,2128,2132,2142,2148,2152,2158,2168,2172,2178,2182,2192,2198,2202,2208,2218,2222,2228",
+    "name": "Positive numbers whose square starts and ends with exactly one 4.",
+    "comment": [
+        "When a square ends with 4 (A273375), this square may end with precisely one 4, two 4's or three 4's (A328886).",
+        "This sequence is infinite as each 2*(10^m + 1), m >= 1 or 2*(10^m + 4), m >= 2 is a term.",
+        "Numbers 2, 22, 222, ..., 2*(10^k - 1) / 9, (k >= 1), as well as numbers 2228, 22228, ..., 2*(10^k + 52) / 9, (k >= 4) are terms and have no digits 0. - _Marius A. Burtea_, Oct 24 2021"
+    ],
+    "example": [
+        "22 is a term since 22^2 = 484.",
+        "638 is not a term since 638^2 = 407044.",
+        "668 is not a term since 668^2 = 446224."
+    ],
+    "mathematica": [
+        "Join[{2}, Select[Range[10, 2000], (d = IntegerDigits[#^2])[[1]] == d[[-1]] == 4 && d[[-2]] != 4 && d[[2]] != 4 &]] (* _Amiram Eldar_, Oct 24 2021 *)"
+    ],
+    "program": [
+        "(PARI) isok(k) = my(d=digits(sqr(k))); (d[1]==4) && (d[#d]==4) && if (#d>2, (d[2]!=4) && (d[#d-1]!=4), 1); \\\\ _Michel Marcus_, Oct 24 2021",
+        "(Magma) [2] cat [n:n in [4..2300]|Intseq(n*n)[1] eq 4 and Intseq(n*n)[#Intseq(n*n)] eq 4 and Intseq(n*n)[-1+#Intseq(n*n)] ne 4 and Intseq(n*n)[2] ne 4]; // _Marius A. Burtea_, Oct 24 2021",
+        "(Python)",
+        "from itertools import count, takewhile",
+        "def ok(n):",
+        "  s = str(n*n); return len(s.rstrip(\"4\")) == len(s.lstrip(\"4\")) == len(s)-1",
+        "def aupto(N):",
+        "  r = takewhile(lambda x: x<=N, (10*i+d for i in count(0) for d in [2, 8]))",
+        "  return [k for k in r if ok(k)]",
+        "print(aupto(2228)) # _Michael S. Branicky_, Oct 24 2021"
+    ],
+    "xref": [
+        "Cf. A045858, A273375 (squares ending with 4), A017317, A328886 (squares ending with three 4).",
+        "Cf. A002276 \\ {0} (a subsequence).",
+        "Subsequence of A305719.",
+        "Similar to: A348487 (k=1), this sequence (k=4), A348489 (k=5), A348490 (k=6)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Oct 24 2021",
+    "references": 5,
+    "revision": 29,
+    "time": "2022-09-08T08:46:26-04:00",
+    "created": "2021-10-29T09:23:01-04:00"
+}

@@ -1,0 +1,48 @@
+{
+    "number": 117760,
+    "data": "1,1,1,2,3,5,8,13,21,33,53,85,136,218,349,559,895,1433,2295,3675,5885,9424,15091,24166,38698,61969,99234,158908,254467,407490,652533,1044932,1673299,2679533,4290863,6871162,11003117,17619812,28215439,45182718",
+    "name": "Expansion of 1/(1 - x - x^3 - x^5 - x^7).",
+    "comment": [
+        "Number of compositions of n into parts 1, 3, 5, and 7. - _David Neil McGrath_, Aug 18 2014"
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A117760/b117760.txt\">Table of n, a(n) for n = 0..4891</a>",
+        "Milan Janjic, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL19/Janjic/janjic73.html\">Binomial Coefficients and Enumeration of Restricted Words</a>, Journal of Integer Sequences, 2016, Vol 19, #16.7.3.",
+        "Sergey Kirgizov, <a href=\"https://arxiv.org/abs/2201.00782\">Q-bonacci words and numbers</a>, arXiv:2201.00782 [math.CO], 2022.",
+        "<a href=\"/index/Rec#order_07\">Index entries for linear recurrences with constant coefficients</a>, signature (1,0,1,0,1,0,1)."
+    ],
+    "formula": [
+        "a(n) = a(n-1) + a(n-3) + a(n-5) + a(n-7)."
+    ],
+    "maple": [
+        "a:= proc() option remember;",
+        "  if n=0 then 1;",
+        "    elif n<=7 then combinat[fibonacci](n);",
+        "    else a(n-1) + a(n-3) + a(n-5) + a(n-7);",
+        "end if; end proc;",
+        "seq(a(n), n=0..50);  # modified by _G. C. Greubel_, Jul 21 2023"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[1/(1-x-x^3-x^5-x^7), {x,0,50}], x]"
+    ],
+    "program": [
+        "(PARI) Vec( 1/(1-x-x^3-x^5-x^7)+O(x^66) ) \\\\ _Joerg Arndt_, Aug 19 2014",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 50); Coefficients(R!( 1/(1-x-x^3-x^5-x^7) )); // _G. C. Greubel_, Jul 21 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def a(n): # a = A117760",
+        "    if n<8: return fibonacci(n) + int(n==0)",
+        "    else: return a(n-1) + a(n-3) + a(n-5) + a(n-7)",
+        "[a(n) for n in range(51)] # _G. C. Greubel_, Jul 21 2023"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Roger L. Bagula_, Apr 14 2006",
+    "ext": [
+        "Edited and extended by _N. J. A. Sloane_, Apr 20 2006"
+    ],
+    "references": 2,
+    "revision": 30,
+    "time": "2023-07-21T17:22:15-04:00",
+    "created": "2006-02-24T03:00:00-05:00"
+}

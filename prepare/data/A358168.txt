@@ -1,0 +1,46 @@
+{
+    "number": 358168,
+    "data": "0,14,131,1024,10381,100881,1014748,10001558,100246289,1000943528,10010107437",
+    "name": "First n-digit number to occur in Van Eck's Sequence (A181391).",
+    "comment": [
+        "a(6)-a(7) from Chuck Gaydos."
+    ],
+    "example": [
+        "a(2) = 14 because 14 is the first 2-digit number occurring in A181391."
+    ],
+    "mathematica": [
+        "nn = 2^20; q[_] = False; q[0] = True; a[_] = 0; c[_] = -1; c[0] = 2; m = 1; {0}~Join~Rest@ Reap[Do[j = c[m]; a[n] = m; c[m] = n; m = 0; If[j > 0, m = n - j]; If[! q[#2], Sow[#1]; q[#2] = True] & @@ {a[n], IntegerLength[a[n]]}, {n, 3, nn}] ][[-1, -1]] (* _Michael De Vlieger_, Nov 05 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        "def A358168(n):",
+        "    b, bdict, k = 0, {0:(1,)},10**(n-1) if n > 1 else 0",
+        "    for m in count(2):",
+        "        if b >= k:",
+        "            return b",
+        "        if len(l := bdict[b]) > 1:",
+        "            b = m-1-l[-2]",
+        "            if b in bdict:",
+        "                bdict[b] = (bdict[b][-1],m)",
+        "            else:",
+        "                bdict[b] = (m,)",
+        "        else:",
+        "            b = 0",
+        "            bdict[0] = (bdict[0][-1],m) # _Chai Wah Wu_, Nov 05 2022"
+    ],
+    "xref": [
+        "Cf. A181391, A358180."
+    ],
+    "keyword": "nonn,base,hard,more",
+    "offset": "1,2",
+    "author": "_G. L. Honaker, Jr._, Nov 01 2022",
+    "ext": [
+        "a(8)-a(10) from _Chai Wah Wu_, Nov 05 2022",
+        "a(11) from _Martin Ehrenstein_, Nov 05 2022"
+    ],
+    "references": 4,
+    "revision": 30,
+    "time": "2022-11-06T01:40:20-05:00",
+    "created": "2022-11-04T22:31:06-04:00"
+}

@@ -1,0 +1,75 @@
+{
+    "number": 93183,
+    "data": "0,3,74,1114,13437,151311,1642197,17405273,181925434,1883327626,19364371468,198115934511,2019328584101",
+    "name": "Number of consecutive runs of just 1 odd nonprime congruent to 1 mod 4 below 10^n.",
+    "comment": [
+        "Split the odd nonprime sequence A014076 into two subsequences A091113 and A091236 with nonprimes labeled 1 mod 4 or 3 mod 4. Add count of nonprimes to sequence if just 1 nonprime congruent to 1 mod 4 occurs before interruption of a nonprime congruent to 3 mod 4.",
+        "Otherwise said: count the nonprimes congruent to 1 mod 4 such that the next larger and next smaller odd nonprime is congruent to 3 mod 4. - _M. F. Hasler_, Sep 30 2018"
+    ],
+    "example": [
+        "a(3) = 74 because 74 single nonprime runs occur below 10^3, each run interrupted by a nonprime congruent to 3 mod 4.",
+        "Below 10^2 = 100, there are only a(2) = 3 isolated odd nonprimes congruent to 1 mod 4: 33, 57 and 93. (Credits: _Peter Munn_, SeqFan list.) - _M. F. Hasler_, Sep 30 2018"
+    ],
+    "maple": [
+        "A014076 := proc(n)",
+        "    option remember;",
+        "    if n = 1 then",
+        "        1;",
+        "    else",
+        "        for a from procname(n-1)+2 by 2 do",
+        "            if not isprime(a) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "isA091113 := proc(n)",
+        "    option remember;",
+        "    if modp(n,4) = 1 and not isprime(n) then",
+        "        true;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "isA091236 := proc(n)",
+        "    option remember;",
+        "    if modp(n,4) = 3 and not isprime(n) then",
+        "        true;",
+        "    else",
+        "        false;",
+        "    end if;",
+        "end proc:",
+        "ct := 0 :",
+        "n := 1 :",
+        "for i from 2 do",
+        "    odnpr := A014076(i) ;",
+        "    prev := A014076(i-1) ;",
+        "    nxt := A014076(i+1) ;",
+        "    if isA091113(odnpr) and isA091236(prev) and isA091236(nxt) then",
+        "        ct := ct+1 ;",
+        "    end if;",
+        "    if odnpr< 10^n and nxt >= 10^n then",
+        "        print(n,ct) ;",
+        "        n := n+1 ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, Oct 02 2018"
+    ],
+    "mathematica": [
+        "A091113 = Select[4 Range[0, 10^5] + 1, ! PrimeQ[#] &];",
+        "A091236 = Select[4 Range[0, 10^5] + 3, ! PrimeQ[#] &];",
+        "lst = {}; Do[If[Length[s = Select[A091113,Between[{A091236[[i]], A091236[[i + 1]]}]]] == 1, AppendTo[lst, s]], {i, Length[A091236] - 1}]; Table[Count[Flatten[lst], x_ /; x < 10^n], {n, 5}]  (* _Robert Price_, May 30 2019 *)"
+    ],
+    "xref": [
+        "Cf. A091113, A091236, A093184-A093188, A093397-A093399, A092636."
+    ],
+    "keyword": "more,nonn",
+    "offset": "1,2",
+    "author": "_Enoch Haga_, Mar 30 2004",
+    "ext": [
+        "a(9)-a(13) from _Bert Dobbelaere_, Dec 19 2018"
+    ],
+    "references": 6,
+    "revision": 23,
+    "time": "2019-05-30T13:45:02-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

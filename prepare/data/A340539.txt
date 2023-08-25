@@ -1,0 +1,41 @@
+{
+    "number": 340539,
+    "data": "37,1123,101107,10091789,1000710709,100003100363,10000031000303,1000001910002521,100000007100010321,10000000071000000349,1000000001910000000799,100000000003100000009939,10000000000391000000012387,1000000000003710000000034573,100000000000031100000000014113",
+    "name": "a(n) is the least prime that is the concatenation of two n-digit primes, and such that the concatenation of the same primes in the other order is also prime or 0 if no such prime exists.",
+    "comment": [
+        "Conjecture: a(n) > 0 and for n > 1 the first n digits of a(n) = A003617(n). - _Chai Wah Wu_, Jan 13 2021"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A340539/b340539.txt\">Table of n, a(n) for n = 1..171</a>"
+    ],
+    "example": [
+        "For n=4, 1009, 1789, 10091789 and 17891009 are all prime."
+    ],
+    "maple": [
+        "f:= proc(d) local P,a,b;",
+        "  a:= prevprime(10^(d-1));",
+        "  do",
+        "    a:= nextprime(a);",
+        "    if a > 10^d then return FAIL fi;",
+        "    b:= prevprime(10^(d-1));",
+        "    do",
+        "      b:= nextprime(b);",
+        "      if b > 10^d then break fi;",
+        "      if isprime(10^d*a+b) and isprime(10^d*b+a) then return 10^d*a+b fi;",
+        "  od od:",
+        "  FAIL",
+        "end proc:",
+        "f(1):= 37:",
+        "map(f, [$1..20]);"
+    ],
+    "xref": [
+        "Cf. A003617, A340487."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jan 10 2021",
+    "references": 1,
+    "revision": 16,
+    "time": "2021-01-13T10:40:50-05:00",
+    "created": "2021-01-11T08:51:46-05:00"
+}

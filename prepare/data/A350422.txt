@@ -1,0 +1,38 @@
+{
+    "number": 350422,
+    "data": "45,99,153,175,207,245,261,325,369,423,425,475,477,531,539,575,637,639,725,747,801,833,845,847,909,925,931,963,1017,1075,1127,1175,1179,1233,1325,1341,1445,1475,1503,1519,1557,1573,1611,1675,1719,1773,1813,1825,1859,1975,2009",
+    "name": "Numbers of the form m = p^2*q for which there exist exactly 2 groups of order m.",
+    "comment": [
+        "Terms come from the union of terms of the form p^2*q with p < q in A350332 and terms of the same form with p > q in A350421, with p, q odd primes.",
+        "All terms are odd.",
+        "These 2 groups are abelian; they are C_{p^2*q} and (C_p X C_p) X C_q, where C means cyclic groups of the stated order and the symbol X means direct product."
+    ],
+    "reference": [
+        "Pascal Ortiz, Exercices d'Alg\u00e8bre, Collection CAPES / Agr\u00e9gation, Ellipses, probl\u00e8me 1.35, pp. 70-74, 2004."
+    ],
+    "example": [
+        "With p < q: 175 = 5^2 * 7, 5 and 7 are odd primes and 5 does not divide 7-1 = 6, hence 175 is a term (see A350332).",
+        "With p > q: 245 = 7^2 * 5, 5 and 7 are odd primes, 5 does not divide 7-1 = 6 and does not divide 7+1 = 8, hence 245 is a term (see A350421)."
+    ],
+    "mathematica": [
+        "q[n_] := Module[{f = FactorInteger[n], p, e}, p = f[[;; , 1]]; e = f[[;; , 2]]; (e == {1, 2} && ! Or @@ Divisible[p[[2]] + {-1, 1}, p[[1]]]) || (e == {2, 1} && ! Divisible[p[[2]] - 1, p[[1]]])]; Select[Range[1, 2000, 2], q] (* _Amiram Eldar_, Jan 03 2022 *)"
+    ],
+    "program": [
+        "(PARI) isoka(f) = if (f[, 2] == [2, 1]~, my(p=f[1, 1], q=f[2, 1]); ((q-1) % p)); \\\\ A350332",
+        "isokb(f) = if (f[, 2] == [1, 2]~, my(p=f[2, 1], q=f[1, 1]); ((p-1) % q) && ((p+1) % q)); \\\\ A350421",
+        "isok(m) = my(f=factor(m)); isoka(f) || isokb(f); \\\\ _Michel Marcus_, Jan 09 2022"
+    ],
+    "xref": [
+        "Disjoint union of A350332 (p<q) and A350421 (p>q).",
+        "Intersection of A054395 and A054753.",
+        "Subsequence of A051532, A060687 and A350322.",
+        "Other subsequences of A054753 linked with order of groups: A079704, A143928, A349495, A350115, A350245, A350638."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Jan 03 2022",
+    "references": 4,
+    "revision": 30,
+    "time": "2022-01-13T08:19:57-05:00",
+    "created": "2022-01-11T22:07:57-05:00"
+}

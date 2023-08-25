@@ -1,0 +1,50 @@
+{
+    "number": 300793,
+    "data": "1,3,13,75,561,5355,63405,894915,14511105,263544435,5284255725,116065424475,2778006733425,72093290744475,2017526711525325,60547198550713875,1938662110170410625,65941564342927147875,2374177441960545346125,90211614359319635056875",
+    "name": "a(n) is the n-th derivative of arcsinh(1/x) at x=1 times (-2)^n/sqrt(2) for n >= 1.",
+    "link": [
+        "Frederik vom Ende, <a href=\"/A300793/a300793_2.pdf\">Proof of the recursive formula for the a(n)</a>",
+        "Marcel Jacobse, <a href=\"/A300793/a300793.txt\">Python Program to compute the sequence A300793</a>",
+        "Mathoverflow, <a href=\"https://mathoverflow.net/q/295019\">Closed, sum-free form for the n-th derivative of arcsinh(1/x) in x=1</a>"
+    ],
+    "formula": [
+        "Proved (see links): a(n) = (-1)^n*Sum_{j=0..n-1} b(j,n) for any n >= 1 where {b(j,n)} for n=1,2,... and j any integer is a recursive sequence given by b(0,1)=-1, b(j,n)=0 if j < 0 or j >= n and b(j,n+1) = b(j,n)*(2j-n) + b(j-1,n)*(2j-3n-1) for all n >= 1 and 0 <= j <= n.",
+        "Empirical (by Martin Rubey on mathoverflow, see links): a(1)=1, a(2)=3, a(3)=13, a(n) = 4(n-2)^2*(n-3)*a(n-3) - 2(3n-5)*(n-2)*a(n-2) + (4n-5)*a(n-1) for all n >= 4.",
+        "a(n) = n!*[x^n]((log(sqrt((1-2*x)^2 + 1) + 1) - log(1 - 2*x))/sqrt(2)). - _Peter Luschny_, Apr 06 2018"
+    ],
+    "maple": [
+        "a := n -> subs(x=1, (-2)^n/sqrt(2)*diff(arcsinh(1/x), x$n)):",
+        "seq(a(n), n=1..20); # _Peter Luschny_, Mar 14 2018",
+        "A300793_list := proc(len) local egf, ser, coef;",
+        "egf := (log(sqrt((1-2*x)^2+1)+1)-log(1-2*x))/sqrt(2):",
+        "ser := series(egf,x,len+1): coef := n -> round(n!*coeff(ser,x,n)):",
+        "seq(coef(n), n=1..len) end: A300793_list(20); # _Peter Luschny_, Apr 06 2018"
+    ],
+    "mathematica": [
+        "(* Mathematica program from B\u00e1lint Koczor, TU Munich *)",
+        "alist[max_] := Module[{prevRow, buf, makeNewRow, ind},",
+        "   (*definitions*)",
+        "   ind[j_] := j + 1; (*to shift the index*)",
+        "   makeNewRow[prevRow_, k_] := Table[",
+        "     If[ind[j] > k, 0, prevRow[[ind[j]]]*(2 j - k)] +",
+        "      If[j == 0, 0, prevRow[[ind[j] - 1]]*(2 j - 3 k - 1)]",
+        "     , {j, 0, k}]; (*this is the recursion formula*)",
+        "   prevRow = {-1}; (*initialize*)",
+        "   buf = Table[",
+        "     If[k == 0, -1, 0], {k, 0, max}];(*this will hold the resulting integers*)",
+        "   Do[",
+        "    prevRow = makeNewRow[prevRow, k];",
+        "    buf[[k + 1]] = Total@prevRow;,(*sums up the previous row*)",
+        "    {k, 1, max}];",
+        "   Return@(buf*Table[(-1)^n, {n, 1, max + 1}]);",
+        "   ];",
+        "alist[19]"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Frederik vom Ende_, Mar 13 2018",
+    "references": 1,
+    "revision": 47,
+    "time": "2018-04-06T15:46:46-04:00",
+    "created": "2018-03-15T10:52:20-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 329759,
+    "data": "15,91,703,1891,8911,12403,38503,79003,88831,146611,188191,218791,269011,286903,385003,497503,597871,736291,765703,954271,1024651,1056331,1152271,1314631,1869211,2741311,3270403,3913003,4255903,4686391,5292631,5481451,6186403,6969511",
+    "name": "Odd composite numbers k for which the number of witnesses for strong pseudoprimality of k equals phi(k)/4, where phi is the Euler totient function (A000010).",
+    "comment": [
+        "Odd numbers k such that A071294((k-1)/2) = A000010(k)/4.",
+        "For each odd composite number m > 9 the number of witnesses <= phi(m)/4. For numbers in this sequence the ratio reaches the maximal possible value 1/4.",
+        "The semiprime terms of this sequence are of the form (2*m+1)*(4*m+1) where 2*m+1 and 4*m+1 are primes and m is odd."
+    ],
+    "reference": [
+        "Richard Crandall and Carl Pomerance, Prime Numbers: A Computational Perspective, 2nd ed., Springer, 2005, Theorem 3.5.4., p. 136."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A329759/b329759.txt\">Table of n, a(n) for n = 1..350</a>",
+        "Louis Monier, <a href=\"https://doi.org/10.1016/0304-3975(80)90007-9\">Evaluation and comparison of two efficient primality testing algorithms</a>, Theoretical Computer Science, Vol. 11 (1980), pp. 97-108."
+    ],
+    "example": [
+        "15 is in the sequence since out of the phi(15) = 8 numbers 1 <= b < 15 that are coprime to 15, i.e., b = 1, 2, 4, 7, 8, 11, 13, and 14, 8/4 = 2 are witnesses for the strong pseudoprimality of 15: 1 and 14."
+    ],
+    "mathematica": [
+        "o[n_] := (n - 1)/2^IntegerExponent[n - 1, 2];",
+        "a[n_?PrimeQ] := n - 1; a[n_] := Module[{p = FactorInteger[n][[;; , 1]]}, om = Length[p]; Product[GCD[o[n], o[p[[k]]]], {k, 1, om}] * (1 + (2^(om * Min[IntegerExponent[#, 2] & /@ (p - 1)]) - 1)/(2^om - 1))];",
+        "aQ[n_] := CompositeQ[n] && a[n] == EulerPhi[n]/4; s = Select[Range[3, 10^5, 2], aQ]"
+    ],
+    "xref": [
+        "Cf. A000010, A033181, A006945, A014233, A071294, A141768, A181782, A195328, A329468.",
+        "Cf. A001262, A020229, A020231, A020233."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Nov 20 2019",
+    "references": 1,
+    "revision": 16,
+    "time": "2019-11-22T03:38:32-05:00",
+    "created": "2019-11-20T19:44:08-05:00"
+}

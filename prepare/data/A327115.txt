@@ -1,0 +1,44 @@
+{
+    "number": 327115,
+    "data": "0,1,4,19,98,570,3642,25292,189454,1519648,12978141,117437020,1121299471,11256640012,118443403699,1302670531063,14938986954323,178248001223476,2208487163394749,28363722744050886,376991516806826090,5178009641895235269,73396161423153313320",
+    "name": "Total number of colors used in all colored integer partitions of n using all colors of an initial interval of the color palette such that all parts have different color patterns and a pattern for part i has i distinct colors in increasing order.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327115/b327115.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} A326914(n,k) = Sum_{k=1..n} A326962(n,k)."
+    ],
+    "example": [
+        "a(2) = 4: 2ab, 1a1b.  Both colors (a and b) are used twice: 2 + 2 = 4."
+    ],
+    "maple": [
+        "C:= binomial:",
+        "g:= proc(n) option remember; n*2^(n-1) end:",
+        "h:= proc(n) option remember; local k; for k from",
+        "      `if`(n=0, 0, h(n-1)) do if g(k)>=n then return k fi od",
+        "    end:",
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1, `if`(i<1 or k<h(n),",
+        "      0, add(b(n-i*j, min(n-i*j, i-1), k)*C(C(k, i), j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> add(k*add(b(n$2, i)*(-1)^(k-i)*C(k, i), i=0..k), k=h(n)..n):",
+        "seq(a(n), n=0..23);"
+    ],
+    "mathematica": [
+        "c = Binomial;",
+        "g[n_] := g[n] = n 2^(n - 1);",
+        "h[n_] := h[n] = Module[{k}, For[k = If[n == 0, 0, h[n - 1]] , True, k++, If [g[k] >= n ,  Return[k]]]];",
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0, 1, If[i < 1 || k < h[n], 0, Sum[b[n - i j, Min[n - i j, i - 1], k] c[c[k, i], j], {j, 0, n/i}]]];",
+        "a[n_] := Sum[k Sum[b[n, n, i] (-1)^(k-i) c[k, i], {i, 0, k}], {k, h[n], n}];",
+        "a /@ Range[0, 23] (* _Jean-Fran\u00e7ois Alcover_, Dec 09 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A326914, A326962."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 13 2019",
+    "references": 3,
+    "revision": 32,
+    "time": "2020-12-09T09:01:07-05:00",
+    "created": "2019-09-13T17:59:53-04:00"
+}

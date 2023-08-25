@@ -1,0 +1,32 @@
+{
+    "number": 101924,
+    "data": "1,7,109,3163,166201,14952367,2002052389,353291166403,77829008955121,21170264082173527,7106489649576530269,2913186117837522604843,1426879448953133350342441,816516326741659045770111487,537701607855913139967684905749,404270165862091267387117902574483",
+    "name": "Numerators of expansion of e.g.f. 2^(-1/2) * arccsch(cos(x)), even powers only.",
+    "comment": [
+        "Odd coefficients are zero, denominators are 2^n."
+    ],
+    "formula": [
+        "arccsch(cos(x)) = log(sqrt(2)+1) + (1/sqrt(2)) * ((1/2)*x^2/2! + (7/4)*x^4/4! + (109/8)*x^6/6! + (3163/16)*x^8/8! + ...).",
+        "arcsech(cos(x)) = Pi/2 - log(sqrt(2)+1) - (1/sqrt(2)) * (-(1/2)*x^2/2! + (7/4)*x^4/4! + (109/8)*x^6/6! + (3163/16)*x^8/8! + ...). [warning: this formula appears to be incorrect since arcsech(cos(0)) = 0; - _Michel Marcus_, Sep 23 2022]"
+    ],
+    "mathematica": [
+        "Table[Numerator[(2n)!SeriesCoefficient[ArcCsch[Cos[x]]/Sqrt[2], {x,0,2n}]],{n,14}] (* _Stefano Spezia_, Aug 29 2022 *)"
+    ],
+    "program": [
+        "(PARI) arccsch(x) = log((1+sqrt(x^2+1))/x);",
+        "lista(nn) = localprec(4*nn); my(x='x+O('x^(nn+1)), v=Vec((serlaplace(arccsch(cos(x))))/quadgen(8))); apply(round, vector(#v\\2-1, k, v[2*k+1]*2^k)); \\\\ _Michel Marcus_, Sep 21 2022"
+    ],
+    "xref": [
+        "Cf. A101922, A012495."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "1,2",
+    "author": "_Ralf Stephan_, Dec 27 2004",
+    "ext": [
+        "More terms from _Michel Marcus_, Sep 20 2022"
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2022-09-23T03:00:46-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

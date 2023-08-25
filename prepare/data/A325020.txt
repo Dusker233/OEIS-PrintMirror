@@ -1,0 +1,42 @@
+{
+    "number": 325020,
+    "data": "1,2,6,22,28,76,84,90,96,170,216,248,252,496,520,532,588,672,700,852,864,1240,2176,2448,2480,2812,3360,6048,7392,7584,8128,9120,11480,12616,12768,13832,14056,14720,15456,19488,20536,21216,27000,30240,31584,31968",
+    "name": "Numbers m such that m*(m-tau(m))/sigma(m) is an integer h where k-tau(k) is the number of nondivisors of k (A049820) and sigma(k) is the sum of the divisors of k (A000203).",
+    "comment": [
+        "Even perfect numbers from A000396 are terms.",
+        "Corresponding values of integers h: 0, 0, 1, 11, 11, 38, 27, 30, 32, 85, 72, 124, 81, ...",
+        "Supersequence of A325021 and A325023."
+    ],
+    "example": [
+        "28 is a term because 28*(28-tau(28))/sigma(28) = 28*(28-6)/56 = 11 (integer)."
+    ],
+    "mathematica": [
+        "Select[Range[10^5], IntegerQ[#1 (#1 - #2)/#3] & @@ Prepend[DivisorSigma[{0, 1}, #], #] &] (* _Michael De Vlieger_, Mar 24 2019 *)"
+    ],
+    "program": [
+        "(Magma) [n: n in [1..1000000] | IsIntegral((n - NumberOfDivisors(n)) * n / SumOfDivisors(n))]",
+        "(PARI) isok(m) = frac(m*(m-numdiv(m))/sigma(m)) == 0; \\\\ _Michel Marcus_, Mar 25 2019",
+        "(Python)",
+        "from itertools import count, islice",
+        "from math import prod",
+        "from functools import reduce",
+        "from sympy import factorint",
+        "def A325020_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        f = factorint(n)",
+        "        s = prod((p**(e+1)-1)//(p-1) for p, e in f.items())",
+        "        if not (n-reduce(lambda x,y:x*y%s,(e+1 for e in f.values()),1))*n%s:",
+        "            yield n",
+        "A325020_list = list(islice(A325020_gen(),20)) # _Chai Wah Wu_, Feb 14 2023"
+    ],
+    "xref": [
+        "Cf. A000005, A000203, A000396, A001599, A049820, A325021, A325022, A325023, A325024."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Jaroslav Krizek_, Mar 24 2019",
+    "references": 4,
+    "revision": 19,
+    "time": "2023-02-16T05:13:02-05:00",
+    "created": "2019-05-03T12:11:20-04:00"
+}

@@ -1,0 +1,28 @@
+{
+    "number": 335939,
+    "data": "5390,7400,11830,20230,24010,25270,37030,58870,67270,95830,117670,129430,154630,196630,243670,260470,314230,352870,373030,436870,482230,491744,507232,554470,658630,714070,742630,801430,831670,893830,1129030,1201270,1313830,1352470",
+    "name": "Bi-unitary weird numbers (A292986) that are not exponentially odd numbers (A268335).",
+    "comment": [
+        "Weird numbers (A006037) that are exponentially odd (A268335) are also bi-unitary weird numbers (A292986), since all of their divisors are bi-unitary."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A335939/b335939.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "fun[p_, e_] := If[OddQ[e], (p^(e+1)-1)/(p-1), (p^(e+1)-1)/(p-1)-p^(e/2)]; bsigma[1] = 1; bsigma[n_] := Times @@ (fun @@@ FactorInteger[n]); biuabQ[n_] := bsigma[n] > 2*n; f[n_] := Select[Divisors[n], Function[d, CoprimeQ[d, n/d]]]; bdiv[m_] := Select[Divisors[m], Last@Intersection[f@#, f[m/#]] == 1 &]; bweirdQ[n_] := biuabQ[n] && Module[{d = Most @ bdiv[n], x}, SeriesCoefficient[Series[Product[1 + x^d[[i]], {i, Length[d]}], {x, 0, n}], n] == 0]; expOddQ[n_] := AllTrue[Last /@ FactorInteger[n], OddQ]; Select[Range[1000], !expOddQ[#] && bweirdQ[#] &]"
+    ],
+    "xref": [
+        "Intersection of A072587 and A292986.",
+        "Cf. A006037, A222266, A268335, A335936, A335938."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jun 30 2020",
+    "ext": [
+        "More terms from _Amiram Eldar_, Mar 25 2023"
+    ],
+    "references": 1,
+    "revision": 12,
+    "time": "2023-03-25T05:29:29-04:00",
+    "created": "2020-06-30T21:16:19-04:00"
+}

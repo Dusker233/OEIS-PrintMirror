@@ -1,0 +1,62 @@
+{
+    "number": 333709,
+    "data": "0,1,3,6,11,16,22,30,38,48,58,70,82,95,110,125,142,159,178,197,218,239,262,285,310,335,362,389,418,447,478,509,542,575,610,645,682,719,757,797,837,879,921,965,1009,1055,1101,1149,1197,1247,1297,1349,1401,1455,1509,1565,1621,1679,1737,1797",
+    "name": "a(n) is the number of iterations for x = x + 1/x needed until x + 1/x > n, starting with x = 1.",
+    "link": [
+        "Peter Luschny, <a href=\"/A333709/b333709.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) < (1/2)*n^2. - _Peter Luschny_, Apr 12 2020"
+    ],
+    "example": [
+        "Illustrating the iterations:",
+        "n  iter   x   1/x   x+1/x > n  a(n)=iter",
+        "1   0   1.00  1.00  2.00  > 1   0",
+        "2   1   2.00  0.50  2.50  > 2   1",
+        "    2   2.50  0.40  2.90  > 3",
+        "3   3   2.90  0.34  3.24  > 3   3",
+        "    4   3.24  0.30  3.55  > 4",
+        "    5   3.55  0.28  3.83  > 4",
+        "4   6   3.83  0.26  4.09  > 4   6"
+    ],
+    "program": [
+        "(Python)",
+        "from math import ceil",
+        "x = 1",
+        "l = []",
+        "for i in range(0, 2**11):",
+        "    h = x",
+        "    x += 1/x",
+        "    if ceil(h) != ceil(x):",
+        "        l.append(i)",
+        "print(l)",
+        "(PARI)",
+        "c=x=1; for(n=0,1e4, h=x; o=c; c=ceil(x+=1./x); if(c>o, print1(n\", \")))",
+        "\\\\ _Charles R Greathouse IV_, Apr 06 2020",
+        "(Julia)",
+        "using Nemo",
+        "function A333709List(bound, prec)",
+        "    R = RealField(prec)",
+        "    L = []",
+        "    x = R(1)",
+        "    z = ZZ(1)",
+        "    for iter in 0:bound",
+        "        x += 1/x",
+        "        if z < x",
+        "            push!(L, iter)",
+        "            z += 1",
+        "        end",
+        "    end",
+        "    return L",
+        "end",
+        "# Choose higher precision for larger bounds!",
+        "A333709List(2000, 64) |> println  # _Peter Luschny_, Apr 11 2020"
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Sebastian F. Orellana_, Apr 02 2020",
+    "references": 1,
+    "revision": 41,
+    "time": "2020-04-13T04:19:00-04:00",
+    "created": "2020-04-11T17:45:16-04:00"
+}

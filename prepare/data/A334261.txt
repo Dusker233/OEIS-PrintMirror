@@ -1,0 +1,34 @@
+{
+    "number": 334261,
+    "data": "4,9,21,25,33,49,57,69,85,93,121,129,133,145,169,177,205,213,217,237,249,253,265,289,309,361,393,417,445,469,489,493,505,517,529,553,565,573,597,633,669,685,697,753,781,793,813,817,841,865,889,913,933,949,961,973,985,993",
+    "name": "Numbers m that are solutions of the arithmetic differential equation 2m\" - m' - 4 = 0.",
+    "comment": [
+        "Contains all the squared primes, plus additional terms.",
+        "At least some of these additional terms that are not divisible by 3 are given by the product of the smallest prime in a prime triplet, and the largest prime in that triplet, this certainly being true until the term 11413."
+    ],
+    "link": [
+        "Nathan Mabey, <a href=\"/A334261/b334261.txt\">Table of n, a(n) for n = 1..20263</a>"
+    ],
+    "example": [
+        "4 is a term since 4'' = 4, 4' = 4, and 2*4 - 4 - 4 = 0."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def d(n): return sum(n*e//p for p, e in factorint(n).items())",
+        "def ok(m): return m > 1 and 2*d(d(m)) - d(m) == 4",
+        "print([k for k in range(1, 999) if ok(k)]) # _Michael S. Branicky_, Aug 15 2022",
+        "(PARI) d(n) = if (n>0, my(f=factor(n)); sum(i=1, #f~, n*f[i, 2]/f[i, 1]), 0);",
+        "isok(m) = -2*d(d(m)) + d(m) + 4 == 0; \\\\ _Michel Marcus_, Apr 21 2020"
+    ],
+    "xref": [
+        "Cf. A003415 (n'), A068346 (n\"), A001248 (squared primes)."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Nathan Mabey_, Apr 20 2020",
+    "references": 2,
+    "revision": 54,
+    "time": "2022-09-18T17:30:06-04:00",
+    "created": "2020-05-18T03:12:40-04:00"
+}

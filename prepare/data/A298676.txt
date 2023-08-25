@@ -1,0 +1,32 @@
+{
+    "number": 298676,
+    "data": "1,2,3,5,5,7,7,10,11,13,13,18,19,26,31,36,41,48,59,71,84,94,106,123,146,165,187,210,240,275,318,364,407,465,525,593,672,756,849,966,1080,1207,1354,1530,1718,1925,2135,2377,2667,2997,3351,3736,4141,4598,5125",
+    "name": "Number of partitions of n that can be uniquely recovered from their P-graphs.",
+    "comment": [
+        "a(n) is the number of partitions of n that can be uniquely recovered from its P-graph, the simple graph whose vertices are the parts of the partition, two of which are joined by an edge if, and only if, they have a common factor greater than 1."
+    ],
+    "link": [
+        "Bernardo Recam\u00e1n Santos, <a href=\"https://puzzling.stackexchange.com/questions/58136/a-unique-partition-of-200-into-6-parts\">A unique partition of 200 into 6 parts</a>, Puzzling Stack Exchange, Dec 17 2017."
+    ],
+    "example": [
+        "a(1) = 1 because the sole partition of 1 can be recovered from its P-graph, a single vertex.",
+        "a(2) = 2 because both partitions of 2 can be recovered from their corresponding P-graphs."
+    ],
+    "mathematica": [
+        "pgraph[p_] := With[{v = Range[Length[p]]}, Graph[v, UndirectedEdge @@@ Select[Subsets[v, {2}], !CoprimeQ @@ p[[#]] &]]];",
+        "a[n_] := Count[Length /@ Gather[pgraph /@ IntegerPartitions[n], IsomorphicGraphQ], 1];",
+        "Array[a, 20]",
+        "(* _Andrey Zabolotskiy_, Jan 30 2018 *)"
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Bernardo Recam\u00e1n_, Jan 28 2018",
+    "ext": [
+        "a(23)-a(50) from _Freddy Barrera_, Jan 29 2018",
+        "a(51)-a(55) from _Andrey Zabolotskiy_, Jan 30 2018"
+    ],
+    "references": 0,
+    "revision": 41,
+    "time": "2018-01-30T09:31:30-05:00",
+    "created": "2018-01-28T19:07:19-05:00"
+}

@@ -1,0 +1,39 @@
+{
+    "number": 321462,
+    "data": "5,7,23,67,71,79,179,191,239,311,317,431,439,479,557,599,607,683,709,719,743,773,787,797,809,863,911,1031,1039,1103,1171,1213,1223,1381,1493,1499,1583,1627,1637,1663,1733,1759,1777,1811,1867,1973,1997,2053,2099",
+    "name": "Primes p for which, if q is the greatest prime < p, there exists a prime r < q such that r*q == 1 (mod p).",
+    "link": [
+        "Robert Israel, <a href=\"/A321462/b321462.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "p = 5 is a term, because then q = 3, and 3*2 = 6 == 1 (mod 5).",
+        "p = 23 is a term, because then q = 19, and 19*17 = 323 == 1 (mod 23)."
+    ],
+    "maple": [
+        "for n from 1 to 300 do",
+        "X := ithprime(n);",
+        "Y := ithprime(n+1);",
+        "Z := 1/X mod Y;",
+        "if Z < X and isprime(Z) then print(Y);",
+        "end if:",
+        "end do:"
+    ],
+    "mathematica": [
+        "aQ[p_]:=Module[{p1=NextPrime[p,-1]},ans=False;p2=2;While[p2<p1,If[Mod[p1*p2,p]==1,ans=True;Break[]];p2=NextPrime[p2]];ans]; Select[Prime[Range[317]],aQ] (* _Amiram Eldar_, Nov 10 2018 *)"
+    ],
+    "program": [
+        "(PARI) is(n) = my(q=precprime(n-1)); forprime(r=1, q-1, if(Mod(r*q, n)==1, return(1))); 0",
+        "forprime(p=1, , if(is(p), print1(p, \", \"))) \\\\ _Felix Fr\u00f6hlich_, Nov 10 2018",
+        "(PARI) upto(n) = {my(q = 3, r, res = List()); forprime(p = 5, n, r = gcdext(q, p)[1]; while(r < 0, r+=p); if(isprime(r), listput(res, p)); q = p); res} \\\\ _David A. Corneth_, Nov 10 2018"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_David James Sycamore_, Nov 10 2018",
+    "ext": [
+        "More terms from _Felix Fr\u00f6hlich_, Nov 10 2018"
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2019-07-03T23:14:35-04:00",
+    "created": "2018-12-24T08:26:13-05:00"
+}

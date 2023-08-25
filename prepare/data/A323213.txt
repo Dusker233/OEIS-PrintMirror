@@ -1,0 +1,44 @@
+{
+    "number": 323213,
+    "data": "5,41,439,4523,46411,470303,4751053,47868179,481346903,4834216447,48507378197,486425324491,4875521711327,48850585043591,489323461383733,4900321995437591,49065251868835099,491200019422325489,4916868348839249987,49212253916770634411",
+    "name": "Nearest prime to the median of the primes below 10^n.",
+    "link": [
+        "Kim Walisch, <a href=\"https://github.com/kimwalisch/primecount\">primecount</a>."
+    ],
+    "formula": [
+        "a(n) = prime(floor(A006880(n) / 2) + 1). - _David A. Corneth_, Mar 19 2019"
+    ],
+    "example": [
+        "From _David A. Corneth_, Mar 19 2019: (Start)",
+        "There are 25 primes <= 10^2 = 100 so a(2) is the (25 + 1)/2 = 13th prime, being 41.",
+        "There are 168 primes <= 10^3 = 1000 so a(3) is the prime closest to the average of prime(84) = 433 and prime(85) = 439. That average is 436, equally distant from both primes. So the largest is chosen. This disables the need to compute the median and we can immediately say that a(3) = prime(168 / 2 + 1) = 439. (End)"
+    ],
+    "mathematica": [
+        "a[n_] := Prime[Floor[PrimePi[10^n]/2] + 1]; Array[a, 10] (* _Amiram Eldar_, Mar 20 2019 *)"
+    ],
+    "program": [
+        "(Julia) using Statistics, Primes",
+        "function MedianPrimes(n)",
+        "    med = Int64(round(median(primes(10^n))))",
+        "    isprime(med) && return med",
+        "    prevmed = prevprime(med); nextmed = nextprime(med)",
+        "    abs(med - prevmed) < abs(med - nextmed) ? prevmed : nextmed end",
+        "println([MedianPrimes(n) for n in 1:12])",
+        "(PARI) a(n) = pi = primepi(10^n); prime(pi \\ 2 + 1) \\\\ _David A. Corneth_, Mar 19 2019"
+    ],
+    "xref": [
+        "Cf. A000040, A000720, A006880."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Mar 19 2019",
+    "ext": [
+        "a(11) from _David A. Corneth_, Mar 19 2019",
+        "a(12)-a(19) using Kim Walisch's primecount, from _Amiram Eldar_, Mar 20 2019",
+        "a(20) from _Jinyuan Wang_, Nov 14 2020"
+    ],
+    "references": 0,
+    "revision": 26,
+    "time": "2020-11-14T08:37:17-05:00",
+    "created": "2019-03-19T19:45:45-04:00"
+}

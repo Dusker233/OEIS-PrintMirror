@@ -1,0 +1,68 @@
+{
+    "number": 278038,
+    "data": "0,1,10,11,100,101,110,1000,1001,1010,1011,1100,1101,10000,10001,10010,10011,10100,10101,10110,11000,11001,11010,11011,100000,100001,100010,100011,100100,100101,100110,101000,101001,101010,101011,101100,101101,110000,110001,110010,110011,110100,110101,110110,1000000",
+    "name": "Binary vectors not containing three consecutive 1's; or, representation of n in the tribonacci base.",
+    "comment": [
+        "These are the nonnegative numbers written in the tribonacci numbering system."
+    ],
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A278038/b278038.txt\">Table of n, a(n) for n = 0..25280</a>",
+        "L. Carlitz, Richard Scoville, and V. E. Hoggatt, Jr., <a href=\"https://www.fq.math.ca/Scanned/10-1/carlitz3-a.pdf\">Fibonacci Representations of Higher Order</a>, <a href=\"https://www.fq.math.ca/Scanned/10-1/carlitz3-b.pdf\">Part 2</a>, The Fibonacci Quarterly, Vol. 10, No. 1 (1972), pp. 43-69, 94.",
+        "F. Michel Dekking, Jeffrey Shallit, and N. J. A. Sloane, <a href=\"https://www.combinatorics.org/ojs/index.php/eljc/article/view/v27i1p52/8039\">Queens in exile: non-attacking queens on infinite chess boards</a>, Electronic J. Combin., 27:1 (2020), #P1.52.",
+        "Eric Duch\u00eane and Michel Rigo, <a href=\"http://dx.doi.org/10.1051/ita:2007039\">A morphic approach to combinatorial games: the Tribonacci case</a>. RAIRO - Theoretical Informatics and Applications, 42, 2008, pp 375-393. See Table 2. [Also available from <a href=\"http://archive.numdam.org/item/ITA_2008__42_2_375_0\">Numdam</a>]",
+        "V. E. Hoggatt, Jr. and Marjorie Bicknell-Johnson, <a href=\"https://www.fq.math.ca/Scanned/20-3/hoggatt.pdf\">Lexicographic Ordering and Fibonacci Representations</a>, The Fibonacci Quarterly, Vol. 20, No. 3 (1982), pp. 193-218.",
+        "Wolfdieter Lang, <a href=\"https://arxiv.org/abs/1810.09787\">The Tribonacci and ABC Representations of Numbers are Equivalent</a>, arXiv preprint arXiv:1810.09787 [math.NT], 2018."
+    ],
+    "example": [
+        "The tribonacci numbers (as in A000073(n), for n >= 3) are 1, 2, 4, 7, 13, 24, 44, 81, ... In terms of this base, 7 is written 1000, 8 is 1001, 11 is 1100, 12 is 1101, 13 is 10000, etc. Zero is 0."
+    ],
+    "maple": [
+        "# maximum index in A73 such that A73 <= n.",
+        "A73floorIdx := proc(n)",
+        "    local k ;",
+        "    for k from 3 do",
+        "        if A000073(k) = n then",
+        "            return k ;",
+        "        elif A000073(k) > n then",
+        "            return k -1 ;",
+        "        end if ;",
+        "    end do:",
+        "end proc:",
+        "A278038 := proc(n)",
+        "    local k,L,nres ;",
+        "    if n = 0 then",
+        "        0;",
+        "    else",
+        "        k := A73floorIdx(n) ;",
+        "        L := [1] ;",
+        "        nres := n-A000073(k) ;",
+        "        while k >= 4 do",
+        "            k := k-1 ;",
+        "            if nres >= A000073(k) then",
+        "                L := [1,op(L)] ;",
+        "                nres := nres-A000073(k) ;",
+        "            else",
+        "                L := [0,op(L)] ;",
+        "            end if ;",
+        "        end do:",
+        "        add( op(i,L)*10^(i-1),i=1..nops(L)) ;",
+        "    end if;",
+        "end proc:",
+        "seq(A278038(n),n=0..40) ; # _R. J. Mathar_, Jun 08 2022"
+    ],
+    "mathematica": [
+        "t[1] = 1; t[2] = 2; t[3] = 4; t[n_] := t[n] = t[n - 1] + t[n - 2] + t[n - 3]; a[n_] := Module[{s = {}, m = n, k}, While[m > 0, k = 1; While[t[k] <= m, k++]; k--; AppendTo[s, k]; m -= t[k]; k = 1]; FromDigits @ IntegerDigits[Total[2^(s - 1)], 2]]; Array[a, 100, 0] (* _Amiram Eldar_, Mar 04 2022 *)"
+    ],
+    "xref": [
+        "Cf. A000073, A080843 (tribonacci word, tribonacci tree).",
+        "See A003726 for the decimal representations of these binary strings.",
+        "Similar sequences: A014417 (Fibonacci), A130310 (Lucas)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_, Nov 16 2016",
+    "references": 43,
+    "revision": 41,
+    "time": "2022-06-08T06:00:15-04:00",
+    "created": "2016-11-16T18:24:05-05:00"
+}

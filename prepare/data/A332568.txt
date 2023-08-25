@@ -1,0 +1,46 @@
+{
+    "number": 332568,
+    "data": "2,220,163800,445021200,3214652032800,50918885567409600,1554049425558455280000,83299908055220376343200000,7314024060095163820937236800000,996356404501170952495143447331200000,201612475303525750146175379983871174400000",
+    "name": "a(n) is the number of linear extensions of the zigzag poset Z of length 2n where each minimal element in Z additionally covers two new elements.",
+    "comment": [
+        "The poset corresponding to a(n) is defined by the following cover relations on elements {1,2,...,4n}: {4i-3 < 4i-1 : i = 1...n} and {4i-2 < 4i-1 : i = 1...n} and {4i-1 < 4i : i = 1...n} and {4i > 4i-1 : i = 1...n-1}.",
+        "This sequence is an instance of a generalization of Euler Numbers defined in the Garver et al. reference. In general, A_k(n) is the number of linear extensions of the zigzag of 2n elements, where each minimal element additionally covers k new elements. Specifically, a(n) = A_2(n)."
+    ],
+    "reference": [
+        "R. P. Stanley, Enumerative combinatorics, 2nd ed., Vol. 1, Cambridge University Press, 2012."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A332568/b332568.txt\">Table of n, a(n) for n = 1..100</a>",
+        "Alexander Garver, Stefan Grosser, Jacob Matherne and Alejandro Morales, <a href=\"https://arxiv.org/abs/2001.08822\">Counting Linear Extensions of Posets with Determinants of Hook Lengths</a>, arXiv:2001.08822 [math.CO], Jan 2020.",
+        "GaYee Park, <a href=\"https://arxiv.org/abs/2104.11166\">Naruse hook formula for linear extensions of mobile posets</a>, arXiv:2104.11166 [math.CO], 2021.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Alternating_permutation\">Alternating Permutation</a>"
+    ],
+    "formula": [
+        "a(n) = (4n)! * det(c_{i,j}) with 1<= i,j <= n, where c_{i,j} is the following matrix:  for j >= i-1, c_{i,j} = Product_{r=1..j-i+1} 1/(4r(4r-1)); otherwise c_{i,j} = 0. (Proved)",
+        "a(n) ~ (4*n)! * c * d^n, where d = 0.0621081230059627257075494363450193617160421717754186757880676835858048... and c = 1.42983395270155716735034676344701283104553855261001105886616... - _Vaclav Kotesovec_, Feb 26 2020"
+    ],
+    "example": [
+        "A_2(2) = 8! * det({{1/(4*3), 1/(8*7*4*3)},{1, 1/(4*3)}}) = 220."
+    ],
+    "maple": [
+        "a:=(k)->(4*k)!*LinearAlgebra:-Determinant(Matrix(k,k,(i,j)->`if`(j>=i-1,mul(1/(4*r*(4*r-1)),r=1..j-i+1),0)));",
+        "seq(a(k),k=1..10);"
+    ],
+    "mathematica": [
+        "nmax = 10; Table[(4*n)!*Det[Table[If[j>=i-1, Product[1/(4*r*(4*r-1)), {r,1,j-i+1}], 0], {i, 1, n}, {j, 1, n}]], {n, 1, nmax}] (* _Vaclav Kotesovec_, Feb 26 2020 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = (4*n)!*matdet(matrix(n, n, i, j, if (j>=i-1, prod(r=1, j-i+1, 1/(4*r*(4*r-1)))))); \\\\ _Michel Marcus_, Feb 20 2020"
+    ],
+    "xref": [
+        "Removing all added elements to the zigzag, this sequence would match A000111.",
+        "Removing one added element per minimal element of the zigzag would result in A332471."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Stefan Grosser_, Feb 16 2020",
+    "references": 1,
+    "revision": 41,
+    "time": "2021-07-26T12:20:05-04:00",
+    "created": "2020-02-27T01:52:14-05:00"
+}

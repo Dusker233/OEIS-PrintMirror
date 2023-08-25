@@ -1,0 +1,41 @@
+{
+    "number": 306775,
+    "data": "1,5,10,20,27,47,56,78,95,123,136,186,201,237,272,318,337,405,426,496,541,593,618,728,765,825,878,968,999,1139,1172,1266,1331,1407,1470,1640,1679,1763,1838,1992,2035,2215,2260,2390,2509,2609,2658,2888,2953,3101",
+    "name": "Partial sums of A060648: sum of the inverse Moebius transform of the Dedekind psi function from 1 to n.",
+    "comment": [
+        "In general, for m >= 1, Sum_{k=1..n} Sum_{d|k} psi_m(d) = Sum_{k=1..n} k^m * A064608(floor(n/k)), where psi_m(d) is the generalized Dedekind psi function.",
+        "Additionally, for m >= 1, Sum_{k=1..n} Sum_{d|k} psi_m(d) ~ (n^(m+1) * zeta(m+1)^2) / ((m+1) * zeta(2*(m+1)))."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A306775/b306775.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Dedekind_psi_function\">Dedekind psi function</a>"
+    ],
+    "formula": [
+        "a(n) ~ (5/4) * n^2.",
+        "a(n) = Sum_{k=1..n} A060648(k).",
+        "a(n) = Sum_{k=1..n} Sum_{d|k} A001615(d).",
+        "a(n) = Sum_{k=1..n} k * A064608(floor(n/k)).",
+        "a(n) = (1/2)*Sum_{k=1..n} 2^omega(k) * floor(n/k) * floor(1+n/k).",
+        "a(n) = Sum_{k=1..n} A001615(k)*floor(n/k). - _Ridouane Oudra_, Aug 27 2019"
+    ],
+    "maple": [
+        "with(numtheory): psi := n -> n*mul(1+1/p, p in factorset(n)):",
+        "seq(add(psi(i)*floor(n/i), i=1..n), n=1..80); # _Ridouane Oudra_, Aug 27 2019"
+    ],
+    "mathematica": [
+        "Accumulate[Table[Sum[EulerPhi[n/d] * DivisorSigma[0, d^2], {d, Divisors[n]}], {n, 1, 100}]] (* _Vaclav Kotesovec_, Oct 09 2019 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, 2^omega(k) * (n\\k) * (1+n\\k))/2;"
+    ],
+    "xref": [
+        "Cf. A001221, A001615, A034444, A060648, A061503, A064608."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Daniel Suteu_, Mar 09 2019",
+    "references": 1,
+    "revision": 14,
+    "time": "2019-10-10T03:37:03-04:00",
+    "created": "2019-03-21T12:47:22-04:00"
+}

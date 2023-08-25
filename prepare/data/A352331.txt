@@ -1,0 +1,31 @@
+{
+    "number": 352331,
+    "data": "4,27,104,260,296,405,525,740,910,945,1460,1806,1818,2504,3125,3140,3176,3656,3860,4563,5540,6056,6930,7016,8420,8636,9224,10820,12573,13256,14024,15140,15464,15944,16136,19940,20456,21690,21860,22856,23336,24020,24260",
+    "name": "Numbers k for which phi(k) = phi(k''), where phi is the Euler totient function (A000010) and k'' the second arithmetic derivative of k (A068346).",
+    "comment": [
+        "If m is a term in A051674, then m'' = m, phi(m'') = phi(m) so the sequence is infinite.",
+        "If p > 3 is at the intersection of A023208 and A005383 then m = 8*p is a term. Indeed, m'' = (8*p)'' = (12*p + 8)' = (4*(3*p + 2))' = 12*(p + 1) and phi(m'') = phi(12*(p + 1)) = phi(24*(p + 1)/2) = 8*(p - 1)/2 = 4*(p - 1) and phi(m) = phi(8*p) = 4*(p - 1).",
+        "If p > 5 is at the intersection of A023221 and A005383 then m = 20*p is a term. Indeed, m'' = (20*p)'' = (24*p + 20)' = (4*(6*p + 5))' = 4*(6*p + 6)  = 24*(p + 1) and phi(m'') = phi(24*(p + 1)) = phi(48*(p + 1)/2) = 16*(p - 1)/2 = 8*(p - 1) and phi(m) = phi(20*p) = 8*(p - 1)."
+    ],
+    "example": [
+        "phi(4'') = phi(4) because 4'' = 4, so 4 is a term.",
+        "phi (27'') = phi(27) because 27'' = 27, so 27 is a term.",
+        "phi(104'') = phi(164') = phi(168) = phi (8*3*7) = 4*2*6 = 48 and phi(104) = phi(8*13) = 4*12 = 48, so 104 is a term."
+    ],
+    "mathematica": [
+        "d[0] = d[1] = 0; d[n_] := n * Plus @@ ((Last[#]/First[#]) & /@ FactorInteger[n]); Select[Range[25000], EulerPhi[#] == EulerPhi[d[d[#]]] &] (* _Amiram Eldar_, Apr 10 2022 *)"
+    ],
+    "program": [
+        "(Magma) f:=func<n |n le 1 select 0 else  n*(&+[Factorisation(n)[i][2] / Factorisation(n)[i][1]: i in [1..#Factorisation(n)]])>; [n:n in [2..24300]| not IsPrime(n) and EulerPhi(n) eq EulerPhi(Floor(f(Floor(f(n))))) ];"
+    ],
+    "xref": [
+        "Cf. A000010, A005383, A051674, A068346, A023208, A023221, A190402,"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Marius A. Burtea_, Apr 09 2022",
+    "references": 0,
+    "revision": 8,
+    "time": "2022-05-04T18:44:15-04:00",
+    "created": "2022-05-04T18:44:15-04:00"
+}

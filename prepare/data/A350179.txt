@@ -1,0 +1,39 @@
+{
+    "number": 350179,
+    "data": "2,3,5,7,11,13,23,29,31,43,47,53,59,61,67,71,79,83,101,103,107,131,139,149,151,157,167,173,179,191,197,211,223,227,229,239,263,269,277,283,293,311,317,331,347,349,359,367,373,383,389,419,421,431,439,443,461,463,467",
+    "name": "Primes of the form ( A349309(n) + 1 ) ^ (1/3).",
+    "comment": [
+        "Equivalently, primes p such that A051903(p^3-1) < 3. - _Amiram Eldar_, Dec 26 2021"
+    ],
+    "example": [
+        "5 is a term since (A349309(3) + 1) ^ (1/3) = 125 ^ (1/3) = 5."
+    ],
+    "maple": [
+        "filter:= n -> isprime(n) and max(map(t -> t[2],ifactors(n^3-1)[2]))<3:",
+        "select(filter, [2,seq(i,i=3..1000,2)]); # _Robert Israel_, Dec 26 2021"
+    ],
+    "mathematica": [
+        "q[p_] := PrimeQ[p] && AllTrue[FactorInteger[p^3 - 1][[;; , 2]], # < 3 &]; Select[Range[500], q] (* _Amiram Eldar_, Dec 26 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import prime, factorint",
+        "def A350179_gen(): return (p for p in (prime(n) for n in count(1)) if max(factorint(p**3-1).values()) < 3)",
+        "A350179_list = list(islice(A350179_gen(),30)) # _Chai Wah Wu_, Jan 24 2022",
+        "(PARI) isok(p) = isprime(p) && (vecmax(factor(p^3-1)[,2]) < 3); \\\\ _Michel Marcus_, Jul 18 2022"
+    ],
+    "xref": [
+        "Cf. A051903, A349309."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Fl\u00e1vio V. Fernandes_, Dec 23 2021",
+    "ext": [
+        "More terms from _Michel Marcus_, Dec 25 2021"
+    ],
+    "references": 0,
+    "revision": 63,
+    "time": "2022-07-18T09:48:27-04:00",
+    "created": "2022-01-24T11:42:45-05:00"
+}

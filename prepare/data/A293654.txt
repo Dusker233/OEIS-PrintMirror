@@ -1,0 +1,48 @@
+{
+    "number": 293654,
+    "data": "1,2,6,14,15,22,23,24,30,33,35,38,42,44,46,47,51,54,56,59,60,62,66,69,70,71,77,78,83,86,87,88,92,94,95,96,99,102,105,107,110,114,115,118,119,120,123,126,131,132,134,135,138,140,141,142,143,150",
+    "name": "Integers not represented by cyclotomic binary forms.",
+    "link": [
+        "Michel Waldschmidt, <a href=\"/A293654/b293654.txt\">Table of n, a(n) for n = 1..249</a>",
+        "Etienne Fouvry, Claude Levesque, Michel Waldschmidt, <a href=\"https://arxiv.org/abs/1712.09019\">Representation of integers by cyclotomic binary forms</a>, arXiv:1712.09019 [math.NT], 2017."
+    ],
+    "maple": [
+        "g := 1;",
+        "for m from 1 to 1000 do",
+        "    for n from 3 to 50 do",
+        "        for x from -50 to 50 do",
+        "            for y from -50 to 50 do",
+        "                if (F[n] = m, max(abs(x), abs(y)) > 1",
+        "                then r[g] := m; m := m+1; n := 3;",
+        "                     x := -50; y := -50; g := g+1",
+        "                fi;",
+        "od; od; od; od;",
+        "for t to 519 do print(r[{t}] = r[t]) od;",
+        "s[1] := 1; s[2] := 2; g := 2;",
+        "for i from 1 to 518 do",
+        "    for j from r[i]+1 to r[i+1]-1 do",
+        "        g := g+1; s[g] := j",
+        "od; od;",
+        "for t to 481 do s[t] od;"
+    ],
+    "mathematica": [
+        "isA296095[n_] := If[n<3, Return[False], logn = Log[n]^1.161; K = Floor[ 5.383*logn]; M = Floor[2*(n/3)^(1/2)]; k = 3; While[True, If[k == 7, K = Ceiling[4.864*logn]; M = Ceiling[2*(n/11)^(1/4)]]; For[y = 2, y <= M, y++, p[z_] = y^EulerPhi[k]*Cyclotomic[k, z]; For[x = 1, x <= y, x++, If[n == p[x/y], Return[True]]]]; k++; If[k>K, Break[]]]; Return[False]];",
+        "Select[Range[150], !isA296095[#]&] (* _Jean-Fran\u00e7ois Alcover_, Jun 21 2018, after _Peter Luschny_ *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A293654list(upto):",
+        "    return [n for n in (1..upto) if not isA296095(n)]",
+        "print(A293654list(150)) # _Peter Luschny_, Feb 25 2018"
+    ],
+    "xref": [
+        "Complement of A296095."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Waldschmidt_, Feb 16 2018",
+    "references": 14,
+    "revision": 45,
+    "time": "2019-02-19T10:22:27-05:00",
+    "created": "2018-02-25T23:05:54-05:00"
+}

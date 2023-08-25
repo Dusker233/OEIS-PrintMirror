@@ -1,0 +1,43 @@
+{
+    "number": 97596,
+    "data": "1,1,2,4,7,14,26,48,89,165,304,559,1029,1893,3482,6404,11779,21666,39850,73296,134813,247961,456072,838847,1542881,2837801,5219530,9600212,17657543,32477286,59735042,109869872,202082201,371687117",
+    "name": "Expansion of g.f. x*(1-x+x^5+x^6-x^7+x^9)/(1-2*x+x^4+x^6-2*x^7+x^10).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A097596/b097596.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_10\">Index entries for linear recurrences with constant coefficients</a>, signature (2,0,0,-1,0,-1,2,0,0,-1)."
+    ],
+    "formula": [
+        "a(n) = ((r3)^n - (r2)^n - (r1)^n)/(r3 - r2 - r1), where r3 = (1/3)*(1 + (19 - 3*sqrt(33))^(1/3) + (19 + 3*sqrt(33))^(1/3)), r1 and r2 are the other roots of x^3 - x^2 - x - 1 = 0.",
+        "G.f.: x*(1 -x +x^5 +x^6 -x^7 +x^9)/((1-x)*(1+x^2)*(1-x-x^2-x^3)*(1-x^2+x^4)). -_Colin Barker_, Dec 02 2012",
+        "a(n) = 2*a(n-1) - a(n-4) - a(n-6) + 2*a(n-7) - a(n-10). - _G. C. Greubel_, Dec 06 2022"
+    ],
+    "mathematica": [
+        "r1=-0.419643377607080569`-0.606290729207199419` I;",
+        "r2=-0.419643377607080569`+0.606290729207199419` I;",
+        "r3=1.83928675521416113`;",
+        "f[n_]:=(r3^n-r2^n-r1^n)/(r3-r2-r1);",
+        "Table[Floor[f[n]], {n,50}]",
+        "LinearRecurrence[{2,0,0,-1,0,-1,2,0,0,-1}, {1,1,2,4,7,14,26,48,89, 165}, 50] (* _G. C. Greubel_, Dec 06 2022 *)"
+    ],
+    "program": [
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 51); Coefficients(R!( x*(1-x+x^5+x^6-x^7+x^9)/(1-2*x+x^4+x^6-2*x^7+x^10) )); // _G. C. Greubel_, Dec 06 2022",
+        "(SageMath)",
+        "def A097596_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P( x*(1-x+x^5+x^6-x^7+x^9)/(1-2*x+x^4+x^6-2*x^7+x^10) ).list()",
+        "a=A097596_list(50); a[1:] # _G. C. Greubel_, Dec 06 2022"
+    ],
+    "xref": [
+        "Cf. A001644."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,3",
+    "author": "_Roger L. Bagula_, Sep 20 2004",
+    "ext": [
+        "Edited by _G. C. Greubel_, Dec 06 2022"
+    ],
+    "references": 1,
+    "revision": 16,
+    "time": "2022-12-08T07:35:59-05:00",
+    "created": "2004-09-22T03:00:00-04:00"
+}

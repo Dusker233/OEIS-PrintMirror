@@ -1,0 +1,35 @@
+{
+    "number": 360592,
+    "data": "1,1,2,5,14,44,149,543,2096,8539,36444,162380,752181,3612037,17933038,91843329,484280386,2624400428,14595111277,83178971707,485218783724,2893881790823,17628815344600,109585578277012,694575012732989,4485139961090153,29486515600393930",
+    "name": "G.f.: Sum_{k>=0} (1 + k*x)^k * x^k.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A360592/b360592.txt\">Table of n, a(n) for n = 0..760</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..floor(n/2)} binomial(n-k,k) * (n-k)^k.",
+        "a(n) ~ exp(exp(1/2)*sqrt(n/2) - 3*exp(1)/8) * n^(n/2) / 2^(n/2 + 1) * (1 + ((exp(1/2) + exp(-1/2))/2^(5/2) + 11*exp(3/2)/2^(9/2))/sqrt(n))."
+    ],
+    "maple": [
+        "N:= 40:",
+        "S:= series(add((1+k*x)^k*x^k, k=0..N),x,N+1):",
+        "seq(coeff(S,x,k),k=0..N); # _Robert Israel_, Feb 13 2023"
+    ],
+    "mathematica": [
+        "nmax = 30; CoefficientList[Series[Sum[(1 + k*x)^k * x^k, {k, 0, nmax}], {x, 0, nmax}], x]",
+        "Flatten[{1, Table[Sum[Binomial[n-k, k] * (n-k)^k, {k, 0, n/2}], {n, 1, 30}]}]"
+    ],
+    "program": [
+        "(PARI) {a(n) = polcoeff(sum(m=0, n, (1 + m*x)^m * x^m + x*O(x^n)), n)};",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A360232, A092366, A187018, A360699, A360707."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Vaclav Kotesovec_, Feb 13 2023",
+    "references": 16,
+    "revision": 28,
+    "time": "2023-02-17T03:29:38-05:00",
+    "created": "2023-02-13T11:52:06-05:00"
+}

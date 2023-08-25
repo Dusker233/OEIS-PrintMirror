@@ -1,0 +1,50 @@
+{
+    "number": 320175,
+    "data": "1,2,5,13,37,120,395,1381,4931,18074,67287,254387,972559,3756315,14629237,57395490,226613217,899773355,3590349661,14390323014,57907783039,233867667197,947601928915,3851054528838,15693587686823,64114744713845,262543966114921,1077406218930902",
+    "name": "Number of series-reduced rooted trees whose leaves are strict integer partitions whose multiset union is an integer partition of n.",
+    "comment": [
+        "A rooted tree is series-reduced if every non-leaf node has at least two branches."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320175/b320175.txt\">Table of n, a(n) for n = 1..200</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(4) = 13 trees:",
+        "  (1)  (2)       (3)            (4)",
+        "       ((1)(1))  (21)           (31)",
+        "                 ((1)(2))       ((1)(3))",
+        "                 ((1)(1)(1))    ((2)(2))",
+        "                 ((1)((1)(1)))  ((1)(21))",
+        "                                ((1)(1)(2))",
+        "                                ((1)((1)(2)))",
+        "                                ((2)((1)(1)))",
+        "                                ((1)(1)(1)(1))",
+        "                                ((1)((1)(1)(1)))",
+        "                                ((1)(1)((1)(1)))",
+        "                                (((1)(1))((1)(1)))",
+        "                                ((1)((1)((1)(1))))"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "sot[m_]:=If[UnsameQ@@m,Prepend[#,m],#]&[Join@@Table[Union[Sort/@Tuples[sot/@p]],{p,Select[mps[m],Length[#]>1&]}]];",
+        "Table[Length[Join@@Table[sot[m],{m,IntegerPartitions[n]}]],{n,10}]"
+    ],
+    "program": [
+        "(PARI) EulerT(v)={Vec(exp(x*Ser(dirmul(v,vector(#v,n,1/n))))-1, -#v)}",
+        "seq(n)={my(p=prod(k=1, n, 1 + x^k + O(x*x^n)), v=vector(n)); for(n=1, n, v[n]=polcoef(p, n) + EulerT(v[1..n])[n]); v} \\\\ _Andrew Howroyd_, Oct 25 2018"
+    ],
+    "xref": [
+        "Cf. A000081, A000311, A000669, A001678, A005804, A141268, A292504, A300660, A317099, A319312, A320173, A320174."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Oct 07 2018",
+    "ext": [
+        "Terms a(11) and beyond from _Andrew Howroyd_, Oct 25 2018"
+    ],
+    "references": 6,
+    "revision": 10,
+    "time": "2018-10-25T22:19:35-04:00",
+    "created": "2018-10-07T14:36:24-04:00"
+}

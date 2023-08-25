@@ -1,0 +1,67 @@
+{
+    "number": 353834,
+    "data": "1,4,8,9,12,16,25,27,32,40,49,63,64,81,112,121,125,128,144,169,243,256,289,325,343,351,352,361,512,529,625,675,729,832,841,931,961,1008,1024,1331,1369,1539,1600,1681,1728,1849,2048,2176,2187,2197,2209,2401",
+    "name": "Nonprime numbers whose prime indices have all equal run-sums.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798.",
+        "The sequence of runs of a sequence consists of its maximal consecutive constant subsequences when read left-to-right. For example, the runs of (2,2,1,1,1,3,2,2) are (2,2), (1,1,1), (3), (2,2), with sums (4,3,3,4)."
+    ],
+    "example": [
+        "The terms together with their prime indices begin:",
+        "     1: {}",
+        "     4: {1,1}",
+        "     8: {1,1,1}",
+        "     9: {2,2}",
+        "    12: {1,1,2}",
+        "    16: {1,1,1,1}",
+        "    25: {3,3}",
+        "    27: {2,2,2}",
+        "    32: {1,1,1,1,1}",
+        "    40: {1,1,1,3}",
+        "    49: {4,4}",
+        "    63: {2,2,4}",
+        "    64: {1,1,1,1,1,1}",
+        "    81: {2,2,2,2}",
+        "   112: {1,1,1,1,4}",
+        "   121: {5,5}",
+        "   125: {3,3,3}",
+        "   128: {1,1,1,1,1,1,1}",
+        "For example, 675 is in the sequence because its prime indices {2,2,2,3,3} have run-sums (6,6)."
+    ],
+    "mathematica": [
+        "Select[Range[100],!PrimeQ[#]&&SameQ@@Cases[FactorInteger[#],{p_,k_}:>PrimePi[p]*k]&]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import factorint, primepi",
+        "def A353848_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n: n == 1 or (sum((f:=factorint(n)).values()) > 1 and len(set(primepi(p)*e for p, e in f.items())) <= 1), count(max(startvalue,1)))",
+        "A353848_list = list(islice(A353848_gen(),30)) # _Chai Wah Wu_, May 27 2022"
+    ],
+    "xref": [
+        "For equal run-lengths we have A072774\\A000040, counted by A047966(n)-1.",
+        "These partitions are counted by A304442(n) - 1.",
+        "These are the nonprime positions of prime powers in A353832.",
+        "Including the primes gives A353833.",
+        "For distinct run-sums we have A353838\\A000040, counted by A353837(n)-1.",
+        "For compositions we have A353848\\A000079, counted by A353851(n)-1.",
+        "A001222 counts prime factors, distinct A001221.",
+        "A005811 counts runs in binary expansion, distinct run-lengths A165413.",
+        "A056239 adds up prime indices, row sums of A112798 and A296150.",
+        "A124010 gives prime signature, sorted A118914.",
+        "A300273 ranks collapsible partitions, counted by A275870.",
+        "A353835 counts distinct run-sums of prime indices, weak A353861.",
+        "A353840-A353846 pertain to partition run-sum trajectory.",
+        "A353862 gives greatest run-sum of prime indices, least A353931.",
+        "A353866 ranks rucksack partitions, counted by A353864.",
+        "Cf. A000005, A000961, A007947, A025475, A071625, A073093, A323014, A353839."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, May 26 2022",
+    "references": 25,
+    "revision": 9,
+    "time": "2022-05-27T21:13:50-04:00",
+    "created": "2022-05-27T14:37:10-04:00"
+}

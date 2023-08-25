@@ -1,0 +1,43 @@
+{
+    "number": 40025,
+    "data": "4,15,93,668,5172,42042,353701,3036643,27045226,239093865,2158090933,19742800564",
+    "name": "a(n) is the number of prime palindromes with 2n+1 digits.",
+    "link": [
+        "Shyam Sunder Gupta, <a href=\"https://listserv.nodak.edu/cgi-bin/wa.exe?A2=NMBRTHRY;d9a588c5.0602\">Palindromic Primes up to 10^19</a>.",
+        "Shyam Sunder Gupta, <a href=\"https://listserv.nodak.edu/cgi-bin/wa.exe?A2=NMBRTHRY;bdeb9ea2.0903\">Palindromic Primes up to 10^21</a>.",
+        "Shyam Sunder Gupta, <a href=\"https://listserv.nodak.edu/cgi-bin/wa.exe?A2=NMBRTHRY;b79493a6.1310\">Palindromic Primes up to 10^23</a>."
+    ],
+    "example": [
+        "a(1)=15 because Number of prime palindromes with 3 digits is 15. [_Shyam Sunder Gupta_, Mar 14 2009]"
+    ],
+    "program": [
+        "(PARI) a(n) = {my(nb = 0); forprime(p=10^(2*n), 10^(2*n+1)-1, if (eval(concat(Vecrev(Str(p)))) == p, nb++);); nb;} \\\\ _Michel Marcus_, Jul 24 2015",
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import product",
+        "def candidate_pals(n): # of length 2n + 1",
+        "  if n == 0: yield from [2, 3, 5, 7]; return # one-digit primes",
+        "  for rightbutend in product(\"0123456789\", repeat=n-1):",
+        "    rightbutend = \"\".join(rightbutend)",
+        "    for end in \"1379\": # multi-digit primes must end in 1, 3, 7, or 9",
+        "      left = end + rightbutend[::-1]",
+        "      for mid in \"0123456789\": yield int(left + mid + rightbutend + end)",
+        "def a(n): return sum(isprime(p) for p in candidate_pals(n))",
+        "print([a(n) for n in range(6)]) # _Michael S. Branicky_, Apr 15 2021"
+    ],
+    "xref": [
+        "Subsequence of A016115, which is the main entry."
+    ],
+    "keyword": "nonn,hard,base,more",
+    "offset": "0,1",
+    "author": "_Patrick De Geest_",
+    "ext": [
+        "a(9) from _Shyam Sunder Gupta_, Feb 12 2006",
+        "a(10) from _Shyam Sunder Gupta_, Mar 14 2009",
+        "a(11) from _Shyam Sunder Gupta_, Oct 05 2013"
+    ],
+    "references": 2,
+    "revision": 30,
+    "time": "2021-04-15T22:56:31-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

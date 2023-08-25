@@ -1,0 +1,36 @@
+{
+    "number": 327596,
+    "data": "1,1,27,1222,78819,7990555,1075539168,185948116920,39826324710186,10231314625984628,3097070454570888110,1088018981038197792790,436918864329884469153204,198400793333371519398942287,100941775818744369615731919906,57064609834208008799145534143376",
+    "name": "Number of colored compositions of 2n using all colors of an n-set such that all parts have different color patterns and the patterns for parts i are sorted and have i colors in (weakly) increasing order.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327596/b327596.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "formula": [
+        "a(n) = A327244(2n,n)."
+    ],
+    "maple": [
+        "C:= binomial:",
+        "b:= proc(n, i, k, p) option remember; `if`(n=0, p!, `if`(i<1, 0, add(",
+        "      b(n-i*j, min(n-i*j, i-1), k, p+j)/j!*C(C(k+i-1, i), j), j=0..n/i)))",
+        "    end:",
+        "a:= n-> add(b(2*n$2, i, 0)*(-1)^(n-i)*C(n, i), i=0..n):",
+        "seq(a(n), n=0..17);"
+    ],
+    "mathematica": [
+        "c = Binomial;",
+        "b[n_, i_, k_, p_] := b[n, i, k, p] = If[n == 0, p!, If[i < 1, 0, Sum[",
+        "    b[n-i*j, Min[n-i*j, i-1], k, p+j]/j!*c[c[k+i-1, i], j], {j, 0, n/i}]]];",
+        "a[n_] := Sum[b[2n, 2n, i, 0]*(-1)^(n-i)*c[n, i], {i, 0, n}];",
+        "Table[a[n], {n, 0, 17}] (* _Jean-Fran\u00e7ois Alcover_, Apr 11 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A327244."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 18 2019",
+    "references": 2,
+    "revision": 10,
+    "time": "2022-04-11T08:12:47-04:00",
+    "created": "2019-09-18T14:12:07-04:00"
+}

@@ -1,0 +1,50 @@
+{
+    "number": 328509,
+    "data": "0,0,0,3,41,425,4287,45941,541219,7071501",
+    "name": "Number of non-unimodal sequences of length n covering an initial interval of positive integers.",
+    "comment": [
+        "A sequence of integers is unimodal if it is the concatenation of a weakly increasing and a weakly decreasing sequence."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/UnimodalSequence.html\">Unimodal Sequence</a>."
+    ],
+    "example": [
+        "The a(3) = 3 sequences are (2,1,2), (2,1,3), (3,1,2).",
+        "The a(4) = 41 sequences:",
+        "  (1212)  (2113)  (2134)  (2413)  (3142)  (3412)",
+        "  (1213)  (2121)  (2143)  (3112)  (3212)  (4123)",
+        "  (1312)  (2122)  (2212)  (3121)  (3213)  (4132)",
+        "  (1323)  (2123)  (2213)  (3122)  (3214)  (4213)",
+        "  (1324)  (2131)  (2312)  (3123)  (3231)  (4231)",
+        "  (1423)  (2132)  (2313)  (3124)  (3241)  (4312)",
+        "  (2112)  (2133)  (2314)  (3132)  (3312)"
+    ],
+    "mathematica": [
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "unimodQ[q_]:=Or[Length[q]<=1,If[q[[1]]<=q[[2]],unimodQ[Rest[q]],OrderedQ[Reverse[q]]]];",
+        "Table[Length[Select[Union@@Permutations/@allnorm[n],!unimodQ[#]&]],{n,0,5}]"
+    ],
+    "xref": [
+        "Not requiring non-unimodality gives A000670.",
+        "The complement appears to be counted by A007052.",
+        "The case where the negation is not unimodal either is A332873.",
+        "Unimodal compositions are A001523.",
+        "Non-unimodal permutations are A059204.",
+        "Non-unimodal compositions are A115981.",
+        "Unimodal compositions covering an initial interval are A227038.",
+        "Numbers whose unsorted prime signature is not unimodal are A332282.",
+        "Covering partitions with unimodal run-lengths are A332577.",
+        "Non-unimodal compositions covering an initial interval are A332743.",
+        "Cf. A060223, A255906, A332281, A332284, A332639, A332672, A332834, A332870."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Feb 19 2020",
+    "ext": [
+        "a(9) from _Robert Price_, Jun 19 2021"
+    ],
+    "references": 45,
+    "revision": 17,
+    "time": "2023-02-12T14:50:45-05:00",
+    "created": "2020-03-02T23:27:34-05:00"
+}

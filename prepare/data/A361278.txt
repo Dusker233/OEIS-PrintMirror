@@ -1,0 +1,35 @@
+{
+    "number": 361278,
+    "data": "1,1,5,19,97,581,3661,26335,202049,1659817,14621941,135567851,1326672865,13624218349,146056961597,1633376573431,18980051829121,228677164878545,2852155973178469,36740599423566787,488127224550517601,6678832987859315221",
+    "name": "Expansion of e.g.f. exp(x * (1+x)^2).",
+    "link": [
+        "Winston de Greef, <a href=\"/A361278/b361278.txt\">Table of n, a(n) for n = 0..566</a>"
+    ],
+    "formula": [
+        "a(n) = n! * Sum_{k=0..n} binomial(2*k,n-k)/k!.",
+        "a(0) = 1; a(n) = (n-1)! * Sum_{k=1..n} k * binomial(2,k-1) * a(n-k)/(n-k)!.",
+        "D-finite with recurrence a(n) -a(n-1) +4*(-n+1)*a(n-2) -3*(n-1)*(n-2)*a(n-3)=0. - _R. J. Mathar_, Mar 12 2023"
+    ],
+    "maple": [
+        "A361278 := proc(n)",
+        "    n!*add(binomial(2*k,n-k)/k!,k=0..n) ;",
+        "end proc:",
+        "seq(A361278(n),n=0..60) ; #_R. J. Mathar_, Mar 12 2023"
+    ],
+    "program": [
+        "(PARI) my(N=30, x='x+O('x^N)); Vec(serlaplace(exp(x*(1+x)^2)))",
+        "(PARI) a(n) = n!*sum(k=0, n, binomial(2*k, n-k)/k!);",
+        "(PARI) a_vector(n) = my(v=vector(n+1)); v[1]=1; for(i=1, n, v[i+1]=(i-1)!*sum(j=1, i, j*binomial(2, j-1)*v[i-j+1]/(i-j)!)); v;"
+    ],
+    "xref": [
+        "Column k=2 of A361277.",
+        "Cf. A082579."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Mar 06 2023",
+    "references": 5,
+    "revision": 21,
+    "time": "2023-03-12T14:16:18-04:00",
+    "created": "2023-03-07T10:35:48-05:00"
+}

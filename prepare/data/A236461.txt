@@ -1,0 +1,43 @@
+{
+    "number": 236461,
+    "data": "52,100,340,1460,2452,2740,4420,20404,21220,36452,48052,62660,66980,94180,103060,108580,128020,140452,142580,169364,171700,195940,221780,254900,260644,361252,378452,490052,498004,717604,736900,756452,766324,791284,879140,889780,916660,1016740,1104100,1164340,1232452,1283204",
+    "name": "Sum of two consecutive primes that is also sum of two consecutive even positive squares.",
+    "comment": [
+        "All values of (q - p) are multiples of 6.",
+        "m = p + q = x^2 + (x+2)^2; {m,p,q,x}: {52, 23, 29, 4}, {100, 47, 53, 6}, {340, 167,  173, 12}, {1460, 727, 733, 26}, {2452, 1223,  1229, 34}, {2740, 1367, 1373, 36}, {4420, 2207, 2213, 46}.",
+        "Intersection of A001043 and A108099. - _Michel Marcus_, Jan 27 2014"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A236461/b236461.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "52 = 23 + 29 = 4^2 + 6^2."
+    ],
+    "maple": [
+        "count:= 0: R:= NULL:",
+        "for m from 1 while count < 100 do",
+        "  y:= 8*m^2+8*m+4;",
+        "  if prevprime(y/2) + nextprime(y/2)=y then",
+        "     count:= count+1;",
+        "     R:= R, y;",
+        "  fi",
+        "od:",
+        "R; # _Robert Israel_, Jan 07 2020"
+    ],
+    "mathematica": [
+        "With[{nn=100000},Intersection[Total/@Partition[Prime[Range[nn]],2,1],Total/@ Partition[Range[2,2nn,2]^2,2,1]]] (* _Harvey P. Dale_, Jul 03 2021 *)"
+    ],
+    "program": [
+        "(PARI) v=vector(1300000); pp=3; forprime(p=5,#v/2,v[p+pp]++;pp=p);forstep(k=2,sqrtint(#v/2)-1,2,v[2*(k^2+2*k+2)]++);for(k=1,#v,if(v[k]==2,print1(k,\", \"))) \\\\ _Hugo Pfoertner_, Jan 07 2020"
+    ],
+    "xref": [
+        "Cf. A001043, A108099."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Zak Seidov_, Jan 26 2014",
+    "references": 1,
+    "revision": 14,
+    "time": "2021-07-03T16:08:30-04:00",
+    "created": "2014-01-28T18:09:57-05:00"
+}

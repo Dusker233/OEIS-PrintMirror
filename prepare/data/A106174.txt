@@ -1,0 +1,47 @@
+{
+    "number": 106174,
+    "data": "0,1,4,23,180,1777,21144,294239,4686680,84066001,1676633340,36801867479,881568186156,22883970972577,639869619046000,19173204600407423,612902677593991536,20819517833595304801,748889739331836981300",
+    "name": "a(n) = 2*n*a(n-1) - a(n-2), with a(0)=0, a(1)=1.",
+    "comment": [
+        "Bessel recurrence at x=1: J(x,n) = (2*n/x)*J(x,n-1) - J(x,n-2)."
+    ],
+    "reference": [
+        "Abramowitz and Stegun, Handbook of Mathematical Functions, 9th printing, 1972, page 385."
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A106174/b106174.txt\">Table of n, a(n) for n = 0..403</a>",
+        "M. Abramowitz and I. A. Stegun, eds., <a href=\"http://www.convertit.com/Go/ConvertIt/Reference/AMS55.ASP\">Handbook of Mathematical Functions</a>, National Bureau of Standards, Applied Math. Series 55, Tenth Printing, 1972 [alternative scanned copy].",
+        "S. Janson, <a href=\"http://www.dmtcs.org/dmtcs-ojs/index.php/dmtcs/issue/view/106\">A divergent generating function that can be summed and analysed analytically</a>, Discrete Mathematics and Theoretical Computer Science; 2010, Vol. 12, No. 2, 1-22."
+    ],
+    "formula": [
+        "a(n) = Sum_{k = 0..floor((n-1)/2)} (-1)^k*2^(n-2*k-1)*(n-2*k-1)! * binomial(n-k-1,k)*binomial(n-k,k+1), cf. A058798. - _Peter Bala_, Aug 01 2013",
+        "a(n) = n!*2^(n-1)*hypergeometric2F3([(1-n)/2, 1-n/2],[2, 1-n, -n], -1) for n >= 2. - _Peter Luschny_, Sep 10 2014",
+        "From _Vaclav Kotesovec_, Jun 10 2019: (Start)",
+        "a(n) = Pi*(BesselJ(1 + n, 1)*BesselY(1, 1) - BesselJ(1, 1)*BesselY(1 + n, 1))/2.",
+        "a(n) ~ BesselJ(1,1) * 2^n * n!. (End)"
+    ],
+    "mathematica": [
+        "F[0]=0; F[1]=1; F[n_]:= F[n]= 2*n*F[n-1]-F[n-2]; Table[F[n], {n, 0, 20}]",
+        "RecurrenceTable[{a[0]==0,a[1]==1,a[n]==2n a[n-1]-a[n-2]},a,{n,20}] (* _Harvey P. Dale_, Oct 17 2016 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "def A058798(n):",
+        "    if n < 2: return n",
+        "    return factorial(n)*2^(n-1)*hypergeometric([1/2-n/2, 1-n/2], [2, 1-n, -n], -1)",
+        "[round(A058798(n).n(164)) for n in (0..18)] # _Peter Luschny_, Sep 10 2014",
+        "(PARI) m=20; v=concat([0,1], vector(m-2)); for(n=3, m, v[n]=2*(n-1)*v[n-1]-v[n-2]); v \\\\ _G. C. Greubel_, Mar 25 2019",
+        "(Magma) I:=[0,1]; [n le 2 select I[n] else 2*(n-1)*Self(n-1) - Self(n-2): n in [1..20]]; // _G. C. Greubel_, Mar 25 2019",
+        "(GAP) a:=[0,1];; for n in [3..20] do a[n]:=2*(n-1)*a[n-1]-a[n-2]; od; a; # _G. C. Greubel_, Mar 25 2019"
+    ],
+    "xref": [
+        "Cf. A058798."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_Roger L. Bagula_, Mar 14 2006",
+    "references": 5,
+    "revision": 39,
+    "time": "2022-09-08T08:45:17-04:00",
+    "created": "2005-07-19T03:00:00-04:00"
+}

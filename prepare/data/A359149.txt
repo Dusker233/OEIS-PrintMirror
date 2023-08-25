@@ -1,0 +1,42 @@
+{
+    "number": 359149,
+    "data": "1,1101,11011101,1101110011101,1101110010110011101,1101110010111010110011101,1101110010111011111010110011101,11011100101110111100011111010110011101,1101110010111011110001001100011111010110011101,110111001011101111000100110101001100011111010110011101",
+    "name": "Concatenate the binary strings for 1,2,...,n-1, n, n-1, ..., 2,1.",
+    "comment": [
+        "Binary analog of A173426 and A360504.",
+        "Converting these binary strings to base 10 gives A173427. E.g. 1101_2 = 13_10 gives A173427(3) = 13.",
+        "What is the first prime here if these strings are regarded as decimal numbers as they stand? a(5) = 1101110010110011101 = 3*37*53*187168113226247 is obviously not a prime."
+    ],
+    "link": [
+        "<a href=\"/index/Mo#MWP\">Index entries for sequences related to Most Wanted Primes video</a>"
+    ],
+    "maple": [
+        "a:= n-> parse(cat(map(t-> convert(t, binary), [$1..n, n-i$i=1..n-1])[])):",
+        "seq(a(n), n=1..10);  # _Alois P. Heinz_, Feb 18 2023"
+    ],
+    "mathematica": [
+        "a[n_] := FromDigits @ Flatten @ IntegerDigits[Join[Range[1, n], Range[n - 1, 1, -1]], 2]; Array[a, 10] (* _Amiram Eldar_, Feb 18 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    sl, sr, sk = \"\", \"\", \"1\"",
+        "    for k in count(1):",
+        "        sk = bin(k)[2:]",
+        "        sl += sk",
+        "        yield int(sl + sr)",
+        "        sr = sk + sr",
+        "print(list(islice(agen(), 10))) # _Michael S. Branicky_, Feb 18 2023"
+    ],
+    "xref": [
+        "Cf. A007088, A173426, A173427, A360504."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, Feb 18 2023",
+    "references": 2,
+    "revision": 15,
+    "time": "2023-02-19T16:17:42-05:00",
+    "created": "2023-02-18T19:32:35-05:00"
+}

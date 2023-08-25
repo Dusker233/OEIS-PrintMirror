@@ -1,0 +1,34 @@
+{
+    "number": 336512,
+    "data": "0,1,3,8,17,38,78,162,330,672,1355,2736,5503,11058,22191,44507,89198,178697,357852,716440,1434041,2869935,5742801,11490298,22988084,45988166,91995547,184021931,368093352,736266262,1472660452,2945526806,5891385159,11783304479",
+    "name": "Total sum of the left-to-right minima in all compositions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A336512/b336512.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "example": [
+        "a(4) = 1 + 1 + 1 + 2 + 1 + 2 + 1 + 3 + 1 + 4 = 17: (1)111, (1)12, (1)21, (2)(1)1, (2)2, (1)3, (3)(1), (4)."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0, [1, 0], add((p-> [0,",
+        "      `if`(j<m, j*p[1], 0)]+p)(b(n-j, min(m, j))), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, n+1)[2]:",
+        "seq(a(n), n=0..50);"
+    ],
+    "mathematica": [
+        "b[n_, m_] := b[n, m] = If[n == 0, {1, 0}, Sum[Function[p, {0,",
+        "     If[j < m, j*p[[1]], 0]} + p][b[n - j, Min[m, j]]], {j, 1, n}]];",
+        "a[n_] := b[n, n + 1][[2]];",
+        "Table[a[n], {n, 0, 50}] (* _Jean-Fran\u00e7ois Alcover_, Mar 07 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A001563 (the same for permutations of [n]), A336484, A336511, A336516, A336770."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jul 23 2020",
+    "references": 5,
+    "revision": 18,
+    "time": "2022-03-07T07:55:06-05:00",
+    "created": "2020-07-24T15:52:26-04:00"
+}

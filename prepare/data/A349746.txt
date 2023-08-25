@@ -1,0 +1,38 @@
+{
+    "number": 349746,
+    "data": "1,11466,114660,411264,804384,871416,4999680,46332000,176417280,378069120,396168192,485188704,709430400,2004912000,3921372000,5600534400,6128179200,6956471808,7556976000,7746979968,9904204800,14092001280,14182439040,23423662080,31998395520",
+    "name": "Numbers k for which k * gcd(sigma(k), u) is equal to sigma(k) * gcd(k, u), where u is obtained by shifting the prime factorization of k two steps toward larger primes [with u = A003961(A003961(k))].",
+    "comment": [
+        "Sigma preserves both the 2-adic and 3-adic valuation of the terms of this sequence.",
+        "All eleven known 5-multiperfect numbers (A046060) are included in this sequence, as well as the smallest 7-multiperfect number, 141310897947438348259849402738485523264343544818565120000 = A007539(7), and probably the majority of other p-multiperfect numbers as well, where p is a prime > 3. However, any term that is in A349747 is not included in this sequence."
+    ],
+    "link": [
+        "<a href=\"/index/Pri#prime_indices\">Index entries for sequences computed from indices in prime factorization</a>",
+        "<a href=\"/index/Si#SIGMAN\">Index entries for sequences related to sigma(n)</a>"
+    ],
+    "formula": [
+        "For all n >= 1, A007814(A000203(a(n))) = A007814(a(n)) and A007949(A000203(a(n))) = A007949(a(n)). [See comment]"
+    ],
+    "mathematica": [
+        "f[p_, e_] := NextPrime[p, 2]^e; s[1] = 1; s[n_] := Times @@ f @@@ FactorInteger[n]; q[n_] := n * GCD[(sigma = DivisorSigma[1, n]), (u = s[n])] == sigma * GCD[n, u]; Select[Range[10^6], q] (* _Amiram Eldar_, Dec 01 2021 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A003961twice(n) = { my(f = factor(n)); for (i=1, #f~, f[i, 1] = nextprime(1+nextprime(1+f[i, 1]))); factorback(f); };",
+        "isA349746(n) = { my(s=sigma(n),u=A003961twice(n)); (n*gcd(s,u) == (s*gcd(n,u))); };"
+    ],
+    "xref": [
+        "Cf. A000203, A003961, A007539, A007814, A007949, A046060, A349747.",
+        "Cf. also A349169, A349745."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Nov 30 2021",
+    "ext": [
+        "a(15)-a(25) from _Martin Ehrenstein_, Dec 17 2021"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2021-12-17T08:38:47-05:00",
+    "created": "2021-12-04T12:30:18-05:00"
+}

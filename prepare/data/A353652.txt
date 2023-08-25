@@ -1,0 +1,61 @@
+{
+    "number": 353652,
+    "data": "2,3,8,9,10,11,12,13,18,23,28,33,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,68,73,78,83,88,93,98,103,108,113,118,123,128,133,138,143,148,153,158,163,168,173,178,183,188",
+    "name": "Unique monotonic sequence of positive integers satisfying a(a(n)) = k*(n-1) + 3, where k = 5.",
+    "comment": [
+        "Numbers m such that the base-5 representation of (2*m-1) starts with 3 or 4 or ends with 0.",
+        "First differences give a run of 5^i 1's followed by a run of 5^i 5's, for i >= 0."
+    ],
+    "link": [
+        "Yifan Xie, <a href=\"/A353652/b353652.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Aa#aan\">Index entries for sequences of the a(a(n)) = 2n family</a>"
+    ],
+    "formula": [
+        "For n in the range (5^i + 1)/2 <= n < (3*5^i + 1)/2, for i >= 0:",
+        "  a(n) = n + 5^i.",
+        "  a(n+1) = 1 + a(n).",
+        "Otherwise, for n in the range (3*5^i + 1)/2 < n <= (5*5^i + 1)/2, for i >= 0:",
+        "  a(n) = 5*(n - 5^i) - 2.",
+        "  a(n+1) = 5 + a(n)."
+    ],
+    "example": [
+        "a(7) = 12 because (5^1 + 1)/2 <= 7 < (3*5^1 + 1)/2, hence a(7) = 7 + 5^1 = 12;",
+        "a(11) = 28 because (3*5^1 + 1)/2 <= 11 < (5*5^1 + 1)/2, hence a(11) = 5*(11 - 5^1) - 2 = 28."
+    ],
+    "program": [
+        "(PARI) a(n) = my(n2=n<<1, p=5^logint(n2, 5)); if(n2 < 3*p, n+p, 5*(n-p)-2); \\\\ _Kevin Ryde_, Apr 18 2022",
+        "(C++)",
+        "/* program used to generate the b-file */",
+        "#include<iostream>",
+        "using namespace std;",
+        "int main(){",
+        "    int cnt1=1, flag=0, cnt2=1, a=2;",
+        "    for(int n=1; n<=10000; n++) {",
+        "        cout<<n<<\" \"<<a<<endl;",
+        "        if(cnt2==cnt1) {",
+        "            flag=1-flag, cnt1=1;",
+        "            if(flag) a+=1;",
+        "            else {",
+        "                a+=5;",
+        "                cnt2*=5;",
+        "            }",
+        "        }",
+        "        else {",
+        "            cnt1++;",
+        "            a+=(flag?5:1);",
+        "        }",
+        "    }",
+        "    return 0;",
+        "}"
+    ],
+    "xref": [
+        "For other values of k: A080637 (k=2), A003605 (k=3), A353651 (k=4), this sequence (k=5), A353653 (k=6)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Yifan Xie_, Jul 15 2022",
+    "references": 5,
+    "revision": 22,
+    "time": "2022-11-01T07:00:11-04:00",
+    "created": "2022-07-17T23:27:49-04:00"
+}

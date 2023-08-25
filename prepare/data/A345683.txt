@@ -1,0 +1,32 @@
+{
+    "number": 345683,
+    "data": "1,3,14,66,444,2880,25080,216720,2247840,24071040,304335360,3752179200,54965433600,810550540800,13176376012800,219079045785600,4078723532083200,75227891042304000,1550619342784512000,31871016307113984000,710529031487987712000,16180987966182014976000",
+    "name": "a(n) = n! * Sum_{k=1..n} 1/floor(n/k).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A345683/b345683.txt\">Table of n, a(n) for n = 1..448</a>",
+        "Vaclav Kotesovec, <a href=\"/A345683/a345683.jpg\">Plot of a(n) / (n*n!) for n = 1..1000000</a>",
+        "Mathoverflow, <a href=\"https://mathoverflow.net/questions/338432/an-asymptotic-formula-for-a-sum-involving-powers-of-floor-functions\">An asymptotic formula for a sum involving powers of floor functions</a>, 2019."
+    ],
+    "formula": [
+        "a(n) ~ c * n * n!, where c = Sum_{j>=1} 1/(j^2*(j+1)) = Pi^2/6 - 1 = 0.644934... [proved by Harry Richman, see Mathoverflow link]",
+        "E.g.f.: -(1/(1-x)) * Sum_{k>0} (1 - x^k) * log(1 - x^k). - _Seiichi Manyama_, Jul 23 2022"
+    ],
+    "mathematica": [
+        "Table[n! * Sum[1/Floor[n/k], {k, 1, n}], {n, 1, 25}]",
+        "Table[n!*(Sum[(Floor[n/j] - Floor[n/(j + 1)])/j, {j, 1, n}]), {n, 1, 25}]"
+    ],
+    "program": [
+        "(PARI) a(n) = n!*sum(k=1, n, 1/(n\\k)); \\\\ _Michel Marcus_, Jun 24 2021",
+        "(PARI) my(N=30, x='x+O('x^N)); Vec(serlaplace(-sum(k=1, N, (1-x^k)*log(1-x^k))/(1-x))) \\\\ _Seiichi Manyama_, Jul 23 2022"
+    ],
+    "xref": [
+        "Cf. A006218, A010786, A092143, A117871, A345682, A345684, A345686, A355987."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Vaclav Kotesovec_, Jun 23 2021",
+    "references": 7,
+    "revision": 32,
+    "time": "2022-07-23T09:53:49-04:00",
+    "created": "2021-06-23T11:59:45-04:00"
+}

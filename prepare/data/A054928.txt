@@ -1,0 +1,35 @@
+{
+    "number": 54928,
+    "data": "1,2,10,114,4872,770832,441038832,896679948304,6513978501814144,170630215981070456064,16261454692532635025585792,5683372715412701087902846672384,7334542846356464937798016155801130496,35157828307617499760694672217473135511928832",
+    "name": "Number of complementary pairs of directed graphs on n nodes. Also number of unlabeled digraphs with n nodes and an even number of arcs.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A054928/b054928.txt\">Table of n, a(n) for n = 1..50</a>",
+        "V. A. Liskovets, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/LISK/Derseq.html\">Some easily derivable sequences</a>, J. Integer Sequences, 3 (2000), #00.2.2."
+    ],
+    "formula": [
+        "Average of A000273 and A003086."
+    ],
+    "mathematica": [
+        "permcount[v_] := Module[{m = 1, s = 0, k = 0, t}, For[i = 1, i <= Length[v], i++, t = v[[i]]; k = If[i > 1 && t == v[[i - 1]], k + 1, 1]; m *= t*k; s += t]; s!/m];",
+        "edges[v_] := Sum[2*GCD[v[[i]], v[[j]]], {i, 2, Length[v]}, {j, 1, i - 1}] + Total[v - 1];",
+        "b[n_] := (s = 0; Do[s += permcount[p]*2^edges[p], {p, IntegerPartitions[n]}]; s/n!);",
+        "edges4[v_] := 4 Sum[Sum[GCD[v[[i]], v[[j]]], {j, 1, i - 1}], {i, 2, Length[v]}] + Sum[2 v[[i]] - 1, {i, 1, Length[v]}];",
+        "c[n_] := (s = 0; Do[s += permcount[2 p]*2^edges4[p]*If[OddQ[n], n *4^Length[p], 1], {p, IntegerPartitions[n/2 // Floor]}]; s/n!);",
+        "a[n_] := (b[n] + c[n])/2;",
+        "Array[a, 14] (* _Jean-Fran\u00e7ois Alcover_, Aug 26 2019, using _Andrew Howroyd_'s code for b=A000273 and c=A003086 *)"
+    ],
+    "xref": [
+        "Cf. A000273, A003086, A007869, A054960, A055969."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, May 24 2000",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Jul 19 2000",
+        "Terms a(14) and beyond from _Andrew Howroyd_, Sep 17 2018"
+    ],
+    "references": 3,
+    "revision": 20,
+    "time": "2019-08-26T08:05:38-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

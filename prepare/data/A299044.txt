@@ -1,0 +1,64 @@
+{
+    "number": 299044,
+    "data": "1,1,2,6,25,129,784,5472,42993,374190,3564176,36808647,409067204,4861490200,61457674398,822732344816,11618029697489,172476856415121,2683881876383377,43660291710726058,740764460615030663,13080604188895285878,239939914279952537597,4564083798329838120034,89886989241387131773525,1830230258908641519168564",
+    "name": "G.f. Sum_{n>=0} Series_Reversion( x/(1+x)^n )^n.",
+    "comment": [
+        "Antidiagonal sums of square table A299427."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A299044/b299044.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n equals the following expressions.",
+        "(1) A(x) = Sum_{n>=0} Series_Reversion( x/(1+x)^n )^n.",
+        "(2) A(x) = Sum_{n>=1} x^n * R(x,n)^(n^2), where",
+        "(2.a) R(x,n) = 1 + x*R(x,n)^n,",
+        "(2.b) R(x,n)^n = Series_Reversion( x/(1+x)^n ) / x,",
+        "(2.c) R(x,n)^n = Sum_{k>=0} C(n*(k+1), k)/(k+1) * x^k;",
+        "(2.d) R(x,n)^(n^2) = Sum_{k>=0} C(n*(n+k), k) * n/(n+k) * x^k.",
+        "FORMULAS FOR TERMS.",
+        "a(n) = Sum_{k=0..n} binomial(n*(n-k), k) * (n-k)/n.",
+        "a(n)^(1/n) ~ n^(n/w) * (n+1-w)^(1 - (n+1)/w) * (w-1)^(1/w - 1), where w = LambertW(exp(1)*n). - _Vaclav Kotesovec_, Feb 19 2018"
+    ],
+    "example": [
+        "G.f. A(x) = 1 + x + 2*x^2 + 6*x^3 + 25*x^4 + 129*x^5 + 784*x^6 + 5472*x^7 + 42993*x^8 + 374190*x^9 + 3564176*x^10 + ...",
+        "such that",
+        "A(x) = 1 + x*R(x,1) + x^2*R(x,2)^4 + x^3*R(x,3)^9 + x^4*R(x,4)^16 + x^5*R(x,5)^25 + x^6*R(x,6)^36 + ...",
+        "where series R(x,n) = 1 + x*R(x,n)^n begin:",
+        "R(x,1) = 1 + x + x^2 + x^3 + x^4 + x^5 + ...",
+        "R(x,2) = 1 + x + 2*x^2 + 5*x^3 + 14*x^4 + 42*x^5 + ...",
+        "R(x,3) = 1 + x + 3*x^2 + 12*x^3 + 55*x^4 + 273*x^5 + ...",
+        "R(x,4) = 1 + x + 4*x^2 + 22*x^3 + 140*x^4 + 969*x^5 + ...",
+        "R(x,5) = 1 + x + 5*x^2 + 35*x^3 + 285*x^4 + 2530*x^5 + ...",
+        "R(x,6) = 1 + x + 6*x^2 + 51*x^3 + 506*x^4 + 5481*x^5 + ...",
+        "...",
+        "and series R(x,n)^(n^2) begin:",
+        "R(x,1) = 1 + x + x^2 + x^3 + x^4 + x^5 + x^6 + ...",
+        "R(x,2)^4 = 1 + 4*x + 14*x^2 + 48*x^3 + 165*x^4 + 572*x^5  + ...",
+        "R(x,3)^9 = 1 + 9*x + 63*x^2 + 408*x^3 + 2565*x^4 + 15939*x^5 + ...",
+        "R(x,4)^16 = 1 + 16*x + 184*x^2 + 1872*x^3 + 17980*x^4 + 167552*x^5 + ...",
+        "R(x,5)^25 = 1 + 25*x + 425*x^2 + 6175*x^3 + 82775*x^4 + 1059380*x^5 + ...",
+        "R(x,6)^36 = 1 + 36*x + 846*x^2 + 16536*x^3 + 292581*x^4 + 4874688*x^5 + ...",
+        "...",
+        "demonstrating that A(x) = Sum_{n>=1} x^n * R(x,n)^(n^2)."
+    ],
+    "mathematica": [
+        "a[0]=1; a[n_] := Sum[Binomial[n*(n-k), k]*(n-k)/n, {k, 0, n}]; Table[a[n], {n, 0, 25}] (* _Jean-Fran\u00e7ois Alcover_, Feb 23 2018 *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A,Ox=x^2*O(x^n)); A = sum(m=0,n+1, serreverse( x/(1+x +Ox)^m +Ox)^m ); polcoeff(A,n)}",
+        "for(n=0,30,print1(a(n),\", \"))",
+        "(PARI) {a(n) = if(n==0,1, sum(k=0,n, binomial(n*(n-k),k) * (n-k)/n ) )}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A299427, A099237, A299043."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Feb 18 2018",
+    "references": 4,
+    "revision": 20,
+    "time": "2018-02-23T05:44:41-05:00",
+    "created": "2018-02-18T14:45:23-05:00"
+}

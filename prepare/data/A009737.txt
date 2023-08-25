@@ -1,0 +1,40 @@
+{
+    "number": 9737,
+    "data": "0,1,2,5,20,81,438,2477,16680,120481,973034,8496245,80252732,817734321,8859646110,102873611549,1258403748432,16372688411713,223202277906386,3213260867586149,48295209177888356",
+    "name": "Expansion of e.g.f. tan(x)*exp(tan(x)).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A009737/b009737.txt\">Table of n, a(n) for n = 0..475</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} ( ((1+(-1)^(n-k))/(k-1)!) * Sum_{j=k..n} j! * Stirling2(n,j) * 2^(n-j-1)*(-1)^((n+k)/2+j)*binomial(j-1,k-1) ) ). - _Vladimir Kruchinin_, Apr 19 2011",
+        "a(n) = D^n(x*exp(x)) evaluated at x = 0, where D is the operator (1+x^2)*d/dx. Cf. A052852. a(n) = Sum_{k=1..n} k*A059419(n,k). - _Peter Bala_, Nov 25 2011"
+    ],
+    "maple": [
+        "m:= 30; S:= series(tan(x)*exp(tan(x)), x, m+1); seq(j!*coeff(S, x, j), j = 0..m); # _G. C. Greubel_, Mar 09 2021"
+    ],
+    "mathematica": [
+        "With[{nn=20},CoefficientList[Series[Tan[x]Exp[Tan[x]],{x,0,nn}],x] Range[0,nn]!] (* _Harvey P. Dale_, Oct 30 2011 *)"
+    ],
+    "program": [
+        "(Maxima)",
+        "a(n):=sum((1+(-1)^(n-k))*sum(j!*stirling2(n,j)*2^(n-j-1)*(-1)^((n+k)/2+j)*binomial(j-1,k-1),j,k,n)/(k-1)!,k,1,n); [_Vladimir Kruchinin_, Apr 19 2011]",
+        "(Sage)",
+        "[factorial(n)*( tan(x)*exp(tan(x)) ).series(x,n+1).list()[n] for n in (0..30)] # _G. C. Greubel_, Mar 09 2021",
+        "(Magma)",
+        "R<x>:=PowerSeriesRing(Rationals(), 30);",
+        "[0] cat Coefficients(R!( Laplace( Tan(x)*Exp(Tan(x)) ) )); // _G. C. Greubel_, Mar 09 2021"
+    ],
+    "xref": [
+        "Cf. A052852, A059419, A008277."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_R. H. Hardin_",
+    "ext": [
+        "Extended and signs tested by _Olivier G\u00e9rard_, Mar 15 1997"
+    ],
+    "references": 2,
+    "revision": 31,
+    "time": "2021-03-10T01:18:26-05:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

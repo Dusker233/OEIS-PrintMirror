@@ -1,0 +1,41 @@
+{
+    "number": 324858,
+    "data": "28,40,52,66,76,88,96,100,112,120,126,136,148,153,156,160,176,186,190,196,208,225,232,246,268,276,280,288,292,297,304,306,328,336,340,344,352,366,369,370,378,388,396,400,408,435,441,448,456,460,486,496,513,516,520,532,540,544,546,550,560,568,576,580,585,592",
+    "name": "Numbers m > 1 such that there exists a composite divisor c of m with s_c(m) = c.",
+    "comment": [
+        "The function s_c(m) gives the sum of the base-c digits of m.",
+        "The main entry for this sequence is A324456 = numbers m > 1 such that there exists a divisor d > 1 of m with s_d(m) = d. It appears that d is usually prime: compare the subsequence A324857 = numbers m > 1 such that there exists a prime divisor p of m with s_p(m) = p. However, d is usually composite for higher values of m.",
+        "For any composite c, 0 < b < c, and 0 < i < j, b*c^i + (c-b)*c^j is in the sequence. - _Robert Israel_, Mar 19 2019",
+        "The sequence does not contain the 3-Carmichael numbers A087788, but intersects the Carmichael numbers A002997 that have at least four factors. This is a nontrivial fact. Examples for such Carmichael numbers below one million: 41041 = 7*11*13*41, 172081 = 7*13*31*61, 188461 = 7*13*19*109, 278545 = 5*17*29*113, 340561 = 13*17*23*67, 825265 = 5*7*17*19*73. For further properties of the terms see A324456 and Kellner 2019. - _Bernd C. Kellner_, Apr 02 2019"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A324858/b324858.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Bernd C. Kellner, <a href=\"https://arxiv.org/abs/1902.11283\">On primary Carmichael numbers</a>, arXiv:1902.11283 [math.NT], 2019."
+    ],
+    "example": [
+        "s_4(28) = 4 as 28 = 3 * 4 + 1 * 4^2, so 28 is a member."
+    ],
+    "maple": [
+        "S:= proc(c,m) convert(convert(m,base,c),`+`) end proc:",
+        "filter:= proc(m) ormap(c -> (S(c,m)=c), remove(isprime,numtheory:-divisors(m) minus {1})) end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Mar 19 2019"
+    ],
+    "mathematica": [
+        "s[n_, b_] := If[n < 1 || b < 2, 0, Plus @@ IntegerDigits[n, b]];",
+        "f[n_] := AnyTrue[Divisors[n], CompositeQ[#] && s[n, #] == # &];",
+        "Select[Range[600], f[#] &] (* simplified by _Bernd C. Kellner_, Apr 02 2019 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {fordiv(n, d, if ((d>1) && !isprime(d) && (sumdigits(n, d) == d), return (1)););} \\\\ _Michel Marcus_, Mar 19 2019"
+    ],
+    "xref": [
+        "A324456 is the union of A324857 and A324858."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jonathan Sondow_, Mar 17 2019",
+    "references": 3,
+    "revision": 24,
+    "time": "2019-05-12T10:01:55-04:00",
+    "created": "2019-03-19T03:58:43-04:00"
+}

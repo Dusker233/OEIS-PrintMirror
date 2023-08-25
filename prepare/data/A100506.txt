@@ -1,0 +1,53 @@
+{
+    "number": 100506,
+    "data": "1,4,15,47,130,330,784,1765,3804,7898,15880,31048,59220,110484,202070,362974,641368,1116325,1916184,3247088,5436972,9002752,14752316,23938188,38487496,61344055,96974176,152110204,236837795,366177506,562373990,858193804,1301654610",
+    "name": "Bisection of A001523.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A100506/b100506.txt\">Table of n, a(n) for n = 0..5000</a>"
+    ],
+    "maple": [
+        "seq(coeff(convert(series(add(-(-1)^k*x^(k*(k+1)/2),k=1..100)/(mul(1-x^k,k=1..100))^2,x,100),polynom),x,2*n+1),n=0..45); # (C. Ronaldo)",
+        "# second Maple program:",
+        "b:= proc(n, i) option remember;",
+        "      `if`(i>n, 0, `if`(irem(n, i)=0, 1, 0)+",
+        "      add(b(n-i*j, i+1)*(j+1), j=0..n/i))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, b(2*n+1, 1)):",
+        "seq(a(n), n=0..60);  # _Alois P. Heinz_, Mar 26 2014"
+    ],
+    "mathematica": [
+        "b[n_, i_]:= b[n, i]= If[i>n, 0, If[Mod[n, i]==0, 1, 0] + Sum[b[n-i*j, i + 1]*(j+1), {j, 0, n/i}]];",
+        "a[n_]:= If[n==0, 1, b[2*n+1, 1]];",
+        "Table[a[n], {n, 0, 60}] (* _Jean-Fran\u00e7ois Alcover_, Jun 18 2018, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(Magma)",
+        "m:=200;",
+        "R<x>:=PowerSeriesRing(Integers(), m);",
+        "b:= Coefficients(R!( 1 + (&+[ x^n*(1-x^n)/(&*[(1-x^j)^2: j in [1..n]]): n in [1..m+2]]) ));",
+        "A100506:= func< n | b[2*n+2] >;",
+        "[A100506(n): n in [0..80]]; // _G. C. Greubel_, Apr 03 2023",
+        "(SageMath)",
+        "@CachedFunction",
+        "def b(n, k): # Indranil Ghosh's code of A001523",
+        "    if k>n: return 0",
+        "    if n%k==0: x=1",
+        "    else: x=0",
+        "    return x + sum(b(n-k*j, k+1)*(j+1) for j in range(n//k + 1))",
+        "def A100506(n): return 1 if n==0 else b(2*n+1, 1)",
+        "[A100506(n) for n in range(41)] # _G. C. Greubel_, Apr 03 2023"
+    ],
+    "xref": [
+        "Cf. A001523."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Nov 24 2004",
+    "ext": [
+        "More terms from C. Ronaldo (aga_new_ac(AT)hotmail.com), Jan 19 2005"
+    ],
+    "references": 4,
+    "revision": 19,
+    "time": "2023-04-03T14:25:58-04:00",
+    "created": "2005-02-20T03:00:00-05:00"
+}

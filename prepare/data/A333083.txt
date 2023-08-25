@@ -1,0 +1,43 @@
+{
+    "number": 333083,
+    "data": "1,1,1,3,13,67,305,2359,16495,141643,1273691,15580299,152788607,2206382433,28916044241,399450183613",
+    "name": "Number of permutations sigma of [n] such that all values k * sigma(k) for 1 <= k <= n are pairwise distinct.",
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation\">Permutation</a>"
+    ],
+    "example": [
+        "In the n=3 case:",
+        "    | sigma(1),sigma(2),sigma(3)",
+        "----+---------------------------",
+        "  1 | [1, 2, 3]",
+        "  2 | [2, 3, 1]",
+        "  3 | [3, 1, 2]"
+    ],
+    "mathematica": [
+        "Table[ Count[ Length@ Union[# Range@ n] & /@ Permutations@ Range@ n, n], {n, 0, 9}] (* _Giovanni Resta_, Mar 09 2020 *)"
+    ],
+    "program": [
+        "(Ruby)",
+        "def A(n)",
+        "  (1..n).to_a.permutation.select{|i| (1..n).map{|j| i[j - 1] * j}.uniq.size == n}.size",
+        "end",
+        "def A333083(n)",
+        "  (0..n).map{|i| A(i)}",
+        "end",
+        "p A333083(9)",
+        "(PARI) a(n) = {my(nb=0); forperm([1..n], p, if (#Set(vector(n, k, k*p[k])) == n, nb++);); nb;} \\\\ _Michel Marcus_, Mar 09 2020"
+    ],
+    "xref": [
+        "Cf. A333082."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_Seiichi Manyama_, Mar 07 2020",
+    "ext": [
+        "a(13)-a(15) from _Giovanni Resta_, Mar 09 2020"
+    ],
+    "references": 3,
+    "revision": 28,
+    "time": "2020-03-09T13:01:50-04:00",
+    "created": "2020-03-09T12:32:51-04:00"
+}

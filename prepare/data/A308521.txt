@@ -1,0 +1,44 @@
+{
+    "number": 308521,
+    "data": "1,3,13,80,645,6466,77653,1087414,17400009,313208098,6264212481,137813028374,3307515383741,85995422345522,2407872025035597,72236162654825222,2311557224345919249,78592945837626597442,2829346052559437183353,107515150026347498080246",
+    "name": "Expansion of e.g.f. (sec(x) + tan(x))/(1 - 2*x).",
+    "comment": [
+        "Boustrophedon transform of A000165 (double factorial of even numbers)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A308521/b308521.txt\">Table of n, a(n) for n = 0..403</a>",
+        "<a href=\"/index/Bo#boustrophedon\">Index entries for sequences related to boustrophedon transform</a>"
+    ],
+    "formula": [
+        "a(n) ~ n! * (sec(1/2) + tan(1/2)) * 2^n. - _Vaclav Kotesovec_, Jun 07 2019"
+    ],
+    "maple": [
+        "N:= 25: # for a(0)..a(N)",
+        "S:= series((sec(x)+tan(x))/(1-2*x),x,N+1):",
+        "seq(coeff(S,x,n)*n!,n=0..N); # _Robert Israel_, Jun 06 2019"
+    ],
+    "mathematica": [
+        "nmax = 19; CoefficientList[Series[(Sec[x] + Tan[x])/(1 - 2 x), {x, 0, nmax}], x] Range[0, nmax]!",
+        "t[n_, 0] := 2^n n!; t[n_, k_] := t[n, k] = t[n, k - 1] + t[n - 1, n - k]; a[n_] := t[n, n]; Array[a, 20, 0]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, accumulate",
+        "def A308521_gen(): # generator of terms",
+        "    blist, m = tuple(), 1",
+        "    for i in count(1):",
+        "        yield (blist := tuple(accumulate(reversed(blist),initial=m)))[-1]",
+        "        m *= 2*i",
+        "A308521_list = list(islice(A308521_gen(),30)) # _Chai Wah Wu_, Jun 11 2022"
+    ],
+    "xref": [
+        "Cf. A000111, A000165, A230960, A231200, A296792."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Jun 04 2019",
+    "references": 1,
+    "revision": 16,
+    "time": "2022-06-11T11:44:18-04:00",
+    "created": "2019-06-04T22:54:57-04:00"
+}

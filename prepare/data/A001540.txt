@@ -1,0 +1,52 @@
+{
+    "number": 1540,
+    "id": "M1856 N0734",
+    "data": "0,2,8,36,184,1110,7776,62216,559952,5599530,61594840,739138092,9608795208,134523132926,2017846993904,32285551902480,548854382342176,9879378882159186,187708198761024552,3754163975220491060,78837443479630312280,1734423756551866870182",
+    "name": "Number of transpositions needed to generate permutations of length n.",
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A001540/b001540.txt\">Table of n, a(n) for n = 1..450</a> (first 100 terms from T. D. Noe)",
+        "R. J. Ord-Smith, <a href=\"https://doi.org/10.1093/comjnl/13.2.152\">Generation of permutation sequences: Part 1</a>, Computer J., 13 (1970), 151-155.",
+        "Simon Plouffe, <a href=\"https://arxiv.org/abs/0911.4975\">Approximations de s\u00e9ries g\u00e9n\u00e9ratrices et quelques conjectures</a>, Dissertation, Universit\u00e9 du Qu\u00e9bec \u00e0 Montr\u00e9al, 1992; arXiv:0911.4975 [math.NT], 2009."
+    ],
+    "formula": [
+        "E.g.f.: cosh(x)/(1-x) - exp(x).",
+        "Recurrence: a(n) = n*a(n-1) + n - (n mod 2).",
+        "a(n) = -1 + n!*Sum{k=0..floor(n/2)} 1/(2*k)! = -1 + round(n! * cosh(1)).",
+        "a(n) = |A009179(n)| - 1 = (n-1)*|A009179(n-1) - A009179(n-2)|.",
+        "a(n) ~ [cosh(1)*n!] - 1, where [x] is the floor of x. - _Simon Plouffe_, Nov 28 2018"
+    ],
+    "example": [
+        "a(5)=-1+5!(1+1/2!+1/4!)=-1+120+60+5=184."
+    ],
+    "maple": [
+        "a := n -> (exp(1)*GAMMA(1 + n, 1) + exp(-1)*GAMMA(1 + n, -1))/2 - 1:",
+        "seq(simplify(a(n)), n=1..20); # _Peter Luschny_, Dec 05 2018"
+    ],
+    "mathematica": [
+        "With[{nn=20},Rest[CoefficientList[Series[Cosh[x]/(1-x)-Exp[x],{x,0,nn}],x]Range[0,nn]!]] (* _Harvey P. Dale_, Mar 04 2013 *)"
+    ],
+    "program": [
+        "(PARI) a(n)=-1+n!*sum(k=0,floor(n/2),1/(2*k)!)",
+        "(J) a001540=:13 : '<:+/(!y)%!+:i.>:<.-:y' NB. _Stephen Makdisi_, May 02 2018",
+        "(Magma) [-1 + (&+[Factorial(n)/Factorial(2*k): k in [0..Floor(n/2)]]): n in [1..20]]; // _G. C. Greubel_, Nov 28 2018",
+        "(Sage) [-1 + factorial(n)*sum(1/factorial(2*k) for k in range(floor((n+2)/2))) for n in (1..20)] # _G. C. Greubel_, Nov 28 2018",
+        "(GAP) a:=[0];; for n in [2..20] do a[n]:=n*a[n-1]+n-(n mod 2); od; a; # _Muniru A Asiru_, Dec 05 2018"
+    ],
+    "xref": [
+        "Cf. A009179."
+    ],
+    "keyword": "nonn,easy,nice",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Edited by _Ralf Stephan_, Apr 16 2004"
+    ],
+    "references": 2,
+    "revision": 51,
+    "time": "2022-09-08T08:44:29-04:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

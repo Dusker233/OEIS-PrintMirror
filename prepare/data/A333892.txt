@@ -1,0 +1,36 @@
+{
+    "number": 333892,
+    "data": "1,1,2,4,14,36,320,1328,7872,51552,756480,5440752,68999136,584117952,9632932800,152699071104,1881048314880,21977611223040,343998708042240,4374197540536320,77078374650869760,1646804888482037760,45052372505959096320,727420047420178022400",
+    "name": "Number of permutations sigma of [n] such that i divides Product_{k=1..i} sigma(k) for 1 <= i <= n.",
+    "example": [
+        "a(5) = 36: 12345, 14325, 14352, 21345, 23145, 23415, 23451, 23541, 24315, 24351, 25341, 32145, 32415, 32451, 32541, 34125, 34152, 34215, 34251, 34512, 34521, 41325, 41352, 42315, 42351, 43125, 43152, 43215, 43251, 43512, 43521, 45312, 45321, 52341, 54312, 54321."
+    ],
+    "maple": [
+        "b:= proc(s) option remember; (n-> `if`(n=0, 1, `if`(irem(",
+        "      mul(i, i=s), n)=0, add(b(s minus {j}), j=s), 0)))(nops(s))",
+        "    end:",
+        "a:= n-> b({$1..n}):",
+        "seq(a(n), n=0..17);  # _Alois P. Heinz_, Apr 09 2020"
+    ],
+    "mathematica": [
+        "b[s_] := b[s] = With[{n = Length[s]}, If[n==0, 1, If[Mod[Times@@s, n]==0, Sum[b[s ~Complement~ {j}], {j, s}], 0]]];",
+        "a[n_] := b[Range[n]];",
+        "a /@ Range[0, 20] (* _Jean-Fran\u00e7ois Alcover_, Nov 16 2020, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) {a(n) = if(n==0, 1, my(k=0); forperm([1..n], p, if(#Set(vector(n, i, prod(j=1, i, p[j])%i))==1, k++)); k)}"
+    ],
+    "xref": [
+        "Cf. A320843, A333710."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Seiichi Manyama_, Apr 09 2020",
+    "ext": [
+        "a(0), a(13)-a(23) from _Alois P. Heinz_, Apr 09 2020"
+    ],
+    "references": 2,
+    "revision": 40,
+    "time": "2020-11-16T11:13:08-05:00",
+    "created": "2020-04-09T09:56:26-04:00"
+}

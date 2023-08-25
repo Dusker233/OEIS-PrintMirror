@@ -1,0 +1,33 @@
+{
+    "number": 357593,
+    "data": "8,26,88,298,1016,3466,11832,40394,137912,470858",
+    "name": "Number of faces of the Minkowski sum of n simplices with vertices e_(i+1), e_(i+2), e_(i+3) for i=0,...,n-1, where e_i is a standard basis vector.",
+    "link": [
+        "L. Escobar, P. Gallardo, J. Gonz\u00e1lez-Anaya, J. L. Gonz\u00e1lez, G. Mont\u00fafar, and A. H. Morales, <a href=\"https://arxiv.org/abs/2209.14978\">Enumeration of max-pooling responses with generalized permutohedra</a>, arXiv:2209.14978 [math.CO], 2022. (See Table 3)"
+    ],
+    "example": [
+        "For n=1, the polytope is the simplex with vertices (1,0,0), (0,1,0), and (0,0,1) that has a(1)=8 faces (1 empty face, 3 vertices, 3 edges, and 1 facet)."
+    ],
+    "program": [
+        "(Sage) def a(n): return add(PP(n,3,1).f_vector())",
+        "def Delta(I,n):",
+        "    IM = identity_matrix(n)",
+        "    return Polyhedron(vertices=[IM[e] for e in I],backend='normaliz')",
+        "def Py(n,SL,yL):",
+        "    return sum(yL[i]*Delta(SL[i],n) for i in range(len(SL)))",
+        "def PP(n,k,s):",
+        "    SS = [set(range(s*i,k+s*i)) for i in range(n)],[1,]*(n)",
+        "    return Py(s*(n-1)+k,SS[0],SS[1])",
+        "[a(n) for n in range(1,4)]"
+    ],
+    "xref": [
+        "Cf. A033303, A007070."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,1",
+    "author": "_Alejandro H. Morales_, Oct 05 2022",
+    "references": 0,
+    "revision": 10,
+    "time": "2022-11-19T20:28:44-05:00",
+    "created": "2022-11-19T20:28:44-05:00"
+}

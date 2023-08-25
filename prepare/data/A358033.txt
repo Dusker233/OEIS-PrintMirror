@@ -1,0 +1,43 @@
+{
+    "number": 358033,
+    "data": "2,3,4,5,6,9,12,15,20,25,30,45,60,75,100,125,150,225,300,375,500,625,750,1125,1500,1875,2500,3125,3750,5625,7500,9375,12500,15625,18750,28125,37500,46875,62500,78125,93750,140625,187500,234375,312500,390625,468750",
+    "name": "a(1) = 2; a(n) - a(n-1) = A093803(a(n-1)), the largest odd proper divisor of a(n-1).",
+    "formula": [
+        "a(n+1) - a(n) = A056487(floor((n-2)/3)), for n > 2. This works because A056487(n+3) = A056487(n+2)*A056487(n+1)/A056487(n). - _Thomas Scheuerle_, Oct 26 2022"
+    ],
+    "example": [
+        "a(1) = 2.",
+        "a(2) = 3. The only proper divisor of 2 is 1; 2 + 1 = 3.",
+        "a(3) = 4. The only proper divisor of 3 is 1; 3 + 1 = 4.",
+        "...",
+        "a(8) = 15.",
+        "a(9) = 20. Proper divisors of 15 are 1, 3, 5; largest odd proper divisor = 5; 15 + 5 = 20."
+    ],
+    "program": [
+        "(Python)",
+        "a_n = 2",
+        "result = [2]",
+        "for n in range(30):",
+        "    temp = []",
+        "    for i in range(1, a_n):",
+        "        if a_n % i == 0:",
+        "            if (i % 2 != 0) and (i != a_n):",
+        "                temp.append(i)",
+        "    result.append(a_n + max(temp))",
+        "    a_n = a_n + max(temp)",
+        "print(result)",
+        "(PARI) f(n) = my(x=if(n==1, 1, n/factor(n)[1, 1])); x >> valuation(x, 2); \\\\ _Michel Marcus_, Oct 26 2022",
+        "lista(nn) = my(va = vector(nn)); va[1] = 2; for (n=2, nn, va[n] = va[n-1] + f(va[n-1]);); va; \\\\ _Michel Marcus_, Oct 26 2022"
+    ],
+    "xref": [
+        "Cf. A093803, A000792 (with largest proper divisor instead).",
+        "Cf. A027750, A038754, A056487, A356639."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Eric Angelini_ and _Gavin Lupo_, Oct 25 2022",
+    "references": 0,
+    "revision": 35,
+    "time": "2022-10-27T12:49:23-04:00",
+    "created": "2022-10-27T12:49:23-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 325916,
+    "data": "1,1,2,5,11,27,76,177,428,966,2724,5986,14322,31241,68632,174364,374901,841417,1792950,3803764,7688426,18376432,37158444,80078021,163155272,335521478,658661436,1298215354,2820956914,5523327097,11240000648,22117134452,43666070406",
+    "name": "Number of partitions of n into colored blocks of equal parts with colors from a set of size n such that the block with largest parts has the first color.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A325916/b325916.txt\">Table of n, a(n) for n = 0..1650</a>"
+    ],
+    "formula": [
+        "a(n) = 1/n * [x^n] Product_{j=1..n} (1+(n-1)*x^j)/(1-x^j) for n>0, a(0)=1.",
+        "a(n) = A321880(n)/n for n > 0, a(0) = 1."
+    ],
+    "example": [
+        "a(3) = 5: 3a, 2a1a, 2a1b, 2a1c, 111a."
+    ],
+    "maple": [
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1, `if`(i<1, 0, k*add(",
+        "      (t-> b(t, min(t, i-1), k))(n-i*j), j=1..n/i) +b(n, i-1, k)))",
+        "    end:",
+        "a:= n-> `if`(n=0, 1, b(n$3)/n):",
+        "seq(a(n), n=0..34);"
+    ],
+    "mathematica": [
+        "b[n_, i_, k_] := b[n, i, k] = If[n == 0, 1, If[i < 1, 0, k Sum[With[{t = n - i j},  b[t, Min[t, i - 1], k]], {j, 1, n/i}] + b[n, i - 1, k]]];",
+        "a[n_] := If[n == 0, 1, b[n, n, n]/n];",
+        "a /@ Range[0, 34] (* _Jean-Fran\u00e7ois Alcover_, Dec 15 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A321880."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 08 2019",
+    "references": 2,
+    "revision": 20,
+    "time": "2020-12-15T16:27:48-05:00",
+    "created": "2019-09-08T16:49:34-04:00"
+}

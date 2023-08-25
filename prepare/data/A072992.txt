@@ -1,0 +1,46 @@
+{
+    "number": 72992,
+    "data": "10,18,21,22,27,30,33,34,35,40,42,45,52,55,56,57,58,65,66,69,70,75,77,81,82,84,85,88,90,93,94,98,100,102,105,106,108,110,115,118,119,120,121,129,132,133,135,136,138,140,141,148,152,154,155,156,161,162,164",
+    "name": "Numbers n such that sigma(n) does not divide C(2n,n).",
+    "comment": [
+        "Contains no primes. - _Robert Israel_, Aug 07 2018"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A072992/b072992.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "It seems that a(n) is asymptotic to C*n with C=2.8..."
+    ],
+    "maple": [
+        "filter:= proc(n) local t,p,L,f,i,c;",
+        "  for f in ifactors(numtheory:-sigma(n))[2] do",
+        "     p:= f[1];",
+        "     L:= convert(n,base,p);",
+        "     t:= 0; c:= 0;",
+        "     for i from 1 to nops(L) do",
+        "       if 2*L[i]+c >= p then",
+        "         c:= 1; t:= t+1; if t >= f[2] then break fi;",
+        "       else",
+        "         c:= 0;",
+        "       fi",
+        "     od:",
+        "     if t < f[2] then return true fi;",
+        "  od;",
+        "  false",
+        "end proc:",
+        "select(filter, [$1..1000]); # _Robert Israel_, Aug 07 2018"
+    ],
+    "mathematica": [
+        "fQ[n_] := Mod[ Binomial[2n, n], DivisorSigma[1, n]] > 0; Select[ Range@164, fQ] (* _Robert G. Wilson v_, Aug 07 2018 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = binomial(2*n, n) % sigma(n); \\\\ _Michel Marcus_, Nov 28 2013"
+    ],
+    "keyword": "easy,nonn",
+    "offset": "1,1",
+    "author": "_Benoit Cloitre_, Aug 21 2002",
+    "references": 1,
+    "revision": 16,
+    "time": "2018-08-09T03:24:49-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 226178,
+    "data": "2,6,12,76,181,1099,1820,9229",
+    "name": "Exponents n such that 2^n - previous_prime(2^n) = next_prime(2^n) - 2^n.",
+    "comment": [
+        "The differences next_prime(2^n) - 2^n are respectively: 1, 3, 3, 15, 165, 1035, 663, 2211.",
+        "If it exists, a(9) > 10000. - _Hugo Pfoertner_, Feb 06 2021"
+    ],
+    "formula": [
+        "A340707(a(n)) = 0. - _Hugo Pfoertner_, Feb 06 2021"
+    ],
+    "example": [
+        "2^6 = 64, next prime = 67, previous prime = 61, 67-64 = 64-61 = 3, hence 6 is in the sequence."
+    ],
+    "mathematica": [
+        "Reap[Do[m = 2^n; p = NextPrime[m, -1]; q = NextPrime[m]; If[p + q == 2*m, Print[n]; Sow[n]], {n, 2, 10^4}]][[2, 1]]"
+    ],
+    "program": [
+        "(PARI) isok(n) = my(p=2^n); p-precprime(p-1) == nextprime(p+1) - p; \\\\ _Michel Marcus_, Oct 02 2019",
+        "(PARI) for(n=2,1100,my(p2=2^n,pn=nextprime(p2),pp=p2-pn+p2);if(ispseudoprime(pp),if(precprime(p2)==pp,print1(n,\", \")))) \\\\ _Hugo Pfoertner_, Feb 06 2021",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime, nextprime",
+        "def A226178_gen(): # generator of terms",
+        "    return filter(lambda n:isprime(r:=((k:=1<<n)<<1)-(m:=nextprime(k))) and nextprime(r)==m, count(1))",
+        "A226178_list = list(islice(A226178_gen(),5)) # _Chai Wah Wu_, Aug 08 2022"
+    ],
+    "xref": [
+        "Cf. A000079, A014210, A014234, A117387, A145025.",
+        "Cf. A013597, A013603, A340707."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "1,1",
+    "author": "_Jean-Fran\u00e7ois Alcover_, May 30 2013",
+    "ext": [
+        "Offset 1 from _Michel Marcus_, Oct 02 2019",
+        "a(8) from _Hugo Pfoertner_, Feb 05 2021"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2022-08-09T02:22:49-04:00",
+    "created": "2013-05-30T16:59:38-04:00"
+}

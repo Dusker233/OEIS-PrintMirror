@@ -1,0 +1,41 @@
+{
+    "number": 326493,
+    "data": "1,1,1,2,2,5,9,21,38,146,322,902,3106,8406,35865,123321,393691,1442688,7310744,23471306,129918661,500183094,2400722981,9592382321,47764284769,280267554944,1247781159201,7620923955225,36278364107926,189688942325418,1124492015730891",
+    "name": "Sum of multinomials M(n-k; p_1-1, ..., p_k-1), where p = (p_1, ..., p_k) ranges over all partitions of n into distinct parts (k is a partition length).",
+    "comment": [
+        "Number of partitions of [n] such that each block contains its size as an element. So the block sizes have to be distinct. a(6) = 9: 123456, 12|3456, 1345|26, 1346|25, 1456|23, 1|23456, 1|24|356, 1|25|346, 1|26|345."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A326493/b326493.txt\">Table of n, a(n) for n = 0..731</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Multinomial_theorem#Multinomial_coefficients\">Multinomial coefficients</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "maple": [
+        "with(combinat):",
+        "a:= n-> add(multinomial(n-nops(p), map(x-> x-1, p)[], 0),",
+        "        p=select(l-> nops(l)=nops({l[]}), partition(n))):",
+        "seq(a(n), n=0..30);",
+        "# second Maple program:",
+        "b:= proc(n, i, p) option remember; `if`(i*(i+1)/2<n, 0, `if`(n=0, p!,",
+        "      b(n, i-1, p)+b(n-i, min(n-i, i-1), p-1)/(i-1)!))",
+        "    end:",
+        "a:= n-> b(n$3):",
+        "seq(a(n), n=0..31);"
+    ],
+    "mathematica": [
+        "b[n_, i_, p_] := b[n, i, p] = If[i(i+1)/2 < n, 0, If[n==0, p!, b[n, i-1, p] + b[n-i, Min[n-i, i-1], p-1]/(i-1)!]];",
+        "a[n_] := b[n, n, n];",
+        "a /@ Range[0, 31] (* _Jean-Fran\u00e7ois Alcover_, Dec 09 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000110, A007837, A327711, A327712, A362362, A363881, A364207, A364278."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Sep 22 2019",
+    "references": 7,
+    "revision": 73,
+    "time": "2023-07-17T12:35:39-04:00",
+    "created": "2019-09-23T09:32:32-04:00"
+}

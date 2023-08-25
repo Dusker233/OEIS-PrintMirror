@@ -1,0 +1,43 @@
+{
+    "number": 20757,
+    "data": "5,8,14,17,19,23,26,32,33,35,40,41,44,47,50,52,53,54,59,62,63,68,71,74,75,77,80,82,85,86,89,95,96,98,103,104,107,109,113,116,117,118,122,124,125,128,129,131,134,138,140,143,145,147,149,152,155,158,161,162,166,167",
+    "name": "Numbers that are not the sum of two triangular numbers.",
+    "comment": [
+        "A052343(a(n)) = 0. - _Reinhard Zumkeller_, May 15 2006",
+        "Numbers of the form (p^(2k+1)s-1)/4, where p is a prime number of the form 4n+3, and s is a number of the form 4m+3 and prime to p, are not expressible as the sum of two triangular numbers. See Satyanarayana (1961), Theorem 2. - _Hans J. H. Tuenter_, Oct 11 2009",
+        "An integer n is in this sequence if and only if at least one 4k+3 prime factor in the canonical form of 4n+1 occurs with an odd exponent. - _Ant King_, Dec 02 2010",
+        "A nonnegative integer n is in this sequence if and only if A000729(n) = 0. - _Michael Somos_, Feb 13 2011",
+        "4*a(n) + 1 are terms of A022544. - _XU Pingya_, Aug 05 2018 [Actually, k is here if and only if 4*k + 1 is in A022544. - _Jianing Song_, Feb 09 2021]",
+        "Integers m such that the smallest number of triangular numbers which sum to m is 3, hence A061336(a(n)) = 3. - _Bernard Schott_, Jul 21 2022"
+    ],
+    "link": [
+        "T. D. Noe, <a href=\"/A020757/b020757.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "John A. Ewell, <a href=\"http://www.jstor.org/stable/2324243\">On Sums of Triangular Numbers and Sums of Squares</a>, The American Mathematical Monthly, Vol. 99, No. 8 (October 1992), pp. 752-757. [From _Ant King_, Dec 02 2010]",
+        "U. V. Satyanarayana, <a href=\"http://www.jstor.org/stable/3614771\">On the representation of numbers as sums of triangular numbers</a>, The Mathematical Gazette, 45(351):40-43, February 1961. [From _Hans J. H. Tuenter_, Oct 11 2009]"
+    ],
+    "example": [
+        "3 = 0 + 3 and 7 = 1 + 6 are not terms, but 8 = 1 + 1 + 6 is a term."
+    ],
+    "mathematica": [
+        "data = Reduce[m (m + 1) + n (n + 1) == 2 # && 0 <= m && 0 <= n, {m, n}, Integers] & /@ Range[167]; Position[data, False] // Flatten  (* _Ant King_, Dec 05 2010 *)"
+    ],
+    "program": [
+        "(Haskell)",
+        "a020757 n = a020757_list !! (n-1)",
+        "a020757_list = filter ((== 0) . a052343) [0..]",
+        "-- _Reinhard Zumkeller_, Jul 25 2014",
+        "(PARI) is(n)=my(m9=n%9,f); if(m9==5 || m9==8, return(1)); f=factor(4*n+1); for(i=1,#f~, if(f[i,1]%4==3 && f[i,2]%2, return(1))); 0 \\\\ _Charles R Greathouse IV_, Mar 17 2022"
+    ],
+    "xref": [
+        "Complement of A020756.",
+        "Cf. A000217, A052343, A022544, A061336.",
+        "Numbers k such that the coefficient of x^k in the expansion of Product_{j>=1} (1 - x^j)^m is zero: A090864 (m=1), A213250 (m=2), A014132 (m=3), A302056 (m=4), A302057 (m=5), this sequence (m=6), A322430 (m=8), A322431 (m=10), A322432 (m=14), A322043 (m=15), A322433 (m=26)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_David W. Wilson_",
+    "references": 21,
+    "revision": 59,
+    "time": "2022-07-22T04:40:26-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

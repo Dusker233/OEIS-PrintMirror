@@ -1,0 +1,53 @@
+{
+    "number": 299930,
+    "data": "19,37,79,97,109,127,139,163,223,229,277,283,313,349,397,421,433,439,457,607,643,691,727,733,739,877,937,997,1063,1093,1327,1423,1459,1489,1567,1579,1597,1627,1657,1699,1753,1777,1801,1987,1999,2017,2089,2113,2203",
+    "name": "Prime numbers represented by a cyclotomic binary form f(x, y) with x and y odd prime numbers and x > y.",
+    "comment": [
+        "A cyclotomic binary form over Z is a homogeneous polynomial in two variables which has the form f(x, y) = y^EulerPhi(k)*CyclotomicPolynomial(k, x/y) where k is some integer >= 3. An integer n is represented by f if f(x,y) = n has an integer solution.",
+        "We say a prime number p decomposes into x and y if x and y are odd prime numbers and there exists a cyclotomic binary form f such that p = f(x,y). The transitive closure of this relation can be displayed as a binary tree, the cbf-tree of p. A cbf-tree is squarefree if all its leafs are distinct. Examples are:",
+        ".",
+        "      33751                   23833                   310567",
+        "       / \\                     /  \\                    /  \\",
+        "    131   79                163    19               359    283",
+        "          / \\               / \\    / \\                     / \\",
+        "         7   3            11   3  5   3                  19   13",
+        "                                                        /  \\",
+        "                                                       5    3",
+        ".",
+        "The leafs of these trees are in A299956. Related to the question whether the root of a cbf-tree can be reconstructed from its leafs is A299733."
+    ],
+    "link": [
+        "Etienne Fouvry, Claude Levesque, Michel Waldschmidt, <a href=\"https://arxiv.org/abs/1712.09019\">Representation of integers by cyclotomic binary forms</a>, arXiv:1712.09019 [math.NT], 2017."
+    ],
+    "program": [
+        "(Julia)",
+        "using Nemo",
+        "function isA299930(n)",
+        "    !isprime(ZZ(n)) && return false",
+        "    R, z = PolynomialRing(ZZ, \"z\")",
+        "    K = Int(floor(5.383*log(n)^1.161)) # Bounds from",
+        "    M = Int(floor(2*sqrt(n/3)))  # Fouvry & Levesque & Waldschmidt",
+        "    N = QQ(n)",
+        "    P(u) = (p for p in u:M if isprime(ZZ(p)))",
+        "    for k in 3:K",
+        "        e = Int(eulerphi(ZZ(k)))",
+        "        c = cyclotomic(k, z)",
+        "        for y in P(3), x in P(y+2)",
+        "            N == y^e*subst(c, QQ(x, y)) && return true",
+        "    end end",
+        "    return false",
+        "end",
+        "A299930list(upto) = [n for n in 1:upto if isA299930(n)]",
+        "println(A299930list(2203))"
+    ],
+    "xref": [
+        "Cf. A299956 (complement), A293654, A296095, A299214, A299498, A299733, A299928, A299929, A299956, A299964."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Peter Luschny_, Feb 25 2018",
+    "references": 9,
+    "revision": 13,
+    "time": "2018-02-26T16:48:40-05:00",
+    "created": "2018-02-26T09:19:07-05:00"
+}

@@ -1,0 +1,75 @@
+{
+    "number": 304487,
+    "data": "1,4,15,36,73,128,207,312,449,620,831,1084,1385,1736,2143,2608,3137,3732,4399,5140,5961,6864,7855,8936,10113,11388,12767,14252,15849,17560,19391,21344,23425,25636,27983,30468,33097,35872,38799,41880,45121,48524,52095",
+    "name": "a(n) = (3 + 2*n - 3*n^2 + 4*n^3 - 3*((-1 + n) mod 2))/6.",
+    "comment": [
+        "a(n) is the trace of an n X n matrix A in which the entries are 1 through n^2, spiraling inward starting with 1 in the (1,1)-entry (proved).",
+        "The first three terms of a(n) coincide with those of A317614."
+    ],
+    "link": [
+        "Stefano Spezia, <a href=\"/A304487/b304487.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (3,-2,-2,3,-1)."
+    ],
+    "formula": [
+        "a(n) = A045991(n) - Sum_{k=2..n-1} A085046(k) for n > 2 (proved).",
+        "G.f.: x*(1 + x + 5 x^2 + x^3)/((-1 + x)^4 (1 + x)).",
+        "a(n) + a(n + 1) = A228958(2*n + 1).",
+        "From _Colin Barker_, Aug 17 2018: (Start)",
+        "a(n) = (2*n - 3*n^2 + 4*n^3) / 6 for n even.",
+        "a(n) = (3 + 2*n - 3*n^2 + 4*n^3) / 6 for n odd.",
+        "a(n) = 3*a(n - 1) - 2*a(n - 2) - 2*a(n - 3) + 3*a(n - 4) - a(n - 5) for n > 5.",
+        "(End)",
+        "E.g.f.: (1/12)*exp(-x)*(-3 + exp(2*x)*(3 + 6*x + 18*x^2 + 8*x^3)). - _Stefano Spezia_, Feb 10 2019"
+    ],
+    "example": [
+        "For n = 1 the matrix A is",
+        "   1",
+        "with trace Tr(A) = a(1) = 1.",
+        "For n = 2 the matrix A is",
+        "   1, 2",
+        "   4, 3",
+        "with Tr(A) = a(2) = 4.",
+        "For n = 3 the matrix A is",
+        "   1, 2, 3",
+        "   8, 9, 4",
+        "   7, 6, 5",
+        "with Tr(A) = a(3) = 15.",
+        "For n = 4 the matrix A is",
+        "   1,  2,  3, 4",
+        "  12, 13, 14, 5",
+        "  11, 16, 15, 6",
+        "  10,  9,  8, 7",
+        "with Tr(A) = a(4) = 36."
+    ],
+    "maple": [
+        "seq((3+2*n-3*n^2+4*n^3-3*modp((-1+n),2))/6,n=1..43); # _Muniru A Asiru_, Sep 17 2018"
+    ],
+    "mathematica": [
+        "Table[1/6 (3 + 2 n - 3 n^2 + 4 n^3 - 3 Mod[-1 + n, 2]), {n, 1, 43}] (* or *)",
+        "CoefficientList[ Series[x*(1 + x + 5 x^2 + x^3)/((-1 + x)^4 (1 + x)), {x, 0, 43}], x] (* or *)",
+        "LinearRecurrence[{3, -2, -2, 3, -1}, {1, 4, 15, 36, 73}, 43]"
+    ],
+    "program": [
+        "(MATLAB and FreeMat)",
+        "for(n=1:43); tm=(3 + 2*n - 3*n^2 + 4*n^3 - 3*mod(-1 + n, 2))/6; fprintf('%d\\t%0.f\\n', n, tm); end",
+        "(GAP)",
+        "a_n:=List([1..43], n->(3 + 2*n - 3*n^2 + 4*n^3 - 3*RemInt(-1 + n, 2))/6",
+        "(Maxima)",
+        "a(n):=(3 + 2*n - 3*n^2 + 4*n^3 - 3*mod(-1 + n, 2))/6$ makelist(a(n), n, 1, 43);",
+        "(PARI) Vec(x*(1 + x + 5*x^2 + x^3)/((-1 + x)^4*(1 + x)) + O(x^44))",
+        "(PARI) a(n) = (3 + 2*n - 3*n^2 + 4*n^3 - 3*((-1 + n)%2))/6",
+        "(Magma) I:=[1,4,15,36,73]; [n le 5 select I[n] else 3*Self(n-1)-2*Self(n-2)-2*Self(n-3)+3*Self(n-4)-Self(n-5): n in [1..43]]; // _Vincenzo Librandi_, Aug 26 2018",
+        "(GAP) List([1..43],n->(3+2*n-3*n^2+4*n^3-3*((-1+n) mod 2))/6); # _Muniru A Asiru_, Sep 17 2018"
+    ],
+    "xref": [
+        "Cf. A317614, A228958, A045991, A085046.",
+        "Cf. A126224 (determinant of the matrix A), A317298 (first differences)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Stefano Spezia_, Aug 17 2018",
+    "references": 3,
+    "revision": 72,
+    "time": "2022-09-08T08:46:21-04:00",
+    "created": "2018-09-04T14:03:55-04:00"
+}

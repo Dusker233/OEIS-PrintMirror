@@ -1,0 +1,56 @@
+{
+    "number": 320803,
+    "data": "1,1,3,7,21,56,174,517,1664,5383,18199,62745,223390,813425,3040181,11620969,45446484,181537904,740369798,3079779662,13059203150,56406416004,248027678362,1109626606188,5048119061134,23342088591797,109648937760252,523036690273237",
+    "name": "Number of non-isomorphic multiset partitions of weight n in which all parts are aperiodic multisets.",
+    "comment": [
+        "A multiset is aperiodic if its multiplicities are relatively prime.",
+        "The weight of a multiset partition is the sum of sizes of its parts. Weight is generally not the same as number of vertices."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A320803/b320803.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(1) = 1 through a(4) = 21 multiset partitions with aperiodic parts:",
+        "  {{1}}  {{1,2}}    {{1,2,2}}      {{1,2,2,2}}",
+        "         {{1},{1}}  {{1,2,3}}      {{1,2,3,3}}",
+        "         {{1},{2}}  {{1},{2,3}}    {{1,2,3,4}}",
+        "                    {{2},{1,2}}    {{1},{1,2,2}}",
+        "                    {{1},{1},{1}}  {{1,2},{1,2}}",
+        "                    {{1},{2},{2}}  {{1},{2,3,3}}",
+        "                    {{1},{2},{3}}  {{1},{2,3,4}}",
+        "                                   {{1,2},{3,4}}",
+        "                                   {{1,3},{2,3}}",
+        "                                   {{2},{1,2,2}}",
+        "                                   {{3},{1,2,3}}",
+        "                                   {{1},{1},{2,3}}",
+        "                                   {{1},{2},{1,2}}",
+        "                                   {{1},{2},{3,4}}",
+        "                                   {{1},{3},{2,3}}",
+        "                                   {{2},{2},{1,2}}",
+        "                                   {{1},{1},{1},{1}}",
+        "                                   {{1},{1},{2},{2}}",
+        "                                   {{1},{2},{2},{2}}",
+        "                                   {{1},{2},{3},{3}}",
+        "                                   {{1},{2},{3},{4}}"
+    ],
+    "program": [
+        "(PARI)",
+        "EulerT(v)={Vec(exp(x*Ser(dirmul(v, vector(#v, n, 1/n))))-1, -#v)}",
+        "permcount(v) = {my(m=1, s=0, k=0, t); for(i=1, #v, t=v[i]; k=if(i>1&&t==v[i-1], k+1, 1); m*=t*k; s+=t); s!/m}",
+        "K(q, t, k)={EulerT(Vec(sum(j=1, #q, gcd(t, q[j])*x^lcm(t, q[j])) + O(x*x^k), -k))}",
+        "a(n)={if(n==0, 1, my(mbt=vector(n, d, moebius(d)), s=0); forpart(q=n, s+=permcount(q)*polcoef(exp(x*Ser(dirmul(mbt, sum(t=1, n, K(q, t, n)/t)))), n)); s/n!)} \\\\ _Andrew Howroyd_, Jan 16 2023"
+    ],
+    "xref": [
+        "Cf. A000740, A000837, A007716, A007916, A100953, A301700, A303386, A303546, A303707, A303708, A303709, A303710, A320800-A320810."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Nov 06 2018",
+    "ext": [
+        "Terms a(11) and beyond from _Andrew Howroyd_, Jan 16 2023"
+    ],
+    "references": 5,
+    "revision": 8,
+    "time": "2023-01-16T14:49:39-05:00",
+    "created": "2018-11-07T05:05:08-05:00"
+}

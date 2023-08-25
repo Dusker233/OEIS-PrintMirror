@@ -1,0 +1,76 @@
+{
+    "number": 63985,
+    "data": "0,1,2,4,5,9,10,14,17,23,24,32,33,41,48,56,57,69,70,82,91,103,104,120,125,139,148,164,165,187,188,204,217,235,246,270,271,291,306,330,331,361,362,386,407,431,432,464,471,501,520,548,549,585,600,632,653,683",
+    "name": "Partial sums of cototient sequence A051953.",
+    "comment": [
+        "Number of elements in the set {(x,y): 1 <= x <= y <= n, 1 = gcd(x,y)}; a(n) = A000217(n) - A002088(n) = A100613(n) - A185670(n). - _Reinhard Zumkeller_, Jan 21 2013",
+        "8*a(n) is the number of dots not in direct reach via a straight line from the center of a 2*n+1 X 2*n+1 array of dots. - _Kiran Ananthpur Bacche_, May 25 2022"
+    ],
+    "link": [
+        "Harry J. Smith, <a href=\"/A063985/b063985.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "N. J. A. Sloane, <a href=\"/A115004/a115004.txt\">Families of Essentially Identical Sequences</a>, Mar 24 2021 (Includes this sequence)"
+    ],
+    "formula": [
+        "a(n) = Sum_{x=1..n} (x - phi(x)) = Sum(x) - Sum(phi(x)) = A000217(n) - A002088(n), phi(n) = A000010(n), cototient(n) = A051953(n).",
+        "a(n) = n^2 - A091369(n). - _Enrique P\u00e9rez Herrero_, Feb 25 2012",
+        "G.f.: x/(1 - x)^3 - (1/(1 - x))*Sum_{k>=1} mu(k)*x^k/(1 - x^k)^2. - _Ilya Gutkovskiy_, Mar 18 2017",
+        "a(n) = (1/2 - 3/Pi^2)*n^2 + O(n*log(n)). - _Amiram Eldar_, Jul 26 2022"
+    ],
+    "mathematica": [
+        "f[n_] := n(n + 1)/2 - Sum[ EulerPhi@i, {i, n}]; Array[f, 58] (* _Robert G. Wilson v_ *)",
+        "Accumulate[Table[n-EulerPhi[n],{n,1,60}]] (* _Harvey P. Dale_, Aug 19 2015 *)"
+    ],
+    "program": [
+        "(PARI) { a=0; for (n=1, 1000, write(\"b063985.txt\", n, \" \", a+=n - eulerphi(n)) ) } \\\\ _Harry J. Smith_, Sep 04 2009",
+        "(Haskell)",
+        "a063985 n = length [()| x <- [1..n], y <- [x..n], gcd x y > 1]",
+        "-- _Reinhard Zumkeller_, Jan 21 2013",
+        "(Python)",
+        "from sympy.ntheory import totient",
+        "def a(n): return sum(x - totient(x) for x in range(1,n + 1))",
+        "[a(n) for n in range(1, 51)] # _Indranil Ghosh_, Mar 18 2017",
+        "(Python)",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A063985(n): # based on second formula in A018805",
+        "    if n == 0:",
+        "        return 0",
+        "    c, j = 0, 2",
+        "    k1 = n//j",
+        "    while k1 > 1:",
+        "        j2 = n//k1 + 1",
+        "        c += (j2-j)*(k1*(k1+1)-2*A063985(k1)-1)",
+        "        j, k1 = j2, n//j2",
+        "    return (2*n+c-j)//2 # _Chai Wah Wu_, Mar 24 2021",
+        "(Java)",
+        "// Save the file as A063985.java to compile and run",
+        "import java.util.stream.IntStream;",
+        "import java.util.*;",
+        "public class A063985 {",
+        "  public static int getInvisiblePoints(int n) {",
+        "    Set<Float> slopes = new HashSet<Float>();",
+        "    IntStream.rangeClosed(1, n).forEach(i ->",
+        "      {IntStream.rangeClosed(1, n).forEach(j ->",
+        "        slopes.add(Float.valueOf((float)i/(float)j))); });",
+        "    return (n * n - slopes.size() + n - 1) / 2;",
+        "  }",
+        "  public static void main(String args[]) throws Exception {",
+        "    IntStream.rangeClosed(1, 30).forEach(i ->",
+        "      System.out.println(getInvisiblePoints(i)));",
+        "  }",
+        "} // _Kiran Ananthpur Bacche_, May 25 2022"
+    ],
+    "xref": [
+        "Cf. A000010, A000217, A002088, A048290, A051953."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Labos Elemer_, Sep 06 2001",
+    "ext": [
+        "Corrected by _Robert G. Wilson v_, Dec 13 2006"
+    ],
+    "references": 10,
+    "revision": 61,
+    "time": "2022-07-26T12:43:32-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

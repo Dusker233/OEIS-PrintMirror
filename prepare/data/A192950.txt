@@ -1,0 +1,46 @@
+{
+    "number": 192950,
+    "data": "0,1,5,31,224,1844,17028,174284,1958176,23959760,317128240,4514617360,68784608640,1116787186240,19248968150720,351024831699520,6752328440253440,136640443206206720,2901703626188801280,64522443639953657600",
+    "name": "a(n) = A192942(n)/2.",
+    "comment": [
+        "See A192942."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A192950/b192950.txt\">Table of n, a(n) for n = 0..440</a>"
+    ],
+    "formula": [
+        "a(n) = 1/10*sqrt(5)*Gamma(n+2+sqrt(5))/Gamma(sqrt(5)+2) - 1/10*sin(Pi*(sqrt(5)+3))*Gamma(sqrt(5)+1)*Gamma(n+2-sqrt(5))/(Pi*(sqrt(5)-1)). - _Vaclav Kotesovec_, Oct 26 2012"
+    ],
+    "example": [
+        "(See A192942.)"
+    ],
+    "mathematica": [
+        "(* First program *)",
+        "q = x^2; s = x + 1; z = 26;",
+        "p[0, x]:= 1;",
+        "p[n_, x_]:= (2*x + n)*p[n-1, x];",
+        "Table[Expand[p[n, x]], {n, 0, 7}]",
+        "reduce[{p1_, q_, s_, x_}]:= FixedPoint[(s PolynomialQuotient @@ #1 + PolynomialRemainder @@ #1 &)[{#1, q, x}] &, p1]",
+        "t = Table[reduce[{p[n, x], q, s, x}], {n, 0, z}];",
+        "u1 = Table[Coefficient[Part[t, n], x, 0], {n, 1, z}] (* A192941 *)",
+        "u2 = Table[Coefficient[Part[t, n], x, 1], {n, 1, z}] (* A192942 *)",
+        "u2/2 (* A192950 *)",
+        "(* Additional programs *)",
+        "With[{s = Sqrt[5]}, Table[FullSimplify[(s*Gamma[n+2+s]/Gamma[s+2] - Sin[Pi*(s+3)]*Gamma[s+1]*Gamma[n+2-s]/(Pi*(s-1)))/10], {n, 0, 20}]] (* _G. C. Greubel_, Jul 25 2019 *)"
+    ],
+    "program": [
+        "(PARI) default(realprecision, 100); vector(20, n, n--; s=sqrt(5); round(s*gamma(n+2+s)/gamma(s+2) - sin(Pi*(s+3))*gamma(s+1)*gamma(n+2-s)/(Pi*(s-1)))/10 ) \\\\ _G. C. Greubel_, Jul 25 2019",
+        "(Magma) SetDefaultRealField(RealField(100)); R:= RealField(); s:=Sqrt(5); [Round(s*Gamma(n+2+s)/Gamma(s+2) - Sin(Pi(R)*(s+3))*Gamma(s+1) *Gamma(n+2-s)/(Pi(R)*(s-1)))/10: n in [0..20]]; // _G. C. Greubel_, Jul 25 2019",
+        "(Sage) s=sqrt(5); [round(s*gamma(n+2+s)/gamma(s+2) - sin(pi*(s+3))* gamma(s+1)*gamma(n+2-s)/(pi*(s-1)))/10 for n in (0..20)] # _G. C. Greubel_, Jul 25 2019"
+    ],
+    "xref": [
+        "Cf. A192942."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Clark Kimberling_, Jul 13 2011",
+    "references": 3,
+    "revision": 13,
+    "time": "2022-09-08T08:45:58-04:00",
+    "created": "2011-07-13T20:19:21-04:00"
+}

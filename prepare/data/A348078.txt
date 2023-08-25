@@ -1,0 +1,40 @@
+{
+    "number": 348078,
+    "data": "906596,1141550,1243275,12133673,13852924,19293209,20738672,22997761,23542001,26587348,30731822,31237450,39987773,41419024,43627148,54040975,54652148,56487148,70289225,75855625,77449300,79677772,80665072,82126448,91420721,93883850,95162849",
+    "name": "Starts of runs of 4 consecutive numbers that have an equal number of even and odd exponents in their prime factorization (A187039).",
+    "link": [
+        "Amiram Eldar, <a href=\"/A348078/b348078.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "906596 is a term since 906596 = 2^2 * 226649, 906596 + 1 = 906597 = 3^2 * 100733, 906596 + 2 = 906598 = 2 * 7^2 * 11 * 29^2 and 906596 + 3 = 906599 = 71 * 113^2 all have an equal number of even and odd exponents in their prime factorization."
+    ],
+    "mathematica": [
+        "q[n_] := n == 1 || Count[(e = FactorInteger[n][[;; , 2]]), _?OddQ] == Count[e, _?EvenQ]; v = q /@ Range[4]; seq = {}; Do[v = Append[Drop[v, 1], q[k]]; If[And @@ v, AppendTo[seq, k - 3]], {k, 5, 2*10^7}]; seq"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def cond(n):",
+        "    evenodd = [0, 0]",
+        "    for e in factorint(n).values():",
+        "        evenodd[e%2] += 1",
+        "    return evenodd[0] == evenodd[1]",
+        "def afind(limit, startk=5):",
+        "    condvec = [cond(startk+i) for i in range(4)]",
+        "    for kp3 in range(startk+3, limit+4):",
+        "        condvec = condvec[1:] + [cond(kp3)]",
+        "        if all(condvec):",
+        "            print(kp3-3, end=\", \")",
+        "afind(125*10**4) # _Michael S. Branicky_, Sep 27 2021"
+    ],
+    "xref": [
+        "Subsequence of A187039, A348076 and A348077."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Sep 27 2021",
+    "references": 3,
+    "revision": 11,
+    "time": "2021-09-28T08:34:07-04:00",
+    "created": "2021-09-28T04:50:41-04:00"
+}

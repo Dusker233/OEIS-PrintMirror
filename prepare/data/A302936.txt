@@ -1,0 +1,31 @@
+{
+    "number": 302936,
+    "data": "1,2,8,32,84,512,972,1155,13365,25740,318087,612612,11223927,14549535,440374077,746503065,19013596875",
+    "name": "Bi-unitary highly composite deficient numbers: bi-unitary deficient numbers k whose number of bi-unitary divisors bd(k) > bd(m) for all bi-unitary deficient numbers m < k.",
+    "comment": [
+        "The record numbers of bi-unitary divisors are 1, 2, 4, 6, 8, 10, 12, 16, 24, 32, 48, 64, 96, 128, 192, 256, 384, ...",
+        "The bi-unitary version of A302934."
+    ],
+    "mathematica": [
+        "f[n_] := Select[Divisors[n], Function[d, CoprimeQ[d, n/d]]]; bdivnum[n_] := DivisorSum[n, 1 &, Last@Intersection[f@#, f[n/#]] == 1 &]; bsigma[m_] := DivisorSum[m, # &, Last@Intersection[f@#, f[m/#]] == 1 &]; dm = 0; Do[sig = bsigma[n]; If[sig >= 2 n, Continue[]]; d = bdivnum[n]; If[d > dm, Print[n]; dm = d], {n, 1, 1000000000}] (* after _Michael De Vlieger_ at A188999 and A286324 *)"
+    ],
+    "program": [
+        "(PARI) udivs(n) = {my(d = divisors(n)); select(x->(gcd(x, n/x)==1), d); }",
+        "gcud(n, m) = vecmax(setintersect(udivs(n), udivs(m)));",
+        "biudivs(n) = select(x->(gcud(x, n/x)==1), divisors(n));",
+        "lista(nn) = {my(maxd = 0); for(n=1, nn, vbiudiv = biudivs(n); if ((vecsum(vbiudiv) < 2*n) && (#vbiudiv > maxd), print1(n, \", \"); maxd = #vbiudiv;););} \\\\ _Michel Marcus_, Apr 17 2018"
+    ],
+    "xref": [
+        "Cf. A188999, A286324, A292982, A293185, A302934."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Apr 16 2018",
+    "ext": [
+        "a(15)-a(17) from _Amiram Eldar_, Jan 26 2019"
+    ],
+    "references": 0,
+    "revision": 17,
+    "time": "2021-07-21T00:44:15-04:00",
+    "created": "2018-04-22T05:17:53-04:00"
+}

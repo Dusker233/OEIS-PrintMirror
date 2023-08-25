@@ -1,0 +1,46 @@
+{
+    "number": 68803,
+    "data": "2,3,5,7,19,29,37,47,59,79,97,397,499,599,1999,2999,3989,4999,29989,49999,59999,79999,199999,599999,799999,2999999,4999999,5999993,19999999,29999999,59999999,69999989,99999989,199999991,699999953,799999999,5999999989,6999999989",
+    "name": "Smaller of two consecutive primes which have no common digits.",
+    "comment": [
+        "Is the sequence finite or infinite?",
+        "Except for 2, 3, 5, and 7, all such primes are of the form a*10^n-b with 1 <= a <= 8 and b mod 10 = 1, 3, 7 or 9. An example of a large pair is 10^101-203 and 10^101+3. The largest known pair of probable primes is 8*10^5002-6243 and 8*10^5002+14481. - _Lewis Baxter_, Mar 06 2023"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A068803/b068803.txt\">Table of n, a(n) for n = 1..804</a>"
+    ],
+    "example": [
+        "397 is a term as 397 and 401 are two consecutive primes with no common digits."
+    ],
+    "mathematica": [
+        "First /@ Select[Partition[Prime[Range[10^6]], 2, 1], Intersection @@ IntegerDigits /@ # == {} &] (* _Jayanta Basu_, Aug 06 2013 *)"
+    ],
+    "program": [
+        "(PARI) isok(p) = isprime(p) && (#setintersect(Set(digits(p)), Set(digits(nextprime(p+1)))) == 0); \\\\ _Michel Marcus_, Mar 27 2023",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import nextprime, prevprime",
+        "def agen(): # generator of terms",
+        "    yield from [2, 3, 5]",
+        "    for d in count(2):",
+        "        for b in range(10**(d-1), 10**d, 10**(d-1)):",
+        "            p, q = prevprime(b), nextprime(b)",
+        "            if set(str(p)) & set(str(q)) == set():",
+        "                yield p",
+        "print(list(islice(agen(), 40))) # _Michael S. Branicky_, May 09 2023"
+    ],
+    "xref": [
+        "Cf. A076490."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,1",
+    "author": "_Amarnath Murthy_, Mar 06 2002",
+    "ext": [
+        "More terms from Larry Soule (lsoule(AT)gmail.com), Jun 21 2006",
+        "a(36) and beyond from _Michael S. Branicky_, May 09 2023"
+    ],
+    "references": 2,
+    "revision": 29,
+    "time": "2023-07-02T17:59:36-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

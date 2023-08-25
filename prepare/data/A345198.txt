@@ -1,0 +1,37 @@
+{
+    "number": 345198,
+    "data": "223,631,1471,2203,2671,3319,4513,4621,5059,5179,8929,9643,9661,11131,11149,12391,12781,12841,14143,14341,14419,15511,15823,15901,16369,17359,19333,19489,19603,19801,20269,20929,21031,22531,23593,23929,24571,25339,25939,26209,29173,29599,29803,30103",
+    "name": "Primes p such that p-2 is the product of two emirps.",
+    "comment": [
+        "All terms == 1 (mod 6)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A345198/b345198.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 1471 is a term because 1471-2 = 13*113, and 13 and 113 are both emirps."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "filter:= proc(p) local F,q,t;",
+        "  if not isprime(p) then return false fi;",
+        "  F:= ifactors(p-2)[2];",
+        "  if add(t[2],t=F) <> 2 then return false fi;",
+        "  andmap(proc(t) local s; s:= revdigs(t); s <> t and isprime(s) end proc, map(t->t[1],F))",
+        "end proc:",
+        "select(filter, [seq(i,i=1..100000,6)]);"
+    ],
+    "xref": [
+        "Cf. A006567."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jun 10 2021",
+    "references": 1,
+    "revision": 8,
+    "time": "2021-06-11T12:23:18-04:00",
+    "created": "2021-06-10T22:33:34-04:00"
+}

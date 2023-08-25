@@ -1,0 +1,39 @@
+{
+    "number": 36312,
+    "data": "4,8,14,16,28,32,49,56,64,98,112,128,196,224,256,343,392,448,454,512,554,686,784,896,908,1024,1108,1372,1454,1568,1589,1792,1816,1939,2048,2216,2401,2744,2908,3136,3178,3584,3632,3878,4096,4432,4802,5089,5488",
+    "name": "Composite numbers whose prime factors contain no digits other than 2 and 7.",
+    "comment": [
+        "All terms are a product of at least two terms of A020459. - _David A. Corneth_, Oct 09 2020"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A036312/b036312.txt\">Table of n, a(n) for n = 1..10000</a> (first 5340 terms from Robert Israel)",
+        "<a href=\"/index/Pri#prime_factors\">Index entries for sequences related to prime factors</a>."
+    ],
+    "formula": [
+        "Sum_{n>=1} 1/a(n) = Product_{p in A020459} (p/(p - 1)) - Sum_{p in A020459} 1/p - 1 = 0.7041098484... . - _Amiram Eldar_, May 18 2022"
+    ],
+    "maple": [
+        "dmax:= 4: # for terms < 2*10^dmax",
+        "P:= {2,7}:",
+        "L:= {7}:",
+        "for d from 1 to dmax-1 do",
+        "  L:= map(t -> 2*10^d+t, L) union map(t -> 7*10^d+t, L);",
+        "  P:= P union select(isprime,L);",
+        "od:",
+        "R:= {1}: N:= 2*10^dmax:",
+        "for p in P do",
+        "  R:= R union map(t -> seq(t*p^j,j=1..floor(log[p](N/t))), R)",
+        "od:",
+        "sort(convert(R minus P minus {1},list)); # _Robert Israel_, Aug 04 2020"
+    ],
+    "xref": [
+        "Cf. A003591, A020459, A036302-A036325."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Dec 15 1998",
+    "references": 2,
+    "revision": 28,
+    "time": "2022-05-18T07:57:03-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

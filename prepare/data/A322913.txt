@@ -1,0 +1,42 @@
+{
+    "number": 322913,
+    "data": "1,3,7,15,36,81,197,455,1105,2618,6315,15141,36570,88161,213342,516247,1251728,3037059,7378290,17938430,43655465,106317863,259127707,631986437,1542364386,3766351332,9202390342,22496047757,55020807236,134631987776,329579227722,807142635031",
+    "name": "Inverse Moebius transform of the sequence (n*A032173(n+2): n >= 1).",
+    "comment": [
+        "The sequence (A032173(n): n >= 1) shifts two places to the left under Bower's \"CHK\" (necklace, identity, unlabeled) transform. The current sequence satisfies A032173(n+2) = (1/n)*Sum_{d|n} mu(d)*a(n/d)."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A322913/b322913.txt\">Table of n, a(n) for n = 1..200</a>",
+        "C. G. Bower, <a href=\"/transforms2.html\">Transforms (2)</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{d|n} d*A032173(d+2).",
+        "a(n) = n*A032173(n) + Sum_{s=1..n-1} a(s)*A032173(n-s).",
+        "G.f.: If A(x) = Sum_{n>=1} a(n)*x^n and B(x) = Sum_{n>=1} A032173(n)*x^n, then A(x) = x*(dB(x)/dx)/(1-B(x)), while (B(x) - x - x^2)/x^2 = Sum_{n>=1} A032173(n+2)*x^n = -Sum_{n>=1} (mu(n)/n)*log(1-B(x^n))."
+    ],
+    "mathematica": [
+        "(* b = A032173 *) b[1] = b[2] = 1; c[1] = 1; c[2] = 3;",
+        "b[n_] := b[n] = 1/(n-2) Sum[MoebiusMu[(n-2)/d] c[d], {d, Divisors[n-2]}];",
+        "c[n_] := c[n] = n b[n] + Sum[c[s] b[n-s], {s, 1, n-1}];",
+        "a[n_] := Sum[d b[d+2], {d, Divisors[n]}];",
+        "Array[a, 26] (* _Jean-Fran\u00e7ois Alcover_, Jan 02 2019 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "CHK(p, n)={sum(d=1, n, moebius(d)/d*log(subst(1/(1+O(x*x^(n\\d))-p), x, x^d)))}",
+        "seq(n)={my(p=1+O(x)); for(i=1, n\\2, p=1+x+x*CHK(x*p, 2*i)); Vec(deriv(x*p)/(1-x*p)+O(x^n))} \\\\ _Andrew Howroyd_, Apr 27 2020"
+    ],
+    "xref": [
+        "Cf. A032171, A032173, A032174."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Petros Hadjicostas_, Dec 30 2018",
+    "ext": [
+        "Terms a(27) and beyond from _Andrew Howroyd_, Apr 27 2020"
+    ],
+    "references": 2,
+    "revision": 30,
+    "time": "2020-04-27T14:44:44-04:00",
+    "created": "2018-12-31T14:15:38-05:00"
+}

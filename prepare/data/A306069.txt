@@ -1,0 +1,38 @@
+{
+    "number": 306069,
+    "data": "1,3,5,7,9,13,15,19,21,25,27,31,33,37,41,45,47,51,53,57,61,65,67,75,77,81,85,89,91,99,101,107,111,115,119,123,125,129,133,141,143,151,153,157,161,165,167,175,177,181,185,189,191,199,203,211,215,219,221",
+    "name": "Partial sums of A286324: Sum_{k=1..n} bd(k) where bd(k) is the number of bi-unitary divisors of k.",
+    "comment": [
+        "The bi-unitary version of A006218 and A064608."
+    ],
+    "reference": [
+        "J\u00f3zsef S\u00e1ndor, Dragoslav S. Mitrinovic, Borislav Crstici, Handbook of Number Theory I, Springer Science & Business Media, 2005, page 72."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A306069/b306069.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "D. Suryanarayana, <a href=\"https://doi.org/10.1007/BFb0058797\">The number of bi-unitary divisors of an integer</a>, The theory of arithmetic functions, ed. Anthony A. Gioia and Donald L. Goldsmith, Springer, Berlin, Heidelberg, 1972, pp. 273-282.",
+        "D. Suryanarayana and R. Sita Rama Chandra Rao, <a href=\"http://informaticsjournals.com/index.php/jims/article/view/16651\">The number of bi-unitary divisors of an integer - II</a>, Journal of the Indian mathematical Society, Vol. 39, No. 1-4 (1975), pp. 261-280."
+    ],
+    "formula": [
+        "a(n) = A*n*(log(n) + 2*gamma - 1 + B) + O(n^(1/2)*exp(-A * log(n)^(3/5) * log(log(n))^(-1/5))), where gamma = A001620, A = A306071 and B = A306072."
+    ],
+    "mathematica": [
+        "fun[p_, e_] := If[Mod[e, 2] == 1, (e + 1), e]; bdivnum[n_] := If[n==1,1,Times @@ (fun @@@ FactorInteger[n])]; Accumulate@ Array[bdivnum, {60}]"
+    ],
+    "program": [
+        "(PARI) udivs(n) = {my(d = divisors(n)); select(x->(gcd(x, n/x)==1), d); }",
+        "gcud(n, m) = vecmax(setintersect(udivs(n), udivs(m)));",
+        "biudivs(n) = select(x->(gcud(x, n/x)==1), divisors(n));",
+        "a(n) = sum(k=1, n, #biudivs(k)); \\\\ _Michel Marcus_, Jun 20 2018"
+    ],
+    "xref": [
+        "Cf. A001620, A006218, A064608, A286324, A306071, A306072."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Jun 19 2018",
+    "references": 7,
+    "revision": 18,
+    "time": "2021-12-29T05:58:24-05:00",
+    "created": "2018-07-28T11:50:28-04:00"
+}

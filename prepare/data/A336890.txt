@@ -1,0 +1,51 @@
+{
+    "number": 336890,
+    "data": "12,17,21,46,64,71,102,107,120,137,145,154,170,173,201,210,224,242,279,288,297,317,349,357,371,375,379,394,397,406,415,422,439,451,460,493,514,537,541,573,599,604,640,701,710,713,729,731,735,739,753,792,793,828,882,927,934,937,943,959,972,973,995",
+    "name": "Numbers that eventually reach the fixed point 8208 under \"x --> sum of the fourth powers of digits of x\".",
+    "link": [
+        "Robert Israel, <a href=\"/A336890/b336890.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "12 --> 1^4+2^4 = 17 --> 1^4+7^4 = 2402 --> 2^4+4^4+0^4+2^4 = 288 --> 2^4+8^4+8^4 = 8208."
+    ],
+    "maple": [
+        "V:= Vector(32805): V[8208]:= true:",
+        "g:= proc(n) local L, t;",
+        "  add(t^4, t = convert(n,base,10))",
+        "end proc:",
+        "f:= proc(n) local x,S; global V;",
+        "  if n <= 32805 then",
+        "     if V[n] <> 0 then return V[n]",
+        "     else S:= [n]",
+        "     fi",
+        "  else S:= []",
+        "  fi;",
+        "  x:= n;",
+        "  do",
+        "    x:= g(x);",
+        "    if V[x] <> 0 then",
+        "       V[S]:= V[x];",
+        "       return V[x]",
+        "    elif member(x,S) then",
+        "       V[S]:= false;",
+        "       return false",
+        "    fi;",
+        "    if x <= 32805 then S:= [op(S), x] fi;",
+        "  od;",
+        "end proc;",
+        "select(f, [$1..10000]); # _Robert Israel_, Sep 03 2020"
+    ],
+    "mathematica": [
+        "okQ[n] := MemberQ[NestList[Total[IntegerDigits[#]^4]&, n, 30], 8208]; Select[Range[1000], okQ]"
+    ],
+    "xref": [
+        "Cf. A219111, A031185, A031184."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Sergio Falcon_, Aug 07 2020",
+    "references": 1,
+    "revision": 11,
+    "time": "2020-09-03T17:42:09-04:00",
+    "created": "2020-08-31T04:44:50-04:00"
+}

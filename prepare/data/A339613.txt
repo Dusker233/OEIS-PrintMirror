@@ -1,0 +1,34 @@
+{
+    "number": 339613,
+    "data": "1,2,2,2,5,8,15,30,57,115,211,398,783,1528,3002,5893,11432,22247,43663,86348,170472,335636,662988,1312816,2595986,5121351,10096635,19930303,39469458,78311512,155219706,307373610,607613871,1202463562,2383024521,4736192475,9413441133",
+    "name": "Number of sets of distinct primes whose sum is a prime, the largest element of a set is prime(n).",
+    "example": [
+        "a(6) = 8 sets: {13}, {3, 7, 13}, {5, 11, 13}, {7, 11, 13}, {2, 3, 5, 13}, {2, 3, 11, 13}, {2, 5, 11, 13} and {2, 3, 5, 7, 11, 13}."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import prime, isprime",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def b(n, s, c):",
+        "  if n == 0:",
+        "    if isprime(s): return 1",
+        "    return 0",
+        "  return b(n-1, s, c) + b(n-1, s+prime(n), c+1)",
+        "a = lambda n: b(n-1, prime(n), 1)",
+        "print([a(n) for n in range(1, 20)]) # _Michael S. Branicky_, Dec 10 2020"
+    ],
+    "xref": [
+        "Cf. A000040, A071810 (partial sums), A127542."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Dec 09 2020",
+    "ext": [
+        "a(35)-a(37) from _Michael S. Branicky_, Dec 09 2020"
+    ],
+    "references": 0,
+    "revision": 11,
+    "time": "2020-12-10T08:52:50-05:00",
+    "created": "2020-12-10T08:52:50-05:00"
+}

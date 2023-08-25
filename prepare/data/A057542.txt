@@ -1,0 +1,31 @@
+{
+    "number": 57542,
+    "data": "1,1,1,3,4,16,87,202,607,1441,4708,41888,44741,339108,1617551",
+    "name": "Maximum cycle length in each permutation between A038776(1) and A038776(A000108(n)).",
+    "link": [
+        "Sean A. Irvine, <a href=\"https://github.com/archmageirvine/joeis/blob/master/src/irvine/oeis/a057/A057542.java\">Java program</a> (github)"
+    ],
+    "maple": [
+        "map(lmax,Bf2DfBinTreePermutationCycleLengths(some_value)); (e.g. 10)",
+        "bf2df := s -> (btbf2df(binrev(s),0,1)/2); # btbf2df and binrev given in A038776",
+        "Bf2DfBinTreePermutationCycleLengths := proc(upto_n) local u,n,a,r,b; a := []; for n from 0 to upto_n do b := []; u := (binomial(2*n,n)/(n+1)); for r from 0 to u-1 do b := [op(b),1+CatalanRank(n,bf2df(CatalanUnrank(n,r)))]; od; a := [op(a),CycleLengths1(b)]; od; RETURN(a); end;",
+        "CycleLengths1 := b -> [[(nops(b)-convert(map(nops,convert(b,'disjcyc')),`+`)),`*`,1],op(map(nops,convert(b,'disjcyc')))];",
+        "last_term := proc(l) local n: n := nops(l); if(0 = n) then ([]) else (op(n,l)): fi: end:",
+        "lmax := proc(a) local e,z; z := 0; for e in a do if whattype(e) = list then e := last_term(e); fi; if e > z then z := e; fi; od; RETURN(z); end;"
+    ],
+    "xref": [
+        "Cycle lengths of permutation A038776 given in A038774.",
+        "Cf. A057543, A057544, A057545.",
+        "LCM's of all cycles: A060113."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,4",
+    "author": "_Antti Karttunen_, Sep 07 2000",
+    "ext": [
+        "a(11)-a(14) from _Sean A. Irvine_, Jun 13 2022"
+    ],
+    "references": 6,
+    "revision": 7,
+    "time": "2022-06-13T03:03:57-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

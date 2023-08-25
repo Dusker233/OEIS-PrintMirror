@@ -1,0 +1,43 @@
+{
+    "number": 281689,
+    "data": "1,3,6,11,18,29,42,62,86,119,159,211,273,352,446,562,697,864,1054,1284,1550,1860,2220,2639,3114,3669,4293,5011,5823,6745,7783,8956,10268,11747,13390,15237,17281,19561,22089,24889,27979,31405,35157,39309,43856,48849,54319,60309,66840,73992,81760,90243",
+    "name": "Expansion of Sum_{k>=2} x^Fibonacci(k)/(1 - x^Fibonacci(k)) / Product_{k>=2} (1 - x^Fibonacci(k)).",
+    "comment": [
+        "Total number of parts in all partitions of n into Fibonacci parts (with a single type of 1).",
+        "Convolution of A003107 and A005086."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A281689/b281689.txt\">Table of n, a(n) for n = 1..20000</a>",
+        "<a href=\"/index/Par#partN\">Index entries for related partition-counting sequences</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=2} x^Fibonacci(k)/(1 - x^Fibonacci(k)) / Product_{k>=2} (1 - x^Fibonacci(k)).",
+        "a(n) = Sum_{k=1..n} k * A319394(n,k). - _Alois P. Heinz_, Sep 18 2018"
+    ],
+    "example": [
+        "a(5) = 18 because we have [5], [3, 2], [3, 1, 1], [2, 2, 1], [2, 1, 1, 1], [1, 1, 1, 1, 1] and 1 + 2 + 3 + 3 + 4 + 5 = 18."
+    ],
+    "maple": [
+        "h:= proc(n) option remember; `if`(n<1, 0, `if`((t->",
+        "      issqr(t+4) or issqr(t-4))(5*n^2), n, h(n-1)))",
+        "    end:",
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, [1, n],",
+        "       b(n, h(i-1))+(p->p+[0, p[1]])(b(n-i, h(min(n-i, i)))))",
+        "    end:",
+        "a:= n-> b(n, h(n))[2]:",
+        "seq(a(n), n=1..70);  # _Alois P. Heinz_, Sep 18 2018"
+    ],
+    "mathematica": [
+        "Rest[CoefficientList[Series[Sum[x^Fibonacci[k]/(1 - x^Fibonacci[k]), {k, 2, 20}]/Product[1 - x^Fibonacci[k], {k, 2, 20}], {x, 0, 52}], x]]"
+    ],
+    "xref": [
+        "Cf. A000045, A003107, A005086, A240225, A319394."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Ilya Gutkovskiy_, Jan 27 2017",
+    "references": 2,
+    "revision": 7,
+    "time": "2018-09-18T16:10:05-04:00",
+    "created": "2017-01-27T13:07:28-05:00"
+}

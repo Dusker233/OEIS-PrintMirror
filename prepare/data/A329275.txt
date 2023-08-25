@@ -1,0 +1,34 @@
+{
+    "number": 329275,
+    "data": "1,2,5,14,40,116,336,976,2835,8238,23940,69580,202235,587822,1708606,4966420,14436034,41961830,121972548,354544354,1030574824,2995634338,8707595956,25310916258,73572844430,213858876100,621637274730,1806952922994,5252386090589,15267448253302",
+    "name": "Expansion of 1 / (1 + Sum_{k>=1} mu(k) * log(1 - 2 * x^k) / k), where mu = A008683.",
+    "comment": [
+        "Invert transform of A001037."
+    ],
+    "formula": [
+        "a(0) = 1; a(n) = Sum_{k=1..n} A001037(k) * a(n-k)."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n=0, 1, (2^n-add(",
+        "      d*b(d), d=numtheory[divisors](n) minus {n}))/n)",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n=0, 1,",
+        "      add(a(n-i)*b(i), i=1..n))",
+        "    end:",
+        "seq(a(n), n=0..30);  # _Alois P. Heinz_, Nov 11 2019"
+    ],
+    "mathematica": [
+        "nmax = 29; CoefficientList[Series[1/(1 + Sum[MoebiusMu[k] Log[1 - 2 x^k]/k, {k, 1, nmax}]), {x, 0, nmax}], x]",
+        "a[0] = 1; a[n_] := a[n] = Sum[(1/k) DivisorSum[k, MoebiusMu[#] 2^(k/#) &] a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 29}]"
+    ],
+    "xref": [
+        "Cf. A000079, A001037, A008683, A329276."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Nov 11 2019",
+    "references": 1,
+    "revision": 8,
+    "time": "2019-11-11T12:40:41-05:00",
+    "created": "2019-11-11T12:40:41-05:00"
+}

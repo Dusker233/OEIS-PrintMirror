@@ -1,0 +1,37 @@
+{
+    "number": 4869,
+    "data": "0,1,2,3,4,5,6,7,128,129,130,131,132,133,134,256,257,258,259,260,261,384,385,386,387,388,512,513,514,515,640,641,642,768,769,896,2187,2188,2189,2190,2191,2192,2193,2315,2316,2317,2318,2319,2320,2443,2444,2445",
+    "name": "Numbers that are the sum of at most 7 positive 7th powers.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A004869/b004869.txt\">Table of n, a(n) for n = 1..15469</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i, t) option remember; n=0 or i>0 and t>0",
+        "      and (b(n, i-1, t) or i^7<=n and b(n-i^7, i, t-1))",
+        "    end:",
+        "a:= proc(n) option remember; local k;",
+        "      for k from 1+ `if`(n=1, -1, a(n-1))",
+        "      while not b(k, iroot(k, 7), 7) do od; k",
+        "    end:",
+        "seq(a(n), n=1..60);  # _Alois P. Heinz_, Sep 16 2016"
+    ],
+    "mathematica": [
+        "b[n_, k_, i_, t_] := b[n, k, i, t] = n == 0 || i > 0 && t > 0 && (b[n, k, i - 1, t] || i^k <= n && b[n - i^k, k, i, t - 1]);",
+        "A[n_, k_] := A[n, k] = Module[{m}, For[m = 1 + If[n == 1, -1, A[n - 1, k]], !b[m, k, m^(1/k) // Floor, k], m++]; m];",
+        "a[n_] := A[n, 7];",
+        "Table[a[n], {n, 1, 60}] (* _Jean-Fran\u00e7ois Alcover_, May 20 2022, after _Alois P. Heinz_ in A336820 *)"
+    ],
+    "xref": [
+        "Column k=7 of A336820."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Sep 16 2016"
+    ],
+    "references": 2,
+    "revision": 22,
+    "time": "2022-05-20T04:59:43-04:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

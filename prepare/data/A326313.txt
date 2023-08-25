@@ -1,0 +1,32 @@
+{
+    "number": 326313,
+    "data": "3,9,21,63,189,441,567,693,2079,4851,6237,13167,39501,92169,118503,276507,829521,908523,2119887,2725569,6359661,19078983,28164213,57236949,84492639,171710847,197149491,591448473,1211061159,1774345419,3633183477,5323036257,6505933203",
+    "name": "Where the number of divisors d(k) reaches a new record for numbers k whose prime factors are of the form 4*j+3.",
+    "comment": [
+        "For references and links see A326312."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A326313/b326313.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "mathematica": [
+        "aQ[n_] := AllTrue[FactorInteger[n][[;; , 1]], Mod[#, 4] == 3 &]; s[n_] := DivisorSum[n, 1 &, aQ[#] &]; sm = 0; seq = {}; Do[s1 = s[n]; If[s1 > sm, sm = s1; AppendTo[seq, n]], {n, 2, 10^5}]; seq (* _Amiram Eldar_, Sep 12 2019 *)"
+    ],
+    "program": [
+        "(PARI) pkn(x,d,m)={my(fn=factor(x),nf=#fn[,1]);for(k=1,nf,if(fn[k,1]%d!=m,return(0)));numdiv(x)};",
+        "divrecord=0;",
+        "for(k=2,50000000,my(j=pkn(k,4,3));if(j>divrecord,divrecord=j;print1(k,\", \")))"
+    ],
+    "xref": [
+        "Cf. A053624, A071383, A230655, A326312, A326314."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Hugo Pfoertner_, Sep 11 2019",
+    "ext": [
+        "More terms from _Amiram Eldar_, Sep 12 2019"
+    ],
+    "references": 3,
+    "revision": 18,
+    "time": "2019-09-12T11:49:09-04:00",
+    "created": "2019-09-11T20:21:00-04:00"
+}

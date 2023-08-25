@@ -1,0 +1,45 @@
+{
+    "number": 238462,
+    "data": "0,0,1,2,6,12,25,50,103,206,413,826,1654,3308,6617,13234,26472,52944,105889,211778,423558,847116,1694233,3388466,6776935,13553870,27107741,54215482,108430966,216861932,433723865,867447730",
+    "name": "2-adic valuation of A052129.",
+    "link": [
+        "Kenny Lau, <a href=\"/A238462/b238462.txt\">Table of n, a(n) for n = 0..3323</a>"
+    ],
+    "formula": [
+        "From _Ridouane Oudra_, Sep 03 2019: (Start)",
+        "a(n) = Sum_{i=1..n} 2^(n-i)*v_2(i), where v_2(i) = A007814(i).",
+        "More generally, the p-adic valuation of A052129 for any prime p is given by",
+        "v_p(A052129(n)) = Sum_{i=1..n} 2^(n-i)*v_p(i), where v_p(i) is the exponent of the highest power of p dividing i. (End)"
+    ],
+    "maple": [
+        "with(padic): seq(add(2^(n-i)*ordp(i, 2), i=1..n), n=0..60); # _Ridouane Oudra_, Sep 03 2019"
+    ],
+    "mathematica": [
+        "Map[IntegerExponent[#, 2] &, Nest[Append[#, Length[#]*#[[-1]]^2] &, {1}, 31]] (* or, per first formula, more efficiently, *)",
+        "Array[Sum[2^(# - i)*IntegerExponent[i, 2], {i, #}] &, 32, 0] (* _Michael De Vlieger_, Sep 29 2019 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A052129(n) = if( n<1, n==0, prod(k=0, n-1, (n - k)^2^k));",
+        "a(n) = valuation(A052129(n),2);",
+        "(PARI) a(n) = fromdigits(vector(n,i,valuation(i,2)), 2); \\\\ _Kevin Ryde_, Oct 08 2021",
+        "(Python)",
+        "n=4000; val=[0]*(n+1); exp=2",
+        "while exp <= n:",
+        "    for j in range(exp,n+1,exp): val[j] += 1",
+        "    exp *= 2",
+        "res = 0; i = 0",
+        "while len(str(res)) <= 1000: print(i,res); i += 1; res = res * 2 + val[i]",
+        "# _Kenny Lau_, Jun 09 2018"
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Joerg Arndt_, Feb 27 2014",
+    "ext": [
+        "Incorrect comment removed by _Michel Marcus_, Oct 06 2019"
+    ],
+    "references": 4,
+    "revision": 42,
+    "time": "2021-10-08T07:31:30-04:00",
+    "created": "2014-02-27T06:11:34-05:00"
+}

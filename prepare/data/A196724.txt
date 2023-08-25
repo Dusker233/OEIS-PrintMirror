@@ -1,0 +1,50 @@
+{
+    "number": 196724,
+    "data": "1,2,4,8,16,32,58,116,212,416,720,1440,2340,4680,7920,13024,23328,46656,74168,148336,229856,371424,615304,1230608,1780224,3401568,5589360,9468504,14397744,28795488,40312128,80624256,131388480,206363168,335814288,521401536",
+    "name": "Number of subsets of {1..n} (including empty set) such that the pairwise products of distinct elements are all distinct.",
+    "comment": [
+        "The number of subsets of {1..n} such that every orderless pair of (not necessarily distinct) elements has a different product is A325860(n). - _Gus Wiseman_, Jun 03 2019"
+    ],
+    "link": [
+        "Fausto A. C. Cariboni, <a href=\"/A196724/b196724.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "example": [
+        "a(6) = 58: from the 2^6=64 subsets of {1,2,3,4,5,6} only 6 do not have all the pairwise products of elements distinct: {1,2,3,6}, {2,3,4,6}, {1,2,3,4,6}, {1,2,3,5,6}, {2,3,4,5,6}, {1,2,3,4,5,6}."
+    ],
+    "maple": [
+        "b:= proc(n, s) local sn, m;",
+        "      m:= nops(s);",
+        "      sn:= [s[], n];",
+        "      `if`(n<1, 1, b(n-1, s) +`if`(m*(m+1)/2 = nops(({seq(seq(",
+        "       sn[i]*sn[j], j=i+1..m+1), i=1..m)})), b(n-1, sn), 0))",
+        "    end:",
+        "a:= proc(n) option remember;",
+        "      b(n-1, [n]) +`if`(n=0, 0, a(n-1))",
+        "    end:",
+        "seq(a(n), n=0..20);"
+    ],
+    "mathematica": [
+        "b[n_, s_] := b[n, s] = Module[{sn, m}, m = Length[s]; sn = Append[s, n]; If[n < 1, 1, b[n - 1, s] + If[m*(m + 1)/2 == Length[Union[Flatten[Table[ sn[[i]] * sn[[j]], {i, 1, m}, {j, i + 1, m + 1}]]]], b[n - 1, sn], 0]]]; a[n_] := a[n] = b[n - 1, {n}] + If[n == 0, 0, a[n - 1]]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Jan 31 2017, translated from Maple *)",
+        "Table[Length[Select[Subsets[Range[n]],UnsameQ@@Times@@@Subsets[#,{2}]&]],{n,0,10}] (* _Gus Wiseman_, Jun 03 2019 *)"
+    ],
+    "xref": [
+        "Cf. A143823, A196719, A196720, A196721, A196722, A196723.",
+        "The subset case is A196724 (this sequence).",
+        "The maximal case is A325859.",
+        "The integer partition case is A325856.",
+        "The strict integer partition case is A325855.",
+        "Heinz numbers of the counterexamples are given by A325993.",
+        "Cf. A292886, A293627, A325860, A325861."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Oct 06 2011",
+    "ext": [
+        "Name edited by _Gus Wiseman_, Jun 03 2019",
+        "a(33)-a(35) from _Fausto A. C. Cariboni_, Oct 05 2020"
+    ],
+    "references": 25,
+    "revision": 24,
+    "time": "2020-10-07T12:42:24-04:00",
+    "created": "2011-10-07T12:14:32-04:00"
+}

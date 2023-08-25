@@ -1,0 +1,48 @@
+{
+    "number": 343978,
+    "data": "1,63,727,4031,15559,45863,116855,257983,526615,983583,1755143,2935231,4776055,7407727,11256623,16498719,23859071,33434063,46467719,62949975,84644439,111486599,146142583,187854119,240880239,303814503,382049919,473813703,586746719",
+    "name": "Number of ordered 6-tuples (a,b,c,d,e,f) with gcd(a,b,c,d,e,f)=1 (1<= {a,b,c,d,e,f} <= n).",
+    "reference": [
+        "Joachim von zur Gathen and J\u00fcrgen Gerhard, Modern Computer Algebra, Cambridge University Press, Second Edition 2003, pp. 53-54."
+    ],
+    "link": [
+        "Karl-Heinz Hofmann, <a href=\"/A343978/b343978.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Joachim von zur Gathen and J\u00fcrgen Gerhard, <a href=\"/A342586/a342586_1.pdf\">Extract from \"3.4. (Non-)Uniqueness of the gcd\" chapter</a>, Modern Computer Algebra, Cambridge University Press, Second Edition 2003, pp. 53-54."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} mu(k)*floor(n/k)^6.",
+        "Lim_{n->infinity} a(n)/n^6 = 1/zeta(6) = A343359 = 945/Pi^6."
+    ],
+    "program": [
+        "(Python)",
+        "from labmath import mobius",
+        "def A343978(n): return sum(mobius(k)*(n//k)**6 for k in range(1, n+1))",
+        "(PARI) a(n)={sum(k=1, n+1, moebius(k)*(n\\k)^6)} \\\\ _Andrew Howroyd_, May 08 2021",
+        "(Python)",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A343978(n):",
+        "    if n == 0:",
+        "        return 0",
+        "    c, j, k1 = 1, 2, n//2",
+        "    while k1 > 1:",
+        "        j2 = n//k1 + 1",
+        "        c += (j2-j)*A343978(k1)",
+        "        j, k1 = j2, n//j2",
+        "    return n*(n**5-1)-c+j # _Chai Wah Wu_, May 17 2021"
+    ],
+    "xref": [
+        "Cf. A343359, A013664, A018805, A071778, A082540, A082544.",
+        "Cf. A342632, A342586, A342935, A342841, A343527, A343193."
+    ],
+    "keyword": "nonn,less",
+    "offset": "1,2",
+    "author": "_Karl-Heinz Hofmann_, May 06 2021",
+    "ext": [
+        "Edited by _N. J. A. Sloane_, Jun 13 2021"
+    ],
+    "references": 9,
+    "revision": 38,
+    "time": "2021-06-13T15:16:09-04:00",
+    "created": "2021-05-17T15:06:14-04:00"
+}

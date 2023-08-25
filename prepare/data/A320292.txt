@@ -1,0 +1,29 @@
+{
+    "number": 320292,
+    "data": "126,162,212,216,234,413,432,672,864,891,918,2112,2132,2176,2691,2772,2871,2912,3168,4144,4199,4224,4455,5184,6336,8448,21372,21771,23391,43673,53768,55328,64116,171432,228177,316764,412272,515484,594342,638715,663832,824544,1588248,5136248,7222932",
+    "name": "Zerofree numbers k such that the product (m+n)*p, where m,n are the first and the last digits of k, and p is the number which is the part of k between m and n, is a divisor of k.",
+    "comment": [
+        "This sequence is infinite since it contains all the terms of the form 6*(10^(6*t)+20)/35 and 33*(10^(6*t)*75+2)/7 for t > 0. The first pattern corresponds to terms 171432, 171428571432, 171428571428571432, ..., the second to terms 353571438, 353571428571438, 353571428571428571438,... . - _Giovanni Resta_, Oct 10 2018"
+    ],
+    "example": [
+        "234 is divisible by 3*(2+4).",
+        "4199 is divisible by 19*(4+9).",
+        "7222932 is divisible by 22293*(7+2)."
+    ],
+    "mathematica": [
+        "Select[Range[100, 10^6], And[FreeQ[#2, 0], Mod[#1, If[#2 == 0, #1 - 1, #2] & @@ {#1, (First@ #2 + Last@ #2) FromDigits@ Most@ Rest@ #2}] == 0] & @@ {#, IntegerDigits@ #} &] (* _Michael De Vlieger_, Oct 11 2018 *)"
+    ],
+    "program": [
+        "(PARI) isok(n) = {d = digits(n); if ((#d >= 3) && vecmin(d), x = d[1]; y = d[#d]; w = vector(#d-2, k, d[k+1]); z = fromdigits(w); if (z, return (!(n % (z*(x+y))))); ); return (0); } \\\\ _Michel Marcus_, Oct 10 2018"
+    ],
+    "xref": [
+        "Intersection of A052382 and A320121."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Anton Deynega_, Oct 09 2018",
+    "references": 1,
+    "revision": 11,
+    "time": "2018-10-26T08:18:18-04:00",
+    "created": "2018-10-26T08:18:18-04:00"
+}

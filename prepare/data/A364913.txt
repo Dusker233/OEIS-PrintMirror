@@ -1,0 +1,51 @@
+{
+    "number": 364913,
+    "data": "0,0,1,2,4,5,10,12,20,27,39,51,74,95,130,169,225,288,378,479,617,778,990,1239,1560,1938,2419,2986,3696,4538,5575,6810,8319,10102,12274,14834,17932,21587,25963,31120,37275,44513,53097,63181,75092,89030,105460,124647",
+    "name": "Number of integer partitions of n having a part that can be written as a nonnegative linear combination of the other (possibly equal) parts.",
+    "comment": [
+        "Includes all non-strict partitions (A047967)."
+    ],
+    "formula": [
+        "a(n) + A364915(n) = A000041(n)."
+    ],
+    "example": [
+        "The a(0) = 0 through a(7) = 12 partitions:",
+        "  .  .  (11)  (21)   (22)    (41)     (33)      (61)",
+        "              (111)  (31)    (221)    (42)      (322)",
+        "                     (211)   (311)    (51)      (331)",
+        "                     (1111)  (2111)   (222)     (421)",
+        "                             (11111)  (321)     (511)",
+        "                                      (411)     (2221)",
+        "                                      (2211)    (3211)",
+        "                                      (3111)    (4111)",
+        "                                      (21111)   (22111)",
+        "                                      (111111)  (31111)",
+        "                                                (211111)",
+        "                                                (1111111)",
+        "The partition (5,4,3) has no part that can be written as a nonnegative linear combination of the others, so is not counted under a(12).",
+        "The partition (6,4,3,2) has 6 = 4+2, or 6 = 3+3, or 6 = 2+2+2, or 4 = 2+2, so is counted under a(15)."
+    ],
+    "mathematica": [
+        "combs[n_,y_]:=With[{s=Table[{k,i},{k,y},{i,0,Floor[n/k]}]},Select[Tuples[s],Total[Times@@@#]==n&]];",
+        "Table[Length[Select[IntegerPartitions[n],!UnsameQ@@#||Or@@Table[combs[#[[k]],Delete[#,k]]!={},{k,Length[#]}]&]],{n,0,15}]"
+    ],
+    "xref": [
+        "The strict case is A364839.",
+        "For sums instead of combinations we have A364272, binary A364670.",
+        "The complement in strict partitions is A364350.",
+        "For subsets instead of partitions we have A364914, complement A326083.",
+        "Allowing equal parts gives A365068, complement A364915.",
+        "A000041 counts integer partitions, strict A000009.",
+        "A008284 counts partitions by length, strict A008289.",
+        "A116861 and A364916 count linear combinations of strict partitions.",
+        "A365007 = strict partitions w/ pos linear combination, complement A365006.",
+        "Cf. A085489, A151897, A236912, A237113, A237667, A275972, A364346."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Aug 20 2023",
+    "references": 5,
+    "revision": 5,
+    "time": "2023-08-22T07:56:43-04:00",
+    "created": "2023-08-22T07:56:43-04:00"
+}

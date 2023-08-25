@@ -1,0 +1,30 @@
+{
+    "number": 364542,
+    "data": "1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,19,20,21,22,23,24,25,26,27,28,29,30,31,32,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,71,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95",
+    "name": "Numbers k for which A005940(k) >= k.",
+    "comment": [
+        "Sequence A005941(A364560(.)) sorted into ascending order.",
+        "A029747 is included as a subsequence, because it gives the known fixed points of map n -> A005940(n).",
+        "Differs from A343107 for the first time at a(22) = 25, which term is not present in A343107. On the other hand, 35 is the first term of A343107 that is not present in this sequence."
+    ],
+    "mathematica": [
+        "nn = 95; Array[Set[a[#], #] &, 2]; Do[If[EvenQ[n], Set[a[n], 2 a[n/2]], Set[a[n], Times @@ Power @@@ Map[{Prime[PrimePi[#1] + 1], #2} & @@ # &, FactorInteger[a[(n + 1)/2]]]]], {n, 3, nn}]; Select[Range[nn], a[#] >= # &] (* _Michael De Vlieger_, Jul 28 2023 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "A005940(n) = { my(p=2, t=1); n--; until(!n\\=2, if((n%2), (t*=p), p=nextprime(p+1))); t };",
+        "isA364542(n) = (A005940(n)>=n);"
+    ],
+    "xref": [
+        "Positions of nonnegative terms in A364499.",
+        "Complement of A364540.",
+        "Cf. A005940, A005941, A029747 (subsequence), A343107 (not a subsequence), A364560."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Antti Karttunen_, Jul 28 2023",
+    "references": 6,
+    "revision": 13,
+    "time": "2023-07-29T15:59:14-04:00",
+    "created": "2023-07-28T10:36:16-04:00"
+}

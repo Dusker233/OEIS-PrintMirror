@@ -1,0 +1,38 @@
+{
+    "number": 329936,
+    "data": "4,8,9,15,16,32,45,49,50,51,55,64,75,85,100,117,126,128,135,153,159,162,171,185,190,200,205,207,215,222,225,238,246,249,252,253,256,287,303,319,324,333,338,350,369,374,378,380,400,407,438,442,444,469,471",
+    "name": "Binary hoax numbers: composite numbers k such that sum of bits of k equals the sum of bits of the distinct prime divisors of k.",
+    "comment": [
+        "Analogous to A278909 (binary Smith numbers) as A019506 (hoax numbers) is analogous to A006753 (Smith numbers).",
+        "Includes all the powers of 2 except for 1 and 2."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A329936/b329936.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "4 = 2^2 is in the sequence since the binary representation of 4 is 100 and 1 + 0 + 0 = 1, and the binary representation of 2 is 10 and 1 + 0 = 1."
+    ],
+    "maple": [
+        "filter:= proc(n)",
+        "if isprime(n) then return false fi;",
+        "convert(convert(n,base,2),`+`) = add(convert(convert(t,base,2),`+`),t=numtheory:-factorset(n))",
+        "end proc:",
+        "select(filter, [$2..1000]); # _Robert Israel_, Nov 28 2019"
+    ],
+    "mathematica": [
+        "binWt[n_] := Total @ IntegerDigits[n, 2]; binHoaxQ[n_] := CompositeQ[n] && Total[binWt /@ FactorInteger[n][[;; , 1]]] == binWt[n]; Select[Range[500], binHoaxQ]"
+    ],
+    "program": [
+        "(PARI) is(n)= my(f=factor(n)[,1]); sum(i=1,#f, hammingweight(f[i]))==hammingweight(n) && !isprime(n) \\\\ _Charles R Greathouse IV_, Nov 28 2019"
+    ],
+    "xref": [
+        "Cf. A006753, A019506, A278909."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Nov 24 2019",
+    "references": 3,
+    "revision": 19,
+    "time": "2019-11-29T03:25:40-05:00",
+    "created": "2019-11-28T23:26:22-05:00"
+}

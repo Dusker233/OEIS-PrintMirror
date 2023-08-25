@@ -1,0 +1,50 @@
+{
+    "number": 329366,
+    "data": "1,2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,29,31,32,37,41,43,47,49,53,59,61,64,67,71,73,79,81,83,89,91,97,101,103,107,109,113,121,125,127,128,131,137,139,149,151,157,163,167,169,173,179,181,191,193,197",
+    "name": "Numbers whose distinct prime indices are pairwise indivisible (stable) and pairwise non-relatively prime (intersecting).",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798.",
+        "The Heinz number of an integer partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k). A partition with no two distinct parts divisible is said to be stable, and a partition with no two distinct parts relatively prime is said to be intersecting, so these are Heinz numbers of stable intersecting partitions."
+    ],
+    "example": [
+        "The sequence of terms together with their prime indices begins:",
+        "    1: {}",
+        "    2: {1}",
+        "    3: {2}",
+        "    4: {1,1}",
+        "    5: {3}",
+        "    7: {4}",
+        "    8: {1,1,1}",
+        "    9: {2,2}",
+        "   11: {5}",
+        "   13: {6}",
+        "   16: {1,1,1,1}",
+        "   17: {7}",
+        "   19: {8}",
+        "   23: {9}",
+        "   25: {3,3}",
+        "   27: {2,2,2}",
+        "   29: {10}",
+        "   31: {11}",
+        "   32: {1,1,1,1,1}",
+        "   37: {12}"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "stableQ[u_,Q_]:=!Apply[Or,Outer[#1=!=#2&&Q[#1,#2]&,u,u,1],{0,1}];",
+        "Select[Range[100],stableQ[Union[primeMS[#]],GCD[#1,#2]==1&]&&stableQ[Union[primeMS[#]],Divisible]&]"
+    ],
+    "xref": [
+        "Intersection of A316476 and A328867.",
+        "Heinz numbers of the partitions counted by A328871.",
+        "Replacing \"intersecting\" with \"relatively prime\" gives A328677.",
+        "Cf. A056239, A112798, A285573, A289509, A303362, A304713, A327393, A328671."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Nov 12 2019",
+    "references": 2,
+    "revision": 5,
+    "time": "2019-11-12T19:24:15-05:00",
+    "created": "2019-11-12T19:24:15-05:00"
+}

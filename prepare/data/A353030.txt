@@ -1,0 +1,63 @@
+{
+    "number": 353030,
+    "data": "13,1439,100799,3548879,14061599,38342303,120355199,12555446399",
+    "name": "a(n) is the first emirp p such that there are exactly n unordered pairs (q,r) of emirps with p = q*r + q + r.",
+    "comment": [
+        "a(n) is the first prime p such that the digit-reversal rev(p) of p is a prime and there are exactly n pairs (q,r) of primes such that q < r, rev(q) and rev(r) are primes, and p = q*r + q + r.",
+        "From _David A. Corneth_, Jan 14 2023: (Start)",
+        "a(8) <= 121347071999, a(9) <= 195271876799, a(10) <= 10175362797599, a(11) <= 17482966300799.",
+        "For n >= 2, n == 3 (mod 4) and (n + 1)/4 has at least 2*n divisors. (End)"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A353030/a353030.gp.txt\">Upper bounds on a(0)..a(30).</a>"
+    ],
+    "example": [
+        "a(3) = 3548879 because 3548879 = 17*197159 + 17 + 197159 = 359*9857 + 359 + 9857 = 953*3719 + 953 + 3719 and 3548879, 17, 197159, 359, 9857, 953, 3719 are emirps."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L, i; L:= convert(n, base, 10); add(L[-i]*10^(i-1), i=1..nops(L)) end proc:",
+        "isemirp:= proc(p) local r;",
+        "   if not isprime(p) then return false fi;",
+        "   r:= revdigs(p);",
+        "   r <> p and isprime(r)",
+        "end proc:",
+        "g:= proc(n) local p,q, t,count;",
+        "  count:= 0;",
+        "  for t in select(`<`,numtheory:-divisors(n+1),floor(sqrt(n+1))) do",
+        "    if isemirp(t-1) and isemirp((n+1)/t-1) then",
+        "       count:= count+1;",
+        "    fi",
+        "  od;",
+        "  count",
+        "end proc:",
+        "V:= Array(0..6): vcount:= 0:",
+        "p:= 2:",
+        "while vcount < 7 do",
+        "  p:= nextprime(p);",
+        "  d:= ilog10(p);",
+        "  p1:= floor(p/10^d);",
+        "  if p1=2 then p:= nextprime(3*10^d)",
+        "  elif member(p1,{4,5,6}) then p:= nextprime(7*10^d)",
+        "  elif p1=8 then p:= nextprime(9*10^d)",
+        "  fi;",
+        "  if isemirp(p) then",
+        "    v:= g(p);",
+        "    if V[v] = 0 then vcount:= vcount+1; V[v]:= p; fi;",
+        "  fi",
+        "od:",
+        "convert(V,list);"
+    ],
+    "xref": [
+        "Cf. A006567, A352249."
+    ],
+    "keyword": "nonn,base,more",
+    "offset": "0,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Apr 18 2022",
+    "ext": [
+        "a(7) from _David A. Corneth_, Jan 14 2023"
+    ],
+    "references": 1,
+    "revision": 24,
+    "time": "2023-01-15T09:52:06-05:00",
+    "created": "2022-04-18T22:26:24-04:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 322068,
+    "data": "0,0,1,2,4,5,10,11,15,18,25,26,36,37,46,54,62,63,78,79,93,103,116,117,137,142,157,166,184,185,216,217,233,247,266,278,308,309,330,346,374,375,416,417,443,467,492,493,533,540,575,595,625,626,671,687,723,745",
+    "name": "a(n) = (1/2)*Sum_{p prime <= n} floor(n/p) * floor(1 + n/p).",
+    "comment": [
+        "Partial sums of A069359."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/Prime_zeta_function\">Prime Zeta Function</a>"
+    ],
+    "formula": [
+        "a(n) ~ A085548 * n*(n+1)/2.",
+        "a(n) = Sum_{p prime <= n} A000217(floor(n/p)).",
+        "a(n) = (Sum_{k=1..floor(sqrt(n))} k*(k+1) * (pi(floor(n/k)) - pi(floor(n/(k+1)))) + Sum_{p prime <= floor(n/(1+floor(sqrt(n))))} floor(n/p)*floor(1+n/p))/2, where pi(x) is the prime-counting function (A000720).",
+        "a(n) = Sum_{i=1..n} i*pi(floor(n/i)), where pi(n) = A000720(n). - _Ridouane Oudra_, Oct 16 2019"
+    ],
+    "maple": [
+        "with(numtheory): seq(add(i*pi(floor(n/i)), i=1..n), n=0..60); # _Ridouane Oudra_, Oct 16 2019"
+    ],
+    "mathematica": [
+        "a[n_] := Module[{s=0, p=2}, While[p<=n, s += (Floor[n/p] * Floor[1 + n/p]); p=NextPrime[p]]; s]/2; Array[a, 100, 0] (* _Amiram Eldar_, Nov 25 2018 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = my(s=0); forprime(p=2, n, s+=(n\\p)*(1+n\\p)); s/2;",
+        "(PARI) a(n) = sum(k=1, sqrtint(n), k*(k+1) * (primepi(n\\k) - primepi(n\\(k+1))))/2 + sum(k=1, n\\(sqrtint(n)+1), if(isprime(k), (n\\k)*(1+n\\k), 0))/2;"
+    ],
+    "xref": [
+        "Cf. A000217, A000720, A013939, A013940, A069359."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,4",
+    "author": "_Daniel Suteu_, Nov 25 2018",
+    "references": 2,
+    "revision": 15,
+    "time": "2019-10-16T12:19:24-04:00",
+    "created": "2018-12-20T23:21:38-05:00"
+}

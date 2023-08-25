@@ -1,0 +1,64 @@
+{
+    "number": 340619,
+    "data": "1,2,2,3,4,4,4,4,5,6,6,7,8,8,8,8,8,8,8,8,9,10,10,11,12,12,12,12,13,14,14,15,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,17,18,18,19,20,20,20,20,21,22,22,23,24,24,24,24,24,24,24,24,25,26,26",
+    "name": "n appears A006519(n) times.",
+    "comment": [
+        "This sequence has similarities with the Cantor staircase function.",
+        "This sequence can be seen as an irregular table where the n-th row contains A006519(n) times the value n.",
+        "For any k > 1, the set of points { (n, a(n)), n = 1..A006520(2^k-1) } is symmetric; for example, for k = 3, we have the following configuration:",
+        "      a(n)",
+        "       ^",
+        "       |           *",
+        "       |         **",
+        "       |        *",
+        "       |    ****",
+        "       |   *",
+        "       | **",
+        "       |*",
+        "       +-------------> n"
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A340619/b340619.txt\">Table of n, a(n) for n = 1..11264</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Cantor_function\">Cantor function</a>"
+    ],
+    "formula": [
+        "a(A006520(n)) = n.",
+        "a(A006520(n)+1) = n+1.",
+        "a(n) + a(A006520(2^k-1) + 1 - n) = 2^k for any k > 0 and n = 1..A006520(2^k-1).",
+        "a(n) = 2^k + (a(r) if r>0), where k such that k*2^(k-1) < n <= (k+1)*2^k and r = n - (k+2)*2^(k-1). - _Kevin Ryde_, Jan 18 2021"
+    ],
+    "example": [
+        "The first rows, alongside A006519(n), are:",
+        "    n | n-th row               | A006519(n)",
+        "   ---+------------------------+-----------",
+        "    1 | 1                      |          1",
+        "    2 | 2, 2                   |          2",
+        "    3 | 3                      |          1",
+        "    4 | 4, 4, 4, 4             |          4",
+        "    5 | 5                      |          1",
+        "    6 | 6, 6                   |          2",
+        "    7 | 7                      |          1",
+        "    8 | 8, 8, 8, 8, 8, 8, 8, 8 |          8",
+        "    9 | 9                      |          1",
+        "   10 | 10, 10                 |          2"
+    ],
+    "mathematica": [
+        "A340619[n_] := Array[n &, Table[BitAnd[BitNot[i - 1], i], {i, 1, n}][[n]]];",
+        "Table[A340619[n], {n, 1, 26}] // Flatten (* _Robert P. P. McKone_, Jan 19 2021 *)"
+    ],
+    "program": [
+        "(PARI) concat(apply(v -> vector(2^valuation(v,2), k, v), [1..26]))",
+        "(PARI) a(n) = my(ret=0); forstep(k=logint(n,2),0,-1, if(n > k<<(k-1), ret+=1<<k; n-=(k+2)<<(k-1))); ret; \\\\ _Kevin Ryde_, Jan 18 2021"
+    ],
+    "xref": [
+        "See A061392 and A340500 for similar sequences.",
+        "Cf. A006519, A006520, A046699."
+    ],
+    "keyword": "nonn,easy,tabf",
+    "offset": "1,2",
+    "author": "_R\u00e9my Sigrist_, Jan 13 2021",
+    "references": 1,
+    "revision": 48,
+    "time": "2021-01-24T05:53:36-05:00",
+    "created": "2021-01-23T23:39:45-05:00"
+}

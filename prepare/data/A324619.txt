@@ -1,0 +1,41 @@
+{
+    "number": 324619,
+    "data": "1,1,2,9,43,238,1436,9230,62347,438397,3188687,23886061,183706628,1447476799,11666912970,96101351315,808489267438,6944890495515,60909005722973,545480514290103,4989651763986766,46633629693716933,445474644772366480,4351015655544312048,43463615209598548901,444132103382081004621,4642827326458824657758,49649335888812297089157,543030381664721843558408,6072677103962177819391932",
+    "name": "G.f. A(x) = Sum_{n>=0} x^n*(A(x)^n + i)^n/(1 + i*x*A(x)^n)^(n+1), where i^2 = -1.",
+    "comment": [
+        "Notice that the imaginary components in the generating function vanish when expanded as a power series in x."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A324619/b324619.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "G.f. A(x) satisfies:",
+        "(1) A(x) = Sum_{n>=0} x^n*(A(x)^n + i)^n / (1 + i*x*A(x)^n)^(n+1).",
+        "(2) A(x) = Sum_{n>=0} x^n*(A(x)^n - i)^n / (1 - i*x*A(x)^n)^(n+1).",
+        "From _Paul D. Hanna_, Nov 05 2021: (Start)",
+        "(3) A(x) = Sum_{n>=0} x^n*Sum_{k=0..n} i^k * binomial(n,k) * (A(x)^n - i*A(x)^k)^(n-k).",
+        "(4) A(x) = Sum_{n>=0} x^n*Sum_{k=0..n} (-i)^k * binomial(n,k) * (A(x)^n + i*A(x)^k)^(n-k). (End)"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 2*x^2 + 9*x^3 + 43*x^4 + 238*x^5 + 1436*x^6 + 9230*x^7 + 62347*x^8 + 438397*x^9 + 3188687*x^10 + 23886061*x^11 + 183706628*x^12 + ...",
+        "such that",
+        "A(x) = 1/(1 - i*x) + x*(A(x) - i)/(1 - i*x*A(x))^2 + x^2*(A(x)^2 - i)^2/(1 - i*x*A(x)^2)^3 + x^3*(A(x)^3 - i)^3/(1 - i*x*A(x)^3)^4 + x^4*(A(x)^4 - i)^4/(1 - i*x*A(x)^4)^5 + x^5*(A(x)^5 - i)^5/(1 - i*x*A(x)^5)^6 + ...",
+        "also",
+        "A(x) = 1/(1 + i*x) + x*(A(x) + i)/(1 + i*x*A(x))^2 + x^2*(A(x)^2 + i)^2/(1 + i*x*A(x)^2)^3 + x^3*(A(x)^3 + i)^3/(1 + i*x*A(x)^3)^4 + x^4*(A(x)^4 + i)^4/(1 + i*x*A(x)^4)^5 + x^5*(A(x)^5 + i)^5/(1 + i*x*A(x)^5)^6 + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1,1]); for(i=0,n, A = concat(A,0);",
+        "A[#A] = polcoeff( sum(n=0,#A, x^n*(Ser(A)^n + I)^n/(1 + I*x*Ser(A)^n)^(n+1) ),#A-1)); polcoeff(Ser(A),n)}",
+        "for(n=0,40,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A324618."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Mar 12 2019",
+    "references": 3,
+    "revision": 14,
+    "time": "2021-11-09T19:53:05-05:00",
+    "created": "2019-03-12T01:54:38-04:00"
+}

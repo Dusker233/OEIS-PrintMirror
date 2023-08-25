@@ -1,0 +1,37 @@
+{
+    "number": 337611,
+    "data": "2,3,6,10,14,20,22,26,28,38,44,46,52,76,78,88,94,102,105,114,116,117,136,138,152,171,186,187,195,207,212,247,248,266,282,284,285,296,304,322,333,354,366,369,387,402,403,407,414,423,425,426,430,437,442,468",
+    "name": "Positive integers m such that A126288^k(m) = m for some positive integer k.",
+    "comment": [
+        "A126288^k(m) means apply A126288 to m k times.",
+        "Equivalently, the numbers that belong to a cycle under the map x -> A126288(x).",
+        "2 and 3 are the only primes in this sequence."
+    ],
+    "link": [
+        "Ely Golden, <a href=\"/A337611/b337611.txt\">Table of n, a(n) for n = 1..7144</a>",
+        "Ely Golden, <a href=\"/A337611/a337611_1.py.txt\">Python program for (na\u00efvely) generating terms of this sequence</a>"
+    ],
+    "formula": [
+        "For any term m, gcd {m, A126288(m), A126288(A126288(m)), ...} = A052126(m)."
+    ],
+    "example": [
+        "3 is a term since A126288(A126288(3)) = A126288(2) = 3."
+    ],
+    "program": [
+        "(PARI) gpf(n) = vecmax(factor(n)[,1]);",
+        "f(n) = if (n==1, 2, n*gpf(n+1)/gpf(n)); \\\\ A126288",
+        "incycle(n, list) = {my(v=Vec(list)); #select(x->(x==n), v);}",
+        "cycle(n) = {my(list = List(), repeat=1); while(repeat, n = f(n); if (incycle(n, list), repeat=0); listput(list, n);); list;}",
+        "isok(n) = {my(list = cycle(n)); incycle(n, list);} \\\\ _Michel Marcus_, Sep 08 2020"
+    ],
+    "xref": [
+        "Cf. A337609, A337610, A337612, A126288, A052126."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Ely Golden_, Sep 05 2020",
+    "references": 4,
+    "revision": 22,
+    "time": "2020-10-07T13:13:14-04:00",
+    "created": "2020-10-06T02:47:35-04:00"
+}

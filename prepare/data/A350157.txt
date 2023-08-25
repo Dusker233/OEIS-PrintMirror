@@ -1,0 +1,40 @@
+{
+    "number": 350157,
+    "data": "0,1,7,61,709,9911,167111,3237921,71850913,1780353439,49100614399,1482061739423,48873720208853,1740252983702871,66793644836081827,2740470162691675711,120029057782404141841,5575505641199441262767,274412698693082818767335,14236421024010426118259883",
+    "name": "Total number of nodes in the smallest connected component summed over all endofunctions on [n].",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A350157/b350157.txt\">Table of n, a(n) for n = 0..385</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} k * A347999(n,k)."
+    ],
+    "example": [
+        "a(2) = 7 = 2 + 2 + 1 + 2: 11, 22, 12, 21."
+    ],
+    "maple": [
+        "g:= proc(n) option remember; add(n^(n-j)*(n-1)!/(n-j)!, j=1..n) end:",
+        "b:= proc(n, m) option remember; `if`(n=0, x^m, add(",
+        "      b(n-i, min(m, i))*g(i)*binomial(n-1, i-1), i=1..n))",
+        "    end:",
+        "a:= n-> (p-> add(coeff(p, x, i)*i, i=0..n))(b(n,n)):",
+        "seq(a(n), n=0..23);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = Sum[n^(n - j)*(n - 1)!/(n - j)!, {j, 1, n}];",
+        "b[n_, m_] := b[n, m] = If[n == 0, x^m, Sum[",
+        "     b[n - i, Min[m, i]]*g[i]*Binomial[n - 1, i - 1], {i, 1, n}]];",
+        "a[n_] := Function[p, Sum[Coefficient[p, x, i]*i, {i, 0, n}]][b[n, n]];",
+        "Table[a[n], {n, 0, 23}] (* _Jean-Fran\u00e7ois Alcover_, Apr 27 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column k=1 of A350202.",
+        "Cf. A000312, A001865, A007778, A209327, A347999."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Dec 17 2021",
+    "references": 4,
+    "revision": 24,
+    "time": "2022-04-27T08:50:55-04:00",
+    "created": "2021-12-17T11:22:36-05:00"
+}

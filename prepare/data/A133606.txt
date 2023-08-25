@@ -1,0 +1,53 @@
+{
+    "number": 133606,
+    "data": "1,124,175,412,1326,1362,1395,1935,3126,3162,3195,3915,4172,9315,14728,17248,21784,72184,123864,124368,126384,132648,132864,136824,138624,142368,148632,162384,163248,163824,164328,164832,168432,183264,186432",
+    "name": "Numbers n with all digits different, such that all of its digits divide n, but none of the nonzero digits not in n divide n.",
+    "comment": [
+        "Digit 1 must appear in each term. - _Michael S. Branicky_, Jul 06 2021"
+    ],
+    "reference": [
+        "Rodolfo Kurchan, Snark, December 2007"
+    ],
+    "link": [
+        "Rodolfo Kurchan, Dec 27 2007, <a href=\"/A133606/b133606.txt\">Table of n, a(n) for n = 1..116</a>"
+    ],
+    "example": [
+        "124 is divisible by 1, 2 and 4 and it is not divisible by 3, 5, 6, 7, 8 and 9.",
+        "175 is divisible by 1, 5 and 7 and it is not divisible by 2, 3, 4, 6, 8 and 9.",
+        "The final term, 864312, is divisible by 8, 6, 4, 3, 1 and 2, but not by 5, 7 or 9."
+    ],
+    "mathematica": [
+        "Select[Range@200000,(s=IntegerDigits@#;Length@s==Length@Union@s&&",
+        "Quiet@AllTrue[#/s,IntegerQ]&&NoneTrue[#/Complement[Range@9,s],IntegerQ])&] (* _Giorgos Kalogeropoulos_, Jul 06 2021 *)",
+        "Select[Range[200000],DigitCount[#,10,0]==0&&Max[DigitCount[#]]==1 && AllTrue[ #/IntegerDigits[#],IntegerQ]&&NoneTrue[#/Complement[Range[ 9],IntegerDigits[ #]], IntegerQ]&] (* _Harvey P. Dale_, Dec 30 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def ok(n):",
+        "  s = str(n); ss = set(s)",
+        "  return '0' not in ss and len(s) == len(ss) and all(n%int(d) == 0 for d in ss) and all(n%int(d) for d in set(\"123456789\")-ss)",
+        "print(list(filter(ok, range(200000)))) # _Michael S. Branicky_, Jul 06 2021",
+        "(Python) # generates entire sequence",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def agen():",
+        "  for digits in range(1, 10):",
+        "    for mp in multiset_permutations(\"123456789\", digits):",
+        "      n, mpc = int(\"\".join(mp)), set(\"123456789\") - set(mp)",
+        "      if all(n%int(d) == 0 for d in mp) and all(n%int(d) for d in mpc):",
+        "        yield n",
+        "print([an for an in agen()]) # _Michael S. Branicky_, Jul 06 2021"
+    ],
+    "xref": [
+        "Cf. A133598."
+    ],
+    "keyword": "nonn,fini,full,base",
+    "offset": "1,2",
+    "author": "_Rodolfo Kurchan_, Dec 27 2007",
+    "ext": [
+        "Name clarified by _Michael S. Branicky_, Jul 06 2021"
+    ],
+    "references": 2,
+    "revision": 16,
+    "time": "2021-12-30T15:31:37-05:00",
+    "created": "2008-06-29T03:00:00-04:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 295499,
+    "data": "2,6,18,48,124,302,720,1672,3828,8624,19222,42402,92824,201730,435848,936548,2003292,4267162,9056642,19158430,40409800,85006554,178392666,373546760,780628626,1628332454,3390841918,7050048360,14636882444,30347358688,62842024406",
+    "name": "Sum of lengths of longest unbordered subword, over all binary words of length n.",
+    "comment": [
+        "By \"subword\" we mean a contiguous substring within a word.  A string x is \"bordered\" if it has some nonempty prefix (other than x) that is also a suffix, and \"unbordered\" otherwise."
+    ],
+    "reference": [
+        "Pawel Gawrychowski, Gregory Kucherov, Benjamin Sach, and Tatiana Starikovskaya, \"Computing the Longest Unbordered Substring\", in C. Iliopoulos et al. (Eds.): SPIRE 2015, LNCS 9309, pp. 246-257, 2015."
+    ],
+    "link": [
+        "Pawel Gawrychowski, Gregory Kucherov, Benjamin Sach, and Tatiana Starikovskaya, <a href=\"https://hal.archives-ouvertes.fr/hal-01250721\">Computing the Longest Unbordered Substring</a>, in C. Iliopoulos et al. (Eds.): SPIRE 2015, LNCS 9309, 2015."
+    ],
+    "example": [
+        "For n = 3 the longest unbordered subwords of 000,111 are of length 1; of 010,101 are of length 2; and for all others are of length 3.  So a(3) = 1+1+2+2+3+3+3+3 = 18."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "def bordered(b):",
+        "    for i in range(len(b)-1, 0, -1):",
+        "        if b[:i] == b[-i:]: return True",
+        "    return False",
+        "def m(b):",
+        "    for i in range(len(b), 0, -1):",
+        "        for j in range(len(b)-i+1):",
+        "            if not bordered(b[j:j+i]):",
+        "                return i",
+        "    return 0",
+        "def a(n): return 2*sum(m(\"0\"+\"\".join(b)) for b in product(\"01\", repeat=n-1))",
+        "print([a(n) for n in range(1, 19)]) # _Michael S. Branicky_, Mar 19 2022"
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Feb 17 2018",
+    "ext": [
+        "a(19) and beyond from _Michael S. Branicky_, Mar 19 2022"
+    ],
+    "references": 0,
+    "revision": 61,
+    "time": "2022-03-19T09:36:18-04:00",
+    "created": "2018-02-17T20:29:48-05:00"
+}

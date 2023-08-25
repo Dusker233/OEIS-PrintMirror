@@ -1,0 +1,45 @@
+{
+    "number": 1114,
+    "id": "M1747 N0692",
+    "data": "2,7,18,28,182,845,904,5235,36028,74713,526624,977572,4709369,9959574,96696762,7724076630,35354759457,138217852516,642742746639,1932003059921,8174135966290,43572900334295,260595630738132,328627943490763,2338298807531952,5101901157383418",
+    "name": "Increasing blocks of digits of e.",
+    "reference": [
+        "N. J. A. Sloane, A Handbook of Integer Sequences, Academic Press, 1973 (includes this sequence).",
+        "N. J. A. Sloane and Simon Plouffe, The Encyclopedia of Integer Sequences, Academic Press, 1995 (includes this sequence)."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A001114/b001114.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "G. W. Reitwiesner, <a href=\"https://doi.org/10.2307/2002695\">An ENIAC determination of pi and e to more than 2000 decimal places</a>, Mathematical Tables and Other Aids to Computation, 4 (1950), 11-15.",
+        "D. Shanks and J. W. Wrench, Jr., <a href=\"https://doi.org/10.2307/2004403\">Calculation of e to 100,000 decimals</a>, Math. Comp., 23 (1969), 679-680."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import E",
+        "def aupto(digit_limit):",
+        "  alst, estr = [], str(E.n(digit_limit)).replace(\".\", \"\")",
+        "  prevlen, prevstr, suffix = 0, \"\", estr",
+        "  while len(suffix) > prevlen + 1:",
+        "    if suffix[:prevlen] > prevstr: idx = prevlen",
+        "    else: idx = prevlen + 1",
+        "    while suffix[idx] == '0':",
+        "      idx += 1",
+        "      if idx > len(suffix): break # end of string reached",
+        "    anstr, suffix = suffix[:idx], suffix[idx:]",
+        "    prevstr, prevlen = anstr, len(anstr)",
+        "    assert anstr[0] != '0'",
+        "    alst.append(int(anstr))",
+        "  return alst",
+        "print(aupto(220)) # _Michael S. Branicky_, Feb 07 2021"
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "More terms from _Jon E. Schoenfield_, Mar 24 2010",
+        "a(24) and beyond from _Michael S. Branicky_, Feb 07 2021"
+    ],
+    "references": 1,
+    "revision": 21,
+    "time": "2021-02-07T21:10:31-05:00",
+    "created": "1991-04-30T03:00:00-04:00"
+}

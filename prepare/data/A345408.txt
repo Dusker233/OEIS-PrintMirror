@@ -1,0 +1,52 @@
+{
+    "number": 345408,
+    "data": "1090,2662,2992,3212,4334,4994,5104,5324,6776,7106,9328,9548,10450,10670,10780,11110,11330,11440,11660,12122,12452,12892,13222,15004,16786,17446,17666,29092,29482,31912,36352,44644,44834,45454,46654,46664,47474,47864,49094,49294,49484,49684,49894,50104",
+    "name": "Numbers that are the sum of an emirp and its reversal in more than one way.",
+    "comment": [
+        "Numbers that are in A345409 in more than one way.",
+        "Interchanging an emirp and its reversal is not counted as a different way."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A345408/b345408.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 2992 is a member because 2992 = 1091 + 1901 = 1181+1811 where 1091 and 1181 and their reversals 1901 and 1811 are primes."
+    ],
+    "maple": [
+        "revdigs:= proc(n) local L,i; L:= convert(n,base,10); add(L[-i]*10^(i-1),i=1..nops(L)) end proc:",
+        "isemirp1:= proc(n) local r;",
+        "if not isprime(n) then return false fi;",
+        "r:= revdigs(n);",
+        "r > n and isprime(r)",
+        "end proc:",
+        "E:= select(isemirp1, [seq(seq(seq(i*10^d+j,j=1..10^d-1,2),i=[1,3,7,9]),d=1..4)]):",
+        "V:= sort(map(t -> t+revdigs(t),E)):",
+        "M:= select(t -> V[t+1]=V[t], [$1..nops(V)-1]):",
+        "sort(convert(convert(V[M],set),list));"
+    ],
+    "program": [
+        "(Python)",
+        "from collections import Counter",
+        "from sympy import isprime, nextprime",
+        "def epgen(start=1, end=float('inf')): # generates unique emirp/prime pairs",
+        "    p = nextprime(start-1)",
+        "    while p <= end:",
+        "        revp = int(str(p)[::-1])",
+        "        if p < revp and isprime(revp): yield (p, revp)",
+        "        p = nextprime(p)",
+        "def aupto(lim):",
+        "    c = Counter(sum(ep) for ep in epgen(1, lim) if sum(ep) <= lim)",
+        "    return sorted(s for s in c if c[s] > 1)",
+        "print(aupto(50105)) # _Michael S. Branicky_, Jun 18 2021"
+    ],
+    "xref": [
+        "Cf. A006567, A345409."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Jun 18 2021",
+    "references": 3,
+    "revision": 11,
+    "time": "2021-06-18T20:43:32-04:00",
+    "created": "2021-06-18T14:49:21-04:00"
+}

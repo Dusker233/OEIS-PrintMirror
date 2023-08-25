@@ -1,0 +1,30 @@
+{
+    "number": 169781,
+    "data": "1,3,9,29,99,361,1373,5349,21109,83859,334275,1334769,5334413,21328351,85294869",
+    "name": "a(n) = A169780(2^n).",
+    "comment": [
+        "These are the \"high water marks\" in A169780."
+    ],
+    "mathematica": [
+        "initTriangle[ ] := {{1, 0, 1, 0, 1}, {1, 0, 1, 1, 0, 1}, {1, 0, 1, 0, 1, 0, 1}, {1, 0, 1, 1, 1, 1, 0, 1}, {1, 0, 1, 0, 0, 0, 1, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}};",
+        "nextRow[k_] := Join[{1, 0}, Table[0, k], {0, 1}]",
+        "neighborPosList[{i_, j_}] := {{i - 1, j - 1}, {i - 1, j}, {i, j - 1}, {i, j + 1}, {i + 1, j}, {i + 1, j + 1}}",
+        "neighborEmptyList[{i_, j_}] := Select[neighborPosList[{i, j}], nTriangle[[Apply[Sequence, #]]] == 0 &]",
+        "getCellValue[{i_, j_}] := nTriangle[[i, j]]",
+        "a169781[n_] := Module[{newGen = { }, lastGen = {{5, 3}, {5, 7}}, newCount = 0, totalCount = 11, k, p, emptyNs, q, emptyCs, r}, nTriangle = initTriangle[ ]; For[k = 6, k <= n, k++, AppendTo[nTriangle, nextRow[k + 1]]; For[p = 1, p <= Length[lastGen], p++, emptyNs = Select[neighborPosList[lastGen[[p]]], getCellValue[#] == 0 &]; For[q = 1, q <= Length[emptyNs], q++, emptyCs = Select[neighborPosList[emptyNs[[q]]], getCellValue[#] == 1 &]; If[Length[emptyCs] == 1, AppendTo[newGen, emptyNs[[q]]]]]]; For[r = 1, r <= Length[newGen], r++, nTriangle[[Apply[Sequence, newGen[[r]]]]] = 1]; lastGen = newGen; totalCount += Length[newGen]; newGen = { }]; totalCount]/;(n>=2^3 && IntegerQ[Log[2, n]])",
+        "a169781[2^11] (* sample invocation for a(11) - _Hartmut F. W. Hoft_, Apr 17 2020 *)"
+    ],
+    "xref": [
+        "Cf. A169780, A169785."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, May 11 2010",
+    "ext": [
+        "a(11)-a(14) from _Hartmut F. W. Hoft_, Apr 17 2020"
+    ],
+    "references": 4,
+    "revision": 10,
+    "time": "2020-05-08T16:13:11-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

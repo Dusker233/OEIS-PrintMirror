@@ -1,0 +1,32 @@
+{
+    "number": 228188,
+    "data": "10,300,195000,43950000,4106400000,396606000000,25271610000000,83084100000000,22661209000000000,1596879960000000000,3344565630000000000000,3344565630000000000000,3344565630000000000000,1795096118003100000000000000,33778738696128000000000000000",
+    "name": "Smallest triangular number divisible by 10^n.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A228188/b228188.txt\">Table of n, a(n) for n = 1..501</a>"
+    ],
+    "formula": [
+        "a(n) = A228191(n)*(A228191(n)+1)/2. - _Chai Wah Wu_, Jul 25 2022"
+    ],
+    "example": [
+        "a(2)=300 because 300 is the smallest triangular number divisible by 10^2."
+    ],
+    "mathematica": [
+        "sol[k_, u_] := Block[{x}, Min[x /. List@ToRules[Reduce[Mod[x + u, 2*2^k] == 0 && Mod[x + 1 - u, 5^k] == 0 && x > 0, {x}, Integers] /. C[1] -> 0]]]; a[n_] := Min[sol[n, 0], sol[n, 1]]; p = a /@ Range[15]; p*(p+1)/2"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory.modular import crt",
+        "def A228188(n): return (k:=int(min(crt(m:=(1<<(n+1),5**n),(0,-1))[0], crt(m,(-1,0))[0])))*(k+1)>>1 # _Chai Wah Wu_, Jul 25 2022"
+    ],
+    "xref": [
+        "Cf. A000217, A228191."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Shyam Sunder Gupta_, Aug 15 2013",
+    "references": 2,
+    "revision": 20,
+    "time": "2022-07-26T01:35:53-04:00",
+    "created": "2013-08-16T12:45:13-04:00"
+}

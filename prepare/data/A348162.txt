@@ -1,0 +1,55 @@
+{
+    "number": 348162,
+    "data": "0,0,2,38,9782,641083190,2753431335706502966,50791843174310108512166439539235563318,17283568615631356151658578642396687258566665947274335391075779120894446085942",
+    "name": "a(n) is the previous term in binary with 0's and 1's put alternatingly before each digit, starting with 0.",
+    "comment": [
+        "The next term is too large to include.",
+        "The actual sequence in binary is 0, 00, 0010, 00100110, ... The 0s at the start of each term are required for the sequence to work."
+    ],
+    "example": [
+        "a(2) = 0010;",
+        "a(3) = (0010 + 0101 -> 00100110);",
+        "a(4) = (00100110 + 01010101 = 0010011000110110).",
+        "Full explanation:",
+        "Say we have the term 0010.",
+        "We get an equal length binary number of alternating 0s and 1s.",
+        "In this case it would be 0101, and we interlace them like so:",
+        "                0   1   0   1",
+        "0010 + 0101 ->    0   0   1   0  -> 00100110"
+    ],
+    "program": [
+        "(Python)",
+        "def combine(a,b):",
+        "  c = ''",
+        "  for i in range(max(len(a),len(b))*2):",
+        "   if i%2 == 0:",
+        "    if len(a) > i/2:",
+        "     c += (a[int(i/2)])",
+        "   else:",
+        "    if len(b) > i/2:",
+        "     c += (b[int(i/2)])",
+        "  return c",
+        "x = '0'",
+        "while True:",
+        "  x = combine(combine(len(x)*'0',len(x)*'1')[:len(x)],x)",
+        "(Python)",
+        "from itertools import islice",
+        "def A348162(): # generator of terms",
+        "    s = '0'",
+        "    while True:",
+        "        yield int(s,2)",
+        "        s = ''.join(x+y for x, y in zip('01'*((len(s)+1)//2),s))",
+        "A348162_list = list(islice(A348162(),9)) # _Chai Wah Wu_, Nov 19 2021",
+        "(PARI) a(n) = my(ret=0,s=1); for(i=2,n, ret += 1<<s + ret<<(s<<=1)); ret; \\\\ _Kevin Ryde_, Nov 19 2021"
+    ],
+    "xref": [
+        "Cf. A014707 (bits of terms), A337580."
+    ],
+    "keyword": "nonn,base",
+    "offset": "0,3",
+    "author": "_Edward Green_, Oct 03 2021",
+    "references": 2,
+    "revision": 25,
+    "time": "2021-11-20T20:41:54-05:00",
+    "created": "2021-11-19T08:19:44-05:00"
+}

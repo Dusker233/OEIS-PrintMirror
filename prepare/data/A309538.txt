@@ -1,0 +1,37 @@
+{
+    "number": 309538,
+    "data": "0,1,3,7,17,40,93,210,469,1036,2268,4928,10640,22848,48832,103936,220416,465920,982016,2064384,4329472,9060352,18923520,39452672,82116609,170655746,354156549,734003212,1519386652,3141533760,6488588432,13388218688,27598521024",
+    "name": "Total number of factorial parts in all compositions of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A309538/b309538.txt\">Table of n, a(n) for n = 0..3312</a>"
+    ],
+    "formula": [
+        "G.f.: Sum_{k>=1} x^(k!)*(1-x)^2/(1-2*x)^2.",
+        "a(n) ~ c * 2^n * n, where c = 0.1914062649011611938476562500000000001880790961... - _Vaclav Kotesovec_, Aug 18 2019"
+    ],
+    "maple": [
+        "g:= proc(n) local i; 1; for i from 2 do",
+        "      if n=% then 1; break elif n<% then 0; break fi;",
+        "      %*i od; g(n):=%",
+        "    end:",
+        "a:= proc(n) option remember; add(a(n-j)+",
+        "      `if`(g(j)=1, ceil(2^(n-j-1)), 0), j=1..n)",
+        "    end:",
+        "seq(a(n), n=0..33);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = Module[{i, p = 1}, For[i = 2, True, i++, If[n == p, p = 1; Break[], If[n<p, p = 0; Break[]]]; p = p*i]; p];",
+        "a[n_] := a[n] = Sum[a[n-j] + If[g[j] == 1, Ceiling[2^(n-j-1)], 0], {j, 1, n}];",
+        "Table[a[n], {n, 0, 33}] (* _Jean-Fran\u00e7ois Alcover_, Jan 10 2023, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000142, A102291."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Aug 06 2019",
+    "references": 1,
+    "revision": 13,
+    "time": "2023-01-10T13:05:03-05:00",
+    "created": "2019-08-08T17:55:51-04:00"
+}

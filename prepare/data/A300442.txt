@@ -1,0 +1,49 @@
+{
+    "number": 300442,
+    "data": "1,1,1,2,3,6,10,23,46,108,231,561,1285,3139,7348,18265,43907,109887,267582,675866,1669909,4238462,10555192,26955062,67706032,173591181,438555624,1129088048,2869732770,7410059898,18911818801,48986728672,125562853003,326011708368",
+    "name": "Number of binary strict trees of weight n.",
+    "comment": [
+        "A binary strict tree of weight n > 0 is either a single node of weight n, or an ordered pair of binary strict trees with strictly decreasing weights summing to n."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A300442/b300442.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = 1 + Sum_{x + y = n, 0 < x < y < n} a(x) * a(y)."
+    ],
+    "example": [
+        "The a(5) = 6 binary strict trees: 5, (41), (32), ((31)1), ((21)2), (((21)1)1).",
+        "The a(6) = 10 binary strict trees:",
+        "  6,",
+        "  (51), (42),",
+        "  ((41)1), ((32)1), ((31)2),",
+        "  (((31)1)1), (((21)2)1), (((21)1)2),",
+        "  ((((21)1)1)1)."
+    ],
+    "maple": [
+        "a:= proc(n) option remember;",
+        "      1+add(a(j)*a(n-j), j=1..(n-1)/2)",
+        "    end:",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Mar 06 2018"
+    ],
+    "mathematica": [
+        "k[n_]:=k[n]=1+Sum[Times@@k/@y,{y,Select[IntegerPartitions[n],Length[#]===2&&UnsameQ@@#&]}];",
+        "Array[k,40]",
+        "(* Second program: *)",
+        "a[n_] := a[n] = 1 + Sum[a[j]*a[n - j], {j, 1, (n - 1)/2}];",
+        "a /@ Range[0, 40] (* _Jean-Fran\u00e7ois Alcover_, May 13 2021, after _Alois P. Heinz_ *)"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(v=vector(n)); for(n=1, n, v[n] = 1 + sum(k=1, (n-1)\\2, v[k]*v[n-k])); concat([1], v)} \\\\ _Andrew Howroyd_, Aug 25 2018"
+    ],
+    "xref": [
+        "Cf. A000992, A001190, A063834, A196545, A273873, A289501, A292432, A293511, A300352, A300440, A300443."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Mar 05 2018",
+    "references": 9,
+    "revision": 28,
+    "time": "2021-05-14T08:09:10-04:00",
+    "created": "2018-03-06T11:03:47-05:00"
+}

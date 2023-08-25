@@ -1,0 +1,35 @@
+{
+    "number": 14329,
+    "data": "1,2,5,12,31,84,245,752,2413,7991,27104,93605,327886,1161735,4155323,14982399,54393829,198666117,729443563,2690890444,9968312790,37066929338,138304185107,517646986719,1942966098461,7311862919106,27582428518833,104279585166245",
+    "name": "Convolution of partition numbers and Catalan numbers.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A014329/b014329.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) ~ c * 4^n / (sqrt(Pi) * n^(3/2)), where c = Sum_{k>=0} A000041(k)/4^k = 1/QPochhammer[1/4, 1/4] = 1.4523536424495970158347130224852748733612279788... . - _Vaclav Kotesovec_, Jun 23 2015",
+        "G.f.: (1 - sqrt(1-4*x))/(2*x*QPochhammer(x)). - _G. C. Greubel_, Jan 08 2023"
+    ],
+    "mathematica": [
+        "Table[Sum[PartitionsP[k]*CatalanNumber[n-k],{k,0,n}],{n,0,50}] (* _Vaclav Kotesovec_, Jun 23 2015 *)"
+    ],
+    "program": [
+        "(Magma)",
+        "A000041:= func< n | NumberOfPartitions(n) >;",
+        "A014329:= func< n | (&+[A000041(j)*Catalan(n-j): j in [0..n]]) >;",
+        "[A014329(n): n in [0..40]]; // _G. C. Greubel_, Jan 08 2023",
+        "(SageMath)",
+        "def A000041(n): return number_of_partitions(n)",
+        "def A014329(n): return sum(A000041(j)*catalan_number(n-j) for j in range(n+1))",
+        "[A014329(n) for n in range(41)] # _G. C. Greubel_, Jan 08 2023"
+    ],
+    "xref": [
+        "Cf. A000041, A000108, A292617."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_",
+    "references": 6,
+    "revision": 15,
+    "time": "2023-01-09T16:41:31-05:00",
+    "created": "1998-06-14T03:00:00-04:00"
+}

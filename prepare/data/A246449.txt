@@ -1,0 +1,39 @@
+{
+    "number": 246449,
+    "data": "10,14,15,18,20,22,26,30,34,35,38,40,42,45,46,50,54,55,58,60,62,65,66,70,74,78,80,82,85,86,90,94,95,98,100,102,105,106,108,110,114,115,116,118,120,122,124,126,130,132,134,135,138,140,142,145,146,148,150,154,155",
+    "name": "Numbers n such that no cube can end in n (in the sense of the respective decimal expansions).",
+    "comment": [
+        "Complement of A246422.",
+        "The terms with n digits are the complement in [10^(n-1) .. 10^n-1] of the set of residues of k^3 mod 10^n for 10^((n-1)/3) < k < 10^n. - _M. F. Hasler_, Jan 26 2020"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A246449/b246449.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "seq(op(sort(convert({$10^(d-1)..10^d-1} minus map(t -> t^3 mod 10^d, {$0..10^d-1}),list))),d=1..3); # _Robert Israel_, Jan 26 2020"
+    ],
+    "program": [
+        "(PARI) v=vector(1000); for(k=1,10^4, my(q=k^3,w=digits(q));for(j=0,2, v[1+fromdigits(w[#w-j..#w])]++)); for(k=1,160, if(v[k]==0,print1(k-1,\", \"))) \\\\ _Hugo Pfoertner_, Jan 26 2020",
+        "(PARI) A246449_row(n)=setminus([10^(n-1)..10^n-1],Set([k^3|k<-[sqrtnint(10^(n-1),3)+1..10^n-1]]%10^n)) \\\\ Yields the n-digit terms. - _M. F. Hasler_, Jan 26 2020",
+        "(Python)",
+        "from sympy import nthroot_mod",
+        "from itertools import count, islice",
+        "def A246449_gen(startvalue=0): # generator of terms >= startvalue",
+        "    return filter(lambda n:not len(nthroot_mod(n,3,10**(len(str(n))))),count(max(startvalue,0)))",
+        "A246449_list = list(islice(A246449_gen(),20)) # _Chai Wah Wu_, Feb 16 2023"
+    ],
+    "xref": [
+        "Cf. A246422."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Derek Orr_, Aug 26 2014",
+    "ext": [
+        "Corrected by _Robert Israel_, Jan 26 2020",
+        "Name edited and incorrect PARI program deleted by _M. F. Hasler_, Jan 26 2020"
+    ],
+    "references": 5,
+    "revision": 20,
+    "time": "2023-02-16T17:10:01-05:00",
+    "created": "2014-09-03T23:47:44-04:00"
+}

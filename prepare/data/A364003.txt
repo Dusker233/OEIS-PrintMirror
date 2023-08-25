@@ -1,0 +1,39 @@
+{
+    "number": 364003,
+    "data": "11,13,16,19,23,25,27,31,32,37,47,49,53,73,81,97,107,127,128,163,193,243,257,383,487,577,863,1153,2187,2593,2917,4373,8192,8747,131072,524288,995327,1492993,1594323,1990657,5308417,28311553,86093443,2147483648,6879707137",
+    "name": "Integers K such that PSL_2(K) is a K_4-simple group, i.e., |PSL_2(K)| has 4 distinct prime divisors.",
+    "comment": [
+        "This sequence is conjectured to be infinite, see Bugeaud, Cao, & Mignotte."
+    ],
+    "link": [
+        "Charles R Greathouse IV, <a href=\"/A364003/b364003.txt\">Table of n, a(n) for n = 1..81</a>",
+        "Y. Bugeaud, Z. Cao, and M. Mignotte, <a href=\"https://doi.org/10.1006/jabr.2000.8742\">On Simple K4-Groups</a>, Journal of Algebra, 241 (2001), 658-668."
+    ],
+    "example": [
+        "|PSL_2(11)| = 660 = 2^2 * 3 * 5 * 11."
+    ],
+    "program": [
+        "(GAP) is:=function(n)",
+        "return IsPrimePowerInt(n) and Length(Unique(FactorsInt(Order(PSL(2,n)))))=4;",
+        "end;",
+        "Filtered([2..1000], n -> is(n)); # _Charles R Greathouse IV_, Jul 03 2023",
+        "(PARI) is(n)=isprimepower(n) && omega(lcm([n-1,n,n+1]))==4 \\\\ _Charles R Greathouse IV_, Jul 03 2023",
+        "(PARI) H(n)=isprimepower(n/2^valuation(n,2)/3^valuation(n,3))",
+        "list(lim)=my(v=List(), N); lim\\=1; for(n=1, logint(lim\\2+1, 3), N=2*3^n; while(N<=lim+1, if(isprimepower(N-1) && H(N-2), listput(v, N-1)); if(isprimepower(N+1) && H(N+2) && N+1<=lim, listput(v, N+1)); N<<=1)); for(n=4,logint(N+1,2), N=2^n; if(H(N-1) && H(N+1) && N<=lim, listput(v,N)); if(isprimepower(N-1) && H(N-2), listput(v,N-1)); if(isprimepower(N+1) && H(N+2) && N+1<=lim, listput(v,N+1))); for(n=3,logint(N,3), N=3^n; if(H(N-1) && H(N+1), listput(v,N))); Set(v) \\\\ _Charles R Greathouse IV_, Jul 03 2023"
+    ],
+    "xref": [
+        "Subsequence of A000961.",
+        "Cf. A003586."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Lixin Zheng_, Jul 01 2023",
+    "ext": [
+        "a(23) corrected by _Charles R Greathouse IV_, Jul 03 2023",
+        "a(36)-a(45) from _Charles R Greathouse IV_, Jul 03 2023"
+    ],
+    "references": 2,
+    "revision": 32,
+    "time": "2023-08-06T08:18:38-04:00",
+    "created": "2023-08-05T23:48:21-04:00"
+}

@@ -1,0 +1,36 @@
+{
+    "number": 306314,
+    "data": "2,4,8,16,32,52,100,160,260,424,684,988,1588,2342,3458,5072,7516,10546,15506,21496,30682,42508,60170,81316,114182,153768,212966,283502,390168,513652",
+    "name": "Number of length-n binary words w such that ww is rich.",
+    "comment": [
+        "A rich word w is one that contains, as contiguous subwords, exactly n nonempty palindromes, where n is the length of w.  An infinite word is rich if all of its (contiguous) subwords are rich.  By a theorem of Glen, Justin, Widmer, and Zamboni (below), a(n) is also the number of length-n binary words w such that the infinite word www... is rich.  And also the number of length-n binary words w that are products of two palindromes, where all the conjugates of w are rich."
+    ],
+    "link": [
+        "A. Glen, J. Justin, S. Widmer, and L. Q. Zamboni, <a href=\"https://doi.org/10.1016/j.ejc.2008.04.006\">Palindromicrichness</a>, European J. Combinatorics 30 (2009), 510-531. See Theorem 3.1, p. 515."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "def pal(w): return w == w[::-1]",
+        "def rich(w):",
+        "    subs = (w[i:j] for i in range(len(w)) for j in range(i+1, len(w)+1))",
+        "    return len(w) == sum(pal(s) for s in set(subs))",
+        "def a(n):",
+        "    binn = (\"0\"+\"\".join(b) for b in product(\"01\", repeat=n-1))",
+        "    return sum(2 for w in binn if rich(w+w))",
+        "print([a(n) for n in range(1, 16)]) # _Michael S. Branicky_, Jul 07 2022"
+    ],
+    "xref": [
+        "Cf. A216264."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Feb 06 2019",
+    "ext": [
+        "a(17)-a(30) from _Lars Blomberg_, Feb 13 2019"
+    ],
+    "references": 0,
+    "revision": 18,
+    "time": "2022-07-07T16:19:22-04:00",
+    "created": "2019-02-06T14:34:13-05:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 340290,
+    "data": "2,1121,2021,2111,10121,10211,11201,12011,12121,12211,21101,21211,22111,101021,101111,110021,110111,110221,111211,112001,121001,121021,122011,200111,201101,210011,211021,211111,222221,1000211,1002011,1010111,1011121,1012201,1021001",
+    "name": "Numbers k that are the representation of primes in base 3 and in base 4.",
+    "comment": [
+        "Except for a(1) = 2, which is the only even prime, all terms end with 1.",
+        "The corresponding sequences of primes are A235473 (for base 3) and A235467 (for base 4) (see examples).",
+        "As 1381 = 1220011_3 = 111211_4, prime 1381 occurs twice and is the next such prime after 2 (see example), which has a representation in base 3 and a representation in base 4 that are both terms of this sequence."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A340290/b340290.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(1) = 2 and 2_3 = 2_4 = 2_10.",
+        "a(2) = 1121 because 1121_3 = 43_10 and 1121_4 = 89_10 are primes.",
+        "a(3) = 2021 because 2021_3 = 61_10 and 2021_4 = 137_10 are primes."
+    ],
+    "mathematica": [
+        "f[n_] := Module[{d = IntegerDigits[n, 3]}, If[PrimeQ[FromDigits[d, 4]], FromDigits[d, 10], 0]]; seq = {}; Do[If[PrimeQ[n], m = f[n]; If[m > 0, AppendTo[seq, m]]], {n, 2, 1000}]; seq (* _Amiram Eldar_, Jan 03 2021 *)",
+        "FromDigits[#]&/@Select[Tuples[{0,1,2},7],PrimeQ[FromDigits[#,4]] && PrimeQ[ FromDigits[ #,3]]&] (* _Harvey P. Dale_, Dec 15 2021 *)"
+    ],
+    "program": [
+        "(PARI) f(n, b) = fromdigits(digits(n, b));",
+        "my(vp=primes(700)); setintersect(apply(x->f(x,3), vp), apply(x->f(x,4), vp)) \\\\ _Michel Marcus_, Jan 04 2021",
+        "(PARI) forprime(p=2, 10^3, my(t=digits(p,3)); if( isprime( fromdigits(t,4)), print1(fromdigits(t,10),\", \"))) \\\\ _Joerg Arndt_, Jan 04 2021",
+        "(Python)",
+        "from sympy import prime, isprime",
+        "from sympy.ntheory.factor_ import digits",
+        "A340290_list = [int(s) for s in (''.join(str(d) for d in digits(prime(i),3)[1:]) for i in range(1,1000)) if isprime(int(s,4))] # _Chai Wah Wu_, Jan 09 2021"
+    ],
+    "xref": [
+        "Intersection of A001363 and A004678.",
+        "Cf. A089981 (bases 3 and 10).",
+        "Cf. A235467, A235473."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bernard Schott_, Jan 03 2021",
+    "ext": [
+        "More terms from _Amiram Eldar_, Jan 03 2021"
+    ],
+    "references": 2,
+    "revision": 52,
+    "time": "2021-12-15T16:35:26-05:00",
+    "created": "2021-01-08T04:13:11-05:00"
+}

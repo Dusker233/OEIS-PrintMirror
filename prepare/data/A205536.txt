@@ -1,0 +1,28 @@
+{
+    "number": 205536,
+    "data": "2,3,5,9,15,21,45,57,117,243,395,465,879,1053,2039,5949,10325,11739,21345,22005,64917,132167,187681,252531,775059,1215147,2126091,3883077,6003423,8207583,19058065,21162879,46406677,70113033,100115753,280588533,699418771,838568259",
+    "name": "Number of distinct values of Sum_{i=0..n} x(i)*binomial(n,i), where the x(i) is a vector of length n+1 that runs through all combinations of {0, 1}.",
+    "mathematica": [
+        "a[n_] := Length @ Union[Total /@ Subsets[Table[Binomial[n, k], {k, 0, n}]]]; Array[a, 10, 0] (* _Amiram Eldar_, Jan 11 2019 *)"
+    ],
+    "program": [
+        "(PARI) padbin(k, n) = my(p = Pol(binary(k))); vector(n, k, polcoeff(p, k-1));",
+        "thebins(n) = vector(2^n, k, padbin(k-1, n));",
+        "a(n) = my(vv = thebins(n+1)); #Set(vector(#vv, k, sum(i=0, n, vv[k][i+1]*binomial(n, i)))); \\\\ _Michel Marcus_, Jan 11 2019"
+    ],
+    "xref": [
+        "Cf. A007318, A205537, A205538, A205539, A205540, A205541.",
+        "Column 1 of A205542."
+    ],
+    "keyword": "nonn",
+    "offset": "0,1",
+    "author": "_R. H. Hardin_, Jan 28 2012",
+    "ext": [
+        "Value range in title corrected and a(29)-a(31) added by _Aaron Meyerowitz_, Jun 13 2014",
+        "a(32)-a(37) from _Bert Dobbelaere_, Sep 15 2019"
+    ],
+    "references": 5,
+    "revision": 36,
+    "time": "2019-09-15T15:13:42-04:00",
+    "created": "2012-01-28T14:09:59-05:00"
+}

@@ -1,0 +1,37 @@
+{
+    "number": 91847,
+    "data": "15,39,111,183,255,327,363,471,2199,3063,4359,4375,5571,8751,15723,36759,46791,65535,140103,208191,441027,4190263,9056583,57395631,172186887,236923383,918330183,3932935775,4294967295,4764161215",
+    "name": "Perfect totient numbers, omitting powers of 3.",
+    "link": [
+        "Douglas E. Iannucci, Deng Moujie and Graeme L. Cohen, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL6/Cohen2/cohen50.html\">On Perfect Totient Numbers</a>, J. Integer Seqs., Vol. 6, 2003."
+    ],
+    "mathematica": [
+        "fQ[n_] := !IntegerQ@ Log[3, n] && Plus @@ FixedPointList[ EulerPhi@# &, n] == 2n + 1 (* _Robert G. Wilson v_, Nov 06 2010 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from gmpy2 import digits",
+        "from sympy import totient",
+        "def A091847_gen(startvalue=3): # generator of terms >= startvalue",
+        "    for n in count((k:=max(startvalue,3))+1-(k&1),2):",
+        "        t = digits(n,3)",
+        "        if t.count('0') != len(t)-1:",
+        "            m, s = n, 1",
+        "            while (m:=totient(m))>1:",
+        "                s += m",
+        "            if s == n:",
+        "                yield n",
+        "A091847_list = list(islice(A091847_gen(),10)) # _Chai Wah Wu_, Mar 24 2023"
+    ],
+    "xref": [
+        "A082897 has more information."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Mar 13 2004",
+    "references": 3,
+    "revision": 14,
+    "time": "2023-03-24T12:42:35-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

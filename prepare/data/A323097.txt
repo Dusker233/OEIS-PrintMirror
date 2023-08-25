@@ -1,0 +1,51 @@
+{
+    "number": 323097,
+    "data": "1,2,4,8,16,32,64,80,128,160,256,320,512,640,1024,1280,1344,2048,2560,2688,4096,5120,5376,8192,10240,10752,16384,20480,21504,21760,32768,40960,43008,43520,65536,81920,86016,87040,131072,163840,172032,174080,262144,327680",
+    "name": "Numbers m such that all elements of the Collatz trajectory occur in the divisors of m.",
+    "comment": [
+        "See A207674 (numbers such that all divisors occur in their Collatz trajectories).",
+        "The powers of 2 are in the sequence.",
+        "The number 80 is probably the unique non-power of 2 of the sequence such that the elements of the Collatz trajectory are exactly the same as the divisors.",
+        "The numbers 5*2^k (A020714) for k > 3 are in the sequence.",
+        "The numbers 21*2^k (A175805) for k > 5 are in the sequence.",
+        "The numbers 85*2^k for k > 7 are in the sequence.",
+        "In the general case, the numbers of the form ((4^i - 1)/3)*2^j for i = 1, 2,... and j = 2i, 2i+1, 2i+2, ... are in the sequence."
+    ],
+    "example": [
+        "1344 is in the sequence because the set of the divisors {1, 2, 3, 4, 6, 7, 8, 12, 14, 16, 21, 24, 28, 32, 42, 48, 56, 64, 84, 96, 112, 168, 192, 224, 336, 448, 672, 1344} contains the set of the elements of the Collatz trajectory 1344 -> 672 -> 336 -> 168 -> 84 -> 42 -> 21 -> 64 -> 32 -> 16 -> 8 -> 4 -> 2 -> 1"
+    ],
+    "maple": [
+        "with(numtheory):nn:=250000:",
+        "  for n from 1 to nn do:",
+        "    m:=n:it:=0:lst:={n}:",
+        "      for i from 1 to nn while(m<>1) do:",
+        "        if irem(m, 2)=0",
+        "         then",
+        "         m:=m/2:",
+        "         else",
+        "         m:=3*m+1:",
+        "        fi:",
+        "       it:=it+1:lst:=lst union {m}:",
+        "      od:",
+        "       x:=divisors(n):n0:=nops(x):lst1:={op(x), x[n0]}:",
+        "       lst2:=lst intersect lst1:n1:=nops(lst2):",
+        "       if lst2=lst",
+        "       then",
+        "       printf(`%d, `,n):",
+        "       else fi:",
+        "     od:"
+    ],
+    "mathematica": [
+        "aQ[n_] := n == LCM @@ NestWhileList[If[OddQ[#], 3 # + 1, #/2] &, n, # > 1 &]; Select[Range[330000], aQ] (* _Amiram Eldar_, Aug 31 2019 *)"
+    ],
+    "xref": [
+        "Cf. A000079, A006370, A006577, A020714, A027750, A070165, A175805, A207674, A272985."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michel Lagneau_, Aug 30 2019",
+    "references": 0,
+    "revision": 13,
+    "time": "2019-10-05T10:48:00-04:00",
+    "created": "2019-10-05T10:48:00-04:00"
+}

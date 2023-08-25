@@ -1,0 +1,32 @@
+{
+    "number": 352914,
+    "data": "1,2,10,74,676,7592,97024,1416200,23015248,412777952,8090869984,171435904928,3908548404160,95264270043776,2470715015425024,67913132377486208,1971038886452490496,60212661838223997440,1930529043247940342272,64801071784954698480128",
+    "name": "Expansion of e.g.f. exp(Sum_{k>=1} prime(k)*x^k).",
+    "formula": [
+        "a(0) = 1; a(n) = (n-1)! * Sum_{k=1..n} A033286(k) * a(n-k)/(n-k)!."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(a(n-j)*",
+        "      ithprime(j)*j*binomial(n, j)*j!, j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Apr 28 2022"
+    ],
+    "mathematica": [
+        "a[0] = 1; a[n_] := a[n] = (n-1)! Sum[k Prime[k] a[n-k]/(n-k)!, {k, 1, n}];",
+        "Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Dec 28 2022 *)"
+    ],
+    "program": [
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(serlaplace(exp(sum(k=1, N, prime(k)*x^k))))",
+        "(PARI) a(n) = if(n==0, 1, (n-1)!*sum(k=1, n, k*prime(k)*a(n-k)/(n-k)!));"
+    ],
+    "xref": [
+        "Cf. A000040, A007446, A033286, A353162, A353166."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Seiichi Manyama_, Apr 28 2022",
+    "references": 1,
+    "revision": 41,
+    "time": "2022-12-28T05:42:49-05:00",
+    "created": "2022-04-28T09:50:18-04:00"
+}

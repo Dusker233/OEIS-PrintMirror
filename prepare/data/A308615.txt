@@ -1,0 +1,50 @@
+{
+    "number": 308615,
+    "data": "1,8,320,46592,10915840,128911704064,3114038000353280,798410297854394368,35228168150276083007094784,72984567358962659964369885986816,2104733804502091904066890388853154119680,146449616359318768962787815768964807513279037440",
+    "name": "Denominators of the even shifted moments of the ternary Cantor measure.",
+    "comment": [
+        "Due to the symmetry of the measure mu with respect to x=1/2 and the parity of the polynomial (x-1/2)^k about the line x=1/2, every odd entry is 0 and is thus omitted.",
+        "The ternary Cantor measure, defined many ways, is the unique Borel measure mu on the unit interval [0,1] satisfying the following recurrence relation for any measurable set E: mu(E) = mu(phi_0(E))/2 + mu(phi_2(E))/2.  Here, for j in {0,1,2}, phi_j:[0,1] to [0,1] is the linear function which sends x in [0,1] to (x+j)/3.  For any nonnegative integer k, we define the k-th shifted moment J(k) to be the integral of (x-1/2)^k with respect to mu.  The described sequence J(0), J(1), J(2), ... is rational and this sequence a(0), a(1), a(2), ... is the sequence of denominators of J(0), J(2), J(4), ....",
+        "For the purpose of computing J(k), we first compute the (unshifted) moments (see A308612 and A308613) which are the integrals of x^k rather than (x-1/2)^k, expand the polynomial (x-1/2)^k, replace each x^m term with the corresponding moment I(m), and simplify."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A308615/b308615.txt\">Table of n, a(n) for n = 0..48</a>",
+        "Steven N. Harding, Alexander W. N. Riasanovsky, <a href=\"https://arxiv.org/abs/1908.05358\">Moments of the weighted Cantor measures</a>, arXiv:1908.05358 [math.FA], 2019."
+    ],
+    "mathematica": [
+        "f[0] = 1; f[n_] := f[n] = Sum[Binomial[n, j]*2^(n - j - 1)*f[j], {j, 0, n - 1}]/(3^n - 1); a[n_] := Sum[Binomial[n, j]*f[j]*(-1/2)^(n - j), {j, 0, n}]; Table[Denominator[a[i]], {i, 0, 24, 2}] (* _Amiram Eldar_, Aug 03 2019 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "moms = [1]",
+        "for k in [1..15]:",
+        "    s = 0",
+        "    for j in [0..k-1]:",
+        "        s += binomial(k, j)*2^(k-j)*moms[j]/2",
+        "    s /= (3^k-1)",
+        "    moms.append(s)",
+        "x = var('x')",
+        "shmoms = []",
+        "for k in [0..15]:",
+        "    p = (x-1/2)^k",
+        "    p = p.expand()",
+        "    s = 0",
+        "    for m in [0..k]:",
+        "        s += moms[m]*p.coefficient(x, m)",
+        "    shmoms.append(s)",
+        "[p.denominator() for p in shmoms[::2]]"
+    ],
+    "xref": [
+        "Matching numerators are A308614.  Shifted version of A308612 and A308613."
+    ],
+    "keyword": "nonn,frac",
+    "offset": "0,2",
+    "author": "_Alexander Riasanovsky_, Jun 10 2019",
+    "ext": [
+        "More terms from _Amiram Eldar_, Aug 03 2019"
+    ],
+    "references": 2,
+    "revision": 37,
+    "time": "2020-03-18T05:10:21-04:00",
+    "created": "2019-09-14T22:55:31-04:00"
+}

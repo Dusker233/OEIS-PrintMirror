@@ -1,0 +1,40 @@
+{
+    "number": 357546,
+    "data": "1,2,4,6,12,18,52,92,278,606,1736,4378,11974,31826,86592,234514,645864,1763784,4904844,13503716,37762996,104922104,294474340,824706556,2322523264,6544002006,18497507308,52357115006,148540658418,421986604840,1201221586484",
+    "name": "a(n) = coefficient of x^n, n >= 0, in A(x) such that: 2 = Sum_{n=-oo..+oo} x^(2*n) * (1 - x^n)^(2*n) * A(x)^n.",
+    "comment": [
+        "Related formal power series identity: 0 = Sum_{n=-oo..+oo} x^n * (1 - x^n)^n."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A357546/b357546.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n satisfies the following.",
+        "(1) 2 = Sum_{n=-oo..+oo} x^(2*n) * (1 - x^n)^(2*n) * A(x)^n.",
+        "(2) 2 = Sum_{n=-oo..+oo} x^(2*n*(n-1)) / ((1 - x^n)^(2*n) * A(x)^n)."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 4*x^2 + 6*x^3 + 12*x^4 + 18*x^5 + 52*x^6 + 92*x^7 + 278*x^8 + 606*x^9 + 1736*x^10 + 4378*x^11 + 11974*x^12 + ...",
+        "such that A(x) satisfies the doubly infinite series",
+        "2 = Sum_{n=-oo..+oo} x^(2*n) * (1 - x^n)^(2*n) * A(x)^n",
+        "which can be split into infinite series P and Q given by",
+        "2 = P + Q ;",
+        "P = 1/((1-x)^2*A(x)) + x^4/((1-x^2)^4*A(x)^2) + x^12/((1-x^3)^6*A(x)^3) + ... + x^(2*n*(n-1))/((1 - x^n)^(2*n)*A(x)^n) + ... ;",
+        "Q = 1 + x^2*(1-x)^2*A(x) + x^4*(1-x^2)^4*A(x)^2 + x^6*(1-x^3)^6*A(x)^3 + ... + x^(2*n)*(1 - x^n)^(2*n)*A(x)^n + ...",
+        "Explicitly,",
+        "P = 1 - x^2 - 2*x^4 - 4*x^5 - 13*x^6 - 18*x^7 - 75*x^8 - 126*x^9 - 475*x^10 - 974*x^11 - 2991*x^12 - 7184*x^13 - 20257*x^14 - ...",
+        "Q = 1 + x^2 + 2*x^4 + 4*x^5 + 13*x^6 + 18*x^7 + 75*x^8 + 126*x^9 + 475*x^10 + 974*x^11 + 2991*x^12 + 7184*x^13 + 20257*x^14 + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1]); for(i=1,n, A=concat(A,0);",
+        "A[#A] = polcoeff(sum(m=-#A,#A, x^(2*m) * (1 - x^m +x*O(x^#A))^(2*m) * Ser(A)^m),#A-1);); A[n+1]}",
+        "for(n=0,30,print1(a(n),\", \"))"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Nov 17 2022",
+    "references": 1,
+    "revision": 8,
+    "time": "2022-12-03T12:07:40-05:00",
+    "created": "2022-11-19T21:06:11-05:00"
+}

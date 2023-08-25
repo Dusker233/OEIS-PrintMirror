@@ -1,0 +1,43 @@
+{
+    "number": 306918,
+    "data": "1,1,2,5,7,18,36,118,265,263212,2217881,152599933940,542101086242752217003726400434973829461152534,63340828764059520458379290673240751904836319648345",
+    "name": "Sum over all partitions of n into distinct parts of the power tower evaluation x^y^...^z, where x, y, ..., z are the parts in decreasing order.",
+    "comment": [
+        "a(14) = 620606987...270037949 has 183231 decimal digits."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PowerTower.html\">Power Tower</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Exponentiation\">Exponentiation</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Identity_element\">Identity element</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Operator_associativity\">Operator associativity</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_(number_theory)\">Partition (number theory)</a>"
+    ],
+    "example": [
+        "a(0) = 1 because the empty partition () has no parts, the exponentiation operator ^ is right-associative, and 1 is the right identity of exponentiation.",
+        "a(6) = 3^2^1 + 4^2 + 5^1 + 6 = 9 + 16 + 5 + 6 = 36."
+    ],
+    "maple": [
+        "d:= proc(l) local i; for i to nops(l)-1 do",
+        "       if l[i]=l[i+1] then return fi od; l",
+        "    end:",
+        "f:= l-> `if`(l=[], 1, l[1]^f(subsop(1=(), l))):",
+        "a:= n-> add(f(l), l=map(l->d(sort(l, `>`)), combinat[partition](n))):",
+        "seq(a(n), n=0..13);"
+    ],
+    "mathematica": [
+        "d[l_] := Module[{i}, For[i = 1, i <= Length[l] - 1, i++, If[l[[i]] == l[[i + 1]], Return[]]]; l];",
+        "f[l_] := If[l == {}, 1, l[[1]]^f[Delete[l, 1]]];",
+        "a[n_] := Sum[f[l], {l, ReverseSort /@ Select[IntegerPartitions[n], Length@# == Length@ Union@# &]}];",
+        "a /@ Range[0, 13] (* _Jean-Fran\u00e7ois Alcover_, May 04 2020, after Maple *)"
+    ],
+    "xref": [
+        "Cf. A022629, A066189, A306884, A306919."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Mar 16 2019",
+    "references": 2,
+    "revision": 18,
+    "time": "2020-05-04T16:29:57-04:00",
+    "created": "2019-03-17T12:09:00-04:00"
+}

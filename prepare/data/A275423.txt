@@ -1,0 +1,42 @@
+{
+    "number": 275423,
+    "data": "1,1,1,1,1,2,7,22,57,127,379,1849,9109,37324,128129,507508,3031393,19609773,108440893,500515633,2467616641,17154715726,134519207131,927764339426,5359830269641,31580724696907,248587878630807,2259650025239257,18541914182165557",
+    "name": "Number of set partitions of [n] such that five is a multiple of each block size.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A275423/b275423.txt\">Table of n, a(n) for n = 0..619</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "formula": [
+        "E.g.f.: exp(x+x^5/5!).",
+        "From _Seiichi Manyama_, Feb 26 2022: (Start)",
+        "a(n) = n! * Sum_{k=0..floor(n/5)} (1/5!)^k * binomial(n-4*k,k)/(n-4*k)!.",
+        "a(n) = a(n-1) + binomial(n-1,4) * a(n-5) for n > 4. (End)"
+    ],
+    "example": [
+        "a(6) = 7: 12345|6, 12346|5, 12356|4, 12456|3, 13456|2, 1|23456, 1|2|3|4|5|6."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      `if`(j>n, 0, a(n-j)*binomial(n-1, j-1)), j=[1, 5]))",
+        "    end:",
+        "seq(a(n), n=0..30);"
+    ],
+    "mathematica": [
+        "a[n_] := a[n] = If[n == 0, 1, Sum[If[j > n, 0, a[n-j]*Binomial[n-1, j-1]], {j, {1, 5}}]];",
+        "Table[a[n], {n, 0, 30}] (* _Jean-Fran\u00e7ois Alcover_, May 17 2018, translated from Maple *)"
+    ],
+    "program": [
+        "(PARI) a(n) = n!*sum(k=0, n\\5, 1/5!^k*binomial(n-4*k, k)/(n-4*k)!); \\\\ _Seiichi Manyama_, Feb 26 2022",
+        "(PARI) a(n) = if(n<5, 1, a(n-1)+binomial(n-1, 4)*a(n-5)); \\\\ _Seiichi Manyama_, Feb 26 2022"
+    ],
+    "xref": [
+        "Column k=5 of A275422."
+    ],
+    "keyword": "nonn",
+    "offset": "0,6",
+    "author": "_Alois P. Heinz_, Jul 27 2016",
+    "references": 6,
+    "revision": 19,
+    "time": "2022-02-26T10:49:11-05:00",
+    "created": "2016-07-27T11:41:08-04:00"
+}

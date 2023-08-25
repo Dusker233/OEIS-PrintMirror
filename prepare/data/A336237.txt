@@ -1,0 +1,34 @@
+{
+    "number": 336237,
+    "data": "24,26,87,154,165,209,250,364,440,448,644,875,1240,1252,1269,1320,1434,1632,1640,1768,1996,2440,2480,2500,2656,2840,2842,4040,4400,5240,6040,6499,6544,7240,7640,8250,8360,8420,8440,8727,8832,8875,9640,10040,10344,10840",
+    "name": "Numbers of the form ab such that phi(ab) = a*b where ab is the concatenation of a and b.",
+    "comment": [
+        "From _Marius A. Burtea_, Aug 04 2020: (Start)",
+        "The sequence is infinite because it contains the family of terms 25 * 10^k, k >= 1. Indeed, phi(25 * 10^k) = phi(2^k * 5^(k + 2)) = 2^(k-1) * 4 * 5^(k + 1) = 2 * (5 * 10^k).",
+        "More generally, if 10 * m is a term then 10^k * m, k >= 1, is a term.",
+        "For example, for k = 2, let 10 * m = a_b and phi(10 * m) = a * b. If m = 2^u * 5^v * s, with u, v >= 0 and gcd(10, s) = 1, then phi(100 * m) = phi(100 * 2^u * 5^v * s) = phi(2^(u + 2) * 5^(v + 2) * s) = 2^(u + 1) * 5^(v + 1) * 4 * phi(s) = 10 * 2^u * 5^v * 4 * phi(s) = 10 * phi(2^(u + 1) * 5^(v + 1) * s) = 10 * phi(10 * m) = 10 * a_b = a_(10*b). (End)"
+    ],
+    "link": [
+        "Marius A. Burtea, <a href=\"/A336237/b336237.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "2*4=8 and phi(24)=8 so 24 is a term."
+    ],
+    "mathematica": [
+        "seqQ[n_] := Module[{d = IntegerDigits[n]}, MemberQ[Times @@@ Table[FromDigits /@ {Take[d, k], Take[d, -Length[d] + k]}, {k, 1, Length[d] - 1}], EulerPhi[n]]]; Select[Range[10, 10^4], seqQ] (* _Amiram Eldar_, Jul 13 2020 *)"
+    ],
+    "program": [
+        "(PARI) isok(m) = {my(tm=eulerphi(m), d=digits(m)); for (i=1, #d-1, if (fromdigits(vector(i, k, d[k]))*fromdigits(vector(#d-i, k, d[i+k])) == tm, return(1)););}",
+        "(Magma) a:=[]; for n in [1..11000] do s:=#Intseq(n); if exists(c){i:i in [1..s-1]| ((n mod 10^i)*(n div 10^i)) eq EulerPhi(n)} then Append(~a,n); end if; end for; a; // _Marius A. Burtea_, Aug 04 2020"
+    ],
+    "xref": [
+        "Cf. A000010, A336191, A336192."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Jul 13 2020",
+    "references": 2,
+    "revision": 15,
+    "time": "2022-09-08T08:46:25-04:00",
+    "created": "2020-07-13T21:31:12-04:00"
+}

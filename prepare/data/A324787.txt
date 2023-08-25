@@ -1,0 +1,56 @@
+{
+    "number": 324787,
+    "data": "2,5,12,29,78,199,508,1355,3592,9589,25752,70579,194228,539961,1507602,4228745,11913940,33690443,95581182,272003821,776082524,2219823175,6363074656",
+    "name": "Index of n-th low point in A022837.",
+    "comment": [
+        "A \"low point\" in a sequence is a term which is less than the previous term (this condition is skipped for the initial term) and which is followed by two or more increases."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A324787/a324787.gp.txt\">PARI program for A324787</a>"
+    ],
+    "maple": [
+        "Riecaman := proc(a,s,M)",
+        "# Start with s, add or subtract a[n], get M terms. If a has w terms, can get M=w+1 terms.",
+        "local b,M2,n,t;",
+        "if whattype(a) <> list then ERROR(\"First argument should be a list\"); fi;",
+        "if a[1]=0 then ERROR(\"a[1] should not be zero\"); fi;",
+        "M2 := min(nops(a),M-1);",
+        "b:=[s]; t:=s;",
+        "for n from 1 to M2 do",
+        "   if a[n]>t then t:=t+a[n] else t:=t-a[n]; fi; b:=[op(b),t]; od:",
+        "b; end;",
+        "blocks := proc(a,S) local b,c,d,M,L,n;",
+        "# Given a list a, whose leading term has index S, return [b,c,d], where b lists the indices of the low points in a, c lists the values of a at the low points, and d lists the length of runs between the low points.",
+        "b:=[]; c:=[]; d:=[]; L:=1;",
+        "# if a[1] a low point?",
+        "   n:=1;",
+        "   if( (a[n+1]>a[n]) and (a[n+2]>a[n+1]) ) then",
+        "   b:=[op(b),n+S-1]; c:=[op(c),a[n]]; d:=[op(d), n-L]; L:=n; fi;",
+        "for n from 2 to nops(a)-2 do",
+        "# if a[n] a low point?",
+        "   if( (a[n-1]>a[n]) and (a[n+1]>a[n]) and (a[n+2]>a[n+1]) ) then",
+        "   b:=[op(b),n+S-1]; c:=[op(c),a[n]]; d:=[op(d), n-L]; L:=n; fi; od;",
+        "[b,c,d]; end;",
+        "p0:=[seq(ithprime(n),n=1..100001)]:",
+        "q1:=Riecaman(p0,1,100000):",
+        "blocks(q1,0); # produces [the present sequence, A324788, A324789]"
+    ],
+    "program": [
+        "(PARI) See Links section."
+    ],
+    "xref": [
+        "Cf. A022837, A324788, A324789, A324790.",
+        "If the basic sequence (A022837) began with 0 instead of 1 we would get A008348, A309226, A324782, A324783, A309225."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,1",
+    "author": "_N. J. A. Sloane_, Sep 04 2019",
+    "ext": [
+        "Modified definition to make offset 0. - _N. J. A. Sloane_, Oct 02 2019",
+        "a(12)-a(22) from _R\u00e9my Sigrist_, Oct 18 2020"
+    ],
+    "references": 5,
+    "revision": 10,
+    "time": "2020-10-18T02:49:59-04:00",
+    "created": "2019-09-04T12:43:29-04:00"
+}

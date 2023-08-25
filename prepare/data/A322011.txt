@@ -1,0 +1,32 @@
+{
+    "number": 322011,
+    "data": "1,2,5,19,121",
+    "name": "Number of distinct chromatic symmetric functions of spanning hypergraphs (or antichain covers) on n vertices.",
+    "comment": [
+        "A stable partition of a graph is a set partition of the vertices where no edge has both ends in the same block. The chromatic symmetric function is given by X_G = Sum_p m(t(p)) where the sum is over all stable partitions of G, t(p) is the integer partition whose parts are the block-sizes of p, and m is the augmented monomial symmetric function basis (see A321895)."
+    ],
+    "example": [
+        "The a(3) = 5 chromatic symmetric functions:",
+        "                  m(111)",
+        "          m(21) + m(111)",
+        "         2m(21) + m(111)",
+        "         3m(21) + m(111)",
+        "  m(3) + 3m(21) + m(111)"
+    ],
+    "mathematica": [
+        "chromSF[g_]:=Sum[m[Sort[Length/@stn,Greater]],{stn,spsu[Select[Subsets[Union@@g],Select[DeleteCases[g,{_}],Function[ed,Complement[ed,#]=={}]]=={}&],Union@@g]}];",
+        "stableSets[u_,Q_]:=If[Length[u]===0,{{}},With[{w=First[u]},Join[stableSets[DeleteCases[u,w],Q],Prepend[#,w]&/@stableSets[DeleteCases[u,r_/;r===w||Q[r,w]||Q[w,r]],Q]]]];",
+        "hyps[n_]:=Select[stableSets[Rest[Subsets[Range[n]]],SubsetQ],Union@@#==Range[n]&];",
+        "Table[Length[Union[chromSF/@hyps[n]]],{n,5}]"
+    ],
+    "xref": [
+        "Cf. A000569, A006125, A229048, A240936, A245883, A277203, A030019, A321750, A321895, A321911, A321994."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Nov 24 2018",
+    "references": 2,
+    "revision": 5,
+    "time": "2018-11-24T08:15:42-05:00",
+    "created": "2018-11-24T08:15:42-05:00"
+}

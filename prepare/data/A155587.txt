@@ -1,0 +1,47 @@
+{
+    "number": 155587,
+    "data": "1,2,3,5,10,24,66,198,627,2057,6919,23715,82501,290513,1033413,3707853,13402698,48760368,178405158,656043858,2423307048,8987427468,33453694488,124936258128,467995871778,1757900019102,6619846420554",
+    "name": "Expansion of (1 + x*c(x))/(1 - x), where c(x) is the g.f. of A000108.",
+    "comment": [
+        "Row sums of A155586.",
+        "Hankel transform is A057079(n+2).",
+        "From _Petros Hadjicostas_, Aug 03 2020: (Start)",
+        "To prove _R. J. Mathar_'s conjecture, note that the o.g.f. of the sequence implies (Sum_{n >= 0} a(n)*x^n)*(1 - x) = 1 + x*c(x); i.e., a(0) + Sum_{n >= 1} (a(n) - a(n-1))*x^n = 1 + Sum_{n >= 1} C(n-1)*x^n, where C(n) = A000108(n) (Catalan numbers).",
+        "Thus, C(n-1) = a(n) - a(n-1) (for n >= 1), and hence C(n) = a(n+1) - a(n). Since 2*(2*n - 1)*C(n-1) = (n + 1)*C(n), we get (n + 1)*a(n+1) + (-5*n + 1)*a(n) + 2*(2*n - 1)*a(n-1) = 0. The last equation implies _R. J. Mathar_'s conjecture. (End)"
+    ],
+    "link": [
+        "Reinhard Zumkeller, <a href=\"/A155587/b155587.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "Gerard Cohen and Jean-Pierre Flori, <a href=\"https://eprint.iacr.org/2011/400\">On a generalized combinatorial conjecture involving addition mod 2^k - 1</a>, IACR, Report 2011/400.",
+        "Jean-Pierre Flori, <a href=\"https://perso.telecom-paristech.fr/flori/thesis/thesis.pdf\">Fonctions bool\u00e9ennes, courbes alg\u00e9briques et multiplication complexe</a>, Thesis, ParisTech, Feb 03 2012.",
+        "Guo-Niu Han, <a href=\"/A196265/a196265.pdf\">Enumeration of Standard Puzzles</a>, 2011. [Cached copy]",
+        "Guo-Niu Han, <a href=\"https://arxiv.org/abs/2006.14070\">Enumeration of Standard Puzzles</a>, arXiv:2006.14070 [math.CO], 2020."
+    ],
+    "formula": [
+        "a(n) = 1 + Sum_{k=0..n-1} A000108(k).",
+        "Conjecture: n*a(n) + (6-5*n)*a(n-1) + 2*(2*n-3)*a(n-2) = 0. - _R. J. Mathar_, Nov 15 2011",
+        "a(n) = A014138(n-1) + 2 for n > 0. - _Reinhard Zumkeller_, Mar 01 2013 [Corrected by _Petros Hadjicostas_, Aug 03 2020]",
+        "a(n+1) - a(n) = A000108(n). - _Petros Hadjicostas_, Aug 04 2020",
+        "a(n) = ((3 - i*sqrt(3)))/2 - CatalanNumber(n)*hypergeom([1, n + 1/2], [n + 2], 4). - _Peter Luschny_, Aug 04 2020"
+    ],
+    "maple": [
+        "CatalanNumber := n -> binomial(2*n, n)/(n+1):",
+        "a := n -> ((3 - I*sqrt(3)))/2 - CatalanNumber(n)*hypergeom([1, n+1/2], [n+2], 4):",
+        "seq(simplify(a(n)), n=0..26); # _Peter Luschny_, Aug 04 2020"
+    ],
+    "program": [
+        "(Haskell)",
+        "a155587 n = a155587_list !! n",
+        "a155587_list = scanl (+) 1 a000108_list  -- _Reinhard Zumkeller_, Mar 01 2013"
+    ],
+    "xref": [
+        "Cf. A000108, A014138, A057079, A155586.",
+        "Partial sums of A120588."
+    ],
+    "keyword": "easy,nonn",
+    "offset": "0,2",
+    "author": "_Paul Barry_, Jan 24 2009",
+    "references": 5,
+    "revision": 39,
+    "time": "2022-06-24T23:37:36-04:00",
+    "created": "2009-02-27T03:00:00-05:00"
+}

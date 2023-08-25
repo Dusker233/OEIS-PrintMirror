@@ -1,0 +1,45 @@
+{
+    "number": 360805,
+    "data": "0,31,120,283,293,712,2872,3287,5028,5129,7088,9553,13229,14232,14799,15113,20153,20830,23239,30233,31430,31667,34443,40654,44298,50184,78877,105834,115281,125120,164253,192103,201590,227747,239910,241910,282230,322550,374370",
+    "name": "Nonnegative integers k such that k! mod nextprime(k) is larger than k.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A360805/b360805.txt\">Table of n, a(n) for n = 1..213</a>"
+    ],
+    "formula": [
+        "{ k >= 0 : k! mod nextprime(k) > k }.",
+        "A360825(a(n)) > a(n)."
+    ],
+    "maple": [
+        "q:= n-> is(n! mod nextprime(n)>n):",
+        "select(q, [$0..20000])[];"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from functools import reduce",
+        "from sympy import nextprime",
+        "def A360805_gen(startvalue=0): # generator of terms >= startvalue",
+        "    n = max(startvalue,0)",
+        "    m = nextprime(n)",
+        "    while True:",
+        "        a = m-1",
+        "        klist = []",
+        "        for i in range(m-1,n,-1):",
+        "            a = a*pow(i,-1,m)%m",
+        "            if a>i-1:",
+        "                klist.append(i-1)",
+        "        yield from sorted(klist)",
+        "        n, m = m, nextprime(m)",
+        "A360805_list = list(islice(A360805_gen(),30)) # _Chai Wah Wu_, Feb 24 2023"
+    ],
+    "xref": [
+        "Cf. A000142, A007978, A151800, A360825."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Feb 22 2023",
+    "references": 2,
+    "revision": 41,
+    "time": "2023-03-10T10:36:18-05:00",
+    "created": "2023-02-24T18:49:20-05:00"
+}

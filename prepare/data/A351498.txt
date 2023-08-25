@@ -1,0 +1,32 @@
+{
+    "number": 351498,
+    "data": "1,10,17,78,1787,15022,38123,45052,1036043",
+    "name": "Position k of first term in a run of odd terms with length > 1 in A093714.",
+    "comment": [
+        "Let S = A093714, known to be a permutation of the natural numbers.",
+        "S(k) and S(k+1) are odd.",
+        "Theorem: S(n) = n implies S(n) and n have the same parity. Proof: S(n) = n iff S(n) mod n = 0, since n | n. If prime q|n yet (S(n),q) = 1, then S(n) != n, a contradiction.",
+        "Corollary: Fixed points in S(n) appear iff S(n) and n have same parity.",
+        "Corollary: Consecutive odd terms S(k), S(k+1) imply that the smallest missing number u in S is either odd or (S(k),u) > 1.",
+        "Fixed points S(k) appear at k in intervals [78, 1787], [15022, 38123], [45052, 1036043]. These positions result from a dataset of S(1..2^30). Are there any more runs of odd terms?"
+    ],
+    "example": [
+        "S(1) = 1 and S(2) = 3, therefore this sequence begins with 1.",
+        "S(10) = 13 and S(11) = 9, therefore 10 is in this sequence.",
+        "S(17) = 23 and S(18) = 15, therefore 17 is in this sequence.",
+        "For 2 <= k <= 10, S(k) and k have different parity, but for 11 <= k <= 17, S(k) and k have the same parity."
+    ],
+    "mathematica": [
+        "nn = 2^20, c = {1}, j = 1, s = 0; t = {}; u = 2; Reap[Do[k = u; While[Nand[FreeQ[c, k], CoprimeQ[j, k], k != j + 1], k++]; j = k; AppendTo[c, k]; If[# != s, s = #; Sow[i - 1]] &@ Mod[Abs[k - i], 2]; If[k == u, While[MemberQ[c, u], u++]; c = DeleteCases[c, _?(# < u &)]], {i, 2, nn}] ][[-1, -1]]"
+    ],
+    "xref": [
+        "Cf. A093714, A351499, A352928, A352932."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Michael De Vlieger_, May 03 2022",
+    "references": 3,
+    "revision": 14,
+    "time": "2022-05-04T12:23:41-04:00",
+    "created": "2022-05-03T23:36:26-04:00"
+}

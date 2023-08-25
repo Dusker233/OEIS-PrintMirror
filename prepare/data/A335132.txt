@@ -1,0 +1,53 @@
+{
+    "number": 335132,
+    "data": "0,1,3,5,7,9,15,17,31,33,63,65,73,119,127,129,255,257,297,349,373,395,419,471,511,513,585,653,709,827,883,951,1023,1025,1193,1879,2047,2049,2145,2225,2257,3887,3919,3999,4095,4097,4321,4681,4777,5501,5533,5941",
+    "name": "Numbers whose binary expansion generates 3-fold rotationally symmetric EQ-triangles.",
+    "comment": [
+        "For any nonnegative number n, the EQ-triangle for n is built by taking as first row the binary expansion of n (without leading zeros), having each entry in the subsequent rows be the EQ of the two values above it (a \"1\" indicates that these two values are equal, a \"0\" indicates that these values are different).",
+        "The second row in such a triangle has binary expansion given by A279645.",
+        "If m belongs to this sequence, then A030101(m) also belongs to this sequence.",
+        "All positive terms are odd.",
+        "This sequence is a variant of A334556; here we use bitwise EQ, there bitwise XOR."
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A335132/a335132.png\">Illustration of initial terms</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Logical_equality#Definition\">Logical equality</a>",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "example": [
+        "For 349:",
+        "- the binary expansion of 349 is \"101011101\",",
+        "- the corresponding EQ-triangle is (with dots instead of 0's for clarity):",
+        "     1 . 1 . 1 1 1 . 1",
+        "      . . . . 1 1 . .",
+        "       1 1 1 . 1 . 1",
+        "        1 1 . . . .",
+        "         1 . 1 1 1",
+        "          . . 1 1",
+        "           1 . 1",
+        "            . .",
+        "             1",
+        "- this triangle has 3-fold rotational symmetry, so 349 belongs to this sequence."
+    ],
+    "program": [
+        "(PARI) is(n) = {",
+        "    my (b=binary(n), p=b);",
+        "    for (k=1, #b,",
+        "        if (b[k]!=p[#p], return (0));",
+        "        if (p[1]!=b[#b+1-k], return (0));",
+        "        p = vector(#p-1, k, p[k]==p[k+1]);",
+        "    );",
+        "    return (1);",
+        "}"
+    ],
+    "xref": [
+        "Cf. A279645, A334556."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,3",
+    "author": "_R\u00e9my Sigrist_, May 24 2020",
+    "references": 1,
+    "revision": 7,
+    "time": "2020-05-27T01:57:14-04:00",
+    "created": "2020-05-27T01:57:14-04:00"
+}

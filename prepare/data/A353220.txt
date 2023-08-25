@@ -1,0 +1,65 @@
+{
+    "number": 353220,
+    "data": "0,2,5,12,21,41,72,134,210,365,608,1020,1598,2624,4163,6926,10598,17433,27309,43605,67251,106709,168128,266268,407438,646460,1005309,1574802,2421374,3771756,5817104,9186359,13845149,21814001,33426338,51821027,79295427",
+    "name": "a(n) is the result of n applications of the function f to n, where f(x) = floor((3*x + 1)/2) (A007494).",
+    "formula": [
+        "a(n) = f^n(n) where f(n) = floor((3*n + 1)/2) = A007494(n)."
+    ],
+    "example": [
+        "a(0) = f^0 (0) = 0 (f not applied at all);",
+        "a(1) = f^1 (1) = f(1) = floor((3*1 + 1)/2) = 2;",
+        "a(2) = f^2 (2) = f(f(2)) = floor((3*f(2) + 1)/2) = floor((3*floor((3*2 + 1)/2) + 1)/2) = 5."
+    ],
+    "maple": [
+        "a:= n-> (f-> (f@@n)(n))(t-> floor((3*t+1)/2)):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, May 01 2022"
+    ],
+    "program": [
+        "(C++)",
+        "#include <iostream>",
+        "using namespace std;",
+        "unsigned int f(unsigned int n) {",
+        "    return (3*n + 1)/2;",
+        "}",
+        "unsigned int a(unsigned int pow, unsigned int n) {",
+        "    if (pow == 0) return n;",
+        "    else return a(pow-1, f(n));",
+        "}",
+        "int main() {",
+        "    for (unsigned int n(0); n <= 20; ++n)",
+        "        cout << a(n, n) << \" \";",
+        "    return 0;",
+        "}",
+        "(Python)",
+        "def f(n):",
+        "    return (3*n + 1)//2;",
+        "def a(pow, n):",
+        "    if (pow == 0): return n;",
+        "    else: return a(pow-1, f(n));",
+        "l = [a(n, n) for n in range(21)];",
+        "(OCaml)",
+        "let rec a power n =",
+        "  let f n =",
+        "    (3*n + 1)/2",
+        "  in",
+        "  if (power = 0) then n",
+        "  else a (power-1) (f n)",
+        ";;",
+        "for n = 0 to 20 do",
+        "  print_string (string_of_int (a n n) ^ \" \")",
+        "done",
+        "(Python)",
+        "from functools import reduce",
+        "def A353220(n): return reduce(lambda x, _ : (3*x+1)//2, range(n), n) # _Chai Wah Wu_, May 07 2022"
+    ],
+    "xref": [
+        "Cf. A007494 (step), A061419, A353215."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Yves Daaboul_, May 01 2022",
+    "references": 2,
+    "revision": 31,
+    "time": "2022-05-07T09:50:37-04:00",
+    "created": "2022-05-03T23:29:22-04:00"
+}

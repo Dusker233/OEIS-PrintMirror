@@ -1,0 +1,55 @@
+{
+    "number": 54941,
+    "data": "1,2,20,624,55248,13982208,10358360640,22792648882176,149888345786341632,2952810709943411146752,174416705255313941476193280,30901060796613886817249881227264,16422801513633911416125344647746244608,26183660776604240464418800095675915958222848",
+    "name": "Number of weakly connected oriented graphs on n labeled nodes.",
+    "comment": [
+        "The triangle of oriented labeled graphs on n>=1 nodes with 1<=k<=n components and row sums A047656 starts:",
+        "       1;",
+        "       2,      1;",
+        "      20,      6,     1;",
+        "     624,     92,    12,   1;",
+        "   55248,   3520,   260,  20,  1;",
+        "13982208, 354208, 11880, 580, 30, 1; - _R. J. Mathar_, Apr 29 2019"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A054941/b054941.txt\">Table of n, a(n) for n = 1..65</a>",
+        "V. A. Liskovets, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL3/LISK/Derseq.html\">Some easily derivable sequences</a>, J. Integer Sequences, 3 (2000), #00.2.2."
+    ],
+    "formula": [
+        "E.g.f.: log( Sum_{n >= 0} 3^binomial(n, 2)*x^n/n! ). - _Vladeta Jovovic_, Feb 14 2003"
+    ],
+    "mathematica": [
+        "nn=20; s=Sum[3^Binomial[n,2]x^n/n!,{n,0,nn}];",
+        "Drop[Range[0,nn]! CoefficientList[Series[Log[s]+1,{x,0,nn}],x],1] (* _Geoffrey Critzer_, Oct 22 2012 *)"
+    ],
+    "program": [
+        "(PARI) N=20; x='x+O('x^N); Vec(serlaplace(log(sum(k=0, N, 3^binomial(k, 2)*x^k/k!)))) \\\\ _Seiichi Manyama_, May 18 2019",
+        "(Magma)",
+        "m:=30;",
+        "f:= func< x | (&+[3^Binomial(n,2)*x^n/Factorial(n) : n in [0..m+3]]) >;",
+        "R<x>:=PowerSeriesRing(Rationals(), m);",
+        "Coefficients(R!(Laplace( Log(f(x)) ))); // _G. C. Greubel_, Apr 28 2023",
+        "(SageMath)",
+        "m=30",
+        "def f(x): return sum(3^binomial(n,2)*x^n/factorial(n) for n in range(m+4))",
+        "def A054941_list(prec):",
+        "    P.<x> = PowerSeriesRing(QQ, prec)",
+        "    return P( log(f(x)) ).egf_to_ogf().list()",
+        "a=A054941_list(40); a[1:] # _G. C. Greubel_, Apr 28 2023"
+    ],
+    "xref": [
+        "Row sums of A350732.",
+        "The unlabeled version is A086345.",
+        "Cf. A001187 (graphs), A003027 (digraphs), A350730 (strongly connected)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_, May 24 2000",
+    "ext": [
+        "More terms from _Vladeta Jovovic_, Feb 14 2003"
+    ],
+    "references": 10,
+    "revision": 31,
+    "time": "2023-04-29T08:10:29-04:00",
+    "created": "2000-06-15T03:00:00-04:00"
+}

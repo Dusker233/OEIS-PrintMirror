@@ -1,0 +1,33 @@
+{
+    "number": 340324,
+    "data": "2,3,4,7,8,9,16,21,27,31,32,63,64,81,93,127,128,189,217,243,256,279,381,512,567,651,729,837,889,1024,1143,1701,1953,2048,2187,2511,2667,3429,3937,4096,5103,5859,6561,7533,8001,8191,8192,10287,11811,15309,16384",
+    "name": "Numbers k such that starting with k and repeatedly applying the map x -> A340323(x) reaches the loop {3, 4}.",
+    "comment": [
+        "From _Sebastian Karlsson_, Jan 15 2021: (Start)",
+        "The sequence can be defined exclusively as:",
+        "- Powers of two greater than one.",
+        "- Powers of three greater than one.",
+        "- Products of distinct Mersenne primes (A046528, except initial 1) or powers of three multiplied with products of distinct Mersenne primes. (End)"
+    ],
+    "mathematica": [
+        "fa[n_]:=fa[n]=FactorInteger[n]; phi[1]=1; phi[p_, s_]:= (p + 1)*( p - 1)^(s - 1)",
+        "phi[n_]:=Product[phi[fa[n][[i, 1]], fa[n][[i, 2]]], {i, Length[fa[n]]}];",
+        "S[n_] := NestWhile [phi, n, ! ( # == 12 || # == 3 || # == 4) &];",
+        "Select[1 + Range[100], 2<S[#]<5 &]"
+    ],
+    "program": [
+        "(PARI) f(n) = if(1==n, n, my(f=factor(n)); prod(i=1, #f~, (f[i, 1]+1)*((f[i, 1]-1)^(f[i, 2]-1)))); \\\\ A340323",
+        "isok(m) = if (m==1, return(0)); while(! ((m==3) || (m==4) || (m==12)), m = f(m)); ((m==3) || (m==4)); \\\\ _Michel Marcus_, Jan 21 2021"
+    ],
+    "xref": [
+        "Cf. A340323, A340325.",
+        "Cf. A000079, A000244, A000668, A046528."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Jos\u00e9 Mar\u00eda Grau Ribas_, Jan 05 2021",
+    "references": 2,
+    "revision": 19,
+    "time": "2021-02-06T12:34:27-05:00",
+    "created": "2021-02-06T12:34:27-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 10354,
+    "data": "1,2,3,4,5,6,7,20,52,92,133,307,432,433,16819,17864,17865,24583,25639,212419,906298,906426,938811,1122179,2087646,3821955,13606405,40695508,423056951,637339524,6710775966,13892162580,32298119799,97095152738,98250308556,98317417420,125586038802",
+    "name": "Base-8 Armstrong or narcissistic numbers (written in base 10).",
+    "comment": [
+        "Like the other single-digit terms, zero would satisfy the definition (n = Sum_{i=1..k} d[i]^k when d[1..k] are the base 8 digits of n), but here only positive numbers are considered. - _M. F. Hasler_, Nov 20 2019"
+    ],
+    "link": [
+        "Joseph Myers, <a href=\"/A010354/b010354.txt\">Table of n, a(n) for n = 1..62</a> (the full list of terms, from Winter)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/NarcissisticNumber.html\">Narcissistic Number</a>",
+        "D. T. Winter, <a href=\"http://ftp.cwi.nl/dik/Armstrong\">Table of Armstrong Numbers</a>"
+    ],
+    "example": [
+        "From _M. F. Hasler_, Nov 20 2019: (Start)",
+        "20 = 24_8 (in base 8), and 2^2 + 4^2 = 20.",
+        "432 = 660_8, and 6^3 + 6^3 + 0^3 = 432; it's easy to see that 432 + 1 then also satisfies the equation, as for any term that is a multiple of 8. (End)"
+    ],
+    "program": [
+        "(PARI) select( {is_A010354(n)=n==vecsum([d^#n|d<-n=digits(n,8)])}, [0..10^6]) \\\\ This gives only terms < 10^6, for illustration of is_A010354(). - _M. F. Hasler_, Nov 20 2019",
+        "(Python)",
+        "from itertools import islice, combinations_with_replacement",
+        "def A010354_gen(): # generator of terms",
+        "    for k in range(1,30):",
+        "        a = tuple(i**k for i in range(8))",
+        "        yield from (x[0] for x in sorted(filter(lambda x:x[0] > 0 and tuple(int(d,8) for d in sorted(oct(x[0])[2:])) == x[1], \\",
+        "                          ((sum(map(lambda y:a[y],b)),b) for b in combinations_with_replacement(range(8),k)))))",
+        "A010354_list = list(islice(A010354_gen(),20)) # _Chai Wah Wu_, Apr 20 2022"
+    ],
+    "xref": [
+        "Cf. A010351 (a(n) written in base 8).",
+        "In other bases: A010344 (base 4), A010346 (base 5), A010348 (base 6), A010350 (base 7), A010353 (base 9), A005188 (base 10), A161948 (base 11), A161949 (base 12), A161950 (base 13), A161951 (base 14), A161952 (base 15), A161953 (base 16)."
+    ],
+    "keyword": "base,fini,full,nonn",
+    "offset": "1,2",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Edited by _Joseph Myers_, Jun 28 2009"
+    ],
+    "references": 17,
+    "revision": 30,
+    "time": "2022-04-20T16:25:00-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

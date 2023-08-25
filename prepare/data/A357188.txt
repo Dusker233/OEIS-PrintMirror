@@ -1,0 +1,42 @@
+{
+    "number": 357188,
+    "data": "35,65,70,95,105,130,140,143,145,169,175,185,190,195,209,210,215,245,247,253,260,265,280,285,286,290,305,315,319,323,325,338,350,355,370,377,380,385,390,391,395,407,418,420,429,430,435,445,455,473,475,481,490",
+    "name": "Numbers with (WLOG adjacent) prime indices x <= y such that the greatest prime factor of x is greater than the least prime factor of y.",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798. The multiset of multisets with MM-number n is formed by taking the multiset of prime indices of each part of the multiset of prime indices of n. For example, the prime indices of 78 are {1,2,6}, so the multiset of multisets with MM-number 78 is {{},{1},{1,2}}."
+    ],
+    "example": [
+        "The terms and corresponding multisets of multisets:",
+        "   35: {{2},{1,1}}",
+        "   65: {{2},{1,2}}",
+        "   70: {{},{2},{1,1}}",
+        "   95: {{2},{1,1,1}}",
+        "  105: {{1},{2},{1,1}}",
+        "  130: {{},{2},{1,2}}",
+        "  140: {{},{},{2},{1,1}}",
+        "  143: {{3},{1,2}}",
+        "  145: {{2},{1,3}}",
+        "  169: {{1,2},{1,2}}",
+        "  175: {{2},{2},{1,1}}",
+        "  185: {{2},{1,1,2}}"
+    ],
+    "mathematica": [
+        "primeMS[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "Select[Range[100],MatchQ[primeMS[#],{___,x_,y_,___}/;Max@@primeMS[x]>Min@@primeMS[y]]&]",
+        "Select[Range[100],!LessEqual@@Join@@primeMS/@primeMS[#]&]"
+    ],
+    "xref": [
+        "These are the positions of non-weakly increasing rows in A357139.",
+        "A000961 lists prime powers.",
+        "A003963 multiples prime indices.",
+        "A056239 adds up prime indices.",
+        "Cf. A000720, A001221, A001222, A007716, A275024, A302242, A302243, A302505, A324926, A325032, A325034."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Sep 30 2022",
+    "references": 0,
+    "revision": 8,
+    "time": "2022-09-30T07:50:43-04:00",
+    "created": "2022-09-30T07:50:43-04:00"
+}

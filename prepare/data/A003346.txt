@@ -1,0 +1,45 @@
+{
+    "number": 3346,
+    "data": "12,27,42,57,72,87,92,102,107,117,122,132,137,147,152,162,167,172,177,182,187,192,197,202,212,217,227,232,242,247,252,257,262,267,277,282,292,297,307,312,322,327,332,342,347,357,362,372,377,387,392,402,407,412,417",
+    "name": "Numbers that are the sum of 12 positive 4th powers.",
+    "comment": [
+        "a(88) = 636 = 5^4 + 11 and a(91) = 651 = 5^4 + 2^4 + 10  are the first two terms not congruent to 2 or 7 (mod 10). - _M. F. Hasler_, Aug 03 2020"
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A003346/b003346.txt\">Table of n, a(n) for n = 1..10000</a> (first 1000 terms from T. D. Noe)",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/BiquadraticNumber.html\">Biquadratic Number.</a>"
+    ],
+    "example": [
+        "From _David A. Corneth_, Aug 03 2020: (Start)",
+        "3740 is in the sequence as 3740 = 1^4 + 1^4 + 1^4 + 1^4 + 1^4 + 1^4 + 1^4 + 1^4 + 3^4 + 5^4 + 5^4 + 7^4.",
+        "4690 is in the sequence as 4690 = 2^4 + 2^4 + 2^4 + 2^4 + 2^4 + 4^4 + 4^4 + 4^4 + 5^4 + 5^4 + 6^4 + 6^4.",
+        "7193 is in the sequence as 7193 = 2^4 + 4^4 + 5^4 + 5^4 + 5^4 + 5^4 + 5^4 + 5^4 + 5^4 + 5^4 + 5^4 + 6^4. (End)"
+    ],
+    "program": [
+        "(PARI) (A003346_upto(N, k=12, m=4)=[i|i<-[1..#N=sum(n=1, sqrtnint(N, m), 'x^n^m, O('x^N))^k], polcoef(N, i)])(500) \\\\ 2nd & 3rd optional arg allow to get other sequences of this group. See A003333 for alternate code. - _M. F. Hasler_, Aug 03 2020",
+        "(Python)",
+        "from itertools import count, takewhile, combinations_with_replacement as mc",
+        "def aupto(limit):",
+        "    qd = takewhile(lambda x: x <= limit, (k**4 for k in count(1)))",
+        "    ss = set(sum(c) for c in mc(qd, 12))",
+        "    return sorted(s for s in ss if s <= limit)",
+        "print(aupto(417)) # _Michael S. Branicky_, Dec 27 2021"
+    ],
+    "xref": [
+        "Cf. A000583 (4th powers).",
+        "Other numbers that are the sum of k positive m-th powers:",
+        "  A000404 (k=2, m=2), A000408 (3, 2), A000414 (4, 2), A047700 (k=5, m=2),",
+        "  A003325 (k=2, m=3), A003072 (k=3, m=3), A003327 .. A003335 (k=4..12, m=3),",
+        "  A003336 .. A003346 (k=2..12, m=4), A003347 .. A003357 (k=2..12, m=5),",
+        "  A003358 .. A003368 (k=2..12, m=6), A003369 .. A003379 (k=2..12, m=7),",
+        "  A003380 .. A003390 (k=2..12, m=8), A003391 .. A004801 (k=2..12, m=9),",
+        "  A004802 .. A004812 (k=2..12, m=10), A004813 .. A004823 (k=2..12, m=11)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_",
+    "references": 45,
+    "revision": 30,
+    "time": "2021-12-27T08:25:57-05:00",
+    "created": "1996-12-11T03:00:00-05:00"
+}

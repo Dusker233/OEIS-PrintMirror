@@ -1,0 +1,42 @@
+{
+    "number": 64901,
+    "data": "65,115,119,215,217,265,365,377,413,415,511,515,517,565,629,707,779,815,865,965,1099,1115,1165,1207,1243,1315,1391,1393,1415,1465,1501,1565,1589,1687,1727,1765,1769,1865,1883,1915,1969,1981,2165,2177,2215",
+    "name": "Semiprimes p1*p2 such that p2 > p1 and p2 mod p1 = 3.",
+    "comment": [
+        "The semiprimes must be squarefree, since p1 does not divide p2. - _Michael De Vlieger_, Apr 12 2018"
+    ],
+    "link": [
+        "John Cerkan, <a href=\"/A064901/b064901.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "Select[Range@ 2215, And[#[[All, -1]] == {1, 1}, Mod[#2, #1] == 3 & @@ #[[All, 1]]] &@ FactorInteger[#] &] (* _Michael De Vlieger_, Apr 12 2018 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "def is_A064901(n):",
+        "    f = factorint(n)",
+        "    return (sum([f[i] for i in f]) == 2) and (max(f) % min(f) == 3)",
+        "def first_A064901(n):",
+        "    x = 1",
+        "    an = []",
+        "    while len(an) < n:",
+        "        if is_A064901(x): an.append(x)",
+        "        x += 2",
+        "    return an # _John Cerkan_, Apr 14 2018",
+        "(PARI) isok(n) = my(f = factor(n)); (#f~ == 2) && (vecmax(f[,2]) < 2) && ((f[2,1] % f[1,1]) == 3); \\\\ _Michel Marcus_, Apr 16 2018"
+    ],
+    "xref": [
+        "Cf. A001358 (p2 mod p1 = 0), A006881, A064899-A064911."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Oct 13 2001",
+    "ext": [
+        "Name clarified by _John Cerkan_, Apr 13 2018"
+    ],
+    "references": 1,
+    "revision": 30,
+    "time": "2018-04-16T19:10:17-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

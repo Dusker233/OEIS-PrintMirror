@@ -1,0 +1,38 @@
+{
+    "number": 300652,
+    "data": "1,2,4,12,40,136,496,1952,7488,30368,123456,512384,2129664,9068672,38391552,165642752,713405952,3109135872,13528865792,59591322624,261549260800,1159547047936,5131968999424,22883893137408,101851069587456,456703499042816,2042949493276672",
+    "name": "Number of enriched p-trees of weight 2n + 1 in which all outdegrees and all leaves are odd.",
+    "comment": [
+        "An enriched p-tree of weight n > 0 is either a single node of weight n, or a finite sequence of at least two enriched p-trees whose weights are weakly decreasing and sum to n."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A300652/b300652.txt\">Table of n, a(n) for n = 0..500</a>"
+    ],
+    "formula": [
+        "a(n) = (1 - (-1)^n)/2 + Sum_y Product_{i in y} a(i) where the sum is over all non-singleton integer partitions of n with an odd number of parts."
+    ],
+    "example": [
+        "The a(3) = 12 trees:",
+        "7,",
+        "(511), (331),",
+        "((111)31), (3(111)1), ((311)11), (31111),",
+        "((111)(111)1), (((111)11)11), ((11111)11), ((111)1111), (1111111)."
+    ],
+    "mathematica": [
+        "r[n_]:=r[n]=If[OddQ[n],1,0]+Sum[Times@@r/@y,{y,Select[IntegerPartitions[n],Length[#]>1&&OddQ[Length[#]]&]}];",
+        "Table[r[n],{n,1,40,2}]"
+    ],
+    "program": [
+        "(PARI) seq(n)={my(v=vector(n)); for(n=1, n, v[n] = 1 + polcoef(1/prod(k=1, n-1, 1 - v[k]*x^(2*k-1) + O(x^(2*n))) - 1/prod(k=1, n-1, 1 + v[k]*x^(2*k-1) + O(x^(2*n))), 2*n-1)/2); v} \\\\ _Andrew Howroyd_, Aug 26 2018"
+    ],
+    "xref": [
+        "Cf. A000009, A000041, A063834, A196545, A273873, A281145, A289501, A298118, A300352, A300353, A300354, A300436, A300439, A300442, A300443, A300574, A300797."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Mar 10 2018",
+    "references": 3,
+    "revision": 8,
+    "time": "2018-08-26T16:34:52-04:00",
+    "created": "2018-03-13T08:59:13-04:00"
+}

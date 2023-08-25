@@ -1,0 +1,40 @@
+{
+    "number": 195979,
+    "data": "1,2,8,53,497,6027,89595,1576682,32047986,738772383,19042778713,542704904381,16944005908637,575128775147734,21086473359281088,830481043455973053,34967280863073327597,1567405219938012472847,74521905471659239870631,3745801599865304794344662",
+    "name": "a(n) = Sum_{k=0..n} T(n,k), where T(n,k) is the number of rooted labeled trees with n nodes whose maximal decreasing subtree has k nodes.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A195979/b195979.txt\">Table of n, a(n) for n = 0..386</a>",
+        "S. Seo and H. Shin, <a href=\"http://arxiv.org/abs/1106.1290\">Another refinement for Rooted Trees</a>, arXiv preprint arXiv:1106.1290 [math.CO], 2011-2012."
+    ],
+    "formula": [
+        "Seo and Shin give an e.g.f.",
+        "a(n) = exp(1) * Sum_{k>=0} (-1)^k*(n - k)^n/k!. - _Ilya Gutkovskiy_, Jun 13 2019",
+        "a(n) ~ exp(1-exp(-1)) * n^n. - _Vaclav Kotesovec_, Aug 04 2021",
+        "E.g.f.: exp(1-exp(LambertW(-x))) / (1+LambertW(-x)). - _M\u00e9lika Tebni_, Jun 13 2023"
+    ],
+    "maple": [
+        "T:= (n, k)-> add(binomial(n+1, m+1) *Stirling2(m+1, k+1)",
+        "             *(n-k)^(n-m-1) *(m-k), m=k..n):",
+        "a:= n-> 1 +add(T(n, k), k=0..n-1):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Sep 30 2011",
+        "# second Maple program:",
+        "b:= proc(n, k) option remember;",
+        "     `if`(n=0, 1, -k*b(n-1, k)+b(n-1, k+1))",
+        "    end:",
+        "a:= n-> b(n, -n):",
+        "seq(a(n), n=0..26);  # _Alois P. Heinz_, Aug 04 2021",
+        "# e.g.f. Maple program:",
+        "A195979 := series(exp(1-exp(LambertW(-x)))/(1+LambertW(-x)), x = 0, 20):",
+        "seq(n!*coeff(A195979, x, n), n = 0 .. 19); # _M\u00e9lika Tebni_, Jun 13 2023"
+    ],
+    "mathematica": [
+        "T[n_, k_] := Sum[Binomial[n+1, m+1]*StirlingS2[m+1, k+1]*(n-k)^(n-m-1)*(m-k), {m, k, n}]; a[n_] := 1 + Sum[T[n, k], {k, 0, n-1}]; Table[a[n], {n, 0, 20}] (* _Jean-Fran\u00e7ois Alcover_, Mar 07 2014, after _Alois P. Heinz_ *)"
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Sep 25 2011",
+    "references": 2,
+    "revision": 35,
+    "time": "2023-06-16T01:59:04-04:00",
+    "created": "2011-09-25T22:43:14-04:00"
+}

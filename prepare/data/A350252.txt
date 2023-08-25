@@ -1,0 +1,80 @@
+{
+    "number": 350252,
+    "data": "0,0,1,7,53,439,4121,43675,519249,6867463,100228877,1602238783,27866817297,524175098299,10606844137009,229807953097903,5308671596791901,130261745042452855,3383732450013895721,92770140175473602755,2677110186541556215233",
+    "name": "Number of non-alternating patterns of length n.",
+    "comment": [
+        "We define a pattern to be a finite sequence covering an initial interval of positive integers. Patterns are counted by A000670 and ranked by A333217.",
+        "A sequence is alternating if it is alternately strictly increasing and strictly decreasing, starting with either. For example, the partition (3,2,2,2,1) has no alternating permutations, even though it does have the anti-run permutations (2,3,2,1,2) and (2,1,2,3,2). An alternating pattern is necessarily an anti-run (A005649).",
+        "Conjecture: Also the number of non-weakly up/down (or down/up) patterns of length n. For example:",
+        "- The a(3) = 7 non-weakly up/down patterns:",
+        "  (121), (122), (123), (132), (221), (231), (321)",
+        "- The a(3) = 7 non-weakly down/up patterns:",
+        "  (112), (123), (211), (212), (213), (312), (321)",
+        "- The a(3) = 7 non-alternating patterns (see example for more):",
+        "  (111), (112), (122), (123), (211), (221), (321)"
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A350252/b350252.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = A000670(n) - A345194(n)."
+    ],
+    "example": [
+        "The a(2) = 1 and a(3) = 7 non-alternating patterns:",
+        "  (1,1)  (1,1,1)",
+        "         (1,1,2)",
+        "         (1,2,2)",
+        "         (1,2,3)",
+        "         (2,1,1)",
+        "         (2,2,1)",
+        "         (3,2,1)",
+        "The a(4) = 53 non-alternating patterns:",
+        "  2112   3124   4123   1112   2134   1234   3112   2113   1123",
+        "  2211   3214   4213   1211   2314   1243   3123   2123   1213",
+        "  2212   3412   4312   1212   2341   1324   3211   2213   1223",
+        "         3421   4321   1221   2413   1342   3212   2311   1231",
+        "                       1222   2431   1423   3213   2312   1232",
+        "                                     1432   3312   2313   1233",
+        "                                            3321   2321   1312",
+        "                                                   2331   1321",
+        "                                                          1322",
+        "                                                          1323",
+        "                                                          1332"
+    ],
+    "mathematica": [
+        "allnorm[n_]:=If[n<=0,{{}},Function[s,Array[Count[s,y_/;y<=#]+1&,n]]/@Subsets[Range[n-1]+1]];",
+        "wigQ[y_]:=Or[Length[y]==0,Length[Split[y]]==Length[y]&& Length[Split[Sign[Differences[y]]]]==Length[y]-1];",
+        "Table[Length[Select[Join@@Permutations/@allnorm[n],!wigQ[#]&]],{n,0,6}]"
+    ],
+    "xref": [
+        "The unordered version is A122746.",
+        "The version for compositions is A345192, ranked by A345168, weak A349053.",
+        "The complement is counted by A345194, weak A349058.",
+        "The version for factorizations is A348613, complement A348610, weak A350139.",
+        "The strict case (permutations) is A348615, complement A001250.",
+        "The weak version for partitions is A349061, complement A349060.",
+        "The weak version for perms of prime indices is A349797, complement A349056.",
+        "The weak version is A350138.",
+        "The version for perms of prime indices is A350251, complement A345164.",
+        "A000670 = patterns (ranked by A333217).",
+        "A003242 = anti-run compositions, complement A261983, ranked by A333489.",
+        "A005649 = anti-run patterns, complement A069321.",
+        "A019536 = necklace patterns.",
+        "A025047/A129852/A129853 = alternating compositions, ranked by A345167.",
+        "A226316 = patterns avoiding (1,2,3), weakly A052709, complement A335515.",
+        "A345163 = normal partitions w/ alternating permutation, complement A345162.",
+        "A345170 = partitions w/ alternating permutation, complement A345165.",
+        "A349055 = normal multisets w/ alternating permutation, complement A349050.",
+        "Cf. A049774, A052955, A096441, A128761, A274230, A335456, A335457, A336103, A344605, A344614."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Jan 13 2022",
+    "ext": [
+        "Terms a(9) and beyond from _Andrew Howroyd_, Feb 04 2022"
+    ],
+    "references": 13,
+    "revision": 10,
+    "time": "2022-02-04T18:10:52-05:00",
+    "created": "2022-01-18T05:56:21-05:00"
+}

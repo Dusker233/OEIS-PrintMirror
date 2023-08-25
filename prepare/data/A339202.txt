@@ -1,0 +1,49 @@
+{
+    "number": 339202,
+    "data": "16,744,50354,2462064,139472532,7621612496,420570135944,23122750594160,1272913614363472,70046421764651488,3855022666171830728,212153410644220498768,11675594777180367650512,642548778638303396036528,35361754611803652243506632,1946082778374581215370587632",
+    "name": "Number of (undirected) Hamiltonian cycles on the n X 5 king graph.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A339202/b339202.txt\">Table of n, a(n) for n = 2..400</a>",
+        "Vaclav Kotesovec, <a href=\"/A339202/a339202.txt\">Empirical g.f.</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HamiltonianCycle.html\">Hamiltonian Cycle</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/KingGraph.html\">King Graph</a>",
+        "<a href=\"/index/Gra#graphs\">Index entries for sequences related to graphs, Hamiltonian</a>"
+    ],
+    "program": [
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_nXk_king_graph(n, k):",
+        "    grids = []",
+        "    for i in range(1, k + 1):",
+        "        for j in range(1, n):",
+        "            grids.append((i + (j - 1) * k, i + j * k))",
+        "            if i < k:",
+        "                grids.append((i + (j - 1) * k, i + j * k + 1))",
+        "            if i > 1:",
+        "                grids.append((i + (j - 1) * k, i + j * k - 1))",
+        "    for i in range(1, k * n, k):",
+        "        for j in range(1, k):",
+        "            grids.append((i + j - 1, i + j))",
+        "    return grids",
+        "def A339190(n, k):",
+        "    universe = make_nXk_king_graph(n, k)",
+        "    GraphSet.set_universe(universe)",
+        "    cycles = GraphSet.cycles(is_hamilton=True)",
+        "    return cycles.len()",
+        "def A339202(n):",
+        "    return A339190(n, 5)",
+        "print([A339202(n) for n in range(2, 20)])"
+    ],
+    "xref": [
+        "Column 5 of A339190.",
+        "Cf. A339199."
+    ],
+    "keyword": "nonn",
+    "offset": "2,1",
+    "author": "_Seiichi Manyama_, Nov 27 2020",
+    "references": 5,
+    "revision": 15,
+    "time": "2020-12-09T05:23:50-05:00",
+    "created": "2020-11-28T02:20:44-05:00"
+}

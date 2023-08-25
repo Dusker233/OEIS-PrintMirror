@@ -1,0 +1,58 @@
+{
+    "number": 350519,
+    "data": "3,13,63,325,1719,9237,50199,275149,1518263,8422961,46935819,262512929,1472854451,8285893713,46723439019,264009961733,1494486641911,8473508472009,48112827862527,273541139290857,1557023508876891,8872219429659729,50605041681538595,288897992799897481",
+    "name": "a(n) = A(n,n) where A(1,n) = A(n,1) = prime(n+1) and A(m,n) = A(m-1,n) + A(m,n-1) + A(m-1,n-1) for m > 1 and n > 1.",
+    "comment": [
+        "Replacing prime(n+1) by other functions f(n) we get:",
+        "  A001850 (with f(n) = 1),",
+        "  A002002 (with f(n) = n+1),",
+        "  A050151 (with f(n) = n/2), and",
+        "  A344576 (with f(n) = Fibonacci(n))."
+    ],
+    "example": [
+        "The two-dimensional recurrence A(m,n) can be depicted in matrix form as",
+        "   3   5   7   11   13    17    19 ...",
+        "   5  13  25   43   67    97   133 ...",
+        "   7  25  63  131  241   405   635 ...",
+        "  11  43 131  325  697  1343  2383 ...",
+        "  13  67 241  697 1719  3759  7485 ...",
+        "  17  97 405 1343 3759  9237 20481 ...",
+        "  19 133 635 2383 7485 20481 50199 ...",
+        "  ...",
+        "and then a(n) is the main diagonal of this matrix, A(n,n)."
+    ],
+    "mathematica": [
+        "f[1,1]=3;f[m_,1]:=Prime[m+1];f[1,n_]:=Prime[n+1];f[m_,n_]:=f[m,n]=f[m-1,n]+f[m,n-1]+f[m-1,n-1];Table[f[n,n],{n,25}] (* _Giorgos Kalogeropoulos_, Jan 03 2022 *)"
+    ],
+    "program": [
+        "(MATLAB)",
+        "clear all",
+        "close all",
+        "sz = 14",
+        "f = zeros(sz,sz);",
+        "pp = primes(50);",
+        "f(1,:) = pp(2:end);",
+        "f(:,1) = pp(2:end);",
+        "for m=2:sz",
+        "    for  n=2:sz",
+        "        f(m,n) = f(m-1,n-1)+f(m,n-1)+f(m-1,n);",
+        "    end",
+        "end",
+        "an = []",
+        "for n=1:sz",
+        "    an = [an f(n,n)];",
+        "end",
+        "S = sprintf('%i,',an);",
+        "S = S(1:end-1)"
+    ],
+    "xref": [
+        "Cf. A000040, A001850, A002002, A050151, A344576 (see comments)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Yigit Oktar_, Jan 02 2022",
+    "references": 0,
+    "revision": 25,
+    "time": "2022-01-24T15:50:57-05:00",
+    "created": "2022-01-24T15:50:57-05:00"
+}

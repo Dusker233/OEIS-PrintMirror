@@ -1,0 +1,38 @@
+{
+    "number": 321584,
+    "data": "1,1,2,6,27,159,1154",
+    "name": "Number of connected (0,1)-matrices with n ones and no zero rows or columns.",
+    "comment": [
+        "A matrix is connected if the positions in each row (or each column) of the nonzero entries form a connected hypergraph."
+    ],
+    "example": [
+        "The a(4) = 27 matrices:",
+        "  [1111]",
+        ".",
+        "  [111][111][111][11][110][110][101][101][100][011][011][010][001]",
+        "  [100][010][001][11][101][011][110][011][111][110][101][111][111]",
+        ".",
+        "  [11][11][11][11][10][10][10][10][01][01][01][01]",
+        "  [10][10][01][01][11][11][10][01][11][11][10][01]",
+        "  [10][01][10][01][10][01][11][11][10][01][11][11]",
+        ".",
+        "  [1]",
+        "  [1]",
+        "  [1]",
+        "  [1]"
+    ],
+    "mathematica": [
+        "csm[s_]:=With[{c=Select[Tuples[Range[Length[s]],2],And[OrderedQ[#],UnsameQ@@#,Length[Intersection@@s[[#]]]>0]&]},If[c=={},s,csm[Union[Append[Delete[s,List/@c[[1]]],Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Select[Subsets[Tuples[Range[n],2],{n}],And[Union[First/@#]==Range[Max@@First/@#],Union[Last/@#]==Range[Max@@Last/@#],Length[csm[Map[Last,GatherBy[#,First],{2}]]]==1]&]],{n,6}] (* Mathematica 7.0+ *)"
+    ],
+    "xref": [
+        "Cf. A007716, A007718, A049311, A056156, A101370, A104602, A120733, A283877, A319557, A319647, A319616-A319629, A321585."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Nov 13 2018",
+    "references": 1,
+    "revision": 6,
+    "time": "2018-11-14T08:09:44-05:00",
+    "created": "2018-11-14T08:09:44-05:00"
+}

@@ -1,0 +1,79 @@
+{
+    "number": 256535,
+    "data": "0,0,1,4,5,8,11,16,19,24,29,36,41,48,55,64,71,80,89,100,109,120,131,144,155,168,181,196,209,224,239,256,271,288,305,324,341,360,379,400,419,440,461,484,505,528,551,576,599,624,649,676,701,728,755,784,811",
+    "name": "The largest number of T-tetrominoes that fit within an n X n square.",
+    "comment": [
+        "No T-tetromino fits in a 1 X 1 or 2 X 2 square: a(1)=a(2)=0. A single T-tetromino can be placed in a 3 X 3 square, and must occupy the center square. Four T-tetrominos fit within a 4 X 4 square with no spaces left over, in a rotationally symmetric tiling: a(4)=4.",
+        "For n = 4m, it is obvious that a(n) = n^2/4, by repeating the construction for n=4. For n = 4m + 2, it can be shown, using a chessboard coloring, that a(n) < n^2/4. By tiling an L-shaped strip of width 2 in a manner that can be indefinitely extended, one can show that a(n) = n^2/4 - 1.",
+        "Shuxin Zhan proved that it is not possible to tile a square of side 4m+1 or 4m+3 with T-tetrominos and a single monomino. Thus there must be at least 5 empty squares in any partial tiling by T-tetrominos. This bound is achieved for tilings in 5 X 5, 7 X 7, 9 X 9 and 11 X 11 squares. Robert Hochberg proved that for n > 11, there must be either 5 or 9 empty squares. He conjectured that 5 is always enough.",
+        "Jack W Grahl proved that, for squares, 5 monominos are always sufficient. This means that the sequence is given by n^2/4, (n^2-1)/4-1, n^2/4-1, (n^2-1)/4-1, for n = 4m, n = 4m+1, n = 4m+2 and n = 4m+3, respectively (which the exception of a(1) = 0), and generating function x^3*(-1-2*x+2*x^2-2*x^3+x^4) ) / ( (1+x)*(x^2+1)*(x-1)^3 ). - _Jack W Grahl_, Jul 25 2018"
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A256535/b256535.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Jack W Grahl, <a href=\"https://arxiv.org/abs/1807.09201\">Every square can be tiled with T-tetrominos and no more than 5 monominos</a>, arXiv:1807.09201 [math.CO], 2018.",
+        "Robert Hochberg, <a href=\"http://arxiv.org/abs/1403.6730\">The gap number of the T-tetromino</a> arxiv:1403.6730, [math.CO], June 2014.",
+        "Shuxin Zhan, <a href=\"https://www.math.psu.edu/mass/sites/default/files/reu2012/Tiling%20Deficient%20Rectangles%20with%20T-Tetrominoes.pdf\">Tiling a deficient rectangle with t-tetrominoes</a>, Penn State Mathematics Advanced Study Semesters REU, August 2012.",
+        "<a href=\"/index/Rec#order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (2,-1,0,1,-2,1)."
+    ],
+    "formula": [
+        "From _Jack W Grahl_, Jul 25 2018: (Start)",
+        "a(4m) = 4m^2;",
+        "a(4m+1) = 4m^2 + 2m - 1;",
+        "a(4m+2) = 4m^2 + 4m;",
+        "a(4m+3) = 4m^2 + 6m + 1.",
+        "(End)",
+        "From _Colin Barker_, May 24 2019: (Start)",
+        "G.f.: x^3*(1 + 2*x - 2*x^2 + 2*x^3 - x^4) / ((1 - x)^3*(1 + x)*(1 + x^2)).",
+        "a(n) = (-7 + 3*(-1)^n + 2*(-i)^n + 2*i^n + 2*n^2) / 8 for n>1, where i=sqrt(-1).",
+        "a(n) = 2*a(n-1) - a(n-2) + a(n-4) - 2*a(n-5) + a(n-6) for n>7.",
+        "(End)"
+    ],
+    "example": [
+        "The optimal tiling for a 4 X 4 square is:",
+        "   AAAB",
+        "   DABB",
+        "   DDCB",
+        "   DCCC",
+        "This forms the building block of a solution for all n a multiple of four.",
+        "For n=7 a solution is given by:",
+        "   ABBBCCC",
+        "   AABD/CE",
+        "   A/DDDEE",
+        "       F/E",
+        "       FFG",
+        "       FGG",
+        "       //G",
+        "with 5 empty squares, and the 4 X 4 square in the lower left filled in as above.",
+        "For n=6, a tiling of the excess after removing a 4 X 4 square shows us how optimal solutions can be generated for any even number that is not a multiple of 4:",
+        "   //ABBB",
+        "   /AAABC",
+        "       CC",
+        "       DC",
+        "       DD",
+        "       D/",
+        "The pairs A&B and C&D can be extended in the manner of a frieze. A nice solution for 9 X 9 does not include tilings of smaller even squares:",
+        "   ABBBCDDDE",
+        "   AABFCCDEE",
+        "   AGFFCHHHE",
+        "   GGGFI/HJ/",
+        "   KKKIIIJJJ",
+        "   /KL//MNNN",
+        "   OLLLPMMNQ",
+        "   OORPPMSQQ",
+        "   ORRRPSSSQ"
+    ],
+    "mathematica": [
+        "Delete[Flatten[ Table[{4n^2, 4n^2 + 2n - 1, 4n^2 + 4n, 4n^2 + 6n + 1}, {n, 0, 14}]], 2] (* or *)",
+        "CoefficientList[ Series[1 + (x^4 - 2x^3 - 2x + 1)/((x - 1)^3 (x^3 + x^2 + x + 1)), {x, 0, 58}], x] (* _Robert G. Wilson v_, Jul 25 2018 *)"
+    ],
+    "program": [
+        "(PARI) concat([0,0], Vec(x^3*(1 + 2*x - 2*x^2 + 2*x^3 - x^4) / ((1 - x)^3*(1 + x)*(1 + x^2)) + O(x^60))) \\\\ _Colin Barker_, May 24 2019"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,4",
+    "author": "_Jack W Grahl_, Sep 15 2015",
+    "references": 2,
+    "revision": 83,
+    "time": "2019-12-19T12:50:01-05:00",
+    "created": "2015-10-16T13:48:40-04:00"
+}

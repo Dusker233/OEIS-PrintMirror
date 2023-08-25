@@ -1,0 +1,34 @@
+{
+    "number": 346984,
+    "data": "1,1,7,85,1495,34477,983983,33476437,1322441575,59492222077,3002578396255,168005805229285,10321907081030167,690761732852321677,50015387402165694607,3895721046926471861365,324805103526730206129607,28861947117644330678207389,2722944810091827410698112959",
+    "name": "E.g.f.: 1 / (6 - 5 * exp(x))^(1/5).",
+    "comment": [
+        "Stirling transform of A008548."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} Stirling2(n,k) * A008548(k).",
+        "a(n) ~ n! / (Gamma(1/5) * 6^(1/5) * n^(4/5) * log(6/5)^(n + 1/5)). - _Vaclav Kotesovec_, Aug 14 2021"
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n<2, 1, (5*n-4)*g(n-1)) end:",
+        "b:= proc(n, m) option remember;",
+        "     `if`(n=0, g(m), m*b(n-1, m)+b(n-1, m+1))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..18);  # _Alois P. Heinz_, Aug 09 2021"
+    ],
+    "mathematica": [
+        "nmax = 18; CoefficientList[Series[1/(6 - 5 Exp[x])^(1/5), {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[Sum[StirlingS2[n, k] 5^k Pochhammer[1/5, k], {k, 0, n}], {n, 0, 18}]"
+    ],
+    "xref": [
+        "Cf. A000670, A008548, A094418, A305404, A346982, A346983, A346985."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Aug 09 2021",
+    "references": 5,
+    "revision": 9,
+    "time": "2021-08-14T09:10:14-04:00",
+    "created": "2021-08-09T20:30:47-04:00"
+}

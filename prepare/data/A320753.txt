@@ -1,0 +1,36 @@
+{
+    "number": 320753,
+    "data": "1,7,29,92,247,590,1292,2644,5124,9494,16939,29262,49156,80577,129252,203363,314462,478683,718339,1064009,1557252,2254113,3229631,4583602,6447917,8995858,12453830,17116103,23363272,31685282,42710057,57238971,76290668,101155025",
+    "name": "Number of partitions of n with seven kinds of 1.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A320753/b320753.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "formula": [
+        "G.f.: 1/(1-x)^7 * 1/Product_{j>1} (1-x^j).",
+        "Euler transform of 7,1,1,1,... .",
+        "a(n) ~ 2 * 3^(5/2) * n^2 * exp(Pi*sqrt(2*n/3)) / Pi^6. - _Vaclav Kotesovec_, Oct 24 2018"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      (numtheory[sigma](j)+6)*a(n-j), j=1..n)/n)",
+        "    end:",
+        "seq(a(n), n=0..40);"
+    ],
+    "mathematica": [
+        "nmax = 50; CoefficientList[Series[1/((1-x)^6 * Product[1-x^k, {k, 1, nmax}]), {x, 0, nmax}], x] (* _Vaclav Kotesovec_, Oct 24 2018 *)"
+    ],
+    "program": [
+        "(PARI) x='x+O('x^30); Vec(1/((1-x)^7*prod(j=2, 40, 1-x^j))) \\\\ _G. C. Greubel_, Oct 27 2018",
+        "(Magma) m:=30; R<x>:=PowerSeriesRing(Integers(), m); Coefficients(R!(1/((1-x)^7*(&*[1-x^j: j in [2..30]])))); // _G. C. Greubel_, Oct 27 2018"
+    ],
+    "xref": [
+        "Column k=7 of A292508."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Alois P. Heinz_, Oct 20 2018",
+    "references": 2,
+    "revision": 13,
+    "time": "2022-09-08T08:46:23-04:00",
+    "created": "2018-10-20T15:44:22-04:00"
+}

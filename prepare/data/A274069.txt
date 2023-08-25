@@ -1,0 +1,53 @@
+{
+    "number": 274069,
+    "data": "1,10,1010,1010100,101010010,101010010110,101010010110100,101010010110100100,1010100101101001001000,10101001011010010010001110,101010010110100100100011101100,10101001011010010010001110110010100,101010010110100100100011101100101001100,10101001011010010010001110110010100110011000,10101001011010010010001110110010100110011000100000",
+    "name": "a(n) is the concatenation of a(n-1) and the Hamming distance between a(n-1) and its reverse (i.e., the minimum number of bitflips needed to make them identical). Sequence written in binary.",
+    "example": [
+        "Let a'(n) be the reverse of a(n). E.g., if a(n) = 10100, then a'(n) = 00101. Let hamm(b,c) denote the Hamming distance between b and c. Let concat designate concatenation of arguments.",
+        "a(1):=1.",
+        "a(2) is the concatenation of a(1) and hamm(a(1),a'(1)). a'(1) = 1. So hamm(a(1),a'(1)) = hamm('1','1') = 0. So a(2) = concat('1','0') = 10.",
+        "a(3) is the concatenation of a(2) and hamm(a(2),a'(2)). hamm(a(2),a'(2)) = hamm('10','01') = 2 or 10 in base 2. So a(3) = concat('10','10') = 1010.",
+        "a(4) is the concatenation of a(3) and hamm(a(3),a'(3)). hamm(a(3),a'(3)) = hamm('1010','0101') = 4 or 100 in base 2. So a(3) = concat('1010','100') = 10100."
+    ],
+    "maple": [
+        "A274069aux := proc(n)",
+        "    option remember;",
+        "    if n = 1 then",
+        "        [1];",
+        "    else",
+        "        d := procname(n-1) ;",
+        "        dreve := ListTools[Reverse](d) ;",
+        "        ham := 0 ;",
+        "        for i from 1 to nops(d) do",
+        "            if op(i,d) <> op(i,dreve) then",
+        "                ham := ham+1 ;",
+        "            end if;",
+        "        end do:",
+        "        if ham = 0 then",
+        "            [op(d),0] ;",
+        "        else",
+        "            ListTools[Reverse](convert(ham,base,2)) ;",
+        "            [op(d),op(%) ] ;",
+        "        end if ;",
+        "    end if;",
+        "end proc:",
+        "A274069 := proc(n)",
+        "    digcatL(A274069aux(n)) ;",
+        "end proc:",
+        "seq(A274069(n),n=1..30) ; # _R. J. Mathar_, May 08 2019"
+    ],
+    "xref": [
+        "Cf. A144078."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,2",
+    "author": "_Meir-Simchah Panzer_, Jun 09 2016",
+    "ext": [
+        "Edited by _Meir-Simchah Panzer_, Jun 12 2018",
+        "More terms from _R. J. Mathar_, May 08 2019."
+    ],
+    "references": 1,
+    "revision": 25,
+    "time": "2019-05-08T11:43:29-04:00",
+    "created": "2016-06-17T09:38:06-04:00"
+}

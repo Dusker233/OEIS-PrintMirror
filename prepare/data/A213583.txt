@@ -1,0 +1,46 @@
+{
+    "number": 213583,
+    "data": "1,9,38,120,327,819,1948,4482,10085,22341,48930,106236,229075,491175,1048184,2227782,4718097,9960921,20970910,44039520,92273951,192937179,402652308,838859850,1744829437,3623877549,7516191578,15569255172,32212253355,66571991631",
+    "name": "Principal diagonal of the convolution array A213582.",
+    "link": [
+        "Clark Kimberling, <a href=\"/A213583/b213583.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (7,-19,25,-16,4)."
+    ],
+    "formula": [
+        "a(n) = 7*a(n-1) - 19*a(n-2) + 25*a(n-3) - 16*a(n-4) + 4*a(n-5).",
+        "G.f.: x*(1 + 2*x - 6*x^2) / ((1 - x)^3*(1 - 2*x)^2).",
+        "a(n) = (n+1)*(2^(n+2) - 3*n -4)/2. - _Colin Barker_, Nov 04 2017",
+        "E.g.f.: (4*(1+2*x)*exp(2*x) - (3*x^2+10*x+4)*exp(x))/2. - _G. C. Greubel_, Jul 08 2019"
+    ],
+    "mathematica": [
+        "(* First program *)",
+        "b[n_]:= 2^n - 1; c[n_]:= n;",
+        "T[n_, k_]:= Sum[b[k-i] c[n+i], {i, 0, k-1}]",
+        "TableForm[Table[T[n, k], {n, 1, 10}, {k, 1, 10}]]",
+        "Flatten[Table[T[n-k+1, k], {n, 12}, {k, n, 1, -1}]] (* A213582 *)",
+        "r[n_]:= Table[T[n, k], {k, 40}] (* columns of antidiagonal triangle *)",
+        "Table[T[n, n], {n, 1, 40}] (* A213583 *)",
+        "s[n_]:= Sum[T[i, n+1-i], {i, 1, n}]",
+        "Table[s[n], {n, 1, 50}] (* A156928 *)",
+        "(* Second program *)",
+        "LinearRecurrence[{7,-19,25,-16,4},{1,9,38,120,327},40] (* _Harvey P. Dale_, Apr 06 2013 *)",
+        "Table[(n+1)*(2^(n+2)-3*n-4)/2, {n,40}] (* _G. C. Greubel_, Jul 08 2019 *)"
+    ],
+    "program": [
+        "(PARI) Vec(x*(1 + 2*x - 6*x^2) / ((1 - x)^3*(1 - 2*x)^2) + O(x^40)) \\\\ _Colin Barker_, Nov 04 2017",
+        "(PARI) vector(40, n, (n+1)*(2^(n+2) -3*n-4)/2) \\\\ _G. C. Greubel_, Jul 08 2019",
+        "(Magma) [(n+1)*(2^(n+2) -3*n-4)/2: n in [1..40]]; // _G. C. Greubel_, Jul 08 2019",
+        "(Sage) [(n+1)*(2^(n+2) -3*n-4)/2 for n in (1..40)] # _G. C. Greubel_, Jul 08 2019",
+        "(GAP) List([1..40], n-> (n+1)*(2^(n+2) -3*n-4)/2) # _G. C. Greubel_, Jul 08 2019"
+    ],
+    "xref": [
+        "Cf. A213500, A213582."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Jun 19 2012",
+    "references": 3,
+    "revision": 29,
+    "time": "2022-09-08T08:46:02-04:00",
+    "created": "2012-07-15T04:10:49-04:00"
+}

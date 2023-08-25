@@ -1,0 +1,41 @@
+{
+    "number": 356443,
+    "data": "569,661,1249,1559,1571,1949,1999,2389,2441,2609,2879,3761,3911,5689,5701,5749,5779,6389,6481,6971,7559,7561,7741,8191,8971,9221,9391,9521,10061,10111,10289,10601,10949,11821,11941,12071,12281,12689,12721,12809,13151,13469,13681,14821,15569,16931,18661",
+    "name": "Primes p such that the concatenation of p and 2*p is the average of a twin prime pair.",
+    "link": [
+        "Robert Israel, <a href=\"/A356443/b356443.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 1249 is a term because 2*1249 = 2498 and 12492498 is the average of the twin prime pair 12492497, 12492499."
+    ],
+    "maple": [
+        "filter:= proc(p) local r;",
+        "  if not isprime(p) then return false fi;",
+        "  r:= p*10^(1+ilog10(2*p))+2*p;",
+        "  isprime(r+1) and isprime(r-1)",
+        "end proc:",
+        "select(filter, [seq(seq(10*i+j, j=[1,9]),i=1..10000)]);"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[2200]], And @@ PrimeQ[FromDigits[Join[IntegerDigits[#], IntegerDigits[2*#]]] + {-1, 1}] &] (* _Amiram Eldar_, Aug 07 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def ok(n):",
+        "    if not isprime(n): return False",
+        "    t = int(str(n)+str(2*n))",
+        "    return isprime(t-1) and isprime(t+1)",
+        "print([k for k in range(20000) if ok(k)]) # _Michael S. Branicky_, Aug 07 2022"
+    ],
+    "xref": [
+        "Cf. A014574."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Aug 07 2022",
+    "references": 1,
+    "revision": 12,
+    "time": "2022-08-31T09:07:27-04:00",
+    "created": "2022-08-30T14:00:38-04:00"
+}

@@ -1,0 +1,61 @@
+{
+    "number": 306200,
+    "data": "0,1,1,2,4,8,18,41,98,237,591,1488,3805,9820,25593,67184,177604,472177,1261998,3388434,9136019,24724904,67141940,182892368,499608724,1368340326,3756651116,10336434585,28499309291,78727891420,217870037932,603934911859,1676720329410",
+    "name": "Number of unlabeled rooted semi-identity trees with n nodes.",
+    "comment": [
+        "A rooted tree is a semi-identity tree if the non-leaf branches of the root are all distinct and are themselves semi-identity trees."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A306200/b306200.txt\">Table of n, a(n) for n = 0..2166</a>"
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 8 trees:",
+        "  o  (o)  (oo)   (ooo)    (oooo)     (ooooo)",
+        "          ((o))  ((oo))   ((ooo))    ((oooo))",
+        "                 (o(o))   (o(oo))    (o(ooo))",
+        "                 (((o)))  (oo(o))    (oo(oo))",
+        "                          (((oo)))   (ooo(o))",
+        "                          ((o(o)))   (((ooo)))",
+        "                          (o((o)))   ((o)(oo))",
+        "                          ((((o))))  ((o(oo)))",
+        "                                     ((oo(o)))",
+        "                                     (o((oo)))",
+        "                                     (o(o(o)))",
+        "                                     (oo((o)))",
+        "                                     ((((oo))))",
+        "                                     (((o(o))))",
+        "                                     ((o)((o)))",
+        "                                     ((o((o))))",
+        "                                     (o(((o))))",
+        "                                     (((((o)))))"
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, 1,",
+        "      add(b(n-i*j, i-1)*binomial(a(i), j), j=0..n/i))",
+        "    end:",
+        "a:= n-> `if`(n=0, 0, b(n-1$2)):",
+        "seq(a(n), n=0..35);  # _Alois P. Heinz_, Jan 29 2019"
+    ],
+    "mathematica": [
+        "ursit[n_]:=Join@@Table[Select[Union[Sort/@Tuples[ursit/@ptn]],UnsameQ@@DeleteCases[#,{}]&],{ptn,IntegerPartitions[n-1]}];",
+        "Table[Length[ursit[n]],{n,10}]",
+        "(* Second program: *)",
+        "b[n_, i_] := b[n, i] = If[n == 0 || i == 1, 1,",
+        "     Sum[b[n - i*j, i - 1]*Binomial[a[i], j], {j, 0, n/i}]];",
+        "a[n_] := If[n == 0, 0, b[n - 1, n - 1]];",
+        "a /@ Range[0, 35] (* _Jean-Fran\u00e7ois Alcover_, May 10 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000081, A004111, A276625, A301700, A306201, A316471, A316474, A317708, A317712, A317718."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Jan 29 2019",
+    "ext": [
+        "More terms from _Alois P. Heinz_, Jan 29 2019"
+    ],
+    "references": 24,
+    "revision": 17,
+    "time": "2021-05-10T07:40:41-04:00",
+    "created": "2019-01-29T19:31:35-05:00"
+}

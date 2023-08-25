@@ -1,0 +1,54 @@
+{
+    "number": 318047,
+    "data": "1,8,81,1028,15780,284652,5903464,138407544,3619892160,104485268960,3299177464704,113120695539612,4185473097734656,166217602768452900,7051983744002135040,318324623296131263408,15232941497754507165696,770291040239888149405944,41042353622873800536064000,2298206207793743728251532020",
+    "name": "a(n) = sum of values taken by all parking functions of length n.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A318047/b318047.txt\">Table of n, a(n) for n = 1..100</a>",
+        "Y. Yao and D. Zeilberger, <a href=\"https://arxiv.org/abs/1806.02680\">An Experimental Mathematics Approach to the Area Statistics of Parking Functions</a>, arXiv 1806.02680, 2018"
+    ],
+    "formula": [
+        "a(n) is the first derivative of P(n,1,x) evaluated at x = 1 where P(n,m,x) satisfies P(n,m,x) = x^n*Sum_{k=0..n} binomial(n,k)*P(n-k, m+k-1, x) with P(0,m,x) = 1 and P(n,0,x) = 0 for n > 0.",
+        "a(n) = Sum_{k=1..n} k*A298593(n, k). - _Andrew Howroyd_, Aug 17 2018"
+    ],
+    "example": [
+        "Case n = 2: There are 3 parking functions of length 2: [1, 1], [1, 2], [2, 1]. Summing up all values gives 2 + 3 + 3 = 8, so a(2) = 8.",
+        "Case n = 3: There are 16 parking functions of length 3: [1, 1, 1], [1, 1, 2], [1, 1, 3], [1, 2, 1], [1, 2, 2], [1, 2, 3], [1, 3, 1], [1, 3, 2], [2, 1, 1], [2, 1, 2], [2, 1, 3], [2, 2, 1], [2, 3, 1], [3, 1, 1], [3, 1, 2], [3, 2, 1]. Summing up all values gives a total of 81, so a(3) = 81."
+    ],
+    "maple": [
+        "#Pnax(n,a,x): the sum of x^(sum of all entries in the parking function) over the set of a-parking functions of length n by recurrence relation.",
+        "Pnax:=proc(n,a,x) local k:",
+        "option remember:",
+        "if n=0 then",
+        "  return 1:",
+        "fi:",
+        "if n>0 and a=0 then",
+        "  return 0:",
+        "fi:",
+        "return expand(x^n*add(binomial(n,k)*Pnax(n-k,a+k-1,x),k=0..n)):",
+        "end:",
+        "seq(subs(x = 1, diff(Pnax(n, 1, x), x)), n = 1 .. 20)"
+    ],
+    "mathematica": [
+        "T[n_, k_] := n Sum[Binomial[n-1, j-1] j^(j-2) (n-j+1)^(n-j-1), {j, k, n}];",
+        "a[n_] := Sum[k T[n, k], {k, 1, n}];",
+        "Array[a, 20] (* _Jean-Fran\u00e7ois Alcover_, Aug 29 2018, after _Andrew Howroyd_ *)"
+    ],
+    "program": [
+        "(PARI) \\\\ here T(n,k) is A298593.",
+        "T(n,k)={n*sum(j=k, n, binomial(n-1, j-1)*j^(j-2)*(n+1-j)^(n-1-j))}",
+        "a(n)={sum(k=1, n, k*T(n,k))} \\\\ _Andrew Howroyd_, Aug 17 2018"
+    ],
+    "xref": [
+        "Cf. A000272, A298593."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Yukun Yao_, Aug 13 2018",
+    "ext": [
+        "Edited by _Andrew Howroyd_ and _N. J. A. Sloane_, Aug 19 2018"
+    ],
+    "references": 2,
+    "revision": 21,
+    "time": "2018-08-29T16:06:54-04:00",
+    "created": "2018-08-19T14:06:58-04:00"
+}

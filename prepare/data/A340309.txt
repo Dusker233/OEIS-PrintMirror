@@ -1,0 +1,59 @@
+{
+    "number": 340309,
+    "data": "0,6,48,282,1476,7302,35016,164850,767340,3546366,16315248,74837802,342621396,1566620022,7157423256,32682574050,149184117180,680813718126,3106475197248,14173073072922,64659388538916,294971717255142,1345602571317096,6138257708432850",
+    "name": "Number of ordered pairs of vertices which have two different shortest paths between them in the n-Hanoi graph (3 pegs, n discs).",
+    "comment": [
+        "Vertices of the Hanoi graph are configurations of discs on pegs in the Towers of Hanoi puzzle.  Edges are a move of a disc from one peg to another.",
+        "The shortest path between a pair of vertices u,v may be unique, or there may be 2 different paths.  a(n) is the number of vertex pairs with 2 shortest paths.  Pairs are ordered, so both u,v and v,u are counted.",
+        "For a given vertex u, Hinz et al. characterize and count the destinations v which have 2 shortest paths.  Their total x_n is the number of vertex pairs in the graph of n+1 discs.  The present sequence is for n discs so a(n) = x_{n-1}."
+    ],
+    "link": [
+        "Kevin Ryde, <a href=\"/A340309/b340309.txt\">Table of n, a(n) for n = 1..500</a>",
+        "Andreas M. Hinz, Sandi Klav\u017ear, Uro\u0161 Milutinovi\u0107, Daniele Parisse, and Ciril Petr, <a href=\"https://doi.org/10.1016/j.ejc.2004.04.009\">Metric Properties of the Tower of Hanoi Graphs and Stern's Diatomic Sequence</a>, European Journal of Combinatorics, volume 26, 2005, pages 693-708.  See proposition 3.9.",
+        "<a href=\"/index/Rec#order_03\">Index entries for linear recurrences with constant coefficients</a>, signature (8,-17,6).",
+        "<a href=\"/index/To#Hanoi\">Index entries for sequences related to Towers of Hanoi</a>"
+    ],
+    "formula": [
+        "With P = (5 + sqrt(17))/2 = A082486, and M = (5 - sqrt(17))/2:",
+        "a(n) = (3/(4*sqrt(17)))*( (sqrt(17)+1)*P^n - 2*sqrt(17)*3^n + (sqrt(17)-1)*M^n ). [Hinz et al.]",
+        "a(n) = (6/sqrt(17)) * Sum_{k=0..n-1} 3^k * (P^(n-1-k) - M^(n-1-k)) [Hinz et al.].",
+        "a(n) = 3*a(n-1) + 6*A107839(n-2), paths within and between subgraphs n-1.",
+        "a(n) = 8*a(n-1) - 17*a(n-2) + 6*a(n-3).",
+        "a(n) = (A052984(n) - 3^n)*3/2.",
+        "G.f.: 6*x^2/((1 - 5*x + 2*x^2)*(1 - 3*x)).",
+        "G.f.: (3/2 - 3*x)/(1 - 5*x + 2*x^2) - (3/2)/(1 - 3*x)."
+    ],
+    "example": [
+        "For n=3 discs, the Hanoi graph is",
+        "                *           \\",
+        "               / \\          | top",
+        "              A---*         | subgraph,",
+        "             /     \\        | of n-1 = 2",
+        "            B       *       | discs",
+        "           / \\     / \\      |",
+        "          C---D---E---*     /",
+        "         /             \\          two shortest",
+        "        *               *           paths for",
+        "       / \\             / \\           A to S",
+        "      *---*           *---*          B to T",
+        "     /     \\         /     \\         C to R",
+        "    *       *       R       *        C to U",
+        "   / \\     / \\     / \\     / \\       D to S",
+        "  *---*---*---*---S---T---U---*",
+        "Going from the top subgraph down to the bottom right subgraph, there are 5 vertex pairs with two shortest paths.  C to R goes around the middle 12-cycle either right or left, and likewise D to S.  The other pairs also go each way around the middle.  There are 6 ordered pairs of n-1 subgraphs repeating these 5 pairs.",
+        "Within the n-1 = 2 disc top subgraph, A and E are in separate n-2 subgraphs (unit triangles) and they are the only pair with two shortest paths.  Again 6 combinations of these, and in 3 subgraphs.  Total a(3) = 6*5 + 6*3*1 = 48."
+    ],
+    "program": [
+        "(PARI) my(p=Mod('x, 'x^2-5*'x+2)); a(n) = (vecsum(Vec(lift(p^(n+1)))) - 3^n)*3/2;"
+    ],
+    "xref": [
+        "Cf. A052984, A107839."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,2",
+    "author": "_Kevin Ryde_, Jan 04 2021",
+    "references": 1,
+    "revision": 12,
+    "time": "2021-01-14T02:36:07-05:00",
+    "created": "2021-01-11T23:48:31-05:00"
+}

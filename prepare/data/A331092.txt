@@ -1,0 +1,29 @@
+{
+    "number": 331092,
+    "data": "1,744,875,924,1115,1575,1704,1955,2904,3815,5495,5844,6125,6335,6824,7136,7314,8154,8225,8360,8784,9414,10535,10744,10935,11976,12047,13194,13404,13475,18024,19368,19943,20615,21791,22224,22560,23807,24143,24576,25752,26424,26999",
+    "name": "Positive numbers k such that k and k + 1 are both positive negaFibonacci-Niven numbers (A331085) and -k and -(k + 1) are both negative negaFibonacci-Niven numbers (A331088).",
+    "comment": [
+        "Positive numbers k such that both k and k + 1 are in A331091."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A331092/b331092.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "ind[n_] := Floor[Log[Abs[n]*Sqrt[5] + 1/2]/Log[GoldenRatio]];",
+        "f[1] = 1; f[n_] := If[n > 0, i = ind[n - 1]; If[EvenQ[i], i++]; i, i = ind[-n]; If[OddQ[i], i++]; i];",
+        "negaFibTermsNum[n_] := Module[{k = n, s = 0}, While[k != 0, i = f[k]; s += 1; k -= Fibonacci[-i]]; s];",
+        "negFibQ[n_] := Divisible[n, negaFibTermsNum[n]] && Divisible[n, negaFibTermsNum[-n]];",
+        "nConsec = 2; neg = negFibQ /@ Range[nConsec]; seq = {}; c = 0; k = nConsec + 1; While[c < 45, If[And @@ neg, c++; AppendTo[seq, k - nConsec]]; neg = Join[Rest[neg], {negFibQ[k]}]; k++]; seq"
+    ],
+    "xref": [
+        "Intersection of A331086 and A331089.",
+        "Cf. A331085, A331088, A331091."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Jan 08 2020",
+    "references": 2,
+    "revision": 12,
+    "time": "2020-01-09T03:06:56-05:00",
+    "created": "2020-01-08T20:42:53-05:00"
+}

@@ -1,0 +1,66 @@
+{
+    "number": 128695,
+    "data": "1,1,2,3,7,13,24,46,89,170,324,618,1183,2260,4318,8249,15765,30123,57556,109973,210137,401525,767216,1465963,2801115,5352275,10226930,19541236,37338699,71345449,136324309,260483548,497722578,951030367",
+    "name": "Number of compositions of n with parts in N which avoid the adjacent pattern 111.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A128695/b128695.txt\">Table of n, a(n) for n = 0..1000</a>",
+        "S. Heubach and T. Mansour, <a href=\"http://arXiv.org/abs/math.CO/0603285\">Enumeration of 3-letter patterns in compositions</a>, arXiv:math/0603285 [math.CO], 2006",
+        "Gus Wiseman, <a href=\"https://oeis.org/A102726/a102726.txt\">Sequences counting and ranking compositions by the patterns they match or avoid.</a>"
+    ],
+    "formula": [
+        "G.f.: 1/(1-Sum(i>=1, x^i*(1+x^i)/(1+x^i*(1+x^i)) ) ).",
+        "a(n) ~ c * d^n, where d is the root of the equation Sum_{k>=1} 1/(d^k + 1/(1 + d^k)) = 1, d=1.9107639262818041675000243699745706859615884029961947632387839..., c=0.4993008137128378086219448701860326113802027003939127932922782... - _Vaclav Kotesovec_, May 01 2014, updated Jul 07 2020",
+        "For n>=2, a(n) = A091616(n) + A003242(n). - _Vaclav Kotesovec_, Jul 07 2020"
+    ],
+    "example": [
+        "From _Gus Wiseman_, Jul 06 2020: (Start)",
+        "The a(0) = 1 through a(5) = 13 compositions:",
+        "  ()  (1)  (2)    (3)    (4)      (5)",
+        "           (1,1)  (1,2)  (1,3)    (1,4)",
+        "                  (2,1)  (2,2)    (2,3)",
+        "                         (3,1)    (3,2)",
+        "                         (1,1,2)  (4,1)",
+        "                         (1,2,1)  (1,1,3)",
+        "                         (2,1,1)  (1,2,2)",
+        "                                  (1,3,1)",
+        "                                  (2,1,2)",
+        "                                  (2,2,1)",
+        "                                  (3,1,1)",
+        "                                  (1,1,2,1)",
+        "                                  (1,2,1,1)",
+        "(End)"
+    ],
+    "maple": [
+        "b:= proc(n, t) option remember; `if`(n=0, 1, add(`if`(abs(t)<>j,",
+        "       b(n-j, j), `if`(t=-j, 0, b(n-j, -j))), j=1..n))",
+        "    end:",
+        "a:= n-> b(n, 0):",
+        "seq(a(n), n=0..40);  # _Alois P. Heinz_, Nov 23 2013"
+    ],
+    "mathematica": [
+        "nn=33;CoefficientList[Series[1/(1-Sum[(x^i+x^(2i))/(1+x^i+x^(2i)),{i,1,nn}]),{x,0,nn}],x] (* _Geoffrey Critzer_, Nov 23 2013 *)",
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n],!MatchQ[#,{___,x_,x_,x_,___}]&]],{n,13}] (* _Gus Wiseman_, Jul 06 2020 *)"
+    ],
+    "xref": [
+        "Column k=0 of A232435.",
+        "Cf. A091616, A232432.",
+        "The matching version is A335464.",
+        "Contiguously (1,1)-avoiding compositions is A003242.",
+        "Contiguously (1,1)-matching compositions are A261983.",
+        "Compositions with some part > 2 are A008466",
+        "Compositions by number of adjacent equal parts are A106356.",
+        "Compositions where each part is adjacent to an equal part are A114901.",
+        "Compositions with adjacent parts coprime are A167606.",
+        "Compositions with equal parts contiguous are A274174.",
+        "Patterns contiguously matched by compositions are A335457.",
+        "Patterns contiguously matched by a given partition are A335516.",
+        "Cf. A005251, A032020, A131044, A178470, A242882, A333175, A335455."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ralf Stephan_, May 08 2007",
+    "references": 20,
+    "revision": 49,
+    "time": "2020-07-09T08:04:05-04:00",
+    "created": "2007-05-11T03:00:00-04:00"
+}

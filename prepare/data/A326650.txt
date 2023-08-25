@@ -1,0 +1,32 @@
+{
+    "number": 326650,
+    "data": "1,1,5,45,1065,61753,9705069,4394516773,5931440509137,24154079629381105,300121111037478706517,11510717148660156841731485,1369013994385630011763634779641,505666129597215709912984823873504809,582167751341290615329122568805084839847101",
+    "name": "Number of colored integer partitions using all colors of an n-set such that each block of part i with multiplicity j has a pattern of i*j distinct colors in increasing order.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A326650/b326650.txt\">Table of n, a(n) for n = 0..50</a>"
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n=0, 0, numtheory[sigma](n)+g(n-1)) end:",
+        "b:= proc(n, i, k) option remember; `if`(n=0, 1, `if`(i<1, 0, add((t->",
+        "      b(n-t, min(n-t, i-1), k)*binomial(k, t))(i*j), j=0..n/i)))",
+        "    end:",
+        "a:= k-> add(add(b(n$2, k-i)*(-1)^i*binomial(k, i), i=0..k), n=k..g(k)):",
+        "seq(a(n), n=0..15);"
+    ],
+    "mathematica": [
+        "g[n_] := g[n] = If[n == 0, 0, DivisorSigma[1, n] + g[n - 1]];",
+        "b[n_, i_, k_] := b[n, i, k] = If[n==0, 1, If[i < 1, 0, Sum[With[{t = i j}, b[n - t, Min[n - t, i - 1], k] Binomial[k, t]], {j, 0, n/i}]]];",
+        "a[k_] := Sum[b[n, n, k-i] (-1)^i Binomial[k, i], {n, k, g[k]}, {i, 0, k}];",
+        "a /@ Range[0, 15] (* _Jean-Fran\u00e7ois Alcover_, Dec 09 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Column sums of A326616 and of A326617."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Sep 12 2019",
+    "references": 3,
+    "revision": 25,
+    "time": "2020-12-09T08:56:53-05:00",
+    "created": "2019-09-15T21:02:47-04:00"
+}

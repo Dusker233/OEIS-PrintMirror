@@ -1,0 +1,59 @@
+{
+    "number": 194952,
+    "data": "48,126,390,1014,2982,8094,23646,66726,196086,568302,1682382,4954998,14750310,43833150,130942398,390959430,1170256854,3502513038,10495480494,31450265622,94296270918,282731526366",
+    "name": "Number of Hamiltonian cycles in C_3 X C_n.",
+    "comment": [
+        "All terms of this sequence are divisible by 6 (which follows from the g.f.)."
+    ],
+    "link": [
+        "Vincenzo Librandi, <a href=\"/A194952/b194952.txt\">Table of n, a(n) for n = 3..2000</a>",
+        "Artem M. Karavaev, <a href=\"https://web.archive.org/web/20161024010518/http://flowproblem.ru/cycles/hamilton-cycles\">Hamilton Cycles page</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/HamiltonianCycle.html\">Hamiltonian Cycle</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/TorusGridGraph.html\">Torus Grid Graph</a>",
+        "<a href=\"/index/Rec&#34;order_06\">Index entries for linear recurrences with constant coefficients</a>, signature (5,-1,-25,26,20,-24)."
+    ],
+    "formula": [
+        "a(n) = 3^n + 3/4*n*2^n + (2^n-(-2)^n)/2 + (-1)^n - 4, n>=3.",
+        "a(n) = 5*a(n-1)-a(n-2)-25*a(n-3)+26*a(n-4)+20*a(n-5)-24*a(n-6), for n>=9, with a(3)=48, a(4)=126, a(5)=390, a(6)=1014, a(7)=2982, a(8)=8094.",
+        "G.f.: -6*x^3*(-8+19*x+32*x^2-65*x^3-34*x^4+48*x^5) / ( (x-1)*(3*x-1)*(2*x+1)*(1+x)*(-1+2*x)^2 ). - _R. J. Mathar_, Sep 18 2011"
+    ],
+    "maple": [
+        "C3xCn := n->3^n+3/4*n*2^n+(2^n-(-2)^n)/2+(-1)^n-4:seq(C3xCn(n),n=3..16);"
+    ],
+    "program": [
+        "(Magma) [3^n + 3/4*n*2^n + (2^n-(-2)^n)/2 + (-1)^n - 4: n in [3..40]]; // _Vincenzo Librandi_, Sep 19 2011",
+        "(Python)",
+        "# Using graphillion",
+        "from graphillion import GraphSet",
+        "def make_CnXCk(n, k):",
+        "    grids = []",
+        "    for i in range(1, k + 1):",
+        "        for j in range(1, n):",
+        "            grids.append((i + (j - 1) * k, i + j * k))",
+        "        grids.append((i + (n - 1) * k, i))",
+        "    for i in range(1, k * n, k):",
+        "        for j in range(1, k):",
+        "            grids.append((i + j - 1, i + j))",
+        "        grids.append((i + k - 1, i))",
+        "    return grids",
+        "def A194952(n):",
+        "    universe = make_CnXCk(n, 3)",
+        "    GraphSet.set_universe(universe)",
+        "    cycles = GraphSet.cycles(is_hamilton=True)",
+        "    return cycles.len()",
+        "print([A194952(n) for n in range(3, 30)])  # _Seiichi Manyama_, Nov 22 2020"
+    ],
+    "xref": [
+        "Row 3 of A270273."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "3,1",
+    "author": "_Artem M. Karavaev_, Sep 06 2011",
+    "ext": [
+        "More terms from _Alexander R. Povolotsky_, Sep 07 2011"
+    ],
+    "references": 4,
+    "revision": 45,
+    "time": "2022-09-08T08:45:58-04:00",
+    "created": "2011-09-18T14:26:50-04:00"
+}

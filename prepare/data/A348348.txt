@@ -1,0 +1,46 @@
+{
+    "number": 348348,
+    "data": "4,6,6,21968100,100803789240,683751016938990,1651735848676253340",
+    "name": "Smallest k such that the numbers j*k - 1 and j*k + 1 are prime for 1 <= j <= n.",
+    "comment": [
+        "The following heuristic argument suggests that a(n) exists for all n: For large (random) k and a specific j <= n, the probability that both j*k - 1 and j*k + 1 are prime should be of the order 1/(log k)^2 (a slight twist of the first Hardy-Littlewood conjecture). Assuming independence between different j, the probability that this holds for 1 <= j <= n is of the order 1/(log k)^(2*n). Since the sum over k of 1/(log k)^(2*n) diverges, this should hold for infinitely many k by the second Borel-Cantelli lemma (assuming independence between different k)."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Borel-Cantelli_lemma\">Borel-Cantelli lemma</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Twin_prime\">Twin prime</a>"
+    ],
+    "example": [
+        "a(1) = A014574(1) = 4.",
+        "a(2) = A066388(1) = 6.",
+        "a(3) = A118859(1) = 6.",
+        "a(4) = A118860(1) = 21968100.",
+        "a(5) = A349321(1) = 100803789240."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime,nextprime",
+        "def A348348(n):",
+        "    p = 2",
+        "    while 1:",
+        "        p_next = nextprime(p)",
+        "        if p_next == p+2 and all(isprime(j*(p+1)-1) and isprime(j*(p+1)+1) for j in range(2,n+1)):",
+        "            return p+1",
+        "        p = p_next",
+        "(PARI) isok(k, n) = for (j=1, n, if (!isprime(j*k-1) || !isprime(j*k+1), return(0))); return(1);",
+        "a(n) = my(k=1); while (!isok(k, n), k++); k; \\\\ _Michel Marcus_, Jul 01 2022"
+    ],
+    "xref": [
+        "Cf. A014574, A066388, A118859, A118860, A349321."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,1",
+    "author": "_Pontus von Br\u00f6mssen_, Oct 13 2021",
+    "ext": [
+        "a(5), a(6) from _Jon E. Schoenfield_, Nov 14 2021",
+        "a(7) from _Klaus Muuss_, Jul 01 2022"
+    ],
+    "references": 5,
+    "revision": 31,
+    "time": "2022-07-01T06:25:50-04:00",
+    "created": "2021-10-21T02:00:50-04:00"
+}

@@ -1,0 +1,71 @@
+{
+    "number": 57854,
+    "data": "5,6,8,9,10,12,13,14,15,16,17,19,20,21,22,23,24,25,26,27,28,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,77,78,79,80",
+    "name": "Non-Lucas numbers: the complement of A000032.",
+    "comment": [
+        "The formula is a consequence of the Lambek-Moser theorem."
+    ],
+    "link": [
+        "G. C. Greubel, <a href=\"/A057854/b057854.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Lambek%E2%80%93Moser_theorem\">Lambek-Moser theorem</a>"
+    ],
+    "formula": [
+        "a(n) = floor(1/2 - LambertW(-1, -log(phi)/phi^(n+1/2))/log(phi)) with phi = (1+sqrt(5))/2. - Nicolas Normand (nicolas.normand (at) polytech.univ-nantes.fr)",
+        "a(n) = A090946(n+2). - _R. J. Mathar_, Jan 29 2019"
+    ],
+    "maple": [
+        "a := proc(n) floor(-1/ln(1/2+1/2*5^(1/2))*LambertW(-1,-ln(1/2+1/2*5^(1/2))/ ((1/2+1/2*5^(1/2))^(n+1/2)))+1/2) end; # _Simon Plouffe_, Nov 30 2017",
+        "# alternative",
+        "isA000032 := proc(n)",
+        "    local l1,l2 ;",
+        "    if n <= 0 then",
+        "        false;",
+        "    elif n <= 4 then",
+        "        true ;",
+        "    else",
+        "        l1 := 3 ; l2 := 4 ;",
+        "        while true do",
+        "            l := l1+l2 ;",
+        "            if l > n then",
+        "                return false;",
+        "            elif l = n then",
+        "                return true;",
+        "            else",
+        "                l1 := l2 ; l2 := l ;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "isA057854 := proc(n)",
+        "    not isA000032(n) ;",
+        "end proc:",
+        "A057854 := proc(n)",
+        "    option remember;",
+        "    if n = 1 then",
+        "        5 ;",
+        "    else",
+        "        for a from procname(n-1)+1 do",
+        "            if isA057854(a) then",
+        "                return a;",
+        "            end if;",
+        "        end do:",
+        "    end if;",
+        "end proc:",
+        "seq(A057854(n),n=1..10) ; # _R. J. Mathar_, Feb 01 2019"
+    ],
+    "mathematica": [
+        "a[n_] := With[{phi = (1 + Sqrt[5])/2}, Floor[1/2 - LambertW[-1, -Log[phi]/phi^(n + 1/2)]/Log[phi]]];",
+        "Table[a[n], {n, 1, 70}] (* _Peter Luschny_, Nov 30 2017 *)",
+        "b:= Complement[Range[1, 100], LucasL[Range[20]]]; Table[b[[n+1]], {n, 1, 70}] (* _G. C. Greubel_, Jun 19 2019 *)"
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Roger Cuculi\u00e8re_, Nov 12 2000",
+    "ext": [
+        "More terms from Larry Reeves (larryr(AT)acm.org), Nov 28 2000"
+    ],
+    "references": 7,
+    "revision": 30,
+    "time": "2019-06-21T22:50:45-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

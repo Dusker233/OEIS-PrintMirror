@@ -1,0 +1,49 @@
+{
+    "number": 329823,
+    "data": "1,3,5,8,14,25,33,64,79,105,126,183,256,379,567,705,795,964,1113,1487,1545,1935,2567,3296,3472,3970,6398,6620,8374,8571,9179,10173,10942,11567,13298,13881,15323,25463,28119,36719,64415,70856,83454,100052,103715,146919,185013,220571,399427,491515,516200,857873,880694,1493008,1613442",
+    "name": "Indices n of Riemann zeta zeros where the Riemann-Siegel Z function sets successive records of maximum absolute values abs(Z(t)) in the interval between the n-th and (n+1)-th zeros.",
+    "comment": [
+        "Between the n-th and (n+1)-th nontrivial Riemann zeros there is exactly one extremum of the Riemann-Siegel Z function.",
+        "If n is odd then Z(t) > 0 else Z(t) < 0, where z(n) is the imaginary part of the n-th Riemann zero, z(n) < t < z(n+1), and Z'(t) = 0.",
+        "Successive records occur when gaps between two successive zeros are large.",
+        "This sequence has many of the same terms as A329742. But some terms in A329742 are absent from this sequence (e.g., 213, 1704, 2295), and this sequence includes some terms that are absent from A329742 (e.g., 79, 105, 183)."
+    ],
+    "link": [
+        "Tadej Kotnik, <a href=\"https://doi.org/10.1090/S0025-5718-03-01568-0\">Computational estimation of the order of zeta(1/2 + i t)</a>, Mathematics of Computation, Vol. 73, No. 246 (2004), pp. 949-956."
+    ],
+    "example": [
+        "    n | a(n) |  max Z(t)  |     t",
+        "   ---+------+------------+------------",
+        "    1 |   1  |   2.340551 |  17.882582",
+        "    2 |   3  |   2.847472 |  27.735883",
+        "    3 |   5  |   2.942394 |  35.392730",
+        "    4 |   8  |  -3.664836 |  45.636113",
+        "    5 |  14  |  -4.166936 |  63.060427",
+        "    6 |  25  |   4.477140 |  90.723857",
+        "    7 |  33  |   5.193289 | 108.986790",
+        "    8 |  64  |  -5.980169 | 171.759106",
+        "    9 |  79  |   6.062599 | 199.651794"
+    ],
+    "mathematica": [
+        "aa = {}; prec = 50; d = 30; e = 1/10^d; max = 0; Do[",
+        "p = N[Im[ZetaZero[t]], prec]; k = N[Im[ZetaZero[t + 1]], prec];",
+        "f = N[RiemannSiegelZ[(p + k)/2], prec];",
+        "g = N[RiemannSiegelZ[(p + k)/2 + e], prec];",
+        "Do[If[Abs[f - g] < 10^-40, Break[]];",
+        "  If[f < g, p = (p + k)/2 + e; f = N[RiemannSiegelZ[(p + k)/2], prec];",
+        "    g = N[RiemannSiegelZ[(p + k)/2 + e], prec], k = (p + k)/2;",
+        "   f = N[RiemannSiegelZ[(p + k)/2], prec];",
+        "   g = N[RiemannSiegelZ[(p + k)/2 + e], prec]], {m, 1, 1000}];",
+        "If[Abs[g] > max, max = Abs[g]; AppendTo[aa, t]], {t, 1, 1000}]; aa"
+    ],
+    "xref": [
+        "Cf. A114856, A254297, A255739, A255742, A326502, A329742."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Artur Jasinski_, Nov 22 2019",
+    "references": 0,
+    "revision": 38,
+    "time": "2020-01-03T13:16:14-05:00",
+    "created": "2020-01-03T13:16:14-05:00"
+}

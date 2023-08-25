@@ -1,0 +1,35 @@
+{
+    "number": 327739,
+    "data": "1,1,2,4,9,18,38,78,163,338,703,1458,3031,6293,13073,27150,56396,117130,243289,505310,1049552,2179938,4527804,9404355,19533126,40570816,84266725,175024267,363530253,755062265,1568285122,3257371187,6765649491,14052439669",
+    "name": "Expansion of 1 / (1 - Sum_{i>=1} Sum_{j=1..i} x^(i*j)).",
+    "comment": [
+        "Invert transform of A038548."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A327739/b327739.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "G.f.: 1 / (1 - Sum_{k>=1} x^(k^2) / (1 - x^k)).",
+        "a(0) = 1; a(n) = Sum_{k=1..n} A038548(k) * a(n-k)."
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<1, 1, add(a(n-i)*",
+        "      ceil(numtheory[sigma][0](i)/2), i=1..n))",
+        "    end:",
+        "seq(a(n), n=0..34);  # _Alois P. Heinz_, Sep 23 2019"
+    ],
+    "mathematica": [
+        "nmax = 33; CoefficientList[Series[1/(1 - Sum[x^(k^2)/(1 - x^k), {k, 1, nmax}]), {x, 0, nmax}], x]",
+        "a[0] = 1; a[n_] := a[n] = Sum[Floor[(DivisorSigma[0, k] + 1)/2] a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 33}]"
+    ],
+    "xref": [
+        "Cf. A038548, A129921, A182269, A211856."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Sep 23 2019",
+    "references": 3,
+    "revision": 8,
+    "time": "2019-09-27T16:29:15-04:00",
+    "created": "2019-09-23T14:50:18-04:00"
+}

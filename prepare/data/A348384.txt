@@ -1,0 +1,57 @@
+{
+    "number": 348384,
+    "data": "1,6,36,40,216,224,240,1296,1344,1408,1440,1600,6656,7776,8064,8448,8640,8960,9600,34816,39936,46656,48384,50176,50688,51840,53760,56320,57600,64000,155648,208896,239616,266240,279936,290304,301056,304128,311040,315392",
+    "name": "Heinz numbers of integer partitions whose length is 2/3 their sum.",
+    "comment": [
+        "The Heinz number of a partition (y_1,...,y_k) is prime(y_1)*...*prime(y_k), so these are numbers whose sum of prime indices is 3/2 their number. Counting the partitions with these Heinz numbers gives A035377(n) = A000041(n/3) if n is a multiple of 3, otherwise 0."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A348384/b348384.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "The sequence contains n iff A056239(n) = 3*A001222(n)/2. Here, A056239 adds up prime indices, while A001222 counts them with multiplicity.",
+        "Intersection of A028260 and A347452."
+    ],
+    "example": [
+        "The terms and their prime indices begin:",
+        "     1: {}",
+        "     6: {1,2}",
+        "    36: {1,1,2,2}",
+        "    40: {1,1,1,3}",
+        "   216: {1,1,1,2,2,2}",
+        "   224: {1,1,1,1,1,4}",
+        "   240: {1,1,1,1,2,3}",
+        "  1296: {1,1,1,1,2,2,2,2}",
+        "  1344: {1,1,1,1,1,1,2,4}",
+        "  1408: {1,1,1,1,1,1,1,5}",
+        "  1440: {1,1,1,1,1,2,2,3}",
+        "  1600: {1,1,1,1,1,1,3,3}",
+        "  6656: {1,1,1,1,1,1,1,1,1,6}",
+        "  7776: {1,1,1,1,1,2,2,2,2,2}"
+    ],
+    "mathematica": [
+        "Select[Range[1000],2*Total[Cases[FactorInteger[#],{p_,k_}:>k*PrimePi[p]]]==3*PrimeOmega[#]&]"
+    ],
+    "program": [
+        "(PARI)",
+        "A056239(n) = { my(f); if(1==n, 0, f=factor(n); sum(i=1, #f~, f[i, 2] * primepi(f[i, 1]))); }",
+        "isA348384(n) = (A056239(n)==(3/2)*bigomega(n)); \\\\ _Antti Karttunen_, Nov 22 2021"
+    ],
+    "xref": [
+        "These partitions are counted by A035377.",
+        "Rounding down gives A348550 or A347452, counted by A108711 or A119620.",
+        "A000041 counts integer partitions.",
+        "A001222 counts prime factors with multiplicity.",
+        "A056239 adds up prime indices, row sums of A112798.",
+        "A316524 gives the alternating sum of prime indices (reverse: A344616).",
+        "A344606 counts alternating permutations of prime factors.",
+        "Cf. A000070, A000097, A028260, A028982, A032766, A236914, A316413, A347457, A348551."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Nov 13 2021",
+    "references": 2,
+    "revision": 12,
+    "time": "2021-12-17T20:29:03-05:00",
+    "created": "2021-11-22T08:08:17-05:00"
+}

@@ -1,0 +1,32 @@
+{
+    "number": 336407,
+    "data": "3,7,11,14,16,20,22,25,29,32,34,37,39,43,45,48,52,54,57,60,62,65,67,69,72,76,80,83,85,87,89,91,93,96,99,101,105,107,109,111,115,117,120,122,125,128,130,133,135,139,141,143,145,149,153,155,157,159,161",
+    "name": "a(n) is the number of composites < n-th odd composite.",
+    "example": [
+        "a(2) is the number of the numbers 4, 6, 8, 9, 10, 12, 14, these being the composites that are less than 15, which is the 2nd odd composite."
+    ],
+    "mathematica": [
+        "z = 400; p = Prime[Range[z]];",
+        "c = Select[Range[2, z], ! PrimeQ@# &];  (* A002808 *)",
+        "d = Select[Range[2, z], ! PrimeQ@# && OddQ@# &];  (* A014076 *)",
+        "f[n_] := Select[c, # < d[[n]] &];",
+        "g[n_] := d[[n]] + Select[c, # < d[[n]] &];",
+        "q[n_] := Length[Intersection[p, g[n]]];",
+        "tq = Table[q[n], {n, 1, 120}] (* A336406 *)",
+        "tc = Table[Length[f[n]], {n, 1, 120}] (* A336407 *)",
+        "m = Min[Length[tq], Length[tc]]; Take[tc, m] - Take[tq, m] (* A336408 *)"
+    ],
+    "program": [
+        "(PARI) n=0;forcomposite(x=4,210,if(x%2,print1(n,\", \"));n++) \\\\ _Hugo Pfoertner_, Jul 26 2020"
+    ],
+    "xref": [
+        "Cf. A000040, A002808, A014076, A336406, A336408."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jul 20 2020",
+    "references": 3,
+    "revision": 16,
+    "time": "2020-09-23T11:22:38-04:00",
+    "created": "2020-09-23T11:22:38-04:00"
+}

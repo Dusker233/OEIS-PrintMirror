@@ -1,0 +1,36 @@
+{
+    "number": 301499,
+    "data": "1,5,22,56,139,269,554,956,1724,2830,4686,7286,11539,17261,26076,38130,55753,79385,113350,158152,220883,303346,415752,562264,759601,1013728,1350404,1782342,2346390,3064045,3992698,5165042,6666529,8552739,10944782,13932362",
+    "name": "Total sum of the hook lengths over all partitions of 2n-1 having exactly n parts.",
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A301499/b301499.txt\">Table of n, a(n) for n = 1..12000</a> (terms 1..5000 from Alois P. Heinz)"
+    ],
+    "formula": [
+        "a(n) = A180681(2*n-1,n).",
+        "a(n) ~ exp(Pi*sqrt(2*n/3)) * n / (8*sqrt(3)). - _Vaclav Kotesovec_, May 27 2018"
+    ],
+    "maple": [
+        "f:= n-> (n-1)*n/2:",
+        "b:= proc(n, i) option remember; `if`(n=0 or i=1, [1, n+f(n)],",
+        "      b(n, i-1)+(p-> p+[0, p[1]*(n+f(i))])(b(n-i, min(n-i, i))))",
+        "    end:",
+        "a:= n-> (p-> p[1]*(2*n-1+f(n))+p[2])(b(n-1$2)):",
+        "seq(a(n), n=1..45);"
+    ],
+    "mathematica": [
+        "f[n_] := n(n-1)/2;",
+        "b[n_, i_] := b[n, i] = If[n == 0 || i == 1, {1, n + f[n]}, b[n, i - 1] + Function[p, p + {0, p[[1]] (n + f[i])}][b[n - i, Min[n - i, i]]]];",
+        "a[n_] := Function[p, p[[1]] (2n - 1 + f[n]) + p[[2]]][b[n - 1, n - 1]];",
+        "Array[a, 45] (* _Jean-Fran\u00e7ois Alcover_, Dec 12 2020, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A180681."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Mar 22 2018",
+    "references": 2,
+    "revision": 16,
+    "time": "2020-12-12T04:44:58-05:00",
+    "created": "2018-03-22T16:32:56-04:00"
+}

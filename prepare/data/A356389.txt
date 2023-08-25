@@ -1,0 +1,32 @@
+{
+    "number": 356389,
+    "data": "1,2,10,34,218,1308,10596,74688,793152,7931520,94504320,1054218240,14662840320,205279764480,3427909632000,50923531008000,907545606912000,16335820924416000,323185344975360000,6220416698689536000,140360358705186816000,3087927891514109952000",
+    "name": "a(n) = n! * Sum_{k=1..n} ( Sum_{d|k} (-1)^(k/d + 1) ) /k.",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A356389/b356389.txt\">Table of n, a(n) for n = 1..449</a>"
+    ],
+    "formula": [
+        "a(n) = n! * Sum_{k=1..n} A048272(k)/k.",
+        "E.g.f.: (1/(1-x)) * Sum_{k>0} log(1 + x^k)/k.",
+        "a(n) ~ n! * log(2) * (log(n) + 2*gamma - log(2)/2), where gamma is the Euler-Mascheroni constant A001620. - _Vaclav Kotesovec_, Aug 07 2022"
+    ],
+    "mathematica": [
+        "Table[n! * Sum[Sum[-(-1)^(k/d), {d, Divisors[k]}]/k, {k, 1, n}], {n, 1, 25}] (* _Vaclav Kotesovec_, Aug 07 2022 *)",
+        "Table[n! * Sum[(2*DivisorSigma[0, 2*k] - 3*DivisorSigma[0, k])/k, {k, 1, n}], {n, 1, 25}] (* _Vaclav Kotesovec_, Aug 07 2022 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = n!*sum(k=1, n, sumdiv(k, d, (-1)^(k/d+1))/k);",
+        "(PARI) my(N=30, x='x+O('x^N)); Vec(serlaplace(sum(k=1, N, log(1+x^k)/k)/(1-x)))"
+    ],
+    "xref": [
+        "Cf. A356390, A356391.",
+        "Cf. A048272, A356297, A356392."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, Aug 05 2022",
+    "references": 5,
+    "revision": 19,
+    "time": "2022-08-18T05:59:06-04:00",
+    "created": "2022-08-05T10:47:56-04:00"
+}

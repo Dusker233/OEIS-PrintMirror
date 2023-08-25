@@ -1,0 +1,49 @@
+{
+    "number": 318915,
+    "data": "1,1,3,5,11,15,33,41,77,105,173,215,381,449,699,911,1335,1611,2433,2867,4179,5113,6903,8251,11769,13661,18177,22011,28997,33711,45251",
+    "name": "Number of joining pairs of integer partitions of n.",
+    "comment": [
+        "Two integer partitions are a joining pair if they have no common cover (coarser partition) other than the maximum. For example, (221) and (311) are not a joining pair as they are both covered by (32) or (41), while (222) and (33) are a joining pair.",
+        "All terms are odd."
+    ],
+    "formula": [
+        "a(n) >= 2 * A000041(n) - 1. - _Alois P. Heinz_, Sep 06 2018"
+    ],
+    "example": [
+        "The sequence of joining pairs of integer partitions begins:",
+        "  ()()   (1)(1)   (2)(2)    (3)(3)     (4)(4)      (5)(5)",
+        "                  (2)(11)   (3)(21)    (4)(31)     (5)(41)",
+        "                  (11)(2)   (3)(111)   (4)(22)     (5)(32)",
+        "                            (21)(3)    (4)(211)    (5)(311)",
+        "                            (111)(3)   (4)(1111)   (5)(221)",
+        "                                       (31)(4)     (5)(2111)",
+        "                                       (31)(22)    (5)(11111)",
+        "                                       (22)(4)     (41)(5)",
+        "                                       (22)(31)    (41)(32)",
+        "                                       (211)(4)    (32)(5)",
+        "                                       (1111)(4)   (32)(41)",
+        "                                                   (32)(41)",
+        "                                                   (221)(5)",
+        "                                                   (2111)(5)",
+        "                                                   (11111)(5)"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]&/@sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mps[set_]:=Union[Sort[Sort/@(#/.x_Integer:>set[[x]])]&/@sps[Range[Length[set]]]];",
+        "ptncaps[y_]:=Union[Map[Sort[Total/@#,Greater]&,mps[y],{1}]];",
+        "Table[Select[Tuples[IntegerPartitions[n],2],Intersection@@ptncaps/@#=={{n}}&]//Length,{n,6}]"
+    ],
+    "xref": [
+        "Cf. A000041, A059849, A060639, A181939, A265947, A299925, A300383, A317141, A317143."
+    ],
+    "keyword": "nonn,more",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Sep 05 2018",
+    "ext": [
+        "a(13)-a(30) from _Alois P. Heinz_, Sep 05 2018"
+    ],
+    "references": 2,
+    "revision": 23,
+    "time": "2018-12-09T10:03:16-05:00",
+    "created": "2018-09-06T19:26:30-04:00"
+}

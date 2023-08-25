@@ -1,0 +1,39 @@
+{
+    "number": 345325,
+    "data": "0,4,16,50,132,315,689,1413,2636,4967,8563,14481,23593,37127,56809,86779,127096,184517,264288,368794,510442,707483,948307,1268871,1689642,2204795,2866855,3729223,4738019,6013021,7619227,9510372,11832748,14770667,18067652",
+    "name": "Number of primes less than 10^n with digits in nondecreasing order.",
+    "comment": [
+        "Number of primes with at most n digits arranged in nondecreasing order."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A345325/b345325.txt\">Table of n, a(n) for n = 0..42</a>",
+        "<a href=\"/index/Pri#primepop\">Index entries for sequences related to numbers of primes in various ranges</a>"
+    ],
+    "mathematica": [
+        "Table[Length@Select[Prime@Range[PrimePi[10^n]],OrderedQ@IntegerDigits@#&],{n,0,7}] (* _Giorgos Kalogeropoulos_, Jul 22 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import accumulate, combinations_with_replacement as mc",
+        "def numwithdigs(d):",
+        "    if d == 0: return 0",
+        "    nonincreasing = (int(\"\".join(m)) for m in mc(\"123456789\", d))",
+        "    return len(list(filter(isprime, nonincreasing)))",
+        "def aupto(nn): return list(accumulate(numwithdigs(d) for d in range(nn+1)))",
+        "print(aupto(14)) # _Michael S. Branicky_, Jul 22 2021"
+    ],
+    "xref": [
+        "Cf. A000040, A006880, A028864, A345326."
+    ],
+    "keyword": "nonn,base,hard",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Jul 22 2021",
+    "ext": [
+        "a(11)-a(34) from _Michael S. Branicky_, Jul 22 2021"
+    ],
+    "references": 2,
+    "revision": 37,
+    "time": "2021-07-24T01:41:23-04:00",
+    "created": "2021-07-22T17:13:43-04:00"
+}

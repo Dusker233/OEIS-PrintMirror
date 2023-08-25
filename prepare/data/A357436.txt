@@ -1,0 +1,65 @@
+{
+    "number": 357436,
+    "data": "2,23,223,2203,22003,220013,2200103,22000103,223000103,2230001003,22300010023,223000100023,2230001000203,22301001000203,223010001000203,2230010001000203,22300010001000203,222300010001000203,2223000100010001203,22203000100010001203,222030001000010001203,2220300010200010001203",
+    "name": "Start with a(1)=2; to get a(n+1) insert in a(n) the smallest possible digit at the rightmost possible position such that the new number is a prime.",
+    "comment": [
+        "Extending a number by inserting a prepending \"0\" is obviously not allowed. Smallness of digit has precedence over rightmostness of position. If no prime extension exists, the sequence terminates.",
+        "Sequence construction very similar to A356557 (the difference arises from the order of the conditions).",
+        "Length of a(n) is n.",
+        "Is the sequence infinite?",
+        "Sequence terminates if and only if it contains a term of A125001."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A357436/b357436.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "a(2) = 23 because the numbers 20, 21, 12, 22 obtained from a(1) = 2 are composite and 23 is a prime.",
+        "For n=6, starting from a(5)=22003 and appending a digit \"0\" from right to left gives 220030, 220003, 202003, which are not primes. Inserting a digit \"1\" from right to left gives 220031 which also is not prime, and 220013 which is prime, so a(6) = 220013."
+    ],
+    "maple": [
+        "f:= proc(n) local x, y,z, j;",
+        "      for x from 0 to 9 do",
+        "        for j from 0 to length(n)-`if`(x=0,1,0) do",
+        "           y:= n mod 10^j;",
+        "           z:= y + x*10^j + 10*(n-y);",
+        "           if isprime(z) then return z fi;",
+        "      od od;",
+        "      FAIL",
+        "end proc:",
+        "R:= 2: x:= 2:",
+        "for count from 2 to 30 while x <> FAIL do",
+        "    x:= f(x); R:= R, x;",
+        "od:",
+        "R; # _Robert Israel_, Sep 29 2022"
+    ],
+    "mathematica": [
+        "a[1]=2; a[n_] := a[n] = Catch@ Block[{p, d = IntegerDigits[a[n-1]]}, Do[p = FromDigits@ Insert[d, c, -i]; If[p > a[n - 1] && PrimeQ[p], Throw@p], {c, 0, 9}, {i, 1 + Length@ d}]]; Array[a, 22] (* _Giovanni Resta_, Oct 13 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import islice",
+        "def anext(an):",
+        "    s = str(an)",
+        "    for c in \"0123456789\":",
+        "        for k in range(len(s)+1):",
+        "            w = s + c if k == 0 else s[:-k] + c + s[-k:]",
+        "            if w[0] != \"0\" and isprime(int(w)): return int(w)",
+        "def agen(an=2):",
+        "    while an != None: yield an; an = anext(an)",
+        "print(list(islice(agen(), 22))) # _Michael S. Branicky_, Sep 29 2022"
+    ],
+    "xref": [
+        "Cf. A356557, A125001, A332603."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Bartlomiej Pawlik_, Sep 28 2022",
+    "ext": [
+        "More terms from _Robert Israel_, Sep 29 2022"
+    ],
+    "references": 3,
+    "revision": 34,
+    "time": "2023-06-12T12:33:19-04:00",
+    "created": "2022-09-29T07:41:17-04:00"
+}

@@ -1,0 +1,42 @@
+{
+    "number": 27218,
+    "data": "1,9,51,279,1277,6235,26789,125370,525082,2409886,9969722,45289767,186105280,840402559,3439358196,15472942142,63155131233,283400162019",
+    "name": "a(n) = Sum_{k=0..n-3} T(n,k)*T(n,k+3), T given by A026736.",
+    "link": [
+        "G. C. Greubel, <a href=\"/A027218/b027218.txt\">Table of n, a(n) for n = 3..1000</a>"
+    ],
+    "mathematica": [
+        "T[n_, k_]:= T[n, k] = If[k==0 || k==n, 1, If[EvenQ[n] && k==(n-2)/2, T[n-1,k-1] + T[n-2,k-1] + T[n-1,k], T[n-1,k-1] + T[n-1,k]]]; Table[Sum[T[n,k]*T[n,k+3], {k, 0, n-3}], {n, 3, 30}] (* _G. C. Greubel_, Jul 19 2019 *)"
+    ],
+    "program": [
+        "(PARI) T(n, k) = if(k==n || k==0, 1, k==n-1, n, if((n%2)==0 && k==(n-2)/2, T(n-1, k-1) + T(n-2, k-1) + T(n-1, k), T(n-1, k-1) + T(n-1, k) ));",
+        "for(n=3,20, print1(sum(k=0, n-3, T(n, k)*T(n,k+3)), \", \")) \\\\ _G. C. Greubel_, Jul 19 2019",
+        "(Sage)",
+        "@CachedFunction",
+        "def T(n, k):",
+        "    if (k==0 or k==n): return 1",
+        "    elif (mod(n, 2)==0 and k==(n-2)/2): return T(n-1, k-1) + T(n-2, k-1)",
+        "+ T(n-1, k)",
+        "    else: return T(n-1, k-1) + T(n-1, k)",
+        "[sum(T(n,k)*T(n,k+3) for k in (0..n-3)) for n in (3..30)] # _G. C. Greubel_, Jul 19 2019",
+        "(GAP)",
+        "T:= function(n, k)",
+        "    if k=0 or k=n then return 1;",
+        "    elif k=n-1 then return n;",
+        "    elif (n mod 2)=0 and k=Int((n-2)/2) then return T(n-1, k-1) + T(n-2, k-1) + T(n-1, k);",
+        "    else return T(n-1, k-1) + T(n-1, k);",
+        "    fi;",
+        "  end;",
+        "List([3..20], n-> Sum([0..n-3], k-> T(n, k)*T(n,k+3) )); # _G. C. Greubel_, Jul 19 2019"
+    ],
+    "xref": [
+        "Cf. A026736."
+    ],
+    "keyword": "nonn",
+    "offset": "3,2",
+    "author": "_Clark Kimberling_",
+    "references": 1,
+    "revision": 12,
+    "time": "2020-04-12T14:27:16-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

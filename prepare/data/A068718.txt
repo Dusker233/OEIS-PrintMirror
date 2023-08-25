@@ -1,0 +1,30 @@
+{
+    "number": 68718,
+    "data": "1,2,2,2,8,25,90,404,2055,11792,75053,525622,4015361,33231679,296182315,2828335731,28809181418,311788442591,3572832236720,43216177809190,550245463265240,7356239983352887,103028812072639378",
+    "name": "Boustrophedon transform of A068717 with A068717(1) = -1 instead of 0.",
+    "comment": [
+        "Signs omitted, all terms < 0. A068717(1) = -1 means soluble (1*1 -1*0*0 = +1 resp. 0*0 -1*1*1 = -1)."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import accumulate, count, islice",
+        "from math import isqrt",
+        "from sympy import continued_fraction_periodic",
+        "def A068718_gen(): # generator of terms",
+        "    yield 1",
+        "    blist = (1,)",
+        "    for n in count(2):",
+        "        yield (blist := tuple(accumulate(reversed(blist),initial=0 if (a:=isqrt(n)**2==n) else (1 if len(continued_fraction_periodic(0,1,n)[1]) & 1 else int(a)-1))))[-1]",
+        "A068718_list = list(islice(A068718_gen(),40)) # _Chai Wah Wu_, Jun 14 2022"
+    ],
+    "xref": [
+        "Cf. A068716, A068717, A049240, A046951."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,2",
+    "author": "_Frank Ellermann_, Feb 26 2002",
+    "references": 1,
+    "revision": 9,
+    "time": "2022-06-15T01:50:18-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

@@ -1,0 +1,46 @@
+{
+    "number": 355377,
+    "data": "119,1236,11359,11449,122669,2334699,13346899",
+    "name": "Numbers k such that the concatenation of digits included in the sum and product of the digits of the number k is an anagram of the number k, and digits of the number are sorted in nondecreasing order.",
+    "comment": [
+        "From _Michael S. Branicky_, Jun 30 2022: (Start)",
+        "No more terms. [updated Jul 01 2022]",
+        "There are no terms > 10^87. If k is a d-digit number, Sum(digits(k)) <= 9*n, Product(digits(k)) <= 9^n, and d exceeds the sum of the number of digits in the latter two for d >= 88. (End)",
+        "a(n) is a digit permutation of A062237(n+9). - _Thomas Scheuerle_, Jun 30 2022"
+    ],
+    "example": [
+        "11359 is a term since 1+1+3+5+9 = 19, 1*1*3*5*9 = 135, and 19135 is an anagram of 11359."
+    ],
+    "program": [
+        "(Python)",
+        "import math",
+        "def is_ok(num):",
+        "    nums = [int(i) for i in str(num)]",
+        "    summa = sum(nums)",
+        "    prods = math.prod(nums)",
+        "    syms_1 = [str(i) for i in nums]",
+        "    syms_2 = [i for i in str(summa)] + [i for i in str(prods)]",
+        "    if syms_1 == sorted(syms_2):",
+        "        return True",
+        "    return False",
+        "(Python)",
+        "from math import prod",
+        "from itertools import count, islice, combinations_with_replacement as mc",
+        "def c(s):",
+        "    d = list(map(int, s))",
+        "    return sorted(s) == sorted(str(sum(d)) + str(prod(d)))",
+        "def ndgen(d): yield from (\"\".join(m) for m in mc(\"123456789\", d))",
+        "def agen(): yield from (int(s) for d in count(1) for s in ndgen(d) if c(s))",
+        "print(list(islice(agen(), 7))) # _Michael S. Branicky_, Jun 30 2022"
+    ],
+    "xref": [
+        "Cf. A062237."
+    ],
+    "keyword": "nonn,base,fini,full",
+    "offset": "1,1",
+    "author": "_Ilya Orlov_, Jun 30 2022",
+    "references": 0,
+    "revision": 41,
+    "time": "2022-07-01T22:08:54-04:00",
+    "created": "2022-07-01T22:08:54-04:00"
+}

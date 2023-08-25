@@ -1,0 +1,63 @@
+{
+    "number": 326024,
+    "data": "1,2,3,5,9,15,25,41,68,109,179,284,443,681,1062,1587,2440,3638,5443,8021,11953,17273,25578,37001,53953,77429,113063,160636,232928,330775,475380,672056,967831,1359743,1952235,2743363,3918401,5495993,7856134,10984547,15669741",
+    "name": "Number of subsets of {1..n} containing no sums or products of distinct elements.",
+    "link": [
+        "Fausto A. C. Cariboni, <a href=\"/A326024/b326024.txt\">Table of n, a(n) for n = 0..80</a>"
+    ],
+    "example": [
+        "The a(0) = 1 through a(5) = 15 subsets:",
+        "  {}  {}   {}   {}     {}       {}",
+        "      {1}  {1}  {1}    {1}      {1}",
+        "           {2}  {2}    {2}      {2}",
+        "                {3}    {3}      {3}",
+        "                {2,3}  {4}      {4}",
+        "                       {2,3}    {5}",
+        "                       {2,4}    {2,3}",
+        "                       {3,4}    {2,4}",
+        "                       {2,3,4}  {2,5}",
+        "                                {3,4}",
+        "                                {3,5}",
+        "                                {4,5}",
+        "                                {2,3,4}",
+        "                                {2,4,5}",
+        "                                {3,4,5}"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Subsets[Range[n]],Intersection[#,Union[Plus@@@Subsets[#,{2,n}],Times@@@Subsets[#,{2,n}]]]=={}&]],{n,0,10}]"
+    ],
+    "program": [
+        "(PARI)",
+        "a(n)={",
+        "   my(recurse(k, es, ep)=",
+        "    if(k > n, 1,",
+        "      my(t = self()(k + 1, es, ep));",
+        "      if(!bittest(es,k) && !bittest(ep,k),",
+        "         es = bitor(es, bitand((2<<n)-1, es << k));",
+        "         forstep(i=n\\k, 1, -1, if(bittest(ep,i), ep=bitor(ep,1<<(k*i))));",
+        "         t += self()(k + 1, es, ep);",
+        "      );",
+        "      t);",
+        "   );",
+        "   1 + if(n, recurse(2, 1, 2));",
+        "} \\\\ _Andrew Howroyd_, Aug 25 2019"
+    ],
+    "xref": [
+        "Subsets without sums of distinct elements are A151897.",
+        "Subsets without products of distinct elements are A326117.",
+        "Maximal subsets without sums or products of distinct elements are A326025.",
+        "Subsets with sums (and products) are A326083.",
+        "Sum-free and product-free subsets are A326495.",
+        "Cf. A007865, A051026, A121269, A325710, A326076, A326489, A326497, A326498."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Jul 09 2019",
+    "ext": [
+        "Terms a(16)-a(40) from _Andrew Howroyd_, Aug 25 2019"
+    ],
+    "references": 3,
+    "revision": 14,
+    "time": "2021-04-10T15:07:42-04:00",
+    "created": "2019-07-10T07:34:52-04:00"
+}

@@ -1,0 +1,35 @@
+{
+    "number": 132437,
+    "data": "0,1,3,15,97,767,7175,77497,949047,12993303,196655437,3260367539,58761008087,1143864229549,23917992791139,534642521054391,12722568903456817,321112383611040455,8568150193087139231,240986045600284560553,7125677277725450247087",
+    "name": "A binomial recursion: a(n) = q(n) (see comment).",
+    "comment": [
+        "Let z(1) = x and z(n) = 1 + Sum_{k=1..n-1} (-1 + binomial(n,k))*z(k), then z(n) = p(n)*x + q(n)."
+    ],
+    "link": [
+        "Vaclav Kotesovec, <a href=\"/A132437/b132437.txt\">Table of n, a(n) for n = 1..400</a>"
+    ],
+    "formula": [
+        "Limit_{n->oo} p(n)/q(n) = (Pi-2)/(4-Pi) = 1.329896183162743847239353...",
+        "From _Vaclav Kotesovec_, Nov 25 2020: (Start)",
+        "E.g.f.: -2-x + exp(x/2)*((4+Pi)/2 - 2*arcsin(exp(x/2)/sqrt(2))) / sqrt(2-exp(x)).",
+        "a(n) ~ (4 - Pi) * n! / (2*sqrt(Pi*n) * log(2)^(n + 1/2)).",
+        "a(n) ~ (4 - Pi) * n^n / (sqrt(2) * exp(n) * log(2)^(n + 1/2)). (End)"
+    ],
+    "mathematica": [
+        "z[1] := x; z[n_] := z[n] = Expand[1 + Sum[(-1 + Binomial[n, k])*z[k], {k, 1, n-1}]]; Table[Coefficient[z[n], x, 0], {n, 1, 30}] (* _Vaclav Kotesovec_, Nov 25 2020 *)",
+        "Rest[CoefficientList[Series[-2 - x + E^(x/2)*((4 + Pi)/2 - 2*ArcSin[E^(x/2) / Sqrt[2]]) / Sqrt[2 - E^x], {x, 0, 20}], x] * Range[0, 20]!] (* _Vaclav Kotesovec_, Nov 25 2020 *)"
+    ],
+    "program": [
+        "(PARI) r=1; s=-1; v=vector(120, j, x); for(n=2, 120, g=r+sum(k=1, n-1, (s+binomial(n, k))*v[k]); v[n]=g); z(n)=v[n]; p(n)=polcoeff(z(n), 1); q(n)=polcoeff(z(n), 0); a(n)=p(n);"
+    ],
+    "xref": [
+        "Cf. A135147, A135148, A135149, A135150, A135074, A135075."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Benoit Cloitre_, Nov 20 2007",
+    "references": 1,
+    "revision": 23,
+    "time": "2023-06-06T15:49:14-04:00",
+    "created": "2007-12-09T03:00:00-05:00"
+}

@@ -1,0 +1,43 @@
+{
+    "number": 358686,
+    "data": "5,50,120,122,288,290,528,842,960,1370,1680,1850,2808,2810,4488,5328,5330,6240,6242,6888,6890,9408,9410,11880,12768,18770,22200,22800,26568,27888,36482,38808,39600,52440,54290,58080,63000,63002,69170,72360,72362,73442,76730,78960",
+    "name": "Numbers sandwiched between two semiprimes, one of which is a square.",
+    "comment": [
+        "Numbers in A124936 but not in A358665.",
+        "All numbers except 5 (the first term) are even.",
+        "Subsequence of A124936."
+    ],
+    "link": [
+        "Harvey P. Dale, <a href=\"/A358686/b358686.txt\">Table of n, a(n) for n = 1..292</a> (all terms up to 10 million)"
+    ],
+    "example": [
+        "5 is sandwiched between two semiprimes 4 = 2*2 and 6 = 3*2, one of which is a square. Thus, 5 is in this sequence.",
+        "34 is sandwiched between squarefree semiprimes 33 = 3*11 and 35 = 5*7. Thus, 34 is not in this sequence."
+    ],
+    "mathematica": [
+        "Select[Range[100000], Total[Transpose[FactorInteger[# - 1]][[2]]] == 2 && Total[Transpose[FactorInteger[# + 1]][[2]]] == 2 && ! (Transpose[FactorInteger[# - 1]][[2]] == {1, 1} && Transpose[FactorInteger[# + 1]][[2]] == {1, 1}) &]",
+        "Mean/@Select[SequencePosition[PrimeOmega[Range[80000]],{2,_,2}],AnyTrue[Sqrt[#],IntegerQ]&] (* _Harvey P. Dale_, Jun 14 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    nxt = []",
+        "    yield 5",
+        "    for k in count(6, 2):",
+        "        prv, nxt = nxt, list(factorint(k+1).values())",
+        "        if (prv==[1, 1] and nxt==[2]) or (prv==[2] and nxt==[1, 1]): yield k",
+        "print(list(islice(agen(), 44))) # _Michael S. Branicky_, Nov 26 2022"
+    ],
+    "xref": [
+        "Cf. A001358, A006881, A124936, A358665."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Tanya Khovanova_, Nov 26 2022",
+    "references": 1,
+    "revision": 30,
+    "time": "2023-07-23T01:53:43-04:00",
+    "created": "2022-11-27T10:41:29-05:00"
+}

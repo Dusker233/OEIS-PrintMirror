@@ -1,0 +1,34 @@
+{
+    "number": 297285,
+    "data": "15,30,31,45,46,47,60,61,62,63,75,76,77,78,79,90,91,92,93,94,95,105,106,107,108,109,110,111,120,121,122,123,124,125,126,127,135,136,137,138,139,140,141,142,143,150,151,152,153,154,155,156,157,158,159,165",
+    "name": "Numbers whose base-15 digits have greater down-variation than up-variation; see Comments.",
+    "comment": [
+        "Suppose that n has base-b digits b(m), b(m-1), ..., b(0).  The base-b down-variation of n is the sum DV(n,b) of all d(i)-d(i-1) for which d(i) > d(i-1); the base-b up-variation of n is the sum UV(n,b) of all d(k-1)-d(k) for which d(k) < d(k-1).  The total base-b variation of n is the sum TV(n,b) = DV(n,b) + UV(n,b).  See the guide at A297330.",
+        "Differs from A296758 first for 255 = 120_15, which has the same number of rises and falls and is not in A296758, but DV(255,15) =2 > UV(255,15) =1 and is in this sequence. - _R. J. Mathar_, Jan 23 2018"
+    ],
+    "link": [
+        "Clark Kimberling, <a href=\"/A297285/b297285.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "165 in base-15:  11,0 having DV = 11, UV = 0, so that 165 is in the sequence."
+    ],
+    "mathematica": [
+        "g[n_, b_] := Map[Total, GatherBy[Differences[IntegerDigits[n, b]], Sign]];",
+        "x[n_, b_] := Select[g[n, b], # < 0 &]; y[n_, b_] := Select[g[n, b], # > 0 &];",
+        "b = 15; z = 2000; p = Table[x[n, b], {n, 1, z}]; q = Table[y[n, b], {n, 1, z}];",
+        "w = Sign[Flatten[p /. {} -> {0}] + Flatten[q /. {} -> {0}]];",
+        "Take[Flatten[Position[w, -1]], 120]   (* A297285 *)",
+        "Take[Flatten[Position[w, 0]], 120]    (* A297286 *)",
+        "Take[Flatten[Position[w, 1]], 120]    (* A297287 *)"
+    ],
+    "xref": [
+        "Cf. A297330, A297286, A297287."
+    ],
+    "keyword": "nonn,base,easy",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_, Jan 17 2018",
+    "references": 4,
+    "revision": 8,
+    "time": "2018-01-23T20:16:43-05:00",
+    "created": "2018-01-17T09:44:13-05:00"
+}

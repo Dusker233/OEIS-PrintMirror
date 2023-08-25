@@ -1,0 +1,54 @@
+{
+    "number": 298883,
+    "data": "1,2,6,180,50400,958003200,131514679296000,1352181326649753600000,112703642894318944282214400000,903025586371469323704949549301760000000,2012769637740033870687308804001121075357286400000000",
+    "name": "Determinant of n X n matrix whose elements are m(i,j) = prime(i)^j.",
+    "comment": [
+        "Traces of these matrices are A087480."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A298883/b298883.txt\">Table of n, a(n) for n = 0..35</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Vandermonde_matrix\">Vandermonde matrix</a>"
+    ],
+    "formula": [
+        "a(n) = Product_{1<=i<=n} prime(i) * Product_{1<=i<j<=n} (prime(j)-prime(i)). - _Robert Israel_, Jan 29 2018"
+    ],
+    "example": [
+        "For n=1:",
+        "          |2| = 2, then a(1) = 2.",
+        "For n=2:",
+        "          |2  4| = 6, then a(2) = 6.",
+        "          |3  9|",
+        "For n=3:",
+        "          |2  4   8| = 180, then a(3) = 180.",
+        "          |3  9  27|",
+        "          |5 25 125|"
+    ],
+    "maple": [
+        "with(LinearAlgebra):",
+        "a:= n-> Determinant(Matrix(n, (i,j)-> ithprime(i)^j)):",
+        "seq(a(n), n=0..12);  # _Alois P. Heinz_, Jan 28 2018",
+        "# Alternative:",
+        "f:= proc(n) local P;",
+        "P:= [seq(ithprime(i),i=1..n)];",
+        "convert(P,`*`)*mul(mul(P[j]-P[i],j=i+1..n),i=1..n-1)",
+        "end proc:",
+        "map(f, [$0..20]); # _Robert Israel_, Jan 29 2018"
+    ],
+    "mathematica": [
+        "a[n_]:=Table[Prime[i]^j,{i,1,n},{j,1,n}];",
+        "Table[Det[a[n]],{n,1,10}]"
+    ],
+    "program": [
+        "(PARI) a(n) = matdet(matrix(n, n, i, j, prime(i)^j)); \\\\ _Michel Marcus_, Jan 28 2018"
+    ],
+    "xref": [
+        "Cf. A080358, A087480, A298903."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Andres Cicuttin_, Jan 28 2018",
+    "references": 2,
+    "revision": 29,
+    "time": "2019-07-28T16:43:32-04:00",
+    "created": "2018-01-29T10:00:36-05:00"
+}

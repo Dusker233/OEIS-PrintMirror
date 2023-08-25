@@ -1,0 +1,56 @@
+{
+    "number": 38604,
+    "data": "3,5,7,11,13,17,19,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,103,107,109,113,131,137,139,149,151,157,163,167,173,179,181,191,193,197,199,307,311,313,317,331,337,347,349,353,359,367,373,379,383,389,397",
+    "name": "Primes not containing the digit '2'.",
+    "comment": [
+        "Subsequence of primes of A052404. - _Michel Marcus_, Feb 21 2015",
+        "Maynard proves that this sequence is infinite and in particular contains the expected number of elements up to x, on the order of x^(log 9/log 10)/log x. - _Charles R Greathouse IV_, Apr 08 2016"
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A038604/b038604.txt\">Table of n, a(n) for n = 1..50000</a>",
+        "M. F. Hasler, <a href=\"/wiki/Numbers_avoiding_certain_digits\">Numbers avoiding certain digits</a> OEIS wiki, Jan 12 2020.",
+        "James Maynard, <a href=\"http://arxiv.org/abs/1604.01041\">Primes with restricted digits</a>, arXiv:1604.01041 [math.NT], 2016.",
+        "James Maynard and Brady Haran, <a href=\"https://www.youtube.com/watch?v=eeoBCS7IEqs\">Primes without a 7</a>, Numberphile video (2019)."
+    ],
+    "formula": [
+        "Intersection of A000040 and A052404. - _M. F. Hasler_, Jan 11 2020",
+        "a(n) ~ n^(log 10/log 9) log n. - _Charles R Greathouse IV_, Aug 03 2023"
+    ],
+    "mathematica": [
+        "Select[Prime[Range[70]], DigitCount[#, 10, 2] == 0 &] (* _Vincenzo Librandi_, Aug 08 2011 *)"
+    ],
+    "program": [
+        "(Magma) [ p: p in PrimesUpTo(400) | not 2 in Intseq(p) ]; // _Bruno Berselli_, Aug 08 2011",
+        "(PARI) lista(nn, d=2) = {forprime(p=2, nn, if (!vecsearch(vecsort(digits(p),,8), d), print1(p, \", \")););} \\\\ _Michel Marcus_, Feb 21 2015",
+        "(PARI)",
+        "select( {is_A038604(n)=is_A052404(n)&&isprime(n)}, [1..400]) \\\\ see Wiki for more",
+        "{next_A038604(n)=until((n==nextprime(n+1))==n=next_A052404(n-1),);n} \\\\ _M. F. Hasler_, Jan 12 2020",
+        "(Python)",
+        "from sympy import isprime, nextprime",
+        "def is_A038604(n): return str(n).find('2')<0 and isprime(n)",
+        "def next_A038604(n): # get smallest term > n",
+        "    while True:",
+        "        n = nextprime(n); s = str(n); t = s.find('2')",
+        "        if t < 0: return n",
+        "        t = 10**(len(s)-1-t); n += t - n%t",
+        "def A038604_upto(stop=math.inf, start=3):",
+        "    while start < stop: yield start; start = next_A038604(start)",
+        "list(A038604_upto(400))",
+        "# _M. F. Hasler_, Jan 12 2020"
+    ],
+    "xref": [
+        "Cf. A000040, A052404.",
+        "Subsequence of A065091 (odd primes).",
+        "Primes having no digit d = 0..9 are A038618, A038603, this sequence, A038611, A038612, A038613, A038614, A038615, A038616, and A038617, respectively."
+    ],
+    "keyword": "nonn,easy,base",
+    "offset": "1,1",
+    "author": "Vasiliy Danilov (danilovv(AT)usa.net), Jul 15 1998",
+    "ext": [
+        "Offset corrected by _Arkadiusz Wesolowski_, Aug 07 2011"
+    ],
+    "references": 13,
+    "revision": 77,
+    "time": "2023-08-04T18:59:20-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

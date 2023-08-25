@@ -1,0 +1,41 @@
+{
+    "number": 317167,
+    "data": "1,2,3,3,5,6,9,11,14,16,20,21,27,30,33,36,44,47,55,58,63,67,76,80,89,94",
+    "name": "Number of distinct critical exponents possible, over all binary strings of length n.",
+    "comment": [
+        "A string x has period p if x[i]=x[i+p] for all i that make sense.  The shortest period is called \"the\" period.  The exponent exp(x) of a string x of length n is defined to be n/p, where p is the period.  The critical exponent of a string x is the maximum, over all nonempty contiguous subwords w of x, of exp(w)."
+    ],
+    "example": [
+        "For n = 6, there are 5 possible critical exponents:  6 (for 000000), 5 (for 000001), 4 (for 000011), 3 (for 000111), 2 (for 001001), and 5/2 (for 001010)."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "from fractions import Fraction",
+        "from functools import lru_cache",
+        "def period(x):",
+        "    for p in range(1, len(x)):",
+        "        if all(x[i] == x[i+p] for i in range(len(x)-p)):",
+        "            return p",
+        "    return len(x)",
+        "def exp(x):",
+        "    return Fraction(len(x), period(x))",
+        "@lru_cache(maxsize=None)",
+        "def critexp(x):",
+        "    if len(x) == 1: return 1",
+        "    return max(exp(x), critexp(x[:-1]), critexp(x[1:]))",
+        "def a(n):",
+        "    return len(set(critexp(\"0\"+\"\".join(x)) for x in product(\"01\", repeat=n-1)))",
+        "print([a(n) for n in range(1, 19)]) # _Michael S. Branicky_, Dec 24 2022"
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Jeffrey Shallit_, Jul 23 2018",
+    "ext": [
+        "a(21)-a(26) from _Michael S. Branicky_, Dec 24 2022"
+    ],
+    "references": 1,
+    "revision": 8,
+    "time": "2022-12-24T19:02:34-05:00",
+    "created": "2018-07-23T21:08:32-04:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 296618,
+    "data": "1,1,9,89,1265,22929,506809,13220521,397585761,13543386785,515418398441,21673889807481,998003450868049,49942515803293489,2698849517019693465,156631203355106962889,9716434375682706344129,641592631434102757993281",
+    "name": "Expansion of the e.g.f. exp(-x)/sqrt(1-4*x).",
+    "link": [
+        "Peter Bala, <a href=\"/A047974/a047974_1.pdf\">Integer sequences that become periodic on reduction modulo k for all k</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} binomial(n,k)*binomial(2*k,k)*k!*(-1)^(n-k).",
+        "a(n) = (i/2)*(-1)^n*U(1/2,n+3/2,-1/4), where U denotes the Kummer U function.",
+        "D-finite with recurrence: a(n+2) - (4*n+5)*a(n+1) - 4*(n+1)*a(n) = 0.",
+        "Sum_{k=0..n} binomial(n,k)*a(k)*a(n-k) = Sum_{k=0..n} binomial(n,k)*(-1)^(n-k)*2^(n+k)*k!.",
+        "Conjectures:",
+        "1) a(n+1) == a(n) (mod n) for all n >= 1.",
+        "2) a(n+k) == (-1)^k*a(n) (mod k) for all n and k >= 1.",
+        "a(n) ~ 2^(2*n + 1/2) * n^n / exp(n + 1/4). - _Vaclav Kotesovec_, Dec 17 2017",
+        "From _Peter Bala_, Jun 19 2023: (Start)",
+        "a(n) == 1 (mod 4).",
+        "Conjecture 1) above follows immediately from the stated recurrence equation. In fact, a(n+1) == a(n) (mod 8*n) for n >= 1.",
+        "For a proof of Conjecture 2) see the Bala link (corollary to Theorem 1, p. 5). (End)"
+    ],
+    "maple": [
+        "A296618 := n -> (-1)^n*(I/2)*KummerU(1/2, n+3/2, -1/4):",
+        "seq(simplify(A296618(n)), n=0..17); # _Peter Luschny_, Dec 18 2017"
+    ],
+    "mathematica": [
+        "Table[Sum[Binomial[n,k]Binomial[2k,k]k! (-1)^(n-k),{k,0,n}],{n,0,18}]",
+        "CoefficientList[Series[Exp[-x]/Sqrt[1-4x], {x,0,18}], x] Range[0,18]!"
+    ],
+    "program": [
+        "(Maxima) makelist(sum(binomial(n,k)*binomial(2*k,k)*k!*(-1)^(n-k),k,0,n),n,0,12);",
+        "(PARI) x='x+O('x^99); Vec(serlaplace(exp(-x)/sqrt(1-4*x))) \\\\ _Altug Alkan_, Dec 17 2017"
+    ],
+    "xref": [
+        "Cf. A052143."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Emanuele Munarini_, Dec 17 2017",
+    "references": 2,
+    "revision": 25,
+    "time": "2023-06-23T15:55:51-04:00",
+    "created": "2017-12-18T05:34:26-05:00"
+}

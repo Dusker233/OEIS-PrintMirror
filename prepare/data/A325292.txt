@@ -1,0 +1,75 @@
+{
+    "number": 325292,
+    "data": "1,8,576,160768,123535360,212713734144,716196297048064,4280584942657732608,42250703121584165486592,651154631135458759089848320,14983590319172065236171175755776,496301942561421311900528265903734784,22953613919171561374366988621726483480576,1444609513446024762131466039751756562435145728",
+    "name": "E.g.f. S(x), where C(x*y) + S(x*y) = exp( Integral Integral C(x*y) dx dy ) such that C(x)^2 - S(x)^2 = 1.",
+    "comment": [
+        "Unsigned version of A326552."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A325292/b325292.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "E.g.f. S(x) = Sum_{n>=0} a(n)*x^(2*n+1)/(2*n+1)!^2, where series S(x) and related series C(x) satisfy the following relations.",
+        "(1.a) C(x)^2 - S(x)^2 = 1.",
+        "(1.b) C'(x)/S(x) = S'(x)/C(x) =  1/x * Integral C(x) dx.",
+        "(2.a) S(x) = Integral C(x)/x * (Integral C(x) dx) dx.",
+        "(2.b) C(x) = 1 + Integral S(x)/x * (Integral C(x) dx) dx.",
+        "(3.a) C(x) + S(x) = exp( Integral 1/x * (Integral C(x) dx) dx ).",
+        "(3.b) C(x) = cosh( Integral 1/x * (Integral C(x) dx) dx ).",
+        "(3.c) S(x) = sinh( Integral 1/x * (Integral C(x) dx) dx ).",
+        "Integration.",
+        "(4.a) S(x*y) = Integral C(x*y) * (Integral C(x*y) dy) dx.",
+        "(4.b) C(x*y) = 1 + Integral S(x*y) * (Integral C(x*y) dy) dx.",
+        "(4.c) S(x*y) = Integral C(x*y) * (Integral C(x*y) dx) dy.",
+        "(4.d) C(x*y) = 1 + Integral S(x*y) * (Integral C(x*y) dx) dy.",
+        "Exponential.",
+        "(5.a) C(x*y) + S(x*y) = exp( Integral Integral C(x*y) dx dy ).",
+        "(5.b) C(x*y) = cosh( Integral Integral C(x*y) dx dy ).",
+        "(5.c) S(x*y) = sinh( Integral Integral C(x*y) dx dy ).",
+        "Derivatives.",
+        "(6.a) d/dx S(x*y) = C(x*y) * Integral C(x*y) dy.",
+        "(6.b) d/dx C(x*y) = S(x*y) * Integral C(x*y) dy.",
+        "(6.c) d/dy S(x*y) = C(x*y) * Integral C(x*y) dx.",
+        "(6.d) d/dy C(x*y) = S(x*y) * Integral C(x*y) dx."
+    ],
+    "example": [
+        "E.g.f. S(x) = x + 8*x^3/3!^2 + 576*x^5/5!^2 + 160768*x^7/7!^2 + 123535360*x^9/9!^2 + 212713734144*x^11/11!^2 + 716196297048064*x^13/13!^2 + 4280584942657732608*x^15/15!^2 + 42250703121584165486592*x^17/17!^2 + 651154631135458759089848320*x^19/19!^2 + 14983590319172065236171175755776*x^21/21!^2 + ...",
+        "where S(x) = sinh( Integral 1/x * (Integral C(x) dx) dx ),",
+        "also, S(x*y) = sinh( Integral Integral C(x*y) dx dy ).",
+        "RELATED SERIES.",
+        "C(x) = 1 + 2*x^2/2!^2 + 56*x^4/4!^2 + 8336*x^6/6!^2 + 3985792*x^8/8!^2 + 4679517952*x^10/10!^2 + 11427218287616*x^12/12!^2 + 51793067942397952*x^14/14!^2 + 400951893341645930496*x^16/16!^2 + 4975999084909976839454720*x^18/18!^2 + 94178912073481319162642169856*x^20/20!^2 + ...",
+        "where C(x) = cosh( Integral 1/x * (Integral C(x) dx) dx ),",
+        "also, C(x*y) = cosh( Integral Integral C(x*y) dx dy ).",
+        "SPECIFIC VALUES.",
+        "At x = 1/2,",
+        "C(1/2) = 1.13133757946411922642102833324416139...",
+        "S(1/2) = 0.52907912329606456055608764850290077...",
+        "log(C(1/2) + S(1/2)) = 0.50706859662590456104854330721421537...",
+        "At x = 1,",
+        "C(1) = 1.61616724447561044622618032294959193...",
+        "S(1) = 1.26964426597212165112687564431552303...",
+        "log(C(1) + S(1)) = 1.05980614652360497313310791544203867...",
+        "At x = 2,",
+        "C(2) = 7.0181980831554020705059330009720760...",
+        "S(2) = 6.9465894030384550946994132182413166...",
+        "log(C(2) + S(2)) = 2.636538981679765615420983831302958...",
+        "At x = 3, the power series for C(x) and S(x) diverge."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(C=1, S=x); for(i=1, 2*n+1,",
+        "S = intformal( C/x * intformal( C +x*O(x^(2*n+1)) ) );",
+        "C = 1 + intformal( S/x * intformal( C +x*O(x^(2*n+1)) ) ); ); (2*n+1)!^2*polcoeff(S, 2*n+1)}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A325290 (C+S), A325291 (C).",
+        "Cf. A326552."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Apr 16 2019",
+    "references": 4,
+    "revision": 16,
+    "time": "2023-04-15T14:16:08-04:00",
+    "created": "2019-04-16T19:48:28-04:00"
+}

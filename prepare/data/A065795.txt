@@ -1,0 +1,66 @@
+{
+    "number": 65795,
+    "data": "1,2,4,6,10,16,26,42,72,124,218,390,706,1292,2388,4436,8292,15578,29376,55592,105532,200858,383220,732756,1403848,2694404,5179938,9973430,19229826,37125562,71762396,138871260,269021848,521666984,1012520400,1966957692,3824240848",
+    "name": "Number of subsets of {1,2,...,n} that contain the average of their elements.",
+    "comment": [
+        "Also the number of subsets of {1,2,...,n} with sum of entries divisible by the largest element (compare A000016). See the Palmer Melbane link for a bijection. - _Joel B. Lewis_, Nov 13 2014"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A065795/b065795.txt\">Table of n, a(n) for n = 1..3333</a>",
+        "Palmer Melbane, <a href=\"http://www.artofproblemsolving.com/Forum/viewtopic.php?p=3631416#p3631416\">Art of Problem Solving thread</a>. - _Joel B. Lewis_, Nov 13 2014"
+    ],
+    "formula": [
+        "a(n) = (1/2)*Sum_{i=1..n} (f(i) - 1) where f(i) = (1/i) * Sum_{d | i and d is odd} 2^(i/d) * phi(d).",
+        "a(n) = (n + A051293(n))/2.",
+        "a(n) = 2^n - A327471(n). - _Gus Wiseman_, Sep 14 2019"
+    ],
+    "example": [
+        "a(4)=6, since {1}, {2}, {3}, {4}, {1,2,3} and {2,3,4} contain their averages.",
+        "From _Gus Wiseman_, Sep 14 2019: (Start)",
+        "The a(1) = 1 through a(6) = 16 subsets:",
+        "  {1}  {1}  {1}      {1}      {1}          {1}",
+        "       {2}  {2}      {2}      {2}          {2}",
+        "            {3}      {3}      {3}          {3}",
+        "            {1,2,3}  {4}      {4}          {4}",
+        "                     {1,2,3}  {5}          {5}",
+        "                     {2,3,4}  {1,2,3}      {6}",
+        "                              {1,3,5}      {1,2,3}",
+        "                              {2,3,4}      {1,3,5}",
+        "                              {3,4,5}      {2,3,4}",
+        "                              {1,2,3,4,5}  {2,4,6}",
+        "                                           {3,4,5}",
+        "                                           {4,5,6}",
+        "                                           {1,2,3,6}",
+        "                                           {1,4,5,6}",
+        "                                           {1,2,3,4,5}",
+        "                                           {2,3,4,5,6}",
+        "(End)"
+    ],
+    "mathematica": [
+        "Table[ Sum[a = Select[Divisors[i], OddQ[ # ] &]; Apply[ Plus, 2^(i/a) * EulerPhi[a]]/i, {i, n}]/2, {n, 34}]",
+        "(* second program *)",
+        "Table[Length[Select[Subsets[Range[n]],MemberQ[#,Mean[#]]&]],{n,0,10}] (* _Gus Wiseman_, Sep 14 2019 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = (1/2)*sum(i=1, n, (1/i)*sumdiv(i, d, if (d%2, 2^(i/d)*eulerphi(d)))); \\\\ _Michel Marcus_, Dec 20 2020",
+        "(Python)",
+        "from sympy import totient, divisors",
+        "def A065795(n): return sum((sum(totient(d)<<k//d-1 for d in divisors(k>>(~k&k-1).bit_length(),generator=True))<<1)//k for k in range(1,n+1))>>1 # _Chai Wah Wu_, Feb 22 2023"
+    ],
+    "xref": [
+        "Subsets containing n whose mean is an element are A000016.",
+        "The version for integer partitions is A237984.",
+        "Subsets not containing their mean are A327471.",
+        "Cf. A051293, A063776, A066571, A135342, A324736, A325705, A326083, A326836, A327478, A327481."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_John W. Layman_, Dec 05 2001",
+    "ext": [
+        "Edited and extended by _Robert G. Wilson v_, Nov 15 2002"
+    ],
+    "references": 15,
+    "revision": 39,
+    "time": "2023-02-22T18:03:47-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

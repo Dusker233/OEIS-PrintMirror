@@ -1,0 +1,54 @@
+{
+    "number": 320890,
+    "data": "11,110,1101,110111,110111100101,11011110010111010111111001000,1101111001011101011111100100010011010101101111011001101111011111000010001111100010010100110101011",
+    "name": "a(1) = 11. For all subsequent terms a(n), take a(n-1) and substitute for the k-th digit the binary number of times that digit has appeared in a(n-1), reading left to right from the 1st to k-th digit.",
+    "comment": [
+        "Each term is an initial segment of all of its successors.",
+        "There are always more 1's than 0's in a term.",
+        "The proportion of 0's or 1's in the n-th term approaches 1/2 as n approaches infinity.",
+        "Starting with any binary integer apart from 0 or 1 and applying the same process to yield a sequence s(n), we have that, for a sufficiently large x, a(n) is always an initial segment of s(n+x). The constancy and uniqueness of the limiting behavior of initial segments in base 2 is unique among all bases, unless the tally system is considered as a degenerate case."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A320890/b320890.txt\">Table of n, a(n) for n = 1..8</a>"
+    ],
+    "example": [
+        "a(1) = 11",
+        "The first 1 is replaced with 1, and the second 1 is replaced with 10 (two), so a(2) = 110 (1|10)",
+        "The first 1 is replaced with 1, the second 1 with 10, and the first 0 with 1, so a(3) = 1101 (1|10|1)",
+        "The first 1 is replaced with 1, the second 1 with 10, the first 0 with 1, and the third 1 with 11 (three), so a(4) = 110111 (1|10|1|11)",
+        "The first 1 is replaced with 1, the second 1 with 10, the first 0 with 1, the third 1 with 11, the fourth 1 with 100, and the fifth 1 with 101, so a(5) = 110111100101 (1|10|1|11|100|101)",
+        "The first 1 is replaced with 1, the second 1 with 10, the first 0 with 1, the third 1 with 11, the fourth 1 with 100, the fifth 1 with 101, the sixth 1 with 110, the second 0 with 10, the third 0 with 11, the seventh 1 with 111, the fourth 0 with 100, and the eighth 1 with 1000, so a(6) = 11011110010111010111111001000 (1|10|1|11|100|101|110|10|11|111|100|1000)"
+    ],
+    "mathematica": [
+        "FromDigits /@ Nest[Append[#, Flatten[IntegerDigits[#, 2] & /@ Table[Count[#, Last@ #] &@ #[[1 ;; k]], {k, Length@ #}]] &[#[[-1]] ] ] &, {{1, 1}}, 6] (* _Michael De Vlieger_, Oct 23 2018 *)"
+    ],
+    "program": [
+        "(PARI) eva(n) = subst(Pol(n), x, 10)",
+        "replace(v) = my(w=[], zeros=0, ones=0); for(k=1, #v, if(v[k]==0, zeros++; w=concat(w, binary(zeros))); if(v[k]==1, ones++; w=concat(w, binary(ones)))); w",
+        "terms(n) = my(v=[1, 1], i=0); while(i < n, print1(eva(v), \", \"); i++; v=replace(v))",
+        "/* Print initial 7 terms as follows: */",
+        "terms(7) \\\\ _Felix Fr\u00f6hlich_, Oct 23 2018",
+        "(Python)",
+        "A320890_list = [11]",
+        "while len(A320890_list)<10:",
+        "    a0,a1,s = 0,0,''",
+        "    for d in str(A320890_list[-1]):",
+        "        if d == '0':",
+        "            a0 += 1",
+        "            s += bin(a0)[2:]",
+        "        else:",
+        "            a1 += 1",
+        "            s += bin(a1)[2:]",
+        "    A320890_list.append(int(s)) # _Chai Wah Wu_, Nov 30 2018"
+    ],
+    "xref": [
+        "Cf. A005150, A007651, A001387, A005151."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Thomas Anton_, Oct 23 2018",
+    "references": 2,
+    "revision": 27,
+    "time": "2018-12-01T08:23:33-05:00",
+    "created": "2018-11-29T18:09:19-05:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 331755,
+    "data": "2,5,13,35,75,159,275,477,755,1163,1659,2373,3243,4429,5799,7489,9467,11981,14791,18275,22215,26815,31847,37861,44499,52213,60543,70011,80347,92263,105003,119557,135327,152773,171275,191721,213547,237953",
+    "name": "Number of vertices in a regular drawing of the complete bipartite graph K_{n,n}.",
+    "link": [
+        "N. J. A. Sloane, <a href=\"/A331755/b331755.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Lars Blomberg, Scott R. Shannon, N. J. A. Sloane, <a href=\"http://neilsloane.com/doc/rose_5.pdf\">Graphical Enumeration and Stained Glass Windows, 1: Rectangular Grids</a>, (2020). Also arXiv:2009.07918.",
+        "M. Griffiths, <a href=\"https://cs.uwaterloo.ca/journals/JIS/VOL13/Griffiths2/griffiths.html\">Counting the regions in a regular drawing of K_{n,n}</a>, J. Int. Seq. 13 (2010) # 10.8.5, Lemma 2.",
+        "S. Legendre, <a href=\"http://www.cs.uwaterloo.ca/journals/JIS/VOL12/Legendre/legendre2.html\">The Number of Crossings in a Regular Drawing of the Complete Bipartite Graph</a>, J. Integer Seqs., Vol. 12, 2009.",
+        "Scott R. Shannon, <a href=\"/A331755/a331755.png\">Images of vertices for n=2</a>.",
+        "Scott R. Shannon, <a href=\"/A331755/a331755_1.png\">Images of vertices for n=3</a>.",
+        "Scott R. Shannon, <a href=\"/A331755/a331755_2.png\">Images of vertices for n=4</a>.",
+        "Scott R. Shannon, <a href=\"/A331755/a331755_3.png\">Images of vertices for n=5</a>.",
+        "Scott R. Shannon, <a href=\"/A331755/a331755_7.png\">Images of vertices for n=6</a>",
+        "Scott R. Shannon, <a href=\"/A331755/a331755_8.png\">Images of vertices for n=7</a>",
+        "Scott R. Shannon, <a href=\"/A331755/a331755_11.png\">Images of vertices for n=8</a>",
+        "Scott R. Shannon, <a href=\"/A331755/a331755_10.png\">Images of vertices for n=9</a>",
+        "Scott R. Shannon, <a href=\"/A331755/a331755_4.png\">Images of vertices for n=10</a>.",
+        "Scott R. Shannon, <a href=\"/A331755/a331755_5.png\">Images of vertices for n=12</a>.",
+        "Scott R. Shannon, <a href=\"/A331755/a331755_6.png\">Images of vertices for n=15</a>.",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/CompleteBipartiteGraph.html\">Complete Bipartite Graph</a>",
+        "<a href=\"/index/St#Stained\">Index entries for sequences related to stained glass windows</a>"
+    ],
+    "formula": [
+        "a(n) = A290132(n) - A290131(n) + 1.",
+        "a(n) = A159065(n) + 2*n.",
+        "This is column 1 of A331453.",
+        "a(n) = (9/(8*Pi^2))*n^4 + O(n^3 log(n)). Asymptotic to (9/(2*Pi^2))*A000537(n-1). [_St\u00e9phane Legendre_, see A159065.]"
+    ],
+    "maple": [
+        "# Maple code from _N. J. A. Sloane_, Jul 16 2020",
+        "V106i := proc(n) local ans,a,b; ans:=0;",
+        "for a from 1 to n-1 do for b from 1 to n-1 do",
+        "if igcd(a,b)=1 then ans:=ans + (n-a)*(n-b); fi; od: od: ans; end; # A115004",
+        "V106ii := proc(n) local ans,a,b; ans:=0;",
+        "for a from 1 to floor(n/2) do for b from 1 to floor(n/2) do",
+        "if igcd(a,b)=1 then ans:=ans + (n-2*a)*(n-2*b); fi; od: od: ans; end; # A331761",
+        "A331755 := n -> 2*(n+1) + V106i(n+1) - V106ii(n+1);"
+    ],
+    "mathematica": [
+        "a[n_]:=Module[{x,y,s1=0,s2=0}, For[x=1, x<=n-1, x++, For[y=1, y<=n-1, y++, If[GCD[x,y]==1,s1+=(n-x)*(n-y); If[2*x<=n-1&&2*y<=n-1,s2+=(n-2*x)*(n-2*y)]]]]; s1-s2]; Table[a[n]+ 2 n, {n, 1, 40}] (* _Vincenzo Librandi_, Feb 04 2020 *)"
+    ],
+    "xref": [
+        "Cf. A290131 (regions), A290132 (edges), A333274 (polygons per vertex), A333276, A159065.",
+        "For K_n see A007569, A007678, A135563."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Feb 02 2020",
+    "references": 26,
+    "revision": 66,
+    "time": "2021-05-21T07:03:58-04:00",
+    "created": "2020-02-02T16:25:38-05:00"
+}

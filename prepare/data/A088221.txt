@@ -1,0 +1,50 @@
+{
+    "number": 88221,
+    "data": "1,2,3,10,63,558,6226,82836,1272555,22103638,427715118,9118752300,212335628550,5362040637900,145970732893284,4261945511044520,132868133756374707,4405535689300995942,154819142574597555670",
+    "name": "Coefficient of x^n in g.f.^n is A000698(n+1).",
+    "link": [
+        "G. C. Greubel, <a href=\"/A088221/b088221.txt\">Table of n, a(n) for n = 0..250</a>",
+        "Ali Assem Mahmoud, <a href=\"https://uwaterloo.ca/scholar/a39mahmo/publications/aymptotics-connected-chord-diagrams\">On the Asymptotics of Connected Chord Diagrams</a>, University of Waterloo (Ontario, Canada 2019).",
+        "Ali Assem Mahmoud and Karen Yeats, <a href=\"https://arxiv.org/abs/2010.06550\">Connected Chord Diagrams and the Combinatorics of Asymptotic Expansions</a>, arXiv:2010.06550 [math.CO], 2020."
+    ],
+    "formula": [
+        "a(n) = Sum_{j=1..n-1} (4*j-1)*A000699(j)*A000699(n-j), with a(0)=1, a(1)=2. - _G. C. Greubel_, Feb 08 2020"
+    ],
+    "maple": [
+        "c:= proc(n) option remember;",
+        "      if n=1 then 1",
+        "    else (n-1)*add( c(j)*c(n-j), j=1..n-1)",
+        "      fi; end:",
+        "a:= proc(n) option remember;",
+        "        if n<2 then n+1",
+        "      else add( (4*j-1)*c(j)*c(n-j), j=1..n-1)",
+        "        fi; end;",
+        "seq(a(n), n=0..20); # _G. C. Greubel_, Feb 08 2020"
+    ],
+    "mathematica": [
+        "c[n_]:= c[n]= If[n==1, 1, (n-1)*Sum[c[j]*c[n-j], {j,n-1}]];",
+        "a[n_]:= If[n<2, n+1, Sum[(4*j-1)*c[j]*c[n-j], {j,n-1}]];",
+        "Table[a[n], {n, 0, 20}] (* _G. C. Greubel_, Feb 08 2020 *)"
+    ],
+    "program": [
+        "(Sage)",
+        "@CachedFunction",
+        "def c(n):",
+        "    if (n==1): return 1",
+        "    else: return (n-1)*sum( c(j)*c(n-j) for j in (1..n-1) )",
+        "def a(n):",
+        "    if (n<2): return n+1",
+        "    else: return sum( (4*j-1)*c(j)*c(n-j) for j in (1..n-1) )",
+        "[a(n) for n in (0..20)] # _G. C. Greubel_, Feb 08 2020"
+    ],
+    "xref": [
+        "Cf. A000698, A000699."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Michael Somos_, Sep 24 2003",
+    "references": 1,
+    "revision": 11,
+    "time": "2020-10-13T23:49:15-04:00",
+    "created": "2004-02-19T03:00:00-05:00"
+}

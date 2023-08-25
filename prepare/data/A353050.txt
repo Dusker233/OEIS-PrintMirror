@@ -1,0 +1,36 @@
+{
+    "number": 353050,
+    "data": "1,2,5,298,18949,3962150,1916564344,2501114025582,8336852053702202,73027618049882652700,1666798946804859125492899,99738726494828465657124210156,15634873312495144092899303952245929,6430416165010536428917103922818349814504",
+    "name": "G.f. A(x) satisfies: 0 = Sum_{n>=1} (Lucas(n) - A(x))^n * x^n/n, where Lucas(n) = A000204(n).",
+    "comment": [
+        "It is conjectured that this is an integer sequence.",
+        "This sequence is a special case of a more general conjecture: 0 = Sum_{n>=1} (L(n) - F(x))^n * x^n/n is satisfied by an integer series F(x) if exp( Sum_{n>=1} L(n) * x^n/n ) yields an integer series."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A353050/b353050.txt\">Table of n, a(n) for n = 0..100</a>"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 5*x^2 + 298*x^3 + 18949*x^4 + 3962150*x^5 + 1916564344*x^6 + 2501114025582*x^7 + 8336852053702202*x^8 + ...",
+        "where",
+        "0 = (1 - A(x))*x + (3 - A(x))^2*x^2/2 + (4 - A(x))^3*x^3/3 + (7 - A(x))^4*x^4/4 + (11 - A(x))^5*x^5/5 + (18 - A(x))^6*x^6/6 + (29 - A(x))^7*x^7/7 + (47 - A(x))^8*x^8/8 + (76 - A(x))^9*x^9/9 + ... + (Lucas(n) - A(x))^n*x^n/n + ...",
+        "Related series.",
+        "exp( Sum_{n>=1} A(x)^n * x^n/n ) = 1/(1 - x*A(x)) = 1 + x + 3*x^2 + 10*x^3 + 319*x^4 + 19601*x^5 + 4002282*x^6 + 1924629400*x^7 + 2504975492897*x^8 + 8341867813691252*x^9 + ...",
+        "exp( Sum_{n>=1} Lucas(n)^n * x^n/n ) = 1 + x + 5*x^2 + 26*x^3 + 634*x^4 + 32928*x^5 + 5704263*x^6 + 2470113915*x^7 + 2978904483553*x^8 + 9401949327631932*x^9 + ... + A156216(n)*x^n + ..."
+    ],
+    "program": [
+        "(PARI) {Lucas(n) = fibonacci(n-1) + fibonacci(n+1)}",
+        "{a(n) = my(A=[1]); for(i=1,n, A=concat(A,0);",
+        "A[#A] = polcoeff( sum(m=1,#A, (Lucas(m) - Ser(A))^m*x^m/m), #A));A[n+1]}",
+        "for(n=0,20,print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A156216, A316363, A000204."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Apr 26 2022",
+    "references": 1,
+    "revision": 46,
+    "time": "2022-04-28T20:24:02-04:00",
+    "created": "2022-04-26T21:08:42-04:00"
+}

@@ -1,0 +1,49 @@
+{
+    "number": 297405,
+    "data": "7,42,63,292,365,438,511,2184,2457,2730,3003,3276,3549,3822,4095,16912,17969,19026,20083,21140,22197,23254,24311,25368,26425,27482,28539,29596,30653,31710,32767,133152,137313,141474,145635,149796,153957,158118,162279,166440,170601,174762,178923,183084,187245",
+    "name": "Binary \"cubes\"; numbers whose binary representation consists of three consecutive identical blocks.",
+    "comment": [
+        "Alternatively, numbers of the form k*(4^n + 2^n + 1), where 2^(n-1) <= k < 2^n."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A297405/b297405.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Daniel M. Kane, Carlo Sanna, and Jeffrey Shallit, <a href=\"https://arxiv.org/abs/1801.04483\">Waring's Theorem for Binary Powers</a>, arXiv:1801.04483 [math.NT], 2018.",
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "formula": [
+        "a(n) = n*(1 + 2^p + 4^p) with p = 1 + floor(log_2(n)). - _Alois P. Heinz_, Dec 29 2017",
+        "G.f.: (7*x + Sum_{n>=1} (4^n + 3*8^n + (2^n + 2*4^n - 3*8^n)*x)*x^(2^n))/(1-x)^2. - _Robert Israel_, Dec 31 2017"
+    ],
+    "example": [
+        "42 in base 2 is 101010, which consists of three copies of the block \"10\"."
+    ],
+    "maple": [
+        "a:= n-> (p-> n*(1+2^p+4^p))(1+ilog2(n)):",
+        "seq(a(n), n=1..50);  # _Alois P. Heinz_, Dec 29 2017"
+    ],
+    "mathematica": [
+        "bc[n_]:=FromDigits[Join[n,n,n],2]; Flatten[Table[bc/@Select[Tuples[ {1,0},n],#[[1]] == 1&],{n,6}]]//Union (* _Harvey P. Dale_, Oct 09 2021 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def a(n): return int(bin(n)[2:]*3, 2)",
+        "print([a(n) for n in range(1, 46)]) # _Michael S. Branicky_, Jul 04 2022",
+        "# Alternative:",
+        "def A297405(n):",
+        "    p = n.bit_length()",
+        "    return n * (1 + 2**p + 4**p)",
+        "print([A297405(n) for n in range(1, 46)])  # _Peter Luschny_, Jul 05 2022",
+        "(PARI) a(n) = n=binary(n); fromdigits(concat([n, n, n]) , 2) \\\\ _Iain Fox_, Jul 04 2022"
+    ],
+    "xref": [
+        "Cf. A020330, which is the corresponding sequence for squares.",
+        "Subsequence of A121016."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Dec 29 2017",
+    "references": 3,
+    "revision": 37,
+    "time": "2022-07-05T16:02:40-04:00",
+    "created": "2017-12-29T19:04:14-05:00"
+}

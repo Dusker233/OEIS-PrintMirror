@@ -1,0 +1,39 @@
+{
+    "number": 360580,
+    "data": "1,1,5,21,90,423,2209,12261,69842,403722,2367829,14096616,85043323,518567546,3189349181,19758783404,123200215388,772606927013,4870004002571,30837536428981,196065919894270,1251190368574657,8011186350002373,51451177669973807,331365405433649972",
+    "name": "Expansion of g.f. A(x) satisfying x = P(x) * Sum_{n=-oo..+oo} x^(n*(3*n+1)/2) * (A(x)^(3*n) - 1/A(x)^(3*n+1)), where P(x) = 1/Product_{n>=1} (1 - x^n).",
+    "link": [
+        "Paul D. Hanna, <a href=\"/A360580/b360580.txt\">Table of n, a(n) for n = 0..300</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/QuintupleProductIdentity.html\">Quintuple Product Identity</a>."
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n, along with P(x) = 1/Product_{n>=1} (1 - x^n), satisfies the following.",
+        "(1) x = P(x) * Sum_{n=-oo..+oo} x^(n*(3*n+1)/2) * (A(x)^(3*n) - 1/A(x)^(3*n+1)).",
+        "(2) x = P(x) * Sum_{n=-oo..+oo} x^(n*(3*n-1)/2) * A(x)^(3*n) * (x^n - 1/A(x)).",
+        "(3) x = Product_{n>=1} (1 - x^n*A(x)) * (1 - x^(n-1)/A(x)) * (1 - x^(2*n-1)*A(x)^2) * (1 - x^(2*n-1)/A(x)^2), by the Watson quintuple product identity.",
+        "a(n) ~ c * d^n / n^(3/2), where d = 6.8614556596748153... and c = 0.3325444675505... - _Vaclav Kotesovec_, Mar 20 2023"
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + x + 5*x^2 + 21*x^3 + 90*x^4 + 423*x^5 + 2209*x^6 + 12261*x^7 + 69842*x^8 + 403722*x^9 + 2367829*x^10 + ..."
+    ],
+    "program": [
+        "(PARI) /* Using the doubly infinite series */",
+        "{a(n) = my(A=[1],P = 1/prod(m=1,n,1-x^m +x*O(x^n))); for(i=1, n, A = concat(A, 0);",
+        "A[#A] = polcoeff(x - P*sum(m=-#A, #A, x^(m*(3*m-1)/2) * Ser(A)^(3*m-1) * (x^m*Ser(A) - 1) ) , #A-1) ); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))",
+        "(PARI) /* Using the quintuple product */",
+        "{a(n) = my(A=[1]); for(i=1, n, A = concat(A, 0);",
+        "A[#A] = polcoeff(x - prod(m=1, #A, (1 - x^m*Ser(A)) * (1 - x^(m-1)/Ser(A)) * (1 - x^(2*m-1)*Ser(A)^2) * (1 - x^(2*m-1)/Ser(A)^2) ), #A-1) ); A[n+1]}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A359920."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Mar 20 2023",
+    "references": 1,
+    "revision": 11,
+    "time": "2023-03-20T05:48:04-04:00",
+    "created": "2023-03-20T05:48:04-04:00"
+}

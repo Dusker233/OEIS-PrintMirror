@@ -1,0 +1,56 @@
+{
+    "number": 65705,
+    "data": "2,123,15127,1860498,228826127,28143753123,3461452808002,425730551631123,52361396397820127,6440026026380244498,792070839848372253127,97418273275323406890123,11981655542024930675232002,1473646213395791149646646123,181246502592140286475862241127",
+    "name": "a(n) = Lucas(10*n).",
+    "comment": [
+        "Lim_{n->infinity} a(n+1)/a(n) = (123 + sqrt(15125))/2 = 122.9918693812...",
+        "Lim_{n->infinity} a(n)/a(n+1) = (123 - sqrt(15125))/2 = 0.00813061875578...",
+        "From _Peter Bala_, Oct 14 2019: (Start)",
+        "Let F(x) = Product_{n >= 0} (1 + x^(4*n+1))/(1 + x^(4*n+3)). Let Phi = 1/2*(sqrt(5) - 1). This sequence gives the partial denominators in the simple continued fraction expansion of the number F(Phi^10) = 1.0081300769... = 1 + 1/(123 + 1/(15127 + 1/(1860498 + ...))).",
+        "Also F(-Phi^10) = 0.9918699143... has the continued fraction representation 1 - 1/(123 - 1/(15127 - 1/(1860498 - ...))) and the simple continued fraction expansion 1/(1 + 1/((123 - 2) + 1/(1 + 1/((15127 - 2) + 1/(1 + 1/((1860498 - 2) + 1/(1 + ...))))))).",
+        "F(Phi^10)*F(-Phi^10) = 0.9999338930... has the simple continued fraction expansion 1/(1 + 1/((123^2 - 4) + 1/(1 + 1/((15127^2 - 4) + 1/(1 + 1/((1860498^2 - 4) + 1/(1 + ...))))))).",
+        "1/2 + (1/2)*F(Phi^10)/F(-Phi^10) = 1.0081967213... has the simple continued fraction expansion 1 + 1/((123 - 2) + 1/(1 + 1/((1860498 - 2) + 1/(1 + 1/(28143753123 - 2) + 1/(1 + ...))))). (End)"
+    ],
+    "reference": [
+        "R. P. Stanley. Enumerative combinatorics. Vol. 2, volume 62 of Cambridge Studies in Advanced Mathematics. Cambridge University Press, Cambridge, 1999."
+    ],
+    "link": [
+        "Indranil Ghosh, <a href=\"/A065705/b065705.txt\">Table of n, a(n) for n = 0..477</a>",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "A. V. Zarelua, <a href=\"https://doi.org/10.1007/s11006-006-0090-y\">On Matrix Analogs of Fermat's Little Theorem</a>,Mathematical Notes, vol. 79, no. 6, 2006, pp. 783-796. Translated from Matematicheskie Zametki, vol. 79, no. 6, 2006, pp. 840-855.",
+        "<a href=\"/index/Rea#recur1\">Index entries for recurrences a(n) = k*a(n - 1) +/- a(n - 2)</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (123,-1)."
+    ],
+    "formula": [
+        "a(n) = 123*a(n-1) - a(n-2), starting with a(0) = 2 and a(1) = 123.",
+        "a(n) = ((123 + sqrt(15125))/2)^n + ((123 - sqrt(15125))/2)^n.",
+        "a(n)^2 = a(2*n) + 2.",
+        "G.f.: (2 - 123*x)/(1 - 123*x + x^2). -  _Philippe Del\u00e9ham_, Nov 18 2008",
+        "From _Peter Bala_, Oct 14 2019: (Start)",
+        "a(n) = F(10*n+10)/F(10) - F(10*n-10)/F(10) = A049670(n+1) - A049670(n-1).",
+        "a(n) = trace(M^n), where M is the 2 X 2 matrix [0, 1; 1, 1]^10 = [34, 55; 55, 89].",
+        "Consequently the Gauss congruences hold: a(n*p^k) = a(n*p^(k-1)) ( mod p^k ) for all prime p and positive integers n and k. See Zarelua and also Stanley (Ch. 5, Ex. 5.2(a) and its solution).",
+        "121*Sum_{n >= 1} 1/(a(n) - 125/a(n)) = 1: (125 = Lucas(10) + 2 and 121 = Lucas(10) - 2)",
+        "125*Sum_{n >= 1} (-1)^(n+1)/(a(n) + 121/a(n)) = 1.",
+        "x*exp(Sum_{n >= 1} a(n)*x^/n) = x + 123*x^2 + 15128*x^3 + ... is the o.g.f. for A049670. (End)",
+        "E.g.f.: exp((1/2)*(123 - 55*sqrt(5))*x)*(1 + exp(55*sqrt(5)*x). - _Stefano Spezia_, Oct 18 2019"
+    ],
+    "example": [
+        "a(4) = 228826127 = 123*a(3) - a(2) = 123*1860498 - 15127=((123+sqrt(15125))/2)^4 + ( (123-sqrt(15125))/2)^4 =228826126.99999999562986 + 0.00000000437013 = 228826127.",
+        "a(4) = L(10 * 4) = L(40) = 228826127. - _Indranil Ghosh_, Feb 08 2017"
+    ],
+    "program": [
+        "(Magma) [Lucas(10*n): n in [0..90]]; // _Vincenzo Librandi_, Apr 14 2011"
+    ],
+    "xref": [
+        "Cf. A000032: a(n) = A000032(10*n).",
+        "Cf. Lucas(k*n): A005248 (k = 2), A014448 (k = 3), A056854 (k = 4), A001946 (k = 5), A087215 (k = 6), A087281 (k = 7), A087265 (k = 8), A087287 (k = 9), A089772 (k = 11), A089775 (k = 12)."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,1",
+    "author": "Nikolay V. Kosinov (kosinov(AT)unitron.com.ua), Oct 25 2003",
+    "references": 8,
+    "revision": 35,
+    "time": "2022-09-08T08:45:04-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

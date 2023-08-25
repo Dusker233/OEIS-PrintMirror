@@ -1,0 +1,51 @@
+{
+    "number": 362744,
+    "data": "1,1,3,13,63,324,1736,9589,54223,312369,1826847,10818156,64737684,390877456,2378312780,14568360645,89766137967,556008951667,3459976045201,21621154097573,135619427912599,853590782088272,5389272616262656,34123058549079788,216621704634708868",
+    "name": "Number of parking functions of size n avoiding the patterns 312 and 321.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A362744/b362744.txt\">Table of n, a(n) for n = 0..1211</a>",
+        "Ayomikun Adeniran and Lara Pudwell, <a href=\"https://doi.org/10.54550/ECA2023V3S3R17\">Pattern avoidance in parking functions</a>, Enumer. Comb. Appl. 3:3 (2023), Article S2R17."
+    ],
+    "formula": [
+        "Consider a Dyck path of semilength n to be a path from (0,0) to (n,n) consisting of N=(0,1) steps and E=(1,0) steps, staying weakly above y=x and let D(n) be the set of all such paths.",
+        "For any Dyck path d, let w(d) be the word of positive integers that records the lengths of the maximal consecutive strings of N-steps in d, let w(d)_i be the i-th entry of w(d), and let |w(d)| be the length of d.",
+        "a(n) = Sum_{d in D(n)} Product_{i=1..|w(d)|-1} (w(d)_i+1).",
+        "a(n) ~ 23 * 3^(3*n + 3/2) / (25 * sqrt(Pi) * 2^(2*n + 3) * n^(3/2)). - _Vaclav Kotesovec_, May 02 2023"
+    ],
+    "example": [
+        "The a(3) = 13 parking functions, given in block notation, are {1},{2},{3}; {1,2},{},{3}; {1,2},{3},{}; {1},{2,3},{}; {1,2,3},{},{}; {1},{3},{2}; {1,3},{},{2}; {1,3},{2},{}; {2},{1},{3}; {2},{1,3},{}; {2},{3},{1}; {2,3},{},{1}; {2,3},{1},{}.",
+        "When n = 3 there are 5 Dyck paths:",
+        "   w(NNNEEE) = [3],     contributing 1 to the sum;",
+        "   w(NNENEE) = [2,1],   contributing 2+1 = 3 to the sum;",
+        "   w(NNEENE) = [2,1],   contributing 2+1 = 3 to the sum;",
+        "   w(NENNEE) = [1,2],   contributing 1+1 = 2 to the sum;",
+        "   w(NENENE) = [1,1,1], contributing (1+1)(1+1) = 4 to the sum.",
+        "Therefore, a(3) = 1+3+3+2+4 = 13."
+    ],
+    "maple": [
+        "b:= proc(x, y, t) option remember; `if`(y>x or y<0, 0,",
+        "     `if`(x=y, 1, b(x-1, y-1, 0)*(t+1)+b(x-1, y+1, t+1)))",
+        "    end:",
+        "a:= n-> b(2*n, 0$2):",
+        "seq(a(n), n=0..24);  # _Alois P. Heinz_, May 02 2023",
+        "# second Maple program:",
+        "a:= proc(n) option remember; `if`(n<2, 1, (2*(667*n^4-1439*n^3+656*n^2",
+        "      +146*n-96)*a(n-1)-3*(3*n-4)*(3*n-2)*(23*n^2-6*n-5)*a(n-2))/",
+        "       (4*(2*n+1)*(n+1)*(23*n^2-52*n+24)))",
+        "    end:",
+        "seq(a(n), n=0..24);  # _Alois P. Heinz_, May 02 2023"
+    ],
+    "xref": [
+        "Cf. A000108, A362595, A362596, A362597, A362741."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Lara Pudwell_, May 01 2023",
+    "ext": [
+        "a(13)-a(24) from _Alois P. Heinz_, May 02 2023"
+    ],
+    "references": 2,
+    "revision": 26,
+    "time": "2023-05-03T15:25:19-04:00",
+    "created": "2023-05-03T15:15:23-04:00"
+}

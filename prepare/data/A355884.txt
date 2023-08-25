@@ -1,0 +1,53 @@
+{
+    "number": 355884,
+    "data": "0,0,1,34,223,997,3402,9141,21665,46390,90874,167539,293443,487082,781537,1209469,1816528,2661113,3822203,5369662,7420495,10086360,13494376",
+    "name": "Number of circles in an n X n grid passing through at least three points.",
+    "link": [
+        "C. Lin, <a href=\"https://math.stackexchange.com/questions/273348/number-of-circles-in-configuration\">Number of circles in configuration</a>, Mathematics Stack Exchange, 2013."
+    ],
+    "program": [
+        "(PARI) \\\\ after user joriki's Java code at Mathematics Stack Exchange link",
+        "circles(n) = {",
+        "  my(C = List());",
+        "  for (x1 = 1, n,",
+        "    for (y1 = 1, n,",
+        "      for (x2 = 1, x1,",
+        "        for (y2 = 1, n,",
+        "          for (x3 = 1, x2,",
+        "            for (y3 = 1, n,",
+        "                my( ax2 = 2 * (x2 - x1),",
+        "                  ay2 = 2 * (y2 - y1),",
+        "                  ax3 = 2 * (x3 - x1),",
+        "                  ay3 = 2 * (y3 - y1),",
+        "                  den = ax2 * ay3 - ax3 * ay2",
+        "                );",
+        "              if (den == 0, next);",
+        "                my( b2 = x2^2 + y2^2 - x1^2 - y1^2,",
+        "                  b3 = x3^2 + y3^2 - x1^2 - y1^2,",
+        "                  x = b2 * ay3 - b3 * ay2,",
+        "                  y = ax2 * b3 - ax3 * b2,",
+        "                  gc = gcd(gcd(x, y), den)",
+        "                );",
+        "              if (den < 0, gc = -gc);",
+        "                x /= gc; y /= gc; den /= gc;",
+        "                my( dx = x - den * x1,",
+        "                  dy = y - den * y1,",
+        "                  s = dx^2 + dy^2",
+        "                );",
+        "              listput(C, [x, y, s, den])",
+        "  ))))));",
+        "  Set(C)",
+        "};",
+        "for (k = 0, 10, print1(#circles(k), \", \"))  \\\\ _Hugo Pfoertner_, Sep 22 2022"
+    ],
+    "xref": [
+        "Cf. A192493, A192494, A357301."
+    ],
+    "keyword": "nonn,hard,more",
+    "offset": "0,4",
+    "author": "_Sharvil Kesarwani_, Jul 20 2022",
+    "references": 1,
+    "revision": 33,
+    "time": "2022-09-24T08:17:30-04:00",
+    "created": "2022-09-24T08:17:30-04:00"
+}

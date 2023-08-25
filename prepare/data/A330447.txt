@@ -1,0 +1,49 @@
+{
+    "number": 330447,
+    "data": "0,1,2,5,5,8,11,22,22,32,32,42,48,48,68,71,77,89,108,115,115,140,140,149,216,268,268,268,310,310,310,340,362,362,362,362,362,476,476,476,476,560,560,560,560,560,576,576,579,692,692,707,754,794,794,797,928",
+    "name": "a(n) is the smallest index k such that {0,1,2,...,n} is a subset of { A316774(j) : 0 <= j <= k }.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A330447/b330447.txt\">Table of n, a(n) for n = 0..20000</a>"
+    ],
+    "formula": [
+        "a(n) = max_{0 <= j <= n} A316905(j).",
+        "a(n) >= A316905(n).",
+        "a(n) <= a(n+1)."
+    ],
+    "maple": [
+        "b:= proc() 0 end:",
+        "g:= proc(n) option remember; local t;",
+        "      t:= `if`(n<2, n, b(g(n-1))+b(g(n-2)));",
+        "      b(t):= b(t)+1; t",
+        "    end:",
+        "f:= proc() local t, a; t, a:= -1, proc() -1 end;",
+        "      proc(n) local h;",
+        "        while a(n) = -1 do",
+        "          t:= t+1; h:= g(t);",
+        "          if a(h) = -1 then a(h):= t fi",
+        "        od; a(n)",
+        "      end",
+        "    end():",
+        "a:= proc(n) option remember; `if`(n<0, 0,",
+        "      max(a(n-1), f(n)))",
+        "    end:",
+        "seq(a(n), n=0..100);"
+    ],
+    "mathematica": [
+        "b[_] = 0;",
+        "g[n_] := g[n] = Module[{t}, t = If[n < 2, n, b[g[n - 1]] + b[g[n - 2]]]; b[t] = b[t] + 1; t];",
+        "f[n_] := Module[{t, a}, t = -1; a[_] = -1; Module[{h}, While[a[n] == -1, t = t + 1; h = g[t]; If[a[h] == -1, a[h] = t]]; a[n]]];",
+        "a[n_] := a[n] = If[n < 0, 0, Max[a[n - 1], f[n]]];",
+        "Table[a[n], {n, 0, 100}] (* _Jean-Fran\u00e7ois Alcover_, Oct 13 2022, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A316774, A316905, A330448."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Dec 15 2019",
+    "references": 3,
+    "revision": 17,
+    "time": "2022-10-13T11:09:46-04:00",
+    "created": "2019-12-15T10:36:15-05:00"
+}

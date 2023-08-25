@@ -1,0 +1,62 @@
+{
+    "number": 176197,
+    "data": "354,723,898,963,978,1394,1569,1634,1649,1938,2003,2018,2178,2193,2258,2499,2674,2739,2754,3043,3108,3123,3283,3298,3363,3714,3779,3794,3954,3969,4034,4194,4323,4338,4369,4403,4434,4449,4578,4738,4803,4818,4978",
+    "name": "Sum of 4 distinct nonzero fourth powers.",
+    "comment": [
+        "1^4+2^4+3^4+4^4=354, 1^4+2^4+3^4+5^4=723, .., 2^4+3^4+4^4+5^4=978,.."
+    ],
+    "link": [
+        "<a href=\"http://www.sciencedaily.com/releases/2008/03/080314145039.htm\">Part of \"Euler's Equation of degree four\"</a>"
+    ],
+    "maple": [
+        "# returns number of ways of writing n as a^4+b^4+c^4+d^4, 1<=a<b<c<d.",
+        "A176197 := proc(n)",
+        "    local a,i,j,k,l,res ;",
+        "    a := 0 ;",
+        "    for i from 1 do",
+        "        if i^4 > n then",
+        "            break ;",
+        "        end if;",
+        "        for j from i+1 do",
+        "            if i^4+j^4 > n then",
+        "                break ;",
+        "            end if;",
+        "            for k from j+1 do",
+        "                if i^4+j^4+k^4> n then",
+        "                    break;",
+        "                end if;",
+        "                res := n-i^4-j^4-k^4 ;",
+        "                if issqr(res) then",
+        "                    res := sqrt(res) ;",
+        "                    if issqr(res) then",
+        "                        l := sqrt(res) ;",
+        "                        if l > k then",
+        "                            a := a+1 ;",
+        "                        end if;",
+        "                    end if;",
+        "                end if;",
+        "            end do:",
+        "        end do:",
+        "    end do:",
+        "    a ;",
+        "end proc:",
+        "for n from 1 do",
+        "    if A176197(n) > 0 then",
+        "        print(n) ;",
+        "    end if;",
+        "end do: # _R. J. Mathar_, May 17 2023"
+    ],
+    "mathematica": [
+        "lst={};Do[Do[Do[Do[AppendTo[lst,a^4+b^4+c^4+d^4],{d,c+1,11}],{c,b+1,10}],{b,a+1,9}],{a,1,8}];Sort@lst"
+    ],
+    "xref": [
+        "Subsequence of A003338."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Vladimir Joseph Stephan Orlovsky_, Apr 11 2010",
+    "references": 4,
+    "revision": 4,
+    "time": "2023-05-17T10:11:48-04:00",
+    "created": "2010-06-01T03:00:00-04:00"
+}

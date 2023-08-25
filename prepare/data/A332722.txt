@@ -1,0 +1,41 @@
+{
+    "number": 332722,
+    "data": "1,1,2,9,74,711,7312,77793,848557,9426039,106218592,1210785512,13933358426,161624712815,1887635428421,22176331059637,261881397819259,3106736469937751,37006306302036790,442425926101676831,5306994321265281854,63851605555921588684,770371217568310624912",
+    "name": "Index position of [2n-1, 2n-3, ..., 3, 1] within the list of partitions of n^2 in canonical ordering.",
+    "comment": [
+        "The canonical ordering of partitions is described in A080577."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A332722/b332722.txt\">Table of n, a(n) for n = 0..130</a>",
+        "Wikipedia, <a href=\"https://www.wikipedia.org/wiki/integer_partition\">Integer Partition</a>"
+    ],
+    "example": [
+        "a(3) = 9, because 531 has position 9 within the list of partitions of 3*3 in canonical ordering: 9, 81, 72, 711, 63, 621, 6111, 54, 531, ... ."
+    ],
+    "maple": [
+        "b:= proc(n, i) option remember;",
+        "     `if`(n=0, 1, b(n-i, i-2)+g(n, i-1))",
+        "    end:",
+        "g:= proc(n, i) option remember; `if`(n=0 or i=1, 1,",
+        "     `if`(i<1, 0, g(n-i, min(n-i, i))+g(n, i-1)))",
+        "    end:",
+        "a:= n-> g(n^2$2)-b(n^2, 2*n-1)+1:",
+        "seq(a(n), n=0..23);"
+    ],
+    "mathematica": [
+        "b[n_, i_] := b[n, i] = If[n == 0, 1, b[n - i, i - 2] + g[n, i - 1]];",
+        "g[n_, i_] := g[n, i] = If[n == 0 || i == 1, 1, If[i < 1, 0, g[n - i, Min[n - i, i]] + g[n, i - 1]]];",
+        "a[n_] := g[n^2, n^2] - b[n^2, 2n - 1] + 1;",
+        "a /@ Range[0, 23] (* _Jean-Fran\u00e7ois Alcover_, May 10 2020, after Maple *)"
+    ],
+    "xref": [
+        "Cf. A000041, A000290, A005408, A080577, A238639, A238640, A322761."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Feb 20 2020",
+    "references": 1,
+    "revision": 17,
+    "time": "2020-05-10T03:24:40-04:00",
+    "created": "2020-02-21T12:42:19-05:00"
+}

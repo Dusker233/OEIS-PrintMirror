@@ -1,0 +1,55 @@
+{
+    "number": 355651,
+    "data": "389,709,907,983,1669,3163,3613,7349,9349,9437,9439,9661,11071,11959,12841,13513,13751,13757,13873,14549,14593,14713,14821,14923,15013,15731,15919,16573,16937,17011,17681,18133,18671,30197,31051,31531,31741,32579,32783,32941,33181,33287,35129,36217,37561",
+    "name": "Emirps p such that (p*q) mod (p+q) is also an emirp, where q is the digit reversal of p.",
+    "comment": [
+        "If p is a term, so is A004086(p)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A355651/b355651.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 907 is a term because 907 and its digit reversal 709 are distinct primes, and (907*709) mod (907 + 709) = 1511 and its digit reversal 1151 are distinct primes."
+    ],
+    "maple": [
+        "rev:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "filter:= proc(p) local q,r,s;",
+        "if not isprime(p) then return false fi;",
+        "q:= rev(p);",
+        "if q=p or not isprime(q) then return false fi;",
+        "r:= (p*q) mod (p+q);",
+        "if not isprime(r) then return false fi;",
+        "s:= rev(r);",
+        "s <> r and isprime(s)",
+        "end proc:",
+        "select(filter, [seq(i,i=13..10^5,2)]);"
+    ],
+    "mathematica": [
+        "emirpQ[p_] := (r = IntegerReverse[p]) != p && PrimeQ[p] && PrimeQ[r]; Select[Range[40000], emirpQ[#] && emirpQ[Mod[#*(r = IntegerReverse[#]), # + r]] &] (* _Amiram Eldar_, Sep 04 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def emirp(n):",
+        "    revn = int(str(n)[::-1])",
+        "    return n != revn and isprime(n) and isprime(revn)",
+        "def ok(n):",
+        "    if not emirp(n): return False",
+        "    q = int(str(n)[::-1])",
+        "    return emirp((n*q)%(n+q))",
+        "print([k for k in range(10**5) if ok(k)]) # _Michael S. Branicky_, Sep 04 2022"
+    ],
+    "xref": [
+        "Cf. A004086, A006567, A356740."
+    ],
+    "keyword": "nonn,base,less",
+    "offset": "1,1",
+    "author": "_J. M. Bergot_ and _Robert Israel_, Sep 04 2022",
+    "references": 2,
+    "revision": 36,
+    "time": "2022-09-18T11:06:05-04:00",
+    "created": "2022-09-07T10:49:28-04:00"
+}

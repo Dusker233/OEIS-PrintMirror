@@ -1,0 +1,46 @@
+{
+    "number": 352618,
+    "data": "1,4,9,16,25,36,49,64,81,100,144,196,225,256,324,400,441,576,625,729,784,900,1024,1225,1296,1600,1764,2025,2304,2401,2500,2916,3136,3600,3969,4096,4900,5184,5625,6400,6561,7056,8100,9216,9604,10000,11025,11664,12544,14400",
+    "name": "Squares that are 7-smooth.",
+    "comment": [
+        "Also, distinct terms appearing in A352598, or terms of the form 4^i * 9^j * 25^k * 49^m for i, j, k, m >= 0."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A352618/b352618.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = A002473(n)^2. - _Pontus von Br\u00f6mssen_, Mar 24 2022",
+        "Sum_{n>=1} 1/a(n) = 1225/768. - _Amiram Eldar_, Mar 24 2022"
+    ],
+    "example": [
+        "49 = 7*7, 81 = (3*3)*(3*3), and 100 = (2*5)*(2*5) are terms."
+    ],
+    "mathematica": [
+        "Select[Range[120], Max[FactorInteger[#][[;; , 1]]] <= 7 &]^2 (* _Amiram Eldar_, Mar 24 2022 *)",
+        "With[{n = 15000}, Union@ Flatten@ Table[2^(2 a)*3^(2 b)*5^(2 c)*7^(2 d), {a, 0, Log[4, n]}, {b, 0, Log[9, n/(2^(2 a))]}, {c, 0, Log[25, n/(2^(2 a)*3^(2 b))]}, {d, 0, Log[49, n/(2^(2 a)*3^(2 b)*5^(2 c))]}]] (* _Michael De Vlieger_, Mar 26 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def agen():",
+        "    for i in count(1):",
+        "        k = i",
+        "        for p in [2, 3, 5, 7]:",
+        "            while k%p == 0:",
+        "                k //= p",
+        "        if k == 1:",
+        "            yield i*i",
+        "print(list(islice(agen(), 50)))"
+    ],
+    "xref": [
+        "Intersection of A000290 and A002473.",
+        "Cf. A352598."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Michael S. Branicky_, Mar 24 2022",
+    "references": 1,
+    "revision": 24,
+    "time": "2022-03-26T13:31:46-04:00",
+    "created": "2022-03-26T10:19:16-04:00"
+}

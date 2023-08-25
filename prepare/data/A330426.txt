@@ -1,0 +1,48 @@
+{
+    "number": 330426,
+    "data": "211,2179,2503,3967,4177,7369,7393,11027,11657,14107,16033,16787,18013,18617,18637,18839,19661,21247,23719,24281,29101,32749,33247,33679,33997,37747,38501,40063,40387,42533,42611,44417,46957,51109,51383,53479,54217,55291,55763",
+    "name": "Primes P where the distance to the nearest prime is greater than 2*log(P).",
+    "comment": [
+        "The author suggests that these numbers be called Double Frogger Primes because two times the distance as the average distance to the nearest neighbor (the log) has to be hopped."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A330426/b330426.txt\">Table of n, a(n) for n = 1..2000</a>"
+    ],
+    "example": [
+        "P = 211 is a term because 199 + 2*log(211) < 211 < 223 - 2*log(211).",
+        "P = 199 is not a term because 197 + 2*log(199) > 199."
+    ],
+    "maple": [
+        "q:= 3: state:= false: count:= 0: Res:= NULL:",
+        "while count < 100 do",
+        "  p:= nextprime(q);",
+        "  newstate:= is(p-q > 2*log(q));",
+        "  if state and newstate then",
+        "    count:= count+1; Res:= Res, q;",
+        "  fi;",
+        "  q:= p; state:= newstate;",
+        "od:",
+        "Res; # _Robert Israel_, Dec 18 2019"
+    ],
+    "mathematica": [
+        "lst={};Do[a=Prime[n];If[Min[Abs[a-NextPrime[a,{-1,1}]]]>2*Log[a],AppendTo[lst,a]],{n,1,10000}];lst (* _Metin Sariyar_, Dec 15 2019 *)",
+        "(* Second program: *)",
+        "Select[Prime@ Range[10^4], Min@ Abs[# - NextPrime[#, {-1, 1}]] > 2 Log[#] &] (* _Michael De Vlieger_, Dec 15 2019 *)"
+    ],
+    "program": [
+        "(Magma) f:=func<p|Abs(p-NextPrime(p)) gt 2*Log(p) and Abs(p-PreviousPrime(p)) gt 2*Log(p)>;  [p:p in PrimesUpTo(56000)|f(p)];// _Marius A. Burtea_, Dec 18 2019"
+    ],
+    "xref": [
+        "Cf. A288908 (with 1*log(P)), A330427 (with 3*log(P)), A330428."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Steven M. Altschuld_, Dec 14 2019",
+    "ext": [
+        "More terms from _Metin Sariyar_, Dec 15 2019"
+    ],
+    "references": 4,
+    "revision": 43,
+    "time": "2022-09-08T08:46:24-04:00",
+    "created": "2019-12-18T10:20:55-05:00"
+}

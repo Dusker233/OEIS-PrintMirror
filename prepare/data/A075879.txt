@@ -1,0 +1,42 @@
+{
+    "number": 75879,
+    "data": "1,19,579,13779,397779,11177779,335777779,7937777779,179977777779,5931777777779,139757777777779,5117377777777779,113559777777777779,3393517777777777779,79991577777777777779,1931953777777777777779,59771197777777777777779,1517537177777777777777779",
+    "name": "The (10^n)-th odd-digit number.",
+    "link": [
+        "Andrew Howroyd, <a href=\"/A075879/b075879.txt\">Table of n, a(n) for n = 0..200</a>"
+    ],
+    "formula": [
+        "a(n) = A014261(10^n). - _Andrew Howroyd_, Jan 17 2020"
+    ],
+    "maple": [
+        "b:= proc(n) local m, r, d; m, r:= n, 0;",
+        "      while m>0 do d:= irem(m, 5, 'm');",
+        "        if d=0 then d:=5; m:= m-1 fi;",
+        "        r:= d*2-1, r",
+        "      od; parse(cat(r))/10",
+        "    end:",
+        "a:= n-> b(10^n):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Jan 17 2020"
+    ],
+    "mathematica": [
+        "NextOddNbr[n_Integer] := Block[{d = IntegerDigits[n], c = 0, l}, l = Length[d] - 1; If[ OddQ[d[[ -1]]], d[[ -1]]++ ]; d[[ -1]]++; If[ d[[ -1]] > 10, c++; d[[ -1]] = 1]; While[l != 0, If[c == 1, d[[l]]++; c-- ]; If[ EvenQ[ d[[l]]], d[[l]]++ ]; If[ d[[l]] > 10, c++; d[[l]] = 1]; l-- ]; If[c == 1, d[[1]] = d[[1]] + 10]; FromDigits[d]]; k = 1; Do[k = Nest[NextOddNbr, k, 9*10^n]; Print[k], {n, 0, 7}]"
+    ],
+    "program": [
+        "(PARI) \\\\ here b(n) is A014261.",
+        "b(n)={my(k=1); while(n>5^k, n-=5^k; k++); fromdigits([2*d+1 | d<-digits(5^k+n-1, 5)]) - 3*10^k}",
+        "a(n)={b(10^n)} \\\\ _Andrew Howroyd_, Jan 17 2020"
+    ],
+    "xref": [
+        "Cf. A014261, A331476."
+    ],
+    "keyword": "base,nonn",
+    "offset": "0,2",
+    "author": "_Robert G. Wilson v_, Oct 16 2002",
+    "ext": [
+        "Terms a(9) and beyond from _Andrew Howroyd_, Jan 17 2020"
+    ],
+    "references": 2,
+    "revision": 11,
+    "time": "2020-01-17T16:29:54-05:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}

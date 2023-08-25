@@ -1,0 +1,36 @@
+{
+    "number": 306205,
+    "data": "1,6,102,3420,191700,16291800,1966015800,321188943600,68482943802000,18508629682620000,6191158589749980000,2512773755138326680000,1216899394130358698760000,693258145152338464498800000",
+    "name": "Number of lonely (gene tree, species tree) pairs with n+1 leaves.",
+    "comment": [
+        "A (gene tree, species tree) pair consisting of leaf-labeled binary trees whose leaves are labeled by the same label set is said to be lonely if and only if the pair has exactly one coalescent history. The sequence a(n) gives the number of distinct lonely (gene tree, species tree) pairs, considering all possible pairs of binary trees with n+1 leaves, bijectively labeled by the same set of n+1 distinguishable leaf labels."
+    ],
+    "link": [
+        "N. A. Rosenberg, <a href=\"https://doi.org/10.1016/j.aam.2018.09.001\">Enumeration of lonely pairs of gene trees and species trees by means of antipodal cherries</a>, Adv. Appl. Math., 102 (2019), 1-17."
+    ],
+    "formula": [
+        "a(n-1) = Sum_{p=1..floor(n/2)} Sum__{k=1..p} (2n-2p-2)! (2p-2)! n! (n-2)! / (2^(n+k-3) (p-k)! (n-p-k)! (n-p-1)! (p-1)! k! (k-1)! 2^(KroneckerDelta(p,n-p)) )."
+    ],
+    "example": [
+        "For n+1=2, the only (gene tree, species tree) pair ((A,B), (A,B)) with n+1=2 leaves is lonely and a(1)=1. For n+1=3, there are a(2)=6 lonely pairs with n+1=3 leaves: (((A,C),B), ((A,B),C)), (((B,C),A), ((A,B),C)), (((A,B),C), ((A,C),B)), (((B,C),A), ((A,C),B)), (((A,B),C), ((B,C),A)), and (((A,C),B), ((B,C),A))."
+    ],
+    "mathematica": [
+        "b[n_] := Sum[Binomial[n, p] T[p] T[n - p]/2^KroneckerDelta[p, n - p] Sum[",
+        "   Factorial[p] Factorial[",
+        "     n - p] Factorial[",
+        "      n - 2]/(2^(k - 1) Factorial[k] Factorial[p - k] Factorial[",
+        "        n - p - k] Factorial[k - 1]), {k, 1, p}], {p, 1, Floor[n/2]}]",
+        "a[n_] := b[n+1]",
+        "Table[a[n], {n, 1, 30}]"
+    ],
+    "xref": [
+        "Lonely pairs are tabulated among pairs of leaf-labeled binary trees (A001818, or the square of A001147), where both trees in the pair are bijectively labeled by the same label set."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Noah A Rosenberg_, Jan 29 2019",
+    "references": 1,
+    "revision": 11,
+    "time": "2019-02-07T12:57:14-05:00",
+    "created": "2019-02-07T12:57:14-05:00"
+}

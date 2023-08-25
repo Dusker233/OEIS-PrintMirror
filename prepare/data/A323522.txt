@@ -1,0 +1,49 @@
+{
+    "number": 323522,
+    "data": "1,1,1,1,1,1,1,1,1,1,25,25,49,73,121,145,217,265,361,433,553,649,817,937,1129,1297,1537,1729,2017,2257,2593,2881,3265,3601,4057,4441,4945,5401,5977,6481,7129,7705,8425,9073,9865,373465,374353,738025,1101865,1828513",
+    "name": "Number of ways to fill a square matrix with the parts of a strict integer partition of n.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A323522/b323522.txt\">Table of n, a(n) for n = 0..7000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k >= 0} (k^2)! * Q(n, k^2) where Q = A008289."
+    ],
+    "example": [
+        "The a(10) = 25 matrices:",
+        "  [10]",
+        ".",
+        "  [4 3] [4 3] [4 2] [4 2] [4 1] [4 1] [3 4] [3 4]",
+        "  [2 1] [1 2] [3 1] [1 3] [3 2] [2 3] [2 1] [1 2]",
+        ".",
+        "  [3 2] [3 2] [3 1] [3 1] [2 4] [2 4] [2 3] [2 3]",
+        "  [4 1] [1 4] [4 2] [2 4] [3 1] [1 3] [4 1] [1 4]",
+        ".",
+        "  [2 1] [2 1] [1 4] [1 4] [1 3] [1 3] [1 2] [1 2]",
+        "  [4 3] [3 4] [3 2] [2 3] [4 2] [2 4] [4 3] [3 4]"
+    ],
+    "maple": [
+        "b:= proc(n, i) b(n, i):= `if`(n=0, [1], `if`(i<1, [], zip((x, y)",
+        "      -> x+y, b(n, i-1), `if`(i>n, [], [0, b(n-i, i-1)[]]), 0)))",
+        "    end:",
+        "a:= n-> (l-> add(l[i^2+1]*(i^2)!, i=0..floor(sqrt(nops(l)-1))))(b(n$2)):",
+        "seq(a(n), n=0..50);  # _Alois P. Heinz_, Jan 17 2019"
+    ],
+    "mathematica": [
+        "Table[Sum[(k^2)!*Length[Select[IntegerPartitions[n,{k^2}],UnsameQ@@#&]],{k,n}],{n,20}]",
+        "(* Second program: *)",
+        "q[n_, k_] := q[n, k] = If[n < k || k < 1, 0,",
+        "     If[n == 1, 1, q[n-k, k] + q[n-k, k-1]]];",
+        "a[n_] := If[n == 0, 1, Sum[(k^2)! q[n, k^2], {k, 0, n}]];",
+        "a /@ Range[0, 50] (* _Jean-Fran\u00e7ois Alcover_, May 20 2021 *)"
+    ],
+    "xref": [
+        "Cf. A000009, A089299, A103198 (non-strict case), A120732, A323431, A323434, A323519, A323523, A323525, A323529."
+    ],
+    "keyword": "nonn",
+    "offset": "0,11",
+    "author": "_Gus Wiseman_, Jan 17 2019",
+    "references": 4,
+    "revision": 18,
+    "time": "2021-05-20T04:08:41-04:00",
+    "created": "2019-01-17T17:18:06-05:00"
+}

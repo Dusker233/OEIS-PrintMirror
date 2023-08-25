@@ -1,0 +1,40 @@
+{
+    "number": 300490,
+    "data": "0,1,1,5,20,109,689,5053,42048,391641,4036697,45618341,560889988,7454314789,106488455033,1627269878557,26487441519584,457532446622001,8359188190686609,161056273132588933,3263644496701880404,69389030027882288861,1544501472271318499105",
+    "name": "Expansion of e.g.f. -exp(-x)*log(1 - x)/(1 - x).",
+    "comment": [
+        "Inverse binomial transform A000254."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A300490/b300490.txt\">Table of n, a(n) for n = 0..450</a>",
+        "N. J. A. Sloane, <a href=\"/transforms.txt\">Transforms</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} (-1)^(n-k)*binomial(n,k)*k!*H(k), where H(k) is the k-th harmonic number.",
+        "a(n) ~ n! * (log(n) + gamma) / exp(1), where gamma is the Euler-Mascheroni constant A001620. - _Vaclav Kotesovec_, Jun 23 2018",
+        "Recurrence: a(0) = 0, a(1) = 1, a(2) = 1, a(3) = 5, a(n+4) = (2*n+5)*a(n+3) - (n^2+2*n-1)*a(n+2) - (2*n+3)*(n+2)*a(n+1) - (n+2)*(n+1)*a(n). - _Vladimir Reshetnikov_, Mar 30 2022"
+    ],
+    "example": [
+        "-exp(-x)*log(1 - x)/(1 - x) = x/1! + x^2/2! + 5*x^3/3! + 20*x^4/4! + 109*x^5/5! + 689*x^6/6! + 5053*x^7/7! + ..."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; `if`(n<2, n, n*b(n-1)+(n-1)!) end:",
+        "a:= proc(n) add(b(k)*(-1)^(n-k)*binomial(n, k), k=0..n) end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Mar 07 2018"
+    ],
+    "mathematica": [
+        "nmax = 22; CoefficientList[Series[-Exp[-x] Log[1 - x]/(1 - x), {x, 0, nmax}], x] Range[0, nmax]!",
+        "Table[Sum[(-1)^(n - k) Binomial[n,k] k! HarmonicNumber[k], {k, 1, n}], {n, 0, 22}]",
+        "a[0] = 0; a[1] = a[2] = 1; a[3] = 5; a[n_Integer] := a[n] = (2 n - 3) a[n - 1] - (n^2 - 6 n + 7) a[n - 2] - (n - 2) (2 n - 5) a[n - 3] - (n - 3) (n - 2) a[n - 4]; Table[a[n], {n, 0, 22}] (* _Vladimir Reshetnikov_, Mar 30 2022 *)"
+    ],
+    "xref": [
+        "Cf. A000254, A073596."
+    ],
+    "keyword": "nonn",
+    "offset": "0,4",
+    "author": "_Ilya Gutkovskiy_, Mar 07 2018",
+    "references": 3,
+    "revision": 13,
+    "time": "2022-03-30T12:05:59-04:00",
+    "created": "2018-03-07T21:34:13-05:00"
+}

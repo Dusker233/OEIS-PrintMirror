@@ -1,0 +1,37 @@
+{
+    "number": 217715,
+    "data": "16,30,32,48,54,64,80,120,176,288,368,432,464,656,848,858,864,1328,1424,1722,1808,1944,2096,2768,2864,2916,3056,3728,3824,4016,4496,4688,5744,5832,6704,6896,7088,7856,8144,9488,10256,10448,10544,10928,11504,11888",
+    "name": "Numbers equal to the Euler totient function of their arithmetic derivative: k = phi(k').",
+    "comment": [
+        "If p is a Sophie Germain prime (A005384) then m = 16*p is a term. Indeed: m' = (16*p)' = 32*p + 16 = 16*(2*p + 1) and phi(m') = phi(32*p + 16) = phi(16*(2*p + 1)) = 8*phi(2*p + 1) = 8*2*p = m for odd p. If p = 2 then m = 16*2 = 32 is a term. - _Marius A. Burtea_, Apr 10 2022"
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A217715/b217715.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..200 from Paolo P. Lava)"
+    ],
+    "example": [
+        "For k=368, k'=752 and phi(752)=368."
+    ],
+    "maple": [
+        "with(numtheory);",
+        "A217715:= proc(q) local n,p;",
+        "for n from 1 to q do",
+        "if phi(n*add(op(2,p)/op(1,p),p=ifactors(n)[2]))=n then print(n); fi; od; end:",
+        "A217715(10^6);"
+    ],
+    "mathematica": [
+        "aQ[1]=1; aQ[n_] := EulerPhi[n * Total[#2/#1 & @@@ FactorInteger[n]]] == n; Select[Range[10000], aQ] (* _Amiram Eldar_, Jul 11 2019 *)"
+    ],
+    "program": [
+        "(Magma) f:=func<n | n le 1 select 0 else  n*(&+[Factorisation(n)[i][2] / Factorisation(n)[i][1]: i in [1..#Factorisation(n)]])>;  [k:k in [2..12000]| k eq EulerPhi(Floor(f(k)))]; // _Marius A. Burtea_, Apr 09 2022"
+    ],
+    "xref": [
+        "Cf. A000010, A003415, A005384, A166374."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Mar 21 2013",
+    "references": 1,
+    "revision": 32,
+    "time": "2022-04-30T08:22:07-04:00",
+    "created": "2013-03-21T13:31:30-04:00"
+}

@@ -1,0 +1,62 @@
+{
+    "number": 345680,
+    "data": "0,7,11,22,29,33,34,38,43,44,47,49,55,56,59,65,66,70,74,77,83,88,92,94,95,99,108,110,117,125,126,131,138,142,147,148,149,161,168,171,172,179,182,184,185,195,196,205,212,220,227,234,237,238,241,258,265,269",
+    "name": "Nonnegative integers whose trajectory under iteration of taking the absolute value of the alternating sum of the squares of the digits (A257588) includes zero.",
+    "comment": [
+        "The sequence was initially studied by a group of students at Clifton College, UK.",
+        "There are infinitely many terms.",
+        "Having checked up to 10^10, there are approximations for the lower and upper density: 0.23 and 0.25 respectively.",
+        "Conjecture: there are strings of consecutive terms of arbitrary length.",
+        "Any number which is formed by concatenating two-digit multiples of 11 is a term."
+    ],
+    "example": [
+        "For 7, the trajectory under iteration is 7, 49, 65, 11, 0, ..., so 7 is a term.",
+        "For 11, the trajectory is 11, 0, ...",
+        "For 22, the trajectory is 22, 0, ...",
+        "For 29, the trajectory is 29, 77, 0, ...",
+        "A non-example is 48. Its trajectory is 48, 48, ..."
+    ],
+    "mathematica": [
+        "Select[Range[1000], FixedPoint[ Abs[Sum[(-1)^(n + 1)*Part[IntegerDigits[#]^2, n], {n, 1, Length[IntegerDigits[#]]}]] &, #, 10] == 0 &] (* _Luca Onnis_, Feb 23 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "def happyish_function(number, base: int = 10):  # A257588",
+        "# iterates the process",
+        "  total = 0",
+        "  times = 0",
+        "  while number > 0:",
+        "    total += pow(-1, times) * pow(abs(number) % base, 2)",
+        "    number = abs(number) // base",
+        "    times += 1",
+        "  return abs(total)",
+        "def is_happyish(number: int) -> bool:",
+        "# determines whether a number is happyish",
+        "  seen_numbers = set()",
+        "  while number > 0 and number not in seen_numbers:",
+        "    seen_numbers.add(number)",
+        "    number = happyish_function(number)",
+        "  return number == 0",
+        "def happyish_list(number: int):",
+        "# creates their list",
+        "  happyish = []",
+        "  n = 0",
+        "  for i in range(number):",
+        "    if is_happyish(i) == True:",
+        "      n +=1",
+        "      happyish.append(i)",
+        "  return happyish",
+        "happyish_list(100) # an example"
+    ],
+    "xref": [
+        "Cf. A257588 (iteration step).",
+        "Cf. A007770 (sum of squares not alternating)."
+    ],
+    "keyword": "nonn,base",
+    "offset": "1,2",
+    "author": "_Stephen Cross_, Jun 23 2021",
+    "references": 1,
+    "revision": 38,
+    "time": "2022-02-24T11:29:42-05:00",
+    "created": "2021-08-23T22:20:48-04:00"
+}

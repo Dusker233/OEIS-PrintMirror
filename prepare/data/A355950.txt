@@ -1,0 +1,31 @@
+{
+    "number": 355950,
+    "data": "1,4,14,81,707,8495,126145,2223364,45270095,1045270723,26982695325,769991073865,24068076196347,817782849568143,30010708874959403,1182932213483903598,49844124089150772080,2235755683827890358557,106363105981739131891399",
+    "name": "a(n) = Sum_{k=1..n} k^(k-1) * floor(n/k).",
+    "link": [
+        "Seiichi Manyama, <a href=\"/A355950/b355950.txt\">Table of n, a(n) for n = 1..387</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} Sum_{d|k} d^(d-1).",
+        "G.f.: (1/(1-x)) * Sum_{k>0} k^(k-1) * x^k/(1 - x^k)."
+    ],
+    "program": [
+        "(PARI) a(n) = sum(k=1, n, n\\k*k^(k-1));",
+        "(PARI) a(n) = sum(k=1, n, sumdiv(k, d, d^(d-1)));",
+        "(PARI) my(N=20, x='x+O('x^N)); Vec(sum(k=1, N, k^(k-1)*x^k/(1-x^k))/(1-x))",
+        "(Python)",
+        "def A355950(n): return n*(1+n**(n-2))+sum(k**(k-1)*(n//k) for k in range(2,n)) if n>1 else 1 # _Chai Wah Wu_, Jul 21 2022"
+    ],
+    "xref": [
+        "Partial sums of A262843.",
+        "Cf. A006218, A268235, A344814, A344815, A344816.",
+        "Cf. A060946, A355887."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, Jul 21 2022",
+    "references": 2,
+    "revision": 16,
+    "time": "2022-07-22T10:12:21-04:00",
+    "created": "2022-07-21T10:16:23-04:00"
+}

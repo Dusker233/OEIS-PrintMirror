@@ -1,0 +1,26 @@
+{
+    "number": 321206,
+    "data": "900,1764,3600,4356,4500,6084,6300,7056,8100,8820,9900,10404,11700,12348,12996,15300,17100,19044,19404,20700,21780,22500,22932,25200,26100,27900,29988,30276,30420,30492,31500,33300,33516,34596,35280,36900,38700,39600,40572",
+    "name": "Exponential pseudoperfect numbers (A318100) that are not e-perfect (A054979).",
+    "comment": [
+        "It seems that most of the exponential pseudoperfect numbers are e-perfect. Up to 10^6 there are 9674 exponential pseudoperfect numbers, of them only 984 are not e-perfect."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A321206/b321206.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/e-Divisor.html\">e-Divisor</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/e-PerfectNumber.html\">e-Perfect Number</a>"
+    ],
+    "mathematica": [
+        "dQ[n_,m_] := (n>0&&m>0 &&Divisible[n,m]); expDivQ[n_,d_] := Module[ {ft=FactorInteger[n]}, And@@MapThread[dQ, {ft[[;;,2]], IntegerExponent[ d,ft[[;;,1]]]} ]]; eDivs[n_] := Module[ {d=Rest[Divisors[n]]}, Select[ d,expDivQ[n,#]&] ]; esigma[1]=1; esigma[n_] := Total@eDivs[n]; eAbundantQ[n_] := esigma[n] > 2n; a = {}; n = 0; While[Length[a] < 30, n++; If[!eAbundantQ[n], Continue[]]; d = Most[eDivs[n]]; c = SeriesCoefficient[Series[Product[1 + x^d[[i]], {i, Length[d]}], {x, 0, n}], n]; If[c > 0, AppendTo[a, n]]]; a"
+    ],
+    "xref": [
+        "Cf. A054979, A318100."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Oct 30 2018",
+    "references": 1,
+    "revision": 7,
+    "time": "2020-06-06T03:19:17-04:00",
+    "created": "2018-11-20T04:17:47-05:00"
+}

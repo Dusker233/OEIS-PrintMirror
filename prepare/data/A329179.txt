@@ -1,0 +1,37 @@
+{
+    "number": 329179,
+    "data": "0,23,36,52,71,80,104,137,143,154,377,443,479,533,823,963,977,1013,1125,1204,1284,1334,1493,1624,1769,1786,1997,2047,2110,2228,2260,2427,2508,2577,2707,2740,3121,3174,3223,3407,3440,3477,3526,3644,3745,3828,3860,4027,4079,4163,4314,4384,4518",
+    "name": "Numbers k such that A258881(k) is a square.",
+    "link": [
+        "Robert Israel, <a href=\"/A329179/b329179.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 36 is a member of the sequence because 36 + 3^2 + 6^2 = 81 = 9^2."
+    ],
+    "maple": [
+        "filter:= n -> issqr(n + convert(map(`^`,convert(n,base,10),2),`+`)):",
+        "select(filter, [$0..10^4]);"
+    ],
+    "mathematica": [
+        "Select[Range[0,5000],IntegerQ[Sqrt[#+Total[IntegerDigits[#]^2]]]&] (* _Harvey P. Dale_, Jan 01 2022 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory.primetest import is_square",
+        "def ssd(n): return sum(int(d)**2 for d in str(n))",
+        "def ok(n): return is_square(n + ssd(n))",
+        "def aupto(limit): return [m for m in range(limit+1) if ok(m)]",
+        "print(aupto(4000)) # _Michael S. Branicky_, Jan 30 2021",
+        "(PARI) isok(k) = issquare(k+norml2(digits(k))); \\\\ _Michel Marcus_, Jan 31 2021"
+    ],
+    "xref": [
+        "Cf. A010052, A258881, A329386."
+    ],
+    "keyword": "base,nonn",
+    "offset": "1,2",
+    "author": "_Will Gosnell_ and _Robert Israel_, Nov 07 2019",
+    "references": 4,
+    "revision": 23,
+    "time": "2022-01-01T19:04:26-05:00",
+    "created": "2019-11-07T21:36:16-05:00"
+}

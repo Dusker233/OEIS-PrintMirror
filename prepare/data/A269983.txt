@@ -1,0 +1,44 @@
+{
+    "number": 269983,
+    "data": "2,3,6,7,11,13,19,29,31,43,59,67,73,79,89,109,151,197,199,211,229,233,269,281,283,293,337,373,379,389,397,419,421,439,449,463,487,503,509,547,557,619,673,701,727,733,797,809,811,827,877,883,887,937,941,947,953,983",
+    "name": "Numbers having factorial fractility A269982(n) = 1.",
+    "comment": [
+        "See A269982 for a definition of factorial fractility and guide to related sequences.",
+        "Is 6 the largest even term of this sequence? - _M. F. Hasler_, Nov 05 2018"
+    ],
+    "example": [
+        "NI(1/7) = (3, 1, 1, 2, 2, 3, 1, 1, 2, 2, 3, 1, 1, 2, 2, ...),",
+        "NI(2/7) = (2, 2, 1, 3, 1, 1, 2, 2, 3, 1, 1, 2, 2, 3, 1, ...),",
+        "NI(3/7) = (2, 1, 1, 3, 1, 1, 2, 2, 3, 1, 1, 2, 2, 3, 1, ...),",
+        "NI(4/7) = (1, 3, 1, 1, 2, 2, 3, 1, 1, 2, 2, 3, 1, 1, 2, ...),",
+        "NI(5/7) = (1, 2, 1, 1, 3, 1, 1, 2, 2, 3, 1, 1, 2, 2, 3, ...),",
+        "NI(6/7) = (1, 1, 2, 1, 1, 3, 1, 1, 2, 2, 3, 1, 1, 2, 2, ...):",
+        "all are eventually periodic with period (1, 1, 2, 2, 3), so that there is only one equivalence class for n = 7, and the fractility of 7 is 1."
+    ],
+    "mathematica": [
+        "A269982[n_] := CountDistinct[With[{l = NestWhileList[",
+        "         Rescale[#, {1/(Floor[x] + 1)!, 1/Floor[x]!} /.",
+        "            FindRoot[1/x! == #, {x, 1}]] &, #, UnsameQ, All]},",
+        "      Min@l[[First@First@Position[l, Last@l] ;;]]] & /@",
+        "    Range[1/n, 1 - 1/n, 1/n]]; (* from Davin Park,Nov 19 2016 *)",
+        "Select[Range[2, 1000], A269982[#] == 1 &] (* _Robert Price_, Sep 19 2019 *)"
+    ],
+    "program": [
+        "(PARI) select( is_A269983(n)=A269982(n)==1, [1..300]) \\\\ _M. F. Hasler_, Nov 05 2018"
+    ],
+    "xref": [
+        "Cf. A269982 (factorial fractility of n); A269984, A269985, A269986, A269987, A269988 (numbers with factorial fractility 2, ..., 6, respectively).",
+        "Cf. A269570 (binary fractility), A270000 (harmonic fractility)."
+    ],
+    "keyword": "nonn",
+    "offset": "1,1",
+    "author": "_Clark Kimberling_ and _Peter J. C. Moses_, Mar 10 2016",
+    "ext": [
+        "Edited and more terms added by _M. F. Hasler_, Nov 05 2018",
+        "a(54)-a(58) from _Robert Price_, Sep 19 2019"
+    ],
+    "references": 6,
+    "revision": 11,
+    "time": "2019-09-19T21:49:42-04:00",
+    "created": "2016-03-10T21:02:58-05:00"
+}

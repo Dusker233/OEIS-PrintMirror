@@ -1,0 +1,41 @@
+{
+    "number": 363562,
+    "data": "1,2,7,32,165,915,5321,32013,197589,1244127,7960163,51604376,338235709,2237671348,14922662524,100210165389,677048764444,4598998298373,31389535211441,215163326541577,1480569995180206,10223713874584005,70822394367021543,492034480142649446",
+    "name": "Expansion of g.f. A(x) satisfying 1 = Sum_{n>=0} x^n * A(x)^n / (1 + x^(n+1)*A(x)^2).",
+    "comment": [
+        "The g.f. A(x) of this sequence is motivated by the following identity:",
+        "Sum_{n>=0} p^n/(1 - q*r^n) = Sum_{n>=0} q^n/(1 - p*r^n) = Sum_{n>=0} p^n*q^n*r^(n^2)*(1 - p*q*r^(2*n))/((1 - p*r^n)*(1-q*r^n)) ;",
+        "here, p = x*A(x), q = -x*A(x)^2, and r = x."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A363562/b363562.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=0} a(n)*x^n may be defined by the following formulas.",
+        "(1) 1 = Sum_{n>=0} x^n * A(x)^n / (1 + x^(n+1)*A(x)^2).",
+        "(2) 1 = Sum_{n>=0} (-1)^n * x^n * A(x)^(2*n) / (1 - x^(n+1)*A(x)).",
+        "(3) x = Sum_{n>=1} (-1)^(n-1) * x^(n^2) * A(x)^(3*(n-1)) * (1 + x^(2*n)*A(x)^3) / ((1 - x^n*A(x))*(1 + x^n*A(x)^2))."
+    ],
+    "example": [
+        "G.f.: A(x) = 1 + 2*x + 7*x^2 + 32*x^3 + 165*x^4 + 915*x^5 + 5321*x^6 + 32013*x^7 + 197589*x^8 + 1244127*x^9 + 7960163*x^10 + ...",
+        "where",
+        "1 = 1/(1 + x*A(x)^2) + x*A(x)/(1 + x^2*A(x)^2) + x^2*A(x)^2/(1 + x^3*A(x)^2) + x^3*A(x)^3/(1 + x^4*A(x)^2) + x^4*A(x)^4/(1 + x^5*A(x)^2) + ...",
+        "also,",
+        "1 = 1/(1 - x*A(x)) - x*A(x)^2/(1 - x^2*A(x)) + x^2*A(x)^4/(1 - x^3*A(x)) - x^3*A(x)^6/(1 - x^4*A(x)) + x^4*A(x)^8/(1 - x^5*A(x)) -+ ..."
+    ],
+    "program": [
+        "(PARI) {a(n,k=2) = my(A=[1]); for(i=1,n, A = concat(A,0);",
+        "A[#A] = polcoeff(-1 + sum(n=0,#A, x^n * Ser(A)^((k-1)*n) / (1 + x^(n+1)*Ser(A)^k ) ),#A));A[n+1]}",
+        "for(n=0,30,print1(a(n,2),\", \"))"
+    ],
+    "xref": [
+        "Cf. A363563, A363564, A340329, A340355."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Paul D. Hanna_, Jul 19 2023",
+    "references": 3,
+    "revision": 9,
+    "time": "2023-07-20T10:07:31-04:00",
+    "created": "2023-07-20T10:07:31-04:00"
+}

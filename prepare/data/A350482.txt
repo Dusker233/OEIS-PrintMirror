@@ -1,0 +1,51 @@
+{
+    "number": 350482,
+    "data": "1,1,3,12,56,282,1494,8207,46332,267174,1566994,9318630,56058288,340530734,2085902781,12869679276,79906734738,498903972318,3130391261901,19728829226876,124833794989761,792731281119894,5050567538514688,32273851864657050,206799487942332132",
+    "name": "G.f. A(x) = Sum_{n>=1} a(n)*x^(2*n-1) satisfies: A(x^3*R(x)) = x^4 - x^6, where A(R(x)) = x.",
+    "formula": [
+        "G.f.: A(x) = Series_Reversion( Product_{n>=0} F(n) ), where F(0) = x, F(1) = 1-x^2, and F(n+1) = 1 - (1 - F(n))^4 * F(n)^2 for n > 0."
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^3 + 3*x^5 + 12*x^7 + 56*x^9 + 282*x^11 + 1494*x^13 + 8207*x^15 + 46332*x^17 + 267174*x^19 + ...",
+        "The series reversion is here denoted R(x) so that R(A(x)) = x where",
+        "R(x) = x - x^3 - x^9 + 3*x^11 - 3*x^13 + x^15 - x^33 + 9*x^35 - 36*x^37 + 84*x^39 + ... + A350483(n)*x^(2*n-1) + ...",
+        "and which by definition also satisfies A(x^3*R(x)) = x^4 - x^6.",
+        "GENERATING METHOD.",
+        "One may obtain the g.f. A(x) from the following method used to generate the series reversion R(x).",
+        "Define F(n), a polynomial in x of order 2*6^(n-1), by the following recurrence:",
+        "F(0) = x,",
+        "F(1) = (1 - x^2),",
+        "F(2) = (1 - x^8 * (1-x^2)^2),",
+        "F(3) = (1 - x^32 * (1-x^2)^8 * F(2)^2),",
+        "F(4) = (1 - x^128 * (1-x^2)^32 * F(2)^8 * F(3)^2),",
+        "F(5) = (1 - x^512 * (1-x^2)^128 * F(2)^32 * F(3)^8 * F(4)^2),",
+        "...",
+        "F(n+1) = 1 - (1 - F(n))^4 * F(n)^2",
+        "...",
+        "Then the series reversion R(x) equals the infinite product:",
+        "R(x) = x * F(1) * F(2) * F(3) * ... * F(n) * ...",
+        "that is,",
+        "R(x) = x * (1-x^2) * (1 - x^8*(1-x^2)^2) * (1 - x^32*(1-x^2)^8*(1 - x^8*(1-x^2)^2)^2) * (1 - x^128*(1-x^2)^32*(1 - x^8*(1-x^2)^2)^8*(1 - x^32*(1-x^2)^8*(1 - x^8*(1-x^2)^2)^2)^2) * ...",
+        "The g.f. of this sequence is then obtained as the series reversion of this infinite product."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1,0]); for(i=1,n, A=concat(A,0);",
+        "A[#A] = -polcoeff( x^4*(1 - x^2) - subst(x*Ser(A),x, x^3 * serreverse(x*Ser(A))), #A+3) );A[n]}",
+        "for(n=1,30,print1(a(2*n-1),\", \"))",
+        "(PARI) /* Using Infinite Product Formula for Series Reversion */",
+        "N = 300; \\\\ set limit on order of polynomials to be 2 times desired number of terms",
+        "{F(n) = my(G=x); if(n==0,G=x, if(n==1, G = (1-x^2), G = 1 - (1 - F(n-1))^4 * F(n-1)^2 +x*O(x^N) ));G}",
+        "{a(n) = my(A = prod(k=0,#binary(n), F(k) +x*O(x^n))); polcoeff(serreverse(A),n)}",
+        "for(n=1,30,print1(a(2*n-1),\", \"))"
+    ],
+    "xref": [
+        "Cf. A350483 (inverse), A273162, A273203, A350434, A350474, A350476, A350478, A350480."
+    ],
+    "keyword": "nonn",
+    "offset": "1,3",
+    "author": "_Paul D. Hanna_, Jan 01 2022",
+    "references": 5,
+    "revision": 7,
+    "time": "2022-09-01T11:59:43-04:00",
+    "created": "2022-01-02T11:51:17-05:00"
+}

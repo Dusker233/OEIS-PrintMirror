@@ -1,0 +1,38 @@
+{
+    "number": 343813,
+    "data": "1,2,5,12,48,88,269,450,1176,4355,6558,20958,43412,61733,122194,324532,820827,1107647,2652517,4655220,6133664,13751210,23192039,49730098,132657130,213646624,270244858,429702432,540212859,848899870,3905568236,5952945182,11078643138",
+    "name": "Number of partitions of prime(n) containing at least one prime.",
+    "link": [
+        "David A. Corneth, <a href=\"/A343813/b343813.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = A235945(A000040(n))."
+    ],
+    "example": [
+        "a(4) = 12 because there are 12 partitions of prime(4) = 7 that contain at least one prime. These partitions are [7], [5,2], [5,1,1], [4,3], [4,2,1], [3,3,1], [3,2,2], [3,2,1,1], [3,1,1,1,1], [2,2,2,1], [2,2,1,1,1], [2,1,1,1,1,1]."
+    ],
+    "mathematica": [
+        "nterms=20;Table[Total[Map[If[Count[#, _?PrimeQ]>0,1,0] &,IntegerPartitions[Prime[n]]]],{n,1,nterms}]"
+    ],
+    "program": [
+        "(PARI) forprime(p=2,59,my(m=0); forpart(X=p, for(k=1,#X, if(isprime(X[k]),m++;break))); print1(m,\", \")) \\\\ _Hugo Pfoertner_, Apr 30 2021",
+        "(PARI) seq(n)={my(p=primes(n), m=p[#p]); vecextract(Vec(1/eta(x+O(x*x^m)) - 1/prod(k=1, m, 1-if(!isprime(k), x^k) + O(x*x^m)), -m), p)} \\\\ _Andrew Howroyd_, Apr 30 2021",
+        "(Python)",
+        "from sympy.utilities.iterables import partitions",
+        "from sympy import sieve, prime",
+        "def A343813(n):",
+        "    p = prime(n)",
+        "    pset = set(sieve.primerange(2,p+1))",
+        "    return sum(1 for d in partitions(p) if len(set(d)&pset) > 0) # _Chai Wah Wu_, May 01 2021"
+    ],
+    "xref": [
+        "Cf. A000040, A058698, A235945."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Paolo Xausa_, Apr 30 2021",
+    "references": 2,
+    "revision": 29,
+    "time": "2021-05-26T13:47:29-04:00",
+    "created": "2021-05-01T07:41:20-04:00"
+}

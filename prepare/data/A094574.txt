@@ -1,0 +1,62 @@
+{
+    "number": 94574,
+    "data": "1,1,5,40,457,6995,136771,3299218,95668354,3268445951,129468914524,5868774803537,301122189141524,17327463910351045,1109375488487304027,78484513540137938209,6098627708074641312182,517736625823888411991202,47791900951140948275632148",
+    "name": "Number of (<=2)-covers of an n-set.",
+    "comment": [
+        "Also the number of strict multiset partitions of {1, 1, 2, 2, 3, 3, ..., n, n}. For example, the a(2) = 5 strict multiset partitions of {1, 1, 2, 2} are (1122), (1)(122), (2)(112), (11)(22), (1)(2)(12). - _Gus Wiseman_, Jul 18 2018"
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A094574/b094574.txt\">Table of n, a(n) for n = 0..300</a>"
+    ],
+    "formula": [
+        "Row sums of A094573.",
+        "E.g.f: exp(-1-1/2*(exp(x)-1))*Sum(exp(x*binomial(n+1, 2))/n!, n=0..infinity) or exp((1-exp(x))/2)*Sum(A094577 (n)*(x/2)^n/n!, n=0..infinity)."
+    ],
+    "example": [
+        "From _Gus Wiseman_, Sep 02 2019: (Start)",
+        "These are set-systems covering {1..n} with vertex-degrees <= 2. For example, the a(3) = 40 covers are:",
+        "  {123}  {1}{23}    {1}{2}{3}     {1}{2}{3}{12}",
+        "         {2}{13}    {1}{2}{13}    {1}{2}{3}{13}",
+        "         {3}{12}    {1}{2}{23}    {1}{2}{3}{23}",
+        "         {1}{123}   {1}{3}{12}    {1}{2}{13}{23}",
+        "         {12}{13}   {1}{3}{23}    {1}{2}{3}{123}",
+        "         {12}{23}   {2}{3}{12}    {1}{3}{12}{23}",
+        "         {13}{23}   {2}{3}{13}    {2}{3}{12}{13}",
+        "         {2}{123}   {1}{12}{23}",
+        "         {3}{123}   {1}{13}{23}",
+        "         {12}{123}  {1}{2}{123}",
+        "         {13}{123}  {1}{3}{123}",
+        "         {23}{123}  {2}{12}{13}",
+        "                    {2}{13}{23}",
+        "                    {2}{3}{123}",
+        "                    {3}{12}{13}",
+        "                    {3}{12}{23}",
+        "                    {12}{13}{23}",
+        "                    {1}{23}{123}",
+        "                    {2}{13}{123}",
+        "                    {3}{12}{123}",
+        "(End)"
+    ],
+    "mathematica": [
+        "facs[n_]:=facs[n]=If[n<=1,{{}},Join@@Table[Map[Prepend[#,d]&,Select[facs[n/d],Min@@#>=d&]],{d,Rest[Divisors[n]]}]];",
+        "Table[Length[Select[facs[Array[Prime,n,1,Times]^2],UnsameQ@@#&]],{n,0,6}] (* _Gus Wiseman_, Jul 18 2018 *)",
+        "m = 20;",
+        "a094577[n_] := Sum[Binomial[n, k]*BellB[2 n - k], {k, 0, n}];",
+        "egf = Exp[(1 - Exp[x])/2]*Sum[a094577[n]*(x/2)^n/n!, {n, 0, m}] + O[x]^m;",
+        "CoefficientList[egf + O[x]^m, x]*Range[0, m-1]! (* _Jean-Fran\u00e7ois Alcover_, May 13 2019 *)"
+    ],
+    "xref": [
+        "Row n=2 of A219585. - _Alois P. Heinz_, Nov 23 2012",
+        "Dominated by A003465.",
+        "Graphs with vertex-degrees <= 2 are A136281.",
+        "Cf. A002718, A007716, A020554, A020555, A050535, A094574, A136284, A316974, A327104, A327106, A327229.",
+        "Main diagonal of A346517."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "Goran Kilibarda, _Vladeta Jovovic_, May 12 2004",
+    "references": 19,
+    "revision": 29,
+    "time": "2021-07-21T17:10:44-04:00",
+    "created": "2004-06-12T03:00:00-04:00"
+}

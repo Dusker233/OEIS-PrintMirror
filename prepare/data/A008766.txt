@@ -1,0 +1,51 @@
+{
+    "number": 8766,
+    "data": "1,1,2,3,5,7,10,13,18,23,29,36,45,54,65,77,91,106,123,141,162,184,208,234,263,293,326,361,399,439,482,527,576,627,681,738,799,862,929,999,1073,1150,1231,1315,1404,1496,1592,1692,1797,1905,2018,2135,2257,2383,2514,2649,2790,2935",
+    "name": "Expansion of (1+x^5)/((1-x)*(1-x^2)*(1-x^3)*(1-x^4)).",
+    "comment": [
+        "From _Washington Bomfim_, Jan 14 2021: (Start)",
+        "Let \\n,m\\ be the number of partitions of n into m non-distinct parts.",
+        "For n >= 1, \\n,5\\ = round((2*n^3-15*n^2+60*n-110*[n mod 2 = 0]-65*[n mod 2])/144).",
+        "For n >= 10, \\n,5\\ = A026811(n) - A026811(n-10).",
+        "(End)"
+    ],
+    "link": [
+        "Washington Bomfim, <a href=\"/A008766/b008766.txt\">Table of n, a(n) for n = 0..9999 (first 1000 terms from G. C. Greubel)</a>",
+        "<a href=\"/index/Rec#order_09\">Index entries for linear recurrences with constant coefficients</a>, signature (2,-1,1,-1,-1,1,-1,2,-1)."
+    ],
+    "formula": [
+        "a(n)=round((2*N^3-15*N^2+60*N-110*[N mod 2=0]-65*[N mod 2])/144), where N=n+5. _Washington Bomfim_, Jan 14 2021"
+    ],
+    "maple": [
+        "seq(coeff(series((1+x^5)/((1-x)*(1-x^2)*(1-x^3)*(1-x^4)), x, n+1), x, n), n = 0 .. 60); # _G. C. Greubel_, Sep 10 2019"
+    ],
+    "mathematica": [
+        "CoefficientList[Series[(1+x^5)/(1-x)/(1-x^2)/(1-x^3)/(1-x^4),{x,0,60}],x] (* or *) LinearRecurrence[{2,-1,1,-1,-1,1,-1,2,-1}, {1,1,2,3,5,7,10, 13,18}, 60] (* _Harvey P. Dale_, Jul 24 2016 *)"
+    ],
+    "program": [
+        "(PARI) Vec((1+x^5)/(1-x)/(1-x^2)/(1-x^3)/(1-x^4) +O(x^99)) \\\\ _Charles R Greathouse IV_, Sep 26 2012",
+        "(Magma) R<x>:=PowerSeriesRing(Integers(), 60); Coefficients(R!( (1+x^5)/((1-x)*(1-x^2)*(1-x^3)*(1-x^4)) )); // _G. C. Greubel_, Sep 10 2019",
+        "(Sage)",
+        "def A008766_list(prec):",
+        "    P.<x> = PowerSeriesRing(ZZ, prec)",
+        "    return P((1+x^5)/((1-x)*(1-x^2)*(1-x^3)*(1-x^4))).list()",
+        "A008766_list(60) # _G. C. Greubel_, Sep 10 2019",
+        "(GAP) a:=[1,1,2,3,5,7,10,13,18];; for n in [10..60] do a[n]:=2*a[n-1]-a[n-2]+a[n-3]-a[n-4]-a[n-5]+a[n-6]-a[n-7]+2*a[n-8]-a[n-9]; od; a; # _G. C. Greubel_, Sep 10 2019",
+        "(PARI) seq(x) = { a = vector(x+1); my(N = 5);",
+        "for(n=0,x, a[n+1]=round((2*N^3-15*N^2+60*N-110*!(N%2)-65*(N%2))/144); N++);a};",
+        "seq(60) \\\\ _Washington Bomfim_, Jan 14 2021"
+    ],
+    "xref": [
+        "Cf. A026811, A001401."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "0,3",
+    "author": "_N. J. A. Sloane_",
+    "ext": [
+        "Terms a(45) onward added by _G. C. Greubel_, Sep 10 2019"
+    ],
+    "references": 2,
+    "revision": 25,
+    "time": "2022-09-08T08:44:36-04:00",
+    "created": "1996-03-15T03:00:00-05:00"
+}

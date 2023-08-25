@@ -1,0 +1,76 @@
+{
+    "number": 341884,
+    "data": "1,2,6,22,342,1444,33184,399235,12502550,117906198,7740054144,74673569118,4724493959332,121637216075836,4503600768557056,89450720590507768,10119960926575526448,152232968281237988010,16384000020089600480000,552020693349464673399080,35271474934322858202723576",
+    "name": "Number of fundamentally different graceful labelings of digraphs with n arcs.",
+    "comment": [
+        "Consider vertices numbered 0 to n. For 1 <= k <= n, add an arc from v_k to (v_k+k) mod q, where q = n+1. (Thus (n+1)^n possibilities.) Two such digraphs are considered equivalent under the following operations: (i) rename each v to (v+1) mod q; (ii) rename each v to (av) mod q, where a is relatively prime to q; (iii) form the converse digraph by reversing the direction of every arc. The number of equivalence classes is a(n)."
+    ],
+    "reference": [
+        "G. S. Bloom and D. F. Hsu, On graceful digraphs and a problem in network addressing, Congr. Numer., 35 (1982) 91-103.",
+        "D. E. Knuth, The Art of Computer Programming, forthcoming exercise in Section 7.2.2.3"
+    ],
+    "link": [
+        "Peter Luschny, <a href=\"/A341884/b341884.txt\">Table of n, a(n) for n = 1..100</a>"
+    ],
+    "example": [
+        "Each equivalence class has exactly one digraph with v_1=0.",
+        "For n=3 the six classes of digraphs 0v_2v_3 are: {000,032}, {001,011,021,031}, {002,010,022,030}, {003,033}, {012,020}, {013,023}."
+    ],
+    "maple": [
+        "# This is a port from the Mathematica program below.",
+        "sols := proc(alf, bet, q)",
+        "igcd(alf, q); `if`(modp(bet, %) <> 0, 0, %) end:",
+        "F := proc(l, a, b, q) local s, r, ll;",
+        "   s := 1; r := 1; ll := modp(l*a, q);",
+        "   while ll > l do",
+        "      s := s + 1;",
+        "      ll := modp(ll*a,  q);",
+        "      r  := modp(r*a+1, q); od;",
+        "`if`(ll <> l, 1, sols(a^s - 1, -r*b, q)) end:",
+        "G := proc(l, a, b, q) local s, r, ll;",
+        "   s := 1; r := 1; ll := modp(-l*a, q);",
+        "   while ll > l do",
+        "      s := s + 1;",
+        "      ll := modp(-ll*a, q);",
+        "      r  := modp(r*a+1, q); od;",
+        "`if`(ll <> l, 1, sols(a^s - 1, -r*b - l*irem(s, 2), q)) end:",
+        "f := (a, b, q) -> mul(F(l, a, b, q), l = 1..q-1):",
+        "g := (a, b, q) -> mul(G(l, a, b, q), l = 1..q-1):",
+        "a := proc(n) local q; q := n + 1;",
+        "    add(`if`(igcd(a, q) > 1, 0, add(f(a, b, q) + g(a, b, q),",
+        "         b = 0..q-1)), a = 1..q-1);",
+        "% / (2*q*numtheory:-phi(q)) end:",
+        "seq(a(n), n=1..21); # _Peter Luschny_, Mar 10 2021"
+    ],
+    "mathematica": [
+        "sols[alf_,bet_,q_]:=Block[{d=GCD[alf,q]},If[Mod[bet,d]!=0,0,d]]",
+        "(* that many solutions to alf x == bet (modulo q) for 0<=x<q *)",
+        "f[l_,a_,b_,q_]:=Block[{r,s,ll,atos},",
+        "                       s=1;ll=Mod[l*a,q];r=1;",
+        "                       While[ll>l, s++;ll=Mod[ll*a,q];r=Mod[r*a+1,q]];",
+        "                       If[ll==l,sols[a^s-1,-r b,q],1]]",
+        "g[l_,a_,b_,q_]:=Block[{r,s,ll,atos},",
+        "                       s=1;ll=Mod[-l*a,q];r=1;",
+        "                       While[ll>l, s++;ll=Mod[-ll*a,q];r=Mod[r*a+1,q]];",
+        "                       If[ll==l,sols[a^s-1,-r b-l Mod[s,2],q],1]]",
+        "f[a_,b_,q_]:=Product[f[l,a,b,q],{l,q-1}]",
+        "g[a_,b_,q_]:=Product[g[l,a,b,q],{l,q-1}]",
+        "x[q_]:=Sum[If[GCD[a,q]>1,0,Sum[f[a,b,q]+g[a,b,q],{b,0,q-1}]],{a,q-1}]/",
+        "  (2q EulerPhi[q])",
+        "a[n_]:=x[n+1]"
+    ],
+    "xref": [
+        "Cf. A342357, A071118."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_Don Knuth_, Feb 22 2021",
+    "ext": [
+        "a(10) from _Don Knuth_, Mar 10 2021",
+        "More terms from _Peter Luschny_, Mar 10 2021"
+    ],
+    "references": 2,
+    "revision": 37,
+    "time": "2021-03-10T17:26:50-05:00",
+    "created": "2021-02-22T16:09:41-05:00"
+}

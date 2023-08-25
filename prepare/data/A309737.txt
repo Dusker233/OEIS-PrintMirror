@@ -1,0 +1,50 @@
+{
+    "number": 309737,
+    "data": "1,1,10,213,133130,50044104412,1456053604226211530303,1355606752437672176235012441560305430335663,211028537470000781652623227715306164580285678106041347266088244412145807188883237767",
+    "name": "Base conversion sequence: a(1) = 1; a(n) is the concatenation of all the previous terms, evaluated in base n-1, written in base n.",
+    "comment": [
+        "This will only work for n <= 10. To get a sequence that is defined for all n, it will be necessary to replace a(n) by a list of its \"digits\". So the result will be a triangle: 1 / 1 / 1,0 / 2,1,3 / ..., in which row n is a list of the digits written in base n. This should be an additional sequence with a cross-reference to this one. - _N. J. A. Sloane_, Sep 21 2019",
+        "See A349918 for the corresponding triangle. - _R\u00e9my Sigrist_, Dec 05 2021"
+    ],
+    "link": [
+        "R\u00e9my Sigrist, <a href=\"/A309737/b309737.txt\">Table of n, a(n) for n = 1..10</a>",
+        "R\u00e9my Sigrist, <a href=\"/A309737/a309737.gp.txt\">PARI program for A309737</a>"
+    ],
+    "formula": [
+        "a(1) = 1; a(n) is the concatenation of all the previous terms, evaluated in base n-1, written in base n."
+    ],
+    "example": [
+        "For a(3) the previous terms are {1,1}. Evaluating the concatenation of those terms in base n-1 = 2 gives 11_2 = 3; converting that to base n = 3 gives 10_3, so a(3) = 10.",
+        "n=4: 1110_3 = 39_10 = 213_4, so a(4) = 213."
+    ],
+    "program": [
+        "(PARI) See Links section.",
+        "(Python)",
+        "from sympy.ntheory.digits import digits",
+        "def fromdigits(d, b):",
+        "    n = 0",
+        "    for di in d: n *= b; n += di",
+        "    return n",
+        "def afull():",
+        "    alst, diglst = [1], [1]",
+        "    for n in range(2, 11):",
+        "        andigs = digits(fromdigits(diglst, n-1), n)[1:]",
+        "        alst.append(int(\"\".join(map(str, andigs))))",
+        "        diglst.extend(andigs)",
+        "    return alst",
+        "print(afull()) # _Michael S. Branicky_, Dec 05 2021"
+    ],
+    "xref": [
+        "Cf. A349918."
+    ],
+    "keyword": "nonn,base,full,fini",
+    "offset": "1,3",
+    "author": "_Moshe Levy_, Aug 14 2019",
+    "ext": [
+        "More terms from _R\u00e9my Sigrist_, Dec 05 2021"
+    ],
+    "references": 2,
+    "revision": 24,
+    "time": "2021-12-07T07:24:07-05:00",
+    "created": "2019-09-21T22:55:20-04:00"
+}

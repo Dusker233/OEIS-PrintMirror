@@ -1,0 +1,60 @@
+{
+    "number": 242525,
+    "data": "1,1,1,3,6,10,17,31,57,104,188,340,616,1117,2025,3670,6651,12054,21847,39596,71764,130065,235730,427238,774328,1403395,2543518,4609881,8354965,15142569,27444447,49740415,90149708,163387657,296124381,536696900",
+    "name": "Number of cyclic arrangements of S={1,2,...,n} such that the difference between any two neighbors is at most 3.",
+    "comment": [
+        "a(n) = NPC(n;S;P) is the count of all neighbor-property cycles for a specific set S of n elements and a specific pair-property P. For more details, see the link and A242519."
+    ],
+    "link": [
+        "Andrew Howroyd, <a href=\"/A242525/b242525.txt\">Table of n, a(n) for n = 1..100</a>",
+        "S. Sykora, <a href=\"http://dx.doi.org/10.3247/SL5Math14.002\">On Neighbor-Property Cycles</a>, <a href=\"http://ebyte.it/library/Library.html#math\">Stan's Library</a>, Volume V, 2014."
+    ],
+    "formula": [
+        "Empirical: a(n) = a(n-1)+a(n-2)+a(n-4)+a(n-5) for n>7. - _Andrew Howroyd_, Apr 08 2016",
+        "Empirical G.f.: x^2 + ((1-x)^2*(1+x)^2)/(1-x-x^2-x^4-x^5). - _Andrew Howroyd_, Apr 08 2016",
+        "Empirical first differences of A185265. - _Sean A. Irvine_, Jun 26 2022"
+    ],
+    "example": [
+        "For n=4, The three cycles are: C_1={1,2,3,4}, C_2={1,2,4,3}, C_3={1,3,2,4}.",
+        "The first and the last of the 104 such cycles of length n=10 are: C_1={1,2,3,5,6,8,9,10,7,4}, C_104={1,3,6,9,10,8,7,5,2,4}."
+    ],
+    "mathematica": [
+        "A242525[n_] := Count[Map[lpf, Map[j1f, Permutations[Range[2, n]]]], 0]/2;",
+        "j1f[x_] := Join[{1}, x, {1}];",
+        "lpf[x_] := Length[Select[Abs[Differences[x]], # > 3 &]];",
+        "Join[{1, 1}, Table[A242525[n], {n, 3, 10}]]",
+        "(* OR, a less simple, but more efficient implementation. *)",
+        "A242525[n_, perm_, remain_] := Module[{opt, lr, i, new},",
+        "   If[remain == {},",
+        "     If[Abs[First[perm] - Last[perm]] <= 3, ct++];",
+        "     Return[ct],",
+        "     opt = remain; lr = Length[remain];",
+        "     For[i = 1, i <= lr, i++,",
+        "      new = First[opt]; opt = Rest[opt];",
+        "      If[Abs[Last[perm] - new] > 3, Continue[]];",
+        "      A242525[n, Join[perm, {new}],",
+        "       Complement[Range[2, n], perm, {new}]];",
+        "      ];",
+        "     Return[ct];",
+        "     ];",
+        "   ];",
+        "Join[{1, 1},",
+        "Table[ct = 0; A242525[n, {1}, Range[2, n]]/2, {n, 3, 12}] ](* _Robert Price_, Oct 24 2018 *)"
+    ],
+    "program": [
+        "(C++) See the link."
+    ],
+    "xref": [
+        "Cf. A242519, A242520, A242521, A242522, A242523, A242524, A242526, A242527, A242528, A242529, A242530, A242531, A242532, A242533, A242534."
+    ],
+    "keyword": "nonn",
+    "offset": "1,4",
+    "author": "_Stanislav Sykora_, May 27 2014",
+    "ext": [
+        "a(28)-a(35) from _Andrew Howroyd_, Apr 08 2016"
+    ],
+    "references": 16,
+    "revision": 28,
+    "time": "2022-06-26T17:31:19-04:00",
+    "created": "2014-05-30T12:44:19-04:00"
+}

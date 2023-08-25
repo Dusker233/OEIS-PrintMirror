@@ -1,0 +1,41 @@
+{
+    "number": 153677,
+    "data": "1,68,142,341,395,490,585,1164,1707,26366,41358,46074,120805,147332,184259,205661,385710,522271,3418770,3675376,9424094",
+    "name": "Minimal exponents m such that the fractional part of (1024/1000)^m obtains a minimum (when starting with m=1).",
+    "comment": [
+        "Recursive definition: a(1)=1, a(n) is the least positive integer m such that the fractional part of (1024/1000)^m is less than the fractional part of (1024/1000)^k for all k, 1 <= k < m.",
+        "a(21) >= 4.5*10^6. - _David A. Corneth_, Mar 15 2019",
+        "a(22) > 10^7. _Robert Price_, Mar 16 2019"
+    ],
+    "formula": [
+        "Recursion: a(1):=1, a(k):=min{ m>1 | fract((1024/1000)^m) < fract((1024/1000)^a(k-1))}, where fract(x) = x-floor(x)."
+    ],
+    "example": [
+        "a(2)=68, since fract((1024/1000)^68) = 0.016456..., but fract((1024/1000)^k) >= 0.024 for 1 <= k <= 67; thus fract((1024/1000)^68) < fract((1024/1000)^k) for 1 <= k < 68."
+    ],
+    "mathematica": [
+        "$MaxExtraPrecision = 10000;",
+        "p = .999;",
+        "Select[Range[1, 50000],",
+        "If[FractionalPart[(1024/1000)^#] < p,",
+        "p = FractionalPart[(1024/1000)^#]; True] &] (* _Robert Price_, Mar 15 2019 *)"
+    ],
+    "program": [
+        "(PARI) upto(n) = my(res = List(), r = 1, p = 1); for(i=1, n, c = frac(p *= 1.024); if(c<r, r=c; print1(i\", \"); listput(res,i))); res \\\\ _David A. Corneth_, Mar 15 2019"
+    ],
+    "xref": [
+        "Cf. A081464, A153669, A153681, A154130, A153685, A153693, A153701, A137994, A153717."
+    ],
+    "keyword": "nonn,more",
+    "offset": "1,2",
+    "author": "_Hieronymus Fischer_, Jan 06 2009",
+    "ext": [
+        "a(18) from _Robert Price_, Mar 15 2019",
+        "a(19)-a(20) from _David A. Corneth_, Mar 15 2019",
+        "a(21) from _Robert Price_, Mar 16 2019"
+    ],
+    "references": 12,
+    "revision": 29,
+    "time": "2019-03-16T15:22:00-04:00",
+    "created": "2009-01-09T03:00:00-05:00"
+}

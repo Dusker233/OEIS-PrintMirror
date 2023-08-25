@@ -1,0 +1,56 @@
+{
+    "number": 46477,
+    "data": "2,3,5,7,373,13331,30103,1496941,1970791",
+    "name": "Primes that are palindromic in bases 8 and 10.",
+    "comment": [
+        "Any other terms have more than 20 digits. - _Michael S. Branicky_, Dec 19 2020"
+    ],
+    "link": [
+        "Patrick De Geest, <a href=\"http://www.worldofnumbers.com/palpri.htm\">World!Of Palindromic Primes</a>"
+    ],
+    "example": [
+        "373_10 = 565_8. - _Jon E. Schoenfield_, Apr 10 2021"
+    ],
+    "mathematica": [
+        "Do[s = RealDigits[n, 8][[1]]; t = RealDigits[n, 10][[1]]; If[PrimeQ[n], If[FromDigits[t] == FromDigits[Reverse[t]], If[FromDigits[s] == FromDigits[Reverse[s]], Print[n]]]], {n, 1, 10^5}]",
+        "pal810Q[p_]:=PalindromeQ[p]&&IntegerDigits[p,8]==Reverse[IntegerDigits[p,8]]; Select[ Prime[ Range[150000]],pal810Q] (* _Harvey P. Dale_, May 25 2023 *)"
+    ],
+    "program": [
+        "(Python) # efficiently search to large numbers",
+        "from sympy import isprime",
+        "from itertools import product",
+        "def candidate_prime_pals(digits):",
+        "  ruled_out = \"024568\" # can't be even or multiple of 5",
+        "  midrange = [[\"\"], \"0123456789\"]",
+        "  for p in product(\"0123456789\", repeat=digits//2):",
+        "    left = \"\".join(p)",
+        "    if len(left):",
+        "      if left[0] in ruled_out: continue",
+        "    for middle in midrange[digits%2]:",
+        "      yield left+middle+left[::-1]",
+        "for digits in range(1, 15):",
+        "  for p in candidate_prime_pals(digits):",
+        "    intp = int(p); octp = oct(intp)[2:]",
+        "    if octp==octp[::-1]:",
+        "      if isprime(intp):",
+        "        print(intp, end=\", \") # _Michael S. Branicky_, Dec 19 2020",
+        "(Python) # alternate sufficient for producing terms through a(9)",
+        "from sympy import isprime",
+        "def ispal(n): strn = str(n); return strn==strn[::-1]",
+        "for n in range(10**7):",
+        "  if ispal(n) and ispal(oct(n)[2:]) and isprime(n):",
+        "    print(n) # _Michael S. Branicky_, Dec 20 2020",
+        "(PARI) is(n) = my(d=digits(n, 8), dd=digits(n)); d==Vecrev(d) && dd==Vecrev(dd)",
+        "forprime(p=1, , if(is(p), print1(p, \", \"))) \\\\ _Felix Fr\u00f6hlich_, Dec 20 2020"
+    ],
+    "xref": [
+        "Cf. A002113, A002385, A029976, A029804."
+    ],
+    "keyword": "nonn,hard,base,more",
+    "offset": "1,1",
+    "author": "_Patrick De Geest_, Aug 15 1998",
+    "references": 0,
+    "revision": 37,
+    "time": "2023-05-25T13:25:36-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

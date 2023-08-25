@@ -1,0 +1,27 @@
+{
+    "number": 348957,
+    "data": "1,2,2,10,18,98,210,1194,2786,16258,39906,236938,601458,3615330,9399858,57024426,150947010,922283522,2475603138,15212318730,41290579410,254909413218,698230131858,4327273358250,11943274468770,74260741616514,206279837823650,1286199407132554",
+    "name": "G.f. A(x) satisfies: A(x) = (1 + x * A(-x)) / (1 - x * A(x)).",
+    "formula": [
+        "a(0) = 1; a(n) = -(-1)^n * a(n-1) + Sum_{k=0..n-1} a(k) * a(n-k-1).",
+        "a(n) ~ c * 3^(3*n/4) * (1 + sqrt(3))^n / (sqrt(2*Pi) * n^(3/2) * 2^(n/2)), where c = 3^(1/4) if n is even and c = (1 + sqrt(3))/sqrt(2) if n is odd. - _Vaclav Kotesovec_, Nov 14 2021",
+        "From _Alexander Burstein_, Nov 26 2021: (Start)",
+        "G.f.: A(-x) = 1/A(x).",
+        "G.f.: A(x) = 1 + x*(1+A(x)^3)/A(x). (End)"
+    ],
+    "mathematica": [
+        "nmax = 27; A[_] = 0; Do[A[x_] = (1 + x A[-x])/(1 - x A[x]) + O[x]^(nmax + 1) // Normal, nmax + 1]; CoefficientList[A[x], x]",
+        "a[0] = 1; a[n_] := a[n] = -(-1)^n a[n - 1] + Sum[a[k] a[n - k - 1], {k, 0, n - 1}]; Table[a[n], {n, 0, 27}]",
+        "CoefficientList[y/.AsymptoticSolve[y-y^2+x(1+y^3)==0,y->1,{x,0,27}][[1]],x] - _Alexander Burstein_, Nov 26 2021"
+    ],
+    "xref": [
+        "Cf. A006318, A086246."
+    ],
+    "keyword": "nonn",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Nov 05 2021",
+    "references": 1,
+    "revision": 25,
+    "time": "2021-11-27T11:17:16-05:00",
+    "created": "2021-11-06T09:06:13-04:00"
+}

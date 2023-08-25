@@ -1,0 +1,40 @@
+{
+    "number": 317129,
+    "data": "1,1,1,1,2,9,40,151,571,2897,19730,140190,953064,6708323,54631552,510143776,4987278692,49168919669,505209884549,5638095015594,67921924172174,852861260421398,10992380368532792,147296144926635359,2082906807168675698,30973237281668975230",
+    "name": "Number of permutations of [n] whose lengths of increasing runs are squares.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A317129/b317129.txt\">Table of n, a(n) for n = 0..400</a>"
+    ],
+    "example": [
+        "a(3) = 1: 321.",
+        "a(4) = 2: 1234, 4321.",
+        "a(5) = 9: 12354, 12453, 13452, 21345, 23451, 31245, 41235, 51234, 54321."
+    ],
+    "maple": [
+        "g:= n-> `if`(issqr(n), 1, 0):",
+        "b:= proc(u, o, t) option remember; `if`(u+o=0, g(t),",
+        "      `if`(g(t)=1, add(b(u-j, o+j-1, 1), j=1..u), 0)+",
+        "       add(b(u+j-1, o-j, t+1), j=1..o))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..27);"
+    ],
+    "mathematica": [
+        "g[n_] := If[IntegerQ@Sqrt[n], 1, 0];",
+        "b[u_, o_, t_] := b[u, o, t] = If[u + o == 0, g[t],",
+        "     If[g[t] == 1, Sum[b[u - j, o + j - 1, 1], {j, 1, u}], 0] +",
+        "     Sum[b[u + j - 1, o - j, t + 1], {j, 1, o}]];",
+        "a[n_] := b[n, 0, 0];",
+        "a /@ Range[0, 27] (* _Jean-Fran\u00e7ois Alcover_, Mar 29 2021, after _Alois P. Heinz_ *)"
+    ],
+    "xref": [
+        "Cf. A000290, A097597, A205801, A317111, A317128, A317130, A317131, A317132, A317445."
+    ],
+    "keyword": "nonn",
+    "offset": "0,5",
+    "author": "_Alois P. Heinz_, Jul 21 2018",
+    "references": 7,
+    "revision": 14,
+    "time": "2021-03-29T08:00:33-04:00",
+    "created": "2018-07-22T11:21:42-04:00"
+}

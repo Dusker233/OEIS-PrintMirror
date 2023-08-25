@@ -1,0 +1,34 @@
+{
+    "number": 323634,
+    "data": "1,1,3,12,80,723,8716,128227,2251086,45647542,1051845574,27107414480,772785074811,24136982014698,819697939365724,30068912837398063,1184872370227462528,49914074776385885492,2238476211786621770206,106476394492364281869654,5354276181476337307494676",
+    "name": "Expansion of Product_{k>=1} 1/(1 - k^(k-1)*x^k).",
+    "comment": [
+        "This sequence is obtained from the generalized Euler transform in A266964 by taking f(n) = 1, g(n) = n^(n-1). - _Seiichi Manyama_, Aug 22 2020"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A323634/b323634.txt\">Table of n, a(n) for n = 0..387</a>"
+    ],
+    "formula": [
+        "a(n) ~ n^(n-1) * (1 + exp(-1)/n + (3*exp(-2) + 3*exp(-1)/2)/n^2). - _Vaclav Kotesovec_, Jan 22 2019"
+    ],
+    "maple": [
+        "a:=series(mul(1/(1-k^(k-1)*x^k),k=1..100),x=0,21): seq(coeff(a,x,n),n=0..20); # _Paolo P. Lava_, Apr 02 2019"
+    ],
+    "mathematica": [
+        "nmax = 20; CoefficientList[Series[Product[1/(1 - k^(k - 1) x^k), {k, 1, nmax}], {x, 0, nmax}], x]",
+        "a[n_] := a[n] = If[n == 0, 1, Sum[Sum[d^(k - k/d + 1), {d, Divisors[k]}] a[n - k], {k, 1, n}]/n]; Table[a[n], {n, 0, 20}]"
+    ],
+    "program": [
+        "(PARI) N=40; x='x+O('x^N); Vec(1/prod(k=1, N, 1-k^(k-1)*x^k)) \\\\ _Seiichi Manyama_, Aug 22 2020"
+    ],
+    "xref": [
+        "Cf. A023879, A023882, A266964, A299786, A300579."
+    ],
+    "keyword": "nonn",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Jan 21 2019",
+    "references": 2,
+    "revision": 17,
+    "time": "2020-08-22T11:08:32-04:00",
+    "created": "2019-01-22T08:48:54-05:00"
+}

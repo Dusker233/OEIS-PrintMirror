@@ -1,0 +1,46 @@
+{
+    "number": 25523,
+    "data": "1,2,3,5,6,9,10,14,16,19,20,28,29,32,35,43,44,52,53,61,64,67,68,88,90,93,97,105,106,119,120,136,139,142,145,171,172,175,178,198,199,212,213,221,229,232,233,281,283,291,294,302,303,323,326,346,349,352,353,397,398,401",
+    "name": "a(n) = 1 + Sum_{ k < n and k | n} a(k).",
+    "comment": [
+        "Permanent of n X n (0,1) matrix defined by A(i,j)=1 iff j=1 or i divides j. - _Vladeta Jovovic_, Jul 05 2003",
+        "Partial sums of A074206, ordered factorizations. - _Augustine O. Munagi_, Jul 10 2007",
+        "The subsequence of primes begins: 2, 3, 5, 19, 29, 43, 53, 61, 67, 97, 139, 199, 229, 233, 281, 283, 349, 353, 397, 401. - _Jonathan Vos Post_"
+    ],
+    "link": [
+        "Seiichi Manyama, <a href=\"/A025523/b025523.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Herbert S. Wilf, <a href=\"https://doi.org/10.37236/1867\">The Redheffer matrix of a partially ordered set</a>, The Electronic Journal of Combinatorics, Volume 11(2), 2004, R#10."
+    ],
+    "formula": [
+        "Running sum of A002033.",
+        "a(n) = 1 + Sum_{k = 2 to n} a([n/k]). [Mitchell Lee (worthawholephan(AT)gmail.com), Jul 26 2010]",
+        "G.f. A(x) satisfies: A(x) = (1/(1 - x)) * (x + Sum_{k>=2} (1 - x^k) * A(x^k)). - _Ilya Gutkovskiy_, Aug 11 2021"
+    ],
+    "program": [
+        "(Python)",
+        "from functools import lru_cache",
+        "@lru_cache(maxsize=None)",
+        "def A025523(n):",
+        "    if n == 0:",
+        "        return 1",
+        "    c, j = 2, 2",
+        "    k1 = n//j",
+        "    while k1 > 1:",
+        "        j2 = n//k1 + 1",
+        "        c += (j2-j)*A025523(k1)",
+        "        j, k1 = j2, n//j2",
+        "    return n+c-j # _Chai Wah Wu_, Mar 30 2021"
+    ],
+    "xref": [
+        "Cf. A002321, A022825, A347031.",
+        "Cf. A074206, A002033.",
+        "A173382 is an essentially identical sequence."
+    ],
+    "keyword": "nonn",
+    "offset": "1,2",
+    "author": "_David W. Wilson_",
+    "references": 9,
+    "revision": 38,
+    "time": "2023-03-31T14:07:00-04:00",
+    "created": "1999-12-11T03:00:00-05:00"
+}

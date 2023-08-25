@@ -1,0 +1,68 @@
+{
+    "number": 75870,
+    "data": "2,10,58,338,1970,11482,66922,390050,2273378,13250218,77227930,450117362,2623476242,15290740090,89120964298,519435045698,3027489309890,17645500813642,102845515571962,599427592618130,3493720040136818,20362892648202778,118683635849079850",
+    "name": "Numbers k such that 2*k^2 - 4 is a square.",
+    "comment": [
+        "Lim_{n->infinity} a(n)/a(n-1) = 3 + 2*sqrt(2).",
+        "Also gives solutions to the equation x^2-2 = floor(x*r*floor(x/r)) where r=sqrt(2). - _Benoit Cloitre_, Feb 14 2004",
+        "The upper intermediate convergents to 2^(1/2) beginning with 10/7, 58/41, 338/239, 1970/1393 form a strictly decreasing sequence; essentially, numerators = A075870, denominators = A002315. - _Clark Kimberling_, Aug 27 2008",
+        "Numbers n such that sqrt(floor(n^2/2 - 1)) is an integer. The integer square roots are given by A002315. - _Richard R. Forberg_, Aug 01 2013",
+        "a(n) are the integer square roots of m^2 + (m+2)^2. The values of m are given by A065113 (except for m = 0). The values of this expression are given by A165518. - _Richard R. Forberg_, Aug 15 2013",
+        "Values of x (or y) in the solutions to x^2 - 6*x*y + y^2 + 16 = 0. - _Colin Barker_, Feb 04 2014",
+        "Also integers k such that k^2 is equal to the sum of four consecutive triangular numbers. - _Colin Barker_, Dec 20 2014",
+        "Equivalently, numbers x such that (x-1)*x/2 + x*(x+1)/2 = (y-1)^2 + (y+1)^2. y-values are listed in A002315. Example: for x=58 and y=41, 57*58/2 + 58*59/2 = 40^2 + 42^2. - _Bruno Berselli_, Mar 19 2018"
+    ],
+    "reference": [
+        "A. H. Beiler, \"The Pellian\", ch. 22 in Recreations in the Theory of Numbers: The Queen of Mathematics Entertains. Dover, New York, New York, pp. 248-268, 1966.",
+        "L. E. Dickson, History of the Theory of Numbers, Vol. II, Diophantine Analysis. AMS Chelsea Publishing, Providence, Rhode Island, 1999, pp. 341-400.",
+        "Peter G. L. Dirichlet, Lectures on Number Theory (History of Mathematics Source Series, V. 16); American Mathematical Society, Providence, Rhode Island, 1999, pp. 139-147.",
+        "P.-F. Teilhet, Reply to Query 2094, L'Interm\u00e9diaire des Math\u00e9maticiens, 10 (1903), 235-238. - _N. J. A. Sloane_, Mar 03 2022"
+    ],
+    "link": [
+        "Colin Barker, <a href=\"/A075870/b075870.txt\">Table of n, a(n) for n = 1..1000</a>",
+        "Tanya Khovanova, <a href=\"http://www.tanyakhovanova.com/RecursiveSequences/RecursiveSequences.html\">Recursive Sequences</a>",
+        "J. J. O'Connor and E. F. Robertson, <a href=\"http://www-gap.dcs.st-and.ac.uk/~history/HistTopics/Pell.html\">Pell's Equation</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/PellEquation.html\">Pell Equation.</a>",
+        "<a href=\"/index/Rec#order_02\">Index entries for linear recurrences with constant coefficients</a>, signature (6,-1)."
+    ],
+    "formula": [
+        "a(n) = 2 * A001653(n).",
+        "a(n) = (1/sqrt(2))*((1+sqrt(2))^(2*n-1) - (1-sqrt(2))^(2*n-1)) = 6*a(n-1) - a(n-2).",
+        "G.f.: 2*x*(1-x)/(1-6*x+x^2). - _Philippe Del\u00e9ham_, Nov 17 2008",
+        "a(n) = round(((2+sqrt(2))*(3+2*sqrt(2))^(n-1))/2). - _Paul Weisenhorn_, Jun 11 2020",
+        "From _Peter Bala_, Aug 21 2022: (Start)",
+        "a(n) = 2*Pell(2*n-1).",
+        "1/a(n) - 1/a(n+1) = 1/(Pell(2*n) + 1/Pell(2*n)), where Pell(n) = A000129(n). (End)"
+    ],
+    "example": [
+        "From _Muniru A Asiru_, Mar 19 2018: (Start)",
+        "For k=2, 2*2^2 - 4 = 8 - 4 = 4 = 2^2.",
+        "For k=10, 2*10^2 - 4 = 200 - 4 =  196 = 14^2.",
+        "For k=58, 2*58^2 - 4 = 6728 - 4 =  6724 = 82^2.",
+        "... (End)"
+    ],
+    "maple": [
+        "a:= proc(n) option remember: if n = 1 then 2 elif n = 2 then 10 elif  n >= 3 then 6*procname(n-1) - procname(n-2) fi; end: seq(a(n), n = 0..25); # _Muniru A Asiru_, Mar 19 2018"
+    ],
+    "mathematica": [
+        "LinearRecurrence[{6,-1},{2,10},30] (* _Harvey P. Dale_, Sep 27 2018 *)"
+    ],
+    "program": [
+        "(PARI) Vec(2*x*(1-x)/(1-6*x+x^2) + O(x^100)) \\\\ _Colin Barker_, Dec 20 2014",
+        "(GAP) a:=[2,10];; for n in [3..25] do a[n]:=6*a[n-1]-a[n-2]; od; a; # _Muniru A Asiru_, Mar 19 2018"
+    ],
+    "xref": [
+        "Cf. A000129, A000217, A000290, A002315.",
+        "Twice A001653."
+    ],
+    "keyword": "nonn,easy",
+    "offset": "1,1",
+    "author": "_Gregory V. Richardson_, Oct 16 2002",
+    "ext": [
+        "More terms from _Colin Barker_, Dec 20 2014"
+    ],
+    "references": 14,
+    "revision": 82,
+    "time": "2022-08-23T09:52:04-04:00",
+    "created": "2003-05-16T03:00:00-04:00"
+}
