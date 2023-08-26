@@ -1,9 +1,9 @@
 name: Daily Update OEIS Printed Mirror
 
-on:
-  schedule:
-    - cron: '0 8 * * *'
-# on: workflow_dispatch
+# on:
+#   schedule:
+#     - cron: '0 8 * * *'
+on: workflow_dispatch
 
 jobs:
   Update-Printed-Mirror:
@@ -70,15 +70,19 @@ jobs:
         git commit -m "Daily document update"
         git push
 
+    - name: Get Current Date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: Daily_Update
-        release_name: Daily Update
-        body: Daily update pdf
+        tag_name: Daily_Update_${{ steps.date.outputs.date }}
+        release_name: Daily Update-${{ steps.date.outputs.date }}
+        body: Daily update pdf-${{ steps.date.outputs.date }}
         draft: false
         prerelease: false
 
