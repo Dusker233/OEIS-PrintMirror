@@ -1,0 +1,65 @@
+{
+    "number": 365044,
+    "data": "1,2,3,5,9,20,43,96,207,442,925,1913,3911,7947,16061",
+    "name": "Number of subsets of {1..n} whose greatest element cannot be written as a (strictly) positive linear combination of the others.",
+    "comment": [
+        "Sets of this type may be called \"positive combination-free\".",
+        "Also subsets of {1..n} such that no element can be written as a (strictly) positive linear combination of the others."
+    ],
+    "link": [
+        "S. R. Finch, <a href=\"/A066062/a066062.pdf\">Monoids of natural numbers</a>, March 17, 2009."
+    ],
+    "formula": [
+        "a(n) = 2^n - A365043(n)."
+    ],
+    "example": [
+        "The subset S = {3,5,6,8} has 6 = 2*3 + 0*5 + 0*8 and 8 = 1*3 + 1*5 + 0*6 but neither of these is strictly positive, so S is counted under a(8).",
+        "The a(0) = 1 through a(5) = 20 subsets:",
+        "  {}  {}   {}   {}     {}         {}",
+        "      {1}  {1}  {1}    {1}        {1}",
+        "           {2}  {2}    {2}        {2}",
+        "                {3}    {3}        {3}",
+        "                {2,3}  {4}        {4}",
+        "                       {2,3}      {5}",
+        "                       {3,4}      {2,3}",
+        "                       {2,3,4}    {2,5}",
+        "                       {1,2,3,4}  {3,4}",
+        "                                  {3,5}",
+        "                                  {4,5}",
+        "                                  {2,3,4}",
+        "                                  {2,4,5}",
+        "                                  {3,4,5}",
+        "                                  {1,2,3,4}",
+        "                                  {1,2,3,5}",
+        "                                  {1,2,4,5}",
+        "                                  {1,3,4,5}",
+        "                                  {2,3,4,5}",
+        "                                  {1,2,3,4,5}"
+    ],
+    "mathematica": [
+        "combp[n_,y_]:=With[{s=Table[{k,i},{k,y},{i,1,Floor[n/k]}]},Select[Tuples[s],Total[Times@@@#]==n&]];",
+        "Table[Length[Select[Subsets[Range[n]],And@@Table[combp[Last[#],Union[Most[#]]]=={},{k,Length[#]}]&]],{n,0,10}]"
+    ],
+    "xref": [
+        "The binary version is A007865, first differences A288728.",
+        "The binary complement is A093971, first differences A365070.",
+        "Without re-usable parts we have A151897, first differences A365071.",
+        "The nonnegative version is A326083, first differences A124506.",
+        "A sub-class is A341507.",
+        "The nonnegative complement is A364914, first differences A365046.",
+        "The complement is counted by A365043, first differences A365042.",
+        "First differences are A365045.",
+        "A085489 and A364755 count subsets w/o the sum of two distinct elements.",
+        "A088809 and A364756 count subsets with the sum of two distinct elements.",
+        "A364350 counts combination-free strict partitions, complement A364839.",
+        "A364913 counts combination-full partitions.",
+        "Cf. A006951, A237113, A237668, A308546, A324736, A326020, A326080, A364272, A364349, A364534, A365069."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Aug 26 2023",
+    "references": 1,
+    "revision": 9,
+    "time": "2023-08-26T21:55:52-04:00",
+    "created": "2023-08-26T21:55:52-04:00"
+}

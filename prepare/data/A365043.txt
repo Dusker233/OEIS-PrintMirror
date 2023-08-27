@@ -1,0 +1,57 @@
+{
+    "number": 365043,
+    "data": "0,0,1,3,7,12,21,32,49,70,99,135,185,245,323",
+    "name": "Number of subsets of {1..n} whose greatest element can be written as a (strictly) positive linear combination of the others.",
+    "comment": [
+        "Sets of this type may be called \"positive combination-full\".",
+        "Also subsets of {1..n} such that some element can be written as a (strictly) positive linear combination of the others."
+    ],
+    "link": [
+        "S. R. Finch, <a href=\"/A066062/a066062.pdf\">Monoids of natural numbers</a>, March 17, 2009."
+    ],
+    "formula": [
+        "a(n) = 2^n - A365044(n)."
+    ],
+    "example": [
+        "The subset S = {3,4,9} has 9 = 3*3 + 0*4, but this is not strictly positive, so S is not counted under a(9).",
+        "The subset S = {3,4,10} has 10 = 2*3 + 1*4, so S is counted under a(10).",
+        "The a(0) = 0 through a(5) = 12 subsets:",
+        "  .  .  {1,2}  {1,2}    {1,2}    {1,2}",
+        "               {1,3}    {1,3}    {1,3}",
+        "               {1,2,3}  {1,4}    {1,4}",
+        "                        {2,4}    {1,5}",
+        "                        {1,2,3}  {2,4}",
+        "                        {1,2,4}  {1,2,3}",
+        "                        {1,3,4}  {1,2,4}",
+        "                                 {1,2,5}",
+        "                                 {1,3,4}",
+        "                                 {1,3,5}",
+        "                                 {1,4,5}",
+        "                                 {2,3,5}"
+    ],
+    "mathematica": [
+        "combp[n_,y_]:=With[{s=Table[{k,i},{k,y},{i,1,Floor[n/k]}]},Select[Tuples[s],Total[Times@@@#]==n&]];",
+        "Table[Length[Select[Rest[Subsets[Range[n]]],combp[Last[#],Union[Most[#]]]!={}&]],{n,0,10}]"
+    ],
+    "xref": [
+        "The binary complement is A007865, first differences A288728.",
+        "The binary version is A093971, first differences A365070.",
+        "The nonnegative complement is A326083, first differences A124506.",
+        "The nonnegative version is A364914, first differences A365046.",
+        "First differences are A365042.",
+        "The complement is counted by A365044, first differences A365045.",
+        "Without re-usable parts we have A364534, first differences A365069.",
+        "A085489 and A364755 count subsets with no sum of two distinct elements.",
+        "A088809 and A364756 count subsets with some sum of two distinct elements.",
+        "A364350 counts combination-free strict partitions, complement A364839.",
+        "A364913 counts combination-full partitions.",
+        "Cf. A151897, A237113, A237668, A308546, A324736, A326020, A326080, A364272."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Aug 25 2023",
+    "references": 1,
+    "revision": 7,
+    "time": "2023-08-26T21:55:57-04:00",
+    "created": "2023-08-26T21:55:57-04:00"
+}

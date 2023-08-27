@@ -1,0 +1,33 @@
+{
+    "number": 364405,
+    "data": "12,16,20,24,38,46,48,50,54,56,66,70,78,81,84,88,91,96,98,99,100,104,116,122,126,130,132,135,138,141,148,150,155,156,161,162,164,166,168,176,180,182,193,196,200,201,204,205,210,212,214,218,220,228,232,234,236",
+    "name": "Numbers k such that k is never the smallest number which requires the maximum number of steps for the Euclidean algorithm for computing gcd(k,m) for any m > k.",
+    "comment": [
+        "Positive numbers not in A084242."
+    ],
+    "program": [
+        "(Ruby)",
+        "def gcdsteps(k, m)",
+        "  k.zero? ? 0 : 1 + gcdsteps(m % k, k)",
+        "end",
+        "flags = [nil, *1..2000]",
+        "(1..flags.length).each do |m|",
+        "  scores = []",
+        "  (1..m).each do |k|",
+        "    scores << [gcdsteps(k, m), k]",
+        "  end",
+        "  flags[scores.sort_by { |n| -n[0] }.first[1]] = nil",
+        "end",
+        "puts flags[1..flags.length / 2].compact"
+    ],
+    "xref": [
+        "Cf. A084242, A051010."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_John Metcalf_, Jul 22 2023",
+    "references": 0,
+    "revision": 19,
+    "time": "2023-08-26T02:52:53-04:00",
+    "created": "2023-08-26T02:52:53-04:00"
+}
