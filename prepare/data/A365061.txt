@@ -1,0 +1,40 @@
+{
+    "number": 365061,
+    "data": "1,2,21,196,2105,27636,451003,8938056,207358929,5451691060,158802143621,5051104945272,173783789845861,6424902913267216,253983495283150095,10692693172088104336,477787129703211313697,22591854186020941025268,1127404525137567577764013",
+    "name": "a(n) is the number of endofunctions on an n-set where there is a single element with a preimage of maximum cardinality.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A365061/b365061.txt\">Table of n, a(n) for n = 1..340</a>"
+    ],
+    "formula": [
+        "a(n) = n*Sum_{b=1..n} binomial(n,b)*(n-b)!*[z^(n-b)](e^z*Gamma(b,z)/Gamma(b))^(n-1).",
+        "a(n) mod 2 = A000035(n). - _Alois P. Heinz_, Aug 25 2023"
+    ],
+    "maple": [
+        "a:= proc(m) option remember; m*add(binomial(m, j)*",
+        "      b(m-j, min(j-1, m-j), m-1), j=1..m)",
+        "    end:",
+        "b:= proc(n, i, t) option remember; `if`(n=0, 1, add(",
+        "      b(n-j, i, t-1) *binomial(n-1, j-1)*t, j=1..min(n, i)))",
+        "    end:",
+        "seq(a(n), n=1..20);  # _Alois P. Heinz_, Aug 25 2023"
+    ],
+    "mathematica": [
+        "seriesCoeff[n_, b_] := seriesCoeff[n, b] = SeriesCoefficient[(Exp[z]*Gamma[b, z]/Gamma[b])^(n - 1), {z, 0, n - b}]; a[n_] := n*Total[Table[Binomial[n, b]*(n - b)!*seriesCoeff[n, b], {b, 1, n}]]; Monitor[Table[a[n], {n, 1, 19}], {n - 1, a[n - 1]}] (* _Robert P. P. McKone_, Aug 26 2023 *)"
+    ],
+    "program": [
+        "(Maxima) a(n):=n*sum(binomial(n,b)*(n-b)!*coeff(taylor((exp(z)* gamma_incomplete_regularized(b,z))^(n-1),z,0,n),z,n-b),b,1,n);"
+    ],
+    "xref": [
+        "Cf. A000035, A000312 (endofunctions), A351118."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Aaron O. Schweiger_, Aug 19 2023",
+    "ext": [
+        "a(16)-a(19) from _Alois P. Heinz_, Aug 25 2023"
+    ],
+    "references": 0,
+    "revision": 40,
+    "time": "2023-08-27T13:18:07-04:00",
+    "created": "2023-08-27T01:45:32-04:00"
+}

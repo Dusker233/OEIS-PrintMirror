@@ -1,0 +1,55 @@
+{
+    "number": 365068,
+    "data": "0,0,0,1,2,4,7,10,16,23,34,44,67,85,119,157,210,268,360,453,592,748,956,1195,1520,1883,2365,2920,3628,4451,5494",
+    "name": "Number of integer partitions of n with some part that can be written as a nonnegative linear combination of the other distinct parts.",
+    "comment": [
+        "These may be called \"non-binary nonnegative combination-full\" partitions.",
+        "Does not necessarily include all non-strict partitions (A047967)."
+    ],
+    "example": [
+        "The partition (5,4,3,3) has no part that can be written as a nonnegative linear combination of the others, so is not counted under a(15).",
+        "The partition (6,4,3,2) has 6 = 1*2 + 1*4, so is counted under a(15). The combinations 6 = 2*3 = 3*2 and 4 = 2*2 can also be used.",
+        "The a(3) = 1 through a(8) = 16 partitions:",
+        "  (21)  (31)   (41)    (42)     (61)      (62)",
+        "        (211)  (221)   (51)     (331)     (71)",
+        "               (311)   (321)    (421)     (422)",
+        "               (2111)  (411)    (511)     (431)",
+        "                       (2211)   (2221)    (521)",
+        "                       (3111)   (3211)    (611)",
+        "                       (21111)  (4111)    (3221)",
+        "                                (22111)   (3311)",
+        "                                (31111)   (4211)",
+        "                                (211111)  (5111)",
+        "                                          (22211)",
+        "                                          (32111)",
+        "                                          (41111)",
+        "                                          (221111)",
+        "                                          (311111)",
+        "                                          (2111111)"
+    ],
+    "mathematica": [
+        "combs[n_,y_]:=With[{s=Table[{k,i},{k,y},{i,0,Floor[n/k]}]}, Select[Tuples[s],Total[Times@@@#]==n&]];",
+        "Table[Length[Select[IntegerPartitions[n], Function[ptn,Or@@Table[combs[ptn[[k]], DeleteCases[ptn,ptn[[k]]]]!={}, {k,Length[ptn]}]]]],{n,0,5}]"
+    ],
+    "xref": [
+        "The complement for sums instead of combinations is A237667, binary A236912.",
+        "For sums instead of combinations we have A237668, binary A237113.",
+        "The strict case is A364839, complement A364350.",
+        "Allowing equal parts in the combination gives A364913.",
+        "For subsets instead of partitions we have A364914, complement A326083.",
+        "The complement is A364915.",
+        "A000041 counts integer partitions, strict A000009.",
+        "A008284 counts partitions by length, strict A008289.",
+        "A116861 and A364916 count linear combinations of strict partitions.",
+        "A323092 counts double-free partitions, ranks A320340.",
+        "A364912 counts linear combinations of partitions of k.",
+        "Cf. A108917, A151897, A364272, A364910, A364911, A365006."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,5",
+    "author": "_Gus Wiseman_, Aug 27 2023",
+    "references": 0,
+    "revision": 8,
+    "time": "2023-08-27T23:21:21-04:00",
+    "created": "2023-08-27T23:21:21-04:00"
+}
