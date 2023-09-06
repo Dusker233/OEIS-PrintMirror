@@ -1,0 +1,47 @@
+{
+    "number": 365379,
+    "data": "0,1,3,5,10,14,27,35,61,83,128,166,264,327,482,632,882,1110,1565,1938,2663",
+    "name": "Number of integer partitions with sum <= n whose distinct parts can be linearly combined using nonnegative coefficients to obtain n.",
+    "example": [
+        "The partition (4,2,2) cannot be linearly combined to obtain 9, so is not counted under a(9). On the other hand, the same partition (4,2,2) has distinct parts {2,4} and has 10 = 1*2 + 2*4, so is counted under a(10).",
+        "The a(1) = 1 through a(5) = 14 partitions:",
+        "  (1)  (1)   (1)    (1)     (1)",
+        "       (2)   (3)    (2)     (5)",
+        "       (11)  (11)   (4)     (11)",
+        "             (21)   (11)    (21)",
+        "             (111)  (21)    (31)",
+        "                    (22)    (32)",
+        "                    (31)    (41)",
+        "                    (111)   (111)",
+        "                    (211)   (211)",
+        "                    (1111)  (221)",
+        "                            (311)",
+        "                            (1111)",
+        "                            (2111)",
+        "                            (11111)"
+    ],
+    "mathematica": [
+        "combs[n_,y_]:=With[{s=Table[{k,i},{k,y},{i,0,Floor[n/k]}]},Select[Tuples[s],Total[Times@@@#]==n&]];",
+        "Table[Length[Select[Join@@Array[IntegerPartitions,n],combs[n,Union[#]]!={}&]],{n,0,10}]"
+    ],
+    "xref": [
+        "For subsets with positive coefficients we have A088314, complement A088528.",
+        "The case of strict partitions with positive coefficients is also A088314.",
+        "The version for subsets is A365073, complement A365074.",
+        "The case of strict partitions is A365311, complement A365312.",
+        "The complement is counted by A365378.",
+        "A000041 counts integer partitions, strict A000009.",
+        "A008284 counts partitions by length, strict A008289.",
+        "A116861 and A364916 count linear combinations of strict partitions.",
+        "A364350 counts combination-free strict partitions, non-strict A364915.",
+        "A364839 counts combination-full strict partitions, non-strict A364913.",
+        "Cf. A237668, A363225, A364272, A364345, A364914, A365320, A365382."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Sep 04 2023",
+    "references": 0,
+    "revision": 5,
+    "time": "2023-09-05T08:15:45-04:00",
+    "created": "2023-09-05T08:15:45-04:00"
+}
