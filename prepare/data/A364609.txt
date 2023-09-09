@@ -1,0 +1,33 @@
+{
+    "number": 364609,
+    "data": "1,5,9,13,18,22,26,30,34,38,42,46,50,55,59,63,67,71,75,79,83,87,92,96,100,104,108,112,116,120,124,129,133,137,141,145,149,153,157,161,166,170,174,178,182,186,190,194,198,203,207,211,215,219,223,227,231",
+    "name": "a(n) = greatest integer k such that 1/n + 1/(n + 1) + ... + 1/k < sqrt(2).",
+    "comment": [
+        "In general, if r > 0 and n > 1, then a(n) is the number k such that h(k) <= r + h(n-1) < h(k+1), where h(m) = m-th harmonic number. Since h(n) is approximately g + log(n+1/2), where g = Euler-Mascheroni constant (A001620), it is easy to prove that a(n) or a(n)-1 is the number floor(n*e^r - (1+e^r)/2). Thus, the difference sequence of (a(n)) has at most two distinct numbers; for r = sqrt(2), the two numbers are 4 and 5."
+    ],
+    "example": [
+        "a(3) = 9 because 1/3 + 1/4 + ... + 1/9 < sqrt(2) < 1/3 + 1/4 + ... + 1/10."
+    ],
+    "mathematica": [
+        "r = Sqrt[2]; h[n_] := HarmonicNumber[n];",
+        "a[n_] : = Select[Range[500], h[#] <= r + h[n - 1] < h[# + 1] & ]",
+        "Flatten[Table[a[n], {n, 1, 70}]]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import accumulate, count",
+        "from fractions import Fraction",
+        "def A364609(n): return next(x[0]+n-1 for x in enumerate(accumulate(Fraction(1,k) for k in count(n))) if x[1]**2 >= 2) # _Chai Wah Wu_, Sep 07 2023",
+        "(PARI) a(n) = my(k=0); while (sum(i=n, n+k, 1/i)^2 < 2, k++); n+k-1; \\\\ _Michel Marcus_, Sep 08 2023"
+    ],
+    "xref": [
+        "Cf. A001620, A136616, A357923, A363993."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Sep 06 2023",
+    "references": 1,
+    "revision": 19,
+    "time": "2023-09-08T07:09:22-04:00",
+    "created": "2023-09-08T02:21:58-04:00"
+}
