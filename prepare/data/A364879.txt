@@ -1,0 +1,55 @@
+{
+    "number": 364879,
+    "data": "2,6,10,28,126,520,1394,4440,11765,35702,98202,271718,736814,2012631,5478367,14867499,40448112,109944053,298170203,810416222,2200884471,5980529528",
+    "name": "a(n) is the smallest number k such that (sum of composites <= k) / (sum of primes <= k) >= n.",
+    "comment": [
+        "a(n)+1 is a prime for n = 0, 1, 2, 3, 4, 5, and 7 (thus, for n = 1, 2, 3, 4, 5, and 7, a(n) is the last of a run of consecutive composites), but not for n = 6, nor for any n in 8..16.",
+        "For n > 0, a(n) is at least the n-th in a run of consecutive composites. a(15) is the 58th in a run of 71 consecutive composites."
+    ],
+    "formula": [
+        "a(n) = min {k : (Sum_{c<=k, c composite} c)/(Sum_{p<=k, p prime} p) >= n}.",
+        "a(n) = min {k>1 : k(k+1)-1>=2*A034387(k)*(n+1)}. - _Chai Wah Wu_, Sep 10 2023"
+    ],
+    "example": [
+        "Let Sp(k) and Sc(k) be the sums of the primes <= k and the composites <= k, respectively. Then the sums and ratios begin as follows:",
+        ".",
+        "   k | Sp(k) | Sc(k) | Sc(k)/Sp(k)",
+        "  ---+-------+-------+------------",
+        "   1 |     0 |     0 | (undefined)",
+        "   2 |     2 |     0 |  0/2  = 0         so a(0) =  2",
+        "   3 |     5 |     0 |  0/5  = 0",
+        "   4 |     5 |     4 |  4/5  = 0.8",
+        "   5 |    10 |     4 |  4/10 = 0.4",
+        "   6 |    10 |    10 | 10/10 = 1         so a(1) =  6",
+        "   7 |    17 |    10 | 10/17 = 0.5882...",
+        "   8 |    17 |    18 | 18/17 = 1.0588...",
+        "   9 |    17 |    27 | 27/17 = 1.5882...",
+        "  10 |    17 |    37 | 37/17 = 2.1764... so a(2) = 10"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        "from sympy import isprime",
+        "def A364879(n):",
+        "    c, cn, m = 0, 0, n+1<<1",
+        "    for k in count(2):",
+        "        if isprime(k):",
+        "            c += k",
+        "            cn += k*m",
+        "        if k*(k+1)-1 >= cn:",
+        "            return k # _Chai Wah Wu_, Sep 10 2023"
+    ],
+    "xref": [
+        "Cf. A000040, A002808, A007504, A034387, A053767, A101256."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,1",
+    "author": "_Jon E. Schoenfield_, Sep 10 2023",
+    "ext": [
+        "a(17)-a(21) from _Chai Wah Wu_, Sep 10 2023"
+    ],
+    "references": 0,
+    "revision": 18,
+    "time": "2023-09-11T01:47:14-04:00",
+    "created": "2023-09-10T18:08:47-04:00"
+}
