@@ -1,0 +1,63 @@
+{
+    "number": 364237,
+    "data": "1,1,2,4,42,504,7492,172480,8639632",
+    "name": "a(n) is the number of non-equivalent permutations of {1,2,...,2n-1} such that no subset of consecutive terms from the permutation sums to 0 modulo 2n, where two permutations are equivalent if one can be obtained from the other by multiplying every entry with an integer relatively prime to 2n and/or reversing the permutation.",
+    "comment": [
+        "If we consider all permutations of {1,2,...,2n-1} such that no subset of consecutive terms from the permutation sums to 0 modulo 2n, then the number of such permutations is given by the number of constructive orderings mentioned in A141599. For example, given the permutation 14325 that satisfies the given conditions, observe that the partial sums modulo 6, namely 1=1, 1+4=5, 1+4+3=2, 1+4+3+2=4, and 1+4+3+2+5=3, are distinct."
+    ],
+    "link": [
+        "Sunil K. Chebolu and Papa A. Sissokho, <a href=\"http://math.colgate.edu/~integers/w13/w13.pdf\">Zero-sum-free tuples and hyperplane arrangements</a>, Integers 22 (2022), #A13.",
+        "Sean A. Irvine, <a href=\"https://github.com/archmageirvine/joeis/blob/master/src/irvine/oeis/a364/A364237.java\">Java program</a> (github)"
+    ],
+    "example": [
+        "When n=3, there are four permutations of {1,2,3,4,5} such that no subset of consecutive terms from the permutation sums to 0 modulo 6, namely 14325, 25314, 41352, and 52341. Note that 14325 and 52341 are equivalent by reversing the permutations. Furthermore multiplication by 5 on every entry also yields the same equivalence. Additionally, 25314 and 41352 are analogously equivalent. Hence a(3)=2.",
+        "When n=4, 6142573 and 3752416 are equivalent by reversing the permutations but not by multiplying any integer relatively prime to 8, whereas 6142573 and 2346751 are equivalent by multiplication of 3 on every entry."
+    ],
+    "program": [
+        "(SageMath)",
+        "n = 3 #the index for the sequence a(n)",
+        "orbits = {} #dictionary of permutations that are consecutive zero-sum-free",
+        "seen = [] #list of seen permutations that are consecutive zero-sum-free",
+        "a = 0 #the value of a(n)",
+        "for labeling in Permutations(range(1,2*n)):",
+        "    if labeling not in seen:",
+        "        sums = [labeling[0]]",
+        "        for i in range(1,2*n-1):",
+        "            nextsum = (labeling[i] + sums[i-1]) % (2*n)",
+        "            if any([nextsum == 0, nextsum in sums]):",
+        "                break",
+        "            sums.append(nextsum)",
+        "        if len(sums) == (2*n)-1:",
+        "            a += 1",
+        "            orbits[a] = []",
+        "            for m in [x for x in range(1,2*n) if gcd(x,2*n) == 1]:",
+        "                equiv = [(m*labeling[i]) % (2*n) for i in range(2*n-1)]",
+        "                if equiv not in orbits[a]:",
+        "                    orbits[a].append(equiv)",
+        "                seen.append(equiv)",
+        "                equiv = [equiv[2*n-2-i] for i in range(2*n-1)]",
+        "                if equiv not in orbits[a]:",
+        "                    orbits[a].append(equiv)",
+        "                seen.append(equiv)",
+        "print(f\"a({n}) = {a}\\n\")",
+        "print(\"Equivalencies:\")",
+        "for i in range(1,a+1):",
+        "    print(f\"{i}.\")",
+        "    for x in orbits[i]:",
+        "        print(x)",
+        "    print('\\n')"
+    ],
+    "xref": [
+        "Cf. A141599."
+    ],
+    "keyword": "nonn,hard,more,new",
+    "offset": "1,3",
+    "author": "_Anna Coleman_, _Joshua Harrington_, _Maggie X. Lai_, _Philip Thomas_, and _Wing Hong Tony Wong_, Jul 18 2023",
+    "ext": [
+        "a(8)-a(9) from _Sean A. Irvine_, Aug 15 2023"
+    ],
+    "references": 0,
+    "revision": 14,
+    "time": "2023-09-11T23:02:43-04:00",
+    "created": "2023-09-11T23:02:43-04:00"
+}
