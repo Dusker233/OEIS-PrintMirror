@@ -1,0 +1,60 @@
+{
+    "number": 364581,
+    "data": "1,4,8,14,15,16,21,22,26,28,32,39,44,45,46,50,51,52,56,58,64,74,82,85,86,88,92,94,98,100,104,105,111,112,114,116,118,122,128,129,135,142,146,147,148,153,154,159,164,165,166,172,176,178,182,183,184,186,188",
+    "name": "Numbers k such that the number of iterations of psi(phi(x)) starting at x = k and terminating when psi(phi(x)) = x (k is counted), -1 otherwise is the same for phi(psi(k)).",
+    "comment": [
+        "Numbers k such that A364631(k) = A364642(k).",
+        "Conjecture: For each a(n), n > 1, a(n)*7 is a term.",
+        "Conjecture: For each even a(n), a(n)*2 is a term."
+    ],
+    "example": [
+        "a(1) = 1 is a term because A364631(1) = A364642(1).",
+        "a(2) = 4 is a term because A364631(4) = A364642(4).",
+        "a(3) = 8 is a term because A364631(8) = A364642(8)."
+    ],
+    "mathematica": [
+        "psi[n_] := n*Times @@ (1 + 1/FactorInteger[n][[;; , 1]]); psi[1] = 1; Select[Range[200], Length@ FixedPointList[EulerPhi[psi[#1]] &, #] == Length@ FixedPointList[psi[EulerPhi[#1]] &, #] &] (* _Amiram Eldar_, Aug 04 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.ntheory.factor_ import totient",
+        "from sympy import isprime, primefactors, prod",
+        "def psi(n):",
+        "    plist = primefactors(n)",
+        "    return n*prod(p+1 for p in plist)//prod(plist)",
+        "def a364631(n):",
+        "    i = 1",
+        "    r = n",
+        "    while (True):",
+        "        rc = totient(psi(r))",
+        "        if (rc == r):",
+        "            break;",
+        "        r = rc",
+        "        i += 1",
+        "    return i",
+        "def a364642(n):",
+        "    i = 1",
+        "    r = n",
+        "    while (True):",
+        "        rc = psi(totient(r))",
+        "        if (rc == r):",
+        "            break;",
+        "        r = rc",
+        "        i += 1",
+        "    return i",
+        "# Output display terms.",
+        "for n in range(1,222):",
+        "    if(a364631(n) == a364642(n)):",
+        "        print(n, end = \", \")"
+    ],
+    "xref": [
+        "Cf. A000010, A001615, A364631, A364642."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Torlach Rush_, Jul 28 2023",
+    "references": 0,
+    "revision": 56,
+    "time": "2023-09-13T23:12:52-04:00",
+    "created": "2023-09-13T23:12:52-04:00"
+}

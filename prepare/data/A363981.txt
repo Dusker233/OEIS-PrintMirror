@@ -1,0 +1,49 @@
+{
+    "number": 363981,
+    "data": "1,2,5,11,13,14,17,23,29,38,41,43,46,47,53,58,59,61,67,68,71,73,74,83,86,89,94,95,101,103,107,109,111,113,116,118,122,123,127,131,137,138,143,149,151,158,163,167,172,173,178,179,181,188,191,193,194,197",
+    "name": "Integers k such that the smallest integer with k factor pairs has an odd number of divisors.",
+    "comment": [
+        "A factor pair of an integer k is an unordered pair of positive integers (a,b) such that a*b=k.",
+        "A038549(n) = min(A005179(2n-1), A005179(2n)). This sequence contains values of k where A005179(2k-1) is smaller.",
+        "Also values k such that A038549(k) is a perfect square.",
+        "I do not know if this sequence is infinite or finite, however I have checked integers up to 20000 and continued to find values at a similar density."
+    ],
+    "example": [
+        "The smallest number with 5 factor pairs is 36: (1,36), (2,18), (3,12), (4,9), (6,6). 36 has an odd number of divisors, 9. Thus, 5 is a term."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy.utilities.iterables import multiset_partitions",
+        "from sympy.ntheory import factorint, prime",
+        "import math",
+        "def smallestNumWithNDivisors(n):",
+        "    partitionsOfPrimeFactors = multiset_partitions(factorint(n, multiple=True))",
+        "    candidates = []",
+        "    for partition in partitionsOfPrimeFactors:",
+        "        factorization = []",
+        "        for subset in partition:",
+        "            factorization.append(math.prod(subset))",
+        "        factorization.sort()",
+        "        factorization.reverse()",
+        "        candidate = 1",
+        "        for j in range(0, len(factorization)):",
+        "            candidate *= prime(j+1)**(factorization[j]-1)",
+        "        candidates.append(candidate)",
+        "    return min(candidates)",
+        "for k in range(1,200):",
+        "    if smallestNumWithNDivisors(2*k-1)<smallestNumWithNDivisors(2*k):",
+        "        print(k , end=', ')",
+        "(PARI) f(n) = min(A005179(2*n-1), A005179(2*n)); \\\\ A038549",
+        "isok(k) = issquare(f(k)); \\\\ _Michel Marcus_, Jul 07 2023"
+    ],
+    "xref": [
+        "Cf. A005179, A038548, A038549, A000005."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Henry Nonnemaker_, Jul 02 2023",
+    "references": 1,
+    "revision": 48,
+    "time": "2023-09-14T00:53:51-04:00",
+    "created": "2023-09-14T00:53:51-04:00"
+}
