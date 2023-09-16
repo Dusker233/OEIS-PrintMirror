@@ -1,0 +1,48 @@
+{
+    "number": 365617,
+    "data": "1,1,2,24,421200,13257209623458438290962108800",
+    "name": "Iterated Pochhammer symbol.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A365617/b365617.txt\">Table of n, a(n) for n = 0..6</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Falling_and_rising_factorials\">Falling and rising factorials</a>"
+    ],
+    "formula": [
+        "a(n) = Pochhammer(...(Pochhammer(Pochhammer(1, 2), 3), ...), n).",
+        "a(n) = gamma(n + a(n-1)) / gamma(a(n-1)).",
+        "a(n) = Product_{j=0..n-1} (j + a(n-1)), a(0) = 1. - _Alois P. Heinz_, Sep 12 2023"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<0, 0,",
+        "      (z-> mul(z+j, j=0..n-1))(a(n-1)))",
+        "    end:",
+        "seq(a(n), n=0..5);  # _Alois P. Heinz_, Sep 12 2023"
+    ],
+    "mathematica": [
+        "FoldList[Pochhammer, 1, Range[5]] (* _Amiram Eldar_, Sep 12 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from gmpy2 import *",
+        "from functools import reduce",
+        "gamma = lambda n: fac(n - 1)",
+        "Pochhammer = lambda z,n: gamma(n + z) // gamma(z)",
+        "list_Pochhammer = lambda lst: int(reduce((lambda x, y: Pochhammer(x, y)), lst)) if len(lst) > 0 else 1",
+        "print([list_Pochhammer(range(1, n + 1)) for n in range(0, 6)])",
+        "(Python)",
+        "from functools import reduce",
+        "from sympy import rf",
+        "def A365617(n): return reduce(rf,range(1,n+1),1) # _Chai Wah Wu_, Sep 15 2023",
+        "(PARI) P(x, y) = my(P=1); for (i=0, y-1, P *= x+i); P;\t",
+        "a(n) = my(x=1); n--; for (i=1, n, x = P(x, i+1)); x; \\\\ _Michel Marcus_, Sep 13 2023"
+    ],
+    "xref": [
+        "Cf. A000142, A000407, A038155, A055462, A112332, A266083."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,3",
+    "author": "_Dar\u00edo Clavijo_, Sep 12 2023",
+    "references": 0,
+    "revision": 50,
+    "time": "2023-09-15T16:24:21-04:00",
+    "created": "2023-09-15T15:59:50-04:00"
+}
