@@ -1,0 +1,49 @@
+{
+    "number": 365458,
+    "data": "1,1,3,3,3,3,3,3,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,81,81,81,81,81",
+    "name": "The largest power of 3 that is less than or equal to n.",
+    "link": [
+        "Michael De Vlieger, <a href=\"/A365458/b365458.txt\">Table of n, a(n) for n = 1..19683</a> (3^9 = 19683)"
+    ],
+    "formula": [
+        "a(n) = 3^floor((log n) / (log 3)). - _Michael De Vlieger_, Sep 17 2023",
+        "a(n) =  A000244(A062153(n)). - _Michel Marcus_, Sep 17 2023"
+    ],
+    "example": [
+        "a(2) = 1 because 3^0 = 1 <= 2.",
+        "a(3) = 3 because 3^1 = 3 <= 3.",
+        "a(4) = 3 because 3^1 = 3 <= 4."
+    ],
+    "mathematica": [
+        "Array[3^Floor@ Log[3, #] &, 90] (* _Michael De Vlieger_, Sep 17 2023 *)"
+    ],
+    "program": [
+        "(PARI) A365458(n) = if(1==n,n,my(k=0); while((3^k) < n, k++); if((3^k) > n,k--); (3^k));",
+        "(PARI) a(n) = 3^logint(n, 3); \\\\ _Michel Marcus_, Sep 17 2023",
+        "(Python)",
+        "def A365458(n):",
+        "    kmin, kmax = 0, 1",
+        "    while 3**kmax <= n:",
+        "        kmax <<= 1",
+        "    while True:",
+        "        kmid = kmax+kmin>>1",
+        "        if 3**kmid > n:",
+        "            kmax = kmid",
+        "        else:",
+        "            kmin = kmid",
+        "        if kmax-kmin <= 1:",
+        "            break",
+        "    return 3**kmin # _Chai Wah Wu_, Sep 17 2023"
+    ],
+    "xref": [
+        "Cf. A000244, A365459.",
+        "Cf. also A062153, A064235, A080342."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,3",
+    "author": "_Antti Karttunen_, Sep 17 2023",
+    "references": 0,
+    "revision": 22,
+    "time": "2023-09-17T18:27:42-04:00",
+    "created": "2023-09-17T11:25:57-04:00"
+}
