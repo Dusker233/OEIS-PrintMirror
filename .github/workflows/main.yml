@@ -55,13 +55,12 @@ jobs:
         ./main
 
     - name: Set up TeX Live
-      run: |
-        sudo apt-get update -q
-        sudo apt-get install -y texlive-full
-
+      uses: teatimeguest/setup-texlive-action@v2
+      
     - name: Compile TeX File into pdf File
       run: |
         cd print
+        xelatex -synctex=1 -interaction=nonstopmode oeis.tex
         xelatex -synctex=1 -interaction=nonstopmode oeis.tex
 
     - name: Commit and Push Changes
