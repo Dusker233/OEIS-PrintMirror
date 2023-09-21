@@ -1,9 +1,9 @@
 name: Daily Update OEIS Printed Mirror
 
-# on:
-#   schedule:
-#     - cron: '0 8 * * *'
-on: workflow_dispatch
+on:
+  schedule:
+    - cron: '0 8 * * *'
+# on: workflow_dispatch
 
 jobs:
   Update-Printed-Mirror:
@@ -54,12 +54,16 @@ jobs:
         sudo chmod 777 main
         ./main
       
+    - name: Set up TeX Live
+      run: |
+        sudo apt-get update -q
+        sudo apt-get install -y texlive-full
+        
     - name: Compile TeX File into pdf File
-      uses: dante-ev/latex-action@latest
-      with:
-        root_file: ./print/oeis.tex
-        compiler: xelatex
-        args: -interaction=nonstopmode -synctex=1
+      run: |
+        cd print
+        xelatex -synctex=1 -interaction=nonstopmode oeis.tex
+        xelatex -synctex=1 -interaction=nonstopmode oeis.tex
         
     - name: Commit and Push Changes
       run: |
