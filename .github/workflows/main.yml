@@ -56,12 +56,18 @@ jobs:
 
     - name: Set up TeX Live
       uses: teatimeguest/setup-texlive-action@v2
+      with:
+        packages: >-
+          scheme-basic
+          latexmk
       
     - name: Compile TeX File into pdf File
       run: |
         cd print
-        xetex -synctex=1 -interaction=nonstopmode oeis.tex
-        xetex -synctex=1 -interaction=nonstopmode oeis.tex
+        latexmk -xelatex -interaction=nonstopmode -synctex=1 "oeis.tex"
+        latexmk -xelatex -interaction=nonstopmode -synctex=1 "oeis.tex"
+        # xetex -synctex=1 -interaction=nonstopmode oeis.tex
+        # xetex -synctex=1 -interaction=nonstopmode oeis.tex
 
     - name: Commit and Push Changes
       run: |
