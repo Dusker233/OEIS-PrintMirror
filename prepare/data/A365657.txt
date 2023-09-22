@@ -1,0 +1,48 @@
+{
+    "number": 365657,
+    "data": "481,1924,4329,7696,12025,17316,23569,24961,28721,30784,38961,48100,58201,65441,69121,69264,81289,94276,99844,108225,113241,114884,123136,139009,155844,173641,192400,212121,224649,232804,254449,258489,261764,276484,277056,300625,325156",
+    "name": "Integers k such that k^2 can be written as the sum of three positive fourth powers.",
+    "comment": [
+        "Primitive solutions are in A365688.",
+        "From _Jon E. Schoenfield_, Sep 15 2023: (Start)",
+        "If k is a term, then so is m^2 * k for every m > 1.",
+        "Every even term is four times a smaller term.",
+        "Every odd term is the sum of one odd fourth power and two even fourth powers.",
+        "(End)"
+    ],
+    "reference": [
+        "Jean-Marie De Koninck, \"Those Fascinating Numbers\", AMS, 2008, entry 481."
+    ],
+    "example": [
+        "1924^2 = 24^4 + 30^4 + 40^4."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import integer_nthroot",
+        "def A365657_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for k in count(max(startvalue,1)):",
+        "        m, flag = k**2, False",
+        "        for x in count(1):",
+        "            if (x4:=x**4)+2>m or flag:",
+        "                break",
+        "            for y in range(min(x,integer_nthroot(m-x4-1,4)[0]),0,-1):",
+        "                if (z4:=m-x4-(y4:=y**4))>y4 or flag:",
+        "                    break",
+        "                if integer_nthroot(z4,4)[1]:",
+        "                    yield k",
+        "                    flag = True",
+        "                    break",
+        "A365657_list = list(islice(A365657_gen(),6)) # _Chai Wah Wu_, Sep 19 2023"
+    ],
+    "xref": [
+        "Cf. A003828, A365688."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Jud McCranie_, Sep 14 2023",
+    "references": 0,
+    "revision": 38,
+    "time": "2023-09-19T16:20:59-04:00",
+    "created": "2023-09-19T14:02:35-04:00"
+}
