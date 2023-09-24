@@ -1,0 +1,36 @@
+{
+    "number": 365858,
+    "data": "1,2,3,5,10,19,41,94,211,493,1170,2787,6713,16274,39651,97109,238838,589527,1459961,3626242,9030451,22542397,56393862,141358275,354975433,892893262,2249412291,5674891017,14335757586,36259245523,91815545801,232745229290,590586152235,1500020153485,3813274653414",
+    "name": "Number of cyclic compositions of 2*n-1 into odd parts.",
+    "comment": [
+        "Odd bisection of A032189.",
+        "Also the number of cyclic compositions into an odd number of odd parts; because such a sum must be odd, alternating terms are zero and have been removed."
+    ],
+    "formula": [
+        "G.f.: (1/2) * Sum_{k odd} (phi(k)/k)*log((1+x^k-x^(2k))/(1-x^k-x^(2*k))), where phi(n) = A000010(n).",
+        "a(n) = (1/(2*n-1)) * Sum_{k divides 2n-1} phi(k)*A000204((2*n-1)/k).",
+        "a(n) ~ ((1+sqrt(5))/2)^(2*n-1) / (2*n). - _Vaclav Kotesovec_, Sep 22 2023"
+    ],
+    "mathematica": [
+        "Table[1/(2*n - 1) * Sum[EulerPhi[k]*LucasL[(2*n - 1)/k], {k, Divisors[2*n - 1]}], {n, 1, 40}] (* _Vaclav Kotesovec_, Sep 22 2023 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "N=99;  x='x+O('x^N); B(x)=x/(1-x^2);",
+        "A=Vec(sum(k=1, N, eulerphi(k)/k*log(1/(1-B(x^k)))));",
+        "vector(#A\\2,n,A[2*n-1]) \\\\ _Joerg Arndt_, Sep 22 2023",
+        "(Python)",
+        "from sympy import totient, lucas, divisors",
+        "def A365858(n): return sum(totient(((n<<1)-1)//k)*(lucas(k)-((k&1^1)<<1)) for k in divisors((n<<1)-1,generator=True))//((n<<1)-1) # _Chai Wah Wu_, Sep 23 2023"
+    ],
+    "xref": [
+        "Cf. A000010, A000204 (Lucas), A032189, A365857, A365859."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Joshua P. Bowman_, Sep 20 2023",
+    "references": 0,
+    "revision": 22,
+    "time": "2023-09-23T15:18:06-04:00",
+    "created": "2023-09-23T12:12:49-04:00"
+}
