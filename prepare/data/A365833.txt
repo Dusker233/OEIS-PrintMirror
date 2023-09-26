@@ -1,0 +1,49 @@
+{
+    "number": 365833,
+    "data": "130,195,222,292,498,582,670,814,970,1362,1398,1534,1645,1813,1834,1978,2514,2717,2853,2865,2994,3092,3130,3157,3211,3462,3897,4527,4615,4707,4782,5529,6070,6610,7270,7399,7414,7527,7767,8029,8305,8687,8911,9994,10330,10390,11297,11557,11619,11679",
+    "name": "Triprimes a such that, if b is the next triprime, a + b and b - a are also triprimes.",
+    "comment": [
+        "It appears that in most cases b - a = 8."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A365833/b365833.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 222 ix a term because 222 = 2*3*37 is a triprime, the next triprime is 230 = 2  5 * 23, and 222 + 230 = 452 = 2^2 * 113 and 230 - 222 = 8 = 2^3 are triprimes."
+    ],
+    "maple": [
+        "with(priqueue);",
+        "a:= 8:  R:= NULL: count:= 0:",
+        "initialize(triprimes);",
+        "insert([-8,0,2],triprimes);",
+        "while count < 50 do",
+        "    v:= extract(triprimes);",
+        "    if v[2] = 3 then",
+        "      b:= -v[1];",
+        "      if numtheory:-bigomega(b-a) = 3 and numtheory:-bigomega(b+a)=3 then",
+        "        R:= R, a; count:= count+1",
+        "      fi;",
+        "      a:= b;",
+        "    else",
+        "      insert(v+[0,1,0],triprimes);",
+        "      q:= nextprime(v[3]);",
+        "      w:= v[1]*(q/v[3])^(3-v[2]);",
+        "      insert([w,v[2],q],triprimes)",
+        "    fi",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "Select[Partition[Select[Range[12000], PrimeOmega[#] == 3 &], 2, 1], AllTrue[{#1 + #2, #2 - #1}, PrimeOmega[#] == 3 &] & @@ # &][[All, 1]] (* _Michael De Vlieger_, Sep 20 2023 *)"
+    ],
+    "xref": [
+        "Cf. A014612."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Zak Seidov_ and _Robert Israel_, Sep 19 2023",
+    "references": 0,
+    "revision": 8,
+    "time": "2023-09-25T08:15:54-04:00",
+    "created": "2023-09-25T08:15:54-04:00"
+}

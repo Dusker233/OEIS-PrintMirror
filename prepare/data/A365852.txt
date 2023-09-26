@@ -1,0 +1,48 @@
+{
+    "number": 365852,
+    "data": "2,93,138,372,552,1488,2208,5952,8832,23808,35328,95232,141312,380928,565248,1523712,2260992,6094848,9043968,24379392,36175872,97517568,144703488,390070272,578813952,1560281088,2315255808,6241124352,9261023232,24964497408,37044092928,99857989632,148176371712",
+    "name": "a(1)= 2. For n > 1, a(n) is the least number k such that k, k - a(n-1) and k + a(n-1) all have n prime divisors counted by multiplicity.",
+    "formula": [
+        "For n >= 2, a(n) = 2^(n-2) * 3 * (27 + 4 * (-1)^n)."
+    ],
+    "example": [
+        "a(3) = 138 because 138 = 2 * 3 * 23, 138 - a(2) = 45 = 3^2 * 5, and 138 + a(2) = 231 = 3 * 7 * 11  all have 3 prime divisors, counted by multiplicity."
+    ],
+    "maple": [
+        "f:= proc(n,a) # first n-almost-prime b>a such that b-a and a+b are n-almost-prime",
+        "  uses priqueue;",
+        "  local Aprimes,v,M,q,w,b;",
+        "  M:= 10^1000;",
+        "  initialize(Aprimes);",
+        "  insert([-2^n,0,2],Aprimes);",
+        "  do",
+        "    v:= extract(Aprimes);",
+        "    if v[2] = n then",
+        "      b:= -v[1];",
+        "      if numtheory:-bigomega(b+a)=n and numtheory:-bigomega(b-a) = n then return b fi",
+        "    else",
+        "      insert(v+[0,1,0],Aprimes);",
+        "      q:= nextprime(v[3]);",
+        "      w:= v[1]*(q/v[3])^(n-v[2]);",
+        "      if w >= -M then insert([w,v[2],q],Aprimes) fi",
+        "    fi",
+        "  od",
+        "end proc:",
+        "R:= 2: a:= 2:",
+        "for n from 2 to 50 do",
+        "  a:= f(n,a);",
+        "  R:= R,a;",
+        "od:",
+        "R;"
+    ],
+    "xref": [
+        "Cf. A001222."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Sep 21 2023",
+    "references": 0,
+    "revision": 30,
+    "time": "2023-09-25T08:19:06-04:00",
+    "created": "2023-09-25T08:19:06-04:00"
+}

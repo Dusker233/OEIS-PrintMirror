@@ -1,0 +1,36 @@
+{
+    "number": 365641,
+    "data": "1,3,7,14,25,41,63,92,128,173,228,293,369,458,561,676,807,955,1119,1300",
+    "name": "The minimum number of ways to label each triangle of a triangulation of an n-gon with one of its vertices so that different triangles get different labels (minimum taken over all triangulations).",
+    "comment": [
+        "Originally proposed by Johan W\u00e4stlund, Aug 28 2007, as an equivalent formulation of A089187.",
+        "The \"fan triangulations\", where one vertex is connected to all other vertices, is optimal up to a(9). Starting from a(10)=128, other triangulations are better."
+    ],
+    "example": [
+        "a(4)=7. Suppose a 4-gon ABCD is triangulated with triangles ABC and ACD. If ABC is labeled B, then ACD can be given 3 possible labels, while if ABC is labeled A or C, only 2 labels are available for ACD and 3+2+2=7. - Johan W\u00e4stlund, Aug 28 2007"
+    ],
+    "program": [
+        "(Python)",
+        "\"\"\"For a chosen \"base edge\" of a triangulated (n+2)-gon, (ul, ur, u2)",
+        "denotes the numbers of labelings where the left, the right, or",
+        "both vertices of the base edge have been used as labels.",
+        "The number of labelings where none of the basepoints is used is always 1.",
+        "tri[n] will contain the possible triplets (ul,ur,u2) for the",
+        "triangulations of an (n+2)-gon.\"\"\"",
+        "tri = [{(0,0,0)}] # start with single edge (2-gon); no labels",
+        "def combine(u,v):",
+        "    (ul,ur,u2),(vl,vr,v2) = u,v # formula obtained by combining the cases",
+        "    return (1+vl+ur+ul, 1+vl+ur+vr, vr+ul+(ul+ur)*(vl+vr)+u2+v2 )",
+        "for n in range(1,18): # dynamic programming, requires large memory",
+        "    tri.append({combine(u,v) for k in range(n)",
+        "                for u in tri[k] for v in tri[n-k-1]})",
+        "print(\", \".join(str(1+min(sum(t) for t in tr)) for tr in tri))"
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "2,2",
+    "author": "_G\u00fcnter Rote_, Sep 14 2023",
+    "references": 0,
+    "revision": 13,
+    "time": "2023-09-25T08:56:23-04:00",
+    "created": "2023-09-25T08:56:23-04:00"
+}

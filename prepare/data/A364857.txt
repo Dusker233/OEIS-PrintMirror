@@ -1,0 +1,37 @@
+{
+    "number": 364857,
+    "data": "1,15,225,3781,72078,1550016,37259191,991980099,29008029501,924873082849,31944725060988,1188568865803032,47403638535874501,2017753008682107135,91309129890388047873,4377769140759352823773,221687675024545322612226",
+    "name": "a(n) = n^n/E, where E is the expected number of rolls of a fair n-sided die before obtaining 3 consecutive strictly increasing rolls.",
+    "comment": [
+        "a(n) is the determinant of (nI-M+M^2/n-OM/n), where O is the n X n matrix of ones, M is the lower triangular of O, and I is the n X n identity matrix.",
+        "a(n) is asymptotically equal to n^n / L, where L = sqrt(3e) / (cos(C)*sqrt(3) - sin(C)) and C = sqrt(3)/2. L=7.9243724345... is the expected number of uniform random samples of a real number between 0 and 1 until obtaining 3 increasing values.",
+        "gcd(n^n,a(n)) is n^2 if n == {5, 8, 11} (mod 12), 1 if n == {0, 1} (mod 3), and 2^(k+1)n^2 otherwise, where 2^k is the highest power of 2 that divides floor(n/12).",
+        "The graph of n^n / a(n) against n appears to follow a shifted reciprocal."
+    ],
+    "formula": [
+        "a(n) = (n-1+A)/2(n-1/2+B)^(n-1) + (n-1-A)/2(n-1/2-B)^(n-1), where A=i*(n+1)/sqrt(3) and B=i*(sqrt(3)/2).",
+        "a(n) = f(n), where f(2) = n-1, f(3) = n*(n-2) and f(m+1) = (2n-1)*f(m)-(n^2-n+1)*f(m-1)."
+    ],
+    "mathematica": [
+        "a[n_]:=Module[{O,I,M},O=ConstantArray[1,{n,n}];I=IdentityMatrix[n]; M=LowerTriangularize[O]; Det[nI-M+MatrixPower[M,2]/n-O.M/n]]; Table[a[i],{i,3,19}] (* _Robert P. P. McKone_, Aug 12 2023 *)",
+        "A[n_]:=I (n+1)/Sqrt[3]; B[n_]:=I Sqrt[3]/2; a[n_]:=(n-1+A[n])/2(n-1/2+B[n])^(n-1) + (n-1-A[n])/2(n-1/2-B[n])^(n-1); Simplify[Table[a[n],{n,3,19}]] (* _Stefano Spezia_, Aug 23 2023 *)"
+    ],
+    "program": [
+        "(Python3)",
+        "def a(n):",
+        "    A,B = n-1,n*(n-2)",
+        "    for i in range(n-2):",
+        "        A,B = B,(2*n-1)*B-(n*n-n+1)*A",
+        "    return B"
+    ],
+    "xref": [
+        "Cf. A000312."
+    ],
+    "keyword": "nonn,new",
+    "offset": "3,2",
+    "author": "_Daniel Chen_, Aug 10 2023",
+    "references": 0,
+    "revision": 49,
+    "time": "2023-09-25T07:32:48-04:00",
+    "created": "2023-09-25T07:32:48-04:00"
+}
