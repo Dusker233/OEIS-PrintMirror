@@ -1,0 +1,38 @@
+{
+    "number": 365749,
+    "data": "1,13,58,117,216,15752,76392,3129199,10886293,12306717,61545851,167927267,197150851,212386485,759678443,5902809947",
+    "name": "Number of iterations that produce a record high of the digest of the SHA2-256 hash of the empty string.",
+    "comment": [
+        "The SHA2-256 algorithm takes inputs of any length but here we are feeding the output of every iteration to the next."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"http://en.wikipedia.org/wiki/SHA-2\">SHA-2</a>"
+    ],
+    "example": [
+        "a(1) = 1 because 1 iteration sha256(\"\") = hex e3b0....b855 is taken as greater than the empty string \"\" starting point.",
+        "a(2) = 13 is the next term since 13 times nested sha256(...(sha256(\"\")...)) = hex f761...8338 is greater than the previous record e3b0....b855."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "import hashlib",
+        "def g():",
+        "  c, vmax, m = 1, b\"\", b\"\"",
+        "  while True:",
+        "    if (m:= hashlib.sha256(m).digest()) > vmax:",
+        "      vmax = m",
+        "      yield c",
+        "    c += 1",
+        "print(list(islice(g(),16)))"
+    ],
+    "xref": [
+        "Cf. A234849."
+    ],
+    "keyword": "nonn,hard,base,more,fini,new",
+    "offset": "1,2",
+    "author": "_Dar\u00edo Clavijo_, Sep 17 2023",
+    "references": 0,
+    "revision": 43,
+    "time": "2023-09-26T20:26:43-04:00",
+    "created": "2023-09-26T20:26:43-04:00"
+}
