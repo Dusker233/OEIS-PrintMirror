@@ -1,0 +1,37 @@
+{
+    "number": 365262,
+    "data": "54,78,96,135,150,156,164,182,252,304,336,442,480,483,525,532,558,570,582,640,645,675,740,744,780,912,918,922,924,1012,1046,1132,1155,1164,1170,1206,1218,1320,1422,1424,1450,1452,1456,1488,1496,1536,1548,1568,1594",
+    "name": "Numbers k which never require the maximum number of steps for the Euclidean algorithm to compute gcd(k,m) for any m > k.",
+    "example": [
+        "k = 54 is a term as the number of steps required to compute the Euclidean algorithm gcd(k, m) is smaller than A034883(m) for all m > k.",
+        "k = 27 is not a term as the number of steps required to compute the Euclidean algorithm gcd(k, m) is equal to A034883(m) for m = 35 (steps = 5), 44 (steps = 6) and 46 (steps = 6)."
+    ],
+    "program": [
+        "(Ruby)",
+        "def gcdsteps(k, m)",
+        "  k.zero? ? 0 : 1 + gcdsteps(m % k, k)",
+        "end",
+        "flags = [nil, *1..5000]",
+        "(1..flags.length).each do |m|",
+        "  scores = []",
+        "  (1..m).each do |k|",
+        "    scores << [gcdsteps(k, m), k]",
+        "  end",
+        "  scores.sort_by! { |n| n[0] }",
+        "  scores.select { |n| n[0] == scores.last[0] }.each do |n|",
+        "    flags[n[1]] = nil",
+        "  end",
+        "end",
+        "print flags[1..flags.length / 2].compact"
+    ],
+    "xref": [
+        "Cf. A034883, A051010, A364405."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_John Metcalf_, Aug 29 2023",
+    "references": 0,
+    "revision": 15,
+    "time": "2023-09-30T21:38:55-04:00",
+    "created": "2023-09-30T21:38:55-04:00"
+}
