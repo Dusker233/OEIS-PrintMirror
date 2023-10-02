@@ -1,0 +1,41 @@
+{
+    "number": 366061,
+    "data": "1,2,6,7,36,674,815,11621,449652,2386324,2643745,187894152,704719562,1390873253,1625785299,3479964180,6909167935,12446961112",
+    "name": "Numbers of iterations that produce a record low of the digest of the SHA2-256 hash of the empty string.",
+    "comment": [
+        "The SHA2-256 algorithm takes inputs of any length but here we are feeding the output of every iteration to the next."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/SHA-2\">SHA-2</a>."
+    ],
+    "example": [
+        "a(1) = 1 because 1 iteration sha256(\"\") = hex e3b0...b855 is taken as the first digest and so is a record.",
+        "a(2) = 2 is the next term since 2 times nested sha256(...(sha256(\"\")...)) = hex 5df6...9456 is less than the previous record e3b0...b855."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "import hashlib",
+        "def g():",
+        "  c, vmin, m = 1, b\"\\xFF\" * 32, b\"\"",
+        "  while True:",
+        "    if (m:= hashlib.sha256(m).digest()) < vmin:",
+        "      vmin = m",
+        "      yield c",
+        "    c += 1",
+        "print(list(islice(g(), 16)))"
+    ],
+    "xref": [
+        "Cf. A365749."
+    ],
+    "keyword": "nonn,more,hard,fini,base,new",
+    "offset": "1,2",
+    "author": "_Dar\u00edo Clavijo_, Sep 27 2023",
+    "ext": [
+        "a(17)-a(18) from _Michael S. Branicky_, Sep 28 2023"
+    ],
+    "references": 0,
+    "revision": 19,
+    "time": "2023-10-01T09:53:17-04:00",
+    "created": "2023-10-01T09:53:17-04:00"
+}

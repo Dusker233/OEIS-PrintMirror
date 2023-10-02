@@ -1,0 +1,34 @@
+{
+    "number": 365809,
+    "data": "5,11,17,23,35,41,47,65,71,83,89,95,131,137,143,161,167,179,185,191,257,263,275,281,287,323,329,335,353,359,371,377,383,515,521,527,545,551,563,569,575,641,647,659,665,671,707,713,719,737,743,755,761,767,1025,1031,1043,1049,1055,1091,1097,1103,1121",
+    "name": "Odd numbers k such that A163511(k) is a square.",
+    "comment": [
+        "The sequence is defined inductively as follows:",
+        " (a) it contains all numbers of the form 2^(2e) + 1, e >= 1,",
+        "   and",
+        " (b) for any term a(n) and any e >= 0, (2^(2e+1) * a(n)) + 1 is also included as a term. There are no other kind of terms.",
+        "Contains no squares. See A365808 for a proof."
+    ],
+    "link": [
+        "<a href=\"/index/Bi#binary\">Index entries for sequences related to binary expansion of n</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "A163511(n) = if(!n, 1, my(p=2, t=1); while(n>1, if(!(n%2), (t*=p), p=nextprime(1+p)); n >>= 1); (t*p));",
+        "isA365809(n) = (n%2 && issquare(A163511(n)));",
+        "(PARI)",
+        "A209229(n) = (n && !bitand(n,n-1));",
+        "isA365809(n) = if(n<=2,0,my(v=valuation(n-1,2)); if(A209229(n-1),!(v%2),(v%2)&&isA365809(n>>v)));"
+    ],
+    "xref": [
+        "Odd terms of A365808.",
+        "Cf. A016754, A052539 (subsequence without its initial 2), A163511."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Oct 01 2023",
+    "references": 0,
+    "revision": 9,
+    "time": "2023-10-01T11:17:04-04:00",
+    "created": "2023-10-01T11:17:04-04:00"
+}
