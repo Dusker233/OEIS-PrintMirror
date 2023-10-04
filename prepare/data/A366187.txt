@@ -1,0 +1,31 @@
+{
+    "number": 366187,
+    "data": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,25,26,27,28,29,30,31,32,33,35,36,37,38,39,42,43,45,50,51,52,53,55,56,57,58,59,60,61,62,63,66,67,68,70,71,72,73,78,79,80,81,91,92,93,110,111,121,122,123,143,147,156,157,171,176,177,178,190,191,192,210,211,255,392,393",
+    "name": "Positive integers k such that the fourth derivative of the k-th Bernoulli polynomial B(k, x) contains only integer coefficients.",
+    "comment": [
+        "Conjecture: The sequence is finite and full and includes A366186."
+    ],
+    "maple": [
+        "aList := len -> select(n -> denom(diff(bernoulli(n, x), `$`(x, 4))) = 1, [seq(1..len)]): aList(400);"
+    ],
+    "program": [
+        "(PARI) isok(k) = #select(x->denominator(x)>1, Vec(deriv(deriv(deriv(deriv(bernpol(k))))))) == 0; \\\\ _Michel Marcus_, Oct 03 2023",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import Poly, diff, bernoulli",
+        "from sympy.abc import x",
+        "def A366187_gen(): # generator of terms",
+        "    return filter(lambda k:k<=4 or all(c.is_integer for c in Poly(diff(bernoulli(k,x),x,4)).coeffs()),count(1))",
+        "A366187_list = list(islice(A366187_gen(),40)) # _Chai Wah Wu_, Oct 03 2023"
+    ],
+    "xref": [
+        "Cf. A094960 (m=1), A366169 (m=2), A366186 (m=3), this sequence (m=4), A366188 (m=5), A366189."
+    ],
+    "keyword": "nonn,more,hard,new",
+    "offset": "1,2",
+    "author": "_Peter Luschny_, Oct 03 2023",
+    "references": 0,
+    "revision": 14,
+    "time": "2023-10-03T15:08:58-04:00",
+    "created": "2023-10-03T13:17:06-04:00"
+}

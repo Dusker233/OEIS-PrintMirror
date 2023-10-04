@@ -1,0 +1,42 @@
+{
+    "number": 365415,
+    "data": "20,371,8091,102127,1061612",
+    "name": "Number of decimal digits of e after its decimal point needed to contain all digit substrings of length n.",
+    "comment": [
+        "Length of the shortest prefix of the decimal expansion of e in which every possible digit string of length n occurs. We only consider the digits after the decimal point.",
+        "It is not known if every natural number appears in the decimal expansion of e. If this is the case, sequence a(n) contains a term for every n."
+    ],
+    "formula": [
+        "a(n) = A152182(n) + n - 2."
+    ],
+    "example": [
+        "a(1) = 20, since 20 is the smallest number of digits in decimal expansion of e in with every digit 0..9 (or, to be more precise, every digit string of length 1) appears: 2.71828182845904523536.",
+        "a(2) = 371, since the first appearance of the digit string \"12\" is at positions 370-371 of the decimal expansion of e and the remaining digit strings of length 2 appear at least once before that position.",
+        "a(3) = 8091, since the first appearance of the digit string \"548\" is at positions 8089-8091 of the decimal expansion of e and the remaining digit strings of length 3 appear at least once before that position.",
+        "a(4) = 102127, since the first appearance of the digit string \"1769\" is at positions 102124-102127 of the decimal expansion of e and the remaining digit strings of length 4 appear at least once before that position."
+    ],
+    "mathematica": [
+        "dok = 300000; an = {};",
+        "For[li = 1, li <= 3, li++,",
+        "  p = ToString[N[E, dok]];",
+        "  cyf = {}; par = 0;",
+        "  For[i = 3, i <= dok, i++,",
+        "   If[par == 0,",
+        "    a = StringTake[p, {i, i + li - 1}];",
+        "    If[MemberQ[cyf, a] == False, cyf = Append[cyf, a];",
+        "     If[Length[cyf] == 10^li, an = Append[an, i + li - 3]; par = 1]],",
+        "    Break[]]",
+        "   ]];",
+        "Print[an]"
+    ],
+    "xref": [
+        "Cf. A001113, A152182, A332262."
+    ],
+    "keyword": "base,nonn,more,new",
+    "offset": "1,1",
+    "author": "_Bartlomiej Pawlik_, Sep 07 2023",
+    "references": 0,
+    "revision": 41,
+    "time": "2023-10-03T10:37:32-04:00",
+    "created": "2023-10-03T10:37:32-04:00"
+}
