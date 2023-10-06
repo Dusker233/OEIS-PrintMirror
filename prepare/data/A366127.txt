@@ -1,0 +1,56 @@
+{
+    "number": 366127,
+    "data": "1,2,4,6,11,15,25,35,53,72,108",
+    "name": "Number of finite incomplete multisets of positive integers with greatest non-subset-sum n.",
+    "comment": [
+        "A non-subset-sum of a multiset of positive integers summing to n is an element of {1..n} that is not the sum of any submultiset. A multiset is incomplete if it has at least one non-subset-sum."
+    ],
+    "example": [
+        "The non-subset-sums of y = {2,2,3} are {1,6}, with maximum 6, so y is counted under a(6).",
+        "The a(1) = 1 through a(6) = 15 multisets:",
+        "  {2}  {3}    {4}      {5}        {6}          {7}",
+        "       {1,3}  {1,4}    {1,5}      {1,6}        {1,7}",
+        "              {2,2}    {2,3}      {2,4}        {2,5}",
+        "              {1,1,4}  {1,1,5}    {3,3}        {3,4}",
+        "                       {1,2,5}    {1,1,6}      {1,1,7}",
+        "                       {1,1,1,5}  {1,2,6}      {1,2,7}",
+        "                                  {1,3,3}      {1,3,4}",
+        "                                  {2,2,2}      {2,2,3}",
+        "                                  {1,1,1,6}    {1,1,1,7}",
+        "                                  {1,1,2,6}    {1,1,2,7}",
+        "                                  {1,1,1,1,6}  {1,1,3,7}",
+        "                                               {1,2,2,7}",
+        "                                               {1,1,1,1,7}",
+        "                                               {1,1,1,2,7}",
+        "                                               {1,1,1,1,1,7}"
+    ],
+    "mathematica": [
+        "prix[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "nmz[y_]:=Complement[Range[Total[y]],Total/@Subsets[y]];",
+        "Table[Length[Select[Join@@IntegerPartitions/@Range[n,2*n],Max@@nmz[#]==n&]],{n,5}]"
+    ],
+    "xref": [
+        "For least instead of greatest we have A126796, ranks A325781, strict A188431.",
+        "These multisets have ranks A365830.",
+        "Counts appearances of n in the rank statistic A365920.",
+        "Column sums of A365921.",
+        "These multisets counted by sum are A365924, strict A365831.",
+        "The strict case is A366129.",
+        "A000041 counts integer partitions, strict A000009.",
+        "A046663 counts partitions without a submultiset summing k, strict A365663.",
+        "A325799 counts non-subset-sums of prime indices.",
+        "A364350 counts combination-free strict partitions, complement A364839.",
+        "A365543 counts partitions with a submultiset summing to k.",
+        "A365661 counts strict partitions w/ a subset summing to k.",
+        "A365918 counts non-subset-sums of partitions.",
+        "A365923 counts partitions by non-subset sums, strict A365545.",
+        "Cf. A006827, A276024, A284640, A304792, A365658, A365919, A365925."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Sep 30 2023",
+    "references": 0,
+    "revision": 6,
+    "time": "2023-10-05T21:30:50-04:00",
+    "created": "2023-10-05T21:30:50-04:00"
+}
