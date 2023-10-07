@@ -1,0 +1,34 @@
+{
+    "number": 366158,
+    "data": "1,5,25,77,179,355,609,995,1497,2167,2999,4069,5289,6841,8595,10661,13023,15777,18795",
+    "name": "Number of distinct determinants of 3 X 3 matrices with entries from {0, 1, ..., n}.",
+    "comment": [
+        "These determinants a(n) equivalently represent the leading coefficient (coefficient of term with degree 0) of the characteristic polynomials for such matrices, thereby providing a direct measure and lower bound of the uniqueness of these polynomials within this matrix class.",
+        "The maximal determinant counted by a(n) is A033431(n) = 2*n^3."
+    ],
+    "link": [
+        "Robert P. P. McKone, <a href=\"/A366158/a366158.txt\">The distinct determinants for a(0)-a(18)</a>."
+    ],
+    "mathematica": [
+        "mat[n_Integer?Positive] := mat[n] = Array[m, {n, n}]; flatMat[n_Integer?Positive] := flatMat[n] = Flatten[mat[n]]; detMat[n_Integer?Positive] := detMat[n] = Det[mat[n]] // FullSimplify; a[d_Integer?Positive, 0] = 1; a[d_Integer?Positive, n_Integer?Positive] := a[d, n] = Length[DeleteDuplicates[Flatten[ParallelTable[Evaluate[detMat[d]], ##] & @@ Table[{flatMat[d][[i]], 0, n}, {i, 1, d^2}]]]]; Table[a[3, n], {n, 0, 9}]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "def A366158(n): return len({a[0]*(a[4]*a[8] - a[5]*a[7]) - a[1]*(a[3]*a[8] - a[5]*a[6]) + a[2]*(a[3]*a[7] - a[4]*a[6]) for a in product(range(n+1),repeat=9)}) # _Chai Wah Wu_, Oct 06 2023"
+    ],
+    "xref": [
+        "Cf. A058331 (distinct determinants for 2 X 2 matrices).",
+        "Cf. A272661, A272659.",
+        "Cf. A365926.",
+        "Cf. A272658, A272660, A272662, A272663.",
+        "Cf. A033431 (maximal determinant)."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,2",
+    "author": "_Robert P. P. McKone_, Oct 02 2023",
+    "references": 0,
+    "revision": 34,
+    "time": "2023-10-06T14:14:51-04:00",
+    "created": "2023-10-06T09:27:21-04:00"
+}
