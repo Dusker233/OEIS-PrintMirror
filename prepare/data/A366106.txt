@@ -1,0 +1,43 @@
+{
+    "number": 366106,
+    "data": "101,109,149,191,199,401,409,419,449,491,499,911,919,941,991,1049,1181,1259,1361,1481,1499,1601,1609,1619,1699,1811,1949,2549,2591,3691,4049,4259,4481,4649,4909,4919,4999,6449,6491,8101,8111,8191,9049,9161,9181,9491,9649,9811,9949,10009,10091",
+    "name": "Primes that are the concatenation of three squares in base 10.",
+    "comment": [
+        "The three squares need not be distinct.",
+        "At least one of the squares must be divisible by 9.",
+        "The first term that is a concatenation of three squares in two different ways is 14411, the concatenation of 1 = 1^2, 441 = 21^2 and 1 = 1^2 and also 144 = 12^2, 1 = 1^2 and 1 = 1^2.",
+        "The first term that is a concatenation of three squares in three different ways is 1961441, the concatenation of 196 = 14^2, 144 = 12^2 and 1 = 1^2, of 196, 1 and 441 = 21^2, and of 1, 961 = 31^2 and 441."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A366106/b366106.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(16) = 1049 is a term because it is the concatenation of 1 = 1^2, 0 = 0^2 and 49 = 7^2."
+    ],
+    "maple": [
+        "M:= 5: # for terms < 10^M",
+        "S:= {}:",
+        "for a from 1 while a^2 < 10^(M-2) do",
+        "  x:= a^2; mx:= length(x);",
+        "  for b from 0 while b^2 < 10^(M-1-mx) do",
+        "    y:= b^2; my:= max(1,length(y));",
+        "    for c from 0 while c^2 < 10^(M-mx-my) do",
+        "      v:= parse(cat(x,y,c^2));",
+        "      if isprime(v) then S:= S union {v} fi;",
+        "od od od:",
+        "sort(convert(S,list));"
+    ],
+    "mathematica": [
+        "a[maxSquareIndex_Integer?Positive]:=Select[Flatten[Table[ToExpression[IntegerString[a^2]<>IntegerString[b^2]<>IntegerString[c^2]],{a,1,maxSquareIndex},{b,0,maxSquareIndex},{c,0,maxSquareIndex}]],PrimeQ]//Sort;a[10][[1;;51]] (* _Robert P. P. McKone_, Oct 02 2023 *)"
+    ],
+    "xref": [
+        "Cf. A167535."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Sep 29 2023",
+    "references": 0,
+    "revision": 21,
+    "time": "2023-10-08T09:30:19-04:00",
+    "created": "2023-10-08T09:30:19-04:00"
+}
