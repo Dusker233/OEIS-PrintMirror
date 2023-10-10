@@ -1,0 +1,52 @@
+{
+    "number": 365686,
+    "data": "4,12,21,24,40,60,84,110,112,120,144,180,220,264,312,315,364,420,480,544,612,684,697,760,820,840,924,1012,1080,1104,1200,1265,1300,1404,1512,1624,1740,1860,1984,2106,2112,2244,2380,2520,2664,2812,2964,3120,3255",
+    "name": "Numbers k such that there exists a pair of integers (m,h) where 1 <= m < floor(sqrt(k)/2) <= h that satisfy Sum_{j=0..m} (k-j)^2 = Sum_{i=1..m} (h+i)^2.",
+    "comment": [
+        "The sums are of m+1 consecutive squares ending at k^2, and of m consecutive squares starting somewhere at or beyond (k+1)^2.",
+        "If k is a term and h = k then k is in A046092.",
+        "All terms are composite numbers.",
+        "Also k is a term if exists a pair of integers (m, h) such that 1 <= m < floor(sqrt(k)/2) <= h and that satisfy k*(m+1)*(k-m)-m*h*(h+m+1)=0."
+    ],
+    "link": [
+        "Project Euler, <a href=\"https://projecteuler.net/problem=261\">Problem 261: Pivotal Square Sums</a>."
+    ],
+    "formula": [
+        "k if Sum_{j=0..m} (k-j)^2 = Sum_{i=1..m} (h+i)^2 where 1 <= m < floor(sqrt(k)/2) <= h."
+    ],
+    "example": [
+        "k=24 is a term because 21^2 + 22^2 + 23^2 + 24^2 = 25^2 + 26^2 + 27^2 with m=3 and h=24.",
+        "k=110 is a term because 108^2 + 109^2 + 110^2 = 133^2 + 134^2, with m=2 and h=132."
+    ],
+    "program": [
+        "(Python)",
+        "from gmpy2 import *",
+        "A002378 = lambda n: n * (n + 1)",
+        "A046092 = lambda n: A002378(n) << 1",
+        "isA046092 = lambda n: (n & 1 == 0) and is_square((n << 1) + 1)",
+        "def isok(k):",
+        "  if is_prime(k): return False",
+        "  if isA046092(k): return True",
+        "  k2 = k * k",
+        "  for m in range(1, (isqrt(k) >> 1) + 1):",
+        "    h, m2, m_2 = k, m * m, m << 1",
+        "    S = k2 - A046092(m) * k",
+        "    while(S > 0):",
+        "      h += 1",
+        "      S -= m2 + (h * m_2)",
+        "    if S == 0: return True",
+        "  return False",
+        "print([k for k in range(1, 3256) if isok(k)])",
+        "(PARI) isok(k) = for (i=1, k-1, my(s1 = sum(j=k-i, k, j^2)); for (m=k+1, oo, my(s2 = sum(j=0, i-1, (m+j)^2)); if (s2 == s1, return(1)); if (s2 > s1, break););); \\\\ _Michel Marcus_, Sep 27 2023"
+    ],
+    "xref": [
+        "Cf. A000290, A002378, A046092, A233035."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Dar\u00edo Clavijo_, Sep 15 2023",
+    "references": 0,
+    "revision": 79,
+    "time": "2023-10-09T12:06:45-04:00",
+    "created": "2023-10-09T12:06:45-04:00"
+}
