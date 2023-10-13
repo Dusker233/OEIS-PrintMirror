@@ -1,0 +1,33 @@
+{
+    "number": 366448,
+    "data": "1,6,22,58,116,221,356,573,824,1163,1565,2143,2697,3527,4385,5388,6455,7992,9342,11262,12953,15034,17301,20246,22595,25823,29054,32679,36228,41112,44964,50600,55288,60770,66543,72927,78173,86577,93925,101775,108798",
+    "name": "Number of distinct characteristic polynomials for 2 X 2 matrices with entries from {0, 1, ..., n}.",
+    "link": [
+        "Robert P. P. McKone, <a href=\"/A366448/a366448.txt\">The distinct characteristic polynomials for a(0)-a(23)</a>."
+    ],
+    "formula": [
+        "a(n) <= A058331(n) * A005408(n) = 4*n^3 + 2*n^2 + 2*n + 1."
+    ],
+    "example": [
+        "For n = 1 the a(1) = 6 characteristic polynomials are {x^2, -4 + x^2, -2 + x^2, -1 + x^2, -4*x + x^2, 2-4*x + x^2}."
+    ],
+    "mathematica": [
+        "mat[n_Integer?Positive]:=mat[n]=Array[m,{n,n}]; flatMat[n_Integer?Positive]:=flatMat[n]=Flatten[mat[n]]; charPolyMat[n_Integer?Positive]:=charPolyMat[n]=FullSimplify[CoefficientList[Expand[CharacteristicPolynomial[mat[n],x]],x]]; a[d_Integer?Positive,0]=1; a[d_Integer?Positive,n_Integer?Positive]:=a[d,n]=Length[DeleteDuplicates[Flatten[Table[Evaluate[charPolyMat[d]],##]&@@Table[{flatMat[d][[i]],0,n},{i,1,d^2}],3]]]; Table[a[2,n],{n,0,41}]"
+    ],
+    "program": [
+        "(PARI) a(n) = my(list=List()); for (i=0, n, for (j=0, n, for(k=0, n, for(m=0, n, my(p=charpoly([i,j;k,m])); listput(list, p))))); #Set(list); \\\\ _Michel Marcus_, Oct 11 2023",
+        "(Python)",
+        "def A366448(n): return len({(a+d,a*d-b*c) for a in range(n+1) for b in range(n+1) for c in range(b+1) for d in range(a+1)}) # _Chai Wah Wu_, Oct 12 2023"
+    ],
+    "xref": [
+        "Cf. A058331 (determinants), A005408 (traces).",
+        "Cf. A272659, A365926."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,2",
+    "author": "_Robert P. P. McKone_, Oct 10 2023",
+    "references": 0,
+    "revision": 23,
+    "time": "2023-10-12T10:30:58-04:00",
+    "created": "2023-10-12T07:52:38-04:00"
+}
