@@ -1,0 +1,42 @@
+{
+    "number": 364369,
+    "data": "11,419,4919,181919,1981919,49936919,991981919,9991981919,16999369225919,136999369225919,99361981818199181,1729936999369225919,3681225936999369225919,132481225936999369225919,99362500576936999369225919,8199362500576936999369225919",
+    "name": "a(n) is the least prime that is the concatenation of n squares, where the concatenations of the last k of these squares are prime for 2 <= k <= n.",
+    "comment": [
+        "At most 2 of the n squares are not divisible by 9."
+    ],
+    "example": [
+        "a(5) = 181919 because it is the concatenation of five squares 1^2 = 1, 9^2 = 81, 3^2 = 9, 1^2 = 1 and 3^2 = 9, and 19, 919, 81919 and 181919 are all prime, and this is the least number that works."
+    ],
+    "maple": [
+        "for d from 1 to 8 do",
+        "  m1:= ceil(10^((d-1)/2));",
+        "  m2:= floor(sqrt(10^d - 1));",
+        "  S[d]:= {seq(i^2, i=m1..m2)};",
+        "  if m1::even then m1:= m1+1 fi;",
+        "  So[d]:= {seq(i^2, i=m1..m2,2)};",
+        "od:",
+        "for d from 2 to 9 do P[2,d]:= select(isprime, {seq(seq(seq(10^i*s+t, t=So[i]),s=S[d-i]),i=1..d-1)}) od:",
+        "L[2]:= 11:",
+        "mm[2]:= 2:",
+        "for m from 3 do",
+        "   found:= false;",
+        "   for d from mm[m-1]+1 to m+7 do",
+        "     P[m,d]:= select(isprime, {seq(seq(seq(10^i*s+t, t=P[m-1,i]),s=S[d-i]),i=mm[m-1]..d-1)});",
+        "     if P[m,d] <> {} and not found then mm[m]:= d; found:= true: L[m]:= min(P[m,d]) fi;",
+        "   od;",
+        "   if not found then break fi;",
+        "od:",
+        "seq(L[i],i=2..m-1);"
+    ],
+    "xref": [
+        "Cf. A167535, A364359."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "2,1",
+    "author": "_Robert Israel_, Oct 20 2023",
+    "references": 0,
+    "revision": 15,
+    "time": "2023-10-22T01:25:24-04:00",
+    "created": "2023-10-21T06:33:27-04:00"
+}
