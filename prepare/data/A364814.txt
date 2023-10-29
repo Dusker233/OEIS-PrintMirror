@@ -1,0 +1,51 @@
+{
+    "number": 364814,
+    "data": "1,2,4,6,8,16,20,24,32,64,72,80,96,128,256,288,320,336,384,512,1024,1056,1152,1280,1344,1536,2048,4096,4224,4608,4800,5120,5376,6144,8192,16384,16896,17280,18432,18816,19200,20480,21504,24576,32768,65536,67584,69120,69888",
+    "name": "Numbers k whose largest divisor <= sqrt(k) is a power of 2, listing only the first such number with any given prime signature.",
+    "comment": [
+        "This sequence is a primitive sequence related to A365406 in the sense that it can be used to find the smallest term k in A365406 such that tau(k), omega(k) or bigomega(k) has some particular value.",
+        "Not every prime signature produces a term. For example no term has prime signature (3, 2, 1). Proof: any number with prime signature (3, 2, 1) has 24 divisors. Hence the 12th divisor must be a power of 2. But the largest power of 2 such number can have as a divisor is 8. 8 can never be the 12th divisor of a number. Therefore (3, 2, 1) can never be the prime signature of a term."
+    ],
+    "example": [
+        "k = 20 = 2^2 * 5 is in the sequence as it has prime signature (2, 1) and its largest divisor <= sqrt(k) is 4, a power of 2. It is the smallest such number since smaller numbers with prime signature (2, 1), namely 12 and 18, do not have the relevant divisor being a power of 2."
+    ],
+    "program": [
+        "(PARI)",
+        "upto(n) = {",
+        "\tmy(res = List([1]), m = Map());",
+        "\tforstep(i = 2, n, 2,",
+        "\t\tif(isok(i),",
+        "\t\t\ts = sig(i);",
+        "\t\t\tsb = sigback(s);",
+        "\t\t\tif(!mapisdefined(m, sb),",
+        "\t\t\t\tlistput(res, i);\t",
+        "\t\t\t\tmapput(m, sb, i)",
+        "\t\t\t)",
+        "\t\t)",
+        "\t);",
+        "\tres",
+        "\t",
+        "}",
+        "sig(n) = {",
+        "\tvecsort(factor(n)[,2],,4)",
+        "}",
+        "sigback(v) = {",
+        "\tmy(pr = primes(#v));",
+        "\tprod(i = 1, #v, pr[i]^v[i])",
+        "}",
+        "isok(n) = my(d = divisors(n)); hammingweight(d[(#d + 1)\\2]) == 1"
+    ],
+    "xref": [
+        "Cf. A025487, A212171, A365406."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_David A. Corneth_, Oct 21 2023",
+    "ext": [
+        "Edited by _Peter Munn_, Oct 26 2023"
+    ],
+    "references": 0,
+    "revision": 28,
+    "time": "2023-10-28T09:33:43-04:00",
+    "created": "2023-10-26T10:19:58-04:00"
+}

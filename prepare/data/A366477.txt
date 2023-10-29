@@ -1,0 +1,45 @@
+{
+    "number": 366477,
+    "data": "2,3,29,28025,2467754261",
+    "name": "a(n) = smallest k such that A366475(k) >= n, or -1 if no such k exists.",
+    "mathematica": [
+        "nn = 2^16; c[_] := False; m[_] := 0; j = 1; c[0] = c[1] = True; q[_] := 0; s = -1;",
+        "  Monitor[Do[p = Prime[n - 1]; r = Mod[j, p];",
+        "    While[Set[k, p m[p] + r ]; c[k], m[p]++];",
+        "    (If[q[#] == 0, Set[q[#], n]]; If[# > s, s = #]) &[ m[p] ];",
+        "    Set[{c[k], j}, {True, k}], {n, 2, nn}], n];",
+        "Array[q, s] (* _Michael De Vlieger_, Oct 27 2023 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        "from sympy import nextprime",
+        "def A366477(n):",
+        "    a, aset, p = 1, {0,1}, 1",
+        "    for i in count(2):",
+        "        p = nextprime(p)",
+        "        b = a%p",
+        "        for j in count(0):",
+        "            if b not in aset:",
+        "                aset.add(b)",
+        "                a = b",
+        "                break",
+        "            b += p",
+        "        if j>=n:",
+        "            return i # _Chai Wah Wu_, Oct 27 2023"
+    ],
+    "xref": [
+        "Cf. A364054, A366475."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Oct 26 2023",
+    "ext": [
+        "a(4) = 28025 from _Michael De Vlieger_, Oct 26 2023, who also reports that 5 does not appear in the first 2^24 terms of A366475.",
+        "a(5) from _Chai Wah Wu_, Oct 28 2023"
+    ],
+    "references": 0,
+    "revision": 17,
+    "time": "2023-10-28T14:40:57-04:00",
+    "created": "2023-10-27T10:24:35-04:00"
+}
