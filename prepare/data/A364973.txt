@@ -1,0 +1,47 @@
+{
+    "number": 364973,
+    "data": "1,1,4,26,217,2110,22744,264057,3242395,41596252,552733376,7559811021,105919629403,1514674166755,22043665219240,325734154669786",
+    "name": "a(n) = number of degree n rational curves in the complex projective plane which satisfy an order 3n-1 local tangency constraint.",
+    "comment": [
+        "This is the number of degree d rational curves in the complex projective plane which pass through a specified point and have contact order 3d-1 to a generic smooth local divisor through that point.",
+        "After multiplying by 3d-1, this sequence appears to agree with A353195.",
+        "Computed in terms of Gromov-Witten invariants of rational surfaces in McDuff-Siegel 2021.",
+        "Agrees with the count of osculating curves, which are defined and computed by a recursive formula in Muratore 2021.",
+        "Computed by a recursive formula in Mikhalkin-Siegel 2023.",
+        "Computed by a closed formula as sum over trees with d leaves and combinatorially defined weights in Siegel 2023."
+    ],
+    "link": [
+        "D. McDuff and K. Siegel, <a href=\"https://doi.org/10.1112/topo.12204\">Counting curves with local tangency constraints</a>, J. Top., 14 (2021) 1176-1242.",
+        "G. Mikhalkin and K. Siegel, <a href=\"https://arxiv.org/abs/2307.13252\">Ellipsoidal superpotentials and stationary descendants</a>, arXiv:2307.13252 [math.SG] (2023).",
+        "G. Muratoro, <a href=\"https://www.intlpress.com/site/pub/pages/journals/items/arkiv/content/vols/0059/0001/a007/index.php\">A recursive formula for osculating curves</a>, Arkiv Mat., 59 (2021) 195-211.",
+        "K. Siegel, <a href=\"https://doi.org/10.1093/imrn/rnaa334\">Computing higher symplectic capacities I</a>, Int. Math. Res. Not., 2022 (2021) 12402-12461.",
+        "K. Siegel, <a href=\"https://kylersiegel.xyz/tree_formula.pdf\">A tree formula for the ellipsoidal superpotential of the complex projective plane</a> (2023)."
+    ],
+    "program": [
+        "(Sage)",
+        "# The following code is written in Sage and is based on the recursive formula in Mikhalkin-Siegel 2023. Note that a slightly more efficient formula is given by using Partitions instead of OrderedPartitions, at the cost of an extra combinatorial factor.",
+        "def a(n):",
+        "\tif n == 1:",
+        "\t\treturn 1",
+        "\tout = 1/(factorial(n)**3)",
+        "\tfor p in [p for p in OrderedPartitions(n) if len(p) > 1]:",
+        "\t\tk = len(p)",
+        "\t\tsummand = prod([(3*m-1)*a(m) for m in p])",
+        "\t\tsummand /= factorial(k)*factorial(3*n-k)",
+        "\t\tout -= summand",
+        "\tout *= factorial(3*n-2)",
+        "\treturn out",
+        "for n in range(1,20):",
+        "\tprint(a(n))"
+    ],
+    "xref": [
+        "Cf. A353195 (after multiplying by 3d-1)."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,3",
+    "author": "_Kyler Siegel_, Aug 22 2023",
+    "references": 0,
+    "revision": 30,
+    "time": "2023-10-30T03:26:14-04:00",
+    "created": "2023-10-29T20:44:31-04:00"
+}
