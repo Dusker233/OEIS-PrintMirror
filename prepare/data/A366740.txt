@@ -1,0 +1,76 @@
+{
+    "number": 366740,
+    "data": "90,180,210,270,360,420,450,462,525,540,550,630,720,810,840,858,900,910,924,990,1050,1080,1100,1155,1170,1260,1326,1350,1386,1440,1470,1530,1575,1620,1650,1666,1680,1710,1716,1800,1820,1848,1870,1890,1911,1938,1980",
+    "name": "Positive integers whose semiprime divisors do not all have different Heinz weights (sum of prime indices, A056239).",
+    "comment": [
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798.",
+        "From _Robert Israel_, Nov 06 2023: (Start)",
+        "Positive integers divisible by the product of four primes, prime(i)*prime(j)*prime(k)*prime(l), i < j <= k < l, with i + l = j + k.",
+        "All positive multiples of terms are terms. (End)"
+    ],
+    "formula": [
+        "These are numbers k such that A086971(k) > A366739(k)."
+    ],
+    "example": [
+        "The semiprime divisors of 90 are (6,9,10,15), with prime indices ({1,2},{2,2},{1,3},{2,3}) with sums (3,4,4,5), which are not all different, so 90 is in the sequence.",
+        "The terms together with their prime indices begin:",
+        "    90: {1,2,2,3}",
+        "   180: {1,1,2,2,3}",
+        "   210: {1,2,3,4}",
+        "   270: {1,2,2,2,3}",
+        "   360: {1,1,1,2,2,3}",
+        "   420: {1,1,2,3,4}",
+        "   450: {1,2,2,3,3}",
+        "   462: {1,2,4,5}",
+        "   525: {2,3,3,4}",
+        "   540: {1,1,2,2,2,3}",
+        "   550: {1,3,3,5}",
+        "   630: {1,2,2,3,4}",
+        "   720: {1,1,1,1,2,2,3}"
+    ],
+    "maple": [
+        "N:= 10^4: # for terms <= N",
+        "P:= select(isprime, [$1..N]): nP:= nops(P):",
+        "R:= {}:",
+        "for i from 1 while P[i]*P[i+1]^2*P[i+2] < N do",
+        "  for j from i+1 while P[i]*P[j]^2 * P[j+1] < N do",
+        "    for k from j do",
+        "      l:= j+k-i;",
+        "      if l <= k or l > nP then break fi;",
+        "      v:= P[i]*P[j]*P[k]*P[l];",
+        "      if v <= N then",
+        "        R:= R union {seq(t,t=v..N,v)};",
+        "      fi",
+        "od od od:",
+        "sort(convert(R,list)); # _Robert Israel_, Nov 06 2023"
+    ],
+    "mathematica": [
+        "prix[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n],{p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "Select[Range[1000],!UnsameQ@@Total/@Union[Subsets[prix[#],{2}]]&]"
+    ],
+    "xref": [
+        "The complement is too dense.",
+        "For all divisors instead of just semiprimes we have A299729, strict A316402.",
+        "Distinct semi-sums of prime indices are counted by A366739.",
+        "Partitions of this type are counted by A366753, non-binary A366754.",
+        "A001222 counts prime factors (or prime indices), distinct A001221.",
+        "A001358 lists semiprimes, squarefree A006881, conjugate A065119.",
+        "A056239 adds up prime indices, row sums of A112798.",
+        "A299701 counts distinct subset-sums of prime indices, positive A304793.",
+        "A299702 ranks knapsack partitions, counted by A108917, strict A275972.",
+        "Semiprime divisors are listed by A367096 and have:",
+        "- square count: A056170",
+        "- sum: A076290",
+        "- squarefree count: A079275",
+        "- count: A086971",
+        "- firsts: A220264",
+        "Cf. A000720, A001248, A008967, A365541, A365920, A366737, A366738, A366741, A367093, A367095, A367097."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Nov 05 2023",
+    "references": 0,
+    "revision": 9,
+    "time": "2023-11-06T22:58:49-05:00",
+    "created": "2023-11-06T22:58:49-05:00"
+}
