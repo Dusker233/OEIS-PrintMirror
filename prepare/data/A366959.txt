@@ -1,0 +1,46 @@
+{
+    "number": 366959,
+    "data": "13,20,24,31,35,42,46,53,57,64,68,75,79,86,97,102,113,120,123,131,132,133,200,201,202,210,213,220,224,231,234,242,243,244,311,312,313,321,324,331,335,342,345,353,354,355,422,423,424,432,435,442,446,453,456,464,465,466",
+    "name": "Numbers whose difference between the largest and smallest digits is equal to 2.",
+    "comment": [
+        "The number of n-digit terms of this sequence is (46*3^n - 93*2^n + 48)/6."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A366959/b366959.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "F:= proc(d) local L,i;",
+        "   L:= select(t -> max(t) = 2 and min(t) = 0, map(convert,[$3^d..2*3^d-1],base,3));",
+        "   L:= map(t -> add(t[-i-1]*10^(i-1),i=1..nops(t)-1),L);",
+        "   L:= map(t -> seq(t+i*(10^d-1)/9,i=0..7), L);",
+        "   op(sort(select(t -> t >= 10^(d-1), L)));",
+        "end proc:",
+        "F(2), F(3), F(4); # _Robert Israel_, Nov 10 2023"
+    ],
+    "mathematica": [
+        "Select[Range[500],Max[d=IntegerDigits[#]]-Min[d]==2 &]"
+    ],
+    "program": [
+        "(Python)",
+        "def ok(n): return max(d:=list(map(int, str(n))))-min(d) == 2",
+        "print([k for k in range(500) if ok(k)]) # _Michael S. Branicky_, Oct 30 2023",
+        "(Python)",
+        "from itertools import chain, count, islice, combinations_with_replacement",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def A366959_gen(): # generator of terms",
+        "    return chain.from_iterable(sorted(int(''.join(str(d) for d in t)) for a in range(8) for c in combinations_with_replacement(range(a,a+3),l) for t in multiset_permutations((a,a+2)+c) if t[0]) for l in count(0))",
+        "A366959_list = list(islice(A366959_gen(),30)) # _Chai Wah Wu_, Nov 10 2023",
+        "(PARI) isok(n) = my(d=digits(n)); vecmax(d) - vecmin(d) == 2; \\\\ _Michel Marcus_, Nov 05 2023"
+    ],
+    "xref": [
+        "Cf. A037904.",
+        "Cf. A010785 (difference = 0), A366958 (difference = 1), A366960 (difference = 3), A366961 (difference = 4), A366962 (difference = 5), A366963 (difference = 6), A366964 (difference = 7), A366965 (difference = 8), A366966 (difference = 9)."
+    ],
+    "keyword": "nonn,base,easy,new",
+    "offset": "1,1",
+    "author": "_Stefano Spezia_, Oct 30 2023",
+    "references": 0,
+    "revision": 23,
+    "time": "2023-11-11T00:15:09-05:00",
+    "created": "2023-11-10T12:28:16-05:00"
+}

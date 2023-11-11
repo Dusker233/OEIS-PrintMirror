@@ -1,0 +1,34 @@
+{
+    "number": 366966,
+    "data": "90,109,190,209,290,309,390,409,490,509,590,609,690,709,790,809,890,900,901,902,903,904,905,906,907,908,909,910,920,930,940,950,960,970,980,990,1009,1019,1029,1039,1049,1059,1069,1079,1089,1090,1091,1092,1093,1094,1095",
+    "name": "Numbers whose difference between the largest and smallest digits is equal to 9.",
+    "comment": [
+        "The number of n-digit terms of this sequence is 9*10^(n-1) - 17*9^(n-1) + 8^n."
+    ],
+    "mathematica": [
+        "Select[Range[1095],Max[d=IntegerDigits[#]]-Min[d]==9 &]"
+    ],
+    "program": [
+        "(Python)",
+        "def ok(n): return max(d:=list(map(int, str(n))))-min(d) == 9",
+        "print([k for k in range(1100) if ok(k)]) # _Michael S. Branicky_, Oct 30 2023",
+        "(Python)",
+        "from itertools import chain, count, islice, combinations_with_replacement",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def A366966_gen(): # generator of terms",
+        "    return chain.from_iterable(sorted(int(''.join(str(d) for d in t)) for c in combinations_with_replacement(range(10),l) for t in multiset_permutations((0,9)+c) if t[0]) for l in count(0))",
+        "A366966_list = list(islice(A366966_gen(),30)) # _Chai Wah Wu_, Nov 10 2023",
+        "(PARI) isok(n) = my(d=digits(n)); vecmax(d) - vecmin(d) == 9; \\\\ _Michel Marcus_, Nov 05 2023"
+    ],
+    "xref": [
+        "Cf. A037904.",
+        "Cf. A010785 (difference = 0), A366958 (difference = 1), A366959 (difference = 2), A366960 (difference = 3), A366961 (difference = 4), A366962 (difference = 5), A366963 (difference = 6), A366964 (difference = 7), A366965 (difference = 8)."
+    ],
+    "keyword": "nonn,base,easy,new",
+    "offset": "1,1",
+    "author": "_Stefano Spezia_, Oct 30 2023",
+    "references": 0,
+    "revision": 16,
+    "time": "2023-11-11T00:15:31-05:00",
+    "created": "2023-11-10T12:26:39-05:00"
+}
