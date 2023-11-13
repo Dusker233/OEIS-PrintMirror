@@ -1,0 +1,27 @@
+{
+    "number": 366746,
+    "data": "1,2,2,2,2,6,6,6,8,8,12,16,20,22,30,36,42,56,68,82,118,134,160,174",
+    "name": "Maximum distance between a partition of n and its contraconjugate.",
+    "comment": [
+        "See A366745 for the definition of contraconjugate."
+    ],
+    "mathematica": [
+        "r[n_, k_] := r[n, k] = Join[p[n, k], ConstantArray[0, n - Length[p[n, k]]]];",
+        "p1[n_, k_] := p1[n, k] = Reverse[IntegerPartitions[n]][[k]];",
+        "r1[n_, k_] := r1[n, k] = Join[p1[n, k], ConstantArray[0, n - Length[p1[n, k]]]];",
+        "d[u_, v_] := Total[Abs[u - v]]; (* distance function *)",
+        "t[n_] := Flatten[Table[d[r[n, k], r1[n, k]], {k, 1, c[n]}]];",
+        "t1 = Table[Count[t[n], m], {n, 1, 24}, {m, 0, 2 n - 1, 2}];  (* A366745 *)",
+        "Map[Max, t1]"
+    ],
+    "xref": [
+        "Cf. A000041, A366745, A366745."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Oct 25 2023",
+    "references": 0,
+    "revision": 4,
+    "time": "2023-11-12T22:01:08-05:00",
+    "created": "2023-11-12T22:01:08-05:00"
+}
