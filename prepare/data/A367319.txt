@@ -1,0 +1,27 @@
+{
+    "number": 367319,
+    "data": "341,1105,1387,2047,4369,4681,5461,13981,15709,35333,42799,60787,126217,158369,215265,256999,266305,486737,617093,1082401,1398101,2113665,2304167,4025905,4188889,4670029,6236473,6242685,8388607,13757653,16843009,17895697,22369621",
+    "name": "Base-2 Fermat pseudoprimes k such that (k-1)/ord(2, k) > (m-1)/ord(2, m) for all base-2 Fermat pseudoprimes m < k, where ord(2, k) is the multiplicative order of 2 modulo k.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A367319/b367319.txt\">Table of n, a(n) for n = 1..182</a> (terms below 2^64)",
+        "Amiram Eldar, <a href=\"/A367319/a367319.txt\">Table of n, a(n), (a(n)-1)/ord(2, a(n)) for n = 1..182</a>"
+    ],
+    "mathematica": [
+        "pspQ[n_] := CompositeQ[n] && PowerMod[2, n - 1, n] == 1; seq[kmax_] := Module[{s = {}, r, rm = 0}, Do[If[pspQ[k], r = (k - 1)/MultiplicativeOrder[2, k]; If[r > rm, rm = r; AppendTo[s, k]]], {k, 1, kmax}]; s]; seq[10^6]"
+    ],
+    "program": [
+        "(PARI) ispsp(n) = n > 1 && n % 2 && Mod(2, n)^(n-1) == 1 && !isprime(n);",
+        "lista(kmax) = {my(r, rm = 0); for(k = 1, kmax, if(ispsp(k), r = (k-1)/znorder(Mod(2, k)); if(r > rm, rm = r; print1(k, \", \"))));}"
+    ],
+    "xref": [
+        "Subsequence of A001567.",
+        "Cf. A002326, A014664, A226216, A300101, A367320."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Nov 14 2023",
+    "references": 0,
+    "revision": 14,
+    "time": "2023-11-15T08:05:05-05:00",
+    "created": "2023-11-15T08:05:05-05:00"
+}
