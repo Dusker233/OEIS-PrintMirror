@@ -1,0 +1,37 @@
+{
+    "number": 367546,
+    "data": "0,2,2,12,68,780,7782,137256,2130440,47895390,1010001010,28531167060,743044451340,25239592216020,797785000011174,31147773583410240,1157442765409226768,51702516367896047760,2185932446972586391986,109912203092239643840220,5255987282125313280008020",
+    "name": "a(n) = Sum_{k=0..n} n^k * |(n - k | k)|, where (a | b) denotes the Kronecker symbol.",
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Kronecker_symbol\">Kronecker symbol</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} [gcd(k, n) = 1] * n^k, where [] is the Iverson bracket."
+    ],
+    "maple": [
+        "KS := (n, k) -> NumberTheory:-KroneckerSymbol(n, k):",
+        "A367546 := n -> local k; add(n^k * abs(KS(n - k ,k)), k = 0..n):",
+        "seq(A367546(n), n = 0..20);"
+    ],
+    "program": [
+        "(SageMath)",
+        "def a(n):",
+        "    return sum(abs(kronecker_symbol(n - k, k)) * n^k for k in range(n + 1))",
+        "# Alternative:  (For Python include 'import math' for math.gcd.)",
+        "def a(n):",
+        "    cop = [int(gcd(k, n) == 1) for k in (0..n)]",
+        "    return sum(p * n^k for k, p in enumerate(cop))",
+        "print([a(n) for n in range(21)])",
+        "(PARI) a(n) = sum(k=0, n, n^k*abs(kronecker(n-k, k))); \\\\ _Michel Marcus_, Nov 23 2023"
+    ],
+    "xref": [
+        "Cf. A217831, A000010, A023896, A055034, A349136, A367544, A367545."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,2",
+    "author": "_Peter Luschny_, Nov 22 2023",
+    "references": 0,
+    "revision": 12,
+    "time": "2023-11-23T21:59:52-05:00",
+    "created": "2023-11-23T21:59:52-05:00"
+}
