@@ -1,0 +1,52 @@
+{
+    "number": 367690,
+    "data": "1,5,14,26,47,67,100,136,177,221,286,338,415,491,568,652,761,861,990,1098,1219,1351,1520,1652,1813,1985,2162,2334,2555,2727,2960,3172,3397,3641,3878,4098,4383,4659,4944,5204,5537,5805,6158,6466,6775,7123,7524,7848",
+    "name": "Total number of steps of Euclid's GCD algorithm to calculate gcd(x,y) for all pairs x,y in the range 1 <= x,y <= n.",
+    "comment": [
+        "The number of steps to calculate gcd(x,y) is A107435(x,y) for x<=y, and is the length of the continued fraction expansion of x/y (including 0 for the integer part).",
+        "A018806(n) <= a(n) <= A064951(n)."
+    ],
+    "link": [
+        "Project Euler, <a href=\"https://projecteuler.net/problem=433\">Problem 433: Steps in Euclid's Algorithm</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1) + n + A049826(n) * 2 and a(1) = 1.",
+        "a(n) = a(n-1) + n + (Sum_{j=1..n-1} A107435(n,j)) * 2 and a(1) = 1.",
+        "a(n) = Sum_{x=1..n} Sum_{y=1..n} A107435(x,y). - _Michel Marcus_, Nov 28 2023"
+    ],
+    "maple": [
+        "g:= proc(x, y) option remember;",
+        "      `if`(y=0, 0, 1+g(y, irem(x, y)))",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n=0, 0,",
+        "      a(n-1)+n+2*add(g(n, j), j=1..n-1))",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Nov 27 2023"
+    ],
+    "program": [
+        "(Python)",
+        "from functools import cache",
+        "A107435 = lambda x,y: 0 if y == 0 else 1 + A107435(y, x % y)",
+        "A049826 = lambda n: sum(A107435(n,j) for j in range(1, n))",
+        "@cache",
+        "def a(n):",
+        "  # Code after _Alois P. Heinz_",
+        "  if n == 0: return 0",
+        "  return a(n-1) + n + A049826(n) * 2",
+        "print([a(n) for n in range(1,49)])",
+        "(PARI)",
+        "A107435(n, k) = if (k == 0, 0, 1 + A107435(k, n % k));",
+        "a(n) = sum(x=1, n, sum(y=1, n, A107435(x,y)));",
+        "print(vector(49,n,a(n)));"
+    ],
+    "xref": [
+        "Cf. A018806, A049826, A064951, A107435."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Dar\u00edo Clavijo_, Nov 26 2023",
+    "references": 0,
+    "revision": 57,
+    "time": "2023-11-29T19:00:08-05:00",
+    "created": "2023-11-29T19:00:08-05:00"
+}
