@@ -1,0 +1,46 @@
+{
+    "number": 367797,
+    "data": "10,12,13,14,15,16,17,18,19,111,211,2020,2122,2230,2231,2234,2235,2236,2237,2238,2239,3121,31131,32131,32233,32340,32341,32345,32346,32347,32348,32349,42232,422242,432242,432450,432451,432456,432457,432458,432459,433242,433344,532342,5433353,5433455,5433560",
+    "name": "The successive digits of the number k are the successive \"inside Levenshtein distances\" of k (except for the last digit of k). See the Comment section for the definition of an \"inside Levenshtein distance\".",
+    "comment": [
+        "Let's consider 2023 and compute the successive traditional Levenshtein distances between 2 and 023, 20 and 23, 202 and 3 (the so-called inside Lds).",
+        "We have:",
+        "  Ld 2<>023 = 2,",
+        "  Ld 20<>23 = 1,",
+        "  Ld 202<>3 = 3.",
+        "The successive Lds of 2023 are 2, 1 and 3."
+    ],
+    "link": [
+        "\u00c9ric Angelini, <a href=\"https://cinquantesignes.blogspot.com/2023/11/inside-levenshtein-distances.html\">Inside Levenshtein distances</a>, Personal blog, November 2023."
+    ],
+    "example": [
+        "a(1) = 10 has an iLd of 1 (the Levenshtein distance between 1 and 0) and this iLd of 1 is the first digit of a(1);",
+        "a(47) = 5433560 is in the sequence because its successive Lds are:",
+        "  Ld 5<>433560 = 5",
+        "  Ld 54<>33560 = 4",
+        "  Ld 543<>3560 = 3",
+        "  Ld 5433<>560 = 3",
+        "  Ld 54335<>60 = 5",
+        "  Ld 543356<>0 = 6.",
+        "We see that the rightmost column above reproduces a(47), except for the last digit."
+    ],
+    "program": [
+        "(Python)",
+        "from Levenshtein import distance as Ld",
+        "def ok(n):",
+        "    s = str(n)",
+        "    if n < 10: return False # convention, though condition is vacuously True",
+        "    return all(Ld(s[:i+1], s[i+1:]) == int(s[i]) for i in range(len(s)-1))",
+        "print([k for k in range(10**7) if ok(k)]) # _Michael S. Branicky_, Dec 01 2023"
+    ],
+    "xref": [
+        "Cf. A367638."
+    ],
+    "keyword": "base,nonn,new",
+    "offset": "1,1",
+    "author": "_Eric Angelini_ and _Giorgos Kalogeropoulos_, Nov 30 2023",
+    "references": 0,
+    "revision": 14,
+    "time": "2023-12-01T15:51:48-05:00",
+    "created": "2023-12-01T15:51:48-05:00"
+}

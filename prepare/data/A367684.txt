@@ -1,0 +1,44 @@
+{
+    "number": 367684,
+    "data": "1,1,2,2,4,5,8,10,14,17,25,30,39,51,66,79,102,125,154,191,233,284,347,420,499,614,726,867,1031,1233,1437,1726,2002,2375,2770,3271,3760,4455,5123,5994,6904,8064,9199,10753,12241,14202,16189,18704,21194,24504",
+    "name": "Number of integer partitions of n whose multiset multiplicity kernel is a submultiset.",
+    "comment": [
+        "We define the multiset multiplicity kernel MMK(m) of a multiset m by the following property, holding for all distinct multiplicities k >= 1. If S is the set of elements of multiplicity k in m, then min(S) has multiplicity |S| in MMK(m). For example, MMK({1,1,2,2,3,4,5}) = {1,1,3,3,3}, and MMK({1,2,3,4,5,5,5,5}) = {1,1,1,1,5}. As an operation on multisets MMK is represented by A367579, and as an operation on their ranks it is represented by A367580."
+    ],
+    "example": [
+        "The a(1) = 1 through a(7) = 10 partitions:",
+        "  (1)  (2)   (3)    (4)     (5)      (6)       (7)",
+        "       (11)  (111)  (22)    (221)    (33)      (322)",
+        "                    (211)   (311)    (222)     (331)",
+        "                    (1111)  (2111)   (411)     (511)",
+        "                            (11111)  (2211)    (2221)",
+        "                                     (3111)    (4111)",
+        "                                     (21111)   (22111)",
+        "                                     (111111)  (31111)",
+        "                                               (211111)",
+        "                                               (1111111)"
+    ],
+    "mathematica": [
+        "submultQ[cap_,fat_]:=And@@Function[i, Count[fat,i]>=Count[cap, i]]/@Union[List@@cap];",
+        "mmk[q_List]:=With[{mts=Length/@Split[q]}, Sort[Table[Min@@Select[q,Count[q,#]==i&], {i,mts}]]];",
+        "Table[Length[Select[IntegerPartitions[n], submultQ[mmk[#],#]&]], {n,0,15}]"
+    ],
+    "xref": [
+        "The case of strict partitions is A000012.",
+        "Includes all partitions with distinct multiplicities A098859, ranks A130091.",
+        "These partitions have ranks A367685.",
+        "A000041 counts integer partitions, strict A000009.",
+        "A072233 counts partitions by number of parts.",
+        "A091602 counts partitions by greatest multiplicity, least A243978.",
+        "A116608 counts partitions by number of distinct parts.",
+        "A116861 counts partitions by sum of distinct parts.",
+        "Cf. A000837, A032741, A071625, A109297, A114640, A367579, A367580, A367581."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Nov 30 2023",
+    "references": 0,
+    "revision": 7,
+    "time": "2023-12-01T09:31:29-05:00",
+    "created": "2023-12-01T09:31:29-05:00"
+}

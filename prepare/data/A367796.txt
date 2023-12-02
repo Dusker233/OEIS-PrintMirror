@@ -1,0 +1,48 @@
+{
+    "number": 367796,
+    "data": "29,47,83,20147,23117,24107,63113,80141,81131,261104399,262005299,262104299,262203299,263302199,264203099,264302099,264500099,270401489,271500389,273104189,273302189,274401089,282203279,284302079,284500079,291104369,291203369,292005269,293005169,293104169,294302069",
+    "name": "Primes p such that the sum of p and its reversal is the square of a prime.",
+    "comment": [
+        "Terms > 83 have an odd number of digits and an even first digit."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A367796/b367796.txt\">Table of n, a(n) for n = 1..5768</a> (terms <= 10^15)"
+    ],
+    "example": [
+        "A056964(a(n)) = 121 = 11^2 for 1 <= n <= 3.",
+        "A056964(a(n)) = 94249 = 307^2 for 4 <= n <= 9.",
+        "A056964(a(n)) = 1254505561 = 35419^2 for 10 <= n <= 70."
+    ],
+    "maple": [
+        "digrev:= proc(n) local L,i;",
+        "  L:= convert(n,base,10);",
+        "  add(L[-i]*10^(i-1),i=1..nops(L))",
+        "end proc:",
+        "filter:= proc(t) local v;",
+        "  v:= sqrt(t+digrev(t));",
+        "  v::integer and isprime(v)",
+        "end proc:",
+        "R:= 29, 47, 83: count:= 3: flag:= true:",
+        "for d from 3 to 9 by 2 do",
+        "  p:= prevprime(10^(d-1));",
+        "  for i from 1 do",
+        "    p:= nextprime(p);",
+        "    p1:= floor(p/10^(d-1));",
+        "    if p1::odd then p:= nextprime((p1+1)*10^(d-1)) fi;",
+        "    if p > 10^d then break fi;",
+        "    if filter(p) then",
+        "       count:= count+1; R:= R,p;",
+        "fi od od:",
+        "R;"
+    ],
+    "xref": [
+        "Cf. A056964, A067030, A061783. Subset of A367793."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Nov 30 2023",
+    "references": 0,
+    "revision": 14,
+    "time": "2023-12-02T02:40:30-05:00",
+    "created": "2023-12-01T03:27:20-05:00"
+}
