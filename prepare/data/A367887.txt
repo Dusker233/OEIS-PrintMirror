@@ -1,0 +1,40 @@
+{
+    "number": 367887,
+    "data": "1,4,20,130,1088,11314,141080,2052250,34118048,638102434,13260323240,303117147370,7558845354608,204203189722354,5940927689713400,185186461979970490,6157337034085736768,217523186522883467074,8136577601614291359560,321261794453042025993610,13352198666907246870560528",
+    "name": "Expansion of e.g.f. exp(2*x) / (1 - 2*sinh(x)).",
+    "link": [
+        "P. R. J. Asveld, <a href=\"https://www.fq.math.ca/Scanned/25-1/asveld.pdf\">A family of Fibonacci-like sequences</a>, Fib. Quart., 25 (1987), 81-83.",
+        "G. Ledin, Jr., <a href=\"https://www.fq.math.ca/Scanned/5-1/ledin.pdf\">On a certain kind of Fibonacci sums</a>, Fib. Quart., 5 (1967), 45-58. See Table IV p. 53."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..n} A341725(n,k).",
+        "a(n) = (-1)^n*Sum_{k=0..n} (-2)^k*A341724(n,k).",
+        "a(n) = -1-0^n+Sum_{k=0..n} k!*Fibonacci(k+4)*Stirling2(n,k).",
+        "a(0) = 1; a(n) = 3^n+Sum_{k=0..n-1} (2^(n-k)-1)*binomial(n,k)*a(k).",
+        "a(n) ~ n! * (phi)^2  / (sqrt(5) * (log(phi))^(n+1)), where phi is the golden ratio.",
+        "a(n) = -1 + A000557(n) + A005923(n)) = - 1 + Sum_{k=0..n} |A341723(n,k) + A341724(n,k)|."
+    ],
+    "maple": [
+        "a := n -> -1-0^n+add(k!*combinat[fibonacci](k+4)*Stirling2(n, k), k = 0 .. n):",
+        "seq(a(n), n=0..20);",
+        "# second program:",
+        "a := proc(n) option remember; `if`(n=0,1,3^n+add((2^(n-k)-1)*binomial(n, k)*a(k), k=0..n-1)) end:",
+        "seq(a(n), n=0..20);",
+        "# third program:",
+        "a := n -> add(2^k*binomial(n, k)*add(j!*combinat[fibonacci](j+2)*Stirling2(n-k, j), j=0..n-k), k=0..n):",
+        "seq(a(n), n=0..20);"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^30)); Vec(serlaplace(exp(2*x) / (1 - 2*sinh(x)))) \\\\ _Michel Marcus_, Dec 04 2023"
+    ],
+    "xref": [
+        "Cf. A000045, A000557, A005923, A341723, A341724, A341725."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,2",
+    "author": "_M\u00e9lika Tebni_, Dec 04 2023",
+    "references": 0,
+    "revision": 11,
+    "time": "2023-12-04T14:13:58-05:00",
+    "created": "2023-12-04T08:33:05-05:00"
+}
