@@ -1,0 +1,51 @@
+{
+    "number": 367962,
+    "data": "1,1,2,2,4,5,6,12,15,16,24,48,60,64,65,120,240,300,320,325,326,720,1440,1800,1920,1950,1956,1957,5040,10080,12600,13440,13650,13692,13699,13700,40320,80640,100800,107520,109200,109536,109592,109600,109601",
+    "name": "Triangle read by rows. T(n, k) = Sum_{j=0..k} (n!/j!).",
+    "formula": [
+        "T(n, k) = A094587(n, k) * A000522(k).",
+        "T(n, k) = e * (n! / k!) * Gamma(k + 1, 1).",
+        "Sum_{k=0..n} T(n, k) * 2^(n - k) = A053482(n).",
+        "Sum_{k=0..n} T(n, k) * binomial(n, k) = A331689(n).",
+        "Recurrence: T(n, n) = T(n, n-1) + 1 starting with T(0, 0) = 1.",
+        "For k <> n: T(n, k) = n * T(n-1, k-1)."
+    ],
+    "example": [
+        "  [0]   1;",
+        "  [1]   1,    2;",
+        "  [2]   2,    4,    5;",
+        "  [3]   6,   12,   15,   16;",
+        "  [4]  24,   48,   60,   64,   65;",
+        "  [5] 120,  240,  300,  320,  325,  326;",
+        "  [6] 720, 1440, 1800, 1920, 1950, 1956, 1957;"
+    ],
+    "maple": [
+        "T := (n, k) -> add(n!/j!, j = 0..k):",
+        "seq(seq(T(n, k), k = 0..n), n = 0..9);"
+    ],
+    "program": [
+        "(SageMath)",
+        "def T(n, k): return sum(falling_factorial(n, n - j) for j in range(k + 1))",
+        "for n in range(9): print([T(n, k) for k in range(n + 1)])",
+        "(Python)",
+        "from functools import cache",
+        "@cache",
+        "def a_row(n: int) -> list[int]:",
+        "    if n == 0: return [1]",
+        "    row = a_row(n - 1) + [0]",
+        "    for k in range(n): row[k] *= n",
+        "    row[n] = row[n - 1] + 1",
+        "    return row"
+    ],
+    "xref": [
+        "Cf. A094587, A000142 (T(n, 0)), A052849 (T(n, 1)), A000522 (T(n, n)), A007526 (T(n,n-1)), A038154 (T(n, n-2)), A355268 (T(n, n/2)), A367963(n) (T(2*n, n)/n!).",
+        "Cf. A001339 (row sums), A087208 (alternating row sums), A082030 (accumulated sums), A053482, A331689."
+    ],
+    "keyword": "nonn,tabl,new",
+    "offset": "0,3",
+    "author": "_Peter Luschny_, Dec 06 2023",
+    "references": 0,
+    "revision": 19,
+    "time": "2023-12-06T18:12:28-05:00",
+    "created": "2023-12-06T14:20:15-05:00"
+}
