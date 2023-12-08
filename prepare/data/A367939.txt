@@ -1,0 +1,30 @@
+{
+    "number": 367939,
+    "data": "1,2,20,168,1936,25376,378688,6284928,114471168,2263605760,48192279552,1097180784640,26562251100160,680591327567872,18381995707154432,521521320660205568,15495495061984051200,480873815489757970432,15549555768325162926080,522810678067316117733376",
+    "name": "Expansion of e.g.f. exp(exp(4*x) - 1 - 2*x).",
+    "formula": [
+        "G.f. A(x) satisfies: A(x) = 1 - 2 * x * ( A(x) - 2 * A(x/(1 - 4*x)) / (1 - 4*x) ).",
+        "a(n) = exp(-1) * Sum_{k>=0} (4*k-2)^n / k!.",
+        "a(0) = 1; a(n) = -2 * a(n-1) + Sum_{k=1..n} binomial(n-1,k-1) * 4^k * a(n-k).",
+        "a(n) = Sum_{k=0..n} binomial(n,k) * (-2)^(n+k) * Bell(k).",
+        "a(n) = 2^n * |A124311(n)|."
+    ],
+    "mathematica": [
+        "nmax = 19; CoefficientList[Series[Exp[Exp[4 x] - 1 - 2 x], {x, 0, nmax}], x] Range[0, nmax]!",
+        "a[0] = 1; a[n_] := a[n] = -2 a[n - 1] + Sum[Binomial[n - 1, k - 1] 4^k a[n - k], {k, 1, n}]; Table[a[n], {n, 0, 19}]",
+        "Table[Sum[Binomial[n, k] (-2)^(n + k) BellB[k], {k, 0, n}], {n, 0, 19}]"
+    ],
+    "program": [
+        "(PARI) my(x='x+O('x^30)); Vec(serlaplace(exp(exp(4*x) - 1 - 2*x))) \\\\ _Michel Marcus_, Dec 07 2023"
+    ],
+    "xref": [
+        "Cf. A000110, A124311, A126617, A355162, A367786, A367938, A367940."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,2",
+    "author": "_Ilya Gutkovskiy_, Dec 05 2023",
+    "references": 0,
+    "revision": 9,
+    "time": "2023-12-07T08:23:21-05:00",
+    "created": "2023-12-07T04:04:05-05:00"
+}
