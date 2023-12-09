@@ -1,0 +1,37 @@
+{
+    "number": 367969,
+    "data": "1,1,1,2,5,11,37,129,431,1921,9544,43844,223512,1407320,8519457,52422985,373424140,2685768084,20354852852,160370778238,1318493838635,11239312718146,98700416575613,916309760098349,8735277842452542,84921152781222758,860903677319960583",
+    "name": "Number of partitions of [n] whose block maxima sum to k, where k is chosen so as to maximize this number.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A367969/b367969.txt\">Table of n, a(n) for n = 0..200</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "example": [
+        "a(5) = 11 = A367955(5,12) is the largest value in row 5 of A367955 and counts the partitions of [5] having block maxima sum 12: 123|4|5, 124|3|5, 125|3|4, 13|24|5, 13|25|4, 14|23|5, 15|23|4, 14|25|3, 15|24|3, 1|2|34|5, 1|2|35|4."
+    ],
+    "maple": [
+        "b:= proc(n, m) option remember; `if`(n=0, 1,",
+        "      b(n-1, m)*m + expand(x^n*b(n-1, m+1)))",
+        "    end:",
+        "a:= n-> max(coeffs(b(n, 0))):",
+        "seq(a(n), n=0..30);",
+        "# second Maple program:",
+        "b:= proc(n, i, t) option remember; `if`(i*(i+1)/2<n, 0,",
+        "      `if`(n=0, t^i, `if`(t=0, 0, t*b(n, i-1, t))+",
+        "       (t+1)^max(0, 2*i-n-1)*b(n-i, min(n-i, i-1), t+1)))",
+        "    end:",
+        "a:= n-> max(seq(b(k, n, 0), k=n..n*(n+1)/2)):",
+        "seq(a(n), n=0..30);"
+    ],
+    "xref": [
+        "Row maxima of A367955.",
+        "Cf. A365441."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Dec 06 2023",
+    "references": 0,
+    "revision": 16,
+    "time": "2023-12-08T15:40:31-05:00",
+    "created": "2023-12-08T14:49:11-05:00"
+}
