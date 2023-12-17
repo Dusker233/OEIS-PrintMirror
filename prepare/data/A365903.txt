@@ -1,0 +1,35 @@
+{
+    "number": 365903,
+    "data": "1,1,1,2,4,10,29,101,367,1562,6891,37871,197930,1121634,6888085,46190282,323250987,2349020516,17897285514,142512956148,1178963284732,10248806222398,91421283039658,847666112839362,8100455404172267,79925567946537362,814508927747776069",
+    "name": "Number of partitions of [n] whose block minima sum to k, where k is chosen so as to maximize this number.",
+    "link": [
+        "Alois P. Heinz, <a href=\"/A365903/b365903.txt\">Table of n, a(n) for n = 0..100</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "maple": [
+        "b:= proc(n, i, t, m) option remember; `if`(n=0, t^(m-i+1),",
+        "     `if`((i+m)*(m+1-i)/2<n or i>n, 0, `if`(t=0, 0,",
+        "      t*b(n, i+1, t, m))+ b(n-i, i+1, t+1, m)))",
+        "    end:",
+        "a:= n-> max(seq(b(k, 1, 0, n), k=0..n*(n+1)/2)):",
+        "seq(a(n), n=0..26);",
+        "# second Maple program:",
+        "a:= proc(h) option remember; local b; b:=",
+        "      proc(n, m) option remember; `if`(n=0, 1,",
+        "        b(n-1, m)*m + expand(x^(h-n+1)*b(n-1, m+1)))",
+        "      end: forget(b); max(coeffs(b(h, 0)))",
+        "    end:",
+        "seq(a(n), n=0..26);"
+    ],
+    "xref": [
+        "Row maxima of A124327.",
+        "Cf. A367969."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Dec 14 2023",
+    "references": 0,
+    "revision": 17,
+    "time": "2023-12-16T22:11:34-05:00",
+    "created": "2023-12-16T21:23:11-05:00"
+}
