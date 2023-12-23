@@ -1,0 +1,62 @@
+{
+    "number": 368063,
+    "data": "1,2,3,10,160,12155,26558675",
+    "name": "a(n) is the least number k such that sigma(sigma(k) * k) > n * sigma(k) * k.",
+    "comment": [
+        "Application of A134716 (sigma(k) / k > n) to A064987.",
+        "From _Daniel Suteu_, Dec 21 2023: (Start)",
+        "a(7) <= 114775357632650.",
+        "a(8) <= 272113056574982766111055794421. (End)"
+    ],
+    "example": [
+        "For n = 4, the divisors of 160 sum to 378. 160 * 378 = 60480, whose divisors sum up to 243840 > 4 * 60480."
+    ],
+    "mathematica": [
+        "a={}; For[n=0, n<=6, n++, k=1; While[DivisorSigma[1,DivisorSigma[1,k]k] <= n DivisorSigma[1,k] k, k++]; AppendTo[a,k]]; a (* _Stefano Spezia_, Dec 10 2023 *)"
+    ],
+    "program": [
+        "(Java)",
+        "public static void main(String[] args)",
+        "    {",
+        "        long max = 0;",
+        "        for (long c = 1; c < Math.pow(10, 8); c = c + 1)",
+        "        {",
+        "            if (factorSum(factorSum(c) * c) > max * factorSum(c) * c)",
+        "            {",
+        "                System.out.println(c + \": \" + factorSum(c) * c);",
+        "                max = max + 1;",
+        "            }",
+        "        }",
+        "    }",
+        "    public static long factorSum(long n)",
+        "    {",
+        "        long sum = 0;",
+        "        for (long c = 1; c <= Math.sqrt(n); c = c + 1)",
+        "        {",
+        "            if (n % c == 0)",
+        "            {",
+        "                sum = sum + c;",
+        "                if (c != Math.sqrt(n))",
+        "                {",
+        "                    sum = sum + n / c;",
+        "                }",
+        "            }",
+        "        }",
+        "        return sum;",
+        "    }",
+        "(PARI) a(n) = my(k=1); while (sigma(sigma(k)*k) <= n * sigma(k) * k, k++); k; \\\\ _Michel Marcus_, Dec 10 2023"
+    ],
+    "xref": [
+        "Cf. A064987, A134716."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,2",
+    "author": "_Max Z. Scialabba_, Dec 10 2023",
+    "ext": [
+        "a(6) from _Michel Marcus_, Dec 10 2023"
+    ],
+    "references": 0,
+    "revision": 44,
+    "time": "2023-12-22T12:11:45-05:00",
+    "created": "2023-12-22T12:11:45-05:00"
+}
