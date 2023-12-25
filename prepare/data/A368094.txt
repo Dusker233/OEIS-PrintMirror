@@ -1,0 +1,54 @@
+{
+    "number": 368094,
+    "data": "0,0,0,0,1,1,5,12,36,97,291",
+    "name": "Number of non-isomorphic set-systems of weight n contradicting a strict version of the axiom of choice.",
+    "comment": [
+        "A set-system is a finite set of finite nonempty sets. The weight of a set-system is the sum of cardinalities of its elements.",
+        "The axiom of choice says that, given any set of nonempty sets Y, it is possible to choose a set containing an element from each. The strict version requires this set to have the same cardinality as Y, meaning no element is chosen more than once."
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(5) = 1 through a(7) = 12 set-systems:",
+        "  {{1},{2},{3},{2,3}}  {{1},{2},{1,3},{2,3}}    {{1},{2},{1,2},{3,4,5}}",
+        "                       {{1},{2},{3},{1,2,3}}    {{1},{3},{2,3},{1,2,3}}",
+        "                       {{2},{3},{1,3},{2,3}}    {{1},{4},{1,4},{2,3,4}}",
+        "                       {{3},{4},{1,2},{3,4}}    {{2},{3},{2,3},{1,2,3}}",
+        "                       {{1},{2},{3},{4},{3,4}}  {{3},{1,2},{1,3},{2,3}}",
+        "                                                {{1},{2},{3},{1,3},{2,3}}",
+        "                                                {{1},{2},{3},{2,4},{3,4}}",
+        "                                                {{1},{2},{3},{4},{2,3,4}}",
+        "                                                {{1},{3},{4},{2,4},{3,4}}",
+        "                                                {{1},{4},{5},{2,3},{4,5}}",
+        "                                                {{2},{3},{4},{1,2},{3,4}}",
+        "                                                {{1},{2},{3},{4},{5},{4,5}}"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]& /@ sps[Complement[set,s]]] /@ Cases[Subsets[set],{i,___}];",
+        "mpm[n_]:=Join@@Table[Union[Sort[Sort/@(#/.x_Integer:>s[[x]])]& /@ sps[Range[n]]], {s,Flatten[MapIndexed[Table[#2,{#1}]&,#]]& /@ IntegerPartitions[n]}];",
+        "brute[m_]:=First[Sort[Table[Sort[Sort /@ (m/.Rule@@@Table[{i,p[[i]]},{i,Length[p]}])], {p,Permutations[Union@@m]}]]];",
+        "Table[Length[Union[brute/@Select[mpm[n], UnsameQ@@#&&And@@UnsameQ@@@# && Select[Tuples[#], UnsameQ@@#&]=={}&]]],{n,0,8}]"
+    ],
+    "xref": [
+        "The case of unlabeled graphs appears to be A140637, complement A134964.",
+        "The case of labeled graphs is A367867, complement A133686.",
+        "The labeled version is A367903, ranks A367907.",
+        "The complement is counted by A368095, connected A368410.",
+        "Repeats allowed: A368097, ranks A355529, complement A368098, ranks A368100.",
+        "Minimal multiset partitions of this type are counted by A368187.",
+        "The connected case is A368409.",
+        "Factorizations of this type are counted by A368413, complement A368414.",
+        "Allowing repeated edges gives A368421, complement A368422.",
+        "A000110 counts set partitions, non-isomorphic A000041.",
+        "A003465 counts covering set-systems, unlabeled A055621.",
+        "A007716 counts non-isomorphic multiset partitions, connected A007718.",
+        "A058891 counts set-systems, unlabeled A000612, connected A323818.",
+        "A283877 counts non-isomorphic set-systems, connected A300913.",
+        "Cf. A302545, A306005, A316983, A317533, A319616, A321155, A321405, A326031, A330223, A330227, A367905."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,7",
+    "author": "_Gus Wiseman_, Dec 23 2023",
+    "references": 1,
+    "revision": 17,
+    "time": "2023-12-24T15:00:27-05:00",
+    "created": "2023-12-24T15:00:27-05:00"
+}
