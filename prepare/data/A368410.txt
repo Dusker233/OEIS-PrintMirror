@@ -1,0 +1,60 @@
+{
+    "number": 368410,
+    "data": "0,1,1,2,3,7,15,32,80,198,528",
+    "name": "Number of non-isomorphic connected set-systems of weight n satisfying a strict version of the axiom of choice.",
+    "comment": [
+        "A set-system is a finite set of finite nonempty sets. The weight of a set-system is the sum of cardinalities of its elements. Weight is generally not the same as number of vertices.",
+        "The axiom of choice says that, given any set of nonempty sets Y, it is possible to choose a set containing an element from each. The strict version requires this set to have the same cardinality as Y, meaning no element is chosen more than once."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Axiom_of_choice\">Axiom of choice</a>."
+    ],
+    "example": [
+        "Non-isomorphic representatives of the a(1) = 1 through a(6) = 15 set-systems:",
+        "  {1}  {12}  {123}    {1234}    {12345}      {123456}",
+        "             {2}{12}  {13}{23}  {14}{234}    {125}{345}",
+        "                      {3}{123}  {23}{123}    {134}{234}",
+        "                                {4}{1234}    {15}{2345}",
+        "                                {2}{13}{23}  {34}{1234}",
+        "                                {2}{3}{123}  {5}{12345}",
+        "                                {3}{13}{23}  {1}{14}{234}",
+        "                                             {12}{13}{23}",
+        "                                             {1}{23}{123}",
+        "                                             {13}{24}{34}",
+        "                                             {14}{24}{34}",
+        "                                             {3}{14}{234}",
+        "                                             {3}{23}{123}",
+        "                                             {3}{4}{1234}",
+        "                                             {4}{14}{234}"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]& /@ sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "mpm[n_]:=Join@@Table[Union[Sort[Sort/@(#/.x_Integer:>s[[x]])]& /@ sps[Range[n]]],{s,Flatten[MapIndexed[Table[#2,{#1}]&,#]]& /@ IntegerPartitions[n]}];",
+        "brute[m_]:=First[Sort[Table[Sort[Sort/@(m/.Rule@@@Table[{i,p[[i]]}, {i,Length[p]}])],{p,Permutations[Union@@m]}]]];",
+        "csm[s_]:=With[{c=Select[Subsets[Range[Length[s]],{2}],Length[Intersection@@s[[#]]]>0&]}, If[c=={},s,csm[Sort[Append[Delete[s,List/@c[[1]]], Union@@s[[c[[1]]]]]]]]];",
+        "Table[Length[Union[brute/@Select[mpm[n], UnsameQ@@#&&And@@UnsameQ@@@#&&Length[csm[#]]==1&&Select[Tuples[#], UnsameQ@@#&]!={}&]]],{n,0,6}]"
+    ],
+    "xref": [
+        "For unlabeled graphs we have A005703, connected case of A134964.",
+        "For labeled graphs we have A129271, connected case of A133686.",
+        "The complement for labeled graphs is A140638, connected case of A367867.",
+        "The complement without connectedness is A367903, ranks A367907.",
+        "Without connectedness we have A368095, ranks A367906,",
+        "Complement with repeats: A368097, connected case of A368411, ranks A355529.",
+        "The complement is counted by A368409, connected case of A368094.",
+        "With repeats allowed: A368412, connected case of A368098, ranks A368100.",
+        "A000110 counts set-partitions, non-isomorphic A000041.",
+        "A003465 counts covering set-systems, unlabeled A055621.",
+        "A007716 counts non-isomorphic multiset partitions, connected A007718.",
+        "A058891 counts set-systems, unlabeled A000612, connected A323818.",
+        "A283877 counts non-isomorphic set-systems, connected A300913.",
+        "Cf. A001055, A140637, A302545, A306005, A321194, A321405, A367902, A368414, A368422."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,4",
+    "author": "_Gus Wiseman_, Dec 25 2023",
+    "references": 0,
+    "revision": 5,
+    "time": "2023-12-26T08:31:57-05:00",
+    "created": "2023-12-26T08:31:57-05:00"
+}
