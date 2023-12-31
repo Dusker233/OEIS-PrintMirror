@@ -1,0 +1,35 @@
+{
+    "number": 367596,
+    "data": "1,3,39,975,40575,844501,73824373,25814174655,3868475107935,724655165594943,165910226233669599,15194097535426090645,4933425635511640104565,5606480381963363479902783,2450522415523358900846598879,1224105922303030827661963930815,693005978151926719613680243125855",
+    "name": "The denominators of a series that converges to log(2) obtained using Whittaker's root series formula.",
+    "comment": [
+        "The Whittaker's root series formula is applied to -1 + x + x^2/2! + x^3/3! + x^4/4! + x^5/5! + x^6/6! + ..., which is the Taylor expansion of e^x with the first coefficient having a negative sign (-1 instead of 1). We obtain log(2) = 1 - 1/3 + 1/39 + 1/975 - 7/40575 - 13/844501 + 115/73824373 + 5657/25814174655 .... The sequence is formed by the denominators of the series."
+    ],
+    "link": [
+        "E. T. Whittaker and G. Robinson, <a href=\"https://archive.org/details/calculusofobserv031400mbp/page/n139/mode/2up\">The Calculus of Observations, London: Blackie & Son, Ltd. 1924, pp. 120-123."
+    ],
+    "formula": [
+        "a(n) is the denominator of the simplified fraction -(-1)^n*det ToeplitzMatrix((c(2),c(1),c(0),0,0,...,0),(c(2),c(3),c(4),...,c(n+1)))/(det ToeplitzMatrix((c(1),c(0),0,...,0),(c(1),c(2),c(3),...,c(n)))*det ToeplitzMatrix((c(1),c(0),0,...,0),(c(1),c(2),c(3),...,c(n+1)))), where c(0)=-1, c(1)=1, c(2)=1/2!, c(3)=1/3!, c(4)=1/4!, c(n)=1/n!."
+    ],
+    "example": [
+        "a(1) is the denominator of -(-1)/1 = 1/1.",
+        "a(2) is the denominator of -(-1)^2*(1/2!)/(1*det((1,1/2!),(-1,1))) = -(1/2)/(1*(3/2)) = -1/3.",
+        "a(3) is the denominator of -(-1)^3*det((1/2!,1/3!),(1,1/2!))/(det((1,1/2!),(-1,1))*det((1,1/2!,1/3!),(-1,1,1/2!),(0,-1,1))) = (1/12)/((3/2)*(13/6)) = 1/39."
+    ],
+    "mathematica": [
+        "c[k_] := If[k < 0, 0, SeriesCoefficient[Exp[x] - 2, {x, 0, k}]]; Join[{1}, Table[(-1)^n*Det[ToeplitzMatrix[Table[c[3 - j], {j, 1, n}], Table[c[j + 1], {j, 1, n}]]] / (Det[ToeplitzMatrix[Table[c[2 - j], {j, 1, n}], Table[c[j], {j, 1, n}]]] * Det[ToeplitzMatrix[Table[c[2 - j], {j, 1, n + 1}], Table[c[j], {j, 1, n + 1}]]]), {n, 1, 20}] // Denominator] (* _Vaclav Kotesovec_, Nov 26 2023 *)"
+    ],
+    "xref": [
+        "Cf. A002162, A365594, A367597 (numerators)."
+    ],
+    "keyword": "nonn,frac,new",
+    "offset": "1,2",
+    "author": "_Raul Prisacariu_, Nov 24 2023",
+    "ext": [
+        "More terms from _Vaclav Kotesovec_, Nov 26 2023"
+    ],
+    "references": 0,
+    "revision": 22,
+    "time": "2023-12-31T00:29:14-05:00",
+    "created": "2023-12-31T00:29:14-05:00"
+}
