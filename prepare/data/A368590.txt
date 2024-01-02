@@ -1,0 +1,48 @@
+{
+    "number": 368590,
+    "data": "728,1013,2813,3309,4323,4899,12438,21259,23113,31394,35719,37812,38023,111894,143449,194053,418613,418614,487368,535309,2232593,2452644,2490669,9226854,17367998,19637644,20341453,28553671,33406839,174398434,468936719,1468970139,2136314464",
+    "name": "Numbers k such that all of k, k+1 and k+2 are the sums of consecutive squares.",
+    "comment": [
+        "418613 is the smallest k such that k through k + 3 are the sums of consecutive squares.",
+        "After an idea by _Allan C. Wechsler_.",
+        "a(30)-a(33) were calculated using the b-file at A368570."
+    ],
+    "link": [
+        "Frank A. Stevenson, <a href=\"/A368590/b368590.txt\">Table of n, a(n) for n = 1..74</a>",
+        "David A. Corneth, <a href=\"/A368590/a368590.gp.txt\">PARI program</a>"
+    ],
+    "example": [
+        "728 is in the sequence via 728 = 7^2 + 8^2 + 9^2 + 10^2 + 11^2 + 12^2 + 13^2, 729 = 27^2 and 730 = 10^2 + 11^2 + 12^2 + 13^2 + 14^2."
+    ],
+    "program": [
+        "(PARI) \\\\ See PARI program",
+        "(Python)",
+        "import heapq",
+        "from itertools import islice",
+        "def agen(): # generator of terms",
+        "    m = 1; h = [(m, 1, 1)]; nextcount = 2",
+        "    v1 = v2 = -1",
+        "    while True:",
+        "        (v, s, l) = heapq.heappop(h)",
+        "        if v != v1:",
+        "            if v2 + 2 == v1 + 1 == v: yield v2",
+        "            v2, v1 = v1, v",
+        "        if v >= m:",
+        "            m += nextcount*nextcount",
+        "            heapq.heappush(h, (m, 1, nextcount))",
+        "            nextcount += 1",
+        "        v -= s*s; s += 1; l += 1; v += l*l",
+        "        heapq.heappush(h, (v, s, l))",
+        "print(list(islice(agen(), 33))) # _Michael S. Branicky_, Jan 01 2024"
+    ],
+    "xref": [
+        "Subsequence of A034705 and of A368570."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_David A. Corneth_, Dec 31 2023",
+    "references": 0,
+    "revision": 32,
+    "time": "2024-01-01T16:40:22-05:00",
+    "created": "2024-01-01T09:13:49-05:00"
+}
