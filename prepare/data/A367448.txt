@@ -1,0 +1,31 @@
+{
+    "number": 367448,
+    "data": "1,2,7,39,324,3839,62973,1402792,41946319,1673580047,88922215948,6297931501377,596303138919753,75787556639822258,12991109500044250083,3018313885461813882295,955168488432838276254520,413639698066068492610331231,246197679553110860511406200613,202212713843977008653180874488520",
+    "name": "Number of chordal graphs on n vertices with a fixed perfect elimination ordering (e.g., 1,2,3,...,n)",
+    "comment": [
+        "a(n) is the number of sign mappings X:([n] choose 2) -> {+,-} such that for any ordered 3-tuple a<b<c we have X(ab)X(ac)X(bc) not equal to -++."
+    ],
+    "program": [
+        "(PARI)",
+        "a(n)={",
+        "  local(M=Map(Mat([1, 1])));",
+        "  my(acc(p, v)=my(z); mapput(M, p, if(mapisdefined(M, p, &z), z+v, v)));",
+        "  my(proc(p,m)=for(k=0, poldegree(p), acc(p + x*(1 + x)^k, polcoef(p,k)*m)));",
+        "  for(r=1, n, my(src=Mat(M)); M=Map(); for(i=1, matsize(src)[1], proc(src[i, 1], src[i, 2])));",
+        "  vecsum(Mat(M)[,2])",
+        "} \\\\ _Andrew Howroyd_, Jan 06 2024"
+    ],
+    "xref": [
+        "Cf. A048192."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Manfred Scheucher_ and _Robert Lauff_, Jan 05 2024",
+    "ext": [
+        "Terms a(12) and beyond from _Andrew Howroyd_, Jan 06 2024"
+    ],
+    "references": 0,
+    "revision": 27,
+    "time": "2024-01-06T22:58:44-05:00",
+    "created": "2024-01-06T09:23:04-05:00"
+}

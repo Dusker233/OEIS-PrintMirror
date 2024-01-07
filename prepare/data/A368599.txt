@@ -1,0 +1,50 @@
+{
+    "number": 368599,
+    "data": "1,1,2,5,13,34,97",
+    "name": "Number of non-isomorphic n-element sets of singletons or pairs of elements of {1..n} with union {1..n}, or unlabeled loop-graphs with n edges covering n vertices.",
+    "comment": [
+        "It doesn't matter for this sequence whether we use loops such as {x,x} or half-loops such as {x}."
+    ],
+    "link": [
+        "Eric Weisstein's World of Mathematics, <a href=\"https://mathworld.wolfram.com/GraphLoop.html\">Graph Loop</a>."
+    ],
+    "example": [
+        "The a(0) = 1 through a(4) = 13 set-systems:",
+        "  {}  {{1}}  {{1},{2}}    {{1},{2},{3}}        {{1},{2},{3},{4}}",
+        "             {{1},{1,2}}  {{1},{2},{1,3}}      {{1},{2},{3},{1,4}}",
+        "                          {{1},{1,2},{1,3}}    {{1},{2},{1,2},{3,4}}",
+        "                          {{1},{1,2},{2,3}}    {{1},{2},{1,3},{1,4}}",
+        "                          {{1,2},{1,3},{2,3}}  {{1},{2},{1,3},{2,4}}",
+        "                                               {{1},{2},{1,3},{3,4}}",
+        "                                               {{1},{1,2},{1,3},{1,4}}",
+        "                                               {{1},{1,2},{1,3},{2,4}}",
+        "                                               {{1},{1,2},{2,3},{2,4}}",
+        "                                               {{1},{1,2},{2,3},{3,4}}",
+        "                                               {{1},{2,3},{2,4},{3,4}}",
+        "                                               {{1,2},{1,3},{1,4},{2,3}}",
+        "                                               {{1,2},{1,3},{2,4},{3,4}}"
+    ],
+    "mathematica": [
+        "brute[m_]:=First[Sort[Table[Sort[Sort /@ (m/.Rule@@@Table[{(Union@@m)[[i]],p[[i]]}, {i,Length[p]}])], {p,Permutations[Range[Length[Union@@m]]]}]]];",
+        "Table[Length[Union[brute /@ Select[Subsets[Subsets[Range[n],{1,2}],{n}], Union@@#==Range[n]&]]],{n,0,5}]"
+    ],
+    "xref": [
+        "For any number of edges we have A000666, A054921, A322700.",
+        "For any number of edges of any size we have A055621, non-covering A000612.",
+        "For edges of any size we have A368186, covering case of A368731.",
+        "The labeled version is A368533, covering case of A014068.",
+        "This is the covering case of A368598.",
+        "A000085 counts set partitions into singletons or pairs.",
+        "A001515 counts length-n set partitions into singletons or pairs.",
+        "A100861 counts set partitions into singletons or pairs by number of pairs.",
+        "A111924 counts set partitions into singletons or pairs by length.",
+        "Cf. A007716, A007717, A058891, A122848, A283877, A302545, A320663, A322661, A339741, A339887, A339888."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,3",
+    "author": "_Gus Wiseman_, Jan 06 2024",
+    "references": 2,
+    "revision": 8,
+    "time": "2024-01-06T22:59:24-05:00",
+    "created": "2024-01-06T22:59:24-05:00"
+}
