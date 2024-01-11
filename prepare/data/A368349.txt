@@ -1,0 +1,68 @@
+{
+    "number": 368349,
+    "data": "0,1,2,3,4,9,11,19,32,51,58,176,196,269,614,1206,1309,3364,3619,8415,18079,22330,23711,79058,117094,139277,219667,455621,477477,1544588,1613790,3362761,7019600,8036377,13732062,48156197,49976001,56250675,116602593,308750265",
+    "name": "Number of maximal sets of pairs (t,d) where 2 <= t <= n, d is a proper divisor of t, no t is repeated, and no d is repeated.",
+    "comment": [
+        "A proper divisor of t is a divisor d in the range 1 <= d < t.",
+        "Each t in a set of pairs cannot repeat another t in the set, and each d in a set cannot repeat another d, but any t may equal any d (apart from within a pair).",
+        "A set of pairs is maximal when no further pair could be added without repeating some t or some d.",
+        "A prime t has a single proper divisor 1, so at most one prime t can appear in a set."
+    ],
+    "example": [
+        "For a(8) = 19, the possible t's 1..n are:",
+        "   1    2     3     4     5     6     7     8",
+        "Their respective possible proper divisors d are:",
+        "        1     1     1     1     1     1     1",
+        "                    2           2           2",
+        "                                3           4",
+        "The sets of (t,d) pairs are:",
+        "                                                  COUNT",
+        "    { (2,1)       (4,2)       (6,3)       (8,4) }   1",
+        "    { (2,1)                   (6,2)       (8,4) }   2",
+        "    { (2,1)                   (6,3)       (8,2) }   3",
+        "    {       (3,1) (4,2)       (6,3)       (8,4) }   4",
+        "    {       (3,1)             (6,2)       (8,4) }   5",
+        "    {       (3,1)             (6,3)       (8,2) }   6",
+        "    {             (4,1)       (6,2)       (8,4) }   7",
+        "    {             (4,1)       (6,3)       (8,2) }   8",
+        "    {             (4,2) (5,1) (6,3)       (8,4) }   9",
+        "    {                   (5,1) (6,2)       (8,4) }  10",
+        "    {                   (5,1) (6,3)       (8,2) }  11",
+        "    {             (4,2)       (6,1)       (8,4) }  12",
+        "    {             (4,1)       (6,3)       (8,4) }  13",
+        "    {                         (6,1)       (8,2) }  14",
+        "    {             (4,2)       (6,3) (7,1) (8,4) }  15",
+        "    {                         (6,2) (7,1) (8,4) }  16",
+        "    {                         (6,3) (7,1) (8,2) }  17",
+        "    {             (4,2)       (6,3)       (8,1) }  18",
+        "    {                         (6,2)       (8,1) }  19",
+        "In set number 9, the pairs have d = 1, 2, 3, 4, which are all the possible proper divisors of 1..8.",
+        "In set number 19, there is no way to include another pair since the unused proper divisors 3 or 4 can only come from t=6 or t=8, and they are already used.",
+        "Set {(6,3),(8,1)} is not counted since it's not maximal (could have (4,2) included)."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import combinations",
+        "from networkx import empty_graph,find_cliques",
+        "from sympy import divisors",
+        "def A368349(n):",
+        "    G=empty_graph((t,d) for t in range(2,n+1) for d in",
+        "divisors(t,generator=True,proper=True))",
+        "    for x,y in combinations(G,2):",
+        "        if x[0]!=y[0] and x[1]!=y[1]: G.add_edge(x,y)",
+        "    return sum(1 for c in find_cliques(G)) # _Pontus von Br\u00f6mssen_, Jan 10 2024"
+    ],
+    "xref": [
+        "Cf. A027751, A032741."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,3",
+    "author": "_Tamas Sandor Nagy_, Dec 22 2023",
+    "ext": [
+        "a(12)-a(40) from _Pontus von Br\u00f6mssen_, Jan 10 2024"
+    ],
+    "references": 0,
+    "revision": 57,
+    "time": "2024-01-10T23:54:51-05:00",
+    "created": "2024-01-10T05:02:30-05:00"
+}

@@ -1,0 +1,69 @@
+{
+    "number": 368867,
+    "data": "1,1,2,2,56,544,5064,69348,1210320",
+    "name": "Number of labeled mappings from n points to themselves with unique square root (endofunctions).",
+    "comment": [
+        "A mapping f has a unique square root if there exists a unique g such that gg = f."
+    ],
+    "example": [
+        "For n = 3, the two 3-cycles are unique square roots of each other.",
+        "Note that the identity map has more than one square root (i.e., 1->2, 2->1, 3->3 and itself).",
+        "Another non-example: 1->1, 2->2, 3->1 has two square roots: itself and 1->2, 2->1, 3->2.",
+        "In fact, the only endofunctions on {1,2,3} with unique square roots are the two 3-cycles, so a(3) = 2."
+    ],
+    "program": [
+        "(Lua)",
+        "  function increment(size, t)",
+        "  t[1] = t[1] + 1",
+        "  local index = 1",
+        "  while t[index] > size do",
+        "    t[index] = 1",
+        "    index = index + 1",
+        "    if index > size then return true end",
+        "    t[index] = t[index] + 1",
+        "  end",
+        "  return false",
+        "end",
+        "function get_initial(size)",
+        "  local return_value = {}",
+        "  for i = 1, size do return_value[i] = 1 end",
+        "  return return_value",
+        "end",
+        "function compute(size)",
+        "  candidate = get_initial(size)",
+        "  return_value = 0",
+        "  repeat",
+        "    fun_root = get_initial(size)",
+        "    fun_root_count = 0",
+        "    repeat",
+        "      for i = 1, size do",
+        "        if candidate[i] ~= fun_root[fun_root[i]] then",
+        "          goto next_fun_root",
+        "        end",
+        "      end",
+        "      fun_root_count = fun_root_count + 1",
+        "\t  if (fun_root_count == 2) then break end",
+        "      ::next_fun_root::",
+        "    until (increment(size, fun_root))",
+        "\t",
+        "    if (fun_root_count == 1) then",
+        "\t  return_value = return_value + 1",
+        "\tend",
+        "  until (increment(size, candidate))",
+        "  return return_value",
+        "end"
+    ],
+    "xref": [
+        "A088994 (permutations only) < This sequence < A102687 (any square maps) < A000312 (all maps)."
+    ],
+    "keyword": "nonn,hard,more,new",
+    "offset": "0,3",
+    "author": "_Keith J. Bauer_, Jan 08 2024",
+    "ext": [
+        "a(7)-a(8) from _Andrew Howroyd_, Jan 09 2024"
+    ],
+    "references": 0,
+    "revision": 10,
+    "time": "2024-01-10T23:55:32-05:00",
+    "created": "2024-01-10T23:55:32-05:00"
+}
