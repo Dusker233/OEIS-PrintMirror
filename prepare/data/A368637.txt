@@ -1,0 +1,36 @@
+{
+    "number": 368637,
+    "data": "1229,3041,3719,3793,4969,5107,6217,6317,6661,7517,8807,8963,9011,9883,10093,10247,11311,12983,13331,15443,17839,19801,21149,21727,22639,23417,23629,24223,24709,25349,26813,27329,27691,28123,28711,28807,28837,29453,29587,30161,31327,32069,34421,35267",
+    "name": "Primes p such that the sum of cubes of the 4 consecutive primes starting with p is twice a prime.",
+    "comment": [
+        "Primes p such that A001222(A133525(A000720(p))) = 2."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A368637/b368637.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 3719 is a term because 3719, 3727, 3733, 3739 are 4 consecutive primes with 3719^3 + 3727^3 + 3733^3 + 3739^3 = 2 * 103749725899 with 103749725899 prime."
+    ],
+    "maple": [
+        "N:= 10000: # for terms up to prime(N)",
+        "P:= [seq(ithprime(i),i=1..N+3)]:",
+        "P3:= map(`^`,[0,op(P)],3):",
+        "S:= ListTools:-PartialSums(P3):",
+        "R:= [seq](S[i+4]-S[i],i=1..N):",
+        "P[select(i -> isprime(R[i]/2), [$3..N])];"
+    ],
+    "mathematica": [
+        "lst[maxN_] := Module[{p = 2, i = 1, l = {}}, Monitor[While[i <= maxN, If[PrimeQ[Total[Take[Prime[Range[PrimePi[p], PrimePi[p] + 3]], 4]^3]/2], AppendTo[l, p]; i++; ]; p = NextPrime[p]; ], i]; l];",
+        "lst[44] (* _Robert P. P. McKone_, Jan 02 2024 *)"
+    ],
+    "xref": [
+        "Cf. A000720, A001222, A133525."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Jan 01 2024",
+    "references": 0,
+    "revision": 8,
+    "time": "2024-01-12T22:46:36-05:00",
+    "created": "2024-01-12T22:46:36-05:00"
+}
