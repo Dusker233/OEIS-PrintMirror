@@ -1,0 +1,43 @@
+{
+    "number": 369080,
+    "data": "1,1,1,2,6,36,180,1080,7560,75600,680400,6804000,74844000,1047816000,13621608000,190702512000,2860537680000,51489678240000,875324530080000,15755841541440000,299360989287360000,6585941764321920000,138304777050760320000,3042705095116727040000",
+    "name": "Number of permutations of [n] such that the element sum of each cycle is odd.",
+    "comment": [
+        "Number of permutations of [n] such that each cycle has an odd number of odd elements.",
+        "a(n+1)/a(n) is an integer for all n >= 0."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A369080/b369080.txt\">Table of n, a(n) for n = 0..450</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation\">Permutation</a>"
+    ],
+    "example": [
+        "a(0) = 1: the empty permutation.",
+        "a(1) = 1: (1).",
+        "a(2) = 1: (12).",
+        "a(3) = 2: (12)(3), (1)(23).",
+        "a(4) = 6: (124)(3), (142)(3), (12)(34), (14)(23), (1)(234), (1)(243)."
+    ],
+    "maple": [
+        "b:= proc(x, y) option remember; `if`(x+y=0, 1, add(",
+        "      `if`(j::odd, binomial(x-1, j-1)*add((i+j-1)!*",
+        "       b(x-j, y-i)*binomial(y, i), i=0..y), 0), j=1..x))",
+        "    end:",
+        "a:= n-> (h-> b(n-h, h))(iquo(n, 2)):",
+        "seq(a(n), n=0..23);",
+        "# second Maple program:",
+        "b:= n-> (<<0|1|0|0|0>, <0|0|1|0|0>, <0|0|0|1|0>,",
+        "          <0|0|0|0|1>, <-1|1|0|0|1>>^n. <<1, 2, 3, 6, 5>>)[1, 1]:",
+        "a:= proc(n) option remember; `if`(n<2, 1, a(n-1)*b(n-2)) end:",
+        "seq(a(n), n=0..23);"
+    ],
+    "xref": [
+        "Cf. A000142, A369079."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jan 12 2024",
+    "references": 0,
+    "revision": 14,
+    "time": "2024-01-13T15:36:03-05:00",
+    "created": "2024-01-13T14:54:17-05:00"
+}

@@ -1,0 +1,45 @@
+{
+    "number": 369079,
+    "data": "1,1,1,2,4,10,28,96,320,1436,5556,28768,129600,730864,3756936,23286784,132872192,910013776,5679982288,42235062784,286769980416,2281079563104,16732506817280,141975748567040,1115928688967680,10077454948692288,84383735744758464",
+    "name": "Number of partitions of [n] such that the element sum of each block is odd.",
+    "comment": [
+        "Number of partitions of [n] such that each block has an odd number of odd elements."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A369079/b369079.txt\">Table of n, a(n) for n = 0..592</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Partition_of_a_set\">Partition of a set</a>"
+    ],
+    "example": [
+        "a(0) = 1: the empty partition.",
+        "a(1) = 1: 1.",
+        "a(2) = 1: 12.",
+        "a(3) = 2: 12|3, 1|23.",
+        "a(4) = 4: 124|3, 12|34, 14|23, 1|234.",
+        "a(5) = 10: 12345, 124|3|5, 12|34|5, 12|3|45, 14|23|5, 1|234|5, 1|23|45, 14|25|3, 1|245|3, 1|25|34."
+    ],
+    "maple": [
+        "b:= proc(n, x, y) option remember; `if`(n=0, `if`(y=0, 1, 0),",
+        "     `if`(n::odd, b(n-1, x+1, y)+`if`(x>0, x*b(n-1, x-1, y+1), 0)+",
+        "     `if`(y>0, y*b(n-1, x+1, y-1), 0), b(n-1, x, y+1)+(x+y)*b(n-1, x, y)))",
+        "    end:",
+        "a:= n-> b(n, 0$2):",
+        "seq(a(n), n=0..26);",
+        "# second Maple program:",
+        "b:= proc(x, y) option remember; `if`(x+y=0, 1,",
+        "      add(`if`(j::odd, binomial(x-1, j-1)*add(",
+        "      b(x-j, y-i)*binomial(y, i), i=0..y), 0), j=1..x))",
+        "    end:",
+        "a:= n-> (h-> b(n-h, h))(iquo(n, 2)):",
+        "seq(a(n), n=0..26);"
+    ],
+    "xref": [
+        "Cf. A000009, A000110, A152140, A290383, A369080."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, Jan 12 2024",
+    "references": 0,
+    "revision": 17,
+    "time": "2024-01-13T14:54:56-05:00",
+    "created": "2024-01-13T14:54:56-05:00"
+}

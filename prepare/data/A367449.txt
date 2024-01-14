@@ -1,0 +1,39 @@
+{
+    "number": 367449,
+    "data": "30,42,54,66,78,102,114,138,174,186,208,222,246,258,282,318,354,366,402,426,438,474,498,534,582,606,618,642,654,678,762,786,822,834,894,906,942,978,1002,1038,1074,1086,1146,1158,1182,1194,1266,1312,1338,1362,1374",
+    "name": "Numbers k for which there are exactly k pairs (i, j), 1 <= i < j < k, such that i + j is a divisor of k.",
+    "comment": [
+        "Numbers k >= 1 for which A367588(k) = Sum_{d|k} floor((d-1)/2) = k;",
+        "Numbers k >= 1 for which A000203(k) - A000005(k) - A183063(k) = 2*k.",
+        "The sequence is infinite because all numbers of the form m = 6*p, p >= 5 prime (A138636), are terms.",
+        "Indeed: sigma(6*p) - tau(6(p) - A183063(6*p) = 3*4*(p + 1) - 8 - 4 = 12*p = 2*m.",
+        "If m = 2^k*p, p = 2^(k + 1) - 4*k - 3 prime number, then m is a term. Indeed: sigma(m) - tau(m) - A183063(m) = (2^(k + 1) - 1)*(p + 1) - 2*(k + 1) - 2*k = 2*m."
+    ],
+    "example": [
+        "30 is a term since it has exactly 30 pairs (i,j): (1, 2), (2, 3), (1, 4), (2, 4), (1, 5), (4, 6), (3, 7), (2, 8), (7, 8), (1,9), (6, 9), (5, 10), (4, 11), (3, 12), (2, 13), (1, 14), (14, 16), (13, 17),(12, 18), (11, 19), (10, 20), (9, 21), (8, 22), (7, 23), (6, 24), (5, 25), (4,26), (3, 27), (2, 28), (1, 29)."
+    ],
+    "maple": [
+        "filter:= proc(n) uses numtheory;",
+        "  sigma(n) - tau(n) - `if`(n::even, tau(n/2),0) = 2*n",
+        "end proc:",
+        "select(filter, [$1..10000]); # _Robert Israel_, Dec 12 2023"
+    ],
+    "mathematica": [
+        "f1[p_, e_] := e+1; f1[2, e_] := 2*e+1; f2[p_, e_] := (p^(e+1)-1)/(p-1); s[1] = 0; s[n_] := Module[{fct = FactorInteger[n]}, Times @@ f2 @@@ fct - Times @@ f1 @@@ fct]; Select[Range[1400], s[#] == 2*# &] (* _Amiram Eldar_, Dec 16 2023 *)"
+    ],
+    "program": [
+        "(Magma) [k:k in [1..1000]|(DivisorSigma(1,k)-#Divisors(k)-#[d:d in Divisors(k)| IsEven(d)]) eq 2*k ];",
+        "(PARI) isok(k) = sumdiv(k, d, (d-1)\\2) == k; \\\\ _Michel Marcus_, Dec 19 2023"
+    ],
+    "xref": [
+        "Fixed points of A367588.",
+        "Cf. A000005, A000203, A138636, A183063."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Marius A. Burtea_, Dec 10 2023",
+    "references": 0,
+    "revision": 31,
+    "time": "2024-01-13T20:32:56-05:00",
+    "created": "2024-01-13T20:32:56-05:00"
+}
