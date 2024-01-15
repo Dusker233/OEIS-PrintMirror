@@ -1,0 +1,28 @@
+{
+    "number": 368702,
+    "data": "14,186,258,322,338,3318,3962,5334,6106,7674,8970,9186,9978,10930,11994,12154,12614,12970,13218,13234,14626,15226,15914,16378,17122,18226,18658,19058,19874,20194,20962,21082,21106,21218,44718,49358,57346,58354,75442,76162,81802,87814,95114,102794,113505,114918,130802",
+    "name": "Numbers whose second arithmetic derivative (A068346) is a primorial number (A002110) > 1.",
+    "comment": [
+        "Numbers k for which A003415(k) is one of the terms of A327978."
+    ],
+    "program": [
+        "(PARI)",
+        "A002620(n) = ((n^2)>>2);",
+        "A003415(n) = if(n<=1, 0, my(f=factor(n)); n*sum(i=1, #f~, f[i, 2]/f[i, 1]));",
+        "A068346(n) = A003415(A003415(n));",
+        "A276150(n) = { my(s=0, p=2, d); while(n, d = (n%p); s += d; n = (n-d)/p; p = nextprime(1+p)); (s); };",
+        "isA368702flat(n) = { my(u=A068346(n)); ((u>1)&&(1==A276150(u))); };",
+        "k=0; for(n=1, A002620(A002110(7)), if(isA368702flat(n), k++; write(\"b368702.txt\", k, \" \", n)));"
+    ],
+    "xref": [
+        "Cf. A002110, A003415, A068346, A327978.",
+        "Subsequence of A046100 and of A328244."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Jan 09 2024",
+    "references": 0,
+    "revision": 5,
+    "time": "2024-01-14T15:06:02-05:00",
+    "created": "2024-01-14T15:06:02-05:00"
+}
