@@ -1,0 +1,57 @@
+{
+    "number": 368107,
+    "data": "4,16,27,64,256,729,1024,3125,4096,16384,19683,65536,262144,531441,823543,1048576,4194304,9765625,14348907,16777216,67108864,268435456,387420489,1073741824,4294967296,10460353203,17179869184,30517578125,68719476736,274877906944,282429536481",
+    "name": "Prime powers p^m such that p | m.",
+    "comment": [
+        "Proper subset of A072873, which in turn is a proper subset of A342090.",
+        "This sequence represents the prime power block in A072873 and A342090.",
+        "A342090 \\ {a(n)} is in A126706.",
+        "A072873 \\ {{1} U {a(n)}} is in A286708, in turn a proper subset of A001694.",
+        "Contains A051674."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A368107/b368107.txt\">Table of n, a(n) for n = 1..3351</a>"
+    ],
+    "example": [
+        "This sequence contains prime powers of the following form:",
+        "2^2, 2^4, i.e., 2^k such that k is even.",
+        "3^3, 3^6, 3^9, i.e., 3^k such that 3 | k.",
+        "5^5, 5^10, 5^15, i.e., 5^k such that 5 | k, etc."
+    ],
+    "mathematica": [
+        "nn = 10^12; i = 1; p = 2; While[p^p <= nn, p = NextPrime[p] ];",
+        "MapIndexed[Set[S[First[#2]], #1] &, Prime@ Range@ PrimePi[p] ];",
+        "Union@ Reap[",
+        "    While[j = S[i];",
+        "    While[S[i]^j < nn,",
+        "      Sow[S[i]^j]; j += S[i] ]; j > 2,",
+        "    i++] ][[-1, 1]]"
+    ],
+    "program": [
+        "(Python)",
+        "import heapq",
+        "from itertools import islice",
+        "from sympy import nextprime",
+        "def agen(): # generator of terms",
+        "    v, h, m, nextp = 4, [(4, 2)], 4, 3",
+        "    while True:",
+        "        v, p = heapq.heappop(h)",
+        "        yield v",
+        "        if v >= m:",
+        "            m = nextp**nextp",
+        "            heapq.heappush(h, (m, nextp))",
+        "            nextp = nextprime(nextp)",
+        "        heapq.heappush(h, (v*p**p, p))",
+        "print(list(islice(agen(), 31))) # _Michael S. Branicky_, Jan 16 2024"
+    ],
+    "xref": [
+        "Cf. A001694, A051674, A072873, A126706, A246547, A286708, A342090."
+    ],
+    "keyword": "nonn,easy,new",
+    "offset": "1,1",
+    "author": "_Michael De Vlieger_, Jan 15 2024",
+    "references": 0,
+    "revision": 53,
+    "time": "2024-01-16T12:10:04-05:00",
+    "created": "2024-01-16T12:10:04-05:00"
+}
