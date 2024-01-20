@@ -1,0 +1,39 @@
+{
+    "number": 367954,
+    "data": "0,2,7,14,26,38,57,78,102,128,165,196,240,284,329,378,440,498,571,634,704,780,875,952,1044,1142,1243,1342,1466,1566,1697,1818,1946,2084,2219,2346,2506,2662,2823,2972,3158,3312,3509,3684,3860,4056,4279,4464,4676",
+    "name": "Total number of steps of Euclid's GCD algorithm to calculate gcd(x,y) for all pairs x,y in the range 1 <= x < y <= n.",
+    "comment": [
+        "A000096(n-1) < a(n) < A367690(n)."
+    ],
+    "formula": [
+        "a(n) = Sum_{x=1..n} Sum_{y=x+1..n} (A107435(y,x) + 1).",
+        "a(n) = A367690(n) - A367892(n).",
+        "a(n) = A367892(n) + A000096(n).",
+        "a(n) = A000217(n-1) + Sum_{i=1..n} A049826(i)."
+    ],
+    "maple": [
+        "g:= proc(x, y) option remember;",
+        "      `if`(y=0, 0, 1+g(y, irem(x, y)))",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n=0, 0,",
+        "      a(n-1)+add(g(j, n), j=1..n-1))",
+        "    end:",
+        "seq(a(n), n=1..100);  # _Alois P. Heinz_, Dec 05 2023"
+    ],
+    "program": [
+        "(Python)",
+        "A107435 = lambda x, y: 0 if y == 0 else 1 + A107435(y, x % y)",
+        "a = lambda n: sum(A107435(y,x)+1 for x in range(1, n+1) for y in range(x+1, n+1))",
+        "print([a(n) for n in range(1, 50)])"
+    ],
+    "xref": [
+        "Cf. A000096, A000217, A049826, A107435, A367690, A367892."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Dar\u00edo Clavijo_, Dec 05 2023",
+    "references": 0,
+    "revision": 33,
+    "time": "2024-01-19T12:59:01-05:00",
+    "created": "2024-01-19T12:59:01-05:00"
+}
