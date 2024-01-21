@@ -1,0 +1,40 @@
+{
+    "number": 368879,
+    "data": "2,11,101,233,277,409,499,521,547,587,607,617,631,659,661,677,719,727,739,743,751,769,773,787,809,827,829,839,859,863,881,883,919,929,941,953,971,991,997,1009,1021,1031,1049,1051,1061,1063,1069,1087,1103,1109,1151,1163,1171,1181,1187,1193",
+    "name": "Primes that are in A070196.",
+    "comment": [
+        "Primes p such that for some k, p = k + the sorted version of the base-10 digits of k."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A368879/b368879.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(4) = 233 is a term because 233 = A070196(121) = 121 + 112 is prime.",
+        "a(5) = 277 is a term in three ways: 277 = 143 + 134 = 152 + 125 = 161 + 116."
+    ],
+    "maple": [
+        "f:= proc(n) local L,i;",
+        "    L:= sort(convert(n,base,10),`>`);",
+        "    add(L[i]*10^(i-1),i=1..nops(L)) + n;",
+        "end proc:",
+        "select(t -> t < 10000 and isprime(t), map(f, {$1..9999}));"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def aupto(LIMIT):",
+        "    cands = set(k + int(\"\".join(sorted(str(k)))) for k in range(LIMIT))",
+        "    return sorted(k for k in cands if k <= LIMIT and isprime(k))",
+        "print(aupto(1200)) # _Michael S. Branicky_, Jan 15 2024"
+    ],
+    "xref": [
+        "Cf. A070196."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Jan 15 2024",
+    "references": 0,
+    "revision": 18,
+    "time": "2024-01-20T09:24:58-05:00",
+    "created": "2024-01-20T09:24:58-05:00"
+}

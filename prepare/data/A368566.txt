@@ -1,0 +1,47 @@
+{
+    "number": 368566,
+    "data": "0,2,6,18,34,48,62,108,166,242,334,512,706,984,1368,1876,2492,3360,4422,5848,7574,9792,12596,16130,20412,25850",
+    "name": "a(n) = number of pairs (p,q) of partitions of n such that d(p,q) > o(p,q), where d and o are distance functions; see Comments.",
+    "comment": [
+        "The definition of d depends on the greedy ordering of the partitions p(i) of n; that is, p(1) >= p(2) >= ... >= p(k), where k = A000041(n); see A366156. The ordinal distance o is defined by o(p(i),p(j)) = |i-j|."
+    ],
+    "formula": [
+        "A368564(n) + A368565(n) + a(n) = A001255(n) for n >= 1."
+    ],
+    "example": [
+        "The 5 partitions of 4 are (p(1),p(2),p(3),p(4),p(5)) = (4,21,22,211,1111). The following table shows the 25 pairs d(p(i),q(j)) and o(p(i),q(j)):",
+        "          |    4   31   22   211  1111",
+        "------------------------------------------------",
+        "   4 d    |    0    2    4    4    6",
+        "     o    |    0    1    2    3    4",
+        "  31 d    |    2    0    2    2    4",
+        "     o    |    1    0    1    2    3",
+        "  22 d    |    4    2    0    2    4",
+        "     o    |    2    1    0    1    2",
+        " 211 d    |    4    2    2    0    2",
+        "     o    |    3    2    1    0    1",
+        "1111 d    |    6    4    4    2    0",
+        "     o    |    4    3    2    1    0",
+        "The table shows 18 pairs (p,q) for which d(p,q) > o(p,q), so a(4) = 18."
+    ],
+    "mathematica": [
+        "c[n_] := PartitionsP[n];",
+        "q[n_, k_] := q[n, k] = IntegerPartitions[n][[k]];",
+        "r[n_, k_] := r[n, k] = Join[q[n, k], ConstantArray[0, n - Length[q[n, k]]]];",
+        "d[u_, v_] := Total[Abs[u - v]];",
+        "p[n_] := Flatten[Table[d[r[n, j], r[n, k]] - Abs[j - k], {j, 1, c[n]}, {k, 1, c[n]}]];",
+        "Table[Count[p[n], 0], {n, 1, 16}]  (* A368565  *)",
+        "Table[Length[Select[p[n], Sign[#] == -1 &]], {n, 1,16}]  (* A368566 *)",
+        "Table[Length[Select[p[n], Sign[#] == 1 &]], {n, 1, 16}]  (* A368567 *)"
+    ],
+    "xref": [
+        "Cf. A000041, A001255, A366156, A368564, A368565."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,2",
+    "author": "_Clark Kimberling_, Dec 31 2023",
+    "references": 0,
+    "revision": 6,
+    "time": "2024-01-20T09:47:01-05:00",
+    "created": "2024-01-20T09:47:01-05:00"
+}

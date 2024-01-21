@@ -1,0 +1,38 @@
+{
+    "number": 368950,
+    "data": "59049,118098,236196,472392,944784,1889568,3779136,7558272,9765625,15116544,19531250,30233088,39062500,60466176,78125000,120932352,156250000,241864704,282475249,312500000,483729408,564950498,625000000,967458816,1129900996,1250000000,1934917632",
+    "name": "Numbers with 11 odd divisors.",
+    "comment": [
+        "Every number in this sequence has the form 2^k * p^10, k >= 0, where p is an odd prime. Exactly 11 different width patterns (A341969) of the symmetric representation of sigma are instantiated by the numbers in this sequence. The width pattern becomes unimodal for k >= floor(log_2(p^10)), see A367370 and A367377."
+    ],
+    "example": [
+        "a(1) = 59049 = 3^10, a(9) = 5^10 = 9765625 is the smallest number with prime factor 5, a(19) = 282475249 is the smallest number with prime factor 7 and a(27) = 2^floor(log_2(3^10)) * 3^10 = 32768 * 59049 = 1934917632 is the smallest whose width pattern of its symmetric representation of sigma is unimodal."
+    ],
+    "maple": [
+        "N:= 10^10: # for terms <= N",
+        "R:= NULL: p:= 2:",
+        "do",
+        "  p:= nextprime(p);",
+        "  if p^10 > N then break fi;",
+        "  R:= R, seq(2^i*p^10, i = 0 .. floor(log[2](N/p^10)))",
+        "od:",
+        "sort([R]); # _Robert Israel_, Jan 16 2024"
+    ],
+    "mathematica": [
+        "numL[p_, b_] := Map[2^# p^10&, Range[0, Floor[Log[2, b/p^10]]]]",
+        "primeL[b_] := Most[NestWhileList[NextPrime[#]&, 3, #^10<=b&]]",
+        "a368950[b_] := Union[Flatten[Map[numL[#, b]&, primeL[b]]]]",
+        "a368950[2 10^9]"
+    ],
+    "xref": [
+        "Cf. A267983 (lists the sequences of numbers with 1 .. 10 odd divisors), A367370, A367377.",
+        "Cf. A235791, A237048, A237270, A237593, A241008, A241010, A249223, A341969."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Hartmut F. W. Hoft_, Jan 10 2024",
+    "references": 0,
+    "revision": 12,
+    "time": "2024-01-20T09:31:55-05:00",
+    "created": "2024-01-20T09:31:55-05:00"
+}
