@@ -1,0 +1,55 @@
+{
+    "number": 369145,
+    "data": "1,2,5,12,30,73,185",
+    "name": "Number of unlabeled loop-graphs with up to n vertices such that it is possible to choose a different vertex from each edge (choosable).",
+    "formula": [
+        "Partial sums of A369200."
+    ],
+    "example": [
+        "The a(0) = 1 through a(3) = 12 loop-graphs (loops shown as singletons):",
+        "  {}  {}     {}           {}",
+        "      {{1}}  {{1}}        {{1}}",
+        "             {{1,2}}      {{1,2}}",
+        "             {{1},{2}}    {{1},{2}}",
+        "             {{1},{1,2}}  {{1},{1,2}}",
+        "                          {{1},{2,3}}",
+        "                          {{1,2},{1,3}}",
+        "                          {{1},{2},{3}}",
+        "                          {{1},{2},{1,3}}",
+        "                          {{1},{1,2},{1,3}}",
+        "                          {{1},{1,2},{2,3}}",
+        "                          {{1,2},{1,3},{2,3}}"
+    ],
+    "mathematica": [
+        "brute[m_]:=First[Sort[Table[Sort[Sort /@ (m/.Rule@@@Table[{(Union@@m)[[i]],p[[i]]}, {i,Length[p]}])], {p,Permutations[Range[Length[Union@@m]]]}]]];",
+        "Table[Length[Union[brute /@ Select[Subsets[Subsets[Range[n],{1,2}]], Length[Select[Tuples[#], UnsameQ@@#&]]!=0&]]],{n,0,4}]"
+    ],
+    "xref": [
+        "Without the choice condition we get A000666, labeled A006125 (shifted left).",
+        "The case of a unique choice is A087803, labeled A088957.",
+        "Without loops we have A134964, labeled A133686 (covering A367869).",
+        "For exactly n edges and no loops we have A137917, labeled A137916.",
+        "The labeled version is A368927, covering A369140.",
+        "The labeled complement is A369141, covering A369142.",
+        "For exactly n edges we have A368984, labeled A333331 (maybe).",
+        "The complement for exactly n edges is A368835, labeled A368596.",
+        "The complement is counted by A369146, labeled A369141 (covering A369142).",
+        "The covering case is A369200.",
+        "The complement for exactly n edges and no loops is A369201, labeled A369143.",
+        "A000085, A100861, A111924 count set partitions into singletons or pairs.",
+        "A006129 counts covering graphs, unlabeled A002494.",
+        "A054548 counts graphs covering n vertices with k edges, with loops A369199.",
+        "A129271 counts connected choosable simple graphs, unlabeled A005703.",
+        "A322661 counts labeled covering loop-graphs, unlabeled A322700.",
+        "A367867 counts non-choosable labeled graphs, covering A367868.",
+        "A368927 counts choosable labeled loop-graphs, covering A369140.",
+        "Cf. A000088, A006649, A062740, A140638, A368924, A369194."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, Jan 22 2024",
+    "references": 2,
+    "revision": 5,
+    "time": "2024-01-22T21:56:56-05:00",
+    "created": "2024-01-22T21:56:56-05:00"
+}
