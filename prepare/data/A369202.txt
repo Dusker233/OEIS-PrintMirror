@@ -1,0 +1,52 @@
+{
+    "number": 369202,
+    "data": "0,0,0,0,2,13,95,826,11137,261899,11729360,1006989636,164072166301,50336940172142,29003653625802754,31397431814146891910,63969589218557753075156,245871863137828405124380563,1787331789281458167615190373076,24636021675399858912682459601585276",
+    "name": "Number of unlabeled simple graphs covering n vertices such that it is not possible to choose a different vertex from each edge (non-choosable).",
+    "comment": [
+        "These are simple graphs covering n vertices such that some connected component has at least two cycles."
+    ],
+    "formula": [
+        "First differences of A140637.",
+        "a(n) = A002494(n) - A368834(n)."
+    ],
+    "example": [
+        "Representatives of the a(4) = 2 and a(5) = 13 simple graphs:",
+        "  {12}{13}{14}{23}{24}      {12}{13}{14}{15}{23}{24}",
+        "  {12}{13}{14}{23}{24}{34}  {12}{13}{14}{15}{23}{45}",
+        "                            {12}{13}{14}{23}{24}{35}",
+        "                            {12}{13}{14}{23}{25}{45}",
+        "                            {12}{13}{14}{25}{35}{45}",
+        "                            {12}{13}{14}{15}{23}{24}{25}",
+        "                            {12}{13}{14}{15}{23}{24}{34}",
+        "                            {12}{13}{14}{15}{23}{24}{35}",
+        "                            {12}{13}{14}{23}{24}{35}{45}",
+        "                            {12}{13}{14}{15}{23}{24}{25}{34}",
+        "                            {12}{13}{14}{15}{23}{24}{35}{45}",
+        "                            {12}{13}{14}{15}{23}{24}{25}{34}{35}",
+        "                            {12}{13}{14}{15}{23}{24}{25}{34}{35}{45}"
+    ],
+    "mathematica": [
+        "brute[m_]:=First[Sort[Table[Sort[Sort /@ (m/.Rule@@@Table[{(Union@@m)[[i]],p[[i]]},{i,Length[p]}])], {p,Permutations[Range[Length[Union@@m]]]}]]];",
+        "Table[Length[Union[brute /@ Select[Subsets[Subsets[Range[n],{2}]],Union@@#==Range[n] && Length[Select[Tuples[#],UnsameQ@@#&]]==0&]]],{n,0,5}]"
+    ],
+    "xref": [
+        "Without the choice condition we have A002494, labeled A006129.",
+        "The connected case is A140636.",
+        "This is the covering case of A140637, complement A134964.",
+        "The labeled version is A367868, complement A367869.",
+        "The complement is counted by A368834.",
+        "The version with loops is A369147, complement A369200.",
+        "A005703 counts unlabeled connected choosable simple graphs, labeled A129271.",
+        "A007716 counts unlabeled multiset partitions, connected A007718.",
+        "A054548 counts graphs covering n vertices with k edges, with loops A369199.",
+        "A283877 counts unlabeled set-systems, connected A300913.",
+        "Cf. A000088, A000612, A006649, A001434, A055621, A137916, A137917, A140638, A368596, A369141, A369146."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,5",
+    "author": "_Gus Wiseman_, Jan 23 2024",
+    "references": 0,
+    "revision": 10,
+    "time": "2024-01-23T23:21:17-05:00",
+    "created": "2024-01-23T23:21:17-05:00"
+}

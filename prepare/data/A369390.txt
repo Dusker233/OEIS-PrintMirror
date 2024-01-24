@@ -1,0 +1,26 @@
+{
+    "number": 369390,
+    "data": "1,1,2,4,6,13,31,77,188,449,1191,3014,7920,21498,57833,154073,412733,1141274,3106771,8576977,24015471,66489615,185886699,517837152,1435964205,4034697191,11438332340,32395341851,92396549863,263233759500,736127855014,2093027604453",
+    "name": "a(n) = [x^prime(n)] Product_{k=1..n} (x^prime(k) + 1 + 1/x^prime(k)).",
+    "maple": [
+        "s:= proc(n) s(n):= `if`(n<1, 0, ithprime(n)+s(n-1)) end:",
+        "b:= proc(n, i) option remember; `if`(n>s(i), 0, `if`(i=0, 1,",
+        "      b(n, i-1)+b(n+ithprime(i), i-1)+b(abs(n-ithprime(i)), i-1)))",
+        "    end:",
+        "a:= n-> b(ithprime(n), n):",
+        "seq(a(n), n=1..40);  # _Alois P. Heinz_, Jan 22 2024"
+    ],
+    "mathematica": [
+        "Table[Coefficient[Product[(x^Prime[k] + 1 + 1/x^Prime[k]), {k, 1, n}], x, Prime[n]], {n, 1, 32}]"
+    ],
+    "xref": [
+        "Cf. A063890, A316706, A350880."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,3",
+    "author": "_Ilya Gutkovskiy_, Jan 22 2024",
+    "references": 0,
+    "revision": 7,
+    "time": "2024-01-23T08:57:13-05:00",
+    "created": "2024-01-23T08:57:13-05:00"
+}
