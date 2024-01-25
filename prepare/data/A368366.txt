@@ -1,0 +1,44 @@
+{
+    "number": 368366,
+    "data": "0,1,54,3856,384375,52173801,9342271792,2144652558336,616093495529805,217007162119140625,92121505246667356416,46444033776765696086016,27459259766085858672714571,18830590227539089561714381425,14834398958231516437500000000000",
+    "name": "AGM transform of positive integers (see Comments for definition).",
+    "comment": [
+        "The AGM transform {AGM(n): n >= 1} is a measure of the difference between the arithmetic mean A(n) = S(n)/n and the geometric mean G(n) = P(n)^(1/n) of a sequence {a(n): n >= 1}, where S(n) = a(1)+...+a(n), P(n) = a(1)*...*a(n). It is given by AGM(n) = S(n)^n - n^n*P(n).",
+        "For odd n, these terms appear to be divisible by n^n; for even n, by (n/2)^n. Additional reductions may be possible. For example, with n = 7, 11, 15, 19, ..., 59, the terms are also divisible by these powers of two: 4, 8, 11, 16, 19, 23, 26, 32, 35, 39, 42, 47, 50, 54. - Hans Havermann, Jan 24 2024"
+    ],
+    "maple": [
+        "AGM := proc(f,M) local b,n,S,P,i,t; b:=[];",
+        "for n from 1 to M do",
+        "S:=add(f(i),i=1..n); P:=mul(f(i),i=1..n); t:=S^n-n^n*P;",
+        "b:=[op(b),t];",
+        "od:",
+        "b;",
+        "end;",
+        "fid:=proc(n) n; end; # the identity map",
+        "AGM(fid,20);"
+    ],
+    "program": [
+        "(PARI) a368366(n) = {my(v=vector(n,i,i)); vecsum(v)^n - n^n*vecprod(v)}; \\\\ _Hugo Pfoertner_, Jan 24 2024",
+        "(Python)",
+        "from itertools import count, islice",
+        "def AGM(g): # generator of AGM transform of sequence given by generator g",
+        "    S, P = 0, 1",
+        "    for n, an in enumerate(g, 1):",
+        "        S += an",
+        "        P *= an",
+        "        yield S**n-n**n*P",
+        "print(list(islice(AGM(count(1)), 15))) # _Michael S. Branicky_, Jan 24 2024"
+    ],
+    "xref": [
+        "Cf. A127610, A368372/A368373.",
+        "See A368367-A368371, A369394 for further examples.",
+        "The AGM transform of (n mod 2) is pi(n)^n, A132377."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,3",
+    "author": "_N. J. A. Sloane_, Jan 24 2024",
+    "references": 0,
+    "revision": 23,
+    "time": "2024-01-25T03:16:39-05:00",
+    "created": "2024-01-24T10:43:22-05:00"
+}
