@@ -1,0 +1,54 @@
+{
+    "number": 369546,
+    "data": "1,1,1,4,7,11,26,75,222,592,1404,3187,7191,16143,36733,86944,215424,554223,1464821,3938700,10682766,29018459,78498045,210594290,558921546,1465997257,3800807854,9751079838,24796892480,62625165584,157365167394,394049765321,984458377709",
+    "name": "Expansion of g.f. A(x) satisfying A(x) = A( x^2*(1+x)^3 ) / (x*(1+x)^2).",
+    "comment": [
+        "The radius of convergence r of g.f. A(x) solves r*(1+r)^3 = 1 where r = 0.3802775690976141156733..."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A369546/b369546.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=1} a(n)*x^n satisfies:",
+        "(1) A(x) = A( x^2*(1+x)^3 ) / (x*(1+x)^2).",
+        "(2) R(x*(1+x)^2*A(x)) = x^2*(1+x)^3, where R(A(x)) = x.",
+        "(3) A(x) = x * Product_{n>=1} F(n), where F(1) = 1+x, and F(n+1) = 1 + (F(n) - 1)^2 * F(n)^3 for n >= 1.",
+        "(4) A(x)^3 = x^2*B(x) where B(x) is the g.f. of A369553."
+    ],
+    "example": [
+        "G.f.: A(x) = x + x^2 + x^3 + 4*x^4 + 7*x^5 + 11*x^6 + 26*x^7 + 75*x^8 + 222*x^9 + 592*x^10 + 1404*x^11 + 3187*x^12 + ...",
+        "RELATED SERIES.",
+        "A(x)^3/x^2 = x + 3*x^2 + 6*x^3 + 19*x^4 + 51*x^5 + 114*x^6 + 280*x^7 + 750*x^8 + 2064*x^9 + 5701*x^10 + ... + A369553(n)*x^n + ...",
+        "Let R(x) be the series reversion of A(x),",
+        "R(x) = x - x^2 + x^3 - 4*x^4 + 13*x^5 - 32*x^6 + 92*x^7 - 327*x^8 + 1066*x^9 - 3287*x^10 + 11143*x^11 - 39080*x^12 + ...",
+        "then R(x) and g.f. A(x) satisfy:",
+        "(1) R(A(x)) = x,",
+        "(2) R(x*(1+x)^2*A(x)) = x^2*(1 + x)^3.",
+        "GENERATING METHOD.",
+        "Define F(n), a polynomial in x of order 5^(n-1), by the following recurrence:",
+        "F(1) = (1 + x),",
+        "F(2) = (1 + x^2 * (1+x)^3),",
+        "F(3) = (1 + x^4 * (1+x)^6 * F(2)^3),",
+        "F(4) = (1 + x^8 * (1+x)^12 * F(2)^6 * F(3)^3),",
+        "F(5) = (1 + x^16 * (1+x)^24 * F(2)^12 * F(3)^6 * F(4)^3),",
+        "...",
+        "F(n+1) = 1 + (F(n) - 1)^2 * F(n)^3",
+        "...",
+        "Then the g.f. A(x) equals the infinite product:",
+        "A(x) = x * F(1) * F(2) * F(3) * ... * F(n) * ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1],F); for(i=1,n, A=concat(A,0); F=x*Ser(A); A[#A] = polcoeff( subst(F,x, x^2*(1 + x)^3 ) - x*(1 + x)^2*F ,#A+1) ); A[n]}",
+        "for(n=1,35, print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A369553, A369545, A369547, A369548, A369549."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,4",
+    "author": "_Paul D. Hanna_, Jan 25 2024",
+    "references": 1,
+    "revision": 11,
+    "time": "2024-01-26T08:33:32-05:00",
+    "created": "2024-01-26T08:33:32-05:00"
+}

@@ -1,0 +1,54 @@
+{
+    "number": 369556,
+    "data": "1,6,21,92,432,1704,6276,24096,95628,383848,1560030,6395256,26220902,106855404,430894908,1716023728,6758075160,26395681392,102540292584,397219456608,1538055130419,5963874635622,23183457031431,90385003122912,353392849642574,1385262648293892,5441942144992950",
+    "name": "Expansion of g.f. A(x) satisfying A(x) = A( x^2*(1+x)^6 ) / x.",
+    "comment": [
+        "The radius of convergence r of g.f. A(x) solves r*(1+r)^6 = 1 where r = 0.2554228710768465432050..."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A369556/b369556.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=1} a(n)*x^n satisfies:",
+        "(1) A(x) = A( x^2*(1+x)^6 ) / x.",
+        "(2) R(x*A(x)) = x^2*(1+x)^6, where R(A(x)) = x.",
+        "(3) A(x) = x * Product_{n>=1} F(n)^6, where F(1) = 1+x, and F(n+1) = 1 + (F(n) - 1)^2 * F(n)^6 for n >= 1.",
+        "(4) A(x) = B(x)^6/x^5 where B(x) is the g.f. of A369549."
+    ],
+    "example": [
+        "G.f.: A(x) = x + 6*x^2 + 21*x^3 + 92*x^4 + 432*x^5 + 1704*x^6 + 6276*x^7 + 24096*x^8 + 95628*x^9 + 383848*x^10 + 1560030*x^11 + 6395256*x^12 + ...",
+        "RELATED SERIES.",
+        "(x^5*A(x))^(1/6) = x + x^2 + x^3 + 7*x^4 + 22*x^5 + 48*x^6 + 120*x^7 + 440*x^8 + 1941*x^9 + 8621*x^10 + 35496*x^11 + ... + A369549(n)*x^n + ...",
+        "Let R(x) be the series reversion of A(x),",
+        "R(x) = x - 6*x^2 + 51*x^3 - 542*x^4 + 6471*x^5 - 82428*x^6 + 1095952*x^7 - 15036582*x^8 + 211325931*x^9 - 3026813166*x^10 + ...",
+        "then R(x) and g.f. A(x) satisfy:",
+        "(1) R(A(x)) = x,",
+        "(2) R(x*A(x)) = x^2*(1 + x)^6.",
+        "GENERATING METHOD.",
+        "Define F(n), a polynomial in x of order 8^(n-1), by the following recurrence:",
+        "F(1) = (1 + x),",
+        "F(2) = (1 + x^2 * (1+x)^6),",
+        "F(3) = (1 + x^4 * (1+x)^12 * F(2)^6),",
+        "F(4) = (1 + x^8 * (1+x)^24 * F(2)^12 * F(3)^6),",
+        "F(5) = (1 + x^16 * (1+x)^48 * F(2)^24 * F(3)^12 * F(4)^6),",
+        "...",
+        "F(n+1) = 1 + (F(n) - 1)^2 * F(n)^6",
+        "...",
+        "Then the g.f. A(x) equals the infinite product:",
+        "A(x) = x * F(1)^6 * F(2)^6 * F(3)^6 * ... * F(n)^6 * ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1],F); for(i=1,n, A=concat(A,0); F=x*Ser(A); A[#A] = polcoeff( subst(F,x, x^2*(1 + x)^5 ) - x*F ,#A+1) ); A[n]}",
+        "for(n=1,35, print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A369549, A350432, A369552, A369553, A369554, A369555."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jan 25 2024",
+    "references": 1,
+    "revision": 10,
+    "time": "2024-01-26T08:33:56-05:00",
+    "created": "2024-01-26T08:33:56-05:00"
+}

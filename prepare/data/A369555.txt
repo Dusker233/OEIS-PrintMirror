@@ -1,0 +1,54 @@
+{
+    "number": 369555,
+    "data": "1,5,15,60,245,826,2685,9285,33170,120170,440326,1615095,5883375,21190660,75236135,263524256,914398280,3157044220,10882619895,37556051395,130016429216,451988934200,1578008726440,5530356335910,19444175637910,68542014844306,242123225194065,856755084242890",
+    "name": "Expansion of g.f. A(x) satisfying A(x) = A( x^2*(1+x)^5 ) / x.",
+    "comment": [
+        "The radius of convergence r of g.f. A(x) solves r*(1+r)^5 = 1 where r = 0.2851990332453493679..."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A369555/b369555.txt\">Table of n, a(n) for n = 1..500</a>"
+    ],
+    "formula": [
+        "G.f. A(x) = Sum_{n>=1} a(n)*x^n satisfies:",
+        "(1) A(x) = A( x^2*(1+x)^5 ) / x.",
+        "(2) R(x*A(x)) = x^2*(1+x)^5, where R(A(x)) = x.",
+        "(3) A(x) = x * Product_{n>=1} F(n)^5, where F(1) = 1+x, and F(n+1) = 1 + (F(n) - 1)^2 * F(n)^5 for n >= 1.",
+        "(4) A(x) = B(x)^5/x^4 where B(x) is the g.f. of A369548."
+    ],
+    "example": [
+        "G.f.: A(x) = x + 5*x^2 + 15*x^3 + 60*x^4 + 245*x^5 + 826*x^6 + 2685*x^7 + 9285*x^8 + 33170*x^9 + 120170*x^10 + 440326*x^11 + ...",
+        "RELATED SERIES.",
+        "(x^4*A(x))^(1/5) = x + x^2 + x^3 + 6*x^4 + 16*x^5 + 31*x^6 + 76*x^7 + 267*x^8 + 1067*x^9 + 4158*x^10 + ... + A369548(n)*x^n + ...",
+        "Let R(x) be the series reversion of A(x),",
+        "R(x) = x - 5*x^2 + 35*x^3 - 310*x^4 + 3105*x^5 - 33201*x^6 + 370405*x^7 - 4263900*x^8 + 50282555*x^9 - 604351325*x^10 + ...",
+        "then R(x) and g.f. A(x) satisfy:",
+        "(1) R(A(x)) = x,",
+        "(2) R(x*A(x)) = x^2*(1 + x)^5.",
+        "GENERATING METHOD.",
+        "Define F(n), a polynomial in x of order 7^(n-1), by the following recurrence:",
+        "F(1) = (1 + x),",
+        "F(2) = (1 + x^2 * (1+x)^5),",
+        "F(3) = (1 + x^4 * (1+x)^10 * F(2)^5),",
+        "F(4) = (1 + x^8 * (1+x)^20 * F(2)^10 * F(3)^5),",
+        "F(5) = (1 + x^16 * (1+x)^40 * F(2)^20 * F(3)^10 * F(4)^5),",
+        "...",
+        "F(n+1) = 1 + (F(n) - 1)^2 * F(n)^5",
+        "...",
+        "Then the g.f. A(x) equals the infinite product:",
+        "A(x) = x * F(1)^5 * F(2)^5 * F(3)^5 * ... * F(n)^5 * ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=[1],F); for(i=1,n, A=concat(A,0); F=x*Ser(A); A[#A] = polcoeff( subst(F,x, x^2*(1 + x)^5 ) - x*F ,#A+1) ); A[n]}",
+        "for(n=1,35, print1(a(n),\", \"))"
+    ],
+    "xref": [
+        "Cf. A369548, A350432, A369552, A369553, A369554, A369556."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jan 25 2024",
+    "references": 1,
+    "revision": 10,
+    "time": "2024-01-26T08:33:52-05:00",
+    "created": "2024-01-26T08:33:52-05:00"
+}
