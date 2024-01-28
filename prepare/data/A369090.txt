@@ -1,0 +1,60 @@
+{
+    "number": 369090,
+    "data": "1,2,9,52,425,4206,48307,632360,9444465,159240250,2983729331,61300668012,1367054727337,32844312889766,845234187028155,23190947446000336,675895337644401377,20863665943202969586,680448552777544884643,23395823324931227353940,846248620848062865320601",
+    "name": "Expansion of e.g.f. A(x) satisfying A(x) = A( x^2*exp(x) ) / x, with A(0) = 0.",
+    "comment": [
+        "Limit (a(n)/n!)^(1/n) = 1/w where w*exp(w) = 1 and w = LambertW(1) = 0.567143290409783872999968... (cf. A030178)."
+    ],
+    "link": [
+        "Paul D. Hanna, <a href=\"/A369090/b369090.txt\">Table of n, a(n) for n = 1..300</a>"
+    ],
+    "formula": [
+        "E.g.f. A(x) = Sum_{n>=1} a(n)*x^n/n! satisfies the following formulas.",
+        "(1) A(x) = A(x^2*exp(x)) / x.",
+        "(2) R(x*A(x)) = x^2*exp(x), where R(A(x)) = x.",
+        "(3) A(x) = x * exp( Sum_{n>=0} F(n) ), where F(0) = x, and F(n+1) = F(n)^2 * exp(F(n)) for n >= 0.",
+        "(4) A(x) = x * exp( L(x) ), where L(x) is the e.g.f. of A369091."
+    ],
+    "example": [
+        "E.g.f.: A(x) = x + 2*x^2/2! + 9*x^3/3! + 52*x^4/4! + 425*x^5/5! + 4206*x^6/6! + 48307*x^7/7! + 632360*x^8/8! + 9444465*x^9/9! + 159240250*x^10/10! + ...",
+        "RELATED SERIES.",
+        "The expansion of the logarithm of A(x)/x starts",
+        "log(A(x)/x) = x + 2*x^2/2! + 6*x^3/3! + 36*x^4/4! + 260*x^5/5! + 2190*x^6/6! + 21882*x^7/7! + 268856*x^8/8! + ... + A369091(n)*x^n/n! + ...",
+        "and equals the sum of all iterations of the function x^2*exp(x).",
+        "Let R(x) be the series reversion of A(x),",
+        "R(x) = x - 2*x^2/2! + 3*x^3/3! + 8*x^4/4! - 155*x^5/5! + 1464*x^6/6! - 7931*x^7/7! - 65360*x^8/8! + 2742345*x^9/9! + ...",
+        "then R(x) and e.g.f. A(x) satisfy:",
+        "(1) R( A(x) ) = x,",
+        "(2) R( x*A(x) ) = x^2 * exp(x).",
+        "GENERATING METHOD.",
+        "Let F(n) equal the n-th iteration of x^2*exp(x), so that",
+        "F(0) = x,",
+        "F(1) = x^2 * exp(x),",
+        "F(2) = x^4 * exp(2*x) * exp(x^2*exp(x)),",
+        "F(3) = x^8 * exp(4*x) * exp(2*x^2*exp(x)) * exp(F(2)),",
+        "F(4) = x^16 * exp(8*x) * exp(4*x^2*exp(x)) * exp(2*F(2)) * exp(F(3)),",
+        "F(5) = x^32 * exp(16*x) * exp(8*x^2*exp(x)) * exp(4*F(2)) * exp(2*F(3)) * exp(F(4)),",
+        "...",
+        "F(n+1) = F(n)^2 * exp(F(n))",
+        "...",
+        "Then the e.g.f. A(x) equals",
+        "A(x) = x * exp(F(0) + F(1) + F(2) + F(3) + ... + F(n) + ...).",
+        "equivalently,",
+        "A(x) = x * exp(x + x^2*exp(x) + x^4*exp(2*x)*exp(x^2*exp(x)) + x^8*exp(4*x)*exp(2*x^2*exp(x)) * exp(x^4*exp(2*x)*exp(x^2*exp(x))) + ...)."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=x); for(i=0, #binary(n),",
+        "A = subst(A, x, x^2*exp(x +x^2*O(x^n)) )/x ); n! * polcoeff(H=A, n)}",
+        "for(n=1, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A369091, A030178."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Paul D. Hanna_, Jan 26 2024",
+    "references": 0,
+    "revision": 9,
+    "time": "2024-01-27T10:36:18-05:00",
+    "created": "2024-01-27T10:36:18-05:00"
+}

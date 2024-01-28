@@ -1,0 +1,57 @@
+{
+    "number": 368374,
+    "data": "1,11,19,27,35,43,50,58,66,74,81,89,97,104,112,120,127,135,143,150,158,165,173,181,188,196,204,211,219,226,234,242,249,257,264,272,280,287,295,302,310,318,325,333,340,348,356,363,371,378,386,394,401,409,416",
+    "name": "a(n) = smallest k such that AM(k) - GM(k) >= n, where AM(k) and GM(k) are the arithmetic and geometric means of [1,...,k].",
+    "comment": [
+        "The difference d(x) = AM(1,2,3,...,x) - GM(1,2,3,...,x) increases. The first difference of d(x) approaches a limit, 1/2 - 1/e (0.13212...). So we could define a(n) to be the least x such that d(x) >= n. - _Don Reble_, Jan 27 2024.  Which is what I did."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A368374/b368374.txt\">Table of n, a(n) for n = 0..10000</a>"
+    ],
+    "example": [
+        "The values of AM(i)-GM(i) for i = 1, ..., 11 are 0, 0.0857864376269049512, 0.1828794071678603411, 0.2866361605993568152, 0.3948289153026481077, 0.5062048344760910451, 0.6199848408587035501, 0.7356494004968713999, 0.8528337256030871195, 0.9712713118832352378, 1.0907612204156046410, so a(1) = 11."
+    ],
+    "maple": [
+        "Digits:=20;",
+        "AM := proc(n) local i; add(i,i=1..n)/n; end;",
+        "GM := proc(n) local i; mul(i,i=1..n)^(1/n); end;",
+        "don := proc(n) evalf(AM(n) - GM(n)); end;",
+        "a:=[1]; w:=1;",
+        "for i from 1 to 300 do",
+        "   if don(i) >= w then a:=[op(a),i]; w:=w+1; fi;",
+        "od:",
+        "a;"
+    ],
+    "program": [
+        "(Python)",
+        "from math import factorial",
+        "def A368374(n):",
+        "    if n == 0: return 1",
+        "    m = (n<<1)-1",
+        "    kmin, kmax = m, m",
+        "    while factorial(kmax)<<kmax > (kmax-m)**kmax:",
+        "        kmax <<= 1",
+        "    while True:",
+        "        kmid = kmax+kmin>>1",
+        "        if factorial(kmid)<<kmid <= (kmid-m)**kmid:",
+        "            kmax = kmid",
+        "        else:",
+        "            kmin = kmid",
+        "        if kmax-kmin <= 1:",
+        "            break",
+        "    return kmin+1 # _Chai Wah Wu_, Jan 27 2024"
+    ],
+    "xref": [
+        "Cf. A068996, A368366."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,2",
+    "author": "_N. J. A. Sloane_, Jan 27 2024, following a suggestion from _Don Reble_",
+    "ext": [
+        "a(39)-a(54) from _Alois P. Heinz_, Jan 27 2024"
+    ],
+    "references": 0,
+    "revision": 29,
+    "time": "2024-01-28T02:03:27-05:00",
+    "created": "2024-01-27T11:08:44-05:00"
+}
