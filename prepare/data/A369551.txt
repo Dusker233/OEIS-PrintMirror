@@ -1,0 +1,39 @@
+{
+    "number": 369551,
+    "data": "1,1,2,9,52,365,3126,33607,434120,6397785,104813290,1881831611,36703128012,773468319637,17544261523166,427299522260535,11158470652237456,311944165793916977,9313905287778153426,296051128664550195763,9979462242106491507860,355292353569342771519021",
+    "name": "Expansion of e.g.f. A(x) satisfying A(x) = 1 + x*exp(x) * A(x^2*exp(x)).",
+    "comment": [
+        "Limit (a(n)/n!)^(1/n) = 1/w where w*exp(w) = 1 and w = LambertW(1) = 0.567143290409783872999968... (cf. A030178)."
+    ],
+    "formula": [
+        "E.g.f. A(x) = Sum_{n>=0} a(n)*x^n/n! satisfies the following formulas.",
+        "(1) A(x) = 1 + x*exp(x) * A(x^2*exp(x)).",
+        "(2) A(x) = (1/x) * Sum_{n>=0} F(n), where F(0) = x, and F(n+1) = F(n)^2 * exp(F(n)) for n >= 0.",
+        "(3) A(x) = log(G(x)) / x where G(x) = exp(x) * G(x^2*exp(x)) is the e.g.f. of A369550.",
+        "(4) A(x) = L(x)/x where L(x) = x + L(x^2*exp(x)) is the e.g.f of A369091.",
+        "a(n) = A369091(n+1)/(n+1) for n >= 0."
+    ],
+    "example": [
+        "E.g.f.: A(x) = 1 + x + 2*x^2/2! + 9*x^3/3! + 52*x^4/4! + 365*x^5/5! + 3126*x^6/6! + 33607*x^7/7! + 434120*x^8/8! + 6397785*x^9/9! + 104813290*x^10/10! + ...",
+        "RELATED SERIES.",
+        "The expansion of A(x^2*exp(x)) begins",
+        "A(x^2*exp(x)) = 1 + 2*x^2/2! + 6*x^3/3! + 36*x^4/4! + 260*x^5/5! + 2550*x^6/6! + 29442*x^7/7! + 386456*x^8/8! + ...",
+        "where A(x) = 1 + x*exp(x) * A(x^2*exp(x)).",
+        "The expansion of exp(x*A(x)) is the e.g.f. of A369550, which begins",
+        "exp(x*A(x)) = 1 + x + 3*x^2/2! + 13*x^3/3! + 85*x^4/4! + 701*x^5/5! + 6901*x^6/6! + 79045*x^7/7! + 1049385*x^8/8! + ... + A369550(n)*x^n/n! + ..."
+    ],
+    "program": [
+        "(PARI) {a(n) = my(A=1+x, X = x + x*O(x^n)); for(i=1, n, A = 1 + x*exp(X) * subst(A, x, x^2*exp(X)) ); n!*polcoeff(A, n)}",
+        "for(n=0, 30, print1(a(n), \", \"))"
+    ],
+    "xref": [
+        "Cf. A369090, A369091, A369550."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,3",
+    "author": "_Paul D. Hanna_, Jan 29 2024",
+    "references": 0,
+    "revision": 8,
+    "time": "2024-01-29T10:59:26-05:00",
+    "created": "2024-01-29T10:59:26-05:00"
+}
