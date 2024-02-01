@@ -1,0 +1,36 @@
+{
+    "number": 369767,
+    "data": "1,1,2,6,31,231,2347,29638,449693,7976253,162204059,3722558272,95221978299,2687309507102,82967647793153,2782190523572392,100715040802229833,3914979746952224303,162662679830709439637,7194483479557973730982,337519906320930133470189",
+    "name": "Maximal coefficient of Product_{i=1..n} Sum_{j=0..n} x^(i*j).",
+    "maple": [
+        "a:= n-> max(coeffs(expand(mul(add(x^(i*j), j=0..n), i=1..n)))):",
+        "seq(a(n), n=0..20);  # _Alois P. Heinz_, Jan 31 2024"
+    ],
+    "mathematica": [
+        "Table[Max[CoefficientList[Product[Sum[x^(i j), {j, 0, n}], {i, 1, n}], x]], {n, 0, 20}]"
+    ],
+    "program": [
+        "(PARI) a(n) = vecmax(Vec(prod(i=1, n, sum(j=0, n, x^(i*j))))); \\\\ _Michel Marcus_, Jan 31 2024",
+        "(Python)",
+        "from collections import Counter",
+        "def A369767(n):",
+        "    c = {j:1 for j in range(n+1)}",
+        "    for i in range(2,n+1):",
+        "        d = Counter()",
+        "        for k in c:",
+        "            for j in range(0,i*n+1,i):",
+        "                d[j+k] += c[k]",
+        "        c = d",
+        "    return max(c.values()) # _Chai Wah Wu_, Jan 31 2024"
+    ],
+    "xref": [
+        "Cf. A000041, A025591, A077047."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,3",
+    "author": "_Ilya Gutkovskiy_, Jan 31 2024",
+    "references": 0,
+    "revision": 13,
+    "time": "2024-01-31T13:11:21-05:00",
+    "created": "2024-01-31T10:38:04-05:00"
+}
