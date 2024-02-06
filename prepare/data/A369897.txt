@@ -1,0 +1,44 @@
+{
+    "number": 369897,
+    "data": "3290624,4122495,4402431,5675264,6608384,6890624,7914752,8614592,9454400,11553920,12613887,13466816,14493248,14853375,15473024,16719615,17494784,18272384,18309375,22784895,24890624,25200800,25869375,25957503,26903744,26921727,27510272,28350080,29761424,31802624",
+    "name": "Numbers k such that k and k + 1 each have 10 prime divisors, counted with multiplicity.",
+    "comment": [
+        "Numbers k such that k and k + 1 are in A046314.",
+        "If a and b are coprime terms of A046312, one of them even, then Dickson's conjecture implies there are infinitely many terms k where k/a and (k+1)/b are primes."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A369897/b369897.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(5) = 6608384 is a term because 6608384 = 2^9 * 12907 and 6608385 = 3^6 * 5 * 7^2 * 37 each have 10 prime divisors, counted with multiplicity."
+    ],
+    "maple": [
+        "with(priqueue):",
+        "R:= NULL:  count:= 0:",
+        "initialize(Q); r:= 0:",
+        "insert([-2^10, [2$10]],Q);",
+        "while count < 30 do",
+        "  T:= extract(Q);",
+        "  if -T[1] = r + 1 then",
+        "    R:= R, r; count:= count+1;",
+        "  fi;",
+        "  r:= -T[1];",
+        "  p:= T[2][-1];",
+        "  q:= nextprime(p);",
+        "  for i from 10 to 1 by -1 while T[2][i] = p do",
+        "    insert([-r*(q/p)^(11-i), [op(T[2][1..i-1]),q$(11-i)]],Q);",
+        "  od",
+        "od:",
+        "R;"
+    ],
+    "xref": [
+        "Cf. A001222, A046312, A046314, A115186."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Zak Seidov_ and _Robert Israel_, Feb 04 2024",
+    "references": 0,
+    "revision": 8,
+    "time": "2024-02-05T09:26:57-05:00",
+    "created": "2024-02-05T09:26:57-05:00"
+}

@@ -1,0 +1,44 @@
+{
+    "number": 368491,
+    "data": "1,5,45,1453,186285,381681581,3126736191405,409827566090715053,214867674970568857223085,1802440697199513680253124870061,967677980931418755473971539884090851245,2078072640579877586820864371518464918573279084461,285608128960093974754528418755948821932657172723113570336685",
+    "name": "a(n) is the integer whose bits designate the possible subset sums of the first n prime numbers.",
+    "comment": [
+        "Bit position 0 (which is sum 0) is the least significant bit of a(n).",
+        "The resulting binary string is palindromic for all n. A subset sum of zero marks one end of the binary string, while the sum of all n primes marks the other end. Therefore, starting from no primes and adding some and starting from all primes and omitting some correspond to the same pattern. (This is so for any values, not just primes.)",
+        "It is observed that for an array of primes, for large values of n, the binary string starts with a certain pattern and ends with the reverse of this certain pattern and consists of all ones in the middle area."
+    ],
+    "formula": [
+        "a(n) = a(n-1) BITOR a(n-1)*2^prime(n).",
+        "a(n) = 91*2^(A007504(n)-6) - 83 for n > 3."
+    ],
+    "example": [
+        "For n = 0, there are no terms from which to calculate a subset sum. An empty array gives zero as the only possible sum. This is designated by the binary string 1 which has a value of 1 in base 10.",
+        "For n = 2, sums of 0,2,3,5 are possible, yielding a binary string of 101101, which has a value of 45 in base 10. The impossibility of sums 1 and 4 is indicated by 0's in the binary string.",
+        "For n = 3, the primes are 2,3,5 and their subset sums 0, 2, 3, 5, 7, 8, 10 are the positions of 1 bits in a(3) = 1453,",
+        "       10   8 7   5   3 2   0   bit positions",
+        "a(n) =  1 0 1 1 0 1 0 1 1 0 1   binary"
+    ],
+    "program": [
+        "(Python)",
+        "from primesieve import *",
+        "n = 20",
+        "ps = generate_n_primes(n)",
+        "res = 1",
+        "a = []",
+        "a.append(res)",
+        "for v in ps:",
+        "  res = (res | (res << v))",
+        "  a.append(res)",
+        "print(a)"
+    ],
+    "xref": [
+        "Cf. A000040, A082548 (number of sums), A007504 (see formula)."
+    ],
+    "keyword": "base,nonn,new",
+    "offset": "0,2",
+    "author": "_Yigit Oktar_, Dec 27 2023",
+    "references": 0,
+    "revision": 44,
+    "time": "2024-02-05T11:17:15-05:00",
+    "created": "2024-02-05T11:17:15-05:00"
+}
