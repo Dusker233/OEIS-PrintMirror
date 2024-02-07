@@ -1,0 +1,31 @@
+{
+    "number": 367843,
+    "data": "1,1,1,1,1,1,1,1,1,1,2,2,3,3,4,6,8,12,18,30,46,70,113,186,314,531,894,1561,2705,4817,8514,15030,26502,47200,84698,151809,273961,496807,900596,1643185,2999837,5498916,10111429,18596096,34306158,63585519,118215700",
+    "name": "Maximum of the absolute value of the coefficients of (1 - x^2) * (1 - x^3) * (1 - x^5) * ... * (1 - x^prime(n)).",
+    "mathematica": [
+        "Table[Max[Abs[CoefficientList[Product[(1 - x^Prime[k]), {k, 1, n}], x]]], {n, 0, 46}]"
+    ],
+    "program": [
+        "(Python)",
+        "from collections import Counter",
+        "from sympy import prime",
+        "def A367843(n):",
+        "    c = {0:1}",
+        "    for k in range(1,n+1):",
+        "        p, b = prime(k), Counter(c)",
+        "        for j in c:",
+        "            b[j+p] -= c[j]",
+        "        c = b",
+        "    return max(map(abs,c.values())) # _Chai Wah Wu_, Feb 06 2024"
+    ],
+    "xref": [
+        "Cf. A046675, A160089, A350457, A350514."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,11",
+    "author": "_Ilya Gutkovskiy_, Feb 06 2024",
+    "references": 0,
+    "revision": 52,
+    "time": "2024-02-07T01:24:04-05:00",
+    "created": "2024-02-06T11:28:57-05:00"
+}
