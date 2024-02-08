@@ -1,0 +1,35 @@
+{
+    "number": 369960,
+    "data": "2313,30033,30069,30249,30282,32350,32553,60093,60273,510550,510561,510579,510633,510723,510741,513063,540963,542853,570573,572910,1021023,1021062,1021239,1023363,1531539,1561563,9699741,9699746,9699759,9699903,9699942,9699957,9699965,9700150,9700353,9702009,9702027,9702049,9702121",
+    "name": "Numbers k such that A003415(k) >= A276086(k) and gcd(k, A003415(k)) = gcd(k, A276086(k)) > 1, where A003415 is the arithmetic derivative, and A276086 is the primorial base exp-function.",
+    "link": [
+        "Antti Karttunen, <a href=\"/A369960/b369960.txt\">Table of n, a(n) for n = 1..350</a>",
+        "<a href=\"/index/Pri#primorialbase\">Index entries for sequences related to primorial base</a>"
+    ],
+    "formula": [
+        "{k | A085731(n) > 1 and A085731(n) == A324198(n) and A083345(k) >= A351251(k)}."
+    ],
+    "program": [
+        "(PARI)",
+        "A003415(n) = if(n<=1, 0, my(f=factor(n)); n*sum(i=1, #f~, f[i, 2]/f[i, 1]));",
+        "A276086(n) = { my(m=1, p=2); while(n, m *= (p^(n%p)); n = n\\p; p = nextprime(1+p)); (m); };",
+        "isA369960(n) = { my(t=A003415(n), u=A276086(n), g=gcd(n,t), h=gcd(n,u)); ((t >= u) && (g==h) && (g>1)); };",
+        "isA369960(n) = if(!n || issquarefree(n), 0, my(t=A003415(n), u=A276086(n), g=gcd(n,t), h=gcd(n,u)); ((t >= u) && (g==h)));",
+        "(PARI)",
+        "A085731(n) = { my(f=factor(n)); for(i=1, #f~, if (f[i, 2] % f[i, 1], f[i, 2]--); ); factorback(f); };",
+        "A324198(n) = { my(m=1, p=2, orgn=n); while(n, m *= (p^min(n%p, valuation(orgn, p))); n = n\\p; p = nextprime(1+p)); (m); };",
+        "isA369960(n) = if(!n || issquarefree(n),0,((A085731(n) == A324198(n)) && (A003415(n) >= A276086(n))));"
+    ],
+    "xref": [
+        "Intersection of A351228 and A369963.",
+        "Subsequence of the following sequences: A013929, A369958, A369959, A369962.",
+        "Cf. A003415, A060735, A083345, A085731, A276086, A324198, A351251."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Feb 07 2024",
+    "references": 0,
+    "revision": 10,
+    "time": "2024-02-07T20:39:34-05:00",
+    "created": "2024-02-07T20:39:34-05:00"
+}
