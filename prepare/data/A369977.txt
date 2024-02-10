@@ -1,0 +1,31 @@
+{
+    "number": 369977,
+    "data": "81,144,225,256,400,441,625,729,784,972,1089,1215,1225,1521,1620,1701,1728,1936,2160,2268,2401,2601,2673,2700,2704,2835,2880,3024,3025,3072,3159,3249,3375,3564,3600,3840,4032,4096,4131,4212,4225,4455,4500,4617,4624,4725,4752,4761,4800,5040,5120,5265,5292,5376",
+    "name": "Numbers that are found in A369002, but not in its subsequence A369976.",
+    "comment": [
+        "a(10) = 972 = 2^2 * 3^5 is the first term that is not a square."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A369977/b369977.txt\">Table of n, a(n) for n = 1..20000</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "A083345(n) = { my(f=factor(n)); numerator(vecsum(vector(#f~, i, f[i, 2]/f[i, 1]))); };",
+        "A369001(n) = !(A083345(n)%2);",
+        "memoA369974 = Map();",
+        "A369974(n) = if(1==n,1,my(v); if(mapisdefined(memoA369974,n,&v), v, v = -sumdiv(n,d,if(d<n,A369001(n/d)*A369974(d),0)); mapput(memoA369974,n,v); (v)));",
+        "A369975(n) = (A369974(n)%2);",
+        "isA369977(n) = (A369001(n) && !A369975(n));"
+    ],
+    "xref": [
+        "Setwise difference A369002 \\ A369976.",
+        "Cf. A083345, A369001, A369974, A369975."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Feb 09 2024",
+    "references": 0,
+    "revision": 7,
+    "time": "2024-02-09T15:49:07-05:00",
+    "created": "2024-02-09T15:49:07-05:00"
+}
