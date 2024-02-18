@@ -1,0 +1,47 @@
+{
+    "number": 370352,
+    "data": "1,1,6,22,46,526,838,838,5667,5667,20158,32127,56697,82617,174718,174718,314492,314492,415789,498957,1142398,1713598,1713598,2280067,2280067,4324316,4324316,5847653,6918908,6918908,6918908,9979197,15855829,24023995,28274398,28274398,28274398,28274398",
+    "name": "The smallest number such that n or more numbers k exist with k - a(n) = sopfr(k) + sopfr(a(n)), where sopfr(m) is the sum of the primes dividing m with repetition.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A370352/b370352.txt\">Table of n, a(n) for n = 1..51</a>"
+    ],
+    "example": [
+        "a(1) = a(2) = 1 as 1 is the smallest number to have two numbers (k = 1, 6) such that 1 - 1 = 0 = sopfr(1) + sopfr(1) = 0, and 6 - 1 = 5 = sopfr(6) + sopfr(1) = 5 + 0 = 5.",
+        "a(3) = 6 as 6 is the smallest number to have three numbers (k = 20, 21, 26) such that 20 - 6 = 14 = sopfr(20) + sopfr(6) = 9 + 5 = 14, 21 - 6 = 15 = sopfr(21) + sopfr(6) = 10 + 5 = 15, and 26 - 6 = 20 = sopfr(26) + sopfr(6) = 15 + 5 = 20."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint",
+        "from itertools import count, islice",
+        "from collections import Counter",
+        "kcount, kmax = Counter(), 0",
+        "def sopfr(n): return sum(p*e for p, e in factorint(n).items())",
+        "def f(n):",
+        "    global kcount, kmax",
+        "    target = n + sopfr(n)",
+        "    for k in range(kmax+1, 2*target+5):",
+        "        kcount[k-sopfr(k)] += 1",
+        "        kmax += 1",
+        "    return kcount[target]",
+        "def agen(): # generator of terms",
+        "    adict, n = dict(), 1",
+        "    for m in count(1):",
+        "        v = f(m)",
+        "        if v not in adict: adict[v] = m",
+        "        for i in range(n, v+1): yield m; n += 1",
+        "print(list(islice(agen(), 16))) # _Michael S. Branicky_, Feb 17 2024"
+    ],
+    "xref": [
+        "Cf. A001414, A369349, A369351, A370351."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,3",
+    "author": "_Scott R. Shannon_, Feb 16 2024",
+    "ext": [
+        "a(21) and beyond from _Michael S. Branicky_, Feb 16 2024"
+    ],
+    "references": 1,
+    "revision": 27,
+    "time": "2024-02-17T12:36:40-05:00",
+    "created": "2024-02-17T12:36:40-05:00"
+}
