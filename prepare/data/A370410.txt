@@ -1,0 +1,35 @@
+{
+    "number": 370410,
+    "data": "0,4,6,14,26,48,86,148,232,400,622,982,1514,2440,3482,5680,8162,12932,18398,29146,40706,64856,90070,141880,196448,309712,425412,668978,917450,1437148,1966022,3074080,4192882,6545344,8912278,13877920,18874298,29341624,39842594,61835140,83886002,129977116,176160686,272563362",
+    "name": "Number of length-n binary strings that are the concatenation of two nonempty palindromes.",
+    "link": [
+        "Michael S. Branicky, <a href=\"/A370410/a370410.txt\">Python program for A370410 (bitwise operations)</a>",
+        "Michael S. Branicky, <a href=\"/A370410/a370410_1.txt\">Python program for A370410 (explicit construction)</a>"
+    ],
+    "program": [
+        "(Python) # see below and Links for faster programs",
+        "from itertools import product",
+        "def p(w): return w == w[::-1]",
+        "def c(w): return any(p(w[:i]) and p(w[i:]) for i in range(1, len(w)))",
+        "def a(n): return 2*sum(1 for w in product(\"01\", repeat=n-1) if c((\"1\",)+w))",
+        "print([a(n) for n in range(1, 21)]) # _Michael S. Branicky_, Feb 18 2024",
+        "(Python)",
+        "from itertools import product",
+        "def bin_pals(d): yield from (\"\".join(p+(m,)+p[::-1]) for p in product(\"01\", repeat=d//2) for m in [[\"\"], [\"0\", \"1\"]][d%2])",
+        "def a(n): return len(set(a+b for i in range(1, n) for a in bin_pals(i) for b in bin_pals(n-i)))",
+        "print([a(n) for n in range(1, 21)]) # _Michael S. Branicky_, Feb 18 2024"
+    ],
+    "xref": [
+        "Cf. A007055, which enumerates the same thing, but allowing the palindromes to be empty."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Jeffrey Shallit_, Feb 18 2024",
+    "ext": [
+        "a(21)-a(44) from _Michael S. Branicky_, Feb 18 2024"
+    ],
+    "references": 0,
+    "revision": 22,
+    "time": "2024-02-18T09:05:20-05:00",
+    "created": "2024-02-18T09:05:20-05:00"
+}
