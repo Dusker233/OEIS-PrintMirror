@@ -1,0 +1,40 @@
+{
+    "number": 370406,
+    "data": "4,18,27,50,125,225,242,294,441,578,686,1029,1089,1331,1922,2401,2601,3025,3362,3675,4913,5070,5290,6962,7225,7605,8575,8649,8978,12675,13182,13225,13778,15129,15162,17787,19773,21970,22743,23762,23805,24025,24334,29791,31329,32258,32955,34969,35378",
+    "name": "Primitive terms of A370348.",
+    "comment": [
+        "Terms of A370348 that are not divisible by any other term of A370348.",
+        "Numbers k such that there are fewer divisors of prime indices of k than there are prime indices of k, and no proper divisor of k has this property."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A370406/b370406.txt\">Table of n, a(n) for n = 1..800</a>"
+    ],
+    "example": [
+        "a(4) = 50 is a term because the prime indices of 50 = 2*5^2 are 1, 2, 2, and there are 3 of these but only 2 divisors of prime indices, namely 1 and 2, and 50 is not divisible by any of the previous terms 4, 18 and 27 of the sequence."
+    ],
+    "maple": [
+        "filter:= proc(n) uses numtheory; local F,D,t;",
+        "  if ormap(t -> n mod t = 0, S) then return false fi;",
+        "F:= map(t -> [pi(t[1]), t[2]], ifactors(n)[2]);",
+        "D:= `union`(seq(divisors(t[1]), t = F);",
+        "nops(D) < add(t[2], t = F);",
+        "end proc:",
+        "R:= NULL: count:= 0: S:= {}:",
+        "for n from 1 while count < 100 do",
+        " if filter(n) then",
+        "   R:= R, n; S:= S union {n}; count:= count+1;",
+        " fi",
+        "od:",
+        "R;"
+    ],
+    "xref": [
+        "Cf. A368110, A370348."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Feb 17 2024",
+    "references": 0,
+    "revision": 11,
+    "time": "2024-02-20T00:46:33-05:00",
+    "created": "2024-02-20T00:46:33-05:00"
+}
