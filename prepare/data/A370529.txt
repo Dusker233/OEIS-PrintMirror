@@ -1,0 +1,33 @@
+{
+    "number": 370529,
+    "data": "0,0,0,0,0,0,1,4,16,100,730,5940,54160,547540,6077155,73473400,961231264,13530711096,203921897844,3276281076600,55900700199840,1009488884673720,19236189509000805,385733279064689820,8119635049867486640,179017704376149395900",
+    "name": "Number of permutations of [n] having exactly three adjacent 2-cycles.",
+    "link": [
+        "R. A. Brualdi and Emeric Deutsch, <a href=\"http://arxiv.org/abs/1005.0781\">Adjacent q-cycles in permutations</a>, arXiv:1005.0781 [math.CO], 2010."
+    ],
+    "formula": [
+        "G.f.: (1/6) * Sum_{k>=3} k! * x^(k+3) / (1+x^2)^(k+1).",
+        "a(n) = (1/6) * Sum_{k=0..floor(n/2)-3} (-1)^k * (n-k-3)! / k!.",
+        "a(n) ~ n! / (6*n^3). - _Vaclav Kotesovec_, Feb 21 2024"
+    ],
+    "maple": [
+        "a:= proc(n) option remember; `if`(n<7, [0$6, 1][n+1], ((n-5)*(n-6)*(n-3)*a(n-1)",
+        "       -6*(n-4)*a(n-2)+(n-2)*(n-3)*((n-5)*a(n-3)+a(n-4)))/((n-5)*(n-6)))",
+        "    end:",
+        "seq(a(n), n=0..25);  # _Alois P. Heinz_, Feb 21 2024"
+    ],
+    "program": [
+        "(PARI) my(N=30, x='x+O('x^N)); concat([0, 0, 0, 0, 0, 0], Vec(sum(k=3, N, k!*x^(k+3)/(1+x^2)^(k+1))/6))",
+        "(PARI) a(n, k=3, q=2) = sum(j=0, n\\q-k, (-1)^j*(n-(q-1)*(j+k))!/j!)/k!;"
+    ],
+    "xref": [
+        "Cf. A177249, A370426, A370524."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,8",
+    "author": "_Seiichi Manyama_, Feb 21 2024",
+    "references": 0,
+    "revision": 17,
+    "time": "2024-02-21T11:50:21-05:00",
+    "created": "2024-02-21T11:50:21-05:00"
+}
