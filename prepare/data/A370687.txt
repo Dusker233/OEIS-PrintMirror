@@ -1,0 +1,50 @@
+{
+    "number": 370687,
+    "data": "4,10,134,2045,2705,16626281",
+    "name": "a(n) is the first number that is the sum of k successive semiprimes for 1 <= k <= n.",
+    "comment": [
+        "a(7) > 5 * 10^8 if it exists."
+    ],
+    "example": [
+        "a(3) = 134 because 134 = 2 * 67 is a semiprime, the sum of two successive semiprimes 65 = 5 * 13 and 69 = 3 * 23, and the sum of three successive semiprimes 39 = 3 * 13, 46 = 2 * 23, 49 = 7 * 7, and is the least such number."
+    ],
+    "maple": [
+        "N:= 2*10^7: # for terms <= N",
+        "P:= select(isprime, [2, seq(i, i=3..N/2, 2)]):",
+        "nP:= nops(P):",
+        "SP:= 0:",
+        "for i from 1 while P[i]^2 <= N do",
+        "  m:= ListTools:-BinaryPlace(P, N/P[i]);",
+        "  SP:= SP, op(P[i]*P[i..m]);",
+        "od:",
+        "SP:= sort([SP]):",
+        "SS:= ListTools:-PartialSums(SP):",
+        "V:= Vector(6):",
+        "SI:= Vector(6):",
+        "II:= Vector(6,1):",
+        "for i from 1 to 6 do SI[i]:= SS[i+1]-SS[1] od:",
+        "count:= 1: V[1]:= 4: m:= 4: im:= {1}:",
+        "while count < 6 do",
+        "  for j in im do",
+        "    II[j]:= II[j]+1;",
+        "    SI[j]:= SS[II[j]+j] - SS[II[j]];",
+        "  od;",
+        "  m:= min(SI);",
+        "  im:= select(j -> SI[j] = m, {$1..20});",
+        "  for k from 1 to 20 while {$1..k} subset im do",
+        "    if V[k] = 0 then V[k]:= m; count:= count+1 fi",
+        "  od;",
+        "od:",
+        "convert(V,list);"
+    ],
+    "xref": [
+        "Cf. A001358, A092192, A370162, A370685."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Feb 27 2024",
+    "references": 0,
+    "revision": 7,
+    "time": "2024-02-27T19:36:32-05:00",
+    "created": "2024-02-27T09:44:00-05:00"
+}

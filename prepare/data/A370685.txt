@@ -1,0 +1,38 @@
+{
+    "number": 370685,
+    "data": "2045,2705,2855,14614,18838,28437,31299,43603,68807,76841,77386,88041,108415,116822,194605,213679,218729,252094,255202,269653,290449,294683,302761,305362,310799,339382,348242,361055,398111,445066,445174,459761,464567,489809,496081,501386,515981,534777,544405",
+    "name": "Semiprimes that are also the sums of two, three and four successive semiprimes.",
+    "link": [
+        "Robert Israel, <a href=\"/A370685/b370685.txt\">Table of n, a(n) for n = 1..2734</a>"
+    ],
+    "example": [
+        "a(3) = 2855 is a term because 2855 = 5 * 571 is a semiprime, A001358(423) = 1418 = 2*709 and A001358(424) = 1437 = 3 * 479 are two successive semiprimes whose sum is 2855, A001358(285) = 949 = 13 * 73, A001358(286) = 951 = 3 * 317 and A001358(287) = 955 = 5 * 191 are three successive semiprimes whose sum is 2855, and A001358(216) = 707 = 7 * 101, A001358(217) = 713 = 23 * 31, A001358(218) = 717 = 3 * 239, A001358(219) = 718 = 2 * 359 are four successive semiprimes whose sum is 2855."
+    ],
+    "maple": [
+        "N:= 10^6: # for terms <= N",
+        "P:= select(isprime, [2, seq(i, i=3..N/2, 2)]):",
+        "nP:= nops(P):",
+        "SP:= 0:",
+        "for i from 1 while P[i]^2 <= N do",
+        "  m:= ListTools:-BinaryPlace(P, N/P[i]);",
+        "  SP:= SP, op(P[i]*P[i..m]);",
+        "od:",
+        "SP:= sort([SP]):",
+        "SS:= ListTools:-PartialSums(SP):",
+        "SS2:= {seq(SS[i]-SS[i-2], i=3..nops(SS))}:",
+        "SS3:= {seq(SS[i]-SS[i-3], i=4..nops(SS))}:",
+        "SS4:= {seq(SS[i]-SS[i-4], i=5..nops(SS))}:",
+        "A:=SS2 intersect SS3 intersect SS4 intersect convert(SP, set):",
+        "A:= sort(convert(A, list)):"
+    ],
+    "xref": [
+        "Cf. A001358, A370162. Intersection of A092192, A131610 and A158339."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Feb 26 2024",
+    "references": 0,
+    "revision": 10,
+    "time": "2024-02-27T09:43:41-05:00",
+    "created": "2024-02-27T09:43:41-05:00"
+}
