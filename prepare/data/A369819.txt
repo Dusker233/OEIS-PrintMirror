@@ -1,0 +1,43 @@
+{
+    "number": 369819,
+    "data": "6,30,124,368,926,2214,4181,8043,13818,23614,34825,54011,84026,109870,156474,217790,304910,376260,510220,667130,794873,1008048,1302947,1629264,1916949,2361150,2859694,3467661,3989744,4779270,5479857,6449983,7575912",
+    "name": "The seventh term of the greedy B_n set of natural numbers.",
+    "comment": [
+        "Proved in arXiv:2312.10910 that a(n) <=  0.382978*n^5 + O(n^4)."
+    ],
+    "link": [
+        "M. B. Nathanson, <a href=\"https://arxiv.org/abs/2310.14426\">The third positive element in the greedy B_h-set</a>, arXiv:2310.14426 [math.NT], 2023.",
+        "M. B. Nathanson and Kevin O'Bryant, <a href=\"https://arxiv.org/abs/2311.14021\">The fourth positive element in the greedy B_h-set</a>, arXiv:2311.14021 [math.NT], 2023.",
+        "Kevin O'Bryant, <a href=\"https://arxiv.org/abs/2312.10910\">B_h-sets and Rigidity</a>, arXiv:2312.10910 [math.NT], 2023."
+    ],
+    "example": [
+        "a(2) = 30, as all 28 nonincreasing sums from {0,1,3,7,12,20,30}, namely 0+0 < 0+1 < 1+1 < ... < 7+20 < 0+30 < 1+30 < 12+20 <3+30 < 7+30 < 20+20 < 12+30 < 20+30 < 30+30, are distinct, and all other 7-element sets of nonnegative integers with this property are lexicographically after {0,1,3,7,12,20,30}."
+    ],
+    "program": [
+        "(Python)",
+        "# uses Python code from A369818",
+        "from itertools import count, combinations_with_replacement",
+        "def A369819(n):",
+        "    alist = [0,1,n+1,n*(n+1)+1,(n+3>>1)*n**2+(3*n+2>>1),A369818(n)]",
+        "    aset = set(sum(d) for d in combinations_with_replacement(alist,n))",
+        "    blist = []",
+        "    for i in range(n):",
+        "        blist.append(set(sum(d) for d in combinations_with_replacement(alist,i)))",
+        "    for k in count(alist[-1]+1):",
+        "        for i in range(n):",
+        "            if any((n-i)*k+d in aset for d in blist[i]):",
+        "                break",
+        "        else:",
+        "            return k # _Chai Wah Wu_, Feb 28 2024"
+    ],
+    "xref": [
+        "Column 7 of A365515."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,1",
+    "author": "_Kevin O'Bryant_, Feb 03 2024",
+    "references": 0,
+    "revision": 14,
+    "time": "2024-02-29T08:53:25-05:00",
+    "created": "2024-02-29T08:53:25-05:00"
+}

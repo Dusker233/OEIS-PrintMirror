@@ -1,0 +1,38 @@
+{
+    "number": 370678,
+    "data": "10,1395,147718,15187437,1530456465,152653821364",
+    "name": "a(n) is the number of pairs x <= y of n-digit numbers such that the number of distinct digits in their product is less than in their concatenation.",
+    "formula": [
+        "a(n) = 9 * 2^(n-3) * 5^(n-2) * (10 + 9*10^n) - A370679(n) - A370680(n)."
+    ],
+    "example": [
+        "a(1) = 10: 8 products 1*2, ..., 1*9, 2*3, 2*4 with 1 digit in x*y and 2 digits in x|y."
+    ],
+    "program": [
+        "(PARI) \\\\ returns [number of products, [a(n), A370679(n), A370680(n)]]",
+        " a370678_80(n) = {my (m=0, c=vector(3), n1=10^(n-1), n2=10*n1-1); for (k1=n1, n2, my (s1=digits(k1)); for (k2=k1, n2, my (s2=digits(k2), cs=#Set(digits(k1*k2)), d=cs-#Set(concat(s1,s2))); c[sign(d)+2]++; m++)); [m,c]}",
+        "(Python)",
+        "def A370678(n):",
+        "    a = 10**(n-1)",
+        "    b, c = 10*a, 0",
+        "    for x in range(a,b):",
+        "        s = set(str(x))",
+        "        for y in range(x,b):",
+        "            if len(s|set(str(y))) > len(set(str(x*y))):",
+        "                c += 1",
+        "    return c # _Chai Wah Wu_, Feb 28 2024"
+    ],
+    "xref": [
+        "Cf. A370675, A370676, A370679, A370680."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "1,1",
+    "author": "_Hugo Pfoertner_, Feb 26 2024",
+    "ext": [
+        "a(6) from _Martin Ehrenstein_, Feb 29 2024"
+    ],
+    "references": 0,
+    "revision": 18,
+    "time": "2024-02-29T13:01:36-05:00",
+    "created": "2024-02-28T08:08:30-05:00"
+}
