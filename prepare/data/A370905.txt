@@ -1,0 +1,35 @@
+{
+    "number": 370905,
+    "data": "1,2,4,7,11,13,19,24,31,35,45,51,63,69,77,88,104,111,129,141,153,163,185,195,216,228,248,266,294,302,332,353,373,389,413,434,470,488,512,532,572,584,626,656,684,706,752,774,817,838,870,906,958,978,1018,1048",
+    "name": "Partial sums of the alternating sum of divisors function (A206369).",
+    "link": [
+        "Amiram Eldar, <a href=\"/A370905/b370905.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "L\u00e1szl\u00f3 T\u00f3th, <a href=\"https://doi.org/10.2478/ausm-2014-0007\">A survey of the alternating sum-of-divisors function</a>, Acta Universitatis Sapientiae, Mathematica, Vol. 5, No. 1 (2013), pp. 93-107.",
+        "L\u00e1szl\u00f3 T\u00f3th, <a href=\"https://www.emis.de/journals/JIS/VOL20/Toth/toth25.html\">Alternating Sums Concerning Multiplicative Arithmetic Functions</a>, Journal of Integer Sequences, Vol. 20 (2017), Article 17.2.1."
+    ],
+    "formula": [
+        "a(n) = Sum_{k=1..n} A206369(k).",
+        "a(n) = (Pi^2/30) * n^2 + O(n * log(n)^(2/3) * log(log(n))^(4/3)) (T\u00f3th, 2013)."
+    ],
+    "mathematica": [
+        "f[p_, e_] := Sum[(-1)^(e-k)*p^k, {k, 0, e}]; beta[1] = 1; beta[n_] := Times @@ f @@@ FactorInteger[n]; Accumulate[Array[beta[#] &, 100]]"
+    ],
+    "program": [
+        "(PARI) beta(n) = {my(f = factor(n)); prod(i=1, #f~, p = f[i, 1]; e = f[i, 2]; sum(k = 0, e, (-1)^(e-k)*p^k));}",
+        "lista(kmax) = {my(s = 0); for(k = 1, kmax, s += beta(k); print1(s, \", \"))};",
+        "(Python)",
+        "from math import prod",
+        "from sympy import factorint",
+        "def A370905(n): return sum(prod((lambda x:x[0]+int((x[1]<<1)>=p+1))(divmod(p**(e+1),p+1)) for p, e in factorint(k).items()) for k in range(1,n+1)) # _Chai Wah Wu_, Mar 05 2024"
+    ],
+    "xref": [
+        "Cf. A206369, A370906."
+    ],
+    "keyword": "nonn,easy,new",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, Mar 05 2024",
+    "references": 0,
+    "revision": 11,
+    "time": "2024-03-05T15:17:14-05:00",
+    "created": "2024-03-05T11:50:39-05:00"
+}
