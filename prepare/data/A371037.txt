@@ -1,0 +1,50 @@
+{
+    "number": 371037,
+    "data": "60,120,168,336,360,504,660,720,1092,1320,1440,1512,2184,2448,2520,3420,4080,4896,5040,5616,6048,6072,6840,7800,7920,8160,9828,11232,12096,12144,12180,14880,15600,16320,19656,20160,24360,25308,25920,29120,29484,29760,31200,32736,34440",
+    "name": "Orders of almost simple groups.",
+    "comment": [
+        "A group G is almost simple if there exists a (non-abelian) simple group S for which S <= G <= Aut(S)."
+    ],
+    "link": [
+        "S\u00e9bastien Palcoux, <a href=\"/A371037/b371037.txt\">Table of n, a(n) for n = 1..113</a>",
+        "T. Connor and D. Leemans, <a href=\"https://leemans.dimitri.web.ulb.be/atlaslat/\">An atlas of subgroup lattices of finite almost simple groups</a>.",
+        "GroupNames, <a href=\"https://people.maths.bris.ac.uk/~matyd/GroupNames/AS.html\">Almost simple groups</a>.",
+        "Groupprops, <a href=\"https://groupprops.subwiki.org/wiki/Almost_simple_group\">Almost simple group</a>.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Almost_simple_group\">Almost simple group</a>."
+    ],
+    "example": [
+        "For n = 1, 2, 3, 4 the values a(n) = 60, 120, 168, 336 correspond to the groups A5, S5, PSL(2,7), PGL(2,7), respectively."
+    ],
+    "program": [
+        "(GAP)",
+        "m := 100000;;",
+        "L := [];;",
+        "it := SimpleGroupsIterator(2, m);;",
+        "for g in it do",
+        "    ag := AutomorphismGroup(g);;",
+        "    iag := InnerAutomorphismsAutomorphismGroup(ag);;",
+        "    Inter := IntermediateSubgroups(ag, iag).subgroups;;",
+        "    LL := [Order(ag), Order(iag)];;",
+        "    for h in Inter do",
+        "        Add(LL, Order(h));;",
+        "    od;",
+        "    for o in LL do",
+        "        if o <= m and (not o in L) then",
+        "            Add(L, o);;",
+        "        fi;",
+        "    od;",
+        "od;",
+        "Sort(L);;",
+        "Print(L);;"
+    ],
+    "xref": [
+        "Cf. A001034."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_S\u00e9bastien Palcoux_, Mar 08 2024",
+    "references": 0,
+    "revision": 20,
+    "time": "2024-03-09T20:30:15-05:00",
+    "created": "2024-03-09T11:08:46-05:00"
+}

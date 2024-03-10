@@ -1,0 +1,43 @@
+{
+    "number": 370137,
+    "data": "6,10,14,18,34,38,42,62,66,90,214,218,222,242,246,270,422,426,450,630,2314,2318,2322,2342,2346,2370,2522,2526,2550,2730,4622,4626,4650,4830,6930,30034,30038,30042,30062,30066,30090,30242,30246,30270,30450,32342,32346,32370,32550,34650,60062,60066,60090,60270,62370,90090",
+    "name": "Sums of three primorials > 1.",
+    "link": [
+        "Antti Karttunen, <a href=\"/A370137/b370137.txt\">Table of n, a(n) for n = 1..15180</a>",
+        "<a href=\"/index/Pri#primorial_numbers\">Index entries for sequences related to primorial numbers</a>"
+    ],
+    "formula": [
+        "For n > 1, A276150(a(n)) = 3.",
+        "For n > 1, A276086(a(n)) = A369979(n)."
+    ],
+    "example": [
+        "6 = A002110(1) + A002110(1) + A002110(1) = 2+2+2.",
+        "10 = A002110(2) + A002110(1) + A002110(1) = 6+2+2.",
+        "14 = A002110(2) + A002110(2) + A002110(1) = 6+6+2.",
+        "18 = A002110(2) + A002110(2) + A002110(2) = 6+6+6.",
+        "38 = A002110(3) + A002110(2) + A002110(1) = 30+6+2."
+    ],
+    "mathematica": [
+        "nn = 6; MapIndexed[Set[P[First[#2] - 1], #1] &, FoldList[Times, 1, Prime@ Range[nn]]]; Table[P[i] + P[j] + P[k], {i, nn}, {j, i}, {k, j}]] // Flatten (* _Michael De Vlieger_, Mar 09 2024 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "up_to = 15180;",
+        "A002110(n) = prod(i=1,n,prime(i));",
+        "A370137list(up_to) = { my(v = vector(up_to), i=0); for(x=1,oo, for(y=1,x, for(z=1,y, i++; if(i > up_to, return(v)); v[i] = A002110(x)+A002110(y)+A002110(z)))); (v); };",
+        "v370137 = A370137list(up_to);",
+        "A370137(n) = v370137[n];"
+    ],
+    "xref": [
+        "Cf. A000292, A002110, A276086, A276150, A369979, A370138.",
+        "Subsequence of A370133.",
+        "Cf. also A370134."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, Mar 09 2024",
+    "references": 0,
+    "revision": 13,
+    "time": "2024-03-09T13:06:00-05:00",
+    "created": "2024-03-09T13:06:00-05:00"
+}
