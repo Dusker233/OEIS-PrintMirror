@@ -1,0 +1,61 @@
+{
+    "number": 370644,
+    "data": "0,0,0,0,0,1,4,13,13,26,56,126,243,471,812,1438",
+    "name": "Number of minimal subsets of {2..n} such that it is not possible to choose a different binary index of each element.",
+    "comment": [
+        "A binary index of n is any position of a 1 in its reversed binary expansion. The binary indices of n are row n of A048793."
+    ],
+    "example": [
+        "The a(0) = 0 through a(7) = 13 subsets:",
+        "  .  .  .  .  .  {2,3,4,5}  {2,4,6}    {2,4,6}",
+        "                            {2,3,4,5}  {2,3,4,5}",
+        "                            {2,3,5,6}  {2,3,4,7}",
+        "                            {3,4,5,6}  {2,3,5,6}",
+        "                                       {2,3,5,7}",
+        "                                       {2,3,6,7}",
+        "                                       {2,4,5,7}",
+        "                                       {2,5,6,7}",
+        "                                       {3,4,5,6}",
+        "                                       {3,4,5,7}",
+        "                                       {3,4,6,7}",
+        "                                       {3,5,6,7}",
+        "                                       {4,5,6,7}",
+        "The a(0) = 0 through a(7) = 13 set-systems:",
+        "  .  .  .  .  .  {2}{12}{3}{13}  {2}{3}{23}       {2}{3}{23}",
+        "                                 {2}{12}{3}{13}   {2}{12}{3}{13}",
+        "                                 {12}{3}{13}{23}  {12}{3}{13}{23}",
+        "                                 {2}{12}{13}{23}  {2}{12}{13}{23}",
+        "                                                  {2}{12}{3}{123}",
+        "                                                  {2}{3}{13}{123}",
+        "                                                  {12}{3}{13}{123}",
+        "                                                  {12}{3}{23}{123}",
+        "                                                  {2}{12}{13}{123}",
+        "                                                  {2}{12}{23}{123}",
+        "                                                  {2}{13}{23}{123}",
+        "                                                  {3}{13}{23}{123}",
+        "                                                  {12}{13}{23}{123}"
+    ],
+    "mathematica": [
+        "bpe[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "fasmin[y_]:=Complement[y,Union@@Table[Union[s,#]& /@ Rest[Subsets[Complement[Union@@y,s]]],{s,y}]];",
+        "Table[Length[fasmin[Select[Subsets[Range[2,n]], Select[Tuples[bpe/@#],UnsameQ@@#&]=={}&]]],{n,0,10}]"
+    ],
+    "xref": [
+        "The version with ones allowed is A370642, minimal case of A370637.",
+        "This is the minimal case of A370643.",
+        "A048793 lists binary indices, A000120 length, A272020 reverse, A029931 sum.",
+        "A070939 gives length of binary expansion.",
+        "A096111 gives product of binary indices.",
+        "A367902 counts choosable set-systems, ranks A367906, unlabeled A368095.",
+        "A367903 counts non-choosable set-systems, ranks A367907, unlabeled A368094.",
+        "A370585 counts maximal choosable sets.",
+        "Cf. A072639, A140637, A326031, A355529, A367905, A368109, A370589, A370591, A370636, A370639, A370640."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,7",
+    "author": "_Gus Wiseman_, Mar 11 2024",
+    "references": 0,
+    "revision": 6,
+    "time": "2024-03-11T18:06:04-04:00",
+    "created": "2024-03-11T18:06:04-04:00"
+}
