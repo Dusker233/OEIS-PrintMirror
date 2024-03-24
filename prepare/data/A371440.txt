@@ -1,0 +1,43 @@
+{
+    "number": 371440,
+    "data": "0,2,5,9,12,14,17,20,25,28,32,36,39,43,46,49,52,56,59,61,64,67,71,74,76,80,83,87,90,92,95,99,102,106,109,111,114,117,119,123,126,130,133,138,140,143,147,150,156,159,163,166,168,171,174,179,183,186,190,193,195,198",
+    "name": "Count of iteration steps for the iterates in A267371 that end in 1.",
+    "comment": [
+        "Conjecture: If iterate m terminates with prefix s ending in 1 then the subsequent iterate of A267371 is terminated by prefix s0."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A371440/b371440.txt\">Table of n, a(n) for n = 0..3000</a>"
+    ],
+    "example": [
+        "a(0) = 0 since the initial string for the iteration process is 01.",
+        "a(2) = 5 since the first 5 prefixes are 0, 01, 010, 0100 and 0100101 determining the iterate 0100101001000100101 of length 19. The next prefix in the iteration process is 01001010."
+    ],
+    "mathematica": [
+        "(* function preLo[ ] is defined in A267371 *)",
+        "lastChar[n_] := Map[StringTake[Last[#], -1]&, NestList[{preLo[#], StringJoin[#[[2]], StringTake[#[[2]], preLo[#]]]}&, {1, \"01\"}, n]]a371440[n_] := Flatten[Position[lastChar[n], \"1\"]-1]a371440[200]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    astr, k, mink = \"01\", 2, 1",
+        "    for i in count(0):",
+        "        if astr[-1] == \"1\": yield i",
+        "        for k in range(mink, len(astr)+1):",
+        "            if astr[1:].count(astr[:k]) == 0:",
+        "                break",
+        "        mink = max(mink, k)",
+        "        astr += astr[:k]",
+        "print(list(islice(agen(), 62))) # _Michael S. Branicky_, Mar 23 2024"
+    ],
+    "xref": [
+        "Cf. A267371."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,2",
+    "author": "_Hartmut F. W. Hoft_, Mar 23 2024",
+    "references": 0,
+    "revision": 15,
+    "time": "2024-03-24T02:22:02-04:00",
+    "created": "2024-03-23T20:33:55-04:00"
+}

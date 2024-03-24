@@ -1,0 +1,76 @@
+{
+    "number": 371403,
+    "data": "34,258,2147,11582,62192,274810,1500309,2235294,10919138,24000612,3074210315,6244442805,6244442805",
+    "name": "Least k such that prime(k), prime(k+1), prime(k+2), ..., prime(k+n) all have the same last digit.",
+    "comment": [
+        "The interest in studying a sequence of n consecutive prime numbers having the same last digit is to look at the behavior of the rarefaction of these numbers when n becomes large.",
+        "a(k) > 10^10 for k >= 14. - _David A. Corneth_, Mar 22 2024"
+    ],
+    "example": [
+        "a(1) = A107730(1) = 34 because prime(34) = 139, prime(35) = 149, both end with the digit 9, and no two consecutive smaller primes end with the same digit.",
+        "a(2) = 258 because prime(258) = 1627, prime(259) = 1637, prime(260) = 1657 with the same last digit 7, and no three consecutive smaller primes have the same last digit.",
+        "a(4) = A371390(1)."
+    ],
+    "maple": [
+        "nn:=15*10^6:",
+        "for n from 2 to 7 do :",
+        "   ii:=0:d:=array(1..n):",
+        "  for m from 1 to nn while(ii=0)",
+        "do:",
+        "   lst:={}:",
+        "     for k from 1 to n do:",
+        "d[k]:=irem(ithprime(m+k-1),10):",
+        "        lst:=lst union {d[k]}:",
+        "     od:",
+        "      if lst={d[1]}",
+        "       then",
+        "       printf(`%d %d \\n`,n-1,m):ii:=1:",
+        "       else",
+        "      fi:",
+        "    od:",
+        "    od:"
+    ],
+    "mathematica": [
+        "a[n_] := Module[{v = Mod[Prime[Range[n + 1]], 10], k = 1, p}, p = Prime[n + 1]; While[! SameQ @@ v, p = NextPrime[p]; v = Join[Rest[v], {Mod[p, 10]}]; k++]; k]; Array[a, 6] (* _Amiram Eldar_, Mar 21 2024 *)"
+    ],
+    "program": [
+        "(PARI)",
+        "upto(n) = {",
+        "\tn += 30;",
+        "\tmy(res = List(), q = 2, t = 1, ld = 2, nld, streak = 0);",
+        "\tforprime(p = 3, oo,",
+        "\t\tnld = p%10;",
+        "\t\tif(nld == ld,",
+        "\t\t\tstreak++;",
+        "\t\t\tif(streak > #res,",
+        "\t\t\t\tlistput(res, t-streak+1);",
+        "\t\t\t\tprint1(t-streak+1\", \");",
+        "\t\t\t)",
+        "\t\t,",
+        "\t\t\tstreak = 0",
+        "\t\t);",
+        "\t\tq = p;",
+        "\t\tld = nld;",
+        "\t\tt++;",
+        "\t\tif(t > n,",
+        "\t\t\treturn(res);",
+        "\t\t)",
+        "\t);",
+        "\tres",
+        "} \\\\ _David A. Corneth_, Mar 23 2024"
+    ],
+    "xref": [
+        "Cf. A000040, A107730, A129750, A371390."
+    ],
+    "keyword": "nonn,base,hard,more,new",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Mar 21 2024",
+    "ext": [
+        "a(7)-a(10) from _Amiram Eldar_, Mar 21 2024",
+        "a(11)-a(13) from _David A. Corneth_, Mar 22 2024"
+    ],
+    "references": 0,
+    "revision": 25,
+    "time": "2024-03-23T20:35:31-04:00",
+    "created": "2024-03-23T20:35:31-04:00"
+}
