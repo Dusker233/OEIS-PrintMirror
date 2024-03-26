@@ -1,0 +1,42 @@
+{
+    "number": 370851,
+    "data": "17,31,71,113,131,151,211,311,1117,1151,1171,1511,2111,11117,11131,11171,11311,111121,111211,112111,113111,131111,311111,511111,1111151,1111211,1111711,1117111,1171111,11111117,11111131,11111171,11111311,11113111,11131111,71111111",
+    "name": "Lesser of two consecutive primes such that the product of its digits is also prime and that of the other is composite.",
+    "example": [
+        "17 is a term because 17 is prime, the product of its digits is 7 which is prime and the product of the digits of 19, the next prime to 17, is 9 and 9 is composite.",
+        "13 is not a term because although it is prime and the product of its digits is 3 which is also prime, the product of the digits of 17, the next prime to 13, is 7 and 7 is not composite.",
+        "29 is not a term because the product of its digits is 18 and 18 is not prime."
+    ],
+    "mathematica": [
+        "Select[Prime[Range[6*10^6]], PrimeQ[Apply[Times, IntegerDigits[#]]]&&CompositeQ[Apply[Times,IntegerDigits[NextPrime[#]]]]&] (* _James C. McMahon_, Mar 03 2024 *)"
+    ],
+    "program": [
+        "(PARI) isok(p)=my(x=vecprod(digits(p)),y=vecprod(digits(nextprime(p+1))));isprime(x) && y>3 &&!isprime(y);",
+        "forprime(p=2,20000,if(isok(p),print1(p\", \")))",
+        "(Python)",
+        "from math import prod",
+        "from itertools import count, islice",
+        "from sympy import isprime, nextprime",
+        "def A370851_gen(): # generator of terms",
+        "    for l in count(1):",
+        "        k = (10**l-1)//9",
+        "        for m in range(l):",
+        "            a = 10**m",
+        "            for j in (1,2,4,6):",
+        "                p = k+a*j",
+        "                if isprime(p) and not (isprime(s:=prod(map(int,str(nextprime(p))))) or s==1):",
+        "                    yield p",
+        "A370851_list = list(islice(A370851_gen(),20)) # _Chai Wah Wu_, Mar 25 2024"
+    ],
+    "xref": [
+        "Cf. A000040, A002808, A053666.",
+        "Cf. also A370848, A370850."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Claude H. R. Dequatre_, Mar 03 2024",
+    "references": 1,
+    "revision": 18,
+    "time": "2024-03-26T01:59:27-04:00",
+    "created": "2024-03-25T21:57:42-04:00"
+}
