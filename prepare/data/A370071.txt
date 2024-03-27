@@ -1,0 +1,40 @@
+{
+    "number": 370071,
+    "data": "0,1,8,144,610,46368,1346269,14930352,63245986,165580141,267914296,2971215073,4807526976,7778742049,12586269025,139583862445,365435296162,591286729879,956722026041,1548008755920,2504730781961,4052739537881,6557470319842,17167680177565,27777890035288,190392490709135",
+    "name": "Fibonacci numbers such that some permutation of their digits is a perfect power.",
+    "comment": [
+        "0, 1, 8 and 144 are the only Fibonacci numbers that are themselves perfect powers (see A227875).",
+        "A term might have multiple permutations which are perfect powers.",
+        "Leading 0 digits are allowed in the perfect power, so that 610 is a term since 016 = 2^4.",
+        "From _David A. Corneth_, Feb 17 2024: (Start)",
+        "Four ideas to find terms:",
+        "1. For each Fibonacci number, check each anagram to determine whether it is a perfect power. A Fibonacci number is a term if and only if such an anagram exists.",
+        "2. Let q be the number of digits of some Fibonacci number F. Then check all perfect powers m < 10^q if the frequency of positive digits matches the corresponding positive digits of F and F has at least as many 0's as m. E.g., 610 is a term as the perfect power 16 has the same number of 1's, and the same number of 6's, and 610 has at least as many 0's as 16.",
+        "3. Match the last digits of perfect powers and whittle down the number of candidates. So for 46368, a perfect square must end in 4 or 6 for the last digit, 36, 64 or 84 for the last two digits and so on.",
+        "4. If some Fibonacci number F has q digits then we could list the possible strings the first floor((q + 1)/2) such numbers could form and see what squares start with those digits. (End)"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A370071/b370071.txt\">Table of n, a(n) for n = 1..45</a>"
+    ],
+    "example": [
+        "46368 is a term because it is a Fibonacci number whose digits can be permuted to 36864 = 192^2 (and also to 86436 = 294^2)."
+    ],
+    "program": [
+        "(PARI) isok(f) = my(d=digits(f), n=#d); for (i=1, n!, my(p=numtoperm(n, i), dd=vector(#d, i, d[p[i]])); if (ispower(fromdigits(dd)), return(1)););",
+        "lista(nn) = my(list = List([0, 1])); for (n=3, nn, my(f=fibonacci(n)); if (isok(f), listput(list, f));); Vec(list); \\\\ _Michel Marcus_, Feb 17 2024"
+    ],
+    "xref": [
+        "Cf. A000045, A227875, A001597, A118715."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,3",
+    "author": "_Gonzalo Mart\u00ednez_, Feb 08 2024",
+    "ext": [
+        "a(19) inserted and a(21)-a(23) by _Michael S. Branicky_, Feb 17 2024",
+        "More terms from _David A. Corneth_, Feb 17 2024"
+    ],
+    "references": 0,
+    "revision": 52,
+    "time": "2024-03-26T21:07:16-04:00",
+    "created": "2024-03-26T21:07:16-04:00"
+}
