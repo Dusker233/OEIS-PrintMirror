@@ -1,0 +1,56 @@
+{
+    "number": 370708,
+    "data": "1,2,3,5,6,8,12,13,15,16,21,23,28,32,37,38,40,45,47,61,63,70,73,80,81,91,96,100,103,105,116,123,128,134,138,150,156,157,175,179,181,190,207,210,214,217,226,240,243,252,256,265,275,281,283,289,292,293,308,315",
+    "name": "a(1)=1; thereafter a(n) is the smallest number > a(n-1) such that no two triples of earlier terms in arithmetic progression have the same common difference.",
+    "comment": [
+        "A triple consists of three distinct values in a(1), a(2), ..., a(n).",
+        "By definition, no arithmetic progression of length > 3 can occur in the sequence.",
+        "What is the density of this sequence?"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A370708/b370708.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "4 is not a term in the sequence because it would create the arithmetic progression (2,3,4), which has the same common difference (1) as the previously occurring triple (1,2,3).",
+        "9 is not a term because it would create the arithmetic progression (3,6,9), which has the same common difference (3) as the previously occurring (2,5,8)."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "def cd(k, alst, dset, diff_dict):",
+        "    newdset = set()",
+        "    for a in alst:",
+        "        if k-a in diff_dict[a]:",
+        "            if k-a in dset:",
+        "                return False",
+        "            else:",
+        "                newdset.add(k-a)",
+        "    return True, newdset",
+        "def agen(): # generator of terms",
+        "    alst, dset, an = [1, 2, 3], {1}, 3",
+        "    yield from alst",
+        "    diff_dict = {1: set(), 2: {1}, 3: {1, 2}}",
+        "    while True:",
+        "        k = an+1",
+        "        while not (ans:=cd(k, alst, dset, diff_dict)): k += 1",
+        "        dset.update(ans[1])",
+        "        an = k",
+        "        diff_dict[k] = {an-a for a in alst}",
+        "        alst.append(an)",
+        "        yield an",
+        "print(list(islice(agen(), 60))) # _Michael S. Branicky_, Mar 30 2024"
+    ],
+    "xref": [
+        "Cf. A003278."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Neal Gersh Tolunsky_, Mar 25 2024",
+    "ext": [
+        "a(15) and beyond from _Michael S. Branicky_, Mar 30 2024"
+    ],
+    "references": 0,
+    "revision": 44,
+    "time": "2024-03-31T02:13:33-04:00",
+    "created": "2024-03-30T12:20:37-04:00"
+}
