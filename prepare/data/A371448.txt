@@ -1,0 +1,64 @@
+{
+    "number": 371448,
+    "data": "1,2,4,5,6,8,10,12,15,16,17,20,24,26,30,32,33,34,40,47,48,51,52,55,60,64,66,68,80,85,86,94,96,102,104,110,120,123,127,128,132,136,141,143,160,165,170,172,187,188,192,204,205,208,215,220,221,226,240,246",
+    "name": "Numbers such that (1) the product of prime indices is squarefree, and (2) the binary indices of prime indices cover an initial interval of positive integers.",
+    "comment": [
+        "Also Heinz numbers of integer partitions whose parts have (1) squarefree product and (2) binary indices covering an initial interval.",
+        "A binary index of n is any position of a 1 in its reversed binary expansion. The binary indices of n are row n of A048793.",
+        "A prime index of n is a number m such that prime(m) divides n. The multiset of prime indices of n is row n of A112798."
+    ],
+    "formula": [
+        "Intersection of A302505 and A371447."
+    ],
+    "example": [
+        "The terms together with their binary indices of prime indices begin:",
+        "   1: {}",
+        "   2: {{1}}",
+        "   4: {{1},{1}}",
+        "   5: {{1,2}}",
+        "   6: {{1},{2}}",
+        "   8: {{1},{1},{1}}",
+        "  10: {{1},{1,2}}",
+        "  12: {{1},{1},{2}}",
+        "  15: {{2},{1,2}}",
+        "  16: {{1},{1},{1},{1}}",
+        "  17: {{1,2,3}}",
+        "  20: {{1},{1},{1,2}}",
+        "  24: {{1},{1},{1},{2}}",
+        "  26: {{1},{2,3}}",
+        "  30: {{1},{2},{1,2}}",
+        "  32: {{1},{1},{1},{1},{1}}",
+        "  33: {{2},{1,3}}",
+        "  34: {{1},{1,2,3}}",
+        "  40: {{1},{1},{1},{1,2}}",
+        "  47: {{1,2,3,4}}",
+        "  48: {{1},{1},{1},{1},{2}}",
+        "  51: {{2},{1,2,3}}"
+    ],
+    "mathematica": [
+        "normQ[m_]:=Or[m=={},Union[m]==Range[Max[m]]];",
+        "bpe[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "prix[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n], {p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "Select[Range[1000], SquareFreeQ[Times@@prix[#]]&&normQ[Join@@bpe/@prix[#]]&]"
+    ],
+    "xref": [
+        "An opposite version is A371293, A371292.",
+        "Without the squarefree condition we have A371447, see also A320456, A326754.",
+        "The connected components of this multiset system are counted by A371451.",
+        "A000009 counts partitions covering initial interval, compositions A107429.",
+        "A000670 counts patterns, ranked by A333217.",
+        "A011782 counts multisets covering an initial interval.",
+        "A048793 lists binary indices, reverse A272020, length A000120, sum A029931.",
+        "A070939 gives length of binary expansion.",
+        "A112798 lists prime indices, reverse A296150, length A001222, sum A056239.",
+        "A131689 counts patterns by number of distinct parts.",
+        "Cf. A000040, A000961, A019565, A055887, A255906, A325097, A325118, A326782, A368109, A371452."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Mar 31 2024",
+    "references": 2,
+    "revision": 4,
+    "time": "2024-03-31T23:51:32-04:00",
+    "created": "2024-03-31T23:51:32-04:00"
+}
