@@ -1,0 +1,44 @@
+{
+    "number": 371455,
+    "data": "1,2,3,4,5,6,7,8,9,11,12,13,14,16,17,18,19,21,23,24,25,26,27,28,29,31,32,33,35,36,37,38,41,42,43,47,48,49,52,53,54,55,56,57,58,59,61,63,64,65,67,69,71,72,73,74,76,79,81,83,84,86,89,95,96,97,98,99",
+    "name": "Numbers k such that if we take the binary indices of each prime index of k we get an antichain of sets.",
+    "comment": [
+        "In an antichain of sets, no edge is a proper subset of any other."
+    ],
+    "example": [
+        "The prime indices of 65 are {3,6} with binary indices {{1,2},{2,3}} so 65 is in the sequence.",
+        "The prime indices of 255 are {2,3,7} with binary indices {{2},{1,2},{1,2,3}} so 255 is not in the sequence."
+    ],
+    "mathematica": [
+        "stableQ[u_,Q_]:=!Apply[Or,Outer[#1=!=#2&&Q[#1,#2]&,u,u,1],{0,1}];",
+        "bix[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "prix[n_]:=If[n==1,{},Flatten[Cases[FactorInteger[n], {p_,k_}:>Table[PrimePi[p],{k}]]]];",
+        "Select[Range[100],stableQ[bix/@prix[#],SubsetQ]&]"
+    ],
+    "xref": [
+        "Contains all powers of primes A000961.",
+        "An opposite version is A087086, carry-connected case A371294.",
+        "For prime indices of prime indices we have A316476, carry-connected A329559.",
+        "These antichains are counted by A325109.",
+        "For binary indices of binary indices we have A326704, carry-conn. A326750.",
+        "The carry-connected case is A371445, counted by A371446.",
+        "A048143 counts connected antichains of sets.",
+        "A048793 lists binary indices, reverse A272020, length A000120, sum A029931.",
+        "A050320 counts set multipartitions of prime indices, see also A318360.",
+        "A070939 gives length of binary expansion.",
+        "A089259 counts set multipartitions of integer partitions.",
+        "A112798 lists prime indices, reverse A296150, length A001222, sum A056239.",
+        "A116540 counts normal set multipartitions.",
+        "A302478 ranks set multipartitions, cf. A073576.",
+        "A325118 ranks carry-connected partitions, counted by A325098.",
+        "A371451 counts carry-connected components of binary indices.",
+        "Cf. A019565, A050326, A304713, A305148, A325097, A325107, A371291, A371452."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Gus Wiseman_, Apr 01 2024",
+    "references": 0,
+    "revision": 5,
+    "time": "2024-04-02T08:56:56-04:00",
+    "created": "2024-04-02T08:56:56-04:00"
+}

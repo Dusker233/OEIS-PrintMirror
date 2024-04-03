@@ -1,0 +1,53 @@
+{
+    "number": 371651,
+    "data": "5,23,173,2693,32587,495637,4447627,35303123,717591877,928090627,69692326373,745041171877",
+    "name": "a(n) is the first prime p such that p - 2 and p + 2 both have exactly n prime factors, counted with multiplicity.",
+    "comment": [
+        "a(n) is the first prime p such that A001222(p - 2) = A001222(p + 2) = n.",
+        "3*10^9 < a(13) <= 5012236328123.",
+        "3*10^9 < a(14) <= 64215009765623."
+    ],
+    "formula": [
+        "a(n) > 2*A154704(n) for n > 1."
+    ],
+    "example": [
+        "a(3) = 173 because 173 is prime, 173 - 2 = 171 = 3^2 * 19 and 173 + 2 = 175 = 5^2 * 7 are both products of 3 primes with multiplicity, and no smaller number works."
+    ],
+    "maple": [
+        "V:= Vector(8):",
+        "p:= 3: count:= 0:",
+        "while count < 8 do",
+        "p:= nextprime(p);",
+        "i:= numtheory:-bigomega(p-2);",
+        "if i <= 8 and V[i] = 0 and numtheory:-bigomega(p+2) = i",
+        "     then V[i]:= p; count:= count+1",
+        "  fi",
+        "od:",
+        "convert(V,list);"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import primeomega, nextprime",
+        "def A371651(n):",
+        "    p = 3",
+        "    while True:",
+        "        if n == primeomega(p-2) == primeomega(p+2):",
+        "            return p",
+        "        p = nextprime(p) # _Chai Wah Wu_, Apr 02 2024"
+    ],
+    "xref": [
+        "Cf. A001222. Contained in A371622.",
+        "Cf. A115186, A154704."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Apr 01 2024",
+    "ext": [
+        "a(11) from _Michael S. Branicky_, Apr 01 2024",
+        "a(12) from _Michael S. Branicky_, Apr 02 2024"
+    ],
+    "references": 0,
+    "revision": 26,
+    "time": "2024-04-02T15:15:40-04:00",
+    "created": "2024-04-02T07:25:10-04:00"
+}

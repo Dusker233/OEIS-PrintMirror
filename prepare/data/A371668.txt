@@ -1,0 +1,35 @@
+{
+    "number": 371668,
+    "data": "0,1,1,1,5,11,19,43,93,181,371,771,1547,3121,6357,12821,25805,52123,105031,211243,425215,855457,1719257,3455153,6942387,13942111,27993317,56197117,112785797,226311535,454043339,910778203,1826666093,3663122277,7344953123",
+    "name": "Number of binary necklaces of length n which have more 00 than 01 substrings.",
+    "formula": [
+        "a(n) = 2^n - A217464(n) - A371570(n).",
+        "a(n) = (8*(n-7)*a(n-7) + 4*(29-5*n)*a(n-6) + (26*n-110)*a(n-5) + (77-23*n)*a(n-4) + (15*n-46)*a(n-3) + (22-10*n)*a(n-2) + 5*(n-1)*a(n-1))/n for n>=7."
+    ],
+    "example": [
+        "a(3) = 1: 000.",
+        "a(4) = 5: 0000, 0001, 0010, 0100, 1000.",
+        "a(5) = 11: 00000, 00001, 00010, 00011, 00100, 00110, 01000, 01100, 10000, 10001, 11000."
+    ],
+    "mathematica": [
+        "tup[n_] := Tuples[{0, 1}, n];",
+        "tupToNec[n_] := Map[Append[#, #[[1]]] &, tup[n]];",
+        "cou[lst_List] := Count[lst, {0, 0}] > Count[lst, {0, 1}];",
+        "par[lst_List] := Partition[lst, 2, 1];",
+        "a[0] = 0;",
+        "a[n_] := a[n] = Map[cou, Map[par, tupToNec[n]]] // Boole // Total;",
+        "Monitor[Table[a[n], {n, 0, 18}], {n, Table[a[m], {m, 0, n - 1}]}]"
+    ],
+    "xref": [
+        "Cf. A217464 (necklaces with equal 00 and 01), A371570 (necklaces with more 01 than 00).",
+        "Cf. A126869 (necklaces with equal 00 and 11, for n>=1), A058622 (necklaces with more 00 than 11).",
+        "Cf. A163493 (strings with equal 00 and 01), A371358 (strings with more 00 than 01), A371564 (strings with more 01 than 00)."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,5",
+    "author": "_Robert P. P. McKone_, Apr 02 2024",
+    "references": 0,
+    "revision": 5,
+    "time": "2024-04-02T11:44:07-04:00",
+    "created": "2024-04-02T11:44:07-04:00"
+}
