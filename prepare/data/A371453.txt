@@ -1,0 +1,59 @@
+{
+    "number": 371453,
+    "data": "32,512,544,8192,8224,8704,8736,16384,16416,16896,16928,24576,24608,25088,25120,1048576,1048608,1049088,1049120,1056768,1056800,1057280,1057312,1064960,1064992,1065472,1065504,1073152,1073184,1073664,1073696,2097152,2097184",
+    "name": "Numbers whose binary indices are all squarefree semiprimes.",
+    "comment": [
+        "A binary index of n is any position of a 1 in its reversed binary expansion. The binary indices of n are row n of A048793."
+    ],
+    "example": [
+        "The terms together with their binary expansions and binary indices begin:",
+        "       32:                 100000 ~ {6}",
+        "      512:             1000000000 ~ {10}",
+        "      544:             1000100000 ~ {6,10}",
+        "     8192:         10000000000000 ~ {14}",
+        "     8224:         10000000100000 ~ {6,14}",
+        "     8704:         10001000000000 ~ {10,14}",
+        "     8736:         10001000100000 ~ {6,10,14}",
+        "    16384:        100000000000000 ~ {15}",
+        "    16416:        100000000100000 ~ {6,15}",
+        "    16896:        100001000000000 ~ {10,15}",
+        "    16928:        100001000100000 ~ {6,10,15}",
+        "    24576:        110000000000000 ~ {14,15}",
+        "    24608:        110000000100000 ~ {6,14,15}",
+        "    25088:        110001000000000 ~ {10,14,15}",
+        "    25120:        110001000100000 ~ {6,10,14,15}",
+        "  1048576:  100000000000000000000 ~ {21}"
+    ],
+    "maple": [
+        "M:= 26: # for terms < 2^M",
+        "P:= select(isprime, [$2..(M+1)/2]): nP:= nops(P):",
+        "S:= select(`<`,{seq(seq(P[i]*P[j],i=1..j-1),j=1..nP)},M+1):",
+        "R:= map(proc(s) local i; add(2^(i-1),i=s) end proc, combinat:-powerset(S) minus {{}}):",
+        "sort(convert(R,list)); # _Robert Israel_, Apr 04 2024"
+    ],
+    "mathematica": [
+        "bix[n_]:=Join@@Position[Reverse[IntegerDigits[n,2]],1];",
+        "sqfsemi[n_]:=SquareFreeQ[n]&&PrimeOmega[n]==2;",
+        "Select[Range[10000],And@@sqfsemi/@bix[#]&]"
+    ],
+    "xref": [
+        "Partitions of this type are counted by A002100, squarefree case of A101048.",
+        "For primes instead of squarefree semiprimes we get A326782.",
+        "For prime indices instead of binary indices we have A339113, A339112.",
+        "Allowing any squarefree numbers gives A368533.",
+        "This is the squarefree case of A371454.",
+        "A001358 lists squarefree semiprimes, squarefree A006881.",
+        "A005117 lists squarefree numbers.",
+        "A048793 lists binary indices, reverse A272020, length A000120, sum A029931.",
+        "A070939 gives length of binary expansion.",
+        "A096111 gives product of binary indices.",
+        "Cf. A087086, A112798, A296119, A302478, A326031, A367905, A368109, A371450."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Gus Wiseman_, Apr 02 2024",
+    "references": 2,
+    "revision": 10,
+    "time": "2024-04-05T08:21:54-04:00",
+    "created": "2024-04-05T08:21:54-04:00"
+}
