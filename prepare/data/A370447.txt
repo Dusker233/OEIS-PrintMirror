@@ -1,0 +1,44 @@
+{
+    "number": 370447,
+    "data": "11,101,181,16661,18181,19991,1008001,1160611,1180811,1190911,1688861,1880881,1881881,1988891,100111001,100888001,101616101,101919101,106111601,106191601,108101801,109111901,109161901,110111011,111010111,111181111,116010611,116696611",
+    "name": "Palindromic prime numbers that consist only of the digits {0,1,6,8,9} and which remain palindromic primes when their digits are rotated by 180 degrees.",
+    "comment": [
+        "10886968801 is the least palindromic prime of this sequence for which the set of digits is {0,1,6,8,9}.",
+        "Terms must start and end with digit 1 and be of odd length for n > 1. - _Michael S. Branicky_, Feb 19 2024"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A370447/b370447.txt\">Table of n, a(n) for n = 1..16934</a> (all terms < 10^20)",
+        "Carlos Rivera, <a href=\"http://www.primepuzzles.net/puzzles/puzz_1163.htm\">Puzzle 1163</a>, The Prime Puzzles & Problems Connection."
+    ],
+    "example": [
+        "16661 becomes 19991 under such a rotation, and both are palindromic primes."
+    ],
+    "program": [
+        "(PARI) rot(u)=my(v=[]);for(i=1,#u,my(x=u[i]);if(x==6,v=concat(9,v),x==9,v=concat(6,v),vecsearch([0,1,8],x)>0,v=concat(x,v)));v",
+        "is(x)=my(u=digits(x),su=Set(u));if(setintersect(su,Set([0,1,6,8,9]))!=su||!isprime(x)||Vecrev(u)!=u,return(0));my(y=fromdigits(rot(u)));return(isprime(y))",
+        "(Python)",
+        "from sympy import isprime",
+        "from itertools import product, count, islice",
+        "def flip180(s): return s[::-1].translate({54:57, 57:54})",
+        "def agen(): # generator of terms",
+        "    yield 11",
+        "    for digits in count(3, 2):",
+        "        for rest in product(\"01689\", repeat=digits//2-1):",
+        "            for mid in \"01689\":",
+        "                s = \"\".join((\"1\",)+rest+(mid,)+rest[::-1]+(\"1\",))",
+        "                if isprime(t:=int(s)) and isprime(int(flip180(s))):",
+        "                    yield t",
+        "print(list(islice(agen(), 28))) # _Michael S. Branicky_, Feb 19 2024"
+    ],
+    "xref": [
+        "Subsequence of palindromes in A007597.",
+        "Cf. A002385, A178316."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Jean-Marc Rebert_, Feb 18 2024",
+    "references": 0,
+    "revision": 39,
+    "time": "2024-04-08T19:12:00-04:00",
+    "created": "2024-04-08T19:12:00-04:00"
+}
