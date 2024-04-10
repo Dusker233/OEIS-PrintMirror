@@ -1,0 +1,53 @@
+{
+    "number": 371845,
+    "data": "123457,423457,523459,723451,823451,823457,923453,1234511,1234517,1234531,1234537,1234543,1234547,1234577,2234501,2234503,2234513,2234539,2234543,2234549,2234563,2234579,2234587,2234591,2234593,2234597,3234533,3234551,3234599,4234501,4234537,5234513,5234543,5234549",
+    "name": "Primes whose second, third, fourth and fifth digits are 2345.",
+    "comment": [
+        "This sequence is infinite by the Prime Number Theorem. - _Charles R Greathouse IV_, Apr 09 2024"
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A371845/b371845.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) \u224d n log n. The ratio a(n)/(n log n) is bounded but does not have a limit. - _Charles R Greathouse IV_, Apr 09 2024"
+    ],
+    "maple": [
+        "R:= NULL: count:= 0:",
+        "for d from 0 while count < 100 do",
+        "  for a from 1 to 9 while count < 100 do",
+        "    for b from 1 to 10^d-1 by 2 while count < 100 do",
+        "      x:= b + 10^d*(2345 + 10000*a);",
+        "      if isprime(x) then",
+        "         count:= count+1; R:= R, x",
+        "      fi",
+        "od od od:",
+        "R;"
+    ],
+    "mathematica": [
+        "p = 12345; s = {}; Do[p = NextPrime[p];",
+        "If[2 == IntegerDigits[p][[2]] && 3 == IntegerDigits[p][[3]] && 4 ==IntegerDigits[p][[4]] && 5 == IntegerDigits[p][[5]], AppendTo[s, p]],",
+        "{1000000}]; s"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import primerange",
+        "def A371845_gen(): # generator of terms",
+        "    for l in count(1):",
+        "        m = 10**l",
+        "        for a in range(1,10):",
+        "            b = (a*10**4+2345)*m",
+        "            yield from primerange(b,b+m)",
+        "A371845_list = list(islice(A371845_gen(),20)) # _Chai Wah Wu_, Apr 09 2024"
+    ],
+    "xref": [
+        "Cf. A371833."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Zak Seidov_ and _Robert Israel_, Apr 08 2024",
+    "references": 0,
+    "revision": 14,
+    "time": "2024-04-09T22:03:23-04:00",
+    "created": "2024-04-09T13:25:38-04:00"
+}
