@@ -1,0 +1,36 @@
+{
+    "number": 371821,
+    "data": "85329,177904587,333577497",
+    "name": "Composite numbers which divide the concatenation of their ascending ordered prime factors, with repetition, when written in binary.",
+    "comment": [
+        "The base 2 version of A259047. Assuming a(4) exists it is greater than 10^10."
+    ],
+    "example": [
+        "177904587 is a term as 177904587 = 3_10 * 7_10 * 103_10 * 233_10 * 353_10 = 11_2 * 111_2 * 1100111_2 * 11101001_2 * 101100001_2 = \"11111110011111101001101100001\"_2 = 533713761_10, which is divisible by 177904587."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import factorint",
+        "def A371821_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        f = sorted(factorint(n,multiple=True))",
+        "        if len(f) > 1:",
+        "            c = 0",
+        "            for p in f:",
+        "                c = ((c<<p.bit_length())+p)%n",
+        "            if not c:",
+        "                yield n",
+        "A371821_list = list(islice(A371821_gen(),3)) # _Chai Wah Wu_, Apr 11 2024"
+    ],
+    "xref": [
+        "Cf. A027746, A004676, A259047, A371641."
+    ],
+    "keyword": "nonn,base,more,bref,new",
+    "offset": "1,1",
+    "author": "_Scott R. Shannon_, Apr 07 2024",
+    "references": 0,
+    "revision": 15,
+    "time": "2024-04-11T17:22:08-04:00",
+    "created": "2024-04-11T10:11:56-04:00"
+}
