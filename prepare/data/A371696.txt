@@ -1,0 +1,43 @@
+{
+    "number": 371696,
+    "data": "26,38,46,378,26579,84941,178838,30791466,39373022,56405502,227501395,904085931",
+    "name": "Composite numbers that divide the reverse of the concatenation of their ascending order prime factors, with repetition.",
+    "example": [
+        "26 is a term as 26 = 2 * 13 = \"213\" which is reverse is \"312\", and 312 is divisible by 26.",
+        "227501395 is a term as 227501395 = 5 * 11 * 17 * 23 * 71 * 149 = \"511172371149\" which in reverse is \"941173271115\", and 941173271115 is divisible by 227501395."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime, factorint",
+        "def ok(k): return not isprime(k) and int(\"\".join(str(p)[::-1]*e for p, e in list(factorint(k).items())[::-1]))%k == 0",
+        "def agen(): yield from filter(ok, count(4))",
+        "print(list(islice(agen(), 7))) # Michael S. Branicky, Apr 13 2024",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import factorint",
+        "def A371696_gen(startvalue=4): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,4)):",
+        "        f = factorint(n)",
+        "        if sum(f.values()) > 1:",
+        "            c = 0",
+        "            for p in sorted(f,reverse=True):",
+        "                a = pow(10,len(s:=str(p)),n)",
+        "                q = int(s[::-1])",
+        "                for _ in range(f[p]):",
+        "                    c = (c*a+q)%n",
+        "            if not c:",
+        "                yield n",
+        "A371696_list = list(islice(A371696_gen(),6)) # _Chai Wah Wu_, Apr 13 2024"
+    ],
+    "xref": [
+        "Cf. A027746, A037276, A259047, A371641, A371666."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "1,1",
+    "author": "_Scott R. Shannon_, Apr 03 2024",
+    "references": 0,
+    "revision": 19,
+    "time": "2024-04-13T16:16:52-04:00",
+    "created": "2024-04-13T09:07:51-04:00"
+}

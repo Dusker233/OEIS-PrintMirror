@@ -1,0 +1,72 @@
+{
+    "number": 371511,
+    "data": "3,73,683,8521,123323,2140069,43720693,1012356487,26411157737,749149003087,23459877380431,798411310382011,29471615863458281,1158045600182881261,48851274656431280857,2193475267557861578041,104737172422274885174411,5257403213296398892278377",
+    "name": "a(n) is the smallest prime such that its representation in base n contains each of the digits 0,1,...,n-2 at least once and does not contain the digit n-1.",
+    "comment": [
+        "Conjecture: for n>3, a(n) has digit sum 2+(n-2)(n-1)/2 if n is of the form 4k+3 and has digit sum 1+(n-2)(n-1)/2 otherwise."
+    ],
+    "link": [
+        "Chai Wah Wu, <a href=\"/A371511/b371511.txt\">Table of n, a(n) for n = 3..387</a>",
+        "Chai Wah Wu, <a href=\"https://arxiv.org/abs/2403.20304\">Pandigital and penholodigital numbers</a>, arXiv:2403.20304 [math.GM], 2024."
+    ],
+    "formula": [
+        "For n>3, a(n) >= (n^(n-1)-n)/(n-1)^2 + n^(n-1). If n = 4k+3 for k>0, then a(n) >= (n^(n-1)-n)/(n-1)^2 + n^(n-1) + n^(n-3) ."
+    ],
+    "example": [
+        "The corresponding base-n representations are:",
+        "n   a(n) in base n",
+        "------------------------",
+        "3   10",
+        "4   1021",
+        "5   10213",
+        "6   103241",
+        "7   1022354",
+        "8   10123645",
+        "9   101236457",
+        "10  1012356487",
+        "11  10223456798",
+        "12  10123459a867",
+        "13  1012345678a9b",
+        "14  1012345678c9ab",
+        "15  1022345678a9cdb",
+        "16  10123456789acbed"
+    ],
+    "program": [
+        "(Python)",
+        "from math import gcd",
+        "from sympy import nextprime",
+        "from sympy.ntheory import digits",
+        "def A371511(n):",
+        "    m, j = n, 0",
+        "    if n > 3:",
+        "        for j in range(1,n-1):",
+        "            if gcd((n*(n-1)>>1)+j,n-1) == 1:",
+        "                 break",
+        "    if j == 0:",
+        "        for i in range(2,n-1):",
+        "            m = n*m+i",
+        "    elif j == 1:",
+        "        for i in range(1,n-1):",
+        "            m = n*m+i",
+        "    else:",
+        "        for i in range(2,1+j):",
+        "            m = n*m+i",
+        "        for i in range(j,n-1):",
+        "            m = n*m+i",
+        "    m -= 1",
+        "    while True:",
+        "        s = digits(m:=nextprime(m), n)[1:]",
+        "        if n-1 not in s and len(set(s))==n-1:",
+        "            return m"
+    ],
+    "xref": [
+        "Cf. A185122, A371194."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "3,1",
+    "author": "_Chai Wah Wu_, Apr 10 2024",
+    "references": 0,
+    "revision": 14,
+    "time": "2024-04-13T23:17:33-04:00",
+    "created": "2024-04-13T22:55:29-04:00"
+}

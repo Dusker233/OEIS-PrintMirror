@@ -1,0 +1,49 @@
+{
+    "number": 371390,
+    "data": "11582,17385,19317,20579,22931,42098,51895,52252,55259,60393,62192,62193,62680,64050,65324,71483,76391,76773,76805,77052,81139,86711,95661,100208,102032,113646,113892,113954,115251,124227,125218,125586,144165,144299,147619,147620",
+    "name": "Numbers k such that prime(k), prime(k+1), prime(k+2), prime(k+3) and prime(k+4) all have the same last digit.",
+    "link": [
+        "David A. Corneth, <a href=\"/A371390/a371390_1.gp.txt\">PARI program</a>"
+    ],
+    "example": [
+        "11582 is a term because prime(11582) = 123229, prime(11583) = 123239, prime(11584) = 123259, prime(11585) = 123269 with the same last digit 9."
+    ],
+    "maple": [
+        "nn:=15*10^4:d:=array(1..5):",
+        "for n from 1 to nn do:",
+        " for k from 1 to 5 do:",
+        "   d[k]:=irem(ithprime(n+k-1),10):",
+        " od:",
+        "  if d[1]=d[2] and d[1]=d[3] and",
+        "d[1]=d[4] and d[1]=d[5]",
+        "    then",
+        "     printf(`%d, `,n):",
+        "    else",
+        "  fi:",
+        "od:"
+    ],
+    "program": [
+        "(PARI) \\\\ See PARI link",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import nextprime",
+        "def A371390_gen(): # generator of terms",
+        "    xlist, p = [2, 3, 5, 7, 1], 11",
+        "    for k in count(1):",
+        "        if len(set(xlist)) == 1:",
+        "            yield k",
+        "        p = nextprime(p)",
+        "        xlist = xlist[1:]+[p%10]",
+        "A371390_list = list(islice(A371390_gen(),10)) # _Chai Wah Wu_, Apr 13 2024"
+    ],
+    "xref": [
+        "Cf. A000040, A007652, A107730, A129750."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Michel Lagneau_, Mar 20 2024",
+    "references": 1,
+    "revision": 19,
+    "time": "2024-04-14T02:35:36-04:00",
+    "created": "2024-04-13T19:50:36-04:00"
+}
