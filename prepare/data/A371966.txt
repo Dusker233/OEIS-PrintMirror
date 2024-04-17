@@ -1,0 +1,40 @@
+{
+    "number": 371966,
+    "data": "1,2,4,8,61,221,442,884,8671,24371,60721,244121,881371,2898371,8692591,48826601,97653202,484336211,968672422,6847550561,24334620331,68473110671,247696944631,884738088671,2892570042961,8872433043671,44817108207511,89634216415022,486415512459511",
+    "name": "Largest number reachable starting from 1 and taking n steps either doubling or doubling+reversing.",
+    "comment": [
+        "At each step you are allowed to either double x -> 2*x or double and reverse x -> R(2*x), where R(x) = A004086(x) is decimal digit reversal."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A371966/b371966.txt\">Table of n, a(n) for n = 0..34</a>"
+    ],
+    "formula": [
+        "a(n) <= 20^n and a(n+1) <= 20*a(n)."
+    ],
+    "example": [
+        "a(4) = 61 by the path 1, 2, 4, 8, 61."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "def reverse(n): return int(str(n)[::-1])",
+        "def agen(): # generator of terms",
+        "    reach = {1}",
+        "    while True:",
+        "        yield max(reach)",
+        "        newreach = set()",
+        "        for q in reach: newreach.update([2*q, reverse(2*q)])",
+        "        reach = newreach",
+        "print(list(islice(agen(), 28))) # _Michael S. Branicky_, Apr 14 2024"
+    ],
+    "xref": [
+        "Cf. A004086, A371880."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "0,2",
+    "author": "_Bryle Morga_ and _Michael S. Branicky_, Apr 14 2024",
+    "references": 0,
+    "revision": 16,
+    "time": "2024-04-16T14:02:34-04:00",
+    "created": "2024-04-16T14:02:34-04:00"
+}
