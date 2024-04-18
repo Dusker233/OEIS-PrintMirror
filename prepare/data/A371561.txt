@@ -1,0 +1,50 @@
+{
+    "number": 371561,
+    "data": "5,35,57,355,359,557,579,3335,3357,5579,5777,33557,35559,333555,357799,557779,3335779,3355777,33333577",
+    "name": "Numbers with multiplicative digital root of 5 that are free of 1s and have their digits in ascending order.",
+    "comment": [
+        "I conjecture this list to be complete. a(20), if it exists, is > 10^50.",
+        "If it exists, a(20) > 10^300. - _Michael S. Branicky_, Apr 17 2024"
+    ],
+    "mathematica": [
+        "A031347 = Table[NestWhile[Times @@ IntegerDigits[#] &, n, # > 9 &], {n, 1, 100000}]; Select[Range[100000], A031347[[#]] == 5 && DigitCount[#, 10, 1] == 0 && Sort[IntegerDigits[#]] == IntegerDigits[#] &] (* _Vaclav Kotesovec_, Apr 17 2024 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from math import prod",
+        "from itertools import count, islice, combinations_with_replacement as mc",
+        "def A031347(n):",
+        "    while n > 9: n = prod(map(int, str(n)))",
+        "    return n",
+        "def bgen(): yield from (int(\"\".join(m)) for d in count(1) for m in mc(\"3579\", d))",
+        "def agen(): yield from (t for t in bgen() if A031347(t) == 5)",
+        "print(list(islice(agen(), 19))) # _Michael S. Branicky_, Apr 17 2024",
+        "(Python)",
+        "from math import prod",
+        "from itertools import count, islice",
+        "def A371561_gen(): # generator of terms",
+        "    for l in count(1):",
+        "        for a in range(l,-1,-1):",
+        "            a3 = 3**a",
+        "            for b in range(l-a,-1,-1):",
+        "                b3 = a3*5**b",
+        "                for c in range(l-a-b,-1,-1):",
+        "                    d = l-a-b-c",
+        "                    d3 = b3*7**c*9**d",
+        "                    while d3 > 9:",
+        "                        d3 = prod(int(x) for x in str(d3))",
+        "                    if d3==5:",
+        "                        yield (10**(a+b+c+d)-1)//3+(10**d*(10**c*(10**b+1)+1)-3)*2//9",
+        "A371561_list = list(islice(A371561_gen(),19)) # _Chai Wah Wu_, Apr 17 2024"
+    ],
+    "xref": [
+        "Cf. A034052, A263473, A263479, A031347."
+    ],
+    "keyword": "nonn,more,base,new",
+    "offset": "1,1",
+    "author": "_Sergio Pimentel_, Mar 27 2024",
+    "references": 0,
+    "revision": 27,
+    "time": "2024-04-17T16:07:38-04:00",
+    "created": "2024-04-17T08:34:36-04:00"
+}
