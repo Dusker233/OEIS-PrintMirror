@@ -1,0 +1,44 @@
+{
+    "number": 371797,
+    "data": "0,0,1,2,5,11,24,51,112,233",
+    "name": "Number of quanimous subsets of {1..n} containing n, meaning there is more than one set partition with equal block-sums.",
+    "comment": [
+        "A finite multiset of numbers is defined to be quanimous iff it can be partitioned into two or more multisets with equal sums. Quanimous partitions are counted by A321452 and ranked by A321454."
+    ],
+    "example": [
+        "The set s = {3,4,6,8,9} has set partitions {{3,4,6,8,9}} and {{3,4,8},{6,9}} with equal block-sums, so s is counted under a(9).",
+        "The a(1) = 0 through a(6) = 11 subsets:",
+        "  .  .  {1,2,3}  {1,3,4}    {1,4,5}      {1,5,6}",
+        "                 {1,2,3,4}  {2,3,5}      {2,4,6}",
+        "                            {1,2,4,5}    {1,2,3,6}",
+        "                            {2,3,4,5}    {1,2,5,6}",
+        "                            {1,2,3,4,5}  {1,3,4,6}",
+        "                                         {2,3,5,6}",
+        "                                         {3,4,5,6}",
+        "                                         {1,2,3,4,6}",
+        "                                         {1,2,4,5,6}",
+        "                                         {2,3,4,5,6}",
+        "                                         {1,2,3,4,5,6}"
+    ],
+    "mathematica": [
+        "sps[{}]:={{}};sps[set:{i_,___}]:=Join@@Function[s,Prepend[#,s]& /@ sps[Complement[set,s]]]/@Cases[Subsets[set],{i,___}];",
+        "Table[Length[Select[Subsets[Range[n]], MemberQ[#,n]&&Length[Select[sps[#],SameQ@@Total/@#&]]>1&]],{n,10}]"
+    ],
+    "xref": [
+        "The \"bi-\" version is A232466, complement A371793.",
+        "The complement is counted by A371790.",
+        "First differences of A371796, complement A371789.",
+        "A371736 counts non-quanimous strict partitions.",
+        "A371737 counts quanimous strict partitions.",
+        "A371783 counts k-quanimous partitions.",
+        "A371791 counts biquanimous subsets, complement A371792.",
+        "Cf. A000005, A002219, A035470, A038041, A275972, A279791, A321452, A371795."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,4",
+    "author": "_Gus Wiseman_, Apr 17 2024",
+    "references": 11,
+    "revision": 5,
+    "time": "2024-04-18T09:32:43-04:00",
+    "created": "2024-04-18T09:32:43-04:00"
+}
