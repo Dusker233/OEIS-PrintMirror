@@ -1,0 +1,48 @@
+{
+    "number": 372106,
+    "data": "1476395008,116508327936,505627938816,640532803911,1207460451879,1429150367744,1458956660623,3292564845031,3820372951296,5056734498816,6784304541696,8090702381056,9095331446784,10757095489536,10973607685048,13505488366293,14913065975808,38203732951296",
+    "name": "A370972 terms composed of nine distinct digits which may repeat.",
+    "comment": [
+        "Each factorization is necessarily composed of multipliers that use only the single missing digit.",
+        "The single missing digit cannot be 0, 1, 5, or 6. Terms missing 2, 3, 4, 7, and 8 appear within a(1)-a(6). 52612606387341 = 9^6 * 99 * 999999 is an example of a term missing 9. - _Michael S. Branicky_, Apr 18 2024"
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A372106/b372106.txt\">Table of n, a(n) for n = 1..10000</a> (terms 1..1016 from Hans Havermann)"
+    ],
+    "example": [
+        "10973607685048 = 22222*22222*22222 is in the sequence because it has nine distinct digits and may be factored using only its missing digit."
+    ],
+    "program": [
+        "(Python)",
+        "import heapq",
+        "from itertools import islice",
+        "def agen(): # generator of terms",
+        "    allowed = [2, 3, 4, 7, 8, 9]",
+        "    v, oldt, h, repunits, bigr = 1, 0, list((d, d) for d in allowed), [1], 1",
+        "    while True:",
+        "        v, d = heapq.heappop(h)",
+        "        if (v, d) != oldt:",
+        "            s = set(str(v))",
+        "            if len(s) == 9 and str(d) not in s:",
+        "                yield v",
+        "            oldt = (v, d)",
+        "            while v > bigr:",
+        "                bigr = 10*bigr + 1",
+        "                repunits.append(bigr)",
+        "                for c in allowed:",
+        "                    heapq.heappush(h, (bigr*c, c))",
+        "            for r in repunits:",
+        "                heapq.heappush(h, (v*d*r, d))",
+        "print(list(islice(agen(), 100))) # _Michael S. Branicky_, Apr 19 2024"
+    ],
+    "xref": [
+        "Cf. A370972."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Hans Havermann_, Apr 18 2024",
+    "references": 0,
+    "revision": 29,
+    "time": "2024-04-20T04:17:00-04:00",
+    "created": "2024-04-19T11:30:59-04:00"
+}
