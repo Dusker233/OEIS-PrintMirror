@@ -1,0 +1,53 @@
+{
+    "number": 371565,
+    "data": "6,7,8,9,10,13,18,20,21,23,25,82,119,137,2389,4108,5875",
+    "name": "Integers k such that removing the even digits from k! yields a prime number.",
+    "comment": [
+        "For k > 4, the number k! is divisible by 10. In fact, for k > 1, the final nonzero digit of k! is even (see A008904). Then, if the even digits of k! are removed, the result is either 0 or an odd number, where the latter are candidates for prime numbers. Thus, with this procedure, it is possible to obtain the following prime numbers, although not in this order of occurrence: 3, 5, 7, 3917, 373757, 5517397, 519917179, 155111333959."
+    ],
+    "example": [
+        "13 is a term since 13! = 6227020800 and eliminating the even digits yields the number 7, which is prime.",
+        "18 is a term since 18! = 6402373705728000 and eliminating the even digits yields 373757, which is prime."
+    ],
+    "mathematica": [
+        "q[n_] := PrimeQ[FromDigits[Select[IntegerDigits[n!], OddQ]]]; Select[Range[200], q] (* _Amiram Eldar_, Mar 30 2024 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "from math import factorial",
+        "def ok(n):",
+        "    r = \"\".join(d for d in str(factorial(n)) if d in \"13579\")",
+        "    return len(r) and isprime(int(r))",
+        "print([k for k in range(1000) if ok(k)]) # _Michael S. Branicky_, Mar 27 2024",
+        "(Python) # generator of terms, removing trailing 0's from n!",
+        "from sympy import isprime",
+        "from itertools import count, islice",
+        "def agen():",
+        "    f = 1",
+        "    for n in count(1):",
+        "        f *= n",
+        "        q, t = divmod(f, 10)",
+        "        while t == 0:",
+        "            f = q",
+        "            q, t = divmod(f, 10)",
+        "        r = \"\".join(d for d in str(f) if d in \"13579\")",
+        "        if len(r) and isprime(int(r)):",
+        "            yield n",
+        "print(list(islice(agen(), 14))) # _Michael S. Branicky_, Apr 10 2024",
+        "(PARI) isok(k) = my(d=digits(k!)); ispseudoprime(fromdigits(select(x->(x%2), d))); \\\\ _Michel Marcus_, Mar 30 2024"
+    ],
+    "xref": [
+        "Cf. A000040, A000142."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "1,1",
+    "author": "_Gonzalo Mart\u00ednez_, Mar 27 2024",
+    "ext": [
+        "a(12)-a(17) from _Michael S. Branicky_, Mar 27 2024"
+    ],
+    "references": 0,
+    "revision": 21,
+    "time": "2024-04-22T10:42:57-04:00",
+    "created": "2024-04-22T10:42:57-04:00"
+}
