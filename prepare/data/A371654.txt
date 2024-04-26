@@ -1,0 +1,42 @@
+{
+    "number": 371654,
+    "data": "2,3,5,7,11,13,17,19,23,29,31,32,37,47,59,67,71,73,74,76,79,89,91,92,95,97,98,101,103,107,109,113,127,131,137,139,149,157,167,172,173,175,176,179,193,194,197,199,203,209,217,223,227,229,232,233,239,257",
+    "name": "Numbers that are not multiples of 10 and that yield a prime if their digits are arranged in ascending order.",
+    "comment": [
+        "If N is a term then all numbers with the same digits as N are terms too."
+    ],
+    "example": [
+        "91 is a term because arranging its digits in ascending order yields 19, which is a prime."
+    ],
+    "mathematica": [
+        "Select[Range[500],  Mod[#, 10] != 0 && PrimeQ[FromDigits[Sort[IntegerDigits[#]]]] &]"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import isprime",
+        "def ok(n): return n%10 and isprime(int(\"\".join(sorted(str(n)))))",
+        "print([k for k in range(260) if ok(k)]) # _Michael S. Branicky_, Apr 01 2024",
+        "(Python)",
+        "from itertools import count, islice, combinations_with_replacement",
+        "from sympy import isprime",
+        "from sympy.utilities.iterables import multiset_permutations",
+        "def A371654_gen(): # generator of terms",
+        "    for l in count(1):",
+        "        xlist = []",
+        "        for p in combinations_with_replacement('0123456789',l):",
+        "            if isprime(int(''.join(p))):",
+        "                xlist.extend(int(''.join(d)) for d in multiset_permutations(p) if d[0] != '0' and d[-1] != '0')",
+        "        yield from sorted(xlist)",
+        "A371654_list = list(islice(A371654_gen(),20)) # _Chai Wah Wu_, Apr 10 2024"
+    ],
+    "xref": [
+        "Cf. A007500, A095179, A371653."
+    ],
+    "keyword": "nonn,base,easy,new",
+    "offset": "1,1",
+    "author": "_C\u00e9sar Eliud Lozada_, Apr 01 2024",
+    "references": 1,
+    "revision": 18,
+    "time": "2024-04-25T14:06:57-04:00",
+    "created": "2024-04-25T14:06:57-04:00"
+}
