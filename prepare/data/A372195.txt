@@ -1,0 +1,50 @@
+{
+    "number": 372195,
+    "data": "0,0,0,1,15,232,3945",
+    "name": "Number of labeled simple graphs covering n vertices with a unique undirected cycle of length > 2.",
+    "comment": [
+        "An undirected cycle in a graph is a sequence of distinct vertices, up to rotation and reversal, such that there are edges between all consecutive elements, including the last and the first."
+    ],
+    "example": [
+        "The a(4) = 15 graphs:",
+        "  12,13,14,23",
+        "  12,13,14,24",
+        "  12,13,14,34",
+        "  12,13,23,24",
+        "  12,13,23,34",
+        "  12,13,24,34",
+        "  12,14,23,24",
+        "  12,14,23,34",
+        "  12,14,24,34",
+        "  12,23,24,34",
+        "  13,14,23,24",
+        "  13,14,23,34",
+        "  13,14,24,34",
+        "  13,23,24,34",
+        "  14,23,24,34"
+    ],
+    "mathematica": [
+        "cyc[y_]:=Select[Join@@Table[Select[Join@@Permutations/@Subsets[Union@@y,{k}],And@@Table[MemberQ[Sort/@y,Sort[{#[[i]],#[[If[i==k,1,i+1]]]}]],{i,k}]&],{k,3,Length[y]}],Min@@#==First[#]&];",
+        "Table[Length[Select[Subsets[Subsets[Range[n],{2}]],Union@@#==Range[n]&&Length[cyc[#]]==2&]],{n,0,5}]"
+    ],
+    "xref": [
+        "For no cycles we have A105784 (for triangles A372168, non-covering A213434), unlabeled A144958 (for triangles A372169).",
+        "Counting triangles instead of cycles gives A372171 (non-covering A372172), unlabeled A372174 (non-covering A372194).",
+        "The unlabeled version is A372191, non-covering A372192.",
+        "The non-covering version is A372193, column k = 1 of A372176.",
+        "A000088 counts unlabeled graphs, labeled A006125.",
+        "A001858 counts acyclic graphs, unlabeled A005195.",
+        "A002807 counts cycles in a complete graph.",
+        "A006129 counts labeled graphs, unlabeled A002494.",
+        "A322661 counts covering loop-graphs, unlabeled A322700.",
+        "A372167 counts covering graphs by triangles (non-covering A372170), unlabeled A372173 (non-covering A263340).",
+        "Cf. A000169, A000272, A053530, A054548, A137916, A137917, A367863, A368597."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,5",
+    "author": "_Gus Wiseman_, Apr 25 2024",
+    "references": 0,
+    "revision": 5,
+    "time": "2024-04-26T14:35:08-04:00",
+    "created": "2024-04-26T14:35:08-04:00"
+}

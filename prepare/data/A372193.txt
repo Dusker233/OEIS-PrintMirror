@@ -1,0 +1,53 @@
+{
+    "number": 372193,
+    "data": "0,0,0,1,19,317",
+    "name": "Number of labeled simple graphs on n vertices with a unique cycle of length > 2.",
+    "comment": [
+        "An undirected cycle in a graph is a sequence of distinct vertices, up to rotation and reversal, such that there are edges between all consecutive elements, including the last and the first."
+    ],
+    "example": [
+        "The a(4) = 19 graphs:",
+        "  12,13,23",
+        "  12,14,24",
+        "  13,14,34",
+        "  23,24,34",
+        "  12,13,14,23",
+        "  12,13,14,24",
+        "  12,13,14,34",
+        "  12,13,23,24",
+        "  12,13,23,34",
+        "  12,13,24,34",
+        "  12,14,23,24",
+        "  12,14,23,34",
+        "  12,14,24,34",
+        "  12,23,24,34",
+        "  13,14,23,24",
+        "  13,14,23,34",
+        "  13,14,24,34",
+        "  13,23,24,34",
+        "  14,23,24,34"
+    ],
+    "mathematica": [
+        "cyc[y_]:=Select[Join@@Table[Select[Join@@Permutations /@ Subsets[Union@@y,{k}],And @@ Table[MemberQ[Sort/@y,Sort[{#[[i]],#[[If[i==k,1,i+1]]]}]],{i,k}]&], {k,3,Length[y]}],Min@@#==First[#]&];",
+        "Table[Length[Select[Subsets[Subsets[Range[n],{2}]], Length[cyc[#]]==2&]],{n,0,5}]"
+    ],
+    "xref": [
+        "For no cycles we have A001858 (covering A105784), unlabeled A005195 (covering A144958).",
+        "Counting triangles instead of cycles gives A372172 (non-covering A372171), unlabeled A372194 (non-covering A372174).",
+        "The unlabeled version is A372192, non-covering A372191.",
+        "The covering case is A372195, column k = 1 of A372175.",
+        "A000088 counts unlabeled graphs, labeled A006125.",
+        "A002807 counts cycles in a complete graph.",
+        "A006129 counts labeled graphs, unlabeled A002494.",
+        "A372167 counts graphs by triangles, non-covering A372170.",
+        "A372173 counts unlabeled graphs by triangles, non-covering A263340.",
+        "Cf. A000272, A054548, A121251, A137916, A213434, A322661, A372169, A372176."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,5",
+    "author": "_Gus Wiseman_, Apr 25 2024",
+    "references": 0,
+    "revision": 5,
+    "time": "2024-04-26T14:34:52-04:00",
+    "created": "2024-04-26T14:34:52-04:00"
+}

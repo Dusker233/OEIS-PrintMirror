@@ -1,0 +1,45 @@
+{
+    "number": 372295,
+    "data": "6,10,21,30,42,70,74,94,111,210,222,553,554,611,851,871,885,998,5530,5554,7751,8441,8655,9998,85511,95554,99998,9999998,77744411,5555555554,7777752221,8666666655,755555555554,95555555555554,999999999999998,5555555555555554,8666666666666655,755555555555555554",
+    "name": "Composite numbers k such that k's prime factors are distinct, the digits of k are in nonincreasing order while the digits of the concatenation of k's ascending order prime factors are in nondecreasing order.",
+    "comment": [
+        "A number 999...9998 will be a term if it has two prime factors 2 and 4999...999. Therefore 999999999999998 and 999...9998 (with 54 9's) are both terms. See A056712.",
+        "The next term is greater than 10^11."
+    ],
+    "example": [
+        "77744411 is a term as 77744411 = 233 * 333667 which has distinct prime factors, 77744411 has nonincreasing digits while its prime factor concatenation \"233333667\" has nondecreasing digits."
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint, isprime",
+        "from itertools import count, islice, combinations_with_replacement as mc",
+        "def nd(s): return s == \"\".join(sorted(s))",
+        "def bgen(d):",
+        "    yield from (\"\".join(m) for m in mc(\"9876543210\", d) if m[0]!=\"0\")",
+        "def agen(): # generator of terms",
+        "    for d in count(1):",
+        "        out = set()",
+        "        for s in bgen(d):",
+        "            t = int(s)",
+        "            if t < 4 or isprime(t): continue",
+        "            f = factorint(t)",
+        "            if len(f) < sum(f.values()): continue",
+        "            if nd(\"\".join(str(p) for p in f)):",
+        "                out.add(t)",
+        "        yield from sorted(out)",
+        "print(list(islice(agen(), 29))) # _Michael S. Branicky_, Apr 26 2024"
+    ],
+    "xref": [
+        "Cf. A372308, A372280, A056712, A372034, A372029, A372055, A027746, A372249."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Scott R. Shannon_, Apr 25 2024",
+    "ext": [
+        "a(33)-a(38) from _Michael S. Branicky_, Apr 26 2024"
+    ],
+    "references": 0,
+    "revision": 23,
+    "time": "2024-04-27T03:37:25-04:00",
+    "created": "2024-04-26T09:42:47-04:00"
+}
