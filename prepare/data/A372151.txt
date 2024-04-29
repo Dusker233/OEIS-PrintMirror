@@ -1,0 +1,44 @@
+{
+    "number": 372151,
+    "data": "35,333,335,445,33445,334445,3333335,3334445,3444445,33333445,333333335,334444445,3333333335,33333334445,333333333335,33333333334445,33333333444445,444444444444445,333333334444444445,333334444444444445,444444444444444445,3333333333333444445",
+    "name": "For a positive number k, let L(k) denote the list consisting of k followed by the prime factors of k, with repetition, in nondecreasing order; sequence gives composite k such that the digits of k is either 3, 4 or 5 and the digits of L(k) are in nondecreasing order.",
+    "comment": [
+        "Subsequence of A372029. Sequence is inspired by the observation that most terms in A372029 so far contain only the digits 3, 4 and 5."
+    ],
+    "example": [
+        "   35 = 5*7",
+        "  333 = 3*3*37",
+        "  335 = 5*67",
+        "  445 = 5*89",
+        "33445 = 5*6689",
+        "333333333333333333333333444444444444444444444445 = 5*66666666666666666666666688888888888888888888889"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice, combinations_with_replacement",
+        "from sympy import isprime, factorint",
+        "def A372151_gen(): # generator of terms",
+        "    for l in count(1):",
+        "        for d in combinations_with_replacement('345',l):",
+        "            a, n = d[-1], int(''.join(d))",
+        "            if not isprime(n):",
+        "                for p in factorint(n,multiple=True):",
+        "                    s = str(p)",
+        "                    if s[0] < a or sorted(s) != list(s):",
+        "                        break",
+        "                    a = s[-1]",
+        "                else:",
+        "                    yield n",
+        "A372151_list = list(islice(A372151_gen(),20))"
+    ],
+    "xref": [
+        "Cf. A372053, A372055, A372034, A372029."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Chai Wah Wu_, Apr 26 2024",
+    "references": 0,
+    "revision": 6,
+    "time": "2024-04-28T11:56:15-04:00",
+    "created": "2024-04-28T11:56:15-04:00"
+}

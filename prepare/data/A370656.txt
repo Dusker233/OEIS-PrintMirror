@@ -1,0 +1,69 @@
+{
+    "number": 370656,
+    "data": "1,1,1,2,5,21,108,737,5795,53635,549777,6294420",
+    "name": "Number of cross-equivalence classes of the symmetric group S_n, where two permutations are cross-equivalent if the multiset of forward distances for every element i in the permutation, for 1 <= i <= n-1, up to and including n, is the same.",
+    "comment": [
+        "The equivalence classes are defined based on a problem described on page 10 of the paper \"On super-strong Wilf equivalence classes of permutations\" by Ioannis Michos, Christina Savvidou, and Demetris Hadjiloucas, The Electronic Journal of Combinatorics 25 (2) (2018). For each permutation of n elements, distances are calculated as the absolute difference in positions for each pair of elements. For each element in a permutation of S_n, that is less than or equal to n-1, one calculates the absolute difference with every other element that comes after it. Permutations are then grouped into equivalence classes when their multisets of distances match. The sequence was generated using a Python as well as a C++ program. The program enumerates all permutations of n elements and classifies them into these equivalence classes."
+    ],
+    "link": [
+        "Constantinos Kourouzides, <a href=\"/A370656/a370656.txt\">C++ program</a>.",
+        "Constantinos Kourouzides, <a href=\"/A370656/a370656_3.txt\">Python program</a>.",
+        "Constantinos Kourouzides, <a href=\"/A370656/a370656_2.txt\">GNU Octave program</a>.",
+        "Ioannis Michos, Christina Savvidou, and Demetris Hadjiloucas, <a href=\"https://doi.org/10.37236/6808\">On super-strong Wilf equivalence classes of permutations</a>, The Electronic Journal of Combinatorics, 25(2) (2018), #P2.54."
+    ],
+    "example": [
+        "a(4)=5.",
+        "The 1st equivalence class, consisting of multisets {{1}, {1,2}, {1,2,3}}, contains the following 8 permutations in S_4:",
+        "  (1) 1 2 3 4,",
+        "  (2) 1 2 4 3,",
+        "  (3) 1 4 3 2,",
+        "  (4) 3 4 2 1,",
+        "  (5) 2 4 3 1,",
+        "  (6) 1 3 4 2,",
+        "  (7) 4 3 2 1,",
+        "  (8) 2 3 4 1.",
+        "The 2nd equivalence class, consisting of multisets {{1}, {2,3}, {1,1,2}}, contains the following 4 permutations in S_4:",
+        "  (1) 4 3 1 2,",
+        "  (2) 2 1 4 3,",
+        "  (3) 3 4 1 2,",
+        "  (4) 2 1 3 4.",
+        "The 3rd equivalence class, consisting of multisets {{2}, {1,1}, {1,2,3}}, contains the following 4 permutations in S_4:",
+        "  (1) 4 2 3 1,",
+        "  (2) 1 4 2 3,",
+        "  (3) 1 3 2 4,",
+        "  (4) 3 2 4 1.",
+        "The 4th equivalence class, consisting of multisets {{2}, {1,3}, {1,1,2}}, contains the following 4 permutations in S_4:",
+        "  (1) 3 1 4 2,",
+        "  (2) 4 1 3 2,",
+        "  (3) 2 3 1 4,",
+        "  (4) 2 4 1 3.",
+        "The 5th equivalence class, consisting of multisets {{3}, {1,2}, {1,1,2}}, contains the following 4 permutations in S_4:",
+        "  (1) 3 2 1 4,",
+        "  (2) 4 2 1 3,",
+        "  (3) 4 1 2 3,",
+        "  (4) 3 1 2 4."
+    ],
+    "maple": [
+        "f:= l-> (n-> {seq(sort([seq(abs(l[i]-l[j]), i=1..j-1)]), j=2..n)})(nops(l)):",
+        "a:= n-> nops({map(f, combinat[permute](n))[]}):",
+        "seq(a(n), n=0..9);  # _Alois P. Heinz_, Mar 13 2024"
+    ],
+    "program": [
+        "(PARI)",
+        "C(p)={vector(#p, i, vecsort(vector(i-1, j, abs(p[i]-p[j]))))}",
+        "a(n)={my(M=Map()); forperm(n, p, mapput(M,C(p),1)); #M} \\\\ _Andrew Howroyd_, Feb 24 2024"
+    ],
+    "xref": [
+        "Cf. A000142, A001710."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,4",
+    "author": "_Constantinos Kourouzides_, Feb 24 2024",
+    "ext": [
+        "a(11) from _Andrew Howroyd_, Feb 24 2024"
+    ],
+    "references": 0,
+    "revision": 61,
+    "time": "2024-04-28T11:20:20-04:00",
+    "created": "2024-04-28T11:19:18-04:00"
+}
