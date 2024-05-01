@@ -1,0 +1,37 @@
+{
+    "number": 372395,
+    "data": "1,1,3,11,65,411,3535,31081,337185,3846557,50329253,691740489,10725769171,172411994899,3050277039465,56428854605627,1124781474310649,23349607769846667,518744693882444419,11949343411110856153,291921874093876965453,7395266131906154621501",
+    "name": "Total number of acyclic orientations in all complete multipartite graphs K_lambda, where lambda ranges over all partitions of n.",
+    "comment": [
+        "An acyclic orientation is an assignment of a direction to each edge such that no cycle in the graph is consistently oriented. Stanley showed that the number of acyclic orientations of a graph G is equal to the absolute value of the chromatic polynomial X_G(q) evaluated at q=-1.",
+        "All terms are odd."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A372395/b372395.txt\">Table of n, a(n) for n = 0..333</a>",
+        "Richard P. Stanley, <a href=\"http://dx.doi.org/10.1016/0012-365X(73)90108-8\">Acyclic Orientations of Graphs</a>, Discrete Mathematics, 5 (1973), pages 171-178, doi:10.1016/0012-365X(73)90108-8",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Acyclic_orientation\">Acyclic orientation</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Multipartite_graph\">Multipartite graph</a>"
+    ],
+    "maple": [
+        "g:= proc(n) option remember; `if`(n=0, 1, add(",
+        "      expand(x*g(n-j))*binomial(n-1, j-1), j=1..n))",
+        "    end:",
+        "b:= proc(t, n, i) option remember; `if`(n=0, t!*(-1)^t,",
+        "     `if`(i<1, 0, b(t, n, i-1)+add(coeff(g(i), x, m)*",
+        "        b(t+m, n-i, min(n-i, i)), m=0..i)))",
+        "    end:",
+        "a:= n-> abs(b(0, n$2)):",
+        "seq(a(n), n=0..21);"
+    ],
+    "xref": [
+        "Row sums of A372396.",
+        "Cf. A000041, A267383, A372254, A372261, A372326, A370613."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Apr 29 2024",
+    "references": 0,
+    "revision": 16,
+    "time": "2024-04-30T18:44:05-04:00",
+    "created": "2024-04-30T12:12:20-04:00"
+}
