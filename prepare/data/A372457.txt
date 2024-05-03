@@ -1,0 +1,51 @@
+{
+    "number": 372457,
+    "data": "1,18,18,1047,1353,34967,82681,2387947,14906455,135967276,700917774,4655571260,18496858461,272170172759,950393245608,10445516265494,43678446835095,654213095126525,654213095126525,22143577275619760,101935843573231761,1777573435823083782,6042068661342892315",
+    "name": "a(n) is the least k such that k^2 + k + 1 is divisible by the n-th power of a prime.",
+    "comment": [
+        "For n > 1 the prime is in A002476.  Conjecture: it is always 7."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A372457/b372457.txt\">Table of n, a(n) for n = 1..1182</a>"
+    ],
+    "example": [
+        "a(4) = 1047 because 1047^2 + 1047 + 1 = 1097257 is divisible by 7^4."
+    ],
+    "maple": [
+        "g:= proc(n) local p,t,tm,r,s,S;",
+        "     tm:= infinity; r:= infinity;",
+        "     for p from 7 by 6 do",
+        "       if p^n > r then return tm fi;",
+        "       if not isprime(p) then next fi;",
+        "       S:= [msolve(t^2+t+1,p^n)];",
+        "       if S = [] then next fi;",
+        "       s:= min(map(rhs@op,S));",
+        "       if s < tm then tm:= s; r:= s^2 + s + 1 fi;",
+        "     od;",
+        "end proc:",
+        "g(1):= 1:",
+        "map(g, [$1..30]);"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import sqrt_mod_iter, nextprime",
+        "def A372457(n):",
+        "    if n == 1: return 1",
+        "    p, m, r = 7, None, None",
+        "    while (m is None or p**n <= m):",
+        "        if (k:=min((r>>1 for r in sqrt_mod_iter(-3,p**n) if r&1),default=None)) is not None:",
+        "            m = (r:=k if r is None else min(r,k))*(r+1)+1",
+        "        while (p:=nextprime(p))%6!=1: pass",
+        "    return r # _Chai Wah Wu_, May 02 2024"
+    ],
+    "xref": [
+        "Cf. A002476."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Robert Israel_, May 01 2024",
+    "references": 0,
+    "revision": 14,
+    "time": "2024-05-02T17:33:52-04:00",
+    "created": "2024-05-02T09:21:58-04:00"
+}
