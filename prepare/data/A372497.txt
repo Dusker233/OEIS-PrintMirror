@@ -1,0 +1,43 @@
+{
+    "number": 372497,
+    "data": "24,120,360,840,960,1680,3024,4224,5040,7920,11880,17160,22800,24024,32760,36480,43680,57120,70224,73440,83520,93024,116280,121800,143640,175560,201600,212520,241080,255024,303600,330624,358800,421200,491400,570024,591360",
+    "name": "Positive integers of the form k^2 - 1 that are the product of two other positive integers of the form k^2 - 1.",
+    "comment": [
+        "This sequence is the sequence of possible c^2 - 1 values of all triples (a,b,c) of integers > 1 such that (a^2 - 1)*(b^2 - 1) = c^2 - 1."
+    ],
+    "link": [
+        "David A. Corneth, <a href=\"/A372497/b372497.txt\">Table of n, a(n) for n = 1..19120</a> (first 408 terms from Ely Golden, terms <= 10^17)",
+        "David A. Corneth, <a href=\"/A372497/a372497.gp.txt\">PARI program</a>"
+    ],
+    "example": [
+        "120 is a term since 120 = 15*8 = (4^2 - 1)*(3^2 - 1) and 120 = 11^2 - 1."
+    ],
+    "program": [
+        "(Python)",
+        "from math import isqrt",
+        "def is_perfect_square(n): return isqrt(abs(n))**2 == n",
+        "limit = 10**17",
+        "sequence_entries = set()",
+        "for a in range(2, isqrt(isqrt(limit))+1):",
+        "    u = a**2 - 1",
+        "    for b in range(a+1, isqrt(limit//u+1)+1):",
+        "        v = b**2 - 1",
+        "        if(is_perfect_square(u*v + 1)): sequence_entries.add(u*v)",
+        "sequence_entries = sorted(sequence_entries)",
+        "for i, j in enumerate(sequence_entries, 1):",
+        "    print(i, j)",
+        "(PARI) isok1(k) = issquare(k+1);",
+        "isok2(k) = fordiv(k, d, if (isok1(d) && isok1(k/d), return(1)));",
+        "isok(k) = isok1(k) && isok2(k); \\\\ _Michel Marcus_, May 04 2024"
+    ],
+    "xref": [
+        "Intersection of A005563 and A063066."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Ely Golden_, May 03 2024",
+    "references": 0,
+    "revision": 34,
+    "time": "2024-05-04T15:13:01-04:00",
+    "created": "2024-05-04T15:13:01-04:00"
+}
