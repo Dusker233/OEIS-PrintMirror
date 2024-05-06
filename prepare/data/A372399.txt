@@ -1,0 +1,64 @@
+{
+    "number": 372399,
+    "data": "2,4,6,8,9,10,14,19,21,23,25,32,34,35,36,37,38,39,45,47,48,52,54,56,57,61,65,74,75,76,77,81,82,83,84,85,86,87,88,89,90,91,94,96,97,99,100,106,108,110,113,114,122,123,130,136,142,153,157,158,159,170,171",
+    "name": "a(n) = k such that A124652(k) does not divide A372111(k-1).",
+    "comment": [
+        "Let b(x) = A124652(x) and let s(x) = A372111(x), where A372111 contains partial sums of A124652.",
+        "a(1) = 2 since b(2) = 2 does not divide s(1) = 1.",
+        "For n > 2, 1 < gcd(b(a(n)), s(a(n)-1)) < b(a(n)).",
+        "For n > 2, both b(a(n)) and s(a(n)-1) are necessarily composite, since prime p either divides or is coprime to n. Furthermore, both b(a(n)) and s(a(n))-1) have at least 2 distinct prime factors.",
+        "Indices of records in A124652 except {1, 2, 3, 5} are in this sequence."
+    ],
+    "link": [
+        "Michael De Vlieger, <a href=\"/A372399/b372399.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Michael De Vlieger, <a href=\"/A372399/a372399.png\">Log log scatterplot of A124652(n)</a>, n = 1..10^5, showing A124652(a(n)) in red."
+    ],
+    "formula": [
+        "A124652(a(n)) is a number in row A372111(a(n)-1) of A272618."
+    ],
+    "example": [
+        "a(2) = 4 since b(4) = 4 does not divide s(3) = 6.",
+        "a(3) = 6 since b(6) = 9 does not divide s(5) = 15.",
+        "a(4) = 8 since b(8) = 8 does not divide s(7) = 30.",
+        "a(5) = 9 since b(9) = 16 does not divide s(8) = 38, etc.",
+        "Table of b(k) and s(k-1), where k = a(n), n = 2..12. Asterisked k denote terms such that rad(b(k)) | rad(s(k-1)); k = 73 and k = 4316 are the only other known indices where the terms have this quality.",
+        "     k      b(k)                        s(k-1)",
+        "    ----------------------------------------------------------",
+        "     4      4 =  2^2                    6 =  2 * 3",
+        "     6      9 =  3^2                   15 =  3 * 5",
+        "     8      8 =  2^3                   30 =  2 * 3 * 5",
+        "     9     16 =  2^4                   38 =  2 * 19",
+        "    10*    12 =  2^2 * 3               54 =  2 * 3^3",
+        "    14*    28 =  2^2 * 7               98 =  2 * 7^2",
+        "    19     32 =  2^5                  216 =  2^3 * 3^3",
+        "    21     81 =  3^4                  279 =  3^2 * 31",
+        "    23     20 =  2^2 * 5              370 =  2 * 5 * 37",
+        "    25    169 = 13^2                  403 = 13 * 31",
+        "    32     49 =  7^2                  728 =  2^3 * 7 * 13",
+        "    ...",
+        "    73*   100 =  2^2 * 5^2           4800 =  2^6 * 3 * 5^2",
+        "    ...",
+        "  4316*  4720 =  2^4 * 5 * 59    30806850 =  2 * 3 * 5^2 * 59^3"
+    ],
+    "mathematica": [
+        "nn = 120; c[_] := False;",
+        "rad[x_] := rad[x] = Times @@ FactorInteger[x][[All, 1]];",
+        "f[x_] := Select[Range[x], Divisible[x, rad[#]] &];",
+        "Array[Set[{a[#], c[#]}, {#, True}] &, 2]; s = a[1] + a[2];",
+        "{2}~Join~Reap[Do[",
+        "  r = f[s]; k = SelectFirst[r, ! c[#] &];",
+        "  If[! Divisible[s, k], Sow[i]];",
+        "  c[k] = True;",
+        "  s += k, {i, 3, nn}] ][[-1, 1]]"
+    ],
+    "xref": [
+        "Cf. A007947, A124652, A272618, A372111."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Michael De Vlieger_, May 05 2024",
+    "references": 0,
+    "revision": 8,
+    "time": "2024-05-05T19:51:00-04:00",
+    "created": "2024-05-05T19:51:00-04:00"
+}
