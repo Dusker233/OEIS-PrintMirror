@@ -1,0 +1,40 @@
+{
+    "number": 372141,
+    "data": "3,5,7,13,17,23,31,41,67,71,73,83,107,109,127,151,157,173,199,233,257,271,277,307,313,353,379,409,419,421,431,443,457,499,521,523,571,587,599,601,631,643,647,653,691,701,709,719,733,743,757,787,797,809,823,829,857,863,887",
+    "name": "Primes p that are palindromic in some prime base q, where q < p.",
+    "comment": [
+        "If we remove either constraint of q < p or q being prime, then the sequence would be all prime numbers (A000040).",
+        "By definition it is a superset of A016041, and is a proper superset by construction (e.g., 13 is in the sequence).",
+        "Some terms have multiple bases that yield palindromic representations, the first being 31 (which is palindromic in both base 2 and base 5). The smallest prime p such that there exist n distinct primes less than p that give palindromic representations of p is A372142(n)."
+    ],
+    "link": [
+        "Tadayoshi Kamegai, <a href=\"/A372141/a372141.txt\">Table of n, a(n) for n = 1..1000</a>"
+    ],
+    "example": [
+        "11 is not in this sequence as its representation in base 2 is 1011, in base 3 is 102, in base 5 is 21, in base 7 is 14, none of which are palindromic.",
+        "1483 is in this sequence as its representation in base 37 is 131, which is palindromic."
+    ],
+    "mathematica": [
+        "a={}; For[i=1, i<=155, i++, flag=0; For[j=1, Prime[j] < Prime[i] && flag==0, j++, If[PalindromeQ[IntegerDigits[Prime[i], Prime[j]]], flag=1; AppendTo[a, Prime[i]]]]]; a (* _Stefano Spezia_, Apr 22 2024 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import sieve",
+        "from sympy.ntheory import digits",
+        "from itertools import islice",
+        "def ispal(v): return v == v[::-1]",
+        "def agen(): yield from (p for p in sieve if any(ispal(digits(p, q)[1:]) for q in sieve.primerange(1, p)))",
+        "print(list(islice(agen(), 60))) # _Michael S. Branicky_, Apr 20 2024"
+    ],
+    "xref": [
+        "Cf. A372142, A002385, A002113.",
+        "Cf. A007500, A016041, A077798."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Tadayoshi Kamegai_, Apr 20 2024",
+    "references": 0,
+    "revision": 24,
+    "time": "2024-05-12T18:22:12-04:00",
+    "created": "2024-05-12T18:22:12-04:00"
+}

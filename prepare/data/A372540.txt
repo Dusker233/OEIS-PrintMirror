@@ -1,0 +1,67 @@
+{
+    "number": 372540,
+    "data": "1,2,4,7,12,21,40,79,158,315,625,1246,2492,4983,9963,19921,39845,79689,159361,318726,637462,1274919,2549835,5099651,10199302,20398665,40797328,81594627,163189198,326378285,652756723,1305513584,2611027095,5222054082,10444108052",
+    "name": "Least k such that the k-th squarefree number has binary expansion of length n. Index of the smallest squarefree number >= 2^n.",
+    "formula": [
+        "A005117(a(n)) = A372683(n)."
+    ],
+    "example": [
+        "The squarefree numbers A005117(a(n)) together with their binary expansions and binary indices begin:",
+        "       1:                  1 ~ {1}",
+        "       2:                 10 ~ {2}",
+        "       5:                101 ~ {1,3}",
+        "      10:               1010 ~ {2,4}",
+        "      17:              10001 ~ {1,5}",
+        "      33:             100001 ~ {1,6}",
+        "      65:            1000001 ~ {1,7}",
+        "     129:           10000001 ~ {1,8}",
+        "     257:          100000001 ~ {1,9}",
+        "     514:         1000000010 ~ {2,10}",
+        "    1027:        10000000011 ~ {1,2,11}",
+        "    2049:       100000000001 ~ {1,12}",
+        "    4097:      1000000000001 ~ {1,13}",
+        "    8193:     10000000000001 ~ {1,14}",
+        "   16385:    100000000000001 ~ {1,15}",
+        "   32770:   1000000000000010 ~ {2,16}",
+        "   65537:  10000000000000001 ~ {1,17}",
+        "  131073: 100000000000000001 ~ {1,18}"
+    ],
+    "mathematica": [
+        "nn=1000;",
+        "ssnm[y_]:=Max@@NestWhile[Most,y,Union[#]!=Range[Max@@#]&];",
+        "dcs=IntegerLength[Select[Range[nn],SquareFreeQ],2];",
+        "Table[Position[dcs,i][[1,1]],{i,ssnm[dcs]}]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count",
+        "from math import isqrt",
+        "from sympy import mobius, factorint",
+        "def A372540(n): return next(sum(mobius(a)*(k//a**2) for a in range(1, isqrt(k)+1)) for k in count(1<<n) if max(factorint(k).values(),default=0)==1) if n else 1 # _Chai Wah Wu_, May 12 2024"
+    ],
+    "xref": [
+        "Counting zeros instead of length gives A372473, firsts of A372472.",
+        "For prime instead of squarefree we have:",
+        "- zeros A372474, firsts of A035103",
+        "- ones A372517, firsts of A014499",
+        "- bits A372684, firsts of A035100",
+        "Positions of first appearances in A372475, run-lengths A077643.",
+        "For weight instead of length we have A372541, firsts of A372433.",
+        "Indices of the squarefree numbers listed by A372683.",
+        "A000120 counts ones in binary expansion (binary weight), zeros A080791.",
+        "A005117 lists squarefree numbers.",
+        "A030190 gives binary expansion, reversed A030308.",
+        "A070939 counts bits, binary length, or length of binary expansion.",
+        "Cf. A029931, A048793, A049093, A049094, A059015, A069010, A211997, A230877."
+    ],
+    "keyword": "nonn,more,base,new",
+    "offset": "0,2",
+    "author": "_Gus Wiseman_, May 10 2024",
+    "ext": [
+        "a(24)-a(34) from _Chai Wah Wu_, May 12 2024"
+    ],
+    "references": 0,
+    "revision": 11,
+    "time": "2024-05-12T11:20:55-04:00",
+    "created": "2024-05-12T10:02:22-04:00"
+}

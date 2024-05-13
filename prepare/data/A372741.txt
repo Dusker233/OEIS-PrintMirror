@@ -1,0 +1,34 @@
+{
+    "number": 372741,
+    "data": "1,2,6,30,210,930,2310,2730,30030,71610,84630",
+    "name": "Coreful highly touchable numbers: numbers m > 0 such that a record number of numbers k have m as the sum of the aliquot coreful divisors (A336563) of k.",
+    "comment": [
+        "A coreful divisor d of n is a divisor that is divisible by every prime that divides n (see also A307958).",
+        "Indices of records of A372739.",
+        "The corresponding record values are 0, 1, 3, 6, 8, 9, 11, 12, 15, 16, 17, ... .",
+        "a(12) > 2*10^5."
+    ],
+    "example": [
+        "a(1) = 1 since it is the least number that is not the sum of aliquot coreful divisors of any number.",
+        "a(2) = 2 since it is the least number that is the sum of aliquot coreful divisors of one number: 2 = A336563(4).",
+        "a(3) = 6 since it is the least number that is the sum of aliquot coreful divisors of 3 numbers: 6 = A336563(8) = A336563(12) = A336563(18), and there is no number between 2 and 6 that is the sum of aliquot coreful divisors of exactly 2 numbers."
+    ],
+    "mathematica": [
+        "f[p_, e_] := (p^(e + 1) - 1)/(p - 1) - 1; s[1] = 0; s[n_] := Times @@ f @@@ FactorInteger[n] - n; seq[m_] := Module[{v = Table[0, {m}], vm = -1, w = {}, i}, Do[i = s[k]; If[1 <= i <= m, v[[i]]++], {k, 1, m^2}]; Do[If[v[[k]] > vm, vm = v[[k]]; AppendTo[w, k]], {k, 1, m}]; w]; seq[1000]"
+    ],
+    "program": [
+        "(PARI) s(n) = {my(f = factor(n)); prod(i = 1, #f~, (f[i, 1]^(f[i, 2] + 1) - 1)/(f[i, 1] - 1) - 1) - n;}",
+        "lista(nmax) = {my(v = vector(nmax), vmax = -1, i); for(k = 1, nmax^2, i = s(k); if(i > 0 && i <= nmax, v[i]++)); for(k = 1, nmax, if(v[k] > vmax, vmax = v[k]; print1(k, \", \")));}"
+    ],
+    "xref": [
+        "Cf. A307958, A336563, A372739, A372740.",
+        "Similar sequences: A238895, A325177, A331972, A331974."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,2",
+    "author": "_Amiram Eldar_, May 12 2024",
+    "references": 0,
+    "revision": 7,
+    "time": "2024-05-12T11:19:35-04:00",
+    "created": "2024-05-12T11:19:35-04:00"
+}
