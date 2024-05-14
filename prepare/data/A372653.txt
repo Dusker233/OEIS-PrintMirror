@@ -1,0 +1,58 @@
+{
+    "number": 372653,
+    "data": "1,9,1089,73441,100280196,1977847729,4146497327025,4187530604721424,121439588246116522561",
+    "name": "Largest square that can be expressed as Sum_{i=1..n} p(2i-1)^p(2i) where p is a permutation of {1, 2, 3, ..., 2n}.",
+    "comment": [
+        "It is unknown whether a(n) exists for all n (at least one sum is a square), but it is expected. It is also unknown whether the sequence is strictly increasing.",
+        "a(n) exists for n <= 11. - _Chai Wah Wu_, May 13 2024"
+    ],
+    "link": [
+        "Bryle Morga et al., <a href=\"https://mathoverflow.net/questions/470816/does-there-exists-a-sigma-in-s-2n-such-that-sum-n-1n-sigma2n-1\">MathOverflow post about this sequence</a>"
+    ],
+    "example": [
+        "a(3) = 1089 = 33^2 = 1^3 + 4^5 + 2^6.",
+        "a(8) = 4187530604721424 = 64711132^2 = 14^1 + 16^2 + 5^3 + 4^6 + 7^8 + 9^12 + 10^13 + 11^15."
+    ],
+    "program": [
+        "(Python)",
+        "import itertools",
+        "import math",
+        "def a(n):",
+        "  res = 0",
+        "  for p in itertools.permutations([i for i in range(1, 2*n + 1)], n):",
+        "    i = 0",
+        "    s = 0",
+        "    for j in range(1, 2*n + 1):",
+        "      if j not in p:",
+        "        s += p[i]**j",
+        "        i += 1",
+        "    if math.isqrt(s)**2 == s:",
+        "      res = max(res, s)",
+        "  return res",
+        "(Python)",
+        "from itertools import combinations, permutations",
+        "from sympy.ntheory.primetest import is_square",
+        "def A372653(n):",
+        "    a, m, f = set(range(1,2*n+1)), 0, [[b**c for c in range(2*n+1)] for b in range(2*n+1)]",
+        "    for b in combinations(a,n):",
+        "        clist = sorted(a-set(b))",
+        "        for d in permutations(range(n)):",
+        "            k = sum(f[b[i]][clist[d[i]]] for i in range(n))",
+        "            if k>m and is_square(k):",
+        "                m = k",
+        "    return m # _Chai Wah Wu_, May 13 2024"
+    ],
+    "xref": [
+        "Cf. A372652."
+    ],
+    "keyword": "nonn,hard,more,new",
+    "offset": "1,2",
+    "author": "_Bryle Morga_, May 08 2024",
+    "ext": [
+        "a(9) from _Chai Wah Wu_, May 13 2024"
+    ],
+    "references": 0,
+    "revision": 30,
+    "time": "2024-05-13T21:17:05-04:00",
+    "created": "2024-05-13T21:17:05-04:00"
+}

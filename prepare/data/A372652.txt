@@ -1,0 +1,58 @@
+{
+    "number": 372652,
+    "data": "1,9,1089,1225,25921,372100,3530641,55890576,1682148196",
+    "name": "Smallest square that can be expressed as Sum_{i=1..n} p(2i-1)^p(2i) where p is a permutation of {1, 2, 3, ..., 2n}.",
+    "comment": [
+        "It is unknown whether a(n) exists for all n, but it is expected.",
+        "a(n) exists for n <= 11. - _Chai Wah Wu_, May 13 2024"
+    ],
+    "link": [
+        "Bryle Morga et al., <a href=\"https://mathoverflow.net/questions/470816/does-there-exists-a-sigma-in-s-2n-such-that-sum-n-1n-sigma2n-1\">MathOverflow question about this sequence</a>."
+    ],
+    "example": [
+        "a(5) = 25921 = 161^2 = 8^1 + 9^3 + 6^5 + 4^7 + 2^10.",
+        "a(6) = 372100 = 610^2 = 11^1 + 10^3 + 8^4 + 12^5 + 7^6 + 2^9."
+    ],
+    "program": [
+        "(Python)",
+        "import itertools",
+        "import math",
+        "def a(n):",
+        "  res = math.inf",
+        "  for p in itertools.permutations([i for i in range(1, 2*n + 1)], n):",
+        "    i = 0",
+        "    s = 0",
+        "    for j in range(1, 2*n + 1):",
+        "      if j not in p:",
+        "        s += p[i]**j",
+        "        i += 1",
+        "    if math.isqrt(s)**2 == s:",
+        "      res = min(res, s)",
+        "  return res",
+        "(Python)",
+        "from itertools import combinations, permutations",
+        "from sympy.ntheory.primetest import is_square",
+        "def A372652(n):",
+        "    a, m, f = set(range(1,2*n+1)), n*(2*n)**(2*n), [[b**c for c in range(2*n+1)] for b in range(2*n+1)]",
+        "    for b in combinations(a,n):",
+        "        clist = sorted(a-set(b))",
+        "        for d in permutations(range(n)):",
+        "            k = sum(f[b[i]][clist[d[i]]] for i in range(n))",
+        "            if k<m and is_square(k):",
+        "                m = k",
+        "    return m # _Chai Wah Wu_, May 13 2024"
+    ],
+    "xref": [
+        "Cf. A372653."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,2",
+    "author": "_Bryle Morga_, May 08 2024",
+    "ext": [
+        "a(9) from _Chai Wah Wu_, May 13 2024"
+    ],
+    "references": 0,
+    "revision": 32,
+    "time": "2024-05-13T12:20:01-04:00",
+    "created": "2024-05-13T09:15:42-04:00"
+}
