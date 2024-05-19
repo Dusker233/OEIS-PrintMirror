@@ -1,0 +1,48 @@
+{
+    "number": 372142,
+    "data": "2,3,31,443,23053,86677,11827763,27362989,755827199,1306369439",
+    "name": "a(n) is the smallest prime p such that there exist exactly n distinct primes q where q < p and the representation of p in base q is a palindrome.",
+    "comment": [
+        "This is a special case of A372141.",
+        "It need not be the case that a(n) is a palindrome in base 2, as 23053 is a counterexample.",
+        "For p > 3, one only needs to check q such that q^2 + 1 <= p else p = cc_q = c*(q+1), not prime for c != 1 and q != 2. A similar argument shows that p cannot have an even number of digits in base q, else it would be divisible by (q+1). - _Michael S. Branicky_, Apr 21 2024"
+    ],
+    "example": [
+        "a(5) = 86677, as it is palindromic in base 2, 107, 113, 151, and 233, and no smaller number satisfies the property."
+    ],
+    "program": [
+        "(Python)",
+        "from math import isqrt",
+        "from sympy import sieve",
+        "from sympy.ntheory import digits",
+        "from itertools import islice",
+        "def ispal(v): return v == v[::-1]",
+        "def f(p): return sum(1 for q in sieve.primerange(1, isqrt(p-1)+1) if ispal(digits(p, q)[1:]))",
+        "def agen():",
+        "    adict, n = {0:2, 1:3}, 0",
+        "    for p in sieve:",
+        "        v = f(p)",
+        "        if v >= n and v not in adict:",
+        "            adict[v] = p",
+        "            while n in adict:",
+        "                yield adict[n]; del adict[n]; n += 1",
+        "print(list(islice(agen(), 6))) # _Michael S. Branicky_, Apr 21 2024"
+    ],
+    "xref": [
+        "Cf. A372141, A002385, A002113.",
+        "Cf. A016041, A007500, A077798."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "0,1",
+    "author": "_Tadayoshi Kamegai_, Apr 21 2024",
+    "ext": [
+        "a(6) from _Jon E. Schoenfield_, Apr 21 2024",
+        "a(7) from _Michael S. Branicky_, Apr 21 2024",
+        "a(8) from _Michael S. Branicky_, Apr 22 2024",
+        "a(9) from _Michael S. Branicky_, Apr 24 2024"
+    ],
+    "references": 1,
+    "revision": 46,
+    "time": "2024-05-19T03:19:19-04:00",
+    "created": "2024-05-18T15:21:45-04:00"
+}
