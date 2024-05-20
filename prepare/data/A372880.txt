@@ -1,0 +1,66 @@
+{
+    "number": 372880,
+    "data": "1,3,12,36,612,1836,168912,10810368,16366897152,51703028103168,1563447866811697152,23520172003575940628103168,1155558163424267804668132116971520",
+    "name": "a(1) = 1; a(2) = 3; for n > 2, a(n) is the smallest proper multiple of a(n-1) that contains a(n-2) as subsequence of its digits.",
+    "comment": [
+        "It is unknown whether a(n+1)/a(n) -> oo as n -> oo.",
+        "The same rule starting from terms 1, 2 gives A004643 and its multiples are as easy as A004643(n+1)/A004643(n) = 2 or 5 alternately."
+    ],
+    "formula": [
+        "a(n) <= a(n-2)*10^k + (a(n-1) - (a(n-2)*10^k mod a(n-1))), where k is the number of decimal digits in a(n-1). - _Michael S. Branicky_, May 17 2024"
+    ],
+    "example": [
+        "a(7) = 168912; 16812 = 92*1836 = 92*a(6) and \"16812\" contains a(5) = 612 as a subsequence."
+    ],
+    "program": [
+        "(Python)",
+        "def subseq(x,y):",
+        "    i = 0",
+        "    j = 0",
+        "    while i != len(x) and j != len(y):",
+        "        if x[i] == y[j]:",
+        "           i += 1",
+        "        j += 1",
+        "    return i == len(x)",
+        "def a(n):",
+        "    if n == 1:",
+        "        return 1",
+        "    A = 1",
+        "    B = 3",
+        "    for _ in range(n-2):",
+        "        s = str(A)",
+        "        i = 1",
+        "        while not subseq(s, str(B*i)):",
+        "            i += 1",
+        "        A, B = B, B*i",
+        "    return B",
+        "(Python)",
+        "from itertools import count, islice",
+        "def is_subseq(s, p):",
+        "    while s and p:",
+        "        if p%10 == s%10: s //= 10",
+        "        p //= 10",
+        "    return s == 0",
+        "def agen(): # generator of terms",
+        "    an2, an1 = [1, 3]",
+        "    yield from [an2, an1]",
+        "    while True:",
+        "        an = next(i*an1 for i in count(1) if is_subseq(an2, i*an1))",
+        "        an2, an1 = an1, an",
+        "        yield an",
+        "print(list(islice(agen(), 11))) # _Michael S. Branicky_, May 15 2024"
+    ],
+    "xref": [
+        "Cf. A004643."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "1,2",
+    "author": "_Bryle Morga_, May 15 2024",
+    "ext": [
+        "a(12)-a(13) from _Michael S. Branicky_, May 15 2024"
+    ],
+    "references": 0,
+    "revision": 25,
+    "time": "2024-05-19T08:56:53-04:00",
+    "created": "2024-05-19T08:56:53-04:00"
+}
