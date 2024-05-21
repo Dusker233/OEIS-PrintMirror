@@ -1,0 +1,26 @@
+{
+    "number": 370723,
+    "data": "1,2,5,14,39,123,393,1352,4782,17824,68481,274166",
+    "name": "Number of symmetric (0,1)-matrices with sum of entries equal to n and no zero rows or columns, with weakly decreasing row sums and column sums.",
+    "example": [
+        "The a(3) = 5 matrices:",
+        "  [1 0 0]  [1 0 0]  [0 1 0]  [0 0 1]  [1 1]",
+        "  [0 1 0]  [0 0 1]  [1 0 0]  [0 1 0]  [1 0]",
+        "  [0 0 1]  [0 1 0]  [0 0 1]  [1 0 0]"
+    ],
+    "mathematica": [
+        "a[0] = 1;",
+        "a[n_] := a[n] = Length[Select[Subsets[Tuples[Range[n], 2], {n}], Module[{matrix, rows, cols}, matrix = ConstantArray[0, {n, n}]; (matrix[[#[[1]], #[[2]]]] = 1) & /@ #; rows = Total[matrix, {2}]; cols = Total[matrix, {1}]; And[Union[First /@ #] == Range[Max @@ First /@ #], Union[Last /@ #] == Range[Max @@ Last /@ #], Sort[Reverse /@ #] == #, OrderedQ[Reverse[rows]], OrderedQ[Reverse[cols]]]] &]];",
+        "Table[a[n], {n, 1, 6}] (* _Robert P. P. McKone_, May 19 2024, from _Gus Wiseman_ in A135588 *)"
+    ],
+    "xref": [
+        "Cf. A178718, A135588, A321652, A365961."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,2",
+    "author": "_Ludovic Schwob_, May 18 2024",
+    "references": 0,
+    "revision": 43,
+    "time": "2024-05-20T10:30:10-04:00",
+    "created": "2024-05-20T10:30:10-04:00"
+}
