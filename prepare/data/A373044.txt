@@ -1,0 +1,48 @@
+{
+    "number": 373044,
+    "data": "2,3,5,7,11,23,67,89,101,4567,10111,67891,89101,789101,4567891,23456789,56789101,1234567891,45678910111,12345678910111,1112123456789101,23456789101112123,112123456789101112123,891011121234567891011,4567891011121234567891",
+    "name": "Prime concatenated analog clock numbers read clockwise.  Version 2: hours > 9 are split in 2 digits.",
+    "comment": [
+        "In this version, the numbers 10, 11, and 12 may be split up into individual digits, in contrast to A036342.",
+        "a(59) has 1325 digits."
+    ],
+    "link": [
+        "Michael S. Branicky, <a href=\"/A373044/b373044.txt\">Table of n, a(n) for n = 1..58</a>",
+        "Eric Angelini, <a href=\"https://cinquantesignes.blogspot.com/2024/05/philip-gustons-primes.html\">Philip Guston's primes</a>",
+        "Tiziano Mosconi, in reply to Carlos Rivera, <a href=\"https://www.primepuzzles.net/puzzles/puzz_019.htm\">Puzzle 19: Primes on a clock</a>, primepuzzles.net, Aug 13 2001."
+    ],
+    "example": [
+        "101 is a term here using the digits 1 and 0 from 10 and the first 1 of 11."
+    ],
+    "program": [
+        "(Python)",
+        "import heapq",
+        "from sympy import isprime",
+        "from itertools import islice",
+        "def agen(): # generator of terms",
+        "    digits = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 0, 1, 1, 1, 2]",
+        "    h = [(digits[i], i) for i in range(len(digits))]",
+        "    found = set()",
+        "    while True:",
+        "        v, last = heapq.heappop(h)",
+        "        if v not in found and isprime(v):",
+        "            found.add(v)",
+        "            yield v",
+        "        nxt = (last+1)%len(digits)",
+        "        heapq.heappush(h, (v*10+digits[nxt], nxt))",
+        "print(list(islice(agen(), 25)))",
+        "(PARI)",
+        "A373044_row(r)={my(d=concat([digits(i)|i<-[1..12]]), p); Set([p| s<-[1..#d], d[s]&& isprime(p=fromdigits([d[i%#d+1]| i<-[s-1..s+r-2]]))])}\\\\ r-digit-terms",
+        "A373044_upto_length(L)=concat([A373044_row(r)|r<-[1..L]]) \\\\ _M. F. Hasler_, May 21 2024"
+    ],
+    "xref": [
+        "Cf. A036342, A373045."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Eric Angelini_ and _Michael S. Branicky_, May 20 2024",
+    "references": 0,
+    "revision": 40,
+    "time": "2024-05-21T11:13:59-04:00",
+    "created": "2024-05-21T08:56:00-04:00"
+}
