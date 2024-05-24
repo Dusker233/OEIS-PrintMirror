@@ -1,0 +1,31 @@
+{
+    "number": 372724,
+    "data": "0,9,25,36,49,81,100,121,144,169,196,289,324,361,400,484,529,576,625,676,729,784,841,961,1156,1296,1369,1444,1600,1681,1849,1936,2116,2209,2304,2401,2500,2704,2809,2916,3136,3364,3481,3721,3844,4489,4624,5041,5184,5329,5476,5776",
+    "name": "Numbers k such that k = Sum_{j=2..k+2} L(k/prime(j)) where L(n/p) is the Legendre symbol. Fixed points of A372725.",
+    "formula": [
+        "A positive k is term if k is a square and its odd part is divisible by exactly one prime."
+    ],
+    "maple": [
+        "L := (n, k) -> NumberTheory:-LegendreSymbol(n, ithprime(k)):",
+        "s := n -> local k; add(L(n, k), k = 2..n + 2):",
+        "select(m -> m = s(m), [seq(0..400)]);",
+        "# Alternative:",
+        "isA := k -> (k = 0) or (issqr(k) and",
+        "       nops(NumberTheory:-PrimeFactors(k/2^padic[ordp] (k, 2))) = 1):",
+        "select(isA, [seq(0..6000)]);"
+    ],
+    "program": [
+        "(PARI) isok(k) = k == sum(j=2, k+2, kronecker(k, prime(j))); \\\\ _Michel Marcus_, May 22 2024"
+    ],
+    "xref": [
+        "Subsequence of A000290, and A069562 U {0}.",
+        "Cf. A372725, A336101, A373087."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Peter Luschny_, May 22 2024",
+    "references": 0,
+    "revision": 12,
+    "time": "2024-05-23T06:14:49-04:00",
+    "created": "2024-05-23T06:14:49-04:00"
+}
