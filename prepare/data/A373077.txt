@@ -1,0 +1,42 @@
+{
+    "number": 373077,
+    "data": "4,16,32,36,128,144,196,216,256,400,484,900,1156,1296,1600,1728,1764,2048,2704,2916,3136,3364,3600,4356,5184,6084,7056,7396,7744,8100,8192,8464,8836,9216,10404,10816,11236,11664,12100,12544,12996,16384,16900,19044,19600",
+    "name": "Perfect powers that are sandwiched between squarefree numbers.",
+    "comment": [
+        "All terms are even numbers."
+    ],
+    "example": [
+        "4 = 2^2 (between 3 which is a prime number and 5 which is a prime number).",
+        "16 = 2^4 (between 15 = 3 * 5 and 17 which is a prime number).",
+        "32 = 2^5 (between 31 which is a prime number and 33 = 3 * 11).",
+        "36 = 2^2 * 3^2 (between 35 = 5 * 7 and 37 which is a prime number)."
+    ],
+    "maple": [
+        "N:= 10^5:",
+        "S:= {}:",
+        "for n from 2 to isqrt(N) by 2 do",
+        "  for k from 2 do",
+        "    m:= n^k;",
+        "    if m > N then break fi;",
+        "    if numtheory:-issqrfree(m-1) and numtheory:-issqrfree(m+1) then S:= S union {m} fi",
+        "od od:",
+        "sort(convert(S,list)); # _Robert Israel_, May 22 2024"
+    ],
+    "mathematica": [
+        "Select[Range[4,20000,4], GCD @@ FactorInteger[#][[;; , 2]] > 1 && And @@ SquareFreeQ /@ (# + {-1, 1}) &] (* _Amiram Eldar_, May 22 2024 *)"
+    ],
+    "program": [
+        "(PARI) isok(k) = ispower(k) && issquarefree(k-1) && issquarefree(k+1); \\\\ _Michel Marcus_, May 22 2024"
+    ],
+    "xref": [
+        "Intersection of A001597 (or A075090) and A067874.",
+        "Cf. A005117."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Massimo Kofler_, May 22 2024",
+    "references": 0,
+    "revision": 21,
+    "time": "2024-05-24T01:38:29-04:00",
+    "created": "2024-05-24T01:38:29-04:00"
+}

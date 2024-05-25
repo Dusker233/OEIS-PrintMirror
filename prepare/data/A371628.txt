@@ -1,0 +1,34 @@
+{
+    "number": 371628,
+    "data": "1,65,757,4225,16001,49205,119365,271489,554797,1040065,1783541,3198325,4850977,7758725,12112757,17392769,24211265,36061805,47162485,67604225,90359305,115930165,148291397,205517173,250266001,315313505,404686153,504317125,595481825",
+    "name": "a(n) = Sum_{1 <= x_1, x_2, x_3, x_4 <= n} ( gcd(x_1, n)/gcd(x_1, x_2, x_3, x_4, n) )^3.",
+    "link": [
+        "Amiram Eldar, <a href=\"/A371628/b371628.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{d|n} phi(n/d) * (n/d)^3 * sigma_6(d^2)/sigma_3(d^2).",
+        "From _Amiram Eldar_, May 24 2024: (Start)",
+        "Multiplicative with a(p^e) = (p^(6*e+2)*(p^4+p^3+2*p^2+p+1) - p^(4*e+2)*(p^2-p+1) + p^2+p+1)/((p+1)^2*(p^2+1)*(p^2-p+1)).",
+        "Dirichlet g.f.: zeta(s)*zeta(s-4)*zeta(s-6)/zeta(s-3)^2.",
+        "Sum_{k=1..n} a(k) ~ c * n^7 / 7, where c = zeta(3)*zeta(7)/zeta(4)^2 = 1.034718122... . (End)"
+    ],
+    "mathematica": [
+        "f[p_, e_] := (p^(6*e+2)*(p^4+p^3+2*p^2+p+1) - p^(4*e+2)*(p^2-p+1) + p^2+p+1)/((p+1)^2*(p^2+1)*(p^2-p+1)); a[1] = 1; a[n_] := Times @@ f @@@ FactorInteger[n]; Array[a, 30] (* _Amiram Eldar_, May 24 2024 *)"
+    ],
+    "program": [
+        "(PARI) a(n) = sumdiv(n, d, eulerphi(n/d)*(n/d)^3*sigma(d^2, 6)/sigma(d^2, 3));"
+    ],
+    "xref": [
+        "Cf. A373059, A371492.",
+        "Cf. A372963, A372964.",
+        "Cf. A084220.",
+        "Cf. A002117, A013662, A013665."
+    ],
+    "keyword": "nonn,mult,new",
+    "offset": "1,2",
+    "author": "_Seiichi Manyama_, May 24 2024",
+    "references": 1,
+    "revision": 16,
+    "time": "2024-05-24T17:36:28-04:00",
+    "created": "2024-05-24T14:39:03-04:00"
+}

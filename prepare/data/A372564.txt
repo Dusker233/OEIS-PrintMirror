@@ -1,0 +1,31 @@
+{
+    "number": 372564,
+    "data": "72,260,380,620,740,860,1220,1340,1460,1580,1940,2060,2180,2540,2780,3020,3140,3260,3620,3860,3980,4220,4460,4580,4820,5420,5540,5660,6140,6260,6620,6740,6980,7340,7460,7580,7940,8180,8420,8660,8780,9140,9260,9740,9980,10460,10820,10940,11420,11540,12020,12140,12260",
+    "name": "Positions of -4's in A346242.",
+    "comment": [
+        "The first four odd terms 71825, 942667, 1322035, 3613027 occur at indices n=273, 3355, 4619, 11995.",
+        "Of the first 20000 terms, 13422 are multiples of 20."
+    ],
+    "link": [
+        "Antti Karttunen, <a href=\"/A372564/b372564.txt\">Table of n, a(n) for n = 1..20000</a>",
+        "<a href=\"/index/Pri#primorialbase\">Index entries for sequences related to primorial base</a>"
+    ],
+    "program": [
+        "(PARI)",
+        "A324198(n) = { my(m=1, p=2, orgn=n); while(n, m *= (p^min(n%p, valuation(orgn, p))); n = n\\p; p = nextprime(1+p)); (m); };",
+        "memoA346242 = Map();",
+        "A346242(n) = if(1==n,1,my(v); if(mapisdefined(memoA346242,n,&v), v, v = -sumdiv(n,d,if(d<n,A324198(n/d)*A346242(d),0)); mapput(memoA346242,n,v); (v)));",
+        "isA372564(n) = (-4==A346242(n));"
+    ],
+    "xref": [
+        "Cf. A346242.",
+        "Cf. also A354814."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Antti Karttunen_, May 24 2024",
+    "references": 0,
+    "revision": 8,
+    "time": "2024-05-24T14:38:35-04:00",
+    "created": "2024-05-24T14:38:35-04:00"
+}
