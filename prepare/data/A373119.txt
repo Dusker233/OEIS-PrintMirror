@@ -1,0 +1,54 @@
+{
+    "number": 373119,
+    "data": "1,2,3,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,12,12,13,13,13,13,13,13,14,14,15,15,15,15,16,16,17",
+    "name": "Cardinality of the largest subset of {1,...,n} such that no four distinct elements of this subset multiply to a square.",
+    "comment": [
+        "a(n) >= A000720(n).",
+        "a(n) ~ n (Erd\u0151s-S\u00e1rk\u00f6zy-S\u00f3s).  Best bounds currently are due to Pach-Vizer.",
+        "a(n+1)-a(n) is either 0 or 1 for any n.",
+        "If \"four\" is replaced by \"one\", \"two\", \"three\", or \"any odd\", one obtains A028391, A013928, A372306, and A373114 respectively."
+    ],
+    "link": [
+        "P. Erd\u0151s, A. S\u00e1rk\u00f6zy, and V. T. S\u00f3s, <a href=\"https://doi.org/10.1016/0195-6698(95)90039-X\">On Product Representations of Powers, I</a>, Europ. J. Combinatorics 16 (1995), 567-588.",
+        "P. Pach and M. Vizer, <a href=\"https://doi.org/10.37236/11477\">Improved Lower Bounds for Multiplicative Square-Free Sequences</a>, The Electronic Journal of Combinatorics, Volume 30, Issue 4 (2023), P4.31."
+    ],
+    "example": [
+        "a(7)=6, because the set {1,2,3,4,5,7} has no four distinct elements multiplying to a square, but {1,2,3,4,5,6,7} has 1*2*3*6 = 6^2."
+    ],
+    "program": [
+        "(Python)",
+        "from math import isqrt",
+        "def is_square(n):",
+        "    return isqrt(n) ** 2 == n",
+        "def valid_subset(A):",
+        "    length = len(A)",
+        "    for i in range(length):",
+        "        for j in range(i + 1, length):",
+        "            for k in range(j + 1, length):",
+        "                for l in range(k + 1, length):",
+        "                    if is_square(A[i] * A[j] * A[k] * A[l]):",
+        "                        return False",
+        "    return True",
+        "def largest_subset_size(N):",
+        "    from itertools import combinations",
+        "    for size in reversed(range(1, N + 1)):",
+        "        for subset in combinations(range(1, N + 1), size):",
+        "            if valid_subset(subset):",
+        "                return size",
+        "for N in range(1, 23):",
+        "    print(largest_subset_size(N))"
+    ],
+    "xref": [
+        "Similar to A028391, A013928, A372306, A373114.  Lower bounded by A000720."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,2",
+    "author": "_Terence Tao_, May 26 2024",
+    "ext": [
+        "a(22)-a(37) from _Michael S. Branicky_, May 26 2024"
+    ],
+    "references": 0,
+    "revision": 26,
+    "time": "2024-05-27T01:42:44-04:00",
+    "created": "2024-05-26T08:19:45-04:00"
+}

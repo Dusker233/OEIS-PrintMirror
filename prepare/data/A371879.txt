@@ -1,0 +1,38 @@
+{
+    "number": 371879,
+    "data": "557,577,587,857,877,1559,4111,4973,5051,5119,5519,5591,6299,6679,6871,6899,6949,7213,7789,7949,7993,8669,8699,9133,9221,9551,9749,10111,10799,11119,11149,11159,11411,11959,12073,12119,13337,13397,13829,14411,15137,15461",
+    "name": "Prime numbers that yield a squarefree semiprime when any digit is removed.",
+    "comment": [
+        "The smallest prime with this property is 557. Since being primes, the terms of this sequence end in 1, 3, 7 or 9 and the penultimate digit is never 0, otherwise by eliminating the last digit the resulting number is not semiprime."
+    ],
+    "example": [
+        "857 is a term, because it is a prime number such that if the 8 is removed, the result is 57 = 3 * 19, while if the 5 is removed, the result is 87 = 3 * 29 and if the 7 is removed, the result is 85 = 5 * 17."
+    ],
+    "mathematica": [
+        "semiPrimeQ[n_] := FactorInteger[n][[;;,2]] == {1, 1}; q[n_] := AllTrue[FromDigits@ Drop[IntegerDigits[n], {#}] & /@ Range[IntegerLength[n]], semiPrimeQ]; Select[Prime[Range[2000]], q] (* _Amiram Eldar_, May 26 2024 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import factorint, isprime",
+        "def ok(n):",
+        "    if n < 10 or not isprime(n): return False",
+        "    s = str(n)",
+        "    for i in range(len(s)):",
+        "        ti = int(s[:i] + s[i+1:])",
+        "        f = factorint(ti)",
+        "        if not len(f) == 2 == sum(f.values()):",
+        "            return False",
+        "    return True",
+        "print([k for k in range(16000) if ok(k)]) # _Michael S. Branicky_, May 25 2024"
+    ],
+    "xref": [
+        "Cf. A000040, A006881."
+    ],
+    "keyword": "base,nonn,new",
+    "offset": "1,1",
+    "author": "_Gonzalo Mart\u00ednez_, May 25 2024",
+    "references": 0,
+    "revision": 14,
+    "time": "2024-05-26T16:13:34-04:00",
+    "created": "2024-05-26T16:13:34-04:00"
+}

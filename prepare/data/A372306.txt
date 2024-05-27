@@ -1,0 +1,56 @@
+{
+    "number": 372306,
+    "data": "1,2,3,4,5,5,6,6,6,7,8,8,9,10,10,10,11,11,12,12,13,13,14,15,15,16,17,18,19,19,20,20,20,21,21,21,22,23,23,24,25,26,27,28,29,30,31,31,31,31,32,33,34,34,34,35,36,37,38,39,40,41,42",
+    "name": "Cardinality of the largest subset of {1,...,n} such that no three distinct elements of this subset multiply to a square.",
+    "comment": [
+        "a(n) >= A373114(n).",
+        "a(n) ~ n (Erd\u0151s-S\u00e1rk\u00f6zy-S\u00f3s).",
+        "a(n+1)-a(n) is either 0 or 1 for any n.",
+        "If \"three\" is replaced by \"two\" one obtains A013928. If \"three\" is replaced by \"one\", one obtains A028391. If \"three\" is replaced by \"any odd\", one obtains A373114."
+    ],
+    "link": [
+        "P. Erd\u0151s, A. S\u00e1rk\u00f6zy, and V. T. S\u00f3s, <a href=\"https://doi.org/10.1016/0195-6698(95)90039-X\">On Product Representations of Powers, I</a>, Europ. J. Combinatorics 16 (1995), 567--588."
+    ],
+    "example": [
+        "a(7)=6, because the set {1,2,3,4,5,7} has no three distinct elements multiplying to a square, but {1,2,3,4,5,6,7} has 2*3*6 = 6^2."
+    ],
+    "program": [
+        "(Python)",
+        "from math import isqrt",
+        "def is_square(n):",
+        "    return isqrt(n) ** 2 == n",
+        "def valid_subset(A):",
+        "    length = len(A)",
+        "    for i in range(length):",
+        "        for j in range(i + 1, length):",
+        "            for k in range(j + 1, length):",
+        "                if is_square(A[i] * A[j] * A[k]):",
+        "                    return False",
+        "    return True",
+        "def largest_subset_size(N):",
+        "    from itertools import combinations",
+        "    max_size = 0",
+        "    for size in range(1, N + 1):",
+        "        for subset in combinations(range(1, N + 1), size):",
+        "            if valid_subset(subset):",
+        "                max_size = max(max_size, size)",
+        "    return max_size",
+        "for N in range(1, 11):",
+        "    print(largest_subset_size(N))"
+    ],
+    "xref": [
+        "Cf. A373114, A013928, A028391."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,2",
+    "author": "_Terence Tao_, May 25 2024",
+    "ext": [
+        "a(18)-a(36) from _Michael S. Branicky_, May 25 2024",
+        "a(37)-a(38) from _Michael S. Branicky_, May 26 2024",
+        "a(39)-a(63) from _Martin Ehrenstein_, May 26 2024"
+    ],
+    "references": 0,
+    "revision": 63,
+    "time": "2024-05-26T12:44:55-04:00",
+    "created": "2024-05-26T01:16:46-04:00"
+}
