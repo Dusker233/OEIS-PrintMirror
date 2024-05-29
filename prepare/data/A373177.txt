@@ -1,0 +1,50 @@
+{
+    "number": 373177,
+    "data": "15632,126530,130265,150632,152630,156329,162530,163025,1265030,1265300,1265309,1300265,1302650,1302659,1500632,1502630,1506329,1526300,1526309,1563299,1566332,1625030,1625300,1625309,1630025,1630250,1630259,1656332,12650030",
+    "name": "Integers k such that 2k + 1 and 4k + 3 are anagrams of k.",
+    "comment": [
+        "The terms of this sequence begin with decimal digits 1 or 2, otherwise 4*k + 3 has more digits than k and cannot be an anagram. The first term whose first digit is 2 is a(3931) = 2055114278.",
+        "This sequence has infinitely many terms, since 1500*10^m + 632 is a term for all positive integers m.",
+        "All terms == 8 (mod 9). - _Hugo Pfoertner_, May 27 2024"
+    ],
+    "example": [
+        "15632 is a term, since 2*15632 + 1 = 31265 and 4*15632 + 3 = 62531 are both permutations of the digits of 15632."
+    ],
+    "maple": [
+        "filter:= proc(n) local L;",
+        "  L:= sort(convert(n,base,10));",
+        "  sort(convert(2*n+1,base,10))=L",
+        "  and sort(convert(4*n+3,base,10))=L",
+        "end proc:",
+        "R:= NULL: count:= 0:",
+        "for d from 1 while count < 100 do",
+        " for x from 10^(d-1) + 7 by 9 to (10^d-3)/4 while count < 100 do",
+        "   if filter(x) then R:= R,x; count:= count+1 fi",
+        "od od:",
+        "R; # _Robert Israel_, May 27 2024"
+    ],
+    "mathematica": [
+        "sid[n_] := Sort[IntegerDigits[n]]; Select[Range[13000000], sid[#] == sid[2*# + 1] == sid[4*# + 3] &] (* _Amiram Eldar_, May 27 2024 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def agen(): # generator of terms",
+        "    for e in count(1):",
+        "        for k in range(10**(e-1), 10**e//4):",
+        "            if sorted(str(k)) == sorted(str(2*k+1)) == sorted(str(4*k+3)):",
+        "                yield k",
+        "print(list(islice(agen(), 30))) # _Michael S. Branicky_, May 26 2024",
+        "(PARI) isok(k) = my(d=vecsort(digits(k))); (d == vecsort(digits(2*k+1))) && (d == vecsort(digits(4*k+3))); \\\\ _Michel Marcus_, May 28 2024"
+    ],
+    "xref": [
+        "Cf. A323711, A371623."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Gonzalo Mart\u00ednez_, May 26 2024",
+    "references": 0,
+    "revision": 21,
+    "time": "2024-05-28T18:28:07-04:00",
+    "created": "2024-05-28T18:28:07-04:00"
+}
