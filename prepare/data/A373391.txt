@@ -1,0 +1,50 @@
+{
+    "number": 373391,
+    "data": "3960,13986,15368,80547,85740,111789,111987,386048,408649,408946,410699,410969,410996,486014,519487,519784,609408,609804,615430,619814,629428,629824,639438,639834,649448,649844,659458,659854,669468,669864,679478,679874",
+    "name": "Integers whose American English names (minus punctuation) can be split into two parts wherein the product of the letter-ranks of one part is equal to that of the other.",
+    "comment": [
+        "By letter-rank we mean a=1, b=2,... z=26. If the qualifying split happens beside a letter \"a\" (as for 408649) there will be two solutions, as moving that \"a\" to the other side of the split will not affect either product.",
+        "There can be no terms involving \"million\" less than 10^60\t(\"novemdecillion\") since \"m\" = 13 would otherwise have no counterpart to make the product of all valuations square. - _Michael S. Branicky_, Jun 03 2024",
+        "a(84)=1000107588."
+    ],
+    "example": [
+        "3960 = threethousandni|nehundredsixty has the product of the letter-ranks of each side of the vertical pipe equal (to 486491443200000)."
+    ],
+    "program": [
+        "(Python)",
+        "from math import prod, isqrt",
+        "from num2words import num2words",
+        "def n2w(n): return \"\".join(c for c in num2words(n).replace(\" and\", \"\") if c.isalpha())",
+        "def ok(n):",
+        "    d = [ord(c) - ord('A') + 1 for c in n2w(n).upper()]",
+        "    if isqrt(s:=prod(d))**2 != s: return False",
+        "    return any(prod(d[:i]) == prod(d[i:]) for i in range(1, len(d)))",
+        "print([k for k in range(10**5) if ok(k)]) # _Michael S. Branicky_, Jun 03 2024",
+        "(Python)",
+        "from math import prod, isqrt",
+        "from num2words import num2words",
+        "def n2w(n): return \"\".join(c for c in num2words(n).replace(\" and\", \"\") if c.isalpha())",
+        "def ok(n):",
+        "\td = [ord(c) - ord('A') + 1 for c in n2w(n).upper()]",
+        "\tpr = prod(d)",
+        "\ts = isqrt(pr)",
+        "\tif s**2 != pr: return False",
+        "\tp = 1",
+        "\tfor i in range(len(d)):",
+        "\t\tp*=d[i]",
+        "\t\tif p > s:",
+        "\t\t\treturn False",
+        "\t\tif p == s:",
+        "return True # _David A. Corneth_, Jun 03 2024, adapted from _Michael S. Branicky_, Jun 03 2024"
+    ],
+    "xref": [
+        "Cf. A372222."
+    ],
+    "keyword": "nonn,base,word,new",
+    "offset": "1,1",
+    "author": "_Hans Havermann_, Jun 03 2024",
+    "references": 0,
+    "revision": 21,
+    "time": "2024-06-03T18:31:34-04:00",
+    "created": "2024-06-03T18:31:34-04:00"
+}
