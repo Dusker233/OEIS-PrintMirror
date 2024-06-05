@@ -1,0 +1,37 @@
+{
+    "number": 373071,
+    "data": "2,3,4,5,7,8,9,11,13,16,17,19,23,25,27,29,31,32,37,41,43,47,49,53,59,61,64,65,66,67,71,73,79,81,83,89,91,97,101,103,107,109,113,120,121,125,127,128,131,137,139,149,151,154,157,163,167,169,173,179,181,191,193,197,199",
+    "name": "Integers k such that k-1 is a multiple of Sum_{prime|k}(prime-1).",
+    "link": [
+        "Robert C. Vaughan and Kevin L. Weis, <a href=\"https://doi.org/10.1112/S002557930001442X\">On sigma-phi numbers</a>, Mathematika 48 (2001), 169-189."
+    ],
+    "maple": [
+        "f:= proc(n)",
+        " add( d-1, d= numtheory[factorset](n));",
+        " end proc:",
+        "results := []:",
+        "for n from 2 to 1000 do  # Adjust the range as needed",
+        " if mod(n-1, f(n)) = 0 then",
+        " results := [op(results), n];",
+        " end if;",
+        "end do;",
+        "results;"
+    ],
+    "mathematica": [
+        "Select[Range[2, 200], Divisible[# - 1, Total[FactorInteger[#][[;; , 1]] - 1]] &] (* _Amiram Eldar_, May 26 2024 *)"
+    ],
+    "program": [
+        "(PARI) isok(k) = (k>1) && (((k-1) % vecsum(apply(x->(x-1), factor(k)[,1]))) == 0); \\\\ _Michel Marcus_, May 26 2024"
+    ],
+    "xref": [
+        "Cf. A055631.",
+        "A246655 is a subsequence."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Rafik Khalfi_, May 25 2024",
+    "references": 0,
+    "revision": 35,
+    "time": "2024-06-04T17:09:19-04:00",
+    "created": "2024-06-04T17:09:19-04:00"
+}
