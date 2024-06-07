@@ -1,0 +1,40 @@
+{
+    "number": 373452,
+    "data": "1,1,2,6,16,64,252,1460,6256,39760,230056,1920152,12154416,113087888,916563592,10586707896,80444848064,898922718272,8634371968224,117894609062176,1160052513737280,16638593775310528,200744153681516384,3415784055462112160,38542918215425934624",
+    "name": "Number of (binary) heaps of length n whose element set equals [k] (for some k <= n).",
+    "comment": [
+        "These heaps may contain repeated elements. Their element sets are gap-free and contain 1 (if nonempty)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A373452/b373452.txt\">Table of n, a(n) for n = 0..495</a>",
+        "Eric Weisstein's World of Mathematics, <a href=\"http://mathworld.wolfram.com/Heap.html\">Heap</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Binary_heap\">Binary heap</a>"
+    ],
+    "example": [
+        "a(0) = 1: the empty heap.",
+        "a(1) = 1: 1.",
+        "a(2) = 2: 11, 21.",
+        "a(3) = 6: 111, 211, 212, 221, 312, 321.",
+        "a(4) = 16: 1111, 2111, 2121, 2211, 2212, 2221, 3121, 3211, 3212, 3221, 3231, 3312, 3321, 4231, 4312, 4321.",
+        "(The examples use max-heaps.)"
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; `if`(n=0, 1,",
+        "     (g-> (f-> add(b(f, j)*b(n-1-f, j), j=1..k)",
+        "             )(min(g-1, n-g/2)))(2^ilog2(n)))",
+        "    end:",
+        "a:= n-> add(add(binomial(k, j)*(-1)^j*b(n, k-j), j=0..k), k=0..n):",
+        "seq(a(n), n=0..24);"
+    ],
+    "xref": [
+        "Row sums of A373451.",
+        "Cf. A056971 (distinct elements), A373450."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,3",
+    "author": "_Alois P. Heinz_, Jun 05 2024",
+    "references": 0,
+    "revision": 22,
+    "time": "2024-06-06T14:28:21-04:00",
+    "created": "2024-06-06T10:03:15-04:00"
+}

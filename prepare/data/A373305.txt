@@ -1,0 +1,41 @@
+{
+    "number": 373305,
+    "data": "0,1,1,5,7,15,41,77,161,325,727,1460,3058,6228,12815,26447,54099,110800,226247,461531,939678,1914189,3890279,7905962,16045367,32550830,65971827,133645098,270561031,547468214,1107208235,2238242852,4522679064,9135128917",
+    "name": "Sum over all complete compositions of n of the element set cardinality.",
+    "comment": [
+        "A complete composition of n has element set [k] with k<=n (without gaps)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A373305/b373305.txt\">Table of n, a(n) for n = 0..1000</a>"
+    ],
+    "formula": [
+        "a(n) = Sum_{k=0..A003056(n)} k * A373118(n,k)."
+    ],
+    "example": [
+        "a(1) = 1: 1.",
+        "a(2) = 1: 11.",
+        "a(3) = 5 = 2 + 2 + 1: 12, 21, 111.",
+        "a(4) = 7 = 2 + 2 + 2 + 1: 112, 121, 211, 1111.",
+        "a(5) = 15 = 7*2 + 1: 122, 212, 221, 1112, 1121, 1211, 2111, 11111."
+    ],
+    "maple": [
+        "g:= proc(n, i, t) `if`(n=0, `if`(i=0, t!, 0),",
+        "     `if`(i<1 or n<i*(i+1)/2, 0, b(n, i, t)))",
+        "    end:",
+        "b:= proc(n, i, t) option remember;",
+        "      add(g(n-i*j, i-1, t+j)/j!, j=1..n/i)",
+        "    end:",
+        "a:= n-> add(g(n, k, 0)*k, k=0..floor((sqrt(1+8*n)-1)/2)):",
+        "seq(a(n), n=0..33);"
+    ],
+    "xref": [
+        "Cf. A003056, A107429, A373118, A373306."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,4",
+    "author": "_Alois P. Heinz_, May 31 2024",
+    "references": 0,
+    "revision": 12,
+    "time": "2024-06-06T08:33:46-04:00",
+    "created": "2024-06-06T08:33:46-04:00"
+}
