@@ -1,0 +1,35 @@
+{
+    "number": 373505,
+    "data": "25,29,37,41,55,67,73,77,85,89,103,115,727,739,745,749,757,761,775,787,793,797,805,809,823,835,841,845,853,857,889,893,901,905,937,941,949,953,967,979,985,989,997,1001,1015,1027,1033,1037,1045,1049,1063,1075,1081",
+    "name": "Numbers k such that k and k+1 both have an equal number of odd and even digits in their factorial-base representations.",
+    "comment": [
+        "If m is the sum of the first k odd-indexed factorial numbers (A000142), for k >= 2, then m-1 is a term, since the factorial-base representation of m is 1010...10, with the block \"10\" repeated k times, and the factorial-base representation of m-1 is the 1010...1001, with the block \"10\" repeated k-1 times and followed by \"01\" (these numbers are 25, 745, 41065, 3669865, 482671465, ...)."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A373505/b373505.txt\">Table of n, a(n) for n = 1..10000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Factorial_number_system\">Factorial number system</a>.",
+        "<a href=\"/index/Fa#facbase\">Index entries for sequences related to factorial base representation.</a>."
+    ],
+    "example": [
+        "25 is a term since the factorial-base representations of 25 and 26 are 1001 and 1010, respectively, and both have 2 odd digits and 2 even digits."
+    ],
+    "mathematica": [
+        "With[{max = 7}, fctBaseDigits[n_] := IntegerDigits[n, MixedRadix[Range[max, 2, -1]]]; s = Select[Range[1, max!], EvenQ[Length[(d = fctBaseDigits[#])]] && Count[d, _?EvenQ] == Length[d]/2 &]; ind = Position[Differences[s], 1] // Flatten; s[[ind]]]"
+    ],
+    "program": [
+        "(PARI) iseq(n) = {my(p = 2, o = 0, e = 0); while(n > 0, if((n%p) %2  == 0, e++, o++); n \\= p; p++); e == o;}",
+        "lista(kmax) = {my(q1 = 0, q2); for(k = 1, kmax, q2 = iseq(k); if(q1 && q2, print1(k-1, \", \")); q1 = q2);}"
+    ],
+    "xref": [
+        "Subsequence of A351895.",
+        "Cf. A000142, A007623.",
+        "Similar sequences: A337238, A373460."
+    ],
+    "keyword": "nonn,base,easy,new",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jun 07 2024",
+    "references": 0,
+    "revision": 8,
+    "time": "2024-06-07T05:21:57-04:00",
+    "created": "2024-06-07T05:21:57-04:00"
+}

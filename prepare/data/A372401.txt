@@ -1,0 +1,49 @@
+{
+    "number": 372401,
+    "data": "1,68,547,2119,5817,13008,25412,45078,74409,116147,173379,249532,348375,474018,630922,823885,1058051,1338898,1672260,2064302,2521535,3050825,3659361,4354687,5144682,6037582,7041946,8166692,9421074,10814695,12357491,14059744,15932086,17985473",
+    "name": "Position of 210^n among 7-smooth numbers A002473.",
+    "comment": [
+        "Also position of 210^(n+1) in A147571."
+    ],
+    "mathematica": [
+        "Table[",
+        "  Sum[Floor@ Log[7, 210^n/(2^i*3^j*5^k)] + 1,",
+        "    {i, 0, Log[2, 210^n]},",
+        "    {j, 0, Log[3, 210^n/2^i]},",
+        "    {k, 0, Log[5, 210^n/(2^i*3^j)]}],",
+        "  {n, 0, 12}]"
+    ],
+    "program": [
+        "(Python)",
+        "import heapq",
+        "from itertools import islice",
+        "from sympy import primerange",
+        "def A372401gen(p=7): # generator for p-smooth terms",
+        "    v, oldv, psmooth_primes, = 1, 0, list(primerange(1, p+1))",
+        "    h = [(1, [0]*len(psmooth_primes))]",
+        "    idx = {psmooth_primes[i]:i for i in range(len(psmooth_primes))}",
+        "    loc = 0",
+        "    while True:",
+        "        v, e = heapq.heappop(h)",
+        "        if v != oldv:",
+        "            loc += 1",
+        "            if len(set(e)) == 1:",
+        "                yield loc",
+        "            oldv = v",
+        "            for p in psmooth_primes:",
+        "                vp, ep = v*p, e[:]",
+        "                ep[idx[p]] += 1",
+        "                heapq.heappush(h, (v*p, ep))",
+        "print(list(islice(A372401gen(), 15))) # _Michael S. Branicky_, Jun 05 2024"
+    ],
+    "xref": [
+        "Cf. A002110, A002473, A022330, A147571, A202821, A372400, A372402."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,2",
+    "author": "_Michael De Vlieger_, Jun 03 2024",
+    "references": 0,
+    "revision": 8,
+    "time": "2024-06-07T14:21:22-04:00",
+    "created": "2024-06-07T14:21:22-04:00"
+}
