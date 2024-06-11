@@ -1,0 +1,41 @@
+{
+    "number": 372403,
+    "data": "1,5,16,37,83,178,374,772,1565,3160,6361,12770,25599,51265,102634,205374,410873,821924,1644070,3288433,6577231,13154868,26310347,52621521,105244142,210489792",
+    "name": "Number of k < 2^n that are neither squarefree nor prime powers.",
+    "comment": [
+        "Analogous to A143658 (number of squarefree k <= 2^n) and A182908 (position of 2^n among prime powers A246655)."
+    ],
+    "example": [
+        "Let quality Q represent a number k that is neither squarefree nor prime power. For instance, Q(k) is true if and only if Omega(k) > omega(k) > 1, i.e., A001222(k) > A001221(k) > 1.",
+        "a(4) = 1 since there is one number k = 12 such that Q(k) is true; 12 < 2^4.",
+        "a(5) = 5 since there are 5 numbers k such that Q(k) is true; {12, 18, 20, 24, 28} are less than 2^5.",
+        "a(6) = 16 since A126706(16) < 2^6 < A126706(17), etc."
+    ],
+    "maple": [
+        "filter:= proc(n) local F;",
+        "  F:= ifactors(n)[2];",
+        "  nops(F) > 1 and max(F[..,2]) > 1",
+        "end proc:",
+        "R:= NULL: v:= 0:",
+        "for i from 4 to 20 do",
+        "  v:= v + nops(select(filter, [$2^(i-1)+1 .. 2^i-1]));",
+        "  R:= R,v;",
+        "od:",
+        "R; # _Robert Israel_, Jun 09 2024"
+    ],
+    "mathematica": [
+        "nn = 2^20; m = 2; c = 0;",
+        "Reap[Do[If[Nor[PrimePowerQ[n], SquareFreeQ[n]], c++];",
+        "  If[n >= m, m *= 2; Sow[c]], {n, nn}] ][[-1, 1]]"
+    ],
+    "xref": [
+        "Cf. A007053, A126706, A143658, A182908."
+    ],
+    "keyword": "nonn,hard,more,new",
+    "offset": "4,2",
+    "author": "_Michael De Vlieger_, Jun 09 2024",
+    "references": 0,
+    "revision": 9,
+    "time": "2024-06-10T15:00:36-04:00",
+    "created": "2024-06-10T15:00:36-04:00"
+}
