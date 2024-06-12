@@ -1,0 +1,79 @@
+{
+    "number": 370515,
+    "data": "1,48,45360,810810000,89828829090000,79747968403032930000,173804636288811640432320000,1295369604157875221186530038720000,17956463972251028473221305671408150080000,683175381189232829757128698827279802247046720000,68097448387645503294976802572499880245452170169824960000",
+    "name": "a(n) is the least integer k with exactly 10^n divisors.",
+    "comment": [
+        "When a prospective a(n) = k has prime factorization k = Product p(i)^r(i), its number of divisors is tau(k) = A000005(k)= Product (r(i)+1) and here this is to be tau(k) = 10^n.",
+        "Assigning exponents r(i) to primes p(i) in decreasing order minimizes k, but various ways to split 10^n into a product (r(i)+1) results in k of various size."
+    ],
+    "link": [
+        "Zhao Hui Du, <a href=\"https://www.zhihu.com/question/536022619/answer/2515898449\">Chinese webpage (Zhihu): What is the minimum number with 100 million divisors?</a>",
+        "StackExchange, <a href=\"https://math.stackexchange.com/questions/496494/smallest-number-with-specific-number-of-divisors\">Smallest number with specific number of divisors</a>",
+        "StackExchange, <a href=\"https://cs.stackexchange.com/questions/85222/find-the-first-integer-with-exactly-n-divisors\">Find the first integer with exactly n divisors</a>"
+    ],
+    "formula": [
+        "a(n) = A005179(10^n) <= A037019(10^n)."
+    ],
+    "example": [
+        "a(1) = 48 = 2^4 * 3, and 48 is the least integer which has exactly 10^1 divisors(1,2,3,4,6,8,12,16,24,48)."
+    ],
+    "maple": [
+        "# Construct list of ordered lists of factorizations of n with",
+        "# minimum divisors mind.",
+        "# Returns a list with A001055(n) entries if called with mind=2.",
+        "# Example: print(ofact(10^3,2))",
+        "ofact := proc(n,mind)",
+        "    local fcts,d,rec,r ;",
+        "    fcts := [] ;",
+        "    for d in numtheory[divisors](n) do",
+        "        if d >= mind then",
+        "            if d = n then",
+        "                fcts := [op(fcts),[n]] ;",
+        "            else",
+        "                # recursive call supposed one more factor given",
+        "                rec := procname(n/d,max(d,mind)) ;",
+        "                for r in rec do",
+        "                    fcts := [op(fcts),[d,op(r)]] ;",
+        "                end do:",
+        "            end if;",
+        "        end if;",
+        "    end do:",
+        "    return fcts ;",
+        "end proc:",
+        "A005179 := proc(n)",
+        "    local Lexp,a,eList,cand,maxxrt ;",
+        "    if n = 1 then",
+        "        return 1;",
+        "    end if;",
+        "    Lexp := ofact(n,2) ;",
+        "    a := 0 ;",
+        "    for eList in Lexp do",
+        "        maxxrt := ListTools[Reverse](eList) ;",
+        "        try",
+        "            cand := mul( ithprime(i)^ ( op(i,maxxrt)-1),i=1..nops(maxxrt)) ;",
+        "        catch:",
+        "            # print(\"catch cand\") ;",
+        "            cand := 0 ;",
+        "        end try ;",
+        "        if a =0 or ( cand < a and cand > 0) then",
+        "            a := cand ;",
+        "        end if;",
+        "    end do:",
+        "    a ;",
+        "end proc:",
+        "A370515 := proc(n)",
+        "    A005179(10^n) ;",
+        "end proc:",
+        "seq(A370515(n),n=0..10) ; # _R. J. Mathar_, Jun 06 2024"
+    ],
+    "xref": [
+        "Cf. A005179, A011557, A037019."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,2",
+    "author": "_Zhining Yang_, Feb 21 2024",
+    "references": 0,
+    "revision": 52,
+    "time": "2024-06-11T15:45:45-04:00",
+    "created": "2024-06-11T10:52:37-04:00"
+}
