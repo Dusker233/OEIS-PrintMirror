@@ -1,0 +1,40 @@
+{
+    "number": 373630,
+    "data": "4,6,10,15,25,26,35,38,49,57,58,74,85,86,91,95,118,119,123,133,134,143,146,161,183,185,187,201,202,205,218,221,237,247,265,267,278,295,299,302,309,314,326,327,334,335,362,393,395,398,403,413,415,427,446,453,466,469,473,481,482,497,519",
+    "name": "a(n) is the n-th semiprime after the n-th prime.",
+    "link": [
+        "Robert Israel, <a href=\"/A373630/b373630.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "formula": [
+        "a(n) = A001358(n + A072000(A000040(n)))."
+    ],
+    "example": [
+        "a(5) = 25 because the 5th prime is 11 and the first 5 semiprimes > 11 are 14,15,21,22,25."
+    ],
+    "maple": [
+        "N:= 10^4: # for terms <= N",
+        "P:= select(isprime,[2,seq(i,i=3..N,2)]):",
+        "S:= select(t -> numtheory:-bigomega(t)=2, [$1..N]): nS:= nops(S):",
+        "f:= proc(n) local j;",
+        "  j:= ListTools:-BinaryPlace(S,P[n]);",
+        "  if j + n <= nS then S[j+n] else fail fi",
+        "end proc:",
+        "R:= NULL:",
+        "for i from 1 do",
+        "  v:= f(i);",
+        "  if v = fail then break fi;",
+        "  R:= R,v",
+        "od:",
+        "R;"
+    ],
+    "xref": [
+        "Cf. A000040, A001358, A072000."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Zak Seidov_ and _Robert Israel_, Jun 11 2024",
+    "references": 0,
+    "revision": 10,
+    "time": "2024-06-12T17:26:53-04:00",
+    "created": "2024-06-12T17:26:53-04:00"
+}
