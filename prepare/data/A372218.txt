@@ -1,0 +1,48 @@
+{
+    "number": 372218,
+    "data": "0,4,36,184,592,1828,4164,9360,18592,34948,59636,102096,161496,255700,385292,562336,796344,1131996,1552780,2133368,2855632,3765492,4876444,6328104,8049744,10203820,12766508,15870744,19496392,23984444,29090340,35318968,42535496,50936036",
+    "name": "a(n) is the number of ways to select three distinct points of an n X n grid forming a triangle whose sides do not pass through a grid point.",
+    "comment": [
+        "a(n) is 1/6 of the number of ways to select three points (x,y), (u,v), (p,q) with gcd(x-u,y-v) = gcd(u-p,v-q) = gcd(p-x,q-y) = 1 and 0 <= x, y, u, v, p, q <= n in an n X n grid."
+    ],
+    "link": [
+        "Felix Huber, <a href=\"/A372218/a372218.pdf\">Illustration of a(2)</a>"
+    ],
+    "example": [
+        "See the linked illustration: a(2) = 36 because there are 36 ways to select three distinct points in a square grid with side length n that satisfy the condition."
+    ],
+    "maple": [
+        "A372218:=proc(n)",
+        "  local x,y,u,v,p,q,a;",
+        "  a:=0;",
+        "  for x from 0 to n do",
+        "    for y from 0 to n do",
+        "      for u from 0 to n do",
+        "        for v from 0 to n do",
+        "          if gcd(x-u,y-v)=1 then",
+        "            for p from 0 to n do",
+        "              for q from 0 to n do",
+        "                if gcd(x-p,y-q)=1 and gcd(p-u,q-v)=1 then a:=a+1 fi;",
+        "              od;",
+        "            od;",
+        "          fi;",
+        "        od;",
+        "      od;",
+        "    od;",
+        "  od;",
+        "  a:=a/6;",
+        "  return a;",
+        "end proc;",
+        "seq(A372218(n),n=0..33);"
+    ],
+    "xref": [
+        "Cf. A115004, A141224, A141255, A320540, A320541, A320544, A372217."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,2",
+    "author": "_Felix Huber_, Apr 28 2024",
+    "references": 1,
+    "revision": 21,
+    "time": "2024-06-17T15:25:29-04:00",
+    "created": "2024-06-17T15:25:29-04:00"
+}
