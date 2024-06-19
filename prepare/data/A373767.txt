@@ -1,0 +1,41 @@
+{
+    "number": 373767,
+    "data": "3,7,15,37,69,188,254,19274,20798,22380,26439,28219,30057,189067,279203,369162,1517727,1528134,2964593,3978491,4645227,4701433,4757977,4895880,4953578,5011614,5062958,7200291,20845013,51370845,101900477,135141272,246185759,358784011,646164289",
+    "name": "Integers k such that the sum of the first k noncubes is a square.",
+    "link": [
+        "Chai Wah Wu, <a href=\"/A373767/b373767.txt\">Table of n, a(n) for n = 1..51</a>"
+    ],
+    "example": [
+        "The 3 first noncubes add up to 2+3+4=9, a square. So 3 is a term."
+    ],
+    "program": [
+        "(PARI) nc(n) = n + sqrtnint(n + sqrtnint(n, 3), 3); \\\\ A007412",
+        "snc(n) = sum(k=1, n, nc(k)); \\\\ A109470",
+        "isok(k) = issquare(snc(k));",
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy.ntheory.primetest import is_square",
+        "def A373767_gen(): # generator of terms",
+        "    k, c = 0, 0",
+        "    for i in count(1):",
+        "        for n in range(i**3+1,(i+1)**3):",
+        "            k += 1",
+        "            c += n",
+        "            if is_square(c):",
+        "                yield k",
+        "A373767_list = list(islice(A373767_gen(),20)) # _Chai Wah Wu_, Jun 18 2024"
+    ],
+    "xref": [
+        "Cf. A007412, A109470."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Michel Marcus_, Jun 18 2024",
+    "ext": [
+        "a(14)-a(35) from _Pontus von Br\u00f6mssen_, Jun 18 2024"
+    ],
+    "references": 0,
+    "revision": 19,
+    "time": "2024-06-18T18:00:58-04:00",
+    "created": "2024-06-18T10:01:40-04:00"
+}
