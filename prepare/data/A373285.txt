@@ -1,0 +1,62 @@
+{
+    "number": 373285,
+    "data": "528,1056,1275,1584,2112,2275,2565,3168,3213,3825,3850,3861,4224,4590,4752,5152,5808,6336,6375,6688,7072,7695,7700,8448,9065,9180,9504,9639,10304,10878,11328,11375,11475,11583,11616,12672,12825,13376,13770,14144,14256,15400,15925,16709,16896",
+    "name": "Numbers k that are composite and not a powers of a prime k such that sopf^{h+1}(k) divides sopf^{h}(k), with sopf^{0}(k)=k, for h=0..A321944(k)-1, where sopf^{h} is the h-th iteration of sopf and sopf = A008472.",
+    "example": [
+        "For k = 11475 = 3^3 * 5^2 * 17, sopf(k)=25 divides k and sopf(sopf(k))=5 divides sopf(k)."
+    ],
+    "maple": [
+        "f := proc (n)",
+        "    add(d, d = numtheory[factorset](n))",
+        "end proc:",
+        "h := proc (n)",
+        "    option remember;",
+        "    if isprime(n) then",
+        "        1",
+        "    else",
+        "        1+h(convert(numtheory[factorset](n), `+`))    end if:",
+        "end proc:",
+        "checkDivisibility := proc (n)",
+        "    local k, fk, fk1, result:",
+        "    result := true:",
+        "    fk := n;",
+        "    for k from 0 to h(n)-1 do",
+        "        fk1 := f(fk);",
+        "        if fk1 = 0 or `mod`(fk, fk1) <> 0 then",
+        "            result := false:",
+        "            break:",
+        "        end if:",
+        "        fk := fk1:",
+        "    end do:",
+        "    return result:",
+        "end proc:",
+        "g := proc (n)",
+        "    nops(numtheory[factorset](n)):",
+        "end proc:",
+        "findNumbers := proc (upper_limit)",
+        "    local n, results:",
+        "    results := []:",
+        "    for n from 2 to upper_limit do",
+        "        if checkDivisibility(n) and 2 <= g(n) then",
+        "            results := [op(results), n]:",
+        "        end if:",
+        "    end do:",
+        "    return results:",
+        "end proc:",
+        "upper_limit := 10000:",
+        "numbers := findNumbers(upper_limit);"
+    ],
+    "mathematica": [
+        "s[n_] := DivisorSum[n, # &, PrimeQ[#] &]; q[n_] := !PrimePowerQ[n] && AllTrue[Ratios@ Reverse@ FixedPointList[s, n], IntegerQ]; Select[Range[2, 17000], q] (* _Amiram Eldar_, May 30 2024 *)"
+    ],
+    "xref": [
+        "Cf. A008472 (sopf), A321944."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Rafik Khalfi_, May 30 2024",
+    "references": 0,
+    "revision": 28,
+    "time": "2024-06-22T15:47:59-04:00",
+    "created": "2024-06-22T15:47:59-04:00"
+}

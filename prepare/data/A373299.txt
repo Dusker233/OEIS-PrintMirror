@@ -1,0 +1,46 @@
+{
+    "number": 373299,
+    "data": "7,11,13,17,29,41,59,79,101,103,107,113,139,163,181,193,227,257,269,311,359,379,397,419,421,439,461,487,491,547,569,577,599,691,701,709,761,811,823,857,863,881,887,919,983,1021,1049,1051,1091,1109,1163",
+    "name": "Numbers prime(k) such that prime(k) - prime(k-1) = prime(k+2) - prime(k+1).",
+    "formula": [
+        "a(n) = A151800(A022885(n))."
+    ],
+    "example": [
+        "7 is in the list because the prime previous to 7 is 5 and the next primes after 7 are 11 and 13, so we have 7 - 5 = 13 - 11 = 2."
+    ],
+    "maple": [
+        "P:= select(isprime,[seq(i,i=3..10^4,2)]):",
+        "G:= P[2..-1]-P[1..-2]: nG:= nops(G):",
+        "J:= select(t -> G[t-1]=G[t+1],[$2..nG-1]):",
+        "P[J]; # _Robert Israel_, May 31 2024"
+    ],
+    "mathematica": [
+        "Select[Partition[Prime[Range[200]], 4, 1], #[[2]] - #[[1]] == #[[4]] - #[[3]] &][[;; , 2]] (* _Amiram Eldar_, May 31 2024 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import prime",
+        "def ok(k):",
+        "    return prime(k)-prime(k-1) == prime(k+2)-prime(k+1)",
+        "print([prime(k) for k in range(2,200) if ok(k)])",
+        "(Python)",
+        "from sympy import nextprime",
+        "from itertools import islice",
+        "def agen(): # generator of terms",
+        "    p, q, r, s = [2, 3, 5, 7]",
+        "    while True:",
+        "        if q-p == s-r: yield q",
+        "        p, q, r, s = q, r, s, nextprime(s)",
+        "print(list(islice(agen(), 60))) # _Michael S. Branicky_, May 31 2024"
+    ],
+    "xref": [
+        "Cf. A001223, A022885, A151800, A263674."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Alexandre Herrera_, May 31 2024",
+    "references": 0,
+    "revision": 21,
+    "time": "2024-06-22T18:08:47-04:00",
+    "created": "2024-06-22T18:08:47-04:00"
+}
