@@ -1,0 +1,46 @@
+{
+    "number": 373780,
+    "data": "1,2,23,31,89,101,404,3026,10001,20002,1000001,2000002",
+    "name": "Positions of records in A373779.",
+    "comment": [
+        "Numbers k such that, if p is the least prime such that the digit reversal of k * p is prime, for every j < k either there is a prime q < p such that the digit reversal of j * q is prime or there is no prime q such that the digit reversal of j * q is prime.",
+        "A373779(10^k + 1) > 10^k for even k, so 10^k + 1 is likely to be a term.",
+        "Similarly, A373779(2 * 10^k + 2) >= 1.5 * 10^k - 1 for even k > 2.",
+        "a(13) > 10^7."
+    ],
+    "example": [
+        "a(3) = 23 is a term because 17 and reverse(23 * 17) = 193 are prime, there is no prime p < 17 for which reverse(23 * p) is prime, and for every j < 23 there is either no prime p with reverse(j * p) prime or there is such a p < 17."
+    ],
+    "maple": [
+        "rev:= proc(n) local L, i;",
+        "  L:= convert(n, base, 10);",
+        "  add(L[-i]*10^(i-1), i=1..nops(L))",
+        "end proc:",
+        "f:= proc(n) local p;",
+        "  if n mod 3 = 0 or n mod 11 = 0 then return -1 fi;",
+        "  p:= 1;",
+        "  do",
+        "    p:= nextprime(p);",
+        "    if isprime(rev(n*p)) then return p fi",
+        "  od;",
+        "end proc:",
+        "R:= 1: m:= 2: count:= 1:",
+        "for i from 2 while count < 12 do",
+        "  v:= f(i);",
+        "  if v > m then",
+        "    count:= count+1; R:= R,i; m:= v;",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "xref": [
+        "Cf. A004086, A373779."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Jun 18 2024",
+    "references": 0,
+    "revision": 6,
+    "time": "2024-06-23T22:04:57-04:00",
+    "created": "2024-06-23T22:04:57-04:00"
+}

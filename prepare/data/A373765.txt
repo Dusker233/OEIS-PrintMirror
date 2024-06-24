@@ -1,0 +1,39 @@
+{
+    "number": 373765,
+    "data": "2,7,19,487,1637,389047",
+    "name": "a(n) is the first number that starts a sequence of exactly n primes x(1), ..., x(n) where x(i+1) = A004093(x(i)) is the digit reversal of 2 * x(i).",
+    "comment": [
+        "a(7) > 7 * 10^9 if it exists."
+    ],
+    "example": [
+        "a(1) = 2 because 2 is prime while A004093(2) = 4 is not prime.",
+        "a(2) = 7 because 7 and A004093(7) = 41 are prime but A004093(41) = 28 is not.",
+        "a(3) = 19 because 19 and A004093(19) = 83 and A004093(83) = 661 are prime but A004093(661) = 2231 is not."
+    ],
+    "maple": [
+        "g:= proc(n) local t,L,i,j;",
+        "  t:= n;",
+        "  for i from 0 while isprime(t) do",
+        "    L:= convert(2*t,base,10);",
+        "    t:= add(L[-j]*10^(j-1),j=1..nops(L));",
+        "  od;",
+        "  i",
+        "end proc:",
+        "V:= Vector(6): count:= 0: p:= 1:",
+        "while count < 6 do",
+        "  p:= nextprime(p); v:= g(p);",
+        "if V[v] = 0 then V[v]:= p; count:= count+1 fi",
+        "od:",
+        "convert(V,list);"
+    ],
+    "xref": [
+        "Cf. A004093."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Jun 18 2024",
+    "references": 0,
+    "revision": 9,
+    "time": "2024-06-23T22:04:31-04:00",
+    "created": "2024-06-23T22:04:31-04:00"
+}
