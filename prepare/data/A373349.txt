@@ -1,0 +1,26 @@
+{
+    "number": 373349,
+    "data": "3,5,7,11,13,71,73,149,151,179,181,311,313,1031,1033,1151,1153,1229,1231,3299,3301,3371,3373,3389,3391,3467,3469,3851,3853,7457,7459,7949,7951,9011,9013,9437,9439,10007,10009,10067,10069,10457,10459,10499,10501,10889",
+    "name": "Twin primes where both the prime and its twin have prime reversals.",
+    "maple": [
+        "R:= n-> (s-> parse(cat(s[-i]$i=1..length(s))))(\"\"||n):",
+        "q:= p-> andmap(isprime, [p, R(p)]) and ormap(",
+        "    t-> andmap(isprime, [p+t, R(p+t)]), [-2, +2]):",
+        "select(q, [$2..12000])[];  # _Alois P. Heinz_, Jun 06 2024"
+    ],
+    "program": [
+        "(PARI) isrevp(p) = isprime(p) && isprime(fromdigits(Vecrev(digits(p))));",
+        "isok(p) = isprime(p) && ((isprime(p+2) && isrevp(p+2)) || (isprime(p-2) &&  isrevp(p-2))) && isrevp(p); \\\\ _Michel Marcus_, Jun 06 2024"
+    ],
+    "xref": [
+        "Cf. A001097, A007500.",
+        "Cf. A004086."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Thomas Otten_, Jun 01 2024",
+    "references": 0,
+    "revision": 23,
+    "time": "2024-06-28T22:31:32-04:00",
+    "created": "2024-06-28T22:31:32-04:00"
+}
