@@ -1,0 +1,33 @@
+{
+    "number": 374071,
+    "data": "1,1,9,107,2609,98089,5564610,438180102,46399705928,6279673881161,1060663766284535,222840745939132105,56798048066468972011,17364018690978269373950,6261448805827102522607660,2624315396531837995006160020,1263427401352418949898456181999,693487403043958170112254851399169",
+    "name": "a(n) is the permanent of the Toeplitz matrix of order n whose element (i,j) equals the (i-j)-th composite number if i > j, (j-i)-th prime number if i < j, or 1 if i = j.",
+    "example": [
+        "a(4) = 2609:",
+        "  [1, 2, 3, 5]",
+        "  [4, 1, 2, 3]",
+        "  [6, 4, 1, 2]",
+        "  [8, 6, 4, 1]"
+    ],
+    "maple": [
+        "P,C:= selectremove(isprime,[$2..100]):",
+        "f:= proc(n) local i; uses LinearAlgebra;",
+        "  Permanent(ToeplitzMatrix([seq(C[i],i=n-1..1,-1),1,seq(P[i],i=1..n-1)]))",
+        "end proc:",
+        "map(f, [$0..20]); # _Robert Israel_, Jun 27 2024"
+    ],
+    "mathematica": [
+        "Composite[n_Integer] := FixedPoint[n + PrimePi[ # ] + 1 &, n + PrimePi[n] + 1]; a[n_]:= Permanent[Table[If[i == j, 1, If[i > j, Composite[i - j], Prime[j - i]]], {i, 1, n}, {j, 1, n}]]; Join[{1},Array[a, 17]]"
+    ],
+    "xref": [
+        "Cf. A071082 (determinant).",
+        "Cf. A374067, A374068, A374069, A374070."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,3",
+    "author": "_Stefano Spezia_, Jun 27 2024",
+    "references": 0,
+    "revision": 11,
+    "time": "2024-06-30T16:28:30-04:00",
+    "created": "2024-06-30T16:28:30-04:00"
+}
