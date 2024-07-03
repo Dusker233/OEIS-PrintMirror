@@ -1,0 +1,47 @@
+{
+    "number": 374166,
+    "data": "2,3,7,23,19207",
+    "name": "The set of primes p such that, for all integers m, the prime p divides at least one term of the recursive sequence (b_0, b_1, b_2,  ...) given by b_0 = m and b_{k+1} = b_k^2 - 1 for k >= 0.",
+    "comment": [
+        "It is an open problem (proposed by Michael Stoll) whether this sequence is infinite.",
+        "a(6) (if it exists) is greater than 5*10^6."
+    ],
+    "link": [
+        "Michael Stoll, <a href=\"https://www.mathe2.uni-bayreuth.de/stoll/workshop2023/open_problems_2023.pdf\">Collected Problems from the Problem Session</a>, Rational Points 2023, Workshop at Franken-Akademie Schloss Schney.  See Question 13 on page 5."
+    ],
+    "example": [
+        "To determine whether the prime p is included in the above sequence, it suffices to compute (b_0, b_1, b_2, ...) modulo p for the initial terms m = 0, 1, ..., p-1, and check whether 0 is contained in each of these mod p sequences.",
+        "For p = 2, the mod 2 sequences for m = 0, 1, are:",
+        "  m = 0: (b_0 mod 2, b_1 mod 2, ...) = (0, 1, 0, 1, ...)",
+        "  m = 1: (b_0 mod 2, b_1 mod 2, ...) = (1, 0, 1, 0, ...)",
+        "  Thus a(1) = 2.",
+        "For p = 3, the mod 3 sequences for m = 0, 1, 2, are:",
+        "  m = 0: (b_0 mod 3, b_1 mod 3, ...) = (0, 2, 0, 2, ...)",
+        "  m = 1: (b_0 mod 3, b_1 mod 3, ...) = (1, 0, 2, 0, ...)",
+        "  m = 2: (b_0 mod 3, b_1 mod 3, ...) = (2, 0, 2, 0, ...)",
+        "  Thus a(2) = 3.",
+        "For p = 5, the mod 5 sequence for m = 2 is:",
+        "  m = 2: (b_0 mod 5, b_1 mod 5, ...) = (2, 3, 3, 3, ...)",
+        "  which does not contain 0.  Thus a(3) > 5."
+    ],
+    "program": [
+        "(Sage)",
+        "def is_A374166(p):",
+        "    if not Integer(p).is_prime(): return False",
+        "    for m in range(2, p):",
+        "        a = m",
+        "        for i in range(p):",
+        "            if a%p==0: break",
+        "            a = (a^2-1)%p",
+        "        else: return False",
+        "    return True",
+        "print([p for p in range(1, 20000) if is_A374166(p)])"
+    ],
+    "keyword": "nonn,hard,more,new",
+    "offset": "1,1",
+    "author": "_Robin Visser_, Jun 29 2024",
+    "references": 0,
+    "revision": 8,
+    "time": "2024-07-02T08:23:32-04:00",
+    "created": "2024-07-02T08:23:32-04:00"
+}
