@@ -1,0 +1,36 @@
+{
+    "number": 373879,
+    "data": "4,6,8,9,12,18,22,24,33,36,44,49,66,72,88,99,119,132,198,203,217,247,264,361,396,469,493,527,529,791,792,793,833,899,923,973,1139,1159,1349,1421,1519,1591,1679,1921,1943,2077,2173,2363,2507,2743,2779,3151",
+    "name": "Composite numbers not factorizable using the Pollard-rho algorithm with parameters x=2,y=2 and f(x)=x^2-1.",
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Pollard%27s_rho_algorithm\">Pollard's rho algorithm</a>"
+    ],
+    "program": [
+        "(Python)",
+        "from sympy import gcd,isprime",
+        "def pollard_rho(n):",
+        "  x,y,d = 2,2,1",
+        "  f = lambda x: x*x-1",
+        "  while d==1:",
+        "    x = f(x) % n",
+        "    y = f(f(y)) % n",
+        "    d = gcd(abs(x-y),n)",
+        "  return d",
+        "isok = lambda n: not isprime(n) and pollard_rho(n) == n",
+        "print([n for n in range(4,3201) if isok(n)])",
+        "(PARI)",
+        "f(x) = x^2-1;",
+        "p(n) = my(x=2,y=2,d=1); while(d==1, x=f(x); y=f(f(y)); d=gcd(abs(x-y),n)); d;",
+        "isok(n) = !isprime(n) && p(n) == n;"
+    ],
+    "xref": [
+        "Cf. A002808, A335792."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Dar\u00edo Clavijo_, Jun 20 2024",
+    "references": 0,
+    "revision": 6,
+    "time": "2024-07-08T22:21:03-04:00",
+    "created": "2024-07-08T22:21:03-04:00"
+}
