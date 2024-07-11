@@ -1,0 +1,42 @@
+{
+    "number": 374238,
+    "data": "11,3333311,7771717,11818181,515115551,727722727,887887787,1110011101,1161611161,1411111441,1411141411,1717117117,1911999919,3311113111,3313133311,3333353533,5151111551,5555115151,5777777557,7373733337,7747447777,7777111777,8887788787,9199119991,9994449499",
+    "name": "Primes whose pattern of identical digits is unique among the primes.",
+    "comment": [
+        "The digit pattern for any natural number n is uniquely defined by the canonical form A358497(n), which enumerates digits according to their position of first occurrence.",
+        "Each prime in this sequence has a unique digit pattern in the sense that no other prime has the same pattern.",
+        "Prime repunits (A004022) are a subsequence, as they are the sole primes with a single distinct digit.",
+        "A cryptarithm (alphametic) expresses a digit pattern in letters, where each distinct letter is to map to a distinct digit.",
+        "If a cryptarithmetic problem calls for a prime number, then the primes in this sequence are unique solutions, so we call these primes cryptarithmically unique."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Verbal_arithmetic\">Verbal arithmetic</a>."
+    ],
+    "example": [
+        "11 is a term since no other prime has the same pattern \"AA\" of two identical digits (any other AA is divisible by A > 1, hence nonprime).",
+        "Counterexample: 13 is not a term since another prime 17 has the same pattern \"AB\" of two nonidentical digits.",
+        "7771717 is a term since it's prime and no other prime has the same pattern \"AAABABA\"."
+    ],
+    "mathematica": [
+        "NumOfDigits = 10; (*Maximal integer length to be searched for*)",
+        "A358497[k_] :=",
+        "  FromDigits[",
+        "   Table[Mod[",
+        "     CountDistinct[Take[#, FirstPosition[#, #[[i]]][[1]]]] &[",
+        "      IntegerDigits[k]], 10], {i, 1, IntegerLength[k]}]];",
+        "A006880[MaxLen_] := PrimePi[10^MaxLen];",
+        "Extract[Select[",
+        "   Tally[Table[{#, A358497[#]} &[Prime[i]], {i, 1,",
+        "       A006880[NumOfDigits]}], #1[[2]] == #2[[2]] &], #[[2]] == 1 &], {All, 1}]"
+    ],
+    "xref": [
+        "Cf. A000040 (primes), A004022 (prime repunits), A358497."
+    ],
+    "keyword": "nonn,base,hard,new",
+    "offset": "1,1",
+    "author": "_Dmytro Inosov_, Jul 01 2024",
+    "references": 0,
+    "revision": 60,
+    "time": "2024-07-09T14:31:16-04:00",
+    "created": "2024-07-09T14:31:16-04:00"
+}

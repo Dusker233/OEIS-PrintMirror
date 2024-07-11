@@ -1,0 +1,55 @@
+{
+    "number": 374495,
+    "data": "2,4,8,16,32,58,108,190,336,560,948,1574,2568,4116,6596,10444,16320,25488,39216,60690,92204,141060,212104,322508,480976,726290,1075640,1616368,2380444,3561146,5220160,7779754,11359620,16874716,24559360,36381264,52797328,78022162,112950608",
+    "name": "Number of palindromic periodicities among the binary words of length n.",
+    "comment": [
+        "A binary word w is a \"palindromic periodicity\" if it is the prefix of the infinite word pspsps... where p and s are palindromes, not both empty, and w is at least as long as ps.",
+        "Terms are even by symmetry. - _Michael S. Branicky_, Jul 10 2024"
+    ],
+    "link": [
+        "Jamie Simpson, <a href=\"https://arxiv.org/abs/2402.05381\">Palindromic periodicities</a>, ArXiv preprint arXiv:2402.05381 [math.CO], May 1 2024."
+    ],
+    "example": [
+        "For n = 6, the six binary words that are not palindromic periodicities are 001011, 001101, 010011, 101100, 110010, 110100."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import product",
+        "def pal(s): return s == s[::-1]",
+        "def pp(w):",
+        "    for i in range(len(w)):",
+        "        if not pal(p:=w[:i]): continue",
+        "        for j in range(i, len(w)+1):",
+        "            if not pal(s:=w[i:j]): continue",
+        "            if (ps:=p+s) == \"\": continue",
+        "            if w == (ps*len(w))[:len(w)]: return True",
+        "    return False",
+        "def a(n):",
+        "    return 2*sum(1 for b in product(\"01\", repeat=n-1) if pp(\"1\"+\"\".join(b)))",
+        "print([a(n) for n in range(1, 16)]) # _Michael S. Branicky_, Jul 10 2024",
+        "(Python) # faster version that works by contruction",
+        "from itertools import count, islice, product",
+        "def binpals(d):",
+        "    left, mid = product(\"01\", repeat=d//2), [[\"\"], \"01\"][d&1]",
+        "    yield from ((l:=\"\".join(t))+m+l[::-1] for t in left for m in mid)",
+        "def agen(): # generator of terms",
+        "    psset = set() # {ps | p, s palindromes; ps != \"\"}",
+        "    for n in count(1):",
+        "        for i in range(n):",
+        "            for p in binpals(i):",
+        "                for s in binpals(n-i):",
+        "                    psset.add(p+s)",
+        "        yield len(set((ps*n)[:n] for ps in psset))",
+        "print(list(islice(agen(), 30))) # _Michael S. Branicky_, Jul 10 2024"
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Jeffrey Shallit_, Jul 09 2024",
+    "ext": [
+        "a(22) and beyond from _Michael S. Branicky_, Jul 10 2024"
+    ],
+    "references": 0,
+    "revision": 17,
+    "time": "2024-07-10T09:37:02-04:00",
+    "created": "2024-07-10T05:28:12-04:00"
+}
