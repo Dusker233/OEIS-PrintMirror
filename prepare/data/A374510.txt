@@ -1,0 +1,54 @@
+{
+    "number": 374510,
+    "data": "0,5,14,90,220,910,1976,5100,8336,15785,22331,31850,40925,49735,58848,74800,86011,107559,123964,152110,181504,220110,293366,357700,393982,458874,497123,570836,755393,888770,987508,1121120,1239126,1395870,1461465,1620600",
+    "name": "Sum of those numbers t which have a unique representation as the sum of floor(n/2) distinct squares from among 1^2,...,n^2.",
+    "comment": [
+        "A000330(n-1) <= a(n)."
+    ],
+    "link": [
+        "Project Euler, <a href=\"https://projecteuler.net/problem=201\">Subsets with a Unique Sum</a>"
+    ],
+    "example": [
+        "a(3) = 14 because: k = 1 and",
+        "  14 = 4+9 and",
+        "  4 = 4+0",
+        "  9 = 9+0",
+        "  and 9 <= n^2.",
+        "a(4) = 90 because: k = 2 and",
+        "  90 = 5+10+13+17+20+25 and",
+        "   5 = 1+4",
+        "  10 = 1+9",
+        "  13 = 4+9",
+        "  17 = 1+16",
+        "  20 = 4+16",
+        "  25 = 9+16 and 16 <= n^2."
+    ],
+    "program": [
+        "(Python)",
+        "from collections import defaultdict",
+        "def a(n):",
+        "    k = n >> 1",
+        "    dp = [defaultdict(int) for _ in range(k + 1)]",
+        "    dp[0][0] = 1",
+        "    for s in [i**2 for i in range(1, n + 1)]:",
+        "        for j in range(k, 0, -1):",
+        "            for m in list(dp[j - 1].keys()):",
+        "                dp[j][m + s] += dp[j - 1][m]",
+        "    return sum(t for t, v in dp[k].items() if v == 1)",
+        "print([a(n) for n in range(1, 37)])",
+        "(Python)",
+        "from itertools import combinations",
+        "from collections import Counter",
+        "def A374510(n): return sum(d for d, e in Counter(sum(s) for s in combinations((m**2 for m in range(1,n+1)),n>>1)).items() if e == 1) # _Chai Wah Wu_, Jul 17 2024"
+    ],
+    "xref": [
+        "Cf. A000290, A000330."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Dar\u00edo Clavijo_, Jul 09 2024",
+    "references": 0,
+    "revision": 25,
+    "time": "2024-07-17T13:29:16-04:00",
+    "created": "2024-07-17T09:58:40-04:00"
+}
