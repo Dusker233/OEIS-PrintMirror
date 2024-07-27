@@ -1,0 +1,33 @@
+{
+    "number": 374961,
+    "data": "5,6,1931,4127,26584",
+    "name": "Numbers k such that 2^k, 2^(k+1) and 2^(k+2) have the same number of terms in their Zeckendorf representation (A007895).",
+    "comment": [
+        "Numbers k such that A020908(k) = A020908(k+1) = A020908(k+2).",
+        "The corresponding values of A020908(k) are 3, 3, 763, 1660, 10596, ... .",
+        "a(6) > 10^5, if it exists."
+    ],
+    "example": [
+        "5 is a term since A020908(5) = A020908(6) = A020908(7) = 3.",
+        "763 is a term since A020908(1931) = A020908(1932) = A020908(1933) = 763."
+    ],
+    "mathematica": [
+        "z[n_] := Length[DeleteCases[NestWhileList[# - Fibonacci[Floor[Log[Sqrt[5]*# + 3/2]/Log[GoldenRatio]]] &, n, # > 1 &], 0]]; (* _Alonso del Arte_ at A007895 *)",
+        "s[n_] := s[n] = z[2^n]; Select[Range[0, 4200], s[#] == s[# + 1] == s[# + 2] &]"
+    ],
+    "program": [
+        "(PARI) A007895(n)=if(n<4, n>0, my(k=2, s, t); while(fibonacci(k++)<=n, ); while(k && n, t=fibonacci(k); if(t<=n, n-=t; s++); k--); s); \\\\ _Charles R Greathouse IV_ at A007895",
+        "lista(kmax) = {my(z1 = A007895(1), z2 = A007895(2), z3); for(k = 2, kmax, z3 = A007895(2^k); if(z1 == z2 && z2 == z3, print1(k-2 , \", \")); z1 = z2; z2 = z3);}"
+    ],
+    "xref": [
+        "Cf. A007895, A020908, A353987.",
+        "Subsequence of A374960."
+    ],
+    "keyword": "nonn,base,hard,more,new",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Jul 25 2024",
+    "references": 0,
+    "revision": 8,
+    "time": "2024-07-26T08:57:35-04:00",
+    "created": "2024-07-26T08:57:35-04:00"
+}
