@@ -1,0 +1,46 @@
+{
+    "number": 374979,
+    "data": "0,0,0,0,0,1,18,159,942,4281,16050,51932,149532,391524,947246,2143677,4581204,9316195,18138636,33984912,61534652,108055425,184582014,307515038,500798058,798762453,1249917936,1921788036,2907159804,4332046200,6365441400,9232216725",
+    "name": "a(n) = Sum_{i+j+k+l+m+r=n, i,j,k,l,m,r >= 1} sigma(i)*sigma(j)*sigma(k)*sigma(l)*sigma(m)*sigma(r).",
+    "comment": [
+        "6-fold convolution of A000203.",
+        "Convolution of A000203 and A374978.",
+        "a(n) = Sum_{i=1..n-1} A000203(i)*A374978(n-i).",
+        "a(n) = Sum_{i=1..n-2} A000385(i)*A374977(n-i-1).",
+        "a(n) = Sum_{i=1..n-1} A374951(i)*A374951(n-i).",
+        "a(n) = Sum_{i+j+k=n-3, i,j,k>=1} A000385(i)*A000385(j)*A000385(k).",
+        "Column k=6 of A319083."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A374979/b374979.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "maple": [
+        "b:= proc(n, k) option remember; `if`(k=0, `if`(n=0, 1, 0),",
+        "      `if`(k=1, `if`(n=0, 0, numtheory[sigma](n)), (q->",
+        "       add(b(j, q)*b(n-j, k-q), j=0..n))(iquo(k, 2))))",
+        "    end:",
+        "a:= n-> b(n, 6):",
+        "seq(a(n), n=1..55);  # _Alois P. Heinz_, Jul 26 2024"
+    ],
+    "program": [
+        "(Python)",
+        "from functools import lru_cache",
+        "from sympy import divisor_sigma",
+        "def A374979(n):",
+        "    @lru_cache(maxsize=None)",
+        "    def g(x):",
+        "        f = factorint(x+1).items()",
+        "        return(5*prod((p**(3*(e+1))-1)//(p**3-1) for p,e in f)-(5+6*x)*prod((p**(e+1)-1)//(p-1) for p, e in f))//12",
+        "    return sum(g(i)*g(j)*g(n-3-i-j) for i in range(1,n-4) for j in range(1,n-i-3))"
+    ],
+    "xref": [
+        "Cf. A000203, A000385, A319083, A374951, A374977, A374978."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,7",
+    "author": "_Chai Wah Wu_, Jul 26 2024",
+    "references": 2,
+    "revision": 22,
+    "time": "2024-07-27T12:35:51-04:00",
+    "created": "2024-07-27T04:56:36-04:00"
+}

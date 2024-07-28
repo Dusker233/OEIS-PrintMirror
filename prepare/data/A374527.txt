@@ -1,0 +1,39 @@
+{
+    "number": 374527,
+    "data": "1,21,85,151,227,341,1365,5461,14563,21845,87381,349525,932067,1398101,5592405,22369621,26512143,39768215,59652323,89478485,357913941,1431655765",
+    "name": "Odd numbers whose Collatz trajectory is a Sidon sequence.",
+    "comment": [
+        "For more information see A375006."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def A374527_gen(startvalue=1): # generator of terms >= startvalue",
+        "    s = max(startvalue,1)",
+        "    for n in count(s+(s&1^1),2):",
+        "        t, a, c = [n], n, set()",
+        "        while a > 1:",
+        "            a = 3*a+1 if a&1 else a>>1",
+        "            for p in t:",
+        "                if (b:=p+a) in c:",
+        "                    break",
+        "                c.add(b)",
+        "            else:",
+        "                t.append(a)",
+        "                continue",
+        "            break",
+        "        else:",
+        "            yield n",
+        "A374527_list = list(islice(A374527_gen(),10)) # _Chai Wah Wu_, Jul 27 2024"
+    ],
+    "xref": [
+        "Odd terms of A375006."
+    ],
+    "keyword": "nonn,hard,more,new",
+    "offset": "1,2",
+    "author": "_Markus Sigg_ and _Hugo Pfoertner_, Jul 27 2024",
+    "references": 1,
+    "revision": 14,
+    "time": "2024-07-28T04:10:43-04:00",
+    "created": "2024-07-27T19:15:04-04:00"
+}

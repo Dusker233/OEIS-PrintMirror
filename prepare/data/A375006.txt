@@ -1,0 +1,48 @@
+{
+    "number": 375006,
+    "data": "1,2,4,8,16,21,32,42,64,85,128,151,170,227,256,302,341,454,512,682,1024,1365,2048,2730,4096,5461,8192,10922,14563,16384,21845,29126,32768,43690,65536,87381,131072,174762,262144,349525,524288,699050,932067,1048576",
+    "name": "Numbers whose Collatz trajectory is a Sidon sequence.",
+    "comment": [
+        "Contains all powers of 2.",
+        "A number can be contained only if all its trajectory elements are contained. This can be used to accelerate the programs."
+    ],
+    "link": [
+        "Markus Sigg, <a href=\"/A375006/b375006.txt\">Table of n, a(n) for n = 1..72</a>",
+        "OEIS Wiki, <a href=\"https://oeis.org/wiki/3x%2B1_problem\">3x+1 problem, Collatz trajectories</a>.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Sidon_sequence\">Sidon sequence</a>."
+    ],
+    "example": [
+        "3 is not contained because its trajectory is {3,10,5,16,8,4,2,1} and 3+10 = 5+8."
+    ],
+    "program": [
+        "(PARI) is_A375006(k) = { my(T=List([k]), S=Set([2*k])); while(k>1, k=if(k%2==0,k/2,3*k+1); listput(T,k); for(i=1,#T, my(s=T[i]+k); if(setsearch(S,s),return(0),S=setunion(S,Set([s])));); ); 1 };",
+        "(Python)",
+        "from itertools import count, islice",
+        "def A375006_gen(startvalue=1): # generator of terms >= startvalue",
+        "    for n in count(max(startvalue,1)):",
+        "        t, a, c = [n], n, set()",
+        "        while a > 1:",
+        "            a = 3*a+1 if a&1 else a>>1",
+        "            for p in t:",
+        "                if (b:=p+a) in c:",
+        "                    break",
+        "                c.add(b)",
+        "            else:",
+        "                t.append(a)",
+        "                continue",
+        "            break",
+        "        else:",
+        "            yield n",
+        "A375006_list = list(islice(A375006_gen(startvalue=1),20)) # _Chai Wah Wu_, Jul 27 2024"
+    ],
+    "xref": [
+        "Union of A374527, twice A374527 and A000079."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Markus Sigg_, Jul 27 2024",
+    "references": 0,
+    "revision": 22,
+    "time": "2024-07-28T04:11:31-04:00",
+    "created": "2024-07-27T23:54:38-04:00"
+}

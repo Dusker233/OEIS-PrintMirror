@@ -1,0 +1,31 @@
+{
+    "number": 374308,
+    "data": "136,10974,96672,227358,455334,527254,947886",
+    "name": "Integers m, with k digits, such that m = Sum_{i=1..k} A000203(m without its i-th digit).",
+    "comment": [
+        "No other term up to 10^10. - _Giovanni Resta_, Jul 06 2024"
+    ],
+    "example": [
+        "136 is in the sequence as 136 = sigma(36) + sigma(16) + sigma(13) = 91 + 31 + 14. - _David A. Corneth_, Jul 27 2024"
+    ],
+    "maple": [
+        "with(numtheory): P:=proc(q) local a,d,k,i,n,t;",
+        "for n from 1 to q do t:=0; a:=convert(n,base,10);",
+        "for k from 1 to nops(a) do d:=0;",
+        "for i from 1 to nops(a) do if i<> k then d:=d*10+a[-i]; fi; od; t:=sigma(d)+t; od;",
+        "if n=t then print(n); fi; od; end: P(10^6)"
+    ],
+    "mathematica": [
+        "q[n_] := Module[{d = IntegerDigits[n]}, n == Total[DivisorSigma[1, Map[FromDigits, Delete[d, #] & /@ Range[Length[d]]]]]]; Select[Range[10^6], q] (* _Amiram Eldar_, Jul 27 2024 *)"
+    ],
+    "xref": [
+        "Cf. A000203, A372753, A374309, A374368."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "1,1",
+    "author": "_Paolo P. Lava_, Jul 03 2024",
+    "references": 2,
+    "revision": 23,
+    "time": "2024-07-28T00:09:45-04:00",
+    "created": "2024-07-28T00:09:45-04:00"
+}
