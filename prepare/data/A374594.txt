@@ -1,0 +1,65 @@
+{
+    "number": 374594,
+    "data": "16,18,20,20,24,30,30,36,48,70,90,180,180,420,528,870,1170,2610",
+    "name": "Areas of trapezoids with integer sides and height whose area equals their perimeter.",
+    "comment": [
+        "A trapezoid is a quadrilateral with at least one pair of parallel sides.",
+        "Conjecture: in this sequence are only three terms which belong to trapezoids with exactly one pair of parallel sides: a(3) = 20, a(5) = 24, a(7) = 30."
+    ],
+    "link": [
+        "Felix Huber, <a href=\"/A374594/a374594.pdf\">Illustration of terms a(1) to a(10)</a>.",
+        "Felix Huber, <a href=\"/A374594/a374594_1.pdf\">Sides and heights of the trapezoids belonging to the terms a(1) to a(18)</a>.",
+        "Eric Weisstein's World of Mathematics,<a href=\"https://mathworld.wolfram.com/Trapezoid.html\">Trapezoid</a>.",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Trapezoid\">Trapezoid</a>."
+    ],
+    "example": [
+        "See attached illustration of the terms a(1) to a(10)."
+    ],
+    "maple": [
+        "with(NumberTheory):",
+        "A374594:=proc(k);",
+        "  local K,L,S,T,i,a,c,x,y,h,b,d;",
+        "  L := Divisors(k);",
+        "  S:=[];",
+        "  T:=[];",
+        "  K:=[];",
+        "  for i to numelems(L) do",
+        "    for c to L[i] do",
+        "      a:=2*L[i]-c;",
+        "      h:=k/L[i];",
+        "      x:=0;",
+        "      while x^2<(k-a-c)^2-h^2 do",
+        "        if issqr(x^2+h^2) then",
+        "          d:=sqrt(x^2+h^2);",
+        "          b:=k-a-c-d;",
+        "          y:=a-c-x;",
+        "          if h^2+y^2=b^2 then",
+        "            S:=[a,b,c,d];",
+        "            S:=sort(S);",
+        "            if member(S,T)=false then",
+        "              T:=[op(T),S];",
+        "              K:=[op(K),k];",
+        "            fi;",
+        "          fi;",
+        "        fi;",
+        "        x:=x+1;",
+        "      od;",
+        "    od;",
+        "  od;",
+        "  if numelems(K)>0 then",
+        "    return op(K)",
+        "  fi;",
+        "end proc;",
+        "seq(A374594(k),k=1..3000);"
+    ],
+    "xref": [
+        "Cf. A098030, A181945, A189415, A214602, A272459, A335187, A340858, A348143, A360790."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,1",
+    "author": "_Felix Huber_, Jul 13 2024",
+    "references": 0,
+    "revision": 7,
+    "time": "2024-07-28T17:08:19-04:00",
+    "created": "2024-07-28T17:08:19-04:00"
+}
