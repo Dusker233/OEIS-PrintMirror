@@ -1,0 +1,47 @@
+{
+    "number": 374843,
+    "data": "1,2,3,4,4,5,6,7,8,9,10,11,12,12,12,13,14,14,14,14,14,15,16,17,17,18,18,19,20,21,22,22,23,23,23,24,25,26,27,28,29,30,30,31,32,33,34,35,36,37,37,38,38,39,40,40,40,40,40,40,40,40,40,41,42,43,44,45",
+    "name": "Number of indices i in [n] such that in the trajectory of i for the Collatz (3x+1) problem the sum and the number of terms are coprime or the trajectory is not finite.",
+    "comment": [
+        "Terms in the trajectories for the Collatz (3x+1) problem can be used to approximate the value of Pi. This method was found by Roland Y\u00e9l\u00e9hada (see the links below)."
+    ],
+    "link": [
+        "Alois P. Heinz, <a href=\"/A374843/b374843.txt\">Table of n, a(n) for n = 1..20000</a>",
+        "Manon Bischoff, <a href=\"https://www.spektrum.de/kolumne/pi-ist-ueberall-auch-im-collatz-problem/2035834\">Pi is everywhere, even in the Collatz problem</a> (in German), Spektrum der Wissenschaft, 2022",
+        "Jean-Paul Delahaye, <a href=\"https://interstices.info/le-nombre-pi-est-partout/\">The number Pi is everywhere</a> (in French), interstices, 2017",
+        "Alois P. Heinz, <a href=\"/A374843/a374843.jpg\">Plot of sqrt(6*n/a(n)) - Pi for n = 1..1000000</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Collatz_conjecture\">Collatz Conjecture</a>",
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Iverson_bracket\">Iverson bracket</a>",
+        "<a href=\"/index/3#3x1\">Index entries for sequences related to 3x+1 (or Collatz) problem</a>",
+        "<a href=\"/index/Ph#Pi314\">Index entries for sequences related to the number Pi</a>"
+    ],
+    "formula": [
+        "a(n) = a(n-1) + [gcd(A008908(n), A033493(n)) = 1] for n >= 1 with a(0) = 0, where [] is the Iverson bracket.",
+        "Limit_{n->oo} sqrt(6*n/a(n)) = Pi = A000796.",
+        "Limit_{n->oo} a(n)/n = A059956.",
+        "Limit_{n->oo} n/a(n) = A013661."
+    ],
+    "example": [
+        "a(5) = 4 = 1 + 1 + 1 + 1 + 0, because gcd(1,1) = gcd(2,3) = gcd(8,49) = gcd(3,7) = 1 and gcd(6,36) > 1.",
+        "a(1000) = 606 -> sqrt(6*1000/a(1000)) = 3.14658387763... ."
+    ],
+    "maple": [
+        "b:= proc(n) option remember; [n, 1]+",
+        "     `if`(n=1, 0, b(`if`(n::even, n/2, 3*n+1)))",
+        "    end:",
+        "a:= proc(n) option remember; `if`(n<1, 0,",
+        "      a(n-1)+1-signum(igcd(b(n)[])-1))",
+        "    end:",
+        "seq(a(n), n=1..68);"
+    ],
+    "xref": [
+        "Cf. A000796, A003989, A006370, A006577, A008908, A013661, A033493, A059956."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,2",
+    "author": "_Alois P. Heinz_, Jul 22 2024",
+    "references": 0,
+    "revision": 39,
+    "time": "2024-07-30T17:09:58-04:00",
+    "created": "2024-07-30T10:22:13-04:00"
+}
