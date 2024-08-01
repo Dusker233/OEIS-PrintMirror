@@ -1,0 +1,38 @@
+{
+    "number": 374846,
+    "data": "3,4,6,7,11,14,19,22,23,31,38,43,46,47,59,62,67,71,79,83,86,94,103,107,118,127,131,134,139,142,151,158,163,166,167,179,191,199,206,211,214,223,227,239,251,254,262,263,271,278,283,302,307,311,326,331,334,347,358,359,367,379,382,383,398",
+    "name": "Numbers appearing exactly once in a Pythagorean triple.",
+    "comment": [
+        "Positions of the ones in A046081.",
+        "With the exception a(2) = 4, the terms are given by A374845, thus providing a simple formula for the sequence."
+    ],
+    "link": [
+        "A. Tripathi, <a href=\"http://www.fq.math.ca/Papers1/46_47-4/Tripathi.pdf\">On Pythagorean triples containing a fixed integer</a>, Fib. Q., 46/47 (2008/2009), 331-340. See Theorem 8."
+    ],
+    "formula": [
+        "p or 2p with p prime and p = 3 mod 4, with 4 added to the sequence, in ascending order."
+    ],
+    "mathematica": [
+        "t={}; Do[If[(PrimeQ[n] && Mod[n, 4] == 3) || (PrimeQ[n/2] && Mod [n/2, 4] == 3), t = Join[t, {n}]], {n, 445}]; t = Insert[t, 4, 2]",
+        "(* Positions of the ones in  A046081; based on program by Jean-Fran\u00e7ois Alcover *)",
+        "a[1] = 0; a[n_] := Module[{f}, f = Select[FactorInteger[n], Mod[#[[1]], 4] == 1 &][[All, 2]]; (DivisorSigma[0, If[OddQ[n], n, n/2]^2] - 1)/2 + (Times @@ (2*f + 1) - 1)/2]; arr = Array[a, 445]; fl = Flatten[Position[arr, 1]]"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from sympy import isprime",
+        "def A374846_gen(startvalue=1): # generator of terms >= startvalue",
+        "    return filter(lambda n:n==4 or (isprime(n) and n&3==3) or (isprime(n>>1) and n&7==6), count(max(startvalue,1)))",
+        "A374846_list = list(islice(A374846_gen(),20)) # _Chai Wah Wu_, Jul 31 2024"
+    ],
+    "xref": [
+        "Cf. A374845, A046081."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Manfred Boergens_, Jul 22 2024",
+    "references": 0,
+    "revision": 13,
+    "time": "2024-07-31T14:41:46-04:00",
+    "created": "2024-07-31T11:57:39-04:00"
+}
