@@ -1,0 +1,63 @@
+{
+    "number": 374244,
+    "data": "1,2,5,9,23,43,113,331,698,1966,4072,11433,23701,66734,205712,459632,1348864,2927822,8499580,26809375,61495590,183946295,408179706,1204202538,2643267587",
+    "name": "A Catalan-like sequence formed from the row sums of a Catalan-like triangle where row n is truncated to have ceiling((n+4)*log(3)/log(2)) - (n + 6) terms.",
+    "formula": [
+        "Same as for a normal Catalan triangle T(n,k), read by rows, each term is the sum of the entries above and to the left, i.e., T(n,k) = Sum_{j=0..k} T(n-1,j) where j is limited to the truncated length."
+    ],
+    "example": [
+        "Standard Catalan:",
+        " n   Sum   Triangle terms",
+        " 1     1 = 1;",
+        " 2     2 = 1, 1;",
+        " 3     5 = 1, 2,  2;",
+        " 4    14 = 1, 3,  5; /5",
+        " 5    42 = 1, 4,  9, 14; /14",
+        " 6   132 = 1, 5, 14, 28; /42;  14",
+        " 7   429 = 1, 6, 20, 48, 90; /132; 132",
+        "...",
+        "When n=4, number of terms is restricted to 3 dropping 1 term; ceiling((4+4)*log(3)/log(2)) - (4 + 6) = 3.",
+        "When n=6, number of terms is restricted to 4 dropping 2 terms; ceiling((6+4)*log(3)/log(2)) - (6 + 6) = 4.",
+        "etc.",
+        "Truncating at the point indicated by / and summing the remaining triangle terms in the normal way results in:",
+        "n    Sum  Truncated Triangle terms",
+        " 1     1 = 1;",
+        " 2     2 = 1, 1;",
+        " 3     5 = 1, 2, 2;",
+        " 4     9 = 1, 3, 5;",
+        " 5    23 = 1, 4, 9, 9;",
+        " 6    43 = 1, 5, 14, 23;",
+        " 7   113 = 1, 6, 20, 43, 43;",
+        " 8   331 = 1, 7, 27, 70, 113, 113;",
+        " 9   698 = 1, 8, 35, 105, 218, 331;",
+        "10  1966 = 1, 9, 44, 149, 367, 698, 698;",
+        "11  4072 = 1, 10, 54, 203, 570, 1268, 1966;",
+        "12 11433 = 1, 11, 65, 268, 838, 2106, 4072, 4072;",
+        "13 23701 = 1, 12, 77, 345, 1183, 3289, 7361, 11433;",
+        "..."
+    ],
+    "program": [
+        "(PARI) f(n) = {",
+        "my(terms(j)=ceil((j+4)*log(3)/log(2)) - (j+6));",
+        "my(T=vector(n));",
+        "my(S=vector(n));",
+        "for(y=1, n,",
+        "       my(k=terms(y));",
+        "     T[y]=vector(k);",
+        "       for(i=1, k, if(i==1,T[y][i]=1,if(i<=length(T[y-1]),T[y][i]=T[y-1][i]+T[y][i-1],T[y][i]=T[y][i-1])));",
+        "       S[y]=vecsum(T[y]);",
+        "    );",
+        "for(y=1, n, print(S[y], \": \", T[y]); );",
+        "}"
+    ],
+    "xref": [
+        "Cf. A009766, A000108, Half Catalan A000992."
+    ],
+    "keyword": "nonn,easy,new",
+    "offset": "1,2",
+    "author": "_Rob Bunce_, Jul 01 2024",
+    "references": 0,
+    "revision": 15,
+    "time": "2024-08-03T11:57:05-04:00",
+    "created": "2024-08-03T11:57:05-04:00"
+}
