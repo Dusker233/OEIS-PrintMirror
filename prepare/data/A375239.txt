@@ -1,0 +1,48 @@
+{
+    "number": 375239,
+    "data": "2522,4921,18241,25553,27290,40313,90834,95513,98282,98705,117002,120962,136073,136865,148682,153794,181441,181554,185825,211673,211674,212401,215034,216361,231002,231665,234641,236041,236634,266282,281402,285410,298433,298434,330473,331985,346505,381353",
+    "name": "Numbers k such that k, k+1, ..., k+5 all have 3 prime factors (counted with multiplicity).",
+    "comment": [
+        "First differs from A045942 at position 20, where a(20) = 211673 but A045942(20) = 204323.",
+        "All terms == 1 or 2 (mod 8)."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A375239/b375239.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "example": [
+        "a(3) = 18241 is a term because",
+        "  18241 = 17 * 29 * 37",
+        "  18242 =  2 * 7 * 1303",
+        "  18243 =  3^2 * 2027",
+        "  18244 =  2^2 * 4561",
+        "  18245 =  5 * 41 * 89",
+        "  18246 =  2 * 3 * 3041",
+        "are all products of 3 primes (counted with multiplicity)."
+    ],
+    "maple": [
+        "R:= NULL: count:= 0: p:= 1:",
+        "while count < 100 do",
+        "  p:= nextprime(p);",
+        "  x:= 4*p;",
+        "  if andmap(t -> numtheory:-bigomega(t)=3, [x-2,x-1,x+1,x+2]) then",
+        "    if numtheory:-bigomega(x-3) = 3 then R:= R, x-3; count:= count+1;  fi;",
+        "    if numtheory:-bigomega(x+3) = 3 then R:= R, x-2; count:= count+1;  fi;",
+        "  fi;",
+        "od:",
+        "R;"
+    ],
+    "mathematica": [
+        "s = {}; Do[If[{3, 3, 3, 3, 3, 3} == PrimeOmega[Range[k, k + 5]],",
+        "AppendTo[s, k]], {k, 1000000}]; s"
+    ],
+    "xref": [
+        "Subsequence of A045942 and of A113789. Contains A259756."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Zak Seidov_ and _Robert Israel_, Aug 06 2024",
+    "references": 0,
+    "revision": 14,
+    "time": "2024-08-07T11:15:06-04:00",
+    "created": "2024-08-07T11:15:06-04:00"
+}
