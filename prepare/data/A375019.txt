@@ -1,0 +1,44 @@
+{
+    "number": 375019,
+    "data": "3,7,8,9,15,17,25,26,27,31,48,49,55,63,64,80,81,97,99,125,127,161,224,225,242,243,244,251,255,288,289,325,343,351,361,449,485,487,511,512,513,575,577,624,625,649,675,676,687,721,728,729,783,960,961,999",
+    "name": "Positive integers n such that (1, n^2 - 1, n^2) is an abc triple.",
+    "comment": [
+        "If a number appears in this sequence, so do all of its powers. This immediately implies that this sequence is infinite.",
+        "The highest known quality abc triple of this form occurs with n = 49, with quality 1.4557, for the triple (1, 2400, 2401)."
+    ],
+    "link": [
+        "Bart de Smit, <a href=\"https://www.math.leidenuniv.nl/~smitbde/abc/\">ABC-triples</a>"
+    ],
+    "example": [
+        "For a(1) = 3: (a,b,c) = (1,8,9) is an abc triple. Reason: rad(1*8*9) = rad(72) = 6. Since 6 < 3^2, 3 is a term of this sequence."
+    ],
+    "program": [
+        "(Python)",
+        "\"\"\"",
+        "Note that this code generates all terms <= n, not the nth term.",
+        "\"\"\"",
+        "n = 10**5  # replace this number with whatever limit",
+        "from sympy import primefactors, prod",
+        "def rad(n): return 1 if n < 2 else prod(primefactors(n))",
+        "# Function to help determine whether a value is a term.",
+        "def is_term(k: int):",
+        "    # Calculate rad((k^2-1)*k^2) = rad((k-1)*k*(k+1)).",
+        "    rad_abc = rad(k-1) * rad(k) * rad(k+1)",
+        "    if k % 2 == 1:",
+        "        rad_abc //= 2  # 2 is double-counted as a prime factor. No other multiple-counts are possible.",
+        "    return rad_abc < k**2",
+        "# The final sequence.",
+        "a = list(filter(is_term, range(2, n+1))) \\\\ _William Hu_, Aug 09 2024",
+        "(PARI) is_a375019(n) = factorback(factorint((n-1)*n*(n+1))[,1]) < n^2 \\\\ _Hugo Pfoertner_, Aug 09 2024"
+    ],
+    "xref": [
+        "Cf. A007531, A007947."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_William Hu_, Aug 09 2024",
+    "references": 9,
+    "revision": 36,
+    "time": "2024-08-09T15:13:41-04:00",
+    "created": "2024-08-09T15:13:41-04:00"
+}
