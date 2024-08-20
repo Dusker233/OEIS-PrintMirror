@@ -1,0 +1,37 @@
+{
+    "number": 374908,
+    "data": "0,6,12,19,27,35,45,54,63,74,81,90,102,115,124,135,147,156,169,183,197,208,226,242,256,272,285,302,318,332,347,359,375,388,407,420,435,449,463,478,492,507,521,533,548,564,579,593,609,627,641,653,669,687,703",
+    "name": "Each term is the sum of the preceding term and its seven-segment total A006942.",
+    "comment": [
+        "The number of segments in each digit 0 to 9 is [6,2,5,5,4,5,6,3,7,6].",
+        "Conjecture: Taking the least significant digit of each term is not an eventually periodic sequence."
+    ],
+    "formula": [
+        "a(n) = a(n-1) + A006942(a(n-1))."
+    ],
+    "example": [
+        "For n=1, the preceding a(0) = 0 is 6 segments so that a(1) = 0 + 6 = 6."
+    ],
+    "mathematica": [
+        "s={0};Do[AppendTo[s,Last[s]+ Plus @@ (IntegerDigits@ Last[s] /. {0 -> 6, 1 -> 2, 2 -> 5, 3 -> 5, 7 -> 3, 8 -> 7, 9 -> 6})],{n,54}];s (* _James C. McMahon_, Aug 19 2024 *)"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import islice",
+        "def b(n): return sum([6, 2, 5, 5, 4, 5, 6, 3, 7, 6][int(d)] for d in str(n))",
+        "def agen(): # generator of terms",
+        "    yield (an:=0)",
+        "    while True: yield (an:=an+b(an))",
+        "print(list(islice(agen(), 55))) # _Michael S. Branicky_, Jul 28 2024"
+    ],
+    "xref": [
+        "Cf. A006942, A219675."
+    ],
+    "keyword": "nonn,base,easy,new",
+    "offset": "0,2",
+    "author": "_David J. Ellis_, Jul 23 2024",
+    "references": 0,
+    "revision": 34,
+    "time": "2024-08-19T21:50:56-04:00",
+    "created": "2024-08-19T11:51:31-04:00"
+}

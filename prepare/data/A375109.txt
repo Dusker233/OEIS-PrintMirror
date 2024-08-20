@@ -1,0 +1,46 @@
+{
+    "number": 375109,
+    "data": "1,1,2,4,6,9,14,17,22,27,35,40,50,56,64,71,85,92,109,117,128,139,159,168,182,194,208,219,245,256,285,298,314,331,349,361,396,414,433,448,486,502,542,560,580,602,646,661,691,711,737,759,809",
+    "name": "Number of distinct products i*j with 1 <= i, j <= n which are not the sum of two numbers between 1 and n.",
+    "comment": [
+        "In other words, these are the products that are not in {2..2*n}.",
+        "Essentialy each unique product i*j that is not i+j for 1 <= i, j <= n is in A254671+1.",
+        "Conversely the number of distinct sums i+j with 1 <= i, j <= n which are not the product of two numbers between 1 and n is A060715.",
+        "a(n) < A263995(n)."
+    ],
+    "formula": [
+        "a(n) = A373716(n)+A108954(n)."
+    ],
+    "example": [
+        "a(3) = 2 because:",
+        " Prods = [1, 2, 3, 2, 4, 6, 3, 6, 9]",
+        " Sums = [2, 3, 4, 3, 4, 5, 4, 5, 6]",
+        " Items in Prods not in Sums : [1,9]",
+        "Total: 2.",
+        "a(4) = 4 because:",
+        " Prods = [1, 2, 3, 4, 2, 4, 6, 8, 3, 6, 9, 12, 4, 8, 12, 16]",
+        " Sums = [2, 3, 4, 5, 3, 4, 5, 6, 4, 5, 6, 7, 5, 6, 7, 8]",
+        " Items in Prods not in Sums: [1, 9, 12, 16]",
+        "Total: 4."
+    ],
+    "program": [
+        "(Python)",
+        "def a(n):",
+        "    P = {i * j for i in range(1, n+1) for j in range(1, n+1)}",
+        "    return sum(1 for x in P if x > 2*n or x < 2)",
+        "print([a(n) for n in range(1,54)])",
+        "(Python)",
+        "def A375109(n): return len({i*j for i in range(1,n+1) for j in range((n<<1)//i+1,i+1)})+1 # _Chai Wah Wu_, Aug 19 2024",
+        "(PARI) a(n) = #select(x->((x>2*n) || (x<2)), setbinop((x,y)->x*y, [1..n])); \\\\ _Michel Marcus_, Jul 30 2024"
+    ],
+    "xref": [
+        "Cf. A027424, A060715, A108954, A254671, A263995, A373716."
+    ],
+    "keyword": "nonn,easy,new",
+    "offset": "1,3",
+    "author": "_Dar\u00edo Clavijo_, Jul 30 2024",
+    "references": 0,
+    "revision": 50,
+    "time": "2024-08-19T13:16:56-04:00",
+    "created": "2024-08-19T11:49:56-04:00"
+}
