@@ -1,0 +1,42 @@
+{
+    "number": 375357,
+    "data": "110,35237,52006454275147,8149229312286883803155895853,101957128471911748968541302399445156486848984449235985038696169948167385",
+    "name": "a(n) is the number of p X p toroidal knot/link mosaics, where p = A000040(n).",
+    "comment": [
+        "A p X p mosaic is an p X p array of the 11 tiles given by Lomonaco and Kauffman. A period p X p mosaic is an p X p mosaic whose opposite edges are identified. A toroidal p X p mosaic is an equivalence class of period p X p mosaics up to finite sequences of cyclic rotations of rows and columns. A toroidal mosaic depicts the projection of a knot or link on the surface of a torus iff the connection points of each tile coincide with those of the contiguous tiles and with those of the tiles on identified edges.",
+        "The Mathematica program below is based on the algorithm given in Theorem 4 of Oh, Hong, Lee, Lee, and Yeon."
+    ],
+    "link": [
+        "Michael Carlisle and Michael S. Laufer, <a href=\"https://doi.org/10.48550/arXiv.1206.4227\">On upper bounds for toroidal mosaic numbers</a>, Quantum Inf. Process. 12 (2013), no. 9, 2935-2945.",
+        "Samuel J. Lomonaco and Louis H. Kauffman, <a href=\"http://www.csee.umbc.edu/~lomonaco/pubs/psapm561.pdf\">Quantum Knots and Mosaics</a>, Proc. Sympos. Applied Math., Amer. Math. Soc., Vol. 68 (2010), pp. 177-208.",
+        "Seungsang Oh, Kyungpyo Hong, Ho Lee, Hwa Jeong Lee, and Mi Jeong Yeon, <a href=\"http://arxiv.org/abs/1703.04867\">Period and toroidal knot mosaics</a>, arXiv: 1703.04867 [math.GT], 2017.",
+        "<a href=\"/index/K#knots\">Index entries for sequences related to knots</a>"
+    ],
+    "example": [
+        "An exhaustive list of all 110 distinct 2 X 2 toroidal link mosaics is given collectively by Appendix A of Carlisle and Laufer and Figure 4 of Oh, Hong, Lee, Lee, and Yeon."
+    ],
+    "mathematica": [
+        "<<OEIS` (* load OEIS-Mathematica package *)",
+        "x[0] = o[0] = {{1}}; y[0] = p[0] = {{0}};",
+        "x[n_] := ArrayFlatten[{{x[n - 1], p[n - 1]}, {p[n - 1], x[n - 1]}}];",
+        "y[n_] := ArrayFlatten[{{y[n - 1], o[n - 1]}, {o[n - 1], y[n - 1]}}];",
+        "o[n_] := ArrayFlatten[{{o[n - 1], y[n - 1]}, {y[n - 1], 4 * o[n - 1]}}];",
+        "p[n_] := ArrayFlatten[{{p[n - 1], x[n - 1]}, {x[n - 1], 4 * p[n - 1]}}];",
+        "t[A_, k_, q_] := 2 + Sum[A[[i + 1, 1 + Mod[i * 2^k, 2^q - 1, 1]]], {i, 0, 2^q - 1}]",
+        "f[q_, k_] := -7 + t[x[q] + o[q], k, q];",
+        "g[q_] := -7 + Part[OEISImport[\"A375355\",\"Data\"], PolygonalNumber[q], 2] - 2*Sum[f[q, k], {k, 0, (q - 1)/2}];",
+        "toroidalcount[q_] := If[q > 2, (1/q^2) * g[q] + (2/q) * Sum[f[q, k], {k, 0, (q - 1)/2}] + 7, 110]",
+        "Monitor[Table[toroidalcount[Prime[n]], {n, 1, 5}], Row[{ProgressIndicator[n, {1, 5}], n}, \" \"]]"
+    ],
+    "xref": [
+        "This is a subsequence of the diagonal of A375356.",
+        "Cf. A375355, A375353, A375354, A261400, A374947, A374946."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,1",
+    "author": "_Luc Ta_, Aug 20 2024",
+    "references": 0,
+    "revision": 10,
+    "time": "2024-08-20T12:22:51-04:00",
+    "created": "2024-08-20T07:39:28-04:00"
+}
