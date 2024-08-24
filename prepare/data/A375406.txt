@@ -1,0 +1,56 @@
+{
+    "number": 375406,
+    "data": "0,0,0,0,0,0,1,4,14,41,110,278,673,1576,3599,8055,17732,38509,82683,175830,370856,776723,1616945,3348500,6902905,14174198,29004911,59175625,120414435,244468774,495340191,1001911626,2023473267,4081241473,8222198324,16548146045,33276169507",
+    "name": "Number of integer compositions of n that match the dashed pattern 3-12.",
+    "comment": [
+        "First differs from the non-dashed version A335514 at a(9) = 41, A335514(9) = 42, due to the composition (3,1,3,2).",
+        "Also the number of integer compositions of n whose leaders of weakly decreasing runs are not weakly increasing. For example, the composition q = (1,1,2,1,2,2,1,3) has maximal weakly decreasing runs ((1,1),(2,1),(2,2,1),(3)), with leaders (1,2,2,3), which are weakly increasing, so q is not counted under a(13); also q does not match 3-12. On the other hand, the reverse is (3,1,2,2,1,2,1,1), with maximal weakly decreasing runs ((3,1),(2,2,1),(2,1,1)), with leaders (3,2,2), which are not weakly increasing, so it is counted under a(13); meanwhile it matches 3-12, as required."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Permutation_pattern\">Permutation pattern</a>.",
+        "Gus Wiseman, <a href=\"/A374629/a374629.txt\">Sequences counting and ranking compositions by their leaders (for six types of runs)</a>."
+    ],
+    "formula": [
+        "a(n>0) = 2^(n-1) - A188900(n)."
+    ],
+    "example": [
+        "The a(0) = 0 through a(8) = 14 compositions:",
+        "  .  .  .  .  .  .  (312)  (412)   (413)",
+        "                           (1312)  (512)",
+        "                           (3112)  (1412)",
+        "                           (3121)  (2312)",
+        "                                   (3122)",
+        "                                   (3212)",
+        "                                   (4112)",
+        "                                   (4121)",
+        "                                   (11312)",
+        "                                   (13112)",
+        "                                   (13121)",
+        "                                   (31112)",
+        "                                   (31121)",
+        "                                   (31211)"
+    ],
+    "mathematica": [
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n], !LessEqual@@First/@Split[#,GreaterEqual]&]],{n,0,15}]",
+        "- or -",
+        "Table[Length[Select[Join@@Permutations/@IntegerPartitions[n], MatchQ[#,{___,z_,___,x_,y_,___}/;x<y<z]&]],{n,0,15}] (*3-12*)"
+    ],
+    "xref": [
+        "For leaders of identical runs we have A056823.",
+        "The complement is counted by A188900.",
+        "The non-dashed version is A335514, ranks A335479.",
+        "Ranks are positions of non-weakly increasing rows in A374740.",
+        "A003242 counts anti-run compositions, ranks A333489.",
+        "A011782 counts compositions.",
+        "Counting compositions by number of runs: A238130, A238279, A333755.",
+        "A373949 counts compositions by run-compressed sum, opposite A373951.",
+        "Cf. A106356, A188920, A189076, A189077, A238343, A333213, A335548, A374629, A374637, A374679, A374748."
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,8",
+    "author": "_Gus Wiseman_, Aug 22 2024",
+    "references": 0,
+    "revision": 11,
+    "time": "2024-08-23T08:40:32-04:00",
+    "created": "2024-08-23T08:40:32-04:00"
+}

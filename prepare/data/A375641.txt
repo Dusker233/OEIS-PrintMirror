@@ -1,0 +1,48 @@
+{
+    "number": 375641,
+    "data": "1,1,2,4,11,32,104,371,1422,5794,25198,115116,553920,2783172,14615962,79663561,451504309,2644454136,16029261144,100111244980,644818331023,4266660974287,29039771691187,202593132873877,1450134395507982,10620929594678416,79653883382579837",
+    "name": "a(n) is the number of partitions of {1..n} into sets where the largest member is greater than the sum of all the others.",
+    "comment": [
+        "Sets of 1 or 2 members are always allowed."
+    ],
+    "example": [
+        "a(4) = 11 because there are 11 such partitions of [1,2,3,4]:",
+        "  [1], [2], [3], [4]",
+        "  [3], [1,2,4]",
+        "  3 partitions into two sets of 2 members, such as [1,2], [3,4]",
+        "  6 partitions into two sets of 1 member and one of 2 members, such as [1],[2],[3,4]."
+    ],
+    "maple": [
+        "f:= proc(S,s) option remember;",
+        "  local i;",
+        "  # set of sublists of list S summing to <= s",
+        "  if s < 0 then return {} fi;",
+        "  if s = 0 then return {[]} fi;",
+        "  `union`({[]}, seq(map(t -> [op(t),S[i]], procname(S[1..i-1],s-S[i])),i=1..nops(S)))",
+        "end proc:",
+        "h:= proc(L)",
+        "# partitions of L into lists with one member > sum of the others",
+        "  option remember;",
+        "  local V,S,R;",
+        "  if L=[] then return {{}} fi;",
+        "  V:= f(L[1..-2],L[-1]-1);",
+        "  R:= NULL:",
+        "  for S in V do",
+        "    if S = L[1..-2] then R:= R,{L}",
+        "    else R:= R, op(map(t -> t union {[op(S),L[-1]]}, procname(remove(t ->    member(t,S),L[1..-2]))))",
+        "  fi od;",
+        "  {R};",
+        "end proc:",
+        "seq(nops(h([$1..n])), n=0..14);"
+    ],
+    "keyword": "nonn,new",
+    "offset": "0,3",
+    "author": "_Robert Israel_, Aug 22 2024",
+    "ext": [
+        "a(15)-a(26) from _Alois P. Heinz_, Aug 22 2024"
+    ],
+    "references": 0,
+    "revision": 26,
+    "time": "2024-08-23T10:50:57-04:00",
+    "created": "2024-08-23T10:50:57-04:00"
+}
