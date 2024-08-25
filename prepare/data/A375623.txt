@@ -1,0 +1,41 @@
+{
+    "number": 375623,
+    "data": "0,0,0,2,12,30,72,132,240,380,600,870,1260,1722",
+    "name": "Maximum value of F(p)  =  Sum (|i-j| - |p(i)-p(j)|)^2 where the sum is over all 1 <= i < j <= n, for all permutations p in the symmetric group S_n.",
+    "comment": [
+        "The function F was defined by Dan Asimov on the Mailing list Math-Fun on Aug. 18, 2024. It can be considered as a sort of entropy of a permutation p like the function Sum_{k=1..n} (p(k)-k)^2 in A126972.",
+        "The terms for even n seem to agree with A047928."
+    ],
+    "maple": [
+        "F := proc(S) local i, j, M;",
+        "M := 0;",
+        "for j from 1 to nops(S) do",
+        "    for i from 1 to j-1 do",
+        "      M := M + (abs(i - j) - abs(S[i] - S[j]))^2",
+        "    od:",
+        "od: M end:",
+        "a := proc(n) local P, m, u, mm;",
+        "P := combinat:-permute(n);",
+        "m := 0;",
+        "for u in P do",
+        "   mm := F(u);",
+        "   if mm > m then m := mm fi;",
+        "od: m end:"
+    ],
+    "program": [
+        "(PARI) a375623(n) = my(m=0); forperm(n, p, m=max(m, sum(i=1,n, sum(j=1,i-1,(abs(i-j)-abs(p[i]-p[j]))^2)))); m \\\\ _Hugo Pfoertner_, Aug 22 2024"
+    ],
+    "xref": [
+        "Cf. A047928, A126972, A375625."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "0,4",
+    "author": "_W. Edwin Clark_, Aug 21 2024",
+    "ext": [
+        "a(11)-a(13) from _Hugo Pfoertner_, Aug 23 2024"
+    ],
+    "references": 0,
+    "revision": 23,
+    "time": "2024-08-24T14:46:03-04:00",
+    "created": "2024-08-24T14:46:03-04:00"
+}
