@@ -1,0 +1,33 @@
+{
+    "number": 375520,
+    "data": "2,2,2,4,20,4020,23086860,13991331508857930,6090228896601444631429868134927310,9346903779275810940456996749711484938792041307270162838305692061624510",
+    "name": "a(n) = A375516(n)/LCM{1,...,n}.",
+    "comment": [
+        "It is a theorem of _R\u00e9my Sigrist_ (soon to be added to A374983) that a(n) is an integer."
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "from math import gcd, lcm",
+        "def A375520_gen(): # generator of terms",
+        "    p, q, c = 0, 1, 1",
+        "    for k in count(1):",
+        "        m = q//(k*(q-p))+1",
+        "        p, q = p*k*m+q, k*m*q",
+        "        p //= (r:=gcd(p,q))",
+        "        q //= r",
+        "        c = lcm(c,k)",
+        "        yield q//c",
+        "A375520_list = list(islice(A375520_gen(),11)) # _Chai Wah Wu_, Aug 28 2024"
+    ],
+    "xref": [
+        "Cf. A003418, A374663, A374983, A375516."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_N. J. A. Sloane_, Aug 28 2024",
+    "references": 0,
+    "revision": 11,
+    "time": "2024-08-29T02:10:04-04:00",
+    "created": "2024-08-28T16:42:00-04:00"
+}

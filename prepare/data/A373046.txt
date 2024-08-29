@@ -1,0 +1,47 @@
+{
+    "number": 373046,
+    "data": "0,0,0,0,1,4,12,32,79,186,424,944,2065,4456,9512,20128,42287,88310,183492,379624,782497,1607756,3294164,6732992,13732063,27953522,56807184,115269984,233585121,472771152,955843984,1930635712,3896121759,7856343278,15830584396",
+    "name": "Number of binary strings of length n that contain the substring 1000.",
+    "comment": [
+        "a(n)=2^(n-3)+a(n-1)+a(n-2)+a(n-3)-1 for n>=7.",
+        "Proof: Copnsider possible endings of the sequence:",
+        "1. If it ends with 000, then all sequences except 00...0 work, meaning that 2^(n-3)-1 sequences are valid.",
+        "2. If it ends with 100, then there are a(n-3) valid sequences.",
+        "3. If it ends with 10, then there are a(n-2) valid sequences.",
+        "4. If it ends with 1, then there are a(n-1) valid sequences.",
+        "As these are the only possible endings, the conclusion holds.",
+        "If we search for a sequence 10...0 (with k zeros), an extended version of the same algorithm gives a(n)=a(n-k)+a(n-k-1)...+a(n-1)+2^(n-k)-1"
+    ],
+    "link": [
+        "<a href=\"/index/Rec#order_05\">Index entries for linear recurrences with constant coefficients</a>, signature (4,-4,0,-1,2)."
+    ],
+    "formula": [
+        "a(n) = 2^(n-3) + a(n-1) + a(n-2) + a(n-3) - 1.",
+        "a(n) = 3*a(n-1) - a(n-2) - a(n-3) - 2*a(n-4) + 1.",
+        "G.f.: -x^4/((x-1)*(2*x-1)*(x^3+x^2+x-1)). - _Alois P. Heinz_, Aug 02 2024",
+        "2*a(n) = 1+2^(n+1)-A000213(n+3). - _R. J. Mathar_, Aug 28 2024"
+    ],
+    "example": [
+        "a(5) = 4: 01000, 11000, 10000, 10001."
+    ],
+    "program": [
+        "(Python)",
+        "def aupton(terms):",
+        "    a = [0, 0, 0]",
+        "    for n in range(3, terms):",
+        "        next_term = 2**(n-3) + a[n-1] + a[n-2] + a[n-3] - 1",
+        "        a.append(next_term)",
+        "    return a[:terms]",
+        "print(aupton(35))"
+    ],
+    "xref": [
+        "Cf. A050232, A232580."
+    ],
+    "keyword": "nonn,easy,new",
+    "offset": "0,6",
+    "author": "_Deyan Bozhkov_, Aug 02 2024",
+    "references": 0,
+    "revision": 46,
+    "time": "2024-08-28T15:39:45-04:00",
+    "created": "2024-08-28T11:32:03-04:00"
+}
