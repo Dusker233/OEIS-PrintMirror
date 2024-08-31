@@ -1,0 +1,48 @@
+{
+    "number": 375781,
+    "data": "1,1,2,3,5,89,39304,46994541278,17331821184409051471456,684945610024339520619912889548385212804350252,454557097914340869696918952726502107711786801276885341616727617337826266151394840009711293",
+    "name": "Lexicographically earliest sequence of positive integers such that for any n > 0, Sum_{k = 1..n} 1 / (prime(k)*a(k)) < 1 (where prime(k) denotes the k-th prime number).",
+    "comment": [
+        "The sum of the reciprocals of the primes diverges. We divide each of its terms in such a way as to have a series bounded by 1."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Divergence_of_the_sum_of_the_reciprocals_of_the_primes\">Divergence of the sum of the reciprocals of the primes</a>"
+    ],
+    "example": [
+        "The first terms, alongside the corresponding sums, are:",
+        "  n  a(n)   Sum_{k=1..n} 1/(prime(k)*a(k))",
+        "  -  -----  ------------------------------",
+        "  1      1  1/2",
+        "  2      1  5/6",
+        "  3      2  14/15",
+        "  4      3  103/105",
+        "  5      5  1154/1155",
+        "  6     89  1336333/1336335",
+        "  7  39304  892896284279/892896284280"
+    ],
+    "program": [
+        "(PARI) { r = 1; forprime (p = 2, prime(11), print1 (a = floor(1/(r*p)) + 1\", \"); r -= 1 / (a*p);); }",
+        "(Python)",
+        "from itertools import islice",
+        "from math import gcd",
+        "from sympy import nextprime",
+        "def A375781_gen(): # generator of terms",
+        "    p, q, k = 0, 1, 1",
+        "    while (k:=nextprime(k)):",
+        "        yield (m:=q//(k*(q-p))+1)",
+        "        p, q = p*k*m+q, k*m*q",
+        "        p //= (r:=gcd(p,q))",
+        "        q //= r",
+        "A375781_list = list(islice(A375781_gen(),11)) # _Chai Wah Wu_, Aug 30 2024"
+    ],
+    "xref": [
+        "Cf. A374663."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,3",
+    "author": "_R\u00e9my Sigrist_, Aug 28 2024",
+    "references": 0,
+    "revision": 8,
+    "time": "2024-08-30T09:53:28-04:00",
+    "created": "2024-08-30T07:09:49-04:00"
+}
