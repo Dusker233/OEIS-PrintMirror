@@ -1,0 +1,45 @@
+{
+    "number": 375824,
+    "data": "36,45,153,171,351,630,1035,1431,2016,3240,3321,4005,8001,10440,13041,13203,16110,21321,23220,25200,101025,105111,114003,222111,320400,321201,1010331,1241100,1313010,1400301,2013021,2031120,2410110,4020030,10006101,11203011,20012301,32004000,32012001,33020001",
+    "name": "Triangular numbers whose sum of digits is 9.",
+    "comment": [
+        "Infinite subsequences include 2 * 10^(2*k) + 13 * 10^k + 21, 2 * 10^(2*k) + 31 * 10^k + 120, 32 * 10^(2*k) + 4 * 10^k, and 32 * 10^(2*k) + 12 * 10^k + 1.",
+        "Conjecture: the last term not of one of those subsequences is a(53) =  210010000005."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A375824/b375824.txt\">Table of n, a(n) for n = 1..95</a>"
+    ],
+    "example": [
+        "a(4) = 153 is a term because 153 = 17 * 18/2 is a triangular number and 1 + 5 + 3 = 9."
+    ],
+    "maple": [
+        "F:= proc(d,s) option remember;",
+        "# d-digit numbers with sum of digits s",
+        "      local R,i;",
+        "      R:= {};",
+        "      for i from 0 to min(s,9) do",
+        "        R:= R union map(t -> 10*t+i, procname(d-1,s-i))",
+        "      od;",
+        "      R",
+        "end proc:",
+        "F(1,0):= {}:",
+        "for i from 1 to 9 do F(1,i):= {i} od:",
+        "sort(convert(`union`(seq(select(t -> issqr(1+8*t), F(d,9)),d=1..12)),list));"
+    ],
+    "mathematica": [
+        "Select[Range[10000](Range[10000]+1)/2,DigitSum[#]==9 &] (* _Stefano Spezia_, Sep 01 2024 *)"
+    ],
+    "program": [
+        "(PARI) select(x->(sumdigits(x)==9), vector(10000, n, n*(n+1)/2)) \\\\ _Michel Marcus_, Aug 31 2024"
+    ],
+    "xref": [
+        "Intersection of A000217 and A052223.  Contained in A117404 and A076713."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Aug 30 2024",
+    "references": 0,
+    "revision": 11,
+    "time": "2024-09-01T18:41:01-04:00",
+    "created": "2024-09-01T18:41:01-04:00"
+}
