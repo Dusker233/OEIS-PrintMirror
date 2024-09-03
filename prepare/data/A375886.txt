@@ -1,0 +1,37 @@
+{
+    "number": 375886,
+    "data": "2,3,5,7,8,11,13,23,37,41,47,53,56,71,77,83,92,122,137,158,167,248",
+    "name": "Numbers k such that 2k and 4k have the same number of Goldbach partitions into primes.",
+    "comment": [
+        "No further terms up to 10^5."
+    ],
+    "example": [
+        "Both 10 = 3+7 = 5+5 and 20 = 3+17 = 7+13 have two Goldbach partitions, so 5 is a term."
+    ],
+    "maple": [
+        "N:= 100000: # to test k <= N",
+        "P:= select(isprime, [2,seq(i,i=3..4*N-2,2)]):",
+        "G:= Vector(4*N):",
+        "for i from 1 to nops(P) do",
+        "   jmax:= ListTools:-BinaryPlace(P,4*N-P[i]);",
+        "   if jmax < i then break fi;",
+        "   J:=  P[i..jmax]+~ P[i];",
+        "   G[J]:= G[J] +~ 1",
+        "od:",
+        "select(t -> G[2*t] = G[4*t], [$1..N]); # _Robert Israel_, Sep 02 2024"
+    ],
+    "mathematica": [
+        "f[n_]:=Length[Select[2*n-Prime[Range[PrimePi[n]]],PrimeQ]];",
+        "Select[Range[250],f[#]==f[2*#]&]"
+    ],
+    "xref": [
+        "Cf. A045917."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,1",
+    "author": "_Ivan N. Ianakiev_, Sep 01 2024",
+    "references": 0,
+    "revision": 12,
+    "time": "2024-09-03T00:55:27-04:00",
+    "created": "2024-09-03T00:55:27-04:00"
+}
