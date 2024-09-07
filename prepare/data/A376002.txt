@@ -1,0 +1,42 @@
+{
+    "number": 376002,
+    "data": "1,3,5,22,84,99,511,803,9999,18887,1378751,103974046",
+    "name": "Positions of records in A032662.",
+    "comment": [
+        "Numbers k such that the first j for which the concatenation j || j+k is prime is greater than for any previous k.",
+        "In order for j || j+k to be prime where j+k has d digits, k and 10^d+1 must be coprime."
+    ],
+    "example": [
+        "a(5) = 84 because A032662(84) = 929 which is greater than A032662(k) for all k < 84."
+    ],
+    "maple": [
+        "tcat:= (a,b) -> a*10^(1+ilog10(b))+b:",
+        "f:= proc(n) local k,k0,d;",
+        "  for d from ilog10(n)+1 do",
+        "    if igcd(10^d+1,n) = 1 then",
+        "      k0:= max(1,10^(d-1)-n);",
+        "      if (k0+n)::even then k0:= k0+1 fi;",
+        "      for k from k0 to 10^d-n-1 by 2 do",
+        "        if isprime(tcat(k,k+n)) then return k fi",
+        "   od fi od",
+        "end proc:",
+        "R:= NULL: m:= 0: count:= 0:",
+        "for i from 1 while count < 11 do",
+        "  v:= f(i);",
+        "  if v > m then",
+        "    count:= count+1; m:= v; R:= R,i;",
+        "  fi;",
+        "od:",
+        "R;"
+    ],
+    "xref": [
+        "Cf. A032662, A376006."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Sep 05 2024",
+    "references": 0,
+    "revision": 9,
+    "time": "2024-09-06T20:17:45-04:00",
+    "created": "2024-09-06T20:17:45-04:00"
+}
