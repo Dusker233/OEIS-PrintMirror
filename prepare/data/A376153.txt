@@ -1,0 +1,35 @@
+{
+    "number": 376153,
+    "data": "13,115,1113,11116,1111124,11111120,111111156,1111111128,11111111616,111111121116,1111111111616,111111111113184,1111111111113012,11111111111112192,111111111111151616,1111111111111113216,51111111111111111168,111411111111111111168,11111111111111111311360",
+    "name": "a(n) is the least number with n decimal digits 1 and n prime factors, counted with multiplicity.",
+    "example": [
+        "a(3) = 1113 because 1113 contains 3 1's and 1113 = 3 * 7 * 53 has 3 prime factors, counted with multiplicity."
+    ],
+    "maple": [
+        "g:= proc(x,S,d)",
+        "local L,i;",
+        "  L:= convert(x,base,9);",
+        "  add(`if`(L[i]=0,0,L[i]+1)*10^S[i],i=1..nops(L)) + add(10^i,i={$0..d-1} minus S)",
+        "end proc:",
+        "f:= proc(n)",
+        "    local x,d,Cands,S;",
+        "    x:= (10^n-1)/9;",
+        "    if numtheory:-bigomega(x) = n then return x fi;",
+        "    for d from n+1 do",
+        "      Cands:= sort([seq(seq(g(x,S,d),x =9^(d-n-1) .. 9^(d-n)-1),S = combinat:-choose({$0..d-1},d-n))]);",
+        "      for x in Cands do if numtheory:-bigomega(x) = n then return x fi od;",
+        "    od;",
+        "end proc:",
+        "seq(f(i),i=1..19);"
+    ],
+    "xref": [
+        "Cf. A376063."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Sep 12 2024",
+    "references": 0,
+    "revision": 4,
+    "time": "2024-09-13T08:07:08-04:00",
+    "created": "2024-09-13T08:07:08-04:00"
+}

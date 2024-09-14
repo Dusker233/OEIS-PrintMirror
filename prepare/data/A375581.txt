@@ -1,0 +1,38 @@
+{
+    "number": 375581,
+    "data": "1,2,3,4,5,7,9,10,12,14,15,19,20,23,27,30,33,34,37,40,43,46,49,50,53,58,59,64,69,74,79,83,84,88,93,97,103,107,111,112,116,120,124,125,129,133,137,141,146,150,154,158,162,166,167,171,175,179,183,187,191",
+    "name": "Numbers m such that there exists an integer k >= 1 for which the concatenation of m, 2m, ..., km is an m-digit number.",
+    "comment": [
+        "Do there exist arbitrarily large gaps between successive terms?"
+    ],
+    "example": [
+        "7 is a term because the concatenation of 7, 14, 21, 28 is 7142128 which has 7 digits.",
+        "21 is not a term because the concatenation of 21, 42, ..., 168 has 20 digits but concatenating this with 168+21 = 189 gives a number with 23 digits."
+    ],
+    "mathematica": [
+        "SelfIncrementingQ[n_] := Module[{len=Length@IntegerDigits[n],num,c=1,numDigits=0},",
+        "  numDigits = len*Ceiling[(10^len - n)/n];",
+        "  If[numDigits >= n, Return[Mod[n, len] == 0]];",
+        "  num = Ceiling[10^len/n]*n;",
+        "  While[numDigits < n + 1,",
+        "    If[(len + c)*Ceiling[(10^(len + c) - num)/n] >= n - numDigits,",
+        "      Return[Mod[n - numDigits, len + c] == 0],",
+        "      numDigits += (len + c)*Ceiling[(10^(len + c) - num)/n]",
+        "       ];",
+        "    num += Ceiling[(10^(len + c) - num)/n]*n;",
+        "    c++;",
+        "   ]",
+        " ]",
+        "Select[Range[191],SelfIncrementingQ]"
+    ],
+    "xref": [
+        "Cf. A375461 (increment by 1)."
+    ],
+    "keyword": "base,nonn,new",
+    "offset": "1,2",
+    "author": "_Nicholas M. R. Frieler_, Aug 19 2024",
+    "references": 1,
+    "revision": 9,
+    "time": "2024-09-13T07:37:18-04:00",
+    "created": "2024-09-13T07:37:18-04:00"
+}
