@@ -1,0 +1,32 @@
+{
+    "number": 376204,
+    "data": "64,192,243,320,441,448,486,704,832,882,960,1088,1215,1216,1344,1472,1701,1764,1856,1984,2112,2205,2240,2368,2430,2496,2624,2673,2752,3008,3159,3264,3392,3402,3520,3648,3776,3904,4131,4160,4288,4410,4416,4544,4617,4672,4851,4928",
+    "name": "Numbers whose sum of powerful divisors (including 1) is a powerful number that is larger than 1.",
+    "comment": [
+        "Numbers k such that A112526(A183097(k)) = 1.",
+        "The primitive terms of this sequence are the powerful terms (A349109 \\ {1}). If m > 1 is a powerful term then k*m is a term of this sequence for all squarefree numbers k that are coprime to m.",
+        "The asymptotic density of this sequence is Sum_{i>=2} f(A349109(i))/A349109(i) = 0.00935344863979..., where f(k) = (6/Pi^2) * Product_{p|k} (p/(p+1))."
+    ],
+    "link": [
+        "Amiram Eldar, <a href=\"/A376204/b376204.txt\">Table of n, a(n) for n = 1..10000</a>"
+    ],
+    "mathematica": [
+        "f[p_, e_] := (p^(e + 1) - 1)/(p - 1) - p; s[1] = 1; s[k_] := Times @@ f @@@ FactorInteger[k]; q[k_] := AllTrue[FactorInteger[k][[;; , 2]], # > 1 &]; Select[Range[5000], q[s[#]] &]"
+    ],
+    "program": [
+        "(PARI) s(k) = {my(f = factor(k)); prod(i = 1, #f~, (f[i,1]^(f[i,2]+1) - 1)/(f[i,1] - 1) - f[i,1]);}",
+        "is(k) = {my(s1 = s(k)); s1 > 1 && ispowerful(s1);}"
+    ],
+    "xref": [
+        "Subsequence of A013929.",
+        "A349109 \\ {1} is a subsequence.",
+        "Cf. A005117, A059956, A112526, A183097."
+    ],
+    "keyword": "nonn,easy,new",
+    "offset": "1,1",
+    "author": "_Amiram Eldar_, Sep 15 2024",
+    "references": 0,
+    "revision": 7,
+    "time": "2024-09-15T02:31:01-04:00",
+    "created": "2024-09-15T02:31:01-04:00"
+}
