@@ -1,0 +1,53 @@
+{
+    "number": 376065,
+    "data": "1,2,4,8,16,24,32,48,64,72,96,128,144,192,216,243,256,288,320,384,432,486,512,576,640,648,729,768,864",
+    "name": "Orders k of groups G such that Inn(G) is isomorphic to Z(Aut(G)) for at least one G of order k.",
+    "comment": [
+        "Inn(G) is the inner automorphism group of G and Z(Aut(G)) is the center of the automorphism group of G.",
+        "A group G for which Inn(G) = Z(Aut(G)) allows for a natural construction of Aut(Aut(G)) via the homomorphism f: Aut(G) -> Aut(Aut(G)) which maps Aut(G) to Inn(Aut(G)) = Aut(G)/Z(Aut(G)) in the same way that G is mapped to Inn(G) = G/Z(G). Furthermore Inn(Aut(G)) = Out(G) (the outer automorphism group), and we have an exact sequence of homomorphisms 1 -> G -> Aut(G) -> Aut(Aut(G)) -> 1. Each term a(n) is thus the order of a group which allows for this particular construction of Aut(Aut(G)).",
+        "The diagram of homomorphisms is as follows:",
+        "             Aut(Aut(G)) --> Out(Aut(G))",
+        "            /      ^          /",
+        "           /       |         /",
+        "     Aut(G)  -->  Inn(Aut(G)) (= Aut(G)/Z(Aut(G)) = Out(G))",
+        "    /  ^         /",
+        "   /   |        /",
+        " G --> Z(Aut(G)) (= Inn(G))",
+        " ^    /",
+        " |   /",
+        " Z(G)",
+        "A000079, A007283(m) for m >= 3, and A020714(r) for r >= 6, are subsequences. See the Miles Englezou link for proofs. In the link it is also shown that the method of proof used to determine that A007283(m) and A020714(r) are subsequences is limited to Fermat primes (A019434) and therefore cannot be used to determine whether 2^s*p is a subsequence for every prime p."
+    ],
+    "link": [
+        "Miles Englezou, <a href=\"/A376065/a376065_4.txt\">Proofs of subsequences</a>"
+    ],
+    "example": [
+        "24 is a term since for G = C3 x D8, Inn(G) = Z(Aut(G)) = C2 x C2, and G has order 24."
+    ],
+    "program": [
+        "(GAP)",
+        "S:=[];",
+        "for n in [1..500] do",
+        "    for i in [1..NrSmallGroups(n)] do",
+        "        G:=SmallGroup(n,i);",
+        "        Aut:=AutomorphismGroup(G);",
+        "        Inn:=InnerAutomorphismsAutomorphismGroup(Aut);",
+        "        if IsomorphismGroups(Centre(Aut),Inn)<>fail then",
+        "            S:=Concatenation(S,[n]);",
+        "            break;",
+        "        fi;",
+        "    od;",
+        "od;",
+        "Print(S);"
+    ],
+    "xref": [
+        "Cf. A000079, A007283, A020714, A019434."
+    ],
+    "keyword": "nonn,more,new",
+    "offset": "1,2",
+    "author": "_Miles Englezou_, Sep 07 2024",
+    "references": 0,
+    "revision": 39,
+    "time": "2024-09-16T09:22:44-04:00",
+    "created": "2024-09-16T09:22:44-04:00"
+}
