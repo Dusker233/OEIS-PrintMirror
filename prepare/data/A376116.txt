@@ -1,0 +1,42 @@
+{
+    "number": 376116,
+    "data": "0,1,2,4,5,7,8,11,12,14,15,18,19,21,22,26,27,29,30,33,34,36,37,41,42,44,45,48,49,51,52,57,58,60,61,64,65,67,68,72,73,75,76,79,80,82,83,88,89,91,92,95,96,98,99,103,104,106,107,110,111,113,114,120,121,123,124,127,128,130",
+    "name": "Number of times the root fires in a chip-firing game starting with 2n chips placed at the root on an infinite binary tree with a loop at the root.",
+    "comment": [
+        "Adding a loop at the root makes the graph 3-regular: each vertex has degree 3.",
+        "The first differences of this sequence give A091090."
+    ],
+    "link": [
+        "Wikipedia, <a href=\"https://en.wikipedia.org/wiki/Chip-firing_game\">Chip-firing game</a>."
+    ],
+    "formula": [
+        "a(n) = Sum_{j=1..m-1} (2^j-1)(b(j)+1), where m = floor(log_2(2n+1)) and b(m)b(m-1)...b(1)b(0) is the binary representation of 2*n+1."
+    ],
+    "example": [
+        "If there are four chips at the root, then the root fires and the process ends in a stable configuration.",
+        "If there are eight chips at the root, the root can fire three times, sending 3 chips to each child. After this, each child can fire once. After that the root has 4 chips and can fire again. The root fires a total of 4 times."
+    ],
+    "maple": [
+        "a:= n-> (l-> add((2^(i-1)-1)*(l[i]+1), i=2..nops(l)-1))(Bits[Split](2*n+1)):",
+        "seq(a(n), n=1..70);  # _Alois P. Heinz_, Sep 12 2024"
+    ],
+    "program": [
+        "(Python)",
+        "def a(n):",
+        "    if n <= 2:",
+        "        return 0",
+        "    else:",
+        "        return (n+1) // 2 - 1 + a((n+1)//2 - 1)",
+        "print([a(2*n) for n in range(1, 51)])"
+    ],
+    "xref": [
+        "Cf. A091090, A376131, A376132."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,3",
+    "author": "_Ryota Inagaki_, _Tanya Khovanova_, and _Austin Luo_, Sep 10 2024",
+    "references": 0,
+    "revision": 26,
+    "time": "2024-09-17T16:34:11-04:00",
+    "created": "2024-09-17T16:34:11-04:00"
+}
