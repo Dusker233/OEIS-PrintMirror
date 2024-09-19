@@ -1,0 +1,40 @@
+{
+    "number": 376220,
+    "data": "3,9,19,23,27,37,39,107,1007,1041,1047,1051,1073,10000011,10000047,10000109,1000000000000017,1000000000000053,1000000000000071,1000000000000291,1000000000000449,10000000000000000000000000000113",
+    "name": "Record values in A174414.",
+    "comment": [
+        "Numbers m such that for some x, the concatenation (m+x)||m is prime, and for every j < x there is some k < m such that (k+j)||k is prime."
+    ],
+    "formula": [
+        "a(n) = A174414(A376219(n))."
+    ],
+    "example": [
+        "a(3) = 19 because A376219(3) = 11 and A174414(11) = 19.  Thus 19 is the least k such that the concatenation (k+11)||k is prime, and for all j < 11 we have (k+j)||k prime for some k < 19."
+    ],
+    "maple": [
+        "tcat:= proc(a, b) a*10^(1+ilog10(b))+b end proc:",
+        "f:= proc(n) local k, d;",
+        "    for d from 1 do",
+        "      if igcd(n, 10^d+1) > 1 then next fi;",
+        "      for k from 10^(d-1)+`if`(d=1, 0, 1) to 10^d by 2 do",
+        "        if isprime(tcat(n+k, k)) then return k fi",
+        "    od od",
+        "end proc:",
+        "R:= NULL: m:= 0:",
+        "for n from 1 to 10^6 do",
+        "   v:= f(n);",
+        "   if v > m then m:= v; R:= R, m fi",
+        "od:",
+        "R;"
+    ],
+    "xref": [
+        "Cf. A174414, A376219."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "1,1",
+    "author": "_Robert Israel_, Sep 16 2024",
+    "references": 0,
+    "revision": 9,
+    "time": "2024-09-18T01:14:57-04:00",
+    "created": "2024-09-18T01:14:57-04:00"
+}

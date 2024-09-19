@@ -1,0 +1,39 @@
+{
+    "number": 376219,
+    "data": "1,10,11,33,88,132,341,505,1111,2828,10504,31512,34138,81103,152207,304414,1378751,2587519,2757502,5175038,126845092,486699103",
+    "name": "Positions of records in A174414.",
+    "comment": [
+        "Positive integers k such that the least m for which the concatenation (m+k)||m is prime is greater than it is for all previous k.",
+        "If k and 10^d+1 are not coprime, then A174414(k) can't have d digits.",
+        "Therefore, assuming A174414(n) always exists, it is unbounded and this sequence is infinite."
+    ],
+    "example": [
+        "a(3) = 11 because A174414(11) = 19 is greater than A174414(1),..., A174414(10)."
+    ],
+    "maple": [
+        "tcat:= proc(a,b) a*10^(1+ilog10(b))+b end proc:",
+        "f:= proc(n) local k,d;",
+        "    for d from 1 do",
+        "      if igcd(n, 10^d+1) > 1 then next fi;",
+        "      for k from 10^(d-1)+`if`(d=1,0,1) to 10^d by 2 do",
+        "        if isprime(tcat(n+k,k)) then return k fi",
+        "    od od",
+        "end proc:",
+        "J:= NULL: m:= 0:",
+        "for n from 1 to 10^6 do",
+        "   v:= f(n);",
+        "   if v > m then m:= v; J:= J,n fi",
+        "od:",
+        "J;"
+    ],
+    "xref": [
+        "Cf. A174414, A376220."
+    ],
+    "keyword": "nonn,base,more,new",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Sep 16 2024",
+    "references": 0,
+    "revision": 19,
+    "time": "2024-09-18T01:14:48-04:00",
+    "created": "2024-09-18T01:14:48-04:00"
+}
