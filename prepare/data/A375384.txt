@@ -1,0 +1,40 @@
+{
+    "number": 375384,
+    "data": "300,780,2628,3240,3828,5460,13530,18528,19110,22578,25878,31878,32640,37128,49770,56280,64980,72390,73920,78210,103740,105570,115440,137550,159330,161028,277140,288420,316410,335790,370230,386760,416328,472878,541320,664128",
+    "name": "Triangular numbers that are sandwiched between two squarefree semiprimes.",
+    "comment": [
+        "All numbers in this sequence are even.",
+        "Terms such as 120 and 528 are in A121898 but are not in this sequence.",
+        "If they exist, further differences between this sequence and A121898 are > 10^18. - _Hugo Pfoertner_, Aug 27 2024",
+        "If they exist, further terms of A121898 not in this sequence are > 10^7779.  This is based on considering the Diophantine equations x*(x-1) = 2*(y^2-1) and x*(x-1) = 2*(y^2+1). - _Robert Israel_, Sep 01 2024"
+    ],
+    "formula": [
+        "a(n) == 0 (mod 6). - _Hugo Pfoertner_, Aug 27 2024"
+    ],
+    "example": [
+        "300 (24th triangular number) between 299 = 13 * 23 and 301 = 7 * 43.",
+        "780 (39th triangular number) between 779 = 19 * 41 and 781 = 11 * 71.",
+        "2628 (72nd triangular number) between 2627 = 37 * 71 and 2629 = 11 * 239."
+    ],
+    "maple": [
+        "select(t -> numtheory:-bigomega(t+1)=2 and numtheory:-bigomega(t-1)=2 and numtheory:-issqrfree(t+1) and numtheory:-issqrfree(t-1), [seq(i*(i+1)/2, i=1..2000)]); # _Robert Israel_, Sep 02 2024"
+    ],
+    "mathematica": [
+        "q[n_] := FactorInteger[n][[;; , 2]] == {1, 1}; Select[Accumulate[Range[1100]], And @@ q /@ (# + {-1, 1}) &] (* _Amiram Eldar_, Aug 13 2024 *)"
+    ],
+    "program": [
+        "(PARI) issp(k) = my(f=factor(k)); (bigomega(f)==2) && issquarefree(f); \\\\ A006881",
+        "lista(nn) = my(list=List()); for (n=2, nn, my(k=n*(n+1)/2); if (issp(k-1) && issp(k+1), listput(list, k))); Vec(list); \\\\ _Michel Marcus_, Sep 01 2024"
+    ],
+    "xref": [
+        "Cf. A000217, A006881.",
+        "Subsequence of A121898."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Massimo Kofler_, Aug 13 2024",
+    "references": 0,
+    "revision": 29,
+    "time": "2024-09-20T06:26:17-04:00",
+    "created": "2024-09-20T06:26:17-04:00"
+}

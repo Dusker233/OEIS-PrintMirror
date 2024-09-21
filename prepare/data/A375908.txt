@@ -1,0 +1,41 @@
+{
+    "number": 375908,
+    "data": "18446,39766,74306,83434,94106,100346,107966,111154,111814,113366,140834,144754,145606,146014,147406,149854,154946,155702,156146,165346,171786,189034,190618,191806,197354,201686,203314,206194,211394,211946,219386,231286,234394,253114,258266,262294,263966",
+    "name": "Sphenic numbers that are sandwiched between products of exactly 4 distinct primes (or tetraprimes).",
+    "comment": [
+        "Terms are of the form 4*k+2."
+    ],
+    "example": [
+        "18446 = 2 * 23 * 401  (between 18445 = 5*7*17*31 and 18447 = 3*11*13*43).",
+        "39766 = 2 * 59 * 337  (between 39765 = 3*5*11*241 and 39767 = 7*13*19*23).",
+        "74306 = 2 * 53 * 701  (between 74305 = 5*7*11*193 and 74307 = 3*17*31*47)."
+    ],
+    "maple": [
+        "N:= 5*10^5: # for terms <= N",
+        "P:= select(isprime,[seq(i,i=3..N/3,2)]): nP:= nops(P):",
+        "R:= NULL:",
+        "for i from 1 to nP while 2*P[i]*P[i+1] <= N do",
+        "  for j from i+1 to nP do",
+        "    x:= 2*P[i]*P[j];",
+        "    if x > N then break fi;",
+        "    if numtheory:-bigomega(x-1) = 4 and numtheory:-bigomega(x+1) = 4 and",
+        "      numtheory:-issqrfree(x-1) and numtheory:-issqrfree(x+1) then",
+        "        R:= R,x",
+        "    fi",
+        "od od:",
+        "sort([R]); # _Robert Israel_, Sep 02 2024"
+    ],
+    "mathematica": [
+        "e[n_] := FactorInteger[n][[;; , 2]]; SequencePosition[e /@ Range[300000], {{1, 1, 1, 1}, {1, 1, 1}, {1, 1, 1, 1}}][[;; , 1]] + 1 (* _Amiram Eldar_, Sep 02 2024 *)"
+    ],
+    "xref": [
+        "Cf. A007304, A046386. Subsequence of A075819."
+    ],
+    "keyword": "nonn,new",
+    "offset": "1,1",
+    "author": "_Massimo Kofler_, Sep 02 2024",
+    "references": 0,
+    "revision": 14,
+    "time": "2024-09-20T06:26:47-04:00",
+    "created": "2024-09-20T06:26:47-04:00"
+}

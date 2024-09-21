@@ -1,0 +1,87 @@
+{
+    "number": 376280,
+    "data": "1,2,3,4,5,6,7,8,9,10,112,135,175,192,224,2304,2625,4116,4608,4704,5376,55125,59049,74088,83349,91125,95256,99225,104976,1062882,1306368,1333584,1469664,1492992,1524096,1594323,1679616,17360406,21337344,23914845,2490394032,29900390625,319070390625",
+    "name": "Record values in A085908.",
+    "comment": [
+        "Numbers m that m is the least 7-smooth number that starts with some k, such that for all j < k there is a 7-smooth number < m that starts with j.",
+        "Positions of records are in A376278."
+    ],
+    "link": [
+        "Robert Israel, <a href=\"/A376280/b376280.txt\">Table of n, a(n) for n = 1..207</a>"
+    ],
+    "formula": [
+        "a(n) = A085908(A376278(n))."
+    ],
+    "example": [
+        "a(12) = 135 because 135 is the least 7-smooth number that starts with 13, and for every j < 13 there is a 7-smooth number less than 135 starting with j."
+    ],
+    "maple": [
+        "# using A085908 in the form of a list",
+        "R:= NULL: m:= 0: count:= 0:",
+        "for i from 1 to nops(A085908) do",
+        "  if A085908[i] > m then",
+        "    count:= count+1; m:= A085908[i];  R:= R, m",
+        "  fi",
+        "od:",
+        "R;"
+    ],
+    "program": [
+        "(Python)",
+        "from itertools import count, islice",
+        "def A376280_gen(): # generator of terms",
+        "    def f(x):",
+        "        c = 0",
+        "        i7 = 1",
+        "        m = x",
+        "        for i in count(0):",
+        "            if i7 > x:",
+        "                break",
+        "            j5 = 1",
+        "            r = m",
+        "            for j in count(0):",
+        "                 if j5 > m:",
+        "                     break",
+        "                 k3 = 1",
+        "                 t = r",
+        "                 for k in count(0):",
+        "                     if k3 > r:",
+        "                         break",
+        "                     c += t.bit_length()",
+        "                     k3 *= 3",
+        "                     t //= 3",
+        "                 j5 *= 5",
+        "                 r //= 5",
+        "            i7 *= 7",
+        "            m //= 7",
+        "        return c",
+        "    c = 1",
+        "    yield 1",
+        "    for n in count(2):",
+        "        for l in count(0):",
+        "            kmin, kmax = n*10**l-1, (n+1)*10**l-1",
+        "            mmin, mmax = f(kmin), f(kmax)",
+        "            if mmax>mmin:",
+        "                while kmax-kmin > 1:",
+        "                    kmid = kmax+kmin>>1",
+        "                    mmid = f(kmid)",
+        "                    if mmid > mmin:",
+        "                        kmax, mmax = kmid, mmid",
+        "                    else:",
+        "                        kmin, mmin = kmid, mmid",
+        "                break",
+        "        if kmax > c:",
+        "            yield kmax",
+        "            c = kmax",
+        "A376280_list = list(islice(A376280_gen(),30)) # _Chai Wah Wu_, Sep 20 2024"
+    ],
+    "xref": [
+        "Cf. A002473, A085908, A376278."
+    ],
+    "keyword": "nonn,base,new",
+    "offset": "1,2",
+    "author": "_Robert Israel_, Sep 18 2024",
+    "references": 0,
+    "revision": 20,
+    "time": "2024-09-20T23:55:09-04:00",
+    "created": "2024-09-20T05:52:11-04:00"
+}
