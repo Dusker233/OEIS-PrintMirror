@@ -3,24 +3,27 @@ from pandas import DataFrame
 import json
 
 def readPage(task):
-	name = ""
-	seg = ""
-	formula = ""
-	f = open("../prepare/data/%s.txt" % task, "r")
-	jsonString = f.read()
-	f.close()
-	res = json.loads(jsonString)
-	for i in res:
-		if (i == 'name'):
-			name = res[i]
-			name += '\n'
-		if (i == 'data'):
-			seg = res[i]
-		if (i == 'formula'):
-			for j in res[i]:
-				formula += j
-				formula += '\n'
-	return task, name, seg, formula
+	try:
+		name = ""
+		seg = ""
+		formula = ""
+		f = open("../prepare/data/%s.txt" % task, "r")
+		jsonString = f.read()
+		f.close()
+		res = json.loads(jsonString)
+		for i in res:
+			if (i == 'name'):
+				name = res[i]
+				name += '\n'
+			if (i == 'data'):
+				seg = res[i]
+			if (i == 'formula'):
+				for j in res[i]:
+					formula += j
+					formula += '\n'
+		return task, name, seg, formula
+	except Exception as e:
+		print(e)
 
 taskIds = pandas.read_csv(
 		"../prepare/allNeed.csv"
