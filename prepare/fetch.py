@@ -83,6 +83,8 @@ input.close()
 lastans = 0
 
 for i in range(lastans, end):
+	if not taskIds[i].startswith('A'):
+		continue
 	file = Path("data/%s.txt" % (taskIds[i]))
 	if file.is_file():
 		print('No.%d exists' % i)
