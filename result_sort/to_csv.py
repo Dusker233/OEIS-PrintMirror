@@ -24,6 +24,7 @@ def readPage(task):
 		return task, name, seg, formula
 	except Exception as e:
 		print(e)
+		return "-1", "", "", ""
 
 taskIds = pandas.read_csv(
 		"../prepare/allNeed.csv"
@@ -41,6 +42,8 @@ for i in taskIds:
 	_seg = ""
 	_formula = ""
 	_ssid, _name, _seg, _formula = readPage(i)
+	if _ssid == "-1":
+		continue
 	ssids.append(_ssid)
 	names.append(_name)
 	segs.append(_seg)
